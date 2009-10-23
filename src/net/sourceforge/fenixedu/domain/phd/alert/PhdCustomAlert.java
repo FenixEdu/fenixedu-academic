@@ -23,27 +23,33 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
     }
 
     public PhdCustomAlert(PhdIndividualProgramProcess process, Group targetGroup, MultiLanguageString subject,
-	    MultiLanguageString body, Boolean sendMail, LocalDate fireDate) {
+	    MultiLanguageString body, Boolean sendMail, LocalDate fireDate, Boolean userDefined, Boolean shared) {
 	this();
-	init(process, targetGroup, subject, body, sendMail, fireDate);
+	init(process, targetGroup, subject, body, sendMail, fireDate, userDefined, shared);
     }
 
-    public PhdCustomAlert(PhdIndividualProgramProcess process, PhdCustomAlertBean bean) {
-	this(process, bean.getTargetGroup(), new MultiLanguageString(Language.getDefaultLanguage(), bean.getSubject()),
-		new MultiLanguageString(Language.getDefaultLanguage(), bean.getBody()), bean.isToSendEmail(), bean.getFireDate());
+    public PhdCustomAlert(PhdCustomAlertBean bean) {
+	this(bean.getProcess(), bean.calculateTargetGroup(), new MultiLanguageString(Language.getDefaultLanguage(), bean
+		.getSubject()), new MultiLanguageString(Language.getDefaultLanguage(), bean.getBody()), bean.isToSendEmail(),
+		bean.getFireDate(), bean.getUserDefined(), bean.getShared());
     }
 
-    private void init(PhdIndividualProgramProcess process, Group targetGroup, MultiLanguageString subject,
-	    MultiLanguageString body, Boolean sendEmail, LocalDate whenToFire) {
+    protected void init(PhdIndividualProgramProcess process, Group targetGroup, MultiLanguageString subject,
+	    MultiLanguageString body, Boolean sendEmail, LocalDate whenToFire, Boolean userDefined, Boolean shared) {
 
 	super.init(process, subject, body);
 
 	check(whenToFire, "error.net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlert.whenToFire.cannot.be.null");
 	check(targetGroup, "error.phd.alert.PhdAlert.targetGroup.cannot.be.null");
 	check(sendEmail, "error.phd.alert.PhdAlert.sendEmail.cannot.be.null");
+	check(userDefined, "error.net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlert.userDefined.cannot.be.null");
+	check(shared, "error.net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlert.shared.cannot.be.null");
+
 	super.setWhenToFire(whenToFire);
 	super.setSendEmail(sendEmail);
 	super.setTargetGroup(targetGroup);
+	super.setUserDefined(userDefined);
+	super.setShared(shared);
     }
 
     @Override
@@ -71,8 +77,12 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
     @Override
     protected void generateMessage() {
 
-	for (final Person person : getTargetGroup().getElements()) {
-	    new PhdAlertMessage(getProcess(), person, getFormattedSubject(), getFormattedBody());
+	if (getShared().booleanValue()) {
+	    new PhdAlertMessage(getProcess(), getTargetGroup().getElements(), getFormattedSubject(), getFormattedBody());
+	} else {
+	    for (final Person person : getTargetGroup().getElements()) {
+		new PhdAlertMessage(getProcess(), person, getFormattedSubject(), getFormattedBody());
+	    }
 	}
 
 	if (isToSendMail()) {
@@ -94,8 +104,23 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
     }
 
     @Override
+    public void setUserDefined(Boolean userDefined) {
+	throw new DomainException("error.phd.alert.PhdCustomAlert.cannot.modify.userDefined");
+    }
+
+    @Override
+    public void setShared(Boolean shared) {
+	throw new DomainException("error.phd.alert.PhdCustomAlert.cannot.modify.shared");
+    }
+
+    @Override
     public boolean isToSendMail() {
 	return getSendEmail().booleanValue();
+    }
+
+    @Override
+    public boolean isSystemAlert() {
+	return !getUserDefined().booleanValue();
     }
 
 }

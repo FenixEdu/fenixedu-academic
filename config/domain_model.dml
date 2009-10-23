@@ -6783,6 +6783,8 @@ class phd.alert.PhdAlert extends DomainObject {
 		Group targetGroup;
 		Boolean sendEmail;
 		LocalDate whenToFire;
+		Boolean userDefined;
+		Boolean shared;
 	}
 	
 		class phd.alert.PhdCandidacyRefereeAlert extends phd.alert.PhdAlert {

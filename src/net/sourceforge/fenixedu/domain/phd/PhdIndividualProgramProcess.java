@@ -20,11 +20,13 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.QualificationBean;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlert;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlert;
@@ -433,7 +435,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
 		Object object) {
 
-	    new PhdCustomAlert(process, (PhdCustomAlertBean) object);
+	    new PhdCustomAlert((PhdCustomAlertBean) object);
 
 	    return process;
 	}
@@ -620,6 +622,10 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		    PublicPresentationSeminarProcess.class, object);
 
 	    publicPresentationSeminarProcess.setIndividualProgramProcess(individualProcess);
+
+	    AlertService.alertCoordinator(individualProcess,
+		    "message.phd.alert.public.presentation.seminar.comission.definition.subject",
+		    "message.phd.alert.public.presentation.seminar.comission.definition.body");
 
 	    return individualProcess;
 	}

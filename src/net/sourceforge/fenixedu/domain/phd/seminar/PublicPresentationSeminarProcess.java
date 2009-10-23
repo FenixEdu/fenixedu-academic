@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidExceptio
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
+import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
 
 public class PublicPresentationSeminarProcess extends PublicPresentationSeminarProcess_Base {
 
@@ -74,8 +75,13 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 	    process.createState(PublicPresentationSeminarProcessStateType.COMMISSION_WAITING_FOR_VALIDATION,
 		    userView.getPerson(), bean.getRemarks());
 
+	    AlertService.alertAcademicOffice(process.getIndividualProgramProcess(),
+		    "message.phd.alert.public.presentation.seminar.comission.validation.subject",
+		    "message.phd.alert.public.presentation.seminar.comission.validation.body");
+
 	    return process;
 	}
+
     }
 
     static public class ValidateComission extends PhdActivity {
@@ -101,8 +107,17 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 	    process.createState(PublicPresentationSeminarProcessStateType.COMMISSION_VALIDATED, userView.getPerson(), bean
 		    .getRemarks());
 
+	    AlertService.alertGuiders(process.getIndividualProgramProcess(),
+		    "message.phd.alert.public.presentation.seminar.comission.validated.subject",
+		    "message.phd.alert.public.presentation.seminar.comission.validated.body");
+
+	    AlertService.alertStudent(process.getIndividualProgramProcess(),
+		    "message.phd.alert.public.presentation.seminar.comission.validated.subject",
+		    "message.phd.alert.public.presentation.seminar.comission.validated.body");
+
 	    return process;
 	}
+
     }
 
     static public class SchedulePresentationDate extends PhdActivity {
@@ -127,6 +142,18 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 	    process.setPresentationDate(bean.getPresentationDate());
 	    process.createState(PublicPresentationSeminarProcessStateType.PUBLIC_PRESENTATION_DATE_SCHEDULED, userView
 		    .getPerson(), bean.getRemarks());
+
+	    AlertService.alertAcademicOffice(process.getIndividualProgramProcess(),
+		    "message.phd.alert.public.presentation.seminar.scheduled.presentation.date.subject",
+		    "message.phd.alert.public.presentation.seminar.scheduled.presentation.date.body");
+
+	    AlertService.alertCoordinator(process.getIndividualProgramProcess(),
+		    "message.phd.alert.public.presentation.seminar.scheduled.presentation.date.subject",
+		    "message.phd.alert.public.presentation.seminar.scheduled.presentation.date.body");
+
+	    AlertService.alertStudent(process.getIndividualProgramProcess(),
+		    "message.phd.alert.public.presentation.seminar.scheduled.presentation.date.subject",
+		    "message.phd.alert.public.presentation.seminar.scheduled.presentation.date.body");
 
 	    return process;
 	}
@@ -155,6 +182,10 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 	    process.createState(PublicPresentationSeminarProcessStateType.REPORT_WAITING_FOR_VALIDATION, userView.getPerson(),
 		    bean.getRemarks());
 
+	    AlertService.alertAcademicOffice(process.getIndividualProgramProcess(),
+		    "message.phd.alert.public.presentation.seminar.report.uploaded.subject",
+		    "message.phd.alert.public.presentation.seminar.report.uploaded.body");
+
 	    return process;
 	}
     }
@@ -180,6 +211,18 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 	    process.addDocument(bean.getDocument(), userView.getPerson());
 	    process.createState(PublicPresentationSeminarProcessStateType.REPORT_VALIDATED, userView.getPerson(), bean
 		    .getRemarks());
+
+	    AlertService.alertCoordinator(process.getIndividualProgramProcess(),
+		    "message.phd.alert.public.presentation.seminar.report.validated.subject",
+		    "message.phd.alert.public.presentation.seminar.report.validated.body");
+
+	    AlertService.alertGuiders(process.getIndividualProgramProcess(),
+		    "message.phd.alert.public.presentation.seminar.report.validated.subject",
+		    "message.phd.alert.public.presentation.seminar.report.validated.body");
+
+	    AlertService.alertStudent(process.getIndividualProgramProcess(),
+		    "message.phd.alert.public.presentation.seminar.report.validated.subject",
+		    "message.phd.alert.public.presentation.seminar.report.validated.body");
 
 	    return process;
 	}

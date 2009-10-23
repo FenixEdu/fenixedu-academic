@@ -475,7 +475,7 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
     public ActionForward prepareCreateCustomAlert(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	request.setAttribute("createCustomAlertBean", new PhdCustomAlertBean());
+	request.setAttribute("createCustomAlertBean", new PhdCustomAlertBean(getProcess(request)));
 
 	return mapping.findForward("createCustomAlert");
     }
