@@ -27,8 +27,7 @@ public class IdDocument extends IdDocument_Base {
 		idDocuments.add(idDocument);
 	    }
 	}
-
-	// return findWithDatabase(idDocumentValue);
+	return idDocuments;
     }
 
     // private static Collection<IdDocument> findWithDatabase(final String
