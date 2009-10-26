@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -46,7 +47,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "fillOriginInformation", path = "/academicAdminOffice/fillOriginInformation.jsp"),
 	@Forward(name = "createStudentSuccess", path = "/academicAdminOffice/createStudentSuccess.jsp"),
 	@Forward(name = "showCreateStudentConfirmation", path = "/academicAdminOffice/showCreateStudentConfirmation.jsp") })
-	//@Forward(name = "printRegistrationDeclarationTemplate", path = "/printRegistrationDeclarationTemplate.jsp", useTile = false) })
+// @Forward(name = "printRegistrationDeclarationTemplate", path =
+// "/printRegistrationDeclarationTemplate.jsp", useTile = false) })
 public class StudentOperationsDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareCreateStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -139,7 +141,8 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 		"chooseIngression").getMetaObject().getObject();
 	ingressionInformationBean.clearAgreement();
 
-	RenderUtils.invalidateViewState();
+	RenderUtils.invalidateViewState("executionDegree");
+	RenderUtils.invalidateViewState("chooseIngression");
 
 	request.setAttribute("executionDegreeBean", executionDegreeBean);
 	request.setAttribute("ingressionInformationBean", ingressionInformationBean);
@@ -193,7 +196,9 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 		choosePersonBean.setFirstTimeSearch(false);
 		if (!persons.isEmpty()
 			|| !Person.findByDateOfBirth(dateOfBirth,
-				Person.findInternalPersonMatchingFirstAndLastName(choosePersonBean.getName())).isEmpty()) {
+				Person.findInternalPersonMatchingFirstAndLastName(choosePersonBean.getName())).isEmpty()
+			|| (choosePersonBean.getStudentNumber() != null && Student.readStudentByNumber(choosePersonBean
+				.getStudentNumber()) != null)) {
 		    // show similar persons
 		    RenderUtils.invalidateViewState();
 		    request.setAttribute("choosePersonBean", choosePersonBean);
@@ -219,7 +224,7 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 
 	} else {
 	    personBean = new PersonBean(choosePersonBean.getName(), identificationNumber, choosePersonBean.getDocumentType(),
-		    dateOfBirth);
+		    dateOfBirth, choosePersonBean.getStudentNumber());
 	}
 
 	request.setAttribute("personBean", personBean);
@@ -316,13 +321,17 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("createStudentSuccess");
     }
 
-    /*public ActionForward printRegistrationDeclarationTemplate(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-
-	Integer registrationID = Integer.valueOf(request.getParameter("registrationID"));
-	request.setAttribute("registration", rootDomainObject.readRegistrationByOID(registrationID));
-
-	return mapping.findForward("printRegistrationDeclarationTemplate");
-    }*/
+    /*
+     * public ActionForward printRegistrationDeclarationTemplate(ActionMapping
+     * mapping, ActionForm actionForm, HttpServletRequest request,
+     * HttpServletResponse response) {
+     * 
+     * Integer registrationID =
+     * Integer.valueOf(request.getParameter("registrationID"));
+     * request.setAttribute("registration",
+     * rootDomainObject.readRegistrationByOID(registrationID));
+     * 
+     * return mapping.findForward("printRegistrationDeclarationTemplate"); }
+     */
 
 }

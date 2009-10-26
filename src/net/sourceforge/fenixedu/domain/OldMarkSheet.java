@@ -57,7 +57,8 @@ public class OldMarkSheet extends OldMarkSheet_Base {
 	if (enrolmentEvaluation == null) {
 	    enrolmentEvaluation = evaluationBean.getEnrolment().addNewEnrolmentEvaluation(EnrolmentEvaluationState.TEMPORARY_OBJ,
 		    getMarkSheetType().getEnrolmentEvaluationType(), responsibleTeacher.getPerson(),
-		    evaluationBean.getGradeValue(), getCreationDate(), evaluationBean.getEvaluationDate(), getExecutionPeriod());
+		    evaluationBean.getGradeValue(), getCreationDate(), evaluationBean.getEvaluationDate(), getExecutionPeriod(),
+		    null);
 	} else {
 	    enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
 	    enrolmentEvaluation.edit(responsibleTeacher.getPerson(), evaluationBean.getGradeValue(), getCreationDate(),

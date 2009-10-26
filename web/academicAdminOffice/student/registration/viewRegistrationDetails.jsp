@@ -181,10 +181,12 @@
 			<fr:property name="bundle(enrol)" value="ACADEMIC_OFFICE_RESOURCES"/>
 			<fr:property name="contextRelative(enrol)" value="true"/>      
 			<fr:property name="order(enrol)" value="1"/>
-			
-			<%--  
-			<fr:property name="visibleIfNot(enrol)" value="registration.registrationConclusionProcessed"/>      					
-			--%>
+
+			<fr:property name="linkFormat(setEvaluations)" value="/curriculumValidation.do?method=prepareCurriculumValidation&amp;studentCurricularPlanId=${externalId}" />
+			<fr:property name="key(setEvaluations)" value="link.student.setEvaluations" />
+			<fr:property name="bundle(setEvaluations)" value="ACADEMIC_OFFICE_RESOURCES" />
+			<fr:property name="contextRelative(setEvaluations)" value="true" />
+			<fr:property name="visibleIf(setEvaluations)" value="evaluationForCurriculumValidationAllowed"/>      					
 			
 			<fr:property name="linkFormat(dismissal)" value="/studentDismissals.do?method=manage&amp;scpID=${idInternal}" />
 			<fr:property name="key(dismissal)" value="link.student.dismissal.management"/>

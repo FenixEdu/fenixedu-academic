@@ -72,7 +72,7 @@ public class SearchResearcher implements ISearchResearcher {
 
 	List<Researcher> results = new ArrayList<Researcher>();
 	for (Researcher researcher : RootDomainObject.getInstance().getResearchers()) {
-	    if (researcher.getAllowsToBeSearched()) {
+	    if (researcher.getPerson() != null && researcher.getAllowsToBeSearched()) {
 		results.add(researcher);
 	    }
 	}

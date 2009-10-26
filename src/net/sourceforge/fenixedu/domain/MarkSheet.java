@@ -257,7 +257,8 @@ public class MarkSheet extends MarkSheet_Base {
 
 	    final EnrolmentEvaluation enrolmentEvaluation = evaluationBean.getEnrolment().addNewEnrolmentEvaluation(
 		    enrolmentEvaluationState, getMarkSheetType().getEnrolmentEvaluationType(), responsibleTeacher.getPerson(),
-		    evaluationBean.getGradeValue(), getCreationDate(), evaluationBean.getEvaluationDate(), getExecutionPeriod());
+		    evaluationBean.getGradeValue(), getCreationDate(), evaluationBean.getEvaluationDate(), getExecutionPeriod(),
+		    null);
 
 	    addEnrolmentEvaluations(enrolmentEvaluation);
 	}
@@ -302,7 +303,8 @@ public class MarkSheet extends MarkSheet_Base {
 	if (enrolmentEvaluation == null) {
 	    enrolmentEvaluation = evaluationBean.getEnrolment().addNewEnrolmentEvaluation(enrolmentEvaluationState,
 		    getMarkSheetType().getEnrolmentEvaluationType(), responsibleTeacher.getPerson(),
-		    evaluationBean.getGradeValue(), getCreationDate(), evaluationBean.getEvaluationDate(), getExecutionPeriod());
+		    evaluationBean.getGradeValue(), getCreationDate(), evaluationBean.getEvaluationDate(), getExecutionPeriod(),
+		    null);
 	} else {
 	    enrolmentEvaluation.edit(responsibleTeacher.getPerson(), evaluationBean.getGradeValue(), getCreationDate(),
 		    evaluationBean.getEvaluationDate());

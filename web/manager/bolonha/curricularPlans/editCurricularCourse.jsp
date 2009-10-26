@@ -163,6 +163,14 @@
 			<h:message for="theoPratHours" styleClass="error0"/>
 			<h:outputText value="</p>" escape="false"/>
 			
+			<h:outputText value="<p><label>#{managerBundle['message.manager.gradeScale']}</label>" escape="false"/>
+			<h:selectOneMenu value="#{ManagerCurricularCourseManagement.gradeScaleString}" id="gradeScale">
+				<f:selectItems value="#{ManagerCurricularCourseManagement.gradeScales}"/>
+			</h:selectOneMenu>
+			<h:outputText value="(#{managerBundle['message.manager.by.default']} #{ManagerCurricularCourseManagement.degreeCurricularPlan.gradeScaleChain.description})" />
+			<h:message for="gradeScale" styleClass="error0"/>
+			<h:outputText value="</p>" escape="false" />
+			
 			<h:outputText value="<p class='mtop1'><label class='lempty'>.</label>" escape="false"/>
 			<fc:commandButton alt="#{htmlAltBundle['commandButton.update']}" styleClass="inputbutton" value="#{bolonhaBundle['update']}" action="#{ManagerCurricularCourseManagement.editOldCurricularCourse}"/>
 			<h:outputText value="</p></fieldset></div>" escape="false"/>

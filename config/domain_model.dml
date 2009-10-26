@@ -183,9 +183,14 @@ enum net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntryType														  	 
 enum net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationType												  as PhdNotificationType;
 enum net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationState												  as PhdNotificationState;
 enum net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType								  as IndividualCandidacyDocumentFileType;
+enum net.sourceforge.fenixedu.domain.accounting.events.DegreeFinalizationCertificateRequestJustificationType 			  as DegreeFinalizationCertificateRequestJustificationType;
 enum net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestJustificationType			  as AcademicServiceRequestJustificationType;
 enum net.sourceforge.fenixedu.domain.EntryPhase 																		  as EntryPhase;
 enum net.sourceforge.fenixedu.domain.research.result.publication.PreferredPublicationPriority                             as PreferredPublicationPriority;
+enum net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationContext												  as EnrolmentEvaluationContext;
+enum net.sourceforge.fenixedu.domain.curriculum.CurriculumValidationEvaluationPhase										  as CurriculumValidationEvaluationPhase;
+
+
 
 /*
  * Value types that need special externalization
@@ -870,6 +875,11 @@ class DomainObject {
 		String gradeValue;
 		String observation;
 		DateTime whenDateTime;
+		String bookReference;
+		String page;
+		EnrolmentEvaluationContext context;
+		CurriculumValidationEvaluationPhase curriculumValidationEvaluationPhase;
+		GradeScale gradeScale;
 	}
 
 	class EnrolmentPeriod extends DomainObject {
@@ -1553,6 +1563,7 @@ class DomainObject {
 		Specialization specialization;
 		YearMonthDay startDateYearMonthDay;
 		DateTime whenDateTime;
+		LocalDate endStageDate;
 	}
 	
 	class StudentGroup extends DomainObject {

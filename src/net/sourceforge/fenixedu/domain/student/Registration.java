@@ -180,6 +180,25 @@ public class Registration extends Registration_Base {
 	createStudentCurricularPlan(person, degreeCurricularPlan, cycleType, executionYear);
     }
 
+    public static Registration createRegistrationWithCustomStudentNumber(final Person person,
+	    final DegreeCurricularPlan degreeCurricularPlan, final StudentCandidacy studentCandidacy,
+	    final RegistrationAgreement agreement, final CycleType cycleType, final ExecutionYear executionYear,
+	    Integer studentNumber) {
+	Registration registration = new Registration(calculateStartDate(executionYear));
+	registration.setStudent(person.hasStudent() ? person.getStudent() : Student.createStudentWithCustomNumber(person,
+		studentNumber));
+	registration.setNumber(studentNumber == null ? registration.getStudent().getNumber() : studentNumber);
+	registration.setRegistrationYear(executionYear == null ? ExecutionYear.readCurrentExecutionYear() : executionYear);
+	registration.setRequestedChangeDegree(false);
+	registration.setRequestedChangeBranch(false);
+	registration.setRegistrationAgreement(agreement == null ? RegistrationAgreement.NORMAL : agreement);
+	registration.setDegree((degreeCurricularPlan != null) ? degreeCurricularPlan.getDegree() : null);
+	registration.createStudentCurricularPlan(person, degreeCurricularPlan, cycleType, executionYear);
+	registration.setStudentCandidacyInformation(studentCandidacy);
+
+	return registration;
+    }
+
     public Registration(final Person person, final DegreeCurricularPlan degreeCurricularPlan, final StudentCandidacy candidacy,
 	    final RegistrationAgreement agreement, final CycleType cycleType) {
 	this(person, degreeCurricularPlan, candidacy, agreement, cycleType, null);

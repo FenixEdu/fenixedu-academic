@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.domain.student;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -71,6 +75,7 @@ import org.apache.commons.collections.Predicate;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixframework.pstm.Transaction;
 
 public class Student extends Student_Base {
 
@@ -100,6 +105,23 @@ public class Student extends Student_Base {
 	}
 	setNumber(number);
 	setRootDomainObject(RootDomainObject.getInstance());
+    }
+
+    public static Student createStudentWithCustomNumber(Person person, Integer number) {
+	if (number == null)
+	    return new Student(person, null);
+
+	if (readStudentByNumber(number) != null) {
+	    throw new DomainException("error.custom.student.creation.student.number.already.set");
+	}
+
+	if (number >= Student.generateStudentNumber())
+	    throw new DomainException("error.custom.student.creation.student.number.higher.than.generated");
+
+	Student student = new Student(person, number);
+	student.setNumber(number);
+
+	return student;
     }
 
     public Student(Person person) {

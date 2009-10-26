@@ -40,7 +40,7 @@ public class CreateStudent extends FenixService {
 	studentCandidacy.fillOriginInformation(originInformationBean, personBean);
 	new RegisteredCandidacySituation(studentCandidacy, ingressionInformationBean.getRegistrationAgreement(),
 		executionDegreeBean.getCycleType(), ingressionInformationBean.getIngression(), ingressionInformationBean
-			.getEntryPhase());
+			.getEntryPhase(), personBean.getStudentNumber());
 
 	// edit precedent degree information
 	studentCandidacy.getPrecedentDegreeInformation().edit(precedentDegreeInformationBean);
@@ -48,9 +48,19 @@ public class CreateStudent extends FenixService {
 	// create registration
 	Registration registration = studentCandidacy.getRegistration();
 	if (registration == null) {
-	    registration = new Registration(person, executionDegreeBean.getDegreeCurricularPlan(), studentCandidacy,
-		    ingressionInformationBean.getRegistrationAgreement(), executionDegreeBean.getCycleType(), executionDegreeBean
-			    .getExecutionYear());
+	    /*
+	     * 26/08/2009 - Due to curriculum validation we must support
+	     * creation of students, if necessary, with a custom student number
+	     * (for students that are not in the system).
+	     */
+	    // registration = new Registration(person,
+	    // executionDegreeBean.getDegreeCurricularPlan(), studentCandidacy,
+	    // ingressionInformationBean.getRegistrationAgreement(),
+	    // executionDegreeBean.getCycleType(), executionDegreeBean
+	    // .getExecutionYear());
+	    registration = Registration.createRegistrationWithCustomStudentNumber(person, executionDegreeBean
+		    .getDegreeCurricularPlan(), studentCandidacy, ingressionInformationBean.getRegistrationAgreement(),
+		    executionDegreeBean.getCycleType(), executionDegreeBean.getExecutionYear(), personBean.getStudentNumber());
 	}
 	registration.setHomologationDate(ingressionInformationBean.getHomologationDate());
 	registration.setStudiesStartDate(ingressionInformationBean.getStudiesStartDate());

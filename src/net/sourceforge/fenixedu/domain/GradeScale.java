@@ -465,4 +465,8 @@ public enum GradeScale {
 	return publicGradeScales;
     }
 
+    public String getDescription() {
+	return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(name());
+    }
+
 }

@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.renderers.providers;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -21,29 +20,46 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
- * @author - ï¿½ngela Almeida (argelina@ist.utl.pt)
+ * @author - Ângela Almeida (argelina@ist.utl.pt)
  * 
  */
 
 public class ExecutionPeriodsForStudentCurricularPlanProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-	final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
+	// final List<ExecutionSemester> result = new
+	// ArrayList<ExecutionSemester>();
 	final StudentCurricularPlan studentCurricularPlan = ((IStudentCurricularPlanBean) source).getStudentCurricularPlan();
 
 	final List<ExecutionSemester> executionPeriodsInTimePeriod = ExecutionSemester.readExecutionPeriodsInTimePeriod(
 		studentCurricularPlan.getStartDate(), getEndDate());
 
-	final ExecutionSemester first = studentCurricularPlan.getDegreeCurricularPlan().getFirstExecutionPeriodEnrolments();
-	for (final ExecutionSemester executionSemester : executionPeriodsInTimePeriod) {
-	    if (first.isBeforeOrEquals(executionSemester) && !executionSemester.isNotOpen()) {
-		result.add(executionSemester);
-	    }
-	}
+	/*
+	 * 26/08/2009 - For curriculum validation we want execution semesters
+	 * since student curricular plan start date
+	 * 
+	 * Without the code below we'll get all execution semesters since the
+	 * start date
+	 */
+	// final ExecutionSemester first =
+	// studentCurricularPlan.getDegreeCurricularPlan().getFirstExecutionPeriodEnrolments();
+	// for (final ExecutionSemester executionSemester :
+	// executionPeriodsInTimePeriod) {
+	// if (first.isBeforeOrEquals(executionSemester) &&
+	// !executionSemester.isNotOpen()) {
+	// result.add(executionSemester);
+	// }
+	// }
 
-	Collections.sort(result, new ReverseComparator(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR));
+	/*
+	 * 26/08/2009 - We sort and return executionPeriodsInTimePeriod instead
+	 * of result
+	 */
 
-	return result;
+	Collections.sort(executionPeriodsInTimePeriod, new ReverseComparator(
+		ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR));
+
+	return executionPeriodsInTimePeriod;
     }
 
     private Date getEndDate() {

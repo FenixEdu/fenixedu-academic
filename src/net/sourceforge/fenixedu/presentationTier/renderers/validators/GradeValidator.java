@@ -34,7 +34,8 @@ public class GradeValidator extends HtmlValidator {
 	    setMessage("renderers.validator.required");
 	} else {
 	    if (grade == null || grade.length() == 0 || grade.equalsIgnoreCase(GradeScale.NA)
-		    || grade.equalsIgnoreCase(GradeScale.RE) || grade.equalsIgnoreCase(GradeScale.AP)) {
+		    || grade.equalsIgnoreCase(GradeScale.RE) || grade.equalsIgnoreCase(GradeScale.AP)
+		    || grade.equalsIgnoreCase(GradeScale.APT)) {
 		setValid(true);
 	    } else {
 		try {

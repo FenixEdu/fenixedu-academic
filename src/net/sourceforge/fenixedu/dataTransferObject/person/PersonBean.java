@@ -114,6 +114,8 @@ public class PersonBean implements Serializable {
 
     private boolean createLoginIdentificationAndUserIfNecessary = true;
 
+    private Integer studentNumber;
+
     public PersonBean() {
 	super();
     }
@@ -123,6 +125,15 @@ public class PersonBean implements Serializable {
 	setDocumentIdNumber(identificationNumber);
 	setIdDocumentType(idDocumentType);
 	setDateOfBirth(dateOfBirth);
+    }
+
+    public PersonBean(String name, String identificationNumber, IDDocumentType idDocumentType, YearMonthDay dateOfBirth,
+	    Integer studentNumber) {
+	setName(name);
+	setDocumentIdNumber(identificationNumber);
+	setIdDocumentType(idDocumentType);
+	setDateOfBirth(dateOfBirth);
+	setStudentNumber(studentNumber);
     }
 
     public PersonBean(IndividualCandidacyPersonalDetails details) {
@@ -630,6 +641,14 @@ public class PersonBean implements Serializable {
 
     public void setCreateLoginIdentificationAndUserIfNecessary(boolean value) {
 	this.createLoginIdentificationAndUserIfNecessary = value;
+    }
+
+    public Integer getStudentNumber() {
+	return studentNumber;
+    }
+
+    public void setStudentNumber(Integer studentNumber) {
+	this.studentNumber = studentNumber;
     }
 
 }

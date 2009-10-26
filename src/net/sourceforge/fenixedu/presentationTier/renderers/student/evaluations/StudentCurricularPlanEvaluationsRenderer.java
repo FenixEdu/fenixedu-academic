@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum;
+package net.sourceforge.fenixedu.presentationTier.renderers.student.evaluations;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -52,7 +52,7 @@ import pt.ist.fenixWebFramework.renderers.contexts.InputContext;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-public class StudentCurricularPlanRenderer extends InputRenderer {
+public class StudentCurricularPlanEvaluationsRenderer extends InputRenderer {
 
     private static final String SCPLANTEMPORARYDISMISSAL = "scplantemporarydismissal";
 
@@ -69,7 +69,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    + "scplancolenrolmentevaluationtype, scplancolyear, scplancolsemester, scplancolexamdate, scplancolgraderesponsible";
 
     public static enum EnrolmentStateFilterType {
-	ALL, APPROVED, APPROVED_OR_ENROLED;
+	ALL, APPROVED_OR_ENROLED;
 
 	public String getName() {
 	    return name();
@@ -151,7 +151,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
     private String selectionName;
 
-    public StudentCurricularPlanRenderer() {
+    public StudentCurricularPlanEvaluationsRenderer() {
 	super();
     }
 
@@ -181,10 +181,6 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
     private boolean isToShowAllEnrolmentStates() {
 	return this.enrolmentStateFilter == EnrolmentStateFilterType.ALL;
-    }
-
-    private boolean isToShowApprovedOnly() {
-	return this.enrolmentStateFilter == EnrolmentStateFilterType.APPROVED;
     }
 
     private boolean isToShowApprovedOrEnroledStatesOnly() {
@@ -657,6 +653,14 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
 	}
 
+	private void generateCellsFromEvaluationDateToEnd(HtmlTableRow dismissalRow) {
+	    if (isViewerAdministrativeOfficeEmployeeOrManager()) {
+		generateCellsWithText(dismissalRow, LATEST_ENROLMENT_EVALUATION_COLUMNS, EMPTY_INFO, new String[] {
+			getLastEnrolmentEvaluationTypeCellClass(), getCreatorCellClass() });
+	    }
+
+	}
+
 	private void generateCellsWithText(final HtmlTableRow row, final int numberOfCells, final String text,
 		final String[] cssClasses) {
 	    for (int i = 0; i < numberOfCells; i++) {
@@ -798,10 +802,6 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    for (final Enrolment enrolment : sortedEnrolments) {
 		if (isToShowAllEnrolmentStates()) {
 		    generateEnrolmentRow(mainTable, enrolment, level, true, false, false);
-		} else if (isToShowApprovedOnly()) {
-		    if (enrolment.isApproved()) {
-			generateEnrolmentRow(mainTable, enrolment, level, true, false, false);
-		    }
 		} else if (isToShowApprovedOrEnroledStatesOnly()) {
 		    if (enrolment.isApproved() || enrolment.isEnroled()) {
 			generateEnrolmentRow(mainTable, enrolment, level, true, false, false);
@@ -837,7 +837,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    }
 
 	    if (!isDismissal && isDetailed() && isViewerAdministrativeOfficeEmployeeOrManager()
-		    && (enrolment.isSpecialSeason() || enrolment.hasImprovement()) || enrolment.hasNormalEvaluationSecondSeason()) {
+		    && (enrolment.isSpecialSeason() || enrolment.hasImprovement())) {
 		generateEnrolmentEvaluationRows(mainTable, enrolment.getLatestFinalImprovementEnrolmentEvaluation(), level + 1);
 		generateEnrolmentEvaluationRows(mainTable, enrolment.getLatestFinalSpecialSeasonEnrolmentEvaluation(), level + 1);
 		generateEnrolmentEvaluationRows(mainTable, enrolment.getLatestFinalNormalEnrolmentEvaluationSecondSeason(),
@@ -860,12 +860,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	 * @param level
 	 *            - The level of the evaluation rows
 	 */
-
 	private void generateEnrolmentEvaluationRows(HtmlTable mainTable, EnrolmentEvaluation evaluation, int level) {
-
-	    if (evaluation == null)
-		return;
-
 	    final HtmlTableRow enrolmentRow = mainTable.createRow();
 
 	    addTabsToRow(enrolmentRow, level);

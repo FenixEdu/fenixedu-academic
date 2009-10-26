@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.GradeScale;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -14,7 +15,7 @@ public class EditOldCurricularCourse extends FenixService {
 	    final String acronym, final Integer minimumValueForAcumulatedEnrollments,
 	    final Integer maximumValueForAcumulatedEnrollments, final Double weigth, final Integer enrolmentWeigth,
 	    final Double credits, final Double ectsCredits, final Double theoreticalHours, final Double labHours,
-	    final Double praticalHours, final Double theoPratHours) throws FenixServiceException {
+	    final Double praticalHours, final Double theoPratHours, final GradeScale gradeScale) throws FenixServiceException {
 
 	final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
 	if (curricularCourse == null) {
@@ -23,6 +24,6 @@ public class EditOldCurricularCourse extends FenixService {
 
 	curricularCourse.edit(name, nameEn, code, acronym, weigth, credits, ectsCredits, enrolmentWeigth,
 		minimumValueForAcumulatedEnrollments, maximumValueForAcumulatedEnrollments, theoreticalHours, labHours,
-		praticalHours, theoPratHours);
+		praticalHours, theoPratHours, gradeScale);
     }
 }

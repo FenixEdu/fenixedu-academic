@@ -5,6 +5,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
@@ -20,7 +21,8 @@ public class CreateOldCurricularCourse extends FenixService {
 	    final String acronym, final Integer minimumValueForAcumulatedEnrollments,
 	    final Integer maximumValueForAcumulatedEnrollments, final Double weigth, final Integer enrolmentWeigth,
 	    final Double credits, final Double ectsCredits, final Integer year, final Integer semester,
-	    final Integer beginExecutionPeriodId, final Integer endExecutionPeriodId) throws FenixServiceException {
+	    final Integer beginExecutionPeriodId, final Integer endExecutionPeriodId, final GradeScale gradeScale)
+	    throws FenixServiceException {
 
 	final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(dcpId);
 	if (degreeCurricularPlan == null) {
@@ -45,6 +47,7 @@ public class CreateOldCurricularCourse extends FenixService {
 	curricularCourse.setCredits(credits);
 	curricularCourse.setEctsCredits(ectsCredits);
 	curricularCourse.setType(CurricularCourseType.NORMAL_COURSE);
+	curricularCourse.setGradeScale(gradeScale);
 
 	final CurricularPeriod curricularPeriod = getCurricularPeriod(degreeCurricularPlan, year, semester);
 	final ExecutionSemester beginExecutionPeriod = rootDomainObject.readExecutionSemesterByOID(beginExecutionPeriodId);

@@ -24,13 +24,15 @@ public class ChoosePersonBean implements Serializable {
 
     private boolean firstTimeSearch = true;
 
+    private Integer studentNumber;
+
     public ChoosePersonBean() {
 	super();
     }
 
     public ChoosePersonBean(IndividualCandidacyPersonalDetails personalDetails) {
 	this.name = personalDetails.getName();
-	
+
 	this.identificationNumber = personalDetails.getDocumentIdNumber();
 	this.documentType = personalDetails.getIdDocumentType();
 	this.dateOfBirth = personalDetails.getDateOfBirthYearMonthDay();
@@ -89,6 +91,10 @@ public class ChoosePersonBean implements Serializable {
 	return firstTimeSearch;
     }
 
+    public boolean getFirstTimeSearch() {
+	return this.firstTimeSearch;
+    }
+
     public void setFirstTimeSearch(boolean firstTimeSearch) {
 	this.firstTimeSearch = firstTimeSearch;
     }
@@ -96,4 +102,13 @@ public class ChoosePersonBean implements Serializable {
     public boolean isEmployee() {
 	return getPerson() != null && getPerson().hasRole(RoleType.EMPLOYEE);
     }
+
+    public Integer getStudentNumber() {
+	return studentNumber;
+    }
+
+    public void setStudentNumber(Integer studentNumber) {
+	this.studentNumber = studentNumber;
+    }
+
 }

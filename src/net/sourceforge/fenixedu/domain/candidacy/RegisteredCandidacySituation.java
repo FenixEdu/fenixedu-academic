@@ -26,8 +26,10 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
     }
 
     public RegisteredCandidacySituation(Candidacy candidacy, RegistrationAgreement registrationAgreement, CycleType cycleType,
-	    Ingression ingression, EntryPhase entryPhase) {
-	this(candidacy, null, registrationAgreement, cycleType);
+	    Ingression ingression, EntryPhase entryPhase, Integer studentNumber) {
+	super();
+	init(candidacy, AccessControl.getPerson());
+	registerCandidacy(registrationAgreement, cycleType, studentNumber);
 
 	((StudentCandidacy) candidacy).setIngression(ingression != null ? ingression : null);
 	((StudentCandidacy) candidacy).setEntryPhase(entryPhase);
@@ -37,10 +39,10 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
 	    CycleType cycleType) {
 	super();
 	init(candidacy, person == null ? AccessControl.getPerson() : person);
-	registerCandidacy(registrationAgreement, cycleType);
+	registerCandidacy(registrationAgreement, cycleType, null);
     }
 
-    private void registerCandidacy(RegistrationAgreement registrationAgreement, CycleType cycleType) {
+    private void registerCandidacy(RegistrationAgreement registrationAgreement, CycleType cycleType, Integer studentNumber) {
 	Person person = getCandidacy().getPerson();
 	Registration registration = null;
 
@@ -55,8 +57,10 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
 
 	}
 
-	if (!person.hasStudent()) {
+	if (!person.hasStudent() && studentNumber == null) {
 	    new Student(person);
+	} else if (!person.hasStudent() && studentNumber != null) {
+	    Student.createStudentWithCustomNumber(person, studentNumber);
 	}
     }
 

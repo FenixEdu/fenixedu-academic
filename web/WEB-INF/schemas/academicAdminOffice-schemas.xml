@@ -64,6 +64,19 @@
 	</slot>	
 </schema>	
 
+<schema name="create.registration.choose.person" extends="choose.person"
+	type="net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<remove name="person"></remove>
+	<slot name="studentNumber" key="label.studentNumber">
+	</slot>
+	<slot name="person" layout="radio-select" key="label.person.similarResults" >
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.person.SearchSimilarNamesPersonsProvider" />
+		<property name="eachLayout" value="values" />
+		<property name="eachSchema" value="person.name.id.dateOfBirth" />		
+	</slot>
+	<slot name="AfirstTimeSearch" hidden="true" />
+</schema> 
+
 <schema name="person.name.id.dateOfBirth" type="net.sourceforge.fenixedu.domain.Person" >	
 	<slot name="documentIdNumber" bundle="MANAGER_RESOURCES" key="documentIdNumber"/>
 	<slot name="name"/>
@@ -516,6 +529,18 @@
 </schema>
 
 <schema name="student.enrolment.choose.executionPeriod" type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentEnrolmentBean">
+	<slot name="studentCurricularPlan.student.student.person.name" key="label.name" read-only="true"/>
+	<slot name="studentCurricularPlan.student.student.number" key="label.studentNumber" read-only="true"/>
+	<slot name="studentCurricularPlan.degreeCurricularPlan.name" key="label.degreeCurricularPlan" read-only="true"/>
+	<slot name="executionPeriod" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsForStudentCurricularPlanProvider" />
+		<property name="format" value="${semester}º Sem - ${executionYear.year}" />
+		<property name="destination" value="postBack"/>
+	</slot>
+</schema>
+
+<schema name="bolonha.student.enrolment.choose.executionPeriod" type="net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.BolonhaStudentEnrollmentBean">
 	<slot name="studentCurricularPlan.student.student.person.name" key="label.name" read-only="true"/>
 	<slot name="studentCurricularPlan.student.student.number" key="label.studentNumber" read-only="true"/>
 	<slot name="studentCurricularPlan.degreeCurricularPlan.name" key="label.degreeCurricularPlan" read-only="true"/>
@@ -1967,3 +1992,50 @@
 	<slot name="localizedName" key="label.name" />
 </schema>
 
+
+<schema name="set.evaluation.curriculum.entry.read.only" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="enrolmentEvaluationTypeDescription" key="label.set.evaluation.type" read-only="true" />
+	<slot name="executionYearFullLabel" key="label.set.evaluation.execution.year" read-only="true" />
+	<slot name="gradeValue" key="label.set.evaluation.grade.value" read-only="true" />
+	<slot name="evaluationDate" key="label.set.evaluation.exam.date" read-only="true" />
+	<slot name="bookReference" key="label.set.evaluation.book.reference" read-only="true" />
+	<slot name="page" key="label.set.evaluation.page" read-only="true" />
+</schema>
+
+<schema name="set.evaluation.curriculum.entry" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="enrolmentEvaluationTypeDescription" key="label.set.evaluation.type" read-only="true" />
+	<slot name="executionYearFullLabel" key="label.set.evaluation.execution.year" read-only="true" />
+	<slot name="gradeValue" key="label.set.evaluation.grade.value" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.GradeValidator">
+		<property name="size" value="4" />
+	</slot>
+	<slot name="gradeScale" key="label.grade.scale.min" />
+	<slot name="evaluationDate" key="label.set.evaluation.exam.date">
+		<validator
+			class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
+			<property name="dateFormat" value="dd/MM/yyyy" />
+			<property name="message" value="error.invalid.date.format" />
+			<property name="key" value="true" />
+		</validator>
+	
+		<property name="size" value="10" />
+	</slot>
+	<slot name="bookReference" key="label.set.evaluation.book.reference" >
+		<property name="size" value="7" />
+	</slot>
+	<slot name="page" key="label.set.evaluation.page" >
+		<property name="size" value="3" />
+	</slot>
+	
+</schema>
+
+
+<schema name="set.end.stage.date" type="net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.BolonhaStudentEnrollmentBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="endStageDate" key="label.curriculum.validation.end.stage.date" >
+		<validator
+			class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
+			<property name="dateFormat" value="dd/MM/yyyy" />
+			<property name="message" value="error.invalid.date.format" />
+			<property name="key" value="true" />
+		</validator>
+	</slot>
+</schema>

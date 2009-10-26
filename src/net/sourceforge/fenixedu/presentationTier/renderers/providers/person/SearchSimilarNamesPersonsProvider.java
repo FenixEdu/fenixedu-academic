@@ -8,6 +8,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
@@ -27,7 +28,12 @@ public class SearchSimilarNamesPersonsProvider implements DataProvider {
 	Set<Person> result = new HashSet<Person>(Person.findPersonByDocumentID(choosePersonBean.getIdentificationNumber()));
 	result.addAll(Person.findByDateOfBirth(choosePersonBean.getDateOfBirth(), Person
 		.findInternalPersonMatchingFirstAndLastName(choosePersonBean.getName())));
+
+	if (choosePersonBean.getStudentNumber() != null) {
+	    Student student = Student.readStudentByNumber(choosePersonBean.getStudentNumber());
+	    result.add(student.getPerson());
+	}
+
 	return result;
     }
-
 }

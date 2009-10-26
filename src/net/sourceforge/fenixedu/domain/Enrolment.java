@@ -16,8 +16,10 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
+import net.sourceforge.fenixedu.domain.curriculum.CurriculumValidationEvaluationPhase;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
+import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationContext;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.EnroledEnrolmentWrapper;
@@ -418,6 +420,18 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return result;
     }
 
+    final public List<EnrolmentEvaluation> getEnrolmentEvaluationByEnrolmentEvaluationTypeAndPhase(
+	    final EnrolmentEvaluationType evaluationType, final CurriculumValidationEvaluationPhase evaluationPhase) {
+	List<EnrolmentEvaluation> result = new ArrayList<EnrolmentEvaluation>();
+	for (EnrolmentEvaluation evaluation : getEvaluationsSet()) {
+	    if (evaluationType.equals(evaluation.getEnrolmentEvaluationType())
+		    && (evaluationPhase == null || evaluationPhase.equals(evaluation.getCurriculumValidationEvaluationPhase()))) {
+		result.add(evaluation);
+	    }
+	}
+	return result;
+    }
+
     final public EnrolmentEvaluation submitEnrolmentEvaluation(EnrolmentEvaluationType enrolmentEvaluationType,
 	    Mark publishedMark, Employee employee, Person personResponsibleForGrade, Date evaluationDate, String observation) {
 
@@ -807,8 +821,12 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return getGrade().getIntegerValue();
     }
 
-    public GradeScale getGradeScale() {
+    public GradeScale getGradeScaleChain() {
 	return getCurricularCourse().getGradeScaleChain();
+    }
+
+    public GradeScale getGradeScale() {
+	return this.getGradeScaleChain();
     }
 
     public BigDecimal getWeigthTimesGrade() {
@@ -914,15 +932,31 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     final public EnrolmentEvaluation addNewEnrolmentEvaluation(EnrolmentEvaluationState enrolmentEvaluationState,
 	    EnrolmentEvaluationType enrolmentEvaluationType, Person responsibleFor, String gradeValue, Date availableDate,
-	    Date examDate, ExecutionSemester executionSemester) {
+	    Date examDate, ExecutionSemester executionSemester, final GradeScale gradeScale) {
 
-	final Grade grade = Grade.createGrade(gradeValue, getGradeScale());
+	final Grade grade = Grade.createGrade(gradeValue, gradeScale != null ? gradeScale : getGradeScale());
 
 	final EnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation(this, enrolmentEvaluationState,
 		enrolmentEvaluationType, responsibleFor, grade, availableDate, examDate, new DateTime());
 	if (enrolmentEvaluationType == EnrolmentEvaluationType.IMPROVEMENT) {
 	    enrolmentEvaluation.setExecutionPeriod(executionSemester);
 	}
+	return enrolmentEvaluation;
+    }
+
+    final public EnrolmentEvaluation addNewEnrolmentEvaluation(EnrolmentEvaluationState enrolmentEvaluationState,
+	    EnrolmentEvaluationType enrolmentEvaluationType, CurriculumValidationEvaluationPhase phase, Person responsibleFor,
+	    String gradeValue, Date availableDate, Date examDate, ExecutionSemester executionSemester, String bookReference,
+	    String page, GradeScale gradeScale) {
+
+	EnrolmentEvaluation enrolmentEvaluation = addNewEnrolmentEvaluation(enrolmentEvaluationState, enrolmentEvaluationType,
+		responsibleFor, gradeValue, availableDate, examDate, executionSemester, gradeScale);
+	enrolmentEvaluation.setBookReference(bookReference);
+	enrolmentEvaluation.setPage(page);
+	enrolmentEvaluation.setContext(EnrolmentEvaluationContext.CURRICULUM_VALIDATION_EVALUATION);
+	enrolmentEvaluation.setCurriculumValidationEvaluationPhase(phase);
+	enrolmentEvaluation.setGradeScale(gradeScale);
+
 	return enrolmentEvaluation;
     }
 
@@ -1040,12 +1074,36 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 		.<EnrolmentEvaluation> max(enrolmentEvaluations));
     }
 
+    public EnrolmentEvaluation getLatestEnrolmentEvaluationFromAnyType() {
+	return getLatestEnrolmentEvalution(getEvaluationsSet());
+    }
+
     final public EnrolmentEvaluation getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType evaluationType) {
 	return getLatestEnrolmentEvalution(getEnrolmentEvaluationsByEnrolmentEvaluationType(evaluationType));
     }
 
+    final public EnrolmentEvaluation getLatestEnrolmentEvaluationByTypeAndPhase(EnrolmentEvaluationType evaluationType,
+	    CurriculumValidationEvaluationPhase phase) {
+	return getLatestEnrolmentEvalution(getEnrolmentEvaluationByEnrolmentEvaluationTypeAndPhase(evaluationType, phase));
+    }
+
     final public EnrolmentEvaluation getLatestFinalNormalEnrolmentEvaluation() {
 	return getLatestEnrolmentEvalution(getFinalEnrolmentEvaluationsByEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL));
+    }
+
+    final public EnrolmentEvaluation getLatestFinalNormalEnrolmentEvaluationFirstSeason() {
+	return getLatestEnrolmentEvalution(getFinalEnrolmentEvaluationsByEnrolmentEvaluationTypeAndPhase(
+		EnrolmentEvaluationType.NORMAL, CurriculumValidationEvaluationPhase.FIRST_SEASON));
+    }
+
+    final public EnrolmentEvaluation getLatestFinalNormalEnrolmentEvaluationSecondSeason() {
+	return getLatestEnrolmentEvalution(getFinalEnrolmentEvaluationsByEnrolmentEvaluationTypeAndPhase(
+		EnrolmentEvaluationType.NORMAL, CurriculumValidationEvaluationPhase.SECOND_SEASON));
+    }
+
+    final public boolean hasNormalEvaluationSecondSeason() {
+	return getLatestEnrolmentEvalution(getFinalEnrolmentEvaluationsByEnrolmentEvaluationTypeAndPhase(
+		EnrolmentEvaluationType.NORMAL, CurriculumValidationEvaluationPhase.SECOND_SEASON)) != null;
     }
 
     final public EnrolmentEvaluation getLatestFinalSpecialSeasonEnrolmentEvaluation() {
@@ -1061,6 +1119,18 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	List<EnrolmentEvaluation> result = new ArrayList<EnrolmentEvaluation>();
 	for (EnrolmentEvaluation evaluation : getEvaluationsSet()) {
 	    if (evaluation.isFinal() && evaluation.getEnrolmentEvaluationType().equals(evaluationType)) {
+		result.add(evaluation);
+	    }
+	}
+	return result;
+    }
+
+    final public List<EnrolmentEvaluation> getFinalEnrolmentEvaluationsByEnrolmentEvaluationTypeAndPhase(
+	    final EnrolmentEvaluationType evaluationType, CurriculumValidationEvaluationPhase phase) {
+	List<EnrolmentEvaluation> result = new ArrayList<EnrolmentEvaluation>();
+	for (EnrolmentEvaluation evaluation : getEvaluationsSet()) {
+	    if (evaluation.isFinal() && evaluation.getEnrolmentEvaluationType().equals(evaluationType)
+		    && phase.equals(evaluation.getCurriculumValidationEvaluationPhase())) {
 		result.add(evaluation);
 	    }
 	}
@@ -1592,6 +1662,16 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     public boolean isAnual() {
 	final CurricularCourse curricularCourse = getCurricularCourse();
 	return curricularCourse != null && curricularCourse.isAnual();
+    }
+
+    public boolean hasAnyNonTemporaryEvaluations() {
+	for (EnrolmentEvaluation evaluation : this.getEvaluationsSet()) {
+	    if (!EnrolmentEvaluationState.TEMPORARY_OBJ.equals(evaluation.getEnrolmentEvaluationState())) {
+		return true;
+	    }
+	}
+
+	return false;
     }
 
 }

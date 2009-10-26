@@ -215,7 +215,8 @@ public class CurricularCourse extends CurricularCourse_Base {
      */
     public void edit(String name, String nameEn, String code, String acronym, Double weigth, Double credits, Double ectsCredits,
 	    Integer enrolmentWeigth, Integer minimumValueForAcumulatedEnrollments, Integer maximumValueForAcumulatedEnrollments,
-	    final Double theoreticalHours, final Double labHours, final Double praticalHours, final Double theoPratHours) {
+	    final Double theoreticalHours, final Double labHours, final Double praticalHours, final Double theoPratHours,
+	    final GradeScale gradeScale) {
 	checkForCurricularCourseWithSameAttributes(getDegreeCurricularPlan(), name, code, acronym);
 	setName(name);
 	setNameEn(nameEn);
@@ -233,6 +234,8 @@ public class CurricularCourse extends CurricularCourse_Base {
 	setLabHours(labHours);
 	setPraticalHours(praticalHours);
 	setTheoPratHours(theoPratHours);
+
+	super.setGradeScale(gradeScale);
     }
 
     private void checkForCurricularCourseWithSameAttributes(DegreeCurricularPlan degreeCurricularPlan, String name, String code,
@@ -1541,9 +1544,10 @@ public class CurricularCourse extends CurricularCourse_Base {
      */
     @Deprecated
     final public boolean isPropaedeutic() {
-//	if (isBolonhaDegree()) {
-//	    throw new DomainException("CurricularCourse.must.check.propaedeutic.status.in.enrolment.in.bolonha.degrees");
-//	}
+	// if (isBolonhaDegree()) {
+	// throw new
+	// DomainException("CurricularCourse.must.check.propaedeutic.status.in.enrolment.in.bolonha.degrees");
+	// }
 	return getType().equals(CurricularCourseType.P_TYPE_COURSE);
     }
 

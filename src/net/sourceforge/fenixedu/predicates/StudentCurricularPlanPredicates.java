@@ -101,6 +101,16 @@ public class StudentCurricularPlanPredicates {
 
     };
 
+    static public AccessControlPredicate<StudentCurricularPlan> SET_EVALUATIONS = new AccessControlPredicate<StudentCurricularPlan>() {
+
+	@Override
+	public boolean evaluate(StudentCurricularPlan studentCurricularPlan) {
+	    final Person person = AccessControl.getPerson();
+	    return person != null
+		    && (person.hasRole(RoleType.MANAGER) || person.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE));
+	}
+    };
+
     static private AdministrativeOfficePermission getPermission(final Person person, final PermissionType type) {
 	return person.getEmployeeAdministrativeOffice().getPermission(type, person.getEmployeeCampus());
     }

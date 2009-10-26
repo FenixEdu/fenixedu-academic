@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.manager.EditOldCurricula
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -44,6 +45,10 @@ public class ManagerCurricularCourseManagementBackingBean extends CurricularCour
     private Double praticalHours;
 
     private Double theoPratHours;
+
+    private String gradeScaleString;
+
+    private GradeScale gradeScale;
 
     public String getAcronym() {
 	if (getCurricularCourse() != null) {
@@ -176,7 +181,7 @@ public class ManagerCurricularCourseManagementBackingBean extends CurricularCour
 	    CreateOldCurricularCourse.run(getDegreeCurricularPlanID(), getCourseGroupID(), getName(), getNameEn(), getCode(),
 		    getAcronym(), getMinimumValueForAcumulatedEnrollments(), getMaximumValueForAcumulatedEnrollments(),
 		    getWeight(), getEnrollmentWeigth(), getCredits(), getEctsCredits(), getCurricularYearID(),
-		    getCurricularSemesterID(), getBeginExecutionPeriodID(), getEndExecutionPeriodID());
+		    getCurricularSemesterID(), getBeginExecutionPeriodID(), getEndExecutionPeriodID(), getGradeScale());
 	} catch (FenixActionException e) {
 	    this.addErrorMessage(bolonhaBundle.getString(e.getMessage()));
 	    return "";
@@ -202,7 +207,7 @@ public class ManagerCurricularCourseManagementBackingBean extends CurricularCour
 	    EditOldCurricularCourse.run(getCurricularCourseID(), getName(), getNameEn(), getCode(), getAcronym(),
 		    getMinimumValueForAcumulatedEnrollments(), getMaximumValueForAcumulatedEnrollments(), getWeight(),
 		    getEnrollmentWeigth(), getCredits(), getEctsCredits(), getTheoreticalHours(), getLabHours(),
-		    getPraticalHours(), getTheoPratHours());
+		    getPraticalHours(), getTheoPratHours(), getGradeScale());
 	    setContextID(0); // resetContextID
 	} catch (FenixServiceException e) {
 	    addErrorMessage(bolonhaBundle.getString(e.getMessage()));
@@ -271,6 +276,38 @@ public class ManagerCurricularCourseManagementBackingBean extends CurricularCour
 	    result.add(new SelectItem(semester.getIdInternal(), semester.getQualifiedName()));
 	}
 	return result;
+    }
+
+    public List<SelectItem> getGradeScales() {
+	List<SelectItem> res = new ArrayList<SelectItem>();
+	res.add(new SelectItem(this.NO_SELECTION_STRING, bolonhaBundle.getString("choose")));
+	for (GradeScale gradeScale : GradeScale.values()) {
+	    res.add(new SelectItem(gradeScale.getName(), enumerationBundle.getString(gradeScale.getName())));
+	}
+	return res;
+    }
+
+    public String getGradeScaleString() {
+	if (this.gradeScaleString == null && getCurricularCourse() != null)
+	    this.gradeScaleString = getCurricularCourse().getGradeScale() != null ? getCurricularCourse().getGradeScale().name()
+		    : null;
+
+	return this.gradeScaleString;
+    }
+
+    public void setGradeScaleString(final String value) {
+	this.gradeScaleString = value;
+    }
+
+    private GradeScale getGradeScale() {
+	if (this.gradeScale == null && this.getGradeScaleString() != null
+		&& !this.NO_SELECTION_STRING.equals(this.getGradeScaleString())) {
+	    this.gradeScale = GradeScale.valueOf(getGradeScaleString());
+	} else if (this.gradeScale == null && this.getGradeScaleString() != null
+		&& this.NO_SELECTION_STRING.equals(this.getGradeScaleString())) {
+	    this.gradeScale = null;
+	}
+	return this.gradeScale;
     }
 
 }

@@ -3,8 +3,11 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.domain.curriculum.CurriculumValidationEvaluationPhase;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
+import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationContext;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.curriculum.GradeFactory;
 import net.sourceforge.fenixedu.domain.curriculum.IGrade;
@@ -87,6 +90,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 	setRootDomainObject(RootDomainObject.getInstance());
 	setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
 	setGrade(Grade.createEmptyGrade());
+	setContext(EnrolmentEvaluationContext.MARK_SHEET_EVALUATION);
     }
 
     public EnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationType type) {
@@ -103,7 +107,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 
 	this(enrolment, type);
 
-	if (enrolmentEvaluationState == null || responsibleFor == null || examDate == null) {
+	if (enrolmentEvaluationState == null || responsibleFor == null) {
 	    throw new DomainException("error.enrolmentEvaluation.invalid.parameters");
 	}
 	setEnrolmentEvaluationState(enrolmentEvaluationState);
@@ -130,7 +134,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 		thesis.setDiscussed(newDateTime);
 	    }
 	}
-        super.setExamDateYearMonthDay(evaluationDateYearMonthDay);
+	super.setExamDateYearMonthDay(evaluationDateYearMonthDay);
     }
 
     protected EnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationState enrolmentEvaluationState,
@@ -172,7 +176,16 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 	if (this.getEnrolment().getStudentCurricularPlan().getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
 	    return compareMyWhenAlteredDateToAnotherWhenAlteredDate(enrolmentEvaluation.getWhen());
 	}
-	if (this.getEnrolmentEvaluationType() == enrolmentEvaluation.getEnrolmentEvaluationType()) {
+
+	if (this.isInCurriculumValidationContextAndIsFinal() && !enrolmentEvaluation.isInCurriculumValidationContextAndIsFinal()) {
+	    return 1;
+	} else if (!this.isInCurriculumValidationContextAndIsFinal()
+		&& enrolmentEvaluation.isInCurriculumValidationContextAndIsFinal()) {
+	    return -1;
+	} else if (this.isInCurriculumValidationContextAndIsFinal()
+		&& enrolmentEvaluation.isInCurriculumValidationContextAndIsFinal()) {
+	    return compareMyWhenAlteredDateToAnotherWhenAlteredDate(enrolmentEvaluation.getWhen());
+	} else if (this.getEnrolmentEvaluationType() == enrolmentEvaluation.getEnrolmentEvaluationType()) {
 	    if ((this.isRectification() && enrolmentEvaluation.isRectification())
 		    || (this.isRectified() && enrolmentEvaluation.isRectified())) {
 		return compareMyWhenAlteredDateToAnotherWhenAlteredDate(enrolmentEvaluation.getWhen());
@@ -272,7 +285,11 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     }
 
     public GradeScale getGradeScale() {
-	return getEnrolment().getGradeScale();
+	return getGradeScaleChain();
+    }
+
+    public GradeScale getGradeScaleChain() {
+	return super.getGradeScale() != null ? super.getGradeScale() : getEnrolment().getGradeScaleChain();
     }
 
     public boolean isNormal() {
@@ -306,6 +323,13 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 	setPersonResponsibleForGrade(responsibleFor);
 	setExamDate(evaluationDate);
 	generateCheckSum();
+    }
+
+    public void edit(Person responsibleFor, String gradeValue, Date availableDate, Date examDate, String bookReference,
+	    String page, String examReference) {
+	edit(responsibleFor, gradeValue, availableDate, examDate);
+	setBookReference(bookReference);
+	setPage(page);
     }
 
     public void edit(Person responsibleFor, String gradeValue, Date availableDate, Date examDate) {
@@ -358,9 +382,14 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 	    throw new DomainException("EnrolmentEvaluation.cannot.submit.with.empty.grade");
 	}
 
-	if (!hasExamDateYearMonthDay()) {
-	    throw new DomainException("EnrolmentEvaluation.cannot.submit.without.exam.date");
-	}
+	/*
+	 * 
+	 * Due to curriculum validation the exam date is not required
+	 * 
+	 * if (!hasExamDateYearMonthDay()) { throw new
+	 * DomainException("EnrolmentEvaluation.cannot.submit.without.exam.date"
+	 * ); }
+	 */
 
 	if (isPayable() && !isPayed()) {
 	    throw new EnrolmentNotPayedException("EnrolmentEvaluation.cannot.set.grade.on.not.payed.enrolment.evaluation",
@@ -371,7 +400,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 	    getRectified().setEnrolmentEvaluationState(EnrolmentEvaluationState.RECTIFIED_OBJ);
 	}
 
-	setEnrolmentEvaluationState(enrolmentEvaluationState); // TODO:
+	setEnrolmentEvaluationState(enrolmentEvaluationState);
 	setEmployee(employee);
 	setObservation(observation);
 	setWhenDateTime(new DateTime());
@@ -496,7 +525,8 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 
     protected void generateCheckSum() {
 	StringBuilder stringBuilder = new StringBuilder();
-	stringBuilder.append(getExamDateYearMonthDay().toString()).append(getGradeValue());
+	stringBuilder.append(getExamDateYearMonthDay() != null ? getExamDateYearMonthDay().toString() : "").append(
+		getGradeValue());
 	stringBuilder.append(getEnrolmentEvaluationType());
 	stringBuilder.append(getEnrolment().getStudentCurricularPlan().getRegistration().getNumber());
 	setCheckSum(FenixDigestUtils.createDigest(stringBuilder.toString()));
@@ -594,6 +624,31 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 	}
 
 	return null;
+    }
+
+    public boolean isInCurriculumValidationContext() {
+	return this.getContext() != null && this.getContext().equals(EnrolmentEvaluationContext.CURRICULUM_VALIDATION_EVALUATION);
+    }
+
+    public boolean isInCurriculumValidationContextAndIsFinal() {
+	return this.isInCurriculumValidationContext() && this.isFinal();
+    }
+
+    private static final String NORMAL_TYPE_FIRST_SEASON_DESCRIPTION = "label.curriculum.validation.normal.type.first.season.description";
+    private static final String NORMAL_TYPE_SECOND_SEASON_DESCRIPTION = "label.curriculum.validation.normal.type.second.season.description";
+
+    private static final ResourceBundle academicResources = ResourceBundle.getBundle("resources.AcademicAdminOffice");
+
+    public String getEnrolmentEvaluationTypeDescription() {
+	if (EnrolmentEvaluationType.NORMAL.equals(this.getEnrolmentEvaluationType())
+		&& CurriculumValidationEvaluationPhase.FIRST_SEASON.equals(this.getCurriculumValidationEvaluationPhase())) {
+	    return academicResources.getString(NORMAL_TYPE_FIRST_SEASON_DESCRIPTION);
+	} else if (EnrolmentEvaluationType.NORMAL.equals(this.getEnrolmentEvaluationType())
+		&& CurriculumValidationEvaluationPhase.SECOND_SEASON.equals(this.getCurriculumValidationEvaluationPhase())) {
+	    return academicResources.getString(NORMAL_TYPE_SECOND_SEASON_DESCRIPTION);
+	}
+
+	return this.getEnrolmentEvaluationType().getDescription();
     }
 
 }

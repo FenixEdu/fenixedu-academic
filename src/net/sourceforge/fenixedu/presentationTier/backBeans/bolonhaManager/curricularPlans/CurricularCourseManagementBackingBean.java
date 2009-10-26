@@ -51,6 +51,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     protected final ResourceBundle enumerationBundle = getResourceBundle("resources/EnumerationResources");
     protected final ResourceBundle domainExceptionBundle = getResourceBundle("resources/DomainExceptionResources");
     protected final Integer NO_SELECTION = 0;
+    protected final String NO_SELECTION_STRING = "no_selection";
 
     private Integer competenceCourseID = null;
     private Integer courseGroupID = null;
@@ -357,7 +358,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 	}
 	return toDelete;
     }
-    
+
     protected boolean isBolonha() {
 	return getDegreeCurricularPlan().isBolonhaDegree();
     }

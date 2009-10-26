@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.BolonhaStudentEnrollmentBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.StudentCurriculumEnrolmentBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.StudentCurriculumGroupBean;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.OptionalEnrolment;
@@ -459,7 +460,18 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 		HtmlTableRow htmlTableRow = groupTable.createRow();
 		HtmlTableCell cellName = htmlTableRow.createCell();
 		cellName.setClasses(getCurricularCourseToEnrolNameClasses());
-		cellName.setBody(new HtmlText(degreeModuleToEvaluate.getName()));
+
+		String degreeName = degreeModuleToEvaluate.getName();
+
+		if (isAcademicAdminOfficeEmployee() && degreeModuleToEvaluate.getDegreeModule() instanceof CurricularCourse) {
+		    degreeName = degreeModuleToEvaluate.getDegreeModule().getCode() + " - " + degreeName;
+
+		    CurricularCourse curricularCourse = (CurricularCourse) degreeModuleToEvaluate.getDegreeModule();
+		    degreeName += " (" + studentResources.getString("label.grade.scale") + " - "
+			    + curricularCourse.getGradeScaleChain().getDescription() + ") ";
+		}
+
+		cellName.setBody(new HtmlText(degreeName));
 
 		// Year
 		final HtmlTableCell yearCell = htmlTableRow.createCell();
@@ -564,7 +576,17 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	    HtmlTableRow htmlTableRow = groupTable.createRow();
 	    HtmlTableCell cellName = htmlTableRow.createCell();
 	    cellName.setClasses(enrolmentNameClasses);
-	    cellName.setBody(new HtmlText(getPresentationNameFor(enrolment)));
+
+	    String enrolmentName = getPresentationNameFor(enrolment);
+	    if (isAcademicAdminOfficeEmployee() && enrolment.getDegreeModule() instanceof CurricularCourse) {
+		CurricularCourse curricularCourse = (CurricularCourse) enrolment.getDegreeModule();
+		enrolmentName = curricularCourse.getCode() + " - " + enrolmentName;
+
+		enrolmentName += "(" + studentResources.getString("label.grade.scale") + " - "
+			+ curricularCourse.getGradeScaleChain().getDescription() + ") ";
+	    }
+
+	    cellName.setBody(new HtmlText(enrolmentName));
 
 	    // Year
 	    final HtmlTableCell yearCell = htmlTableRow.createCell();

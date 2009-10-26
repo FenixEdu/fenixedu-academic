@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -19,6 +20,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreT
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedBranchChangeException;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
+import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
 import net.sourceforge.fenixedu.domain.accessControl.PermissionType;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdminOffice.AdministrativeOfficePermission;
 import net.sourceforge.fenixedu.domain.accounting.events.EnrolmentOutOfPeriodEvent;
@@ -76,12 +78,15 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule.Curric
 import net.sourceforge.fenixedu.domain.studentCurriculum.curriculumLine.CurriculumLineLocationBean;
 import net.sourceforge.fenixedu.domain.studentCurriculum.curriculumLine.MoveCurriculumLinesBean;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.comparators.ReverseComparator;
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -2927,5 +2932,54 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
 
 	return false;
+    }
+
+    public Boolean getEvaluationForCurriculumValidationAllowed() {
+	ExecutionSemester FENIX_START_DATE_SEMESTER = ExecutionSemester.readBySemesterAndExecutionYear(1, "2002/2003");
+	return this.getStartExecutionPeriod().isBefore(FENIX_START_DATE_SEMESTER) && !this.isBolonhaDegree();
+    }
+
+    @Service
+    @Checked("StudentCurricularPlanPredicates.SET_EVALUATIONS")
+    public void setEvaluationsForCurriculumValidation(List<List<MarkSheetEnrolmentEvaluationBean>> enrolmentEvaluationsBeanList) {
+	for (List<MarkSheetEnrolmentEvaluationBean> evaluationsList : enrolmentEvaluationsBeanList) {
+	    setIndividualEvaluationsForCurriculumValidation(evaluationsList);
+	}
+    }
+
+    private static final ResourceBundle ACADEMIC_RESOURCES = ResourceBundle.getBundle("resources.AcademicAdminOffice");
+
+    private List<MarkSheetEnrolmentEvaluationBean> setIndividualEvaluationsForCurriculumValidation(
+	    List<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationsBeanList) {
+
+	for (MarkSheetEnrolmentEvaluationBean enrolmentEvaluationBean : enrolmentEvaluationsBeanList) {
+	    Enrolment enrolment = enrolmentEvaluationBean.getEnrolment();
+
+	    EnrolmentEvaluation enrolmentEvaluation = enrolmentEvaluationBean.getLatestEnrolmentEvaluation();
+
+	    if (StringUtils.isEmpty(enrolmentEvaluationBean.getGradeValue())) {
+		enrolmentEvaluationBean.setEnrolmentEvaluationSet(Boolean.FALSE);
+		continue;
+	    }
+
+	    enrolmentEvaluation = enrolment.addNewEnrolmentEvaluation(EnrolmentEvaluationState.TEMPORARY_OBJ,
+		    enrolmentEvaluationBean.getEnrolmentEvaluationType(), enrolmentEvaluationBean
+			    .getCurriculumValidationEvaluationPhase(), AccessControl.getPerson(), enrolmentEvaluationBean
+			    .getGradeValue(), new java.util.Date(), enrolmentEvaluationBean.getEvaluationDate(),
+		    enrolmentEvaluationBean.getExecutionSemester(), enrolmentEvaluationBean.getBookReference(),
+		    enrolmentEvaluationBean.getPage(), enrolmentEvaluationBean.getGradeScale());
+	    enrolmentEvaluation.confirmSubmission(AccessControl.getPerson().getEmployee(), ACADEMIC_RESOURCES
+		    .getString("message.curriculum.validation.observation"));
+
+	    enrolmentEvaluationBean.setEnrolmentEvaluationSet(Boolean.TRUE);
+	}
+
+	return enrolmentEvaluationsBeanList;
+    }
+
+    @Service
+    @Checked("StudentCurricularPlanPredicates.SET_EVALUATIONS")
+    public void editEndStageDate(LocalDate date) {
+	this.setEndStageDate(date);
     }
 }

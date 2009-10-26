@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.dataTransferObject.student.IStudentCurricularPlanBean;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -13,10 +14,13 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DegreeModuleToEnrolKeyConverter;
+
+import org.joda.time.LocalDate;
+
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-public class BolonhaStudentEnrollmentBean implements Serializable {
+public class BolonhaStudentEnrollmentBean implements Serializable, IStudentCurricularPlanBean {
 
     private static final long serialVersionUID = -5614162187691303580L;
 
@@ -36,10 +40,14 @@ public class BolonhaStudentEnrollmentBean implements Serializable {
 
     private CycleType cycleTypeToEnrol;
 
+    private LocalDate endStageDate;
+
     public BolonhaStudentEnrollmentBean(final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionSemester executionSemester, final int[] curricularYears, CurricularRuleLevel curricularRuleLevel) {
 	this(studentCurricularPlan, executionSemester, new StudentCurriculumGroupBean(studentCurricularPlan.getRoot(),
 		executionSemester, curricularYears), curricularRuleLevel);
+
+	setEndStageDate(studentCurricularPlan.getEndStageDate());
     }
 
     protected BolonhaStudentEnrollmentBean(final StudentCurricularPlan studentCurricularPlan,
@@ -154,4 +162,11 @@ public class BolonhaStudentEnrollmentBean implements Serializable {
 	this.cycleTypeToEnrol = cycleTypeToEnrol;
     }
 
+    public LocalDate getEndStageDate() {
+	return this.endStageDate;
+    }
+
+    public void setEndStageDate(LocalDate date) {
+	this.endStageDate = date;
+    }
 }

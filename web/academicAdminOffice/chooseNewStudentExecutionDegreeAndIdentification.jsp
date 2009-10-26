@@ -13,6 +13,9 @@
 	</p>
 </html:messages>
 
+<fr:messages>
+</fr:messages>
+
 <fr:form action="/createStudent.do">
 
 	<h3 class="mtop15 mbottom025"><bean:message key="label.degree" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
@@ -45,18 +48,35 @@
 </fr:form>
 
 <logic:present name="choosePersonBean">
+	<bean:define id="firstTimeSearch" name="choosePersonBean" property="firstTimeSearch" />
+	
+	<script src="<%= request.getContextPath() + "/javaScript/jquery/jquery.js" %>" type="text/javascript" >
+	</script>
+	
+	<script>
+		$(document).ready(function() {
+			$("span.choosePersonBeanForm form input").change(function() {
+				$("span.choosePersonBeanForm form input[name$='firstTimeSearch']").attr("value", true);
+			})
+		});
+	</script>
+	
+	<span class="choosePersonBeanForm">
 	<fr:form action="/createStudent.do?method=choosePerson">
 		<fr:edit id="executionDegree" name="executionDegreeBean" visible="false"  />
 		<fr:edit name="ingressionInformationBean" id="chooseIngression" visible="false" />
+		
 		<h3 class="mtop1 mbottom025"><bean:message key="label.identification" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
-		<fr:edit id="choosePerson" name="choosePersonBean" schema="choose.person" type="net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean">				 
+		<fr:edit id="choosePerson" name="choosePersonBean" schema="create.registration.choose.person" type="net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean">				 
+			<fr:hidden name="firstTimeSearch" slot="firstTimeSearch" />
 			<fr:layout name="tabular" >
-				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
+ 				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 			</fr:layout>
 		</fr:edit>
 		<p>
-			<html:submit><bean:message key="button.continue" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>		
+			<html:submit><bean:message key="button.continue" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>
 		</p>
 	</fr:form>
+	</span>
 </logic:present>	
