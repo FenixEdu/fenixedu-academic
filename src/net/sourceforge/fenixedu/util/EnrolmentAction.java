@@ -21,10 +21,6 @@ public class EnrolmentAction extends FenixValuedEnum {
 
     public static final EnrolmentAction UNENROL = new EnrolmentAction("unenrol", EnrolmentAction.UNENROL_TYPE);
 
-    /**
-     * @param name
-     * @param value
-     */
     private EnrolmentAction(String name, int value) {
 	super(name, value);
     }

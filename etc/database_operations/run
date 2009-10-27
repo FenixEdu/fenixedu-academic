@@ -44,3 +44,4 @@ function executeWithTempFile() {
 }
 
 execute "Alter Enrolment Evaluation table" alterEnrolmentEvaluationTable.sql
+execute "Create table registration state log" createTableRegistrationStateLog.sql

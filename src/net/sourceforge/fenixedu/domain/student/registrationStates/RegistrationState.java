@@ -22,11 +22,13 @@ import net.sourceforge.fenixedu.domain.util.workflow.IState;
 import net.sourceforge.fenixedu.domain.util.workflow.StateBean;
 import net.sourceforge.fenixedu.domain.util.workflow.StateMachine;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.EnrolmentAction;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import dml.runtime.RelationAdapter;
 
 /**
  * 
@@ -34,6 +36,30 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
  * 
  */
 public abstract class RegistrationState extends RegistrationState_Base implements IState {
+
+    static {
+	RegistrationStateRegistration.addListener(new RelationAdapter<RegistrationState, Registration>() {
+
+	    @Override
+	    public void afterAdd(RegistrationState state, Registration registration) {
+		super.afterAdd(state, registration);
+
+		if (registration != null && state != null) {
+		    new RegistrationStateLog(state, EnrolmentAction.ENROL, AccessControl.getPerson());
+		}
+	    }
+
+	    @Override
+	    public void beforeRemove(RegistrationState state, Registration registration) {
+		super.beforeRemove(state, registration);
+
+		if (registration != null && state != null) {
+		    new RegistrationStateLog(state, EnrolmentAction.UNENROL, AccessControl.getPerson());
+		}
+	    }
+
+	});
+    }
 
     public static Comparator<RegistrationState> DATE_COMPARATOR = new Comparator<RegistrationState>() {
 	public int compare(RegistrationState leftState, RegistrationState rightState) {
@@ -92,9 +118,9 @@ public abstract class RegistrationState extends RegistrationState_Base implement
     }
 
     protected void init(Registration registration, Person responsiblePerson, DateTime stateDate) {
+	setStateDate(stateDate != null ? stateDate : new DateTime());
 	setRegistration(registration != null ? registration : null);
 	setResponsiblePerson(selectPerson(responsiblePerson));
-	setStateDate(stateDate != null ? stateDate : new DateTime());
     }
 
     private Person selectPerson(final Person responsiblePerson) {

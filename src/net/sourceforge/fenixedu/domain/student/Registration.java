@@ -310,6 +310,8 @@ public class Registration extends Registration_Base {
 	    ;
 	for (; hasAnyCurriculumLineLogs(); getCurriculumLineLogs().get(0).delete())
 	    ;
+	for (; hasAnyRegistrationStateLogs(); getRegistrationStateLogs().get(0).delete())
+	    ;
 
 	if (hasRegistrationNumber()) {
 	    getRegistrationNumber().delete();

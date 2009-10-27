@@ -5021,6 +5021,14 @@ class DomainObject {
 		
 		class student.registrationStates.TransitedState extends student.registrationStates.RegistrationState {
 		}
+		
+	class student.registrationStates.RegistrationStateLog extends DomainObject {
+		DateTime whenCreated;
+		DateTime stateDate;
+		String stateType; 
+		EnrolmentAction action;
+		String who;
+	}
 
 	class studentCurriculum.Credits extends DomainObject {
 		Double givenCredits;
@@ -11330,10 +11338,10 @@ relation RegistrationRegistrationNumber {
 }
 
 relation RegistrationStateRegistration {
+	student.Registration playsRole registration;
 	student.registrationStates.RegistrationState playsRole registrationStates {
 		multiplicity *;
 	}
-	student.Registration playsRole registration;
 }
 
 relation RegistrationStateResponsiblePerson {
@@ -11341,6 +11349,13 @@ relation RegistrationStateResponsiblePerson {
 		multiplicity *;
 	}
 	Person playsRole responsiblePerson;
+}
+
+relation RegistrationStateLogRegistration {
+	student.registrationStates.RegistrationStateLog playsRole registrationStateLogs {
+		multiplicity *;
+	}
+	student.Registration playsRole registration;
 }
 
 relation RegistrationStudent {
@@ -13243,6 +13258,13 @@ relation RootDomainObjectRegistrationNumber {
 relation RootDomainObjectRegistrationState {
 	RootDomainObject playsRole rootDomainObject;
 	student.registrationStates.RegistrationState playsRole registrationStates {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectRegistrationStateLog {
+	RootDomainObject playsRole rootDomainObject;
+	student.registrationStates.RegistrationStateLog playsRole registrationStateLogs {
 		multiplicity *;
 	}
 }
