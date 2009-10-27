@@ -257,7 +257,8 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 		Integer.valueOf(getFromRequest(request, "resultId").toString()));
 	final Person loggedPerson = AccessControl.getPerson();
 	if (!loggedPerson.getTeacher().hasProfessorshipForExecutionCourse(courseResult.getExecutionCourse())
-		&& courseResult.getExecutionDegree().getCoordinatorByTeacher(loggedPerson) == null) {
+		&& courseResult.getExecutionDegree().getCoordinatorByTeacher(loggedPerson) == null
+		&& !loggedPerson.isPedagogicalCouncilMember()) {
 	    return null;
 	}
 	request.setAttribute("inquiryResult", courseResult);
@@ -279,7 +280,8 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	final Person loggedPerson = AccessControl.getPerson();
 	if (teachingResult.getProfessorship().getTeacher() != loggedPerson.getTeacher()
 		&& loggedPerson.getTeacher().isResponsibleFor(teachingResult.getProfessorship().getExecutionCourse()) == null
-		&& teachingResult.getExecutionDegree().getCoordinatorByTeacher(loggedPerson) == null) {
+		&& teachingResult.getExecutionDegree().getCoordinatorByTeacher(loggedPerson) == null
+		&& !loggedPerson.isPedagogicalCouncilMember()) {
 	    return null;
 	}
 	request.setAttribute("inquiryResult", teachingResult);
