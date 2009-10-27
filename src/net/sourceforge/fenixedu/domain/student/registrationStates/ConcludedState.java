@@ -23,7 +23,7 @@ public class ConcludedState extends ConcludedState_Base {
     protected ConcludedState(Registration registration, Person person, DateTime dateTime) {
 	super();
 
-	if (!registration.hasConcluded()) {
+	if (registration.isBolonha() && !registration.hasConcluded()) {
 	    throw new DomainException("error.registration.is.not.concluded");
 	}
 
