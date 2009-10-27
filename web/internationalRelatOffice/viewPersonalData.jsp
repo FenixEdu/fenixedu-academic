@@ -8,13 +8,13 @@
 
 <h2><bean:message key="link.student.viewPersonalData" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
 
-<ul class="mvert2">
-	<li>
-		<html:link page="/students.do?method=visualizeStudent" paramId="studentID" paramName="student" paramProperty="idInternal">
-			<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-		</html:link>
-	</li>
-</ul>
+
+<p>
+	<html:link page="/students.do?method=visualizeStudent" paramId="studentID" paramName="student" paramProperty="idInternal">
+		<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+	</html:link>
+</p>
+
 
 <h3 class="mbottom025"><bean:message key="label.person.title.personal.info" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
 <fr:view name="personBean" schema="student.personalData-edit" >
@@ -112,10 +112,10 @@
 	<br/><br/>
 </logic:empty>
 	
-<ul>
-	<li>
-		<html:link page="/student.do?method=visualizeStudent" paramId="studentID" paramName="student" paramProperty="idInternal">
-			<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-		</html:link>
-	</li>
-</ul>
+
+<p>
+	<html:link page="/student.do?method=visualizeStudent" paramId="studentID" paramName="student" paramProperty="idInternal">
+		<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+	</html:link>
+</p>
+

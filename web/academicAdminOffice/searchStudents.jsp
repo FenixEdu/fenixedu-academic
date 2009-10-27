@@ -5,7 +5,7 @@
 <html:xhtml/>
 
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
-<h2><strong><bean:message key="link.studentOperations.viewStudents" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></h2>
+<h2><bean:message key="link.studentOperations.viewStudents" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
 <fr:edit name="studentsSearchBean" schema="student.StudentsSearchBean" >
 	<fr:layout name="tabular" >
@@ -29,8 +29,8 @@
 	<logic:greaterThan name="numberStudents" value="1">
 		<fr:view name="students" schema="Student.view-with-number-and-name">
 			<fr:layout name="tabular" >
-				<fr:property name="classes" value="tstyle1"/>
-	        	<fr:property name="columnClasses" value="listClasses,,"/>
+				<fr:property name="classes" value="tstyle1 thlight mtop2"/>
+	        	<fr:property name="columnClasses" value="acenter,,"/>
 				<fr:property name="linkFormat(view)" value="/student.do?method=visualizeStudent&studentID=${idInternal}" />
 				<fr:property name="key(view)" value="link.student.visualizeStudent"/>
 				<fr:property name="bundle(view)" value="ACADEMIC_OFFICE_RESOURCES"/>

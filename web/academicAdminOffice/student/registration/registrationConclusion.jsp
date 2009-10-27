@@ -11,13 +11,13 @@
 	<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 	<h2><bean:message key="student.registrationConclusionProcess" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 		
-	<ul class="mtop2 list5">
-		<li>
-			<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="registrationConclusionBean" paramProperty="registration.idInternal">
-				<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-			</html:link>
-		</li>
-	</ul>
+
+	<p>
+		<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="registrationConclusionBean" paramProperty="registration.idInternal">
+			<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+		</html:link>
+	</p>
+
 	
 	<logic:equal name="registrationConclusionBean" property="conclusionProcessed" value="true">
 		<br/>

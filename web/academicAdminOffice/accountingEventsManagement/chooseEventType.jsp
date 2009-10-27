@@ -11,13 +11,11 @@
 		key="label.accountingEvents.management.createEvents"
 		bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></h2>
 		
-	<ul class="mtop2 list5">
-		<li>
+		<p>
 			<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="studentCurricularPlan" paramProperty="registration.idInternal">
 				<bean:message key="label.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 			</html:link>
-		</li>
-	</ul>
+		</p>
 	
 	<bean:define id="registration" name="studentCurricularPlan" property="registration" />	
 	<logic:present name="registration" property="ingression">

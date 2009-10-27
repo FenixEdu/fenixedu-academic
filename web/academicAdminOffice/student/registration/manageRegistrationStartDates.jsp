@@ -7,13 +7,13 @@
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><strong><bean:message key="link.student.manageRegistrationStartDates" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></h2>
 
-<ul class="mtop2 list5">
-	<li>
-		<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="registration" paramProperty="idInternal">
-			<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES" />
-		</html:link>
-	</li>
-</ul>
+
+<p>
+	<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="registration" paramProperty="idInternal">
+		<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES" />
+	</html:link>
+</p>
+
 
 <div style="float: right;">
 	<bean:define id="personID" name="registration" property="student.person.idInternal"/>

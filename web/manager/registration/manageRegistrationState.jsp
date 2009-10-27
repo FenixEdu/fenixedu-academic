@@ -13,13 +13,13 @@
 	</p>
 </html:messages>
 
-<ul class="mtop2">
-	<li>
-		<html:link page="/bolonhaStudentEnrolment.do?method=showAllStudentCurricularPlans" paramId="studentId" paramName="registration" paramProperty="student.idInternal">
-			<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-		</html:link>
-	</li>
-</ul>
+
+<p>
+	<html:link page="/bolonhaStudentEnrolment.do?method=showAllStudentCurricularPlans" paramId="studentId" paramName="registration" paramProperty="student.idInternal">
+		<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+	</html:link>
+</p>
+
 
 <div style="float: right;">
 	<bean:define id="personID" name="registration" property="student.person.idInternal"/>

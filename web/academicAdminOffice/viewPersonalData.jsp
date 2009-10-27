@@ -9,7 +9,7 @@
 
 <p class="mtop2">
 	<html:link page="/student.do?method=visualizeStudent" paramId="studentID" paramName="student" paramProperty="idInternal">
-		« <bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+		<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 	</html:link>
 </p>
 
@@ -116,6 +116,6 @@
 	
 <p class="mtop2">
 	<html:link page="/student.do?method=visualizeStudent" paramId="studentID" paramName="student" paramProperty="idInternal">
-		« <bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+		<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 	</html:link>
 </p>

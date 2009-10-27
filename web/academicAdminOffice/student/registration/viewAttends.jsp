@@ -12,13 +12,13 @@
 	<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 	<h2><bean:message key="registration.curriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
-	<ul class="mtop2 list5">
-		<li>
+
+	<p>
 		<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="registration" paramProperty="idInternal">
 			<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 		</html:link>
-		</li>
-	</ul>
+	</p>
+
 
 	<html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
 		<span class="error0"> <bean:write name="message" /> </span>

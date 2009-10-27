@@ -7,13 +7,11 @@
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 	<h2><strong><bean:message key="label.documents.anualIRS" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></h2>
 	
-	<ul class="mtop2 list5">
-		<li>
-			<html:link page="/generatedDocuments.do?method=prepareSearchPerson">
-				<bean:message key="label.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-			</html:link>
-		</li>
-	</ul>
+	<p>
+		<html:link page="/generatedDocuments.do?method=prepareSearchPerson">
+			<bean:message key="label.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+		</html:link>
+	</p>
 	
 	<p class="mtop15 mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.person" /></strong></p>
 	<fr:view name="person" 	schema="person.view-with-name-and-idDocumentType-and-documentIdNumber">

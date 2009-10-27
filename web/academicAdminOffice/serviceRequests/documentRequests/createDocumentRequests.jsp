@@ -24,13 +24,11 @@
 		</p>
 	</html:messages>
 	
-	<ul class="mtop2">
-		<li>
-			<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="documentRequestCreateBean" paramProperty="registration.idInternal">
-				<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-			</html:link>
-		</li>
-	</ul>
+	<p class="mtop2">
+		<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="documentRequestCreateBean" paramProperty="registration.idInternal">
+			<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+		</html:link>
+	</p>
 		
 	<div style="float: right;">
 		<bean:define id="personID" name="documentRequestCreateBean" property="registration.student.person.idInternal"/>

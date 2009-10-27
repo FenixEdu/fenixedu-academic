@@ -8,13 +8,13 @@
 
 <h2><bean:message key="label.visualizeRegistration" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
-<ul class="mtop2 list5">
-	<li>
-		<html:link page="/students.do?method=visualizeStudent" paramId="studentID" paramName="registration" paramProperty="student.idInternal">
-			<bean:message key="link.student.backToStudentDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-		</html:link>
-	</li>
-</ul>
+
+<p>
+	<html:link page="/students.do?method=visualizeStudent" paramId="studentID" paramName="registration" paramProperty="student.idInternal">
+		<bean:message key="link.student.backToStudentDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+	</html:link>
+</p>
+
 
 <div style="float: right;">
 	<bean:define id="personID" name="registration" property="student.person.idInternal"/>

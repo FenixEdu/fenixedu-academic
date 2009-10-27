@@ -15,13 +15,11 @@
 <bean:define id="registration" name="registration" type="net.sourceforge.fenixedu.domain.student.Registration"/>
 
 <logic:present role="INTERNATIONAL_RELATION_OFFICE">
-	<ul class="mtop2 printhidden">
-		<li>
+	<p class="printhidden">
 		<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="registration" paramProperty="idInternal">
 			<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 		</html:link>
-		</li>
-	</ul>
+	</p>
 </logic:present>
 
 <p><span class="error0"><!-- Error messages go here --><html:errors /></span></p>

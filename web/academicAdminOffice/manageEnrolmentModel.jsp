@@ -7,16 +7,16 @@
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message key="link.student.manageEnrolmentModel" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
 
-<ul class="mbottom05">
-	<li>
-		<html:link page="/student.do?method=visualizeRegistration"
-			paramId="registrationID" paramName="enrolmentModelBean"
-			paramProperty="registration.idInternal">
-			<bean:message key="link.student.back"
-				bundle="ACADEMIC_OFFICE_RESOURCES" />
-		</html:link>
-	</li>
-</ul>
+
+<p>
+	<html:link page="/student.do?method=visualizeRegistration"
+		paramId="registrationID" paramName="enrolmentModelBean"
+		paramProperty="registration.idInternal">
+		<bean:message key="link.student.back"
+			bundle="ACADEMIC_OFFICE_RESOURCES" />
+	</html:link>
+</p>
+
 
 
 <fr:edit name="enrolmentModelBean" schema="student.manageEnrolmentModel">
