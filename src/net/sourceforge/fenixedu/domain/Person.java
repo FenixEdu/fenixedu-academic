@@ -3014,6 +3014,10 @@ public class Person extends Person_Base {
     public boolean isPersonResearcher() {
 	return getPersonRole(RoleType.RESEARCHER) != null;
     }
+    
+    public boolean isPedagogicalCouncilMember() {
+	return getPersonRole(RoleType.PEDAGOGICAL_COUNCIL) != null;
+    }    
 
     public Integer getMostSignificantNumber() {
 	if (getPartyClassification().equals(PartyClassification.TEACHER)) {
