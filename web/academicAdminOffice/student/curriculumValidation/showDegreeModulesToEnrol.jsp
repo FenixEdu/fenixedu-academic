@@ -8,7 +8,7 @@
 
 	<em><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.academicAdminOffice" /></em>
 	
-	<h2><bean:message key="title.curriculum.validation" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
+	<h2><bean:message key="label.curriculum.validation.student.enrolment.without.rules" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 	
 	<bean:define id="studentCurricularPlanId" name="studentCurricularPlan" property="externalId"/>
 
@@ -23,8 +23,7 @@
 </logic:equal>
 
 <logic:equal name="studentCurriculumValidationAllowed" value="true"> 
-	<p class="mtop15 mbottom025"><strong><bean:message key="label.student.setEvaluations.chooseExecutionPeriod" bundle="ACADEMIC_OFFICE_RESOURCES"/>:</strong></p>
-	
+
 	<fr:form action="<%= "/curriculumValidation.do?method=prepareStudentEnrolment&amp;studentCurricularPlanId=" + studentCurricularPlanId  %>">
 		<fr:edit id="student.enrolment.bean" name="bolonhaStudentEnrollmentBean" visible="false"/>
 		
@@ -40,20 +39,22 @@
 	</fr:form>
 	
 	<bean:define id="executionSemesterId" name="bolonhaStudentEnrollmentBean" property="executionPeriod.externalId" />
-	<p>
-		<html:link page="<%= "/curriculumValidation.do?method=prepareSetEvaluations&amp;studentCurricularPlanId=" + studentCurricularPlanId + "&amp;executionSemesterId=" + executionSemesterId %>">
-			<bean:message key="label.curriculum.validation.continue" bundle="ACADEMIC_OFFICE_RESOURCES" />
-		</html:link>
-	</p>
+	<ul class="mbottom2">
+		<li>
+			<html:link page="<%= "/curriculumValidation.do?method=prepareSetEvaluations&amp;studentCurricularPlanId=" + studentCurricularPlanId + "&amp;executionSemesterId=" + executionSemesterId %>">
+				<bean:message key="label.curriculum.validation.continue" bundle="ACADEMIC_OFFICE_RESOURCES" />
+			</html:link>
+		</li>
+	</ul>
 	
 	<bean:define id="student" name="bolonhaStudentEnrollmentBean" property="studentCurricularPlan.registration.student" />
 	
 	
 	<logic:messagesPresent message="true" property="success">
 		<div class="success0" style="padding: 0.5em;">
-		<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES" property="success">
-			<span><bean:write name="messages" /></span>
-		</html:messages>
+			<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES" property="success">
+				<span><bean:write name="messages" /></span>
+			</html:messages>
 		</div>
 	</logic:messagesPresent>
 
@@ -92,10 +93,10 @@
 		
 		<fr:edit id="bolonhaStudentEnrolments" name="bolonhaStudentEnrollmentBean">
 			<fr:layout name="bolonha-student-enrolment">
-				<fr:property name="enrolmentClasses" value="se_enrolled smalltxt,se_enrolled smalltxt aright,se_enrolled smalltxt aright,se_enrolled smalltxt aright,se_enrolled aright" />
+				<fr:property name="enrolmentClasses" value="se_enrolled smalltxt,se_enrolled smalltxt aright,se_enrolled nowrap smalltxt aright,se_enrolled smalltxt aright,se_enrolled aright" />
 				<fr:property name="temporaryEnrolmentClasses" value="se_temporary smalltxt,se_temporary smalltxt aright,se_temporary smalltxt aright,se_temporary smalltxt aright,se_temporary aright" />
 				<fr:property name="impossibleEnrolmentClasses" value="se_impossible smalltxt,se_impossible smalltxt aright,se_impossible smalltxt aright,se_impossible smalltxt aright,se_impossible aright" />
-				<fr:property name="curricularCourseToEnrolClasses" value="smalltxt, smalltxt aright, smalltxt aright, aright" />				
+				<fr:property name="curricularCourseToEnrolClasses" value="smalltxt, nowrap smalltxt aright, nowrap smalltxt aright, aright" />				
 				<fr:property name="groupRowClasses" value="se_groups" />
 			</fr:layout>
 		</fr:edit>

@@ -22,8 +22,8 @@
 	<fr:form action="<%= "/curriculumValidation.do?method=editEndStageDate&amp;studentCurricularPlanId=" + studentCurricularPlanId %>">
 		 <fr:edit id="student.enrolment.bean" name="bolonhaStudentEnrollmentBean" schema="set.end.stage.date" layout="tabular-editable">
 		 	<fr:layout>
-				<fr:property name="classes" value="tstyle4 thlight mtop05"/>
-		        <fr:property name="columnClasses" value=",,,"/>					                	 	
+				<fr:property name="classes" value="tstyle5 thlight"/>
+		        <fr:property name="columnClasses" value=",,tdclear tderror1"/>					                	 	
 		 	</fr:layout>
 		 </fr:edit>
 		 

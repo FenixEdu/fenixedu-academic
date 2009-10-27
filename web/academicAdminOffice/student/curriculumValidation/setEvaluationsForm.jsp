@@ -9,14 +9,14 @@
 <html:xhtml/>
 
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
-<h2><bean:message key="title.student.setEvaluations" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
+<h2><bean:message key="label.curriculum.validation.set.evaluations" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
 <bean:define id="studentCurricularPlanId" name="studentCurricularPlan" property="externalId"/>
 <bean:define id="executionSemesterId" name="executionSemester" property="externalId" />
 
 <p>
 	<html:link page="<%= "/curriculumValidation.do?method=prepareCurriculumValidation&amp;studentCurricularPlanId=" + studentCurricularPlanId  %>">
-		« <bean:message key="label.back" bundle="ACADEMIC_OFFICE_RESOURCES" />
+		<bean:message key="label.back" bundle="ACADEMIC_OFFICE_RESOURCES" />
 	</html:link>
 </p>
 <p>
@@ -24,6 +24,9 @@
 		« <bean:message key="label.curriculum.validation.student.enrolment.without.rules" bundle="ACADEMIC_OFFICE_RESOURCES" />
 	</html:link>
 </p>
+
+
+
 
 
 <logic:equal name="studentCurriculumValidationAllowed" value="false">
@@ -93,8 +96,8 @@
 <table class="tstyle4 tdcenter thlight mtop05">
 	<thead>
 		<tr>
-			<th style="width: 160px;"><bean:message key="label.set.evaluation.curricular.course.name" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
-			<th style="width: 80px;"><bean:message key="label.set.evaluation.enrolment.state" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
+			<th style="width: 150px;"><bean:message key="label.set.evaluation.curricular.course.name" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
+			<th style="width: 70px;"><bean:message key="label.set.evaluation.enrolment.state" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
 			<th style="width: 80px;"><bean:message key="label.set.evaluation.enrolment.condition" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
 			<th class="evaluations"></th>
 		</tr>
@@ -167,8 +170,8 @@
 	<table class="tstyle4 tdcenter thlight mtop05">
 		<thead>
 			<tr>
-				<th style="width: 160px;"><bean:message key="label.set.evaluation.curricular.course.name" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
-				<th style="width: 80px;"><bean:message key="label.set.evaluation.enrolment.state" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
+				<th style="width: 150px;"><bean:message key="label.set.evaluation.curricular.course.name" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
+				<th style="width: 70px;"><bean:message key="label.set.evaluation.enrolment.state" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
 				<th style="width: 80px;"><bean:message key="label.set.evaluation.enrolment.condition" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
 				<th></th>
 			</tr>

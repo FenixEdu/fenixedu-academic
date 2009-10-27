@@ -13,26 +13,25 @@
 <bean:define id="registrationId" name="studentCurricularPlan" property="registration.idInternal" />
 
 
-<p>
-<html:link page="<%= "/curriculumValidation.do?method=prepareStudentEnrolment&amp;studentCurricularPlanId=" + studentCurricularPlanId %>">
-	<bean:message key="label.curriculum.validation.student.enrolment.without.rules" bundle="ACADEMIC_OFFICE_RESOURCES" />
+<html:link page="<%= "/student.do?method=visualizeRegistration&amp;registrationId=" + registrationId %>" >
+	<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES" />
 </html:link>
-</p>
 
-<p>
-<html:link page="<%= "/curriculumValidation.do?method=prepareSetEvaluations&amp;studentCurricularPlanId=" + studentCurricularPlanId  %>">
-	<bean:message key="label.curriculum.validation.set.evaluations" bundle="ACADEMIC_OFFICE_RESOURCES" />
-</html:link>
-</p>
 
-<p>
-<html:link page="<%= "/curriculumValidation.do?method=prepareEditEndStageDate&amp;studentCurricularPlanId=" + studentCurricularPlanId  %>">
-	<bean:message key="label.curriculum.validation.set.end.stage.date" bundle="ACADEMIC_OFFICE_RESOURCES" />
-</html:link>
-</p>
-
-<p>
-	<html:link page="<%= "/student.do?method=visualizeRegistration&amp;registrationId=" + registrationId %>" >
-		<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES" />
-	</html:link>
-</p>
+<ul class="mtop15">
+	<li>
+		<html:link page="<%= "/curriculumValidation.do?method=prepareStudentEnrolment&amp;studentCurricularPlanId=" + studentCurricularPlanId %>">
+			<bean:message key="label.curriculum.validation.student.enrolment.without.rules" bundle="ACADEMIC_OFFICE_RESOURCES" />
+		</html:link>
+	</li>
+	<li>
+		<html:link page="<%= "/curriculumValidation.do?method=prepareSetEvaluations&amp;studentCurricularPlanId=" + studentCurricularPlanId  %>">
+			<bean:message key="label.curriculum.validation.set.evaluations" bundle="ACADEMIC_OFFICE_RESOURCES" />
+		</html:link>
+	</li>
+	<li>
+		<html:link page="<%= "/curriculumValidation.do?method=prepareEditEndStageDate&amp;studentCurricularPlanId=" + studentCurricularPlanId  %>">
+			<bean:message key="label.curriculum.validation.set.end.stage.date" bundle="ACADEMIC_OFFICE_RESOURCES" />
+		</html:link>
+	</li>
+</ul>
