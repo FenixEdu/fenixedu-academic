@@ -7,30 +7,32 @@ import net.sourceforge.fenixedu.util.EnrolmentAction;
 import org.joda.time.DateTime;
 
 public class RegistrationStateLog extends RegistrationStateLog_Base {
-    
+
     private RegistrationStateLog() {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
-        setWhenCreated(new DateTime());
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+	setWhenCreated(new DateTime());
     }
-    
+
     public RegistrationStateLog(final RegistrationState state, final EnrolmentAction action, final Person person) {
-	
+
 	this();
-	
+
 	check(state, "error.RegistrationStateLog.invalid.state");
 	check(state.getRegistration(), "error.RegistrationStateLog.invalid.registation");
 	check(state.getStateDate(), "error.RegistrationStateLog.invalid.state.date");
 	check(action, "error.RegistrationStateLog.invalid.action");
-	check(person, "error.RegistrationStateLog.invalid.person");
-	
+
 	setRegistration(state.getRegistration());
 	setStateDate(state.getStateDate());
 	setStateType(state.getClass().getName());
 	setAction(action);
-	setWho(person.getIstUsername());
+	
+	if (person != null) {
+	    setWho(person.getIstUsername());
+	}
     }
-    
+
     public void delete() {
 	removeRootDomainObject();
 	removeRegistration();
