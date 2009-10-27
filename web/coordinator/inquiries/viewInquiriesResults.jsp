@@ -19,6 +19,10 @@
 		<strong><bean:write name="courseResult" property="studentInquiriesCourseResult.executionCourse.nome" /> - 				
 		<bean:write name="courseResult" property="studentInquiriesCourseResult.executionDegree.degreeCurricularPlan.name" /></strong>
 	</html:link>
+    <bean:define id="executionCourseLink"><c:out value="${pageContext.request.contextPath}" /><c:out value="${executionCourse.site.reversePath}" />/pagina-inicial</bean:define>
+    <!-- NO_CHECKSUM --><!-- HAS_CONTEXT --><html:link href="<%= executionCourseLink %>" target="_blank">            
+        <em><bean:message key="link.curricularUnit.website" bundle="INQUIRIES_RESOURCES"/></em>
+    </html:link>
 </p>
 
 <logic:notEmpty name="courseResult" property="studentInquiriesTeachingResults">
@@ -119,6 +123,10 @@
 			<logic:empty name="professorship" property="teachingInquiry">
 				<bean:write name="professorship" property="person.name"/>
 			</logic:empty>
+            <bean:define id="emailAddress" name="professorship" property="person.institutionalOrDefaultEmailAddressValue" />
+            <html:link href="<%= "mailto:" + emailAddress %>" target="_blank" style="border: none" titleKey="link.email" bundle="INQUIRIES_RESOURCES">
+                <img src="<%=request.getContextPath()%>/images/icon_email.gif"/>
+            </html:link>
 		</li>
 	</logic:iterate>
 </ul>
@@ -143,6 +151,10 @@
             <bean:define id="delegateInquiryID" name="delegateInquiry" property="idInternal" />
             <html:link page="<%= "/viewInquiriesResults.do?method=showFilledYearDelegateInquiry&filledYearDelegateInquiryId=" + delegateInquiryID + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID")  %>" target="_blank">
                 <bean:write name="delegateInquiry" property="delegate.registration.student.person.name"/>
+            </html:link>
+            <bean:define id="emailAddress" name="delegateInquiry" property="delegate.registration.student.person.institutionalOrDefaultEmailAddressValue" />
+            <html:link href="<%= "mailto:" + emailAddress %>" target="_blank" style="border: none" titleKey="link.email" bundle="INQUIRIES_RESOURCES">
+                <img src="<%=request.getContextPath()%>/images/icon_email.gif"/>
             </html:link>
         </li>
     </logic:iterate>
