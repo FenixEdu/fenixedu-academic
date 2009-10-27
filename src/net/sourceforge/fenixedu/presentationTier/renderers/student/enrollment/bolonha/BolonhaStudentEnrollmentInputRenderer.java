@@ -31,6 +31,9 @@ import net.sourceforge.fenixedu.presentationTier.renderers.controllers.CopyCheck
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyArrayConverter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
+
+import org.apache.commons.lang.StringUtils;
+
 import pt.ist.fenixWebFramework.renderers.InputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlActionLink;
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
@@ -464,7 +467,9 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 		String degreeName = degreeModuleToEvaluate.getName();
 
 		if (isAcademicAdminOfficeEmployee() && degreeModuleToEvaluate.getDegreeModule() instanceof CurricularCourse) {
-		    degreeName = degreeModuleToEvaluate.getDegreeModule().getCode() + " - " + degreeName;
+		    if (!StringUtils.isEmpty(degreeModuleToEvaluate.getDegreeModule().getCode())) {
+			degreeName = degreeModuleToEvaluate.getDegreeModule().getCode() + " - " + degreeName;
+		    }
 
 		    CurricularCourse curricularCourse = (CurricularCourse) degreeModuleToEvaluate.getDegreeModule();
 		    degreeName += " (" + studentResources.getString("label.grade.scale") + " - "
@@ -580,7 +585,10 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	    String enrolmentName = getPresentationNameFor(enrolment);
 	    if (isAcademicAdminOfficeEmployee() && enrolment.getDegreeModule() instanceof CurricularCourse) {
 		CurricularCourse curricularCourse = (CurricularCourse) enrolment.getDegreeModule();
-		enrolmentName = curricularCourse.getCode() + " - " + enrolmentName;
+
+		if (!StringUtils.isEmpty(curricularCourse.getCode())) {
+		    enrolmentName = curricularCourse.getCode() + " - " + enrolmentName;
+		}
 
 		enrolmentName += "(" + studentResources.getString("label.grade.scale") + " - "
 			+ curricularCourse.getGradeScaleChain().getDescription() + ") ";
