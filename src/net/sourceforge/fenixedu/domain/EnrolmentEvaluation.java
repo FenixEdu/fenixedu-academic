@@ -292,6 +292,10 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 	return super.getGradeScale() != null ? super.getGradeScale() : getEnrolment().getGradeScaleChain();
     }
 
+    public GradeScale getAssociatedGradeScale() {
+	return super.getGradeScale();
+    }
+
     public boolean isNormal() {
 	return getEnrolmentEvaluationType() == EnrolmentEvaluationType.NORMAL;
     }

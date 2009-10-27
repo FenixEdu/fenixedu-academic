@@ -2005,7 +2005,7 @@
 <schema name="set.evaluation.curriculum.entry" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="enrolmentEvaluationTypeDescription" key="label.set.evaluation.type" read-only="true" />
 	<slot name="executionYearFullLabel" key="label.set.evaluation.execution.year" read-only="true" />
-	<slot name="gradeValue" key="label.set.evaluation.grade.value" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.GradeValidator">
+	<slot name="gradeValue" key="label.set.evaluation.grade.value.simple" validator="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment.bolonha.validators.GradeValidator">
 		<property name="size" value="4" />
 	</slot>
 	<slot name="gradeScale" key="label.grade.scale.min" />

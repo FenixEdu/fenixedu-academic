@@ -66,6 +66,7 @@ public class MarkSheetEnrolmentEvaluationBean implements Serializable {
 	    this.evaluationDate = enrolmentEvaluation.getExamDate();
 	    this.bookReference = enrolmentEvaluation.getBookReference();
 	    this.page = enrolmentEvaluation.getPage();
+	    this.gradeScale = enrolmentEvaluation.getAssociatedGradeScale();
 	}
 
 	this.enrolmentEvaluationSet = null;
