@@ -546,7 +546,7 @@
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
       <description>
-        If slot is required
+        If slot is required. Has the same result of adding pt.ist.fenixWebFramework.renderers.validators.RequiredValidator using validator tag 
       </description>
     </attribute>
     
