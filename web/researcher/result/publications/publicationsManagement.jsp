@@ -20,7 +20,7 @@
 	</logic:messagesPresent>
 
     <logic:notPresent name="preferredSetting">
-		<ul class="list5 mbottom15">
+		<ul class="list5 mbottom2">
 			<li>
 				<html:link page="/resultPublications/prepareCreate.do">
 					<bean:message bundle="RESEARCHER_RESOURCES"	key="researcher.ResultPublication.insert.link"/>
@@ -60,7 +60,7 @@
 	<logic:present name="preferredSetting">
 	   <fr:form action="/publications/management.do?method=setPreferredPublications">
 	       <jsp:include page="publicationsCategories.jsp" />
-	       <p>
+	       <p class="mtop2">
 		       <html:submit><bean:message bundle="RESEARCHER_RESOURCES" key="button.save" /></html:submit>
 		       <html:cancel><bean:message bundle="RESEARCHER_RESOURCES" key="button.cancel" /></html:cancel>
 	       </p>
@@ -69,6 +69,12 @@
 
     <logic:notPresent name="preferredSetting">
 	    <jsp:include page="publicationsCategories.jsp" />
+	    <p>
+	    	<em>
+		        <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.preferredPublications.help2"/>
+		        <html:link page="/resultPublications/listPublications.do"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.management.title"/></html:link>
+	    	</em>
+	    </p>
     </logic:notPresent>
 
 	</logic:notEmpty>
