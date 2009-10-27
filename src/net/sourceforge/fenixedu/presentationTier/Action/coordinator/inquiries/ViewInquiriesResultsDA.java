@@ -31,32 +31,12 @@ import net.sourceforge.fenixedu.domain.inquiries.teacher.TeachingInquiry;
 import net.sourceforge.fenixedu.domain.student.YearDelegateCourseInquiry;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-
-@Mapping(path = "/viewInquiriesResults", module = "coordinator", formBeanClass = ViewInquiriesResultPageDTO.class)
-@Forwards( { @Forward(name = "inquiryResults", path = "/coordinator/inquiries/viewInquiriesResults.jsp"),
-	@Forward(name = "curricularUnitSelection", path = "/coordinator/inquiries/curricularUnitSelection.jsp"),
-	@Forward(name = "showFilledTeachingInquiry", path = "/inquiries/showFilledTeachingInquiry.jsp", useTile = false),
-	@Forward(name = "showFilledTeachingInquiry_v2", path = "/inquiries/showFilledTeachingInquiry_v2.jsp", useTile = false),
-	@Forward(name = "showFilledDelegateInquiry", path = "/inquiries/showFilledDelegateInquiry.jsp", useTile = false),
-	@Forward(name = "showCourseInquiryResult", path = "/inquiries/showCourseInquiryResult.jsp", useTile = false),
-	@Forward(name = "showTeachingInquiryResult", path = "/inquiries/showTeachingInquiryResult.jsp", useTile = false) })
-public class ViewInquiriesResultsDA extends FenixDispatchAction {
-
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	CoordinatedDegreeInfo.setCoordinatorContext(request);
-	return super.execute(mapping, actionForm, request, response);
-    }
+abstract public class ViewInquiriesResultsDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
@@ -71,7 +51,7 @@ public class ViewInquiriesResultsDA extends FenixDispatchAction {
 	return actionMapping.findForward("curricularUnitSelection");
     }
 
-    private List<ExecutionSemester> getExecutionSemesters(HttpServletRequest request, ActionForm actionForm) {
+    protected List<ExecutionSemester> getExecutionSemesters(HttpServletRequest request, ActionForm actionForm) {
 	Integer degreeCurricularPlanID = getIntegerFromRequest(request, "degreeCurricularPlanID");
 	if (degreeCurricularPlanID == null || degreeCurricularPlanID == 0) {
 	    degreeCurricularPlanID = ((ViewInquiriesResultPageDTO) actionForm).getDegreeCurricularPlanID();
@@ -218,6 +198,7 @@ public class ViewInquiriesResultsDA extends FenixDispatchAction {
 
 	    ((ViewInquiriesResultPageDTO) actionForm).setExecutionCourseID(executionCourse.getOid());
 	    ((ViewInquiriesResultPageDTO) actionForm).setExecutionDegreeID(executionDegree.getOid());
+//	    ((ViewInquiriesResultPageDTO) actionForm).setDegreeCurricularPlanID(executionDegree.getDegreeCurricularPlan().getIdInternal());
 
 	    final StudentInquiriesCourseResultBean courseResultBean = populateStudentInquiriesCourseResults(executionCourse,
 		    executionDegree);
@@ -230,16 +211,8 @@ public class ViewInquiriesResultsDA extends FenixDispatchAction {
 	return selectexecutionSemester(actionMapping, actionForm, request, response);
     }
 
-    private boolean coordinatorCanComment(final ExecutionDegree executionDegree, final ExecutionSemester executionPeriod) {
-	if (executionDegree.getDegreeType().isThirdCycle()) {
-	    return false;
-	}
-
-	final InquiryResponsePeriod coordinatorReportResponsePeriod = executionPeriod.getCoordinatorReportResponsePeriod();
-	final Coordinator coordinator = executionDegree.getCoordinatorByTeacher(AccessControl.getPerson());
-	return coordinator != null && coordinator.isResponsible() && coordinatorReportResponsePeriod != null
-		&& coordinatorReportResponsePeriod.isOpen();
-    }
+    abstract protected boolean coordinatorCanComment(final ExecutionDegree executionDegree,
+	    final ExecutionSemester executionPeriod);
 
     private StudentInquiriesCourseResultBean populateStudentInquiriesCourseResults(final ExecutionCourse executionCourse,
 	    final ExecutionDegree executionDegree) {

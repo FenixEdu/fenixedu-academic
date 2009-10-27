@@ -107,6 +107,12 @@
 		<li>
 			<html:link page="/evaluationMethodControl.do?method=search"><bean:message key="label.evaluationMethodControl" bundle="APPLICATION_RESOURCES"/></html:link>
 		</li>
+        <li>
+            <html:link page="/viewInquiriesResults.do?method=chooseDegreeCurricularPlan">
+                <bean:message key="title.inquiries.results" bundle="INQUIRIES_RESOURCES"/>
+            </html:link>
+        </li>        
+        
 
 		<li class="navheader">
 			<bean:message key="link.tutorship" bundle="PEDAGOGICAL_COUNCIL"/>
