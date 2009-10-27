@@ -468,7 +468,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 
 		if (isAcademicAdminOfficeEmployee() && degreeModuleToEvaluate.getDegreeModule() instanceof CurricularCourse) {
 		    if (!StringUtils.isEmpty(degreeModuleToEvaluate.getDegreeModule().getCode())) {
-			degreeName = degreeModuleToEvaluate.getDegreeModule().getCode() + " - " + degreeName;
+		    degreeName = degreeModuleToEvaluate.getDegreeModule().getCode() + " - " + degreeName;
 		    }
 
 		    CurricularCourse curricularCourse = (CurricularCourse) degreeModuleToEvaluate.getDegreeModule();
@@ -587,10 +587,10 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 		CurricularCourse curricularCourse = (CurricularCourse) enrolment.getDegreeModule();
 
 		if (!StringUtils.isEmpty(curricularCourse.getCode())) {
-		    enrolmentName = curricularCourse.getCode() + " - " + enrolmentName;
+		enrolmentName = curricularCourse.getCode() + " - " + enrolmentName;
 		}
 
-		enrolmentName += "(" + studentResources.getString("label.grade.scale") + " - "
+		enrolmentName += " (" + studentResources.getString("label.grade.scale") + " - "
 			+ curricularCourse.getGradeScaleChain().getDescription() + ") ";
 	    }
 
