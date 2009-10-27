@@ -435,7 +435,7 @@
 					<textElement textAlignment="Justified" lineSpacing="1_1_2">
 						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["no " + $P{degreeDescription} + ", obteve aprovamento nas seguintes unidades extra-curriculares:"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["no " + $P{degreeDescription} + ", obteve aproveitamento nas seguintes unidades extra-curriculares:"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
