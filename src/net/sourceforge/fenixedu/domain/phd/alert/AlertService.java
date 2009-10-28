@@ -49,7 +49,7 @@ public class AlertService {
 
 	final Set<Person> toNotify = new HashSet<Person>();
 
-	for (final PhdProgramGuiding guiding : process.getGuidings()) {
+	for (final PhdProgramGuiding guiding : process.getGuidingsAndAssistantGuidings()) {
 	    if (guiding.isInternal()) {
 		toNotify.add(((InternalGuiding) guiding).getPerson());
 	    } else {

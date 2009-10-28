@@ -147,7 +147,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 		    "message.phd.alert.public.presentation.seminar.scheduled.presentation.date.subject",
 		    "message.phd.alert.public.presentation.seminar.scheduled.presentation.date.body");
 
-	    AlertService.alertCoordinator(process.getIndividualProgramProcess(),
+	    AlertService.alertGuiders(process.getIndividualProgramProcess(),
 		    "message.phd.alert.public.presentation.seminar.scheduled.presentation.date.subject",
 		    "message.phd.alert.public.presentation.seminar.scheduled.presentation.date.body");
 
