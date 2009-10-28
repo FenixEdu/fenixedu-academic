@@ -1,9 +1,5 @@
 package net.sourceforge.fenixedu.domain.student;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -75,7 +71,6 @@ import org.apache.commons.collections.Predicate;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixframework.pstm.Transaction;
 
 public class Student extends Student_Base {
 
@@ -128,10 +123,10 @@ public class Student extends Student_Base {
 	this(person, null);
     }
 
-    public static Student readStudentByNumber(Integer studentNumber) {
-	for (Student student : RootDomainObject.getInstance().getStudents()) {
-	    if (student.getNumber().equals(studentNumber)) {
-		return student;
+    public static Student readStudentByNumber(final Integer number) {
+	for (final StudentNumber studentNumber : RootDomainObject.getInstance().getStudentNumbers()) {
+	    if (studentNumber.getNumber().equals(number)) {
+		return studentNumber.getStudent();
 	    }
 	}
 	return null;
@@ -262,13 +257,13 @@ public class Student extends Student_Base {
     }
 
     public static Integer generateStudentNumber() {
-	Integer nextNumber = 0;
-	for (Student student : RootDomainObject.getInstance().getStudents()) {
-	    if (student.getNumber() < 100000 && student.getNumber() > nextNumber) {
-		nextNumber = student.getNumber();
+	int nextNumber = 0;
+	for (final StudentNumber studentNumber : RootDomainObject.getInstance().getStudentNumbers()) {
+	    if (studentNumber.getNumber().intValue() < 100000 && studentNumber.getNumber().intValue() > nextNumber) {
+		nextNumber = studentNumber.getNumber().intValue();
 	    }
 	}
-	return nextNumber + 1;
+	return Integer.valueOf(nextNumber + 1);
     }
 
     public ResidenceCandidacies getResidenceCandidacyForCurrentExecutionYear() {
@@ -1624,4 +1619,18 @@ public class Student extends Student_Base {
 	setExportInformationPassword(null);
     }
 
+    @Override
+    public void setNumber(final Integer number) {
+	super.setNumber(number);
+
+	if (hasStudentNumber()) {
+	    if (number != null) {
+		getStudentNumber().setNumber(number);
+	    } else {
+		getStudentNumber().delete();
+	    }
+	} else if (number != null) {
+	    new StudentNumber(this);
+	}
+    }
 }

@@ -4962,6 +4962,10 @@ class DomainObject {
 		Integer number;
 		String exportInformationPassword;
 	}
+	
+	class student.StudentNumber extends DomainObject {
+		Integer number;
+	}
 
 	class student.StudentDataByExecutionYear extends DomainObject {
 		StudentPersonalDataAuthorizationChoice personalDataAuthorization;
@@ -13530,6 +13534,13 @@ relation RootDomainObjectStudent {
 	}
 }
 
+relation RootDomainObjectStudentNumber {
+	RootDomainObject playsRole rootDomainObject;
+	student.StudentNumber playsRole studentNumbers {
+		multiplicity *;
+	}
+}
+
 relation RootDomainObjectStudentCourseReport {
 	RootDomainObject playsRole rootDomainObject;
 	gesdis.StudentCourseReport playsRole studentCourseReports {
@@ -14309,6 +14320,11 @@ relation StudentPaymentCode {
 relation StudentPerson {
 	student.Student playsRole student;
 	Person playsRole person;
+}
+
+relation StudentStudentNumber {
+	student.Student playsRole student;
+	student.StudentNumber playsRole studentNumber;
 }
 
 relation StudentSecretaryEnrolmentStudent {
