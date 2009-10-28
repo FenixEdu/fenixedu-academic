@@ -161,6 +161,7 @@
 			</ul>
 			</div>
 		</logic:iterate>
+		<div style="clear: both;"></div>
     </logic:notEmpty>
 	
 	
