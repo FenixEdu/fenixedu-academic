@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 public class InternalGuiding extends InternalGuiding_Base {
 
@@ -46,7 +47,13 @@ public class InternalGuiding extends InternalGuiding_Base {
 
     @Override
     public String getWorkLocation() {
-	return getPerson().getEmployee().getCurrentWorkingPlace().getName();
+	if (getPerson().hasEmployee()) {
+	    final Unit workingPlace = getPerson().getEmployee().getCurrentWorkingPlace();
+	    if (workingPlace != null) {
+		workingPlace.getName();
+	    }
+	}
+	return null;
     }
 
     @Override
