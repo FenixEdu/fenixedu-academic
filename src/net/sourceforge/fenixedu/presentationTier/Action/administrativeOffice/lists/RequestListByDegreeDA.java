@@ -15,15 +15,18 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.commons.DegreeByExecutionYearBean;
-import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestSearchBean;
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestSearchBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
+import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestYear;
 import net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -49,7 +52,7 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 	    HttpServletResponse response) {
 
 	request.setAttribute("degreeByExecutionYearBean", new DegreeByExecutionYearBean());
-	request.setAttribute("academicServiceRequestSearchBean", new AcademicServiceRequestSearchBean());
+	request.setAttribute("documentRequestSearchBean", new DocumentRequestSearchBean());
 
 	return mapping.findForward("searchRequests");
     }
@@ -58,10 +61,10 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 	    HttpServletResponse response) {
 
 	final Object degreeSearchBean = getRenderedObject("degreeByExecutionYearBean");
-	final Object requestSearchBean = getRenderedObject("academicServiceRequestSearchBean");
+	final Object requestSearchBean = getRenderedObject("documentRequestSearchBean");
 	RenderUtils.invalidateViewState();
 	request.setAttribute("degreeByExecutionYearBean", degreeSearchBean);
-	request.setAttribute("academicServiceRequestSearchBean", requestSearchBean);
+	request.setAttribute("documentRequestSearchBean", requestSearchBean);
 
 	return mapping.findForward("searchRequests");
     }
@@ -70,70 +73,96 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	final DegreeByExecutionYearBean degreeSearchBean = (DegreeByExecutionYearBean) getRenderedObject("degreeByExecutionYearBean");
-	final AcademicServiceRequestSearchBean requestSearchBean = (AcademicServiceRequestSearchBean) getRenderedObject("academicServiceRequestSearchBean");
+	final DocumentRequestSearchBean requestSearchBean = (DocumentRequestSearchBean) getRenderedObject("documentRequestSearchBean");
 
 	final List<RegistrationAcademicServiceRequest> requestList = search(degreeSearchBean, requestSearchBean);
 
 	request.setAttribute("degreeByExecutionYearBean", degreeSearchBean);
-	request.setAttribute("academicServiceRequestSearchBean", requestSearchBean);
+	request.setAttribute("documentRequestSearchBean", requestSearchBean);
 	request.setAttribute("registrationAcademicServiceRequestList", requestList);
 
 	return mapping.findForward("searchRequests");
     }
 
     public List<RegistrationAcademicServiceRequest> search(DegreeByExecutionYearBean degreeSearchBean,
-	    AcademicServiceRequestSearchBean requestSearchBean) {
-	List<RegistrationAcademicServiceRequest> requestList = new ArrayList<RegistrationAcademicServiceRequest>();
+	    DocumentRequestSearchBean requestSearchBean) {
+	List<RegistrationAcademicServiceRequest> resultList = new ArrayList<RegistrationAcademicServiceRequest>();
 
-	final Degree degree = degreeSearchBean.getDegree();
-	final DegreeType degreetype = degreeSearchBean.getDegreeType();
-	final ExecutionYear executionYear = degreeSearchBean.getExecutionYear();
-	final AcademicServiceRequestType requestType = requestSearchBean.getAcademicServiceRequestType();
-	final AcademicServiceRequestSituationType requestSituation = requestSearchBean.getAcademicServiceRequestSituationType();
-	for (final AcademicServiceRequest academicServiceRequest : executionYear.getAcademicServiceRequests()) {
+	final Degree chosenDegree = degreeSearchBean.getDegree();
+	final DegreeType chosenDegreeType = degreeSearchBean.getDegreeType();
+	final ExecutionYear chosenExecutionYear = degreeSearchBean.getExecutionYear();
+
+	final AcademicServiceRequestType chosenServiceRequestType = requestSearchBean.getAcademicServiceRequestType();
+	final DocumentRequestType chosenDocumentRequestType = requestSearchBean.getChosenDocumentRequestType();
+	final AcademicServiceRequestSituationType chosenRequestSituation = requestSearchBean
+		.getAcademicServiceRequestSituationType();
+
+	ArrayList<AcademicServiceRequest> requestList = getRequestsByYear(chosenExecutionYear.getBeginCivilYear());
+	requestList.addAll(getRequestsByYear(chosenExecutionYear.getEndCivilYear()));
+	for (final AcademicServiceRequest academicServiceRequest : requestList) {
 	    if (!(academicServiceRequest instanceof RegistrationAcademicServiceRequest)) {
 		continue;
 	    }
 	    RegistrationAcademicServiceRequest request = (RegistrationAcademicServiceRequest) academicServiceRequest;
 
-	    DegreeCurricularPlan degreeCurricularPlan = null;
-	    for (DegreeCurricularPlan plan : request.getDegree().getDegreeCurricularPlansForYear(executionYear)) {
-		if ((degreeCurricularPlan == null)
-			|| (degreeCurricularPlan.getMostRecentExecutionDegree().isBefore(plan.getMostRecentExecutionDegree()))) {
-		    degreeCurricularPlan = plan;
-		}
-	    }
-	    if (degreeCurricularPlan == null) {
-		degreeCurricularPlan = request.getDegree().getMostRecentDegreeCurricularPlan();
-	    }
-
-	    if ((degreetype != null) && (degreeCurricularPlan == null || degreetype != degreeCurricularPlan.getDegreeType())) {
+	    DegreeCurricularPlan degreeCurricularPlan = getMostRecentDegreeCurricularPlanForYear(request, chosenExecutionYear);
+	    if ((chosenDegreeType != null)
+		    && (degreeCurricularPlan == null || chosenDegreeType != degreeCurricularPlan.getDegreeType())) {
 		continue;
 	    }
-	    if (degree != null && degree != request.getDegree()) {
+	    if (chosenDegree != null && chosenDegree != request.getRegistration().getDegree()) {
 		continue;
 	    }
-	    if (requestType != null && requestType != request.getAcademicServiceRequestType()) {
+	    if (chosenServiceRequestType != null && chosenServiceRequestType != request.getAcademicServiceRequestType()) {
 		continue;
 	    }
-	    if (requestSituation != null
-		    && requestSituation != request.getActiveSituation().getAcademicServiceRequestSituationType()) {
+	    if (request.getAcademicServiceRequestType() == AcademicServiceRequestType.DOCUMENT
+		    && chosenDocumentRequestType != null
+		    && chosenDocumentRequestType != (((DocumentRequest) request).getDocumentRequestType())) {
+		continue;
+	    }
+	    if (chosenRequestSituation != null
+		    && chosenRequestSituation != request.getActiveSituation().getAcademicServiceRequestSituationType()) {
 		continue;
 	    }
 	    if (requestSearchBean.isUrgentRequest() && !request.isUrgentRequest()) {
 		continue;
 	    }
-	    requestList.add(request);
+	    resultList.add(request);
 	}
 
-	return requestList;
+	return resultList;
+    }
+
+    private ArrayList<AcademicServiceRequest> getRequestsByYear(int year) {
+	AcademicServiceRequestYear academicServiceRequestYear = AcademicServiceRequestYear.readByYear(year);
+	if (academicServiceRequestYear == null) {
+	    return new ArrayList<AcademicServiceRequest>();
+	} else {
+	    return new ArrayList<AcademicServiceRequest>(academicServiceRequestYear.getAcademicServiceRequests());
+	}
+    }
+
+    private DegreeCurricularPlan getMostRecentDegreeCurricularPlanForYear(RegistrationAcademicServiceRequest request,
+	    final ExecutionYear executionYear) {
+	DegreeCurricularPlan degreeCurricularPlan = null;
+	for (DegreeCurricularPlan plan : request.getRegistration().getDegree().getDegreeCurricularPlansForYear(executionYear)) {
+	    if ((degreeCurricularPlan == null)
+		    || (degreeCurricularPlan.getMostRecentExecutionDegree().isBefore(plan.getMostRecentExecutionDegree()))) {
+		degreeCurricularPlan = plan;
+	    }
+	}
+	if (degreeCurricularPlan == null) {
+	    degreeCurricularPlan = request.getRegistration().getDegree().getMostRecentDegreeCurricularPlan();
+	}
+	return degreeCurricularPlan;
     }
 
     public ActionForward exportInfoToExcel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
 	final DegreeByExecutionYearBean degreeSearchBean = (DegreeByExecutionYearBean) getRenderedObject("degreeByExecutionYearBean");
-	final AcademicServiceRequestSearchBean requestSearchBean = (AcademicServiceRequestSearchBean) getRenderedObject("academicServiceRequestSearchBean");
+	final DocumentRequestSearchBean requestSearchBean = (DocumentRequestSearchBean) getRenderedObject("documentRequestSearchBean");
 	if ((degreeSearchBean == null) || (requestSearchBean == null)) {
 	    return null;
 	}
@@ -166,7 +195,7 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
     }
 
     private void exportToXls(List<RegistrationAcademicServiceRequest> requestList, OutputStream outputStream,
-	    DegreeByExecutionYearBean degreeSearchBean, AcademicServiceRequestSearchBean requestSearchBean) throws IOException {
+	    DegreeByExecutionYearBean degreeSearchBean, DocumentRequestSearchBean requestSearchBean) throws IOException {
 
 	final StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet(
 		getResourceMessage("label.requestByDegree.unspaced"));

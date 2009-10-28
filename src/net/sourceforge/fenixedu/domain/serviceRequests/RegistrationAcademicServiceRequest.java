@@ -31,6 +31,11 @@ abstract public class RegistrationAcademicServiceRequest extends RegistrationAca
 	    throw new DomainException("error.serviceRequests.AcademicServiceRequest.registration.cannot.be.null");
 	} else if (!isAvailableForTransitedRegistrations() && bean.getRegistration().isTransited()) {
 	    throw new DomainException("RegistrationAcademicServiceRequest.registration.cannot.be.transited");
+	} else if (ExecutionYear.readByDateTime(bean.getRequestDate()).isBefore(bean.getRegistration().getStartExecutionYear())) {
+	    throw new DomainException("error.RegistrationAcademicServiceRequest.requestDate.before.registrationStartDate");
+	} else if (bean.getExecutionYear() != null
+		&& bean.getExecutionYear().isBefore(bean.getRegistration().getStartExecutionYear())) {
+	    throw new DomainException("error.RegistrationAcademicServiceRequest.executionYear.before.registrationStartDate");
 	}
     }
 

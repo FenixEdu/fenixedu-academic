@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.dataTransferObject.serviceRequests;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.serviceRequests.EquivalencePlanRequest;
@@ -11,10 +10,10 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 public class RegistrationAcademicServiceRequestCreateBean extends AcademicServiceRequestCreateBean {
 
     private AcademicServiceRequestType academicServiceRequestType;
-    private DomainReference<CurriculumGroup> curriculumGroup;
-    private DomainReference<CourseGroup> courseGroup;
-    private DomainReference<Enrolment> enrolment;
-    private DomainReference<EquivalencePlanRequest> equivalencePlanRequest;
+    private CurriculumGroup curriculumGroup;
+    private CourseGroup courseGroup;
+    private Enrolment enrolment;
+    private EquivalencePlanRequest equivalencePlanRequest;
     private String subject;
     private String purpose;
     private Integer numberOfEquivalences = null;
@@ -32,36 +31,35 @@ public class RegistrationAcademicServiceRequestCreateBean extends AcademicServic
     }
 
     final public CurriculumGroup getCurriculumGroup() {
-	return (this.curriculumGroup != null) ? this.curriculumGroup.getObject() : null;
+	return curriculumGroup;
     }
 
     final public void setCurriculumGroup(CurriculumGroup curriculumGroup) {
-	this.curriculumGroup = (curriculumGroup != null) ? new DomainReference<CurriculumGroup>(curriculumGroup) : null;
+	this.curriculumGroup = curriculumGroup;
     }
 
     final public CourseGroup getCourseGroup() {
-	return (this.courseGroup != null) ? this.courseGroup.getObject() : null;
+	return courseGroup;
     }
 
     final public void setCourseGroup(CourseGroup courseGroup) {
-	this.courseGroup = (courseGroup != null) ? new DomainReference<CourseGroup>(courseGroup) : null;
+	this.courseGroup = courseGroup;
     }
 
     final public Enrolment getEnrolment() {
-	return (this.enrolment != null) ? this.enrolment.getObject() : null;
+	return enrolment;
     }
 
     final public void setEnrolment(Enrolment enrolment) {
-	this.enrolment = (enrolment != null) ? new DomainReference<Enrolment>(enrolment) : null;
+	this.enrolment = enrolment;
     }
 
     final public EquivalencePlanRequest getEquivalencePlanRequest() {
-	return (this.equivalencePlanRequest != null) ? this.equivalencePlanRequest.getObject() : null;
+	return equivalencePlanRequest;
     }
 
     final public void setEquivalencePlanRequest(EquivalencePlanRequest equivalencePlanRequest) {
-	this.equivalencePlanRequest = (equivalencePlanRequest != null) ? new DomainReference<EquivalencePlanRequest>(
-		equivalencePlanRequest) : null;
+	this.equivalencePlanRequest = equivalencePlanRequest;
     }
 
     final public String getSubject() {

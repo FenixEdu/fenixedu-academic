@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ page import="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType" %>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
@@ -23,7 +24,9 @@
 	</fr:layout>
 </fr:edit>
 
-<fr:edit id="academicServiceRequestSearchBean" name="academicServiceRequestSearchBean" schema="AcademicServiceRequestSearchBean.edit">
+<bean:define id="documentRequestSearchBean" name="documentRequestSearchBean" type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestSearchBean"/>
+<fr:edit id="documentRequestSearchBean" name="documentRequestSearchBean" schema="<%= (documentRequestSearchBean.getAcademicServiceRequestType() == AcademicServiceRequestType.DOCUMENT) ? "DocumentRequestSearchBean.edit" : "AcademicServiceRequestSearchBean.edit" %>">
+	<fr:destination name="postBack" path="/requestListByDegree.do?method=postBack"/>
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle5 thlight thright mtop025 thmiddle"/>
 	</fr:layout>
