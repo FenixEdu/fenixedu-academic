@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.QualificationBean;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.caseHandling.Process;
@@ -972,5 +971,13 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     @Override
     protected PhdIndividualProgramProcess getIndividualProgramProcess() {
 	return this;
+    }
+
+    public Set<PhdProgramGuiding> getGuidingsAndAssistantGuidings() {
+	final Set<PhdProgramGuiding> result = new HashSet<PhdProgramGuiding>();
+	result.addAll(getAssistantguidings());
+	result.addAll(getGuidings());
+
+	return result;
     }
 }
