@@ -51,7 +51,7 @@ abstract public class ViewInquiriesResultsDA extends FenixDispatchAction {
 	return actionMapping.findForward("curricularUnitSelection");
     }
 
-    protected List<ExecutionSemester> getExecutionSemesters(HttpServletRequest request, ActionForm actionForm) {
+    public List<ExecutionSemester> getExecutionSemesters(HttpServletRequest request, ActionForm actionForm) {
 	Integer degreeCurricularPlanID = getIntegerFromRequest(request, "degreeCurricularPlanID");
 	if (degreeCurricularPlanID == null || degreeCurricularPlanID == 0) {
 	    degreeCurricularPlanID = ((ViewInquiriesResultPageDTO) actionForm).getDegreeCurricularPlanID();
@@ -59,12 +59,9 @@ abstract public class ViewInquiriesResultsDA extends FenixDispatchAction {
 	final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(getIntegerFromRequest(
 		request, "degreeCurricularPlanID"));
 	final List<ExecutionSemester> executionSemesters = new ArrayList<ExecutionSemester>();
-	final Person loggedPerson = AccessControl.getPerson();
 	for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
-	    if (executionDegree.getCoordinatorByTeacher(loggedPerson) != null) {
-		final ExecutionYear executionYear = executionDegree.getExecutionYear();
-		executionSemesters.addAll(executionYear.getExecutionPeriodsSet());
-	    }
+	    final ExecutionYear executionYear = executionDegree.getExecutionYear();
+	    executionSemesters.addAll(executionYear.getExecutionPeriodsSet());
 	}
 	Collections.sort(executionSemesters);
 	Collections.reverse(executionSemesters);
@@ -198,7 +195,8 @@ abstract public class ViewInquiriesResultsDA extends FenixDispatchAction {
 
 	    ((ViewInquiriesResultPageDTO) actionForm).setExecutionCourseID(executionCourse.getOid());
 	    ((ViewInquiriesResultPageDTO) actionForm).setExecutionDegreeID(executionDegree.getOid());
-//	    ((ViewInquiriesResultPageDTO) actionForm).setDegreeCurricularPlanID(executionDegree.getDegreeCurricularPlan().getIdInternal());
+	    // ((ViewInquiriesResultPageDTO)
+	    // actionForm).setDegreeCurricularPlanID(executionDegree.getDegreeCurricularPlan().getIdInternal());
 
 	    final StudentInquiriesCourseResultBean courseResultBean = populateStudentInquiriesCourseResults(executionCourse,
 		    executionDegree);

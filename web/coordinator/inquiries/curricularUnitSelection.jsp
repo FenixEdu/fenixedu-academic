@@ -51,13 +51,13 @@ div.progress-container > div {
     <div class="mtop1">
         <bean:write name="executionSemester" property="coordinatorReportResponsePeriod.introduction" filter="false"/>
         
-        <p>De seguida apresenta-se informação sobre os resultados dos Inquéritos aos alunos, dos Relatórios de Docência, preenchidos por cada elemento do Corpo Docente e pelo Responsável por UC, e dos Relatórios de Discência, preenchidos pelos Delegados de Curso , para cada UC do curso.</p> 
+        <p>De seguida apresenta-se informação sobre os resultados dos Inquéritos aos alunos, dos Relatórios de Docência, preenchidos por cada elemento do Corpo Docente e pelo Responsável por UC, e dos Relatórios de Discência, preenchidos pelos Delegados de Curso, para cada UC do curso.</p> 
         
-        <p>No primeiro grupo de UC estarão aquelas onde foram identificados resultados a melhorar, sendo que algumas apresentam resultados a melhorar em mais do que um grupo de questões e para mais de metade dos pares Docente/tipo de aulas que leccionaram (auditorias). Nos segundo e terceiro grupos estão, respectivamente, as UC cujos docentes tiveram resultados excelentes e as restantes UC.</p>
+        <p>No primeiro grupo de UC estarão aquelas onde foram identificados resultados a melhorar, sendo que algumas apresentam resultados a melhorar em mais do que um grupo de questões e para mais de metade dos pares Docente/tipo de aulas que leccionaram (passíveis de auditoria). Nos segundo e terceiro grupos estão, respectivamente, as UC cujos docentes tiveram resultados excelentes e as restantes UC.</p>
         
-        <p>Para cada UC é possível introduzir um comentário individual aos resultados; para as <strong>UC em condições de serem auditadas é obrigatório o registo de medidas correctivas a serem adoptadas</strong>, incluindo a respectiva calendarização.</p>
+        <p>Para cada UC é possível introduzir um <strong>comentário individual</strong> aos resultados; para as <strong>UC em condições de serem auditadas é obrigatório o registo de medidas correctivas a serem adoptadas,</strong> incluindo a respectiva calendarização.</p>
         
-        <p>No final desta página é solicitado o registo dos seguintes pontos que compõem o RSCC: <br/>
+        <p>No final desta página é solicitado o registo dos seguintes pontos que compõem o RSCC:<br/>
         &nbsp;&nbsp;&nbsp;&nbsp;- Comentário Global ao funcionamento e aos resultados das UC do curso;<br/>
         &nbsp;&nbsp;&nbsp;&nbsp;- Síntese das medidas correctivas a serem adoptadas na sequência de resultados insatisfatórios;<br/>
         &nbsp;&nbsp;&nbsp;&nbsp;- A identificação de boas práticas de ensino e aprendizagem desenvolvidas pelos Docentes, com vista a uma sistematização e disseminação das mesmas.</p>

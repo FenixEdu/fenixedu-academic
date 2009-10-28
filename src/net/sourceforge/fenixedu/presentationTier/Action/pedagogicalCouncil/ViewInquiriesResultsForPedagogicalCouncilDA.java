@@ -12,10 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.ViewInquiriesResultPageDTO;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.inquiries.ViewInquiriesResultsDA;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 
@@ -46,12 +44,12 @@ public class ViewInquiriesResultsForPedagogicalCouncilDA extends ViewInquiriesRe
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-	
+	    HttpServletResponse response) throws Exception {
+
 	request.setAttribute("degreeCurricularPlanID", CoordinatedDegreeInfo.findDegreeCurricularPlanID(request));
-        return super.execute(mapping, actionForm, request, response);
+	return super.execute(mapping, actionForm, request, response);
     }
-    
+
     public ActionForward chooseDegreeCurricularPlan(ActionMapping actionMapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
@@ -61,23 +59,6 @@ public class ViewInquiriesResultsForPedagogicalCouncilDA extends ViewInquiriesRe
 	request.setAttribute("degrees", degrees);
 
 	return actionMapping.findForward("chooseDegreeCurricularPlan");
-    }
-
-    protected List<ExecutionSemester> getExecutionSemesters(HttpServletRequest request, ActionForm actionForm) {
-	Integer degreeCurricularPlanID = getIntegerFromRequest(request, "degreeCurricularPlanID");
-	if (degreeCurricularPlanID == null || degreeCurricularPlanID == 0) {
-	    degreeCurricularPlanID = ((ViewInquiriesResultPageDTO) actionForm).getDegreeCurricularPlanID();
-	}
-	final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(getIntegerFromRequest(
-		request, "degreeCurricularPlanID"));
-	final List<ExecutionSemester> executionSemesters = new ArrayList<ExecutionSemester>();
-	for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
-	    final ExecutionYear executionYear = executionDegree.getExecutionYear();
-	    executionSemesters.addAll(executionYear.getExecutionPeriodsSet());
-	}
-	Collections.sort(executionSemesters);
-	Collections.reverse(executionSemesters);
-	return executionSemesters;
     }
 
     @Override

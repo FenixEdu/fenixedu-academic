@@ -13,17 +13,26 @@
 
 <p class="separator2 mtop2"><b><bean:message key="title.inquiries.studentResults" bundle="INQUIRIES_RESOURCES"/></b></p>
 <bean:define id="courseResult" name="studentInquiriesCourseResult" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.StudentInquiriesCourseResultBean"/>
-<p class="mtop2">
-	<bean:message key="link.teachingInquiries.cuResults" bundle="INQUIRIES_RESOURCES"/> - 
-    <html:link href="<%= request.getContextPath() + "/teacher/teachingInquiry.do?method=showInquiryCourseResult&resultId=" + courseResult.getStudentInquiriesCourseResult().getIdInternal() %>" target="_blank">            
-		<strong><bean:write name="courseResult" property="studentInquiriesCourseResult.executionCourse.nome" /> - 				
-		<bean:write name="courseResult" property="studentInquiriesCourseResult.executionDegree.degreeCurricularPlan.name" /></strong>
-	</html:link>
-    <bean:define id="executionCourseLink"><c:out value="${pageContext.request.contextPath}" /><c:out value="${executionCourse.site.reversePath}" />/pagina-inicial</bean:define>
-    <!-- NO_CHECKSUM --><!-- HAS_CONTEXT --><html:link href="<%= executionCourseLink %>" target="_blank">            
-        <em><bean:message key="link.curricularUnit.website" bundle="INQUIRIES_RESOURCES"/></em>
-    </html:link>
-</p>
+    <table>
+        <tr>
+            <td valign="top">
+            	<bean:message key="link.teachingInquiries.cuResults" bundle="INQUIRIES_RESOURCES"/> - 
+            </td>
+            <td valign="top">
+                <html:link href="<%= request.getContextPath() + "/teacher/teachingInquiry.do?method=showInquiryCourseResult&resultId=" + courseResult.getStudentInquiriesCourseResult().getIdInternal() %>" target="_blank">            
+            		<strong><bean:write name="courseResult" property="studentInquiriesCourseResult.executionCourse.nome" /> -
+            		<bean:write name="courseResult" property="studentInquiriesCourseResult.executionDegree.degreeCurricularPlan.name" /></strong>
+            	</html:link>
+                - <c:out value="${executionCourse.executionPeriod.qualifiedName}" />
+                <br/>
+                <bean:define id="executionCourseLink"><c:out value="${pageContext.request.contextPath}" /><c:out value="${executionCourse.site.reversePath}" />/pagina-inicial</bean:define>
+                <!-- NO_CHECKSUM --><!-- HAS_CONTEXT --><html:link href="<%= executionCourseLink %>" target="_blank">
+                    <em><bean:message key="link.curricularUnit.website" bundle="INQUIRIES_RESOURCES"/></em>
+                </html:link>
+            
+            </td>
+        </tr>
+    </table>
 
 <logic:notEmpty name="courseResult" property="studentInquiriesTeachingResults">
 	<ul>
@@ -32,8 +41,8 @@
                 <html:link href="<%= request.getContextPath() + "/teacher/teachingInquiry.do?method=showInquiryTeachingResult&resultId=" + teachingResult.getIdInternal() %>" target="_blank">            
 					<bean:write name="teachingResult" property="professorship.person.name" />
 					&nbsp;(<bean:message name="teachingResult" property="shiftType.name"  bundle="ENUMERATION_RESOURCES"/>)<br/>
-                </html:link>                        
-			</li>			
+                </html:link>
+			</li>
 		</logic:iterate>
 	</ul>
 </logic:notEmpty>
