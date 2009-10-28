@@ -60,8 +60,14 @@ public class CreateTutorshipDispatchAction extends TutorManagementDispatchAction
 	    return mapping.findForward("notAuthorized");
 	}
 
-	List<StudentsByEntryYearBean> studentsWithoutTutorBeans = getStudentsWithoutTutorByEntryYearBeans(degreeCurricularPlanID,
-		executionDegreeId);
+	List<StudentsByEntryYearBean> studentsWithoutTutorBeans;
+	if((request.getParameter("showAll") != null) && (request.getParameter("showAll").equalsIgnoreCase("true"))) {
+	    studentsWithoutTutorBeans = getAllStudentsWithoutTutorByEntryYearBeans(degreeCurricularPlanID, executionDegreeId, request.getParameter("showAll"));
+	    request.setAttribute("showAll", "true");
+	} else {
+	    studentsWithoutTutorBeans = getStudentsWithoutTutorByEntryYearBeans(degreeCurricularPlanID,
+		executionDegreeId, "false");
+	}
 
 	if (request.getParameter("selectedEntryYear") != null) {
 	    ExecutionYear entryYear = ExecutionYear.readExecutionYearByName(request.getParameter("selectedEntryYear"));
@@ -200,18 +206,50 @@ public class CreateTutorshipDispatchAction extends TutorManagementDispatchAction
      * the last 5 entry years
      */
     private List<StudentsByEntryYearBean> getStudentsWithoutTutorByEntryYearBeans(Integer degreeCurricularPlanID,
-	    Integer executionDegreeID) {
+	    Integer executionDegreeID, String showAll) {
 	final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) RootDomainObject.readDomainObjectByOID(
 		DegreeCurricularPlan.class, degreeCurricularPlanID);
 
 	Map<ExecutionYear, StudentsByEntryYearBean> studentsWithoutTutorByEntryYear = new HashMap<ExecutionYear, StudentsByEntryYearBean>();
 
 	ExecutionYear entryYear = ExecutionYear.readCurrentExecutionYear();
+
 	for (int i = 0; i < 5; i++) {
 	    List<StudentCurricularPlan> studentsWithoutTutor = degreeCurricularPlan
 		    .getStudentsWithoutTutorGivenEntryYear(entryYear);
-	    Degree degree = degreeCurricularPlan.getEquivalencePlan().getSourceDegree();
-	    for(DegreeCurricularPlan oldDegreeCurricularPlan : degree.getDegreeCurricularPlansForYear(entryYear)) {
+	    if (!studentsWithoutTutor.isEmpty()) {
+		StudentsByEntryYearBean bean = new StudentsByEntryYearBean(entryYear);
+		bean.setStudentsList(studentsWithoutTutor);
+		bean.setDegreeCurricularPlanID(degreeCurricularPlanID);
+		bean.setExecutionDegreeID(executionDegreeID);
+		bean.setShowAll(showAll);
+		studentsWithoutTutorByEntryYear.put(entryYear, bean);
+	    }
+	    entryYear = entryYear.getPreviousExecutionYear();
+	}
+	ArrayList<StudentsByEntryYearBean> beans = new ArrayList<StudentsByEntryYearBean>(studentsWithoutTutorByEntryYear
+		.values());
+	Collections.sort(beans, new BeanComparator("executionYear"));
+	Collections.reverse(beans);
+
+	return beans;
+    }
+    
+    private List<StudentsByEntryYearBean> getAllStudentsWithoutTutorByEntryYearBeans(Integer degreeCurricularPlanID,
+	    Integer executionDegreeID, String showAll) {
+	final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) RootDomainObject.readDomainObjectByOID(
+		DegreeCurricularPlan.class, degreeCurricularPlanID);
+
+	Map<ExecutionYear, StudentsByEntryYearBean> studentsWithoutTutorByEntryYear = new HashMap<ExecutionYear, StudentsByEntryYearBean>();
+
+	ExecutionYear entryYear = ExecutionYear.readCurrentExecutionYear();
+
+	Degree sourceDegree = degreeCurricularPlan.getEquivalencePlan().getSourceDegree();
+	while((degreeCurricularPlan.getExecutionDegreeByYear(entryYear) != null)
+		|| (sourceDegree.getDegreeCurricularPlansForYear(entryYear).isEmpty() == false)) {
+	    List<StudentCurricularPlan> studentsWithoutTutor = degreeCurricularPlan
+		    .getStudentsWithoutTutorGivenEntryYear(entryYear);
+	    for(DegreeCurricularPlan oldDegreeCurricularPlan : sourceDegree.getDegreeCurricularPlansForYear(entryYear)) {
 		studentsWithoutTutor.addAll(oldDegreeCurricularPlan.getStudentsWithoutTutorGivenEntryYear(entryYear));
 	    }
 	    if (!studentsWithoutTutor.isEmpty()) {
@@ -219,6 +257,7 @@ public class CreateTutorshipDispatchAction extends TutorManagementDispatchAction
 		bean.setStudentsList(studentsWithoutTutor);
 		bean.setDegreeCurricularPlanID(degreeCurricularPlanID);
 		bean.setExecutionDegreeID(executionDegreeID);
+		bean.setShowAll(showAll);
 		studentsWithoutTutorByEntryYear.put(entryYear, bean);
 	    }
 	    entryYear = entryYear.getPreviousExecutionYear();

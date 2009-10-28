@@ -706,7 +706,7 @@
 	<slot name="executionYear.year" key="label.entryYear" layout="link">
 		<property name="classes" value="bold" />
 		<property name="useParent" value="true"/>
-		<property name="linkFormat" value="/createTutorship.do?method=prepareCreateTutorships&amp;selectedEntryYear=${executionYear.year}&amp;executionDegreeId=${executionDegreeID}&amp;degreeCurricularPlanID=${degreeCurricularPlanID}"/>
+		<property name="linkFormat" value="/createTutorship.do?method=prepareCreateTutorships&amp;showAll=${showAll}&amp;selectedEntryYear=${executionYear.year}&amp;executionDegreeId=${executionDegreeID}&amp;degreeCurricularPlanID=${degreeCurricularPlanID}"/>
 		<property name="contextRelative" value="true" />
 		<property name="moduleRelative" value="true" />
 	</slot>

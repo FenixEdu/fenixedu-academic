@@ -31,6 +31,8 @@ public class StudentsByEntryYearBean implements Serializable {
     private Integer numberOfStudentsToCreateTutorship;
 
     private DomainReference<ExecutionYear> executionYear;
+    
+    private String showAll;
 
     public Integer getTeacherNumber() {
 	return teacherNumber;
@@ -158,6 +160,14 @@ public class StudentsByEntryYearBean implements Serializable {
 
     public void clearSelectedStudentsToCreateTutorshipList() {
 	this.studentsToCreateTutorshipList.clear();
+    }
+    
+    public String getShowAll() {
+	return showAll;
+    }
+    
+    public void setShowAll(String showAll) {
+	this.showAll = showAll;
     }
 
 }

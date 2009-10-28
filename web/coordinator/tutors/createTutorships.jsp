@@ -9,6 +9,10 @@
 <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" />
 <bean:define id="parameters" value="<%= "executionDegreeId=" + executionDegreeId + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>" />
 
+<logic:present name="showAll">
+	<bean:define id="showAll" name="showAll" />
+</logic:present>
+
 <h2><bean:message key="label.coordinator.createTutorships" bundle="APPLICATION_RESOURCES" /></h2>
 
 <logic:notPresent name="selectedStudentsBean">
@@ -32,6 +36,11 @@
 	   	    <fr:property name="classes" value="tstyle2 thlight thright mvert05 acenter"/>
 	    </fr:layout>
 	</fr:view>
+	<logic:notPresent name="showAll">
+	<html:link page="<%= "/createTutorship.do?method=prepareCreateTutorships&" + parameters + "&showAll=true" %>">
+		<bean:message key="message.show.all.degree.curricular.plans" bundle="APPLICATION_RESOURCES"/>
+	</html:link>
+	</logic:notPresent>
 </logic:notPresent>
 <logic:present name="selectedStudentsBean">
 
