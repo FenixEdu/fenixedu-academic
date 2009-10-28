@@ -152,7 +152,7 @@
 				<fr:property name="key(view)" value="label.view"/>
 				<fr:property name="bundle(view)" value="PHD_RESOURCES"/>
 				<fr:property name="order(view)" value="0" />
-				<fr:property name="hasContext(view)" value="true" />
+				<fr:property name="hasContext(view)" value="false" />
 				<fr:property name="contextRelative(view)" value="false" />
 			</fr:layout>
 		</fr:view>
