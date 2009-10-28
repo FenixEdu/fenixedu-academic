@@ -1,9 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.parkingManager;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.parking.DeleteParkingRequestPeriod;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.parking.RenewParkingCards;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -11,12 +7,13 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.parking.DeleteParkingRequestPeriod;
+import net.sourceforge.fenixedu.applicationTier.Servico.parking.RenewParkingCards;
 import net.sourceforge.fenixedu.dataTransferObject.parking.ParkingCardSearchBean;
 import net.sourceforge.fenixedu.dataTransferObject.parking.ParkingCardSearchBean.ParkingCardSearchPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.parking.ParkingCardSearchBean.ParkingCardUserState;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequestPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
@@ -119,8 +116,8 @@ public class ManageParkingPeriodsDA extends FenixDispatchAction {
 	    request.setAttribute("parkingCardSearchBean", parkingCardSearchBean);
 	    return mapping.findForward("cardsRenewal");
 	}
-	RenewParkingCards.run(parkingCardSearchBean.getSelectedParkingParties(),
-		parkingCardSearchBean.getRenewalEndDate(), parkingCardSearchBean.getNewParkingGroup());
+	RenewParkingCards.run(parkingCardSearchBean.getSelectedParkingParties(), parkingCardSearchBean.getRenewalEndDate(),
+		parkingCardSearchBean.getNewParkingGroup(), parkingCardSearchBean.getEmailText());
 	parkingCardSearchBean.getSelectedParkingParties().clear();
 	parkingCardSearchBean.setRenewalEndDate(null);
 	parkingCardSearchBean.setNewParkingGroup(null);

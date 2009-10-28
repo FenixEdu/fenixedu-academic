@@ -38,6 +38,8 @@ public class ParkingCardSearchBean implements Serializable {
 
     private ParkingCardUserState parkingCardState;
 
+    private String emailText;
+
     public enum ParkingCardSearchPeriod {
 	ENDS_BEFORE_ONE_MONTH, ENDS_BEFORE_TWO_MONTHS, ENDED_UNTIL_ONE_MONTH_AGO, ENDED_UNTIL_SIX_MONTHS_AGO, ENDED_UNTIL_ONE_YEAR_AGO;
 
@@ -250,5 +252,13 @@ public class ParkingCardSearchBean implements Serializable {
 
     public void setParkingCardState(ParkingCardUserState parkingCardState) {
 	this.parkingCardState = parkingCardState;
+    }
+
+    public String getEmailText() {
+	return emailText;
+    }
+
+    public void setEmailText(String emailText) {
+	this.emailText = emailText;
     }
 }
