@@ -42,7 +42,7 @@ public class ExtraCurricularCertificateRequestDocument extends AdministrativeOff
 	for (final Enrolment enrolment : enrolments) {
 	    result.append(
 		    StringUtils.multipleLineRightPadWithSuffix(getPresentationNameFor(enrolment).toUpperCase(), LINE_LENGTH,
-			    END_CHAR, getCreditsAndGradeInfo(enrolment, getExecutionYear()))).append(LINE_BREAK);
+			    END_CHAR, getCreditsAndGradeInfo(enrolment, enrolment.getExecutionYear()))).append(LINE_BREAK);
 	}
 
 	result.append(generateEndLine());
