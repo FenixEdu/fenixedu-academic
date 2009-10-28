@@ -1,15 +1,20 @@
 package net.sourceforge.fenixedu.dataTransferObject.internship;
 
 import java.io.Serializable;
+import java.util.Collections;
 
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.internship.InternshipCandidacy;
+import net.sourceforge.fenixedu.domain.internship.InternshipCandidacySession;
 import net.sourceforge.fenixedu.domain.internship.LanguageKnowledgeLevel;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionUnit;
 import net.sourceforge.fenixedu.domain.person.Gender;
+import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 
 import org.joda.time.LocalDate;
+
+import pt.ist.fenixWebFramework.renderers.DataProvider;
+import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 /**
  * @author Pedro Santos (pmrsa)
@@ -17,12 +22,46 @@ import org.joda.time.LocalDate;
 public class InternshipCandidacyBean implements Serializable, Comparable<InternshipCandidacyBean> {
     private static final long serialVersionUID = -4963748520642734496L;
 
+    public static class UniversitiesProvider implements DataProvider {
+	@Override
+	public Converter getConverter() {
+	    return new DomainObjectKeyConverter();
+	}
+
+	@Override
+	public Object provide(Object source, Object currentValue) {
+	    InternshipCandidacyBean bean = (InternshipCandidacyBean) source;
+	    if (bean.getSession() != null) {
+		return bean.getSession().getUniversitySet();
+	    }
+	    return Collections.emptySet();
+	}
+    }
+
+    public static class DestinationsProvider implements DataProvider {
+	@Override
+	public Converter getConverter() {
+	    return new DomainObjectKeyConverter();
+	}
+
+	@Override
+	public Object provide(Object source, Object currentValue) {
+	    InternshipCandidacyBean bean = (InternshipCandidacyBean) source;
+	    if (bean.getSession() != null) {
+		return bean.getSession().getDestinationSet();
+	    }
+	    return Collections.emptySet();
+	}
+    }
+
     public enum StudentYear {
 	FIRST, SECOND;
     }
 
-    private DomainReference<InternshipCandidacy> candidacy;
-    private DomainReference<AcademicalInstitutionUnit> university;
+    private final InternshipCandidacySession session;
+
+    private InternshipCandidacy candidacy;
+    private AcademicalInstitutionUnit university;
     private String studentNumber;
     private StudentYear studentYear;
     private String degree;
@@ -39,7 +78,7 @@ public class InternshipCandidacyBean implements Serializable, Comparable<Interns
 
     private LocalDate birthday;
     private String parishOfBirth;
-    private DomainReference<Country> countryOfBirth;
+    private Country countryOfBirth;
 
     private String documentIdNumber;
     private String emissionLocationOfDocumentId;
@@ -51,9 +90,9 @@ public class InternshipCandidacyBean implements Serializable, Comparable<Interns
     private LocalDate emissionDateOfPassport;
     private LocalDate expirationDateOfPassport;
 
-    private DomainReference<Country> firstDestination;
-    private DomainReference<Country> secondDestination;
-    private DomainReference<Country> thirdDestination;
+    private Country firstDestination;
+    private Country secondDestination;
+    private Country thirdDestination;
 
     private LanguageKnowledgeLevel english = LanguageKnowledgeLevel.NONE;
     private LanguageKnowledgeLevel french = LanguageKnowledgeLevel.NONE;
@@ -62,11 +101,13 @@ public class InternshipCandidacyBean implements Serializable, Comparable<Interns
 
     private Boolean previousCandidacy;
 
-    public InternshipCandidacyBean() {
+    public InternshipCandidacyBean(InternshipCandidacySession session) {
+	this.session = session;
 	setCountryOfBirth(Country.readByTwoLetterCode("PT"));
     }
 
     public InternshipCandidacyBean(InternshipCandidacy candidacy) {
+	this.session = candidacy.getInternshipCandidacySession();
 	setCandidacy(candidacy);
 	setStudentNumber(candidacy.getStudentNumber());
 	setUniversity(candidacy.getUniversity());
@@ -112,20 +153,24 @@ public class InternshipCandidacyBean implements Serializable, Comparable<Interns
 	setPreviousCandidacy(candidacy.getPreviousCandidacy());
     }
 
+    public InternshipCandidacySession getSession() {
+	return session;
+    }
+
     public InternshipCandidacy getCandidacy() {
-	return (this.candidacy != null) ? this.candidacy.getObject() : null;
+	return candidacy;
     }
 
     public void setCandidacy(InternshipCandidacy candidacy) {
-	this.candidacy = (candidacy != null) ? new DomainReference<InternshipCandidacy>(candidacy) : null;
+	this.candidacy = candidacy;
     }
 
     public Country getCountryOfBirth() {
-	return (this.countryOfBirth != null) ? this.countryOfBirth.getObject() : null;
+	return countryOfBirth;
     }
 
     public void setCountryOfBirth(Country countryOfBirth) {
-	this.countryOfBirth = (countryOfBirth != null) ? new DomainReference<Country>(countryOfBirth) : null;
+	this.countryOfBirth = countryOfBirth;
     }
 
     public String getStudentNumber() {
@@ -297,27 +342,27 @@ public class InternshipCandidacyBean implements Serializable, Comparable<Interns
     }
 
     public Country getFirstDestination() {
-	return (this.firstDestination != null) ? this.firstDestination.getObject() : null;
+	return firstDestination;
     }
 
     public void setFirstDestination(Country country) {
-	this.firstDestination = (country != null) ? new DomainReference<Country>(country) : null;
+	this.firstDestination = country;
     }
 
     public Country getSecondDestination() {
-	return (this.secondDestination != null) ? this.secondDestination.getObject() : null;
+	return secondDestination;
     }
 
     public void setSecondDestination(Country country) {
-	this.secondDestination = (country != null) ? new DomainReference<Country>(country) : null;
+	this.secondDestination = country;
     }
 
     public Country getThirdDestination() {
-	return (this.thirdDestination != null) ? this.thirdDestination.getObject() : null;
+	return thirdDestination;
     }
 
     public void setThirdDestination(Country country) {
-	this.thirdDestination = (country != null) ? new DomainReference<Country>(country) : null;
+	this.thirdDestination = country;
     }
 
     public LanguageKnowledgeLevel getEnglish() {
@@ -361,11 +406,11 @@ public class InternshipCandidacyBean implements Serializable, Comparable<Interns
     }
 
     public AcademicalInstitutionUnit getUniversity() {
-	return (this.university != null) ? this.university.getObject() : null;
+	return university;
     }
 
     public void setUniversity(AcademicalInstitutionUnit university) {
-	this.university = (university != null) ? new DomainReference<AcademicalInstitutionUnit>(university) : null;
+	this.university = university;
     }
 
     @Override

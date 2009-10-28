@@ -6,12 +6,12 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.dataTransferObject.internship.InternshipCandidacyBean;
 import net.sourceforge.fenixedu.domain.internship.DuplicateInternshipCandidacy;
 import net.sourceforge.fenixedu.domain.internship.InternshipCandidacy;
+import net.sourceforge.fenixedu.domain.internship.InternshipCandidacySession;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.joda.time.LocalDateTime;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -24,11 +24,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 public class InternshipDA extends FenixDispatchAction {
     public ActionForward prepareCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	LocalDateTime start = new LocalDateTime(2008, 11, 10, 9, 0);
-	LocalDateTime end = new LocalDateTime(2008, 12, 1, 0, 0);
-	LocalDateTime now = new LocalDateTime(System.currentTimeMillis());
-	if (now.isAfter(start) && now.isBefore(end)) {
-	    request.setAttribute("candidacy", new InternshipCandidacyBean());
+	InternshipCandidacySession session = InternshipCandidacySession.getMostRecentCandidacySession();
+	if (session.getCandidacyInterval().containsNow()) {
+	    request.setAttribute("candidacy", new InternshipCandidacyBean(session));
 	}
 	return mapping.findForward("candidacy");
     }

@@ -190,8 +190,6 @@ enum net.sourceforge.fenixedu.domain.research.result.publication.PreferredPublic
 enum net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationContext												  as EnrolmentEvaluationContext;
 enum net.sourceforge.fenixedu.domain.curriculum.CurriculumValidationEvaluationPhase										  as CurriculumValidationEvaluationPhase;
 
-
-
 /*
  * Value types that need special externalization
  */
@@ -5021,7 +5019,7 @@ class DomainObject {
 		
 		class student.registrationStates.TransitedState extends student.registrationStates.RegistrationState {
 		}
-		
+
 	class student.registrationStates.RegistrationStateLog extends DomainObject {
 		DateTime whenCreated;
 		DateTime stateDate;
@@ -6497,9 +6495,13 @@ class residence.ResidenceMonth extends DomainObject {
 	Month month;
 }
 
+class internship.InternshipCandidacySession extends DomainObject {
+    Interval candidacyInterval;
+}
+
 class internship.InternshipCandidacy extends DomainObject {
-    Integer candidacyCode;
-    DateTime candidacyDate;
+    Integer candidacyCode (REQUIRED);
+    DateTime candidacyDate (REQUIRED);
 
     String studentNumber;
     Integer studentYear;
@@ -16471,10 +16473,44 @@ relation RootDomainObjectProfilingLogs {
 	}
 }
 
+relation RootDomainObjectInternshipCandidacySession {
+    RootDomainObject playsRole rootDomainObject;
+    internship.InternshipCandidacySession playsRole internshipCandidacySession {
+        multiplicity *;
+    }
+}
+
 relation RootDomainObjectInternshipCandidacy {
     RootDomainObject playsRole rootDomainObject;
     internship.InternshipCandidacy playsRole internshipCandidacy {
         multiplicity *;
+    }
+}
+
+relation InternshipCandidacySessionUniversities {
+    internship.InternshipCandidacySession playsRole internshipCandidacySession {
+        multiplicity *;
+    }
+    organizationalStructure.AcademicalInstitutionUnit playsRole university {
+        multiplicity *;
+    }
+}
+
+relation InternshipCandidacySessionDestinations {
+    internship.InternshipCandidacySession playsRole internshipCandidacySession {
+        multiplicity *;
+    }
+    Country playsRole destination {
+        multiplicity *;
+    }
+}
+
+relation InternshipCandidacyInternshipSession {
+    internship.InternshipCandidacy playsRole internshipCandidacy {
+        multiplicity *;
+    }
+    internship.InternshipCandidacySession playsRole internshipCandidacySession {
+        multiplicity 1;
     }
 }
 

@@ -14,45 +14,35 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class InternshipCandidacy extends InternshipCandidacy_Base {
-
     private static final int MAX_CODE = 999999;
 
     private static final int MIN_CODE = 100000;
 
-    private InternshipCandidacy(Integer code) {
+    private InternshipCandidacy(Integer code, InternshipCandidacySession session) {
 	super();
-	setRootDomainObject(RootDomainObject.getInstance());
 	setCandidacyCode(code);
 	setCandidacyDate(new DateTime(System.currentTimeMillis()));
+	setInternshipCandidacySession(session);
+	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     @Service
     public static Integer create(InternshipCandidacyBean bean) throws DuplicateInternshipCandidacy {
-	RootDomainObject root = RootDomainObject.getInstance();
 	Integer code = new Random(System.currentTimeMillis()).nextInt(MAX_CODE - MIN_CODE) + MIN_CODE;
-	for (InternshipCandidacy other : root.getInternshipCandidacySet()) {
+	for (InternshipCandidacy other : bean.getSession().getInternshipCandidacySet()) {
 	    if (code.equals(other.getCandidacyCode()))
 		return create(bean); // try again;
 	    if (bean.getStudentNumber().equals(other.getStudentNumber()) && bean.getUniversity().equals(other.getUniversity()))
 		throw new DuplicateInternshipCandidacy(bean.getStudentNumber(), bean.getUniversity().getName());
 	}
 
-	InternshipCandidacy candidacy = new InternshipCandidacy(code);
+	InternshipCandidacy candidacy = new InternshipCandidacy(code, bean.getSession());
 	beanToModel(bean, candidacy);
 
 	SystemSender sender = RootDomainObject.getInstance().getSystemSender();
-
 	new Message(sender, sender.getConcreteReplyTos(), Collections.EMPTY_LIST, RenderUtils.getResourceString(
 		"GLOBAL_RESOURCES", "email.iaeste.subject"), RenderUtils.getResourceString("GLOBAL_RESOURCES",
 		"iaeste.email.body", new Object[] { candidacy.getName(), candidacy.getCandidacyCode() }), candidacy.getEmail());
-	// new Email("Sistema Fénix", "suporte@ist.utl.pt", null,
-	// Collections.singleton(candidacy.getEmail()), null, null,
-	// "Candidatura a estágios IAESTE", "Caro(a) " + candidacy.getName()
-	// +
-	// ", a sua candidatura foi submetida com sucesso. Foi-lhe atribuído o código de inscrição nº "
-	// + candidacy.getCandidacyCode() +
-	// ", que deverá utilizar em contactos futuros.");
-
 	return candidacy.getCandidacyCode();
     }
 
@@ -104,6 +94,7 @@ public class InternshipCandidacy extends InternshipCandidacy_Base {
 
     @Service
     public void delete() {
+	removeInternshipCandidacySession();
 	removeCountryOfBirth();
 	removeFirstDestination();
 	removeSecondDestination();

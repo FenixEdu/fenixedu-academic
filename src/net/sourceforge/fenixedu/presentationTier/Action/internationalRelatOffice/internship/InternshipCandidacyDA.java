@@ -21,7 +21,10 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.joda.time.Interval;
+import org.joda.time.LocalDate;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -58,10 +61,28 @@ public class InternshipCandidacyDA extends FenixDispatchAction {
 	return mapping.findForward("candidates");
     }
 
+    public ActionForward sessionPostback(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	CandidateSearchBean search = (CandidateSearchBean) getRenderedObject("search");
+	RenderUtils.invalidateViewState();
+	Interval interval = search.getSession().getCandidacyInterval();
+	if (search.getCutStart() == null || !interval.contains(search.getCutStart().toDateTimeAtStartOfDay())) {
+	    search.setCutStart(interval.getStart().toLocalDate());
+	}
+	if (search.getCutEnd() == null || !interval.contains(search.getCutEnd().toDateTimeAtStartOfDay())) {
+	    search.setCutEnd(interval.getEnd().toLocalDate());
+	}
+	if (interval.contains(new LocalDate().minusDays(1).toDateMidnight())) {
+	    search.setCutEnd(new LocalDate().minusDays(1));
+	}
+	request.setAttribute("search", search);
+	return mapping.findForward("candidates");
+    }
+
     public ActionForward searchCandidates(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	CandidateSearchBean search = (CandidateSearchBean) getRenderedObject("search");
-	if (search.getCutEnd().isBefore(search.getCutStart())) {
+	if (search.getCutStart() != null && search.getCutEnd() != null && search.getCutEnd().isBefore(search.getCutStart())) {
 	    addErrorMessage(request, "start", "error.internationalrelations.internship.candidacy.search.startafterend");
 	    return prepareCandidates(mapping, actionForm, request, response);
 	}
@@ -187,9 +208,11 @@ public class InternshipCandidacyDA extends FenixDispatchAction {
 
     private SortedSet<InternshipCandidacyBean> filterCandidates(CandidateSearchBean search) {
 	SortedSet<InternshipCandidacyBean> candidates = new TreeSet<InternshipCandidacyBean>();
-	for (InternshipCandidacy candidacy : rootDomainObject.getInternshipCandidacySet()) {
-	    if (isIncluded(candidacy, search)) {
-		candidates.add(new InternshipCandidacyBean(candidacy));
+	if (search.getSession() != null) {
+	    for (InternshipCandidacy candidacy : search.getSession().getInternshipCandidacySet()) {
+		if (isIncluded(candidacy, search)) {
+		    candidates.add(new InternshipCandidacyBean(candidacy));
+		}
 	    }
 	}
 	return candidates;

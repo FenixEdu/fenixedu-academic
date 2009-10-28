@@ -12,23 +12,40 @@
 <schema name="internship.candidates.search"
 	type="net.sourceforge.fenixedu.dataTransferObject.internationalRelationsOffice.internship.CandidateSearchBean"
 	bundle="DOMAIN_RESOURCES">
-	<slot name="university" layout="menu-select" key="label.internship.InternshipCandidacy.student.university">
+	<slot name="session" layout="menu-select-postback"
+		key="label.internship.InternshipCandidacy.session">
+		<validator
+			class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 		<property name="providerClass"
-			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.internship.AcademicUnitsForInternshipsProvider" />
+			value="net.sourceforge.fenixedu.dataTransferObject.internationalRelationsOffice.internship.CandidateSearchBean$SessionProvider" />
+		<property name="format" value="${presentationName}" />
+		<property name="destination" value="sessionPostback" />
+	</slot>
+	<slot name="university" layout="menu-select"
+		key="label.internship.InternshipCandidacy.student.university">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.dataTransferObject.internationalRelationsOffice.internship.CandidateSearchBean$UniversitiesProvider" />
 		<property name="format" value="${fullPresentationName}" />
+		<property name="sortBy" value="fullPresentationName" />
 		<property name="key" value="true" />
 		<property name="defaultText" value="label.dropDown.all" />
 		<property name="bundle" value="ENUMERATION_RESOURCES" />
 	</slot>
-	<slot name="cutStart" layout="picker" key="label.internationalrelations.internship.candidacy.search.start"
+	<slot name="cutStart" layout="picker"
+		key="label.internationalrelations.internship.candidacy.search.start"
 		bundle="INTERNATIONAL_RELATIONS_OFFICE">
-        <validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
+		<validator
+			class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+		<validator
+			class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
 	</slot>
-	<slot name="cutEnd" layout="picker" key="label.internationalrelations.internship.candidacy.search.end"
+	<slot name="cutEnd" layout="picker"
+		key="label.internationalrelations.internship.candidacy.search.end"
 		bundle="INTERNATIONAL_RELATIONS_OFFICE">
-        <validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
+		<validator
+			class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+		<validator
+			class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
 	</slot>
 </schema>
 
@@ -40,30 +57,37 @@
 	<slot name="degree" key="label.internship.InternshipCandidacy.student.degree" />
 </schema>
 
-<schema name="internship.candidacy.studentinfo" type="net.sourceforge.fenixedu.dataTransferObject.internship.InternshipCandidacyBean"
-    bundle="DOMAIN_RESOURCES">
-    <slot name="university" layout="menu-select" key="label.internship.InternshipCandidacy.student.university"
-        validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-        <property name="providerClass"
-            value="net.sourceforge.fenixedu.presentationTier.renderers.providers.internship.AcademicUnitsForInternshipsProvider" />
-        <property name="format" value="${fullPresentationName}" />
-    </slot>
-    <slot name="studentNumber" key="label.internship.InternshipCandidacy.student.number"
-        validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-        <property name="size" value="10" />
-    </slot>
-    <slot name="studentYear" layout="input-with-comment" key="label.internship.InternshipCandidacy.student.year">
-        <property name="subLayout" value="radio" />
-        <property name="subProperty(classes)" value="liinline" />
-        <property name="bundle" value="INTERNATIONAL_RELATIONS_OFFICE"/>
-        <property name="comment" value="label.internationalrelations.internship.candidacy.student.number.help"/>
-        <property name="commentLocation" value="right"/>
-        <property name="commentClasses" value="smalltxt color555"/>
-        <validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-    </slot>
-    <slot name="degree" key="label.internship.InternshipCandidacy.student.degree" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-        <property name="size" value="60" />
-    </slot>
+<schema name="internship.candidacy.studentinfo"
+	type="net.sourceforge.fenixedu.dataTransferObject.internship.InternshipCandidacyBean"
+	bundle="DOMAIN_RESOURCES">
+	<slot name="university" layout="menu-select"
+		key="label.internship.InternshipCandidacy.student.university"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.dataTransferObject.internship.InternshipCandidacyBean$UniversitiesProvider" />
+		<property name="format" value="${fullPresentationName}" />
+		<property name="sortBy" value="fullPresentationName" />
+	</slot>
+	<slot name="studentNumber" key="label.internship.InternshipCandidacy.student.number"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="10" />
+	</slot>
+	<slot name="studentYear" layout="input-with-comment"
+		key="label.internship.InternshipCandidacy.student.year">
+		<property name="subLayout" value="radio" />
+		<property name="subProperty(classes)" value="liinline" />
+		<property name="bundle" value="INTERNATIONAL_RELATIONS_OFFICE" />
+		<property name="comment"
+			value="label.internationalrelations.internship.candidacy.student.number.help" />
+		<property name="commentLocation" value="right" />
+		<property name="commentClasses" value="smalltxt color555" />
+		<validator
+			class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	</slot>
+	<slot name="degree" key="label.internship.InternshipCandidacy.student.degree"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="60" />
+	</slot>
 </schema>
 
 <schema name="internship.candidacy.personalinfo" type="net.sourceforge.fenixedu.dataTransferObject.internship.InternshipCandidacyBean"
@@ -193,26 +217,33 @@
     <slot name="name" />
 </schema>
 
-<schema name="internship.candidacy.destination" type="net.sourceforge.fenixedu.dataTransferObject.internship.InternshipCandidacyBean"
-    bundle="INTERNATIONAL_RELATIONS_OFFICE">
-    <slot name="firstDestination" layout="menu-select" key="label.internationalrelations.internship.candidacy.destination.firstoption">
-        <property name="providerClass"
-            value="net.sourceforge.fenixedu.presentationTier.renderers.providers.internship.IAESTECountryProvider" />
-        <property name="choiceType" value="net.sourceforge.fenixedu.domain.Country" />
-        <property name="format" value="${name}" />
-    </slot>
-    <slot name="secondDestination" layout="menu-select" key="label.internationalrelations.internship.candidacy.destination.secondoption">
-        <property name="providerClass"
-            value="net.sourceforge.fenixedu.presentationTier.renderers.providers.internship.IAESTECountryProvider" />
-        <property name="choiceType" value="net.sourceforge.fenixedu.domain.Country" />
-        <property name="format" value="${name}" />
-    </slot>
-    <slot name="thirdDestination" layout="menu-select" key="label.internationalrelations.internship.candidacy.destination.thirdoption">
-        <property name="providerClass"
-            value="net.sourceforge.fenixedu.presentationTier.renderers.providers.internship.IAESTECountryProvider" />
-        <property name="choiceType" value="net.sourceforge.fenixedu.domain.Country" />
-        <property name="format" value="${name}" />
-    </slot>
+<schema name="internship.candidacy.destination"
+	type="net.sourceforge.fenixedu.dataTransferObject.internship.InternshipCandidacyBean"
+	bundle="INTERNATIONAL_RELATIONS_OFFICE">
+	<slot name="firstDestination" layout="menu-select"
+		key="label.internationalrelations.internship.candidacy.destination.firstoption">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.dataTransferObject.internship.InternshipCandidacyBean$DestinationsProvider" />
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country" />
+		<property name="format" value="${name}" />
+		<property name="sortBy" value="name" />
+	</slot>
+	<slot name="secondDestination" layout="menu-select"
+		key="label.internationalrelations.internship.candidacy.destination.secondoption">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.dataTransferObject.internship.InternshipCandidacyBean$DestinationsProvider" />
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country" />
+		<property name="format" value="${name}" />
+		<property name="sortBy" value="name" />
+	</slot>
+	<slot name="thirdDestination" layout="menu-select"
+		key="label.internationalrelations.internship.candidacy.destination.thirdoption">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.dataTransferObject.internship.InternshipCandidacyBean$DestinationsProvider" />
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country" />
+		<property name="format" value="${name}" />
+		<property name="sortBy" value="name" />
+	</slot>
 </schema>
 
 <schema name="internship.candidacy.languages" type="net.sourceforge.fenixedu.dataTransferObject.internship.InternshipCandidacyBean"

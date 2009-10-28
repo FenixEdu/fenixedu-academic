@@ -1,30 +1,74 @@
 package net.sourceforge.fenixedu.dataTransferObject.internationalRelationsOffice.internship;
 
 import java.io.Serializable;
+import java.util.Collections;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.internship.InternshipCandidacySession;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionUnit;
+import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 
 import org.joda.time.LocalDate;
+
+import pt.ist.fenixWebFramework.renderers.DataProvider;
+import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 /**
  * @author Pedro Santos (pmrsa)
  */
 public class CandidateSearchBean implements Serializable {
+    public static class SessionProvider implements DataProvider {
+	@Override
+	public Converter getConverter() {
+	    return new DomainObjectKeyConverter();
+	}
+
+	@Override
+	public Object provide(Object source, Object currentValue) {
+	    return RootDomainObject.getInstance().getInternshipCandidacySessionSet();
+	}
+    }
+
+    public static class UniversitiesProvider implements DataProvider {
+	@Override
+	public Converter getConverter() {
+	    return new DomainObjectKeyConverter();
+	}
+
+	@Override
+	public Object provide(Object source, Object currentValue) {
+	    CandidateSearchBean bean = (CandidateSearchBean) source;
+	    if (bean.getSession() != null) {
+		return bean.getSession().getUniversitySet();
+	    }
+	    return Collections.emptySet();
+	}
+    }
+
     private static final long serialVersionUID = 1170872005958537842L;
 
-    private DomainReference<AcademicalInstitutionUnit> university;
+    private InternshipCandidacySession session;
 
-    private LocalDate cutStart = new LocalDate(2008, 11, 10);
+    private AcademicalInstitutionUnit university;
 
-    private LocalDate cutEnd = new LocalDate(System.currentTimeMillis()).minusDays(1);
+    private LocalDate cutStart;
+
+    private LocalDate cutEnd;
+
+    public InternshipCandidacySession getSession() {
+	return session;
+    }
+
+    public void setSession(InternshipCandidacySession session) {
+	this.session = session;
+    }
 
     public AcademicalInstitutionUnit getUniversity() {
-	return (this.university != null) ? this.university.getObject() : null;
+	return university;
     }
 
     public void setUniversity(AcademicalInstitutionUnit university) {
-	this.university = (university != null) ? new DomainReference<AcademicalInstitutionUnit>(university) : null;
+	this.university = university;
     }
 
     public LocalDate getCutStart() {

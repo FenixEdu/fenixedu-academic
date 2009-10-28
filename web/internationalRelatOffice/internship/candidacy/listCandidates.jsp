@@ -18,6 +18,7 @@
 				<fr:property name="classes" value="tstyle5 thright thlight mbottom05" />
 				<fr:property name="columnClasses" value=",,tdclear tderror1 nowrap aright" />
 			</fr:layout>
+			<fr:destination name="sessionPostback" path="/internship/internshipCandidacy.do?method=sessionPostback"/>
 		</fr:edit>
 		<input type="hidden" name="method" />
 		<p class="mtop05 mbottom15"><html:submit onclick="this.form.method.value='searchCandidates';">
