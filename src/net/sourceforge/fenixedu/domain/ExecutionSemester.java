@@ -408,15 +408,9 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 	if (lessonsPeriod == null) {
 
 	    Collection<ExecutionDegree> degrees = getExecutionYear().getExecutionDegreesByType(DegreeType.DEGREE);
-	    if (degrees.isEmpty()) {
-		degrees.addAll(getExecutionYear().getExecutionDegreesByType(DegreeType.BOLONHA_DEGREE));
-	    }
-	    if (degrees.isEmpty()) {
-		degrees.addAll(getExecutionYear().getExecutionDegreesByType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
-	    }
-	    if (degrees.isEmpty()) {
-		degrees.addAll(getExecutionYear().getExecutionDegreesByType(DegreeType.BOLONHA_MASTER_DEGREE));
-	    }
+	    degrees.addAll(getExecutionYear().getExecutionDegreesByType(DegreeType.BOLONHA_DEGREE));
+	    degrees.addAll(getExecutionYear().getExecutionDegreesByType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
+	    degrees.addAll(getExecutionYear().getExecutionDegreesByType(DegreeType.BOLONHA_MASTER_DEGREE));
 
 	    for (ExecutionDegree executionDegree : degrees) {
 		if (getSemester() == 1) {
@@ -648,7 +642,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 	}
 	return null;
     }
-    
+
     public InquiryResponsePeriod getInquiryResponsePeriod(final InquiryResponsePeriodType type) {
 	for (InquiryResponsePeriod inquiryResponsePeriod : getInquiryResponsePeriods()) {
 	    if (inquiryResponsePeriod.getType() == type) {
