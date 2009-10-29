@@ -91,7 +91,7 @@ public class EmailsDA extends FenixDispatchAction {
 	    }
 	}
 	if (senders.size() == 1) {
-	    return viewSentEmails(mapping, request, senders.iterator().next());
+	    return viewSentEmails(mapping, request, senders.iterator().next().getIdInternal());
 	} else {
 	    request.setAttribute("senders", senders);
 	    return mapping.findForward("view.sent.emails");
