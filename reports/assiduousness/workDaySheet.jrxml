@@ -27,9 +27,9 @@
 	<field name="workScheduleAcronym" class="java.lang.String"/>
 	<field name="date.dayOfMonth" class="java.lang.Integer"/>
 	<field name="balanceTimeFormatted" class="java.lang.String"/>
-	<field name="notes" class="java.lang.String"/>
+	<field name="notesWithoutStyle" class="java.lang.String"/>
 	<field name="unjustifiedTimeFormatted" class="java.lang.String"/>
-	<field name="clockingsFormattedToManagement" class="java.lang.String"/>
+	<field name="clockingsWithoutStyle" class="java.lang.String"/>
 	<field name="weekDay" class="java.lang.String"/>
 
 		<background>
@@ -243,7 +243,7 @@
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$F{balanceTimeFormatted}+" "]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="183"
 						y="0"
@@ -255,10 +255,10 @@
 					<bottomPen lineWidth="0.25" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
-					<textElement textAlignment="Center">
+					<textElement  isStyledText="true">
 						<font fontName="Verdana"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{notes}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{notesWithoutStyle}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -289,10 +289,10 @@
 					<bottomPen lineWidth="0.25" lineColor="#000000"/>
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
-					<textElement markup="styled">
+					<textElement  isStyledText="true">
 						<font fontName="Verdana"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{clockingsFormattedToManagement}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{clockingsWithoutStyle}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement

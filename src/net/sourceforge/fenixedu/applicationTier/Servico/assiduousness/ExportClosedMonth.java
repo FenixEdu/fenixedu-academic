@@ -113,7 +113,7 @@ public class ExportClosedMonth extends FenixService {
 				    JustificationType.HALF_OCCURRENCE)) {
 				leaveDuration = new Duration(schedule.getEqualWorkPeriodDuration().getMillis() / 2);
 			    } else {
-				leaveDuration = leaveDuration.plus(workDaySheet.getLeaveDuration(thisDay, workSchedule, leave));
+				leaveDuration = leaveDuration.plus(workDaySheet.getLeaveDuration(workSchedule, leave));
 			    }
 			}
 			result.append(getLine(assiduousnessClosedMonth.getAssiduousnessStatusHistory().getAssiduousness()
@@ -262,7 +262,7 @@ public class ExportClosedMonth extends FenixService {
 	    if (clockings == null) {
 		clockings = new ArrayList<AssiduousnessRecord>();
 	    }
-	    workDaySheet = new WorkDaySheet(thisDay, workSchedule, clockings, list);
+	    workDaySheet = new WorkDaySheet(assiduousness, thisDay, workSchedule, clockings, list);
 	    ICalculateDailyWorkSheetStrategy calculateDailyWorkSheetStrategy = CalculateDailyWorkSheetStrategyFactory
 		    .getInstance().getCalculateDailyWorkSheetStrategy(thisDay);
 	    workDaySheet = calculateDailyWorkSheetStrategy.calculateDailyBalance(assiduousness, workDaySheet, isDayHoliday);

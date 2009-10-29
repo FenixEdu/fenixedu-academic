@@ -2,49 +2,73 @@ package net.sourceforge.fenixedu.domain.assiduousness;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeWorkSheet;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.util.NumberUtils;
 
+import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Duration;
-import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.joda.time.Partial;
 
 public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 
     public AssiduousnessClosedMonth(AssiduousnessStatusHistory assiduousnessStatusHistory, ClosedMonth closedMonth,
-	    Duration balance, Duration totalComplementaryWeeklyRestBalance, Duration totalWeeklyRestBalance,
-	    Duration holidayRest, Duration balanceToDiscount, double vacations, double tolerance, double article17,
-	    double article66, Integer maximumWorkingDays, Integer workedDaysWithBonusDaysDiscount,
-	    Integer workedDaysWithA17VacationsDaysDiscount, Duration finalBalance, Duration finalBalanceToCompensate,
-	    LocalDate beginDate, LocalDate endDate, Duration totalWorkedTime) {
-	setRootDomainObject(RootDomainObject.getInstance());
-	setBalance(balance);
-	setBalanceToDiscount(balanceToDiscount);
+	    EmployeeWorkSheet employeeWorkSheet, LocalDate beginDate, LocalDate endDate) {
+	init(employeeWorkSheet);
 	setAssiduousnessStatusHistory(assiduousnessStatusHistory);
 	setClosedMonth(closedMonth);
-	setSaturdayBalance(totalComplementaryWeeklyRestBalance);
-	setSundayBalance(totalWeeklyRestBalance);
-	setHolidayBalance(holidayRest);
-	setVacations(vacations);
-	setTolerance(tolerance);
-	setArticle17(article17);
-	setArticle66(article66);
-	setAccumulatedArticle66(0.0);
-	setAccumulatedUnjustified(0.0);
-	setMaximumWorkingDays(maximumWorkingDays);
-	setWorkedDaysWithBonusDaysDiscount(workedDaysWithBonusDaysDiscount);
-	setWorkedDaysWithA17VacationsDaysDiscount(workedDaysWithA17VacationsDaysDiscount);
-	setFinalBalance(finalBalance);
-	setFinalBalanceToCompensate(finalBalanceToCompensate);
 	setBeginDate(beginDate);
 	setEndDate(endDate);
-	setTotalWorkedTime(totalWorkedTime);
+	setLastModifiedDate(new DateTime());
+	setIsCorrection(Boolean.FALSE);
+    }
+
+    public AssiduousnessClosedMonth(EmployeeWorkSheet employeeWorkSheet, ClosedMonth correctionClosedMonth,
+	    AssiduousnessClosedMonth oldAssiduousnessClosedMonth) {
+	init(employeeWorkSheet);
+	setCorrectedOnClosedMonth(correctionClosedMonth);
+	setAssiduousnessStatusHistory(oldAssiduousnessClosedMonth.getAssiduousnessStatusHistory());
+	setClosedMonth(oldAssiduousnessClosedMonth.getClosedMonth());
+	setBeginDate(oldAssiduousnessClosedMonth.getBeginDate());
+	setEndDate(oldAssiduousnessClosedMonth.getEndDate());
+	setIsCorrection(Boolean.TRUE);
+    }
+
+    private void init(EmployeeWorkSheet employeeWorkSheet) {
+	setLastModifiedDate(new DateTime());
+	setRootDomainObject(RootDomainObject.getInstance());
+	setBalance(employeeWorkSheet.getTotalBalance());
+	setBalanceToDiscount(employeeWorkSheet.getBalanceToCompensate());
+	setSaturdayBalance(employeeWorkSheet.getComplementaryWeeklyRest());
+	setSundayBalance(employeeWorkSheet.getWeeklyRest());
+	setHolidayBalance(employeeWorkSheet.getHolidayRest());
+	setVacations(employeeWorkSheet.getVacations().doubleValue());
+	setTolerance(employeeWorkSheet.getTolerance().doubleValue());
+	setArticle17(employeeWorkSheet.getArticle17().doubleValue());
+	setArticle66(employeeWorkSheet.getArticle66().doubleValue());
+	setMaximumWorkingDays(employeeWorkSheet.getMaximumWorkingDays());
+	setWorkedDaysWithBonusDaysDiscount(employeeWorkSheet.getWorkedDaysWithBonusDaysDiscount());
+	setWorkedDaysWithA17VacationsDaysDiscount(employeeWorkSheet.getWorkedDaysWithA17VacationsDaysDiscount());
+	setFinalBalance(employeeWorkSheet.getEmployeeBalanceResume().getFinalAnualBalance());
+	setFinalBalanceToCompensate(employeeWorkSheet.getEmployeeBalanceResume().getFutureBalanceToCompensate());
+	setTotalWorkedTime(employeeWorkSheet.getTotalWorkedTime());
+	setUnjustifiedDays(employeeWorkSheet.getUnjustifiedDays() + employeeWorkSheet.getUnjustifiedDaysLeave());
+	setAccumulatedArticle66(employeeWorkSheet.getAccumulatedArticle66().doubleValue());
+	setAccumulatedUnjustified(employeeWorkSheet.getAccumulatedUnjustified().doubleValue());
+	setAccumulatedArticle66Days(employeeWorkSheet.getAccumulatedArticle66Days());
+	setAccumulatedUnjustifiedDays(employeeWorkSheet.getAccumulatedUnjustifiedDays());
+    }
+
+    public void correct(EmployeeWorkSheet employeeWorkSheet) {
+	init(employeeWorkSheet);
+	setIsCorrection(Boolean.TRUE);
     }
 
     public HashMap<String, Duration> getPastJustificationsDurations() {
@@ -85,127 +109,31 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	return closedMonthJustificationscodesMap;
     }
 
-    private double getTotalUnjustifiedPercentage(LocalDate beginDate, LocalDate endDate) {
-	double unjustified = 0;
-	Duration balanceWithoutDiscount = getBalance().plus(getBalanceToDiscount());
-	Duration averageWorkTimeDuration = getAssiduousnessStatusHistory().getAssiduousness().getAverageWorkTimeDuration(
-		beginDate, endDate);
-	if (!balanceWithoutDiscount.isShorterThan(Duration.ZERO)) {
-	    unjustified = getUnjustifiedPercentage(getAssiduousnessExtraWorks());
-	} else {
-	    Duration unjustifiedTotalDuration = Duration.ZERO;
-	    for (AssiduousnessExtraWork extraWork : getAssiduousnessExtraWorks()) {
-		unjustifiedTotalDuration = unjustifiedTotalDuration.plus(extraWork.getUnjustified());
-	    }
-	    long balanceToProcess = Math.abs(balanceWithoutDiscount.getMillis()) > unjustifiedTotalDuration.getMillis() ? Math
-		    .abs(balanceWithoutDiscount.getMillis()) : unjustifiedTotalDuration.getMillis();
-	    long balanceAfterTolerance = balanceToProcess - Assiduousness.IST_TOLERANCE_TIME.getMillis();
-	    if (balanceAfterTolerance > 0) {
-		unjustified = (double) balanceAfterTolerance / (double) averageWorkTimeDuration.getMillis();
-	    }
-	}
-
-	if (beginDate.getMonthOfYear() == 12 && getFinalBalanceToCompensate().isLongerThan(Duration.ZERO)) {
-	    unjustified = unjustified
-		    + (getFinalBalanceToCompensate().getMillis() / (double) averageWorkTimeDuration.getMillis());
-	}
-	return unjustified;
-    }
-
-    private double getUnjustifiedPercentage(List<AssiduousnessExtraWork> assiduousnessExtraWorks) {
-	double unjustified = 0;
-	long tempIstTorelanceTime = Assiduousness.IST_TOLERANCE_TIME.getMillis();
-	for (AssiduousnessExtraWork extraWork : assiduousnessExtraWorks) {
-	    if (extraWork.getUnjustified().isLongerThan(Duration.ZERO)) {
-		long unjustifiedAfterTolerance = extraWork.getUnjustified().getMillis() - tempIstTorelanceTime;
-		if (unjustifiedAfterTolerance > 0) {
-		    unjustified += ((double) unjustifiedAfterTolerance / (double) extraWork.getWorkScheduleType()
-			    .getNormalWorkPeriod().getWorkPeriodDuration().getMillis());
-		}
-		tempIstTorelanceTime = unjustifiedAfterTolerance > 0 ? 0 : tempIstTorelanceTime
-			- extraWork.getUnjustified().getMillis();
-	    }
-	}
-	return unjustified;
-    }
-
     public void delete() {
 	removeRootDomainObject();
 	removeAssiduousnessStatusHistory();
-	List<AssiduousnessExtraWork> assiduousnessExtraWorks = new ArrayList<AssiduousnessExtraWork>(getAssiduousnessExtraWorks());
+	List<AssiduousnessExtraWork> assiduousnessExtraWorks = new ArrayList<AssiduousnessExtraWork>(super
+		.getAssiduousnessExtraWorks());
 	for (AssiduousnessExtraWork assiduousnessExtraWork : assiduousnessExtraWorks) {
 	    getAssiduousnessExtraWorks().remove(assiduousnessExtraWork);
 	    assiduousnessExtraWork.delete();
 	}
-	List<ClosedMonthJustification> closedMonthJustifications = new ArrayList<ClosedMonthJustification>(
-		getClosedMonthJustifications());
+	List<ClosedMonthJustification> closedMonthJustifications = new ArrayList<ClosedMonthJustification>(super
+		.getClosedMonthJustifications());
 	for (ClosedMonthJustification closedMonthJustification : closedMonthJustifications) {
 	    getClosedMonthJustifications().remove(closedMonthJustification);
 	    closedMonthJustification.delete();
 	}
 
-	List<AssiduousnessClosedDay> assiduousnessClosedDays = new ArrayList<AssiduousnessClosedDay>(getAssiduousnessClosedDays());
+	List<AssiduousnessClosedDay> assiduousnessClosedDays = new ArrayList<AssiduousnessClosedDay>(super
+		.getAssiduousnessClosedDays());
 	for (AssiduousnessClosedDay assiduousnessClosedDay : assiduousnessClosedDays) {
 	    getAssiduousnessClosedDays().remove(assiduousnessClosedDay);
 	    assiduousnessClosedDay.delete();
 	}
+	removeClosedMonth();
+	removeCorrectedOnClosedMonth();
 	deleteDomainObject();
-    }
-
-    public void setAllUnjustifiedAndAccumulatedArticle66(int unjustifiedDays) {
-	AssiduousnessClosedMonth lastAssiduousnessClosedMonth = getPreviousAssiduousnessClosedMonth();
-	double unjustified = 0;
-	double a66 = 0;
-	double previousAccumulatedA66 = 0;
-	double previousUnjustified = 0;
-	double previousNotCompleteA66 = 0;
-	double previousNotCompleteUnjustified = 0;
-
-	if (lastAssiduousnessClosedMonth != null) {
-	    previousAccumulatedA66 = lastAssiduousnessClosedMonth.getAccumulatedArticle66();
-	    previousNotCompleteA66 = previousAccumulatedA66 - (int) previousAccumulatedA66;
-	    previousUnjustified = lastAssiduousnessClosedMonth.getAccumulatedUnjustified();
-	    previousNotCompleteUnjustified = previousUnjustified - (int) previousUnjustified;
-	}
-	LocalDate beginDate = new LocalDate(getClosedMonth().getClosedYearMonth().get(DateTimeFieldType.year()), getClosedMonth()
-		.getClosedYearMonth().get(DateTimeFieldType.monthOfYear()), 01);
-	LocalDate endDate = new LocalDate(getClosedMonth().getClosedYearMonth().get(DateTimeFieldType.year()), getClosedMonth()
-		.getClosedYearMonth().get(DateTimeFieldType.monthOfYear()), beginDate.dayOfMonth().getMaximumValue());
-	unjustified = getTotalUnjustifiedPercentage(beginDate, endDate);
-
-	unjustified = NumberUtils.formatDoubleWithoutRound(unjustified, 1);
-
-	double anualRemaining = Assiduousness.MAX_A66_PER_YEAR - previousAccumulatedA66;
-	double monthRemaining = anualRemaining > Assiduousness.MAX_A66_PER_MONTH ? Assiduousness.MAX_A66_PER_MONTH
-		: anualRemaining;
-	if (getArticle66() < monthRemaining && unjustified > 0) {
-	    monthRemaining = monthRemaining - getArticle66();
-	    if (unjustified <= monthRemaining) {
-		a66 = unjustified;
-		unjustified = 0;
-	    } else {
-		unjustified -= monthRemaining;
-		a66 = monthRemaining;
-	    }
-	}
-	a66 = NumberUtils.formatDoubleWithoutRound(a66, 1);
-	setAccumulatedArticle66(previousAccumulatedA66 + a66);
-	setAccumulatedUnjustified(previousUnjustified + unjustified);
-
-	int A66ToDiscount = (int) (a66 + previousNotCompleteA66);
-	int unjustifiedToDiscount = (int) (unjustified + previousNotCompleteUnjustified);
-	setAccumulatedUnjustifiedDays((int) Math.floor(unjustifiedToDiscount));
-	setAccumulatedArticle66Days((int) Math.floor(A66ToDiscount));
-
-	int countUnjustifiedWorkingDays = unjustifiedDays;
-	for (Leave leave : getAssiduousnessStatusHistory().getAssiduousness().getLeaves(beginDate, endDate)) {
-	    if (leave.getJustificationMotive().getAcronym().equalsIgnoreCase("FINJUST")) {
-		countUnjustifiedWorkingDays += leave.getWorkDaysBetween(new Interval(beginDate.toDateTimeAtStartOfDay(), endDate
-			.toDateTimeAtStartOfDay()));
-	    }
-	}
-	setUnjustifiedDays(countUnjustifiedWorkingDays);
-
     }
 
     public AssiduousnessClosedMonth getPreviousAssiduousnessClosedMonth() {
@@ -214,8 +142,8 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	if (previousMonth <= 0) {
 	    return null;
 	}
-	ClosedMonth previousClosedMonth = ClosedMonth.getClosedMonth(new YearMonth(partial.get(DateTimeFieldType.year()),
-		previousMonth));
+	ClosedMonth previousClosedMonth = ClosedMonth.getClosedMonthForBalance(new YearMonth(partial
+		.get(DateTimeFieldType.year()), previousMonth));
 	if (previousClosedMonth != null) {
 	    AssiduousnessClosedMonth assiduousnessClosedMonth = previousClosedMonth
 		    .getAssiduousnessClosedMonth(getAssiduousnessStatusHistory());
@@ -272,4 +200,139 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	return nightWorkByWorkScheduleType;
     }
 
+    public List<AssiduousnessClosedDay> getAllAssiduousnessClosedDays() {
+	return super.getAssiduousnessClosedDays();
+    }
+
+    @Override
+    public List<AssiduousnessClosedDay> getAssiduousnessClosedDays() {
+	Set<AssiduousnessClosedDay> all = new HashSet<AssiduousnessClosedDay>(getAllAssiduousnessClosedDays());
+	if (getCorrectedOnClosedMonth() != null) {
+	    for (AssiduousnessClosedMonth assiduousnessClosedMonth : getClosedMonth().getAllAssiduousnessClosedMonths(
+		    getAssiduousnessStatusHistory())) {
+		all.addAll(assiduousnessClosedMonth.getAllAssiduousnessClosedDays());
+	    }
+	}
+	Map<LocalDate, AssiduousnessClosedDay> assiduousnessClosedDays = new HashMap<LocalDate, AssiduousnessClosedDay>();
+	for (AssiduousnessClosedDay assiduousnessClosedDay : all) {
+	    AssiduousnessClosedDay assiduousnessClosedDayFromMap = assiduousnessClosedDays.get(assiduousnessClosedDay.getDay());
+	    if (assiduousnessClosedDayFromMap == null
+		    || (assiduousnessClosedDay.getIsCorrection() && (!assiduousnessClosedDayFromMap.getIsCorrection()))
+		    || (assiduousnessClosedDay.getIsCorrection() && assiduousnessClosedDayFromMap.getIsCorrection() && assiduousnessClosedDay
+			    .getCorrectedOnClosedMonth().getClosedYearMonth().isAfter(
+				    assiduousnessClosedDayFromMap.getCorrectedOnClosedMonth().getClosedYearMonth()))) {
+		assiduousnessClosedDays.put(assiduousnessClosedDay.getDay(), assiduousnessClosedDay);
+	    }
+	}
+	return new ArrayList<AssiduousnessClosedDay>(assiduousnessClosedDays.values());
+    }
+
+    public AssiduousnessClosedDay getAssiduousnessClosedDay(LocalDate date) {
+	AssiduousnessClosedDay lastAssiduousnessClosedDay = null;
+	for (AssiduousnessClosedDay assiduousnessClosedDay : getAssiduousnessClosedDays()) {
+	    if (assiduousnessClosedDay.getDay().equals(date)
+		    && (lastAssiduousnessClosedDay == null || (assiduousnessClosedDay.getIsCorrection() && ((!lastAssiduousnessClosedDay
+			    .getIsCorrection()) || lastAssiduousnessClosedDay.getCorrectedOnClosedMonth().getClosedYearMonth()
+			    .isBefore(assiduousnessClosedDay.getCorrectedOnClosedMonth().getClosedYearMonth()))))) {
+		lastAssiduousnessClosedDay = assiduousnessClosedDay;
+	    }
+	}
+	return lastAssiduousnessClosedDay;
+    }
+
+    public List<AssiduousnessExtraWork> getAllAssiduousnessExtraWorks() {
+	return super.getAssiduousnessExtraWorks();
+    }
+
+    @Override
+    public List<AssiduousnessExtraWork> getAssiduousnessExtraWorks() {
+	Set<AssiduousnessExtraWork> all = new HashSet<AssiduousnessExtraWork>(getAllAssiduousnessExtraWorks());
+	if (getCorrectedOnClosedMonth() != null) {
+	    for (AssiduousnessClosedMonth assiduousnessClosedMonth : getClosedMonth().getAllAssiduousnessClosedMonths(
+		    getAssiduousnessStatusHistory())) {
+		all.addAll(assiduousnessClosedMonth.getAllAssiduousnessExtraWorks());
+	    }
+	}
+	Map<WorkScheduleType, AssiduousnessExtraWork> assiduousnessExtraWorks = new HashMap<WorkScheduleType, AssiduousnessExtraWork>();
+	for (AssiduousnessExtraWork assiduousnessExtraWork : all) {
+	    AssiduousnessExtraWork assiduousnessExtraWorkFromMap = assiduousnessExtraWorks.get(assiduousnessExtraWork
+		    .getWorkScheduleType());
+	    if (assiduousnessExtraWorkFromMap == null
+		    || (assiduousnessExtraWork.getIsCorrection() && (!assiduousnessExtraWorkFromMap.getIsCorrection()))
+		    || (assiduousnessExtraWork.getIsCorrection() && assiduousnessExtraWorkFromMap.getIsCorrection() && assiduousnessExtraWork
+			    .getCorrectedOnClosedMonth().getClosedYearMonth().isAfter(
+				    assiduousnessExtraWorkFromMap.getCorrectedOnClosedMonth().getClosedYearMonth()))) {
+		assiduousnessExtraWorks.put(assiduousnessExtraWork.getWorkScheduleType(), assiduousnessExtraWork);
+	    }
+	}
+	return new ArrayList<AssiduousnessExtraWork>(assiduousnessExtraWorks.values());
+    }
+
+    public List<ClosedMonthJustification> getAllClosedMonthJustifications() {
+	return super.getClosedMonthJustifications();
+    }
+
+    @Override
+    public List<ClosedMonthJustification> getClosedMonthJustifications() {
+	Set<ClosedMonthJustification> all = new HashSet<ClosedMonthJustification>(getAllClosedMonthJustifications());
+	if (getCorrectedOnClosedMonth() != null) {
+	    for (AssiduousnessClosedMonth assiduousnessClosedMonth : getClosedMonth().getAllAssiduousnessClosedMonths(
+		    getAssiduousnessStatusHistory())) {
+		all.addAll(assiduousnessClosedMonth.getAllClosedMonthJustifications());
+	    }
+	}
+	Map<JustificationMotive, ClosedMonthJustification> closedMonthJustifications = new HashMap<JustificationMotive, ClosedMonthJustification>();
+	for (ClosedMonthJustification closedMonthJustification : all) {
+	    ClosedMonthJustification closedMonthJustificationFromMap = closedMonthJustifications.get(closedMonthJustification
+		    .getJustificationMotive());
+	    if (closedMonthJustificationFromMap == null
+		    || (closedMonthJustification.getIsCorrection() && (!closedMonthJustificationFromMap.getIsCorrection()))
+		    || (closedMonthJustification.getIsCorrection() && closedMonthJustificationFromMap.getIsCorrection() && closedMonthJustification
+			    .getCorrectedOnClosedMonth().getClosedYearMonth().isAfter(
+				    closedMonthJustificationFromMap.getCorrectedOnClosedMonth().getClosedYearMonth()))) {
+		closedMonthJustifications.put(closedMonthJustification.getJustificationMotive(), closedMonthJustification);
+	    }
+	}
+	return new ArrayList<ClosedMonthJustification>(closedMonthJustifications.values());
+    }
+
+    public boolean hasEqualValues(EmployeeWorkSheet employeeWorkSheet) {
+	return (employeeWorkSheet.getTotalBalance().equals(getBalance())
+		&& employeeWorkSheet.getUnjustifiedBalance().equals(getTotalUnjustifiedBalance())
+		&& employeeWorkSheet.getComplementaryWeeklyRest().equals(getSaturdayBalance())
+		&& employeeWorkSheet.getWeeklyRest().equals(getSundayBalance())
+		&& employeeWorkSheet.getHolidayRest().equals(getHolidayBalance())
+		&& employeeWorkSheet.getUnjustifiedDays().equals(getUnjustifiedDays())
+		&& employeeWorkSheet.getAccumulatedUnjustifiedDays().equals(getAccumulatedUnjustifiedDays())
+		&& employeeWorkSheet.getAccumulatedArticle66Days().equals(getAccumulatedArticle66Days())
+		&& employeeWorkSheet.getBalanceToCompensate().equals(getBalanceToDiscount())
+		&& employeeWorkSheet.getMaximumWorkingDays().equals(getMaximumWorkingDays())
+		&& employeeWorkSheet.getTotalWorkedTime().equals(getTotalWorkedTime())
+		&& employeeWorkSheet.getWorkedDaysWithBonusDaysDiscount().equals(getWorkedDaysWithBonusDaysDiscount())
+		&& employeeWorkSheet.getWorkedDaysWithA17VacationsDaysDiscount().equals(
+			getWorkedDaysWithA17VacationsDaysDiscount())
+		&& employeeWorkSheet.getMultipleMonthBalance().equals(getBalanceToDiscount())
+		&& employeeWorkSheet.getVacations().equals(getVacations())
+		&& employeeWorkSheet.getTolerance().equals(getTolerance())
+		&& employeeWorkSheet.getArticle17().equals(getArticle17()) && employeeWorkSheet.getArticle66().equals(
+		getArticle66()));
+    }
+
+    public AssiduousnessClosedMonth getOldAssiduousnessClosedMonth() {
+	AssiduousnessClosedMonth oldAssiduousnessClosedMonth = null;
+	if (getIsCorrection()) {
+	    for (AssiduousnessClosedMonth assiduousnessClosedMonth : getClosedMonth().getAllAssiduousnessClosedMonths(
+		    getAssiduousnessStatusHistory())) {
+		if ((!assiduousnessClosedMonth.equals(this))
+			&& (oldAssiduousnessClosedMonth == null || (!oldAssiduousnessClosedMonth.getIsCorrection() || (assiduousnessClosedMonth
+				.getIsCorrection() && assiduousnessClosedMonth.getCorrectedOnClosedMonth().getClosedYearMonth()
+				.isAfter(oldAssiduousnessClosedMonth.getCorrectedOnClosedMonth().getClosedYearMonth()))
+
+			))) {
+		    oldAssiduousnessClosedMonth = assiduousnessClosedMonth;
+		}
+	    }
+	}
+	return oldAssiduousnessClosedMonth;
+    }
 }

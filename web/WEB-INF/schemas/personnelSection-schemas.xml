@@ -77,10 +77,12 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	<slot name="date.dayOfMonth" key="label.day" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="weekDay" key="label.weekDay" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="workScheduleAcronym" key="label.schedule" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="balanceTimeFormatted" key="label.balance" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="unjustifiedTimeFormatted" key="label.unjustified" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="notes" key="label.notes" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="clockingsFormattedToManagement" key="link.clockings" bundle="ASSIDUOUSNESS_RESOURCES">
+	<slot name="balanceTime" key="label.balance" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="unjustifiedTime" key="label.unjustified" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="notes" key="label.notes" bundle="ASSIDUOUSNESS_RESOURCES">
+		<property name="escaped" value="false"/>
+	</slot>
+	<slot name="clockings" key="link.clockings" bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="escaped" value="false"/>
 	</slot>
 </schema>
@@ -90,20 +92,20 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	<slot name="date.dayOfMonth" key="label.day" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="weekDay" key="label.weekDay" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="workScheduleAcronym" key="label.schedule" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="balanceTimeFormatted" key="label.balance" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="unjustifiedTimeFormatted" key="label.unjustified" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="balanceTime" key="label.balance" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="unjustifiedTime" key="label.unjustified" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="notes" key="label.notes" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="clockingsFormattedToManagement" key="link.clockings" bundle="ASSIDUOUSNESS_RESOURCES">
+	<slot name="clockings" key="link.clockings" bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="escaped" value="false"/>
 	</slot>
-	<slot name="extraWorkFirstLevelFormatted" key="label.extraWorkFirstLevel" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="extraWorkSecondLevelWithLimitFormatted" key="label.extraWorkSecondLevelWithLimit" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="extraWorkSecondLevelFormatted" key="label.extraWorkSecondLevel" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="nightWorkBalanceFormatted" key="label.nightWork" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="overtimeFirstLevel" key="label.extraWorkFirstLevel" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="overtimeSecondLevelWithLimit" key="label.extraWorkSecondLevelWithLimit" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="overtimeSecondLevel" key="label.extraWorkSecondLevel" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="nightWorkBalance" key="label.nightWork" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	
-	<slot name="nightExtraWorkFirstLevelFormatted" key="label.nightExtraWorkFirstLevel" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="nightExtraWorkSecondLevelWithLimitFormatted" key="label.nightExtraWorkSecondLevel" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="nightExtraWorkSecondLevelFormatted" key="label.nightExtraWorkSecondLevelWithLimit" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="nightlyOvertimeFirstLevel" key="label.nightExtraWorkFirstLevel" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="nightlyOvertimeSecondLevelWithLimit" key="label.nightExtraWorkSecondLevel" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="nightlyOvertimeSecondLevel" key="label.nightExtraWorkSecondLevelWithLimit" bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
 
 
@@ -1441,3 +1443,28 @@ constructor="description, state, modifiedBy">
 	<slot name="name" key="label.relation" layout="null-as-label"/>
 </schema>
 
+<schema name="show.assiduousnessClosedMonth" type="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth">
+	<slot name="lastModifiedDate" key="label.beginDate" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="correctedOnClosedMonth" key="label.correctedOnClosedMonth" bundle="ASSIDUOUSNESS_RESOURCES" layout="values" schema="show.closedMonth"/>
+	<slot name="beginDate" key="label.beginDate" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="endDate" key="label.endDate" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="assiduousnessStatusHistory.assiduousnessStatus.description" key="label.status" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="balance" key="label.balanceasd" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="holidayBalance" key="label.totalHoliday" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="saturdayBalance" key="label.totalSaturday" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="sundayBalance" key="label.totalSunday" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="accumulatedArticle66" key="label.accumulatedArticle66" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="accumulatedUnjustified" key="label.accumulatedUnjustified" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="unjustifiedDays" key="label.unjustifiedDaysHeader" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="accumulatedArticle66Days" key="label.accumulatedArticle66DaysHeader" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="accumulatedUnjustifiedDays" key="label.accumulatedUnjustifiedDaysHeader" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="vacations" key="label.usedVacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="tolerance" key="link.assiduousnessExemptions" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="article17" key="label.art17" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="article66" key="label.art66" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="totalWorkedTime" key="label.totalWorkedTime" bundle="ASSIDUOUSNESS_RESOURCES"/>
+</schema>
+
+<schema name="show.closedMonth" type="net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth">
+	<slot name="closedYearMonth"/>
+</schema>	

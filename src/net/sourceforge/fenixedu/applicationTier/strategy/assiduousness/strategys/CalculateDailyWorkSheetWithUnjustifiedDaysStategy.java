@@ -15,9 +15,8 @@ public class CalculateDailyWorkSheetWithUnjustifiedDaysStategy extends Calculate
 	if (balanceLeaves.isEmpty() && balanceOcurrenceLeaves.isEmpty() && halfOccurrenceTimeLeaves.isEmpty()) {
 	    workDaySheet.setUnjustifiedDay();
 	} else {
-	    workDaySheet.setBalanceTime(Duration.ZERO.minus(
-		    workDaySheet.getWorkSchedule().getWorkScheduleType().getNormalWorkPeriod().getWorkPeriodDuration())
-		    .toPeriod());
+	    workDaySheet.setBalanceTime(Duration.ZERO.minus(workDaySheet.getWorkSchedule().getWorkScheduleType()
+		    .getNormalWorkPeriod().getWorkPeriodDuration()));
 	    if (workDaySheet.getWorkSchedule().getWorkScheduleType().getFixedWorkPeriod() != null) {
 		workDaySheet.setUnjustifiedTime(workDaySheet.getWorkSchedule().getWorkScheduleType().getFixedWorkPeriod()
 			.getWorkPeriodDuration());

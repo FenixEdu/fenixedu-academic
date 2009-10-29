@@ -295,7 +295,7 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 		    stringBuilder.append(new DecimalFormat("0000").format(employeeBonusInstallment.getCostCenterCode())).append(
 			    separator);
 		    Integer absences = 0;
-		    ClosedMonth closedMonth = ClosedMonth.getClosedMonth(new YearMonth(employeeMonthlyBonusInstallment
+		    ClosedMonth closedMonth = ClosedMonth.getClosedMonthForBalance(new YearMonth(employeeMonthlyBonusInstallment
 			    .getPartialYearMonth()));
 		    if (closedMonth != null) {
 			List<AssiduousnessClosedMonth> assiduousnessClosedMonthList = closedMonth

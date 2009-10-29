@@ -9,7 +9,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ReadAssiduousnessWorkSheet;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -54,7 +53,6 @@ import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
@@ -132,10 +130,7 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 	EmployeeScheduleFactory employeeScheduleFactory = new EmployeeScheduleFactory(employee, null, choosenSchedule);
 	request.setAttribute("employeeScheduleBean", employeeScheduleFactory);
 	if (yearMonth != null) {
-	    LocalDate beginDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, 01);
-	    LocalDate endDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, beginDate.dayOfMonth()
-		    .getMaximumValue());
-	    setEmployeeStatus(request, employee, beginDate, endDate);
+	    setEmployeeStatus(request, employee, yearMonth);
 	    request.setAttribute("yearMonth", yearMonth);
 	    request.setAttribute("employee", employee);
 	}
@@ -225,11 +220,8 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 	}
 
 	if (employee.getAssiduousness() != null) {
-	    LocalDate beginDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, 01);
-	    LocalDate endDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, beginDate.dayOfMonth()
-		    .getMaximumValue());
 	    request.setAttribute("vacations", employee.getAssiduousness().getAssiduousnessVacationsByYear(yearMonth.getYear()));
-	    setEmployeeStatus(request, employee, beginDate, endDate);
+	    setEmployeeStatus(request, employee, yearMonth);
 	}
 	request.setAttribute("yearMonth", yearMonth);
 	request.setAttribute("employee", employee);
@@ -423,8 +415,7 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 
 	    List<AssiduousnessStatusHistory> assiduousnessStatusHistoryList = employee.getAssiduousness().getStatusBetween(
 		    beginDate, endDate);
-	    final IUserView userView = UserView.getUser();
-	    ClosedMonth closedMonth = ClosedMonth.getClosedMonth(yearMonth);
+	    ClosedMonth closedMonth = ClosedMonth.getClosedMonthForBalance(yearMonth);
 	    for (AssiduousnessStatusHistory assiduousnessStatusHistory : assiduousnessStatusHistoryList) {
 		EmployeeBalanceResume employeeBalanceResume = new EmployeeBalanceResume();
 		if (closedMonth != null) {
@@ -449,6 +440,29 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 	}
 	request.setAttribute("yearMonth", yearMonth);
 	return mapping.findForward("show-balance-resume");
+    }
+
+    public ActionForward showAllAssiduousnessClosedMonth(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+	final Employee employee = getEmployee(request, (DynaActionForm) form);
+	ActionForward actionForward = validateEmployee(mapping, request, employee);
+	if (actionForward != null) {
+	    return actionForward;
+	}
+	YearMonth yearMonth = getYearMonth(request, employee);
+	if (yearMonth != null) {
+	    ClosedMonth closedMonth = ClosedMonth.getClosedMonthForBalance(yearMonth);
+	    if (closedMonth != null && closedMonth.getClosedForBalance()) {
+		List<AssiduousnessClosedMonth> assiduousnessClosedMonthList = closedMonth
+			.getAllAssiduousnessClosedMonths(employee.getAssiduousness());
+		Collections.sort(assiduousnessClosedMonthList, new BeanComparator("creationDate"));
+		request.setAttribute("assiduousnessClosedMonthList", assiduousnessClosedMonthList);
+	    }
+	}
+	setEmployeeStatus(request, employee, yearMonth);
+	request.setAttribute("yearMonth", yearMonth);
+	request.setAttribute("employee", employee);
+	return mapping.findForward("show-assiduousness-closed-months");
     }
 
     private ActionForward validateEmployee(ActionMapping mapping, HttpServletRequest request, final Employee employee) {
@@ -514,16 +528,18 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 	actionMessages.add("message", new ActionMessage(message));
 	saveMessages(request, actionMessages);
 	request.setAttribute("yearMonth", yearMonth);
+	if (employee != null) {
+	    request.setAttribute("employee", employee);
+	    request.setAttribute("employeeWorkSheet", new EmployeeWorkSheet(employee));
+	    setEmployeeStatus(request, employee, yearMonth);
+	}
+    }
+
+    private void setEmployeeStatus(HttpServletRequest request, Employee employee, YearMonth yearMonth) {
 	LocalDate beginDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, 01);
 	LocalDate endDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, beginDate.dayOfMonth()
 		.getMaximumValue());
-	if (employee != null) {
-	    EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet();
-	    employeeWorkSheet.setEmployee(employee);
-	    request.setAttribute("employee", employee);
-	    request.setAttribute("employeeWorkSheet", employeeWorkSheet);
-	    setEmployeeStatus(request, employee, beginDate, endDate);
-	}
+	setEmployeeStatus(request, employee, beginDate, endDate);
     }
 
     private void setEmployeeStatus(HttpServletRequest request, final Employee employee, LocalDate beginDate, LocalDate endDate) {

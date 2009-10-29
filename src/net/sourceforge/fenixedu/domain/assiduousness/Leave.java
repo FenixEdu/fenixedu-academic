@@ -3,10 +3,14 @@ package net.sourceforge.fenixedu.domain.assiduousness;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.EnumSet;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ReadAssiduousnessWorkSheet;
+import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeWorkSheet;
+import net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkDaySheet;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.util.AttributeType;
@@ -14,6 +18,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.Attributes;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.TimePoint;
 import net.sourceforge.fenixedu.domain.assiduousness.util.Timeline;
+import net.sourceforge.fenixedu.util.IntervalUtils;
 import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -56,10 +61,12 @@ public class Leave extends Leave_Base {
 	setLastModifiedDate(lastModificationDate);
 	setModifiedBy(modifiedBy);
 	setOracleSequence(0);
+	correctAssiduousnessClosedMonth(null);
     }
 
     public void modify(DateTime date, Duration dateDuration, JustificationMotive justificationMotive, WorkWeek aplicableWeekDays,
 	    String notes, Employee modifiedBy) {
+	Interval oldInterval = getTotalInterval();
 	setDate(date);
 	setJustificationMotive(justificationMotive);
 	setAplicableWeekDays(aplicableWeekDays);
@@ -68,6 +75,135 @@ public class Leave extends Leave_Base {
 	setLastModifiedDate(new DateTime());
 	setModifiedBy(modifiedBy);
 	setOracleSequence(0);
+	correctAssiduousnessClosedMonth(oldInterval);
+    }
+
+    @Override
+    public void anulate(Employee modifiedBy) {
+	super.anulate(modifiedBy);
+	correctAssiduousnessClosedMonth(null);
+    }
+
+    private void correctAssiduousnessClosedMonth(Interval oldInterval) {
+	ClosedMonth correctionClosedMonth = ClosedMonth.getNextClosedMonth();
+	Boolean correctNext = false;
+	LocalDate date = getDate().toLocalDate();
+
+	do {
+	    correctNext = false;
+	    ClosedMonth closedMonth = ClosedMonth.getClosedMonthForBalance(date);
+	    if (closedMonth != null && closedMonth.getClosedForBalance()) {
+		List<AssiduousnessClosedMonth> oldAssiduousnessClosedMonths = closedMonth
+			.getAssiduousnessClosedMonths(getAssiduousness());
+		for (AssiduousnessClosedMonth oldAssiduousnessClosedMonth : oldAssiduousnessClosedMonths) {
+		    if (oldAssiduousnessClosedMonth != null) {
+			EmployeeWorkSheet employeeWorkSheet = ReadAssiduousnessWorkSheet.run(getAssiduousness().getEmployee(),
+				oldAssiduousnessClosedMonth.getBeginDate(), oldAssiduousnessClosedMonth.getEndDate());
+
+			AssiduousnessClosedMonth newAssiduousnessClosedMonth = oldAssiduousnessClosedMonth;
+
+			if (!oldAssiduousnessClosedMonth.hasEqualValues(employeeWorkSheet)) {
+			    correctNext = true;
+			    if (oldAssiduousnessClosedMonth.getIsCorrection()
+				    && oldAssiduousnessClosedMonth.getCorrectedOnClosedMonth().equals(correctionClosedMonth)) {
+				oldAssiduousnessClosedMonth.correct(employeeWorkSheet);
+			    } else {
+				newAssiduousnessClosedMonth = new AssiduousnessClosedMonth(employeeWorkSheet,
+					correctionClosedMonth, oldAssiduousnessClosedMonth);
+			    }
+			}
+
+			List<ClosedMonthJustification> closedMonthJustifications = oldAssiduousnessClosedMonth
+				.getClosedMonthJustifications();
+			for (ClosedMonthJustification closedMonthJustification : closedMonthJustifications) {
+			    if (!closedMonthJustification.hasEqualValues(employeeWorkSheet)) {
+				correctNext = true;
+				if (closedMonthJustification.getIsCorrection()
+					&& closedMonthJustification.getCorrectedOnClosedMonth().equals(correctionClosedMonth)) {
+				    closedMonthJustification.correct(employeeWorkSheet);
+				} else {
+				    new ClosedMonthJustification(employeeWorkSheet, correctionClosedMonth,
+					    newAssiduousnessClosedMonth, closedMonthJustification.getJustificationMotive());
+				}
+			    }
+			}
+
+			Set<JustificationMotive> notCorrectedJustifications = new HashSet<JustificationMotive>();
+			notCorrectedJustifications.addAll(getNotCorrected(employeeWorkSheet.getJustificationsDuration(),
+				closedMonthJustifications));
+			for (JustificationMotive justificationMotive : notCorrectedJustifications) {
+			    new ClosedMonthJustification(employeeWorkSheet, correctionClosedMonth, oldAssiduousnessClosedMonth,
+				    justificationMotive);
+			}
+
+			List<Interval> leavesIntervals = null;
+			if (oldInterval != null) {
+			    leavesIntervals = IntervalUtils.mergeIntervalLists(getTotalInterval(), oldInterval);
+			} else {
+			    leavesIntervals = new ArrayList<Interval>();
+			    leavesIntervals.add(getTotalInterval());
+			}
+			Interval monthInterval = new Interval(
+				oldAssiduousnessClosedMonth.getBeginDate().toDateTimeAtStartOfDay(), oldAssiduousnessClosedMonth
+					.getEndDate().plusDays(1).toDateTimeAtStartOfDay());
+
+			for (Interval interval : leavesIntervals) {
+			    Interval overlapsInterval = interval.overlap(monthInterval);
+			    correctAssiduousnessClosedDay(correctionClosedMonth, oldAssiduousnessClosedMonth, employeeWorkSheet,
+				    newAssiduousnessClosedMonth, overlapsInterval);
+			}
+
+		    }
+		}
+	    }
+	    date = date.plusMonths(1);
+	} while (correctNext);
+    }
+
+    private void correctAssiduousnessClosedDay(ClosedMonth correctionClosedMonth,
+	    AssiduousnessClosedMonth oldAssiduousnessClosedMonth, EmployeeWorkSheet employeeWorkSheet,
+	    AssiduousnessClosedMonth newAssiduousnessClosedMonth, Interval overlapsInterval) {
+	if (overlapsInterval != null) {
+	    List<AssiduousnessExtraWork> assiduousnessExtraWorks = oldAssiduousnessClosedMonth.getAssiduousnessExtraWorks();
+	    for (AssiduousnessExtraWork assiduousnessExtraWork : assiduousnessExtraWorks) {
+		if (!assiduousnessExtraWork.hasEqualValues(employeeWorkSheet)) {
+		    if (assiduousnessExtraWork.getIsCorrection()
+			    && assiduousnessExtraWork.getCorrectedOnClosedMonth().equals(correctionClosedMonth)) {
+			assiduousnessExtraWork.correct(employeeWorkSheet);
+		    } else {
+			new AssiduousnessExtraWork(employeeWorkSheet, correctionClosedMonth, newAssiduousnessClosedMonth,
+				assiduousnessExtraWork.getWorkScheduleType());
+		    }
+		}
+	    }
+	    Set<WorkScheduleType> notCorrected = new HashSet<WorkScheduleType>();
+	    notCorrected.addAll(getNotCorrectedExtraWork(employeeWorkSheet.getExtra125Map(), assiduousnessExtraWorks));
+	    notCorrected.addAll(getNotCorrectedExtraWork(employeeWorkSheet.getExtra150Map(), assiduousnessExtraWorks));
+	    notCorrected.addAll(getNotCorrectedExtraWork(employeeWorkSheet.getExtra150WithLimitsMap(), assiduousnessExtraWorks));
+	    notCorrected.addAll(getNotCorrectedExtraWork(employeeWorkSheet.getExtraNight160Map(), assiduousnessExtraWorks));
+	    notCorrected.addAll(getNotCorrectedExtraWork(employeeWorkSheet.getExtraNight190Map(), assiduousnessExtraWorks));
+	    notCorrected.addAll(getNotCorrectedExtraWork(employeeWorkSheet.getExtraNight190WithLimitsMap(),
+		    assiduousnessExtraWorks));
+	    notCorrected.addAll(getNotCorrectedExtraWork(employeeWorkSheet.getExtra25Map(), assiduousnessExtraWorks));
+	    notCorrected.addAll(getNotCorrectedExtraWork(employeeWorkSheet.getUnjustifiedMap(), assiduousnessExtraWorks));
+	    notCorrected.addAll(getNotCorrectedExtraWorkDays(employeeWorkSheet.getExtraWorkNightsMap(), assiduousnessExtraWorks));
+	    for (WorkScheduleType workScheduleType : notCorrected) {
+		new AssiduousnessExtraWork(employeeWorkSheet, correctionClosedMonth, oldAssiduousnessClosedMonth,
+			workScheduleType);
+	    }
+
+	    for (LocalDate day = overlapsInterval.getStart().toLocalDate(); !day.isAfter(overlapsInterval.getEnd().toLocalDate()); day = day
+		    .plusDays(1)) {
+		AssiduousnessClosedDay assiduousnessClosedDay = oldAssiduousnessClosedMonth.getAssiduousnessClosedDay(day);
+		WorkDaySheet workDaySheet = employeeWorkSheet.getWorkDaySheet(day);
+		if (assiduousnessClosedDay != null && assiduousnessClosedDay.getIsCorrection()
+			&& assiduousnessClosedDay.getCorrectedOnClosedMonth().equals(correctionClosedMonth)) {
+		    assiduousnessClosedDay.correct(workDaySheet);
+		} else {
+		    new AssiduousnessClosedDay(newAssiduousnessClosedMonth, workDaySheet, correctionClosedMonth);
+		}
+	    }
+	}
     }
 
     public DateTime getEndDate() {
@@ -89,6 +225,7 @@ public class Leave extends Leave_Base {
 	return getEndDate().toLocalDate();
     }
 
+    @Override
     public Partial getPartialEndDate() {
 	Partial p = new Partial();
 	LocalDate y = getEndLocalDate();
@@ -132,7 +269,7 @@ public class Leave extends Leave_Base {
 	    // JustificationType.BALANCE) {
 	    // pointList.addAll(leave.toTimePoints(AttributeType.BALANCE));
 	    // } else {
-	    AttributeType at = (AttributeType) attributesIt.next();
+	    AttributeType at = attributesIt.next();
 	    pointList.addAll(leave.toTimePoints(at));
 	}
 	timeline.plotList(pointList);
@@ -212,6 +349,15 @@ public class Leave extends Leave_Base {
     public void setDuration(Duration duration) {
 	super.setDuration(duration);
 	getAssiduousness().updateAssiduousnessRecordMonthIndex(this);
+    }
+
+    public boolean isEqual(DateTime dateTime, Duration duration, JustificationMotive justificationMotive, String notes,
+	    boolean isAnulated) {
+	return isEqual(dateTime, justificationMotive, isAnulated) && getDuration().equals(duration) && getNotes().equals(notes);
+    }
+
+    public boolean isEqual(DateTime dateTime, JustificationMotive justificationMotive, String notes, boolean isAnulated) {
+	return isEqual(dateTime, justificationMotive, isAnulated) && getNotes().equals(notes);
     }
 
 }

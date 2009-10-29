@@ -2309,6 +2309,8 @@ class DomainObject {
 		Duration finalBalanceToCompensate;
 		LocalDate beginDate;
 		LocalDate endDate;
+		Boolean isCorrection;
+		DateTime lastModifiedDate;
 	}
 	
 	class assiduousness.AssiduousnessClosedDay extends DomainObject {
@@ -2318,6 +2320,9 @@ class DomainObject {
 		Duration unjustified;
 		String notes;
 		String clockings;
+		Duration holidayBalance;
+		Duration saturdayBalance;
+		Duration sundayBalance;
 		Duration extraWorkFirstLevel;
 	    Duration extraWorkSecondLevel;
 	    Duration extraWorkSecondLevelWithLimit;
@@ -2326,6 +2331,8 @@ class DomainObject {
 	    Duration nightlyExtraWorkSecondLevelWithLimit;
 	    Duration nightlyWorkBalance;		
 	    Boolean unjustifiedDay;
+	    Boolean isCorrection;
+	    DateTime lastModifiedDate;
 	}
 
 	class assiduousness.AssiduousnessExemption extends DomainObject {
@@ -2347,6 +2354,8 @@ class DomainObject {
 		Duration secondLevelNightBalanceWithLimit;
 		Integer nightExtraWorkDays;
 		Duration unjustified;
+		Boolean isCorrection;
+		DateTime lastModifiedDate;
 	}
 
 	class assiduousness.AssiduousnessRecord extends DomainObject {
@@ -2425,6 +2434,7 @@ class DomainObject {
 		Boolean closedForBalance;
 		Boolean closedForExtraWork;
 		Partial closedYearMonth;
+		DateTime closedForBalanceDate;
 	}
 
 	class assiduousness.ClosedMonthDocument extends DomainObject {
@@ -2437,6 +2447,8 @@ class DomainObject {
 
 	class assiduousness.ClosedMonthJustification extends DomainObject {
 		Duration justificationDuration;
+		Boolean isCorrection;
+		DateTime lastModifiedDate;
 	}
 
 	class assiduousness.EmployeeExtraWorkAuthorization extends DomainObject {
@@ -7803,9 +7815,23 @@ relation AssiduousnessExtraWorkAssiduousnessClosedMonth {
 	}
 }
 
+relation AssiduousnessExtraWorkClosedMonth {
+	assiduousness.ClosedMonth playsRole correctedOnClosedMonth;
+	assiduousness.AssiduousnessExtraWork playsRole assiduousnessExtraWorksCorrections {
+		multiplicity *;
+	}
+}
+
 relation AssiduousnessClosedDayAssiduousnessClosedMonth {
 	assiduousness.AssiduousnessClosedMonth playsRole assiduousnessClosedMonth;
 	assiduousness.AssiduousnessClosedDay playsRole assiduousnessClosedDays {
+		multiplicity *;
+	}
+}
+
+relation AssiduousnessClosedDayClosedMonth {
+	assiduousness.ClosedMonth playsRole correctedOnClosedMonth;
+	assiduousness.AssiduousnessClosedDay playsRole assiduousnessClosedDaysCorrections {
 		multiplicity *;
 	}
 }
@@ -8069,6 +8095,13 @@ relation ClockUnitClocking {
 	assiduousness.ClockUnit playsRole clockUnit;
 }
 
+relation AssiduousnessClosedMonthClosedMonth {
+	assiduousness.ClosedMonth playsRole correctedOnClosedMonth;
+	assiduousness.AssiduousnessClosedMonth playsRole assiduousnessClosedMonthsCorrections {
+		multiplicity *;
+	}
+}
+
 relation ClosedMonthAssiduousnessClosedMonth {
 	assiduousness.ClosedMonth playsRole closedMonth;
 	assiduousness.AssiduousnessClosedMonth playsRole assiduousnessClosedMonths {
@@ -8079,6 +8112,13 @@ relation ClosedMonthAssiduousnessClosedMonth {
 relation ClosedMonthJustificationAssiduousnessClosedMonth {
 	assiduousness.AssiduousnessClosedMonth playsRole assiduousnessClosedMonth;
 	assiduousness.ClosedMonthJustification playsRole closedMonthJustifications {
+		multiplicity *;
+	}
+}
+
+relation ClosedMonthJustificationClosedMonth {
+	assiduousness.ClosedMonth playsRole correctedOnClosedMonth;
+	assiduousness.ClosedMonthJustification playsRole closedMonthJustificationCorrections {
 		multiplicity *;
 	}
 }

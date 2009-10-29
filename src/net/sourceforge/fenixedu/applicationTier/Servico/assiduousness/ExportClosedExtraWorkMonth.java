@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecordMonthIndex;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
+import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonthJustification;
 import net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest;
 import net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive;
 import net.sourceforge.fenixedu.domain.assiduousness.Leave;
@@ -31,13 +32,11 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.util.WeekDay;
 
-import org.joda.time.DateMidnight;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Days;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
-import org.joda.time.Period;
 import org.joda.time.PeriodType;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -306,29 +305,13 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 		}
 	    }
 	}
-	HashMap<String, Duration> pastJustificationsDurations = assiduousnessClosedMonth.getPastJustificationsDurations();
-	HashMap<String, Duration> closedMonthJustificationsMap = assiduousnessClosedMonth.getClosedMonthJustificationsMap();
-	for (String giafCode : closedMonthJustificationsMap.keySet()) {
-	    Duration pastDurationToDiscount = Duration.ZERO;
-	    Duration pastDuration = pastJustificationsDurations.get(giafCode);
-	    int scheduleHours = assiduousnessClosedMonth.getAssiduousnessStatusHistory().getAssiduousness()
-		    .getAverageWorkTimeDuration(assiduousnessClosedMonth.getBeginDate(), assiduousnessClosedMonth.getEndDate())
-		    .toPeriod(PeriodType.dayTime()).getHours();
-	    if (pastDuration != null) {
-		Period pastToDiscount = Period.hours(pastDuration.toPeriod().getHours() % scheduleHours).withMinutes(
-			pastDuration.toPeriod().getMinutes());
 
-		pastDurationToDiscount = pastToDiscount.toDurationFrom(new DateMidnight());
-	    }
-	    pastDurationToDiscount = pastDurationToDiscount.plus(closedMonthJustificationsMap.get(giafCode));
-	    int justificationDays = pastDurationToDiscount.toPeriod().getHours() / scheduleHours;
+	HashMap<String, Duration> pastJustificationsDurations = assiduousnessClosedMonth.getPastJustificationsDurations();
+	for (ClosedMonthJustification closedMonthJustification : assiduousnessClosedMonth.getClosedMonthJustifications()) {
+	    int justificationDays = closedMonthJustification.getJustificationDays(pastJustificationsDurations);
 	    if (justificationDays != 0) {
-		JustificationMotive justificationMotive = JustificationMotive.getJustificationMotiveByGiafCode(giafCode,
-			assiduousnessClosedMonth.getAssiduousnessStatusHistory());
-		if (justificationMotive != null) {
-		    result.append(getLeaveLine(assiduousnessClosedMonth, justificationMotive, justificationDays, leavesBeans,
-			    state));
-		}
+		result.append(getLeaveLine(assiduousnessClosedMonth, closedMonthJustification.getJustificationMotive(),
+			justificationDays, leavesBeans, state));
 	    }
 	}
 

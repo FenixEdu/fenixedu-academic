@@ -150,7 +150,7 @@ public class BonusInstallment implements Serializable {
 	    spreadsheet.addCell(employeeBonusInstallment.getExplorationUnit(), spreadsheet.getExcelStyle().getIntegerStyle());
 	    for (EmployeeMonthlyBonusInstallment employeeMonthlyBonusInstallment : employeeBonusInstallment
 		    .getEmployeeMonthlyBonusInstallmentsOrdered()) {
-		ClosedMonth closedMonth = ClosedMonth.getClosedMonth(new YearMonth(employeeMonthlyBonusInstallment
+		ClosedMonth closedMonth = ClosedMonth.getClosedMonthForBalance(new YearMonth(employeeMonthlyBonusInstallment
 			.getPartialYearMonth()));
 		int maximumWorkingDays = 0;
 		int workedDays = 0;

@@ -83,6 +83,7 @@
 			<forward name="show-status" path="show-status"/>
 			<forward name="show-all-schedules" path="show-all-schedules"/>
 			<forward name="show-balance-resume" path="show-balance-resume"/>
+			<forward name="show-assiduousness-closed-months" path="show-assiduousness-closed-months"/>
 		</action>
 		<action path="/exportAssiduousness"
 	    		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.ExportAssiduousnessDispatchAction" 

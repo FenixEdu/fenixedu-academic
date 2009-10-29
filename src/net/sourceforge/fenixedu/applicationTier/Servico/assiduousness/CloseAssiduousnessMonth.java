@@ -5,15 +5,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
-import net.sourceforge.fenixedu.applicationTier.strategy.assiduousness.CalculateDailyWorkSheetStrategyFactory;
-import net.sourceforge.fenixedu.applicationTier.strategy.assiduousness.strategys.ICalculateDailyWorkSheetStrategy;
-import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeBalanceResume;
+import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeWorkSheet;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkDaySheet;
-import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedDay;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
@@ -24,24 +20,15 @@ import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonthJustification;
 import net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive;
 import net.sourceforge.fenixedu.domain.assiduousness.Leave;
-import net.sourceforge.fenixedu.domain.assiduousness.Schedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.AssiduousnessState;
-import net.sourceforge.fenixedu.domain.assiduousness.util.DayType;
-import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationGroup;
-import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
-import net.sourceforge.fenixedu.domain.assiduousness.util.ScheduleClockingType;
 
-import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Hours;
-import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.joda.time.PeriodType;
-
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class CloseAssiduousnessMonth extends FenixService {
 
@@ -79,13 +66,12 @@ public class CloseAssiduousnessMonth extends FenixService {
     }
 
     private ClosedMonth getClosedMonth(LocalDate beginDate) {
-	ClosedMonth closedMonth = ClosedMonth.getOpenClosedMonth(new YearMonth(beginDate));
+	ClosedMonth closedMonth = ClosedMonth.getOrCreateOpenClosedMonth(beginDate);
 	if (closedMonth != null) {
 	    closedMonth.setClosedForBalance(Boolean.TRUE);
-	    return closedMonth;
-	} else {
-	    return new ClosedMonth(beginDate);
+	    closedMonth.setClosedForBalanceDate(new DateTime());
 	}
+	return closedMonth;
     }
 
     private AssiduousnessClosedMonth getMonthAssiduousnessBalance(AssiduousnessStatusHistory assiduousnessStatusHistory,
@@ -98,263 +84,58 @@ public class CloseAssiduousnessMonth extends FenixService {
 	HashMap<LocalDate, List<AssiduousnessRecord>> clockingsMap = getClockingsMap(assiduousnessRecords, workScheduleMap, init,
 		end);
 	HashMap<LocalDate, List<Leave>> leavesMap = getLeavesMap(assiduousnessRecords, beginDate, endDate);
-	Duration totalBalance = Duration.ZERO;
-	Duration totalComplementaryWeeklyRestBalance = Duration.ZERO;
-	Duration totalWeeklyRestBalance = Duration.ZERO;
-	Duration holidayRest = Duration.ZERO;
-	Duration totalBalanceToDiscount = Duration.ZERO;
-	Duration totalWorkedTime = Duration.ZERO;
-	HashMap<WorkScheduleType, Duration> extra125Map = new HashMap<WorkScheduleType, Duration>();
-	HashMap<WorkScheduleType, Duration> extra150Map = new HashMap<WorkScheduleType, Duration>();
-	HashMap<WorkScheduleType, Duration> extra150WithLimitsMap = new HashMap<WorkScheduleType, Duration>();
-	HashMap<WorkScheduleType, Duration> extraNight160Map = new HashMap<WorkScheduleType, Duration>();
-	HashMap<WorkScheduleType, Duration> extraNight190Map = new HashMap<WorkScheduleType, Duration>();
-	HashMap<WorkScheduleType, Duration> extraNight190WithLimitsMap = new HashMap<WorkScheduleType, Duration>();
-	HashMap<WorkScheduleType, Integer> extraWorkNightsMap = new HashMap<WorkScheduleType, Integer>();
 
-	HashMap<WorkScheduleType, Duration> extra25Map = new HashMap<WorkScheduleType, Duration>();
-	HashMap<WorkScheduleType, Duration> unjustifiedMap = new HashMap<WorkScheduleType, Duration>();
-	HashMap<JustificationMotive, Duration> justificationsDuration = new HashMap<JustificationMotive, Duration>();
-	double vacations = 0;
-	double tolerance = 0;
-	double article17 = 0;
-	double article66 = 0;
-	int unjustifiedDays = 0;
-	int maximumWorkingDays = 0;
-	Integer workedDaysWithBonusDaysDiscount = 0;
-	Integer workedDaysWithA17VacationsDaysDiscount = 0;
-	List<WorkDaySheet> workDaySheets = new ArrayList<WorkDaySheet>();
-	for (LocalDate thisDay = beginDate; thisDay.isBefore(endDate.plusDays(1)); thisDay = thisDay.plusDays(1)) {
-	    int thisBonusDiscount = 0, thisA17Discount = 0;
-	    WorkDaySheet workDaySheet = new WorkDaySheet();
-	    workDaySheet.setDate(thisDay);
-	    final Schedule schedule = assiduousnessStatusHistory.getAssiduousness().getSchedule(thisDay);
-	    if (schedule != null && assiduousnessStatusHistory.getAssiduousness().isStatusActive(thisDay, thisDay)) {
-		final boolean isDayHoliday = assiduousnessStatusHistory.getAssiduousness().isHoliday(thisDay);
-		final WorkSchedule workSchedule = workScheduleMap.get(thisDay);
-		workDaySheet.setWorkSchedule(workSchedule);
-		workDaySheet.setAssiduousnessRecords(getDayClockings(clockingsMap, thisDay));
-		List<Leave> leavesList = getDayLeaves(leavesMap, thisDay);
-		workDaySheet.setLeaves(leavesList);
-		ICalculateDailyWorkSheetStrategy calculateDailyWorkSheetStrategy = CalculateDailyWorkSheetStrategyFactory
-			.getInstance().getCalculateDailyWorkSheetStrategy(thisDay);
-		workDaySheet = calculateDailyWorkSheetStrategy.calculateDailyBalance(assiduousnessStatusHistory
-			.getAssiduousness(), workDaySheet, isDayHoliday, true);
-		Duration thisDayWorkedTime = Duration.ZERO;
-		Duration timeLeaveToDiscount = Duration.ZERO;
-		if (workSchedule != null && !isDayHoliday) {
-		    final StringBuilder notes = new StringBuilder(workDaySheet.getNotes());
-		    for (final Leave leave : leavesList) {
-			if (notes.length() != 0) {
-			    notes.append(" / ");
-			}
-			notes.append(leave.getJustificationMotive().getAcronym());
-		    }
-		    workDaySheet.setNotes(notes.toString());
-		    maximumWorkingDays += 1;
-		    for (Leave leave : leavesList) {
-			if (leave.getJustificationMotive().getJustificationType().equals(JustificationType.TIME)) {
-			    Duration justificationDuration = justificationsDuration.get(leave.getJustificationMotive());
-			    if (justificationDuration == null) {
-				justificationDuration = Duration.ZERO;
-			    }
-			    justificationDuration = justificationDuration.plus(workDaySheet.getLeaveDuration(thisDay,
-				    workSchedule, leave));
-			    justificationsDuration.put(leave.getJustificationMotive(), justificationDuration);
-			} else if ((leave.getJustificationMotive().getJustificationType().equals(JustificationType.OCCURRENCE) || leave
-				.getJustificationMotive().getJustificationType().equals(JustificationType.MULTIPLE_MONTH_BALANCE))
-				&& leave.getJustificationMotive().getActualWorkTime()) {
-			    Interval nightInterval = new Interval(workDaySheet.getDate().toDateTime(
-				    Assiduousness.defaultStartNightWorkDay), workDaySheet.getDate().toDateTime(
-				    Assiduousness.defaultEndNightWorkDay).plusDays(1));
-			    setNightExtraWorkMap(workDaySheet, extra25Map, workSchedule.getWorkScheduleType()
-				    .getNormalWorkPeriod().getNormalNigthWorkPeriod(nightInterval));
-			}
-			if (leave.getJustificationMotive().getAcronym().equals("1/2 FÉR")
-				|| leave.getJustificationMotive().getAcronym().equals("FHE")
-				|| leave.getJustificationMotive().getAcronym().equals("FHEA")
-				|| leave.getJustificationMotive().getAcronym().equals("FTRANS")
-				|| leave.getJustificationMotive().getAcronym().equals("FA17")
-				|| leave.getJustificationMotive().getAcronym().equals("FEB")
-				|| leave.getJustificationMotive().getAcronym().equals("FER")
-				|| leave.getJustificationMotive().getAcronym().equals("A42")
-				|| leave.getJustificationMotive().getAcronym().equals("FA42")
-				|| leave.getJustificationMotive().getAcronym().equals("FA42T")) {
-			    if (leave.getJustificationMotive().getJustificationType().equals(JustificationType.TIME)) {
-				vacations = vacations + 0.5;
-			    } else {
-				vacations = vacations + 1;
-			    }
-			} else if (leave.getJustificationMotive().getJustificationGroup() != null
-				&& leave.getJustificationMotive().getJustificationGroup().equals(JustificationGroup.TOLERANCES)) {
-			    tolerance = tolerance + 1;
-			} else if (leave.getJustificationMotive().getAcronym().equals("A17")) {
-			    article17 = article17 + 1;
-			} else if (leave.getJustificationMotive().getAcronym().equals("A66")) {
-			    article66 = article66 + 1;
-			} else if (leave.getJustificationMotive().getAcronym().equals("1/2A66")) {
-			    article66 = article66 + 0.5;
-			}
+	EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet(assiduousnessStatusHistory.getAssiduousness().getEmployee(),
+		beginDate, endDate);
+	employeeWorkSheet.calculateWorkSheet(workScheduleMap, clockingsMap, leavesMap, true);
 
-			if (leave.getJustificationMotive().getJustificationType()
-				.equals(JustificationType.MULTIPLE_MONTH_BALANCE)) {
-			    totalBalanceToDiscount = totalBalanceToDiscount.plus(workDaySheet.getWorkSchedule()
-				    .getWorkScheduleType().getNormalWorkPeriod().getWorkPeriodDuration());
-			} else if (leave.getJustificationMotive().getJustificationType().equals(
-				JustificationType.HALF_MULTIPLE_MONTH_BALANCE)) {
-			    totalBalanceToDiscount = totalBalanceToDiscount.plus(workDaySheet.getWorkSchedule()
-				    .getWorkScheduleType().getNormalWorkPeriod().getWorkPeriodDuration().getMillis() / 2);
-			}
-
-			if (!leave.getJustificationMotive().getDiscountBonus()
-				|| !leave.getJustificationMotive().getJustificationType().equals(JustificationType.OCCURRENCE)) {
-			    thisBonusDiscount = 1;
-			}
-			if (!leave.getJustificationMotive().getDiscountA17Vacations()
-				|| !leave.getJustificationMotive().getJustificationType().equals(JustificationType.OCCURRENCE)) {
-			    thisA17Discount = 1;
-			}
-			if (!leave.getJustificationMotive().getDiscountA17Vacations()) {
-			    if (leave.getJustificationMotive().getJustificationType().equals(JustificationType.OCCURRENCE)) {
-				thisDayWorkedTime = workDaySheet.getWorkSchedule().getWorkScheduleType().getNormalWorkPeriod()
-					.getWorkPeriodDuration();
-			    }
-			} else {
-			    if (leave.getJustificationMotive().getJustificationType().equals(JustificationType.TIME)
-				    && leave.getJustificationMotive().getJustificationType() != null) {
-				timeLeaveToDiscount = timeLeaveToDiscount.plus(leave.getDuration());
-			    }
-			}
-		    }
-		    Duration thisDayBalance = workDaySheet.getBalanceTime().toDurationFrom(new DateMidnight());
-
-		    if (workSchedule.getWorkScheduleType().getScheduleClockingType().equals(
-			    ScheduleClockingType.NOT_MANDATORY_CLOCKING)) {
-			thisDayWorkedTime = workDaySheet.getWorkSchedule().getWorkScheduleType().getNormalWorkPeriod()
-				.getWorkPeriodDuration();
-			if (leavesList.isEmpty()) {
-			    thisBonusDiscount = 1;
-			    thisA17Discount = 1;
-			}
-		    } else if (!workDaySheet.getAssiduousnessRecords().isEmpty()) {
-			thisDayWorkedTime = workDaySheet.getWorkSchedule().getWorkScheduleType().getNormalWorkPeriod()
-				.getWorkPeriodDuration().plus(thisDayBalance);
-			if (leavesList.isEmpty()) {
-			    thisBonusDiscount = 1;
-			    thisA17Discount = 1;
-			}
-		    }
-
-		    if (!workSchedule.getWorkScheduleType().getScheduleClockingType().equals(
-			    ScheduleClockingType.NOT_MANDATORY_CLOCKING)) {
-			totalBalance = totalBalance.plus(thisDayBalance);
-		    }
-		    setNightExtraWork(workDaySheet, extra25Map);
-		    setExtraWork(workDaySheet, thisDayBalance, extra125Map, extra150Map, extra150WithLimitsMap);
-		    setNightExtraWork(workDaySheet, thisDayBalance, extraNight160Map, extraNight190Map,
-			    extraNight190WithLimitsMap, extraWorkNightsMap);
-		    setUnjustified(workDaySheet, unjustifiedMap);
-		    if (!timeLeaveToDiscount.equals(Duration.ZERO)) {
-			thisDayWorkedTime = thisDayWorkedTime.minus(timeLeaveToDiscount);
-		    }
-		    totalWorkedTime = totalWorkedTime.plus(thisDayWorkedTime);
-		    if (workDaySheet.getUnjustifiedDay()) {
-			unjustifiedDays = unjustifiedDays + 1;
-		    }
-		} else {
-		    StringBuilder notes = new StringBuilder();
-		    for (final Leave leave : leavesList) {
-			if (leave.getJustificationMotive().getDayType() != DayType.WORKDAY
-				&& leave.getJustificationMotive().getJustificationGroup() != JustificationGroup.CURRENT_YEAR_HOLIDAYS
-				&& leave.getJustificationMotive().getJustificationGroup() != JustificationGroup.LAST_YEAR_HOLIDAYS
-				&& leave.getJustificationMotive().getJustificationGroup() != JustificationGroup.NEXT_YEAR_HOLIDAYS) {
-			    if (notes.length() != 0) {
-				notes.append(" / ");
-			    }
-			    notes.append(leave.getJustificationMotive().getAcronym());
-			}
-		    }
-		    workDaySheet.setNotes(notes.toString());
-		    if (isDayHoliday) {
-			ResourceBundle bundle = ResourceBundle
-				.getBundle("resources.AssiduousnessResources", Language.getLocale());
-			workDaySheet.setWorkScheduleAcronym(bundle.getString("label.holiday"));
-		    }
-		    totalComplementaryWeeklyRestBalance = totalComplementaryWeeklyRestBalance.plus(new Duration(Math.min(
-			    roundToHalfHour(workDaySheet.getComplementaryWeeklyRest()).getMillis(),
-			    Assiduousness.normalWorkDayDuration.getMillis())));
-		    totalWeeklyRestBalance = totalWeeklyRestBalance.plus(new Duration(Math.min(roundToHalfHour(
-			    workDaySheet.getWeeklyRest()).getMillis(), Assiduousness.normalWorkDayDuration.getMillis())));
-		    holidayRest = holidayRest.plus(new Duration(Math.min(roundToHalfHour(workDaySheet.getHolidayRest())
-			    .getMillis(), Assiduousness.normalWorkDayDuration.getMillis())));
-		}
-	    }
-	    workedDaysWithBonusDaysDiscount += thisBonusDiscount;
-	    workedDaysWithA17VacationsDaysDiscount += thisA17Discount;
-	    workDaySheets.add(workDaySheet);
-	}
-
-	EmployeeBalanceResume employeeBalanceResume = new EmployeeBalanceResume(totalBalance, totalBalanceToDiscount, closedMonth
-		.getClosedYearMonth(), assiduousnessStatusHistory);
 	AssiduousnessClosedMonth assiduousnessClosedMonth = new AssiduousnessClosedMonth(assiduousnessStatusHistory, closedMonth,
-		totalBalance, totalComplementaryWeeklyRestBalance, totalWeeklyRestBalance, holidayRest, totalBalanceToDiscount,
-		vacations, tolerance, article17, article66, maximumWorkingDays, workedDaysWithBonusDaysDiscount,
-		workedDaysWithA17VacationsDaysDiscount, employeeBalanceResume.getFinalAnualBalance(), employeeBalanceResume
-			.getFutureBalanceToCompensate(), beginDate, endDate, totalWorkedTime);
+		employeeWorkSheet, beginDate, endDate);
 
-	for (WorkDaySheet workDaySheet : workDaySheets) {
+	for (WorkDaySheet workDaySheet : employeeWorkSheet.getWorkDaySheetList()) {
 	    new AssiduousnessClosedDay(assiduousnessClosedMonth, workDaySheet);
 	}
-	for (JustificationMotive justificationMotive : justificationsDuration.keySet()) {
-	    Duration duration = justificationsDuration.get(justificationMotive);
+	for (JustificationMotive justificationMotive : employeeWorkSheet.getJustificationsDuration().keySet()) {
+	    Duration duration = employeeWorkSheet.getJustificationsDuration().get(justificationMotive);
 	    new ClosedMonthJustification(assiduousnessClosedMonth, justificationMotive, duration);
 	}
 
-	Set<WorkScheduleType> workScheduleTypeSet = new HashSet<WorkScheduleType>(extra25Map.keySet());
-	workScheduleTypeSet.addAll(extra125Map.keySet());
-	workScheduleTypeSet.addAll(extra150Map.keySet());
-	workScheduleTypeSet.addAll(extra150WithLimitsMap.keySet());
-	workScheduleTypeSet.addAll(extraNight160Map.keySet());
-	workScheduleTypeSet.addAll(extraNight190Map.keySet());
-	workScheduleTypeSet.addAll(extraNight190WithLimitsMap.keySet());
-	workScheduleTypeSet.addAll(unjustifiedMap.keySet());
-	workScheduleTypeSet.addAll(extraWorkNightsMap.keySet());
+	Set<WorkScheduleType> workScheduleTypeSet = new HashSet<WorkScheduleType>(employeeWorkSheet.getExtra25Map().keySet());
+	workScheduleTypeSet.addAll(employeeWorkSheet.getExtra125Map().keySet());
+	workScheduleTypeSet.addAll(employeeWorkSheet.getExtra150Map().keySet());
+	workScheduleTypeSet.addAll(employeeWorkSheet.getExtra150WithLimitsMap().keySet());
+	workScheduleTypeSet.addAll(employeeWorkSheet.getExtraNight160Map().keySet());
+	workScheduleTypeSet.addAll(employeeWorkSheet.getExtraNight190Map().keySet());
+	workScheduleTypeSet.addAll(employeeWorkSheet.getExtraNight190WithLimitsMap().keySet());
+	workScheduleTypeSet.addAll(employeeWorkSheet.getUnjustifiedMap().keySet());
+	workScheduleTypeSet.addAll(employeeWorkSheet.getExtraWorkNightsMap().keySet());
 
 	for (WorkScheduleType workScheduleType : workScheduleTypeSet) {
-	    Duration totalExtra25 = extra25Map.get(workScheduleType) == null ? Duration.ZERO : extra25Map.get(workScheduleType);
-	    Duration totalExtra125 = extra125Map.get(workScheduleType) == null ? Duration.ZERO : extra125Map
-		    .get(workScheduleType);
-	    Duration totalExtra150 = extra150Map.get(workScheduleType) == null ? Duration.ZERO : extra150Map
-		    .get(workScheduleType);
-	    Duration totalExtra150WithLimit = extra150WithLimitsMap.get(workScheduleType) == null ? Duration.ZERO
-		    : extra150WithLimitsMap.get(workScheduleType);
-	    Duration totalNightExtra160 = extraNight160Map.get(workScheduleType) == null ? Duration.ZERO : extraNight160Map
-		    .get(workScheduleType);
-	    Duration totalNightExtra190 = extraNight190Map.get(workScheduleType) == null ? Duration.ZERO : extraNight190Map
-		    .get(workScheduleType);
-	    Duration totalNightExtra190WithLimit = extraNight190WithLimitsMap.get(workScheduleType) == null ? Duration.ZERO
-		    : extraNight190WithLimitsMap.get(workScheduleType);
-	    Duration totalUnjustified = unjustifiedMap.get(workScheduleType) == null ? Duration.ZERO : unjustifiedMap
-		    .get(workScheduleType);
-	    Integer extraWorkNights = extraWorkNightsMap.get(workScheduleType) == null ? 0 : extraWorkNightsMap
-		    .get(workScheduleType);
+	    Duration totalExtra25 = employeeWorkSheet.getExtra25Map().get(workScheduleType) == null ? Duration.ZERO
+		    : employeeWorkSheet.getExtra25Map().get(workScheduleType);
+	    Duration totalExtra125 = employeeWorkSheet.getExtra125Map().get(workScheduleType) == null ? Duration.ZERO
+		    : employeeWorkSheet.getExtra125Map().get(workScheduleType);
+	    Duration totalExtra150 = employeeWorkSheet.getExtra150Map().get(workScheduleType) == null ? Duration.ZERO
+		    : employeeWorkSheet.getExtra150Map().get(workScheduleType);
+	    Duration totalExtra150WithLimit = employeeWorkSheet.getExtra150WithLimitsMap().get(workScheduleType) == null ? Duration.ZERO
+		    : employeeWorkSheet.getExtra150WithLimitsMap().get(workScheduleType);
+	    Duration totalNightExtra160 = employeeWorkSheet.getExtraNight160Map().get(workScheduleType) == null ? Duration.ZERO
+		    : employeeWorkSheet.getExtraNight160Map().get(workScheduleType);
+	    Duration totalNightExtra190 = employeeWorkSheet.getExtraNight190Map().get(workScheduleType) == null ? Duration.ZERO
+		    : employeeWorkSheet.getExtraNight190Map().get(workScheduleType);
+	    Duration totalNightExtra190WithLimit = employeeWorkSheet.getExtraNight190WithLimitsMap().get(workScheduleType) == null ? Duration.ZERO
+		    : employeeWorkSheet.getExtraNight190WithLimitsMap().get(workScheduleType);
+	    Duration totalUnjustified = employeeWorkSheet.getUnjustifiedMap().get(workScheduleType) == null ? Duration.ZERO
+		    : employeeWorkSheet.getUnjustifiedMap().get(workScheduleType);
+	    Integer extraWorkNights = employeeWorkSheet.getExtraWorkNightsMap().get(workScheduleType) == null ? 0
+		    : employeeWorkSheet.getExtraWorkNightsMap().get(workScheduleType);
 	    new AssiduousnessExtraWork(assiduousnessClosedMonth, workScheduleType, totalExtra25, totalExtra125, totalExtra150,
 		    totalExtra150WithLimit, totalNightExtra160, totalNightExtra190, totalNightExtra190WithLimit, extraWorkNights,
 		    totalUnjustified);
 	}
 
-	assiduousnessClosedMonth.setAllUnjustifiedAndAccumulatedArticle66(unjustifiedDays);
-
-	Integer accumulatedUnjustifiedDays = assiduousnessClosedMonth.getAccumulatedUnjustifiedDays();
-	Integer article66Days = assiduousnessClosedMonth.getAccumulatedArticle66Days();
-	assiduousnessClosedMonth
-		.setWorkedDaysWithBonusDaysDiscount(workedDaysWithBonusDaysDiscount - accumulatedUnjustifiedDays >= 0 ? workedDaysWithBonusDaysDiscount
-			- accumulatedUnjustifiedDays
-			: 0);
-	assiduousnessClosedMonth.setWorkedDaysWithA17VacationsDaysDiscount(workedDaysWithA17VacationsDaysDiscount
-		- accumulatedUnjustifiedDays >= 0 ? workedDaysWithA17VacationsDaysDiscount - accumulatedUnjustifiedDays : 0);
-
-	if (unjustifiedDays > 0 || accumulatedUnjustifiedDays > 0 || article66Days > 0
+	if (employeeWorkSheet.getUnjustifiedDays() > 0 || assiduousnessClosedMonth.getAccumulatedUnjustifiedDays() > 0
+		|| assiduousnessClosedMonth.getAccumulatedArticle66Days() > 0
 		|| assiduousnessClosedMonth.getArticle66().doubleValue() > 0) {
 	    return assiduousnessClosedMonth;
 	}

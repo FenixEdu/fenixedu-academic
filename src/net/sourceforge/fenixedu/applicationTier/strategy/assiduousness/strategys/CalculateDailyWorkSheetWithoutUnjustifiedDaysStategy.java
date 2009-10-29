@@ -12,8 +12,8 @@ public class CalculateDailyWorkSheetWithoutUnjustifiedDaysStategy extends Calcul
     @Override
     protected void setUnjustifiedDay(WorkDaySheet workDaySheet, List<Leave> halfOccurrenceTimeLeaves, List<Leave> balanceLeaves,
 	    List<Leave> balanceOcurrenceLeaves) {
-	workDaySheet.setBalanceTime(Duration.ZERO.minus(
-		workDaySheet.getWorkSchedule().getWorkScheduleType().getNormalWorkPeriod().getWorkPeriodDuration()).toPeriod());
+	workDaySheet.setBalanceTime(Duration.ZERO.minus(workDaySheet.getWorkSchedule().getWorkScheduleType()
+		.getNormalWorkPeriod().getWorkPeriodDuration()));
 	if (workDaySheet.getWorkSchedule().getWorkScheduleType().getFixedWorkPeriod() != null) {
 	    workDaySheet.setUnjustifiedTime(workDaySheet.getWorkSchedule().getWorkScheduleType().getFixedWorkPeriod()
 		    .getWorkPeriodDuration());

@@ -3,9 +3,10 @@ package net.sourceforge.fenixedu.domain.assiduousness;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeWorkSheet;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.util.ClosedMonthDocumentType;
@@ -25,16 +26,9 @@ public class ClosedMonth extends ClosedMonth_Base {
 
     public static final int dayOfMonthToCloseLastMonth = 4;
 
-    public ClosedMonth(Partial closedYearMonth) {
-	setRootDomainObject(RootDomainObject.getInstance());
-	setClosedForBalance(true);
-	setClosedForExtraWork(false);
-	setClosedYearMonth(closedYearMonth);
-    }
-
     public ClosedMonth(LocalDate day) {
 	setRootDomainObject(RootDomainObject.getInstance());
-	setClosedForBalance(true);
+	setClosedForBalance(false);
 	setClosedForExtraWork(false);
 	setClosedYearMonth(new Partial().with(DateTimeFieldType.monthOfYear(), day.getMonthOfYear()).with(
 		DateTimeFieldType.year(), day.getYear()));
@@ -124,7 +118,7 @@ public class ClosedMonth extends ClosedMonth_Base {
 	return false;
     }
 
-    public static ClosedMonth getClosedMonth(LocalDate date) {
+    public static ClosedMonth getClosedMonthForBalance(LocalDate date) {
 	for (ClosedMonth closedMonth : RootDomainObject.getInstance().getClosedMonths()) {
 	    if (closedMonth.getClosedYearMonth().get(DateTimeFieldType.year()) == date.getYear()
 		    && closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear()) == date.getMonthOfYear()
@@ -135,11 +129,21 @@ public class ClosedMonth extends ClosedMonth_Base {
 	return null;
     }
 
-    public static ClosedMonth getClosedMonth(YearMonth yearMonth) {
+    public static ClosedMonth getClosedMonthForBalance(YearMonth yearMonth) {
 	for (ClosedMonth closedMonth : RootDomainObject.getInstance().getClosedMonths()) {
 	    if (closedMonth.getClosedYearMonth().get(DateTimeFieldType.year()) == yearMonth.getYear()
 		    && closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear()) == yearMonth.getNumberOfMonth()
 		    && closedMonth.getClosedForBalance()) {
+		return closedMonth;
+	    }
+	}
+	return null;
+    }
+
+    public static ClosedMonth getClosedMonth(YearMonth yearMonth) {
+	for (ClosedMonth closedMonth : RootDomainObject.getInstance().getClosedMonths()) {
+	    if (closedMonth.getClosedYearMonth().get(DateTimeFieldType.year()) == yearMonth.getYear()
+		    && closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear()) == yearMonth.getNumberOfMonth()) {
 		return closedMonth;
 	    }
 	}
@@ -155,6 +159,21 @@ public class ClosedMonth extends ClosedMonth_Base {
 	    }
 	}
 	return null;
+    }
+
+    public static ClosedMonth getOrCreateOpenClosedMonth(LocalDate localDate) {
+	for (ClosedMonth closedMonth : RootDomainObject.getInstance().getClosedMonths()) {
+	    if (closedMonth.getClosedYearMonth().get(DateTimeFieldType.year()) == localDate.getYear()
+		    && closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear()) == localDate.getMonthOfYear()
+		    && !closedMonth.getClosedForBalance()) {
+		return closedMonth;
+	    }
+	}
+	return new ClosedMonth(localDate);
+    }
+
+    public static ClosedMonth getNextClosedMonth() {
+	return getOrCreateOpenClosedMonth(getLastMonthClosed().getClosedMonthFirstDay().plusMonths(1));
     }
 
     public static ClosedMonth getClosedMonth(Partial partial) {
@@ -200,15 +219,6 @@ public class ClosedMonth extends ClosedMonth_Base {
 	return !hasAnyClosedMonthDocuments();
     }
 
-    public AssiduousnessClosedMonth getAssiduousnessClosedMonth(AssiduousnessStatusHistory assiduousnessStatusHistory) {
-	for (AssiduousnessClosedMonth assiduousnessClosedMonth : getAssiduousnessClosedMonths()) {
-	    if (assiduousnessClosedMonth.getAssiduousnessStatusHistory().equals(assiduousnessStatusHistory)) {
-		return assiduousnessClosedMonth;
-	    }
-	}
-	return null;
-    }
-
     public List<AssiduousnessClosedMonth> getAssiduousnessClosedMonths(Assiduousness assiduousness) {
 	List<AssiduousnessClosedMonth> result = new ArrayList<AssiduousnessClosedMonth>();
 	for (AssiduousnessClosedMonth assiduousnessClosedMonth : getAssiduousnessClosedMonths()) {
@@ -217,6 +227,60 @@ public class ClosedMonth extends ClosedMonth_Base {
 	    }
 	}
 	return result;
+    }
+
+    public AssiduousnessClosedMonth getAssiduousnessClosedMonth(AssiduousnessStatusHistory assiduousnessStatusHistory) {
+	AssiduousnessClosedMonth lastAssiduousnessClosedMonth = null;
+	for (AssiduousnessClosedMonth assiduousnessClosedMonth : getAssiduousnessClosedMonths()) {
+	    if (assiduousnessClosedMonth.getAssiduousnessStatusHistory().equals(assiduousnessStatusHistory)
+		    && (lastAssiduousnessClosedMonth == null || (assiduousnessClosedMonth.getIsCorrection() && ((!lastAssiduousnessClosedMonth
+			    .getIsCorrection()) || lastAssiduousnessClosedMonth.getCorrectedOnClosedMonth().getClosedYearMonth()
+			    .isBefore(assiduousnessClosedMonth.getCorrectedOnClosedMonth().getClosedYearMonth()))))) {
+		lastAssiduousnessClosedMonth = assiduousnessClosedMonth;
+	    }
+	}
+	return lastAssiduousnessClosedMonth;
+    }
+
+    public List<AssiduousnessClosedMonth> getAllAssiduousnessClosedMonths() {
+	return super.getAssiduousnessClosedMonths();
+    }
+
+    public List<AssiduousnessClosedMonth> getAllAssiduousnessClosedMonths(Assiduousness assiduousness) {
+	List<AssiduousnessClosedMonth> assiduousnessClosedMonthList = new ArrayList<AssiduousnessClosedMonth>();
+	for (AssiduousnessClosedMonth assiduousnessClosedMonth : super.getAssiduousnessClosedMonths()) {
+	    if (assiduousnessClosedMonth.getAssiduousnessStatusHistory().getAssiduousness().equals(assiduousness)) {
+		assiduousnessClosedMonthList.add(assiduousnessClosedMonth);
+	    }
+	}
+	return assiduousnessClosedMonthList;
+    }
+
+    public List<AssiduousnessClosedMonth> getAllAssiduousnessClosedMonths(AssiduousnessStatusHistory assiduousnessStatusHistory) {
+	List<AssiduousnessClosedMonth> all = new ArrayList<AssiduousnessClosedMonth>();
+	for (AssiduousnessClosedMonth assiduousnessClosedMonth : super.getAssiduousnessClosedMonths()) {
+	    if (assiduousnessClosedMonth.getAssiduousnessStatusHistory().equals(assiduousnessStatusHistory)) {
+		all.add(assiduousnessClosedMonth);
+	    }
+	}
+	return all;
+    }
+
+    @Override
+    public List<AssiduousnessClosedMonth> getAssiduousnessClosedMonths() {
+	Map<AssiduousnessStatusHistory, AssiduousnessClosedMonth> assiduousnessClosedMonths = new HashMap<AssiduousnessStatusHistory, AssiduousnessClosedMonth>();
+	for (AssiduousnessClosedMonth assiduousnessClosedMonth : super.getAssiduousnessClosedMonths()) {
+	    AssiduousnessClosedMonth assiduousnessClosedMonthFromMap = assiduousnessClosedMonths.get(assiduousnessClosedMonth
+		    .getAssiduousnessStatusHistory());
+	    if (assiduousnessClosedMonthFromMap == null
+		    || (assiduousnessClosedMonth.getIsCorrection() && (!assiduousnessClosedMonthFromMap.getIsCorrection()))
+		    || (assiduousnessClosedMonth.getIsCorrection() && assiduousnessClosedMonthFromMap.getIsCorrection() && assiduousnessClosedMonth
+			    .getCorrectedOnClosedMonth().getClosedYearMonth().isAfter(
+				    assiduousnessClosedMonthFromMap.getCorrectedOnClosedMonth().getClosedYearMonth()))) {
+		assiduousnessClosedMonths.put(assiduousnessClosedMonth.getAssiduousnessStatusHistory(), assiduousnessClosedMonth);
+	    }
+	}
+	return new ArrayList<AssiduousnessClosedMonth>(assiduousnessClosedMonths.values());
     }
 
     public ClosedMonthDocument addFile(byte[] file, String fileName, ClosedMonthDocumentType closedMonthDocumentType)
@@ -236,24 +300,14 @@ public class ClosedMonth extends ClosedMonth_Base {
     }
 
     public void openMonth() {
-	List<AssiduousnessClosedMonth> assiduousnessClosedMonths = new ArrayList<AssiduousnessClosedMonth>(
-		getAssiduousnessClosedMonths());
+	List<AssiduousnessClosedMonth> assiduousnessClosedMonths = new ArrayList<AssiduousnessClosedMonth>(super
+		.getAssiduousnessClosedMonths());
 	for (AssiduousnessClosedMonth assiduousnessClosedMonth : assiduousnessClosedMonths) {
-	    getAssiduousnessClosedMonths().remove(assiduousnessClosedMonth);
+	    super.getAssiduousnessClosedMonths().remove(assiduousnessClosedMonth);
 	    assiduousnessClosedMonth.delete();
 	}
 	setClosedForBalance(Boolean.FALSE);
 	setClosedForExtraWork(Boolean.FALSE);
     }
 
-    public EmployeeWorkSheet getEmployeeWorkSheet(Assiduousness assiduousness, LocalDate beginDate, LocalDate endDate) {
-	List<AssiduousnessStatusHistory> assiduousnessStatusHistories = assiduousness.getStatusBetween(getClosedMonthFirstDay(),
-		getClosedMonthLastDay());
-	EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet(assiduousness.getEmployee(), beginDate, endDate);
-	for (AssiduousnessStatusHistory assiduousnessStatusHistory : assiduousnessStatusHistories) {
-	    AssiduousnessClosedMonth assiduousnessClosedMonth = getAssiduousnessClosedMonth(assiduousnessStatusHistory);
-	    employeeWorkSheet.addWorkDaySheets(assiduousnessClosedMonth, beginDate, endDate);
-	}
-	return employeeWorkSheet;
-    }
 }

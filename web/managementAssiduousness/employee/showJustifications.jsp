@@ -29,7 +29,6 @@
 			<jsp:param name="method" value="showJustifications" />
 		</jsp:include>
 		<% if (net.sourceforge.fenixedu.domain.ManagementGroups.isAssiduousnessManagerMember(user.getPerson())) {%>
-			<logic:equal name="yearMonth" property="isThisYearMonthClosed" value="false">
 				<logic:present name="employeeJustificationFactory">
 					<p class="mtop2">
 						<span class="error0 mtop0">
@@ -44,7 +43,6 @@
 						<jsp:param name="year" value="<%=year.toString() %>" />
 					</jsp:include>
 				</logic:present>
-			</logic:equal>
 		<%}%>
 	</logic:present>
 
@@ -66,7 +64,6 @@
 					<fr:property name="columnClasses" value="acenter" />
 					<fr:property name="headerClasses" value="acenter" />
 					<%if (net.sourceforge.fenixedu.domain.ManagementGroups.isAssiduousnessManagerMember(user.getPerson())) {%>
-					<logic:equal name="yearMonth" property="isThisYearMonthClosed" value="false">
 		                <fr:property name="link(edit)" value="<%="/employeeAssiduousness.do?method=prepareEditEmployeeJustification&month="+month.toString()+"&year="+year.toString()%>" />
 						<fr:property name="key(edit)" value="label.edit" />
 						<fr:property name="param(edit)" value="idInternal" />
@@ -75,7 +72,6 @@
 						<fr:property name="key(delete)" value="label.delete" />
 						<fr:property name="param(delete)" value="idInternal" />
 						<fr:property name="bundle(delete)" value="ASSIDUOUSNESS_RESOURCES" />
-					</logic:equal>
 	                <%}%>
 				</fr:layout>
 			</fr:view>

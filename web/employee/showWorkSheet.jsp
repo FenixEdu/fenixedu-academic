@@ -8,6 +8,16 @@
 <em class="invisible"><bean:message key="title.assiduousness" /></em>
 <h2><bean:message key="link.workSheet" /></h2>
 
+<style>
+span.assiduousnessCorrections {
+background: #fff;
+color: #333;
+}
+span.assiduousnessCorrections.missingClockings {
+background: #e7f6e9;
+color: #226B17;
+}
+</style>
 
 <logic:present name="employeeWorkSheet">
 

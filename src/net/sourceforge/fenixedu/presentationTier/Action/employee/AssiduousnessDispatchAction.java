@@ -178,9 +178,7 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
 	} else {
 	    ActionForward actionForward = verifyYearMonth("show-work-sheet", request, mapping, yearMonth);
 	    if (actionForward != null) {
-		EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet();
-		employeeWorkSheet.setEmployee(employee);
-		request.setAttribute("employeeWorkSheet", employeeWorkSheet);
+		request.setAttribute("employeeWorkSheet", new EmployeeWorkSheet(employee));
 		return actionForward;
 	    }
 	}
@@ -194,8 +192,7 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
 	}
 	LocalDate endDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, endDay);
 
-	EmployeeWorkSheet employeeWorkSheet = (EmployeeWorkSheet) ReadAssiduousnessWorkSheet.run(employee.getAssiduousness(),
-		beginDate, endDate);
+	EmployeeWorkSheet employeeWorkSheet = ReadAssiduousnessWorkSheet.run(employee.getAssiduousness(), beginDate, endDate);
 	request.setAttribute("employeeWorkSheet", employeeWorkSheet);
 	request.setAttribute("yearMonth", yearMonth);
 	return mapping.findForward("show-work-sheet");

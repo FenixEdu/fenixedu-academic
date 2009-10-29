@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.assiduousness;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Employee;
@@ -16,6 +17,12 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 public class JustificationMotive extends JustificationMotive_Base {
+
+    static final public Comparator<JustificationMotive> COMPARATOR_AND_ACRONYM = new Comparator<JustificationMotive>() {
+	public int compare(final JustificationMotive o1, final JustificationMotive o2) {
+	    return o1.getAcronym().compareTo(o2.getAcronym());
+	}
+    };
 
     // construtors used in scripts
     public JustificationMotive(String acronym, String description, Boolean actualWorkTime, JustificationType justificationType,

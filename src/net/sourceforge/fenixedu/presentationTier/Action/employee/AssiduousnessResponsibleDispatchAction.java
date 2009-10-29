@@ -217,9 +217,8 @@ public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction 
 	    return mapping.findForward("show-clockings");
 	}
 	final YearMonth yearMonth = getYearMonth(request);
+	EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet(employee);
 	if (yearMonth == null) {
-	    EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet();
-	    employeeWorkSheet.setEmployee(employee);
 	    request.setAttribute("employeeWorkSheet", employeeWorkSheet);
 	    return mapping.findForward("show-employee-work-sheet");
 	}
@@ -231,8 +230,6 @@ public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction 
 	    request.setAttribute("displayCurrentDayNote", "true");
 	}
 	LocalDate endDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, endDay);
-	EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet();
-	employeeWorkSheet.setEmployee(employee);
 	if (employee.getAssiduousness() != null) {
 	    try {
 		Object[] args = { employee.getAssiduousness(), beginDate, endDate };

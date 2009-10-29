@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject.assiduousness;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -42,6 +41,7 @@ public class RegularizationMonthFactory implements Serializable, FactoryExecutor
 	LocalDate beginDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, 01);
 	int endDay = beginDate.dayOfMonth().getMaximumValue();
 	LocalDate endDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, endDay);
+	setYearMonth(yearMonth);
 	LocalDate lowerBeginDate = beginDate.minusDays(8);
 	HashMap<LocalDate, WorkSchedule> workScheduleMap = assiduousness.getWorkSchedulesBetweenDates(lowerBeginDate, endDate);
 	DateTime init = getInit(lowerBeginDate, workScheduleMap);
@@ -63,19 +63,11 @@ public class RegularizationMonthFactory implements Serializable, FactoryExecutor
 	    for (LocalTime timeOfDay : regularizationDayBean.getTimeClockingsToFill()) {
 		if (timeOfDay != null) {
 		    DateTime missingClockingDateTime = regularizationDayBean.getDate().toDateTime(timeOfDay);
-		    new MissingClocking(getAssiduousness(), getJustificationMotive(), missingClockingDateTime, getModifiedBy());
+		    new MissingClocking(getAssiduousness(), missingClockingDateTime, getJustificationMotive(), getModifiedBy());
 		}
 	    }
 	}
 	return null;
-    }
-
-    private List<DateTime> getClockingsDateTime(RegularizationDayBean regularizationDayBean) {
-	List<DateTime> dateTimeList = new ArrayList<DateTime>();
-	for (LocalTime timeOfDay : regularizationDayBean.getTimeClockingsToFill()) {
-	    dateTimeList.add(regularizationDayBean.getDate().toDateTime(timeOfDay));
-	}
-	return dateTimeList;
     }
 
     public YearMonth getYearMonth() {

@@ -56,7 +56,8 @@
 				</html:submit>
 			</fr:form>
 		</logic:equal>
-		
+	</p>
+	<p>	
 		<fr:form action="/monthClosure.do?method=exportClosedMonthFile">
 			<fr:edit id="yearMonthToOpen2" name="yearMonthToExport" schema="show.date" visible="false"/>
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.open" styleClass="invisible">
@@ -104,6 +105,14 @@
 			</p>
 		</fr:form>
 	</logic:equal>
+	<fr:form action="/monthClosure.do?method=showMonthCorrections">
+			<fr:edit id="yearMonth" name="yearMonth" schema="show.date" visible="false"/>
+			<p>
+				<html:submit bundle="ASSIDUOUSNESS_RESOURCES" altKey="submit.submit" styleClass="invisible">
+					<bean:message key="button.corrections" />
+				</html:submit>
+			</p>
+	</fr:form>
 	<logic:notEqual name="yearMonth" property="canCloseMonth" value="true">
 		<bean:message key="message.cantCloseMonth" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	</logic:notEqual>

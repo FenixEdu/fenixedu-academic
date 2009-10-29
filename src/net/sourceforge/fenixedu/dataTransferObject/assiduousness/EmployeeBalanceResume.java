@@ -6,7 +6,9 @@ import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 
+import org.joda.time.DateTimeFieldType;
 import org.joda.time.Duration;
+import org.joda.time.LocalDate;
 import org.joda.time.MutablePeriod;
 import org.joda.time.Partial;
 import org.joda.time.PeriodType;
@@ -14,6 +16,10 @@ import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
 
 public class EmployeeBalanceResume implements Serializable {
+
+    private static final String NEGATIVE_HOUR = "-";
+
+    private static final String HOUR_SEPARATOR = ":";
 
     AssiduousnessStatusHistory assiduousnessStatusHistory;
 
@@ -32,6 +38,13 @@ public class EmployeeBalanceResume implements Serializable {
     Duration futureBalanceToCompensate = Duration.ZERO;
 
     public EmployeeBalanceResume() {
+    }
+
+    public EmployeeBalanceResume(Duration thisBalance, Duration thisBalanceToCompensate, LocalDate thisMonth,
+	    AssiduousnessStatusHistory assiduousnessStatusHistory) {
+	Partial partial = new Partial().with(DateTimeFieldType.monthOfYear(), thisMonth.getMonthOfYear()).with(
+		DateTimeFieldType.year(), thisMonth.getYear());
+	setEmployeeBalanceResume(thisBalance, thisBalanceToCompensate, partial, assiduousnessStatusHistory);
     }
 
     public EmployeeBalanceResume(Duration thisBalance, Duration thisBalanceToCompensate, Partial thisMonth,
@@ -92,7 +105,7 @@ public class EmployeeBalanceResume implements Serializable {
 	    AssiduousnessStatusHistory assiduousnessStatusHistory) {
 	if (yearMonth.getMonth().getNumberOfMonth() != 1) {
 	    yearMonth.subtractMonth();
-	    ClosedMonth closedMonth = ClosedMonth.getClosedMonth(yearMonth);
+	    ClosedMonth closedMonth = ClosedMonth.getClosedMonthForBalance(yearMonth);
 	    if (closedMonth != null) {
 		return closedMonth.getAssiduousnessClosedMonth(assiduousnessStatusHistory);
 	    }
@@ -165,103 +178,44 @@ public class EmployeeBalanceResume implements Serializable {
     }
 
     public String getAnualBalanceString() {
-	PeriodFormatter fmt = new PeriodFormatterBuilder().printZeroAlways().appendHours().appendSeparator(":")
-		.minimumPrintedDigits(2).appendMinutes().toFormatter();
-	MutablePeriod balance = new MutablePeriod(previousAnualBalance.getMillis(), PeriodType.time());
-	if (previousAnualBalance.toPeriod().getMinutes() < 0) {
-	    balance.setMinutes(-previousAnualBalance.toPeriod().getMinutes());
-	    if (previousAnualBalance.toPeriod().getHours() == 0) {
-		fmt = new PeriodFormatterBuilder().printZeroAlways().appendLiteral("-").appendHours().appendSeparator(":")
-			.minimumPrintedDigits(2).appendMinutes().toFormatter();
-	    }
-	}
-	return fmt.print(balance);
-
+	return getDurationString(previousAnualBalance);
     }
 
     public String getAnualBalanceToCompensateString() {
-	PeriodFormatter fmt = new PeriodFormatterBuilder().printZeroAlways().appendHours().appendSeparator(":")
-		.minimumPrintedDigits(2).appendMinutes().toFormatter();
-	MutablePeriod balance = new MutablePeriod(anualBalanceToCompensate.getMillis(), PeriodType.time());
-	if (anualBalanceToCompensate.toPeriod().getMinutes() < 0) {
-	    balance.setMinutes(-anualBalanceToCompensate.toPeriod().getMinutes());
-	    if (anualBalanceToCompensate.toPeriod().getHours() == 0) {
-		fmt = new PeriodFormatterBuilder().printZeroAlways().appendLiteral("-").appendHours().appendSeparator(":")
-			.minimumPrintedDigits(2).appendMinutes().toFormatter();
-	    }
-	}
-	return fmt.print(balance);
-
+	return getDurationString(anualBalanceToCompensate);
     }
 
     public String getFinalAnualBalanceString() {
-	PeriodFormatter fmt = new PeriodFormatterBuilder().printZeroAlways().appendHours().appendSeparator(":")
-		.minimumPrintedDigits(2).appendMinutes().toFormatter();
-	MutablePeriod balance = new MutablePeriod(finalAnualBalance.getMillis(), PeriodType.time());
-	if (finalAnualBalance.toPeriod().getMinutes() < 0) {
-	    balance.setMinutes(-finalAnualBalance.toPeriod().getMinutes());
-	    if (finalAnualBalance.toPeriod().getHours() == 0) {
-		fmt = new PeriodFormatterBuilder().printZeroAlways().appendLiteral("-").appendHours().appendSeparator(":")
-			.minimumPrintedDigits(2).appendMinutes().toFormatter();
-	    }
-	}
-	return fmt.print(balance);
+	return getDurationString(finalAnualBalance);
     }
 
     public String getFinalMonthlyBalanceString() {
-	PeriodFormatter fmt = new PeriodFormatterBuilder().printZeroAlways().appendHours().appendSeparator(":")
-		.minimumPrintedDigits(2).appendMinutes().toFormatter();
-	MutablePeriod balance = new MutablePeriod(finalMonthlyBalance.getMillis(), PeriodType.time());
-	if (finalMonthlyBalance.toPeriod().getMinutes() < 0) {
-	    balance.setMinutes(-finalMonthlyBalance.toPeriod().getMinutes());
-	    if (finalMonthlyBalance.toPeriod().getHours() == 0) {
-		fmt = new PeriodFormatterBuilder().printZeroAlways().appendLiteral("-").appendHours().appendSeparator(":")
-			.minimumPrintedDigits(2).appendMinutes().toFormatter();
-	    }
-	}
-	return fmt.print(balance);
+	return getDurationString(finalMonthlyBalance);
     }
 
     public String getFutureBalanceToCompensateString() {
-	PeriodFormatter fmt = new PeriodFormatterBuilder().printZeroAlways().appendHours().appendSeparator(":")
-		.minimumPrintedDigits(2).appendMinutes().toFormatter();
-	MutablePeriod balance = new MutablePeriod(futureBalanceToCompensate.getMillis(), PeriodType.time());
-	if (futureBalanceToCompensate.toPeriod().getMinutes() < 0) {
-	    balance.setMinutes(-futureBalanceToCompensate.toPeriod().getMinutes());
-	    if (futureBalanceToCompensate.toPeriod().getHours() == 0) {
-		fmt = new PeriodFormatterBuilder().printZeroAlways().appendLiteral("-").appendHours().appendSeparator(":")
-			.minimumPrintedDigits(2).appendMinutes().toFormatter();
-	    }
-	}
-	return fmt.print(balance);
+	return getDurationString(futureBalanceToCompensate);
     }
 
     public String getMonthlyBalanceString() {
-	PeriodFormatter fmt = new PeriodFormatterBuilder().printZeroAlways().appendHours().appendSeparator(":")
-		.minimumPrintedDigits(2).appendMinutes().toFormatter();
-	MutablePeriod balance = new MutablePeriod(monthlyBalance.getMillis(), PeriodType.time());
-	if (monthlyBalance.toPeriod().getMinutes() < 0) {
-	    balance.setMinutes(-monthlyBalance.toPeriod().getMinutes());
-	    if (monthlyBalance.toPeriod().getHours() == 0) {
-		fmt = new PeriodFormatterBuilder().printZeroAlways().appendLiteral("-").appendHours().appendSeparator(":")
-			.minimumPrintedDigits(2).appendMinutes().toFormatter();
-	    }
-	}
-	return fmt.print(balance);
+	return getDurationString(monthlyBalance);
     }
 
     public String getMonthlyBalanceToCompensateString() {
-	PeriodFormatter fmt = new PeriodFormatterBuilder().printZeroAlways().appendHours().appendSeparator(":")
+	return getDurationString(monthlyBalanceToCompensate);
+    }
+
+    public String getDurationString(Duration duration) {
+	PeriodFormatter fmt = new PeriodFormatterBuilder().printZeroAlways().appendHours().appendSeparator(HOUR_SEPARATOR)
 		.minimumPrintedDigits(2).appendMinutes().toFormatter();
-	MutablePeriod balance = new MutablePeriod(monthlyBalanceToCompensate.getMillis(), PeriodType.time());
-	if (monthlyBalanceToCompensate.toPeriod().getMinutes() < 0) {
-	    balance.setMinutes(-monthlyBalanceToCompensate.toPeriod().getMinutes());
-	    if (monthlyBalanceToCompensate.toPeriod().getHours() == 0) {
-		fmt = new PeriodFormatterBuilder().printZeroAlways().appendLiteral("-").appendHours().appendSeparator(":")
-			.minimumPrintedDigits(2).appendMinutes().toFormatter();
+	MutablePeriod balance = new MutablePeriod(duration.getMillis(), PeriodType.time());
+	if (duration.toPeriod().getMinutes() < 0) {
+	    balance.setMinutes(-duration.toPeriod().getMinutes());
+	    if (duration.toPeriod().getHours() == 0) {
+		fmt = new PeriodFormatterBuilder().printZeroAlways().appendLiteral(NEGATIVE_HOUR).appendHours().appendSeparator(
+			HOUR_SEPARATOR).minimumPrintedDigits(2).appendMinutes().toFormatter();
 	    }
 	}
 	return fmt.print(balance);
     }
-
 }

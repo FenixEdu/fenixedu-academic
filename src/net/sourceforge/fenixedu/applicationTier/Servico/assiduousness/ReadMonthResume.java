@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.assiduousness.Schedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
 import net.sourceforge.fenixedu.domain.assiduousness.util.ScheduleClockingType;
 
-import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
@@ -36,7 +35,7 @@ public class ReadMonthResume extends FenixService {
     @Checked("RolePredicates.PERSONNEL_SECTION_PREDICATE")
     @Service
     public static List<AssiduousnessMonthlyResume> run(AssiduousnessExportChoices assiduousnessExportChoices) {
-	ClosedMonth closedMonth = ClosedMonth.getClosedMonth(assiduousnessExportChoices.getYearMonth());
+	ClosedMonth closedMonth = ClosedMonth.getClosedMonthForBalance(assiduousnessExportChoices.getYearMonth());
 	List<AssiduousnessMonthlyResume> assiduousnessMonthlyResumeList = new ArrayList<AssiduousnessMonthlyResume>();
 	if (closedMonth == null) {
 	    HashMap<Assiduousness, List<AssiduousnessRecord>> assiduousnessRecords = getAssiduousnessRecord(
@@ -86,23 +85,19 @@ public class ReadMonthResume extends FenixService {
 	LocalDate today = new LocalDate();
 	for (LocalDate thisDay = beginDate; thisDay.isBefore(endDate.plusDays(1)); thisDay = thisDay.plusDays(1)) {
 	    if (thisDay.isBefore(today)) {
-		WorkDaySheet workDaySheet = new WorkDaySheet();
-		workDaySheet.setDate(thisDay);
 		final Schedule schedule = assiduousness.getSchedule(thisDay);
 		if (schedule != null && assiduousness.isStatusActive(thisDay, thisDay)) {
 		    final boolean isDayHoliday = assiduousness.isHoliday(thisDay);
 		    final WorkSchedule workSchedule = workScheduleMap.get(thisDay);
-		    workDaySheet.setWorkSchedule(workSchedule);
-		    workDaySheet.setAssiduousnessRecords(getDayClockings(clockingsMap, thisDay));
-		    List<Leave> leavesList = getDayLeaves(leavesMap, thisDay);
-		    workDaySheet.setLeaves(leavesList);
+		    WorkDaySheet workDaySheet = new WorkDaySheet(assiduousness, thisDay, workSchedule, getDayClockings(
+			    clockingsMap, thisDay), getDayLeaves(leavesMap, thisDay));
 		    ICalculateDailyWorkSheetStrategy calculateDailyWorkSheetStrategy = CalculateDailyWorkSheetStrategyFactory
 			    .getInstance().getCalculateDailyWorkSheetStrategy(thisDay);
 		    workDaySheet = calculateDailyWorkSheetStrategy.calculateDailyBalance(assiduousness, workDaySheet,
 			    isDayHoliday);
 
 		    if (workSchedule != null && !isDayHoliday) {
-			Duration thisDayBalance = workDaySheet.getBalanceTime().toDurationFrom(new DateMidnight());
+			Duration thisDayBalance = workDaySheet.getBalanceTime();
 			if (!workSchedule.getWorkScheduleType().getScheduleClockingType().equals(
 				ScheduleClockingType.NOT_MANDATORY_CLOCKING)) {
 			    totalBalance = totalBalance.plus(thisDayBalance);

@@ -10,14 +10,26 @@
 
 <%net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session.getAttribute(pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE); %>
 <logic:present name="yearMonth">
+	<bean:define id="yearMonth" name="yearMonth"/>
 	<bean:define id="month" name="yearMonth" property="month" />
 	<bean:define id="year" name="yearMonth" property="year" />
 
 	<logic:present name="employee">
+		<bean:define id="employee" name="employee"/>
 		<bean:define id="employeeNumber" name="employee" property="employeeNumber" />
-		<%if (net.sourceforge.fenixedu.domain.ManagementGroups.isAssiduousnessManagerMember(user.getPerson())) {%>
-		<logic:equal name="yearMonth" property="isThisYearMonthClosed" value="false">
 		
+		<bean:define id="employeeStatusList" name="employeeStatusList"/>
+		<%request.setAttribute("employee", employee);
+		request.setAttribute("employeeStatusList", employeeStatusList);
+		request.setAttribute("yearMonth", yearMonth);
+		request.setAttribute("showJustificationsLinks", "showJustificationsLinks");%>
+		<jsp:include page="common/consultEmployeeAssiduousnessMenu.jsp">
+			<jsp:param name="month" value="<%=month.toString() %>" />
+			<jsp:param name="year" value="<%=year.toString() %>" />
+			<jsp:param name="yearMonthSchema" value="choose.date" />
+			<jsp:param name="method" value="showJustifications" />
+		</jsp:include>
+		<%if (net.sourceforge.fenixedu.domain.ManagementGroups.isAssiduousnessManagerMember(user.getPerson())) {%>
 		<p class="mtop2">
 			<span class="error0 mtop0">
 				<html:messages id="errorMessage" message="true" property="errorMessage">
@@ -158,32 +170,8 @@
 			</table>
 		</fr:form>
 		</div>
-
-		</logic:equal>
-
 		<%}%>
-		<p><bean:message key="label.show" />: <html:link
-			page="<%="/viewEmployeeAssiduousness.do?method=showWorkSheet&month="+month.toString()+"&year="+year.toString()+"&employeeNumber="+employeeNumber.toString()%>">
-			<bean:message key="link.workSheet" />
-		</html:link>, <html:link
-			page="<%="/viewEmployeeAssiduousness.do?method=showSchedule&month="+month.toString()+"&year="+year.toString()+"&employeeNumber="+employeeNumber.toString()%>">
-			<bean:message key="label.schedule" />
-		</html:link>, <html:link
-			page="<%="/viewEmployeeAssiduousness.do?method=showClockings&month="+month.toString()+"&year="+year.toString()+"&employeeNumber="+employeeNumber.toString()%>">
-			<bean:message key="link.clockings" />
-		</html:link>, <html:link
-			page="<%="/viewEmployeeAssiduousness.do?method=showJustifications&month="+month.toString()+"&year="+year.toString()+"&employeeNumber="+employeeNumber.toString()%>">
-			<bean:message key="link.justifications" />
-		</html:link></p>
-
-
-		<span class="toprint"><br />
-		</span>
-		<fr:view name="employee" schema="show.employeeInformation">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="showinfo1 thbold" />
-			</fr:layout>
-		</fr:view>
+		
 	</logic:present>
 
 	<logic:messagesPresent message="true">
@@ -191,38 +179,6 @@
 			<p><span class="error0"><bean:write name="message" /></span></p>
 		</html:messages>
 	</logic:messagesPresent>
-
-	<bean:define id="employeeNumber" name="employee" property="employeeNumber"/>
-	<div class="mvert1 invisible">
-	<fr:form action="/viewEmployeeAssiduousness.do?method=showJustifications">
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method"
-			name="employeeForm" property="method" value="showJustifications" />
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.employeeNumber"
-			name="employeeForm" property="employeeNumber" value="<%= employeeNumber.toString() %>" />
-		<fr:edit id="yearMonth" name="yearMonth" schema="choose.date">
-			<fr:layout>
-				<fr:property name="classes" value="thlight thright" />
-			</fr:layout>
-		</fr:edit>
-		<p><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"
-			styleClass="invisible">
-			<bean:message key="button.submit" />
-		</html:submit></p>
-	</fr:form></div>
-		
-	<div class="toprint">
-	<p class="bold mbottom0"><bean:define id="month" name="yearMonth"
-		property="month" /> <bean:message key="<%=month.toString()%>"
-		bundle="ENUMERATION_RESOURCES" /> <bean:write name="yearMonth"
-		property="year" /></p>
-	<br />
-	</div>
-
-	<fr:view name="employeeStatusList" schema="show.employeeStatus">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="showinfo1 thbold" />
-		</fr:layout>
-	</fr:view>
 
 <logic:present name="justifications">
 	<logic:empty name="justifications">

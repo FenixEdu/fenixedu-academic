@@ -11,7 +11,6 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.assiduousness.Anulation;
 import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecordMonthIndex;
@@ -27,7 +26,6 @@ import net.sourceforge.fenixedu.domain.assiduousness.MissingClocking;
 import net.sourceforge.fenixedu.domain.assiduousness.Schedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkWeek;
-import net.sourceforge.fenixedu.domain.assiduousness.util.AnulationState;
 import net.sourceforge.fenixedu.domain.assiduousness.util.DayType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
@@ -116,9 +114,6 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			if (getBeginDate() == null) {
 			    return new ActionMessage("errors.required", bundle.getString("label.date"));
 			}
-			if (ClosedMonth.isMonthClosed(getBeginDate())) {
-			    return new ActionMessage("errors.datesInClosedMonth");
-			}
 			if (getBeginTime() == null) {
 			    return new ActionMessage("errors.required", bundle.getString("label.beginHour"));
 			}
@@ -148,10 +143,6 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			    }
 			    duration = getDuration(getBeginDate().toDateTimeAtStartOfDay(), getEndDate().toDateTimeAtStartOfDay());
 			}
-			if (isDateIntervalInClosedMonth(getBeginDate(), duration)) {
-			    return new ActionMessage("errors.datesInClosedMonth");
-			}
-
 			if (getJustificationMotive().getDayType() == DayType.EVERYDAY) {
 			    if (!isActive(getEmployee().getAssiduousness(), getBeginDate(), duration)) {
 				return new ActionMessage("errors.inactiveEmployee");
@@ -164,14 +155,11 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			if (isOverlapingOtherJustification(getEmployee().getAssiduousness(), duration, null)) {
 			    return new ActionMessage("errors.overlapingOtherJustification");
 			}
-			new Leave(getEmployee().getAssiduousness(), getBeginDate().toDateTime(LocalTime.MIDNIGHT), duration,
+			new Leave(getEmployee().getAssiduousness(), getBeginDate().toDateTimeAtStartOfDay(), duration,
 				getJustificationMotive(), null, getNotes(), new DateTime(), getModifiedBy());
 		    } else if (getJustificationMotive().getJustificationType().equals(JustificationType.BALANCE)) {
 			if (getBeginDate() == null) {
 			    return new ActionMessage("errors.required", bundle.getString("label.date"));
-			}
-			if (ClosedMonth.isMonthClosed(getBeginDate())) {
-			    return new ActionMessage("errors.datesInClosedMonth");
 			}
 			if (!hasScheduleAndActive(getEmployee().getAssiduousness(), getBeginDate(), dayDuration)) {
 			    return new ActionMessage("errors.employeeHasNoScheduleOrInactive");
@@ -193,9 +181,6 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 				    JustificationType.HALF_MULTIPLE_MONTH_BALANCE)) {
 			if (getBeginDate() == null) {
 			    return new ActionMessage("errors.required", bundle.getString("label.date"));
-			}
-			if (ClosedMonth.isMonthClosed(getBeginDate())) {
-			    return new ActionMessage("errors.datesInClosedMonth");
 			}
 			if (!hasScheduleAndActive(getEmployee().getAssiduousness(), getBeginDate(), dayDuration)) {
 			    return new ActionMessage("errors.employeeHasNoScheduleOrInactive");
@@ -230,9 +215,6 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			if (getBeginDate() == null) {
 			    return new ActionMessage("errors.required", bundle.getString("label.date"));
 			}
-			if (ClosedMonth.isMonthClosed(getBeginDate())) {
-			    return new ActionMessage("errors.datesInClosedMonth");
-			}
 			if (!hasScheduleAndActive(getEmployee().getAssiduousness(), getBeginDate(), dayDuration)) {
 			    return new ActionMessage("errors.employeeHasNoScheduleOrInactive");
 			}
@@ -260,9 +242,6 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 		    if (getJustificationMotive().getJustificationType() == null) {
 			if (getBeginDate() == null) {
 			    return new ActionMessage("errors.required", bundle.getString("label.date"));
-			}
-			if (ClosedMonth.isMonthClosed(getBeginDate())) {
-			    return new ActionMessage("errors.datesInClosedMonth");
 			}
 			if (getBeginTime() == null) {
 			    return new ActionMessage("errors.required", bundle.getString("label.hour"));
@@ -337,9 +316,6 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			if (getBeginDate() == null) {
 			    return new ActionMessage("errors.required", bundle.getString("label.date"));
 			}
-			if (ClosedMonth.isMonthClosed(getBeginDate())) {
-			    return new ActionMessage("errors.datesInClosedMonth");
-			}
 			if (getBeginTime() == null) {
 			    return new ActionMessage("errors.required", bundle.getString("label.beginHour"));
 			}
@@ -353,10 +329,13 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			if (actionMessage != null) {
 			    return new ActionMessage(actionMessage);
 			}
-
-			((Leave) getJustification()).modify(getBeginDate().toDateTime(getBeginTime()), getDuration(getBeginTime()
-				.toDateTimeToday(), getEndTime().toDateTimeToday()), getJustificationMotive(), null, getNotes(),
-				getModifiedBy());
+			if (!((Leave) getJustification()).isEqual(getBeginDate().toDateTime(getBeginTime()), getDuration(
+				getBeginTime().toDateTimeToday(), getEndTime().toDateTimeToday()), getJustificationMotive(),
+				getNotes(), false)) {
+			    ((Leave) getJustification()).modify(getBeginDate().toDateTime(getBeginTime()), getDuration(
+				    getBeginTime().toDateTimeToday(), getEndTime().toDateTimeToday()), getJustificationMotive(),
+				    null, getNotes(), getModifiedBy());
+			}
 		    } else if (getJustificationMotive().getJustificationType().equals(JustificationType.OCCURRENCE)
 			    || getJustificationMotive().getJustificationType().equals(JustificationType.MULTIPLE_MONTH_BALANCE)) {
 			if (getBeginDate() == null) {
@@ -368,21 +347,6 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 				return new ActionMessage("error.invalidDateInterval");
 			    }
 			    duration = getDuration(getBeginDate().toDateTimeAtStartOfDay(), getEndDate().toDateTimeAtStartOfDay());
-			}
-			// if (isDateIntervalInClosedMonth(getBeginDate(),
-			// duration)) {
-			// return new
-			// ActionMessage("errors.datesInClosedMonth");
-			// }
-			if ((!getBeginDate().isEqual(getJustification().getDate().toLocalDate()))
-				&& (ClosedMonth.isMonthClosed(getBeginDate()) || ClosedMonth.isMonthClosed(getJustification()
-					.getDate().toLocalDate()))) {
-			    return new ActionMessage("errors.datesInClosedMonth");
-			}
-
-			if (getEndDate() != null && ClosedMonth.isMonthClosed(getEndDate())
-				&& !ClosedMonth.getLastClosedLocalDate().equals(getEndDate())) {
-			    return new ActionMessage("errors.datesInClosedMonth");
 			}
 
 			if (getJustificationMotive().getDayType() == DayType.EVERYDAY) {
@@ -398,14 +362,14 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			if (isOverlapingOtherJustification(getEmployee().getAssiduousness(), duration, getJustification())) {
 			    return new ActionMessage("errors.overlapingOtherJustification");
 			}
-			((Leave) getJustification()).modify(getBeginDate().toDateTime(LocalTime.MIDNIGHT), duration,
-				getJustificationMotive(), null, getNotes(), getModifiedBy());
+			if (!((Leave) getJustification()).isEqual(getBeginDate().toDateTimeAtStartOfDay(), duration,
+				getJustificationMotive(), getNotes(), false)) {
+			    ((Leave) getJustification()).modify(getBeginDate().toDateTimeAtStartOfDay(), duration,
+				    getJustificationMotive(), null, getNotes(), getModifiedBy());
+			}
 		    } else if (getJustificationMotive().getJustificationType().equals(JustificationType.BALANCE)) {
 			if (getBeginDate() == null) {
 			    return new ActionMessage("errors.required", bundle.getString("label.date"));
-			}
-			if (ClosedMonth.isMonthClosed(getBeginDate())) {
-			    return new ActionMessage("errors.datesInClosedMonth");
 			}
 			if (!hasScheduleAndActive(getEmployee().getAssiduousness(), getBeginDate(), dayDuration)) {
 			    return new ActionMessage("errors.employeeHasNoScheduleOrInactive");
@@ -420,16 +384,16 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			if (isOverlapingAnotherBalanceLeave(getEmployee().getAssiduousness(), numberOfHours, getJustification())) {
 			    return new ActionMessage("errors.overlapingOtherJustification");
 			}
-			((Leave) getJustification()).modify(getBeginDate().toDateTime(LocalTime.MIDNIGHT), numberOfHours,
-				getJustificationMotive(), null, getNotes(), getModifiedBy());
+			if (!((Leave) getJustification()).isEqual(getBeginDate().toDateTime(LocalTime.MIDNIGHT), numberOfHours,
+				getJustificationMotive(), getNotes(), false)) {
+			    ((Leave) getJustification()).modify(getBeginDate().toDateTime(LocalTime.MIDNIGHT), numberOfHours,
+				    getJustificationMotive(), null, getNotes(), getModifiedBy());
+			}
 		    } else if (getJustificationMotive().getJustificationType().equals(JustificationType.HALF_OCCURRENCE_TIME)
 			    || getJustificationMotive().getJustificationType().equals(
 				    JustificationType.HALF_MULTIPLE_MONTH_BALANCE)) {
 			if (getBeginDate() == null) {
 			    return new ActionMessage("errors.required", bundle.getString("label.date"));
-			}
-			if (ClosedMonth.isMonthClosed(getBeginDate())) {
-			    return new ActionMessage("errors.datesInClosedMonth");
 			}
 			if (!hasScheduleAndActive(getEmployee().getAssiduousness(), getBeginDate(), dayDuration)) {
 			    return new ActionMessage("errors.employeeHasNoScheduleOrInactive");
@@ -454,15 +418,14 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 				    .getSecondPeriodDuration();
 
 			}
-
-			((Leave) getJustification()).modify(beginDateTime, halfWorkScheduleDuration, getJustificationMotive(),
-				null, getNotes(), getModifiedBy());
+			if (!((Leave) getJustification()).isEqual(beginDateTime, halfWorkScheduleDuration,
+				getJustificationMotive(), getNotes(), false)) {
+			    ((Leave) getJustification()).modify(beginDateTime, halfWorkScheduleDuration,
+				    getJustificationMotive(), null, getNotes(), getModifiedBy());
+			}
 		    } else if (getJustificationMotive().getJustificationType().equals(JustificationType.HALF_OCCURRENCE)) {
 			if (getBeginDate() == null) {
 			    return new ActionMessage("errors.required", bundle.getString("label.date"));
-			}
-			if (ClosedMonth.isMonthClosed(getBeginDate())) {
-			    return new ActionMessage("errors.datesInClosedMonth");
 			}
 			if (!hasScheduleAndActive(getEmployee().getAssiduousness(), getBeginDate(), dayDuration)) {
 			    return new ActionMessage("errors.employeeHasNoScheduleOrInactive");
@@ -476,9 +439,11 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			if (workSchedule == null) {
 			    return new ActionMessage("errors.employeeHasNoScheduleOrInactive");
 			}
-
-			((Leave) getJustification()).modify(getBeginDate().toDateTimeAtStartOfDay(), null,
-				getJustificationMotive(), null, getNotes(), getModifiedBy());
+			if (!((Leave) getJustification()).isEqual(getBeginDate().toDateTimeAtStartOfDay(),
+				getJustificationMotive(), getNotes(), false)) {
+			    ((Leave) getJustification()).modify(getBeginDate().toDateTimeAtStartOfDay(), null,
+				    getJustificationMotive(), null, getNotes(), getModifiedBy());
+			}
 		    } else {
 			// error - regul
 			return new ActionMessage("errors.error");
@@ -492,9 +457,6 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			if (getBeginDate() == null) {
 			    return new ActionMessage("errors.required", bundle.getString("label.date"));
 			}
-			if (ClosedMonth.isMonthClosed(getBeginDate())) {
-			    return new ActionMessage("errors.datesInClosedMonth");
-			}
 			if (getBeginTime() == null) {
 			    return new ActionMessage("errors.required", bundle.getString("label.hour"));
 			}
@@ -502,8 +464,11 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			if (isOverlapingAnotherAssiduousnessRecord((MissingClocking) getJustification())) {
 			    return new ActionMessage("errors.regularizationOverlapingAnotherAssiduousnessRecord");
 			}
-			((MissingClocking) getJustification()).modify(getBeginDate().toDateTime(getBeginTime()),
-				getJustificationMotive(), getModifiedBy());
+			if (!((MissingClocking) getJustification()).isEqual(getBeginDate().toDateTime(getBeginTime()),
+				getJustificationMotive(), false)) {
+			    ((MissingClocking) getJustification()).modify(getBeginDate().toDateTime(getBeginTime()),
+				    getJustificationMotive(), getModifiedBy());
+			}
 		    } else {
 			// erro - just
 			return new ActionMessage("errors.error");
@@ -537,23 +502,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	}
 
 	public Object execute() {
-	    if (getJustification().getJustificationMotive().getJustificationType() != null
-		    && (getJustification().getJustificationMotive().getJustificationType().equals(JustificationType.OCCURRENCE) || getJustification()
-			    .getJustificationMotive().getJustificationType().equals(JustificationType.MULTIPLE_MONTH_BALANCE))) {
-		if (isDateIntervalInClosedMonth(getJustification().getDate().toLocalDate(), ((Leave) getJustification())
-			.getDuration())) {
-		    return new ActionMessage("errors.cantDelete.datesInClosedMonth");
-		}
-	    } else {
-		if (ClosedMonth.isMonthClosed(getJustification().getDate().toLocalDate())) {
-		    return new ActionMessage("errors.cantDelete.datesInClosedMonth");
-		}
-	    }
-	    if (getJustification().getAnulation() != null) {
-		getJustification().getAnulation().setState(AnulationState.VALID);
-	    } else {
-		new Anulation(getJustification(), getModifiedBy());
-	    }
+	    getJustification().anulate(getModifiedBy());
 	    return null;
 	}
 
@@ -581,9 +530,6 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 		if (getJustificationMotive().getJustificationType().equals(JustificationType.TIME)) {
 		    if (getBeginDate() == null) {
 			return new ActionMessage("errors.required", bundle.getString("label.date"));
-		    }
-		    if (ClosedMonth.isMonthClosed(getBeginDate())) {
-			return new ActionMessage("errors.datesInClosedMonth");
 		    }
 		    if (getBeginTime() == null) {
 			return new ActionMessage("errors.required", bundle.getString("label.beginHour"));
@@ -613,20 +559,14 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			}
 			duration = getDuration(getBeginDate().toDateTimeAtStartOfDay(), getEndDate().toDateTimeAtStartOfDay());
 		    }
-		    if (isDateIntervalInClosedMonth(getBeginDate(), duration)) {
-			return new ActionMessage("errors.datesInClosedMonth");
-		    }
 
-		    String result = createJustification(getBeginDate().toDateTime(LocalTime.MIDNIGHT), duration, bundle);
+		    String result = createJustification(getBeginDate().toDateTimeAtStartOfDay(), duration, bundle);
 		    if (result != null) {
 			return new ActionMessage("errors", result);
 		    }
 		} else if (getJustificationMotive().getJustificationType().equals(JustificationType.BALANCE)) {
 		    if (getBeginDate() == null) {
 			return new ActionMessage("errors.required", bundle.getString("label.date"));
-		    }
-		    if (ClosedMonth.isMonthClosed(getBeginDate())) {
-			return new ActionMessage("errors.datesInClosedMonth");
 		    }
 		    Duration numberOfHours = getDuration(LocalTime.MIDNIGHT.toDateTimeToday(), getEndTime().toDateTimeToday());
 		    if (numberOfHours == null) {
@@ -645,10 +585,6 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 		    if (getBeginDate() == null) {
 			return new ActionMessage("errors.required", bundle.getString("label.date"));
 		    }
-		    if (ClosedMonth.isMonthClosed(getBeginDate())) {
-			return new ActionMessage("errors.datesInClosedMonth");
-		    }
-
 		    String result = createJustification(getBeginDate().toDateTimeAtStartOfDay(), dayDuration, bundle);
 		    if (result != null) {
 			return new ActionMessage("errors", result);

@@ -46,7 +46,7 @@ public class ExportEmployeesAnualInfo extends FenixService {
 	    YearMonth thisYearMonth = new YearMonth(yearMonth.getYear(), yearMonth.getMonth());
 	    EmployeeAnualInfo employeeAnualInfo = new EmployeeAnualInfo(assiduousness.getEmployee(), yearMonth);
 	    for (; thisYearMonth.getYear().intValue() == yearMonth.getYear(); thisYearMonth.subtractMonth()) {
-		closedMonth = ClosedMonth.getClosedMonth(thisYearMonth);
+		closedMonth = ClosedMonth.getClosedMonthForBalance(thisYearMonth);
 		employeeAnualInfo.setCurrentYearMonth(new YearMonth(thisYearMonth.getYear(), thisYearMonth.getMonth()));
 		LocalDate beginDate = new LocalDate(thisYearMonth.getYear(), thisYearMonth.getNumberOfMonth(), 01);
 		int endDay = beginDate.dayOfMonth().getMaximumValue();
