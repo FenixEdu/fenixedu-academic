@@ -58,7 +58,7 @@ function check(e,v){
 	<logic:messagesPresent message="true">
 		<p>
 		<span class="error0"><!-- Error messages go here -->
-			<html:messages id="message" message="true">
+			<html:messages id="message" message="true" >
 				<bean:write name="message" filter="true"/>
 			</html:messages>
 		</span>

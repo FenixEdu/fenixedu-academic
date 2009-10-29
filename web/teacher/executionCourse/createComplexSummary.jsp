@@ -43,10 +43,11 @@ function check(e,v){
 	<bean:define id="executionCourseID" name="summariesManagementBean" property="executionCourse.idInternal" />
 	
 	<logic:messagesPresent message="true">
+
 		<p>
 		<span class="error0"><!-- Error messages go here -->
 			<html:messages id="message" message="true">
-				<bean:write name="message" filter="true"/>
+				<bean:write name="message" filter="true" />
 			</html:messages>
 		</span>
 		<p>
