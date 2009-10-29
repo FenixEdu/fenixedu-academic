@@ -67,12 +67,12 @@ public abstract class CreateThesisFile extends FenixService {
 
 	file.setPermittedGroup(new GroupUnion(scientificCouncil, commissionMembers, student, thesisGroup));
 
-	updateThesis(thesis, file, title, subTitle, language);
+	updateThesis(thesis, file, title, subTitle, language, fileName, fileToUpload);
 
 	return file;
     }
 
-    private VirtualPath getVirtualPath(Thesis thesis) {
+    protected VirtualPath getVirtualPath(Thesis thesis) {
 	// TODO: thesis, review path
 
 	VirtualPathNode[] nodes = { new VirtualPathNode("Thesis", "Thesis"),
@@ -86,7 +86,7 @@ public abstract class CreateThesisFile extends FenixService {
 	return path;
     }
 
-    private Collection<FileSetMetaData> createMetaData(Thesis thesis, String fileName) {
+    protected Collection<FileSetMetaData> createMetaData(Thesis thesis, String fileName) {
 	List<FileSetMetaData> metaData = new ArrayList<FileSetMetaData>();
 
 	metaData.add(FileSetMetaData.createAuthorMeta(thesis.getStudent().getPerson().getName()));
@@ -95,7 +95,7 @@ public abstract class CreateThesisFile extends FenixService {
 	return metaData;
     }
 
-    private FileDescriptor saveFile(VirtualPath filePath, String fileName, boolean isPrivate,
+    protected FileDescriptor saveFile(VirtualPath filePath, String fileName, boolean isPrivate,
 	    Collection<FileSetMetaData> metaData, File file) throws FenixServiceException, IOException {
 	IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
 	InputStream is = null;
@@ -113,6 +113,6 @@ public abstract class CreateThesisFile extends FenixService {
 
     protected abstract void removePreviousFile(Thesis thesis);
 
-    protected abstract void updateThesis(Thesis thesis, ThesisFile file, String title, String subTitle, Language language);
+    protected abstract void updateThesis(Thesis thesis, ThesisFile file, String title, String subTitle, Language language, String fileName, File fileToUpload) throws FenixServiceException, IOException;
 
 }

@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.thesis;
 
+import java.io.File;
+import java.io.IOException;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
@@ -21,7 +25,7 @@ public class CreateThesisAbstractFile extends CreateThesisFile {
     }
 
     @Override
-    protected void updateThesis(Thesis thesis, ThesisFile file, String title, String subTitle, Language language) {
+    protected void updateThesis(Thesis thesis, ThesisFile file, String title, String subTitle, Language language, String fileName, File fileToUpload) throws FenixServiceException, IOException {
 	thesis.setExtendedAbstract(file);
     }
 

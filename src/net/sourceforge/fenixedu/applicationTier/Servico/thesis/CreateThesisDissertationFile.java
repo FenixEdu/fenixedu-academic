@@ -1,5 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.thesis;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Collection;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -8,6 +13,9 @@ import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFil
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.utl.ist.fenix.tools.file.FileDescriptor;
+import pt.utl.ist.fenix.tools.file.FileSetMetaData;
+import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class CreateThesisDissertationFile extends CreateThesisFile {
@@ -25,7 +33,7 @@ public class CreateThesisDissertationFile extends CreateThesisFile {
     }
 
     @Override
-    protected void updateThesis(Thesis thesis, ThesisFile file, String title, String subTitle, Language language) {
+    protected void updateThesis(Thesis thesis, ThesisFile file, String title, String subTitle, Language language, String fileName, File fileToUpload) throws FenixServiceException, IOException {
 	if (title == null || subTitle == null) {
 	    throw new DomainException("thesis.files.dissertation.title.required");
 	}
@@ -45,9 +53,13 @@ public class CreateThesisDissertationFile extends CreateThesisFile {
 
 	    researchResultDocumentFile.delete();
 
+	    Collection<FileSetMetaData> metaData = createMetaData(thesis, fileName);
+	    VirtualPath filePath = getVirtualPath(thesis);
+	    FileDescriptor descriptor = saveFile(filePath, fileName, true, metaData, fileToUpload);
+
 	    publication.addDocumentFile(file.getFilename(), file.getFilename(), permittedGroupType,
 		    file.getMimeType(), file.getChecksum(), file.getChecksumAlgorithm(), file.getSize(),
-		    file.getExternalStorageIdentification(), permittedGroup);
+		    descriptor.getUniqueId(), permittedGroup);
 	    publication.setThesis(thesis);
 
 	}
