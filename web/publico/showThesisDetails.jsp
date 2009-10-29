@@ -59,10 +59,10 @@
 	<fr:view name="thesis" property="publication.organization"/>
 
 	<bean:define id="thesis" name="thesis" type="net.sourceforge.fenixedu.domain.thesis.Thesis"/>
+	<bean:define id="publicationId" name="thesis" property="publication.idInternal"/>
 	<%
 		if (thesis.getDissertation().isPersonAllowedToAccess(AccessControl.getPerson())) {
 	%>
-		<bean:define id="publicationId" name="thesis" property="publication.idInternal"/>
 		(<html:link target="_blank" page="<%="/bibtexExport.do?method=exportPublicationToBibtex&publicationId="+ publicationId %>">
 			<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.exportToBibTeX" />
 		</html:link><logic:iterate id="file" name="files" length="1">,
@@ -75,7 +75,6 @@
 	<%
 		} else {
 	%>
-		<bean:define id="publicationId" name="thesis" property="publication.idInternal"/>
 		(<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.exportToBibTeX" />
 		<logic:iterate id="file" name="files" length="1">,
 		<bean:define id="downloadUrl" name="file" property="downloadUrl" type="java.lang.String"/>	
