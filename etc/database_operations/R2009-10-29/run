@@ -43,3 +43,6 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create student numbers table" createStudentNumbersTable.sql
+execute "Update phd alert message" updatePhdAlertMessage.sql
+execute "Alter assiduousness tables" alterAssiduousnessTables.sql 
