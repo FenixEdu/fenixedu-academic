@@ -61,6 +61,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentsAndGroups;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTeachers;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
+import net.sourceforge.fenixedu.dataTransferObject.personnelSection.payrollSection.BonusInstallment;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.ImportContentBean;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
@@ -78,11 +79,14 @@ import net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMap
 import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
@@ -404,15 +408,24 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
     public ActionForward associateTeacher(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
+	if (isCancelled(request)) {
+	    RenderUtils.invalidateViewState();	
+	    DynaActionForm teacherForm = (DynaActionForm) form;
+	    teacherForm.set("teacherNumber","");
+	    return prepareAssociateTeacher(mapping, form, request, response);
+	}
+	
 	Integer objectCode = getObjectCode(request);
 	DynaActionForm teacherForm = (DynaActionForm) form;
 	String id = (String) teacherForm.get("teacherNumber");
-	Person person;
-	if (id.substring(0, 3).equalsIgnoreCase("ist")) {
+	Person person = null;
+	if (id.length() >= 3 && id.substring(0, 3).equalsIgnoreCase("ist")) {
 	    person = Person.readPersonByIstUsername(id);
 	} else {
-	    Teacher teacher = Teacher.readByNumber(Integer.valueOf(id));
-	    person = teacher == null ? null : teacher.getPerson();
+	    if (StringUtils.isNumeric(id)) {
+		Teacher teacher = Teacher.readByNumber(Integer.valueOf(id));
+		person = teacher == null ? null : teacher.getPerson();
+	    }
 	}
 	if (person != null) {
 	    try {
@@ -422,8 +435,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	    }
 	} else {
 	    final ActionErrors actionErrors = new ActionErrors();
-	    actionErrors.add("error", new ActionError("label.invalid.teacher.number"));
+	    actionErrors.add("error", new ActionMessage("label.invalid.teacher.number"));
 	    saveErrors(request, actionErrors);
+	    return prepareAssociateTeacher(mapping, teacherForm, request, response);
 	}
 	return viewTeachersByProfessorship(mapping, form, request, response);
     }
