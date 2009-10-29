@@ -52,7 +52,9 @@
 		<property name="maxLength" value="20" />
 	</slot>		
 	<slot name="documentType" key="label.idDocumentType.descriptive" 
-		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="excludedValues" value="CITIZEN_CARD" />
+	</slot>
 	<slot name="dateOfBirth" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
 		<property name="size" value="12"/>
 		<property name="maxLength" value="10"/>
@@ -103,7 +105,9 @@
 </schema>
 
 <schema name="student.documentId-edit" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="ACADEMIC_OFFICE_RESOURCES" > 
-	<slot name="idDocumentType" key="label.idDocumentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="idDocumentType" key="label.idDocumentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="excludedValues" value="CITIZEN_CARD" />
+	</slot>
 	<slot name="documentIdNumber" key="label.identificationNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>	
 	<slot name="documentIdEmissionLocation" />
 	<slot name="documentIdEmissionDate" >
@@ -461,7 +465,9 @@
 
 <schema name="student.StudentsSearchBeanByIdentification" type="net.sourceforge.fenixedu.dataTransferObject.student.StudentsSearchBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="identificationNumber" key="label.identificationNumber"/>
-	<slot name="documentType" key="label.idDocumentType"/>
+	<slot name="documentType" key="label.idDocumentType">
+		<property name="excludedValues" value="CITIZEN_CARD" />
+	</slot>
 </schema>
 
 <schema name="student.approved.curricular.courses.with.ects.credits" type="net.sourceforge.fenixedu.domain.CurricularCourse" bundle="ACADEMIC_OFFICE_RESOURCES">

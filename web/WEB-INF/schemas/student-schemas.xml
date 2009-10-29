@@ -343,7 +343,9 @@
 <schema name="student.StudentsSearchBean" type="net.sourceforge.fenixedu.dataTransferObject.student.StudentsSearchBean" bundle="APPLICATION_RESOURCES">
 	<slot name="number" />
 	<slot name="identificationNumber" />
-	<slot name="documentType" key="label.idDocumentType" />
+	<slot name="documentType" key="label.idDocumentType">
+		<property name="excludedValues" value="CITIZEN_CARD" />
+	</slot>
 	<slot name="name" />
 	<slot name="username" />
 </schema>

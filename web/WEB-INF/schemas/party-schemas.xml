@@ -29,7 +29,9 @@
 <schema name="net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean" type="net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean" bundle="MANAGER_RESOURCES" > 
 	<slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="gender" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="idDocumentType" key="label.idDocumentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="idDocumentType" key="label.idDocumentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="excludedValues" value="CITIZEN_CARD" />
+	</slot>
 	<slot name="documentIdNumber" key="label.identificationNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="documentIdEmissionLocation"/>
 	<slot name="documentIdEmissionDate">
@@ -51,7 +53,9 @@
 <schema name="net.sourceforge.fenixedu.domain.Person" type="net.sourceforge.fenixedu.domain.Person" bundle="MANAGER_RESOURCES" > 
 	<slot name="name"/>
 	<slot name="gender"/>
-	<slot name="idDocumentType" key="label.idDocumentType"/>
+	<slot name="idDocumentType" key="label.idDocumentType">
+		<property name="excludedValues" value="CITIZEN_CARD" />
+	</slot>
 	<slot name="documentIdNumber" key="label.identificationNumber"/>
 	<slot name="emissionLocationOfDocumentId"/>
 	<slot name="emissionDateOfDocumentIdYearMonthDay">
@@ -74,7 +78,9 @@
 	<slot name="name">
 		<property name="size" value="50"/>
 	</slot>
-	<slot name="idDocumentType" key="label.idDocumentType"/>
+	<slot name="idDocumentType" key="label.idDocumentType">
+		<property name="excludedValues" value="CITIZEN_CARD" />
+	</slot>
 	<slot name="documentIdNumber" key="label.identificationNumber"/>
 </schema>
 <schema name="net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean.Unit" type="net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean" bundle="MANAGER_RESOURCES" > 

@@ -259,7 +259,9 @@
 	<slot name="email" validator="pt.ist.fenixWebFramework.renderers.validators.EmailValidator" key="messaging.email.label">
 		<property name="size" value="40"/>	
 	</slot>
-	<slot name="documentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="documentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="excludedValues" value="CITIZEN_CARD" />
+	</slot>
 	<slot name="documentIDNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 </schema>	
 

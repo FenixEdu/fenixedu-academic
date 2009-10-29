@@ -65,7 +65,9 @@
 		<property name="maxLength" value="20" />
 	</slot>		
 	<slot name="idDocumentType" key="label.idDocumentType" 
-		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>	
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="excludedValues" value="CITIZEN_CARD" />
+	</slot>
 	<slot name="contributorNumber" key="label.contributorNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>	
 	<slot name="candidacyDate" >
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.AdvancedDateValidator">

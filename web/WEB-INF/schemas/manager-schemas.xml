@@ -4,7 +4,9 @@
 
 <schema name="EditPersonDomainObject" type="net.sourceforge.fenixedu.domain.Person" bundle="MANAGER_RESOURCES">
 	<slot name="documentIdNumber" />
-	<slot name="idDocumentType"/>	
+	<slot name="idDocumentType">
+		<property name="excludedValues" value="CITIZEN_CARD" />
+	</slot>	
 	<slot name="name"/>	
 	<slot name="socialSecurityNumber"/>		
 	<setter signature="editPersonalData(documentIdNumber, idDocumentType, name, socialSecurityNumber)"/>
@@ -54,7 +56,9 @@
 		<property name="size" value="50"/>
 	</slot>	
 	<slot name="documentIdNumber" />
-	<slot name="idDocumentType"/>	
+	<slot name="idDocumentType">
+		<property name="excludedValues" value="CITIZEN_CARD" />
+	</slot>	
 </schema>	
 
 <schema name="SearchPersonAttributes" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="MANAGER_RESOURCES">	
@@ -78,7 +82,9 @@
 
 <schema name="NewInvitedPersonIdentificationInfo" type="net.sourceforge.fenixedu.dataTransferObject.person.InvitedPersonBean" bundle="MANAGER_RESOURCES">
 	<slot name="documentIdNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>	
-	<slot name="idDocumentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>			
+	<slot name="idDocumentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="excludedValues" value="CITIZEN_CARD" />
+	</slot>			
     <slot name="documentIdEmissionLocation" />
 	<slot name="documentIdEmissionDate" />
     <slot name="documentIdExpirationDate" />
@@ -194,7 +200,9 @@
 
 <schema name="PersonIdentificationInfo" type="net.sourceforge.fenixedu.domain.Person" bundle="MANAGER_RESOURCES">
 	<slot name="documentIdNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>	
-	<slot name="idDocumentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="idDocumentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="excludedValues" value="CITIZEN_CARD" />
+	</slot>
     <slot name="emissionLocationOfDocumentId" />
 	<slot name="emissionDateOfDocumentIdYearMonthDay" />
     <slot name="expirationDateOfDocumentIdYearMonthDay" />

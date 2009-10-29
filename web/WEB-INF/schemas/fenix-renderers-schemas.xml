@@ -110,7 +110,9 @@
         <property name="size" value="50"/>
     </slot>
     <slot name="gender"/>
-    <slot name="idDocumentType"/>
+    <slot name="idDocumentType">
+    	<property name="excludedValues" value="CITIZEN_CARD" />
+    </slot>
     <slot name="documentIdNumber"/>
     <slot name="expirationDateOfDocumentIdYearMonthDay">
         <property name="size" value="12"/>
@@ -129,7 +131,9 @@
         <property name="size" value="50"/>
     </slot>
     <slot name="gender" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-    <slot name="idDocumentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <slot name="idDocumentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    	<property name="excludedValues" value="CITIZEN_CARD" />
+    </slot>
     <slot name="documentIdNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
     <slot name="expirationDateOfDocumentIdYearMonthDay">
         <validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
@@ -151,7 +155,9 @@
         <property name="size" value="50"/>
     </slot>
     <slot name="username" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-    <slot name="idDocumentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <slot name="idDocumentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    	<property name="excludedValues" value="CITIZEN_CARD" />
+    </slot>
     <slot name="documentIdNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
     <slot name="gender" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
     <slot name="maritalStatus" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
@@ -170,7 +176,9 @@
     <slot name="username" default="pxxxxx"
           validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
     <slot name="idDocumentType" default="IDENTITY_CARD"
-          validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+          validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    	<property name="excludedValues" value="CITIZEN_CARD" />
+    </slot>
     <slot name="documentIdNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
     <slot name="gender" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
     <slot name="maritalStatus" default="UNKNOWN"
@@ -282,7 +290,9 @@
 		</slot>
 		<slot name="gender" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 		<slot name="documentIdNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-		<slot name="idDocumentType" default="IDENTITY_CARD" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+		<slot name="idDocumentType" default="IDENTITY_CARD" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+			<property name="excludedValues" value="CITIZEN_CARD" />
+		</slot>
 		<slot name="emissionLocationOfDocumentId" />
 		<slot name="emissionDateOfDocumentIdYearMonthDay">
 			<property name="size" value="12" />
@@ -668,7 +678,9 @@
 	<schema name="SimpleSearchPersonWithStudentBean.edit" type="net.sourceforge.fenixedu.dataTransferObject.person.SimpleSearchPersonWithStudentBean" bundle="APPLICATION_RESOURCES">
 		<slot name="studentNumber"/>
 		<slot name="documentIdNumber"/>
-		<slot name="idDocumentType"/>
+		<slot name="idDocumentType">
+			<property name="excludedValues" value="CITIZEN_CARD" />
+		</slot>
 		<slot name="name"/>
 		<slot name="username"/>
 	</schema>

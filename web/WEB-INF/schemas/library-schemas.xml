@@ -386,7 +386,9 @@
 	<slot name="phone" key="label.card.person.phone" read-only="true"/>
 	<slot name="mobile" key="label.card.person.mobile" read-only="true"/>
 	<slot name="email" key="label.card.person.email" read-only="true"/>
-	<slot name="idDocumentType" key="label.idDocumentType" bundle="MANAGER_RESOURCES"/>
+	<slot name="idDocumentType" key="label.idDocumentType" bundle="MANAGER_RESOURCES">
+		<property name="excludedValues" value="CITIZEN_CARD" />
+	</slot>
 	<slot name="documentIdNumber" key="label.identificationNumber" bundle="MANAGER_RESOURCES"/>
 	<slot name="unitNameDomainReference" layout="autoComplete" key="label.card.unitName">
 		<property name="size" value="80"/>

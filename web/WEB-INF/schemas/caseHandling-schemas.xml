@@ -36,7 +36,9 @@
 	<slot name="identificationNumber" key="label.identificationNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="maxLength" value="20" />
 	</slot>
-	<slot name="documentType" key="label.idDocumentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="documentType" key="label.idDocumentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="excludedValues" value="CITIZEN_CARD" />
+	</slot>
 	<slot name="dateOfBirth" key="label.dateOfBirth" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="12"/>
 		<property name="maxLength" value="10"/>
@@ -120,7 +122,9 @@
 		<property name="maxlength" value="50"/>			
 	</slot>
 	
-	<slot name="idDocumentType" key="label.idDocumentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="idDocumentType" key="label.idDocumentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="excludedValues" value="CITIZEN_CARD" />
+	</slot>
 	
 	<slot name="documentIdExpirationDate" key="label.documentIdExpirationDate" >
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
@@ -1351,6 +1355,7 @@
 
 	<slot name="personBean.idDocumentType" key="label.idDocumentType" >
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<property name="excludedValues" value="CITIZEN_CARD" />
 	</slot>
 
 	<slot name="personBean.documentIdExpirationDate" key="label.documentIdExpirationDate">
@@ -1461,6 +1466,7 @@
 
 	<slot name="personBean.idDocumentType" key="label.idDocumentType" >
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<property name="excludedValues" value="CITIZEN_CARD" />
 	</slot>
 </schema>
 
