@@ -51,8 +51,8 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
     public ActionForward prepareSearch(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	request.setAttribute("degreeByExecutionYearBean", new DegreeByExecutionYearBean());
-	request.setAttribute("documentRequestSearchBean", new DocumentRequestSearchBean());
+	request.setAttribute("degreeByExecutionYearBean", getOrCreateDegreeSearchBean());
+	request.setAttribute("documentRequestSearchBean", getOrCreateRequestSearchBean());
 
 	return mapping.findForward("searchRequests");
     }
@@ -60,13 +60,23 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
     public ActionForward postBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final Object degreeSearchBean = getRenderedObject("degreeByExecutionYearBean");
-	final Object requestSearchBean = getRenderedObject("documentRequestSearchBean");
+	final DegreeByExecutionYearBean degreeSearchBean = getOrCreateDegreeSearchBean();
+	final DocumentRequestSearchBean requestSearchBean = getOrCreateRequestSearchBean();
 	RenderUtils.invalidateViewState();
 	request.setAttribute("degreeByExecutionYearBean", degreeSearchBean);
 	request.setAttribute("documentRequestSearchBean", requestSearchBean);
 
 	return mapping.findForward("searchRequests");
+    }
+
+    private DegreeByExecutionYearBean getOrCreateDegreeSearchBean() {
+	DegreeByExecutionYearBean bean = (DegreeByExecutionYearBean) getRenderedObject("degreeByExecutionYearBean");
+	return (bean != null) ? bean : new DegreeByExecutionYearBean();
+    }
+
+    private DocumentRequestSearchBean getOrCreateRequestSearchBean() {
+	DocumentRequestSearchBean bean = (DocumentRequestSearchBean) getRenderedObject("documentRequestSearchBean");
+	return (bean != null) ? bean : new DocumentRequestSearchBean();
     }
 
     public ActionForward runSearchAndShowResults(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

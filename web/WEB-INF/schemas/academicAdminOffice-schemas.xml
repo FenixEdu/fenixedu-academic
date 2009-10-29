@@ -1439,6 +1439,7 @@
 		<property name="destination" value="postBack"/>
 	</slot>
 	<slot name="activeEnrolments" key="label.activeEnrolments" />
+	<slot name="regime" key="registration.regime"/>
 	<slot name="nationality" layout="menu-select" key="label.nationality">
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/>
 		<property name="format" value="${nationality}" />

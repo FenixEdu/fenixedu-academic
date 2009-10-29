@@ -41,27 +41,28 @@ import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 @Forwards( { @Forward(name = "searchDiplomas", path = "/academicAdminOffice/lists/searchDiplomasBySituation.jsp") })
 public class DiplomasListBySituationDA extends FenixDispatchAction {
 
-    @SuppressWarnings("unused")
     public ActionForward prepareBySituation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	request.setAttribute("searchParametersBean", new SearchDiplomasBySituationParametersBean(AccessControl.getPerson()
-		.getEmployee()));
+	request.setAttribute("searchParametersBean", getOrCreateSearchParametersBean());
 	return mapping.findForward("searchDiplomas");
     }
 
-    @SuppressWarnings("unused")
     public ActionForward postBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final Object renderedObject = getRenderedObject();
+	final SearchDiplomasBySituationParametersBean searchParametersBean = getOrCreateSearchParametersBean();
 	RenderUtils.invalidateViewState();
-	request.setAttribute("searchParametersBean", renderedObject);
+	request.setAttribute("searchParametersBean", searchParametersBean);
 
 	return mapping.findForward("searchDiplomas");
     }
 
-    @SuppressWarnings("unused")
+    private SearchDiplomasBySituationParametersBean getOrCreateSearchParametersBean() {
+	SearchDiplomasBySituationParametersBean bean = (SearchDiplomasBySituationParametersBean) getRenderedObject("searchParametersBean");
+	return (bean != null) ? bean : new SearchDiplomasBySituationParametersBean(AccessControl.getPerson().getEmployee());
+    }
+
     public ActionForward searchBySituation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
@@ -72,7 +73,6 @@ public class DiplomasListBySituationDA extends FenixDispatchAction {
 	return mapping.findForward("searchDiplomas");
     }
 
-    @SuppressWarnings("unused")
     public ActionForward exportInfoToExcel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 

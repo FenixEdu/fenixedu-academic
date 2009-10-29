@@ -17,8 +17,9 @@
 <fr:form id="searchForm" action="/diplomasListBySituation.do">
 	<html:hidden property="method" value="searchBySituation"/>
 	<html:hidden property="extendedInfo" value="false"/>
-		<fr:edit name="searchParametersBean" schema="diploma.list.searchBySituation.chooseDegree" id="chooseSituation">
+		<fr:edit id="searchParametersBean" name="searchParametersBean" schema="diploma.list.searchBySituation.chooseDegree">
 			<fr:destination name="postBack" path="/diplomasListBySituation.do?method=postBack"/>
+			<fr:destination name="invalid" path="/diplomasListBySituation.do?method=prepareBySituation"/>
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thlight thright mtop025 thmiddle"/>
 		        <fr:property name="columnClasses" value=",,tdclear tderror1"/>

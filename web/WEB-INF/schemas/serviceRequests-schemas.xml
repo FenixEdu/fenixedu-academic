@@ -689,15 +689,14 @@
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.serviceRequests.AcademicServiceRequestTypeProvider" />
 		<property name="eachLayout" value="" />
 	</slot>
-	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.serviceRequests.AcademicServiceRequestSituationTypeProvider" />
-	</slot>
+	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType"/>
 	<slot name="urgentRequest" key="label.only.urgent"/>
 </schema>
 
 <schema name="DocumentRequestSearchBean.edit" type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestSearchBean" extends="AcademicServiceRequestSearchBean.edit" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="chosenDocumentRequestType" key="label.documentRequestsManagement.searchDocumentRequests.documentRequestType">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DocumentRequestTypeProvider"/>
+	<slot name="chosenDocumentRequestType" key="label.documentRequestsManagement.searchDocumentRequests.documentRequestType" layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DocumentRequestTypeProvider$QuickDeliveryTypes"/>
+		<property name="eachLayout" value="" />
 	</slot>
 </schema>
 

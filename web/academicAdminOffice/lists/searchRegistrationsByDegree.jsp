@@ -18,6 +18,7 @@
 <html:hidden property="extendedInfo" value="false"/>
 	<fr:edit name="searchParametersBean" schema="student.list.searchByDegree.chooseDegree" id="chooseDegree">
 		<fr:destination name="postBack" path="/studentsListByDegree.do?method=postBack"/>
+		<fr:destination name="invalid" path="/studentsListByDegree.do?method=prepareByDegree"/>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright mtop025 thmiddle"/>
 	        <fr:property name="columnClasses" value=",,tdclear tderror1"/>

@@ -52,18 +52,23 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
     public ActionForward prepareByDegree(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	request.setAttribute("searchParametersBean", new SearchStudentsByDegreeParametersBean());
+	request.setAttribute("searchParametersBean", getOrCreateSearchParametersBean());
 	return mapping.findForward("searchRegistrations");
     }
 
     public ActionForward postBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final Object renderedObject = getRenderedObject();
+	final SearchStudentsByDegreeParametersBean searchParametersBean = getOrCreateSearchParametersBean();
 	RenderUtils.invalidateViewState();
-	request.setAttribute("searchParametersBean", renderedObject);
+	request.setAttribute("searchParametersBean", searchParametersBean);
 
 	return mapping.findForward("searchRegistrations");
+    }
+
+    private SearchStudentsByDegreeParametersBean getOrCreateSearchParametersBean() {
+	SearchStudentsByDegreeParametersBean bean = (SearchStudentsByDegreeParametersBean) getRenderedObject("searchParametersBean");
+	return (bean != null) ? bean : new SearchStudentsByDegreeParametersBean();
     }
 
     public ActionForward searchByDegree(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -158,6 +163,7 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
 		spreadsheet.addCell(registration.getEnrolmentsExecutionYears().size());
 		spreadsheet.addCell(registration.getCurricularYear(executionYear));
 		spreadsheet.addCell(registration.getEnrolments(executionYear).size());
+		spreadsheet.addCell(registration.isPartialRegime(executionYear) ? "Tempo Parcial" : "Tempo Integral");
 
 		fillSpreadSheetPreBolonhaInfo(spreadsheet, registration);
 		fillSpreadSheetBolonhaInfo(spreadsheet, registration, registration.getLastStudentCurricularPlan().getFirstCycle());
@@ -217,6 +223,7 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
 	    spreadsheet.addHeader("Nº inscrições");
 	    spreadsheet.addHeader("Ano académico");
 	    spreadsheet.addHeader("Nº disciplinas inscritas");
+	    spreadsheet.addHeader("Regime");
 	    spreadsheet.addHeader("Curso Concluído");
 	    spreadsheet.addHeader("Data de Conclusão");
 	    spreadsheet.addHeader("Média de Curso");

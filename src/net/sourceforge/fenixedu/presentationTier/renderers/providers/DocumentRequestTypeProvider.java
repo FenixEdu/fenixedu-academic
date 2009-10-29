@@ -23,15 +23,23 @@ public class DocumentRequestTypeProvider implements DataProvider {
 
 	@Override
 	public Object provide(Object source, Object currentValue) {
-	    return super.provide(source, currentValue, true);
+	    return super.provide(source, currentValue, false, true);
+	}
+    }
+
+    static public class QuickDeliveryTypes extends DocumentRequestTypeProvider {
+
+	@Override
+	public Object provide(Object source, Object currentValue) {
+	    return super.provide(source, currentValue, true, false);
 	}
     }
 
     public Object provide(Object source, Object currentValue) {
-	return provide(source, currentValue, false);
+	return provide(source, currentValue, false, false);
     }
 
-    public Object provide(Object source, Object currentValue, boolean includePreBolonhaTypes) {
+    public Object provide(Object source, Object currentValue, boolean includeQuickDeliveryTypes, boolean includePreBolonhaTypes) {
 
 	AdministrativeOfficeType administrativeOfficeType = AccessControl.getPerson().getEmployee().getAdministrativeOffice()
 		.getAdministrativeOfficeType();
@@ -39,11 +47,16 @@ public class DocumentRequestTypeProvider implements DataProvider {
 	final Collection<DocumentRequestType> result = new ArrayList<DocumentRequestType>();
 
 	for (final DocumentRequestType documentRequestType : DocumentRequestType.values()) {
-	    if (documentRequestType.getAdministrativeOfficeTypes().contains(administrativeOfficeType)
-		    && !documentRequestType.isAllowedToQuickDeliver()
-		    && (includePreBolonhaTypes || !documentRequestType.isPreBolonha())) {
-		result.add(documentRequestType);
+	    if (!documentRequestType.getAdministrativeOfficeTypes().contains(administrativeOfficeType)) {
+		continue;
 	    }
+	    if (!includeQuickDeliveryTypes && documentRequestType.isAllowedToQuickDeliver()) {
+		continue;
+	    }
+	    if (!includePreBolonhaTypes && documentRequestType.isPreBolonha()) {
+		continue;
+	    }
+	    result.add(documentRequestType);
 	}
 
 	return result;

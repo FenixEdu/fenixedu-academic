@@ -6,6 +6,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.commons.DegreeByExecutionYearBean;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
+import net.sourceforge.fenixedu.domain.student.RegistrationRegimeType;
 import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 
@@ -23,9 +24,11 @@ public class SearchStudentsByDegreeParametersBean extends DegreeByExecutionYearB
 
     private List<StudentStatuteType> studentStatuteTypes = new ArrayList<StudentStatuteType>();
 
-    private Country nationality = null;
-
     private boolean activeEnrolments = false;
+
+    private RegistrationRegimeType regime = null;
+
+    private Country nationality = null;
 
     public List<RegistrationAgreement> getRegistrationAgreements() {
 	return registrationAgreements;
@@ -61,6 +64,14 @@ public class SearchStudentsByDegreeParametersBean extends DegreeByExecutionYearB
 
     public void setActiveEnrolments(boolean activeEnrolments) {
 	this.activeEnrolments = activeEnrolments;
+    }
+
+    public RegistrationRegimeType getRegime() {
+	return regime;
+    }
+
+    public void setRegime(RegistrationRegimeType regime) {
+	this.regime = regime;
     }
 
     public Country getNationality() {

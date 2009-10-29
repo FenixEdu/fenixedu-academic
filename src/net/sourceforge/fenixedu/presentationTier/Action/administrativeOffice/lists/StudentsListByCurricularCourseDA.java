@@ -60,18 +60,24 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
 
     public ActionForward prepareByCurricularCourse(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	request.setAttribute("searchBean", new SearchStudentsByCurricularCourseParametersBean());
+
+	request.setAttribute("searchBean", getOrCreateSearchBean());
 	return mapping.findForward("chooseCurricularCourse");
     }
 
     public ActionForward chooseExecutionYearPostBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	Object searchBean = getRenderedObject();
+	SearchStudentsByCurricularCourseParametersBean searchBean = getOrCreateSearchBean();
 	RenderUtils.invalidateViewState();
 	request.setAttribute("searchBean", searchBean);
 
 	return mapping.findForward("chooseCurricularCourse");
+    }
+
+    private SearchStudentsByCurricularCourseParametersBean getOrCreateSearchBean() {
+	SearchStudentsByCurricularCourseParametersBean bean = (SearchStudentsByCurricularCourseParametersBean) getRenderedObject("searchBean");
+	return (bean != null) ? bean : new SearchStudentsByCurricularCourseParametersBean();
     }
 
     public ActionForward showActiveCurricularCourseScope(ActionMapping mapping, ActionForm form, HttpServletRequest request,

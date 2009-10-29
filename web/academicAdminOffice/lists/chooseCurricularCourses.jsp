@@ -14,8 +14,9 @@
 </html:messages>
 
 <fr:form action="/studentsListByCurricularCourse.do?method=showActiveCurricularCourseScope">
-	<fr:edit name="searchBean" schema="student.list.searchByCurricularCourse.chooseDegreeCurricularPlan">
+	<fr:edit id="searchBean" name="searchBean" schema="student.list.searchByCurricularCourse.chooseDegreeCurricularPlan">
 		<fr:destination name="executionYearPostBack" path="/studentsListByCurricularCourse.do?method=chooseExecutionYearPostBack"/>	
+		<fr:destination name="invalid" path="/studentsListByCurricularCourse.do?method=prepareByCurricularCourse"/>	
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright mtop025 thmiddle"/>
 	        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
