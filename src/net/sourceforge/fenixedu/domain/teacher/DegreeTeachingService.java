@@ -34,7 +34,7 @@ public class DegreeTeachingService extends DegreeTeachingService_Base {
 	if (teacherService == null || professorship == null || shift == null || percentage == null) {
 	    throw new DomainException("arguments can't be null");
 	}
-	if (percentage == 0 || percentage > 100 || percentage < 0) {
+	if (percentage > 100 || percentage < 0) {
 	    throw new DomainException("message.invalid.professorship.percentage");
 	}
 	if (professorship.getExecutionCourse().isMasterDegreeDFAOrDEAOnly()) {

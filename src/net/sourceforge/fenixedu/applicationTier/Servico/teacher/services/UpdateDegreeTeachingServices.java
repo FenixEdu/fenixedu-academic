@@ -31,8 +31,11 @@ public class UpdateDegreeTeachingServices extends FenixService {
 	    if (degreeTeachingService != null) {
 		degreeTeachingService.updatePercentage(shiftIDTeachingPercentage.getPercentage(), roleType);
 	    } else {
-		new DegreeTeachingService(teacherService, professorship, shift, shiftIDTeachingPercentage.getPercentage(),
-			roleType);
+		if (shiftIDTeachingPercentage.getPercentage() == null
+			|| (shiftIDTeachingPercentage.getPercentage() != null && shiftIDTeachingPercentage.getPercentage() != 0)) {
+		    new DegreeTeachingService(teacherService, professorship, shift, shiftIDTeachingPercentage.getPercentage(),
+			    roleType);
+		}
 	    }
 	}
     }
