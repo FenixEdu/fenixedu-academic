@@ -6832,6 +6832,7 @@ class phd.alert.PhdAlert extends DomainObject {
 		
 	
 class phd.alert.PhdAlertMessage extends DomainObject {
+	DateTime whenCreated;
 	MultiLanguageString subject;
 	MultiLanguageString body;
 	Boolean readed;

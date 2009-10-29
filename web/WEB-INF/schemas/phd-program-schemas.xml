@@ -121,7 +121,9 @@
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
 	</slot>	
-	<slot name="idDocumentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="idDocumentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="excludedValues" value="CITIZEN_CARD" />
+	</slot>
 	<slot name="documentIdNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="documentIdEmissionDate" validator="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
 		<property name="size" value="12"/>
@@ -164,7 +166,9 @@
 	<slot name="maritalStatus" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="excludedValues" value="UNKNOWN" />
 	</slot>
-	<slot name="idDocumentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="idDocumentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="excludedValues" value="CITIZEN_CARD" />
+	</slot>
 	<slot name="documentIdNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="documentIdEmissionDate" validator="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
 		<property name="size" value="12"/>
@@ -1048,12 +1052,11 @@
 	
 	<slot name="systemAlert"/>
 	
-	
 </schema>
 
 <schema name="PhdAlertMessage.view" type="net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage" bundle="PHD_RESOURCES">	
 	
-	<slot name="process.processNumber"/>
+	<slot name="whenCreated" layout="no-time" />
 
 	<slot name="subject" />
 	
@@ -1065,6 +1068,8 @@
 
 
 <schema name="PhdAlertMessage.view.for.process" type="net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage" bundle="PHD_RESOURCES">	
+	
+	<slot name="whenCreated" layout="no-time" />
 	
 	<slot name="subject" />
 	

@@ -51,6 +51,7 @@
 				<fr:property name="confirmationKey(markAsReaded)" value="message.confirm.alertMessage.mark.as.readed" />
 				<fr:property name="confirmationBundle(markAsReaded)" value="PHD_RESOURCES" />
 
+				<fr:property name="sortBy" value="whenCreated=desc" />
 		</fr:layout>
 	</fr:view>	
 </logic:notEmpty>

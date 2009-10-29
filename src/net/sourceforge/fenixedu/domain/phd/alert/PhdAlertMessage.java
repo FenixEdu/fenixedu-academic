@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.joda.time.DateTime;
+
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -18,6 +20,7 @@ public class PhdAlertMessage extends PhdAlertMessage_Base {
     protected PhdAlertMessage() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
+	setWhenCreated(new DateTime());
     }
 
     public PhdAlertMessage(PhdIndividualProgramProcess process, Person person, MultiLanguageString subject,
