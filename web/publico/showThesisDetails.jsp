@@ -3,7 +3,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<html:xhtml/>
+
+<%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%><html:xhtml/>
 
 <bean:define id="listThesesActionPath" name="listThesesActionPath"/>
 <bean:define id="listThesesContext" name="listThesesContext"/>
@@ -56,17 +57,34 @@
 	<fr:view name="thesis" property="publication.authorsNames"/>,
 	<fr:view name="thesis" property="publication.year"/>,
 	<fr:view name="thesis" property="publication.organization"/>
+
+	<bean:define id="thesis" name="thesis" type="net.sourceforge.fenixedu.domain.thesis.Thesis"/>
+	<%
+		if (thesis.getDissertation().isPersonAllowedToAccess(AccessControl.getPerson())) {
+	%>
+		<bean:define id="publicationId" name="thesis" property="publication.idInternal"/>
+		(<html:link target="_blank" page="<%="/bibtexExport.do?method=exportPublicationToBibtex&publicationId="+ publicationId %>">
+			<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.exportToBibTeX" />
+		</html:link><logic:iterate id="file" name="files" length="1">,
 	
-	<bean:define id="publicationId" name="thesis" property="publication.idInternal"/>
-	(<html:link target="_blank" page="<%="/bibtexExport.do?method=exportPublicationToBibtex&publicationId="+ publicationId %>">
-		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.exportToBibTeX" />
-	</html:link><logic:iterate id="file" name="files" length="1">,
-	
-	<bean:define id="downloadUrl" name="file" property="downloadUrl" type="java.lang.String"/>	
-	<html:link href="<%= downloadUrl %>">
-		<html:img page="/images/icon_pdf.gif" module=""/>
-		<fr:view name="file" property="size" layout="fileSize"/>
-	</html:link></logic:iterate>)
+		<bean:define id="downloadUrl" name="file" property="downloadUrl" type="java.lang.String"/>	
+		<html:link href="<%= downloadUrl %>">
+			<html:img page="/images/icon_pdf.gif" module=""/>
+			<fr:view name="file" property="size" layout="fileSize"/>
+		</html:link></logic:iterate>)
+	<%
+		} else {
+	%>
+		<bean:define id="publicationId" name="thesis" property="publication.idInternal"/>
+		(<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.exportToBibTeX" />
+		<logic:iterate id="file" name="files" length="1">,
+		<bean:define id="downloadUrl" name="file" property="downloadUrl" type="java.lang.String"/>	
+			<html:img page="/images/icon_pdf.gif" module=""/>
+			<fr:view name="file" property="size" layout="fileSize"/>
+		</logic:iterate>)
+	<%
+		}
+	%>
 		
 </logic:notEmpty>
 

@@ -26,8 +26,9 @@ public class MakeThesisDocumentsUnavailable extends FenixService {
 
 	final net.sourceforge.fenixedu.domain.research.result.publication.Thesis publication = thesis.getPublication();
 	if (publication != null) {
-	    final ResearchResultDocumentFile researchResultDocumentFile = publication.getResultDocumentFilesIterator().next();
-	    researchResultDocumentFile.setPermittedGroup(thesisFile.getPermittedGroup());
+	    for (final ResearchResultDocumentFile researchResultDocumentFile : publication.getResultDocumentFilesSet()) {
+		researchResultDocumentFile.setPermittedGroup(thesisFile.getPermittedGroup());
+	    }
 	}
     }
 

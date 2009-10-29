@@ -28,7 +28,8 @@ public class ResultPredicates {
 
     public static final AccessControlPredicate<ResearchResult> writePredicate = new AccessControlPredicate<ResearchResult>() {
 	public boolean evaluate(ResearchResult result) {
-	    return result.isEditableByCurrentUser();
+	    final IUserView userView = AccessControl.getUserView();
+	    return result.isEditableByCurrentUser() || (userView != null && userView.hasRoleType(RoleType.SCIENTIFIC_COUNCIL));
 	}
     };
 
