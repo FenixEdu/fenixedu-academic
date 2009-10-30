@@ -6834,6 +6834,7 @@ class phd.alert.PhdAlert extends DomainObject {
 		}
 		
 		class phd.alert.PhdRegistrationFormalizationAlert extends phd.alert.PhdAlert {
+			Integer maxDays;
 		}
 		
 		class phd.alert.PhdFinalProofRequestAlert extends phd.alert.PhdAlert {

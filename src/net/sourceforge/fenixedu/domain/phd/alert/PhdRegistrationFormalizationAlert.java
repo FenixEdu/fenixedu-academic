@@ -16,12 +16,10 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PhdRegistrationFormalizationAlert extends PhdRegistrationFormalizationAlert_Base {
 
-    private static final int MAX_DAYS = 20;
-
-    public PhdRegistrationFormalizationAlert(PhdIndividualProgramProcess process) {
+    public PhdRegistrationFormalizationAlert(PhdIndividualProgramProcess process, final int maxDays) {
 	super();
 	init(process);
-
+	setMaxDays(maxDays);
     }
 
     private void init(PhdIndividualProgramProcess process) {
@@ -45,7 +43,7 @@ public class PhdRegistrationFormalizationAlert extends PhdRegistrationFormalizat
     }
 
     private LocalDate getWhenToFire() {
-	return PhdProgramCalendarUtil.addWorkDaysTo(getProcess().getCandidacyProcess().getWhenRatified(), MAX_DAYS);
+	return PhdProgramCalendarUtil.addWorkDaysTo(getProcess().getCandidacyProcess().getWhenRatified(), getMaxDays());
     }
 
     @Override

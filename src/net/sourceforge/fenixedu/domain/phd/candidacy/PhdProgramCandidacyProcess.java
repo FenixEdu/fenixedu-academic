@@ -572,7 +572,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	addDocument(bean.getRatificationFile(), responsible);
 
 	if (!getIndividualProgramProcess().hasAnyRegistrationFormalizationActiveAlert()) {
-	    new PhdRegistrationFormalizationAlert(getIndividualProgramProcess());
+	    new PhdRegistrationFormalizationAlert(getIndividualProgramProcess(), bean.getMaxDaysToFormalizeRegistration());
 	}
 
 	createState(PhdProgramCandidacyProcessState.RATIFIED_BY_SCIENTIFIC_COUNCIL, responsible);

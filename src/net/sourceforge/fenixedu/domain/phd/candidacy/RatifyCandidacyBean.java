@@ -10,10 +10,8 @@ import org.joda.time.LocalDate;
 
 public class RatifyCandidacyBean implements Serializable {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
+    private static final int DEFAULT_MAX_DAYS_TO_FORMALIZE_REGISTRATION = 20;
 
     private LocalDate whenRatified;
 
@@ -21,12 +19,11 @@ public class RatifyCandidacyBean implements Serializable {
 
     private DomainReference<PhdProgramCandidacyProcess> process;
 
+    private int maxDaysToFormalizeRegistration = DEFAULT_MAX_DAYS_TO_FORMALIZE_REGISTRATION;
+
     public RatifyCandidacyBean(PhdProgramCandidacyProcess process) {
-
 	setProcess(process);
-
 	this.ratificationFile = new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.CANDIDACY_RATIFICATION);
-
     }
 
     public PhdProgramCandidacyProcess getProcess() {
@@ -51,6 +48,14 @@ public class RatifyCandidacyBean implements Serializable {
 
     public void setRatificationFile(PhdProgramDocumentUploadBean ratificationFile) {
 	this.ratificationFile = ratificationFile;
+    }
+
+    public int getMaxDaysToFormalizeRegistration() {
+	return maxDaysToFormalizeRegistration;
+    }
+
+    public void setMaxDaysToFormalizeRegistration(int maxDaysToFormalizeRegistration) {
+	this.maxDaysToFormalizeRegistration = maxDaysToFormalizeRegistration;
     }
 
 }
