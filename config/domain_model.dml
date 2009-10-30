@@ -8072,7 +8072,9 @@ relation CareerTeacher {
 	teacher.Career playsRole associatedCareers {
 		multiplicity *;
 	}
-	Teacher playsRole teacher;
+	Teacher playsRole teacher {
+	   multiplicity 1;
+	}
 }
 
 relation CaseStudyCaseStudyChoice {

@@ -18,6 +18,7 @@
 		<li><html:link page="/resultPatents/management.do"><bean:message bundle="RESEARCHER_RESOURCES" key="link.patentsManagement"/></html:link></li>			
 		<li><html:link page="/activities/activitiesManagement.do?method=listActivities"><bean:message bundle="RESEARCHER_RESOURCES" key="link.activitiesManagement"/></html:link></li>
 		<li><html:link page="/prizes/prizeManagement.do?method=listPrizes"><bean:message bundle="RESEARCHER_RESOURCES" key="label.prizes"/></html:link></li>
+        <li><html:link page="/career/careerManagement.do?method=showCareer"><bean:message bundle="RESEARCHER_RESOURCES" key="label.career"/></html:link></li>
 		<%--
 		<li class="navheader"><bean:message bundle="RESEARCHER_RESOURCES" key="link.participationsTitle"/></li>
 		--%>

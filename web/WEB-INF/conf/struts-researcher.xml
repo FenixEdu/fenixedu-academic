@@ -439,6 +439,8 @@
     <message-resources parameter="resources.DepartmentMemberResources" key="DEPARTMENT_MEMBER_RESOURCES" null="false"/>
     <message-resources parameter="resources.ScientificCouncilResources" key="SCIENTIFIC_COUNCIL_RESOURCES" null="false"/>
 	<message-resources parameter="resources.AcademicAdminOffice" key="ACADEMIC_OFFICE_RESOURCES" null="false"/>
+	<message-resources parameter="resources.CommonResources" key="COMMON_RESOURCES" null="false"/>
+    <message-resources parameter="resources.DomainResources" key="DOMAIN_RESOURCES" null="false"/>
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
         <set-property property="pathnames" 

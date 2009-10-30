@@ -10,6 +10,12 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.CareerType;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.joda.time.Interval;
+import org.joda.time.LocalDateTime;
+
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Leonor Almeida
@@ -24,10 +30,32 @@ public abstract class Career extends Career_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
+    @Service
     public void delete() {
 	removeTeacher();
 	removeRootDomainObject();
 	super.deleteDomainObject();
+    }
+
+    public Interval getInterval() {
+	return new Interval(new LocalDateTime(getBeginYear(), 1, 1, 0, 0, 0).toDateTime(), new LocalDateTime(getEndYear(), 1, 1,
+		0, 0, 0).toDateTime());
+    }
+
+    @Override
+    public void setBeginYear(Integer beginYear) {
+	if (getEndYear() != null && beginYear != null && beginYear > getEndYear()) {
+	    throw new DomainException("error.professionalcareer.endYearBeforeStart");
+	}
+	super.setBeginYear(beginYear);
+    }
+
+    @Override
+    public void setEndYear(Integer endYear) {
+	if (getBeginYear() != null && endYear != null && getBeginYear() > endYear) {
+	    throw new DomainException("error.professionalcareer.endYearBeforeStart");
+	}
+	super.setEndYear(endYear);
     }
 
     public static List<Career> readAllByTeacherIdAndCareerType(Teacher teacher, CareerType careerType) {

@@ -33,14 +33,17 @@ import net.sourceforge.fenixedu.domain.research.result.ResultTeacher;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
+import net.sourceforge.fenixedu.domain.teacher.Career;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.teacher.Orientation;
+import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
 import net.sourceforge.fenixedu.domain.teacher.PublicationsNumber;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 import net.sourceforge.fenixedu.domain.teacher.TeacherProfessionalSituation;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
+import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.util.OrientationType;
 import net.sourceforge.fenixedu.util.PeriodState;
@@ -156,7 +159,7 @@ public class Teacher extends Teacher_Base {
 	}
 	return null;
     }
-    
+
     public void updateResponsabilitiesFor(Integer executionYearId, List<Integer> executionCourses)
 	    throws MaxResponsibleForExceed, InvalidCategory {
 
@@ -1302,36 +1305,52 @@ public class Teacher extends Teacher_Base {
 	return result;
     }
 
-    
     public int getProfessorshipsCount() {
 	return getPerson().getProfessorshipsCount();
     }
-    
+
     public boolean hasAnyProfessorships() {
 	return getPerson().hasAnyProfessorships();
     }
-    
-    public boolean hasProfessorship(Professorship professorship){
+
+    public boolean hasProfessorship(Professorship professorship) {
 	return getPerson().hasProfessorships(professorship);
     }
-    
-    public Set<Professorship> getProfessorshipsSet(){
-	return  getPerson().getProfessorshipsSet();
+
+    public Set<Professorship> getProfessorshipsSet() {
+	return getPerson().getProfessorshipsSet();
     }
-    
-    public void addProfessorships(Professorship professorship){
+
+    public void addProfessorships(Professorship professorship) {
 	getPerson().addProfessorships(professorship);
     }
-    
-    public void removeProfessorships(Professorship professorship){
+
+    public void removeProfessorships(Professorship professorship) {
 	getPerson().removeProfessorships(professorship);
     }
-    
-    public List<Professorship> getProfessorships(){
+
+    public List<Professorship> getProfessorships() {
 	return getPerson().getProfessorships();
     }
 
-    public Iterator<Professorship> getProfessorshipsIterator(){
+    public Iterator<Professorship> getProfessorshipsIterator() {
 	return getPerson().getProfessorshipsIterator();
+    }
+
+    public Set<Career> getCareersByType(CareerType type) {
+	return getCareersByTypeAndInterval(type, null);
+    }
+
+    public Set<Career> getCareersByTypeAndInterval(CareerType type, Interval intersecting) {
+	Set<Career> careers = new HashSet<Career>();
+	for (Career career : getAssociatedCareersSet()) {
+	    if (type == null || (type.equals(CareerType.PROFESSIONAL) && career instanceof ProfessionalCareer)
+		    || (type.equals(CareerType.TEACHING) && career instanceof TeachingCareer)) {
+		if (intersecting == null || intersecting.overlaps(career.getInterval())) {
+		    careers.add(career);
+		}
+	    }
+	}
+	return careers;
     }
 }

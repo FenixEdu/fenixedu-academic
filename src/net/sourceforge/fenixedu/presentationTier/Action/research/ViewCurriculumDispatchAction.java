@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ExecutionYearIntervalBean;
+import net.sourceforge.fenixedu.domain.CareerType;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
@@ -28,6 +29,7 @@ import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResul
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
+import net.sourceforge.fenixedu.domain.teacher.Career;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -35,12 +37,14 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.joda.time.Interval;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class ViewCurriculumDispatchAction extends FenixAction {
 
+    @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 
@@ -91,6 +95,7 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 	Set<ResearchResultPublication> bookParts = new HashSet<ResearchResultPublication>();
 	Set<ResearchResultPublication> resultPublications = new HashSet<ResearchResultPublication>();
 	Set<Prize> prizes = new HashSet<Prize>();
+	Set<Career> career = new HashSet<Career>();
 
 	if (firstExecutionYear == null) {
 	    firstExecutionYear = ExecutionYear.readFirstExecutionYear();
@@ -128,9 +133,12 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 	    unstructured.addAll(person.getUnstructureds(iteratorYear));
 	    bookParts.addAll(person.getInbooks(iteratorYear));
 	    prizes.addAll(person.getPrizes(iteratorYear));
-
 	    iteratorYear = iteratorYear.getNextExecutionYear();
 	}
+
+	career.addAll(teacher.getCareersByTypeAndInterval(CareerType.PROFESSIONAL, new Interval(firstExecutionYear
+		.getBeginDateYearMonthDay().toDateTimeAtMidnight(), finaltExecutionYear.getEndDateYearMonthDay()
+		.toDateTimeAtMidnight())));
 
 	List<PersonFunction> functionsList = new ArrayList<PersonFunction>(functions);
 	Collections.sort(functionsList, new ReverseComparator(new BeanComparator("beginDateInDateType")));
@@ -175,5 +183,6 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 		ScopeType.INTERNATIONAL, firstExecutionYear, finaltExecutionYear)));
 	request.setAttribute("participations", person.getParticipations());
 	request.setAttribute("prizes", prizes);
+	request.setAttribute("career", career);
     }
 }
