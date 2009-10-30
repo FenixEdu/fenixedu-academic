@@ -1248,8 +1248,7 @@
 	<slot name="refereeEmail" />
 </schema>
 
-<schema name="AcademicAdminOffice.PhdIndividualProgramProcess.view.registration" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
-
+<schema name="AcademicAdminOffice.PhdIndividualProgramProcess.view.student.information" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
 	<slot name="student.number" read-only="true" layout="conditional-link">
 		<property name="linkFormat" value="/academicAdminOffice/student.do?method=visualizeRegistration&amp;registrationID=${registration.idInternal}"/>
 		<property name="contextRelative" value="true"/>
@@ -1260,8 +1259,17 @@
 	<slot name="person.istUsername" />
 </schema>
 
-
-
+<schema name="AcademicAdminOffice.PhdIndividualProgramProcess.view.registration.conclusion.bean" type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean" bundle="PHD_RESOURCES">
+	<slot name="registration.activeStateType" key="label.currentState">
+		<property name="classes" value="bold" />
+	</slot>
+	<slot name="registration.startDate" layout="null-as-label" key="label.startDate" >
+        <property name="label" value="-"/>	
+	</slot>
+	<slot name="conclusionDate" />
+	<slot name="registration.degreeNameWithDescription" key="label.degree" />
+	<slot name="finalAverage" />
+</schema>
 
 <schema name="PublicPresentationSeminarProcess.view" type="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess" bundle="PHD_RESOURCES">
 	<slot name="activeState">

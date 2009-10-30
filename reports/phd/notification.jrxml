@@ -34,6 +34,7 @@
 	<parameter name="insuranceFee" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="registrationFee" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="date" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="notificationNumber" isForPrompting="false" class="java.lang.String"/>
 
 
 		<group  name="endLine" >
@@ -79,9 +80,9 @@
 					<textElement textAlignment="Left">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["DATA: "+ $P{date} +
-
-"\n\nNº cand " +  $P{processNumber}+
+				<textFieldExpression   class="java.lang.String"><![CDATA["Ofício nº " + $P{notificationNumber} +
+"\n\nData: "+ $P{date} + 
+"\n\nCandidatura nº " +  $P{processNumber}+
 
 "\n\nExmo(a) Senhor(a)"+
 "\n" + $P{name} +

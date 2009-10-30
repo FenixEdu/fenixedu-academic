@@ -65,7 +65,7 @@ public class PhdNotificationDocument extends FenixReport {
 	addParameter("registrationFee", getRegistrationFee(individualProgramProcess, whenRatified));
 
 	addParameter("date", new LocalDate().toString(DATE_FORMAT));
-
+	addParameter("notificationNumber", getNotification().getNotificationNumber());
     }
 
     private String getRegistrationFee(final PhdIndividualProgramProcess individualProgramProcess, final LocalDate whenRatified) {

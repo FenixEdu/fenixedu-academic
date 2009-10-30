@@ -11,11 +11,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.fileManager.StorePersona
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean.UnableToProcessTheImage;
+import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.JobBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.QualificationBean;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
@@ -131,6 +133,13 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 
     public ActionForward viewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
+
+	final PhdIndividualProgramProcess process = getProcess(request);
+	if (process != null) {
+	    request.setAttribute("registrationConclusionBean", new RegistrationConclusionBean(process.getRegistration(),
+		    CycleType.THIRD_CYCLE));
+	}
+
 	return mapping.findForward("viewProcess");
     }
 

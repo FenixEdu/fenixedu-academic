@@ -8,6 +8,7 @@ import java.util.HashSet;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
@@ -29,11 +30,15 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
 
     private Boolean hasAccessToRegistrationConclusionProcess = Boolean.TRUE;
 
-    public RegistrationConclusionBean(Registration registration) {
-	this(registration, null);
+    public RegistrationConclusionBean(final Registration registration) {
+	setRegistration(registration);
     }
 
-    public RegistrationConclusionBean(Registration registration, CycleCurriculumGroup cycleCurriculumGroup) {
+    public RegistrationConclusionBean(final Registration registration, final CycleType cycleType) {
+	this(registration, registration.getLastStudentCurricularPlan().getCycle(cycleType));
+    }
+
+    public RegistrationConclusionBean(final Registration registration, final CycleCurriculumGroup cycleCurriculumGroup) {
 	setRegistration(registration);
 	setCycleCurriculumGroup(cycleCurriculumGroup);
     }

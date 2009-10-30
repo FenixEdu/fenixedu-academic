@@ -129,10 +129,10 @@
   </tr>
 </table>
 
-
 <logic:equal name="process" property="activeState" value="WORK_DEVELOPMENT">
+	<br/>
 	<strong><bean:message  key="label.phd.student.information" bundle="PHD_RESOURCES"/></strong>
-	<fr:view schema="AcademicAdminOffice.PhdIndividualProgramProcess.view.registration" name="process">
+	<fr:view schema="AcademicAdminOffice.PhdIndividualProgramProcess.view.student.information" name="process">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight mtop10" />
 		</fr:layout>
@@ -140,8 +140,8 @@
 </logic:equal>
 
 <%--CAT --%>
-<br/>
 <logic:notEmpty name="process" property="seminarProcess">
+	<br/>
 	<strong><bean:message  key="label.phd.publicPresentationSeminarProcess" bundle="PHD_RESOURCES"/></strong>
 	<fr:view schema="PublicPresentationSeminarProcess.view" name="process" property="seminarProcess">
 		<fr:layout name="tabular">
@@ -200,9 +200,25 @@
 	</ul>
 </logic:notEmpty>
 
+
+<%-- School part --%>
+
+<logic:present name="registrationConclusionBean">
+	<br/>
+	<strong><bean:message  key="label.phd.school.part" bundle="PHD_RESOURCES"/></strong>
+	<fr:view schema="AcademicAdminOffice.PhdIndividualProgramProcess.view.registration.conclusion.bean" name="registrationConclusionBean">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle2 thlight mtop10" />
+		</fr:layout>
+	</fr:view>
+</logic:present>
+
+
 <%--Candidacy --%>
-<br/>
+
 <strong><bean:message  key="label.phd.candidacyProcess" bundle="PHD_RESOURCES"/></strong>
+<br/>
+
 <table>
   <tr>
     <td>
