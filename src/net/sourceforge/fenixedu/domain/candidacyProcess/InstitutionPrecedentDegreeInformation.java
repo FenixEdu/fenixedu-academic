@@ -53,8 +53,10 @@ public class InstitutionPrecedentDegreeInformation extends InstitutionPrecedentD
 
     @Override
     public LocalDate getConclusionDate() {
-	final BasePartial date = isBolonha() ? getStudentCurricularPlan().getConclusionDate(getCycleType()) : getRegistration()
-		.getConclusionDate();
+	final BasePartial date = isBolonha() ? (getStudentCurricularPlan().getCycle(getCycleType()) != null ? getStudentCurricularPlan()
+		.getConclusionDate(getCycleType())
+		: null)
+		: getRegistration().getConclusionDate();
 	return date != null ? new LocalDate(date) : null;
     }
 
@@ -66,7 +68,9 @@ public class InstitutionPrecedentDegreeInformation extends InstitutionPrecedentD
 
     @Override
     public String getConclusionGrade() {
-	final Integer result = isBolonha() ? getStudentCurricularPlan().getCycle(getCycleType()).getFinalAverage()
+	final Integer result = isBolonha() ? (getStudentCurricularPlan().getCycle(getCycleType()) != null ? getStudentCurricularPlan()
+		.getCycle(getCycleType()).getFinalAverage()
+		: null)
 		: getRegistration().getFinalAverage();
 	return (result == null) ? null : String.valueOf(result);
     }
