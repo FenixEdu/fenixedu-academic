@@ -14,6 +14,7 @@
 th { width: 150px; }
 </style>
 
+<div class="infoop2">Consulte o Centro de Inscrição da sua instituição de ensino para mais informações.</div>
 <fr:form action="/internship.do?method=submitCandidacy">
 
     <p class="mtop2 mbottom025"><strong>

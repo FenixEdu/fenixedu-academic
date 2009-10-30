@@ -240,7 +240,7 @@
 		<put name="hideLanguage" value="true" />
 	</definition>
     -->
-    <definition name="definition.public.internship" page="/layout/secondaryIstLayout_form.jsp">
+    <definition name="definition.public.internship" page="/layout/iaesteLayout.jsp">
     </definition>
     
     <definition name="internship.candidacy" extends="definition.public.internship">

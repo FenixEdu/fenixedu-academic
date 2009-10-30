@@ -43,13 +43,14 @@ public class InternshipCandidacyDA extends FenixDispatchAction {
     private static final ResourceBundle ENUMERATION_RESOURCES = ResourceBundle.getBundle("resources/EnumerationResources",
 	    new Locale("pt"));
 
-    private static final String[] HEADERS = new String[] { "Nº Candidatura", "Universidade", "Nº Aluno", "Ano", "Curso", "Nome",
-	    "Sexo", "Data Nascimento", "Naturalidade", "Nacionalidade", "B.I.", "Arquivo", "Emissão", "Validade", "Passaporte",
-	    "Arquivo", "Emissão", "Validade", "Morada", "Cod. Postal", "Localidade", "Telefone", "Telemóvel", "e-mail",
-	    "1º Preferência", "2º Preferência", "3º Preferência", "Inglês", "Francês", "Espanhol", "Alemão", "Candidatura Prévia" };
+    private static final String[] HEADERS = new String[] { "Nº Candidatura", "Universidade", "Nº Aluno", "Ano", "Curso", "Ramo",
+	    "Nome", "Sexo", "Data Nascimento", "Naturalidade", "Nacionalidade", "B.I.", "Arquivo", "Emissão", "Validade",
+	    "Passaporte", "Arquivo", "Emissão", "Validade", "Morada", "Cod. Postal", "Localidade", "Telefone", "Telemóvel",
+	    "e-mail", "1º Preferência", "2º Preferência", "3º Preferência", "Inglês", "Francês", "Espanhol", "Alemão",
+	    "Candidatura Prévia" };
 
-    private static final String[] HEADERS_NO_UNIV = new String[] { "Nº Candidatura", "Nº Aluno", "Ano", "Curso", "Nome", "Sexo",
-	    "Data Nascimento", "Naturalidade", "Nacionalidade", "B.I.", "Arquivo", "Emissão", "Validade", "Passaporte",
+    private static final String[] HEADERS_NO_UNIV = new String[] { "Nº Candidatura", "Nº Aluno", "Ano", "Curso", "Ramo", "Nome",
+	    "Sexo", "Data Nascimento", "Naturalidade", "Nacionalidade", "B.I.", "Arquivo", "Emissão", "Validade", "Passaporte",
 	    "Arquivo", "Emissão", "Validade", "Morada", "Cod. Postal", "Localidade", "Telefone", "Telemóvel", "e-mail",
 	    "1º Preferência", "2º Preferência", "3º Preferência", "Inglês", "Francês", "Espanhol", "Alemão", "Candidatura Prévia" };
 
@@ -159,6 +160,7 @@ public class InternshipCandidacyDA extends FenixDispatchAction {
 	    row.setCell(bean.getStudentNumber());
 	    row.setCell(bean.getStudentYear().ordinal() + 1);
 	    row.setCell(bean.getDegree());
+	    row.setCell(bean.getBranch());
 	    row.setCell(bean.getName());
 	    row.setCell(bean.getGender().toLocalizedString());
 	    row.setCell(bean.getBirthday().toString("dd-MM-yyyy"));

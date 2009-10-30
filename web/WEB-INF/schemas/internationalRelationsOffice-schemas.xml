@@ -55,37 +55,32 @@
 	<slot name="studentNumber" key="label.internship.InternshipCandidacy.student.number" />
 	<slot name="studentYear" key="label.internship.InternshipCandidacy.student.year" />
 	<slot name="degree" key="label.internship.InternshipCandidacy.student.degree" />
+    <slot name="branch" key="label.internship.InternshipCandidacy.student.branch" />
 </schema>
 
-<schema name="internship.candidacy.studentinfo"
-	type="net.sourceforge.fenixedu.dataTransferObject.internship.InternshipCandidacyBean"
+<schema name="internship.candidacy.studentinfo" type="net.sourceforge.fenixedu.dataTransferObject.internship.InternshipCandidacyBean"
 	bundle="DOMAIN_RESOURCES">
-	<slot name="university" layout="menu-select"
-		key="label.internship.InternshipCandidacy.student.university"
-		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass"
-			value="net.sourceforge.fenixedu.dataTransferObject.internship.InternshipCandidacyBean$UniversitiesProvider" />
+	<slot name="university" layout="menu-select" key="label.internship.InternshipCandidacy.student.university" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.dataTransferObject.internship.InternshipCandidacyBean$UniversitiesProvider" />
 		<property name="format" value="${fullPresentationName}" />
 		<property name="sortBy" value="fullPresentationName" />
 	</slot>
-	<slot name="studentNumber" key="label.internship.InternshipCandidacy.student.number"
-		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+	<slot name="studentNumber" key="label.internship.InternshipCandidacy.student.number" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="10" />
 	</slot>
-	<slot name="studentYear" layout="input-with-comment"
-		key="label.internship.InternshipCandidacy.student.year">
+	<slot name="studentYear" layout="input-with-comment" key="label.internship.InternshipCandidacy.student.year">
 		<property name="subLayout" value="radio" />
 		<property name="subProperty(classes)" value="liinline" />
 		<property name="bundle" value="INTERNATIONAL_RELATIONS_OFFICE" />
-		<property name="comment"
-			value="label.internationalrelations.internship.candidacy.student.number.help" />
+		<property name="comment" value="label.internationalrelations.internship.candidacy.student.number.help" />
 		<property name="commentLocation" value="right" />
 		<property name="commentClasses" value="smalltxt color555" />
-		<validator
-			class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	</slot>
-	<slot name="degree" key="label.internship.InternshipCandidacy.student.degree"
-		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+	<slot name="degree" key="label.internship.InternshipCandidacy.student.degree" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="60" />
+	</slot>
+	<slot name="branch" key="label.internship.InternshipCandidacy.student.branch">
 		<property name="size" value="60" />
 	</slot>
 </schema>

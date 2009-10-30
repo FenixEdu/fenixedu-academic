@@ -35,18 +35,14 @@
 	IAESTE Portugal e que, nessa altura, caso um dos estágios me interesse, <strong>devo fazer
 	a minha inscrição.</strong>
 </li>
-<li>
-    Sou obrigado a participar, ou fazer-me representar na reunião de atribuição de estágios a
-	realizar em Março.
-</li>
-<li>
-    Caso não obtenha um estágio nessa altura, devo entrar novamente em contacto com a IAESTE <strong>a
-	partir do mês de ABRIL</strong>, para continuar a ser considerado como candidato para novos
-	estágios que apareçam daí em diante.
-</li>
+	<li>Caso não obtenha um estágio nesta fase de candidatura, devo
+	entrar novamente em contacto com o centro de inscrição IAESTE do meu
+	estabelecimento de ensino <strong>a partir do mês de ABRIL</strong>,
+	para continuar a ser considerado como candidato para novos estágios que
+	apareçam daí em diante.</li>
 </ul>
 
-<p>Faça "Submeter" para concluir o processo de candidatura:</p>
+<p>Carregue em "Submeter Candidatura" para concluir o processo de candidatura:</p>
 
 <logic:present name="candidacy">
 	<fr:form id="form0" action="/internship.do">
@@ -55,8 +51,6 @@
 		<html:submit onclick="this.form.method.value='backToCandidacy';">
 			<bean:message bundle="COMMON_RESOURCES" key="button.back" />
 		</html:submit>
-		<html:submit styleId="submitBtn">
-			<bean:message bundle="COMMON_RESOURCES" key="button.submit" />
-		</html:submit>
+		<html:submit styleId="submitBtn">Submeter Candidatura</html:submit>
 	</fr:form>
 </logic:present>

@@ -56,6 +56,7 @@ public class InternshipCandidacy extends InternshipCandidacy_Base {
 	candidacy.setUniversity(bean.getUniversity());
 	candidacy.setStudentYear(bean.getStudentYear().ordinal() + 1);
 	candidacy.setDegree(bean.getDegree());
+	candidacy.setBranch(bean.getBranch());
 	candidacy.setName(bean.getName());
 	candidacy.setGender(bean.getGender());
 	candidacy.setBirthday(bean.getBirthday());

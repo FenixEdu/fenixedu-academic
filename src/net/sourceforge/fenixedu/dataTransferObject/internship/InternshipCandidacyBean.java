@@ -65,6 +65,7 @@ public class InternshipCandidacyBean implements Serializable, Comparable<Interns
     private String studentNumber;
     private StudentYear studentYear;
     private String degree;
+    private String branch;
     private String name;
     private Gender gender;
 
@@ -117,6 +118,7 @@ public class InternshipCandidacyBean implements Serializable, Comparable<Interns
 	    setStudentYear(StudentYear.SECOND);
 	}
 	setDegree(candidacy.getDegree());
+	setBranch(candidacy.getBranch());
 	setName(candidacy.getName());
 	setGender(candidacy.getGender());
 	setBirthday(candidacy.getBirthday());
@@ -195,6 +197,14 @@ public class InternshipCandidacyBean implements Serializable, Comparable<Interns
 
     public void setDegree(String degree) {
 	this.degree = degree;
+    }
+
+    public String getBranch() {
+	return branch;
+    }
+
+    public void setBranch(String branch) {
+	this.branch = branch;
     }
 
     public String getName() {

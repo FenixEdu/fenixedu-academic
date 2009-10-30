@@ -16,6 +16,6 @@
 
 	<p>a sua candidatura foi submetida com sucesso. Foi-lhe atribuído o código de inscrição nº <strong
 		class="highlight1"><bean:write name="candidacyNumber" /></strong>, que deverá utilizar em
-	contactos futuros. Esta mensagem foi-lhe também enviada para o email que preencheu na candidatura.</p>
+	contactos futuros. Uma cópia desta mensagem foi-lhe enviada para o email submetido na canditarura.</p>
 
 </logic:present>

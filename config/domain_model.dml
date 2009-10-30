@@ -6522,6 +6522,7 @@ class internship.InternshipCandidacy extends DomainObject {
     String studentNumber;
     Integer studentYear;
     String degree;
+    String branch;
     String name;
     Gender gender;
 
