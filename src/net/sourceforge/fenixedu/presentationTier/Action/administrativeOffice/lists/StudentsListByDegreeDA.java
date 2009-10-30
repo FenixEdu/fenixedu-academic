@@ -67,7 +67,7 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
     }
 
     private SearchStudentsByDegreeParametersBean getOrCreateSearchParametersBean() {
-	SearchStudentsByDegreeParametersBean bean = (SearchStudentsByDegreeParametersBean) getRenderedObject("searchParametersBean");
+	SearchStudentsByDegreeParametersBean bean = (SearchStudentsByDegreeParametersBean) getRenderedObject("chooseDegree");
 	return (bean != null) ? bean : new SearchStudentsByDegreeParametersBean();
     }
 
