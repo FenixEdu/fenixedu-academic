@@ -1,12 +1,10 @@
 package net.sourceforge.fenixedu.domain.util.email;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -164,22 +162,6 @@ public class Message extends Message_Base {
 		getBody());
 	removeRootDomainObjectFromPendingRelation();
 	setSent(new DateTime());
-	deleteOldMessages(sender);
-
     }
 
-    private void deleteOldMessages(final Sender sender) {
-	ArrayList<Message> sort = new ArrayList<Message>();
-	sort.addAll(sender.getMessages());
-	Collections.sort(sort, Message.COMPARATOR_BY_CREATED_DATE_OLDER_LAST);
-	int sentCounter = 0;
-	for (Message message : sort) {
-	    if (message.getSent() != null) {
-		++sentCounter;
-	    }
-	    if ((sentCounter > Message.NUMBER_OF_SENT_EMAILS_TO_STAY) && (message.getSent() != null)) {
-		message.delete();
-	    }
-	}
-    }
 }

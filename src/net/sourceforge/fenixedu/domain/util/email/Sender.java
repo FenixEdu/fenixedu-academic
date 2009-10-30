@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
@@ -99,4 +100,19 @@ public class Sender extends Sender_Base {
     public String getFromName(Person person) {
 	return getFromName();
     }
+
+    public void deleteOldMessages() {
+	final SortedSet<Message> messages = new TreeSet<Message>(Message.COMPARATOR_BY_CREATED_DATE_OLDER_LAST);
+	messages.addAll(getMessagesSet());
+	int sentCounter = 0;
+	for (final Message message : messages) {
+	    if (message.getSent() != null) {
+		++sentCounter;
+		if (sentCounter > Message.NUMBER_OF_SENT_EMAILS_TO_STAY) {
+		    message.delete();
+		}
+	    }
+	}
+    }
+
 }
