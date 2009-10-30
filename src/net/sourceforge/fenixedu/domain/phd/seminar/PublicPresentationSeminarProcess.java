@@ -103,7 +103,11 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 
 	    final PublicPresentationSeminarProcessBean bean = (PublicPresentationSeminarProcessBean) object;
 	    bean.getDocument().setType(PhdIndividualProgramDocumentType.PUBLIC_PRESENTATION_SEMINAR_COMISSION);
-	    process.addDocument(bean.getDocument(), userView.getPerson());
+
+	    if (bean.getDocument().hasAnyInformation()) {
+		process.addDocument(bean.getDocument(), userView.getPerson());
+	    }
+
 	    process.createState(PublicPresentationSeminarProcessStateType.COMMISSION_VALIDATED, userView.getPerson(), bean
 		    .getRemarks());
 
@@ -114,6 +118,37 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 	    AlertService.alertStudent(process.getIndividualProgramProcess(),
 		    "message.phd.alert.public.presentation.seminar.comission.validated.subject",
 		    "message.phd.alert.public.presentation.seminar.comission.validated.body");
+
+	    return process;
+	}
+
+    }
+
+    static public class RejectComission extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PublicPresentationSeminarProcess process, IUserView userView) {
+
+	    if (process.getActiveState() != PublicPresentationSeminarProcessStateType.COMMISSION_WAITING_FOR_VALIDATION) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView))
+		throw new PreConditionNotValidException();
+	}
+
+	@Override
+	protected PublicPresentationSeminarProcess executeActivity(PublicPresentationSeminarProcess process, IUserView userView,
+		Object object) {
+
+	    final PublicPresentationSeminarProcessBean bean = (PublicPresentationSeminarProcessBean) object;
+
+	    process.createState(PublicPresentationSeminarProcessStateType.WAITING_FOR_COMISSION_CONSTITUTION, userView
+		    .getPerson(), bean.getRemarks());
+
+	    AlertService.alertCoordinator(process.getIndividualProgramProcess(),
+		    "message.phd.alert.public.presentation.seminar.comission.rejected.subject",
+		    "message.phd.alert.public.presentation.seminar.comission.rejected.body");
 
 	    return process;
 	}
@@ -208,7 +243,11 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 
 	    final PublicPresentationSeminarProcessBean bean = (PublicPresentationSeminarProcessBean) object;
 	    bean.getDocument().setType(PhdIndividualProgramDocumentType.PUBLIC_PRESENTATION_SEMINAR_REPORT);
-	    process.addDocument(bean.getDocument(), userView.getPerson());
+
+	    if (bean.getDocument().hasAnyInformation()) {
+		process.addDocument(bean.getDocument(), userView.getPerson());
+	    }
+
 	    process.createState(PublicPresentationSeminarProcessStateType.REPORT_VALIDATED, userView.getPerson(), bean
 		    .getRemarks());
 
@@ -223,6 +262,35 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 	    AlertService.alertStudent(process.getIndividualProgramProcess(),
 		    "message.phd.alert.public.presentation.seminar.report.validated.subject",
 		    "message.phd.alert.public.presentation.seminar.report.validated.body");
+
+	    return process;
+	}
+    }
+
+    static public class RejectReport extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PublicPresentationSeminarProcess process, IUserView userView) {
+	    if (process.getActiveState() != PublicPresentationSeminarProcessStateType.REPORT_WAITING_FOR_VALIDATION) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView))
+		throw new PreConditionNotValidException();
+	}
+
+	@Override
+	protected PublicPresentationSeminarProcess executeActivity(PublicPresentationSeminarProcess process, IUserView userView,
+		Object object) {
+
+	    final PublicPresentationSeminarProcessBean bean = (PublicPresentationSeminarProcessBean) object;
+
+	    process.createState(PublicPresentationSeminarProcessStateType.PUBLIC_PRESENTATION_DATE_SCHEDULED, userView
+		    .getPerson(), bean.getRemarks());
+
+	    AlertService.alertGuiders(process.getIndividualProgramProcess(),
+		    "message.phd.alert.public.presentation.seminar.report.rejected.subject",
+		    "message.phd.alert.public.presentation.seminar.report.rejected.body");
 
 	    return process;
 	}
@@ -299,9 +367,11 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
     static {
 	activities.add(new SubmitComission());
 	activities.add(new ValidateComission());
+	activities.add(new RejectComission());
 	activities.add(new SchedulePresentationDate());
 	activities.add(new UploadReport());
 	activities.add(new ValidateReport());
+	activities.add(new RejectReport());
 	activities.add(new DownloadReportDocument());
 	activities.add(new DownloadComissionDocument());
     }

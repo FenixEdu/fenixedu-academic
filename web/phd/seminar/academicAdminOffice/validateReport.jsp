@@ -72,8 +72,8 @@
 		</fr:layout>
 	</fr:edit>
 	
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='validateReport';"><bean:message bundle="PHD_RESOURCES" key="label.submit"/></html:submit>
-	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='viewIndividualProgramProcess';"><bean:message bundle="PHD_RESOURCES" key="label.cancel"/></html:cancel>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='validateReport';"><bean:message bundle="PHD_RESOURCES" key="label.validate"/></html:submit>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='rejectReport';"><bean:message bundle="PHD_RESOURCES" key="label.reject"/></html:submit>
 
 </fr:form>
 

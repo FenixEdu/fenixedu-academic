@@ -9,6 +9,8 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean;
+import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess.RejectComission;
+import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess.RejectReport;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess.SchedulePresentationDate;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess.SubmitComission;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess.UploadReport;
@@ -110,6 +112,21 @@ abstract public class CommonPublicPresentationSeminarDA extends PhdProcessDA {
 	    ExecuteProcessActivity.run(getProcess(request), ValidateComission.class, getRenderedObject("validateComissionBean"));
 
 	    addSuccessMessage(request, "message.comission.validated.with.success");
+
+	} catch (DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	    return mapping.findForward("validateComission");
+	}
+
+	return viewIndividualProgramProcess(request, getProcess(request));
+
+    }
+
+    public ActionForward rejectComission(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	try {
+	    ExecuteProcessActivity.run(getProcess(request), RejectComission.class, getRenderedObject("validateComissionBean"));
 
 	} catch (DomainException e) {
 	    addErrorMessage(request, e.getKey(), e.getArgs());
@@ -228,6 +245,21 @@ abstract public class CommonPublicPresentationSeminarDA extends PhdProcessDA {
 	    ExecuteProcessActivity.run(getProcess(request), ValidateReport.class, getRenderedObject("validateReportBean"));
 
 	    addSuccessMessage(request, "message.public.presentation.seminar.report.validated.with.success");
+
+	} catch (DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	    return mapping.findForward("validateReport");
+	}
+
+	return viewIndividualProgramProcess(request, getProcess(request));
+
+    }
+
+    public ActionForward rejectReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	try {
+	    ExecuteProcessActivity.run(getProcess(request), RejectReport.class, getRenderedObject("validateReportBean"));
 
 	} catch (DomainException e) {
 	    addErrorMessage(request, e.getKey(), e.getArgs());
