@@ -79,7 +79,8 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 		    && assiduousnessClosedMonth.getClosedMonth().getClosedYearMonth().get(DateTimeFieldType.monthOfYear()) < getClosedMonth()
 			    .getClosedYearMonth().get(DateTimeFieldType.monthOfYear())) {
 		for (ClosedMonthJustification closedMonthJustification : assiduousnessClosedMonth.getClosedMonthJustifications()) {
-		    if (closedMonthJustification.getJustificationMotive().getActive()) {
+		    if (closedMonthJustification.getJustificationMotive().getActive()
+			    && closedMonthJustification.getJustificationMotive().getAccumulate()) {
 			String code = closedMonthJustification.getJustificationMotive().getGiafCode(
 				assiduousnessClosedMonth.getAssiduousnessStatusHistory());
 			Duration duration = pastJustificationsDurations.get(code);
@@ -200,19 +201,24 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	return nightWorkByWorkScheduleType;
     }
 
-    public List<AssiduousnessClosedDay> getAllAssiduousnessClosedDays() {
+    public List<AssiduousnessClosedDay> getAllAssiduousnessClosedDaysWithoutCorrections() {
 	return super.getAssiduousnessClosedDays();
+    }
+
+    public Set<AssiduousnessClosedDay> getAllAssiduousnessClosedDays() {
+	Set<AssiduousnessClosedDay> all = new HashSet<AssiduousnessClosedDay>(getAllAssiduousnessClosedDaysWithoutCorrections());
+	if (getCorrectedOnClosedMonth() != null) {
+	    for (AssiduousnessClosedMonth assiduousnessClosedMonth : getClosedMonth().getAllAssiduousnessClosedMonths(
+		    getAssiduousnessStatusHistory())) {
+		all.addAll(assiduousnessClosedMonth.getAllAssiduousnessClosedDaysWithoutCorrections());
+	    }
+	}
+	return all;
     }
 
     @Override
     public List<AssiduousnessClosedDay> getAssiduousnessClosedDays() {
-	Set<AssiduousnessClosedDay> all = new HashSet<AssiduousnessClosedDay>(getAllAssiduousnessClosedDays());
-	if (getCorrectedOnClosedMonth() != null) {
-	    for (AssiduousnessClosedMonth assiduousnessClosedMonth : getClosedMonth().getAllAssiduousnessClosedMonths(
-		    getAssiduousnessStatusHistory())) {
-		all.addAll(assiduousnessClosedMonth.getAllAssiduousnessClosedDays());
-	    }
-	}
+	Set<AssiduousnessClosedDay> all = getAllAssiduousnessClosedDays();
 	Map<LocalDate, AssiduousnessClosedDay> assiduousnessClosedDays = new HashMap<LocalDate, AssiduousnessClosedDay>();
 	for (AssiduousnessClosedDay assiduousnessClosedDay : all) {
 	    AssiduousnessClosedDay assiduousnessClosedDayFromMap = assiduousnessClosedDays.get(assiduousnessClosedDay.getDay());
@@ -268,19 +274,26 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	return new ArrayList<AssiduousnessExtraWork>(assiduousnessExtraWorks.values());
     }
 
-    public List<ClosedMonthJustification> getAllClosedMonthJustifications() {
+    public Set<ClosedMonthJustification> getAllClosedMonthJustifications() {
+	Set<ClosedMonthJustification> all = new HashSet<ClosedMonthJustification>(
+		getClosedMonthJustificationsWithoutCorrections());
+	if (getCorrectedOnClosedMonth() != null) {
+	    for (AssiduousnessClosedMonth assiduousnessClosedMonth : getClosedMonth().getAllAssiduousnessClosedMonths(
+		    getAssiduousnessStatusHistory())) {
+		all.addAll(assiduousnessClosedMonth.getClosedMonthJustificationsWithoutCorrections());
+	    }
+	}
+	return all;
+    }
+
+    public List<ClosedMonthJustification> getClosedMonthJustificationsWithoutCorrections() {
 	return super.getClosedMonthJustifications();
     }
 
     @Override
     public List<ClosedMonthJustification> getClosedMonthJustifications() {
-	Set<ClosedMonthJustification> all = new HashSet<ClosedMonthJustification>(getAllClosedMonthJustifications());
-	if (getCorrectedOnClosedMonth() != null) {
-	    for (AssiduousnessClosedMonth assiduousnessClosedMonth : getClosedMonth().getAllAssiduousnessClosedMonths(
-		    getAssiduousnessStatusHistory())) {
-		all.addAll(assiduousnessClosedMonth.getAllClosedMonthJustifications());
-	    }
-	}
+	Set<ClosedMonthJustification> all = getAllClosedMonthJustifications();
+
 	Map<JustificationMotive, ClosedMonthJustification> closedMonthJustifications = new HashMap<JustificationMotive, ClosedMonthJustification>();
 	for (ClosedMonthJustification closedMonthJustification : all) {
 	    ClosedMonthJustification closedMonthJustificationFromMap = closedMonthJustifications.get(closedMonthJustification

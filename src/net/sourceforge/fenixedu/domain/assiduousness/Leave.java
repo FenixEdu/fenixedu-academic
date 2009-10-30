@@ -66,16 +66,26 @@ public class Leave extends Leave_Base {
 
     public void modify(DateTime date, Duration dateDuration, JustificationMotive justificationMotive, WorkWeek aplicableWeekDays,
 	    String notes, Employee modifiedBy) {
+	ClosedMonth closedMonth = ClosedMonth.getClosedMonthForBalance(date.toLocalDate());
 	Interval oldInterval = getTotalInterval();
-	setDate(date);
-	setJustificationMotive(justificationMotive);
-	setAplicableWeekDays(aplicableWeekDays);
-	setNotes(notes);
-	setDuration(dateDuration);
-	setLastModifiedDate(new DateTime());
-	setModifiedBy(modifiedBy);
-	setOracleSequence(0);
-	correctAssiduousnessClosedMonth(oldInterval);
+
+	if (closedMonth != null && closedMonth.getClosedForBalance()
+		&& getLastModifiedDate().isBefore(closedMonth.getClosedForBalanceDate())) {
+	    anulate(modifiedBy);
+	    Leave leave = new Leave(getAssiduousness(), date, dateDuration, justificationMotive, aplicableWeekDays, notes,
+		    new DateTime(), modifiedBy);
+	    leave.correctAssiduousnessClosedMonth(oldInterval);
+	} else {
+	    setDate(date);
+	    setJustificationMotive(justificationMotive);
+	    setAplicableWeekDays(aplicableWeekDays);
+	    setNotes(notes);
+	    setDuration(dateDuration);
+	    setLastModifiedDate(new DateTime());
+	    setModifiedBy(modifiedBy);
+	    setOracleSequence(0);
+	    correctAssiduousnessClosedMonth(oldInterval);
+	}
     }
 
     @Override

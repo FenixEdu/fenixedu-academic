@@ -308,10 +308,12 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 
 	HashMap<String, Duration> pastJustificationsDurations = assiduousnessClosedMonth.getPastJustificationsDurations();
 	for (ClosedMonthJustification closedMonthJustification : assiduousnessClosedMonth.getClosedMonthJustifications()) {
-	    int justificationDays = closedMonthJustification.getJustificationDays(pastJustificationsDurations);
-	    if (justificationDays != 0) {
-		result.append(getLeaveLine(assiduousnessClosedMonth, closedMonthJustification.getJustificationMotive(),
-			justificationDays, leavesBeans, state));
+	    if (closedMonthJustification.getJustificationMotive().getAccumulate()) {
+		int justificationDays = closedMonthJustification.getJustificationDays(pastJustificationsDurations);
+		if (justificationDays != 0) {
+		    result.append(getLeaveLine(assiduousnessClosedMonth, closedMonthJustification.getJustificationMotive(),
+			    justificationDays, leavesBeans, state));
+		}
 	    }
 	}
 

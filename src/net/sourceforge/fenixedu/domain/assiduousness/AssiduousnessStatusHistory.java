@@ -1,6 +1,9 @@
 package net.sourceforge.fenixedu.domain.assiduousness;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -115,5 +118,22 @@ public class AssiduousnessStatusHistory extends AssiduousnessStatusHistory_Base 
 	averageWorkPeriodDuration = new Duration(averageWorkPeriodDuration.getMillis()
 		/ (Months.monthsBetween(beginDate, endDate).getMonths() + 1));
 	return averageWorkPeriodDuration;
+    }
+
+    @Override
+    public List<AssiduousnessClosedMonth> getAssiduousnessClosedMonths() {
+	Map<ClosedMonth, AssiduousnessClosedMonth> assiduousnessClosedMonths = new HashMap<ClosedMonth, AssiduousnessClosedMonth>();
+	for (AssiduousnessClosedMonth assiduousnessClosedMonth : super.getAssiduousnessClosedMonths()) {
+	    AssiduousnessClosedMonth assiduousnessClosedMonthFromMap = assiduousnessClosedMonths.get(assiduousnessClosedMonth
+		    .getClosedMonth());
+	    if (assiduousnessClosedMonthFromMap == null
+		    || (assiduousnessClosedMonth.getIsCorrection() && (!assiduousnessClosedMonthFromMap.getIsCorrection()))
+		    || (assiduousnessClosedMonth.getIsCorrection() && assiduousnessClosedMonthFromMap.getIsCorrection() && assiduousnessClosedMonth
+			    .getCorrectedOnClosedMonth().getClosedYearMonth().isAfter(
+				    assiduousnessClosedMonthFromMap.getCorrectedOnClosedMonth().getClosedYearMonth()))) {
+		assiduousnessClosedMonths.put(assiduousnessClosedMonth.getClosedMonth(), assiduousnessClosedMonth);
+	    }
+	}
+	return new ArrayList<AssiduousnessClosedMonth>(assiduousnessClosedMonths.values());
     }
 }

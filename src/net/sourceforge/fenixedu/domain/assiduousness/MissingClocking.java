@@ -41,11 +41,19 @@ public class MissingClocking extends MissingClocking_Base {
     }
 
     public void modify(DateTime date, JustificationMotive justificationMotive, Employee modifiedBy) {
-	setDate(date);
-	setJustificationMotive(justificationMotive);
-	setLastModifiedDate(new DateTime());
-	setModifiedBy(modifiedBy);
-	correctAssiduousnessClosedMonth();
+	ClosedMonth closedMonth = ClosedMonth.getClosedMonthForBalance(date.toLocalDate());
+	if (closedMonth != null && closedMonth.getClosedForBalance()
+		&& getLastModifiedDate().isBefore(closedMonth.getClosedForBalanceDate())) {
+	    anulate(modifiedBy);
+	    MissingClocking missingClocking = new MissingClocking(getAssiduousness(), date, justificationMotive, modifiedBy);
+	    missingClocking.correctAssiduousnessClosedMonth();
+	} else {
+	    setDate(date);
+	    setJustificationMotive(justificationMotive);
+	    setLastModifiedDate(new DateTime());
+	    setModifiedBy(modifiedBy);
+	    correctAssiduousnessClosedMonth();
+	}
     }
 
     @Override

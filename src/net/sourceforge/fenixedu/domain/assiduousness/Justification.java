@@ -72,6 +72,7 @@ public class Justification extends Justification_Base {
 	} else {
 	    new Anulation(this, modifiedBy);
 	}
+	setLastModifiedDate(new DateTime());
     }
 
     protected List<JustificationMotive> getNotCorrected(HashMap<JustificationMotive, Duration> map,
@@ -126,6 +127,15 @@ public class Justification extends Justification_Base {
 	    }
 	}
 	return notCorrected;
+    }
+
+    public boolean getIsCorrection() {
+	ClosedMonth closedMonth = ClosedMonth.getLastMonthClosed();
+	if (closedMonth != null) {
+	    DateTime closedForBalanceDate = closedMonth.getClosedForBalanceDate();
+	    return (closedForBalanceDate != null && closedForBalanceDate.isBefore(getLastModifiedDate()));
+	}
+	return false;
     }
 
     public boolean getIsCorrection(LocalDate date) {

@@ -28,7 +28,8 @@ public class ClosedMonthJustification extends ClosedMonthJustification_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
 	setAssiduousnessClosedMonth(assiduousnessClosedMonth);
 	setJustificationMotive(justificationMotive);
-	setJustificationDuration(employeeWorkSheet.getJustificationsDuration().get(getJustificationMotive()));
+	Duration justificationDuration = employeeWorkSheet.getJustificationsDuration().get(getJustificationMotive());
+	setJustificationDuration(justificationDuration == null ? Duration.ZERO : justificationDuration);
 	setIsCorrection(Boolean.TRUE);
 	setCorrectedOnClosedMonth(correctionClosedMonth);
 	setLastModifiedDate(new DateTime());
@@ -43,11 +44,14 @@ public class ClosedMonthJustification extends ClosedMonthJustification_Base {
     }
 
     public boolean hasEqualValues(EmployeeWorkSheet employeeWorkSheet) {
-	return (getJustificationDuration().equals(employeeWorkSheet.getJustificationsDuration().get(getJustificationMotive())));
+	return employeeWorkSheet.getJustificationsDuration().get(getJustificationMotive()) != null
+		&& (getJustificationDuration()
+			.equals(employeeWorkSheet.getJustificationsDuration().get(getJustificationMotive())));
     }
 
     public void correct(EmployeeWorkSheet employeeWorkSheet) {
-	setJustificationDuration(employeeWorkSheet.getJustificationsDuration().get(getJustificationMotive()));
+	Duration justificationDuration = employeeWorkSheet.getJustificationsDuration().get(getJustificationMotive());
+	setJustificationDuration(justificationDuration == null ? Duration.ZERO : justificationDuration);
 	setIsCorrection(Boolean.TRUE);
 	setLastModifiedDate(new DateTime());
     }
@@ -55,7 +59,8 @@ public class ClosedMonthJustification extends ClosedMonthJustification_Base {
     public ClosedMonthJustification getOldClosedMonthJustification() {
 	ClosedMonthJustification oldClosedMonthJustification = null;
 	if (getIsCorrection()) {
-	    for (ClosedMonthJustification closedMonthJustification : getAssiduousnessClosedMonth().getClosedMonthJustifications()) {
+	    for (ClosedMonthJustification closedMonthJustification : getAssiduousnessClosedMonth()
+		    .getAllClosedMonthJustifications()) {
 		if ((!closedMonthJustification.equals(this))
 			&& closedMonthJustification.getJustificationMotive().equals(getJustificationMotive())
 			&& (oldClosedMonthJustification == null || ((!oldClosedMonthJustification.getIsCorrection()) || (closedMonthJustification

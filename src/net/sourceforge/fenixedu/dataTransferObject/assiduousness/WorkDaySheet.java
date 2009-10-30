@@ -208,7 +208,8 @@ public class WorkDaySheet implements Serializable {
 	    setWorkingDay(true);
 	    for (Leave leave : getLeaves()) {
 		addNote(leave);
-		if (leave.getJustificationMotive().getJustificationType().equals(JustificationType.TIME)) {
+		if (leave.getJustificationMotive().getJustificationType().equals(JustificationType.TIME)
+			&& leave.getJustificationMotive().getAccumulate()) {
 		    Duration justificationDuration = justificationsDuration.get(leave.getJustificationMotive());
 		    if (justificationDuration == null) {
 			justificationDuration = Duration.ZERO;
