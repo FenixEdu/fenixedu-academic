@@ -3,10 +3,8 @@ package net.sourceforge.fenixedu.domain.thesis;
 import java.text.Collator;
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -67,16 +65,13 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
     protected void updateParticipantInformation(Person person) {
 	Teacher teacher = person.getTeacher();
 
-	if (teacher != null) {
+	if (teacher != null && teacher.getCurrentWorkingDepartment() != null) {
 	    if (teacher.getCategory() == null) {
 		setCategory("-");
 	    } else {
 		setCategory(teacher.getCategory().getName().getContent());
 	    }
-	    Department currentWorkingDepartment = teacher.getCurrentWorkingDepartment();
-	    if (currentWorkingDepartment != null) {
-		setAffiliation(teacher.getCurrentWorkingDepartment().getRealName());
-	    }
+	    setAffiliation(teacher.getCurrentWorkingDepartment().getRealName());
 	} else {
 	    ExternalContract contract = person.getExternalContract();
 	    if (contract != null) {
@@ -103,7 +98,7 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
 	Thesis thesis = getThesis();
 
 	if (!thesis.hasCredits()) {
-	    return (double) 0.0;
+	    return 0.0;
 	}
 
 	ThesisParticipationType type = this.getType();
@@ -120,7 +115,7 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
 	    }
 	}
 
-	return (double) 0.0;
+	return 0.0;
     }
 
     public void delete() {
