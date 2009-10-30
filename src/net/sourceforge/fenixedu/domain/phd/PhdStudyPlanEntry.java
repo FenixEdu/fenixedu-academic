@@ -55,6 +55,10 @@ abstract public class PhdStudyPlanEntry extends PhdStudyPlanEntry_Base {
 	return getType() == PhdStudyPlanEntryType.PROPAEDEUTIC;
     }
 
+    public boolean isExtraCurricular() {
+	return getType() == PhdStudyPlanEntryType.EXTRA_CURRICULAR;
+    }
+
     public boolean isInternalEntry() {
 	return false;
     }
@@ -74,4 +78,5 @@ abstract public class PhdStudyPlanEntry extends PhdStudyPlanEntry_Base {
     abstract public String getCourseDescription();
 
     abstract public boolean isSimilar(PhdStudyPlanEntry entry);
+
 }

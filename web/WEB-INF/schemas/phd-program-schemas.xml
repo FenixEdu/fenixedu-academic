@@ -1128,17 +1128,16 @@
 	<slot name="competenceCourses" layout="option-select">
 		<property name="saveOptions" value="true"/>
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.CompetenceCourseForStudyPlanEntryProvider"/>
-		<property name="eachSchema" value="CompetenceCourse.view.name.only"/>
+		<property name="eachSchema" value="PhdStudyPlanEntry.CompetenceCourse.view"/>
 		<property name="eachLayout" value="values"/>
 		<property name="classes" value="nobullet noindent"/>
 	</slot>
 </schema>
 
-
-<schema name="CompetenceCourse.view.name.only" type="net.sourceforge.fenixedu.domain.CompetenceCourse" bundle="PHD_RESOURCES">
+<schema name="PhdStudyPlanEntry.CompetenceCourse.view" type="net.sourceforge.fenixedu.domain.CompetenceCourse" bundle="PHD_RESOURCES">
 	<slot name="name" />
+	<slot name="ectsCredits" />
 </schema>
-
 
 <schema name="PhdStudyPlanEntryBean.edit.external" type="net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntryBean" bundle="PHD_RESOURCES">
 	<slot name="internalEntry" layout="radio-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">

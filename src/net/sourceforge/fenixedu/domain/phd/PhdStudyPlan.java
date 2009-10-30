@@ -130,6 +130,18 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
 	return result;
     }
 
+    public Set<PhdStudyPlanEntry> getExtraCurricularEntries() {
+	final Set<PhdStudyPlanEntry> result = new HashSet<PhdStudyPlanEntry>();
+
+	for (final PhdStudyPlanEntry entry : getEntries()) {
+	    if (entry.isExtraCurricular()) {
+		result.add(entry);
+	    }
+	}
+
+	return result;
+    }
+
     public boolean hasSimilarEntry(PhdStudyPlanEntry entry) {
 	for (final PhdStudyPlanEntry each : getEntries()) {
 	    if (each.isSimilar(entry)) {

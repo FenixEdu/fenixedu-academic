@@ -120,6 +120,7 @@
 				</fr:layout>
 			</fr:view>
 		</logic:notEmpty>	
+		
 		<br/><br/>
 		<strong><bean:message  key="label.phd.propaedeuticsCourses" bundle="PHD_RESOURCES"/></strong><br/>
 		<logic:empty name="studyPlan" property="propaedeuticEntries">
@@ -137,7 +138,24 @@
 				</fr:layout>
 			</fr:view>
 		</logic:notEmpty>
-		
+
+		<br/><br/>
+		<strong><bean:message  key="label.phd.extraCurricularCourses" bundle="PHD_RESOURCES"/></strong><br/>
+		<logic:empty name="studyPlan" property="extraCurricularEntries">
+			<bean:message  key="label.phd.noCourses" bundle="PHD_RESOURCES"/>
+		</logic:empty>
+		<logic:notEmpty name="studyPlan" property="extraCurricularEntries">
+			<fr:view schema="PhdStudyPlanEntry.view" name="studyPlan" property="extraCurricularEntries">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle2 thlight mtop15" />
+					<fr:property name="linkFormat(delete)" value="/phdIndividualProgramProcess.do?method=deleteStudyPlanEntry&studyPlanEntryId=${externalId}&processId=${studyPlan.process.externalId}"/>
+					<fr:property name="key(delete)" value="label.delete"/>
+					<fr:property name="bundle(delete)" value="PHD_RESOURCES"/>
+					<fr:property name="confirmationKey(delete)" value="label.confirmation.delete.message" />
+					<fr:property name="confirmationBundle(delete)" value="PHD_RESOURCES" />
+				</fr:layout>
+			</fr:view>
+		</logic:notEmpty>
 		
 		<br/><br/>
 		<p>
