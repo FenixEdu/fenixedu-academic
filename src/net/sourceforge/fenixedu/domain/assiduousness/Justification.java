@@ -138,7 +138,7 @@ public class Justification extends Justification_Base {
     }
 
     public boolean isEqual(DateTime dateTime, JustificationMotive justificationMotive, Boolean anulated) {
-	return getDate().equals(dateTime) || getJustificationMotive().equals(justificationMotive) && isAnulated() == anulated;
+	return getDate().equals(dateTime) && getJustificationMotive().equals(justificationMotive) && isAnulated() == anulated;
     }
 
 }
