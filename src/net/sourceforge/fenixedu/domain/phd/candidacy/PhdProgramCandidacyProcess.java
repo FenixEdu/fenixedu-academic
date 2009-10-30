@@ -250,7 +250,9 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
 	PhdProgramCandidacyProcessState.STAND_BY_WITH_COMPLETE_INFORMATION,
 
-	PhdProgramCandidacyProcessState.REJECTED);
+	PhdProgramCandidacyProcessState.REJECTED,
+
+	PhdProgramCandidacyProcessState.WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION);
 
 	@Override
 	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
@@ -579,10 +581,10 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
     private PhdProgramCandidacyProcess registrationFormalization(final RegistrationFormalizationBean bean,
 	    final Person responsible) {
-	
 
 	if (!getIndividualProgramProcess().hasStudyPlan()) {
-	    throw new DomainException("error.phd.candidacy.PhdProgramCandidacyProcess.registrationFormalization.must.create.study.plan");
+	    throw new DomainException(
+		    "error.phd.candidacy.PhdProgramCandidacyProcess.registrationFormalization.must.create.study.plan");
 	}
 
 	createState(PhdProgramCandidacyProcessState.CONCLUDED, responsible);
