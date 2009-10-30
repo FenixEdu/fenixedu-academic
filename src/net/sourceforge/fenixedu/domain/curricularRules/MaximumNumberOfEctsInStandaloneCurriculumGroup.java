@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.StandaloneCurriculumGro
 
 public class MaximumNumberOfEctsInStandaloneCurriculumGroup extends CurricularRuleNotPersistent {
 
-    static private double MAXIMUM_DEFAULT_VALUE = 20.25d;
+    static public double MAXIMUM_DEFAULT_VALUE = 20.25d;
 
     private StandaloneCurriculumGroup standaloneCurriculumGroup;
     private double maximumEcts;

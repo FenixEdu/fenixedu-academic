@@ -93,7 +93,8 @@ public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy
 	}
 
 	if (!MaximumNumberOfEctsInStandaloneCurriculumGroup.allowEctsCheckingDefaultValue(total)) {
-	    throw new DomainException("error.StandaloneIndividualCandidacy.ects.credits.above.maximum", String.valueOf(total));
+	    throw new DomainException("error.StandaloneIndividualCandidacy.ects.credits.above.maximum", String
+		    .valueOf(MaximumNumberOfEctsInStandaloneCurriculumGroup.MAXIMUM_DEFAULT_VALUE));
 	}
     }
 
