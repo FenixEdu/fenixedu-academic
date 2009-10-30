@@ -7,7 +7,7 @@
 
 <bean:define id="prizeID" name="prize" property="idInternal"/>
 
-<em><bean:message bundle="RESEARCHER_RESOURCES" key="label.research"/></em>
+<em><bean:message bundle="RESEARCHER_RESOURCES" key="label.researchPortal"/></em>
 <h2><bean:message bundle="RESEARCHER_RESOURCES" key="label.prizeAuthors"/></h2>
 
 <ul>
