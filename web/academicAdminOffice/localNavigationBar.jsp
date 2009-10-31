@@ -9,7 +9,7 @@
 <%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl" %>
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-
+ 
 
 	<ul>
 		<li class="navheader"><bean:message key="link.studentOperations" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
