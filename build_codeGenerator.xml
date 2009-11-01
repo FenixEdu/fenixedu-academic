@@ -33,6 +33,7 @@
 
         <!-- set a different FenixDomainModel class until we don't need the ojbConcreteClass anylonger -->
         <property name="fenix.framework.domainModelClass" value="pt.ist.fenixframework.pstm.dml.FenixDomainModelWithOCC"/>
+
         <import file="dml-generate.xml"/>
 
         <path id="classpath.analysis">
