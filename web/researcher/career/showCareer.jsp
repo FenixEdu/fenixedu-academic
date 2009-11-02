@@ -61,7 +61,7 @@
 <logic:present name="deleteCareer">
     <p>
         <bean:message bundle="RESEARCHER_RESOURCES" key="label.career.delete.confirm" />
-		<span class="color888"><fr:view name="deleteCareer" property="beginYear"/> <bean:message key="label.until" bundle="RESEARCHER_RESOURCES"/> <fr:view name="deleteCareer" property="endYear"/></span>, 
+		<span class="color888"><fr:view name="deleteCareer" property="beginYear"/><logic:present name="deleteCareer" property="endYear" ><bean:message key="label.until" bundle="RESEARCHER_RESOURCES"/> <fr:view name="deleteCareer" property="endYear"/></span></logic:present>, 
 		<fr:view name="deleteCareer" property="function"/> (<fr:view name="deleteCareer" property="entity"/>)?
         
         <fr:form action="/career/careerManagement.do?method=deleteCareer">

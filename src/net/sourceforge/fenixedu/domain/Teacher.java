@@ -1346,7 +1346,7 @@ public class Teacher extends Teacher_Base {
 	for (Career career : getAssociatedCareersSet()) {
 	    if (type == null || (type.equals(CareerType.PROFESSIONAL) && career instanceof ProfessionalCareer)
 		    || (type.equals(CareerType.TEACHING) && career instanceof TeachingCareer)) {
-		if (intersecting == null || intersecting.overlaps(career.getInterval())) {
+		if (intersecting == null || career.getInterval().overlaps(intersecting)) {
 		    careers.add(career);
 		}
 	    }

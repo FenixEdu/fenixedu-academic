@@ -23,7 +23,10 @@ public class ProfessionalCareer extends ProfessionalCareer_Base {
 	super();
 	if (teacher == null)
 	    throw new DomainException("The teacher should not be null!");
-	if (endYear < beginYear) {
+	if (beginYear == null) {
+	    throw new DomainException("error.professionalcareer.beginYearIsMandatory");
+	}
+	if (endYear != null && endYear < beginYear) {
 	    throw new DomainException("error.professionalcareer.endYearBeforeStart");
 	}
 	setTeacher(teacher);

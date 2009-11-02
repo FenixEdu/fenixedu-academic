@@ -12,10 +12,10 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
-import org.joda.time.Interval;
 import org.joda.time.LocalDateTime;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.utl.ist.fenix.tools.util.PossiblyNullEndedInterval;
 
 /**
  * @author Leonor Almeida
@@ -37,9 +37,13 @@ public abstract class Career extends Career_Base {
 	super.deleteDomainObject();
     }
 
-    public Interval getInterval() {
-	return new Interval(new LocalDateTime(getBeginYear(), 1, 1, 0, 0, 0).toDateTime(), new LocalDateTime(getEndYear(), 1, 1,
-		0, 0, 0).toDateTime());
+    public PossiblyNullEndedInterval getInterval() {
+	if (getEndYear() != null) {
+	    return new PossiblyNullEndedInterval(new LocalDateTime(getBeginYear(), 1, 1, 0, 0, 0).toDateTime().getMillis(),
+		    new LocalDateTime(getEndYear(), 1, 1, 0, 0, 0).toDateTime().getMillis());
+	} else {
+	    return new PossiblyNullEndedInterval(new LocalDateTime(getBeginYear(), 1, 1, 0, 0, 0).toDateTime().getMillis());
+	}
     }
 
     @Override

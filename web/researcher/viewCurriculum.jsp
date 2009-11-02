@@ -583,7 +583,7 @@
     <ul>
     <logic:iterate id="line" name="career">
 		<li>
-            <span class="color888"><fr:view name="line" property="beginYear"/> <bean:message key="label.until" bundle="RESEARCHER_RESOURCES"/> <fr:view name="line" property="endYear"/></span>, 
+            <span class="color888"><fr:view name="line" property="beginYear"/><logic:present name="line" property="endYear"> <bean:message key="label.until" bundle="RESEARCHER_RESOURCES"/> <fr:view name="line" property="endYear"/></span></logic:present>, 
             <fr:view name="line" property="function"/> (<fr:view name="line" property="entity"/>)
         </li>
     </logic:iterate>
