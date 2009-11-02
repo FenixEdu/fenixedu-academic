@@ -22,6 +22,8 @@ import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
 import net.sourceforge.fenixedu.domain.contacts.Phone;
 import net.sourceforge.fenixedu.domain.contacts.WebAddress;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.lang.StringUtils;
@@ -79,6 +81,8 @@ public class PersonInformationDTO {
     private String employeeUnit;
 
     private List<String> studentDegrees;
+    
+    private String campus;
 
     public PersonInformationDTO(final Person person) {
 	this.name = person.getName();
@@ -113,18 +117,29 @@ public class PersonInformationDTO {
 	    roles.add(role.getRoleType().name());
 	}
 
-	if (person.hasTeacher() && person.getTeacher().getCurrentWorkingDepartment() != null) {
-	    this.teacherDepartment = person.getTeacher().getCurrentWorkingDepartment().getRealName();
-	}
-
-	if (person.hasEmployee() && person.getEmployee().getCurrentWorkingPlace() != null) {
-	    this.employeeUnit = person.getEmployee().getCurrentWorkingPlace().getName();
-	}
-
 	this.studentDegrees = new ArrayList<String>();
 	if (person.hasStudent()) {
 	    for (Registration registration : person.getStudent().getActiveRegistrations()) {
 		studentDegrees.add(registration.getDegree().getPresentationName());
+	    }
+
+	    final Registration lastActiveRegistration = person.getStudent().getLastActiveRegistration();
+	    if (lastActiveRegistration != null) {
+		this.campus = lastActiveRegistration.getCampus().getName();
+	    }
+	    
+	}
+	
+	if (person.hasTeacher() && person.getTeacher().getCurrentWorkingDepartment() != null) {
+	    this.teacherDepartment = person.getTeacher().getCurrentWorkingDepartment().getRealName();
+	}
+
+	final Unit currentWorkingPlace = person.getEmployee().getCurrentWorkingPlace();
+	if (person.hasEmployee() && currentWorkingPlace != null) {
+	    this.employeeUnit = currentWorkingPlace.getName();
+	    final Campus employeeCampus = currentWorkingPlace.getCampus();
+	    if (employeeCampus != null) {
+		this.campus = employeeCampus.getName();
 	    }
 	}
 
@@ -354,4 +369,13 @@ public class PersonInformationDTO {
 	this.workEmails = workEmails;
     }
 
+    public String getCampus() {
+        return campus;
+    }
+
+    public void setCampus(String campus) {
+        this.campus = campus;
+    }
+
+    
 }
