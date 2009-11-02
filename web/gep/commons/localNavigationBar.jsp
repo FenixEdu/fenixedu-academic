@@ -59,6 +59,12 @@
 			<bean:message key="link.inquiries.studentInquiry.uploadResults" bundle="INQUIRIES_RESOURCES"/>
 		</html:link>				
 	</li>	
+    <li>
+        <html:link page="/viewInquiriesResults.do?method=chooseDegreeCurricularPlan">
+            <bean:message key="title.inquiries.results" bundle="INQUIRIES_RESOURCES"/>
+        </html:link>
+    </li>
+    
 	<li class="navheader">
 		<bean:message key="label.protocols.navigation.header" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 	</li>

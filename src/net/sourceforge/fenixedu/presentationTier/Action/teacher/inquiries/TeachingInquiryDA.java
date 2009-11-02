@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesCourseResult;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesTeachingResult;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -256,9 +257,9 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	final StudentInquiriesCourseResult courseResult = RootDomainObject.getInstance().readStudentInquiriesCourseResultByOID(
 		Integer.valueOf(getFromRequest(request, "resultId").toString()));
 	final Person loggedPerson = AccessControl.getPerson();
-	if (!loggedPerson.getTeacher().hasProfessorshipForExecutionCourse(courseResult.getExecutionCourse())
-		&& courseResult.getExecutionDegree().getCoordinatorByTeacher(loggedPerson) == null
-		&& !loggedPerson.isPedagogicalCouncilMember()) {
+	if (!loggedPerson.isPedagogicalCouncilMember() && loggedPerson.getPersonRole(RoleType.GEP) == null
+		&& !loggedPerson.getTeacher().hasProfessorshipForExecutionCourse(courseResult.getExecutionCourse())
+		&& courseResult.getExecutionDegree().getCoordinatorByTeacher(loggedPerson) == null) {
 	    return null;
 	}
 	request.setAttribute("inquiryResult", courseResult);
@@ -278,10 +279,10 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	final StudentInquiriesTeachingResult teachingResult = RootDomainObject.getInstance()
 		.readStudentInquiriesTeachingResultByOID(Integer.valueOf(getFromRequest(request, "resultId").toString()));
 	final Person loggedPerson = AccessControl.getPerson();
-	if (teachingResult.getProfessorship().getTeacher() != loggedPerson.getTeacher()
+	if (!loggedPerson.isPedagogicalCouncilMember() && loggedPerson.getPersonRole(RoleType.GEP) == null
+		&& teachingResult.getProfessorship().getTeacher() != loggedPerson.getTeacher()
 		&& loggedPerson.getTeacher().isResponsibleFor(teachingResult.getProfessorship().getExecutionCourse()) == null
-		&& teachingResult.getExecutionDegree().getCoordinatorByTeacher(loggedPerson) == null
-		&& !loggedPerson.isPedagogicalCouncilMember()) {
+		&& teachingResult.getExecutionDegree().getCoordinatorByTeacher(loggedPerson) == null) {
 	    return null;
 	}
 	request.setAttribute("inquiryResult", teachingResult);
