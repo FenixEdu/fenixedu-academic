@@ -365,12 +365,16 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
     public ActionForward printNotification(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws JRException, IOException {
 
-	final PhdNotificationDocument report = new PhdNotificationDocument(getNotification(request));
+	final PhdNotificationDocument report = new PhdNotificationDocument(getNotification(request), getLanguage(request));
 	writeFile(response, report.getReportFileName() + ".pdf", "application/pdf", ReportsUtils
 		.exportToProcessedPdfAsByteArray(report));
 
 	return null;
 
+    }
+
+    private Language getLanguage(HttpServletRequest request) {
+	return Language.valueOf(request.getParameter("language"));
     }
 
     public ActionForward markNotificationAsSent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -382,21 +386,11 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 
     }
 
-    public ActionForward printCandidacyDeclarationPt(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward printCandidacyDeclaration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException, JRException {
 
-	final PhdCandidacyDeclarationDocument report = new PhdCandidacyDeclarationDocument(getProcess(request), Language.pt);
-	writeFile(response, report.getReportFileName() + ".pdf", "application/pdf", ReportsUtils
-		.exportToProcessedPdfAsByteArray(report));
-
-	return null;
-
-    }
-
-    public ActionForward printCandidacyDeclarationEn(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws IOException, JRException {
-
-	final PhdCandidacyDeclarationDocument report = new PhdCandidacyDeclarationDocument(getProcess(request), Language.en);
+	final PhdCandidacyDeclarationDocument report = new PhdCandidacyDeclarationDocument(getProcess(request),
+		getLanguage(request));
 	writeFile(response, report.getReportFileName() + ".pdf", "application/pdf", ReportsUtils
 		.exportToProcessedPdfAsByteArray(report));
 

@@ -72,10 +72,14 @@
 			<fr:property name="order(markAsSent)" value="0"/>
 			<fr:property name="visibleIfNot(markAsSent)" value="sent"/>
 			
-			<fr:property name="linkFormat(print)" value="/phdProgramCandidacyProcess.do?method=printNotification&notificationId=${externalId}&processId=${candidacyProcess.externalId}"/>
-			<fr:property name="key(print)" value="label.print"/>
-			<fr:property name="bundle(print)" value="PHD_RESOURCES"/>
-			<fr:property name="order(print)" value="1"/>
+			<fr:property name="linkFormat(printPT)" value="/phdProgramCandidacyProcess.do?method=printNotification&language=pt&notificationId=${externalId}&processId=${candidacyProcess.externalId}"/>
+			<fr:property name="key(printPT)" value="label.print.pt"/>
+			<fr:property name="bundle(printPT)" value="PHD_RESOURCES"/>
+			<fr:property name="order(printPT)" value="1"/>
+			<fr:property name="linkFormat(printEN)" value="/phdProgramCandidacyProcess.do?method=printNotification&language=en&&notificationId=${externalId}&processId=${candidacyProcess.externalId}"/>
+			<fr:property name="key(printEN)" value="label.print.en"/>
+			<fr:property name="bundle(printEN)" value="PHD_RESOURCES"/>
+			<fr:property name="order(printEN)" value="2"/>
 		</fr:layout>
 		
 

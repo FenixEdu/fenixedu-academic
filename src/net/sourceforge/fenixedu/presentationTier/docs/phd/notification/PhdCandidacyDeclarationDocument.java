@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.docs.phd.notification;
 
-import java.util.Locale;
-
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;

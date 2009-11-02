@@ -15,6 +15,8 @@ import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+
 public class PhdNotificationDocument extends FenixReport {
 
     private static final String DATE_FORMAT = "dd/MM/yyyy";
@@ -26,8 +28,11 @@ public class PhdNotificationDocument extends FenixReport {
 
     private DomainReference<PhdNotification> notification;
 
-    public PhdNotificationDocument(PhdNotification notification) {
+    private Language language;
+
+    public PhdNotificationDocument(PhdNotification notification, Language language) {
 	setNotification(notification);
+	setLanguage(language);
 	fillReport();
     }
 
@@ -37,6 +42,14 @@ public class PhdNotificationDocument extends FenixReport {
 
     private void setNotification(PhdNotification notification) {
 	this.notification = (notification != null) ? new DomainReference<PhdNotification>(notification) : null;
+    }
+
+    public Language getLanguage() {
+	return language;
+    }
+
+    public void setLanguage(Language language) {
+	this.language = language;
     }
 
     @Override
@@ -90,7 +103,7 @@ public class PhdNotificationDocument extends FenixReport {
 
     @Override
     public String getReportTemplateKey() {
-	return getClass().getName() + "." + getNotification().getType().name();
+	return getClass().getName() + "." + getNotification().getType().name() + "." + getLanguage().name();
     }
 
 }
