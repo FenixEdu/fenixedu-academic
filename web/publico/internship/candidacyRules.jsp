@@ -47,10 +47,10 @@
 <logic:present name="candidacy">
 	<fr:form id="form0" action="/internship.do">
 		<input type="hidden" name="method" />
-		<fr:edit id="confirm" name="candidacy" visible="false" />
-		<html:submit onclick="this.form.method.value='backToCandidacy';">
-			<bean:message bundle="COMMON_RESOURCES" key="button.back" />
-		</html:submit>
+		<fr:edit id="confirm" name="candidacy" visible="false">
+	        <fr:destination name="cancel" path="/internship.do?method=backToCandidacy"/>
+		</fr:edit>
+		<html:cancel><bean:message bundle="COMMON_RESOURCES" key="button.back" /></html:cancel>
 		<html:submit styleId="submitBtn">Submeter Candidatura</html:submit>
 	</fr:form>
 </logic:present>
