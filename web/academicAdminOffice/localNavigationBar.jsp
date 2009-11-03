@@ -78,13 +78,14 @@
 		<li class="navheader"><bean:message key="label.documents" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
 		<li><html:link page="/generatedDocuments.do?method=prepareSearchPerson"><bean:message key="label.documents.anualIRS" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link></li>
 	</ul>
-	
-	<%--
-	<ul>
-		<li class="navheader"><bean:message key="label.phds" bundle="PHD_RESOURCES"/></li>
-		<li><html:link page="/phdIndividualProgramProcess.do?method=manageProcesses"><bean:message key="label.phd.manageProcesses" bundle="PHD_RESOURCES"/></html:link></li>
-	</ul>
-	--%>
+
+	<logic:equal name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee.administrativeOffice.administrativeOfficeType" value="MASTER_DEGREE">
+		<ul>
+			<li class="navheader"><bean:message key="label.phds" bundle="PHD_RESOURCES"/></li>
+			<li><html:link page="/phdIndividualProgramProcess.do?method=manageProcesses"><bean:message key="label.phd.manageProcesses" bundle="PHD_RESOURCES"/></html:link></li>
+		</ul>
+	</logic:equal>
+
 	<logic:equal name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee.unitCoordinator" value="true">
 		<ul>
 			<li class="navheader"><bean:message key="label.permissions" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
