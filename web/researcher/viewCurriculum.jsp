@@ -366,12 +366,12 @@
 			</logic:iterate>
 		</table>
 	</logic:notEmpty>
-	</logic:notEmpty>
 
     <p><em>
         <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.preferredPublications.help2"/>
         <html:link page="/resultPublications/listPublications.do"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.management.title"/></html:link>
     </em></p>
+	</logic:notEmpty>
 
 <%-- 
 			<ul>
