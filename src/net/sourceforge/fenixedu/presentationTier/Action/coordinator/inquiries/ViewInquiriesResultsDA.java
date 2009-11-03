@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.StudentInquiriesCou
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeachingInquiryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.ViewInquiriesResultPageDTO;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.YearDelegateCourseInquiryDTO;
-import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CoordinatorExecutionDegreeCoursesReport;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainObject;
@@ -20,16 +19,13 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesCourseResult;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesTeachingResult;
 import net.sourceforge.fenixedu.domain.inquiries.teacher.TeachingInquiry;
 import net.sourceforge.fenixedu.domain.student.YearDelegateCourseInquiry;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -89,22 +85,8 @@ abstract public class ViewInquiriesResultsDA extends FenixDispatchAction {
 	Collection<StudentInquiriesCourseResult> executionCoursesToImproove = new ArrayList<StudentInquiriesCourseResult>();
 	Collection<StudentInquiriesCourseResult> excelentExecutionCourses = new ArrayList<StudentInquiriesCourseResult>();
 
-	for (StudentInquiriesCourseResult studentInquiriesCourseResult : executionDegree.getStudentInquiriesCourseResults()) {
-	    final ExecutionCourse executionCourse = studentInquiriesCourseResult.getExecutionCourse();
-	    if (executionCourse != null && executionCourse.getExecutionPeriod() == executionSemester) {
-
-		if (studentInquiriesCourseResult.isUnsatisfactory()
-			|| hasTeachingResultsToImproove(executionDegree, executionCourse)) {
-		    executionCoursesToImproove.add(getStudentInquiriesCourseResult(executionCourse, executionDegree));
-		} else if (studentInquiriesCourseResult.isExcellent()
-			|| hasExcellentTeachingResults(executionDegree, executionCourse)) {
-		    excelentExecutionCourses.add(getStudentInquiriesCourseResult(executionCourse, executionDegree));
-		} else {
-		    otherExecutionCourses.add(getStudentInquiriesCourseResult(executionCourse, executionDegree));
-		}
-
-	    }
-	}
+	fillExecutionCourses(executionSemester, executionDegree, otherExecutionCourses, executionCoursesToImproove,
+		excelentExecutionCourses);
 
 	Collections.sort((List<StudentInquiriesCourseResult>) otherExecutionCourses,
 		StudentInquiriesCourseResult.EXECUTION_COURSE_NAME_COMPARATOR);
@@ -131,6 +113,29 @@ abstract public class ViewInquiriesResultsDA extends FenixDispatchAction {
 	return actionMapping.findForward("curricularUnitSelection");
     }
 
+    protected void fillExecutionCourses(final ExecutionSemester executionSemester, final ExecutionDegree executionDegree,
+	    Collection<StudentInquiriesCourseResult> otherExecutionCourses,
+	    Collection<StudentInquiriesCourseResult> executionCoursesToImproove,
+	    Collection<StudentInquiriesCourseResult> excelentExecutionCourses) {
+
+	for (StudentInquiriesCourseResult studentInquiriesCourseResult : executionDegree.getStudentInquiriesCourseResults()) {
+	    final ExecutionCourse executionCourse = studentInquiriesCourseResult.getExecutionCourse();
+	    if (executionCourse != null && executionCourse.getExecutionPeriod() == executionSemester) {
+
+		if (studentInquiriesCourseResult.isUnsatisfactory()
+			|| hasTeachingResultsToImproove(executionDegree, executionCourse)) {
+		    executionCoursesToImproove.add(getStudentInquiriesCourseResult(executionCourse, executionDegree));
+		} else if (studentInquiriesCourseResult.isExcellent()
+			|| hasExcellentTeachingResults(executionDegree, executionCourse)) {
+		    excelentExecutionCourses.add(getStudentInquiriesCourseResult(executionCourse, executionDegree));
+		} else {
+		    otherExecutionCourses.add(getStudentInquiriesCourseResult(executionCourse, executionDegree));
+		}
+
+	    }
+	}
+    }
+
     private CoordinatorExecutionDegreeCoursesReport getExecutionDegreeCoursesReports(final ExecutionSemester executionSemester,
 	    final ExecutionDegree executionDegree) {
 	if (executionDegree.getDegreeType().isThirdCycle()) {
@@ -148,7 +153,7 @@ abstract public class ViewInquiriesResultsDA extends FenixDispatchAction {
 	}
     }
 
-    private boolean hasTeachingResultsToImproove(final ExecutionDegree executionDegree, final ExecutionCourse executionCourse) {
+    protected boolean hasTeachingResultsToImproove(final ExecutionDegree executionDegree, final ExecutionCourse executionCourse) {
 	for (Professorship otherTeacherProfessorship : executionCourse.getProfessorships()) {
 	    for (StudentInquiriesTeachingResult studentInquiriesTeachingResult : otherTeacherProfessorship
 		    .getStudentInquiriesTeachingResults()) {
@@ -161,7 +166,7 @@ abstract public class ViewInquiriesResultsDA extends FenixDispatchAction {
 	return false;
     }
 
-    private boolean hasExcellentTeachingResults(final ExecutionDegree executionDegree, final ExecutionCourse executionCourse) {
+    protected boolean hasExcellentTeachingResults(final ExecutionDegree executionDegree, final ExecutionCourse executionCourse) {
 	for (Professorship otherTeacherProfessorship : executionCourse.getProfessorships()) {
 	    for (StudentInquiriesTeachingResult studentInquiriesTeachingResult : otherTeacherProfessorship
 		    .getStudentInquiriesTeachingResults()) {
@@ -231,7 +236,7 @@ abstract public class ViewInquiriesResultsDA extends FenixDispatchAction {
 	return resultBean;
     }
 
-    private StudentInquiriesCourseResult getStudentInquiriesCourseResult(final ExecutionCourse executionCourse,
+    protected StudentInquiriesCourseResult getStudentInquiriesCourseResult(final ExecutionCourse executionCourse,
 	    final ExecutionDegree executionDegree) {
 	for (StudentInquiriesCourseResult studentInquiriesCourseResult : executionCourse.getStudentInquiriesCourseResults()) {
 	    if (studentInquiriesCourseResult.getExecutionDegree() == executionDegree) {

@@ -948,20 +948,23 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public List<ExecutionCourse> getExecutionCoursesByExecutionPeriod(final ExecutionSemester executionSemester) {
-	Set<ExecutionCourse> executionCourseSet = new HashSet<ExecutionCourse>();
+	List<ExecutionCourse> executionCourseList = new ArrayList<ExecutionCourse>();
+	executionCourseList.addAll(getExecutionCoursesByExecutionPeriod(executionSemester, new HashSet<ExecutionCourse>()));
+	return executionCourseList;
+    }
+
+    public Set<ExecutionCourse> getExecutionCoursesByExecutionPeriod(final ExecutionSemester executionSemester,
+	    final Set<ExecutionCourse> resultSet) {
 
 	List<CurricularCourse> curricularCourseList = getCurricularCoursesWithActiveScopesInExecutionPeriod(executionSemester);
 
 	for (CurricularCourse curricularCourse : curricularCourseList) {
-	    executionCourseSet.addAll(curricularCourse.getExecutionCoursesByExecutionPeriod(executionSemester));
+	    resultSet.addAll(curricularCourse.getExecutionCoursesByExecutionPeriod(executionSemester));
 	}
 
-	List<ExecutionCourse> executionCourseList = new ArrayList<ExecutionCourse>();
-	executionCourseList.addAll(executionCourseSet);
-
-	return executionCourseList;
+	return resultSet;
     }
-
+    
     public boolean hasEnrolmentForPeriod(ExecutionSemester executionSemester) {
 	for (CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
 	    if (curricularCourse.hasEnrolmentForPeriod(executionSemester)) {

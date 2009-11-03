@@ -1736,6 +1736,15 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	}
 	return departments;
     }
+    
+    public boolean isFromDepartment(final Department departmentToCheck) {
+	for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
+	    if (departmentToCheck == curricularCourse.getCompetenceCourse().getDepartmentUnit().getDepartment()) {
+		return true;
+	    }
+	}
+	return false;
+    }    
 
     public GenericPair<YearMonthDay, YearMonthDay> getMaxLessonsPeriod() {
 

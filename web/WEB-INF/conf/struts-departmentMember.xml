@@ -645,18 +645,25 @@
 	<message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>
 	<message-resources parameter="resources.GroupNameResources" key="GROUP_NAME_RESOURCES" null="false"/>
 	<message-resources parameter="resources.ResourceAllocationManagerResources" key="SOP_RESOURCES" null="false"/>
+	<message-resources parameter="resources.InquiriesResources" key="INQUIRIES_RESOURCES" null="false"/>
+	<message-resources parameter="resources.PedagogicalCouncilResources" key="PEDAGOGICAL_COUNCIL" null="false"/>
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
         <set-property property="pathnames" 
             value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-departmentMember.xml"/>
     </plug-in>
-    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
-        <set-property property="definitions-config" 
-            value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/departmentMember/tiles-departmentMember-definitions.xml,/WEB-INF/tiles/departmentMember/tiles-departmentMember-pages-definitions.xml" 
-            />
+    
+    <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin" >
+		<set-property property="definitions-config" 
+            value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/departmentMember/tiles-departmentMember-definitions.xml,/WEB-INF/tiles/departmentMember/tiles-departmentMember-pages-definitions.xml" />
         <set-property property="moduleAware" value="true" />
         <set-property property="definitions-parser-validate" value="true" />
+        <set-property property="factoryClassname" value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" />
+        <set-property property="defaultTileDefinition" value="departmentMember.masterPage" />
     </plug-in>
+    
+    <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn" />      
+    
     <plug-in className="pt.ist.fenixWebFramework.renderers.plugin.RenderersPlugin">
 	    <set-property property="config" 
 	                  value="/WEB-INF/fenix-renderers-config.xml"/>

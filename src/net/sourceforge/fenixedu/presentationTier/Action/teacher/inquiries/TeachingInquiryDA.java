@@ -258,6 +258,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 		Integer.valueOf(getFromRequest(request, "resultId").toString()));
 	final Person loggedPerson = AccessControl.getPerson();
 	if (!loggedPerson.isPedagogicalCouncilMember() && loggedPerson.getPersonRole(RoleType.GEP) == null
+		&& loggedPerson.getPersonRole(RoleType.DEPARTMENT_MEMBER) == null
 		&& !loggedPerson.getTeacher().hasProfessorshipForExecutionCourse(courseResult.getExecutionCourse())
 		&& courseResult.getExecutionDegree().getCoordinatorByTeacher(loggedPerson) == null) {
 	    return null;
@@ -280,6 +281,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 		.readStudentInquiriesTeachingResultByOID(Integer.valueOf(getFromRequest(request, "resultId").toString()));
 	final Person loggedPerson = AccessControl.getPerson();
 	if (!loggedPerson.isPedagogicalCouncilMember() && loggedPerson.getPersonRole(RoleType.GEP) == null
+		&& loggedPerson.getPersonRole(RoleType.DEPARTMENT_MEMBER) == null
 		&& teachingResult.getProfessorship().getTeacher() != loggedPerson.getTeacher()
 		&& loggedPerson.getTeacher().isResponsibleFor(teachingResult.getProfessorship().getExecutionCourse()) == null
 		&& teachingResult.getExecutionDegree().getCoordinatorByTeacher(loggedPerson) == null) {

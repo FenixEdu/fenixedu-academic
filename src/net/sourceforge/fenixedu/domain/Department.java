@@ -16,7 +16,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
@@ -109,6 +111,17 @@ public class Department extends Department_Base {
 	}
     }
 
+    public Set<ExecutionCourse> getAllExecutionCoursesByExecutionPeriod(final ExecutionSemester executionSemester) {
+
+	Set<ExecutionCourse> executionCourses = new HashSet<ExecutionCourse>();
+
+	for (CompetenceCourse competenceCourse : getCompetenceCourses()) {
+	    competenceCourse.getExecutionCoursesByExecutionPeriod(executionSemester, executionCourses);
+	}
+
+	return executionCourses;
+    }
+    
     public List<TeacherPersonalExpectation> getTeachersPersonalExpectationsByExecutionYear(ExecutionYear executionYear) {
 	List<Teacher> teachersFromDepartment = getAllTeachers(executionYear.getBeginDateYearMonthDay(), executionYear
 		.getEndDateYearMonthDay());
