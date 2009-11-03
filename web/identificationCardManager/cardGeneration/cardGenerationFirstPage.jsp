@@ -14,6 +14,11 @@
 	</html:link>
 </p>
 
+<p>
+	<html:link page="/manageCardGeneration.do?method=uploadCardInfo">
+		<bean:message key="link.manage.card.generation.upload.card.info" />
+	</html:link>
+</p>
 
 <logic:equal name="categoryCondesProblem" value="true">
 	<font color="red">

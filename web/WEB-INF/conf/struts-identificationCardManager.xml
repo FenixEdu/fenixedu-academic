@@ -39,6 +39,7 @@
 				type="net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.ManageCardGenerationDA"
 				parameter="method">
 			<forward name="firstPage" path="df.page.card.generation.firstPage"/>
+			<forward name="uploadCardInfo" path="df.page.card.generation.uploadCardInfo"/>
 			<forward name="showCategoryCodes" path="df.page.card.generation.showCategoryCodes"/>
 			<forward name="showDegreeCodesAndLabels" path="df.page.card.generation.showDegreeCodesAndLabels"/>
 			<forward name="editDegree" path="df.page.card.generation.editDegree"/>

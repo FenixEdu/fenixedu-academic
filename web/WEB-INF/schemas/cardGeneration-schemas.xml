@@ -93,3 +93,9 @@
 	<slot name="withAccountInformation" key="label.withAccountInformation"/>
 	<slot name="linePrefix" key="label.linePrefix"/>
 </schema>
+
+<schema name="CardInfoUpload" type="net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.ManageCardGenerationDA$UploadBean" bundle="CARD_GENERATION_RESOURCES">
+	<slot name="inputStream" key="label.file" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="fileNameSlot" value="filename"/>
+	</slot>
+</schema>

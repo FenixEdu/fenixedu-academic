@@ -8,6 +8,9 @@
      <definition name="df.page.card.generation.showCategoryCodes" extends="definition.identificationCardManager.masterPage">
         <put name="body" value="/identificationCardManager/cardGeneration/showCategoryCodes.jsp"/>
     </definition>
+    <definition name="df.page.card.generation.uploadCardInfo" extends="definition.identificationCardManager.masterPage">
+        <put name="body" value="/identificationCardManager/cardGeneration/uploadCardInfo.jsp"/>
+    </definition>
      <definition name="df.page.card.generation.showDegreeCodesAndLabels" extends="definition.identificationCardManager.masterPage">
         <put name="body" value="/identificationCardManager/cardGeneration/showDegreeCodesAndLabels.jsp"/>
     </definition>
