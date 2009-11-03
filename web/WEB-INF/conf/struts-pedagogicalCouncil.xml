@@ -125,7 +125,7 @@
 		  parameter="method"
 		  type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.SendEmailToStudents">
 			 <forward name="showDegrees" path="showDegrees"/>
-			 <forward name="sendEmail" path="/messaging/newEmail.jsp" />
+			 <forward name="sendEmail" path="/messaging/emails.do?method=newEmail" contextRelative="true" />
 		 </action>
 		 
 
