@@ -111,22 +111,24 @@
     </slot>
 </schema>
 
-<schema name="internship.candidacy.personaldocuments.bi" type="net.sourceforge.fenixedu.dataTransferObject.internship.InternshipCandidacyBean"
-    bundle="DOMAIN_RESOURCES">
-    <slot name="documentIdNumber" key="label.internship.InternshipCandidacy.student.documentIdNumber"
-        validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-    <slot name="emissionLocationOfDocumentId" key="label.internship.InternshipCandidacy.student.emissionLocationOfDocumentId"
-        validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-    <slot name="emissionDateOfDocumentId" layout="picker"
-        key="label.internship.InternshipCandidacy.student.emissionDateOfDocumentId">
-        <validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-        <validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
-    </slot>
-    <slot name="expirationDateOfDocumentId" layout="picker"
-        key="label.internship.InternshipCandidacy.student.expirationDateOfDocumentId">
-        <validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-        <validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
-    </slot>
+<schema name="internship.candidacy.personaldocuments.bi"
+	type="net.sourceforge.fenixedu.dataTransferObject.internship.InternshipCandidacyBean"
+	bundle="DOMAIN_RESOURCES">
+	<slot name="documentIdNumber"
+		key="label.internship.InternshipCandidacy.student.documentIdNumber"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="emissionLocationOfDocumentId"
+		key="label.internship.InternshipCandidacy.student.emissionLocationOfDocumentId" />
+	<slot name="emissionDateOfDocumentId" layout="picker"
+		key="label.internship.InternshipCandidacy.student.emissionDateOfDocumentId">
+		<validator
+			class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
+	</slot>
+	<slot name="expirationDateOfDocumentId" layout="picker"
+		key="label.internship.InternshipCandidacy.student.expirationDateOfDocumentId">
+		<validator
+			class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
+	</slot>
 </schema>
 
 <schema name="internship.candidacy.personaldocuments.passport" type="net.sourceforge.fenixedu.dataTransferObject.internship.InternshipCandidacyBean"
