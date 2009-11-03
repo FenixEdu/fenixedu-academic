@@ -31,6 +31,7 @@ import net.sourceforge.fenixedu.domain.reports.StatusAndApprovalReportFile;
 import net.sourceforge.fenixedu.domain.reports.TeachersByShiftReportFile;
 import net.sourceforge.fenixedu.domain.reports.TeachersListFromGiafReportFile;
 import net.sourceforge.fenixedu.domain.reports.TeachersListReportFile;
+import net.sourceforge.fenixedu.domain.reports.TimetablesReportFile;
 import net.sourceforge.fenixedu.domain.reports.TutorshipProgramReportFile;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.StringUtils;
@@ -247,6 +248,18 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 
 	return mapping.findForward("selectDegreeType");
     }
+    
+    @SuppressWarnings("unused")
+    public ActionForward downloadTimetables(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws IOException {
+	final DegreeType degreeType = getDegreeType(request);
+	final ExecutionYear executionYear = getExecutionYear(request);
+	final String format = getFormat(request);
+
+	prepareNewJobResponse(request, ReportFileFactory.createTimetablesReportFile(format, degreeType, executionYear));
+
+	return mapping.findForward("selectDegreeType");
+    }
 
     @SuppressWarnings("unused")
     public ActionForward downloadDissertationsProposals(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -399,6 +412,8 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	    return TeachersListFromGiafReportFile.class;
 	case 19:
 	    return CourseLoadAndResponsiblesReportFile.class;
+	case 20:
+	    return TimetablesReportFile.class;
 	default:
 	    return null;
 	}

@@ -90,6 +90,7 @@
 	<bean:define id="urlTeachersByShift" type="java.lang.String">/reportsByDegreeType.do?method=downloadTeachersByShift&amp;<bean:write name="args" filter="false"/></bean:define>
 	<bean:define id="urlCourseLoads" type="java.lang.String">/reportsByDegreeType.do?method=downloadCourseLoads&amp;<bean:write name="args" filter="false"/></bean:define>
 	<bean:define id="urlTutorshipProgram" type="java.lang.String">/reportsByDegreeType.do?method=downloadTutorshipProgram&amp;<bean:write name="args" filter="false"/></bean:define>
+	<bean:define id="urlTimetables" type="java.lang.String">/reportsByDegreeType.do?method=downloadTimetables&amp;<bean:write name="args" filter="false"/></bean:define>
     <bean:define id="urlRaidesGraduation" type="java.lang.String">/reportsByDegreeType.do?method=downloadRaidesGraduation&amp;<bean:write name="args" filter="false"/></bean:define>
     <bean:define id="urlRaidesDfa" type="java.lang.String">/reportsByDegreeType.do?method=downloadRaidesDfa&amp;<bean:write name="args" filter="false"/></bean:define>
     <bean:define id="urlRaidesPhd" type="java.lang.String">/reportsByDegreeType.do?method=downloadRaidesPhd&amp;<bean:write name="args" filter="false"/></bean:define>
@@ -325,6 +326,28 @@
 					</td>
 					<td>
 						<html:link page="<%= viewReports + "&type=16" %>">
+							<bean:message key="label.view.requests.done" bundle="GEP_RESOURCES" />
+						</html:link>
+					</td>
+				</tr>
+				
+				<tr>
+					<td>
+						<bean:message key="label.report.teachers.and.lessons" bundle="GEP_RESOURCES"/>
+					</td>
+					<td>
+						<bean:define id="urlTimetablesCsv" type="java.lang.String"><bean:write name="urlTimetables" filter="false"/>&amp;format=csv</bean:define>
+						<html:link page="<%= urlTimetablesCsv %>">
+							<bean:message key="label.request.csv" bundle="GEP_RESOURCES" />
+						</html:link>
+						|
+						<bean:define id="urlTimetablesXls" type="java.lang.String"><bean:write name="urlTimetables" filter="false"/>&amp;format=xls</bean:define>
+						<html:link page="<%= urlTimetablesXls %>">
+							<bean:message key="label.request.xls" bundle="GEP_RESOURCES" />
+						</html:link>
+					</td>
+					<td>
+						<html:link page="<%= viewReports + "&type=20" %>">
 							<bean:message key="label.view.requests.done" bundle="GEP_RESOURCES" />
 						</html:link>
 					</td>

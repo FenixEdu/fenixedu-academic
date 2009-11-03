@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.reports.StatusAndApprovalReportFile;
 import net.sourceforge.fenixedu.domain.reports.TeachersByShiftReportFile;
 import net.sourceforge.fenixedu.domain.reports.TeachersListFromGiafReportFile;
 import net.sourceforge.fenixedu.domain.reports.TeachersListReportFile;
+import net.sourceforge.fenixedu.domain.reports.TimetablesReportFile;
 import net.sourceforge.fenixedu.domain.reports.TutorshipProgramReportFile;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -77,6 +78,16 @@ public class ReportFileFactory {
 	teachersListFromGiafReportFile.setDegreeType(degreeType);
 	teachersListFromGiafReportFile.setExecutionYear(executionYear);
 	return teachersListFromGiafReportFile;
+    }
+    
+    @Service
+    public static GepReportFile createTimetablesReportFile(String type, DegreeType degreeType,
+	    ExecutionYear executionYear) {
+	final TimetablesReportFile timetablesReportFile = new TimetablesReportFile();
+	timetablesReportFile.setType(type);
+	timetablesReportFile.setDegreeType(degreeType);
+	timetablesReportFile.setExecutionYear(executionYear);
+	return timetablesReportFile;
     }
 
     @Service

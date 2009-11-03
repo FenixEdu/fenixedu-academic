@@ -16,7 +16,7 @@ public class CourseLoadReportFile extends CourseLoadReportFile_Base {
 
     @Override
     public String getJobName() {
-	return "Listagem de tipos de aula e carga horária";
+	return "Listagem de tipos de aula e carga horï¿½ria";
     }
 
     @Override
@@ -38,6 +38,7 @@ public class CourseLoadReportFile extends CourseLoadReportFile_Base {
 	spreadsheet.setHeader("tipo aula");
 	spreadsheet.setHeader("horas aula");
 	spreadsheet.setHeader("total turnos");
+	spreadsheet.setHeader("OID execucao disciplina");
 
 	for (ExecutionSemester executionSemester : getExecutionYear().getExecutionPeriods()) {
 	    for (ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCourses()) {
@@ -61,6 +62,7 @@ public class CourseLoadReportFile extends CourseLoadReportFile_Base {
 			row.setCell(courseLoad.getTotalQuantity() != null ? courseLoad.getTotalQuantity().toPlainString()
 				.replace('.', ',') : StringUtils.EMPTY);
 			row.setCell(shiftsCount);
+			row.setCell(String.valueOf(executionCourse.getOid()));
 
 		    }
 		}

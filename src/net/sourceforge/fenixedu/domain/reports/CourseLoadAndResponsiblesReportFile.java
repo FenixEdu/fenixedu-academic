@@ -31,7 +31,7 @@ public class CourseLoadAndResponsiblesReportFile extends CourseLoadAndResponsibl
 
     @Override
     public String getJobName() {
-	return "Listagem de informação sobre disciplinas";
+	return "Listagem de informaï¿½ï¿½o sobre disciplinas";
     }
 
     @Override
@@ -50,8 +50,8 @@ public class CourseLoadAndResponsiblesReportFile extends CourseLoadAndResponsibl
 	spreadsheet.setHeader("Nome Curso");
 	spreadsheet.setHeader("Sigla Curso");
 	spreadsheet.setHeader("Nome Disciplina");
-	spreadsheet.setHeader("Código Disciplina Competência");
-	spreadsheet.setHeader("Código Disciplina de Execução");
+	spreadsheet.setHeader("Cï¿½digo Disciplina Competï¿½ncia");
+	spreadsheet.setHeader("Cï¿½digo Disciplina de Execuï¿½ï¿½o");
 	spreadsheet.setHeader("Ano Lectivo");
 	spreadsheet.setHeader("Ano Curricular");
 	spreadsheet.setHeader("Semestre Lectivo");
@@ -59,19 +59,21 @@ public class CourseLoadAndResponsiblesReportFile extends CourseLoadAndResponsibl
 	spreadsheet.setHeader("Responsaveis");
 	spreadsheet.setHeader("Departamento");
 	spreadsheet.setHeader("Area Cientifica");
-	spreadsheet.setHeader("Créditos ECTS");
+	spreadsheet.setHeader("Crï¿½ditos ECTS");
 	spreadsheet.setHeader("Carga Horaria Total");
 	spreadsheet.setHeader("Carga Horaria de Contacto");
 	spreadsheet.setHeader("Carga Trabalho Autonomo");
 	spreadsheet.setHeader("Carga Horaria Teoricas");
 	spreadsheet.setHeader("Carga Horaria Praticas");
-	spreadsheet.setHeader("Carga Horaria Teorico-Prática");
+	spreadsheet.setHeader("Carga Horaria Teorico-Prï¿½tica");
 	spreadsheet.setHeader("Carga Horaria Laboratorial");
-	spreadsheet.setHeader("Carga Horaria Seminários");
+	spreadsheet.setHeader("Carga Horaria Seminï¿½rios");
 	spreadsheet.setHeader("Carga Horaria Problemas");
 	spreadsheet.setHeader("Carga Horaria Trabalho de Campo");
 	spreadsheet.setHeader("Carga Horaria Estagio");
 	spreadsheet.setHeader("Carga Horaria Orientacao Tutorial");
+	spreadsheet.setHeader("OID execucao disciplina");
+	spreadsheet.setHeader("OID disciplina competencia");
 
 	for (Degree degree : Degree.readNotEmptyDegrees()) {
 	    if (degree.getDegreeType().equals(getDegreeType())) {
@@ -143,6 +145,8 @@ public class CourseLoadAndResponsiblesReportFile extends CourseLoadAndResponsibl
 	row.setCell(printBigDecimal(findCourseLoad(competenceCourseLoad, executionCourse, ShiftType.FIELD_WORK)));
 	row.setCell(printBigDecimal(findCourseLoad(competenceCourseLoad, executionCourse, ShiftType.TRAINING_PERIOD)));
 	row.setCell(printBigDecimal(findCourseLoad(competenceCourseLoad, executionCourse, ShiftType.TUTORIAL_ORIENTATION)));
+	row.setCell(String.valueOf(executionCourse.getOid()));
+	row.setCell(curricularCourse.hasCompetenceCourse() ? String.valueOf(curricularCourse.getCompetenceCourse().getOid()) : null);
     }
 
     private CompetenceCourseLoad findCompetenceCourseLoad(final CurricularCourse curricularCourse,

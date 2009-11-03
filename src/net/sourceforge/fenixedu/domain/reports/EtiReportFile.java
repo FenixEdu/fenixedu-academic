@@ -33,7 +33,7 @@ public class EtiReportFile extends EtiReportFile_Base {
 
     @Override
     public void renderReport(Spreadsheet spreadsheet) throws Exception {
-	spreadsheet.setHeader("número Aluno");
+	spreadsheet.setHeader("nï¿½mero Aluno");
 	setDegreeHeaders(spreadsheet, "aluno");
 	spreadsheet.setHeader("semestre");
 	spreadsheet.setHeader("ano lectivo");
@@ -41,15 +41,16 @@ public class EtiReportFile extends EtiReportFile_Base {
 	setDegreeHeaders(spreadsheet, "disciplina");
 	spreadsheet.setHeader("creditos");
 	spreadsheet.setHeader("estado");
-	spreadsheet.setHeader("época");
+	spreadsheet.setHeader("ï¿½poca");
 	spreadsheet.setHeader("nota");
-	spreadsheet.setHeader("época normal");
-	spreadsheet.setHeader("época especial");
+	spreadsheet.setHeader("ï¿½poca normal");
+	spreadsheet.setHeader("ï¿½poca especial");
 	spreadsheet.setHeader("melhoria");
 	spreadsheet.setHeader("tipo Aluno");
-	spreadsheet.setHeader("número inscricoes anteriores");
+	spreadsheet.setHeader("nï¿½mero inscricoes anteriores");
 	spreadsheet.setHeader("executionCourseId");
-	spreadsheet.setHeader("disponível para inquérito");
+	spreadsheet.setHeader("disponï¿½vel para inquï¿½rito");
+	spreadsheet.setHeader("OID execucao disciplina");
 
 	for (final Degree degree : Degree.readNotEmptyDegrees()) {
 	    if (checkDegreeType(getDegreeType(), degree)) {
@@ -132,8 +133,9 @@ public class EtiReportFile extends EtiReportFile_Base {
 	    if (executionCourse.getAvailableForInquiries() != null && executionCourse.getAvailableForInquiries().booleanValue()) {
 		row.setCell("sim");
 	    } else {
-		row.setCell("não");
+		row.setCell("nï¿½o");
 	    }
+	    row.setCell(String.valueOf(executionCourse.getOid()));
 	}
     }
 
