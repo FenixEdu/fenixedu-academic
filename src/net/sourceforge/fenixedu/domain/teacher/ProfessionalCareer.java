@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.domain.teacher;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoProfessionalCareer;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -17,6 +18,23 @@ public class ProfessionalCareer extends ProfessionalCareer_Base {
 
     public ProfessionalCareer() {
 	super();
+    }
+
+    public ProfessionalCareer(Person person, Integer beginYear, Integer endYear, String function, String entity) {
+	super();
+	if (person == null)
+	    throw new DomainException("The teacher should not be null!");
+	if (beginYear == null) {
+	    throw new DomainException("error.professionalcareer.beginYearIsMandatory");
+	}
+	if (endYear != null && endYear < beginYear) {
+	    throw new DomainException("error.professionalcareer.endYearBeforeStart");
+	}
+	setPerson(person);
+	setBeginYear(beginYear);
+	setEndYear(endYear);
+	setFunction(function);
+	setEntity(entity);
     }
 
     public ProfessionalCareer(Teacher teacher, Integer beginYear, Integer endYear, String function, String entity) {

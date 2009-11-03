@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CareerType;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -32,6 +33,7 @@ public abstract class Career extends Career_Base {
 
     @Service
     public void delete() {
+	removePerson();
 	removeTeacher();
 	removeRootDomainObject();
 	super.deleteDomainObject();
@@ -62,22 +64,22 @@ public abstract class Career extends Career_Base {
 	super.setEndYear(endYear);
     }
 
-    public static List<Career> readAllByTeacherIdAndCareerType(Teacher teacher, CareerType careerType) {
+    public static List<Career> readAllByTeacherIdAndCareerType(Person person, CareerType careerType) {
 	if (careerType == null) {
-	    return teacher.getAssociatedCareers();
+	    return person.getAssociatedCareers();
 	}
 	List<Career> allTeacherCareers = new ArrayList<Career>();
 
 	if (careerType.equals(CareerType.PROFESSIONAL)) {
-	    readCareersByClass(teacher, allTeacherCareers, ProfessionalCareer.class.getName());
+	    readCareersByClass(person, allTeacherCareers, ProfessionalCareer.class.getName());
 	} else if (careerType.equals(CareerType.TEACHING)) {
-	    readCareersByClass(teacher, allTeacherCareers, TeachingCareer.class.getName());
+	    readCareersByClass(person, allTeacherCareers, TeachingCareer.class.getName());
 	}
 	return allTeacherCareers;
     }
 
-    private static void readCareersByClass(Teacher teacher, List<Career> allTeacherCareers, String className) {
-	for (Career career : teacher.getAssociatedCareers()) {
+    private static void readCareersByClass(Person person, List<Career> allTeacherCareers, String className) {
+	for (Career career : person.getAssociatedCareers()) {
 	    if (career.getClass().getName().equals(className)) {
 		allTeacherCareers.add(career);
 	    }

@@ -105,6 +105,9 @@ import net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.teacher.Career;
+import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
+import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
@@ -125,6 +128,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
+import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -2254,6 +2258,23 @@ public class Person extends Person_Base {
 	return false;
     }
 
+    public Set<Career> getCareersByType(CareerType type) {
+	return getCareersByTypeAndInterval(type, null);
+    }
+
+    public Set<Career> getCareersByTypeAndInterval(CareerType type, Interval intersecting) {
+	Set<Career> careers = new HashSet<Career>();
+	for (Career career : getAssociatedCareersSet()) {
+	    if (type == null || (type.equals(CareerType.PROFESSIONAL) && career instanceof ProfessionalCareer)
+		    || (type.equals(CareerType.TEACHING) && career instanceof TeachingCareer)) {
+		if (intersecting == null || career.getInterval().overlaps(intersecting)) {
+		    careers.add(career);
+		}
+	    }
+	}
+	return careers;
+    }
+
     public static class PersonBeanFactoryEditor extends PersonBean implements FactoryExecutor {
 	public PersonBeanFactoryEditor(final Person person) {
 	    super(person);
@@ -3014,10 +3035,10 @@ public class Person extends Person_Base {
     public boolean isPersonResearcher() {
 	return getPersonRole(RoleType.RESEARCHER) != null;
     }
-    
+
     public boolean isPedagogicalCouncilMember() {
 	return getPersonRole(RoleType.PEDAGOGICAL_COUNCIL) != null;
-    }    
+    }
 
     public Integer getMostSignificantNumber() {
 	if (getPartyClassification().equals(PartyClassification.TEACHER)) {

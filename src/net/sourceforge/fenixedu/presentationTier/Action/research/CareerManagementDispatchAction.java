@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.CareerType;
-import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.teacher.Career;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -25,7 +25,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 public class CareerManagementDispatchAction extends FenixDispatchAction {
     public ActionForward showCareer(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	Teacher teacher = getLoggedPerson(request).getTeacher();
+	Person person = getLoggedPerson(request);
 	SortedSet<Career> sortedCareer = new TreeSet<Career>(new Comparator<Career>() {
 	    @Override
 	    public int compare(Career o1, Career o2) {
@@ -36,7 +36,7 @@ public class CareerManagementDispatchAction extends FenixDispatchAction {
 		}
 	    }
 	});
-	sortedCareer.addAll(teacher.getCareersByType(CareerType.PROFESSIONAL));
+	sortedCareer.addAll(person.getCareersByType(CareerType.PROFESSIONAL));
 	request.setAttribute("career", sortedCareer);
 	return mapping.findForward("showCareer");
     }

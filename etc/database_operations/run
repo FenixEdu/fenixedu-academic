@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Career Fixes" careerFixes.sql

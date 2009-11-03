@@ -3056,8 +3056,8 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 </schema>
 
 <schema name="researcher.career" type="net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer" bundle="DOMAIN_RESOURCES"
-	constructor="teacher, beginYear, endYear, function, entity">
-    <slot name="teacher" hidden="true" />
+	constructor="person, beginYear, endYear, function, entity">
+    <slot name="person" hidden="true" />
 	<slot name="entity" key="label.teacher.ProfessionalCareer.entity">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 		<property name="size" value="60" />

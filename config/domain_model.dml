@@ -8073,9 +8073,18 @@ relation CareerTeacher {
 	teacher.Career playsRole associatedCareers {
 		multiplicity *;
 	}
-	Teacher playsRole teacher {
+	Person playsRole person {
 	   multiplicity 1;
 	}
+}
+
+relation CareerTeacherTemp {
+    teacher.Career playsRole associatedCareers {
+        multiplicity *;
+    }
+    Teacher playsRole teacher {
+       multiplicity 1;
+    }
 }
 
 relation CaseStudyCaseStudyChoice {

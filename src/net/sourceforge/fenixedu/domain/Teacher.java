@@ -1337,20 +1337,4 @@ public class Teacher extends Teacher_Base {
 	return getPerson().getProfessorshipsIterator();
     }
 
-    public Set<Career> getCareersByType(CareerType type) {
-	return getCareersByTypeAndInterval(type, null);
-    }
-
-    public Set<Career> getCareersByTypeAndInterval(CareerType type, Interval intersecting) {
-	Set<Career> careers = new HashSet<Career>();
-	for (Career career : getAssociatedCareersSet()) {
-	    if (type == null || (type.equals(CareerType.PROFESSIONAL) && career instanceof ProfessionalCareer)
-		    || (type.equals(CareerType.TEACHING) && career instanceof TeachingCareer)) {
-		if (intersecting == null || career.getInterval().overlaps(intersecting)) {
-		    careers.add(career);
-		}
-	    }
-	}
-	return careers;
-    }
 }

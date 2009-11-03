@@ -136,7 +136,7 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 	    iteratorYear = iteratorYear.getNextExecutionYear();
 	}
 
-	career.addAll(teacher.getCareersByTypeAndInterval(CareerType.PROFESSIONAL, new Interval(firstExecutionYear
+	career.addAll(person.getCareersByTypeAndInterval(CareerType.PROFESSIONAL, new Interval(firstExecutionYear
 		.getBeginDateYearMonthDay().toDateTimeAtMidnight(), finaltExecutionYear.getEndDateYearMonthDay()
 		.toDateTimeAtMidnight())));
 
