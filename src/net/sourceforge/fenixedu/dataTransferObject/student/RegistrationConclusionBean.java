@@ -8,6 +8,7 @@ import java.util.HashSet;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
@@ -185,7 +186,19 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
     }
 
     public boolean isConcluded() {
-	return isByCycle() ? getCycleCurriculumGroup().isConcluded() : getRegistration().hasConcluded();
+	return isByCycle() ? getCycleCurriculumGroup().isConcluded() : hasConcludedRegistration();
+    }
+
+    private boolean hasConcludedRegistration() {
+	/*
+	 * For pre-bolonha degrees always return true
+	 */
+	final StudentCurricularPlan lastStudentCurricularPlan = getRegistration().getLastStudentCurricularPlan();
+	if (lastStudentCurricularPlan == null || !lastStudentCurricularPlan.isBolonhaDegree()) {
+	    return true;
+	}
+
+	return getRegistration().hasConcluded();
     }
 
     public Collection<CurriculumModule> getCurriculumModulesWithNoConlusionDate() {
