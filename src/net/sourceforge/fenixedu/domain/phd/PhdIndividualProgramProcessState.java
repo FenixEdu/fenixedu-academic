@@ -2,20 +2,34 @@ package net.sourceforge.fenixedu.domain.phd;
 
 public enum PhdIndividualProgramProcessState {
 
-    CANDIDACY,
+    CANDIDACY(true),
 
     NOT_ADMITTED,
 
     CANCELLED,
 
-    WORK_DEVELOPMENT,
+    WORK_DEVELOPMENT(true),
 
     SUSPENDED,
 
-    THESIS_DISCUSSION,
+    THESIS_DISCUSSION(true),
 
     FLUNKED,
 
     CONCLUDED;
+
+    private boolean activeState;
+
+    private PhdIndividualProgramProcessState(boolean activeState) {
+	this.activeState = activeState;
+    }
+
+    private PhdIndividualProgramProcessState() {
+	this(false);
+    }
+
+    public boolean isActive() {
+	return activeState;
+    }
 
 }

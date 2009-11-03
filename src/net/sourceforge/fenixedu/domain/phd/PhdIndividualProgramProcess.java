@@ -52,8 +52,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	}
 
 	protected void processPreConditions(final PhdIndividualProgramProcess process, final IUserView userView) {
-	    if (process != null && process.isCancelled()) {
-		throw new PreConditionNotValidException("error.PhdIndividualProgramProcess.is.cancelled");
+	    if (process != null && !process.getActiveState().isActive()) {
+		throw new PreConditionNotValidException();
 	    }
 	}
 
@@ -79,7 +79,10 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	activities.add(new AddAssistantGuidingInformation());
 	activities.add(new DeleteAssistantGuiding());
 
-	activities.add(new CancelPhdIndividualProgramProcess());
+	activities.add(new CancelPhdProgramProcess());
+	activities.add(new NotAdmittedPhdProgramProcess());
+	activities.add(new SuspendPhdProgramProcess());
+	activities.add(new FlunkedPhdProgramProcess());
 
 	activities.add(new AddCandidacyReferees());
 
@@ -366,26 +369,96 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	}
     }
 
-    static public class CancelPhdIndividualProgramProcess extends PhdActivity {
+    static public class CancelPhdProgramProcess extends PhdActivity {
+
+	@Override
+	protected void processPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    // remove restrictions
+	}
 
 	@Override
 	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
 	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
+	}
 
-	    // TODO: CHECK CONDITIONS TO CANCEL PROCESS
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
+		Object object) {
 
-	    if (process.hasAnyPayments()) {
-		throw new PreConditionNotValidException("error.PhdIndividualProgramProcess.cannot.cancel.because.has.payments");
+	    process.createState(PhdIndividualProgramProcessState.CANCELLED, userView.getPerson());
+	    process.cancelDebts(userView.getPerson());
+
+	    return process;
+	}
+    }
+
+    static public class NotAdmittedPhdProgramProcess extends PhdActivity {
+
+	@Override
+	protected void processPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    // remove restrictions
+	}
+
+	@Override
+	public void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
 	    }
 	}
 
 	@Override
 	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
 		Object object) {
-	    process.createState(PhdIndividualProgramProcessState.CANCELLED, userView.getPerson());
-	    process.getCandidacyProcess().cancelDebt(userView.getPerson().getEmployee());
+	    process.createState(PhdIndividualProgramProcessState.NOT_ADMITTED, userView.getPerson());
+	    process.cancelDebts(userView.getPerson());
+	    return process;
+	}
+    }
+
+    static public class SuspendPhdProgramProcess extends PhdActivity {
+
+	@Override
+	protected void processPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    // remove restrictions
+	}
+
+	@Override
+	public void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
+		Object object) {
+	    process.createState(PhdIndividualProgramProcessState.SUSPENDED, userView.getPerson());
+	    process.cancelDebts(userView.getPerson());
+	    return process;
+	}
+    }
+
+    static public class FlunkedPhdProgramProcess extends PhdActivity {
+
+	@Override
+	protected void processPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    // remove restrictions
+	}
+
+	@Override
+	public void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
+		Object object) {
+	    process.createState(PhdIndividualProgramProcessState.FLUNKED, userView.getPerson());
+	    process.cancelDebts(userView.getPerson());
 	    return process;
 	}
     }
@@ -784,12 +857,6 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return getActiveState() == PhdIndividualProgramProcessState.CANCELLED;
     }
 
-    private boolean hasAnyPayments() {
-	// TODO: for now just check candidacy, but is necessary to check another
-	// debts?
-	return getCandidacyProcess().hasAnyPayments();
-    }
-
     public List<PhdCandidacyReferee> getPhdCandidacyReferees() {
 	return getCandidacyProcess().getCandidacyReferees();
     }
@@ -980,4 +1047,15 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
 	return result;
     }
+
+    private void cancelDebts(final Person person) {
+	if (hasCandidacyProcess() && !getCandidacyProcess().hasAnyPayments()) {
+	    getCandidacyProcess().cancelDebt(person.getEmployee());
+	}
+
+	if (hasRegistrationFee() && !getRegistrationFee().hasAnyPayments()) {
+	    getRegistrationFee().cancel(person.getEmployee());
+	}
+    }
+
 }

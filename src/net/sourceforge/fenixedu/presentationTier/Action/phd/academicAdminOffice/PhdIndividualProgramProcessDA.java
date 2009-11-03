@@ -32,6 +32,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddJobInf
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddQualification;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddStudyPlan;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddStudyPlanEntry;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.CancelPhdProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteAssistantGuiding;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteGuiding;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteJobInformation;
@@ -42,11 +43,15 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditIndiv
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditPersonalInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditQualificationExams;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditStudyPlan;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.FlunkedPhdProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.NotAdmittedPhdProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RequestPublicPresentationSeminarComission;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.SuspendPhdProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlert;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlertBean;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
 import net.sourceforge.fenixedu.util.ContentType;
 
@@ -74,6 +79,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "editPhdIndividualProgramProcessInformation", path = "/phd/academicAdminOffice/editPhdIndividualProgramProcessInformation.jsp"),
 
 	@Forward(name = "manageGuidingInformation", path = "/phd/academicAdminOffice/manageGuidingInformation.jsp"),
+
+	@Forward(name = "managePhdIndividualProgramProcessState", path = "/phd/academicAdminOffice/managePhdIndividualProgramProcessState.jsp"),
 
 	@Forward(name = "manageAlerts", path = "/phd/academicAdminOffice/manageAlerts.jsp"),
 
@@ -135,7 +142,7 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 	    HttpServletResponse response) {
 
 	final PhdIndividualProgramProcess process = getProcess(request);
-	if (process != null) {
+	if (process != null && process.hasRegistration()) {
 	    request.setAttribute("registrationConclusionBean", new RegistrationConclusionBean(process.getRegistration(),
 		    CycleType.THIRD_CYCLE));
 	}
@@ -470,7 +477,60 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 	return mapping.findForward("manageGuidingInformation");
     }
 
-    // End pf Phd guiding information
+    // End of Phd guiding information
+
+    // change phd individual program process state
+
+    public ActionForward managePhdIndividualProgramProcessState(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	final PhdIndividualProgramProcessBean bean = new PhdIndividualProgramProcessBean();
+	bean.setIndividualProgramProcess(getProcess(request));
+	request.setAttribute("processBean", bean);
+	return mapping.findForward("managePhdIndividualProgramProcessState");
+    }
+
+    public ActionForward managePhdIndividualProgramProcessStateInvalid(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("processBean", getRenderedObject("processBean"));
+	return mapping.findForward("managePhdIndividualProgramProcessState");
+    }
+
+    public ActionForward changePhdIndividualProgramProcessState(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+
+	final PhdIndividualProgramProcessBean bean = (PhdIndividualProgramProcessBean) getRenderedObject("processBean");
+
+	try {
+	    switch (bean.getProcessState()) {
+	    case CANCELLED:
+		ExecuteProcessActivity.run(getProcess(request), CancelPhdProgramProcess.class.getSimpleName(), bean);
+		break;
+
+	    case FLUNKED:
+		ExecuteProcessActivity.run(getProcess(request), FlunkedPhdProgramProcess.class.getSimpleName(), bean);
+		break;
+
+	    case NOT_ADMITTED:
+		ExecuteProcessActivity.run(getProcess(request), NotAdmittedPhdProgramProcess.class.getSimpleName(), bean);
+		break;
+
+	    case SUSPENDED:
+		ExecuteProcessActivity.run(getProcess(request), SuspendPhdProgramProcess.class.getSimpleName(), bean);
+		break;
+
+	    default:
+		throw new FenixActionException();
+	    }
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getMessage(), e.getArgs());
+	    request.setAttribute("processBean", bean);
+	    return managePhdIndividualProgramProcessState(mapping, actionForm, request, response);
+	}
+
+	return viewProcess(mapping, actionForm, request, response);
+    }
+
+    // End of change phd individual program process state
 
     // Alerts Management
 

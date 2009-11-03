@@ -1260,14 +1260,14 @@
 </schema>
 
 <schema name="AcademicAdminOffice.PhdIndividualProgramProcess.view.registration.conclusion.bean" type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean" bundle="PHD_RESOURCES">
-	<slot name="registration.activeStateType" key="label.currentState">
+	<slot name="registration.activeStateType">
 		<property name="classes" value="bold" />
 	</slot>
-	<slot name="registration.startDate" layout="null-as-label" key="label.startDate" >
+	<slot name="registration.startDate" layout="null-as-label">
         <property name="label" value="-"/>	
 	</slot>
 	<slot name="conclusionDate" />
-	<slot name="registration.degreeNameWithDescription" key="label.degree" />
+	<slot name="registration.degreeNameWithDescription" />
 	<slot name="finalAverage" />
 </schema>
 

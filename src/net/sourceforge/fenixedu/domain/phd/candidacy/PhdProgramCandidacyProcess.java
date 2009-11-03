@@ -465,7 +465,9 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     public void cancelDebt(final Employee employee) {
-	getEvent().cancel(employee);
+	if (hasEvent()) {
+	    getEvent().cancel(employee);
+	}
     }
 
     public String getProcessNumber() {
