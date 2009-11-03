@@ -308,19 +308,24 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 
 		final ParkingParty parkingParty = rootDomainObject.readParkingPartyByOID(new Integer(parkingPartyID));
 		Integer parkingGroupID = null;
-		Integer parkingRequestID = new Integer(request.getParameter("code"));
-		if (request.getParameter("groupID") == null) {
-			saveErrorMessage(request, "group", "error.invalidGroup");
-			request.setAttribute("idInternal", parkingRequestID);
-			return showRequest(mapping, actionForm, request, response);
+		
+		parkingGroupID = request.getParameter("groupID") != null ? Integer.valueOf(request.getParameter("groupID")) : null;
+		
+		if(parkingGroupID != null) {
+    		Integer parkingRequestID = new Integer(request.getParameter("code"));
+    		if (request.getParameter("groupID") == null) {
+    			saveErrorMessage(request, "group", "error.invalidGroup");
+    			request.setAttribute("idInternal", parkingRequestID);
+    			return showRequest(mapping, actionForm, request, response);
+    		}
+    		
+    		if (!isValidGroup(parkingGroupID)) {
+    			saveErrorMessage(request, "group", "error.invalidGroup");
+    			request.setAttribute("idInternal", parkingRequestID);
+    			return showRequest(mapping, actionForm, request, response);
+    		}
 		}
-		parkingGroupID = Integer.valueOf(request.getParameter("groupID"));
-		if (!isValidGroup(parkingGroupID)) {
-			saveErrorMessage(request, "group", "error.invalidGroup");
-			request.setAttribute("idInternal", parkingRequestID);
-			return showRequest(mapping, actionForm, request, response);
-		}
-
+		
 		ParkingGroup parkingGroup = null;
 		if (parkingGroupID != null) {
 			parkingGroup = rootDomainObject.readParkingGroupByOID(parkingGroupID);
