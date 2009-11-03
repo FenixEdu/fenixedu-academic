@@ -74,7 +74,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 
 	public ActionForward showParkingRequests(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		// verificar autorizaï¿½ï¿½o
+		// verificar autorização
 		ParkingRequestSearch parkingRequestSearch = (ParkingRequestSearch) getRenderedObject("parkingRequestSearch");
 
 		if (parkingRequestSearch == null) {
@@ -112,7 +112,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 
 	public ActionForward showRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		// verificar autorizaï¿½ï¿½o
+		// verificar autorização
 		final String codeString = request.getParameter("idInternal");
 		Integer code = null;
 		if (codeString == null) {
@@ -356,9 +356,9 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 			if ((person.getTeacher() != null && person.getTeacher().getCurrentWorkingDepartment() != null)
 					|| (person.getEmployee() != null && person.getEmployee().getCurrentWorkingContract() != null && person
 							.getPersonRole(RoleType.TEACHER) == null)) {
-				return "Nï¿½ Mec: " + number;
+				return "Nº Mec: " + number;
 			} else {
-				return "Nï¿½" + number;
+				return "Nº" + number;
 			}
 		}
 		return "";
@@ -591,11 +591,11 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 		StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("Pedidos_Parque", 15);
 		spreadsheet.newHeaderRow();
 		spreadsheet.addHeader("Categoria");
-		spreadsheet.addHeader("Nï¿½mero");
+		spreadsheet.addHeader("Número");
 		spreadsheet.addHeader("Nome", 9000);
 		spreadsheet.addHeader("Estado");
 		spreadsheet.addHeader("Data Pedido");
-		spreadsheet.addHeader("Outras Informaï¿½ï¿½es", 6000);
+		spreadsheet.addHeader("Outras Informações", 6000);
 
 		final ResourceBundle enumerationBundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
 		for (ParkingRequest parkingRequest : parkingRequestList) {
