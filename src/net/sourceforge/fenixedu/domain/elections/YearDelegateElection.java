@@ -155,7 +155,8 @@ public class YearDelegateElection extends YearDelegateElection_Base {
 	for (DelegateElection delegateElection : scp.getRegistration().getStudent().getDelegateElections()) {
 	    if (delegateElection instanceof YearDelegateElection) {
 		if (delegateElection.getDegree().equals(election.getDegree())
-			&& delegateElection.getExecutionYear().equals(election.getExecutionYear())) {
+			&& delegateElection.getExecutionYear().equals(election.getExecutionYear())
+			&& !delegateElection.getVotingPeriod().isPastPeriod()) {
 		    return true;
 		}
 	    }
