@@ -51,6 +51,7 @@ public abstract class ResearchResultPublication extends ResearchResultPublicatio
     private void removeAssociations() {
 	super.setPublisher(null);
 	super.setOrganization(null);
+	super.setPersonThatPrefers(null);
     }
 
     @Override
