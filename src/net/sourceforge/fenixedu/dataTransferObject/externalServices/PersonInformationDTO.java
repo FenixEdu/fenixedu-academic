@@ -134,12 +134,14 @@ public class PersonInformationDTO {
 	    this.teacherDepartment = person.getTeacher().getCurrentWorkingDepartment().getRealName();
 	}
 
-	final Unit currentWorkingPlace = person.getEmployee().getCurrentWorkingPlace();
-	if (person.hasEmployee() && currentWorkingPlace != null) {
-	    this.employeeUnit = currentWorkingPlace.getName();
-	    final Campus employeeCampus = currentWorkingPlace.getCampus();
-	    if (employeeCampus != null) {
-		this.campus = employeeCampus.getName();
+	if (person.hasEmployee()) {
+	    final Unit currentWorkingPlace = person.getEmployee().getCurrentWorkingPlace();
+	    if (currentWorkingPlace != null) {
+		this.employeeUnit = currentWorkingPlace.getName();
+		final Campus employeeCampus = currentWorkingPlace.getCampus();
+		if (employeeCampus != null) {
+		    this.campus = employeeCampus.getName();
+		}
 	    }
 	}
 
