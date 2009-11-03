@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd.student;
 
+import java.util.Collections;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,7 +26,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Forward(name = "viewAlertMessages", path = "/phd/student/viewAlertMessages.jsp"),
 
-@Forward(name = "viewProcessAlertMessages", path = "/phd/student/viewProcessAlertMessages.jsp")
+@Forward(name = "viewProcessAlertMessages", path = "/phd/student/viewProcessAlertMessages.jsp"),
+
+@Forward(name = "choosePhdProcess", path = "/phd/student/choosePhdProcess.jsp")
 
 })
 public class PhdIndividualProgramProcessDA extends PhdProcessDA {
@@ -87,16 +91,13 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 	    return mapping.findForward("viewProcess");
 	}
 
-	if (!person.hasAnyPhdIndividualProgramProcesses()) {
+	if (person.getPhdIndividualProgramProcessesCount() == 1) {
+	    request.setAttribute("process", person.getPhdIndividualProgramProcesses().get(0));
 	    return mapping.findForward("viewProcess");
 	}
 
-	if (person.getPhdIndividualProgramProcessesCount() > 1) {
-	    return mapping.findForward("choosePhdProcess");
-	}
-
-	request.setAttribute("process", person.getPhdIndividualProgramProcesses().get(0));
-	return mapping.findForward("viewProcess");
+	request.setAttribute("processes", person.getPhdIndividualProgramProcesses());
+	return mapping.findForward("choosePhdProcess");
     }
 
 }

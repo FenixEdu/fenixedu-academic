@@ -1320,3 +1320,11 @@
 	</slot>
 </schema>
 
+<schema name="PhdIndividualProgramProcess.view.resume.for.student" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
+	<slot name="processNumber" />
+	<slot name="phdProgram" layout="null-as-label">
+		<property name="subLayout" value="values" />
+		<property name="subSchema" value="PhdProgram.name" />
+	</slot>
+	<slot name="activeState"/>
+</schema>
