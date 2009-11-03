@@ -308,6 +308,10 @@ public abstract class ResearchResult extends ResearchResult_Base {
 
 	}
 
+	for (; !getPrizes().isEmpty(); getPrizes().get(0).delete()) {
+
+	}
+
 	for (; !getResultUnitAssociations().isEmpty(); getResultUnitAssociations().get(0).delete()) {
 
 	}
