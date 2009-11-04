@@ -1,9 +1,11 @@
-package net.sourceforge.fenixedu.domain.phd;
+package net.sourceforge.fenixedu.domain.phd.debts;
 
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramCalendarUtil;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
@@ -28,6 +30,19 @@ public class PhdRegistrationFeePR extends PhdRegistrationFeePR_Base {
 	deactivate();
 	return new PhdRegistrationFeePR(new DateTime().minus(1000), null, getServiceAgreementTemplate(), fixedAmount,
 		penaltyAmount);
+    }
+
+    @Override
+    public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+	Money total = super.calculateTotalAmountToPay(event, when, applyDiscount).add(
+		hasPenalty(event, when) ? getFixedAmountPenalty() : Money.ZERO);
+
+	final PhdRegistrationFee feeEvent = (PhdRegistrationFee) event;
+	if (feeEvent.hasPhdEventExemption()) {
+	    total = total.subtract(feeEvent.getPhdEventExemption().getValue());
+	}
+
+	return total.isPositive() ? total : Money.ZERO;
     }
 
     @Override

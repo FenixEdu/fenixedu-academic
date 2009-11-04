@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter phd event classes" alterPhdEventClasses.sql

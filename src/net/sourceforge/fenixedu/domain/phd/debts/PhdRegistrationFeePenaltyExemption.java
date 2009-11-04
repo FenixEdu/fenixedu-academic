@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.domain.phd;
+package net.sourceforge.fenixedu.domain.phd.debts;
 
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.accounting.Event;

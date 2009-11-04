@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.accounting;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreatePhdRegistrationFeePenaltyExemptionBean;
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.phd.PhdRegistrationFeePenaltyExemption;
+import net.sourceforge.fenixedu.domain.phd.debts.PhdRegistrationFeePenaltyExemption;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 

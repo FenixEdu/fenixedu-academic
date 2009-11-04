@@ -343,7 +343,7 @@
 </schema>
 
 <schema name="PhdRegistrationFeePenaltyExemption.view" 
-		type="net.sourceforge.fenixedu.domain.phd.PhdRegistrationFeePenaltyExemption" 
+		type="net.sourceforge.fenixedu.domain.phd.debts.PhdRegistrationFeePenaltyExemption" 
 		bundle="APPLICATION_RESOURCES">
 	<slot name="description" key="label.net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemption.description" />
     <slot name="reason" key="label.net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemption.reason" />
@@ -367,6 +367,7 @@
 		bundle="APPLICATION_RESOURCES">
 	<slot name="description" key="label.net.sourceforge.fenixedu.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyExemption.description" />
 	<slot name="value" />
+	<slot name="dispatchDate" />
 	<slot name="reason" />
 </schema>
 

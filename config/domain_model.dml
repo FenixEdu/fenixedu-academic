@@ -189,6 +189,7 @@ enum net.sourceforge.fenixedu.domain.EntryPhase 																		  as EntryPhas
 enum net.sourceforge.fenixedu.domain.research.result.publication.PreferredPublicationPriority                             as PreferredPublicationPriority;
 enum net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationContext												  as EnrolmentEvaluationContext;
 enum net.sourceforge.fenixedu.domain.curriculum.CurriculumValidationEvaluationPhase										  as CurriculumValidationEvaluationPhase;
+enum net.sourceforge.fenixedu.domain.phd.debts.PhdEventExemptionJustificationType										  as PhdEventExemptionJustificationType;
 
 /*
  * Value types that need special externalization
@@ -6882,16 +6883,31 @@ class phd.notification.PhdNotification extends DomainObject {
 	PhdNotificationState state;
 }
 
-class phd.candidacy.PhdProgramCandidacyEvent extends accounting.AcademicEvent {
+class phd.debts.PhdEvent extends accounting.AcademicEvent {
 }
 
-class phd.PhdRegistrationFee extends accounting.AcademicEvent {
+class phd.candidacy.PhdProgramCandidacyEvent extends phd.debts.PhdEvent {
 }
 
-class phd.PhdRegistrationFeePR extends accounting.postingRules.FixedAmountWithPenaltyPR {
+class phd.candidacy.PhdProgramCandidacyPR extends accounting.postingRules.FixedAmountPR {
 }
 
-class phd.PhdRegistrationFeePenaltyExemption extends accounting.events.PenaltyExemption {
+class phd.debts.PhdRegistrationFee extends phd.debts.PhdEvent {
+}
+
+class phd.debts.PhdRegistrationFeePR extends accounting.postingRules.FixedAmountWithPenaltyPR {
+}
+
+class phd.debts.PhdEventExemption extends accounting.Exemption {
+	Money value;
+}
+
+class phd.debts.PhdEventExemptionJustification extends accounting.events.ExemptionJustification {
+	PhdEventExemptionJustificationType justificationType;
+	LocalDate dispatchDate;
+}
+
+class phd.debts.PhdRegistrationFeePenaltyExemption extends accounting.events.PenaltyExemption {
 }
 
 
@@ -7092,7 +7108,7 @@ relation PhdProgramCandidacyProcessPhdProgramCandidacyEvent {
 
 relation PhdIndividualProgramProcessPhdRegistrationFee {
 	phd.PhdIndividualProgramProcess playsRole process;
-	phd.PhdRegistrationFee playsRole registrationFee;
+	phd.debts.PhdRegistrationFee playsRole registrationFee;
 }
 
 relation PhdProgramCandidacyProcessPhdProgramCandidacy {

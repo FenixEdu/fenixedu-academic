@@ -1,14 +1,13 @@
-package net.sourceforge.fenixedu.domain.phd;
+package net.sourceforge.fenixedu.domain.phd.debts;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accounting.Account;
-import net.sourceforge.fenixedu.domain.accounting.AccountType;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
-import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class PhdRegistrationFee extends PhdRegistrationFee_Base {
@@ -35,32 +34,14 @@ public class PhdRegistrationFee extends PhdRegistrationFee_Base {
     }
 
     @Override
-    protected Account getFromAccount() {
-	return getPerson().getAccountBy(AccountType.EXTERNAL);
-    }
-
-    @Override
-    public Account getToAccount() {
-	return getUnit().getAccountBy(AccountType.INTERNAL);
-    }
-
-    private PhdProgram getPhdProgram() {
-	return getProcess().getPhdProgram();
-    }
-
-    private PhdProgramUnit getUnit() {
-	return getPhdProgram().getPhdProgramUnit();
-    }
-
-    @Override
-    public PostingRule getPostingRule() {
-	return getPhdProgram().getServiceAgreementTemplate().findPostingRuleByEventTypeAndDate(getEventType(), getWhenOccured());
-    }
-
-    @Override
     protected void disconnect() {
 	removeProcess();
 	super.disconnect();
+    }
+
+    @Override
+    protected PhdProgram getPhdProgram() {
+	return getProcess().getPhdProgram();
     }
 
     @Override

@@ -51,15 +51,30 @@
 	<fr:form action='<%="/exemptionsManagement.do?eventId=" + eventId %>'>
 		<html:hidden property="method" value="" />
 
-		<fr:edit id="exemptionBean" name="exemptionBean" schema="AcademicServiceRequestExemption.edit">
+		<fr:edit id="exemptionBean" name="exemptionBean">
+			<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.phd.PhdEventExemptionBean">
+				<fr:slot name="justificationType" layout="radio-select" required="true">
+					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.PhdEventExemptionJustificationTypeProvider" />
+			        <fr:property name="saveOptions" value="true"/>
+				</fr:slot>
+				<fr:slot name="dispatchDate" required="true" />
+				<fr:slot name="value" required="true" />
+				<fr:slot name="reason" layout="longText" required="true">
+					<fr:property name="rows" value="4" />
+					<fr:property name="columns" value="40" />
+				</fr:slot>
+			</fr:schema>
+		
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4" />
 				<fr:property name="columnClasses" value=",,tdclear tderror1" />
 			</fr:layout>
-			<fr:destination name="invalid" path='<%="/exemptionsManagement.do?method=prepareCreateAcademicServiceRequestExemptionInvalid&amp;eventId=" + eventId %>'/>
+		
+			<fr:destination name="invalid" path='<%="/exemptionsManagement.do?method=prepareCreatePhdEventExemptionInvalid&amp;eventId=" + eventId %>'/>
+
 		</fr:edit>
 
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='createAcademicServiceRequestExemption';">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='createPhdEventExemption';">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.create" />
 		</html:submit>
 		<html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.cancel" onclick="this.form.method.value='showExemptions';">
