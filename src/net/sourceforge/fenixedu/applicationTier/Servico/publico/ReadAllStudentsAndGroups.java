@@ -80,7 +80,7 @@ public class ReadAllStudentsAndGroups extends FenixService {
 	    }
 	}
 
-	Collections.sort(infoSiteStudentsAndGroupsList, new BeanComparator("infoSiteStudentInformation.number"));
+	Collections.sort(infoSiteStudentsAndGroupsList, new BeanComparator("infoStudentGroup.groupNumber"));
 
 	infoSiteStudentsAndGroups.setInfoSiteStudentsAndGroupsList(infoSiteStudentsAndGroupsList);
 	infoSiteStudentsAndGroups.setInfoGrouping(InfoGrouping.newInfoFromDomain(grouping));
