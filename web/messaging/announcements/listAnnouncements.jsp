@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ taglib uri="/WEB-INF/messaging.tld" prefix="messaging"%>
+<%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 
 <%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext"%>
 <html:xhtml />
@@ -116,7 +117,21 @@
 								<fr:view name="announcement" property="announcementBoard.name" />
 							</html:link>
 							<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.less" /> 
-			
+
+							<%-- Página da Cadeira --%>
+							<logic:notEmpty name="announcement" property="announcementBoard">
+								<logic:equal name="announcement" property="announcementBoard.class.name" value="net.sourceforge.fenixedu.domain.messaging.ExecutionCourseAnnouncementBoard">
+									<logic:notEmpty name="announcement" property="announcementBoard.executionCourse">
+										<logic:notEmpty name="announcement" property="announcementBoard.executionCourse.site">
+											<app:contentLink name="announcement" property="announcementBoard.executionCourse.site" target="_blank">
+												<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.web.page" /> 
+											</app:contentLink>
+											<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.less" /> 
+										</logic:notEmpty>
+									</logic:notEmpty>
+								</logic:equal>
+							</logic:notEmpty>
+
 							<%-- Manage --%> 
 							
 							<bean:define id="contentContext" name="<%= FilterFunctionalityContext.CONTEXT_KEY%>"/>
