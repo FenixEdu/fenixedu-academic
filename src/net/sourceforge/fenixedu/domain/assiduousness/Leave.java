@@ -206,11 +206,13 @@ public class Leave extends Leave_Base {
 					.plusDays(1)) {
 				AssiduousnessClosedDay assiduousnessClosedDay = oldAssiduousnessClosedMonth.getAssiduousnessClosedDay(day);
 				WorkDaySheet workDaySheet = employeeWorkSheet.getWorkDaySheet(day);
-				if (assiduousnessClosedDay != null && assiduousnessClosedDay.getIsCorrection()
-						&& assiduousnessClosedDay.getCorrectedOnClosedMonth().equals(correctionClosedMonth)) {
-					assiduousnessClosedDay.correct(workDaySheet);
-				} else {
-					new AssiduousnessClosedDay(newAssiduousnessClosedMonth, workDaySheet, correctionClosedMonth);
+				if (workDaySheet != null) {
+					if (assiduousnessClosedDay != null && assiduousnessClosedDay.getIsCorrection()
+							&& assiduousnessClosedDay.getCorrectedOnClosedMonth().equals(correctionClosedMonth)) {
+						assiduousnessClosedDay.correct(workDaySheet);
+					} else {
+						new AssiduousnessClosedDay(newAssiduousnessClosedMonth, workDaySheet, correctionClosedMonth);
+					}
 				}
 			}
 		}
