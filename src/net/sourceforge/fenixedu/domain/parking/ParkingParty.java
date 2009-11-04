@@ -183,7 +183,7 @@ public class ParkingParty extends ParkingParty_Base {
 
     public String getWorkPhone() {
 	if (getParty().isPerson()) {
-	    return getParty().getDefaultPhone().getNumber();
+	    return getParty().getDefaultPhone() != null ? getParty().getDefaultPhone().getNumber() : StringUtils.EMPTY;
 	}
 	return null;
     }
