@@ -59,7 +59,7 @@ public class RegistrationConclusionProcess extends RegistrationConclusionProcess
 	final DateTime creation = conclusionProcess.getCreationDateTime();
 
 	if (reg.getDegreeType() == DegreeType.MASTER_DEGREE || reg.getDegreeType() == DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA) {
-	    if (!reg.isSchoolPartConcluded()) {
+	    if (!reg.isSchoolPartConcluded() && !reg.isConcluded()) {
 		RegistrationStateCreator.createState(reg, responsible, creation, RegistrationStateType.SCHOOLPARTCONCLUDED);
 	    }
 	} else {
