@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
@@ -943,8 +942,8 @@ public class Thesis extends Thesis_Base {
 	final ExecutionCourse executionCourse = getExecutionCourse();
 	if (executionCourse != null) {
 	    for (Professorship professorship : executionCourse.getProfessorships()) {
-		if (professorship.isResponsibleFor()) {
-		    teachers.add(professorship.getTeacher());
+		if (professorship.isResponsibleFor() && professorship.hasTeacher()) {
+		    return professorship.getTeacher();
 		}
 	    }
 	}
@@ -952,19 +951,13 @@ public class Thesis extends Thesis_Base {
 	CurricularCourse curricularCourse = getEnrolment().getCurricularCourse();
 	Degree degree = curricularCourse.getDegree();
 
-	if (teachers.isEmpty()) {
-	    for (Coordinator coordinator : degree.getCurrentResponsibleCoordinators()) {
-		if (coordinator.isResponsible()) {
-		    teachers.add(coordinator.getPerson().getTeacher());
+	for (final ExecutionDegree executionDegree : curricularCourse.getDegreeCurricularPlan().getExecutionDegreesSet()) {
+	    if (executionDegree.getExecutionYear() == getEnrolment().getExecutionYear()) {
+		for (Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
+		    if (coordinator.isResponsible()) {
+			return coordinator.getPerson().getTeacher();
+		    }
 		}
-	    }
-	}
-
-	List<Department> departments = degree.getDepartments();
-
-	for (Teacher teacher : teachers) {
-	    if (departments.contains(teacher.getCurrentWorkingDepartment())) {
-		return teacher;
 	    }
 	}
 
