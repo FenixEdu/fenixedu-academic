@@ -45,7 +45,9 @@
 
 <div id="wrap">
 			<fr:form action="<%= "/manageFinalDegreeWork.do?method=finalDegreeWorkInfo&page=0&degreeCurricularPlanID=" + degreeCurricularPlanID + "&executionDegreeOID=" + executionDegreeOID%>">
-	<table class="tstyle5 thlight thleft tdright mtop05 mbottom05">
+            
+            <p class="mbottom05"><strong><bean:message key="finalDegreeWorkProposal.setProposalPeriod.header"/></strong></p>
+	        <table class="tstyle5 thlight thleft tdright mtop05 mbottom05">
 				<tr>
 					<th><bean:message key="finalDegreeWorkProposal.setProposalPeriod.start"/></th>
 					<td>
