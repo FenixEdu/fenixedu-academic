@@ -34,7 +34,8 @@ public class ReadTeacherServiceDistributionByCourse extends FenixService {
 
 	Department department = rootDomainObject.readDepartmentByOID(departmentId);
 
-	List<CompetenceCourse> competenceCourseList = department.getCompetenceCourses();
+//	List<CompetenceCourse> competenceCourseList = department.getCompetenceCourses();
+	List<CompetenceCourse> competenceCourseList = department.getDepartmentUnit().getCompetenceCourses();
 
 	List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>();
 	for (Integer executionPeriodID : executionPeriodsIDs) {
@@ -143,6 +144,10 @@ public class ReadTeacherServiceDistributionByCourse extends FenixService {
 
 	for (Professorship professorShipEntry : executionCourse.getProfessorships()) {
 	    Teacher teacher = professorShipEntry.getTeacher();
+	    
+	    if(teacher == null){
+		continue;
+	    }
 
 	    Integer teacherIdInternal = teacher.getIdInternal();
 	    String teacherName = teacher.getPerson().getName();
