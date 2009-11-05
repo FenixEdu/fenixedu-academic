@@ -449,7 +449,8 @@ public class CandidacyInformationBean implements Serializable {
 
 	    }
 
-	    if (!getCountryOfResidence().isDefaultCountry() && !getDislocatedFromPermanentResidence()) {
+	    if (!getCountryOfResidence().isDefaultCountry()
+		    && (getDislocatedFromPermanentResidence() == null || !getDislocatedFromPermanentResidence())) {
 		result.add("error.CandidacyInformationBean.foreign.students.must.select.dislocated.option");
 	    }
 	}
