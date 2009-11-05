@@ -70,17 +70,23 @@ public class MissingClocking extends MissingClocking_Base {
 		LocalDate date = getDate().toLocalDate();
 		AssiduousnessStatusHistory assiduousnessStatusHistory = getAssiduousness().getLastAssiduousnessStatusHistoryBetween(date,
 				date);
+		EmployeeWorkSheet oldEmployeeWorkSheet = null;
 
 		do {
 			correctNext = false;
 			ClosedMonth closedMonth = ClosedMonth.getClosedMonthForBalance(date);
-			if (closedMonth != null && closedMonth.getClosedForBalance()) {
+			if (closedMonth != null) {
 				AssiduousnessClosedMonth oldAssiduousnessClosedMonth = closedMonth
 						.getAssiduousnessClosedMonth(assiduousnessStatusHistory);
 				if (oldAssiduousnessClosedMonth != null) {
 
 					EmployeeWorkSheet employeeWorkSheet = ReadAssiduousnessWorkSheet.run(getAssiduousness().getEmployee(),
 							oldAssiduousnessClosedMonth.getBeginDate(), oldAssiduousnessClosedMonth.getEndDate());
+
+					if (oldDay != null) {
+						oldEmployeeWorkSheet = ReadAssiduousnessWorkSheet.run(getAssiduousness().getEmployee(), oldDay
+								.toLocalDate(), oldDay.toLocalDate());
+					}
 
 					AssiduousnessClosedMonth newAssiduousnessClosedMonth = oldAssiduousnessClosedMonth;
 
@@ -157,8 +163,8 @@ public class MissingClocking extends MissingClocking_Base {
 						}
 
 						if (oldDay != null) {
-							correctOldAssiduousnessClosedDay(oldDay, correctionClosedMonth, oldAssiduousnessClosedMonth,
-									employeeWorkSheet, newAssiduousnessClosedMonth);
+							correctOldAssiduousnessClosedDay(oldDay, correctionClosedMonth, oldEmployeeWorkSheet,
+									newAssiduousnessClosedMonth);
 
 							correctAssiduousnessClosedDay(correctionClosedMonth, oldAssiduousnessClosedMonth, employeeWorkSheet,
 									newAssiduousnessClosedMonth);
@@ -174,8 +180,7 @@ public class MissingClocking extends MissingClocking_Base {
 	}
 
 	private void correctOldAssiduousnessClosedDay(DateTime oldDay, ClosedMonth correctionClosedMonth,
-			AssiduousnessClosedMonth oldAssiduousnessClosedMonth, EmployeeWorkSheet employeeWorkSheet,
-			AssiduousnessClosedMonth newAssiduousnessClosedMonth) {
+			EmployeeWorkSheet employeeWorkSheet, AssiduousnessClosedMonth newAssiduousnessClosedMonth) {
 		LocalDate oldPreviousDay = oldDay.toLocalDate().minusDays(1);
 		HashMap<LocalDate, WorkSchedule> oldWorkScheduleMap = getAssiduousness().getWorkSchedulesBetweenDates(oldPreviousDay,
 				oldDay.toLocalDate());
@@ -194,6 +199,12 @@ public class MissingClocking extends MissingClocking_Base {
 		} else if (overlapsSchedule < 0) {
 			clockDay = clockDay.minusDays(1);
 		}
+
+		ClosedMonth closedMonth = ClosedMonth.getClosedMonthForBalance(oldDay.toLocalDate());
+		AssiduousnessStatusHistory assiduousnessStatusHistory = getAssiduousness().getLastAssiduousnessStatusHistoryBetween(
+				oldDay.toLocalDate(), oldDay.toLocalDate());
+		AssiduousnessClosedMonth oldAssiduousnessClosedMonth = closedMonth
+				.getAssiduousnessClosedMonth(assiduousnessStatusHistory);
 
 		LocalDate oldDayToUpdate = clockDay;
 
