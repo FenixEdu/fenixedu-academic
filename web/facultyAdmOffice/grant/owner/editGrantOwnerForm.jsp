@@ -188,9 +188,9 @@
 			<bean:message key="label.grant.owner.infoperson.country"/>:
 		</td>
 		<td>
-			<html:select bundle="HTMLALT_RESOURCES" altKey="select.country" property="country">
-				<html:options collection="countryList" property="idInternal" labelProperty="name"/>
-			</html:select>
+			<html:select bundle="HTMLALT_RESOURCES" altKey="select.country" property="country">				
+				<html:options collection="countryList" property="idInternal" labelProperty="nameAndNationality"/>
+			</html:select>																	
 		</td>
 	</tr>
 	<tr>
