@@ -342,7 +342,7 @@ public class FenixStatementInterceptor implements StatementInterceptor {
 	}
 
 	private String extractNameFromKey(String key) {
-	    String name = key.replace("KEY_", "");
+	    String name = key.replace("OID_", "");
 	    name = name.toLowerCase();
 	    StringBuilder buffer = new StringBuilder();
 	    for (String part : name.split("_")) {
