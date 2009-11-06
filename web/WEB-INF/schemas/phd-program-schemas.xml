@@ -558,13 +558,12 @@
 		<property name="bundle" value="PHD_RESOURCES"/>
 	</slot>
 	<slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<slot name="qualification" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="qualification" />
 	<slot name="category" />
 	<slot name="workLocation" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="address" />
 	<slot name="email">
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.EmailValidator" />
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NotRequiredEmailValidator" />
 	</slot>
 	<slot name="phone" />
 </schema>
