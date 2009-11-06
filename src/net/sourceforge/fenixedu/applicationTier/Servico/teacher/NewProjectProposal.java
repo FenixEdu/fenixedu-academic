@@ -89,10 +89,8 @@ public class NewProjectProposal extends FenixService {
 	Iterator iterProfessorship = professorships.iterator();
 	while (iterProfessorship.hasNext()) {
 	    Professorship professorship = (Professorship) iterProfessorship.next();
-	    Teacher teacher = professorship.getTeacher();
-	    if (!(teacher.getPerson()).equals(senderPerson)) {
-
-		group.add(teacher.getPerson());
+	    if (!professorship.getPerson().equals(senderPerson)) {
+		group.add(professorship.getPerson());
 	    } else {
 		acceptProposal = true;
 	    }
@@ -106,8 +104,7 @@ public class NewProjectProposal extends FenixService {
 	Iterator iterProfessorshipAux = professorshipsAux.iterator();
 	while (iterProfessorshipAux.hasNext()) {
 	    Professorship professorshipAux = (Professorship) iterProfessorshipAux.next();
-	    Teacher teacherAux = professorshipAux.getTeacher();
-	    Person pessoa = teacherAux.getPerson();
+	    Person pessoa = professorshipAux.getPerson();
 	    if (!(pessoa.equals(senderPerson))) {
 		groupAux.add(pessoa);
 		if (!allOtherProfessors.contains(pessoa)) {
