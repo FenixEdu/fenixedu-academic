@@ -369,7 +369,7 @@
 
 <schema name="PhdProgramDocumentUploadBean.edit" type="net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean" bundle="PHD_RESOURCES">
 	<slot name="type">
-		<property name="excludedValues" value="CANDIDACY_REVIEW,CANDIDACY_RATIFICATION" />
+		<property name="excludedValues" value="CANDIDACY_REVIEW,CANDIDACY_RATIFICATION,PUBLIC_PRESENTATION_SEMINAR_COMISSION,PUBLIC_PRESENTATION_SEMINAR_REPORT" />
 	</slot>
 	<slot name="remarks">
 		<property name="maxLength" value="100" />
