@@ -125,51 +125,39 @@
 
 	<br/>
 	<strong><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.framing"/></strong>:
-	<p>
-		<bean:write name="finalDegreeWorkProposal" property="framing"/>
-	</p>
+	<pre><bean:write name="finalDegreeWorkProposal" property="framing"/></pre>
 
 	<br/>
 	<strong><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.objectives"/></strong>:
-	<p>
-		<bean:write name="finalDegreeWorkProposal" property="objectives"/>
-	</p>
+	<pre><bean:write name="finalDegreeWorkProposal" property="objectives"/></pre>
 
 	<br/>
 	<strong><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.description"/></strong>:
-	<p>
-		<bean:write name="finalDegreeWorkProposal" property="description"/>
-	</p>
+	<pre><bean:write name="finalDegreeWorkProposal" property="description"/></pre>
 
 	<br/>
 	<strong><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.requirements"/></strong>:
-	<p>
-		<bean:write name="finalDegreeWorkProposal" property="requirements"/>
-	</p>
+	<pre><bean:write name="finalDegreeWorkProposal" property="requirements"/></pre>
 
 	<br/>
 	<strong><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.deliverable"/></strong>:
-	<p>
-		<bean:write name="finalDegreeWorkProposal" property="deliverable"/>
-	</p>
+	<pre><bean:write name="finalDegreeWorkProposal" property="deliverable"/></pre>
 
 	<br/>
 	<strong><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.url"/></strong>:
 	<p>
-		<bean:write name="finalDegreeWorkProposal" property="url"/>
-	</p>
+        <bean:write name="finalDegreeWorkProposal" property="url"/>
+    </p>
 
 	<br/>
 	<strong><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.observations"/></strong>:
-	<p>
-		<bean:write name="finalDegreeWorkProposal" property="observations"/>
-	</p>
+	<pre><bean:write name="finalDegreeWorkProposal" property="observations"/></pre>
 
 	<br/>
 	<strong><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.location"/></strong>:
 	<p>
-		<bean:write name="finalDegreeWorkProposal" property="location"/>
-	</p>
+        <bean:write name="finalDegreeWorkProposal" property="location"/>
+    </p>
 </logic:present>
 <logic:notPresent name="finalDegreeWorkProposal">
 	<span class="error"><!-- Error messages go here --><bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposal.notPresent"/></span>
