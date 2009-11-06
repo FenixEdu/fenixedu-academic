@@ -16,7 +16,8 @@
 <fr:form action="/studentsListByDegree.do" id="searchForm">
 <html:hidden property="method" value="searchByDegree"/>
 <html:hidden property="extendedInfo" value="false"/>
-	<fr:edit name="searchParametersBean" schema="student.list.searchByDegree.chooseDegree" id="chooseDegree">
+	<fr:edit id="searchParametersBean" name="searchParametersBean" visible="false"/>
+	<fr:edit id="chosenDegree" name="searchParametersBean" schema="SearchStudentsByDegreeParametersBean.edit.degreeAndRegistrationInfo">
 		<fr:destination name="postBack" path="/studentsListByDegree.do?method=postBack"/>
 		<fr:destination name="invalid" path="/studentsListByDegree.do?method=prepareByDegree"/>
 		<fr:layout name="tabular">
@@ -25,7 +26,7 @@
 		</fr:layout>
 	</fr:edit>
 
-	<fr:edit id="chooseParameters" name="searchParametersBean" schema="student.list.searchByDegree.parameters">
+	<fr:edit id="chosenParameters" name="searchParametersBean" schema="SearchStudentsByDegreeParametersBean.edit.parameters">
 		<fr:layout name="tabular-row">
 			<fr:property name="classes" value="tdtop ulnomargin"/>
 		</fr:layout>

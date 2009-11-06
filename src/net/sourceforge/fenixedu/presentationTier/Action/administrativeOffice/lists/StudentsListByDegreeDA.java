@@ -67,7 +67,7 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
     }
 
     private SearchStudentsByDegreeParametersBean getOrCreateSearchParametersBean() {
-	SearchStudentsByDegreeParametersBean bean = (SearchStudentsByDegreeParametersBean) getRenderedObject("chooseDegree");
+	SearchStudentsByDegreeParametersBean bean = (SearchStudentsByDegreeParametersBean) getRenderedObject("searchParametersBean");
 	return (bean != null) ? bean : new SearchStudentsByDegreeParametersBean();
     }
 
@@ -177,7 +177,7 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
     private void fillSpreadSheetPreBolonhaInfo(StyledExcelSpreadsheet spreadsheet, Registration registration) {
 	if (!registration.isBolonha()) {
 	    RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(registration);
-	    fillSpreadSheetRegistrationInfo(spreadsheet, registrationConclusionBean);
+	    fillSpreadSheetRegistrationInfo(spreadsheet, registrationConclusionBean, registration.hasConcluded());
 	} else {
 	    fillSpreadSheetEmptyCells(spreadsheet);
 	}
@@ -187,16 +187,14 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
 	    CycleCurriculumGroup cycle) {
 	if ((cycle != null) && (!cycle.isExternal())) {
 	    RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(registration, cycle);
-	    fillSpreadSheetRegistrationInfo(spreadsheet, registrationConclusionBean);
+	    fillSpreadSheetRegistrationInfo(spreadsheet, registrationConclusionBean, registrationConclusionBean.isConcluded());
 	} else {
 	    fillSpreadSheetEmptyCells(spreadsheet);
 	}
     }
 
     private void fillSpreadSheetRegistrationInfo(StyledExcelSpreadsheet spreadsheet,
-	    RegistrationConclusionBean registrationConclusionBean) {
-	boolean isConcluded = registrationConclusionBean.isConcluded();
-
+	    RegistrationConclusionBean registrationConclusionBean, boolean isConcluded) {
 	spreadsheet.addCell(isConcluded ? "Sim" : "Não");
 	spreadsheet.addCell(isConcluded ? registrationConclusionBean.getConclusionDate().toString(YMD_FORMAT) : "");
 	spreadsheet.addCell(registrationConclusionBean.getAverage().toString());
