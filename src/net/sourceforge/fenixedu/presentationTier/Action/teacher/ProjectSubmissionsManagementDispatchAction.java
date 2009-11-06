@@ -14,13 +14,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.NotifyStudentGroup;
 import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.domain.ProjectSubmission;
 import net.sourceforge.fenixedu.domain.ProjectSubmissionLog;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentGroup;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.Archive;
@@ -186,9 +186,9 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
     }
 
     private Project getProject(HttpServletRequest request) {
-	final Teacher teacher = getUserView(request).getPerson().getTeacher();
+	final Person person = getUserView(request).getPerson();
 	final Integer projectId = getRequestParameterAsInteger(request, "projectID");
-	for (final Professorship professorship : teacher.getProfessorships()) {
+	for (final Professorship professorship : person.getProfessorships()) {
 	    for (final Project project : professorship.getExecutionCourse().getAssociatedProjects()) {
 		if (project.getIdInternal().equals(projectId)) {
 		    return project;
