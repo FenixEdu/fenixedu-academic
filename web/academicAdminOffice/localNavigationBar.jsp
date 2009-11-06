@@ -12,6 +12,11 @@
  
 
 	<ul>
+		<logic:equal name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee.administrativeOffice.administrativeOfficeType" value="MASTER_DEGREE">
+			<li class="navheader"><bean:message key="label.phds" bundle="PHD_RESOURCES"/></li>
+			<li><html:link page="/phdIndividualProgramProcess.do?method=manageProcesses"><bean:message key="label.phd.manageProcesses" bundle="PHD_RESOURCES"/></html:link></li>
+		</logic:equal>
+		
 		<li class="navheader"><bean:message key="link.studentOperations" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
 		<li><html:link page="/createStudent.do?method=prepareCreateStudent"><bean:message key="link.studentOperations.createStudent" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link></li>
 		<li><html:link page="/students.do?method=prepareSearch"><bean:message key="link.studentOperations.viewStudents" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link></li>
@@ -78,13 +83,6 @@
 		<li class="navheader"><bean:message key="label.documents" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
 		<li><html:link page="/generatedDocuments.do?method=prepareSearchPerson"><bean:message key="label.documents.anualIRS" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link></li>
 	</ul>
-
-	<logic:equal name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee.administrativeOffice.administrativeOfficeType" value="MASTER_DEGREE">
-		<ul>
-			<li class="navheader"><bean:message key="label.phds" bundle="PHD_RESOURCES"/></li>
-			<li><html:link page="/phdIndividualProgramProcess.do?method=manageProcesses"><bean:message key="label.phd.manageProcesses" bundle="PHD_RESOURCES"/></html:link></li>
-		</ul>
-	</logic:equal>
 
 	<logic:equal name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee.unitCoordinator" value="true">
 		<ul>
