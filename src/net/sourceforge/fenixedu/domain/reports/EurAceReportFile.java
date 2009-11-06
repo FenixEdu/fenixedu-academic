@@ -30,7 +30,7 @@ public class EurAceReportFile extends EurAceReportFile_Base {
 	setDegreeHeaders(spreadsheet);
 	spreadsheet.setHeader("nome disciplina");
 	spreadsheet.setHeader("codigo execucao disciplina");
-	spreadsheet.setHeader("nï¿½mero do docente");
+	spreadsheet.setHeader("número do docente");
 	spreadsheet.setHeader("OID execucao disciplina");
 
 	for (final Degree degree : Degree.readNotEmptyDegrees()) {
@@ -42,7 +42,7 @@ public class EurAceReportFile extends EurAceReportFile_Base {
 				for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
 				    if (checkExecutionYear(getExecutionYear(), executionCourse)) {
 					for (final Professorship professorship : executionCourse.getProfessorshipsSet()) {
-					    if (professorship.hasPerson()) {
+					    if (professorship.hasTeacher()) {
 						final Teacher teacher = professorship.getTeacher();
 						final Row row = spreadsheet.addRow();
 						setDegreeCells(row, degree);
