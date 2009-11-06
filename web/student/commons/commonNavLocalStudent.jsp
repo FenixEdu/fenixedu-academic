@@ -76,9 +76,7 @@
 	<li class="navheader"><bean:message key="label.information.export" bundle="STUDENT_RESOURCES"/></li>
 	<li><html:link page="/managePasswords.do?method=managePasswords" titleKey="label.information.export.manage.passwords"><bean:message key="label.information.export.manage.passwords"/></html:link></li>
 
-	<%-- 
 	<li class="navheader"><bean:message key="label.phds" bundle="PHD_RESOURCES"/></li>
 	<li><html:link page="/phdIndividualProgramProcess.do?method=viewProcess"><bean:message key="label.phd.manageProcesses" bundle="PHD_RESOURCES"/></html:link></li>
-	--%>
 
 </ul>

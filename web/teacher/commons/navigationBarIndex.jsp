@@ -121,10 +121,8 @@
 		        </html:link>
 	        </li>
 	        
-	        
-<%-- 	        
     <li class="navheader"><bean:message key="label.phds" bundle="PHD_RESOURCES"/></li>
 	<li><html:link page="/phdIndividualProgramProcess.do?method=manageProcesses"><bean:message key="label.phd.manageProcesses" bundle="PHD_RESOURCES"/></html:link></li>
 	<li><html:link page="/phdIndividualProgramProcess.do?method=viewAlertMessages"><bean:message key="label.phd.alertMessages" bundle="PHD_RESOURCES"/></html:link></li>
- --%>
+
 </ul>
