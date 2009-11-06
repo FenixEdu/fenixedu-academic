@@ -57,7 +57,29 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 
 	ExecutionYearIntervalBean bean = retrieveExecutionYearBeanFromRequest(request);
 
-	putInformationOnRequestForGivenExecutionYear(bean.getFirstExecutionYear(), bean.getFinalExecutionYear(), person, request);
+	ExecutionYear firstExecutionYear = bean.getFirstExecutionYear();
+	ExecutionYear finalExecutionYear = bean.getFinalExecutionYear();
+
+	ExecutionYear firstOfAll = ExecutionYear.readFirstExecutionYear();
+
+	if (firstExecutionYear == null) {
+	    firstExecutionYear = firstOfAll;
+	}
+	if (finalExecutionYear == null || finalExecutionYear.isBefore(firstExecutionYear)) {
+	    finalExecutionYear = ExecutionYear.readLastExecutionYear();
+	}
+
+	if (person.getResearchResultPublications().size() > 100
+		&& (finalExecutionYear.getBeginCivilYear() - firstExecutionYear.getBeginCivilYear()) > 5
+		&& firstExecutionYear == firstOfAll) {
+	    firstExecutionYear = finalExecutionYear.getPreviousExecutionYear().getPreviousExecutionYear()
+		    .getPreviousExecutionYear().getPreviousExecutionYear().getPreviousExecutionYear();
+	}
+
+	bean.setFinalExecutionYear(finalExecutionYear);
+	bean.setFirstExecutionYear(firstExecutionYear);
+
+	putInformationOnRequestForGivenExecutionYear(firstExecutionYear, finalExecutionYear, person, request);
 
 	final List<ResearchInterest> researchInterests = person.getResearchInterests();
 	request.setAttribute("researchInterests", researchInterests);
@@ -70,6 +92,7 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 	ExecutionYearIntervalBean bean = (viewState != null) ? (ExecutionYearIntervalBean) viewState.getMetaObject().getObject()
 		: new ExecutionYearIntervalBean();
 	request.setAttribute("executionYearIntervalBean", bean);
+	RenderUtils.invalidateViewState("executionYearIntervalBean");
 	return bean;
     }
 
@@ -96,13 +119,6 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 	Set<ResearchResultPublication> resultPublications = new HashSet<ResearchResultPublication>();
 	Set<Prize> prizes = new HashSet<Prize>();
 	Set<Career> career = new HashSet<Career>();
-
-	if (firstExecutionYear == null) {
-	    firstExecutionYear = ExecutionYear.readFirstExecutionYear();
-	}
-	if (finaltExecutionYear == null || finaltExecutionYear.isBefore(firstExecutionYear)) {
-	    finaltExecutionYear = ExecutionYear.readLastExecutionYear();
-	}
 
 	ExecutionYear stoppageYear = finaltExecutionYear.getNextExecutionYear();
 	ExecutionYear iteratorYear = firstExecutionYear;

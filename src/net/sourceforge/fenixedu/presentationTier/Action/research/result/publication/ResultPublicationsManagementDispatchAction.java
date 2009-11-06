@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateJournalIssue;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateResearchEventEdition;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.result.publication.DeleteResultPublication;
+import net.sourceforge.fenixedu.dataTransferObject.research.result.ExecutionYearIntervalBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultDocumentFileSubmissionBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultUnitAssociationCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ArticleBean;
@@ -16,6 +17,7 @@ import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.C
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultEventAssociationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean.ResultPublicationType;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -596,21 +598,50 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 
     private void setRequestAttributesToList(HttpServletRequest request, Person person) {
 
-	request.setAttribute("books", ResearchResultPublication.sort(person.getBooks()));
-	request.setAttribute("national-articles", ResearchResultPublication.sort(person.getArticles(ScopeType.NATIONAL)));
+	ExecutionYearIntervalBean bean = (ExecutionYearIntervalBean) getRenderedObject("executionYearIntervalBean");
+
+	if (bean == null) {
+	    bean = new ExecutionYearIntervalBean();
+	}
+	ExecutionYear firstExecutionYear = bean.getFirstExecutionYear();
+	ExecutionYear finalExecutionYear = bean.getFinalExecutionYear();
+
+	ExecutionYear firstOfAll = ExecutionYear.readFirstExecutionYear();
+
+	if (firstExecutionYear == null) {
+	    firstExecutionYear = firstOfAll;
+	}
+	if (finalExecutionYear == null || finalExecutionYear.isBefore(firstExecutionYear)) {
+	    finalExecutionYear = ExecutionYear.readLastExecutionYear();
+	}
+
+	if (person.getResearchResultPublications().size() > 100
+		&& (finalExecutionYear.getBeginCivilYear() - firstExecutionYear.getBeginCivilYear()) > 5
+		&& firstExecutionYear == firstOfAll) {
+	    firstExecutionYear = finalExecutionYear.getPreviousExecutionYear().getPreviousExecutionYear()
+		    .getPreviousExecutionYear().getPreviousExecutionYear().getPreviousExecutionYear();
+	}
+
+	bean.setFinalExecutionYear(finalExecutionYear);
+	bean.setFirstExecutionYear(firstExecutionYear);
+	
+	request.setAttribute("executionYearIntervalBean", bean);
+	
+	request.setAttribute("books", ResearchResultPublication.sort(person.getBooks(firstExecutionYear, finalExecutionYear)));
+	request.setAttribute("national-articles", ResearchResultPublication.sort(person.getArticles(ScopeType.NATIONAL,firstExecutionYear, finalExecutionYear)));
 	request.setAttribute("international-articles", ResearchResultPublication
-		.sort(person.getArticles(ScopeType.INTERNATIONAL)));
+		.sort(person.getArticles(ScopeType.INTERNATIONAL,firstExecutionYear, finalExecutionYear)));
 	request.setAttribute("national-inproceedings", ResearchResultPublication
-		.sort(person.getInproceedings(ScopeType.NATIONAL)));
+		.sort(person.getInproceedings(ScopeType.NATIONAL,firstExecutionYear, finalExecutionYear)));
 	request.setAttribute("international-inproceedings", ResearchResultPublication.sort(person
-		.getInproceedings(ScopeType.INTERNATIONAL)));
-	request.setAttribute("proceedings", ResearchResultPublication.sort(person.getProceedings()));
-	request.setAttribute("theses", ResearchResultPublication.sort(person.getTheses()));
-	request.setAttribute("manuals", ResearchResultPublication.sort(person.getManuals()));
-	request.setAttribute("technicalReports", ResearchResultPublication.sort(person.getTechnicalReports()));
-	request.setAttribute("otherPublications", ResearchResultPublication.sort(person.getOtherPublications()));
-	request.setAttribute("unstructureds", ResearchResultPublication.sort(person.getUnstructureds()));
-	request.setAttribute("inbooks", ResearchResultPublication.sort(person.getInbooks()));
+		.getInproceedings(ScopeType.INTERNATIONAL,firstExecutionYear, finalExecutionYear)));
+	request.setAttribute("proceedings", ResearchResultPublication.sort(person.getProceedings(firstExecutionYear, finalExecutionYear)));
+	request.setAttribute("theses", ResearchResultPublication.sort(person.getTheses(firstExecutionYear, finalExecutionYear)));
+	request.setAttribute("manuals", ResearchResultPublication.sort(person.getManuals(firstExecutionYear, finalExecutionYear)));
+	request.setAttribute("technicalReports", ResearchResultPublication.sort(person.getTechnicalReports(firstExecutionYear, finalExecutionYear)));
+	request.setAttribute("otherPublications", ResearchResultPublication.sort(person.getOtherPublications(firstExecutionYear, finalExecutionYear)));
+	request.setAttribute("unstructureds", ResearchResultPublication.sort(person.getUnstructureds(firstExecutionYear, finalExecutionYear)));
+	request.setAttribute("inbooks", ResearchResultPublication.sort(person.getInbooks(firstExecutionYear, finalExecutionYear)));
 
 	request.setAttribute("person", getLoggedPerson(request));
     }

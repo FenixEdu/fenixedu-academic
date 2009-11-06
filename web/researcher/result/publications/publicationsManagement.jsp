@@ -55,6 +55,45 @@
 		<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.emptyList"/></em></p>
 	</logic:empty>
 	
+	<fr:form action="/resultPublications/listPublications.do">
+		<fr:edit id="executionYearIntervalBean" name="executionYearIntervalBean" visible="false"/>
+		
+		<p class="mbottom025"><bean:message key="label.choosen.interval" bundle="RESEARCHER_RESOURCES"/>:</p>
+		
+		<table class="tstyle5 mtop025">
+		<tr>
+			<td>
+				<bean:message key="label.start" bundle="RESEARCHER_RESOURCES"/>:	  
+				<fr:edit id="firstYear" name="executionYearIntervalBean" slot="firstExecutionYear">
+					<fr:layout name="menu-select">
+					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider"/>
+					<fr:property name="format" value="${year}"/>
+					<fr:property name="defaultText" value="label.undefined"/>
+					<fr:property name="key" value="true"/>
+					<fr:property name="bundle" value="RESEARCHER_RESOURCES"/>
+				</fr:layout>
+				</fr:edit>
+			</td>						  
+			<td>
+				<bean:message key="label.end" bundle="RESEARCHER_RESOURCES"/>:
+
+				<fr:edit id="finalYear" name="executionYearIntervalBean" slot="finalExecutionYear">
+					<fr:layout name="menu-select">
+					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider"/>
+					<fr:property name="format" value="${year}"/>
+					<fr:property name="defaultText" value="label.undefined"/>
+					<fr:property name="key" value="true"/>
+					<fr:property name="bundle" value="RESEARCHER_RESOURCES"/>
+				</fr:layout>
+				</fr:edit>
+
+				<html:submit><bean:message key="label.filter" bundle="RESEARCHER_RESOURCES"/></html:submit>
+			</td>
+		</tr>
+		</table>
+		</fr:form>
+		
+		
 	<logic:notEmpty name="publications">
 	
 	<logic:present name="preferredSetting">
