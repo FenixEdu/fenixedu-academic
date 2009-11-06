@@ -15,13 +15,11 @@
 		<li>
 			<html:link page="/index.do"><bean:message  key="label.coordinator.degrees"/></html:link>
 		</li>
-		<%-- 
 		<li>
 			<html:link page="/phdIndividualProgramProcess.do?method=manageProcesses">
 				<bean:message  key="label.coordinator.phdProcesses"/>
 			</html:link>
 		</li>
-		--%>
 		
 		<%-- BIG HACK :) - temporary --%>
 		<logic:equal name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" 
