@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
@@ -15,6 +16,7 @@ import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 import bibtex.dom.BibtexEntry;
@@ -51,7 +53,8 @@ public abstract class ResearchResultPublication extends ResearchResultPublicatio
     private void removeAssociations() {
 	super.setPublisher(null);
 	super.setOrganization(null);
-	super.setPersonThatPrefers(null);
+	for (; hasAnyPersonThatPrefers(); getPersonThatPrefers().get(0).delete())
+	    ;
     }
 
     @Override
@@ -196,18 +199,31 @@ public abstract class ResearchResultPublication extends ResearchResultPublicatio
 	publication.setCreator(getCreator());
     }
 
+    protected PreferredPublication getPreferredPublicationForCurrentUser() {
+	IUserView user = UserView.getUser();
+	Person person = user.getPerson();
+	for (PreferredPublication preferred : getPersonThatPrefersSet()) {
+	    if (preferred.getPersonThatPrefers().equals(person))
+		return preferred;
+	}
+	return null;
+    }
+
     public PreferredPublicationPriority getPreferredLevel() {
-	return hasPersonThatPrefers() ? getPersonThatPrefers().getPriority() : PreferredPublicationPriority.NONE;
+	PreferredPublication preferred = getPreferredPublicationForCurrentUser();
+	return preferred != null ? preferred.getPriority() : PreferredPublicationPriority.NONE;
     }
 
     public void setPreferredLevel(PreferredPublicationPriority priority) {
-	if (hasPersonThatPrefers() && priority == PreferredPublicationPriority.NONE) {
-	    getPersonThatPrefers().delete();
+	if (getPreferredPublicationForCurrentUser() != null && priority == PreferredPublicationPriority.NONE) {
+	    getPreferredPublicationForCurrentUser().delete();
 	} else if (priority != PreferredPublicationPriority.NONE) {
-	    if (hasPersonThatPrefers()) {
-		getPersonThatPrefers().setPriority(priority);
+	    PreferredPublication preferred = getPreferredPublicationForCurrentUser();
+	    if (preferred == null) {
+		IUserView user = UserView.getUser();
+		preferred = new PreferredPublication(user.getPerson(), this, priority);
 	    } else {
-		new PreferredPublication(getCreator(), this, priority);
+		preferred.setPriority(priority);
 	    }
 	}
     }

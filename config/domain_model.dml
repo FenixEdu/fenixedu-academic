@@ -11540,7 +11540,9 @@ relation PreferredPublicationsPublication {
     research.result.publication.ResearchResultPublication playsRole preferredPublication {
         multiplicity 1;
     }
-    research.result.publication.PreferredPublication playsRole personThatPrefers;
+    research.result.publication.PreferredPublication playsRole personThatPrefers {
+        multiplicity *;
+    }
 }
 
 relation ResearchResultPrize {
