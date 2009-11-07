@@ -138,12 +138,9 @@
     	<span><bean:message bundle="DEPARTMENT_MEMBER_RESOURCES" key="label.teacher.details.orientationInformation"/></span>
     	<span style="position: absolute; right: 5px;"><%=ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX%><a href="#header"><bean:message key="label.top" /></a></span>
     </p>
-    
-	
-
 	</logic:notEmpty>
 	<logic:empty  name="final_works">	
-	    <logic:notEmpty  name="guidances">	
+	    <logic:notEmpty  name="secondCycleThesis">	
 		    <p id='guidancesTitle' class="separator2" style="position: relative; width: 99%; margin-top: 2em;">
 		    	<span><bean:message bundle="DEPARTMENT_MEMBER_RESOURCES" key="label.teacher.details.orientationInformation"/></span>
 		    	<span style="position: absolute; right: 5px;"><%=ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX%><a href="#header"><bean:message key="label.top" /></a></span>
@@ -166,26 +163,39 @@
 		</logic:iterate>
 		<div style="clear: both;"></div>
     </logic:notEmpty>
-	
-	
 
-	<logic:notEmpty name="guidances">
+	<logic:notEmpty name="secondCycleThesis">
 	<p class="indent1 mtop15"><em><bean:message key="label.common.masterDegree" bundle="DEPARTMENT_MEMBER_RESOURCES"/></em></p>
 	<ul>
+	<logic:notEmpty name="guidances">
 	<logic:iterate id="guidance" name="guidances">
-		<li><fr:view name="guidance" property="dissertationTitle"/>, <fr:view name="guidance" property="masterDegreeThesis.studentCurricularPlan.student.person.name"/> (<bean:message key="label.teacher.details.orientationInformation.masterDegreeProofDate" bundle="DEPARTMENT_MEMBER_RESOURCES"/>: 
+		<li><fr:view name="guidance" property="dissertationTitle"/>, <fr:view name="guidance" property="masterDegreeThesis.studentCurricularPlan.student.person.name"/> (<bean:message key="label.teacher.details.orientationInformation.masterDegreeProofDate" bundle="DEPARTMENT_MEMBER_RESOURCES"/>:
 		<logic:present name="guidance" property="masterDegreeThesis.activeMasterDegreeProofVersion">
-		<fr:view name="guidance" property="masterDegreeThesis.activeMasterDegreeProofVersion.proofDate" type="java.lang.String"/>)
+    	  <fr:view name="guidance" property="masterDegreeThesis.activeMasterDegreeProofVersion.proofDate" type="java.lang.String"/>)
 		</logic:present>
 		<logic:notPresent name="guidance" property="masterDegreeThesis.activeMasterDegreeProofVersion">
-			-
+		  <bean:message bundle="RESEARCHER_RESOURCES" key="label.researcher.thesis.notEvaluated"/>)
 		</logic:notPresent>
 		</li>
-		
 	</logic:iterate>
-	</ul>	
 	</logic:notEmpty>
 
+    <logic:notEmpty name="orientedThesis">
+    <logic:iterate id="thesis" name="orientedThesis">
+	   <li>
+	       <fr:view name="thesis" property="finalFullTitle" />, <fr:view name="thesis" property="student.person.name" /> (<bean:message key="label.teacher.details.orientationInformation.masterDegreeProofDate" bundle="DEPARTMENT_MEMBER_RESOURCES"/>:
+	       <fr:view name="thesis" property="evaluation" type="org.joda.time.DateTime">
+	           <fr:layout name="null-as-label">
+	               <fr:property name="key" value="true" />
+	               <fr:property name="bundle" value="RESEARCHER_RESOURCES" />
+	               <fr:property name="label" value="label.researcher.thesis.notEvaluated" />
+	           </fr:layout>
+	       </fr:view>)
+	   </li>
+    </logic:iterate>
+    </logic:notEmpty>
+    </ul>
+    </logic:notEmpty>
 	
 
 	<!-- Functions -->	

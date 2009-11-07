@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
 import net.sourceforge.fenixedu.domain.teacher.Career;
+import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -102,6 +103,7 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 	Set<Advise> final_works = new HashSet<Advise>();
 	Set<MasterDegreeThesisDataVersion> guidances = new HashSet<MasterDegreeThesisDataVersion>();
 	Set<ExecutionCourse> lectures = new HashSet<ExecutionCourse>();
+	Set<Thesis> orientedThesis = new HashSet<Thesis>();
 	Set<PersonFunction> functions = new HashSet<PersonFunction>();
 	Set<ResearchResultPublication> books = new HashSet<ResearchResultPublication>();
 	Set<ResearchResultPublication> localArticles = new HashSet<ResearchResultPublication>();
@@ -132,6 +134,8 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 		guidances.addAll(teacher.getGuidedMasterDegreeThesisByExecutionYear(iteratorYear));
 		lectures.addAll(teacher.getLecturedExecutionCoursesByExecutionYear(iteratorYear));
 	    }
+
+	    orientedThesis.addAll(person.getOrientedOrCoorientedThesis(iteratorYear));
 
 	    functions.addAll(person.getPersonFuntions(iteratorYear.getBeginDateYearMonthDay(), iteratorYear
 		    .getEndDateYearMonthDay()));
@@ -165,6 +169,10 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 	request.setAttribute("final_works", final_worksList);
 	request.setAttribute("guidances", guidances);
 	request.setAttribute("lectures", lectures);
+	request.setAttribute("orientedThesis", orientedThesis);
+	if (!(guidances.isEmpty() && orientedThesis.isEmpty())) {
+	    request.setAttribute("secondCycleThesis", true);
+	}
 	request.setAttribute("resultPublications", resultPublications);
 	request.setAttribute("books", ResearchResultPublication.sort(books));
 	request.setAttribute("local-articles", ResearchResultPublication.sort(localArticles));

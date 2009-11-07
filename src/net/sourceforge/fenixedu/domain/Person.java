@@ -109,7 +109,9 @@ import net.sourceforge.fenixedu.domain.teacher.Career;
 import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
 import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
+import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
+import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod;
@@ -2701,6 +2703,17 @@ public class Person extends Person_Base {
 	    return getExternalContract().getInstitutionUnit().getPresentationNameWithParents();
 	}
 	return "";
+    }
+
+    public Set<Thesis> getOrientedOrCoorientedThesis(ExecutionYear year) {
+	Set<Thesis> thesis = new HashSet<Thesis>();
+	for (ThesisEvaluationParticipant participant : getThesisEvaluationParticipants()) {
+	    if (participant.getThesis().getEnrolment().getExecutionYear().equals(year)
+		    && (participant.getType() == ThesisParticipationType.ORIENTATOR || participant.getType() == ThesisParticipationType.COORIENTATOR)) {
+		thesis.add(participant.getThesis());
+	    }
+	}
+	return thesis;
     }
 
     public List<ThesisEvaluationParticipant> getThesisEvaluationParticipants(ExecutionSemester executionSemester) {
