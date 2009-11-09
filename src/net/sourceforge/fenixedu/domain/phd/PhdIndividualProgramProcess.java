@@ -39,7 +39,12 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHa
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Base {
@@ -393,6 +398,11 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	    process.createState(PhdIndividualProgramProcessState.CANCELLED, userView.getPerson());
 	    process.cancelDebts(userView.getPerson());
 
+	    if (process.hasRegistration() && process.getRegistration().isActive()) {
+		RegistrationStateCreator.createState(process.getRegistration(), userView.getPerson(), new DateTime(),
+			RegistrationStateType.CANCELED);
+	    }
+
 	    return process;
 	}
     }
@@ -416,6 +426,12 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		Object object) {
 	    process.createState(PhdIndividualProgramProcessState.NOT_ADMITTED, userView.getPerson());
 	    process.cancelDebts(userView.getPerson());
+
+	    if (process.hasRegistration() && process.getRegistration().isActive()) {
+		RegistrationStateCreator.createState(process.getRegistration(), userView.getPerson(), new DateTime(),
+			RegistrationStateType.CANCELED);
+	    }
+
 	    return process;
 	}
     }
@@ -439,6 +455,12 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		Object object) {
 	    process.createState(PhdIndividualProgramProcessState.SUSPENDED, userView.getPerson());
 	    process.cancelDebts(userView.getPerson());
+
+	    if (process.hasRegistration() && process.getRegistration().isActive()) {
+		RegistrationStateCreator.createState(process.getRegistration(), userView.getPerson(), new DateTime(),
+			RegistrationStateType.INTERRUPTED);
+	    }
+
 	    return process;
 	}
     }
@@ -462,6 +484,12 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		Object object) {
 	    process.createState(PhdIndividualProgramProcessState.FLUNKED, userView.getPerson());
 	    process.cancelDebts(userView.getPerson());
+
+	    if (process.hasRegistration() && process.getRegistration().isActive()) {
+		RegistrationStateCreator.createState(process.getRegistration(), userView.getPerson(), new DateTime(),
+			RegistrationStateType.CANCELED);
+	    }
+
 	    return process;
 	}
     }
