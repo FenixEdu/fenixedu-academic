@@ -547,7 +547,7 @@ extends="eventCreation">
 </schema>
 
 <schema name="scientificJournalCreation.journalName" type="net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchScientificJournalCreationBean" bundle="RESEARCHER_RESOURCES">
-	<slot name="scientificJournal" key="label.scientificJournal.name" layout="autoComplete" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
+	<slot name="scientificJournal" key="label.scientificJournal.name" layout="autoComplete">
 		<property name="size" value="50"/>
 		<property name="rawSlotName" value="scientificJournalName"/>
 		<property name="labelField" value="name"/>
