@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create phd thesis process tables" createPhdThesisProcessTables.sql
