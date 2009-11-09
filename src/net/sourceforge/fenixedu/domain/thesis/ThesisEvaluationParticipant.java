@@ -73,16 +73,16 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
 	    }
 	    setAffiliation(teacher.getCurrentWorkingDepartment().getRealName());
 	} else {
-	    ExternalContract contract = person.getExternalContract();
-	    if (contract != null) {
-		setAffiliation(contract.getInstitutionUnit().getName());
+	    Employee employee = person.getEmployee();
+	    if (employee != null) {
+		Unit currentWorkingPlace = employee.getCurrentWorkingPlace();
+		if (currentWorkingPlace != null) {
+		    setAffiliation(currentWorkingPlace.getNameWithAcronym());
+		}
 	    } else {
-		Employee employee = person.getEmployee();
-		if (employee != null) {
-		    Unit currentWorkingPlace = employee.getCurrentWorkingPlace();
-		    if (currentWorkingPlace != null) {
-			setAffiliation(currentWorkingPlace.getNameWithAcronym());
-		    }
+		ExternalContract contract = person.getExternalContract();
+		if (contract != null) {
+		    setAffiliation(contract.getInstitutionUnit().getName());
 		}
 	    }
 	}
