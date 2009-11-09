@@ -227,6 +227,14 @@
     <definition name="thesis-list" extends="departmentAdmOffice.masterPage">
         <put name="body" value="/coordinator/thesis/listThesis.jsp"/>
     </definition>
+    <definition name="thesis-edit" extends="departmentAdmOffice.masterPage">
+        <put name="body" value="/coordinator/thesis/editThesis.jsp"/>
+    </definition>
+        <definition name="thesis-select-person" extends="departmentAdmOffice.masterPage">
+        <put name="body" value="/coordinator/thesis/selectPerson.jsp"/>
+    </definition>
+    
+    
 
 
 <!-- Teacher Service Distribution -->	

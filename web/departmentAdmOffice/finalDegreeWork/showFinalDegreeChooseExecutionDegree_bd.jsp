@@ -15,8 +15,8 @@
 </p>
 
 <div class="infoop2">
-	<p><bean:message key="choose.execution.year.for.final.degree.work.managment.create.info.part1"/></p>
-	<p><bean:message key="choose.execution.year.for.final.degree.work.managment.create.info.part2"/></p>
+	<p><bean:message key="choose.execution.year.for.final.degree.work.managment.create.info.part1" bundle="APPLICATION_RESOURCES"/></p>
+	<p><bean:message key="choose.execution.year.for.final.degree.work.managment.create.info.part2" bundle="APPLICATION_RESOURCES"/></p>
 </div>
 
 <table>

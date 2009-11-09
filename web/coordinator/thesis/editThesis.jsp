@@ -10,27 +10,27 @@
 
 <html:xhtml/>
 
-<h2><bean:message key="title.coordinator.thesis.proposal"/></h2>
+<h2><bean:message key="title.coordinator.thesis.proposal" bundle="APPLICATION_RESOURCES"/></h2>
 
 <ul>
     <li>
         <html:link page="<%= String.format("/manageThesis.do?method=listThesis&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s", dcpId, executionYearId) %>">
-            <bean:message key="title.coordinator.thesis.back"/>
+            <bean:message key="title.coordinator.thesis.back" bundle="APPLICATION_RESOURCES"/>
         </html:link>
     </li>
     <li>
         <logic:equal name="thesis" property="valid" value="true">
             <html:link page="<%= String.format("/manageThesis.do?method=submitProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
-                <bean:message key="title.coordinator.thesis.submit"/>
+                <bean:message key="title.coordinator.thesis.submit" bundle="APPLICATION_RESOURCES"/>
             </html:link>
         </logic:equal>
         <logic:notEqual name="thesis" property="valid" value="true">
-            <bean:message key="title.coordinator.thesis.submit"/>
+            <bean:message key="title.coordinator.thesis.submit" bundle="APPLICATION_RESOURCES"/>
         </logic:notEqual>
     </li>
     <li>
         <html:link page="<%= String.format("/manageThesis.do?method=confirmDeleteProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
-            <bean:message key="title.coordinator.thesis.delete"/>
+            <bean:message key="title.coordinator.thesis.delete" bundle="APPLICATION_RESOURCES"/>
         </html:link>
     </li>
 </ul>
@@ -46,18 +46,18 @@
 
     <div class="warning0" style="padding: 1em;">
         <p class="mtop0">
-            <strong><bean:message key="label.attention"/>:</strong><br/>
-            <bean:message key="label.coordinator.thesis.delete.confirm"/>
+            <strong><bean:message key="label.attention" bundle="APPLICATION_RESOURCES"/>:</strong><br/>
+            <bean:message key="label.coordinator.thesis.delete.confirm" bundle="APPLICATION_RESOURCES"/>
         </p>
         <div class="forminline">
             <fr:form action="<%= String.format("/manageThesis.do?method=deleteProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
                 <html:submit>
-                    <bean:message key="button.coordinator.thesis.delete"/>
+                    <bean:message key="button.coordinator.thesis.delete" bundle="APPLICATION_RESOURCES"/>
                 </html:submit>
             </fr:form>
             <fr:form action="<%= String.format("/manageThesis.do?method=editProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
                 <html:submit>
-                    <bean:message key="button.cancel"/>
+                    <bean:message key="button.cancel" bundle="APPLICATION_RESOURCES"/>
                 </html:submit>
             </fr:form>
         </div>
@@ -65,7 +65,7 @@
 </logic:present>
 
 
-<h3 class="mtop15 mbottom05"><bean:message key="title.coordinator.thesis.edit.proposal"/></h3>
+<h3 class="mtop15 mbottom05"><bean:message key="title.coordinator.thesis.edit.proposal" bundle="APPLICATION_RESOURCES"/></h3>
 
 <fr:view name="thesis" schema="coordinator.thesis.state">
     <fr:layout name="tabular">
@@ -76,7 +76,7 @@
 
 
 <%-- Dissertation --%>
-<h3 class="mtop15 mbottom05"><bean:message key="title.coordinator.thesis.edit.dissertation"/></h3>
+<h3 class="mtop15 mbottom05"><bean:message key="title.coordinator.thesis.edit.dissertation" bundle="APPLICATION_RESOURCES"/></h3>
 
 <fr:view name="thesis" schema="thesis.jury.proposal.information">
     <fr:layout name="tabular">
@@ -87,17 +87,17 @@
 
 <p class="mtop05">
 	<html:link page="<%= String.format("/manageThesis.do?method=changeInformation&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
-	    <bean:message key="link.coordinator.thesis.edit.changeInformation"/>
+	    <bean:message key="link.coordinator.thesis.edit.changeInformation"  bundle="APPLICATION_RESOURCES"/>
 	</html:link>
 </p>
 
 <%-- Rejected information --%>
 <logic:equal name="thesis" property="rejected" value="true">
     <div class="warning0" style="padding: 1em;">
-        <p class="mtop0 mbottom025"><strong><bean:message key="label.attention"/>:</strong><br/> <bean:message key="title.coordinator.thesis.edit.rejected"/></p>
+        <p class="mtop0 mbottom025"><strong><bean:message key="label.attention" bundle="APPLICATION_RESOURCES"/>:</strong><br/> <bean:message key="title.coordinator.thesis.edit.rejected" bundle="APPLICATION_RESOURCES"/></p>
         <p class="mtop025 mbottom0">
             	<logic:notEmpty name="thesis" property="rejectionComment" >
-                <bean:message key="label.coordinator.thesis.edit.rejected.comment"/>:
+                <bean:message key="label.coordinator.thesis.edit.rejected.comment" bundle="APPLICATION_RESOURCES"/>:
             </logic:notEmpty>
     	        <fr:view name="thesis" property="rejectionComment" type="java.lang.String">
     	            <fr:layout name="null-as-label">
@@ -110,7 +110,7 @@
     </div>
 </logic:equal>
 
-<h3 class="mtop15 mbottom05"><bean:message key="title.coordinator.thesis.edit.discussion"/></h3>
+<h3 class="mtop15 mbottom05"><bean:message key="title.coordinator.thesis.edit.discussion" bundle="APPLICATION_RESOURCES"/></h3>
 
 <logic:notPresent name="changeDiscussion">
 	<fr:view name="thesis" schema="thesis.jury.proposal.discussion">
@@ -121,7 +121,7 @@
 	</fr:view>
     
     <html:link page="<%= String.format("/manageThesis.do?method=editProposalDiscussion&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
-        <bean:message key="link.coordinator.thesis.edit.changeInformation"/>
+        <bean:message key="link.coordinator.thesis.edit.changeInformation" bundle="APPLICATION_RESOURCES"/>
     </html:link>
 </logic:notPresent>
 
@@ -147,23 +147,23 @@
 
 
 <%-- Jury --%>
-<h3 class="separator2 mtop2 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.jury"/></h3>
+<h3 class="separator2 mtop2 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.jury" bundle="APPLICATION_RESOURCES"/></h3>
 
 <div style="padding: 1em;">
 	<p class="mtop0">
-		<bean:message key="label.thesis.external.orientators"/>
+		<bean:message key="label.thesis.external.orientators" bundle="APPLICATION_RESOURCES"/>
 	</p>
 </div>
 
 <%-- problems in the jury --%>
 <logic:notEmpty name="conditions">
 	<div class="warning0" style="padding: 1em;">
-    <strong><bean:message key="label.attention"/>:</strong><br/>
+    <strong><bean:message key="label.attention" bundle="APPLICATION_RESOURCES"/>:</strong><br/>
 	<ul class="mbottom05">
 	    <logic:iterate id="condition" name="conditions">
 	       	<li>
 	            <bean:define id="key" name="condition" property="key" type="java.lang.String"/>
-	            <bean:message key="<%= key %>"/>
+	            <bean:message key="<%= key %>" bundle="APPLICATION_RESOURCES"/>
 			</li>
 	    </logic:iterate>
     </ul>
@@ -171,12 +171,12 @@
 </logic:notEmpty>
 
 <%-- Orientation --%>
-<h4 class="mtop25 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.orientation"/></h4>
+<h4 class="mtop25 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.orientation" bundle="APPLICATION_RESOURCES"/></h4>
 
 <logic:empty name="thesis" property="orientator">
     <p>
  	   <html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=orientator&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
-	   		<bean:message key="link.coordinator.thesis.edit.addOrientation"/>
+	   		<bean:message key="link.coordinator.thesis.edit.addOrientation" bundle="APPLICATION_RESOURCES"/>
 	   </html:link>
     </p>
 </logic:empty>
@@ -184,7 +184,7 @@
     <logic:empty name="thesis" property="coorientator">
         <p>
 	        <html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=coorientator&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
-                <bean:message key="link.coordinator.thesis.edit.addOrientation"/>
+                <bean:message key="link.coordinator.thesis.edit.addOrientation" bundle="APPLICATION_RESOURCES"/>
     	    </html:link>
         </p>
     </logic:empty>
@@ -193,7 +193,7 @@
 <logic:empty name="thesis" property="orientator">
     <logic:empty name="thesis" property="coorientator">
         <p>
-            <em><bean:message key="title.coordinator.thesis.edit.orientation.empty"/></em>
+            <em><bean:message key="title.coordinator.thesis.edit.orientation.empty" bundle="APPLICATION_RESOURCES"/></em>
         </p>
     </logic:empty>
 </logic:empty>
@@ -210,7 +210,7 @@
         <logic:present name="editOrientatorCreditsDistribution">
             <table class="tstyle2 thlight thright mtop0 mbottom05 tgluetop">
                 <tr>
-                    <th class="width12em"><bean:message key="label.coordinator.thesis.edit.teacher.credits"/>:</th>
+                    <th class="width12em"><bean:message key="label.coordinator.thesis.edit.teacher.credits" bundle="APPLICATION_RESOURCES"/>:</th>
                     <td class="width35em">
                         <fr:form action="<%= String.format("/manageThesis.do?method=editProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
                             <fr:edit id="editCreditsOrientator" name="thesis" slot="orientatorCreditsDistribution">
@@ -234,7 +234,7 @@
                     </td>
                     <td class="tdclear">
                         <span class="error0">
-                            <fr:message for="editCreditsOrientator" type="validation"/>
+                            <fr:message for="editCreditsOrientator" type="validation" />
                         </span>
                     </td>
                 </tr>
@@ -243,7 +243,7 @@
         <logic:notPresent name="editOrientatorCreditsDistribution">
             <table class="tstyle2 thlight thright mtop0 mbottom05 tgluetop">
                 <tr>
-                    <th class="width12em"><bean:message key="label.coordinator.thesis.edit.teacher.credits"/>:</th>
+                    <th class="width12em"><bean:message key="label.coordinator.thesis.edit.teacher.credits"  bundle="APPLICATION_RESOURCES"/>:</th>
                     <td class="width35em">
                         <logic:empty name="thesis" property="orientatorCreditsDistribution">-</logic:empty>
                         <logic:notEmpty name="thesis" property="orientatorCreditsDistribution">
@@ -251,7 +251,7 @@
                         </logic:notEmpty>
                         &nbsp;&nbsp;&nbsp;&nbsp;
                         (<html:link page="<%= String.format("/manageThesis.do?method=changeCredits&amp;target=orientator&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
-                            <bean:message key="label.change"/>
+                            <bean:message key="label.change"  bundle="APPLICATION_RESOURCES"/>
                         </html:link>)
                     </td>
                 </tr>
@@ -261,10 +261,10 @@
     
     <p class="mtop05">
         <html:link page="<%= String.format("/manageThesis.do?method=changeParticipationInfo&amp;target=orientator&amp;remove=true&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
-            <bean:message key="link.coordinator.thesis.edit.changePerson"/>
+            <bean:message key="link.coordinator.thesis.edit.changePerson"  bundle="APPLICATION_RESOURCES"/>
         </html:link>,
         <html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=orientator&amp;remove=true&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
-            <bean:message key="link.coordinator.thesis.edit.removePerson"/>
+            <bean:message key="link.coordinator.thesis.edit.removePerson"  bundle="APPLICATION_RESOURCES"/>
         </html:link>
     </p>
 </logic:notEmpty>
@@ -281,7 +281,7 @@
         <logic:present name="editCoorientatorCreditsDistribution">
             <table class="tstyle2 thlight thright mtop0 mbottom05 tgluetop">
                 <tr>
-                    <th class="width12em"><bean:message key="label.coordinator.thesis.edit.teacher.credits"/>:</th>
+                    <th class="width12em"><bean:message key="label.coordinator.thesis.edit.teacher.credits" bundle="APPLICATION_RESOURCES"/>:</th>
                     <td class="width35em">
                         <fr:form action="<%= String.format("/manageThesis.do?method=editProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
                             <fr:edit id="editCreditsCoorientator" name="thesis" slot="coorientatorCreditsDistribution">
@@ -313,7 +313,7 @@
         <logic:notPresent name="editCoorientatorCreditsDistribution">
             <table class="tstyle2 thlight thright mtop0 mbottom05 tgluetop">
                 <tr>
-                    <th class="width12em"><bean:message key="label.coordinator.thesis.edit.teacher.credits"/>:</th>
+                    <th class="width12em"><bean:message key="label.coordinator.thesis.edit.teacher.credits" bundle="APPLICATION_RESOURCES"/>:</th>
                     <td class="width35em">
                         <logic:empty name="thesis" property="coorientatorCreditsDistribution">-</logic:empty>
                         <logic:notEmpty name="thesis" property="coorientatorCreditsDistribution">
@@ -321,7 +321,7 @@
                         </logic:notEmpty>
                         &nbsp;&nbsp;&nbsp;&nbsp;
                         (<html:link page="<%= String.format("/manageThesis.do?method=changeCredits&amp;target=coorientator&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
-                            <bean:message key="label.change"/>
+                            <bean:message key="label.change" bundle="APPLICATION_RESOURCES"/>
                         </html:link>)
                     </td>
                 </tr>
@@ -331,20 +331,20 @@
 
     <p class="mtop05">
         <html:link page="<%= String.format("/manageThesis.do?method=changeParticipationInfo&amp;target=coorientator&amp;remove=true&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
-            <bean:message key="link.coordinator.thesis.edit.changePerson"/>
+            <bean:message key="link.coordinator.thesis.edit.changePerson" bundle="APPLICATION_RESOURCES"/>
         </html:link>,
         <html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=coorientator&amp;remove=true&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
-            <bean:message key="link.coordinator.thesis.edit.removePerson"/>
+            <bean:message key="link.coordinator.thesis.edit.removePerson" bundle="APPLICATION_RESOURCES"/>
         </html:link>
     </p>
 </logic:notEmpty>
 
 <%-- Jury/President --%>
-<h4 class="mtop25 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.jury.president"/></h4>
+<h4 class="mtop25 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.jury.president" bundle="APPLICATION_RESOURCES"/></h4>
 
 <logic:empty name="thesis" property="president">
     <p>
-        <em><bean:message key="title.coordinator.thesis.edit.president.empty"/></em>
+        <em><bean:message key="title.coordinator.thesis.edit.president.empty" bundle="APPLICATION_RESOURCES"/></em>
     </p>
 </logic:empty>
 
@@ -359,31 +359,31 @@
 
 <logic:empty name="thesis" property="president">
     <html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=president&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
-        <bean:message key="link.coordinator.thesis.edit.addPerson"/>
+        <bean:message key="link.coordinator.thesis.edit.addPerson" bundle="APPLICATION_RESOURCES"/>
     </html:link>
 </logic:empty>
 <logic:notEmpty name="thesis" property="president">
     <html:link page="<%= String.format("/manageThesis.do?method=changeParticipationInfo&amp;target=president&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
-        <bean:message key="link.coordinator.thesis.edit.changePerson"/>
+        <bean:message key="link.coordinator.thesis.edit.changePerson" bundle="APPLICATION_RESOURCES"/>
     </html:link>,
     <html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=president&amp;remove=true&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
-        <bean:message key="link.coordinator.thesis.edit.removePerson"/>
+        <bean:message key="link.coordinator.thesis.edit.removePerson" bundle="APPLICATION_RESOURCES"/>
     </html:link>
 </logic:notEmpty>
 
 <%-- Jury/"Vowels" --%>
-<h4 class="mtop25 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.vowels"/></h4>
+<h4 class="mtop25 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.vowels" bundle="APPLICATION_RESOURCES"/></h4>
 
 <bean:size id="vowelsSize" name="thesis" property="vowels"/>
 <logic:lessThan name="vowelsSize" value="3">
     <html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=vowel&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", dcpId, thesisId) %>">
-        <bean:message key="link.coordinator.thesis.edit.addVowel"/>
+        <bean:message key="link.coordinator.thesis.edit.addVowel" bundle="APPLICATION_RESOURCES"/>
     </html:link>
 </logic:lessThan>
 
 <logic:empty name="thesis" property="vowels">
     <p>
-        <em><bean:message key="title.coordinator.thesis.edit.vowels.empty"/></em>
+        <em><bean:message key="title.coordinator.thesis.edit.vowels.empty" bundle="APPLICATION_RESOURCES"/></em>
     </p>
 </logic:empty>
 
@@ -399,10 +399,10 @@
         <bean:define id="vowelId" name="vowel" property="idInternal"/>
         
         <html:link page="<%= String.format("/manageThesis.do?method=changeParticipationInfo&amp;target=vowel&amp;vowelID=%s&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", vowelId, dcpId, thesisId) %>">
-            <bean:message key="link.coordinator.thesis.edit.changePerson"/>
+            <bean:message key="link.coordinator.thesis.edit.changePerson" bundle="APPLICATION_RESOURCES"/>
         </html:link>
         , <html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=vowel&amp;vowelID=%s&amp;remove=true&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", vowelId, dcpId, thesisId) %>">
-            <bean:message key="link.coordinator.thesis.edit.removePerson"/>
+            <bean:message key="link.coordinator.thesis.edit.removePerson" bundle="APPLICATION_RESOURCES"/>
         </html:link>
     </logic:iterate>
 </logic:notEmpty>

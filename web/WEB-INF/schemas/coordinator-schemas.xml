@@ -199,7 +199,7 @@
      </slot>
 </schema>
 
-<schema name="thesis.jury.proposal.person" type="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant">
+<schema name="thesis.jury.proposal.person" type="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant" bundle="APPLICATION_RESOURCES">
     <slot name="personName" key="label.person.name"/>
     <slot name="category" key="label.teacher.category" layout="null-as-label">
         <property name="label" value="-"/>
@@ -209,17 +209,18 @@
     </slot>
 </schema>
 
-<schema name="thesis.bean.selectPerson.internal" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean">
+<schema name="thesis.bean.selectPerson.internal" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean" bundle="APPLICATION_RESOURCES">
     <slot name="internal" key="label.coordinator.thesis.edit.internal" layout="radio-postback">
         <property name="trueLabel" value="label.coordinator.thesis.edit.internalPerson"/>
         <property name="falseLabel" value="label.coordinator.thesis.edit.externalPerson"/>
+        <property name="bundle" value="APPLICATION_RESOURCES"/>
         <property name="destination" value="changePersonType"/>
         <property name="classes" value="nobullet liinline"/>
     </slot>
 </schema>
 
 <schema name="thesis.bean.selectPerson.internal.orientator" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean"
-        extends="thesis.bean.selectPerson.internal">
+        extends="thesis.bean.selectPerson.internal" bundle="APPLICATION_RESOURCES">
     <slot name="personName" key="label.coordinator.thesis.edit.personName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="70"/>
         <property name="rawSlotName" value="rawPersonName"/>
@@ -233,7 +234,7 @@
 </schema>
 
 <schema name="thesis.bean.selectPerson.internal.coorientator" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean"
-        extends="thesis.bean.selectPerson.internal">
+        extends="thesis.bean.selectPerson.internal" bundle="APPLICATION_RESOURCES">
     <slot name="personName" key="label.coordinator.thesis.edit.personName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="70"/>
         <property name="rawSlotName" value="rawPersonName"/>
@@ -247,7 +248,7 @@
 </schema>
 
 <schema name="thesis.bean.selectPerson.internal.president" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean"
-        extends="thesis.bean.selectPerson.internal">
+        extends="thesis.bean.selectPerson.internal" bundle="APPLICATION_RESOURCES">
     <slot name="personName" key="label.coordinator.thesis.edit.personName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="70"/>
         <property name="rawSlotName" value="rawPersonName"/>
@@ -261,7 +262,7 @@
 </schema>
 
 <schema name="thesis.bean.selectPerson.internal.vowel" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean"
-        extends="thesis.bean.selectPerson.internal">
+        extends="thesis.bean.selectPerson.internal" bundle="APPLICATION_RESOURCES">
     <slot name="personName" key="label.coordinator.thesis.edit.personName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="70"/>
         <property name="rawSlotName" value="rawPersonName"/>
@@ -274,10 +275,11 @@
     </slot>
 </schema>
 
-<schema name="thesis.bean.selectPerson.external" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean">
+<schema name="thesis.bean.selectPerson.external" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean" bundle="APPLICATION_RESOURCES">
     <slot name="internal" key="label.coordinator.thesis.edit.internal" layout="radio-postback">
-        <property name="trueLabel" value="label.coordinator.thesis.edit.internalPerson"/>
+        <property name="trueLabel" value="label.coordinator.thesis.edit.internalPerson" />
         <property name="falseLabel" value="label.coordinator.thesis.edit.externalPerson"/>
+        <property name="bundle" value="APPLICATION_RESOURCES"/>
         <property name="destination" value="changePersonType"/>
         <property name="classes" value="nobullet liinline"/>
     </slot>
@@ -310,7 +312,7 @@
     </slot>
 </schema>
 
-<schema name="thesis.jury.proposal.information" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+<schema name="thesis.jury.proposal.information" type="net.sourceforge.fenixedu.domain.thesis.Thesis" bundle="APPLICATION_RESOURCES">
     <slot name="student" layout="format" key="student">
         <property name="format" value="${person.name} (${number})"/>
     </slot>
@@ -321,7 +323,7 @@
     </slot>
 </schema>
 
-<schema name="thesis.jury.proposal.discussion" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+<schema name="thesis.jury.proposal.discussion" type="net.sourceforge.fenixedu.domain.thesis.Thesis" bundle="APPLICATION_RESOURCES">
     <slot name="proposedDiscussed" key="label.coordinator.thesis.discussed" layout="null-as-label">
         <property name="label" value="-"/>
         <property name="subLayout" value="dataDependent"/>
@@ -336,7 +338,7 @@
     </slot>    
 </schema>
 
-<schema name="thesis.jury.proposal.discussion.edit" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+<schema name="thesis.jury.proposal.discussion.edit" type="net.sourceforge.fenixedu.domain.thesis.Thesis" bundle="APPLICATION_RESOURCES">
     <slot name="proposedDiscussed" key="label.coordinator.thesis.discussed"/>
     <slot name="proposedPlace" key="label.coordinator.thesis.place"/>
 </schema>
@@ -440,7 +442,7 @@
     <slot name="thesisCoordinator" key="label.coordinator.coordination.team.member"/>
 </schema>
 
-<schema name="coordinator.thesis.table" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.StudentThesisInfo">
+<schema name="coordinator.thesis.table" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.StudentThesisInfo" bundle="APPLICATION_RESOURCES">
     <slot name="student.number" key="label.student.number.short"/>
     <slot name="student.person.name" key="student"/>
     <slot name="semester" key="label.semester.short"/>
