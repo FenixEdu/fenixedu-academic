@@ -44,15 +44,16 @@ public class InternshipCandidacyDA extends FenixDispatchAction {
 	    new Locale("pt"));
 
     private static final String[] HEADERS = new String[] { "Nº Candidatura", "Universidade", "Nº Aluno", "Ano", "Curso", "Ramo",
-	    "Nome", "Sexo", "Data Nascimento", "Naturalidade", "Nacionalidade", "B.I.", "Arquivo", "Emissão", "Validade",
-	    "Passaporte", "Arquivo", "Emissão", "Validade", "Morada", "Cod. Postal", "Localidade", "Telefone", "Telemóvel",
-	    "e-mail", "1º Preferência", "2º Preferência", "3º Preferência", "Inglês", "Francês", "Espanhol", "Alemão",
-	    "Candidatura Prévia" };
+	    "Nome", "Sexo", "Data Nascimento", "Naturalidade", "Nacionalidade", "B.I. (ou Cartão do Cidadão)", "Arquivo",
+	    "Emissão", "Validade", "Passaporte", "Arquivo", "Emissão", "Validade", "Morada", "Cod. Postal", "Localidade",
+	    "Telefone", "Telemóvel", "e-mail", "1º Preferência", "2º Preferência", "3º Preferência", "Inglês", "Francês",
+	    "Espanhol", "Alemão", "Candidatura Prévia" };
 
     private static final String[] HEADERS_NO_UNIV = new String[] { "Nº Candidatura", "Nº Aluno", "Ano", "Curso", "Ramo", "Nome",
-	    "Sexo", "Data Nascimento", "Naturalidade", "Nacionalidade", "B.I.", "Arquivo", "Emissão", "Validade", "Passaporte",
-	    "Arquivo", "Emissão", "Validade", "Morada", "Cod. Postal", "Localidade", "Telefone", "Telemóvel", "e-mail",
-	    "1º Preferência", "2º Preferência", "3º Preferência", "Inglês", "Francês", "Espanhol", "Alemão", "Candidatura Prévia" };
+	    "Sexo", "Data Nascimento", "Naturalidade", "Nacionalidade", "B.I. (ou Cartão do Cidadão)", "Arquivo", "Emissão",
+	    "Validade", "Passaporte", "Arquivo", "Emissão", "Validade", "Morada", "Cod. Postal", "Localidade", "Telefone",
+	    "Telemóvel", "e-mail", "1º Preferência", "2º Preferência", "3º Preferência", "Inglês", "Francês", "Espanhol",
+	    "Alemão", "Candidatura Prévia" };
 
     public ActionForward prepareCandidates(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
