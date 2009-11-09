@@ -15,7 +15,7 @@ create table `THESIS_JURY_ELEMENT` (
   `QUALIFICATION` longtext,
   `PRESIDENT` tinyint(1),
   `REPORTER` tinyint(1),
-  'ELEMENT_ORDER' int(11), 
+  `ELEMENT_ORDER` int(11), 
   `OID` bigint(20) NOT NULL,
   `OID_PERSON` bigint(20),
   `OID_PROCESS` bigint(20) NOT NULL,
