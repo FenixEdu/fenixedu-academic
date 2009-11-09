@@ -178,6 +178,7 @@ enum net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType  
 enum net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType                                            	  as PhdIndividualProgramDocumentType;
 enum net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState                                                  as PhdProgramCandidacyProcessState;
 enum net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessStateType								  as PublicPresentationSeminarProcessStateType;
+enum net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType												  as PhdThesisProcessStateType;
 enum net.sourceforge.fenixedu.domain.phd.candidacy.ApplicantOverallPromise												  as ApplicantOverallPromise;
 enum net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntryType														  	  as PhdStudyPlanEntryType;
 enum net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationType												  as PhdNotificationType;
@@ -6705,9 +6706,11 @@ class phd.PhdProcessState extends DomainObject {
 		PublicPresentationSeminarProcessStateType type;
 	}
 
+	class phd.thesis.PhdThesisProcessState extends phd.PhdProcessState {
+		PhdThesisProcessStateType type;
+	}
 	
 class phd.PhdProgramProcess extends caseHandling.Process {
-
 }
 
 class phd.PhdIndividualProgramProcess extends phd.PhdProgramProcess {
@@ -6741,14 +6744,20 @@ class phd.seminar.PublicPresentationSeminarProcess extends phd.PhdProgramProcess
 	LocalDate presentationDate;
 }
 
-class phd.seminar.SeminarCommissionElement extends DomainObject {
-	DateTime creationDate;
+class phd.thesis.PhdThesisProcess extends phd.PhdProgramProcess {
 }
 
-	class phd.seminar.InternalSeminarCommissionElement extends phd.seminar.SeminarCommissionElement {
+class phd.thesis.ThesisJuryElement extends DomainObject {
+	DateTime creationDate;
+	Boolean president;
+	Boolean reporter;
+	Integer elementOrder;
+}
+
+	class phd.thesis.InternalThesisJuryElement extends phd.thesis.ThesisJuryElement {
 	}
 	
-	class phd.seminar.ExternalSeminarCommissionElement extends phd.seminar.SeminarCommissionElement {
+	class phd.thesis.ExternalThesisJuryElement extends phd.thesis.ThesisJuryElement {
 		String name;
 		String qualification;
 		String category;
@@ -7211,6 +7220,13 @@ relation PublicPresentationSeminarPhdProcessState {
 	}
 }
 
+relation PhdThesisPhdProcessState {
+	phd.thesis.PhdThesisProcess playsRole process;
+	phd.thesis.PhdThesisProcessState playsRole states {
+		multiplicity *;
+	}
+}
+
 relation PhdCandidacyRefereeLetterRootDomainObject {
 	RootDomainObject playsRole rootDomainObject;
 	phd.candidacy.PhdCandidacyRefereeLetter playsRole phdCandidacyRefereeLetters {
@@ -7368,23 +7384,28 @@ relation PhdIndividualProgramProcessPublicPresentationSeminarProcess {
 	phd.seminar.PublicPresentationSeminarProcess playsRole seminarProcess;
 }
 
-relation RootDomainObjectSeminarCommissionElement {
+relation PhdIndividualProgramProcessPhdThesisProcess {
+	phd.PhdIndividualProgramProcess playsRole individualProgramProcess;
+	phd.thesis.PhdThesisProcess playsRole thesisProcess;
+}
+
+relation RootDomainObjectThesisJuryElement {
 	RootDomainObject playsRole rootDomainObject;
-	phd.seminar.SeminarCommissionElement playsRole seminarCommissionElements {
+	phd.thesis.ThesisJuryElement playsRole phdThesisJuryElements {
 		multiplicity *;
 	}
 }
 
-relation PublicPresentationSeminarProcessSeminarCommissionElement {
-	phd.seminar.PublicPresentationSeminarProcess playsRole process;
-	phd.seminar.SeminarCommissionElement playsRole seminarCommissionElements {
+relation PhdThesisProcessThesisJuryElement {
+	phd.thesis.PhdThesisProcess playsRole process;
+	phd.thesis.ThesisJuryElement playsRole thesisJuryElements {
 		multiplicity *;
 	}
 }
 
-relation PersonInternalSeminarCommissionElement {
+relation PersonInternalThesisJuryElement {
 	Person playsRole person;
-	phd.seminar.InternalSeminarCommissionElement playsRole internalSeminarCommissionElements {
+	phd.thesis.InternalThesisJuryElement playsRole internalThesisJuryElements {
 		multiplicity *;
 	}
 } 

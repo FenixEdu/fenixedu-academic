@@ -1,11 +1,10 @@
-package net.sourceforge.fenixedu.domain.phd.seminar;
+package net.sourceforge.fenixedu.domain.phd.thesis;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 
-public class SeminarComissionElementBean implements Serializable {
+public class PhdThesisJuryElementBean implements Serializable {
 
     private static final long serialVersionUID = -5365333247731361583L;
 
@@ -16,7 +15,7 @@ public class SeminarComissionElementBean implements Serializable {
     private String address;
     private String phone;
     private String email;
-    private DomainReference<Person> person;
+    private Person person;
 
     public String getName() {
 	return name;
@@ -75,11 +74,11 @@ public class SeminarComissionElementBean implements Serializable {
     }
 
     public Person getPerson() {
-	return (this.person != null) ? this.person.getObject() : null;
+	return person;
     }
 
     public void setPerson(Person person) {
-	this.person = (person != null) ? new DomainReference<Person>(person) : null;
+	this.person = person;
     }
 
     public boolean isInternal() {

@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.domain.phd.seminar;
+package net.sourceforge.fenixedu.domain.phd.thesis;
 
 import static net.sourceforge.fenixedu.util.StringUtils.EMPTY;
 import static net.sourceforge.fenixedu.util.StringUtils.isEmpty;
@@ -6,18 +6,18 @@ import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 
-public class InternalSeminarCommissionElement extends InternalSeminarCommissionElement_Base {
-
-    private InternalSeminarCommissionElement() {
+public class InternalThesisJuryElement extends InternalThesisJuryElement_Base {
+    
+    private InternalThesisJuryElement() {
 	super();
     }
 
-    InternalSeminarCommissionElement(final PublicPresentationSeminarProcess process, final SeminarComissionElementBean bean) {
+    InternalThesisJuryElement(final PhdThesisProcess process, final PhdThesisJuryElementBean bean) {
 	this();
 
 	super.init(process);
 
-	check(bean.getPerson(), "error.InternalSeminarCommissionElement.invalid.person");
+	check(bean.getPerson(), "error.InternalThesisJuryElement.invalid.person");
 	setPerson(bean.getPerson());
     }
 

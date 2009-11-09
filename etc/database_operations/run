@@ -42,3 +42,5 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Create phd thesis process tables" createPhdThesisProcessTables.sql

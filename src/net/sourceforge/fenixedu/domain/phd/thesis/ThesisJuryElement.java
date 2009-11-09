@@ -1,19 +1,19 @@
-package net.sourceforge.fenixedu.domain.phd.seminar;
+package net.sourceforge.fenixedu.domain.phd.thesis;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.joda.time.DateTime;
 
-abstract public class SeminarCommissionElement extends SeminarCommissionElement_Base {
+abstract public class ThesisJuryElement extends ThesisJuryElement_Base {
 
-    protected SeminarCommissionElement() {
+    protected ThesisJuryElement() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setCreationDate(new DateTime());
     }
 
-    protected void init(final PublicPresentationSeminarProcess process) {
-	check(process, "error.SeminarCommissionElement.invalid.process");
+    protected void init(final PhdThesisProcess process) {
+	check(process, "error.ThesisJuryElement.invalid.process");
 	setProcess(process);
     }
 
@@ -41,12 +41,12 @@ abstract public class SeminarCommissionElement extends SeminarCommissionElement_
 
     abstract public String getEmail();
 
-    static public SeminarCommissionElement create(final PublicPresentationSeminarProcess process,
-	    final SeminarComissionElementBean bean) {
+    static public ThesisJuryElement create(final PhdThesisProcess process, final PhdThesisJuryElementBean bean) {
 	if (bean.isInternal()) {
-	    return new InternalSeminarCommissionElement(process, bean);
+	    return new InternalThesisJuryElement(process, bean);
 	} else {
-	    return new ExternalSeminarCommissionElement(process, bean);
+	    return new ExternalThesisJuryElement(process, bean);
 	}
     }
+
 }

@@ -46,11 +46,13 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditStudy
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.FlunkedPhdProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.NotAdmittedPhdProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RequestPublicPresentationSeminarComission;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RequestPublicThesisPresentation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.SuspendPhdProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlert;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlertBean;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean;
+import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
 import net.sourceforge.fenixedu.util.ContentType;
@@ -102,7 +104,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 	@Forward(name = "uploadPhoto", path = "/phd/academicAdminOffice/uploadPhoto.jsp"),
 
-	@Forward(name = "requestPublicPresentationSeminarComission", path = "/phd/academicAdminOffice/requestPublicPresentationSeminarComission.jsp")
+	@Forward(name = "requestPublicPresentationSeminarComission", path = "/phd/academicAdminOffice/requestPublicPresentationSeminarComission.jsp"),
+
+	@Forward(name = "requestPublicThesisPresentation", path = "/phd/academicAdminOffice/requestPublicThesisPresentation.jsp")
 
 })
 public class PhdIndividualProgramProcessDA extends PhdProcessDA {
@@ -874,5 +878,31 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
     }
 
     // End of Request Public Presentation Seminar Comission
+
+    // Request Public Thesis Presentation
+
+    public ActionForward prepareRequestPublicThesisPresentation(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("requestPublicThesisPresentation", new PhdThesisProcessBean());
+	return mapping.findForward("requestPublicThesisPresentation");
+    }
+
+    public ActionForward prepareRequestPublicThesisPresentationInvalid(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("requestPublicThesisPresentation", getRenderedObject("requestPublicThesisPresentation"));
+	return mapping.findForward("requestPublicThesisPresentation");
+    }
+
+    public ActionForward requestPublicThesisPresentation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final PhdThesisProcessBean bean = (PhdThesisProcessBean) getRenderedObject("requestPublicThesisPresentation");
+	request.setAttribute("requestPublicThesisPresentation", bean);
+
+	return executeActivity(RequestPublicThesisPresentation.class, bean, request, mapping, "requestPublicThesisPresentation",
+		"viewProcess");
+    }
+
+    // End of Request Public Thesis Presentation
 
 }

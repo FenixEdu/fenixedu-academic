@@ -37,6 +37,7 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess;
+import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.student.Student;
 
 import org.joda.time.LocalDate;
@@ -102,6 +103,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	activities.add(new EditQualificationExams());
 
 	activities.add(new RequestPublicPresentationSeminarComission());
+
+	activities.add(new RequestPublicThesisPresentation());
     }
 
     @StartActivity
@@ -698,6 +701,35 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	    AlertService.alertCoordinator(individualProcess,
 		    "message.phd.alert.public.presentation.seminar.comission.definition.subject",
 		    "message.phd.alert.public.presentation.seminar.comission.definition.body");
+
+	    return individualProcess;
+	}
+    }
+
+    static public class RequestPublicThesisPresentation extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    if (process.hasThesisProcess() || process.getActiveState() != PhdIndividualProgramProcessState.WORK_DEVELOPMENT) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess individualProcess, IUserView userView,
+		Object object) {
+
+	    final PhdThesisProcess thesisProcess = Process.createNewProcess(userView, PhdThesisProcess.class, object);
+	    thesisProcess.setIndividualProgramProcess(individualProcess);
+
+	    /*
+	     * 
+	     * TODO: SEND ALERTS ALERTS
+	     */
 
 	    return individualProcess;
 	}

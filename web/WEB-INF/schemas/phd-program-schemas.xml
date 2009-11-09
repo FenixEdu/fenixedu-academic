@@ -1309,7 +1309,6 @@
 	</slot>
 </schema>
 
-
 <schema name="PublicPresentationSeminarComissionDocumentBean.edit.presentationDate" type="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean" 
 		bundle="PHD_RESOURCES">
 	<slot name="presentationDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>

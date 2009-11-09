@@ -127,12 +127,21 @@
 				</html:link>
 			</li>
 			<phd:activityAvailable process="<%= process %>" activity="<%= RequestPublicPresentationSeminarComission.class %>">
-			<li>
-				<html:link action="/phdIndividualProgramProcess.do?method=prepareRequestPublicPresentationSeminarComission" paramId="processId" paramName="process" paramProperty="externalId">
-					<bean:message bundle="PHD_RESOURCES" key="label.phd.request.public.presentation.seminar.comission"/>
-				</html:link>
-			</li>
+				<li>
+					<html:link action="/phdIndividualProgramProcess.do?method=prepareRequestPublicPresentationSeminarComission" paramId="processId" paramName="process" paramProperty="externalId">
+						<bean:message bundle="PHD_RESOURCES" key="label.phd.request.public.presentation.seminar.comission"/>
+					</html:link>
+				</li>
 			</phd:activityAvailable>
+			<%-- 
+			<phd:activityAvailable process="<%= process %>" activity="<%= RequestPublicPresentationSeminarComission.class %>">
+				<li>
+					<html:link action="/phdIndividualProgramProcess.do?method=prepareRequestPublicThesisPresentation" paramId="processId" paramName="process" paramProperty="externalId">
+						<bean:message bundle="PHD_RESOURCES" key="label.phd.request.public.thesis.presentation"/>
+					</html:link>
+				</li>
+			</phd:activityAvailable>
+			--%>
 		</ul>
     </td>
   </tr>

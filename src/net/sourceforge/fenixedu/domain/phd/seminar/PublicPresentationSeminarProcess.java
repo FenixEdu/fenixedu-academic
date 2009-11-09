@@ -377,7 +377,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
     }
 
     private PublicPresentationSeminarProcess() {
-
+	super();
     }
 
     public boolean hasReportDocument() {
