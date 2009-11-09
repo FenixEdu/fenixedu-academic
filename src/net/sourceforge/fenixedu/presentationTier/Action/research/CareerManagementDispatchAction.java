@@ -29,10 +29,10 @@ public class CareerManagementDispatchAction extends FenixDispatchAction {
 	SortedSet<Career> sortedCareer = new TreeSet<Career>(new Comparator<Career>() {
 	    @Override
 	    public int compare(Career o1, Career o2) {
-		if (o2.getEndYear() != null) {
-		    return -(o1.getBeginYear().compareTo(o2.getEndYear()));
+		if (!o1.getBeginYear().equals(o2.getBeginYear())) {
+		    return -(o1.getBeginYear().compareTo(o2.getBeginYear()));
 		} else {
-		    return 1;
+		    return o1.getExternalId().compareTo(o2.getExternalId());
 		}
 	    }
 	});
