@@ -26,6 +26,8 @@ public class SearchStudentsByDegreeParametersBean extends DegreeByExecutionYearB
 
     private boolean activeEnrolments = false;
 
+    private boolean standaloneEnrolments = false;
+
     private RegistrationRegimeType regime = null;
 
     private Country nationality = null;
@@ -64,6 +66,14 @@ public class SearchStudentsByDegreeParametersBean extends DegreeByExecutionYearB
 
     public void setActiveEnrolments(boolean activeEnrolments) {
 	this.activeEnrolments = activeEnrolments;
+    }
+
+    public boolean getStandaloneEnrolments() {
+	return standaloneEnrolments;
+    }
+
+    public void setStandaloneEnrolments(boolean standaloneEnrolments) {
+	this.standaloneEnrolments = standaloneEnrolments;
     }
 
     public RegistrationRegimeType getRegime() {

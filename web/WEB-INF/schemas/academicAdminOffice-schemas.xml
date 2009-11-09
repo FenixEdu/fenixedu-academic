@@ -1443,6 +1443,7 @@
 <schema name="SearchStudentsByDegreeParametersBean.edit.degreeAndRegistrationInfo"
 	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.SearchStudentsByDegreeParametersBean" extends="DegreeByExecutionYearBean.edit" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="activeEnrolments" key="label.activeEnrolments" />
+	<slot name="standaloneEnrolments" key="label.withStandaloneEnrolments" />
 	<slot name="regime" key="registration.regime"/>
 	<slot name="nationality" layout="menu-select" key="label.nationality">
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/>

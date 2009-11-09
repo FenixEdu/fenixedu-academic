@@ -101,6 +101,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
+import net.sourceforge.fenixedu.domain.studentCurriculum.StandaloneCurriculumGroup;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
 import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
@@ -1085,6 +1086,16 @@ public class Registration extends Registration_Base {
 		if (enrolment.getExecutionPeriod() == executionSemester) {
 		    return true;
 		}
+	    }
+	}
+	return false;
+    }
+
+    final public boolean hasAnyStandaloneEnrolmentsIn(final ExecutionYear executionYear) {
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    StandaloneCurriculumGroup standaloneCurriculumGroup = studentCurricularPlan.getStandaloneCurriculumGroup();
+	    if ((standaloneCurriculumGroup != null) && (standaloneCurriculumGroup.hasEnrolment(executionYear))) {
+		return true;
 	    }
 	}
 	return false;

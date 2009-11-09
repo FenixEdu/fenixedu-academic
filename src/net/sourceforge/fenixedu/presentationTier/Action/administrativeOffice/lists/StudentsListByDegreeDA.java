@@ -144,7 +144,9 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
 	for (RegistrationWithStateForExecutionYearBean registrationWithStateForExecutionYearBean : registrations) {
 	    Registration registration = registrationWithStateForExecutionYearBean.getRegistration();
 	    spreadsheet.newRow();
-	    spreadsheet.addCell(registration.getDegree().getSigla());
+	    Degree degree = registration.getDegree();
+	    spreadsheet.addCell(!(StringUtils.isEmpty(degree.getSigla())) ? degree.getSigla() : degree.getNameFor(executionYear)
+		    .getContent());
 	    spreadsheet.addCell(registration.getNumber().toString());
 	    final Person person = registration.getPerson();
 	    spreadsheet.addCell(person.getName());

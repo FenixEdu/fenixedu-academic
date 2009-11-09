@@ -70,6 +70,10 @@ public class SearchStudents extends FenixService {
 		continue;
 	    }
 
+	    if (searchbean.getStandaloneEnrolments() && !registration.hasAnyStandaloneEnrolmentsIn(executionYear)) {
+		continue;
+	    }
+
 	    if ((searchbean.getRegime() != null) && (registration.getRegimeType(executionYear) != searchbean.getRegime())) {
 		continue;
 	    }
