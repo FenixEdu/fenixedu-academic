@@ -40,7 +40,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Mapping(path = "/requestListByDegree", module = RequestListByDegreeDA.MODULE)
 @Forwards( { @Forward(name = "searchRequests", path = "/academicAdminOffice/lists/searchRequestsByDegree.jsp") })
@@ -185,9 +184,8 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 	    if (degreeSearchBean.getDegree() == null) {
 		filename = executionYear.getYear();
 	    } else {
-		filename = degreeSearchBean.getDegree().getNameFor(executionYear).getContent(Language.getLanguage()).replace(' ',
-			'_')
-			+ "_" + executionYear.getYear();
+		filename = degreeSearchBean.getDegree().getNameFor(executionYear).getContent().replace(' ', '_') + "_"
+			+ executionYear.getYear();
 	    }
 
 	    response.setContentType("application/vnd.ms-excel");

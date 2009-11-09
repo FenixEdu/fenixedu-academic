@@ -5,6 +5,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.li
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.ServletOutputStream;
@@ -20,9 +21,11 @@ import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationWithState
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.StringUtils;
 
@@ -35,7 +38,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -98,9 +100,8 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
 		if (searchBean.getDegree() == null) {
 		    filename = executionYear.getYear();
 		} else {
-		    filename = searchBean.getDegree().getNameFor(executionYear).getContent(Language.getLanguage()).replace(' ',
-			    '_')
-			    + "_" + executionYear.getYear();
+		    filename = searchBean.getDegree().getNameFor(executionYear).getContent().replace(' ', '_') + "_"
+			    + executionYear.getYear();
 		}
 
 		response.setContentType("application/vnd.ms-excel");
@@ -168,12 +169,25 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
 		spreadsheet.addCell(registration.isPartialRegime(executionYear) ? "Tempo Parcial" : "Tempo Integral");
 
 		fillSpreadSheetPreBolonhaInfo(spreadsheet, registration);
-		fillSpreadSheetBolonhaInfo(spreadsheet, registration, registration.getLastStudentCurricularPlan().getFirstCycle());
-		fillSpreadSheetBolonhaInfo(spreadsheet, registration, registration.getLastStudentCurricularPlan()
-			.getSecondCycle());
-		fillSpreadSheetBolonhaInfo(spreadsheet, registration, registration.getLastStudentCurricularPlan().getThirdCycle());
+		if (getAdministratedCycleTypes().contains(CycleType.FIRST_CYCLE)) {
+		    fillSpreadSheetBolonhaInfo(spreadsheet, registration, registration.getLastStudentCurricularPlan().getCycle(
+			    CycleType.FIRST_CYCLE));
+		}
+
+		if (getAdministratedCycleTypes().contains(CycleType.SECOND_CYCLE)) {
+		    fillSpreadSheetBolonhaInfo(spreadsheet, registration, registration.getLastStudentCurricularPlan().getCycle(
+			    CycleType.SECOND_CYCLE));
+		}
+		if (getAdministratedCycleTypes().contains(CycleType.THIRD_CYCLE)) {
+		    fillSpreadSheetBolonhaInfo(spreadsheet, registration, registration.getLastStudentCurricularPlan().getCycle(
+			    CycleType.THIRD_CYCLE));
+		}
 	    }
 	}
+    }
+
+    private static Collection<CycleType> getAdministratedCycleTypes() {
+	return AccessControl.getPerson().getEmployee().getAdministrativeOffice().getAdministratedCycleTypes();
     }
 
     private void fillSpreadSheetPreBolonhaInfo(StyledExcelSpreadsheet spreadsheet, Registration registration) {
@@ -227,15 +241,21 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
 	    spreadsheet.addHeader("Curso Concluído");
 	    spreadsheet.addHeader("Data de Conclusão");
 	    spreadsheet.addHeader("Média de Curso");
-	    spreadsheet.addHeader("1º Ciclo Concluído");
-	    spreadsheet.addHeader("Data de Conclusão (1º Ciclo)");
-	    spreadsheet.addHeader("Média de Curso (1º Ciclo)");
-	    spreadsheet.addHeader("2º Ciclo Concluído");
-	    spreadsheet.addHeader("Data de Conclusão (2º Ciclo)");
-	    spreadsheet.addHeader("Média de Curso (2º Ciclo)");
-	    spreadsheet.addHeader("3º Ciclo Concluído");
-	    spreadsheet.addHeader("Data de Conclusão (3º Ciclo)");
-	    spreadsheet.addHeader("Média de Curso (3º Ciclo)");
+	    if (getAdministratedCycleTypes().contains(CycleType.FIRST_CYCLE)) {
+		spreadsheet.addHeader("1º Ciclo Concluído");
+		spreadsheet.addHeader("Data de Conclusão (1º Ciclo)");
+		spreadsheet.addHeader("Média de Curso (1º Ciclo)");
+	    }
+	    if (getAdministratedCycleTypes().contains(CycleType.SECOND_CYCLE)) {
+		spreadsheet.addHeader("2º Ciclo Concluído");
+		spreadsheet.addHeader("Data de Conclusão (2º Ciclo)");
+		spreadsheet.addHeader("Média de Curso (2º Ciclo)");
+	    }
+	    if (getAdministratedCycleTypes().contains(CycleType.THIRD_CYCLE)) {
+		spreadsheet.addHeader("3º Ciclo Concluído");
+		spreadsheet.addHeader("Data de Conclusão (3º Ciclo)");
+		spreadsheet.addHeader("Média de Curso (3º Ciclo)");
+	    }
 	}
     }
 

@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.accessControl.PermissionType;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdminOffice.AdministrativeOfficePermission;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdminOffice.AdministrativeOfficePermissionGroup;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AdministrativeOfficeUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
@@ -200,6 +201,16 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 	    if (degreeType.getAdministrativeOfficeType() == getAdministrativeOfficeType()) {
 		result.add(degreeType);
 	    }
+	}
+
+	return result;
+    }
+
+    public Collection<CycleType> getAdministratedCycleTypes() {
+	Collection<CycleType> result = new HashSet<CycleType>();
+
+	for (final DegreeType degreeType : getAdministratedDegreeTypes()) {
+	    result.addAll(degreeType.getCycleTypes());
 	}
 
 	return result;

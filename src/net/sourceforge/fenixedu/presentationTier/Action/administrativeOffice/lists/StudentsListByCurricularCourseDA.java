@@ -45,7 +45,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * @author - �ngela Almeida (argelina@ist.utl.pt)
@@ -143,8 +142,8 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
 	try {
 	    String filename;
 
-	    filename = curricularCourse.getDegreeCurricularPlan().getDegree().getNameFor(executionYear).getContent(
-		    Language.getLanguage()).replace(' ', '_')
+	    filename = curricularCourse.getDegreeCurricularPlan().getDegree().getNameFor(executionYear).getContent().replace(' ',
+		    '_')
 		    + "_" + executionYear.getYear();
 
 	    response.setContentType("application/vnd.ms-excel");

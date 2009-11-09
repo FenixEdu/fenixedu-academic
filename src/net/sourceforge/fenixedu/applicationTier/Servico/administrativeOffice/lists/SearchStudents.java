@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.lists;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -14,8 +15,10 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
@@ -35,13 +38,24 @@ public class SearchStudents extends FenixService {
 	final ExecutionYear executionYear = searchbean.getExecutionYear();
 	for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
 	    final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-	    if ((searchbean.getDegreeType() == null || degreeCurricularPlan.getDegreeType() == searchbean.getDegreeType())
-		    && (degree == null || degreeCurricularPlan.getDegree() == degree)) {
-		degreeCurricularPlan.getRegistrations(executionYear, registrations);
+	    if ((searchbean.getDegreeType() != null && degreeCurricularPlan.getDegreeType() != searchbean.getDegreeType())) {
+		continue;
 	    }
+	    if ((degreeCurricularPlan.getDegreeType() != DegreeType.EMPTY)
+		    && (!getAdministratedDegreeTypes().contains(degreeCurricularPlan.getDegreeType()))) {
+		continue;
+	    }
+	    if (degree != null && degreeCurricularPlan.getDegree() != degree) {
+		continue;
+	    }
+	    degreeCurricularPlan.getRegistrations(executionYear, registrations);
 	}
 
 	return filterResults(searchbean, registrations, executionYear);
+    }
+
+    private static Collection<DegreeType> getAdministratedDegreeTypes() {
+	return AccessControl.getPerson().getEmployee().getAdministrativeOffice().getAdministratedDegreeTypes();
     }
 
     private static List<RegistrationWithStateForExecutionYearBean> filterResults(SearchStudentsByDegreeParametersBean searchbean,
