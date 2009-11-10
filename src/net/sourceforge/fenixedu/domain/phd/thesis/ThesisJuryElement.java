@@ -14,7 +14,12 @@ abstract public class ThesisJuryElement extends ThesisJuryElement_Base {
 
     protected void init(final PhdThesisProcess process) {
 	check(process, "error.ThesisJuryElement.invalid.process");
+	setElementOrder(generateNextElementOrder(process));
 	setProcess(process);
+    }
+
+    private Integer generateNextElementOrder(final PhdThesisProcess process) {
+	return Integer.valueOf(process.getThesisJuryElementsCount() + 1);
     }
 
     public void delete() {

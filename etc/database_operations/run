@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter Thesis Jury Element table" alterThesisJuryElementTable.sql
