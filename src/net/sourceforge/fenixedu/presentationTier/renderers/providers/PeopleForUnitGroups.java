@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 import org.apache.commons.beanutils.MethodUtils;
@@ -40,7 +41,13 @@ public class PeopleForUnitGroups implements DataProvider {
 		people.addAll(subUnit.getPossibleGroupMembers());
 	    }
 	}
+	for (PersistentGroupMembers persistentGroupMembers : unit.getPersistentGroups()) {
+	    for(Person person : persistentGroupMembers.getPersons()){
+		if (! people.contains(person)){
+		    people.add(person);
+		}
+	    }
+	}
 	return people;
     }
-
 }

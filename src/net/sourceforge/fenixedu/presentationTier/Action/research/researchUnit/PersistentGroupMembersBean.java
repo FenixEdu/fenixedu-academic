@@ -22,6 +22,7 @@ public class PersistentGroupMembersBean implements Serializable {
 
     private String name;
     private PersistentGroupMembersType type;
+    private Person person;
 
     private void init(PersistentGroupMembers group, Unit unit) {
 	this.unit = unit;
@@ -68,6 +69,18 @@ public class PersistentGroupMembersBean implements Serializable {
     public void setPeople(List<Person> people) {
 	this.people.clear();
 	this.people.addAll(people);
+    }
+    
+    public void addPeople(List<Person> people) {
+	this.people.addAll(people);
+    }
+
+    public void setIstId(Person istId) {
+	this.person = istId;
+    }
+
+    public Person getIstId() {
+	return person;
     }
 
 }

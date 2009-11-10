@@ -1274,7 +1274,8 @@ extends="eventCreation">
 
 <!-- PUBLICATION SCHEMAS -->
 <!-- Schemas used for Result Publications Management -->
-<!-- Publication schema names's construction: "result.publication.[***]."+[PublicationType] -->
+<!-- Publication schema names's construction: "result.publication.[***]."+[PublicationType]
+-->
 <schema name="resultPublication.editType" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean">
   	<slot name="publicationType" layout="menu-select-postback" key="researcher.ResultPublication.type"
@@ -2191,7 +2192,8 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Co
 <schema name="bibtex.participatorDescription" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.bibtex.BibtexParticipatorBean">
  	<slot name="personDescription"/>
 </schema>
-<!-- Schemas used in bibtex importation. simple remove slot publicationType (not possible to change publicationType!) -->
+<!-- Schemas used in bibtex importation. simple remove slot publicationType (not possible to change publicationType!)
+-->
 <schema name="result.publication.import.Book" bundle="RESEARCHER_RESOURCES" extends="result.publication.create.Book"
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.BookBean">
 	<remove name="publicationType"/>
@@ -2637,7 +2639,8 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 	</slot>
 </schema>
 
-<!-- This one has a single field title with all information (from old publications) -->
+<!-- This one has a single field title with all information (from old publications)
+-->
 <schema name="result.publication.presentation.Unstructured" extends="publication.TitleAndAuthors" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.domain.research.result.publication.Unstructured">
 		<slot name="title"/>
@@ -2775,19 +2778,6 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 		<property name="sortBy" value="name"/>
 	</slot>
 </schema>
-
-<schema name="create.persistent.group" type="net.sourceforge.fenixedu.presentationTier.Action.research.researchUnit.PersistentGroupMembersBean" bundle="RESEARCHER_RESOURCES">
-	<slot name="name" key="label.groupName" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="size" value="40"/>
-	</slot>
-	<slot name="people" layout="option-select" key="label.members" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-			<property name="classes" value="nobullet noindent"/>
-			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PeopleForUnitGroups"/>
-			<property name="saveOptions" value="true"/>
-			<property name="eachLayout" value="name-with-alias"/>
-			<property name="sortBy" value="name"/>
-	</slot>
-</schema>	
 
 <schema name="view.genericFileUpload" type="net.sourceforge.fenixedu.presentationTier.Action.research.researchUnit.UnitFileUploadBean" bundle="RESEARCHER_RESOURCES">
 	<slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">

@@ -69,6 +69,9 @@ public abstract class UnitFunctionalities extends FenixDispatchAction {
 	IViewState viewState = RenderUtils.getViewState("createGroup");
 	if (viewState != null) {
 	    PersistentGroupMembersBean bean = (PersistentGroupMembersBean) viewState.getMetaObject().getObject();
+	    if (bean.getIstId() != null) {
+		bean.getPeople().add(bean.getIstId());
+	    }
 	    executeService("CreatePersistentGroup", new Object[] { bean.getUnit(), bean.getName(), bean.getPeople(),
 		    bean.getType() });
 	}
@@ -91,7 +94,6 @@ public abstract class UnitFunctionalities extends FenixDispatchAction {
 
     public ActionForward prepareEditPersistedGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-
 	request.setAttribute("bean", new PersistentGroupMembersBean(getGroup(request)));
 	return mapping.findForward("editPersistedGroup");
     }
@@ -103,6 +105,9 @@ public abstract class UnitFunctionalities extends FenixDispatchAction {
 	if (viewState != null) {
 	    try {
 		PersistentGroupMembersBean bean = (PersistentGroupMembersBean) viewState.getMetaObject().getObject();
+		if (bean.getIstId() != null) {
+		    bean.getPeople().add(bean.getIstId());
+		}
 		executeService("EditPersistentGroup", new Object[] { bean.getGroup(), bean.getName(), bean.getPeople(),
 			bean.getUnit() });
 	    } catch (DomainException e) {
