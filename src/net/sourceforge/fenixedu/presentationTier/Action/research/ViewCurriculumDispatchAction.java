@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -120,7 +122,7 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 	Set<ResearchResultPublication> bookParts = new HashSet<ResearchResultPublication>();
 	Set<ResearchResultPublication> resultPublications = new HashSet<ResearchResultPublication>();
 	Set<Prize> prizes = new HashSet<Prize>();
-	Set<Career> career = new HashSet<Career>();
+	SortedSet<Career> career = new TreeSet<Career>(Career.CAREER_DATE_COMPARATOR);
 
 	ExecutionYear stoppageYear = finaltExecutionYear.getNextExecutionYear();
 	ExecutionYear iteratorYear = firstExecutionYear;

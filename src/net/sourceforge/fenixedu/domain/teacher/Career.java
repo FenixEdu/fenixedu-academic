@@ -5,12 +5,12 @@
 package net.sourceforge.fenixedu.domain.teacher;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CareerType;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.LocalDateTime;
@@ -25,6 +25,17 @@ import pt.utl.ist.fenix.tools.util.PossiblyNullEndedInterval;
  */
 //
 public abstract class Career extends Career_Base {
+
+    public static Comparator<Career> CAREER_DATE_COMPARATOR = new Comparator<Career>() {
+	@Override
+	public int compare(Career o1, Career o2) {
+	    if (!o1.getBeginYear().equals(o2.getBeginYear())) {
+		return -(o1.getBeginYear().compareTo(o2.getBeginYear()));
+	    } else {
+		return o1.getExternalId().compareTo(o2.getExternalId());
+	    }
+	}
+    };
 
     public Career() {
 	super();

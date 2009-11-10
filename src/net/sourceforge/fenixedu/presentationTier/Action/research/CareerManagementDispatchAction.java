@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.research;
 
-import java.util.Comparator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -26,16 +25,7 @@ public class CareerManagementDispatchAction extends FenixDispatchAction {
     public ActionForward showCareer(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	Person person = getLoggedPerson(request);
-	SortedSet<Career> sortedCareer = new TreeSet<Career>(new Comparator<Career>() {
-	    @Override
-	    public int compare(Career o1, Career o2) {
-		if (!o1.getBeginYear().equals(o2.getBeginYear())) {
-		    return -(o1.getBeginYear().compareTo(o2.getBeginYear()));
-		} else {
-		    return o1.getExternalId().compareTo(o2.getExternalId());
-		}
-	    }
-	});
+	SortedSet<Career> sortedCareer = new TreeSet<Career>(Career.CAREER_DATE_COMPARATOR);
 	sortedCareer.addAll(person.getCareersByType(CareerType.PROFESSIONAL));
 	request.setAttribute("career", sortedCareer);
 	return mapping.findForward("showCareer");
