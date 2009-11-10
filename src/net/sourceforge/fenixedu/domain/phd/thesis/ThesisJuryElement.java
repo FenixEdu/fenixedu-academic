@@ -1,10 +1,20 @@
 package net.sourceforge.fenixedu.domain.phd.thesis;
 
+import java.util.Collections;
+import java.util.Comparator;
+
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.joda.time.DateTime;
 
 abstract public class ThesisJuryElement extends ThesisJuryElement_Base {
+
+    static public final Comparator<ThesisJuryElement> COMPARATOR_BY_ELEMENT_ORDER = new Comparator<ThesisJuryElement>() {
+	@Override
+	public int compare(ThesisJuryElement o1, ThesisJuryElement o2) {
+	    return o1.getElementOrder().compareTo(o2.getElementOrder());
+	}
+    };
 
     protected ThesisJuryElement() {
 	super();
@@ -19,7 +29,11 @@ abstract public class ThesisJuryElement extends ThesisJuryElement_Base {
     }
 
     private Integer generateNextElementOrder(final PhdThesisProcess process) {
-	return Integer.valueOf(process.getThesisJuryElementsCount() + 1);
+	if (!process.hasAnyThesisJuryElements()) {
+	    return Integer.valueOf(1);
+	}
+	return Integer.valueOf(Collections.max(process.getThesisJuryElements(), ThesisJuryElement.COMPARATOR_BY_ELEMENT_ORDER)
+		.getElementOrder().intValue() + 1);
     }
 
     public void delete() {
