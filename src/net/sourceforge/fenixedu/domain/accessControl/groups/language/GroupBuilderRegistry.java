@@ -9,8 +9,10 @@ import net.sourceforge.fenixedu.domain.ManagementGroups;
 import net.sourceforge.fenixedu.domain.accessControl.AllDegreesStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.AllEmployeesByCampus;
 import net.sourceforge.fenixedu.domain.accessControl.AllEmployeesGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AllFirstCycleStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.AllMasterDegreesStudents;
 import net.sourceforge.fenixedu.domain.accessControl.AllResearchersGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AllSecondCycleStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.AllStudentsByCampus;
 import net.sourceforge.fenixedu.domain.accessControl.AllStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.AllTeachersByCampus;
@@ -250,7 +252,7 @@ public class GroupBuilderRegistry {
 		InternalPersonGroup.class, ExecutionCourseResponsiblesGroup.class, InstitutionSiteManagers.class,
 		TeachersAndInstitutionSiteManagersGroup.class, PedagogicalCouncilMembersGroup.class,
 		ScientificCouncilMembersGroup.class, AllTeachersGroup.class, AllEmployeesGroup.class, AllStudentsGroup.class,
-		AllResearchersGroup.class, InternalOrExternalTeacherGroup.class };
+		AllResearchersGroup.class, InternalOrExternalTeacherGroup.class, AllSecondCycleStudentsGroup.class, AllFirstCycleStudentsGroup.class };
 
 	for (Class groupClass : groups) {
 	    String className = groupClass.getSimpleName();
