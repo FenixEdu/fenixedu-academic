@@ -1,0 +1,105 @@
+package net.sourceforge.fenixedu.domain.accessControl;
+
+import java.util.Set;
+
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgument;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
+import net.sourceforge.fenixedu.domain.student.Registration;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+
+public class DegreeStudentsCycleGroup extends DegreeStudentsGroup {
+
+	/**
+         * 
+         */
+	private static final long serialVersionUID = 1L;
+	private CycleType cycleType;
+
+	public DegreeStudentsCycleGroup(Degree object, CycleType cycleType) {
+		super(object);
+		setCycleType(cycleType);
+	}
+
+	@Override
+	public Set<Person> getElements() {
+		Set<Person> elements = super.buildSet();
+		for (DegreeCurricularPlan degreeCurricularPlan : getDegree().getActiveDegreeCurricularPlans()) {
+			if (getCycleType().equals(degreeCurricularPlan.getDegreeType().getCycleType())) {
+				for (StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlans()) {
+					if (studentCurricularPlan.isActive()) {
+						elements.add(studentCurricularPlan.getRegistration().getPerson());
+					}
+				}
+			}
+		}
+
+		return super.freezeSet(elements);
+	}
+
+	@Override
+	public boolean isMember(Person person) {
+		if (person != null && person.hasStudent()) {
+			for (final Registration registration : person.getStudent().getRegistrationsSet()) {
+				StudentCurricularPlan activeStudentCurricularPlan = registration.getActiveStudentCurricularPlan();
+				if (registration.isActive() && activeStudentCurricularPlan.getDegree() == getDegree()
+						&& getCycleType().equals(activeStudentCurricularPlan.getDegreeType())) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	@Override
+	protected Argument[] getExpressionArguments() {
+		return new Argument[] { new IdOperator(getObject()), new StaticArgument(getCycleType().name()) };
+	}
+
+	@Override
+	public String getName() {
+		return RenderUtils.getFormatedResourceString("GROUP_NAME_RESOURCES", "label.name." + getClass().getSimpleName(),
+				getObject().getPresentationName(), getCycleType().getDescription());
+	}
+
+	public static class Builder implements GroupBuilder {
+
+		public Group build(Object[] arguments) {
+			try {
+				final String cycleTypeName = (String) arguments[1];
+				final CycleType cycleType = CycleType.valueOf(cycleTypeName);
+				return new DegreeStudentsCycleGroup((Degree) arguments[0], cycleType);
+			} catch (ClassCastException e) {
+				throw new GroupDynamicExpressionException("accessControl.group.builder.degreeGroup.notDegree", arguments[0]
+						.toString());
+			}
+		}
+
+		public int getMinArguments() {
+			return 2;
+		}
+
+		public int getMaxArguments() {
+			return 2;
+		}
+
+	}
+
+	public CycleType getCycleType() {
+		return cycleType;
+	}
+
+	public void setCycleType(CycleType cycleType) {
+		this.cycleType = cycleType;
+	}
+}

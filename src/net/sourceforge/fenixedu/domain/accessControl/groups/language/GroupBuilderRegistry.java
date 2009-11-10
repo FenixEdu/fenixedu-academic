@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeScientificComm
 import net.sourceforge.fenixedu.domain.accessControl.CurricularCourseStudentsByExecutionPeriodGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DegreeAllCoordinatorsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DegreeCoordinatorsGroup;
+import net.sourceforge.fenixedu.domain.accessControl.DegreeStudentsCycleGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DegreeStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DegreeTeachersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DegreesOfExecutionCourseGroup;
@@ -192,6 +193,7 @@ public class GroupBuilderRegistry {
 		new ExecutionCourseTeachersAndStudentsGroup.Builder());
 	register("degreesOfExecutionCourse", DegreesOfExecutionCourseGroup.class, new DegreesOfExecutionCourseGroup.Builder());
 	register("competenceCourse", CompetenceCourseGroup.class, new CompetenceCourseGroup.Builder());
+	register("degreeStudentsCycle", DegreeStudentsCycleGroup.class, new DegreeStudentsCycleGroup.Builder());
 	register("degreeStudents", DegreeStudentsGroup.class, new DegreeStudentsGroup.Builder());
 	register("degreeTeachers", DegreeTeachersGroup.class, new DegreeTeachersGroup.Builder());
 	register("departmentEmployeesByYear", DepartmentEmployeesByExecutionYearGroup.class,
