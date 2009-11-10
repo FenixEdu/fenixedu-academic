@@ -640,7 +640,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 	request.setAttribute("manuals", ResearchResultPublication.sort(person.getManuals(firstExecutionYear, finalExecutionYear)));
 	request.setAttribute("technicalReports", ResearchResultPublication.sort(person.getTechnicalReports(firstExecutionYear, finalExecutionYear)));
 	request.setAttribute("otherPublications", ResearchResultPublication.sort(person.getOtherPublications(firstExecutionYear, finalExecutionYear)));
-	request.setAttribute("unstructureds", ResearchResultPublication.sort(person.getUnstructureds(firstExecutionYear, finalExecutionYear)));
+	request.setAttribute("unstructureds", ResearchResultPublication.sort(person.getUnstructureds()));
 	request.setAttribute("inbooks", ResearchResultPublication.sort(person.getInbooks(firstExecutionYear, finalExecutionYear)));
 
 	request.setAttribute("person", getLoggedPerson(request));
