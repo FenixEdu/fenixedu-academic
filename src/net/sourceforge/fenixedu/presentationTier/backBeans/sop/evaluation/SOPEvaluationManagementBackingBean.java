@@ -689,7 +689,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	List<CalendarLink> result = new ArrayList<CalendarLink>();
 	Integer[] curricularYearIDs = getCurricularYearIDs();
 
-	if (curricularYearIDs != null) {
+	if (curricularYearIDs != null && getExecutionDegree() != null) {
 	    List<Integer> curricularYears = Arrays.asList(getCurricularYearIDs());
 	    DegreeCurricularPlan degreeCurricularPlan = getExecutionDegree().getDegreeCurricularPlan();
 	    for (final ExecutionCourse executionCourse : getExecutionCourses()) {
@@ -772,7 +772,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	final List<ExecutionCourseWrittenEvaluationAgregationBean> executionCourseWrittenEvaluationAgregationBean = new ArrayList<ExecutionCourseWrittenEvaluationAgregationBean>();
 	final Integer[] curricularYears = getCurricularYearIDs();
 
-	if (curricularYears != null) {
+	if (curricularYears != null && this.getExecutionDegree() != null) {
 	    final DegreeCurricularPlan degreeCurricularPlan = this.getExecutionDegree().getDegreeCurricularPlan();
 	    for (final Integer curricularYearID : curricularYears) {
 		// final Object args[] = { degreeCurricularPlan.getIdInternal(),
@@ -823,7 +823,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	List<ExecutionCourse> executionCoursesWithWrittenEvaluations = new ArrayList<ExecutionCourse>();
 	Integer[] curricularYearIDs = getCurricularYearIDs();
 
-	if (curricularYearIDs != null) {
+	if (curricularYearIDs != null && getExecutionDegree() != null) {
 
 	    DegreeCurricularPlan degreeCurricularPlan = getExecutionDegree().getDegreeCurricularPlan();
 	    List<Integer> curricularYears = Arrays.asList(curricularYearIDs);
@@ -873,7 +873,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
 	Integer[] curricularYearIDs = getCurricularYearIDs();
 
-	if (curricularYearIDs != null) {
+	if (curricularYearIDs != null && getExecutionDegree() != null) {
 	    List<Integer> curricularYears = Arrays.asList(curricularYearIDs);
 	    DegreeCurricularPlan degreeCurricularPlan = getExecutionDegree().getDegreeCurricularPlan();
 
