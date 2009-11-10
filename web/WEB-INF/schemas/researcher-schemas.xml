@@ -562,7 +562,7 @@ extends="eventCreation">
 <schema name="journalCreation.existentJournal" type="net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchScientificJournalCreationBean" bundle="RESEARCHER_RESOURCES">
 	<slot name="scientificJournal.name" key="label.scientificJournal.name" read-only="true" />
 	<slot name="beginDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="endDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="endDate"/>
 	<slot name="role" key="label.activityRole" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.researcher.activity.ResearchActivityRolesDataProvider"/>
 		<property name="eachLayout" value=""/>
@@ -585,7 +585,7 @@ extends="eventCreation">
 	<slot name="publisher"/>
 	<slot name="locationType" key="label.scientificJournal.locationType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="beginDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="endDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="endDate" />
 	<slot name="role" key="label.activityRole" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.researcher.activity.ResearchActivityRolesDataProvider"/>
 		<property name="eachLayout" value=""/>

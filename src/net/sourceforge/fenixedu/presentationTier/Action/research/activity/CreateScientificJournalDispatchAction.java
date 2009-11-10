@@ -73,7 +73,7 @@ public class CreateScientificJournalDispatchAction extends FenixDispatchAction {
 	    } catch (DomainException e) {
 		addActionMessage(request, e.getMessage());
 		request.setAttribute("existentJournalBean", bean);
-		request.setAttribute("journalCreationSchema", "journalCreation.existentJourna");
+		request.setAttribute("journalCreationSchema", "journalCreation.existentJournal");
 		return prepare(mapping, form, request, response);
 	    }
 	}
