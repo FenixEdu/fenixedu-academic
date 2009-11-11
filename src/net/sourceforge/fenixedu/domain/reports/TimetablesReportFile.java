@@ -2,7 +2,9 @@ package net.sourceforge.fenixedu.domain.reports;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -69,9 +71,15 @@ public class TimetablesReportFile extends TimetablesReportFile_Base {
     private void timetables(Spreadsheet spreadsheet, final ExecutionYear executionYear, final DegreeType degreeType) throws IOException {
 	generateNameAndHeaders(spreadsheet, executionYear, degreeType);
 
+	Map<ExecutionCourse, Boolean> areLessonsWithoutTeacherConsidered = new HashMap<ExecutionCourse, Boolean>();
+	for(ExecutionCourse executionCourse : getRootDomainObject().getExecutionCourses()) {
+	    areLessonsWithoutTeacherConsidered.put(executionCourse, false);
+	}
 	for (Teacher teacher : getRootDomainObject().getTeachers()) {
 	    for (final ExecutionSemester semester : executionYear.getExecutionPeriods()) {
+		ExecutionCourse executionCourse = null;
 		for(Professorship professorship : teacher.getDegreeProfessorshipsByExecutionPeriod(semester)) {
+		    executionCourse = professorship.getExecutionCourse();
 		    boolean isSameDegreeType = false;
 		    for(Degree degree : professorship.getExecutionCourse().getDegreesSortedByDegreeName()) {
 			if(degree.getDegreeType().compareTo(degreeType) == 0) {
@@ -99,10 +107,10 @@ public class TimetablesReportFile extends TimetablesReportFile_Base {
 			    	row.setCell(semester.getQualifiedName());
 
 			    	// ID Execution Course
-			    	row.setCell(professorship.getExecutionCourse().getIdInternal());
+			    	row.setCell(executionCourse.getIdInternal());
 
 			    	// OID Execution Course
-			    	row.setCell(String.valueOf(professorship.getExecutionCourse().getOid()));
+			    	row.setCell(String.valueOf(executionCourse.getOid()));
 
 			    	// ID Turno
 			    	row.setCell(service.getShift().getIdInternal());
@@ -133,6 +141,71 @@ public class TimetablesReportFile extends TimetablesReportFile_Base {
 			    	// Nº Alunos Inscritos
 			    	row.setCell(service.getShift().getShiftEnrolmentsOrderedByDate().size());
 			    }
+			}
+		    }
+		}
+		if((executionCourse != null) && (areLessonsWithoutTeacherConsidered.get(executionCourse) == false)) {
+		    for(Lesson lesson : getRootDomainObject().getLessons()) {
+			if(lesson.getExecutionCourse() != executionCourse) {
+			    continue;
+			}
+			if(lesson.getShift().getDegreeTeachingServices().isEmpty()) {
+			    for(ShiftType shiftType : lesson.getShift().getTypes()) {
+				// Licoes sem professor
+				final Row row = spreadsheet.addRow();
+			    
+				// Nr Docente
+				row.setCell("");
+
+				// Nome Docente
+				row.setCell("");
+
+				// Ano Lectivo
+				row.setCell(executionYear.getQualifiedName());
+
+				// Semestre
+				row.setCell(semester.getQualifiedName());
+
+				// ID Execution Course
+				row.setCell(executionCourse.getIdInternal());
+
+				// OID Execution Course
+				row.setCell(String.valueOf(executionCourse.getOid()));
+
+				// ID Turno
+				row.setCell(lesson.getShift().getIdInternal());
+
+				// Nome Turno
+				row.setCell(lesson.getShift().getNome());
+
+				// Tipo Aula
+				row.setCell(shiftType.getFullNameTipoAula());
+
+				// Dia Semana
+				row.setCell(lesson.getDiaSemana().getDiaSemanaString());
+
+				// Hora Início
+				row.setCell(lesson.getBeginHourMinuteSecond().toString());
+
+				// Hora Fim
+				row.setCell(lesson.getEndHourMinuteSecond().toString());
+
+				// Sala
+				if(lesson.getSala() != null) {
+				    row.setCell(lesson.getSala().getNome());
+				}
+
+				// Percentagem Assegurada pelo Docente
+				row.setCell("");
+
+				// Nº Alunos Inscritos
+				row.setCell(lesson.getShift().getShiftEnrolmentsOrderedByDate().size());
+
+				areLessonsWithoutTeacherConsidered.put(executionCourse, true);
+			    }
+			}
+			if(areLessonsWithoutTeacherConsidered.get(executionCourse) == true) {
+			    break;
 			}
 		    }
 		}
