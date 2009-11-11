@@ -37,6 +37,7 @@
 						<fr:property name="columnClasses" value="dnone,,tdclear tderror1"/>
 					</fr:layout>
 			   		<fr:destination name="invalid" path="/resultPublications/prepareCreate.do"/>
+					<fr:destination name="cancel" path="/resultPublications/listPublications.do"/>
 				</fr:edit>	
 				
 				<!-- Present publication fields -->
