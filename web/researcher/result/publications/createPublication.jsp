@@ -50,6 +50,7 @@
 			 	    <fr:layout name="tabular">
 			    	    <fr:property name="classes" value="tstyle5 thright thlight thtop"/>
 			        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+			        	<fr:property name="requiredMarkShown" value="true"/>
 				    </fr:layout>
 			   		<fr:destination name="invalid" path="/resultPublications/prepareCreate.do"/>
 			   		<fr:destination name="typePostBack" path="/resultPublications/changeType.do"/>
@@ -177,8 +178,10 @@
 					<fr:edit id="journalInfo" name="issueBean" schema="result.publication.create.Article.createMagazine">
 						<fr:layout name="tabular">
 							<fr:property name="classes" value="tstyle5 thright thlight thtop mtop025"/>
-		        		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+							<fr:property name="requiredMarkShown" value="true"/>
+		        			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 						</fr:layout>
+						<fr:destination name="invalid"  path="/resultPublications/createJournal.do"/>
 					</fr:edit>
 	
 					</logic:equal>
@@ -196,7 +199,8 @@
 					<fr:edit id="issueInfo" name="issueBean" schema="<%= issueSchema %>">
 						<fr:layout name="tabular">
 						 <fr:property name="classes" value="tstyle5 thright thlight thtop mtop05 dinline"/>
-		        		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+		        		 <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+		        		 <fr:property name="requiredMarkShown" value="true"/>
 						</fr:layout>
 						<fr:destination name="postBack" path="/resultPublications/changeSpecialIssueInCreation.do"/>
 						<fr:destination name="invalid"  path="/resultPublications/createJournal.do"/>

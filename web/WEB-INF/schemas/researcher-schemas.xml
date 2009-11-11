@@ -1474,7 +1474,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Ar
 
 <schema name="result.publication.create.Article.createMagazine" bundle="RESEARCHER_RESOURCES"
 type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.CreateIssueBean">
-	<slot name="scientificJournalName" key="label.journal.name">
+	<slot name="scientificJournalName" key="label.journal.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="70"/>
 	</slot>
 	<slot name="issn" validator="pt.ist.fenixWebFramework.renderers.validators.ISSNValidator" layout="input-with-comment">
@@ -1482,7 +1482,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 		<property name="comment" value="label.issn.explanation"/>
 		<property name="commentClasses" value="smalltxt color555"/>
 	</slot>
-	<slot name="location" key="label.scope"/>
+	<slot name="location" key="label.scope" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="publisher">
 		<property name="size" value="40"/>
 	</slot>
