@@ -21,9 +21,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(path = "/phdThesisProcess", module = "academicAdminOffice")
 @Forwards( {
 
-@Forward(name = "manageThesisJuryElements", path = "/phd/thesis/manageThesisJuryElements.jsp"),
+@Forward(name = "manageThesisJuryElements", path = "/phd/thesis/academicAdminOffice/manageThesisJuryElements.jsp"),
 
-@Forward(name = "addJuryElement", path = "/phd/thesis/addJuryElement.jsp")
+@Forward(name = "addJuryElement", path = "/phd/thesis/academicAdminOffice/addJuryElement.jsp")
 
 })
 public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
@@ -67,4 +67,5 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
 	return manageThesisJuryElements(mapping, actionForm, request, response);
     }
+
 }
