@@ -16,7 +16,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(path = "/gratuityPaymentsReminder")
 @Forwards( {
 
-@Forward(name = "showGratuityPaymentsReminder", path = "/showGratuityPaymentsReminder.jsp")
+@Forward(name = "showGratuityPaymentsReminder", path = "/showGratuityPaymentsReminder.jsp", useTile = false)
 
 })
 public class GratuityPaymentsReminderAction extends FenixDispatchAction {
@@ -24,13 +24,6 @@ public class GratuityPaymentsReminderAction extends FenixDispatchAction {
     public ActionForward showReminder(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	return mapping.findForward("showGratuityPaymentsReminder");
-    }
-
-    private ActionForward redirect(final String path) {
-	final ActionForward actionForward = new ActionForward();
-	actionForward.setPath(path);
-	actionForward.setRedirect(true);
-	return actionForward;
     }
 
 }

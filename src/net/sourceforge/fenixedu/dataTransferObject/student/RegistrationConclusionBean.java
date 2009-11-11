@@ -31,6 +31,8 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
 
     private Boolean hasAccessToRegistrationConclusionProcess = Boolean.TRUE;
 
+    private LocalDate enteredConclusionDate;
+
     public RegistrationConclusionBean(final Registration registration) {
 	setRegistration(registration);
     }
@@ -287,6 +289,18 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
 
     public void setHasAccessToRegistrationConclusionProcess(Boolean hasAccessToRegistrationConclusionProcess) {
 	this.hasAccessToRegistrationConclusionProcess = hasAccessToRegistrationConclusionProcess;
+    }
+
+    public LocalDate getEnteredConclusionDate() {
+	return enteredConclusionDate;
+    }
+
+    public boolean hasEnteredConclusionDate() {
+	return getEnteredConclusionDate() != null;
+    }
+
+    public void setEnteredConclusionDate(LocalDate enteredConclusionDate) {
+	this.enteredConclusionDate = enteredConclusionDate;
     }
 
 }

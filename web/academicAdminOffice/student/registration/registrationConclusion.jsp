@@ -219,10 +219,9 @@
 				</logic:notEmpty>
 			</p>
 		</logic:equal>
-		
-		
+
 			<h3 class="mtop15 mbottom05"><bean:message key="registration.curriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
-	
+
 			<logic:equal name="registrationConclusionBean" property="curriculumForConclusion.studentCurricularPlan.boxStructure" value="true">
 				<p>
 					<fr:view name="registrationConclusionBean" property="curriculumForConclusion">
@@ -236,15 +235,15 @@
 				<bean:define id="curriculumEntries" name="registrationConclusionBean" property="curriculumForConclusion.curriculumEntries"/>
 				<table class="scplan">
 					<tr class="scplangroup">
-						<td class=" scplancolcurricularcourse" rowspan="2" colspan="2">
+						<th class=" scplancolcurricularcourse" rowspan="2" colspan="2">
 							<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.curricular.course.from.curriculum"/>
 						</th>
-						<td class=" scplancolgrade"colspan="3">
+						<th class=" scplancolgrade"colspan="3">
 							<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="degree.average"/>
 						</th>
-						<td class=" scplancolgrade">
+						<th class=" scplancolgrade">
 							<bean:message key="curricular.year" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-						</td>
+						</th>
 					</tr>
 					<tr class="scplangroup">
 						<td class=" scplancolgrade">
@@ -258,7 +257,7 @@
 						</td>
 						<td  class=" scplancolgrade" style="width: 100px;">
 							<bean:message bundle="APPLICATION_RESOURCES" key="label.credits"/>
-						</th>
+						</td>
 					</tr>
 					<logic:iterate id="curriculumEntry" name="curriculumEntries">
 						<logic:equal name="curriculumEntry" property="class.name" value="net.sourceforge.fenixedu.domain.student.curriculum.NotInDegreeCurriculumCurriculumEntry">
@@ -323,11 +322,29 @@
 			</logic:equal>	
 	
 		
-		
+		<%-- Form used to concluded process or to repeat --%>		
 		<logic:equal name="registrationConclusionBean" property="canBeConclusionProcessed" value="true">
 			<fr:form action="/registration.do?method=doRegistrationConclusion">
 			
 				<fr:edit id="registrationConclusionBean" name="registrationConclusionBean" visible="false" />
+				
+				<strong><bean:message  key="student.registrationConclusionProcess.data" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong>
+				<fr:edit id="registrationConclusionBean-manage" name="registrationConclusionBean">
+					<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean">
+						<fr:slot name="calculatedConclusionDate" readOnly="true">
+							<fr:property name="classes" value="bold" />
+						</fr:slot>
+						<fr:slot name="enteredConclusionDate" layout="input-with-comment">
+					        <fr:property name="bundle" value="APPLICATION_RESOURCES"/>
+							<fr:property name="comment" value="label.registrationConclusionProcess.enteredConclusionDate.comment"/>
+							<fr:property name="commentLocation" value="right" />
+						</fr:slot>
+					</fr:schema>
+					<fr:layout name="tabular-editable">
+						<fr:property name="classes" value="tstyle4 thright thlight mvert05"/>
+						<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
+					</fr:layout>
+				</fr:edit>
 				
 				<p class="mtop15">
 					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">

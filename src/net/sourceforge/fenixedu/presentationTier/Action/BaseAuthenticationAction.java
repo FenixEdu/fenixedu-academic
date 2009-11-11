@@ -4,7 +4,6 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.domain.PendingRequest;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
@@ -32,7 +31,6 @@ import org.joda.time.Days;
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.servlets.filters.I18NFilter;
 import pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public abstract class BaseAuthenticationAction extends FenixAction {
 
@@ -50,8 +48,9 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	    final HttpSession session = request.getSession(false);
 
 	    UserView.setUser(userView);
-	    String pendingRequest = request.getParameter("pendingRequest"); 
-	    if (pendingRequest != null && pendingRequest.length() > 0 && !pendingRequest.equals("null") && DomainObject.fromExternalId(pendingRequest) != null) {
+	    String pendingRequest = request.getParameter("pendingRequest");
+	    if (pendingRequest != null && pendingRequest.length() > 0 && !pendingRequest.equals("null")
+		    && DomainObject.fromExternalId(pendingRequest) != null) {
 		return handleSessionRestoreAndGetForward(request, form, userView, session);
 	    } else if (isStudentAndHasInquiriesToRespond(userView)) {
 		return handleSessionCreationAndForwardToInquiriesResponseQuestion(request, userView, session);
@@ -78,11 +77,9 @@ public abstract class BaseAuthenticationAction extends FenixAction {
     }
 
     private boolean isStudentAndHasGratuityDebtsToPay(final IUserView userView) {
-	return false;
-	// return userView.hasRoleType(RoleType.STUDENT)
-	// && userView.getPerson().
-	// hasGratuityOrAdministrativeOfficeFeeAndInsuranceDebtsFor(
-	// ExecutionYear.readCurrentExecutionYear());
+	return userView.hasRoleType(RoleType.STUDENT)
+		&& userView.getPerson().hasGratuityOrAdministrativeOfficeFeeAndInsuranceDebtsFor(
+			ExecutionYear.readCurrentExecutionYear());
     }
 
     private boolean isTeacherAndHasInquiriesToRespond(IUserView userView) {
