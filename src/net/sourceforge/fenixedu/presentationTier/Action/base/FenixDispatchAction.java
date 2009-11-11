@@ -81,6 +81,18 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	return actionForward;
     }
 
+    protected static String getResourceMessageFromModuleOrApplication(String moduleName, String key) {
+	try {
+	    return getResourceBundleByModuleName(moduleName).getString(key);
+	} catch (MissingResourceException e) {
+	    try {
+		return getResourceBundleByModuleName("Application").getString(key);
+	    } catch (MissingResourceException ex) {
+		return key;
+	    }
+	}
+    }
+
     protected static String getResourceMessageFromModule(String moduleName, String key) {
 	try {
 	    return getResourceBundleByModuleName(moduleName).getString(key);

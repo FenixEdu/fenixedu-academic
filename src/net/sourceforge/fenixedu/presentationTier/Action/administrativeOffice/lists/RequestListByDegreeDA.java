@@ -221,17 +221,11 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 	AcademicServiceRequestSituationType situationType = requestSearchBean.getAcademicServiceRequestSituationType();
 	spreadsheet.newRow();
 	if (requestType != null) {
-	    spreadsheet.addHeader(getResourceMessage("label.type")
-		    + ": "
-		    + getResourceMessageFromModule("Enumeration", requestType.getClass().getSimpleName() + "."
-			    + requestType.getName()));
+	    spreadsheet.addHeader(getResourceMessage("label.type") + ": " + getEnumNameFromResources(requestType));
 	}
 	spreadsheet.newRow();
 	if (situationType != null) {
-	    spreadsheet.addHeader(getResourceMessage("label.state")
-		    + ": "
-		    + getResourceMessageFromModule("Enumeration", situationType.getClass().getSimpleName() + "."
-			    + situationType.getName()));
+	    spreadsheet.addHeader(getResourceMessage("label.state") + ": " + getEnumNameFromResources(situationType));
 	}
 	spreadsheet.newRow();
 	if (requestSearchBean.isUrgentRequest()) {
@@ -271,7 +265,11 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 	spreadsheet.addHeader(getResourceMessage("label.student.name"));
     }
 
-    private String getResourceMessage(String key) {
-	return getResourceMessageFromModule(MODULE, key);
+    static private String getResourceMessage(String key) {
+	return getResourceMessageFromModuleOrApplication(MODULE, key);
+    }
+
+    static private String getEnumNameFromResources(Enum enumeration) {
+	return getResourceMessageFromModule("Enumeration", enumeration.getClass().getSimpleName() + "." + enumeration.name());
     }
 }

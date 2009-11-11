@@ -3,6 +3,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.lists;
 
+import static net.sourceforge.fenixedu.util.StringUtils.EMPTY;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Collection;
@@ -45,9 +47,11 @@ import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
  * 
  */
 
-@Mapping(path = "/studentsListByDegree", module = "academicAdminOffice")
+@Mapping(path = "/studentsListByDegree", module = StudentsListByDegreeDA.MODULE)
 @Forwards( { @Forward(name = "searchRegistrations", path = "/academicAdminOffice/lists/searchRegistrationsByDegree.jsp") })
 public class StudentsListByDegreeDA extends FenixDispatchAction {
+
+    protected static final String MODULE = "academicAdminOffice";
 
     private static final String YMD_FORMAT = "yyyy-MM-dd";
 
@@ -125,7 +129,8 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
     private void exportToXls(List<RegistrationWithStateForExecutionYearBean> registrationWithStateForExecutionYearBean,
 	    OutputStream outputStream, ExecutionYear executionYear, Degree degree, boolean extendedInfo) throws IOException {
 
-	final StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("AlunosPorCurso");
+	final StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet(
+		getResourceMessage("lists.studentByDegree.unspaced"));
 	spreadsheet.newHeaderRow();
 	if (degree == null) {
 	    spreadsheet.addHeader(executionYear.getYear());
@@ -134,7 +139,7 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
 	}
 	spreadsheet.newRow();
 	spreadsheet.newRow();
-	spreadsheet.addCell(registrationWithStateForExecutionYearBean.size() + " Alunos");
+	spreadsheet.addCell(registrationWithStateForExecutionYearBean.size() + " " + getResourceMessage("label.students"));
 	fillSpreadSheet(registrationWithStateForExecutionYearBean, spreadsheet, executionYear, extendedInfo);
 	spreadsheet.getWorkbook().write(outputStream);
     }
@@ -158,22 +163,20 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
 
 	    if (extendedInfo) {
 		spreadsheet.addCell(registration.getPerson().getCountry().getName());
-		spreadsheet.addCell(person.getDefaultEmailAddress() == null ? StringUtils.EMPTY : person.getDefaultEmailAddress()
-			.getValue());
+		spreadsheet.addCell(person.getDefaultEmailAddress() == null ? EMPTY : person.getDefaultEmailAddress().getValue());
 		spreadsheet.addCell(person.getGender().toLocalizedString());
-		spreadsheet.addCell(person.getDateOfBirthYearMonthDay() == null ? StringUtils.EMPTY : person
-			.getDateOfBirthYearMonthDay().toString(YMD_FORMAT));
+		spreadsheet.addCell(person.getDateOfBirthYearMonthDay() == null ? EMPTY : person.getDateOfBirthYearMonthDay()
+			.toString(YMD_FORMAT));
 		spreadsheet.addCell(registration.getEnrolmentsExecutionYears().size());
 		spreadsheet.addCell(registration.getCurricularYear(executionYear));
 		spreadsheet.addCell(registration.getEnrolments(executionYear).size());
-		spreadsheet.addCell(registration.isPartialRegime(executionYear) ? "Tempo Parcial" : "Tempo Integral");
+		spreadsheet.addCell(getEnumNameFromResources(registration.getRegimeType(executionYear)));
 
 		fillSpreadSheetPreBolonhaInfo(spreadsheet, registration);
 		if (getAdministratedCycleTypes().contains(CycleType.FIRST_CYCLE)) {
 		    fillSpreadSheetBolonhaInfo(spreadsheet, registration, registration.getLastStudentCurricularPlan().getCycle(
 			    CycleType.FIRST_CYCLE));
 		}
-
 		if (getAdministratedCycleTypes().contains(CycleType.SECOND_CYCLE)) {
 		    fillSpreadSheetBolonhaInfo(spreadsheet, registration, registration.getLastStudentCurricularPlan().getCycle(
 			    CycleType.SECOND_CYCLE));
@@ -211,52 +214,59 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
 
     private void fillSpreadSheetRegistrationInfo(StyledExcelSpreadsheet spreadsheet,
 	    RegistrationConclusionBean registrationConclusionBean, boolean isConcluded) {
-	spreadsheet.addCell(isConcluded ? "Sim" : "Não");
-	spreadsheet.addCell(isConcluded ? registrationConclusionBean.getConclusionDate().toString(YMD_FORMAT) : "");
+	spreadsheet.addCell(getResourceMessage("label." + (isConcluded ? "yes" : "no") + ".capitalized"));
+	spreadsheet.addCell(isConcluded ? registrationConclusionBean.getConclusionDate().toString(YMD_FORMAT) : EMPTY);
 	spreadsheet.addCell(registrationConclusionBean.getAverage().toString());
     }
 
     private void fillSpreadSheetEmptyCells(StyledExcelSpreadsheet spreadsheet) {
-	spreadsheet.addCell("");
-	spreadsheet.addCell("");
-	spreadsheet.addCell("");
+	spreadsheet.addCell(EMPTY);
+	spreadsheet.addCell(EMPTY);
+	spreadsheet.addCell(EMPTY);
     }
 
     private void setHeaders(final StyledExcelSpreadsheet spreadsheet, final boolean extendedInfo) {
 	spreadsheet.newHeaderRow();
-	spreadsheet.addHeader("Curso");
-	spreadsheet.addHeader("Número");
-	spreadsheet.addHeader("Nome");
-	spreadsheet.addHeader("Estado da Matrícula");
-	spreadsheet.addHeader("Acordo");
+	spreadsheet.addHeader(getResourceMessage("label.degree"));
+	spreadsheet.addHeader(getResourceMessage("label.number"));
+	spreadsheet.addHeader(getResourceMessage("label.name"));
+	spreadsheet.addHeader(getResourceMessage("label.registration.state"));
+	spreadsheet.addHeader(getResourceMessage("label.registrationAgreement"));
 	if (extendedInfo) {
-	    spreadsheet.addHeader("Nacionalidade");
-	    spreadsheet.addHeader("Email");
-	    spreadsheet.addHeader("Género");
-	    spreadsheet.addHeader("Data Nascimento");
-	    spreadsheet.addHeader("Nº inscrições");
-	    spreadsheet.addHeader("Ano académico");
-	    spreadsheet.addHeader("Nº disciplinas inscritas");
-	    spreadsheet.addHeader("Regime");
-	    spreadsheet.addHeader("Curso Concluído");
-	    spreadsheet.addHeader("Data de Conclusão");
-	    spreadsheet.addHeader("Média de Curso");
+	    spreadsheet.addHeader(getResourceMessage("label.nationality"));
+	    spreadsheet.addHeader(getResourceMessage("label.email"));
+	    spreadsheet.addHeader(getResourceMessage("label.gender"));
+	    spreadsheet.addHeader(getResourceMessage("label.dateOfBirth"));
+	    spreadsheet.addHeader(getResourceMessage("label.registration.enrolments.number.short"));
+	    spreadsheet.addHeader(getResourceMessage("curricular.year"));
+	    spreadsheet.addHeader(getResourceMessage("label.student.enrolments.number.short"));
+	    spreadsheet.addHeader(getResourceMessage("registration.regime"));
+	    spreadsheet.addHeader(getResourceMessage("degree.concluded"));
+	    spreadsheet.addHeader(getResourceMessage("label.conclusionDate"));
+	    spreadsheet.addHeader(getResourceMessage("degree.average"));
 	    if (getAdministratedCycleTypes().contains(CycleType.FIRST_CYCLE)) {
-		spreadsheet.addHeader("1º Ciclo Concluído");
-		spreadsheet.addHeader("Data de Conclusão (1º Ciclo)");
-		spreadsheet.addHeader("Média de Curso (1º Ciclo)");
+		spreadsheet.addHeader(getResourceMessage("label.firstCycle.concluded"));
+		spreadsheet.addHeader(getResourceMessage("label.firstCycle.conclusionDate"));
+		spreadsheet.addHeader(getResourceMessage("label.firstCycle.average"));
 	    }
 	    if (getAdministratedCycleTypes().contains(CycleType.SECOND_CYCLE)) {
-		spreadsheet.addHeader("2º Ciclo Concluído");
-		spreadsheet.addHeader("Data de Conclusão (2º Ciclo)");
-		spreadsheet.addHeader("Média de Curso (2º Ciclo)");
+		spreadsheet.addHeader(getResourceMessage("label.secondCycle.concluded"));
+		spreadsheet.addHeader(getResourceMessage("label.secondCycle.conclusionDate"));
+		spreadsheet.addHeader(getResourceMessage("label.secondCycle.average"));
 	    }
 	    if (getAdministratedCycleTypes().contains(CycleType.THIRD_CYCLE)) {
-		spreadsheet.addHeader("3º Ciclo Concluído");
-		spreadsheet.addHeader("Data de Conclusão (3º Ciclo)");
-		spreadsheet.addHeader("Média de Curso (3º Ciclo)");
+		spreadsheet.addHeader(getResourceMessage("label.thirdCycle.concluded"));
+		spreadsheet.addHeader(getResourceMessage("label.thirdCycle.conclusionDate"));
+		spreadsheet.addHeader(getResourceMessage("label.thirdCycle.average"));
 	    }
 	}
     }
 
+    static private String getResourceMessage(String key) {
+	return getResourceMessageFromModuleOrApplication(MODULE, key);
+    }
+
+    static private String getEnumNameFromResources(Enum<?> enumeration) {
+	return getResourceMessageFromModule("Enumeration", enumeration.getClass().getSimpleName() + "." + enumeration.name());
+    }
 }
