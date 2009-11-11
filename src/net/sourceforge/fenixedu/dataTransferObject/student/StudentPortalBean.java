@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.WrittenTest;
+import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
@@ -31,25 +32,27 @@ public class StudentPortalBean implements Serializable {
 	    private String evaluationType;
 	    private String identification;
 	    private String realization;
+	    private String register;
 	    private String enrolment;
 	    private String room;
-	    private Boolean registered;
+	    
+	    private boolean registered;
 
 	    public EvaluationAnnouncement(WrittenTest writtenTest) {
 		setEvaluationType(writtenTest.getEvaluationType().toString());
 		setIdentification(writtenTest.getDescription());
+		setRegister(isStudentEnrolled(writtenTest));
 		setRealization(writtenTest);
 		setEnrolment(writtenTest);
-		setRegistered(isStudentEnrolled(writtenTest));
 		setRoom(writtenTest);
 	    }
 
 	    public EvaluationAnnouncement(Exam exam) {
 		setEvaluationType(exam.getEvaluationType().toString());
 		setIdentification(exam.getName());
+		setRegister(isStudentEnrolled(exam));
 		setRealization(exam);
 		setEnrolment(exam);
-		setRegistered(isStudentEnrolled(exam));
 		setRoom(exam);
 	    }
 
@@ -57,9 +60,10 @@ public class StudentPortalBean implements Serializable {
 		ResourceBundle resource = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
 		setEvaluationType(resource.getString("label.grouping"));
 		setIdentification(grouping.getName());
+		setRegister(isStudentEnrolled(grouping));
 		setRealization(grouping);
 		setEnrolment(grouping);
-		setRegistered(isStudentEnrolled(grouping));
+		setRoom("-");
 	    }
 
 	    private boolean isStudentEnrolled(WrittenEvaluation writtenEvaluation) {
@@ -104,7 +108,11 @@ public class StudentPortalBean implements Serializable {
 		return room;
 	    }
 
-	    public Boolean getRegistered() {
+	    public String getRegister() {
+		return register;
+	    }
+	    
+	    public boolean getRegistered() {
 		return registered;
 	    }
 
@@ -117,45 +125,60 @@ public class StudentPortalBean implements Serializable {
 	    }
 
 	    public void setRealization(WrittenEvaluation writtenEvaluation) {
-		ResourceBundle resource = ResourceBundle.getBundle("resources.StudentResources", Language.getLocale());
-		this.realization = resource.getString("message.out.realization.date") + " "
-			+ YearMonthDay.fromDateFields(writtenEvaluation.getBeginningDateTime().toDate()).toString();
+		this.realization = YearMonthDay.fromDateFields(writtenEvaluation.getBeginningDateTime().toDate()).toString() + " " +
+			writtenEvaluation.getBeginningDateTime().getHourOfDay() + ":"
+			+ ((writtenEvaluation.getBeginningDateTime().getMinuteOfHour() == 0) ?
+				"00" : writtenEvaluation.getBeginningDateTime().getMinuteOfHour());
 	    }
 
 	    public void setRealization(Grouping grouping) {
-		this.realization = "";
+		this.realization = "-";
 	    }
 
 	    public void setEnrolment(WrittenEvaluation writtenEvaluation) {
 		ResourceBundle resource = ResourceBundle.getBundle("resources.StudentResources", Language.getLocale());
 		if (writtenEvaluation.getEnrollmentBeginDayDateYearMonthDay() != null
 			&& writtenEvaluation.getEnrollmentEndDayDateYearMonthDay() != null) {
-		    this.enrolment = resource.getString("message.out.enrolment.period.normal") + " "
-			    + writtenEvaluation.getEnrollmentBeginDayDateYearMonthDay().toString() + " "
-			    + resource.getString("message.out.until") + " "
-			    + writtenEvaluation.getEnrollmentEndDayDateYearMonthDay().toString();
+		    this.enrolment = writtenEvaluation.getEnrollmentBeginDayDateYearMonthDay().toString() + " " +
+		    	resource.getString("message.out.until") + " " +
+		    	writtenEvaluation.getEnrollmentEndDayDateYearMonthDay().toString();
 		} else {
-		    this.enrolment = " " + resource.getString("message.out.enrolment.period.default");
+		    this.enrolment = "-";
+		    this.register = "-";
 		}
 	    }
 
 	    public void setEnrolment(Grouping grouping) {
 		ResourceBundle resource = ResourceBundle.getBundle("resources.StudentResources", Language.getLocale());
-		this.enrolment = resource.getString("message.out.enrolment.period.normal") + " "
-			+ YearMonthDay.fromDateFields(grouping.getEnrolmentBeginDayDate()).toString() + " "
-			+ resource.getString("message.out.until") + " "
-			+ YearMonthDay.fromDateFields(grouping.getEnrolmentEndDayDate()).toString();
+		this.enrolment = YearMonthDay.fromDateFields(grouping.getEnrolmentBeginDayDate()).toString() + " " +
+	    		resource.getString("message.out.until") + " " + 
+			YearMonthDay.fromDateFields(grouping.getEnrolmentEndDayDate()).toString();
 	    }
 
 	    public void setRoom(WrittenEvaluation writtenEvaluation) {
 		ResourceBundle resource = ResourceBundle.getBundle("resources.StudentResources", Language.getLocale());
 		if (writtenEvaluation.getAssociatedRooms().isEmpty() == false) {
-		    this.room = resource.getString("message.out.room") + ": " + writtenEvaluation.getAssociatedRoomsAsString();
+		    this.room = writtenEvaluation.getAssociatedRoomsAsString();
 		} else {
-		    this.room = resource.getString("message.out.without.room");
+		    this.room = "-";
 		}
 	    }
+	    
+	    public void setRoom(String room) {
+		this.room = room;
+	    }
 
+	    public void setRegister(Boolean registered) {
+		ResourceBundle resource = ResourceBundle.getBundle("resources.StudentResources", Language.getLocale());
+		if(registered) {
+		    this.register = resource.getString("label.enroled");
+		    setRegistered(true);
+		} else {
+		    this.register = resource.getString("message.out.not.enrolled");
+		    setRegistered(false);
+		}
+	    }
+	    
 	    public void setRegistered(Boolean registered) {
 		this.registered = registered;
 	    }

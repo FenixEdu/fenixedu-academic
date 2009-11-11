@@ -46,35 +46,76 @@
 			</app:contentLink>
 			</logic:notEmpty>
 		</h3>
-		<table class="tstyle2 thleft thlight mtop05">
+		<table class="tstyle4 thlight mtop0">
 			<logic:iterate id="executionCoursesAnnouncement" name="studentPortalBean" property="executionCoursesAnnouncements">
 				<tr>
-					<td>
-						<p class="mvert0">
+					<td colspan="5" style="border: none; padding: 0.5em 0; background: #fff;">
+						<h4 class="mtop1 mbottom05">
 							<app:contentLink name="executionCoursesAnnouncement" property="executionCourse.site" target="_blank">
 								<bean:write name="executionCoursesAnnouncement" property="executionCourse.nome"/>
 							</app:contentLink>
-						</p>
-						<logic:notEmpty name="executionCoursesAnnouncement" property="evaluationAnnouncements">
-							<ul class="color777 mbottom0">
-								<logic:iterate id="evaluationAnnouncement" name="executionCoursesAnnouncement" property="evaluationAnnouncements">
-									<li>
-										<bean:write name="evaluationAnnouncement" property="evaluationType"/>
-										 "<bean:write name="evaluationAnnouncement" property="identification"/>" - 
-										<bean:write name="evaluationAnnouncement" property="enrolment"/>
-										<bean:write name="evaluationAnnouncement" property="realization"/>
-										<bean:write name="evaluationAnnouncement" property="room"/>
-										<logic:equal name="evaluationAnnouncement" property="registered" value="true">
-											<span class="warning0">
-												<bean:message key="label.enroled" bundle="STUDENT_RESOURCES"/>
-											</span>
-										</logic:equal>
-									</li>
-								</logic:iterate>
-							</ul>
-						</logic:notEmpty>
+						</h4>
 					</td>
 				</tr>
+				<logic:notEmpty name="executionCoursesAnnouncement" property="evaluationAnnouncements">
+					<tr>
+						<th>
+						</th>
+						<th>
+							<bean:message key="message.out.realization.date" bundle="STUDENT_RESOURCES" />
+						</th>
+						<th>
+							<bean:message key="message.out.room" bundle="STUDENT_RESOURCES" />
+						</th>
+						<th>
+							<bean:message key="message.out.enrolment.period.normal"  bundle="STUDENT_RESOURCES" />
+						</th>
+						<th>
+						</th>
+					</tr>
+					<logic:iterate id="evaluationAnnouncement" name="executionCoursesAnnouncement" property="evaluationAnnouncements">
+						<tr>
+							<td>
+								<bean:write name="evaluationAnnouncement" property="evaluationType"/>
+								 "<bean:write name="evaluationAnnouncement" property="identification"/>"
+							</td>
+							<td class="acenter">
+								<span class="color888 smalltxt">
+									<bean:write name="evaluationAnnouncement" property="realization"/>
+								</span>
+							</td>
+							<td class="acenter">
+								<span class="color888 smalltxt">
+									<bean:write name="evaluationAnnouncement" property="room"/>
+								</span>
+							</td>
+							<td class="acenter">
+								<span class="color888 smalltxt">
+									<bean:write name="evaluationAnnouncement" property="enrolment"/>
+								</span>
+							</td>
+							<logic:equal name="evaluationAnnouncement" property="registered" value="true">
+								<td class="acenter">
+									<span class="success0">
+										<bean:write name="evaluationAnnouncement" property="register"/>
+									</span>
+								</td>
+							</logic:equal>
+							<logic:equal name="evaluationAnnouncement" property="registered" value="false">
+								<td class="acenter">
+									<span class="color888 smalltxt">
+										<bean:write name="evaluationAnnouncement" property="register"/>
+									</span>
+								</td>
+							</logic:equal>
+						</tr>
+					</logic:iterate>
+				</logic:notEmpty>
+				<logic:empty name="executionCoursesAnnouncement" property="evaluationAnnouncements">
+					<tr>
+						<td colspan="5"><span class="color888 smalltxt"><bean:message key="message.out.no.evaluations" bundle="STUDENT_RESOURCES" /></span></td>
+					</tr>
+				</logic:empty>
 			</logic:iterate>
 		</table>
 	</logic:iterate>
