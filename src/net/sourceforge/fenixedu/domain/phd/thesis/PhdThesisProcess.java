@@ -9,6 +9,8 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
+import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdProcessState;
 
 public class PhdThesisProcess extends PhdThesisProcess_Base {
@@ -38,15 +40,44 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	@Override
 	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
 	    final PhdThesisProcess result = new PhdThesisProcess();
+	    final PhdThesisProcessBean phdThesisProcessBean = (PhdThesisProcessBean) object;
+
 	    result.createState(PhdThesisProcessStateType.WAITING_FOR_JURY_CONSTITUTION, userView.getPerson(),
-		    ((PhdThesisProcessBean) object).getRemarks());
+		    phdThesisProcessBean.getRemarks());
 
 	    return result;
 	}
     }
 
+    static public class SubmitThesis extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+
+	}
+
+	@Override
+	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
+	    final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
+
+	    bean.getDocument().setType(
+		    bean.getFinalThesis().booleanValue() ? PhdIndividualProgramDocumentType.FINAL_THESIS
+			    : PhdIndividualProgramDocumentType.PROVISIONAL_THESIS);
+
+	    process.addDocument(bean.getDocument(), userView.getPerson());
+
+	    return process;
+
+	}
+    }
+
     static private List<Activity> activities = new ArrayList<Activity>();
     static {
+	activities.add(new RequestThesis());
+	activities.add(new SubmitThesis());
     }
 
     private PhdThesisProcess() {
@@ -84,6 +115,10 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
     public PhdThesisProcessStateType getActiveState() {
 	final PhdThesisProcessState state = getMostRecentState();
 	return state != null ? state.getType() : null;
+    }
+
+    public String getActiveStateRemarks() {
+	return getMostRecentState().getRemarks();
     }
 
 }

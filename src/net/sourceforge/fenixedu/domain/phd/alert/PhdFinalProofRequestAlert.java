@@ -42,7 +42,7 @@ public class PhdFinalProofRequestAlert extends PhdFinalProofRequestAlert_Base {
 
     @Override
     protected boolean isToDiscard() {
-	return getProcess().hasRequestedFinalProof();
+	return getProcess().hasThesisProcess();
     }
 
     @Override

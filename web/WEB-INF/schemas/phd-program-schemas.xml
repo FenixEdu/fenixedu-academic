@@ -369,7 +369,7 @@
 
 <schema name="PhdProgramDocumentUploadBean.edit" type="net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean" bundle="PHD_RESOURCES">
 	<slot name="type">
-		<property name="excludedValues" value="CANDIDACY_REVIEW,CANDIDACY_RATIFICATION,PUBLIC_PRESENTATION_SEMINAR_COMISSION,PUBLIC_PRESENTATION_SEMINAR_REPORT" />
+		<property name="excludedValues" value="CANDIDACY_REVIEW,CANDIDACY_RATIFICATION,PUBLIC_PRESENTATION_SEMINAR_COMISSION,PUBLIC_PRESENTATION_SEMINAR_REPORT,PROVISIONAL_THESIS,FINAL_THESIS" />
 	</slot>
 	<slot name="remarks">
 		<property name="maxLength" value="100" />
@@ -1325,4 +1325,16 @@
 		<property name="subSchema" value="PhdProgram.name" />
 	</slot>
 	<slot name="activeState"/>
+</schema>
+
+
+<schema name="PhdThesisProcess.view" type="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess" bundle="PHD_RESOURCES">
+	<slot name="activeState">
+		<property name="classes" value="bold"/>
+	</slot>
+	<slot name="whenCreated" />
+	<slot name="createdBy" />
+	<slot name="whenUpdated" />
+	<slot name="updatedBy" />
+	<slot name="activeStateRemarks"/>
 </schema>

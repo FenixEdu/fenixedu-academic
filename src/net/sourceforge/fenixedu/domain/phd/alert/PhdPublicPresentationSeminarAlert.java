@@ -50,7 +50,7 @@ public class PhdPublicPresentationSeminarAlert extends PhdPublicPresentationSemi
 
     @Override
     protected boolean isToDiscard() {
-	return getProcess().hasPublicPresentationSeminar();
+	return getProcess().hasSeminarProcess();
     }
 
     @Override

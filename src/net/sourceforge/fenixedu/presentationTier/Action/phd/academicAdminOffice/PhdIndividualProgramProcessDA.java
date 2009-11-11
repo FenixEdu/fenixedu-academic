@@ -883,7 +883,15 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 
     public ActionForward prepareRequestPublicThesisPresentation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
-	request.setAttribute("requestPublicThesisPresentation", new PhdThesisProcessBean());
+
+	final PhdThesisProcessBean phdThesisProcessBean = new PhdThesisProcessBean();
+
+	request.setAttribute("requestPublicThesisPresentation", phdThesisProcessBean);
+	request.setAttribute("hasPublicPresentationSeminar", getProcess(request).hasSeminarProcess());
+	request.setAttribute("hasPublicPresentationSeminarReport", getProcess(request).getSeminarProcess().hasReportDocument());
+	request.setAttribute("hasSchoolPartConcluded", getProcess(request).hasSchoolPartConcluded());
+	request.setAttribute("hasQualificationExamsToPerform", getProcess(request).hasQualificationExamsToPerform());
+
 	return mapping.findForward("requestPublicThesisPresentation");
     }
 
@@ -898,6 +906,8 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 
 	final PhdThesisProcessBean bean = (PhdThesisProcessBean) getRenderedObject("requestPublicThesisPresentation");
 	request.setAttribute("requestPublicThesisPresentation", bean);
+
+	RenderUtils.invalidateViewState("requestPublicThesisPresentation.edit.document");
 
 	return executeActivity(RequestPublicThesisPresentation.class, bean, request, mapping, "requestPublicThesisPresentation",
 		"viewProcess");

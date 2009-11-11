@@ -43,6 +43,10 @@ public enum PhdIndividualProgramDocumentType {
 
     PUBLIC_PRESENTATION_SEMINAR_REPORT,
 
+    PROVISIONAL_THESIS,
+
+    FINAL_THESIS,
+
     OTHER(false);
 
     private boolean isVersioned;

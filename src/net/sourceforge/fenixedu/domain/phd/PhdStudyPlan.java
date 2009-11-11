@@ -193,4 +193,8 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
 	    return getDegree().getPresentationName(getProcess().getExecutionYear());
 	}
     }
+
+    public boolean isExempted() {
+	return getExempted();
+    }
 }

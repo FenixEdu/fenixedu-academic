@@ -38,6 +38,7 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessB
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
+import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
@@ -751,8 +752,15 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess individualProcess, IUserView userView,
 		Object object) {
 
-	    final PhdThesisProcess thesisProcess = Process.createNewProcess(userView, PhdThesisProcess.class, object);
+	    final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
+
+	    final PhdThesisProcess thesisProcess = Process.createNewProcess(userView, PhdThesisProcess.class, bean);
+
 	    thesisProcess.setIndividualProgramProcess(individualProcess);
+
+	    bean.getDocument().setType(PhdIndividualProgramDocumentType.PROVISIONAL_THESIS);
+
+	    thesisProcess.addDocument(bean.getDocument(), userView.getPerson());
 
 	    /*
 	     * 
@@ -1033,25 +1041,6 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return getPerson().getStudent();
     }
 
-    final public boolean hasPublicPresentationSeminar() {
-	/*
-	 * TODO: MUST IMPLEMENT THIS CORRECTLY
-	 * 
-	 * (used final to get compilation error when creating entity)
-	 */
-	return false;
-
-    }
-
-    final public boolean hasRequestedFinalProof() {
-	/*
-	 * TODO: MUST IMPLEMENT THIS CORRECTLY
-	 * 
-	 * (used final to get compilation error when creating entity)
-	 */
-	return false;
-    }
-
     public boolean isCoordinatorForPhdProgram(Person person) {
 	final ExecutionDegree executionDegree = getPhdProgram().getDegree().getLastActiveDegreeCurricularPlan()
 		.getExecutionDegreeByAcademicInterval(ExecutionYear.readCurrentExecutionYear().getAcademicInterval());
@@ -1116,6 +1105,23 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	if (hasRegistrationFee() && !getRegistrationFee().hasAnyPayments()) {
 	    getRegistrationFee().cancel(person.getEmployee());
 	}
+    }
+
+    public boolean hasSchoolPartConcluded() {
+	return getStudyPlan().isExempted() ? true : getRegistration().isConcluded();
+
+    }
+
+    public boolean hasQualificationExamsToPerform() {
+	return isQualificationExamsRequired() && !isQualificationExamsPerformed();
+    }
+
+    private boolean isQualificationExamsPerformed() {
+	return getQualificationExamsPerformed() != null && getQualificationExamsPerformed();
+    }
+
+    private boolean isQualificationExamsRequired() {
+	return getQualificationExamsRequired() != null && getQualificationExamsRequired();
     }
 
 }
