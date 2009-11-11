@@ -74,10 +74,24 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	}
     }
 
+    static public class AddJuryElement extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
+	    // Add pre-conditions
+	}
+
+	@Override
+	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
+	    ThesisJuryElement.create(process, (PhdThesisJuryElementBean) object);
+	    return process;
+	}
+    }
+
     static private List<Activity> activities = new ArrayList<Activity>();
     static {
-	activities.add(new RequestThesis());
 	activities.add(new SubmitThesis());
+	activities.add(new AddJuryElement());
     }
 
     private PhdThesisProcess() {

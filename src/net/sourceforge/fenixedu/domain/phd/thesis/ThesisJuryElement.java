@@ -52,7 +52,7 @@ abstract public class ThesisJuryElement extends ThesisJuryElement_Base {
 
     abstract public String getCategory();
 
-    abstract public String getInstitution(); // Unit or String?
+    abstract public String getInstitution();
 
     abstract public String getAddress();
 

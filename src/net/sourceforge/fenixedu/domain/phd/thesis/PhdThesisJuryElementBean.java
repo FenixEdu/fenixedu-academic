@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.phd.thesis;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.person.PersonName;
 
 public class PhdThesisJuryElementBean implements Serializable {
 
@@ -15,7 +16,12 @@ public class PhdThesisJuryElementBean implements Serializable {
     private String address;
     private String phone;
     private String email;
-    private Person person;
+
+    private boolean president;
+    private boolean reporter;
+
+    private PhdThesisJuryElementType juryType;
+    private PersonName personName;
 
     public String getName() {
 	return name;
@@ -73,16 +79,51 @@ public class PhdThesisJuryElementBean implements Serializable {
 	this.email = email;
     }
 
-    public Person getPerson() {
-	return person;
+    public PersonName getPersonName() {
+	return personName;
     }
 
-    public void setPerson(Person person) {
-	this.person = person;
+    public void setPersonName(PersonName personName) {
+	this.personName = personName;
+    }
+
+    public Person getPerson() {
+	return getPersonName().getPerson();
+    }
+
+    public boolean isPresident() {
+	return president;
+    }
+
+    public void setPresident(boolean president) {
+	this.president = president;
+    }
+
+    public boolean isReporter() {
+	return reporter;
+    }
+
+    public void setReporter(boolean reporter) {
+	this.reporter = reporter;
+    }
+
+    public PhdThesisJuryElementType getJuryType() {
+	return juryType;
+    }
+
+    public void setJuryType(PhdThesisJuryElementType juryType) {
+	this.juryType = juryType;
     }
 
     public boolean isInternal() {
-	return getPerson() != null;
+	return getJuryType() == PhdThesisJuryElementType.INTERNAL;
     }
 
+    static public enum PhdThesisJuryElementType {
+	INTERNAL, EXTERNAL;
+
+	public String getName() {
+	    return name();
+	}
+    }
 }
