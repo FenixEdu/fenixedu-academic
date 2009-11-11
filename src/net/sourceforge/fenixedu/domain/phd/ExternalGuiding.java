@@ -16,7 +16,7 @@ public class ExternalGuiding extends ExternalGuiding_Base {
 	check(name, "error.ExternalGuiding.invalid.name");
 	// check(qualification, "error.ExternalGuiding.invalid.qualification");
 	check(workLocation, "error.ExternalGuiding.invalid.workLocation");
-	check(email, "error.ExternalGuiding.invalid.email");
+	//check(email, "error.ExternalGuiding.invalid.email");
 
 	setName(name);
 	setQualification(qualification);
