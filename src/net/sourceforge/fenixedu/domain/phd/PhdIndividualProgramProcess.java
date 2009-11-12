@@ -40,10 +40,8 @@ import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProc
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -739,6 +737,12 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
 	@Override
 	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+
+	    if (process.hasSeminarProcess() && !process.getSeminarProcess().isExempted()
+		    && !process.getSeminarProcess().isConcluded()) {
+		throw new PreConditionNotValidException();
+	    }
+
 	    if (process.hasThesisProcess() || process.getActiveState() != PhdIndividualProgramProcessState.WORK_DEVELOPMENT) {
 		throw new PreConditionNotValidException();
 	    }
@@ -809,11 +813,6 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
 	check(person, "error.phd.PhdIndividualProgramProcess.person.cannot.be.null");
 	check(executionYear, "error.phd.PhdIndividualProgramProcess.executionYear.cannot.be.null");
-
-	// if (phdProgramFocusArea == null && phdProgram == null) {
-	// check(phdProgram,
-	// "error.phd.PhdIndividualProgramProcess.phdProgram.or.focus.area.cannot.be.null");
-	// }
     }
 
     @Override
@@ -1108,8 +1107,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public boolean hasSchoolPartConcluded() {
-	return getStudyPlan().isExempted() ? true : getRegistration().isConcluded();
-
+	return (hasStudyPlan() && getStudyPlan().isExempted()) || (hasRegistration() && getRegistration().isConcluded());
     }
 
     public boolean hasQualificationExamsToPerform() {
@@ -1122,6 +1120,10 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     private boolean isQualificationExamsRequired() {
 	return getQualificationExamsRequired() != null && getQualificationExamsRequired();
+    }
+
+    public boolean hasSeminarReportDocument() {
+	return hasSeminarProcess() && getSeminarProcess().hasReportDocument();
     }
 
 }
