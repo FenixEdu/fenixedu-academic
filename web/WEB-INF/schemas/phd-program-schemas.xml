@@ -436,7 +436,7 @@
 	<slot name="degree" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="school" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="mark" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="attendedBegin" layout="year-month" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+	<slot name="attendedBegin" layout="year-month">
 		<property name="maxLength" value="7" />
 		<property name="size" value="7" />
 	</slot>
