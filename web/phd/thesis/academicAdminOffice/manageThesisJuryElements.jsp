@@ -8,7 +8,7 @@
 
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-<bean:define id="processId" name="process" property="externalId" />
+<bean:define id="individualProcessId" name="process" property="individualProgramProcess.externalId" />
 
 <%-- ### Title #### --%>
 <em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
@@ -17,7 +17,7 @@
 
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
-<html:link action="<%= "/phdIndividualProgramProcess.do?method=viewProcess&processId=" + processId.toString() %>">
+<html:link action="<%= "/phdIndividualProgramProcess.do?method=viewProcess&processId=" + individualProcessId.toString() %>">
 	<bean:message bundle="PHD_RESOURCES" key="label.back"/>
 </html:link>
 <br/><br/>
@@ -30,7 +30,7 @@
 
 <%--  ### Context Information (e.g. Person Information, Registration Information)  ### --%>
 <strong><bean:message  key="label.phd.process" bundle="PHD_RESOURCES"/></strong>
-<fr:view schema="AcademicAdminOffice.PhdIndividualProgramProcess.view" name="process">
+<fr:view schema="AcademicAdminOffice.PhdIndividualProgramProcess.view" name="process" property="individualProgramProcess">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thlight mtop15" />
 	</fr:layout>

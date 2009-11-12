@@ -31,7 +31,7 @@
 
 <%--  ### Context Information (e.g. Person Information, Registration Information)  ### --%>
 <strong><bean:message  key="label.phd.process" bundle="PHD_RESOURCES"/></strong>
-<fr:view schema="AcademicAdminOffice.PhdIndividualProgramProcess.view" name="process">
+<fr:view schema="AcademicAdminOffice.PhdIndividualProgramProcess.view" name="process" property="individualProgramProcess">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thlight mtop15" />
 	</fr:layout>
@@ -80,6 +80,8 @@
 				<fr:slot name="juryType" layout="radio-postback" required="true">
 					<fr:property name="classes" value="nobullet liinline"/>
 				</fr:slot>
+				<fr:slot name="president" />
+				<fr:slot name="reporter" />
 				
 				<%-- Add internal jury type slots --%>
 				<logic:equal name="thesisJuryElementBean" property="juryType" value="INTERNAL">
