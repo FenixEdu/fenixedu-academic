@@ -5,10 +5,6 @@
 <%@ taglib uri="/WEB-INF/phd.tld" prefix="phd" %>
 
 
-
-
-
-
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess"%>
 
 <logic:notEmpty name="process" property="thesisProcess">
@@ -25,8 +21,8 @@
 	<ul class="operations">
 		<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= PhdThesisProcess.SubmitThesis.class %>">
 		<li style="display: inline;">
-			<html:link action="/publicPresentationSeminarProcess.do?method=prepareSubmitComission" paramId="processId" paramName="process" paramProperty="seminarProcess.externalId">
-				<bean:message bundle="PHD_RESOURCES" key="label.phd.submit.public.presentation.seminar.comission"/>
+			<html:link action="/phdThesisProcess.do?method=prepareSubmitThesis" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
+				<bean:message bundle="PHD_RESOURCES" key="label.phd.submit.thesis"/>
 			</html:link>
 		</li>
 		</phd:activityAvailable>
