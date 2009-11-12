@@ -14,12 +14,15 @@
 		
 		<h:outputText value="<h2>#{bundle['label.distribute.information']}</h2>" escape="false" />
 
+		<h:outputText value="<div class='infoop2'>#{bundle['message.distribution.alreadyExists']}</div>" 
+			rendered="#{evaluationManagementBackingBean.existsADistribution}" escape="false"/>			
+
 		<h:panelGroup rendered="#{!empty evaluationManagementBackingBean.evaluationRooms}">
 			<h:outputText value="#{bundle['label.distribute.students']}" styleClass="bold" />		
 			<h:selectOneRadio id="distributeEnroledStudentsOption"
 					value="#{evaluationManagementBackingBean.distributeEnroledStudentsOption}" layout="pageDirection" >
 				<f:selectItem itemValue="true" itemLabel="#{bundle['label.distribute.enrolled']} (#{evaluationManagementBackingBean.evaluation.writtenEvaluationEnrolmentsCount})" />
-				<f:selectItem itemValue="false" itemLabel="#{bundle['label.distribute.attend']} (#{evaluationManagementBackingBean.numberOfAttendingStudents})" />
+				<f:selectItem itemValue="false" itemLabel="#{bundle['label.distribute.allAttend']} (#{evaluationManagementBackingBean.numberOfAttendingStudents})" />
 			</h:selectOneRadio>
 			
 			<h:outputText value="<br/>#{bundle['label.distribute.rooms']}<br/>" styleClass="bold" escape="false" />
@@ -39,7 +42,7 @@
 			</h:dataTable>
 			
 			<h:outputText value="<br/>" escape="false"/>
-			<h:panelGroup styleClass="infoop">
+			<h:panelGroup styleClass="infoop">				
 				<h:outputText value="#{bundle['label.distribute.changeRoom']} " />
 				<h:selectOneMenu value="#{evaluationManagementBackingBean.roomToChangeID}" onchange="this.form.submit();"
 						valueChangeListener="#{evaluationManagementBackingBean.changeRoom}" >
@@ -52,13 +55,17 @@
 					<f:selectItems value="#{evaluationManagementBackingBean.positions}"/>
 				</h:selectOneMenu>
 				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
-			</h:panelGroup>
+			</h:panelGroup>			
 			
 			<h:outputText value="<br/><br/>" escape="false"/>
+			
+			<h:outputText value="<em class='highlight1'>#{bundle['message.distribution.notReversible']}</em><br/><br/>" 
+				rendered="#{!evaluationManagementBackingBean.existsADistribution}" escape="false"/>						
+			
 			<h:outputText styleClass="error" rendered="#{!empty evaluationManagementBackingBean.errorMessage}"
 					value="#{bundle[evaluationManagementBackingBean.errorMessage]}<br/>" escape="false" />		
-			
-			<h:commandButton alt="#{htmlAltBundle['commandButton.submit']}" action="#{evaluationManagementBackingBean.distributeStudentsByRooms}" value="#{bundle['label.submit']}" styleClass="inputButton" />	
+						
+			<h:commandButton alt="#{htmlAltBundle['commandButton.distribute']}" action="#{evaluationManagementBackingBean.distributeStudentsByRooms}" value="#{bundle['label.distribute']}" styleClass="inputButton" />	
 		</h:panelGroup>
 
 		<h:panelGroup rendered="#{empty evaluationManagementBackingBean.evaluationRooms}">
