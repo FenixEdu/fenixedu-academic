@@ -31,6 +31,7 @@ public class Email extends Email_Base {
     }
 
     public void delete() {
+	removeMessage();
 	removeRootDomainObject();
 	super.deleteDomainObject();
     }
