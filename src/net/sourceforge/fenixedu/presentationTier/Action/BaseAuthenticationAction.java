@@ -77,9 +77,10 @@ public abstract class BaseAuthenticationAction extends FenixAction {
     }
 
     private boolean isStudentAndHasGratuityDebtsToPay(final IUserView userView) {
-	return userView.hasRoleType(RoleType.STUDENT)
-		&& userView.getPerson().hasGratuityOrAdministrativeOfficeFeeAndInsuranceDebtsFor(
-			ExecutionYear.readCurrentExecutionYear());
+	return false;
+//	return userView.hasRoleType(RoleType.STUDENT)
+//		&& userView.getPerson().hasGratuityOrAdministrativeOfficeFeeAndInsuranceDebtsFor(
+//			ExecutionYear.readCurrentExecutionYear());
     }
 
     private boolean isTeacherAndHasInquiriesToRespond(IUserView userView) {
