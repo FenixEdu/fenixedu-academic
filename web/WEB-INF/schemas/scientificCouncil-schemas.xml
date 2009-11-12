@@ -127,7 +127,7 @@
 	</slot>
 	<slot name="url" key="label.scientific.journal.url">
 		<property name="size" value="80"/>
-		<validator name="pt.ist.fenixWebFramework.renderers.validators.UrlValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.UrlValidator">
 			<property name="required" value="false"/>
 		</validator>
 	</slot>
@@ -149,7 +149,7 @@
 	</slot>
 	<slot name="url" key="label.scientific.journal.url">
 		<property name="size" value="80"/>
-		<validator name="pt.ist.fenixWebFramework.renderers.validators.UrlValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.UrlValidator">
 			<property name="required" value="false"/>
 		</validator>
 	</slot>
@@ -198,7 +198,7 @@
 	<slot name="eventType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.event.eventType"/>
 	<slot name="url" key="label.scientific.journal.url">
 		<property name="size" value="80"/>
-		<validator name="pt.ist.fenixWebFramework.renderers.validators.UrlValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.UrlValidator">
 			<property name="required" value="false"/>
 		</validator>
 	</slot>
@@ -212,7 +212,7 @@
 	<slot name="eventType" key="label.event.eventType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="url" key="label.scientific.journal.url">
 		<property name="size" value="80"/>
-		<validator name="pt.ist.fenixWebFramework.renderers.validators.UrlValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.UrlValidator">
 			<property name="required" value="false"/>
 		</validator>
 	</slot>
@@ -254,7 +254,7 @@
 	<slot name="month" key="label.month"/>
 	<slot name="url" key="label.scientific.journal.url">
 		<property name="size" value="80"/>
-		<validator name="pt.ist.fenixWebFramework.renderers.validators.UrlValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.UrlValidator">
 			<property name="required" value="false"/>
 		</validator>
 	</slot>
