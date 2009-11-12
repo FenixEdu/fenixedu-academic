@@ -24,12 +24,14 @@
 				<bean:message key="link.teacherService"/>
 			</html:link>
 		</li>
-        
-        <li>
-            <html:link page="/viewInquiriesResults.do?method=chooseDegreeCurricularPlan">
-                <bean:message key="title.inquiries.results" bundle="INQUIRIES_RESOURCES"/>
-            </html:link>
-        </li>        
+
+	<!--        
+	        <li>
+    	        <html:link page="/viewInquiriesResults.do?method=chooseDegreeCurricularPlan">
+        	        <bean:message key="title.inquiries.results" bundle="INQUIRIES_RESOURCES"/>
+            	</html:link>
+        	</li>
+	-->
 		
 		<logic:notEmpty name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.vigilantWrappers">
 			<li>
