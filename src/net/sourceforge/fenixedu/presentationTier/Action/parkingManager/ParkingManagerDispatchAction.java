@@ -289,10 +289,11 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 				request.setAttribute("idInternal", parkingRequestID);
 				return showRequest(mapping, actionForm, request, response);
 			}
+			Integer mostSignificantNumber = getMostSignificantNumber((Person) parkingRequest.getParkingParty().getParty(),
+					rootDomainObject.readParkingGroupByOID(group));
 			UpdateParkingParty.run(parkingRequest, ParkingRequestState.ACCEPTED, cardNumber, rootDomainObject
 					.readParkingGroupByOID(group), note, parkingPartyBean.getCardStartDate(), parkingPartyBean.getCardEndDate(),
-					new Integer(getMostSignificantNumber((Person) parkingRequest.getParkingParty().getParty(), rootDomainObject
-							.readParkingGroupByOID(group))));
+					mostSignificantNumber);
 		} else if (request.getParameter("reject") != null) {
 			UpdateParkingParty.run(parkingRequest, ParkingRequestState.REJECTED, null, null, note, null, null, null);
 		} else {
@@ -308,24 +309,24 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 
 		final ParkingParty parkingParty = rootDomainObject.readParkingPartyByOID(new Integer(parkingPartyID));
 		Integer parkingGroupID = null;
-		
+
 		parkingGroupID = request.getParameter("groupID") != null ? Integer.valueOf(request.getParameter("groupID")) : null;
-		
-		if(parkingGroupID != null) {
-    		Integer parkingRequestID = new Integer(request.getParameter("code"));
-    		if (request.getParameter("groupID") == null) {
-    			saveErrorMessage(request, "group", "error.invalidGroup");
-    			request.setAttribute("idInternal", parkingRequestID);
-    			return showRequest(mapping, actionForm, request, response);
-    		}
-    		
-    		if (!isValidGroup(parkingGroupID)) {
-    			saveErrorMessage(request, "group", "error.invalidGroup");
-    			request.setAttribute("idInternal", parkingRequestID);
-    			return showRequest(mapping, actionForm, request, response);
-    		}
+
+		if (parkingGroupID != null) {
+			Integer parkingRequestID = new Integer(request.getParameter("code"));
+			if (request.getParameter("groupID") == null) {
+				saveErrorMessage(request, "group", "error.invalidGroup");
+				request.setAttribute("idInternal", parkingRequestID);
+				return showRequest(mapping, actionForm, request, response);
+			}
+
+			if (!isValidGroup(parkingGroupID)) {
+				saveErrorMessage(request, "group", "error.invalidGroup");
+				request.setAttribute("idInternal", parkingRequestID);
+				return showRequest(mapping, actionForm, request, response);
+			}
 		}
-		
+
 		ParkingGroup parkingGroup = null;
 		if (parkingGroupID != null) {
 			parkingGroup = rootDomainObject.readParkingGroupByOID(parkingGroupID);
