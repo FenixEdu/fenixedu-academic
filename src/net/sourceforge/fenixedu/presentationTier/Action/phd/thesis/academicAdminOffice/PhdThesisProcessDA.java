@@ -60,8 +60,7 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 	    HttpServletResponse response) {
 
 	try {
-	    ExecuteProcessActivity.run(getProcess(request), AddJuryElement.class.getSimpleName(),
-		    getRenderedObject("thesisJuryElementBean"));
+	    ExecuteProcessActivity.run(getProcess(request), AddJuryElement.class, getRenderedObject("thesisJuryElementBean"));
 	    addSuccessMessage(request, "message.thesis.added.jury.with.success");
 
 	} catch (final DomainException e) {
