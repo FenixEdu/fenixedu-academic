@@ -147,9 +147,6 @@ public class EditWrittenEvaluation extends FenixService {
 	    Sender sender = RootDomainObject.getInstance().getSystemSender();
 	    new Message(sender, new ConcreteReplyTo(group.getContactEmail()).asCollection(),
 		    new Recipient(new FixedSetGroup(tos)).asCollection(), subject, body, "");
-	    // EmailSender.send(group.getName(), group.getContactEmail(), new
-	    // String[] { group.getContactEmail() }, tos, null, null,
-	    // subject, body);
 	}
     }
 }

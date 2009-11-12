@@ -357,11 +357,6 @@ public class MergeExecutionCourses extends FenixService {
 	    new Message(systemSender, systemSender.getConcreteReplyTos(), Collections.EMPTY_LIST, RenderUtils.getResourceString(
 		    "GLOBAL_RESOURCES", "mergeExecutionCourses.email.subject", new Object[] { executionCourseTo.getNome() }),
 		    message.toString(), bccs);
-
-	    // new Email("Sistema Fénix", "no-reply@ist.utl.pt", new String[]
-	    // {}, tos, Collections.EMPTY_LIST,
-	    // Collections.EMPTY_LIST, "Junção de disciplinas: " +
-	    // executionCourseTo.getNome(), message.toString());
 	}
     }
 

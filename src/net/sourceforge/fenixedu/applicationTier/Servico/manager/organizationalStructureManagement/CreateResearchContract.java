@@ -69,8 +69,6 @@ public class CreateResearchContract extends FenixService {
 
 	    new Message(sender, sender.getConcreteReplyTos(), new Recipient(new PersonGroup(person)).asCollection(), subject,
 		    message, "");
-	    // new Email(creator.getName(), creator.getEmail(), null, tos, null,
-	    // null, subject, message);
 	}
     }
 }

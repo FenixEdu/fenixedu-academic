@@ -62,13 +62,6 @@ public class DeleteWrittenEvaluation extends FenixService {
 		    new Recipient(new FixedSetGroup(tos)).asCollection(), subject, body, "");
 
 	}
-
-	// EmailSender.send(group.getName(), group.getContactEmail(), new
-	// String[] { group.getContactEmail() }, tos, null, null,
-	// subject, RenderUtils.getResourceString("VIGILANCY_RESOURCES",
-	// "label.writtenEvaluationDeletedMessage",
-	// new Object[] { writtenEvaluation.getName(), beginDateString, time
-	// }));
     }
 
 }

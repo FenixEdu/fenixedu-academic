@@ -49,19 +49,10 @@ public class MergeExternalUnits extends FenixService {
 		    final String body = RenderUtils.getResourceString("GLOBAL_RESOURCES", "mergeExternalUnits.email.body",
 			    new Object[] { person.getName(), person.getUsername(), fromUnitName, fromUnitID,
 				    destinationUnit.getName(), destinationUnit.getIdInternal() });
-		    // String body =
-		    // "Foi efectuado um merge de unidades externas por " +
-		    // person.getName() + "["
-		    // + person.getUsername() + "]" + " : Unidade Origem -> " +
-		    // fromUnitName + "[" + fromUnitID
-		    // + "]  Unidade Destino -> " + destinationUnit.getName() +
-		    // "[" + destinationUnit.getIdInternal() + "]";
 
 		    SystemSender systemSender = rootDomainObject.getSystemSender();
 		    new Message(systemSender, systemSender.getConcreteReplyTos(), Collections.EMPTY_LIST, subject, body,
 			    resultEmails);
-		    // new Email("Fénix", "suporte@ist.utl.pt", null,
-		    // resultEmails, null, null, "MergeUnits", body);
 		}
 	    }
 	}

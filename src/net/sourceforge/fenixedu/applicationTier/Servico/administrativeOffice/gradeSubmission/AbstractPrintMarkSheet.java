@@ -32,14 +32,6 @@ public abstract class AbstractPrintMarkSheet extends FenixService {
 
 	if (!markSheet.getPrinted()) {
 	    markSheet.setPrinted(Boolean.TRUE);
-
-	    /*
-	     * if(markSheet.getResponsibleTeacher().getPerson().getEmail() !=
-	     * null) { EmailSender.send(null, "from",
-	     * Collections.singletonList(markSheet
-	     * .getResponsibleTeacher().getPerson().getEmail()), null, null,
-	     * "subject", "message"); }
-	     */
 	}
     }
 

@@ -432,11 +432,46 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public boolean canBeDeleted() {
 
-	if (hasAnyAssociatedInquiriesCourses() || hasAnyAssociatedInquiriesRegistries() || hasAnyStudentInquiriesCourseResults()
-		|| hasAnyYearDelegateCourseInquiries() || hasAnyAssociatedSummaries() || !getGroupings().isEmpty()
-		|| hasAnyAssociatedBibliographicReferences() || !hasOnlyFinalEvaluations() || hasEvaluationMethod()
-		|| !getAssociatedShifts().isEmpty() || hasCourseReport() || hasAnyAttends()
-		|| (hasSite() && !getSite().isDeletable()) || (hasBoard() && !getBoard().isDeletable())) {
+	if (hasAnyAssociatedInquiriesCourses()) {
+	    throw new DomainException("error.execution.course.cant.delete");
+	}
+	if (hasAnyAssociatedInquiriesRegistries()) {
+	    throw new DomainException("error.execution.course.cant.delete");
+	}
+	if (hasAnyStudentInquiriesCourseResults()) {
+	    throw new DomainException("error.execution.course.cant.delete");
+	}
+	if (hasAnyYearDelegateCourseInquiries()) {
+	    throw new DomainException("error.execution.course.cant.delete");
+	}
+	if (hasAnyAssociatedSummaries()) {
+	    throw new DomainException("error.execution.course.cant.delete");
+	}
+	if (!getGroupings().isEmpty()) {
+	    throw new DomainException("error.execution.course.cant.delete");
+	}
+	if (hasAnyAssociatedBibliographicReferences()) {
+	    throw new DomainException("error.execution.course.cant.delete");
+	}
+	if (!hasOnlyFinalEvaluations()) {
+	    throw new DomainException("error.execution.course.cant.delete");
+	}
+	if (hasEvaluationMethod()) {
+	    throw new DomainException("error.execution.course.cant.delete");
+	}
+	if (!getAssociatedShifts().isEmpty()) {
+	    throw new DomainException("error.execution.course.cant.delete");
+	}
+	if (hasCourseReport()) {
+	    throw new DomainException("error.execution.course.cant.delete");
+	}
+	if (hasAnyAttends()) {
+	    throw new DomainException("error.execution.course.cant.delete");
+	}
+	if (hasSite() && !getSite().isDeletable()) {
+	    throw new DomainException("error.execution.course.cant.delete");
+	}
+	if (hasBoard() && !getBoard().isDeletable()) {
 	    throw new DomainException("error.execution.course.cant.delete");
 	}
 

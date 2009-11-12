@@ -129,11 +129,5 @@ public class EditGroupShift extends FenixService {
 	SystemSender systemSender = rootDomainObject.getSystemSender();
 	new Message(systemSender, systemSender.getConcreteReplyTos(), recipients, messages
 		.getMessage("message.subject.grouping.change"), message, "");
-	// new Email("Fenix System", messages.getMessage("noreply.mail"), null,
-	// emails, null, null, messages
-	// .getMessage("message.subject.grouping.change"),
-	// messages.getMessage("message.body.grouping.change.shift",
-	// registration.getNumber().toString(),
-	// studentGroup.getGroupNumber().toString()));
     }
 }
