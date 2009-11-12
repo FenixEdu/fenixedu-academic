@@ -9,7 +9,7 @@
 
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-<bean:define id="processId" name="process" property="individualProgramProcess.externalId" />
+<bean:define id="processId" name="process" property="externalId" />
 <bean:define id="individualProcessId" name="process" property="individualProgramProcess.externalId" />
 
 
@@ -48,6 +48,7 @@
 
 <strong><bean:message  key="label.phd.thesis" bundle="PHD_RESOURCES"/></strong><br/>
 <fr:form action="<%= "/phdThesisProcess.do?processId=" + processId.toString() %>">
+	<input type="hidden" name="method" />
 	<fr:edit id="submitThesisBean" name="submitThesisBean" visible="false" />
 	
 	<fr:edit id="submitThesisBean.edit.thesis.type" name="submitThesisBean">
@@ -82,7 +83,7 @@
 	</fr:edit>
 
 <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='submitThesis';"><bean:message bundle="PHD_RESOURCES" key="label.submit"/></html:submit>
-<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='cancel_method';"><bean:message bundle="PHD_RESOURCES" key="label.cancel_label"/></html:cancel>	
+<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='viewIndividualProgramProcess';"><bean:message bundle="PHD_RESOURCES" key="label.cancel"/></html:cancel>	
 </fr:form>
 
 
