@@ -884,20 +884,23 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
     public ActionForward prepareRequestPublicThesisPresentation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	final PhdThesisProcessBean phdThesisProcessBean = new PhdThesisProcessBean();
-
-	request.setAttribute("requestPublicThesisPresentation", phdThesisProcessBean);
-	request.setAttribute("hasPublicPresentationSeminar", getProcess(request).hasSeminarProcess());
-	request.setAttribute("hasPublicPresentationSeminarReport", getProcess(request).getSeminarProcess().hasReportDocument());
-	request.setAttribute("hasSchoolPartConcluded", getProcess(request).hasSchoolPartConcluded());
-	request.setAttribute("hasQualificationExamsToPerform", getProcess(request).hasQualificationExamsToPerform());
+	request.setAttribute("requestPublicThesisPresentation", new PhdThesisProcessBean());
+	addThesisPreConditionsInformation(request, getProcess(request));
 
 	return mapping.findForward("requestPublicThesisPresentation");
+    }
+
+    private void addThesisPreConditionsInformation(HttpServletRequest request, final PhdIndividualProgramProcess process) {
+	request.setAttribute("hasPublicPresentationSeminar", process.hasSeminarProcess());
+	request.setAttribute("hasPublicPresentationSeminarReport", process.hasSeminarReportDocument());
+	request.setAttribute("hasSchoolPartConcluded", process.hasSchoolPartConcluded());
+	request.setAttribute("hasQualificationExamsToPerform", process.hasQualificationExamsToPerform());
     }
 
     public ActionForward prepareRequestPublicThesisPresentationInvalid(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 	request.setAttribute("requestPublicThesisPresentation", getRenderedObject("requestPublicThesisPresentation"));
+	addThesisPreConditionsInformation(request, getProcess(request));
 	return mapping.findForward("requestPublicThesisPresentation");
     }
 
@@ -908,6 +911,7 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 	request.setAttribute("requestPublicThesisPresentation", bean);
 
 	RenderUtils.invalidateViewState("requestPublicThesisPresentation.edit.document");
+	addThesisPreConditionsInformation(request, getProcess(request));
 
 	return executeActivity(RequestPublicThesisPresentation.class, bean, request, mapping, "requestPublicThesisPresentation",
 		"viewProcess");
