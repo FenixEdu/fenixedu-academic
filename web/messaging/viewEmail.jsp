@@ -30,4 +30,12 @@
 		</fr:layout>
 	</fr:view>
 
+	<logic:notEmpty name="message" property="messageIds">
+		<bean:message bundle="MESSAGING_RESOURCES" key="message.email.sent.message.ids"/>
+		<logic:iterate id="messageId" name="message" property="messageIds">
+			<bean:write name="messageId"/>
+			<br/>
+		</logic:iterate>
+	</logic:notEmpty>
+
 </logic:present>

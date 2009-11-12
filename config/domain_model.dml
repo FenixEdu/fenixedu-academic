@@ -5720,6 +5720,10 @@ class DomainObject {
 		String bccs;
 	}
 
+	class util.email.MessageId extends DomainObject {
+		String id;
+	}
+
 	class util.email.Recipient extends DomainObject {
 		String toName;
 		Group members;
@@ -16390,6 +16394,13 @@ relation RootDomainObjectUtilEmailMessage {
 	}
 }
 
+relation RootDomainObjectUtilEmailMessageId {
+	RootDomainObject playsRole rootDomainObject;
+	util.email.MessageId playsRole utilEmailMessageIds {
+		multiplicity *;
+	}
+}
+
 relation RootDomainObjectUtilEmailRecipient {
 	RootDomainObject playsRole rootDomainObject;
 	util.email.Recipient playsRole utilEmailRecipients {
@@ -16414,6 +16425,20 @@ relation UtilEmailSenderUtilEmailMessage {
 	util.email.Message playsRole messages {
 		multiplicity *;
 	}
+}
+
+relation UtilEmailMessageIdUtilEmailMessage {
+	util.email.Message playsRole message;
+	util.email.MessageId playsRole messageIds {
+		multiplicity *;
+	}
+}
+
+relation UtilEmailUtilEmailMessage {
+	util.Email playsRole emails {
+		multiplicity *;
+	}
+	util.email.Message playsRole message;
 }
 
 relation UtilEmailMessageUtilEmailRecipientTos {

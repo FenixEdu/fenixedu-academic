@@ -157,9 +157,10 @@ public class Message extends Message_Base {
     public void dispatch() {
 	final Sender sender = getSender();
 	final Person person = getPerson();
-	new Email(sender.getFromName(person), sender.getFromAddress(), getReplyToAddresses(person),
+	final Email email = new Email(sender.getFromName(person), sender.getFromAddress(), getReplyToAddresses(person),
 		getRecipientAddresses(getTosSet()), getRecipientAddresses(getCcsSet()), getDestinationBccs(), getSubject(),
 		getBody());
+	email.setMessage(this);
 	removeRootDomainObjectFromPendingRelation();
 	setSent(new DateTime());
     }
