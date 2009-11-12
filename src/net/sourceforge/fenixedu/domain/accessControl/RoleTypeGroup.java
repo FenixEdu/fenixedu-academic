@@ -48,4 +48,18 @@ public class RoleTypeGroup extends Group {
 		+ roleType);
 	return name != null ? name : super.getName();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+	if (!(obj instanceof RoleTypeGroup)) {
+	    return false;
+	}
+
+	return this.roleType.equals(((RoleTypeGroup) obj).roleType);
+    }
+
+    @Override
+    public int hashCode() {
+	return this.roleType.hashCode();
+    }
 }
