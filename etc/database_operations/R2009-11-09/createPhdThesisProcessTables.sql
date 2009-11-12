@@ -5,6 +5,7 @@ alter table `PROCESS` add column `OID_THESIS_PROCESS` bigint(20);
 
 create table `THESIS_JURY_ELEMENT` (
   `ID_INTERNAL` int(11) NOT NULL auto_increment,
+  `OJB_CONCRETE_CLASS` VARCHAR(255) NOT NULL;
   `CREATION_DATE` datetime NULL default NULL,
   `NAME` longtext,
   `ADDRESS` longtext,
