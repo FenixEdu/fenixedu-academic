@@ -4,9 +4,9 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/phd.tld" prefix="phd" %>
 
+<%@page import="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess"%>
 
-
-<%@page import="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess"%><logic:notEmpty name="process" property="seminarProcess">
+<logic:notEmpty name="process" property="seminarProcess">
 <logic:equal name="process" property="activeState.active" value="true">
 
 	<br/>
