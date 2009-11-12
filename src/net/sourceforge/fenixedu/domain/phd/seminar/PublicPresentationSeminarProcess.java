@@ -442,4 +442,20 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 
 	return false;
     }
+
+    public boolean isExempted() {
+	/*
+	 * TODO: Its possible to have exemption to seminar process, in this case
+	 * we should have a new state and this method must be implemented with
+	 * something like getActiveState() ==
+	 * PhdIndividualProgramProcessState.EXEMPTED
+	 */
+	return false;
+
+    }
+
+    public boolean isConcluded() {
+	return getActiveState() == PublicPresentationSeminarProcessStateType.REPORT_VALIDATED;
+    }
+
 }
