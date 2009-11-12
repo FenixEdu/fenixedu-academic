@@ -1,6 +1,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType"%><html:xhtml/>
+<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
@@ -83,7 +84,7 @@
 
 <fr:edit id="requestPublicThesisPresentation.edit.document" name="requestPublicThesisPresentation">
 	
-	<fr:schema type="<%= requestPublicThesisPresentation.getClass().getName() %>" bundle="PHD_RESOURCES">
+	<fr:schema type="<%= PhdThesisProcessBean.class.getName() %>" bundle="PHD_RESOURCES">
 		<fr:slot name="document.file" required="true">
 			<fr:property name="fileNameSlot" value="document.filename"/>
 			<fr:property name="size" value="20"/>
@@ -99,7 +100,7 @@
 
 <fr:edit id="requestPublicThesisPresentation.edit.remarks" name="requestPublicThesisPresentation">
 	
-	<fr:schema type="<%= requestPublicThesisPresentation.getClass().getName() %>" bundle="PHD_RESOURCES">
+	<fr:schema type="<%= PhdThesisProcessBean.class.getName() %>" bundle="PHD_RESOURCES">
 		<fr:slot name="remarks" layout="longText">
 			<fr:property name="columns" value="80"/>
 			<fr:property name="rows" value="8"/>

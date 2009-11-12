@@ -6,7 +6,9 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisJuryElementBean;
+import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess.AddJuryElement;
+import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess.SubmitThesis;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.thesis.CommonPhdThesisProcessDA;
 
 import org.apache.struts.action.ActionForm;
@@ -23,7 +25,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Forward(name = "manageThesisJuryElements", path = "/phd/thesis/academicAdminOffice/manageThesisJuryElements.jsp"),
 
-@Forward(name = "addJuryElement", path = "/phd/thesis/academicAdminOffice/addJuryElement.jsp")
+@Forward(name = "addJuryElement", path = "/phd/thesis/academicAdminOffice/addJuryElement.jsp"),
+
+@Forward(name = "submitThesis", path = "/phd/thesis/academicAdminOffice/submitThesis.jsp")
 
 })
 public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
@@ -67,5 +71,41 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
 	return manageThesisJuryElements(mapping, actionForm, request, response);
     }
+
+    // Submit thesis
+    public ActionForward prepareSubmitThesis(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("submitThesisBean", new PhdThesisProcessBean());
+
+	return mapping.findForward("submitThesis");
+    }
+
+    public ActionForward prepareSubmitThesisInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	RenderUtils.invalidateViewState("submitThesisBean.edit.document");
+
+	request.setAttribute("submitThesisBean", getRenderedObject("submitThesisBean"));
+
+	return mapping.findForward("submitThesis");
+    }
+
+    public ActionForward submitThesis(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	try {
+	    ExecuteProcessActivity.run(getProcess(request), SubmitThesis.class, getRenderedObject("submitThesisBean"));
+
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getMessage(), e.getArgs());
+	    return prepareSubmitThesisInvalid(mapping, form, request, response);
+	}
+
+	return viewIndividualProgramProcess(request, getProcess(request));
+
+    }
+
+    // End of submit thesis
 
 }
