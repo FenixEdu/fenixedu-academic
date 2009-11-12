@@ -1655,17 +1655,17 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 		extends="resultPublication.editType"
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.InproceedingsBean">
 <!--	<slot name="scope"/>-->
-	<slot name="publisher"/>
+	<slot name="publisher"><property name="size" value="40"/></slot>
 	<slot name="address"><property name="size" value="40"/></slot>
 	<slot name="firstPage">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
-		<property name="size" value="5"/>
+		<property name="size" value="10"/>
 	</slot>
 	<slot name="lastPage">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
-		<property name="size" value="5"/>
+		<property name="size" value="10"/>
 	</slot>
-	<slot name="language"><property name="size" value="15"/></slot>
+	<slot name="language"><property name="size" value="20"/></slot>
 	<slot name="url" layout="input-with-comment">
 		<property name="subProperty(size)" value="60"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
@@ -1755,7 +1755,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 <schema name="result.publication.select.Event" bundle="RESEARCHER_RESOURCES" 
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultEventAssociationBean">
 	  	<slot name="event" key="label.event" layout="autoComplete" >
-		<property name="size" value="50"/>
+		<property name="size" value="60"/>
 		<property name="rawSlotName" value="eventName"/>
 		<property name="labelField" value="name"/>
 		<property name="format" value="${name}"/>
@@ -1780,19 +1780,19 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 <schema name="result.publication.create.NewEventEdition" bundle="RESEARCHER_RESOURCES" 
 		type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultEventAssociationBean">
 	<slot name="edition" layout="input-with-comment" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="subProperty(size)" value="50"/>
+		<property name="subProperty(size)" value="60"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.newEvent.eventEdition.fieldHelp"/>
 		<property name="commentClasses" value="smalltxt color555"/>
 	</slot>
 	<slot name="eventLocation" key="label.event.eventLocation" layout="input-with-comment" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="subProperty(size)" value="30"/>
+		<property name="subProperty(size)" value="40"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.newEvent.eventEditionPlace"/>
 		<property name="commentClasses" value="smalltxt color555"/>
 	</slot>
 	<slot name="organization" layout="input-with-comment" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="subProperty(size)" value="45"/>
+		<property name="subProperty(size)" value="40"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
 		<property name="comment" value="label.newEvent.eventEditionOrganization"/>
 		<property name="commentClasses" value="smalltxt color555"/>
@@ -3039,12 +3039,12 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 	</slot>
 </schema>
 
+
 <schema name="edit.expert.allowed.contacts" type="net.sourceforge.fenixedu.domain.research.Researcher" bundle="RESEARCHER_RESOURCES">
 	<slot name="allowsContactByStudents"/>
 	<slot name="allowsContactByMedia"/>
 	<slot name="allowsContactByOtherResearchers"/>
 </schema>
-
 <schema name="researcher.career" type="net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer" bundle="DOMAIN_RESOURCES"
 	constructor="person, beginYear, endYear, function, entity">
     <slot name="person" hidden="true" />

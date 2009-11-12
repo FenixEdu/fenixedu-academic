@@ -108,10 +108,12 @@
 
     <logic:notPresent name="preferredSetting">
 	    <jsp:include page="publicationsCategories.jsp" />
-	    <p>
+	    <p class="mtop15">
 	    	<em>
-		        <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.preferredPublications.help2"/>
-		        <html:link page="/resultPublications/listPublications.do"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.management.title"/></html:link>
+		        <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.preferredPublications.help.management"/>
+				<html:link page="/publications/management.do?method=prepareSetPreferredPublications">
+					<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.setPreferredPublications"/>
+	            </html:link>.
 	    	</em>
 	    </p>
     </logic:notPresent>
