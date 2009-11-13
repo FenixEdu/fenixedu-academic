@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.lis
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.SearchDiplomasBySituationParametersBean;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -37,9 +38,12 @@ import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
  * 
  */
 
-@Mapping(path = "/diplomasListBySituation", module = "academicAdminOffice")
+@Mapping(path = "/diplomasListBySituation", module = DiplomasListBySituationDA.MODULE)
 @Forwards( { @Forward(name = "searchDiplomas", path = "/academicAdminOffice/lists/searchDiplomasBySituation.jsp") })
 public class DiplomasListBySituationDA extends FenixDispatchAction {
+
+    private static final String LOCALDATE_FORMAT = "yyyy-MM-dd";
+    protected static final String MODULE = "academicAdminOffice";
 
     public ActionForward prepareBySituation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
@@ -68,8 +72,11 @@ public class DiplomasListBySituationDA extends FenixDispatchAction {
 
 	final SearchDiplomasBySituationParametersBean bean = (SearchDiplomasBySituationParametersBean) getRenderedObject();
 	request.setAttribute("searchParametersBean", bean);
-	request.setAttribute("diplomasList", SearchDiplomas.run(bean));
-
+	try {
+	    request.setAttribute("diplomasList", SearchDiplomas.run(bean));
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getKey(), e.getArgs());
+	}
 	return mapping.findForward("searchDiplomas");
     }
 
@@ -81,8 +88,9 @@ public class DiplomasListBySituationDA extends FenixDispatchAction {
 	    final Collection<DiplomaRequest> requests = SearchDiplomas.run(bean);
 
 	    try {
-		String filename = "Diplomas_" + bean.getAcademicServiceRequestSituationType().getLocalizedName() + "_"
-			+ bean.getSearchBegin().toString("yyyy-MM-dd") + "_" + bean.getSearchEnd().toString("yyyy-MM-dd");
+		String filename = getResourceMessage("label.diplomas") + "_"
+			+ bean.getAcademicServiceRequestSituationType().getLocalizedName() + "_"
+			+ bean.getSearchBegin().toString(LOCALDATE_FORMAT) + "_" + bean.getSearchEnd().toString(LOCALDATE_FORMAT);
 
 		response.setContentType("application/vnd.ms-excel");
 		response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
@@ -105,7 +113,7 @@ public class DiplomasListBySituationDA extends FenixDispatchAction {
     private void exportToXls(final Collection<DiplomaRequest> requests, final OutputStream os, final boolean extendedInfo)
 	    throws IOException {
 
-	final StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("Diplomas");
+	final StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet(getResourceMessage("label.diplomas"));
 	fillSpreadSheet(requests, spreadsheet, extendedInfo);
 	spreadsheet.getWorkbook().write(os);
     }
@@ -135,16 +143,24 @@ public class DiplomasListBySituationDA extends FenixDispatchAction {
 
     private void setHeaders(final StyledExcelSpreadsheet spreadsheet, final boolean extendedInfo) {
 	spreadsheet.newHeaderRow();
-	spreadsheet.addHeader("Nr Aluno");
-	spreadsheet.addHeader("Nome");
-	spreadsheet.addHeader("Curso");
-	spreadsheet.addHeader("Pedido");
-	spreadsheet.addHeader("Estado");
-	spreadsheet.addHeader("Id Pedido");
+	spreadsheet.addHeader(getResourceMessage("label.studentNumber"));
+	spreadsheet.addHeader(getResourceMessage("label.name"));
+	spreadsheet.addHeader(getResourceMessage("label.degree"));
+	spreadsheet.addHeader(getResourceMessage("label.request"));
+	spreadsheet.addHeader(getResourceMessage("label.state"));
+	spreadsheet.addHeader(getResourceMessage("label.serviceRequestNumber"));
 
 	if (extendedInfo) {
 	    // TODO
 	}
+    }
+
+    static private String getResourceMessage(String key) {
+	return getResourceMessageFromModuleOrApplication(MODULE, key);
+    }
+
+    static private String getEnumNameFromResources(Enum enumeration) {
+	return getResourceMessageFromModule("Enumeration", enumeration.getClass().getSimpleName() + "." + enumeration.name());
     }
 
 }
