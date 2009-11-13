@@ -169,9 +169,11 @@ public class InternshipCandidacyDA extends FenixDispatchAction {
 	    row.setCell(StringUtils.capitalize(bean.getCountryOfBirth().getCountryNationality().getPreferedContent()
 		    .toLowerCase()));
 	    row.setCell(bean.getDocumentIdNumber());
-	    row.setCell(bean.getEmissionLocationOfDocumentId());
-	    row.setCell(bean.getEmissionDateOfDocumentId().toString("dd-MM-yyyy"));
-	    row.setCell(bean.getExpirationDateOfDocumentId().toString("dd-MM-yyyy"));
+	    row.setCell(bean.getEmissionLocationOfDocumentId() != null ? bean.getEmissionLocationOfDocumentId() : null);
+	    row.setCell(bean.getEmissionDateOfDocumentId() != null ? bean.getEmissionDateOfDocumentId().toString("dd-MM-yyyy")
+		    : null);
+	    row.setCell(bean.getExpirationDateOfDocumentId() != null ? bean.getExpirationDateOfDocumentId()
+		    .toString("dd-MM-yyyy") : null);
 	    row.setCell(bean.getPassportIdNumber() != null ? bean.getPassportIdNumber() : "");
 	    row.setCell(bean.getEmissionLocationOfPassport() != null ? bean.getEmissionLocationOfPassport() : "");
 	    row.setCell(bean.getEmissionDateOfPassport() != null ? bean.getEmissionDateOfPassport().toString("dd-MM-yyyy") : "");
