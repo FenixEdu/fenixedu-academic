@@ -32,8 +32,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -45,6 +43,7 @@ import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 @Forwards( { @Forward(name = "searchRequests", path = "/academicAdminOffice/lists/searchRequestsByDegree.jsp") })
 public class RequestListByDegreeDA extends FenixDispatchAction {
 
+    private static final String DATETIME_FORMAT = "dd-MM-yyyy HH:mm";
     protected static final String MODULE = "academicAdminOffice";
 
     public ActionForward prepareSearch(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -246,8 +245,7 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 	    spreadsheet.newRow();
 	    spreadsheet.addCell(request.getCampus().getName());
 	    spreadsheet.addCell(request.getServiceRequestNumber());
-	    DateTimeFormatter formatter = DateTimeFormat.forPattern("dd-MM-yyyy HH:mm");
-	    spreadsheet.addCell(request.getRequestDate().toString(formatter));
+	    spreadsheet.addCell(request.getRequestDate().toString(DATETIME_FORMAT));
 	    spreadsheet.addCell(request.getDescription());
 	    spreadsheet.addCell(request.getStudent().getNumber());
 	    spreadsheet.addCell(request.getStudent().getName());

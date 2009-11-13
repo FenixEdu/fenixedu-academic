@@ -32,6 +32,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -52,10 +53,12 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
  * 
  */
 
-@Mapping(path = "/studentsListByCurricularCourse", module = "academicAdminOffice")
+@Mapping(path = "/studentsListByCurricularCourse", module = StudentsListByCurricularCourseDA.MODULE)
 @Forwards( { @Forward(name = "chooseCurricularCourse", path = "/academicAdminOffice/lists/chooseCurricularCourses.jsp"),
 	@Forward(name = "studentByCurricularCourse", path = "/academicAdminOffice/lists/studentsByCurricularCourses.jsp") })
 public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
+
+    protected static final String MODULE = "academicAdminOffice";
 
     public ActionForward prepareByCurricularCourse(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
@@ -166,13 +169,14 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
     private void exportToXls(List<Enrolment> registrationWithStateForExecutionYearBean, OutputStream outputStream,
 	    ExecutionYear executionYear, Degree degree, String year, String semester) throws IOException {
 
-	final StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("AlunosPorCurso");
+	final StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet(
+		getResourceMessage("lists.studentByCourse.unspaced"));
 	spreadsheet.newHeaderRow();
-	spreadsheet.addHeader(degree.getNameFor(executionYear) + " - " + executionYear.getNextYearsYearString() + " - " + year
-		+ " Ano " + semester + " Semestre");
+	spreadsheet.addHeader(degree.getNameFor(executionYear) + " - " + executionYear.getYear() + " - " + year + " "
+		+ getResourceMessage("label.year") + " " + semester + " " + getResourceMessage("label.semester"));
 	spreadsheet.newRow();
 	spreadsheet.newRow();
-	spreadsheet.addCell(registrationWithStateForExecutionYearBean.size() + " Alunos");
+	spreadsheet.addCell(registrationWithStateForExecutionYearBean.size() + " " + getResourceMessage("label.students"));
 	fillSpreadSheet(registrationWithStateForExecutionYearBean, spreadsheet, executionYear);
 	spreadsheet.getWorkbook().write(outputStream);
     }
@@ -186,21 +190,22 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
 	    spreadsheet.addCell(registration.getNumber().toString());
 	    spreadsheet.addCell(registration.getPerson().getName());
 	    spreadsheet.addCell(registration.getRegistrationAgreement().getName());
-	    spreadsheet.addCell(registration.getDegree().getNameFor(executionYear));
-	    spreadsheet.addCell(registrationWithStateForExecutionYearBean.getEnrollmentState().getDescription());
+	    Degree degree = registration.getDegree();
+	    spreadsheet.addCell(!(StringUtils.isEmpty(degree.getSigla())) ? degree.getSigla() : degree.getNameFor(executionYear)
+		    .toString());
+	    spreadsheet.addCell(getEnumNameFromResources(registrationWithStateForExecutionYearBean.getEnrollmentState()));
 	    spreadsheet.addCell(registrationWithStateForExecutionYearBean.getEnrolmentEvaluationType().getDescription());
 	}
     }
 
     private void setHeaders(final StyledExcelSpreadsheet spreadsheet) {
 	spreadsheet.newHeaderRow();
-	spreadsheet.addHeader("Numero");
-	spreadsheet.addHeader("Nome");
-	spreadsheet.addHeader("Acordo");
-	spreadsheet.addHeader("Curso");
-	spreadsheet.addHeader("Estado");
-	spreadsheet.addHeader("Epoca");
-
+	spreadsheet.addHeader(getResourceMessage("label.student.number"));
+	spreadsheet.addHeader(getResourceMessage("label.name"));
+	spreadsheet.addHeader(getResourceMessage("label.registrationAgreement"));
+	spreadsheet.addHeader(getResourceMessage("label.degree"));
+	spreadsheet.addHeader(getResourceMessage("label.state"));
+	spreadsheet.addHeader(getResourceMessage("label.epoch"));
     }
 
     public ActionForward downloadStatistics(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -208,7 +213,7 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
 	final ExecutionYear executionYear = getExecutionYearParameter(request);
 	final Set<Degree> degreesToInclude = getDegreesToInclude();
 
-	final String filename = "statistics_" + executionYear.getName().replace('/', '-');
+	final String filename = getResourceMessage("label.statistics") + "_" + executionYear.getName().replace('/', '-');
 	final Spreadsheet spreadsheet = new Spreadsheet(filename);
 	addStatisticsHeaders(spreadsheet);
 	addStatisticsInformation(spreadsheet, executionYear, degreesToInclude);
@@ -225,10 +230,10 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
     }
 
     private void addStatisticsHeaders(final Spreadsheet spreadsheet) {
-	spreadsheet.setHeader("Sigla do Curso");
-	spreadsheet.setHeader("Nome do Curso");
-	spreadsheet.setHeader("Nome da Disciplina");
-	spreadsheet.setHeader("Número de Inscritos");
+	spreadsheet.setHeader(getResourceMessage("label.degree.acronym"));
+	spreadsheet.setHeader(getResourceMessage("label.degree.name"));
+	spreadsheet.setHeader(getResourceMessage("label.curricularCourse.name"));
+	spreadsheet.setHeader(getResourceMessage("label.degree.numberOfEnrolments"));
     }
 
     private void addStatisticsInformation(final Spreadsheet spreadsheet, final ExecutionYear executionYear,
@@ -275,6 +280,14 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
 	final Integer executionYearId = executionYearIdString != null && executionYearIdString.length() > 0 ? Integer
 		.valueOf(executionYearIdString) : null;
 	return executionYearId == null ? null : rootDomainObject.readExecutionYearByOID(executionYearId);
+    }
+
+    static private String getResourceMessage(String key) {
+	return getResourceMessageFromModuleOrApplication(MODULE, key);
+    }
+
+    static private String getEnumNameFromResources(Enum<?> enumeration) {
+	return getResourceMessageFromModule("Enumeration", enumeration.getClass().getSimpleName() + "." + enumeration.name());
     }
 
 }
