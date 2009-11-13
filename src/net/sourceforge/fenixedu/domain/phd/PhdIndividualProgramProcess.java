@@ -762,9 +762,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
 	    thesisProcess.setIndividualProgramProcess(individualProcess);
 
-	    bean.getDocument().setType(PhdIndividualProgramDocumentType.PROVISIONAL_THESIS);
-
-	    thesisProcess.addDocument(bean.getDocument(), userView.getPerson());
+	    thesisProcess.addDocuments(bean.getDocuments(), userView.getPerson());
 
 	    /*
 	     * 

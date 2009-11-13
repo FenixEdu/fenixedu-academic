@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.phd;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
@@ -10,6 +11,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 
 abstract public class PhdProgramProcess extends PhdProgramProcess_Base {
 
@@ -20,6 +22,12 @@ abstract public class PhdProgramProcess extends PhdProgramProcess_Base {
     protected void addDocument(PhdProgramDocumentUploadBean each, Person responsible) {
 	new PhdProgramProcessDocument(this, each.getType(), each.getRemarks(), each.getFileContent(), each.getFilename(),
 		responsible);
+    }
+
+    protected void addDocuments(List<PhdProgramDocumentUploadBean> documents, Person responsible) {
+	for (final PhdProgramDocumentUploadBean each : documents) {
+	    addDocument(each, responsible);
+	}
     }
 
     public void removeDocumentsByType(PhdIndividualProgramDocumentType type) {
@@ -69,17 +77,23 @@ abstract public class PhdProgramProcess extends PhdProgramProcess_Base {
 
 	return result;
     }
-    
+
     protected PhdProgramProcessDocument getLastestDocumentVersionFor(PhdIndividualProgramDocumentType type) {
 	final Collection<PhdProgramProcessDocument> documents = filterLatestDocumentVersions(getDocumentsByType(type));
 
 	return documents.isEmpty() ? null : documents.iterator().next();
     }
 
-
     static protected boolean isMasterDegreeAdministrativeOfficeEmployee(IUserView userView) {
 	return userView != null && userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
 		&& userView.getPerson().getEmployeeAdministrativeOffice().isMasterDegree();
+    }
+
+    static protected boolean isParticipant(PhdThesisProcess process, IUserView userView) {
+	return isMasterDegreeAdministrativeOfficeEmployee(userView)
+		|| process.getIndividualProgramProcess().isCoordinatorForPhdProgram(userView.getPerson())
+		|| process.getIndividualProgramProcess().isGuiderOrAssistentGuider(userView.getPerson())
+		|| process.getIndividualProgramProcess().getPerson() == userView.getPerson();
     }
 
     abstract protected PhdIndividualProgramProcess getIndividualProgramProcess();
