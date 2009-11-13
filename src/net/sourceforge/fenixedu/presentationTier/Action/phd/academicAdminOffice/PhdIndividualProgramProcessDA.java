@@ -19,8 +19,10 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.QualificationBean;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramGuidingBean;
 import net.sourceforge.fenixedu.domain.phd.PhdStudyPlanBean;
 import net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntry;
@@ -884,7 +886,12 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
     public ActionForward prepareRequestPublicThesisPresentation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	request.setAttribute("requestPublicThesisPresentation", new PhdThesisProcessBean());
+	final PhdThesisProcessBean bean = new PhdThesisProcessBean();
+	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.PROVISIONAL_THESIS));
+	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.THESIS_REQUIREMENT));
+
+	request.setAttribute("requestPublicThesisPresentation", bean);
+
 	addThesisPreConditionsInformation(request, getProcess(request));
 
 	return mapping.findForward("requestPublicThesisPresentation");
@@ -899,8 +906,13 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 
     public ActionForward prepareRequestPublicThesisPresentationInvalid(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
+
 	request.setAttribute("requestPublicThesisPresentation", getRenderedObject("requestPublicThesisPresentation"));
+
 	addThesisPreConditionsInformation(request, getProcess(request));
+
+	RenderUtils.invalidateViewState("requestPublicThesisPresentation.edit.documents");
+
 	return mapping.findForward("requestPublicThesisPresentation");
     }
 
@@ -910,7 +922,7 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 	final PhdThesisProcessBean bean = (PhdThesisProcessBean) getRenderedObject("requestPublicThesisPresentation");
 	request.setAttribute("requestPublicThesisPresentation", bean);
 
-	RenderUtils.invalidateViewState("requestPublicThesisPresentation.edit.document");
+	RenderUtils.invalidateViewState("requestPublicThesisPresentation.edit.documents");
 	addThesisPreConditionsInformation(request, getProcess(request));
 
 	return executeActivity(RequestPublicThesisPresentation.class, bean, request, mapping, "requestPublicThesisPresentation",

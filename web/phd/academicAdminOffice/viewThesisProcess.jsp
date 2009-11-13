@@ -29,13 +29,25 @@
 		<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= PhdThesisProcess.DownloadProvisionalThesisDocument.class %>">
 		<li style="display: inline;">
 			<bean:define id="provisionalThesisDownloadUrl" name="thesisProcess" property="provisionalThesisDocument.downloadUrl" />
-			<a href="<%= provisionalThesisDownloadUrl.toString() %>"><bean:message  key="label.phd.provisional.thesis.document" bundle="PHD_RESOURCES"/></a>
+			<a href="<%= provisionalThesisDownloadUrl.toString() %>">
+				<bean:write name="thesisProcess" property="provisionalThesisDocument.documentType.localizedName"/>
+				(<bean:message  key="label.version" bundle="PHD_RESOURCES"/> <bean:write name="thesisProcess" property="provisionalThesisDocument.documentVersion"/>)
+			</a>
 		</li>
 		</phd:activityAvailable>
 		<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= PhdThesisProcess.DownloadFinalThesisDocument.class %>">
 		<li style="display: inline;">
 			<bean:define id="finalThesisDownloadUrl" name="thesisProcess" property="finalThesisDocument.downloadUrl" />
-			<a href="<%= finalThesisDownloadUrl.toString() %>"><bean:message  key="label.phd.final.thesis.document" bundle="PHD_RESOURCES"/></a>
+			<a href="<%= finalThesisDownloadUrl.toString() %>">
+				<bean:write name="thesisProcess" property="finalThesisDocument.documentType.localizedName"/> 
+				(<bean:message  key="label.version" bundle="PHD_RESOURCES" /> <bean:write name="thesisProcess" property="finalThesisDocument.documentVersion"/>)
+			</a>
+		</li>
+		</phd:activityAvailable>
+		<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= PhdThesisProcess.DownloadThesisRequirement.class %>">
+		<li style="display: inline;">
+			<bean:define id="thesisRequirementDownloadUrl" name="thesisProcess" property="thesisRequirementDocument.downloadUrl" />
+			<a href="<%= thesisRequirementDownloadUrl.toString() %>"><bean:write name="thesisProcess" property="thesisRequirementDocument.documentType.localizedName"/> </a>
 		</li>
 		</phd:activityAvailable>
 	</ul>

@@ -47,6 +47,8 @@ public enum PhdIndividualProgramDocumentType {
 
     FINAL_THESIS,
 
+    THESIS_REQUIREMENT,
+
     OTHER(false);
 
     private boolean isVersioned;

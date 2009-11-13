@@ -1,7 +1,8 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 
 <%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean"%><html:xhtml/>
+<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
@@ -82,16 +83,17 @@
 
 <fr:edit id="requestPublicThesisPresentation" name="requestPublicThesisPresentation" visible="false" />
 
-<fr:edit id="requestPublicThesisPresentation.edit.document" name="requestPublicThesisPresentation">
+<fr:edit id="requestPublicThesisPresentation.edit.documents" name="requestPublicThesisPresentation" property="documents">
 	
-	<fr:schema type="<%= PhdThesisProcessBean.class.getName() %>" bundle="PHD_RESOURCES">
-		<fr:slot name="document.file" required="true">
-			<fr:property name="fileNameSlot" value="document.filename"/>
+	<fr:schema type="<%= PhdProgramDocumentUploadBean.class.getName() %>" bundle="PHD_RESOURCES">
+		<fr:slot name="type" readOnly="true" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean.type"/>
+		<fr:slot name="file" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean.file">
+			<fr:property name="fileNameSlot" value="filename"/>
 			<fr:property name="size" value="20"/>
 		</fr:slot>
 	</fr:schema>
 	
-	<fr:layout name="tabular">
+	<fr:layout name="tabular-editable">
 		<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 		<fr:property name="columnClasses" value=",,tdclear tderror1" />
 		<fr:destination name="invalid" path="<%="/phdIndividualProgramProcess.do?method=prepareRequestPublicThesisPresentationInvalid&processId=" + processId.toString() %>" />

@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdProcessState;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 
 public class PhdThesisProcess extends PhdThesisProcess_Base {
@@ -64,11 +65,11 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
 	    final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
 
-	    bean.getDocument().setType(
-		    bean.getFinalThesis().booleanValue() ? PhdIndividualProgramDocumentType.FINAL_THESIS
-			    : PhdIndividualProgramDocumentType.PROVISIONAL_THESIS);
-
-	    process.addDocument(bean.getDocument(), userView.getPerson());
+	    for (final PhdProgramDocumentUploadBean each : bean.getDocuments()) {
+		if (each.hasAnyInformation()) {
+		    process.addDocument(each, userView.getPerson());
+		}
+	    }
 
 	    return process;
 
@@ -89,19 +90,14 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	}
     }
 
+    // TODO: find clean solution to return documents
+    // grouped?
     static public class DownloadProvisionalThesisDocument extends PhdActivity {
 
 	@Override
 	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
 
-	    if (!process.hasProvisionalThesisDocument()) {
-		throw new PreConditionNotValidException();
-	    }
-
-	    if (isMasterDegreeAdministrativeOfficeEmployee(userView)
-		    || process.getIndividualProgramProcess().isCoordinatorForPhdProgram(userView.getPerson())
-		    || process.getIndividualProgramProcess().isGuiderOrAssistentGuider(userView.getPerson())
-		    || process.getIndividualProgramProcess().getPerson() == userView.getPerson()) {
+	    if (process.hasProvisionalThesisDocument() && isParticipant(process, userView)) {
 		return;
 	    }
 
@@ -123,14 +119,29 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	@Override
 	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
 
-	    if (!process.hasFinalThesisDocument()) {
-		throw new PreConditionNotValidException();
+	    if (process.hasFinalThesisDocument() && isParticipant(process, userView)) {
+		return;
 	    }
 
-	    if (isMasterDegreeAdministrativeOfficeEmployee(userView)
-		    || process.getIndividualProgramProcess().isCoordinatorForPhdProgram(userView.getPerson())
-		    || process.getIndividualProgramProcess().isGuiderOrAssistentGuider(userView.getPerson())
-		    || process.getIndividualProgramProcess().getPerson() == userView.getPerson()) {
+	    throw new PreConditionNotValidException();
+
+	}
+
+	@Override
+	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
+	    // nothing to be done
+
+	    return null;
+	}
+
+    }
+
+    static public class DownloadThesisRequirement extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
+
+	    if (process.hasThesisRequirementDocument() && isParticipant(process, userView)) {
 		return;
 	    }
 
@@ -153,6 +164,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	activities.add(new AddJuryElement());
 	activities.add(new DownloadProvisionalThesisDocument());
 	activities.add(new DownloadFinalThesisDocument());
+	activities.add(new DownloadThesisRequirement());
     }
 
     private PhdThesisProcess() {
@@ -196,20 +208,30 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	return getMostRecentState().getRemarks();
     }
 
+    // TODO: find clean solution to return specific documents
+    // grouped??
+    public PhdProgramProcessDocument getProvisionalThesisDocument() {
+	return getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.PROVISIONAL_THESIS);
+    }
+
     public boolean hasProvisionalThesisDocument() {
 	return getProvisionalThesisDocument() != null;
     }
 
-    public PhdProgramProcessDocument getProvisionalThesisDocument() {
-	return getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.PROVISIONAL_THESIS);
+    public PhdProgramProcessDocument getFinalThesisDocument() {
+	return getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.FINAL_THESIS);
     }
 
     public boolean hasFinalThesisDocument() {
 	return getFinalThesisDocument() != null;
     }
 
-    public PhdProgramProcessDocument getFinalThesisDocument() {
-	return getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.FINAL_THESIS);
+    public PhdProgramProcessDocument getThesisRequirementDocument() {
+	return getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.THESIS_REQUIREMENT);
+    }
+
+    public boolean hasThesisRequirementDocument() {
+	return getThesisRequirementDocument() != null;
     }
 
 }

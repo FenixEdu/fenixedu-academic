@@ -2,7 +2,8 @@
 
 <%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean"%><html:xhtml/>
+<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
@@ -46,37 +47,22 @@
 
 
 
-<strong><bean:message  key="label.phd.thesis" bundle="PHD_RESOURCES"/></strong><br/>
 <fr:form action="<%= "/phdThesisProcess.do?processId=" + processId.toString() %>" encoding="multipart/form-data">
 	<input type="hidden" name="method" />
 	<fr:edit id="submitThesisBean" name="submitThesisBean" visible="false" />
 	
-	<fr:edit id="submitThesisBean.edit.thesis.type" name="submitThesisBean">
+	<fr:edit id="submitThesisBean.edit.documents" name="submitThesisBean" property="documents">
 	
-		<fr:schema bundle="PHD_RESOURCES" type="<%= PhdThesisProcessBean.class.getName() %>">
-			<fr:slot name="finalThesis" required="true" layout="radio">
-				<fr:property name="classes" value="liinline nobullet"/>
-			</fr:slot>
-		</fr:schema>
-	
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4" />
-			<fr:property name="columnClasses" value=",,tdclear tderror1" />
-		</fr:layout>
-		
-	</fr:edit>
-	
-	<fr:edit id="submitThesisBean.edit.document" name="submitThesisBean">
-	
-		<fr:schema bundle="PHD_RESOURCES" type="<%= PhdThesisProcessBean.class.getName() %>">
-			<fr:slot name="document.file" required="true">
-				<fr:property name="fileNameSlot" value="document.filename"/>
+		<fr:schema bundle="PHD_RESOURCES" type="<%= PhdProgramDocumentUploadBean.class.getName() %>">
+			<fr:slot name="type" readOnly="true" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean.type"/>
+			<fr:slot name="file" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean.file">
+				<fr:property name="fileNameSlot" value="filename"/>
 				<fr:property name="size" value="20"/>
 			</fr:slot>
 		</fr:schema>
 	
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4" />
+		<fr:layout name="tabular-editable">
+			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 			<fr:property name="columnClasses" value=",,tdclear tderror1" />
 		</fr:layout>
 		

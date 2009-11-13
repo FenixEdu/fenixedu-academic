@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisJuryElementBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess.AddJuryElement;
@@ -75,7 +77,11 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
     public ActionForward prepareSubmitThesis(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	request.setAttribute("submitThesisBean", new PhdThesisProcessBean());
+	final PhdThesisProcessBean bean = new PhdThesisProcessBean();
+	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.PROVISIONAL_THESIS));
+	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.FINAL_THESIS));
+
+	request.setAttribute("submitThesisBean", bean);
 
 	return mapping.findForward("submitThesis");
     }
@@ -83,7 +89,7 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
     public ActionForward prepareSubmitThesisInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	RenderUtils.invalidateViewState("submitThesisBean.edit.document");
+	RenderUtils.invalidateViewState("submitThesisBean.edit.documents");
 
 	request.setAttribute("submitThesisBean", getRenderedObject("submitThesisBean"));
 
@@ -93,13 +99,8 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
     public ActionForward submitThesis(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	if (!RenderUtils.getViewState("submitThesisBean.edit.thesis.type").isValid()) {
-	    return prepareSubmitThesisInvalid(mapping, form, request, response);
-	}
-
 	try {
 	    ExecuteProcessActivity.run(getProcess(request), SubmitThesis.class, getRenderedObject("submitThesisBean"));
-
 	} catch (final DomainException e) {
 	    addErrorMessage(request, e.getMessage(), e.getArgs());
 	    return prepareSubmitThesisInvalid(mapping, form, request, response);
