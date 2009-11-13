@@ -18,9 +18,9 @@
 	
 	<logic:messagesPresent message="true">
 		<p>
-		<html:messages id="messages" message="true" bundle="RESEARCHER_RESOURCES">
-			<span class="error0"><!-- Error messages go here --><bean:write name="messages" /></span>
-		</html:messages>
+			<html:messages id="messages" message="true" bundle="RESEARCHER_RESOURCES">
+				<span class="error0"><!-- Error messages go here --><bean:write name="messages" /></span>
+			</html:messages>
 		</p>
 	</logic:messagesPresent>
 
@@ -46,6 +46,7 @@
 					</fr:layout>
 				</fr:edit>
 					<br/>
+					<div class="mvert1"></div>
 					<html:submit property="confirm"><bean:message key="label.chooseMagazineFromList" bundle="RESEARCHER_RESOURCES"/></html:submit>
 					<logic:present name="publicationBean" property="scientificJournalName">
 						<html:submit property="new"><bean:message key="label.createMagazine" bundle="RESEARCHER_RESOURCES"/></html:submit>	

@@ -40,25 +40,29 @@
 	<bean:define id="linkKey" value="link.goBackToView" toScope="request"/>
 	
 	<logic:present name="publicationCreated">
-			<bean:define id="linkKey" value="link.viewPublicationPage" toScope="request"/>
-			<p><span class="success0"><bean:message key="label.publication.created.with.success" bundle="RESEARCHER_RESOURCES"/>.</span></p>
-			<p class="mvert05"><bean:message key="label.publication.created.note" bundle="RESEARCHER_RESOURCES"/></p>
+		<bean:define id="linkKey" value="link.viewPublicationPage" toScope="request"/>
+		<p><span class="success0"><bean:message key="label.publication.created.with.success" bundle="RESEARCHER_RESOURCES"/>.</span></p>
+		<p class="mvert05"><bean:message key="label.publication.created.note" bundle="RESEARCHER_RESOURCES"/></p>
 	</logic:present>
 	
 	
 	<%-- Go to previous page --%>
-	<p class="mtop05"><html:link page="<%= backLink %>"><bean:message bundle="RESEARCHER_RESOURCES" key="<%= linkKey%>"/></html:link></p> 
+	<ul class="mvert05">
+		<li>
+			<html:link page="<%= backLink %>"><bean:message bundle="RESEARCHER_RESOURCES" key="<%= linkKey%>"/></html:link>
+		</li>
+	</ul> 
 	
 	
 	<%-- Warning/Error messages --%>
 	<logic:messagesPresent name="messages" message="true">
 		<html:messages id="messages" message="true" bundle="RESEARCHER_RESOURCES">
-			<p><span class="error0"><!-- Error messages go here --><bean:write name="messages"/></span></p>
+			<p class="mtop15"><span class="error0"><!-- Error messages go here --><bean:write name="messages"/></span></p>
 		</html:messages>
 	</logic:messagesPresent>
 
 	<%-- List of existing unit associations --%>
-	<p class="mtop25 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultUnitAssociation.title.label"/></b></p>
+	<p class="mtop15 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultUnitAssociation.label"/></b></p>
 	<logic:empty name="associations">
 		<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultUnitAssociation.emptyList"/></em></p>
 	</logic:empty>
@@ -99,7 +103,7 @@
 		<bean:message key="label.unit.suggestion.explanation" bundle="RESEARCHER_RESOURCES"/>
 	</div>
 	
-	<p class="mtop2 mbottom0"><b>1) <bean:message key="label.unit.suggestion" bundle="RESEARCHER_RESOURCES"/>:</b></p>
+	<p class="mtop2 mbottom0"><b>1) <bean:message key="label.unit.suggestion" bundle="RESEARCHER_RESOURCES"/></b></p>
 	<fr:form action="<%= addSugestion %>">
 	<fr:edit id="suggestion" name="unitBean" schema="resultUnitAssociation.create.with.suggestion" >
 		<fr:layout name="flow">

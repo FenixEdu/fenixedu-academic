@@ -114,10 +114,10 @@
 	
 		<%-- Documents --%>
 	<p class="mtop2 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="label.documents"/></b>
-		<logic:equal name="result" property="editableByCurrentUser" value="true">
-		(<html:link page="<%="/resultDocumentFiles/prepareEdit.do?" + parameters %>">
-			<bean:message bundle="RESEARCHER_RESOURCES" key="link.managed.associated.documents" />
-		</html:link>)
+		<logic:equal name="result" property="editableByCurrentUser" value="true"> | 
+			<html:link page="<%="/resultDocumentFiles/prepareEdit.do?" + parameters %>">
+				<bean:message bundle="RESEARCHER_RESOURCES" key="link.managed.associated.documents" />
+			</html:link>
 		</logic:equal>
 	</p>
 	<jsp:include page="../commons/viewDocumentFiles.jsp"/>

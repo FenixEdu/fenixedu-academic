@@ -54,7 +54,7 @@
 		<bean:define id="documents" name="result" property="resultDocumentFiles"/>
 		
 		<logic:empty name="documents">
-			<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultDocumentFiles.emptyList"/></em></p>
+			<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultDocumentFiles.emptyList"/>.</em></p>
 		</logic:empty>
 		<logic:notEmpty name="documents">
 			<fr:view name="documents" schema="resultDocumentFile.summary">

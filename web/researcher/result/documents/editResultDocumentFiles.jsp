@@ -27,21 +27,20 @@
 	
 	<%-- Use Case Titles --%>
 	<logic:equal name="resultType" value="ResultPatent">
-		<em><bean:message key="link.patentsManagement" bundle="RESEARCHER_RESOURCES"/></em> 
+		<p><em><bean:message key="link.patentsManagement" bundle="RESEARCHER_RESOURCES"/></em></p> 
 	</logic:equal>
 	<logic:notEqual name="resultType" value="ResultPatent">
-		<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.publications"/></em>
+		<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.publications"/></em></p>
 	</logic:notEqual>
+	
 	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultDocumentFiles.useCase.title"/></h2>
+	
 	<h3><fr:view name="result" property="title"/></h3>
 	
 	<%-- Go to previous page --%>
 	<ul class="mvert2 list5">
 		<li>
-
 			<html:link page="<%= backLink %>"><bean:message bundle="RESEARCHER_RESOURCES" key="link.goBackToView"/></html:link>
-
-
 		</li>
 	</ul>
 
@@ -53,9 +52,9 @@
 	</logic:messagesPresent>
 	
 	<%-- Documents List--%>
-	<strong><bean:message bundle="RESEARCHER_RESOURCES" key="label.documents"/></strong>
+	<p><strong><bean:message bundle="RESEARCHER_RESOURCES" key="label.documents"/></strong></p>
 	<logic:empty name="documents">
-		<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultDocumentFiles.emptyList"/></em></p>
+		<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultDocumentFiles.emptyList"/>.</em></p>
 	</logic:empty>
 	<logic:notEmpty name="documents">
 		<logic:notPresent name="editExisting">
@@ -69,7 +68,7 @@
 	</logic:notEmpty>
 
 	<%-- Document File Submission --%>
-	<p class="mtop2 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultDocumentFiles.selectFile"/>:</b></p>
+	<p class="mtop2 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultDocumentFiles.selectFile"/></b></p>
 	
 	<fr:edit id="editBean" name="bean" schema="resultDocumentFile.submission.edit" action="<%= create %>">
 		<fr:layout name="tabular">

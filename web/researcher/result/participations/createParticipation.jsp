@@ -40,9 +40,10 @@
 				<strong><bean:message key="label.attention" bundle="RESEARCHER_RESOURCES"/>:</strong><br/>
 				<bean:message key="label.informationForCreateUser" bundle="RESEARCHER_RESOURCES"/>
 			</div>
+			<br/>
 		</logic:messagesNotPresent>
  	</logic:present>
- 	
+
  	<logic:notPresent name="duringCreation">
 	<!-- Schema definitions -->
 	<bean:define id="createSchema" name="createSchema" type="java.lang.String"/>
@@ -62,6 +63,7 @@
 				<fr:destination name="change.unitType" path="/resultParticipations/changeUnitType.do"/>
 			</fr:edit>
 			<br/>
+			<div class="mvert15"></div>
 			<html:submit><bean:message key="label.submit" bundle="APPLICATION_RESOURCES"/></html:submit>
 			<logic:present name="needToCreatePerson"> 	
 				<html:submit property="createNew"><bean:message key="label.createPerson" bundle="RESEARCHER_RESOURCES"/></html:submit>
@@ -84,11 +86,12 @@
 			<fr:form action="<%= "/resultParticipations/unitWrapper.do?" + parameters %>">
 				<fr:edit id="beanForExternalPerson" name="bean" schema="<%= schema %>">
 					<fr:layout name="tabular">
-				        <fr:property name="classes" value="tstyle5 thlight mtop05 dinline"/>
+				        <fr:property name="classes" value="tstyle5 thlight thright mtop05 dinline"/>
 				        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 					</fr:layout>
 				</fr:edit>
 				<br/>
+				<div class="mvert1"></div>
 				<html:submit property="createNewUnit"><bean:message key="button.submit" bundle="RESEARCHER_RESOURCES"/></html:submit>
 			</fr:form>
 			<fr:form action="<%= "/resultParticipations/prepareEdit.do?" + parameters %>">

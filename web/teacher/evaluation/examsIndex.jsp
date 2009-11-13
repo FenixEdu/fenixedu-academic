@@ -86,7 +86,7 @@
 
 					<fc:dataRepeater value="#{true}" var="firstCurricularCourse"/>
 	
-					<h:outputText value="<p class='indent1 mvert05 xpto'>#{bundle['label.teacher.evaluation.associated.curricular.courses']}: " escape="false"/>
+					<h:outputText value="<p class='indent1 mvert05 disabledLink'>#{bundle['label.teacher.evaluation.associated.curricular.courses']}: " escape="false"/>
 					<fc:dataRepeater value="#{exam.associatedExecutionCourses}" var="associatedExecutionCourse">
 						<fc:dataRepeater value="#{exam.degreeModuleScopes}" var="degreeModuleScope">
 							<fc:dataRepeater value="#{associatedExecutionCourse.associatedCurricularCoursesSet}" var ="curricularCourse">

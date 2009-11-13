@@ -20,11 +20,13 @@
 
 	<!-- Titles -->
 	<logic:equal name="resultType" value="ResultPatent">
-		<em><bean:message key="researcher.viewCurriculum.publicationsTitle" bundle="RESEARCHER_RESOURCES"/></em> 
+		<p><em><bean:message key="researcher.viewCurriculum.publicationsTitle" bundle="RESEARCHER_RESOURCES"/></em></p> 
 	</logic:equal>
+	
 	<logic:notEqual name="resultType" value="ResultPatent">
-		<em><bean:message key="researcher.viewCurriculum.publicationsTitle" bundle="RESEARCHER_RESOURCES"/></em> 
+		<p><em><bean:message key="researcher.viewCurriculum.publicationsTitle" bundle="RESEARCHER_RESOURCES"/></em></p> 
 	</logic:notEqual>
+	
 	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultParticipation.useCase.title"/></h2>
 	
 	<h3><fr:view name="result" property="title"/></h3>

@@ -49,7 +49,7 @@
 	<%-- Documents List--%>
 	<h4><bean:message bundle="RESEARCHER_RESOURCES" key="label.documents"/></h4>
 	<logic:empty name="documents">
-		<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultDocumentFiles.emptyList"/></em></p>
+		<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultDocumentFiles.emptyList"/>.</em></p>
 	</logic:empty>
 	<logic:notEmpty name="documents">
 		<fr:view name="documents" schema="resultDocumentFile.summary">

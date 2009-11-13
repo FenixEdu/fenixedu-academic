@@ -20,37 +20,33 @@
 	<bean:define id="prepareAlterOrder" value="<%="/resultParticipations/prepareAlterOrder.do?" + parameters%>"/>
 	<bean:define id="remove" value="<%="/resultParticipations/remove.do?" + parameters%>"/>
 
-	<strong><bean:message bundle="RESEARCHER_RESOURCES" key="label.resultParticipations"/></strong>
+	<p class="mbottom05"><strong><bean:message bundle="RESEARCHER_RESOURCES" key="label.resultParticipations"/></strong></p>
+	
 	<logic:notPresent name="deleteConfirmation">
-			
 			
 			<logic:greaterThan name="result" property="resultParticipationsCount" value="1">
 			  <bean:define id="showOptions" value="true" toScope="request"/>
 			</logic:greaterThan>
 			<logic:lessThan name="result" property="resultParticipationsCount" value="2">
-			  		<logic:equal name="result" property="isPossibleSelectPersonRole" value="true">
-						  <bean:define id="showOptions" value="true" toScope="request"/>
-			  		</logic:equal>
+		  		<logic:equal name="result" property="isPossibleSelectPersonRole" value="true">
+					  <bean:define id="showOptions" value="true" toScope="request"/>
+		  		</logic:equal>
 			</logic:lessThan>
 
-			
-			<logic:present name="showOptions"> ( </logic:present>
 			<logic:greaterThan name="result" property="resultParticipationsCount" value="1">
 				<html:link page="<%= prepareAlterOrder %>"><bean:message bundle="RESEARCHER_RESOURCES" key="link.alterOrder"/></html:link>
 			</logic:greaterThan>
 			<logic:equal name="result" property="isPossibleSelectPersonRole" value="true">
-				<logic:greaterThan name="result" property="resultParticipationsCount" value="1">, 
-				</logic:greaterThan>
+				<logic:greaterThan name="result" property="resultParticipationsCount" value="1">|</logic:greaterThan>
 				<html:link page="<%= prepareEditRoles %>"><bean:message bundle="RESEARCHER_RESOURCES" key="link.editRoles"/></html:link>
 			</logic:equal>
-			<logic:present name="showOptions"> ) </logic:present>
 
-			
-			
 	</logic:notPresent>
+
 	<logic:empty name="participations">
  		<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultParticipation.emptyList"/></em></p>
  	</logic:empty>	
+
 	<logic:notEmpty name="participations">
 		<fr:view name="participations" schema="<%= listSchema %>">
 			<fr:layout name="tabular">
