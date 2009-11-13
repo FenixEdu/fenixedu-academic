@@ -93,6 +93,10 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
     public ActionForward submitThesis(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
+	if (!RenderUtils.getViewState("submitThesisBean.edit.thesis.type").isValid()) {
+	    return prepareSubmitThesisInvalid(mapping, form, request, response);
+	}
+
 	try {
 	    ExecuteProcessActivity.run(getProcess(request), SubmitThesis.class, getRenderedObject("submitThesisBean"));
 

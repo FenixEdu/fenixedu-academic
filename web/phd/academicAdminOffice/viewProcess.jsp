@@ -124,7 +124,6 @@
 					</html:link>
 				</li>
 			</phd:activityAvailable>
-			<%-- 
 			<phd:activityAvailable process="<%= process %>" activity="<%= PhdIndividualProgramProcess.RequestPublicThesisPresentation.class %>">
 				<li>
 					<html:link action="/phdIndividualProgramProcess.do?method=prepareRequestPublicThesisPresentation" paramId="processId" paramName="process" paramProperty="externalId">
@@ -132,7 +131,6 @@
 					</html:link>
 				</li>
 			</phd:activityAvailable>
-			--%>
 		</ul>
     </td>
   </tr>

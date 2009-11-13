@@ -26,6 +26,18 @@
 			</html:link>
 		</li>
 		</phd:activityAvailable>
+		<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= PhdThesisProcess.DownloadProvisionalThesisDocument.class %>">
+		<li style="display: inline;">
+			<bean:define id="provisionalThesisDownloadUrl" name="thesisProcess" property="provisionalThesisDocument.downloadUrl" />
+			<a href="<%= provisionalThesisDownloadUrl.toString() %>"><bean:message  key="label.phd.provisional.thesis.document" bundle="PHD_RESOURCES"/></a>
+		</li>
+		</phd:activityAvailable>
+		<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= PhdThesisProcess.DownloadFinalThesisDocument.class %>">
+		<li style="display: inline;">
+			<bean:define id="finalThesisDownloadUrl" name="thesisProcess" property="finalThesisDocument.downloadUrl" />
+			<a href="<%= finalThesisDownloadUrl.toString() %>"><bean:message  key="label.phd.final.thesis.document" bundle="PHD_RESOURCES"/></a>
+		</li>
+		</phd:activityAvailable>
 	</ul>
 </logic:equal>
 <br/>

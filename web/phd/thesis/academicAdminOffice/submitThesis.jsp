@@ -47,7 +47,7 @@
 
 
 <strong><bean:message  key="label.phd.thesis" bundle="PHD_RESOURCES"/></strong><br/>
-<fr:form action="<%= "/phdThesisProcess.do?processId=" + processId.toString() %>">
+<fr:form action="<%= "/phdThesisProcess.do?processId=" + processId.toString() %>" encoding="multipart/form-data">
 	<input type="hidden" name="method" />
 	<fr:edit id="submitThesisBean" name="submitThesisBean" visible="false" />
 	

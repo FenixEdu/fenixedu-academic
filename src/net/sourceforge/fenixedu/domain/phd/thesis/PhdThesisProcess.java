@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdProcessState;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 
 public class PhdThesisProcess extends PhdThesisProcess_Base {
 
@@ -88,10 +89,70 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	}
     }
 
+    static public class DownloadProvisionalThesisDocument extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
+
+	    if (!process.hasProvisionalThesisDocument()) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (isMasterDegreeAdministrativeOfficeEmployee(userView)
+		    || process.getIndividualProgramProcess().isCoordinatorForPhdProgram(userView.getPerson())
+		    || process.getIndividualProgramProcess().isGuiderOrAssistentGuider(userView.getPerson())
+		    || process.getIndividualProgramProcess().getPerson() == userView.getPerson()) {
+		return;
+	    }
+
+	    throw new PreConditionNotValidException();
+
+	}
+
+	@Override
+	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
+	    // nothing to be done
+
+	    return null;
+	}
+
+    }
+
+    static public class DownloadFinalThesisDocument extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
+
+	    if (!process.hasFinalThesisDocument()) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (isMasterDegreeAdministrativeOfficeEmployee(userView)
+		    || process.getIndividualProgramProcess().isCoordinatorForPhdProgram(userView.getPerson())
+		    || process.getIndividualProgramProcess().isGuiderOrAssistentGuider(userView.getPerson())
+		    || process.getIndividualProgramProcess().getPerson() == userView.getPerson()) {
+		return;
+	    }
+
+	    throw new PreConditionNotValidException();
+
+	}
+
+	@Override
+	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
+	    // nothing to be done
+
+	    return null;
+	}
+
+    }
+
     static private List<Activity> activities = new ArrayList<Activity>();
     static {
 	activities.add(new SubmitThesis());
 	activities.add(new AddJuryElement());
+	activities.add(new DownloadProvisionalThesisDocument());
+	activities.add(new DownloadFinalThesisDocument());
     }
 
     private PhdThesisProcess() {
@@ -133,6 +194,22 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 
     public String getActiveStateRemarks() {
 	return getMostRecentState().getRemarks();
+    }
+
+    public boolean hasProvisionalThesisDocument() {
+	return getProvisionalThesisDocument() != null;
+    }
+
+    public PhdProgramProcessDocument getProvisionalThesisDocument() {
+	return getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.PROVISIONAL_THESIS);
+    }
+
+    public boolean hasFinalThesisDocument() {
+	return getFinalThesisDocument() != null;
+    }
+
+    public PhdProgramProcessDocument getFinalThesisDocument() {
+	return getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.FINAL_THESIS);
     }
 
 }
