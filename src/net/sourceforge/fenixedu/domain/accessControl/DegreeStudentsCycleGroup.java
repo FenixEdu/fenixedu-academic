@@ -11,10 +11,12 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilde
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class DegreeStudentsCycleGroup extends DegreeStudentsGroup {
@@ -34,16 +36,28 @@ public class DegreeStudentsCycleGroup extends DegreeStudentsGroup {
 	public Set<Person> getElements() {
 		Set<Person> elements = super.buildSet();
 		for (DegreeCurricularPlan degreeCurricularPlan : getDegree().getActiveDegreeCurricularPlans()) {
-			if (getCycleType().equals(degreeCurricularPlan.getDegreeType().getCycleType())) {
-				for (StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlans()) {
-					if (studentCurricularPlan.isActive()) {
-						elements.add(studentCurricularPlan.getRegistration().getPerson());
-					}
+		    if (matchCycleTypes(getCycleType(), degreeCurricularPlan.getDegreeType())) {
+			for (StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlans()) {
+			    if (studentCurricularPlan.isActive()) {
+				final CycleCurriculumGroup cycleCurriculumGroup = studentCurricularPlan.getCycle(getCycleType());
+				if (cycleCurriculumGroup != null && !cycleCurriculumGroup.isConcluded()) {
+				    elements.add(studentCurricularPlan.getRegistration().getPerson());
 				}
+			    }
 			}
+		    }
 		}
 
 		return super.freezeSet(elements);
+	}
+
+	private boolean matchCycleTypes(final CycleType cycleType, final DegreeType degreeType) {
+	    for (final CycleType ct : degreeType.getCycleTypes()) {
+		if (cycleType == ct) {
+		    return true;
+		}
+	    }
+	    return false;
 	}
 
 	@Override
