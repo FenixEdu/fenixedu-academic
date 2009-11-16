@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Fixing scope in events" fixScopeInEvents.sql
+
