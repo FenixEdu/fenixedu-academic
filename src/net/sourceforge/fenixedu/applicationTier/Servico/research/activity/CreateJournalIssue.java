@@ -19,17 +19,21 @@ public class CreateJournalIssue extends FenixService {
 	} else {
 	    journal = bean.getJournal();
 	}
-	return run(journal, bean.getYear(), bean.getMonth(), bean.getVolume(), bean.getNumber(), bean.getUrl());
+	return run(journal, bean.getYear(), bean.getMonth(), bean.getVolume(), bean.getNumber(), bean.getUrl(), bean
+		.getSpecialIssue(), bean.getSpecialIssueComment());
     }
 
     @Service
-    public static JournalIssue run(ScientificJournal journal, Integer year, Month month, String volume, String number, String url) {
+    public static JournalIssue run(ScientificJournal journal, Integer year, Month month, String volume, String number,
+	    String url, Boolean specialIssue, String specialIssueComment) {
 	JournalIssue issue = new JournalIssue(journal);
 	issue.setYear(year);
 	issue.setMonth(month);
 	issue.setVolume(volume);
 	issue.setNumber(number);
 	issue.setUrl(url);
+	issue.setSpecialIssue(specialIssue);
+	issue.setSpecialIssueComment(specialIssueComment);
 	return issue;
     }
 }

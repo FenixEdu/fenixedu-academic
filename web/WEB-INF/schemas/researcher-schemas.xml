@@ -2455,6 +2455,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Co
 		<property name="moduleRelative" value="true"/>
  	    <property name="linkFormat" value="/showJournals.do?method=showScientificJournal&amp;journalId=${scientificJournal.idInternal}"/>
 	</slot>
+	<slot name="journalIssue.specialIssueComment" key="label.specialIssueComment"/>
 	<slot name="journalIssue.publisher" label="label.publisher"/>
 	<slot name="url">
 		<property name="classes" value="greytxt1"/>
