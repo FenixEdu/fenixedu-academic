@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.domain.research.activity;
 
 import java.util.List;
 
+import org.joda.time.YearMonthDay;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
@@ -81,7 +83,8 @@ public class EventEditionParticipation extends EventEditionParticipation_Base {
 
     @Override
     public Integer getCivilYear() {
-	return this.getEventEdition().getStartDate().getYear();
+	YearMonthDay startDate = this.getEventEdition().getStartDate();
+	return startDate != null ? startDate.getYear() : null;
     }
 
     @Override
