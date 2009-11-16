@@ -5,9 +5,11 @@ import java.util.HashSet;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.SearchDiplomasBySituationParametersBean;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
@@ -22,12 +24,27 @@ public class SearchDiplomas extends FenixService {
 	final Collection<DiplomaRequest> result = new HashSet<DiplomaRequest>();
 
 	for (final AcademicServiceRequest request : bean.searchAcademicServiceRequests()) {
-	    if (request.isRequestForRegistration() && request.isDocumentRequest() && ((DocumentRequest) request).isDiploma()) {
-		result.add((DiplomaRequest) request);
+	    if (!request.isRequestForRegistration()) {
+		continue;
 	    }
+	    if (!request.isDocumentRequest() || !((DocumentRequest) request).isDiploma()) {
+		continue;
+	    }
+	    DiplomaRequest diplomaRequest = (DiplomaRequest) request;
+
+	    DegreeType diplomaDegreeType = diplomaRequest.getRegistration().getDegree().getDegreeType();
+	    if ((diplomaDegreeType != DegreeType.EMPTY) && (!getAdministratedDegreeTypes().contains(diplomaDegreeType))) {
+		continue;
+	    }
+
+	    result.add(diplomaRequest);
 	}
 
 	return result;
+    }
+
+    private static Collection<DegreeType> getAdministratedDegreeTypes() {
+	return AccessControl.getPerson().getEmployee().getAdministrativeOffice().getAdministratedDegreeTypes();
     }
 
 }

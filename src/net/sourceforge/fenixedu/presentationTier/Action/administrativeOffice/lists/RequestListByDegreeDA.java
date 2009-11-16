@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.li
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.ServletOutputStream;
@@ -27,6 +28,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServi
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -108,16 +110,22 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 	ArrayList<AcademicServiceRequest> requestList = getRequestsByYear(chosenExecutionYear.getBeginCivilYear());
 	requestList.addAll(getRequestsByYear(chosenExecutionYear.getEndCivilYear()));
 	for (final AcademicServiceRequest academicServiceRequest : requestList) {
-	    if (!(academicServiceRequest instanceof RegistrationAcademicServiceRequest)) {
+	    if (!academicServiceRequest.isRequestForRegistration()) {
 		continue;
 	    }
 	    RegistrationAcademicServiceRequest request = (RegistrationAcademicServiceRequest) academicServiceRequest;
 
-	    DegreeCurricularPlan degreeCurricularPlan = getMostRecentDegreeCurricularPlanForYear(request, chosenExecutionYear);
+	    DegreeCurricularPlan degreeCurricularPlan = getMostRecentDegreeCurricularPlanForYear(request.getRegistration()
+		    .getDegree(), chosenExecutionYear);
 	    if ((chosenDegreeType != null)
 		    && (degreeCurricularPlan == null || chosenDegreeType != degreeCurricularPlan.getDegreeType())) {
 		continue;
 	    }
+	    if ((degreeCurricularPlan != null) && (degreeCurricularPlan.getDegreeType() != DegreeType.EMPTY)
+		    && (!getAdministratedDegreeTypes().contains(degreeCurricularPlan.getDegreeType()))) {
+		continue;
+	    }
+
 	    if (chosenDegree != null && chosenDegree != request.getRegistration().getDegree()) {
 		continue;
 	    }
@@ -142,6 +150,10 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 	return resultList;
     }
 
+    private static Collection<DegreeType> getAdministratedDegreeTypes() {
+	return AccessControl.getPerson().getEmployee().getAdministrativeOffice().getAdministratedDegreeTypes();
+    }
+
     private ArrayList<AcademicServiceRequest> getRequestsByYear(int year) {
 	AcademicServiceRequestYear academicServiceRequestYear = AcademicServiceRequestYear.readByYear(year);
 	if (academicServiceRequestYear == null) {
@@ -151,17 +163,16 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 	}
     }
 
-    private DegreeCurricularPlan getMostRecentDegreeCurricularPlanForYear(RegistrationAcademicServiceRequest request,
-	    final ExecutionYear executionYear) {
+    private DegreeCurricularPlan getMostRecentDegreeCurricularPlanForYear(Degree degree, final ExecutionYear executionYear) {
 	DegreeCurricularPlan degreeCurricularPlan = null;
-	for (DegreeCurricularPlan plan : request.getRegistration().getDegree().getDegreeCurricularPlansForYear(executionYear)) {
+	for (DegreeCurricularPlan plan : degree.getDegreeCurricularPlansForYear(executionYear)) {
 	    if ((degreeCurricularPlan == null)
 		    || (degreeCurricularPlan.getMostRecentExecutionDegree().isBefore(plan.getMostRecentExecutionDegree()))) {
 		degreeCurricularPlan = plan;
 	    }
 	}
 	if (degreeCurricularPlan == null) {
-	    degreeCurricularPlan = request.getRegistration().getDegree().getMostRecentDegreeCurricularPlan();
+	    degreeCurricularPlan = degree.getMostRecentDegreeCurricularPlan();
 	}
 	return degreeCurricularPlan;
     }
