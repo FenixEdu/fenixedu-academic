@@ -219,7 +219,8 @@ public class Inproceedings extends Inproceedings_Base {
 
     @Override
     public Month getMonth() {
-	return Month.values()[getEventEdition().getStartDate().getMonthOfYear() - 1];
+	return getEventEdition().getStartDate() != null ? Month.values()[getEventEdition().getStartDate().getMonthOfYear() - 1]
+		: null;
     }
 
     @Override
