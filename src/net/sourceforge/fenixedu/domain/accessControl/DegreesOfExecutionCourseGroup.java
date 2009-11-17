@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -67,7 +68,14 @@ public class DegreesOfExecutionCourseGroup extends ExecutionCourseGroup {
 		    }
 		}
 	    }
+
+	    for (final Attends attends : getExecutionCourse().getAttendsSet()) {
+		if (attends.getRegistration().getStudent() == person.getStudent()) {
+		    return true;
+		}
+	    }
 	}
+
 	return false;
     }
 
