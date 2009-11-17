@@ -85,7 +85,8 @@
 		<td class="aright">
 		<logic:present name="filterBean">
 			<bean:define id="filter" name="filterBean" property="status.status"/>
-			<cp:collectionPages url="<%= "/coordinator/manageFinalDegreeWork.do?method=showProposals&filter=" +  filter + "&degreeCurricularPlanID=" + degreeCurricularPlanID + "&executionDegreeOID=" + executionDegreeOID %>" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages"/></td>
+			<bean:define id="filterParameters" name="filterBean" property="proposalsFilterAsParameters"/>
+			<cp:collectionPages url="<%= "/coordinator/manageFinalDegreeWork.do?method=showProposals&filter=" +  filter + "&degreeCurricularPlanID=" + degreeCurricularPlanID + "&executionDegreeOID=" + executionDegreeOID + filterParameters %>" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages"/></td>
 		</logic:present>
 		
 	</tr>

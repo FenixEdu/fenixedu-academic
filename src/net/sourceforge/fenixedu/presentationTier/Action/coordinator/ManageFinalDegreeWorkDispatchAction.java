@@ -67,6 +67,9 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.coordinator.ProposalsFilterBean.AttributionFilter;
+import net.sourceforge.fenixedu.presentationTier.Action.coordinator.ProposalsFilterBean.StatusCountPair;
+import net.sourceforge.fenixedu.presentationTier.Action.coordinator.ProposalsFilterBean.WithCandidatesFilter;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
@@ -284,9 +287,14 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
 	final ProposalsSummaryBean proposalsSummaryBean = new ProposalsSummaryBean(executionDegree, degreeCurricularPlan);
 
-	ProposalsFilterBean filterBean = (ProposalsFilterBean) getRenderedObject("filterBean");
-	if (filterBean == null) {
-	    filterBean = new ProposalsFilterBean(proposalsSummaryBean);
+	ProposalsFilterBean filterBean;
+	if(request.getParameter("proposalStatusType") == null) {
+	    filterBean = (ProposalsFilterBean) getRenderedObject("filterBean");
+	    if (filterBean == null) {
+		   filterBean = new ProposalsFilterBean(proposalsSummaryBean);
+	    }
+	} else {
+	    filterBean = readFilterBean(request, proposalsSummaryBean);
 	}
 	filterBean.setFromRequest(request);
 	// Collection<Proposal> proposals =
@@ -307,6 +315,52 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	request.setAttribute("proposals", pager.getPage(page));
 	request.setAttribute("countProposals", proposals.size());
 	return mapping.findForward("show-proposals");
+    }
+    
+    private ProposalsFilterBean readFilterBean(HttpServletRequest request, ProposalsSummaryBean summary) {
+	ProposalsFilterBean proposalsFilterBean = new ProposalsFilterBean(summary);
+	String proposalStatusString = request.getParameter("proposalStatusType");
+	String attributionFilterString = request.getParameter("attributionFilter");
+	String withCandidatesFilterString = request.getParameter("withCandidatesFilter");
+	int count;
+
+	ProposalStatusType proposalStatusType;
+	if(proposalStatusString.equalsIgnoreCase("TOTAL")) {
+	    proposalStatusType = ProposalStatusType.TOTAL;
+	    count = summary.getTotalProposalsCount();
+	} else if(proposalStatusString.equalsIgnoreCase("FOR_APPROVAL")) {
+	    proposalStatusType = ProposalStatusType.FOR_APPROVAL;
+	    count = summary.getForApprovalProposalsCount();
+	} else if(proposalStatusString.equalsIgnoreCase("APPROVED")) {
+	    proposalStatusType = ProposalStatusType.APPROVED;
+	    count = summary.getApprovedProposalsCount();
+	} else {
+	    proposalStatusType = ProposalStatusType.PUBLISHED;
+	    count = summary.getPublishedProposalsCount();
+	}
+	
+	AttributionFilter attributionFilter;
+	if(attributionFilterString.equalsIgnoreCase("ATTRIBUTED")) {
+	    attributionFilter = AttributionFilter.ATTRIBUTED;
+	} else if(attributionFilterString.equalsIgnoreCase("NOT_ATTRIBUTED")) {
+	    attributionFilter = AttributionFilter.NOT_ATTRIBUTED;
+	} else {
+	    attributionFilter = AttributionFilter.ALL;
+	}
+	
+	WithCandidatesFilter withCandidatesFilter;
+	if(withCandidatesFilterString.equalsIgnoreCase("WITH_CANDIDATES")) {
+	    withCandidatesFilter = WithCandidatesFilter.WITH_CANDIDATES;
+	} else if(withCandidatesFilterString.equalsIgnoreCase("WITHOUT_CANDIDATES")) {
+	    withCandidatesFilter = WithCandidatesFilter.WITHOUT_CANDIDATES;
+	} else {
+	    withCandidatesFilter = WithCandidatesFilter.ALL;
+	}
+	proposalsFilterBean.setAttribution(attributionFilter);
+	proposalsFilterBean.setWithCandidates(withCandidatesFilter);
+	
+	proposalsFilterBean.setStatus(new StatusCountPair(proposalStatusType, count));
+	return proposalsFilterBean;
     }
 
     public ActionForward showProposal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -1138,13 +1192,13 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
     private void setProposalsHeaders(final Spreadsheet spreadsheet) {
 	spreadsheet.setHeader("Proposta");
 	spreadsheet.setHeader("Estado da Proposta");
-	spreadsheet.setHeader("Título");
+	spreadsheet.setHeader("Tï¿½tulo");
 	spreadsheet.setHeader("Utilizador IST Orientador");
 	spreadsheet.setHeader("Nome Orientador");
 	spreadsheet.setHeader("Utilizador IST Coorientador");
 	spreadsheet.setHeader("Nome Coorientador");
-	spreadsheet.setHeader("Percentagem Créditos Orientador");
-	spreadsheet.setHeader("Percentagem Créditos Coorientador");
+	spreadsheet.setHeader("Percentagem Crï¿½ditos Orientador");
+	spreadsheet.setHeader("Percentagem Crï¿½ditos Coorientador");
 	spreadsheet.setHeader("Nome do Acompanhante");
 	spreadsheet.setHeader("Email do Acompanhante");
 	spreadsheet.setHeader("Telefone do Acompanhante");
@@ -1152,28 +1206,28 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	spreadsheet.setHeader("Morada da empresa");
 	spreadsheet.setHeader("Enquadramento");
 	spreadsheet.setHeader("Objectivos");
-	spreadsheet.setHeader("Descrição");
+	spreadsheet.setHeader("Descriï¿½ï¿½o");
 	spreadsheet.setHeader("Requisitos");
 	spreadsheet.setHeader("Resultado esperado");
 	spreadsheet.setHeader("URL");
-	spreadsheet.setHeader("Área de Especialização");
-	spreadsheet.setHeader("Número mínimo de elementos do grupo");
-	spreadsheet.setHeader("Número máximo de elementos do grupo");
-	spreadsheet.setHeader("Adequação a Dissertação");
-	spreadsheet.setHeader("Observações");
-	spreadsheet.setHeader("Localização da realização do TFC");
+	spreadsheet.setHeader("ï¿½rea de Especializaï¿½ï¿½o");
+	spreadsheet.setHeader("Nï¿½mero mï¿½nimo de elementos do grupo");
+	spreadsheet.setHeader("Nï¿½mero mï¿½ximo de elementos do grupo");
+	spreadsheet.setHeader("Adequaï¿½ï¿½o a Dissertaï¿½ï¿½o");
+	spreadsheet.setHeader("Observaï¿½ï¿½es");
+	spreadsheet.setHeader("Localizaï¿½ï¿½o da realizaï¿½ï¿½o do TFC");
     }
 
     private void setGroupsHeaders(final Spreadsheet spreadsheet) {
-	spreadsheet.setHeader("Número");
+	spreadsheet.setHeader("Nï¿½mero");
 	spreadsheet.setHeader("Estado da Proposta");
-	spreadsheet.setHeader("Título");
+	spreadsheet.setHeader("Tï¿½tulo");
 	spreadsheet.setHeader("Utilizador IST Orientador");
 	spreadsheet.setHeader("Nome Orientador");
 	spreadsheet.setHeader("Utilizador IST Coorientador");
 	spreadsheet.setHeader("Nome Coorientador");
-	spreadsheet.setHeader("Percentagem Créditos Orientador");
-	spreadsheet.setHeader("Percentagem Créditos Coorientador");
+	spreadsheet.setHeader("Percentagem Crï¿½ditos Orientador");
+	spreadsheet.setHeader("Percentagem Crï¿½ditos Coorientador");
 	spreadsheet.setHeader("Nome do Acompanhante");
 	spreadsheet.setHeader("Email do Acompanhante");
 	spreadsheet.setHeader("Telefone do Acompanhante");
@@ -1181,16 +1235,16 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	spreadsheet.setHeader("Morada da empresa");
 	spreadsheet.setHeader("Enquadramento");
 	spreadsheet.setHeader("Objectivos");
-	spreadsheet.setHeader("Descrição");
+	spreadsheet.setHeader("Descriï¿½ï¿½o");
 	spreadsheet.setHeader("Requisitos");
 	spreadsheet.setHeader("Resultado esperado");
 	spreadsheet.setHeader("URL");
-	spreadsheet.setHeader("Área de Especialização");
-	spreadsheet.setHeader("Número mínimo de elementos do grupo");
-	spreadsheet.setHeader("Número máximo de elementos do grupo");
-	spreadsheet.setHeader("Adequação a Dissertação");
-	spreadsheet.setHeader("Observações");
-	spreadsheet.setHeader("Localização da realização do TFC");
+	spreadsheet.setHeader("ï¿½rea de Especializaï¿½ï¿½o");
+	spreadsheet.setHeader("Nï¿½mero mï¿½nimo de elementos do grupo");
+	spreadsheet.setHeader("Nï¿½mero mï¿½ximo de elementos do grupo");
+	spreadsheet.setHeader("Adequaï¿½ï¿½o a Dissertaï¿½ï¿½o");
+	spreadsheet.setHeader("Observaï¿½ï¿½es");
+	spreadsheet.setHeader("Localizaï¿½ï¿½o da realizaï¿½ï¿½o do TFC");
     }
 
     private static final MessageResources applicationResources = MessageResources
@@ -1297,7 +1351,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	}
 
 	for (int i = 0; i < maxNumberStudentsPerGroup; i++) {
-	    spreadsheet.setHeader("Número aluno " + (i + 1));
+	    spreadsheet.setHeader("Nï¿½mero aluno " + (i + 1));
 	    spreadsheet.setHeader("Nome aluno " + (i + 1));
 	}
     }

@@ -9,9 +9,13 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseAttendsBean.StudentAttendsStateType;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.CandidacyAttributionType;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.WorkingStudentSelectionType;
 
 import org.apache.commons.collections.Predicate;
 
@@ -174,5 +178,13 @@ public class ProposalsFilterBean implements Serializable {
 	    ProposalStatusType status = ProposalStatusType.valueOf(filter);
 	    setStatus(getStatusCount(status));
 	}
+    }
+
+    public String getProposalsFilterAsParameters() {
+	String parameters = "";
+	parameters += "&amp;proposalStatusType=" + getStatus().getStatus();
+	parameters += "&amp;attributionFilter=" + getAttribution();
+	parameters += "&amp;withCandidatesFilter=" + getWithCandidates();
+	return parameters;
     }
 }
