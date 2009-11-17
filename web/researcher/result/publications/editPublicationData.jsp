@@ -26,15 +26,13 @@
 	</logic:messagesPresent>
 
 	<bean:define id="action" value="/resultPublications/editData.do" type="java.lang.String"/>
-	<logic:equal name="typeChanged" value="true">
 		<logic:equal name="publicationBean" property="class.simpleName" value="ArticleBean">
 			<bean:define id="action" value="/resultPublications/prepareEditJournal.do" type="java.lang.String"/>
 		</logic:equal>
 		<logic:equal name="publicationBean" property="class.simpleName" value="InproceedingsBean">
 			<bean:define id="action" value="/resultPublications/prepareEditEvent.do" type="java.lang.String"/>
 		</logic:equal>
-	</logic:equal>
-
+	
 	<fr:form action="<%= action + "?" + parameters %>">
 	
 
@@ -45,6 +43,7 @@
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle5 thright thlight"/>
 					<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+					<fr:property name="requiredMarkShown" value="true"/>
 				</fr:layout>
 		   		<fr:destination name="invalid" path="<%= "/resultPublications/prepareEditData.do?" + parameters %>"/>
 		   		<fr:destination name="typePostBack" path="<%= "/resultPublications/changeType.do?" + parameters %>"/>
@@ -76,14 +75,12 @@
 		
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm" property="confirm">
 		<bean:define id="submitLabel" value="button.submit"/>
-		<logic:equal name="typeChanged" value="true">
 			<logic:equal name="publicationBean" property="class.simpleName" value="ArticleBean">
 					<bean:define id="submitLabel" value="button.next"/>
 			</logic:equal>
 			<logic:equal name="publicationBean" property="class.simpleName" value="InproceedingsBean">
 					<bean:define id="submitLabel" value="button.next"/>
 			</logic:equal>
-		</logic:equal>
 
 			<bean:message bundle="RESEARCHER_RESOURCES" key="<%= submitLabel %>"/>
 		</html:submit>
