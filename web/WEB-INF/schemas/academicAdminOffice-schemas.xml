@@ -91,8 +91,8 @@
 	</slot>
 	<slot name="gender" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="socialSecurityNumber" />
-    <slot name="professionType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-    <slot name="professionalCondition" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />	
+    <slot name="professionType" />
+    <slot name="professionalCondition" />	
 	<slot name="profession" />
 	<slot name="maritalStatus">
 		<property name="excludedValues" value="UNKNOWN" />
@@ -130,9 +130,9 @@
 		<property name="format" value="${nationality}" />
 		<property name="sortBy" value="nationality"/>
 	</slot>
-	<slot name="parishOfBirth" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<slot name="districtSubdivisionOfBirth" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<slot name="districtOfBirth" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="parishOfBirth" />
+	<slot name="districtSubdivisionOfBirth" />
+	<slot name="districtOfBirth" />
 	<slot name="countryOfBirth" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
 		<property name="format" value="${name}"/>
@@ -150,18 +150,18 @@
 	<slot name="address" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
 	</slot>
-	<slot name="area" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="area" />
 	<slot name="areaCode">
 		<property name="size" value="10"/>
 		 <validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="regexp" value="\d{4}-\d{3}"/>
+            <property name="regexp" value="(\d{4}-\d{3})?"/>
             <property name="message" value="error.areaCode.invalidFormat"/>
             <property name="key" value="true"/>
         </validator>
 	</slot>
-	<slot name="areaOfAreaCode" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<slot name="parishOfResidence" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-   	<slot name="districtSubdivisionOfResidenceObject" layout="autoComplete" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
+	<slot name="areaOfAreaCode" />
+	<slot name="parishOfResidence" />
+   	<slot name="districtSubdivisionOfResidenceObject" layout="autoComplete" key="label.districtSubdivisionOfResidenceObject.required">
 		<property name="size" value="50"/>
 		<property name="labelField" value="name"/>
 		<property name="format" value="${name} - (${district.name})"/>
@@ -250,8 +250,8 @@
 </schema>
 
 <schema name="student.originInformationBean-edit" type="net.sourceforge.fenixedu.dataTransferObject.candidacy.OriginInformationBean" bundle="ACADEMIC_OFFICE_RESOURCES" >
-	<slot name="dislocatedFromPermanentResidence" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"  />
-   	<slot name="schoolTimeDistrictSubdivisionOfResidence" layout="autoComplete" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
+	<slot name="dislocatedFromPermanentResidence"  />
+   	<slot name="schoolTimeDistrictSubdivisionOfResidence" layout="autoComplete">
 		<property name="size" value="50"/>
 		<property name="labelField" value="name"/>
 		<property name="format" value="${name} - (${district.name})"/>
@@ -261,7 +261,7 @@
 		<property name="className" value="net.sourceforge.fenixedu.domain.DistrictSubdivision"/>
 		<property name="minChars" value="2"/>
 	</slot>	    
-    <slot name="grantOwnerType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <slot name="grantOwnerType"/>
    	<slot name="grantOwnerProviderUnitName" layout="autoComplete">
 		<property name="size" value="50"/>
 		<property name="labelField" value="unit.name"/>
@@ -285,21 +285,21 @@
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType" />
 		<property name="eachLayout" value="this-does-not-exist" />
 	</slot>
-	<slot name="motherSchoolLevel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select">
+	<slot name="motherSchoolLevel" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentHouseholdProvider" />
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.SchoolLevelType" />
 		<property name="eachLayout" value="this-does-not-exist" />
 	</slot>
-	<slot name="motherProfessionType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<slot name="motherProfessionalCondition" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="motherProfessionType" />
+	<slot name="motherProfessionalCondition" />
 
-	<slot name="fatherSchoolLevel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select">
+	<slot name="fatherSchoolLevel" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentHouseholdProvider" />
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.SchoolLevelType" />
 		<property name="eachLayout" value="this-does-not-exist" />
 	</slot>
-	<slot name="fatherProfessionType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="fatherProfessionalCondition" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="fatherProfessionType"/>
+	<slot name="fatherProfessionalCondition" />
 	
 	<slot name="spouseSchoolLevel" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentHouseholdProvider" />

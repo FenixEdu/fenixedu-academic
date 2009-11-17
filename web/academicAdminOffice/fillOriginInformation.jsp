@@ -19,6 +19,7 @@
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 	        <fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
+	        <fr:property name="requiredMarkShown" value="true" />
 		</fr:layout>
 		<fr:destination name="invalid" path="/createStudent.do?method=prepareShowFillOriginInformation"/>
 	</fr:edit>

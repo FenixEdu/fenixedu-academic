@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.domain.student;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -71,6 +75,7 @@ import org.apache.commons.collections.Predicate;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixframework.pstm.Transaction;
 
 public class Student extends Student_Base {
 
@@ -131,6 +136,39 @@ public class Student extends Student_Base {
 	}
 	return null;
     }
+
+
+    // -------------------------------------------------------------
+    // read static methods
+    // -------------------------------------------------------------
+    public static Student readStudentByNumberOther(Integer number) {
+	// For performance reasons...
+	PreparedStatement stmt = null;
+	try {
+	    final Connection connection = Transaction.getCurrentJdbcConnection();
+	    stmt = connection.prepareStatement("SELECT ID_INTERNAL FROM STUDENT WHERE NUMBER = ?");
+
+	    stmt.setInt(1, number);
+	    final ResultSet resultSet = stmt.executeQuery();
+	    if (resultSet.next()) {
+		return RootDomainObject.getInstance().readStudentByOID(resultSet.getInt(1));
+	    }
+
+	    return null;
+	} catch (SQLException e) {
+	    throw new Error(e);
+	} finally {
+	    if (stmt != null) {
+		try {
+		    stmt.close();
+		} catch (SQLException e) {
+		    throw new Error(e);
+		}
+	    }
+	}
+    }
+
+
 
     public String getName() {
 	return getPerson().getName();
