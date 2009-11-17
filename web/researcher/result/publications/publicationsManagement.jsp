@@ -37,25 +37,16 @@
 				</html:link>
 			</li>
 	        <li>
-	            <html:link page="/publications/management.do?method=prepareSetPreferredPublications">
+	        	<bean:define id="firstOID" name="executionYearIntervalBean" property="firstExecutionYear.externalId"/>
+	        	<bean:define id="lastOID" name="executionYearIntervalBean" property="finalExecutionYear.externalId"/>
+	        	
+	        	<html:link page="<%= "/publications/management.do?method=prepareSetPreferredPublications&firstOID=" + firstOID + "&lastOID=" + lastOID %>">
 	                <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.setPreferredPublications"/>
 	            </html:link>
 	        </li>
 		</ul>
-    </logic:notPresent>
-
-    <logic:present name="preferredSetting">
-        <h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.preferredPublications.title"/></h3>
-		<div class="infoop2">
-    		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.preferredPublications.help"/>
-		</div>
-    </logic:present>
-
-	<logic:empty name="publications">
-		<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.emptyList"/></em></p>
-	</logic:empty>
-	
-	<fr:form action="/resultPublications/listPublications.do">
+		
+		<fr:form action="/resultPublications/listPublications.do">
 		<fr:edit id="executionYearIntervalBean" name="executionYearIntervalBean" visible="false"/>
 		
 		<p class="mbottom025"><bean:message key="label.choosen.interval" bundle="RESEARCHER_RESOURCES"/>:</p>
@@ -92,6 +83,24 @@
 		</tr>
 		</table>
 		</fr:form>
+    </logic:notPresent>
+
+    <logic:present name="preferredSetting">
+        <h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.preferredPublications.title"/></h3>
+		<div class="infoop2">
+    		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.preferredPublications.help"/>
+		</div>
+		
+		<p>
+			<strong><bean:message key="label.selectedInterval" bundle="RESEARCHER_RESOURCES"/></strong>: <fr:view name="first" property="year"/> - <fr:view name="last" property="year"/>
+		</p>
+    </logic:present>
+
+	<logic:empty name="publications">
+		<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.emptyList"/></em></p>
+	</logic:empty>
+	
+	
 		
 		
 	<logic:notEmpty name="publications">
