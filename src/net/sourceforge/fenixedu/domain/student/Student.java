@@ -1085,7 +1085,16 @@ public class Student extends Student_Base {
     }
 
     public boolean hasActiveRegistrations() {
-	return getActiveRegistrations().size() > 0;
+	for (final Registration registration : super.getRegistrationsSet()) {
+	    final RegistrationState registrationState = registration.getActiveState();
+	    if (registrationState != null) {
+		final RegistrationStateType registrationStateType = registrationState.getStateType();
+		if (registrationStateType != RegistrationStateType.TRANSITION && registrationStateType.isActive()) {
+		    return true;
+		}
+	    }
+	}
+	return false;
     }
 
     public Registration getTransitionRegistrationFor(DegreeCurricularPlan degreeCurricularPlan) {

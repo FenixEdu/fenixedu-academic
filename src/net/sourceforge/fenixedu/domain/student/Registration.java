@@ -2130,12 +2130,15 @@ public class Registration extends Registration_Base {
 
     final public RegistrationState getActiveState() {
 	if (hasAnyRegistrationStates()) {
-	    List<RegistrationState> states = new ArrayList<RegistrationState>();
+	    RegistrationState activeState = null;
 	    for (RegistrationState state : getRegistrationStates()) {
-		if (!state.getStateDate().isAfterNow())
-		    states.add(state);
+		if (!state.getStateDate().isAfterNow()) {
+		    if (activeState == null || RegistrationState.DATE_COMPARATOR.compare(activeState, state) < 0) {
+			activeState = state;
+		    }
+		}
 	    }
-	    return !states.isEmpty() ? Collections.max(states, RegistrationState.DATE_COMPARATOR) : null;
+	    return activeState;
 	} else {
 	    return null;
 	}
