@@ -40,8 +40,8 @@
 </logic:present>
 
 
-<p class="mbottom05"><bean:message key="label.visualization.options"/></p>
  <logic:present name="summary">
+ <p class="mbottom05"><bean:message key="label.visualization.options"/></p>
 	<fr:view name="summary" schema="thesis.bean.candidacies.links">
 		<fr:layout name="values">
 			<fr:property name="classes" value="mvert1"/>
