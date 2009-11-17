@@ -28,7 +28,7 @@ public class AllSecondCycleStudentsGroup extends Group {
 			if (!person.getStudent().getActiveRegistrations().isEmpty()) {
 				for (Registration registration : person.getStudent().getActiveRegistrations()) {
 					StudentCurricularPlan scp = registration.getLastStudentCurricularPlan();
-					if (scp.hasConcludedCycle(CycleType.FIRST_CYCLE) && !scp.hasConcludedCycle(CycleType.SECOND_CYCLE)) {
+					if (scp.isBolonhaDegree() && scp.hasConcludedCycle(CycleType.FIRST_CYCLE) && !scp.hasConcludedCycle(CycleType.SECOND_CYCLE)) {
 						elements.add(person);
 						break;
 					}
