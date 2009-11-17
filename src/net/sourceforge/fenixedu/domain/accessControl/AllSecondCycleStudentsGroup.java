@@ -14,33 +14,34 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class AllSecondCycleStudentsGroup extends Group {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public AllSecondCycleStudentsGroup() {
-	}
+    public AllSecondCycleStudentsGroup() {
+    }
 
-	@Override
-	public Set<Person> getElements() {
-		Set<Person> elements = new HashSet<Person>();
-		List<Person> people = Role.getRoleByRoleType(RoleType.STUDENT).getAssociatedPersons();
+    @Override
+    public Set<Person> getElements() {
+	Set<Person> elements = new HashSet<Person>();
+	List<Person> people = Role.getRoleByRoleType(RoleType.STUDENT).getAssociatedPersons();
 
-		for (Person person : people) {
-			if (!person.getStudent().getActiveRegistrations().isEmpty()) {
-				for (Registration registration : person.getStudent().getActiveRegistrations()) {
-					StudentCurricularPlan scp = registration.getLastStudentCurricularPlan();
-					if (scp.isBolonhaDegree() && scp.hasConcludedCycle(CycleType.FIRST_CYCLE) && !scp.hasConcludedCycle(CycleType.SECOND_CYCLE)) {
-						elements.add(person);
-						break;
-					}
-				}
-			}
+	for (Person person : people) {
+	    if (!person.getStudent().getActiveRegistrations().isEmpty()) {
+		for (Registration registration : person.getStudent().getActiveRegistrations()) {
+		    StudentCurricularPlan scp = registration.getLastStudentCurricularPlan();
+		    if (scp != null && scp.isBolonhaDegree() && scp.hasConcludedCycle(CycleType.FIRST_CYCLE)
+			    && !scp.hasConcludedCycle(CycleType.SECOND_CYCLE)) {
+			elements.add(person);
+			break;
+		    }
 		}
-		return elements;
+	    }
 	}
+	return elements;
+    }
 
-	@Override
-	protected Argument[] getExpressionArguments() {
-		return null;
-	}
+    @Override
+    protected Argument[] getExpressionArguments() {
+	return null;
+    }
 
 }
