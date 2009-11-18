@@ -19,7 +19,9 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class PhdNotificationDocument extends FenixReport {
 
-    private static final String DATE_FORMAT = "dd/MM/yyyy";
+    private static final String DATE_FORMAT_PT = "dd/MM/yyyy";
+
+    private static final String DATE_FORMAT_EN = "yyyy/MM/dd";
 
     /**
      * 
@@ -72,13 +74,17 @@ public class PhdNotificationDocument extends FenixReport {
 
 	final LocalDate whenRatified = candidacyProcess.getWhenRatified();
 
-	addParameter("ratificationDate", whenRatified != null ? whenRatified.toString(DATE_FORMAT) : "");
+	addParameter("ratificationDate", whenRatified != null ? whenRatified.toString(getDateFormat()) : "");
 
 	addParameter("insuranceFee", getInsuranceFee(individualProgramProcess));
 	addParameter("registrationFee", getRegistrationFee(individualProgramProcess, whenRatified));
 
-	addParameter("date", new LocalDate().toString(DATE_FORMAT));
+	addParameter("date", new LocalDate().toString(getDateFormat()));
 	addParameter("notificationNumber", getNotification().getNotificationNumber());
+    }
+
+    private String getDateFormat() {
+	return getLanguage() == Language.pt ? DATE_FORMAT_PT : DATE_FORMAT_EN;
     }
 
     private String getRegistrationFee(final PhdIndividualProgramProcess individualProgramProcess, final LocalDate whenRatified) {
