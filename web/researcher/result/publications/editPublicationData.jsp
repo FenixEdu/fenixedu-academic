@@ -32,7 +32,10 @@
 		<logic:equal name="publicationBean" property="class.simpleName" value="InproceedingsBean">
 			<bean:define id="action" value="/resultPublications/prepareEditEvent.do" type="java.lang.String"/>
 		</logic:equal>
-	
+		<logic:equal name="publicationBean" property="class.simpleName" value="ProceedingsBean">
+			<bean:define id="action" value="/resultPublications/prepareEditEvent.do" type="java.lang.String"/>
+		</logic:equal>
+
 	<fr:form action="<%= action + "?" + parameters %>">
 	
 
@@ -81,6 +84,9 @@
 			<logic:equal name="publicationBean" property="class.simpleName" value="InproceedingsBean">
 					<bean:define id="submitLabel" value="button.next"/>
 			</logic:equal>
+			<logic:equal name="publicationBean" property="class.simpleName" value="ProceedingsBean">
+					<bean:define id="submitLabel" value="button.next"/>
+			</logic:equal>			
 
 			<bean:message bundle="RESEARCHER_RESOURCES" key="<%= submitLabel %>"/>
 		</html:submit>
