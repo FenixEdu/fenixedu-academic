@@ -140,6 +140,7 @@
 							<fr:layout name="tabular">
 								<fr:property name="classes" value="tstyle5 thright thlight thtop thmiddle mtop05 dinline"/>
 					        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+								<fr:property name="requiredMarkShown" value="true"/>
 							</fr:layout>
 						</fr:edit>
 						<br/><br/>
@@ -289,6 +290,7 @@
 							<fr:layout name="tabular">
 									<fr:property name="classes" value="tstyle5 thright thlight thtop thmiddle mtop05 dinline"/>
 						        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+						        	<fr:property name="requiredMarkShown" value="true"/>
 								</fr:layout>
 							<fr:destination name="invalid" path="/resultPublications/prepareCreateEvent.do"/>
 						</fr:edit>
@@ -308,6 +310,7 @@
 							<fr:layout name="tabular">
 									<fr:property name="classes" value="tstyle5 thright thlight thtop thmiddle mtop05 dinline"/>
 						        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+						        	<fr:property name="requiredMarkShown" value="true"/>
 								</fr:layout>
 							<fr:destination name="invalid" path="/resultPublications/prepareCreateEvent.do"/>			
 						</fr:edit>
@@ -324,6 +327,7 @@
 							<fr:layout name="tabular">
 								<fr:property name="classes" value="tstyle5 thright thlight thtop mtop0"/>
 		        				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+		        				<fr:property name="requiredMarkShown" value="true"/>
 							</fr:layout>
 							<fr:destination name="invalid" path="/resultPublications/prepareCreateEvent.do"/>			
 						</fr:edit>
@@ -335,6 +339,7 @@
 							<fr:layout name="tabular">
 									<fr:property name="classes" value="tstyle5 thright thlight thtop thmiddle mtop05 dinline"/>
 						        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+						        	<fr:property name="requiredMarkShown" value="true"/>
 								</fr:layout>
 							<fr:destination name="invalid" path="/resultPublications/prepareCreateEvent.do"/>			
 						</fr:edit>
@@ -354,6 +359,7 @@
 							<fr:layout name="tabular">
 									<fr:property name="classes" value="tstyle5 thright thlight thtop thmiddle mtop05 dinline"/>
 						        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+						        	<fr:property name="requiredMarkShown" value="true"/>
 								</fr:layout>
 							<fr:destination name="invalid" path="/resultPublications/prepareCreateEvent.do"/>			
 						</fr:edit>

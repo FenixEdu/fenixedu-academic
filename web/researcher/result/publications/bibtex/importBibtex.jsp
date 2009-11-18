@@ -302,6 +302,7 @@
 			    <fr:layout name="tabular">
 		    	    <fr:property name="classes" value="tstyle5 thright thlight thtop mtop05"/>
 		        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+		        	<fr:property name="requiredMarkShown" value="true"/>
 			    </fr:layout>
 					<fr:destination name="invalid" path="/bibtexManagement/invalidSubmit.do"/>
 		   		</fr:edit>
@@ -341,6 +342,7 @@
 				    <fr:layout name="tabular">
 			    	    <fr:property name="classes" value="tstyle5 thright thlight thtop"/>
 			        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+			        	<fr:property name="requiredMarkShown" value="true"/>
 				    </fr:layout>
 			   		<fr:destination name="invalid" path="/bibtexManagement/invalidSubmit.do"/>
 			   		<fr:destination name="input" path="/bibtexManagement/invalidSubmit.do"/>
@@ -349,6 +351,7 @@
 				    <fr:layout name="tabular">
 			    	    <fr:property name="classes" value="tstyle5 thright thlight thtop"/>
 			        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+			        	<fr:property name="requiredMarkShown" value="true"/>
 				    </fr:layout>
 			   		<fr:destination name="invalid" path="/bibtexManagement/invalidSubmit.do"/>
 			   		<fr:destination name="input" path="/bibtexManagement/invalidSubmit.do"/>
@@ -377,6 +380,7 @@
 						<fr:layout name="tabular">
 						 <fr:property name="classes" value="tstyle5 thright thlight thtop mtop05"/>
 		        		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+		        		<fr:property name="requiredMarkShown" value="true"/>
 						</fr:layout>
 					</fr:edit>
 	
@@ -396,6 +400,7 @@
 						<fr:layout name="tabular">
 						 <fr:property name="classes" value="tstyle5 thright thlight thtop mtop05"/>
 		        		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+		        		<fr:property name="requiredMarkShown" value="true"/>
 						</fr:layout>
 						<fr:destination name="postBack" path="/bibtexManagement/changeSpecialIssueInImport.do"/>
 						<fr:destination name="invalid"  path="/bibtexManagement/createJournalWorkFlow.do"/>

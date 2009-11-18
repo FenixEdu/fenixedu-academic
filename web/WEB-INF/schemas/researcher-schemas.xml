@@ -1640,8 +1640,8 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 	<slot name="eventName" key="label.event" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="60"/>
 	</slot>
-	<slot name="eventType"/>
-	<slot name="scope"/>
+	<slot name="eventType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="scope" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="url" layout="input-with-comment">
 		<property name="subProperty(size)" value="60"/>
 		<property name="bundle" value="RESEARCHER_RESOURCES"/>
