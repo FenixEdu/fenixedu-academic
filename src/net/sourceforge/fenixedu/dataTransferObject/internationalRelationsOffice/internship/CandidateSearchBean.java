@@ -90,7 +90,7 @@ public class CandidateSearchBean implements Serializable {
     public String getName() {
 	StringBuilder output = new StringBuilder();
 	if (getUniversity() != null) {
-	    output.append(getUniversity().getName().replace(' ', '.'));
+	    output.append(getUniversity().getFullPresentationName().replace(' ', '.'));
 	} else {
 	    output.append("todos");
 	}
