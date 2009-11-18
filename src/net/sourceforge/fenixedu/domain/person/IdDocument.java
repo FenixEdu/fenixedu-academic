@@ -6,13 +6,6 @@ import java.util.Collection;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
-import pt.ist.fenixframework.pstm.Transaction;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-
-
 public class IdDocument extends IdDocument_Base {
 
     public IdDocument(final Person person, final String value, final IdDocumentTypeObject idDocumentType) {
@@ -35,40 +28,7 @@ public class IdDocument extends IdDocument_Base {
 	    }
 	}
 
-	//return idDocuments;
-
-	return findWithDatabase(idDocumentValue);
-    }
-
-     private static Collection<IdDocument> findWithDatabase(final String
-     idDocumentValue) {
-    // For performance reasons...
-    final Collection<IdDocument> idDocuments = new ArrayList<IdDocument>();
-    
-    PreparedStatement stmt = null;
-    try {
-    final Connection connection = Transaction.getCurrentJdbcConnection();
-    stmt =
-    connection.prepareStatement("SELECT ID_INTERNAL FROM ID_DOCUMENT WHERE UPPER(VALUE) = '"
-    + idDocumentValue.toUpperCase() + "'");
-    final ResultSet resultSet = stmt.executeQuery();
-    if (resultSet.next()) {
-    idDocuments.add(RootDomainObject.getInstance().readIdDocumentByOID(resultSet.getInt(1)));
-    }
-    } catch (SQLException e) {
-    throw new Error(e);
-    } finally {
-    if (stmt != null) {
-    try {
-    stmt.close();
-    } catch (SQLException e) {
-    throw new Error(e);
-    }
-    }
-    }
-    
-    return idDocuments;
-    
+	return idDocuments;
     }
 
     public void setIdDocumentType(IDDocumentType documentType) {
