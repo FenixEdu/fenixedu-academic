@@ -45,21 +45,6 @@
 			</groupHeader>
 			<groupFooter>
 			<band height="43"  isSplitAllowed="true" >
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="44"
-						y="0"
-						width="528"
-						height="41"
-						key="textField-2"/>
-					<box></box>
-					<textElement isStyledText="true">
-						<font/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">NOTA:</style>"+
-"\nDocumentos a entregar no momento da matrícula:" +
-"\n- Boletim Vacinas e 2 fotografias"]]></textFieldExpression>
-				</textField>
 			</band>
 			</groupFooter>
 		</group>
@@ -80,13 +65,11 @@
 					<textElement textAlignment="Left">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["<Versão Inglesa>" +
-"\n\nOfício nº " + $P{notificationNumber} +
-"\n\nData: "+ $P{date} + 
-"\n\nCandidatura nº " +  $P{processNumber}+
+				<textFieldExpression   class="java.lang.String"><![CDATA["\n\Letter No. " + $P{notificationNumber} +
+"\n\nDate: "+ $P{date} + 
+"\n\nApplication No. " +  $P{processNumber}+
 
-"\n\nExmo(a) Senhor(a)"+
-"\n" + $P{name} +
+"\n\n" + $P{name} +
 "\n" + $P{address}  +
 "\n" + $P{areaCode} + " " + $P{areaOfAreaCode}]]></textFieldExpression>
 				</textField>
@@ -117,17 +100,18 @@
 					<textElement textAlignment="Justified" isStyledText="true" lineSpacing="1_1_2">
 						<font size="10" isPdfEmbedded ="false"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">ASSUNTO</style>: <style isUnderline=\"true\"> Curso de Doutoramento em " + $P{programName} + " - Candidatura</style>\n\n"
+				<textFieldExpression   class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">Subject</style>: <style isUnderline=\"true\"> PhD Program on " + $P{programName} + " - Application </style>\n\n"
 +
-"No âmbito do assunto acima mencionado, e em conformidade com o estabelecido no Regulamento Geral dos Doutoramentos do IST - 3º Ciclo de estudos Superiores, vimos por este meio informar de que a candidatura apresentada por V. Exª ao Curso de Doutoramento em " + $P{programName} + ", foi aceite pelo Conselho Científico do IST em " + $P{ratificationDate} + ", nos termos do parecer emitido pelo respectivo Coordenador do Doutoramento, do qual enviamos cópia em anexo, <style isUnderline=\"true\">considerando-se, apenas, aluno de doutoramento a partir da data da matrícula.</style>"
+"Dear " + ${name} + ",\n" + 
 
-+"\n\nDeste modo, e para que seja regularizada a situação de V. Exa. no referido Programa de Doutoramento, deverá formalizar a sua matrícula, procedendo de imediato ao pagamento da taxa da inscrição (" + $P{registrationFee} + " euros), do seguro escolar obrigatório (" + $P{insuranceFee} + " euros) e da 1ª prestação da propina anual, de acordo com o artº 6º do Regulamento de Propinas de Doutoramento do IST, podendo efectuar a liquidação por Multibanco, nos nossos serviços de Atendimento. Caso a referida matrícula não seja efectuada no prazo máximo de 20 dias, a contar da data de expedição deste ofício, procederemos à anulação do seu processo. "
+"Concerning the above matter and in accordance with the IST PhD Programmes General Regulations, we hereby inform you that your application to " + $P{programName} + " PhD Program, has bem accepted by IST's Scientific Board on " + $P{ratificationDate} + ", as informed by the Department's PhD Scientific Coordinator. <style isUnderline=\"true\">Therefore, you are considered a PhD student as soon as your registration is made.</style>"
 
-+"\n\nRelativamente ao percurso académico que V. Exª irá iniciar, ou prosseguir no IST, <style isUnderline=\"true\">gostaríamos de lhe sugerir a relevância de consultar o Regulamento Geral dos Doutoramentos do IST - 3º Ciclo de Estudos Superiores</style>, e alertá-lo(a) para a obrigatoriedade da realização de uma Apresentação Pública da Proposta de Tese até 24 meses, após o início dos estudos, para a realização de um curso de Doutoramento, constituído por unidades curriculares de base científica adequadas à formação para investigação, conforme estabelecido no referido Regulamento.<style isUnderline=\"true\"> Chamamos, também, a sua atenção para o cumprimento dos prazos de regularização das propinas anuais.</style>"
++"\n\nPlease be advised that you must address our desk here at Post-Graduation Unit in order to proceed to the payment of the due Application fee (" + $P{registrationFee} + " eur) and annual insurance (" + $P{insuranceFee} + " eur) plus tuition fees."
 
-+"\n\nFinalmente, salientamos que o Requerimento da Prova de Doutoramento deverá ser submetida, nos nossos serviços, no prazo mínimo de 2 anos e máximo de 5 anos a contar da data de matrícula no ciclo de estudos, conforme estabelecido no ponto 48 do Regulamento Geral dos Doutoramentos do IST - 3º Ciclo de estudos Superiores."
++"\n\nAs to the academic path that you will pursue at IST, <style isUnderline=\"true\">we would like to suggest that you get all the information on the IST PhD Programmes General Regulations</style>, as well as to alert you to the obligation of every PhD student to present a Thesis Proposal Seminar within the Department. This should be done is the first 24 months of your PhD.<style isUnderline=\"true\"> We also call you attention for the need to comply with the timely payment of the annual tuition fees.</style>"
 
-+"\n\nAproveitando esta oportunidade para lhe desejar as maiores felicidades no percurso académico que agora inicia no IST, apresentamos os nossos melhores cumprimentos."]]></textFieldExpression>
++"\n\nFinally, we point out that you must submit the first draft of your thesis in our services, within the minimum state period of 2 years and maximum of 5 years from the date of your registration, as established in point 48 of the IST PhD Programmes General Regulations."
+]]></textFieldExpression>
 				</textField>
 			</band>
 		</detail>
@@ -148,8 +132,26 @@
 					<textElement>
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["Dr. " + $P{administrativeOfficeCoordinator} +
-"\n(Coordenador do Núcleo de Pós-Graduação e Formação Contínua)"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Best Regards " +
+"\n" + $P{administrativeOfficeCoordinator} +
+"\n(Post-Graduation Unit Coordinator)"
+]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="44"
+						y="12"
+						width="354"
+						height="42"
+						key="textField-4"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Best Regards " +
+"\n" + $P{administrativeOfficeCoordinator} +
+"\n(Post-Graduation Unit Coordinator)"
+]]></textFieldExpression>
 				</textField>
 			</band>
 		</pageFooter>
