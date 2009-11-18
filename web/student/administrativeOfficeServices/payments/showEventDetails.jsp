@@ -36,9 +36,7 @@
 
 
 <p class="mtop1 mbottom025"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.sibsPayments" /></strong></p>
-<em>Códigos indisponíveis temporáriamente</em>
 
-<%-- Temporary unavailable 
 <logic:notEmpty name="accountingEventPaymentCodes">
 	<fr:view name="accountingEventPaymentCodes" schema="AccountingEventPaymentCode.view">
 		<fr:layout name="tabular">
@@ -47,7 +45,6 @@
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>
---%>
 
 <html:form action="/payments.do?method=showEvents">
 	<p class="mtop1">
