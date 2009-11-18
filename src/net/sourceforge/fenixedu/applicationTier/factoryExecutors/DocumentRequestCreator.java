@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Declarat
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaSupplementRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.RegistryDiplomaRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import pt.ist.fenixWebFramework.services.Service;
@@ -34,6 +35,9 @@ final public class DocumentRequestCreator extends DocumentRequestCreateBean impl
 
 	} else if (getChosenDocumentRequestType().isDiploma()) {
 	    return new DiplomaRequest(this);
+
+	} else if (getChosenDocumentRequestType().isRegistryDiploma()) {
+	    return new RegistryDiplomaRequest(this);
 
 	} else if (getChosenDocumentRequestType().isPastDiploma()) {
 	    return CreatePastDiplomaRequest.create(this);

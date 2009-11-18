@@ -85,6 +85,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaR
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaSupplementRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.RegistryDiplomaRequest;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.curriculum.AverageType;
@@ -3036,6 +3037,19 @@ public class Registration extends Registration_Base {
 		final DiplomaRequest diplomaRequest = (DiplomaRequest) documentRequest;
 		if (cycleType == null || cycleType == diplomaRequest.getWhatShouldBeRequestedCycle()) {
 		    return diplomaRequest;
+		}
+	    }
+	}
+
+	return null;
+    }
+
+    final public RegistryDiplomaRequest getRegistryDiplomaRequest(final CycleType cycleType) {
+	for (final DocumentRequest documentRequest : getDocumentRequests()) {
+	    if (documentRequest.isRegistryDiploma() && !documentRequest.finishedUnsuccessfully()) {
+		final RegistryDiplomaRequest registryDiplomaRequest = (RegistryDiplomaRequest) documentRequest;
+		if (cycleType == null || cycleType == registryDiplomaRequest.getRequestedCycle()) {
+		    return registryDiplomaRequest;
 		}
 	    }
 	}

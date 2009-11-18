@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -89,5 +90,15 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base {
     @Override
     public boolean isToPrint() {
 	return !isDelivered();
+    }
+
+    @Override
+    protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
+	super.internalChangeState(academicServiceRequestBean);
+	if (academicServiceRequestBean.isToProcess()) {
+	    if (!getRegistration().isRegistrationConclusionProcessed(getRequestedCycle())) {
+		throw new DomainException("error.registryDiploma.registration.not.submited.to.conclusion.process");
+	    }
+	}
     }
 }

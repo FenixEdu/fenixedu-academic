@@ -54,8 +54,17 @@
 		</fr:view>		
 	</logic:present>
 	
-	<logic:notEqual name="documentRequestCreateBean" property="chosenDocumentRequestType" value="<%=DocumentRequestType.DIPLOMA_REQUEST.name()%>">	
+	<logic:equal name="documentRequestCreateBean" property="hasCycleTypeDependency" value="true">
+	    <fr:view name="documentRequestCreateBean" schema="DocumentRequestCreateBean.requestedCycle"
+	        type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean">
+            <fr:layout name="tabular">
+                <fr:property name="classes" value="tstyle4 thright thlight mvert0"/>
+                <fr:property name="columnClasses" value="width14em,width20em,tdclear tderror1"/>
+            </fr:layout>    
+	    </fr:view>
+	</logic:equal>
 	
+	<logic:equal name="documentRequestCreateBean" property="hasPurposeNeed" value="true">
 		<fr:view name="documentRequestCreateBean" schema="DocumentRequestCreateBean.purposes" 
 			type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean">
 			<fr:layout name="tabular">
@@ -63,8 +72,7 @@
 				<fr:property name="columnClasses" value="width14em,width20em,tdclear tderror1"/>
 			</fr:layout>	
 		</fr:view>
-
-	</logic:notEqual>
+	</logic:equal>
 	
 	<logic:equal name="documentRequestCreateBean" property="chosenDocumentRequestType.canBeFreeProcessed" value="true">
 		<fr:view name="documentRequestCreateBean" schema="DocumentRequestCreateBean.freeProcessed" 

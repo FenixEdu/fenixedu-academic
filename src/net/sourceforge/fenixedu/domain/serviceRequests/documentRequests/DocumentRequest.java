@@ -6,7 +6,10 @@ import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServi
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.documents.GeneratedDocument;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.joda.time.DateTime;
 
 public abstract class DocumentRequest extends DocumentRequest_Base {
 
@@ -47,6 +50,10 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 
     final public boolean isDiploma() {
 	return getDocumentRequestType().isDiploma();
+    }
+
+    public boolean isRegistryDiploma() {
+	return getDocumentRequestType().isRegistryDiploma();
     }
 
     final public boolean isDiplomaSupplement() {
@@ -104,6 +111,18 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 
     public Locale getLocale() {
 	return null;
+    }
+
+    public GeneratedDocument getLastGeneratedDocument() {
+	DateTime last = null;
+	GeneratedDocument lastDoc = null;
+	for (GeneratedDocument document : getDocumentSet()) {
+	    if (last == null || document.getUploadTime().isAfter(last)) {
+		last = document.getUploadTime();
+		lastDoc = document;
+	    }
+	}
+	return lastDoc;
     }
 
 }

@@ -79,6 +79,8 @@ public class AdministrativeOfficeDocument extends FenixReport {
 		return Collections.singletonList(new IRSDeclaration(documentRequest));
 	    case DIPLOMA_REQUEST:
 		return Collections.singletonList(new Diploma(documentRequest));
+	    case REGISTRY_DIPLOMA_REQUEST:
+		return Collections.singletonList(new RegistryDiploma(documentRequest));
 	    case DIPLOMA_SUPPLEMENT_REQUEST:
 		List<AdministrativeOfficeDocument> result = new ArrayList<AdministrativeOfficeDocument>();
 		for (Locale locale : DiplomaSupplement.suportedLocales) {

@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormat
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.RegistryCodeBag;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -43,6 +44,7 @@ import org.apache.struts.action.ActionMapping;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -61,9 +63,8 @@ import pt.utl.ist.fenix.tools.util.CollectionPager;
 	@Forward(name = "prepareConcludeDocumentRequest", path = "/documentRequestsManagement.do?method=prepareConcludeDocumentRequest"),
 	@Forward(name = "prepareConcludeServiceRequest", path = "/academicAdminOffice/serviceRequests/concludeServiceRequest.jsp"),
 	@Forward(name = "prepareCreateServiceRequest", path = "/academicAdminOffice/serviceRequests/prepareCreateServiceRequest.jsp"),
-	@Forward(name = "searchResults", path = "/academicAdminOffice/serviceRequests/searchResults.jsp")
-
-})
+	@Forward(name = "searchResults", path = "/academicAdminOffice/serviceRequests/searchResults.jsp"),
+	@Forward(name = "showCurrentBag", path = "/academicAdminOffice/serviceRequests/showCurrentBag.jsp") })
 public class AcademicServiceRequestsManagementDispatchAction extends FenixDispatchAction {
 
     private static final int REQUESTS_PER_PAGE = 50;
@@ -528,6 +529,14 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	final RegistrationAcademicServiceRequestCreator bean = (RegistrationAcademicServiceRequestCreator) getRenderedObject("academicServiceRequestCreateBean");
 	request.setAttribute("registration", bean.getRegistration());
 	return mapping.findForward("viewRegistrationDetails");
+    }
+
+    @Service
+    public ActionForward viewCurrentBag(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	RegistryCodeBag bag = rootDomainObject.getInstitutionUnit().getRegistryCodeGenerator().getCurrentBag();
+	request.setAttribute("bag", bag);
+	return mapping.findForward("showCurrentBag");
     }
 
 }

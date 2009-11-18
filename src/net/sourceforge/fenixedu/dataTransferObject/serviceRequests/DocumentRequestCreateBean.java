@@ -437,8 +437,8 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
     }
 
     public boolean getHasPurposeNeed() {
-	return !(chosenDocumentRequestType.isDiploma() || chosenDocumentRequestType.isPastDiploma() || chosenDocumentRequestType
-		.isDiplomaSupplement());
+	return !(chosenDocumentRequestType.isDiploma() || chosenDocumentRequestType.isRegistryDiploma()
+		|| chosenDocumentRequestType.isPastDiploma() || chosenDocumentRequestType.isDiplomaSupplement());
     }
 
     public void setPastPaymentAmount(Money paymentAmount) {
