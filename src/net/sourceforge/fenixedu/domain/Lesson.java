@@ -62,6 +62,37 @@ public class Lesson extends Lesson_Base {
 
     @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessons")
     public Lesson(DiaSemana diaSemana, Calendar inicio, Calendar fim, Shift shift, FrequencyType frequency,
+	    ExecutionSemester executionSemester, OccupationPeriod period, AllocatableSpace room) {
+
+	super();
+
+	if (shift != null) {
+	    GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod = shift.getExecutionCourse().getMaxLessonsPeriod();
+	    if (period == null || period.getStartYearMonthDay().isBefore(maxLessonsPeriod.getLeft())) {
+		throw new DomainException("error.Lesson.invalid.begin.date");
+	    }
+	    if (period.getEndYearMonthDayWithNextPeriods().isAfter(maxLessonsPeriod.getRight())) {
+		throw new DomainException("error.invalid.new.date");
+	    }
+	}
+
+	setRootDomainObject(RootDomainObject.getInstance());
+	setDiaSemana(diaSemana);
+	setInicio(inicio);
+	setFim(fim);
+	setShift(shift);
+	setFrequency(frequency);
+	setPeriod(period);
+
+	checkShiftLoad(shift);
+
+	if (room != null) {
+	    new LessonSpaceOccupation(room, this);
+	}
+    }
+
+    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessons")
+    public Lesson(DiaSemana diaSemana, Calendar inicio, Calendar fim, Shift shift, FrequencyType frequency,
 	    ExecutionSemester executionSemester, YearMonthDay beginDate, YearMonthDay endDate, AllocatableSpace room) {
 
 	super();
@@ -713,7 +744,6 @@ public class Lesson extends Lesson_Base {
 
     private SortedSet<YearMonthDay> getAllValidLessonDatesWithoutInstancesDates(YearMonthDay startDateToSearch,
 	    YearMonthDay endDateToSearch) {
-
 	SortedSet<YearMonthDay> result = new TreeSet<YearMonthDay>();
 	startDateToSearch = startDateToSearch != null ? getValidBeginDate(startDateToSearch) : null;
 

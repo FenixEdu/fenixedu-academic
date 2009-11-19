@@ -1024,4 +1024,14 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	return Collections.EMPTY_SET;
     }
 
+    public OccupationPeriod getPeriodLessons(final ExecutionSemester executionSemester) {
+	if (executionSemester.getSemester().intValue() == 1) {
+	    return getPeriodLessonsFirstSemester();
+	} else if (executionSemester.getSemester().intValue() == 2) {
+	    return getPeriodLessonsSecondSemester();
+	} else {
+	    throw new Error("unexpected.semester: " + executionSemester.getSemester());
+	}
+    }
+
 }
