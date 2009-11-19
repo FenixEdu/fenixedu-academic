@@ -233,11 +233,15 @@
 					</td>
 				</logic:iterate>
 				<td class="highlight2">
-					<logic:iterate id="weeklyWorkLoad" name="weeklyWorkLoadEntry" property="value" length="1">
-						<logic:present name="weeklyWorkLoad">
-							<strong>
-								<bean:write name="weeklyWorkLoad" property="attends.weeklyWorkLoadContact"/>
-							</strong>
+					<bean:define id="contactWrittenValue" value=""/>
+					<logic:iterate id="weeklyWorkLoad" name="weeklyWorkLoadEntry" property="value">
+						<logic:present name="weeklyWorkLoad">						
+							<logic:empty name="contactWrittenValue">
+								<bean:define id="contactWrittenValue" value="alreadyWritten"/>
+								<strong>
+									<bean:write name="weeklyWorkLoad" property="attends.weeklyWorkLoadContact"/>
+								</strong>
+							</logic:empty>
 						</logic:present>
 					</logic:iterate>
 				</td>
@@ -254,11 +258,15 @@
 					</td>
 				</logic:iterate>
 				<td class="highlight2">
-					<logic:iterate id="weeklyWorkLoad" name="weeklyWorkLoadEntry" property="value" length="1">
+					<bean:define id="autonomoustWrittenValue" value=""/>
+					<logic:iterate id="weeklyWorkLoad" name="weeklyWorkLoadEntry" property="value">
 						<logic:present name="weeklyWorkLoad">
-							<strong>
-								<bean:write name="weeklyWorkLoad" property="attends.weeklyWorkLoadAutonomousStudy"/>
-							</strong>
+							<logic:empty name="autonomoustWrittenValue">
+								<bean:define id="autonomoustWrittenValue" value="alreadyWritten"/>
+								<strong>
+									<bean:write name="weeklyWorkLoad" property="attends.weeklyWorkLoadAutonomousStudy"/>
+								</strong>
+							</logic:empty>
 						</logic:present>
 					</logic:iterate>
 				</td>
@@ -275,11 +283,15 @@
 					</td>
 				</logic:iterate>
 				<td class="highlight2">
-					<logic:iterate id="weeklyWorkLoad" name="weeklyWorkLoadEntry" property="value" length="1">
+					<bean:define id="otherWrittenValue" value=""/>
+					<logic:iterate id="weeklyWorkLoad" name="weeklyWorkLoadEntry" property="value">
 						<logic:present name="weeklyWorkLoad">
-							<strong>
-								<bean:write name="weeklyWorkLoad" property="attends.weeklyWorkLoadOther"/>
-							</strong>
+							<logic:empty name="otherWrittenValue">
+								<bean:define id="otherWrittenValue" value="alreadyWritten"/>
+								<strong>
+									<bean:write name="weeklyWorkLoad" property="attends.weeklyWorkLoadOther"/>
+								</strong>
+							</logic:empty>
 						</logic:present>
 					</logic:iterate>
 				</td>
@@ -300,11 +312,15 @@
 					</td>
 				</logic:iterate>
 				<td class="highlight2">
-					<logic:iterate id="weeklyWorkLoad" name="weeklyWorkLoadEntry" property="value" length="1">
+					<bean:define id="totalWrittenValue" value=""/>
+					<logic:iterate id="weeklyWorkLoad" name="weeklyWorkLoadEntry" property="value">
 						<logic:present name="weeklyWorkLoad">
-							<strong>
-								<bean:write name="weeklyWorkLoad" property="attends.weeklyWorkLoadTotal"/>
-							</strong>
+							<logic:empty name="totalWrittenValue">
+								<bean:define id="totalWrittenValue" value="alreadyWritten"/>
+								<strong>
+									<bean:write name="weeklyWorkLoad" property="attends.weeklyWorkLoadTotal"/>
+								</strong>
+							</logic:empty>
 						</logic:present>
 					</logic:iterate>
 				</td>
