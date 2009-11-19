@@ -127,8 +127,8 @@ public class PhdProgram extends PhdProgram_Base {
     }
 
     public Set<Person> getCoordinatorsFor(ExecutionYear executionYear) {
-	final ExecutionDegree executionDegree = getDegree().getLastActiveDegreeCurricularPlan()
-		.getExecutionDegreeByAcademicInterval(executionYear.getAcademicInterval());
+	final ExecutionDegree executionDegree = getDegree().getLastActiveDegreeCurricularPlan().getExecutionDegreeByYear(
+		executionYear);
 
 	final Set<Person> result = new HashSet<Person>();
 	if (executionDegree != null) {
