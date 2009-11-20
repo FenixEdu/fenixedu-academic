@@ -119,7 +119,7 @@
             <fr:property name="visibleIf(recreate)" value="preEvaluated"/>
 
             <fr:property name="sortParameter" value="sortBy"/>
-            <fr:property name="sortUrl" value="<%= String.format("/manageThesis.do?method=listThesis&amp;degreeCurricularPlanID=%s&amp;executionYear=%s", dcpId, executionYearId) %>"/>
+            <fr:property name="sortUrl" value="<%= String.format("/manageThesis.do?method=listThesis&amp;degreeCurricularPlanID=%s&amp;executionYear=%s&amp;filter=%s", dcpId, executionYearId, request.getParameter("filter")) %>"/>
             <fr:property name="sortBy" value="<%= request.getParameter("sortBy") == null ? "student.number" : request.getParameter("sortBy") %>"/>
         </fr:layout>
     </fr:view>
@@ -129,7 +129,7 @@
     	    <fr:layout name="tabular-sortable">
         	    	<fr:property name="classes" value="tstyle1"/>
             	<fr:property name="sortParameter" value="sortBy"/>
-            	<fr:property name="sortUrl" value="<%= String.format("/manageThesis.do?method=listThesis&amp;degreeCurricularPlanID=%s&amp;executionYear=%s", dcpId, executionYearId) %>"/>
+            	<fr:property name="sortUrl" value="<%= String.format("/manageThesis.do?method=listThesis&amp;degreeCurricularPlanID=%s&amp;executionYear=%s&amp;filter=%s", dcpId, executionYearId, request.getParameter("filter")) %>"/>
             	<fr:property name="sortBy" value="<%= request.getParameter("sortBy") == null ? "student.number" : request.getParameter("sortBy") %>"/>
         	</fr:layout>
     	</fr:view>
