@@ -17,9 +17,7 @@
 <h3>
 	<bean:message key="message.final.degree.work.administration"/>
 	<bean:write name="executionDegree" property="executionYear.nextYearsYearString"/>
-</h3>	
-
-<p><html:link page="<%= "/manageFinalDegreeWork.do?method=showProposals&page=0&degreeCurricularPlanID=" + degreeCurricularPlanID + "&executionDegreeOID=" + executionDegreeOID%>"><bean:message key="label.return"/></html:link></p>
+</h3>
 
 <logic:present name="executionDegree" property="scheduling">
 <logic:notEqual name="executionDegree" property="scheduling.executionDegreesSortedByDegreeName" value="1">
