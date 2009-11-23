@@ -35,9 +35,7 @@
 	<parameter name="coorientatorAffiliation" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="coorientatorCategory" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="coorientatorName" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="thesisTitle" isForPrompting="false" class="java.lang.String">
-		<defaultValueExpression ><![CDATA["kjhsfdkjf hsdk hdkjfd hklh fkjdhf kdlj dljkf hdjkfdkl h kdjhfkljsd hdskjhf klj hskjf hsdkljf hsdkljf hdkfjbsdkl jhkj khf kj hzkjf"]]></defaultValueExpression>
-	</parameter>
+	<parameter name="thesisTitle" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="thesisSubtitle" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="thesisLanguage" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="juryPresidentName" isForPrompting="false" class="java.lang.String"/>
