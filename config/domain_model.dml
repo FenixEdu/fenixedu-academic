@@ -191,6 +191,7 @@ enum net.sourceforge.fenixedu.domain.research.result.publication.PreferredPublic
 enum net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationContext                                                as EnrolmentEvaluationContext;
 enum net.sourceforge.fenixedu.domain.curriculum.CurriculumValidationEvaluationPhase                                       as CurriculumValidationEvaluationPhase;
 enum net.sourceforge.fenixedu.domain.phd.debts.PhdEventExemptionJustificationType                                         as PhdEventExemptionJustificationType;
+enum net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionState                                             as RectorateSubmissionState;
 
 /*
  * Value types that need special externalization
@@ -2716,15 +2717,15 @@ class DomainObject {
     }
 
         class contacts.EmailAddress extends contacts.PartyContact {
-            String value;
+            String value (REQUIRED);
         }
 
         class contacts.MobilePhone extends contacts.PartyContact {
-            String number;
+            String number (REQUIRED);
         }
 
         class contacts.Phone extends contacts.PartyContact {
-            String number;
+            String number (REQUIRED);
         }
 
         class contacts.PhysicalAddress extends contacts.PartyContact {
@@ -2738,7 +2739,7 @@ class DomainObject {
         }
 
         class contacts.WebAddress extends contacts.PartyContact {
-            String url;
+            String url (REQUIRED);
         }
 
     class credits.CreditLine extends DomainObject {
@@ -4693,12 +4694,11 @@ class DomainObject {
         String code;
     }
 
-    class serviceRequests.RegistryDiplomaCode extends serviceRequests.RegistryCode;
-
-    class serviceRequests.DiplomaCode extends serviceRequests.RegistryCode;
-
-	class serviceRequests.RegistryCodeBag extends DomainObject {
-	   DateTime date;
+	class serviceRequests.RectorateSubmissionBatch extends DomainObject {
+	   DateTime creation;
+	   DateTime submission;
+	   DateTime reception;
+	   RectorateSubmissionState state;
 	}
 
     class serviceRequests.AcademicServiceRequestSituation extends DomainObject {
@@ -7516,38 +7516,33 @@ relation InstitutionRegistryCodeGeneratorCodes {
 relation AcademicServiceRequestRegistryCode {
     serviceRequests.RegistryCode playsRole registryCode;
     serviceRequests.documentRequests.DocumentRequest playsRole documentRequest {
-        multiplicity 1;
+        multiplicity 1..*;
     }
 }
 
-relation RegistryCodeBagRootDomainObject {
-    serviceRequests.RegistryCodeBag playsRole registryCodeBag {
+relation RectorateSubmissionBatchRootDomainObject {
+    serviceRequests.RectorateSubmissionBatch playsRole rectorateSubmissionBatch {
         multiplicity *;
     }
     RootDomainObject playsRole rootDomainObject;
 }
 
-relation InstitutionRegistryCodeGeneratorRegistryCodeBag {
+relation InstitutionRegistryCodeGeneratorRectorateSubmissionBatch {
     serviceRequests.InstitutionRegistryCodeGenerator playsRole registryCodeGenerator {
         multiplicity 1;
     }
-    serviceRequests.RegistryCodeBag playsRole currentBag {
-        multiplicity 1;
+    serviceRequests.RectorateSubmissionBatch playsRole rectorateSubmissionBatch {
+        multiplicity *;
     }
 }
 
-relation RegistryCodeRegistryCodeBag {
+relation RegistryCodeRectorateSubmissionBatch {
     serviceRequests.RegistryCode playsRole registryCode {
         multiplicity *;
     }
-    serviceRequests.RegistryCodeBag playsRole registryCodeBag {
+    serviceRequests.RectorateSubmissionBatch playsRole rectorateSubmissionBatch {
         multiplicity 1;
     }
-}
-
-relation RegistryCodeBagPrevious {
-    serviceRequests.RegistryCodeBag playsRole next;
-    serviceRequests.RegistryCodeBag playsRole previous;
 }
 
 relation RegistrationAcademicServiceRequestRegistration {
