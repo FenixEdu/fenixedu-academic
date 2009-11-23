@@ -178,7 +178,7 @@ enum net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType  
 enum net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType                                                 as PhdIndividualProgramDocumentType;
 enum net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState                                                  as PhdProgramCandidacyProcessState;
 enum net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessStateType                                as PublicPresentationSeminarProcessStateType;
-enum net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType												  as PhdThesisProcessStateType;
+enum net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType                                                 as PhdThesisProcessStateType;
 enum net.sourceforge.fenixedu.domain.phd.candidacy.ApplicantOverallPromise                                                as ApplicantOverallPromise;
 enum net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntryType                                                            as PhdStudyPlanEntryType;
 enum net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationType                                                 as PhdNotificationType;
@@ -191,7 +191,6 @@ enum net.sourceforge.fenixedu.domain.research.result.publication.PreferredPublic
 enum net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationContext                                                as EnrolmentEvaluationContext;
 enum net.sourceforge.fenixedu.domain.curriculum.CurriculumValidationEvaluationPhase                                       as CurriculumValidationEvaluationPhase;
 enum net.sourceforge.fenixedu.domain.phd.debts.PhdEventExemptionJustificationType                                         as PhdEventExemptionJustificationType;
-enum net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionState                                             as RectorateSubmissionState;
 
 /*
  * Value types that need special externalization
@@ -4694,12 +4693,13 @@ class DomainObject {
         String code;
     }
 
-	class serviceRequests.RectorateSubmissionBatch extends DomainObject {
-	   DateTime creation;
-	   DateTime submission;
-	   DateTime reception;
-	   RectorateSubmissionState state;
-	}
+    class serviceRequests.RegistryDiplomaCode extends serviceRequests.RegistryCode;
+
+    class serviceRequests.DiplomaCode extends serviceRequests.RegistryCode;
+
+    class serviceRequests.RegistryCodeBag extends DomainObject {
+       DateTime date;
+    }
 
     class serviceRequests.AcademicServiceRequestSituation extends DomainObject {
         AcademicServiceRequestSituationType academicServiceRequestSituationType;
@@ -5743,9 +5743,9 @@ class DomainObject {
         String bccs;
     }
 
-	class util.email.MessageId extends DomainObject {
-		String id;
-	}
+    class util.email.MessageId extends DomainObject {
+        String id;
+    }
 
     class util.email.Recipient extends DomainObject {
         String toName;
@@ -6733,9 +6733,9 @@ class phd.PhdProcessState extends DomainObject {
         PublicPresentationSeminarProcessStateType type;
     }
 
-	class phd.thesis.PhdThesisProcessState extends phd.PhdProcessState {
-		PhdThesisProcessStateType type;
-	}
+    class phd.thesis.PhdThesisProcessState extends phd.PhdProcessState {
+        PhdThesisProcessStateType type;
+    }
     
 class phd.PhdProgramProcess extends caseHandling.Process {
 
@@ -6777,15 +6777,15 @@ class phd.thesis.PhdThesisProcess extends phd.PhdProgramProcess {
 
 class phd.thesis.ThesisJuryElement extends DomainObject {
     DateTime creationDate;
-	Boolean president;
-	Boolean reporter;
-	Integer elementOrder;
+    Boolean president;
+    Boolean reporter;
+    Integer elementOrder;
 }
 
-	class phd.thesis.InternalThesisJuryElement extends phd.thesis.ThesisJuryElement {
+    class phd.thesis.InternalThesisJuryElement extends phd.thesis.ThesisJuryElement {
     }
     
-	class phd.thesis.ExternalThesisJuryElement extends phd.thesis.ThesisJuryElement {
+    class phd.thesis.ExternalThesisJuryElement extends phd.thesis.ThesisJuryElement {
         String name;
         String qualification;
         String category;
@@ -7249,10 +7249,10 @@ relation PublicPresentationSeminarPhdProcessState {
 }
 
 relation PhdThesisPhdProcessState {
-	phd.thesis.PhdThesisProcess playsRole process;
-	phd.thesis.PhdThesisProcessState playsRole states {
-		multiplicity *;
-	}
+    phd.thesis.PhdThesisProcess playsRole process;
+    phd.thesis.PhdThesisProcessState playsRole states {
+        multiplicity *;
+    }
 }
 
 relation PhdCandidacyRefereeLetterRootDomainObject {
@@ -7413,27 +7413,27 @@ relation PhdIndividualProgramProcessPublicPresentationSeminarProcess {
 }
 
 relation PhdIndividualProgramProcessPhdThesisProcess {
-	phd.PhdIndividualProgramProcess playsRole individualProgramProcess;
-	phd.thesis.PhdThesisProcess playsRole thesisProcess;
+    phd.PhdIndividualProgramProcess playsRole individualProgramProcess;
+    phd.thesis.PhdThesisProcess playsRole thesisProcess;
 }
 
 relation RootDomainObjectThesisJuryElement {
     RootDomainObject playsRole rootDomainObject;
-	phd.thesis.ThesisJuryElement playsRole phdThesisJuryElements {
+    phd.thesis.ThesisJuryElement playsRole phdThesisJuryElements {
         multiplicity *;
     }
 }
 
 relation PhdThesisProcessThesisJuryElement {
-	phd.thesis.PhdThesisProcess playsRole process;
-	phd.thesis.ThesisJuryElement playsRole thesisJuryElements {
+    phd.thesis.PhdThesisProcess playsRole process;
+    phd.thesis.ThesisJuryElement playsRole thesisJuryElements {
         multiplicity *;
     }
 }
 
 relation PersonInternalThesisJuryElement {
     Person playsRole person;
-	phd.thesis.InternalThesisJuryElement playsRole internalThesisJuryElements {
+    phd.thesis.InternalThesisJuryElement playsRole internalThesisJuryElements {
         multiplicity *;
     }
 } 
@@ -7516,33 +7516,38 @@ relation InstitutionRegistryCodeGeneratorCodes {
 relation AcademicServiceRequestRegistryCode {
     serviceRequests.RegistryCode playsRole registryCode;
     serviceRequests.documentRequests.DocumentRequest playsRole documentRequest {
-        multiplicity 1..*;
+        multiplicity 1;
     }
 }
 
-relation RectorateSubmissionBatchRootDomainObject {
-    serviceRequests.RectorateSubmissionBatch playsRole rectorateSubmissionBatch {
+relation RegistryCodeBagRootDomainObject {
+    serviceRequests.RegistryCodeBag playsRole registryCodeBag {
         multiplicity *;
     }
     RootDomainObject playsRole rootDomainObject;
 }
 
-relation InstitutionRegistryCodeGeneratorRectorateSubmissionBatch {
+relation InstitutionRegistryCodeGeneratorRegistryCodeBag {
     serviceRequests.InstitutionRegistryCodeGenerator playsRole registryCodeGenerator {
         multiplicity 1;
     }
-    serviceRequests.RectorateSubmissionBatch playsRole rectorateSubmissionBatch {
-        multiplicity *;
+    serviceRequests.RegistryCodeBag playsRole currentBag {
+        multiplicity 1;
     }
 }
 
-relation RegistryCodeRectorateSubmissionBatch {
+relation RegistryCodeRegistryCodeBag {
     serviceRequests.RegistryCode playsRole registryCode {
         multiplicity *;
     }
-    serviceRequests.RectorateSubmissionBatch playsRole rectorateSubmissionBatch {
+    serviceRequests.RegistryCodeBag playsRole registryCodeBag {
         multiplicity 1;
     }
+}
+
+relation RegistryCodeBagPrevious {
+    serviceRequests.RegistryCodeBag playsRole next;
+    serviceRequests.RegistryCodeBag playsRole previous;
 }
 
 relation RegistrationAcademicServiceRequestRegistration {
@@ -16477,10 +16482,10 @@ relation RootDomainObjectUtilEmailMessage {
 }
 
 relation RootDomainObjectUtilEmailMessageId {
-	RootDomainObject playsRole rootDomainObject;
-	util.email.MessageId playsRole utilEmailMessageIds {
-		multiplicity *;
-	}
+    RootDomainObject playsRole rootDomainObject;
+    util.email.MessageId playsRole utilEmailMessageIds {
+        multiplicity *;
+    }
 }
 
 relation RootDomainObjectUtilEmailRecipient {
@@ -16510,17 +16515,17 @@ relation UtilEmailSenderUtilEmailMessage {
 }
 
 relation UtilEmailMessageIdUtilEmailMessage {
-	util.email.Message playsRole message;
-	util.email.MessageId playsRole messageIds {
-		multiplicity *;
-	}
+    util.email.Message playsRole message;
+    util.email.MessageId playsRole messageIds {
+        multiplicity *;
+    }
 }
 
 relation UtilEmailUtilEmailMessage {
-	util.Email playsRole emails {
-		multiplicity *;
-	}
-	util.email.Message playsRole message;
+    util.Email playsRole emails {
+        multiplicity *;
+    }
+    util.email.Message playsRole message;
 }
 
 relation UtilEmailMessageUtilEmailRecipientTos {
