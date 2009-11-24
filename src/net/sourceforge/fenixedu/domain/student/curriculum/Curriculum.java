@@ -325,7 +325,7 @@ public class Curriculum implements Serializable, ICurriculum {
 	}
 
 	final BigDecimal ectsCreditsCurricularYear = sumEctsCredits.add(BigDecimal.valueOf(24)).divide(BigDecimal.valueOf(60),
-		SCALE * SCALE + 1).add(BigDecimal.valueOf(1));
+		SCALE * SCALE + 1, RoundingMode.HALF_EVEN).add(BigDecimal.valueOf(1));
 	return Math.min(ectsCreditsCurricularYear.intValue(), getTotalCurricularYears().intValue());
     }
 
