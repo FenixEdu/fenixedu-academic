@@ -44,7 +44,6 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
@@ -321,11 +320,13 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 
 	    infoScheduleing = ReadFinalDegreeWorkProposalSubmisionPeriod.run(infoExecutionDegree.getExecutionDegree());
 	    if (infoScheduleing == null
+		    || infoScheduleing.getStartOfProposalPeriod() == null
+		    || infoScheduleing.getEndOfProposalPeriod() == null
 		    || infoScheduleing.getStartOfProposalPeriod().getTime() > Calendar.getInstance().getTimeInMillis()
 		    || infoScheduleing.getEndOfProposalPeriod().getTime() < Calendar.getInstance().getTimeInMillis()) {
 		ActionErrors actionErrors = new ActionErrors();
 
-		if (infoScheduleing != null) {
+		if (infoScheduleing != null && infoScheduleing.getStartOfProposalPeriod() != null && infoScheduleing.getEndOfProposalPeriod() != null) {
 		    actionErrors.add("finalDegreeWorkProposal.ProposalPeriod.validator.OutOfPeriod", new ActionError(
 			    "finalDegreeWorkProposal.ProposalPeriod.validator.OutOfPeriod"));
 		    request.setAttribute("infoScheduleing", infoScheduleing);
