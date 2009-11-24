@@ -52,7 +52,6 @@ public class PendingRequest extends PendingRequest_Base {
 	}
     }
 
-    @Service
     public void delete() {
 	for (PendingRequestParameter pendingRequestParameter : getPendingRequestParameter()) {
 	    pendingRequestParameter.delete();
