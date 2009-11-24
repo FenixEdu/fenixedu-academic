@@ -178,12 +178,17 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonthToExportList");
 	if (yearMonth != null && yearMonth.getIsThisYearMonthClosed()) {
 	    final ClosedMonth closedMonth = ClosedMonth.getClosedMonthForBalance(yearMonth);
-	    StyledExcelSpreadsheet spreadsheet = getSpreadSheet2(closedMonth);
+	    StyledExcelSpreadsheet spreadsheet = getSpreadSheet(closedMonth);
 	    spreadsheet.getWorkbook().setRepeatingRowsAndColumns(0, 0, 0, 0, 1);
 	    spreadsheet.getSheet().getPrintSetup().setLandscape(true);
 	    spreadsheet.getSheet().getPrintSetup().setLeftToRight(true);
 	    response.setContentType("text/plain");
-	    response.addHeader("Content-Disposition", "attachment; filename=listagem_mes.xls");
+	    ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+	    String month = bundleEnumeration.getString(yearMonth.getMonth().toString());
+	    response.addHeader("Content-Disposition", new StringBuilder("attachment; filename=listagem_mes_").append(month)
+		    .append("-").append(yearMonth.getYear()).toString()
+		    + ".xls");
+
 	    final ServletOutputStream writer = response.getOutputStream();
 	    spreadsheet.getWorkbook().write(writer);
 	    writer.flush();
@@ -193,7 +198,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	return prepareToCloseMonth(mapping, actionForm, request, response);
     }
 
-    private StyledExcelSpreadsheet getSpreadSheet2(ClosedMonth closedMonth) {
+    private StyledExcelSpreadsheet getSpreadSheet(ClosedMonth closedMonth) {
 	StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("Listagem Fecho Mês");
 	spreadsheet.newHeaderRow();
 	spreadsheet.addHeader("Nº Mec");
@@ -252,8 +257,62 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 			.get(justificationMotive));
 	    }
 	}
-
 	spreadsheet.setRegionBorder(0, spreadsheet.getRow().getRowNum() + 1, 0, spreadsheet.getMaxiumColumnNumber() - 1);
+
+	spreadsheet.getSheet("Listagem Fecho Mês Agrupada");
+	spreadsheet.newHeaderRow();
+	spreadsheet.addHeader("Nº Mec");
+	spreadsheet.addHeader("Nome", 10000);
+	columnNumber = 2;
+	Map<String, Integer> justificationsByGroups = new HashMap<String, Integer>();
+	for (JustificationGroup justificationGroup : JustificationGroup.values()) {
+	    List<JustificationMotive> justificationMotivesByGroup = JustificationMotive
+		    .getJustificationMotivesByGroup(justificationGroup);
+	    if (justificationMotivesByGroup.size() != 0) {
+		justificationsByGroups.put(justificationGroup.name(), columnNumber++);
+		spreadsheet.addHeader(bundleEnumeration.getString(justificationGroup.name()), spreadsheet.getExcelStyle()
+			.getVerticalHeaderStyle(), 1250);
+	    }
+	}
+	for (JustificationMotive justificationMotive : rootDomainObject.getJustificationMotives()) {
+	    if (justificationMotive.getJustificationGroup() == null
+		    && justificationTypes.contains(justificationMotive.getJustificationType())
+		    && getIsJustificationUsed(assiduousnessRecordBetweenDates, justificationMotive)) {
+		justificationsByGroups.put(justificationMotive.getAcronym(), columnNumber++);
+		spreadsheet.addHeader(justificationMotive.getAcronym(), spreadsheet.getExcelStyle().getVerticalHeaderStyle(),
+			1250);
+	    }
+	}
+
+	for (AssiduousnessClosedMonth assiduousnessClosedMonth : closedMonth.getAssiduousnessClosedMonths()) {
+	    Map<JustificationGroup, Double> justificationsValues = new HashMap<JustificationGroup, Double>();
+	    spreadsheet.newRow();
+	    spreadsheet.addCell(assiduousnessClosedMonth.getAssiduousnessStatusHistory().getAssiduousness().getEmployee()
+		    .getEmployeeNumber());
+	    spreadsheet.addCell(assiduousnessClosedMonth.getAssiduousnessStatusHistory().getAssiduousness().getEmployee()
+		    .getPerson().getName());
+	    for (JustificationMotive justificationMotive : justifications.keySet()) {
+		double leavesDaysByJustificationMotive = getLeavesDaysByJustificationMotive(justificationMotive,
+			assiduousnessClosedMonth);
+		if (justificationMotive.getJustificationGroup() == null) {
+		    spreadsheet.addCell(leavesDaysByJustificationMotive == 0 ? "" : leavesDaysByJustificationMotive,
+			    justificationsByGroups.get(justificationMotive.getAcronym()));
+		} else {
+		    Double value = justificationsValues.get(justificationMotive.getJustificationGroup());
+		    if (value == null) {
+			value = 0.0;
+		    }
+		    justificationsValues
+			    .put(justificationMotive.getJustificationGroup(), value + leavesDaysByJustificationMotive);
+		}
+	    }
+	    for (JustificationGroup justificationGroup : justificationsValues.keySet()) {
+		Double value = justificationsValues.get(justificationGroup);
+		spreadsheet.addCell(value == 0 ? "" : value, justificationsByGroups.get(justificationGroup.name()));
+	    }
+	}
+	spreadsheet.setRegionBorder(0, spreadsheet.getRow().getRowNum() + 1, 0, spreadsheet.getMaxiumColumnNumber() - 1);
+
 	return spreadsheet;
     }
 

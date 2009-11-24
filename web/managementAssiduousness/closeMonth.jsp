@@ -65,6 +65,14 @@
 			</html:submit>
 		</fr:form>
 	</p>
+	<p>
+		<fr:form action="/monthClosure.do?method=showMonthCorrections">
+			<fr:edit id="yearMonth" name="yearMonthToExport" schema="show.date" visible="false"/>
+			<html:submit bundle="ASSIDUOUSNESS_RESOURCES" altKey="submit.submit" styleClass="invisible">
+				<bean:message key="button.corrections" />
+			</html:submit>
+		</fr:form>
+	</p>
 	
 	<logic:notEmpty name="closedMonthDocuments">
 		<bean:define id="closedMonthDocuments" name="closedMonthDocuments" toScope="request" />

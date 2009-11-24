@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.DayType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationGroup;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
+import net.sourceforge.fenixedu.domain.exceptions.InvalidGiafCodeException;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.util.WeekDay;
 
@@ -122,8 +123,14 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 	HashMap<Assiduousness, List<LeaveBean>> allUnpaidLicenseLeaves = getLeaves(allAssiduousnessRecord,
 		beginUnpaidLicenseDate, endUnpaidLicenseDate, true);
 	StateWrapper state = new StateWrapper();
-	state.a66JustificationMotive = getA66JustificationMotive();
-	state.unjustifiedJustificationMotive = getUnjustifiedJustificationMotive();
+	state.a66JustificationMotive = JustificationMotive.getA66JustificationMotive();
+	if (state.a66JustificationMotive == null) {
+	    throw new InvalidGiafCodeException("errors.invalidA66JustificationMotive");
+	}
+	state.unjustifiedJustificationMotive = JustificationMotive.getUnjustifiedJustificationMotive();
+	if (state.unjustifiedJustificationMotive == null) {
+	    throw new InvalidGiafCodeException("errors.invalidUnjustifiedJustificationMotive");
+	}
 	state.maternityJustificationMotive = getMaternityJustificationMotive();
 	state.maternityJustificationList = new ArrayList<Assiduousness>();
 
@@ -622,24 +629,6 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 	    }
 	}
 	return false;
-    }
-
-    private static JustificationMotive getUnjustifiedJustificationMotive() {
-	for (JustificationMotive justificationMotive : rootDomainObject.getJustificationMotives()) {
-	    if (justificationMotive.getAcronym().equalsIgnoreCase("FINJUST")) {
-		return justificationMotive;
-	    }
-	}
-	return null;
-    }
-
-    private static JustificationMotive getA66JustificationMotive() {
-	for (JustificationMotive justificationMotive : rootDomainObject.getJustificationMotives()) {
-	    if (justificationMotive.getAcronym().equalsIgnoreCase("A 66 P.A.")) {
-		return justificationMotive;
-	    }
-	}
-	return null;
     }
 
     public static JustificationMotive getMaternityJustificationMotive() {

@@ -2531,6 +2531,8 @@ class DomainObject {
         Boolean discountBonus;
         Boolean discountA17Vacations;
         Boolean inExercise;
+        Boolean isJustificationForUnjustifiedDays;
+        Boolean isJustificationForArticle66Days;
     }
 
     class assiduousness.Meal extends DomainObject {
