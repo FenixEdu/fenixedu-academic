@@ -485,7 +485,7 @@ public class Student extends Student_Base {
     }
 
     public void delete() {
-
+	
 	for (; hasAnyStudentDataByExecutionYear(); getStudentDataByExecutionYear().get(0).delete())
 	    ;
 	for (; !getRegistrations().isEmpty(); getRegistrations().get(0).delete())
@@ -496,6 +496,8 @@ public class Student extends Student_Base {
 	getElectedElections().clear();
 	getDelegateElections().clear();
 
+	setNumber(null);
+	
 	removePerson();
 	removeRootDomainObject();
 	deleteDomainObject();
