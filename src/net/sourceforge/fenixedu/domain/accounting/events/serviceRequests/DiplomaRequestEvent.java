@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.accounting.events.serviceRequests;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
+import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
@@ -67,6 +68,12 @@ abstract public class DiplomaRequestEvent extends DiplomaRequestEvent_Base {
 	labelFormatter.appendLabel(" ");
 	labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent());
 	labelFormatter.appendLabel(")");
+    }
+
+    @Override
+    public PostingRule getPostingRule() {
+	return getAdministrativeOffice().getServiceAgreementTemplate().findPostingRuleByEventTypeAndDate(getEventType(),
+		getAcademicServiceRequest().getRequestDate());
     }
 
 }

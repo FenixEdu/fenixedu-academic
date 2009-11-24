@@ -23,12 +23,14 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormat
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -147,9 +149,10 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	throw new DomainException("error.serviceRequests.AcademicServiceRequest.cannot.modify.creationDate");
     }
 
+    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Override
     final public void setRequestDate(DateTime requestDate) {
-	throw new DomainException("error.serviceRequests.AcademicServiceRequest.cannot.modify.requestDate");
+	super.setRequestDate(requestDate);
     }
 
     final public boolean isUrgentRequest() {

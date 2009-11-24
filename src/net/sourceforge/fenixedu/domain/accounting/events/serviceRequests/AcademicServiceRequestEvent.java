@@ -46,7 +46,7 @@ abstract public class AcademicServiceRequestEvent extends AcademicServiceRequest
     }
 
     @Override
-    final public PostingRule getPostingRule() {
+    public PostingRule getPostingRule() {
 	return getAdministrativeOffice().getServiceAgreementTemplate().findPostingRuleByEventTypeAndDate(getEventType(),
 		getWhenOccured());
     }
