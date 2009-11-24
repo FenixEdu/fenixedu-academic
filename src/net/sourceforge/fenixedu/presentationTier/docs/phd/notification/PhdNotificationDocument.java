@@ -1,5 +1,10 @@
 package net.sourceforge.fenixedu.presentationTier.docs.phd.notification;
 
+import java.text.MessageFormat;
+import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -8,6 +13,7 @@ import net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramGuiding;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.notification.PhdNotification;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
@@ -81,6 +87,52 @@ public class PhdNotificationDocument extends FenixReport {
 
 	addParameter("date", new LocalDate().toString(getDateFormat()));
 	addParameter("notificationNumber", getNotification().getNotificationNumber());
+
+	addGuidingsParameter(individualProgramProcess);
+
+    }
+
+    private void addGuidingsParameter(final PhdIndividualProgramProcess individualProgramProcess) {
+	if (!individualProgramProcess.getGuidings().isEmpty() && !individualProgramProcess.getAssistantguidings().isEmpty()) {
+	    addParameter("guidingsInformation", MessageFormat.format(getMessageFromResource(getClass().getName()
+		    + ".full.guidings.template"), buildGuidingsInformation(individualProgramProcess.getGuidings()),
+		    buildGuidingsInformation(individualProgramProcess.getAssistantguidings())));
+	} else if (!individualProgramProcess.getGuidings().isEmpty()) {
+	    addParameter("guidingsInformation", MessageFormat.format(getMessageFromResource(getClass().getName()
+		    + ".guidings.only.template"), buildGuidingsInformation(individualProgramProcess.getGuidings())));
+	} else {
+	    addParameter("guidingsInformation", "");
+	}
+    }
+
+    private String buildGuidingsInformation(final List<PhdProgramGuiding> guidings) {
+	final StringBuilder result = new StringBuilder();
+	for (int i = 0; i < guidings.size(); i++) {
+	    final PhdProgramGuiding guiding = guidings.get(i);
+	    result.append(guiding.getNameWithTitle());
+	    if (i == guidings.size() - 2) {
+		result.append(" ").append(getMessageFromResource("label.and")).append(" ");
+	    } else {
+		result.append(", ");
+	    }
+	}
+
+	if (result.length() > 0) {
+	    if (result.toString().endsWith(getMessageFromResource("label.and"))) {
+		return result.substring(0, result.length() - getMessageFromResource("label.and").length());
+	    }
+
+	    if (result.toString().endsWith(", ")) {
+		return result.substring(0, result.length() - 2);
+	    }
+	}
+
+	return result.toString();
+
+    }
+
+    private String getMessageFromResource(String key) {
+	return ResourceBundle.getBundle("resources.PhdResources", new Locale(getLanguage().name())).getString(key);
     }
 
     private String getDateFormat() {

@@ -14,6 +14,7 @@ public class PhdProgramGuidingBean implements Serializable {
     private DomainReference<PersonName> personName;
 
     private String name;
+    private String title;
     private String qualification;
     private String category;
     private String workLocation;
@@ -46,6 +47,14 @@ public class PhdProgramGuidingBean implements Serializable {
 
     public void setName(String name) {
 	this.name = name;
+    }
+
+    public String getTitle() {
+	return title;
+    }
+
+    public void setTitle(String title) {
+	this.title = title;
     }
 
     public String getQualification() {

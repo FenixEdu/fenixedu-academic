@@ -525,7 +525,7 @@
 
 
 <schema name="PhdProgramGuiding.view" type="net.sourceforge.fenixedu.domain.phd.PhdProgramGuiding" bundle="PHD_RESOURCES">
-	<slot name="name">
+	<slot name="nameWithTitle">
 		<property name="classes" value="bold nowrap"/>
 	</slot>
 	<slot name="qualification" />
@@ -537,7 +537,7 @@
 </schema>
 
 <schema name="PhdProgramGuiding.view.simple" type="net.sourceforge.fenixedu.domain.phd.PhdProgramGuiding" bundle="PHD_RESOURCES">
-	<slot name="name">
+	<slot name="nameWithTitle">
 		<property name="classes" value="bold nowrap"/>
 	</slot>
 	<slot name="qualification" />
@@ -558,6 +558,7 @@
 		<property name="bundle" value="PHD_RESOURCES"/>
 	</slot>
 	<slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="title" />
 	<slot name="qualification" />
 	<slot name="category" />
 	<slot name="workLocation" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
@@ -583,6 +584,7 @@
 		<property name="className" value="net.sourceforge.fenixedu.domain.person.PersonName"/>
 		<property name="minChars" value="4"/>				
 	</slot>
+	<slot name="title" />
 </schema>
 
 <!-- Public schemas -->
@@ -904,7 +906,7 @@
 </schema>
 
 <schema name="Public.PhdProgramGuiding.view" type="net.sourceforge.fenixedu.domain.phd.PhdProgramGuiding" bundle="PHD_RESOURCES">
-	<slot name="name" />
+	<slot name="nameWithTitle" />
 	<slot name="workLocation" />
 	<slot name="email" />
 </schema>

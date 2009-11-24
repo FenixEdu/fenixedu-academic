@@ -35,6 +35,7 @@
 	<parameter name="registrationFee" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="date" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="notificationNumber" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="guidingsInformation" isForPrompting="false" class="java.lang.String"/>
 
 
 		<group  name="endLine" >
@@ -45,6 +46,21 @@
 			</groupHeader>
 			<groupFooter>
 			<band height="43"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="44"
+						y="0"
+						width="354"
+						height="42"
+						key="textField-4"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Best Regards, " +
+"\n" + $P{administrativeOfficeCoordinator} +
+"\n(Post-Graduation Unit Coordinator)"]]></textFieldExpression>
+				</textField>
 			</band>
 			</groupFooter>
 		</group>
@@ -53,8 +69,8 @@
 			</band>
 		</background>
 		<title>
-			<band height="158"  isSplitAllowed="true" >
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+			<band height="171"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="320"
 						y="25"
@@ -104,7 +120,7 @@
 +
 "Dear " + $P{name} + ",\n\n" + 
 
-"Concerning the above matter and in accordance with the IST PhD Programmes General Regulations, we hereby inform you that your application to " + $P{programName} + " PhD Program, has bem accepted by IST's Scientific Board on " + $P{ratificationDate} + ", as informed by the Department's PhD Scientific Coordinator. <style isUnderline=\"true\">Therefore, you are considered a PhD student as soon as your registration is made.</style>"
+"Concerning the above matter and in accordance with the IST PhD Programmes General Regulations, we hereby inform you that your application to " + $P{programName} + " PhD Program, " + $P{guidingsInformation} + " has been accepted by IST's Scientific Board on " + $P{ratificationDate} + ", as informed by the Department's PhD Scientific Coordinator. <style isUnderline=\"true\">Therefore, you are considered a PhD student as soon as your registration is made.</style>"
 
 +"\n\nPlease be advised that you must address our desk here at Post-Graduation Unit in order to proceed to the payment of the due Application fee (" + $P{registrationFee} + " eur) and annual insurance (" + $P{insuranceFee} + " eur) plus tuition fees."
 
@@ -120,36 +136,6 @@
 		</columnFooter>
 		<pageFooter>
 			<band height="78"  isSplitAllowed="true" >
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="44"
-						y="12"
-						width="354"
-						height="42"
-						key="textField-4"/>
-					<box></box>
-					<textElement>
-						<font/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["Best Regards " +
-"\n" + $P{administrativeOfficeCoordinator} +
-"\n(Post-Graduation Unit Coordinator)"]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="44"
-						y="12"
-						width="354"
-						height="42"
-						key="textField-4"/>
-					<box></box>
-					<textElement>
-						<font/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["Best Regards, " +
-"\n" + $P{administrativeOfficeCoordinator} +
-"\n(Post-Graduation Unit Coordinator)"]]></textFieldExpression>
-				</textField>
 			</band>
 		</pageFooter>
 		<summary>

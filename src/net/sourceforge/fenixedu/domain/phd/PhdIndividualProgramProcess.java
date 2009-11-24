@@ -867,14 +867,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     private PhdProgramGuiding createPhdProgramGuiding(final PhdProgramGuidingBean bean) {
-	final PhdProgramGuiding guiding;
-	if (bean.isInternal()) {
-	    guiding = PhdProgramGuiding.create(bean.getPerson());
-	} else {
-	    guiding = PhdProgramGuiding.create(bean.getName(), bean.getQualification(), bean.getWorkLocation(), bean.getEmail());
-	    guiding.edit(bean.getCategory(), bean.getAddress(), bean.getPhone());
-	}
-	return guiding;
+	return PhdProgramGuiding.create(bean);
     }
 
     public PhdIndividualProgramProcess deleteAssistantGuiding(final PhdProgramGuiding assistant) {

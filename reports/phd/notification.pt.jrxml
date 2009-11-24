@@ -35,6 +35,7 @@
 	<parameter name="registrationFee" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="date" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="notificationNumber" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="guidingsInformation" isForPrompting="false" class="java.lang.String"/>
 
 
 		<group  name="endLine" >
@@ -44,21 +45,20 @@
 			</band>
 			</groupHeader>
 			<groupFooter>
-			<band height="43"  isSplitAllowed="true" >
+			<band height="32"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="44"
 						y="0"
-						width="528"
-						height="41"
-						key="textField-2"/>
+						width="354"
+						height="30"
+						key="textField-4"/>
 					<box></box>
-					<textElement isStyledText="true">
+					<textElement>
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">NOTA:</style>"+
-"\nDocumentos a entregar no momento da matrícula:" +
-"\n- Boletim Vacinas e 2 fotografias"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Dr. " + $P{administrativeOfficeCoordinator} +
+"\n(Coordenador do Núcleo de Pós-Graduação e Formação Contínua)"]]></textFieldExpression>
 				</textField>
 			</band>
 			</groupFooter>
@@ -68,8 +68,8 @@
 			</band>
 		</background>
 		<title>
-			<band height="158"  isSplitAllowed="true" >
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+			<band height="171"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="320"
 						y="25"
@@ -118,7 +118,7 @@
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">ASSUNTO</style>: <style isUnderline=\"true\"> Curso de Doutoramento em " + $P{programName} + " - Candidatura</style>\n\n"
 +
-"No âmbito do assunto acima mencionado, e em conformidade com o estabelecido no Regulamento Geral dos Doutoramentos do IST - 3º Ciclo de estudos Superiores, vimos por este meio informar de que a candidatura apresentada por V. Exª ao Curso de Doutoramento em " + $P{programName} + ", foi aceite pelo Conselho Científico do IST em " + $P{ratificationDate} + ", nos termos do parecer emitido pelo respectivo Coordenador do Doutoramento, do qual enviamos cópia em anexo, <style isUnderline=\"true\">considerando-se, apenas, aluno de doutoramento a partir da data da matrícula.</style>"
+"No âmbito do assunto acima mencionado, e em conformidade com o estabelecido no Regulamento Geral dos Doutoramentos do IST - 3º Ciclo de estudos Superiores, vimos por este meio informar de que a candidatura apresentada por V. Exª ao Curso de Doutoramento em " + $P{programName} + ", " + $P{guidingsInformation} + "foi aceite pelo Conselho Científico do IST em " + $P{ratificationDate} + ", nos termos do parecer emitido pelo respectivo Coordenador do Doutoramento, do qual enviamos cópia em anexo, <style isUnderline=\"true\">considerando-se, apenas, aluno de doutoramento a partir da data da matrícula.</style>"
 
 +"\n\nDeste modo, e para que seja regularizada a situação de V. Exa. no referido Programa de Doutoramento, deverá formalizar a sua matrícula, procedendo de imediato ao pagamento da taxa da inscrição (" + $P{registrationFee} + " euros), do seguro escolar obrigatório (" + $P{insuranceFee} + " euros) e da 1ª prestação da propina anual, de acordo com o artº 6º do Regulamento de Propinas de Doutoramento do IST, podendo efectuar a liquidação por Multibanco, nos nossos serviços de Atendimento. Caso a referida matrícula não seja efectuada no prazo máximo de 20 dias, a contar da data de expedição deste ofício, procederemos à anulação do seu processo. "
 
@@ -138,17 +138,18 @@
 			<band height="78"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="44"
-						y="12"
-						width="354"
-						height="42"
-						key="textField-4"/>
+						x="290"
+						y="6"
+						width="297"
+						height="55"
+						key="textField-2"/>
 					<box></box>
-					<textElement>
+					<textElement isStyledText="true">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["Dr. " + $P{administrativeOfficeCoordinator} +
-"\n(Coordenador do Núcleo de Pós-Graduação e Formação Contínua)"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">NOTA:</style>"+
+"\nDocumentos a entregar no momento da matrícula:" +
+"\n- Boletim Vacinas e 2 fotografias"]]></textFieldExpression>
 				</textField>
 			</band>
 		</pageFooter>

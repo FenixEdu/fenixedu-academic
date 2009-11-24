@@ -14,10 +14,11 @@ public class InternalGuiding extends InternalGuiding_Base {
 	super();
     }
 
-    InternalGuiding(final Person person) {
+    InternalGuiding(final Person person, final String title) {
 	this();
 	check(person, "error.InternalGuiding.person.cannot.be.null");
 	setPerson(person);
+	setTitle(title);
     }
 
     @Override
@@ -96,16 +97,6 @@ public class InternalGuiding extends InternalGuiding_Base {
     }
 
     @Override
-    void edit(String name, String qualification, String workLocation, String email) {
-	// nothing to be done
-    }
-
-    @Override
-    void edit(String category, String address, String phone) {
-	// nothing to be done
-    }
-
-    @Override
     public boolean isFor(Person person) {
 	return getPerson() == person;
     }
@@ -114,4 +105,5 @@ public class InternalGuiding extends InternalGuiding_Base {
     public boolean isInternal() {
 	return true;
     }
+
 }

@@ -6802,6 +6802,7 @@ class phd.candidacy.PHDProgramCandidacy extends candidacy.StudentCandidacy {
 }
 
 class phd.PhdProgramGuiding extends DomainObject {
+	String title;
 }
 
     class phd.InternalGuiding extends phd.PhdProgramGuiding {
