@@ -99,6 +99,9 @@ public class Message extends Message_Base {
 	for (final ReplyTo replyTo : getReplyTosSet()) {
 	    replyTo.safeDelete();
 	}
+	for (; !getMessageIds().isEmpty(); getMessageIds().get(0).removeMessage())
+	    ;
+
 	removeSender();
 	removePerson();
 	removeRootDomainObjectFromPendingRelation();
