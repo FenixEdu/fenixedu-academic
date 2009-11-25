@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add JustificationMotive columns and missing indexes" addJustificationMotiveColumnsAndMissingIndexes.sql
+execute "Registry Code Changes" registryCodesChanges.sql
