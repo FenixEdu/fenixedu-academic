@@ -7519,7 +7519,7 @@ relation InstitutionRegistryCodeGeneratorCodes {
 relation AcademicServiceRequestRegistryCode {
     serviceRequests.RegistryCode playsRole registryCode;
     serviceRequests.documentRequests.DocumentRequest playsRole documentRequest {
-        multiplicity 1..*;
+        multiplicity *;
     }
 }
 
@@ -7535,7 +7535,7 @@ relation InstitutionRegistryCodeGeneratorRectorateSubmissionBatch {
         multiplicity 1;
     }
     serviceRequests.RectorateSubmissionBatch playsRole rectorateSubmissionBatch {
-        multiplicity 1..*;
+        multiplicity *;
     }
 }
 

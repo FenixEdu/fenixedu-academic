@@ -25,8 +25,8 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base {
     public RegistryDiplomaRequest(final DocumentRequestCreateBean bean) {
 	this();
 	super.init(bean);
-	checkParameters(bean);
 	super.setRequestedCycle(bean.getRequestedCycle());
+	checkParameters(bean);
 	if (isPayedUponCreation() && !isFree()) {
 	    RegistryDiplomaRequestEvent.create(getAdministrativeOffice(), getRegistration().getPerson(), this);
 	}
