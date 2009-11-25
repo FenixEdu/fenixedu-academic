@@ -18,7 +18,7 @@
 			<p><span class="error0"><!-- Error messages go here --><bean:write name="messages"/></span></strong></p>
 		</html:messages>
 	</logic:messagesPresent>
-
+	
     <logic:notPresent name="preferredSetting">
 		<ul class="list5 mbottom2">
 			<li>
@@ -36,10 +36,9 @@
 						<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.exportAllToBibTeX" />
 				</html:link>
 			</li>
+			<bean:define id="firstOID" name="executionYearIntervalBean" property="firstExecutionYear.externalId"/>
+			<bean:define id="lastOID" name="executionYearIntervalBean" property="finalExecutionYear.externalId"/>
 	        <li>
-	        	<bean:define id="firstOID" name="executionYearIntervalBean" property="firstExecutionYear.externalId"/>
-	        	<bean:define id="lastOID" name="executionYearIntervalBean" property="finalExecutionYear.externalId"/>
-	        	
 	        	<html:link page="<%= "/publications/management.do?method=prepareSetPreferredPublications&firstOID=" + firstOID + "&lastOID=" + lastOID %>">
 	                <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.setPreferredPublications"/>
 	            </html:link>
@@ -118,11 +117,14 @@
     <logic:notPresent name="preferredSetting">
 	    <jsp:include page="publicationsCategories.jsp" />
 	    <p class="mtop15">
+	    	<bean:define id="firstOID" name="executionYearIntervalBean" property="firstExecutionYear.externalId"/>
+			<bean:define id="lastOID" name="executionYearIntervalBean" property="finalExecutionYear.externalId"/>
+	    
 	    	<em>
 		        <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.preferredPublications.help.management"/>
-				<html:link page="/publications/management.do?method=prepareSetPreferredPublications">
-					<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.setPreferredPublications"/>
-	            </html:link>.
+				<html:link page="<%= "/publications/management.do?method=prepareSetPreferredPublications&firstOID=" + firstOID + "&lastOID=" + lastOID %>">
+	                <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.setPreferredPublications"/>
+	            </html:link>
 	    	</em>
 	    </p>
     </logic:notPresent>
