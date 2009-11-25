@@ -1,16 +1,17 @@
 package net.sourceforge.fenixedu.domain.serviceRequests;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.RegistryDiplomaRequest;
+
+import org.joda.time.DateTime;
 
 public class InstitutionRegistryCodeGenerator extends InstitutionRegistryCodeGenerator_Base {
     public InstitutionRegistryCodeGenerator() {
 	super();
-	new RegistryCodeBag(this);
+	new RectorateSubmissionBatch(this);
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
@@ -29,19 +30,29 @@ public class InstitutionRegistryCodeGenerator extends InstitutionRegistryCodeGen
 	throw new UnsupportedOperationException();
     }
 
-    public List<RegistryCodeBag> getRegistryBags() {
-	LinkedList<RegistryCodeBag> result = new LinkedList<RegistryCodeBag>();
-	do {
-	    result.addLast(getCurrentBag());
-	} while (getCurrentBag().hasPrevious());
-	return result;
+    public RectorateSubmissionBatch getCurrentRectorateSubmissionBatch() {
+	DateTime last = null;
+	RectorateSubmissionBatch current = null;
+	for (RectorateSubmissionBatch bag : getRectorateSubmissionBatchSet()) {
+	    if (last == null || bag.getCreation().isAfter(last)) {
+		last = bag.getCreation();
+		current = bag;
+	    }
+	}
+	return current;
     }
 
     public RegistryCode createRegistryFor(RegistryDiplomaRequest request) {
-	return new RegistryDiplomaCode(this, request);
+	return new RegistryCode(this, request);
     }
 
-    public RegistryCode createRegistryFor(DiplomaRequest request) {
-	return new DiplomaCode(this, request);
+    public Object getRectorateSubmissionBatchesByState(RectorateSubmissionState state) {
+	Set<RectorateSubmissionBatch> result = new HashSet<RectorateSubmissionBatch>();
+	for (RectorateSubmissionBatch batch : getRectorateSubmissionBatchSet()) {
+	    if (batch.getState().equals(state)) {
+		result.add(batch);
+	    }
+	}
+	return result;
     }
 }

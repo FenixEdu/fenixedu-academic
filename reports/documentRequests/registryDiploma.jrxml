@@ -12,8 +12,8 @@
 		 columnSpacing="0"
 		 leftMargin="60"
 		 rightMargin="60"
-		 topMargin="100"
-		 bottomMargin="160"
+		 topMargin="130"
+		 bottomMargin="150"
 		 whenNoDataType="NoPages"
 		 isTitleNewPage="false"
 		 isSummaryNewPage="false">
@@ -55,31 +55,31 @@
 			</band>
 		</background>
 		<title>
-			<band height="150"  isSplitAllowed="true" >
+			<band height="145"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
 						mode="Transparent"
 						x="0"
 						y="0"
-						width="237"
+						width="180"
 						height="22"
 						key="staticText-1"/>
 					<box></box>
-					<textElement textAlignment="Center">
-						<font size="12"/>
+					<textElement textAlignment="Right">
+						<font size="12" isStrikeThrough="false" />
 					</textElement>
 				<text><![CDATA[REPÚBLICA]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
 						mode="Transparent"
-						x="238"
+						x="300"
 						y="0"
-						width="237"
+						width="175"
 						height="22"
 						key="staticText-2"/>
 					<box></box>
-					<textElement textAlignment="Center">
+					<textElement textAlignment="Left">
 						<font size="12"/>
 					</textElement>
 				<text><![CDATA[PORTUGUESA]]></text>
@@ -108,7 +108,7 @@
 			</band>
 		</columnHeader>
 		<detail>
-			<band height="300"  isSplitAllowed="true" >
+			<band height="276"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="0"
@@ -233,18 +233,18 @@
 				</textField>
 				<line direction="TopDown">
 					<reportElement
-						x="5"
-						y="66"
-						width="190"
+						x="20"
+						y="64"
+						width="180"
 						height="0"
 						key="line-1"/>
 					<graphicElement stretchType="NoStretch"/>
 				</line>
 				<line direction="TopDown">
 					<reportElement
-						x="285"
-						y="66"
-						width="190"
+						x="279"
+						y="64"
+						width="180"
 						height="0"
 						key="line-2"/>
 					<graphicElement stretchType="NoStretch"/>
@@ -252,8 +252,8 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="0"
-						y="78"
-						width="218"
+						y="76"
+						width="213"
 						height="22"
 						key="textField-9"
 						positionType="Float"/>
@@ -265,8 +265,8 @@
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="262"
-						y="78"
+						x="261"
+						y="76"
 						width="213"
 						height="21"
 						key="textField-10"

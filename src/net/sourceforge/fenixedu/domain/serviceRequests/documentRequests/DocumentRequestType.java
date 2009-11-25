@@ -135,8 +135,8 @@ public enum DocumentRequestType {
     }
 
     final public boolean getHasCycleTypeDependency(final DegreeType degreeType) {
-	return degreeType.isComposite()
-		&& (this == DEGREE_FINALIZATION_CERTIFICATE || this == REGISTRY_DIPLOMA_REQUEST || this == DIPLOMA_REQUEST || this == DIPLOMA_SUPPLEMENT_REQUEST);
+	return this == DEGREE_FINALIZATION_CERTIFICATE || this == REGISTRY_DIPLOMA_REQUEST || this == DIPLOMA_REQUEST
+		|| this == DIPLOMA_SUPPLEMENT_REQUEST;
     }
 
     public boolean isAllowedToQuickDeliver() {

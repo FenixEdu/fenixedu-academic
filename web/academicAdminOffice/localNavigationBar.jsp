@@ -36,7 +36,7 @@
 		<li><html:link action="/academicServiceRequestsManagement.do?method=search&amp;academicSituationType=NEW"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="new.requests" /></html:link></li>
 		<li><html:link action="/academicServiceRequestsManagement.do?method=search&amp;academicSituationType=PROCESSING"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="processing.requests" /></html:link></li>
 		<li><html:link action="/academicServiceRequestsManagement.do?method=search&amp;academicSituationType=CONCLUDED"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="concluded.requests"/></html:link></li>
-<%--        <li><html:link action="/academicServiceRequestsManagement.do?method=viewCurrentBag"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="link.registryCodes"/></html:link></li> --%>
+<%--        <li><html:link action="/rectorateDocumentSubmission.do?method=index"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="link.rectorateSubmission"/></html:link></li> --%>
 
 		<li class="navheader"><bean:message key="label.navheader.marksSheet" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
 		<li><html:link page="/markSheetManagement.do?method=prepareSearchMarkSheet"><bean:message key="link.markSheet.management" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link></li>

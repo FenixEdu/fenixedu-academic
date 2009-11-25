@@ -162,19 +162,27 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 	final DegreeType degreeType = degree.getDegreeType();
 	if (degreeType.getQualifiesForGraduateTitle()) {
 	    res.append(", ");
-	    res.append(getResourceBundle().getString("documents.DegreeFinalizationCertificate.diplomaDescription.one"));
-
-	    switch (degreeType) {
-	    case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
-		break;
-	    case BOLONHA_SPECIALIZATION_DEGREE:
+	    if (getDocumentRequest().getRegistryCode() != null) {
+		res.append(getResourceBundle().getString("documents.DegreeFinalizationCertificate.registryNumber"));
 		res.append(SINGLE_SPACE);
-		res.append(getResourceBundle().getString("documents.DegreeFinalizationCertificate.diplomaDescription.diploma"));
-		break;
-	    default:
-		res.append(SINGLE_SPACE);
-		res.append(getResourceBundle().getString("documents.DegreeFinalizationCertificate.diplomaDescription.letter"));
-		break;
+		res.append(getDocumentRequest().getRegistryCode().getCode());
+	    } else {
+		res.append(getResourceBundle().getString("documents.DegreeFinalizationCertificate.diplomaDescription.one"));
+		switch (degreeType) {
+		case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
+		    break;
+		case BOLONHA_SPECIALIZATION_DEGREE:
+		    res.append(SINGLE_SPACE);
+		    res.append(getResourceBundle()
+			    .getString("documents.DegreeFinalizationCertificate.diplomaDescription.diploma"));
+		    break;
+		default:
+		    res.append(SINGLE_SPACE);
+		    res
+			    .append(getResourceBundle().getString(
+				    "documents.DegreeFinalizationCertificate.diplomaDescription.letter"));
+		    break;
+		}
 	    }
 	}
 
@@ -248,5 +256,4 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 
 	return result.toString();
     }
-
 }

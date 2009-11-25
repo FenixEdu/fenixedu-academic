@@ -2021,3 +2021,22 @@
 		</validator>
 	</slot>
 </schema>
+
+<schema name="rectorateSubmission.batchIndex"
+	type="net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionBatch" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="creation" key="label.rectorateSubmission.creation" />
+    <slot name="registryCodeCount" key="label.rectorateSubmission.registryCodeCount" />
+</schema>
+
+<schema name="rectorateSubmission.batchDocuments"
+	type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest"
+	bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="serviceRequestNumberYear" key="label.serviceRequestNumberYear" />
+	<slot name="activeSituationDate" key="last.modification"
+		layout="no-time" />
+	<slot name="student.number" key="label.studentNumber" />
+	<slot name="description"
+		key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.description" />
+	<slot name="academicServiceRequestSituationType"
+		key="label.currentSituation" />
+</schema>

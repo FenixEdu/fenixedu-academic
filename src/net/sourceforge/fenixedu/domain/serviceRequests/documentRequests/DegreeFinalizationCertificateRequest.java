@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DegreeF
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.serviceRequests.RegistryCode;
 import net.sourceforge.fenixedu.domain.student.MobilityProgram;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
@@ -99,9 +100,18 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     static public void checkForDiplomaRequest(final Registration registration, final CycleType requestedCycle) {
 	final DiplomaRequest diplomaRequest = registration.getDiplomaRequest(requestedCycle);
 	if (diplomaRequest == null) {
-	    throw new DomainException("DegreeFinalizationCertificateRequest.registration.withoutDiplomaRequest");
+	    checkForRegistryRequest(registration, requestedCycle);
 	} else if (diplomaRequest.isPayedUponCreation() && diplomaRequest.hasEvent() && !diplomaRequest.getEvent().isPayed()) {
 	    throw new DomainException("DegreeFinalizationCertificateRequest.registration.withoutPayedDiplomaRequest");
+	}
+    }
+
+    static public void checkForRegistryRequest(final Registration registration, final CycleType requestedCycle) {
+	final RegistryDiplomaRequest registryRequest = registration.getRegistryDiplomaRequest(requestedCycle);
+	if (registryRequest == null) {
+	    throw new DomainException("DegreeFinalizationCertificateRequest.registration.withoutRegistryRequest");
+	} else if (registryRequest.isPayedUponCreation() && registryRequest.hasEvent() && !registryRequest.getEvent().isPayed()) {
+	    throw new DomainException("DegreeFinalizationCertificateRequest.registration.withoutPayedRegistryRequest");
 	}
     }
 
@@ -300,6 +310,12 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     @Override
     public boolean hasPersonalInfo() {
 	return true;
+    }
+
+    @Override
+    public RegistryCode getRegistryCode() {
+	RegistryDiplomaRequest registry = getRegistration().getRegistryDiplomaRequest(getWhatShouldBeRequestedCycle());
+	return registry != null ? registry.getRegistryCode() : null;
     }
 
     @Service

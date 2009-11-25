@@ -1,23 +1,29 @@
 package net.sourceforge.fenixedu.domain.serviceRequests;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.documents.GeneratedDocument;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.RegistryDiplomaRequest;
 
-public abstract class RegistryCode extends RegistryCode_Base {
-    protected RegistryCode() {
+import org.joda.time.LocalDate;
+
+public class RegistryCode extends RegistryCode_Base {
+    protected RegistryCode(InstitutionRegistryCodeGenerator generator, RegistryDiplomaRequest request) {
 	super();
-    }
-
-    protected void init(InstitutionRegistryCodeGenerator generator, DocumentRequest request) {
 	setRegistryCodeGenerator(generator);
-	setRegistryCodeBag(generator.getCurrentBag());
-	setDocumentRequest(request);
-	setCode(generator.getNextNumber().toString());
-    }
-
-    public GeneratedDocument getDocument() {
-	return getDocumentRequest().getLastGeneratedDocument();
+	setRectorateSubmissionBatch(generator.getCurrentRectorateSubmissionBatch());
+	addDocumentRequest(request);
+	String type = null;
+	switch (request.getRequestedCycle()) {
+	case FIRST_CYCLE:
+	    type = "L";
+	    break;
+	case SECOND_CYCLE:
+	    type = "M";
+	    break;
+	case THIRD_CYCLE:
+	    type = "D";
+	    break;
+	}
+	setCode(generator.getNextNumber() + "/ISTc" + type + "/" + new LocalDate().toString("yy"));
     }
 
     @Override

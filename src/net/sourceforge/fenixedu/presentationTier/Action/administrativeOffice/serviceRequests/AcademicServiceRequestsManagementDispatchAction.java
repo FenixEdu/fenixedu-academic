@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormat
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.RegistryCodeBag;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -44,7 +43,6 @@ import org.apache.struts.action.ActionMapping;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -530,13 +528,4 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	request.setAttribute("registration", bean.getRegistration());
 	return mapping.findForward("viewRegistrationDetails");
     }
-
-    @Service
-    public ActionForward viewCurrentBag(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	RegistryCodeBag bag = rootDomainObject.getInstitutionUnit().getRegistryCodeGenerator().getCurrentBag();
-	request.setAttribute("bag", bag);
-	return mapping.findForward("showCurrentBag");
-    }
-
 }
