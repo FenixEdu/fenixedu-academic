@@ -612,7 +612,6 @@
     name="DocumentRequestCreateBean.REGISTRY_DIPLOMA_REQUEST.AdditionalInformation.view"
     type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean"
     bundle="ACADEMIC_OFFICE_RESOURCES">
-    <slot name="requestedCycle" key="label.cycleType" />
     <slot name="givenNames" key="label.givenNames" />
     <slot name="familyNames" key="label.familyNames" />
 </schema>
@@ -631,7 +630,6 @@
     name="DocumentRequestCreateBean.DIPLOMA_SUPPLEMENT_REQUEST.AdditionalInformation.view"
     type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean"
     bundle="ACADEMIC_OFFICE_RESOURCES">
-    <slot name="requestedCycle" key="label.cycleType" />
     <slot name="givenNames" key="label.givenNames" />
     <slot name="familyNames" key="label.familyNames" />
 </schema>

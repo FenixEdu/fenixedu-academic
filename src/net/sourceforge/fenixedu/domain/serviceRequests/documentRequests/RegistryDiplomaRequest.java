@@ -33,6 +33,14 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base {
 	// setDiplomaSupplement(new DiplomaSupplementRequest(bean));
     }
 
+    // public String getFamilyNames() {
+    // return getDiplomaSupplement().getFamilyNames();
+    // }
+    //
+    // public String getGivenNames() {
+    // return getDiplomaSupplement().getGivenNames();
+    // }
+
     @Override
     protected void checkParameters(DocumentRequestCreateBean bean) {
 	if (bean.getRequestedCycle() == null)
@@ -122,11 +130,9 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base {
 		    .create(this);
 	    final AdministrativeOfficeDocument[] array = {};
 	    byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(documents.toArray(array));
-
 	    DocumentRequestGeneratedDocument.store(this, documents.iterator().next().getReportFileName() + ".pdf", data);
 	} catch (JRException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
+	    throw new DomainException("error.registryDiploma.errorGeneratingDocument");
 	}
     }
 
