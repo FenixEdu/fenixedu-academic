@@ -50,7 +50,7 @@
 			</p>
 		</fr:hasMessages>
 		<fr:edit name="materialTypeBean" id="materialTypeWithMaterial" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.MaterialTypeBean"	schema="<%= chooseMaterialSchema %>" action="<%= prepareInsertMaterialOccupationLink %>">			
-			<fr:destination name="cancel" path="<%= showMaterialSpaceOccupationLink %>"/>			
+			<fr:destination name="cancel" path="<%= showMaterialSpaceOccupationLink %>"/>
 			<fr:destination name="invalid" path="<%= prepareInsertMaterialOccupationLink %>"/>
 			<fr:destination name="exception" path="<%= prepareInsertMaterialOccupationLink %>"/>
 			<fr:layout name="tabular">      										  
@@ -59,7 +59,16 @@
      		</fr:layout>
 		</fr:edit>
 	</logic:notEmpty>
-	
+
+	<logic:notEmpty name="materialTypeBean">
+		<logic:empty name="materialTypeBean" property="material">
+			<logic:present name="prepare-search-was-called">
+				<p>
+					<bean:message bundle="SPACE_RESOURCES" key="space.manager.material.does.not.exist"/>
+				</p>
+			</logic:present>
+		</logic:empty>
+	</logic:notEmpty>
 
 	<logic:notEmpty name="materialTypeBean" property="material">					
 		<p class="mtop1 mbottom05"><strong><bean:message key="title.insert.material.occupation.details" bundle="SPACE_RESOURCES"/></strong></p>

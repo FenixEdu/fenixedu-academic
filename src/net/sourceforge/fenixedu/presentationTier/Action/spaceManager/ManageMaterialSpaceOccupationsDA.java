@@ -31,13 +31,13 @@ public class ManageMaterialSpaceOccupationsDA extends FenixDispatchAction {
 
     public ActionForward prepareInsertMaterialOccupation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-
 	IViewState viewState = RenderUtils.getViewState("materialTypeWithMaterial");
 	if (viewState != null) {
 	    MaterialTypeBean materialTypeBean = (MaterialTypeBean) viewState.getMetaObject().getObject();
 	    if (materialTypeBean.getMaterialType() == null) {
 		addActionMessage(request, "error.material.not.found");
 	    }
+	    request.setAttribute("prepare-search-was-called", Boolean.TRUE);
 	}
 	viewState = (viewState == null) ? RenderUtils.getViewState("materialTypeToCreate") : viewState;
 	return setMaterialTypeBean(mapping, request, viewState);
