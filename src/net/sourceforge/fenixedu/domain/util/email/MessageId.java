@@ -14,5 +14,11 @@ public class MessageId extends MessageId_Base {
 	setMessage(message);
 	setId(messageID);
     }
+
+    public void delete() {
+	removeMessage();
+	removeRootDomainObject();
+	deleteDomainObject();
+    }
     
 }
