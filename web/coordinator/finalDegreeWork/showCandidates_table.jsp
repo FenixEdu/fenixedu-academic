@@ -98,7 +98,8 @@ color: #0a3f72;
 					</logic:notEmpty>
 				</td>
 				<td class="proposta <%= tdClass2 %>">
-					<bean:write name="groupProposal" property="orderOfPreference"/>) <a href="<%= "/ciapl/coordinator/manageFinalDegreeWork.do?method=showProposal&proposalOID=" + proposal.getExternalId() + "&degreeCurricularPlanID=" + degreeCurricularPlanID + "&executionDegreeOID=" + executionDegreeOID %>"><bean:write name="proposal" property="presentationName"/></a>
+					<bean:write name="groupProposal" property="orderOfPreference"/>) 
+                    <html:link page="<%= "/manageFinalDegreeWork.do?method=showProposal&proposalOID=" + proposal.getExternalId() + "&degreeCurricularPlanID=" + degreeCurricularPlanID + "&executionDegreeOID=" + executionDegreeOID %>"><bean:write name="proposal" property="presentationName"/></html:link>
 				</td>
 				<td class="nowrap <%= tdClass2 %>">
 				<bean:define id="attributeVisible" value="false"/>
