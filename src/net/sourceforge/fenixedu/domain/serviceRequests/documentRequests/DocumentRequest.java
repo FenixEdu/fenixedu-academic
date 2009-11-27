@@ -1,13 +1,18 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
+import java.util.List;
 import java.util.Locale;
 
+import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.documents.DocumentRequestGeneratedDocument;
 import net.sourceforge.fenixedu.domain.documents.GeneratedDocument;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice.AdministrativeOfficeDocument;
+import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
 import org.joda.time.DateTime;
 
@@ -113,6 +118,18 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 	return null;
     }
 
+    protected void generateDocument() {
+	try {
+	    final List<AdministrativeOfficeDocument> documents = (List<AdministrativeOfficeDocument>) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
+		    .create(this);
+	    final AdministrativeOfficeDocument[] array = {};
+	    byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(documents.toArray(array));
+	    DocumentRequestGeneratedDocument.store(this, documents.iterator().next().getReportFileName() + ".pdf", data);
+	} catch (JRException e) {
+	    throw new DomainException("error.documentRequest.errorGeneratingDocument");
+	}
+    }
+
     public GeneratedDocument getLastGeneratedDocument() {
 	DateTime last = null;
 	GeneratedDocument lastDoc = null;
@@ -124,5 +141,4 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 	}
 	return lastDoc;
     }
-
 }

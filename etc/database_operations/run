@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Rectorate Changes" rectorateSubmissionChanges.sql

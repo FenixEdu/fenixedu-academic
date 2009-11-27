@@ -99,6 +99,9 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base {
 	    if (!getRegistration().isRegistrationConclusionProcessed(getRequestedCycle())) {
 		throw new DomainException("error.registryDiploma.registration.not.submited.to.conclusion.process");
 	    }
+	    RegistryDiplomaRequest registryRequest = getRegistration().getRegistryDiplomaRequest(getRequestedCycle());
+	    registryRequest.getRegistryCode().addDocumentRequest(this);
+	    getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
 	}
     }
 }

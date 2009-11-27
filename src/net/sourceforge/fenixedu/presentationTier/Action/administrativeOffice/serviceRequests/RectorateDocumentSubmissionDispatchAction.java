@@ -11,6 +11,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionBatch;
 import net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionState;
@@ -40,14 +41,11 @@ import pt.utl.ist.fenix.tools.excel.WorkbookExportFormat;
 public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchAction {
     public ActionForward index(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	request.setAttribute("unsent", rootDomainObject.getInstitutionUnit().getRegistryCodeGenerator()
-		.getRectorateSubmissionBatchesByState(RectorateSubmissionState.UNSENT));
-	request.setAttribute("closed", rootDomainObject.getInstitutionUnit().getRegistryCodeGenerator()
-		.getRectorateSubmissionBatchesByState(RectorateSubmissionState.CLOSED));
-	request.setAttribute("sent", rootDomainObject.getInstitutionUnit().getRegistryCodeGenerator()
-		.getRectorateSubmissionBatchesByState(RectorateSubmissionState.SENT));
-	request.setAttribute("received", rootDomainObject.getInstitutionUnit().getRegistryCodeGenerator()
-		.getRectorateSubmissionBatchesByState(RectorateSubmissionState.RECEIVED));
+	AdministrativeOffice office = getLoggedPerson(request).getEmployee().getAdministrativeOffice();
+	request.setAttribute("unsent", office.getRectorateSubmissionBatchesByState(RectorateSubmissionState.UNSENT));
+	request.setAttribute("closed", office.getRectorateSubmissionBatchesByState(RectorateSubmissionState.CLOSED));
+	request.setAttribute("sent", office.getRectorateSubmissionBatchesByState(RectorateSubmissionState.SENT));
+	request.setAttribute("received", office.getRectorateSubmissionBatchesByState(RectorateSubmissionState.RECEIVED));
 	return mapping.findForward("index");
     }
 
@@ -57,7 +55,9 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 	Set<String> actions = new HashSet<String>();
 	switch (batch.getState()) {
 	case UNSENT:
-	    actions.add("closeBatch");
+	    if (batch.hasAnyDocumentRequest()) {
+		actions.add("closeBatch");
+	    }
 	    break;
 	case CLOSED:
 	    actions.add("generateMetadata");
@@ -73,7 +73,7 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 	    actions.add("zipDocuments");
 	}
 	request.setAttribute("batch", batch);
-	request.setAttribute("requests", batch.getDocumentRequests());
+	request.setAttribute("requests", batch.getDocumentRequestSet());
 	request.setAttribute("actions", actions);
 	return mapping.findForward("viewBatch");
     }
@@ -81,7 +81,7 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
     public ActionForward closeBatch(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	RectorateSubmissionBatch batch = getDomainObject(request, "batchOid");
-	batch.closeBag();
+	batch.closeBatch();
 	return viewBatch(mapping, actionForm, request, response);
     }
 
@@ -103,7 +103,7 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 	    HttpServletResponse response) {
 	RectorateSubmissionBatch batch = getDomainObject(request, "batchOid");
 	SimplifiedSpreadsheetBuilder<DocumentRequest> builder = new SimplifiedSpreadsheetBuilder<DocumentRequest>(batch
-		.getDocumentRequests()) {
+		.getDocumentRequestSet()) {
 	    private final ResourceBundle enumeration = ResourceBundle.getBundle("resources/EnumerationResources", new Locale(
 		    "pt", "PT"));
 
@@ -116,7 +116,7 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 		    addColumn("Ciclo", enumeration.getString(((RegistryDiplomaRequest) document).getRequestedCycle().name()));
 		    break;
 		case DIPLOMA_REQUEST:
-		    addColumn("Ciclo", enumeration.getString(((DiplomaRequest) document).getRequestedCycle().name()));
+		    addColumn("Ciclo", enumeration.getString(((DiplomaRequest) document).getWhatShouldBeRequestedCycle().name()));
 		    break;
 		case DIPLOMA_SUPPLEMENT_REQUEST:
 		    addColumn("Ciclo", enumeration.getString(((DiplomaSupplementRequest) document).getRequestedCycle().name()));
@@ -127,6 +127,7 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 		addColumn("Tipo de Curso", enumeration.getString(document.getDegreeType().name()));
 		addColumn("Nº de Aluno", document.getStudent().getNumber());
 		addColumn("Nome", document.getPerson().getName());
+		addColumn("Ficheiro", document.getLastGeneratedDocument().getFilename());
 	    }
 	};
 	try {
@@ -149,7 +150,7 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 	    RectorateSubmissionBatch batch = getDomainObject(request, "batchOid");
 	    Archive archive = new DiskZipArchive(response, batch.getRange());
 	    Fetcher fetcher = new Fetcher(archive, request, response);
-	    for (DocumentRequest document : batch.getDocumentRequests()) {
+	    for (DocumentRequest document : batch.getDocumentRequestSet()) {
 		fetcher.queue(new Resource(document.getLastGeneratedDocument().getFilename(), document.getLastGeneratedDocument()
 			.getDownloadUrl()));
 	    }

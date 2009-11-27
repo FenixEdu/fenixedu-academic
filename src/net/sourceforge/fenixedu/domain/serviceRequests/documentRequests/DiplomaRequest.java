@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
+import net.sourceforge.fenixedu.domain.serviceRequests.RegistryCode;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -132,6 +133,18 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 	    if (isPayable() && !isPayed()) {
 		throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
 	    }
+
+//	    RegistryDiplomaRequest registryRequest = getRegistration().getRegistryDiplomaRequest(getRequestedCycle());
+//	    if (registryRequest != null) {
+//		registryRequest.getRegistryCode().addDocumentRequest(this);
+//		getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
+//	    } else {
+//		// FIXME: this else is only needed until all diplomas with no
+//		// registry diplomas are flushed away from the system.
+//		getRootDomainObject().getInstitutionUnit().getRegistryCodeGenerator().createRegistryFor(this);
+//		getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
+//	    }
+//	    generateDocument();
 	}
 
 	if (academicServiceRequestBean.isToConclude() && !isFree() && !hasEvent() && !isPayedUponCreation()) {
@@ -192,6 +205,12 @@ public class DiplomaRequest extends DiplomaRequest_Base {
     @Override
     public boolean isToPrint() {
 	return !isDelivered();
+    }
+
+    @Override
+    public RegistryCode getRegistryCode() {
+	RegistryDiplomaRequest registry = getRegistration().getRegistryDiplomaRequest(getWhatShouldBeRequestedCycle());
+	return registry != null ? registry.getRegistryCode() : super.getRegistryCode();
     }
 
     @Override

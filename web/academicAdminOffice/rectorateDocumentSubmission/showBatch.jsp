@@ -12,7 +12,7 @@
 </html:link></p>
 
 <bean:define id="creation" name="batch" property="creation" type="org.joda.time.DateTime" />
-<bean:define id="count" name="batch" property="registryCodeCount" />
+<bean:define id="count" name="batch" property="documentRequestCount" />
 <h3 class="mtop15 mbottom05"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"
     key="label.rectorateSubmission.batchDetails" arg0="<%= creation.toString("dd-MM-yyyy") %>"
     arg1="<%= count.toString() %>" /></h3>

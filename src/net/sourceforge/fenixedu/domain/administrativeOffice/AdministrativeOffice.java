@@ -22,10 +22,13 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.AdministrativeOff
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestYear;
+import net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionBatch;
+import net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionState;
 import net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.space.Campus;
 
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -325,4 +328,25 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 		&& getAdministrativeOfficePermissionGroup(campus).hasPermission(permissionType);
     }
 
+    public RectorateSubmissionBatch getCurrentRectorateSubmissionBatch() {
+	DateTime last = null;
+	RectorateSubmissionBatch current = null;
+	for (RectorateSubmissionBatch bag : getRectorateSubmissionBatchSet()) {
+	    if (last == null || bag.getCreation().isAfter(last)) {
+		last = bag.getCreation();
+		current = bag;
+	    }
+	}
+	return current;
+    }
+
+    public Set<RectorateSubmissionBatch> getRectorateSubmissionBatchesByState(RectorateSubmissionState state) {
+	Set<RectorateSubmissionBatch> result = new HashSet<RectorateSubmissionBatch>();
+	for (RectorateSubmissionBatch batch : getRectorateSubmissionBatchSet()) {
+	    if (batch.getState().equals(state)) {
+		result.add(batch);
+	    }
+	}
+	return result;
+    }
 }

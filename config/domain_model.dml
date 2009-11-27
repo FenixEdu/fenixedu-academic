@@ -7530,8 +7530,8 @@ relation RectorateSubmissionBatchRootDomainObject {
     RootDomainObject playsRole rootDomainObject;
 }
 
-relation InstitutionRegistryCodeGeneratorRectorateSubmissionBatch {
-    serviceRequests.InstitutionRegistryCodeGenerator playsRole registryCodeGenerator {
+relation AdministrativeOfficeRectorateSubmissionBatch {
+    administrativeOffice.AdministrativeOffice playsRole administrativeOffice {
         multiplicity 1;
     }
     serviceRequests.RectorateSubmissionBatch playsRole rectorateSubmissionBatch {
@@ -7539,8 +7539,8 @@ relation InstitutionRegistryCodeGeneratorRectorateSubmissionBatch {
     }
 }
 
-relation RegistryCodeRectorateSubmissionBatch {
-    serviceRequests.RegistryCode playsRole registryCode {
+relation DocumentRequestRectorateSubmissionBatch {
+    serviceRequests.documentRequests.DocumentRequest playsRole documentRequest {
         multiplicity *;
     }
     serviceRequests.RectorateSubmissionBatch playsRole rectorateSubmissionBatch {

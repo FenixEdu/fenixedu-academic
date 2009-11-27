@@ -4,17 +4,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.RegistryDiplomaRequestEvent;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
-import net.sourceforge.fenixedu.domain.documents.DocumentRequestGeneratedDocument;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
-import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice.AdministrativeOfficeDocument;
-import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
 public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base {
 
@@ -116,23 +112,12 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base {
 		throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
 	    }
 	    getRootDomainObject().getInstitutionUnit().getRegistryCodeGenerator().createRegistryFor(this);
+	    getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
 	    generateDocument();
 	} else if (academicServiceRequestBean.isToConclude() && !isFree() && !hasEvent() && !isPayedUponCreation()) {
 	    RegistryDiplomaRequestEvent.create(getAdministrativeOffice(), getRegistration().getPerson(), this);
 	} else if (academicServiceRequestBean.isToCancelOrReject() && hasEvent()) {
 	    getEvent().cancel(academicServiceRequestBean.getEmployee());
-	}
-    }
-
-    private void generateDocument() {
-	try {
-	    final List<AdministrativeOfficeDocument> documents = (List<AdministrativeOfficeDocument>) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
-		    .create(this);
-	    final AdministrativeOfficeDocument[] array = {};
-	    byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(documents.toArray(array));
-	    DocumentRequestGeneratedDocument.store(this, documents.iterator().next().getReportFileName() + ".pdf", data);
-	} catch (JRException e) {
-	    throw new DomainException("error.registryDiploma.errorGeneratingDocument");
 	}
     }
 
