@@ -55,7 +55,7 @@
 						key="textField-4"/>
 					<box></box>
 					<textElement>
-						<font/>
+						<font size="9"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["Best Regards, " +
 "\n" + $P{administrativeOfficeCoordinator} +
@@ -69,7 +69,7 @@
 			</band>
 		</background>
 		<title>
-			<band height="171"  isSplitAllowed="true" >
+			<band height="269"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="320"
@@ -79,7 +79,7 @@
 						key="textField-3"/>
 					<box></box>
 					<textElement textAlignment="Left">
-						<font/>
+						<font size="9"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["\n\nLetter No. " + $P{notificationNumber} +
 "\n\nDate: "+ $P{date} + 
@@ -114,7 +114,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Justified" isStyledText="true" lineSpacing="1_1_2">
-						<font size="10" isPdfEmbedded ="false"/>
+						<font size="9" isPdfEmbedded ="false"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">Subject</style>: <style isUnderline=\"true\"> PhD Program on " + $P{programName} + " - Application </style>\n\n"
 +

@@ -2,7 +2,7 @@
 <!-- Created with iReport - A designer for JasperReports -->
 <!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
 <jasperReport
-		 name="Notification"
+		 name="notification.pt"
 		 columnCount="1"
 		 printOrder="Vertical"
 		 orientation="Portrait"
@@ -55,7 +55,7 @@
 						key="textField-4"/>
 					<box></box>
 					<textElement>
-						<font/>
+						<font size="9"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["Dr. " + $P{administrativeOfficeCoordinator} +
 "\n(Coordenador do Núcleo de Pós-Graduação e Formação Contínua)"]]></textFieldExpression>
@@ -68,7 +68,7 @@
 			</band>
 		</background>
 		<title>
-			<band height="171"  isSplitAllowed="true" >
+			<band height="269"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="320"
@@ -78,7 +78,7 @@
 						key="textField-3"/>
 					<box></box>
 					<textElement textAlignment="Left">
-						<font/>
+						<font size="9"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["Ofício nº " + $P{notificationNumber} +
 "\n\nData: "+ $P{date} + 
@@ -114,7 +114,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Justified" isStyledText="true" lineSpacing="1_1_2">
-						<font size="10" isPdfEmbedded ="false"/>
+						<font size="9" isPdfEmbedded ="false"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">ASSUNTO</style>: <style isUnderline=\"true\"> Curso de Doutoramento em " + $P{programName} + " - Candidatura</style>\n\n"
 +
@@ -145,7 +145,7 @@
 						key="textField-2"/>
 					<box></box>
 					<textElement isStyledText="true">
-						<font/>
+						<font size="9"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">NOTA:</style>"+
 "\nDocumentos a entregar no momento da matrícula:" +
