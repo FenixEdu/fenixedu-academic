@@ -27,7 +27,24 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.renderers.DataProvider;
+import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
+import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
+
 public class DocumentRequestCreateBean extends RegistrationAcademicServiceRequestCreateBean {
+
+    public static class CycleTypeProvider implements DataProvider {
+	@Override
+	public Converter getConverter() {
+	    return new EnumConverter();
+	}
+
+	@Override
+	public Object provide(Object source, Object currentValue) {
+	    DocumentRequestCreateBean bean = (DocumentRequestCreateBean) source;
+	    return bean.getRegistration().getDegreeType().getCycleTypes();
+	}
+    }
 
     private static final long serialVersionUID = 1L;
 

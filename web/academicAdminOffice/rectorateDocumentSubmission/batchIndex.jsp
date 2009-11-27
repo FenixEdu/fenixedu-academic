@@ -13,7 +13,7 @@
     <fr:view name="unsent" schema="rectorateSubmission.batchIndex">
         <fr:layout name="tabular">
             <fr:property name="classes" value="tstyle4 tdcenter thlight mtop05" />
-            <fr:property name="sortBy" value="creation=asc" />
+            <fr:property name="sortBy" value="creation=desc" />
             <fr:property name="link(view)" value="/rectorateDocumentSubmission.do?method=viewBatch" />
             <fr:property name="key(view)" value="link.rectorateSubmission.viewBatch" />
             <fr:property name="param(view)" value="externalId/batchOid" />
@@ -28,7 +28,7 @@
     <fr:view name="closed" schema="rectorateSubmission.batchIndex">
         <fr:layout name="tabular">
             <fr:property name="classes" value="tstyle4 tdcenter thlight mtop05" />
-            <fr:property name="sortBy" value="creation=asc" />
+            <fr:property name="sortBy" value="creation=desc" />
             <fr:property name="link(view)" value="/rectorateDocumentSubmission.do?method=viewBatch" />
             <fr:property name="key(view)" value="link.rectorateSubmission.viewBatch" />
             <fr:property name="param(view)" value="externalId/batchOid" />
@@ -43,7 +43,7 @@
     <fr:view name="sent" schema="rectorateSubmission.batchIndex">
         <fr:layout name="tabular">
             <fr:property name="classes" value="tstyle4 tdcenter thlight mtop05" />
-            <fr:property name="sortBy" value="creation=asc" />
+            <fr:property name="sortBy" value="creation=desc" />
             <fr:property name="link(view)" value="/rectorateDocumentSubmission.do?method=viewBatch" />
             <fr:property name="key(view)" value="link.rectorateSubmission.viewBatch" />
             <fr:property name="param(view)" value="externalId/batchOid" />
@@ -58,7 +58,7 @@
     <fr:view name="received" schema="rectorateSubmission.batchIndex">
         <fr:layout name="tabular">
             <fr:property name="classes" value="tstyle4 tdcenter thlight mtop05" />
-            <fr:property name="sortBy" value="creation=asc" />
+            <fr:property name="sortBy" value="creation=desc" />
             <fr:property name="link(view)" value="/rectorateDocumentSubmission.do?method=viewBatch" />
             <fr:property name="key(view)" value="link.rectorateSubmission.viewBatch" />
             <fr:property name="param(view)" value="externalId/batchOid" />

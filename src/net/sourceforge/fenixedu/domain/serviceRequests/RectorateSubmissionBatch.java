@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.domain.serviceRequests;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -18,6 +21,36 @@ public class RectorateSubmissionBatch extends RectorateSubmissionBatch_Base {
 	setState(RectorateSubmissionState.UNSENT);
 	setRegistryCodeGenerator(registryCodeGenerator);
 	setRootDomainObject(RootDomainObject.getInstance());
+    }
+
+    public Set<DocumentRequest> getDocumentRequests() {
+	Set<DocumentRequest> requests = new HashSet<DocumentRequest>();
+	for (RegistryCode code : getRegistryCodeSet()) {
+	    requests.addAll(code.getDocumentRequestSet());
+	}
+	return requests;
+    }
+
+    public Integer getDocumentRequestCount() {
+	return getDocumentRequests().size();
+    }
+
+    public String getRange() {
+	String first = null;
+	String last = null;
+	for (RegistryCode code : getRegistryCodeSet()) {
+	    if (first == null || code.getCode().compareTo(first) < 0) {
+		first = code.getCode();
+	    }
+	    if (last == null || code.getCode().compareTo(last) > 0) {
+		last = code.getCode();
+	    }
+	}
+	if (first != null && last != null) {
+	    return first + "-" + last;
+	} else {
+	    return "-";
+	}
     }
 
     @Service

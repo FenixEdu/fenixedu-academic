@@ -124,6 +124,10 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
 	return getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.CANCELLED;
     }
 
+    public boolean isSentToExternalEntity() {
+	return getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY;
+    }
+
     void edit(final AcademicServiceRequestBean academicServiceRequestBean) {
 	super.setEmployee(academicServiceRequestBean.getEmployee());
 	super.setJustification(academicServiceRequestBean.getJustification());

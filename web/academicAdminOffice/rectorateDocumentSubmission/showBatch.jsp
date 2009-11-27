@@ -31,8 +31,7 @@
             <fr:slot name="degreeType" key="label.degreeType" />
             <fr:slot name="student.number" key="label.studentNumber" />
             <fr:slot name="person.name" key="label.Student.Person.name" />
-            <fr:slot name="academicServiceRequestSituationType"
-                key="label.currentSituation" />
+            <fr:slot name="academicServiceRequestSituationType" key="label.currentSituation" />
             <fr:slot name="lastGeneratedDocument" layout="link" key="label.rectorateSubmission.document">
                 <fr:property name="key" value="link.download" />
                 <fr:property name="bundle" value="COMMON_RESOURCES" />
@@ -41,6 +40,18 @@
         <fr:layout name="tabular">
             <fr:property name="classes" value="tstyle4 thlight thcenter" />
             <fr:property name="sortBy" value="code=asc" />
+            <fr:property name="link(view)"
+                value="/student.do?method=visualizeRegistration" />
+            <fr:property name="param(view)" value="registration.idInternal/registrationID" />
+            <fr:property name="key(view)" value="link.rectorateSubmission.viewRegistration" />
+            <fr:property name="bundle(view)" value="ACADEMIC_OFFICE_RESOURCES" />
+            <fr:property name="blankTarget(view)" value="true" />
+            <fr:property name="link(receive)"
+                value="/academicServiceRequestsManagement.do?method=prepareReceiveAcademicServiceRequest" />
+            <fr:property name="param(receive)" value="idInternal/academicServiceRequestId" />
+            <fr:property name="key(receive)" value="link.rectorateSubmission.receive" />
+            <fr:property name="bundle(receive)" value="ACADEMIC_OFFICE_RESOURCES" />
+            <fr:property name="visibleIf(receive)" value="activeSituation.sentToExternalEntity" />
         </fr:layout>
     </fr:view>
 </logic:notEmpty>

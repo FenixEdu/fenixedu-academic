@@ -22,6 +22,7 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlLinkWithPreprendedComme
 import pt.ist.fenixWebFramework.renderers.components.HtmlScript;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
+import pt.ist.fenixWebFramework.renderers.components.HtmlLink.Target;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 import pt.ist.fenixWebFramework.renderers.layouts.TabularLayout;
 import pt.ist.fenixWebFramework.renderers.model.MetaObject;
@@ -29,7 +30,6 @@ import pt.ist.fenixWebFramework.renderers.model.MetaObjectCollection;
 import pt.ist.fenixWebFramework.renderers.model.MetaObjectFactory;
 import pt.ist.fenixWebFramework.renderers.model.MetaSlot;
 import pt.ist.fenixWebFramework.renderers.schemas.Schema;
-import pt.ist.fenixWebFramework.renderers.utils.RenderKit;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.renderers.utils.RendererPropertyUtils;
 
@@ -789,6 +789,14 @@ public class CollectionRenderer extends OutputRenderer {
 	return getTableLink(name).getConfirmationBundle();
     }
 
+    public String getBlankTarget(String name) {
+	return Boolean.toString(getTableLink(name).getBlankTarget());
+    }
+
+    public void setBlankTarget(String name, String value) {
+	getTableLink(name).setBlankTarget(Boolean.parseBoolean(value));
+    }
+
     protected int getNumberOfLinkColumns() {
 	if (isRowForLinks()) {
 	    return 0;
@@ -1269,6 +1277,8 @@ public class CollectionRenderer extends OutputRenderer {
 
 	private String confirmationBundle;
 
+	private Boolean blankTarget = false;
+
 	public TableLink() {
 	    super();
 
@@ -1428,6 +1438,14 @@ public class CollectionRenderer extends OutputRenderer {
 	    this.confirmationBundle = confirmationBundle;
 	}
 
+	public Boolean getBlankTarget() {
+	    return blankTarget;
+	}
+
+	public void setBlankTarget(Boolean blankTarget) {
+	    this.blankTarget = blankTarget;
+	}
+
 	public int compareTo(TableLink other) {
 	    if (getOrder() == null) {
 		return 0;
@@ -1474,6 +1492,10 @@ public class CollectionRenderer extends OutputRenderer {
 
 		if (isContextRelativeSet()) {
 		    link.setContextRelative(isContextRelative());
+		}
+
+		if (getBlankTarget().booleanValue()) {
+		    link.setTarget(Target.BLANK);
 		}
 
 		link.setText(getLinkText(this));
