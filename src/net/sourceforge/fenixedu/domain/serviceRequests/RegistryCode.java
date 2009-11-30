@@ -24,7 +24,7 @@ public class RegistryCode extends RegistryCode_Base {
 	    type = "D";
 	    break;
 	}
-	setCode(generator.getNextNumber() + "/ISTc" + type + "/" + new LocalDate().toString("yy"));
+	setCode(generator.getNextNumber() + "/ISTC" + type + "/" + new LocalDate().toString("yy"));
     }
 
     protected RegistryCode(InstitutionRegistryCodeGenerator generator, RegistryDiplomaRequest request) {
