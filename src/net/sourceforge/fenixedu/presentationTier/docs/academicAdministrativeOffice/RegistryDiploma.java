@@ -43,9 +43,20 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
 	addParameter("idNumber", person.getDocumentIdNumber());
 	addParameter("parishOfBirth", person.getParishOfBirth());
 
-	addParameter("degreeName", degreeType.getFilteredName() + SINGLE_SPACE + getResourceBundle().getString("label.in")
-		+ SINGLE_SPACE + degree.getFilteredName(conclusion.getConclusionYear()));
+	String degreeName = "";
+	if (degreeType.isComposite()) {
+	    degreeName = getEnumerationBundle().getString(cycle.getQualifiedName()) + " do ";
+	}
+	addParameter("degreeName", degreeName + "curso de " + degreeType.getFilteredName() + SINGLE_SPACE
+		+ getResourceBundle().getString("label.in") + SINGLE_SPACE
+		+ degree.getFilteredName(conclusion.getConclusionYear()));
 	addParameter("conclusionDay", verboseDate(conclusion.getConclusionDate()));
+	addParameter("graduateTitle", getEnumerationBundle().getString(
+		degreeType.getQualifiedName() + (degreeType.isComposite() ? "." + cycle.name() : "") + ".graduate.title")
+		+ SINGLE_SPACE
+		+ getResourceBundle().getString("label.in")
+		+ SINGLE_SPACE
+		+ degree.getFilteredName(conclusion.getConclusionYear()));
 	Integer finalAverage = registration.getFinalAverage(cycle);
 	addParameter("finalAverage", getEnumerationBundle().getString(finalAverage.toString()));
 	String qualifiedAverageGrade;
