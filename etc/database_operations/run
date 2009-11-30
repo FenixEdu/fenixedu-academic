@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Rectorate Submission Batch Changers Log" rectorateBatchChangers.sql 

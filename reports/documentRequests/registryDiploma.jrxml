@@ -49,6 +49,7 @@
 	<parameter name="finalAverage" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="finalAverageQualified" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="date" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="graduateTitle" isForPrompting="false" class="java.lang.String"/>
 
 		<background>
 			<band height="0"  isSplitAllowed="true" >
@@ -148,7 +149,7 @@
 					<textElement>
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["portadora do bilhete de identidade nº " + $P{idNumber} + ", natural de " + $P{parishOfBirth} + " concluiu o curso de " + $P{degreeName} + " no"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["portadora do bilhete de identidade nº " + $P{idNumber} + ", natural de " + $P{parishOfBirth} + " concluiu o " + $P{degreeName} + " no"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -190,7 +191,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle" isStyledText="true">
 						<font pdfFontName="Helvetica-Bold" isBold="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{degreeName}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{graduateTitle}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement

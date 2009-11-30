@@ -7548,6 +7548,27 @@ relation DocumentRequestRectorateSubmissionBatch {
     }
 }
 
+relation RectorateSubmissionBatchCreator {
+    serviceRequests.RectorateSubmissionBatch playsRole createdRectorateSubmissionBatch {
+        multiplicity *;
+    }
+    Employee playsRole creator;
+}
+
+relation RectorateSubmissionBatchSubmitter {
+    serviceRequests.RectorateSubmissionBatch playsRole submittedRectorateSubmissionBatch {
+        multiplicity *;
+    }
+    Employee playsRole submitter;
+}
+
+relation RectorateSubmissionBatchReceptor {
+    serviceRequests.RectorateSubmissionBatch playsRole receivedRectorateSubmissionBatch {
+        multiplicity *;
+    }
+    Employee playsRole receptor;
+}
+
 relation RegistrationAcademicServiceRequestRegistration {
     student.Registration playsRole registration;
     serviceRequests.RegistrationAcademicServiceRequest playsRole academicServiceRequests {

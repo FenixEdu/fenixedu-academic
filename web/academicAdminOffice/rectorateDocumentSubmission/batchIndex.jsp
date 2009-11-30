@@ -10,7 +10,7 @@
 <logic:notEmpty name="unsent">
     <h3 class="mtop15 mbottom05"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"
         key="title.rectorateSubmission.unsent" /></h3>
-    <fr:view name="unsent" schema="rectorateSubmission.batchIndex">
+    <fr:view name="unsent" schema="rectorateSubmission.batchIndex.UNSENT">
         <fr:layout name="tabular">
             <fr:property name="classes" value="tstyle4 tdcenter thlight mtop05" />
             <fr:property name="sortBy" value="creation=desc" />
@@ -25,7 +25,7 @@
 <logic:notEmpty name="closed">
     <h3 class="mtop15 mbottom05"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"
         key="title.rectorateSubmission.closed" /></h3>
-    <fr:view name="closed" schema="rectorateSubmission.batchIndex">
+    <fr:view name="closed" schema="rectorateSubmission.batchIndex.CLOSED">
         <fr:layout name="tabular">
             <fr:property name="classes" value="tstyle4 tdcenter thlight mtop05" />
             <fr:property name="sortBy" value="creation=desc" />
@@ -40,7 +40,7 @@
 <logic:notEmpty name="sent">
     <h3 class="mtop15 mbottom05"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"
         key="title.rectorateSubmission.sent" /></h3>
-    <fr:view name="sent" schema="rectorateSubmission.batchIndex">
+    <fr:view name="sent" schema="rectorateSubmission.batchIndex.SENT">
         <fr:layout name="tabular">
             <fr:property name="classes" value="tstyle4 tdcenter thlight mtop05" />
             <fr:property name="sortBy" value="creation=desc" />
@@ -55,7 +55,7 @@
 <logic:notEmpty name="received">
     <h3 class="mtop15 mbottom05"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"
         key="title.rectorateSubmission.received" /></h3>
-    <fr:view name="received" schema="rectorateSubmission.batchIndex">
+    <fr:view name="received" schema="rectorateSubmission.batchIndex.RECEIVED">
         <fr:layout name="tabular">
             <fr:property name="classes" value="tstyle4 tdcenter thlight mtop05" />
             <fr:property name="sortBy" value="creation=desc" />

@@ -18,6 +18,7 @@ public class RectorateSubmissionBatch extends RectorateSubmissionBatch_Base {
     public RectorateSubmissionBatch(AdministrativeOffice administrativeOffice) {
 	super();
 	setCreation(new DateTime());
+	setCreator(AccessControl.hasPerson() ? AccessControl.getPerson().getEmployee() : null);
 	setState(RectorateSubmissionState.UNSENT);
 	setAdministrativeOffice(administrativeOffice);
 	setRootDomainObject(RootDomainObject.getInstance());
@@ -71,6 +72,7 @@ public class RectorateSubmissionBatch extends RectorateSubmissionBatch_Base {
 	    throw new DomainException("error.rectorateSubmission.attemptingToSendABatchNotInClosedState");
 	setState(RectorateSubmissionState.SENT);
 	setSubmission(new DateTime());
+	setSubmitter(AccessControl.getPerson().getEmployee());
 	Employee employee = AccessControl.getPerson().getEmployee();
 	for (DocumentRequest document : getDocumentRequestSet()) {
 	    if (document.getAcademicServiceRequestSituationType().equals(AcademicServiceRequestSituationType.PROCESSING)) {
@@ -99,6 +101,7 @@ public class RectorateSubmissionBatch extends RectorateSubmissionBatch_Base {
 	if (allDocumentsReceived()) {
 	    setState(RectorateSubmissionState.RECEIVED);
 	    setReception(new DateTime());
+	    setReceptor(AccessControl.getPerson().getEmployee());
 	}
     }
 
