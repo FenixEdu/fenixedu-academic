@@ -1,14 +1,11 @@
-/**
- * 
- */
-package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.lists;
+package net.sourceforge.fenixedu.presentationTier.Action.commons.administrativeOffice.lists;
 
 import static net.sourceforge.fenixedu.util.StringUtils.EMPTY;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -23,11 +20,11 @@ import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationWithState
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.StringUtils;
 
@@ -36,9 +33,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 
 /**
@@ -47,11 +41,9 @@ import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
  * 
  */
 
-@Mapping(path = "/studentsListByDegree", module = StudentsListByDegreeDA.MODULE)
-@Forwards( { @Forward(name = "searchRegistrations", path = "/academicAdminOffice/lists/searchRegistrationsByDegree.jsp") })
-public class StudentsListByDegreeDA extends FenixDispatchAction {
+public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 
-    protected static final String MODULE = "academicAdminOffice";
+    protected static final String RESOURCE_MODULE = "academicAdminOffice";
 
     private static final String YMD_FORMAT = "yyyy-MM-dd";
 
@@ -74,7 +66,12 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
 
     private SearchStudentsByDegreeParametersBean getOrCreateSearchParametersBean() {
 	SearchStudentsByDegreeParametersBean bean = (SearchStudentsByDegreeParametersBean) getRenderedObject("searchParametersBean");
-	return (bean != null) ? bean : new SearchStudentsByDegreeParametersBean();
+	if (bean == null) {
+	    bean = new SearchStudentsByDegreeParametersBean();
+	    bean.setAdministratedDegreeTypes(getAdministratedDegreeTypes());
+	    bean.setAdministratedDegrees(getAdministratedDegrees());
+	}
+	return bean;
     }
 
     public ActionForward searchByDegree(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -189,10 +186,6 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
 	}
     }
 
-    private static Collection<CycleType> getAdministratedCycleTypes() {
-	return AccessControl.getPerson().getEmployee().getAdministrativeOffice().getAdministratedCycleTypes();
-    }
-
     private void fillSpreadSheetPreBolonhaInfo(StyledExcelSpreadsheet spreadsheet, Registration registration) {
 	if (!registration.isBolonha()) {
 	    RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(registration);
@@ -262,11 +255,13 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
 	}
     }
 
-    static private String getResourceMessage(String key) {
-	return getResourceMessageFromModuleOrApplication(MODULE, key);
+    protected String getResourceMessage(String key) {
+	return getResourceMessageFromModuleOrApplication(RESOURCE_MODULE, key);
     }
 
-    static private String getEnumNameFromResources(Enum<?> enumeration) {
-	return getResourceMessageFromModule("Enumeration", enumeration.getClass().getSimpleName() + "." + enumeration.name());
-    }
+    protected abstract Set<CycleType> getAdministratedCycleTypes();
+
+    protected abstract Set<DegreeType> getAdministratedDegreeTypes();
+
+    protected abstract Set<Degree> getAdministratedDegrees();
 }

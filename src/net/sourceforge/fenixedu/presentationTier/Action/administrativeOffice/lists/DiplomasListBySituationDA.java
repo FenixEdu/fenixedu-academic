@@ -158,9 +158,4 @@ public class DiplomasListBySituationDA extends FenixDispatchAction {
     static private String getResourceMessage(String key) {
 	return getResourceMessageFromModuleOrApplication(MODULE, key);
     }
-
-    static private String getEnumNameFromResources(Enum enumeration) {
-	return getResourceMessageFromModule("Enumeration", enumeration.getClass().getSimpleName() + "." + enumeration.name());
-    }
-
 }

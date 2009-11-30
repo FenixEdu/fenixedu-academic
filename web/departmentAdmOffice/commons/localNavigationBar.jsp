@@ -120,6 +120,10 @@
 		</html:link>
 	</li>
 
+	<li class="navheader"><bean:message key="label.lists" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
+	<li><html:link page="/studentsListByDegree.do?method=prepareByDegree"><bean:message key="link.studentsListByDegree" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link></li>
+	<%--<li><html:link page="/studentsListByCurricularCourse.do?method=prepareByCurricularCourse"><bean:message key="link.studentsListByCurricularCourse" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link></li>--%>
+
 		<%-- Another Temporary solution :-( --%>	
 		
 		<% String deecCode = "21"; %>
@@ -157,7 +161,7 @@
 			<strong><bean:message key="label.navheader.person.examCoordinator" bundle="VIGILANCY_RESOURCES"/></strong>
 		</li>
 
-		<li><html:link  page="/vigilancy/examCoordinatorManagement.do?method=prepareExamCoordinator"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.manageExamCoordinator"/></html:link></li>	
+		<li><html:link  page="/vigilancy/examCoordinatorManagement.do?method=prepareExamCoordinator"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.manageExamCoordinator"/></html:link></li>
 
     <li class="navheader">
         <bean:message key="label.site.title"/>
@@ -200,7 +204,6 @@
 				  </logic:equal>
 				  <li><html:link page="<%= "/departmentFunctionalities.do?method=manageFiles&unitId=" + unitID %>"><bean:message key="label.manageFiles" bundle="RESEARCHER_RESOURCES"/></html:link></li>						
 			</ul>
-		</li>
 		</ul>
 		
 			<logic:notEmpty name="unit" property="allSubUnits">
@@ -216,7 +219,7 @@
 											<html:link page="<%= "/sendEmailToDepartmentGroups.do?method=prepare&unitExternalId=" + subUnitExternalId %>">
 												<bean:message key="label.sendEmailToGroups" bundle="RESEARCHER_RESOURCES"/>
 											 </html:link>
-										 </li>	
+										 </li>
 										  <logic:equal name="subUnit" property="currentUserAbleToDefineGroups" value="true">
 										  <li>
 											 <html:link page="<%= "/departmentFunctionalities.do?method=configureGroups&unitId=" + subUnitID %>"><bean:message key="label.configurePersistentGroups" bundle="RESEARCHER_RESOURCES"/>
@@ -224,7 +227,7 @@
 										  </li>
 										  </logic:equal>
 										  <li><html:link page="<%= "/departmentFunctionalities.do?method=manageFiles&unitId=" + subUnitID %>"><bean:message key="label.manageFiles" bundle="RESEARCHER_RESOURCES"/></html:link></li>						
-									</ul>							
+									</ul>
 						</logic:equal>
 					</logic:equal>
 				</logic:iterate>

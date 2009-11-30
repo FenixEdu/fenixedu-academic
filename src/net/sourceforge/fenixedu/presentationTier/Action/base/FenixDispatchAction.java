@@ -93,6 +93,10 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	}
     }
 
+    protected static String getEnumNameFromResources(Enum<?> enumeration) {
+	return getResourceMessageFromModule("Enumeration", enumeration.getClass().getSimpleName() + "." + enumeration.name());
+    }
+
     protected static String getResourceMessageFromModule(String moduleName, String key) {
 	try {
 	    return getResourceBundleByModuleName(moduleName).getString(key);

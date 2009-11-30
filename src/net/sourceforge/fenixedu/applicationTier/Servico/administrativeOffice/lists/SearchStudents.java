@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.lists;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -18,7 +17,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
@@ -34,28 +32,29 @@ public class SearchStudents extends FenixService {
 
 	final Set<Registration> registrations = new TreeSet<Registration>(Registration.NUMBER_COMPARATOR);
 
-	final Degree degree = searchbean.getDegree();
+	final Degree chosenDegree = searchbean.getDegree();
+	final DegreeType chosenDegreeType = searchbean.getDegreeType();
 	final ExecutionYear executionYear = searchbean.getExecutionYear();
 	for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
 	    final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-	    if ((searchbean.getDegreeType() != null && degreeCurricularPlan.getDegreeType() != searchbean.getDegreeType())) {
+	    if ((chosenDegreeType != null && degreeCurricularPlan.getDegreeType() != chosenDegreeType)) {
 		continue;
 	    }
-	    if ((degreeCurricularPlan.getDegreeType() != DegreeType.EMPTY)
-		    && (!getAdministratedDegreeTypes().contains(degreeCurricularPlan.getDegreeType()))) {
+	    if (chosenDegree != null && degreeCurricularPlan.getDegree() != chosenDegree) {
 		continue;
 	    }
-	    if (degree != null && degreeCurricularPlan.getDegree() != degree) {
-		continue;
+	    if (degreeCurricularPlan.getDegreeType() != DegreeType.EMPTY) {
+		if (!searchbean.getAdministratedDegreeTypes().contains(degreeCurricularPlan.getDegreeType())) {
+		    continue;
+		}
+		if (!searchbean.getAdministratedDegrees().contains(degreeCurricularPlan.getDegree())) {
+		    continue;
+		}
 	    }
 	    degreeCurricularPlan.getRegistrations(executionYear, registrations);
 	}
 
 	return filterResults(searchbean, registrations, executionYear);
-    }
-
-    private static Collection<DegreeType> getAdministratedDegreeTypes() {
-	return AccessControl.getPerson().getEmployee().getAdministrativeOffice().getAdministratedDegreeTypes();
     }
 
     private static List<RegistrationWithStateForExecutionYearBean> filterResults(SearchStudentsByDegreeParametersBean searchbean,

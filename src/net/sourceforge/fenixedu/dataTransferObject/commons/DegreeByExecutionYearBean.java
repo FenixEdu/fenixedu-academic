@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject.commons;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -14,6 +15,8 @@ public class DegreeByExecutionYearBean implements Serializable, Comparable<Degre
     private Degree degree;
     private DegreeType degreeType;
     private ExecutionYear executionYear;
+    private Set<Degree> administratedDegrees;
+    private Set<DegreeType> administratedDegreeTypes;
 
     public DegreeByExecutionYearBean() {
     }
@@ -22,6 +25,22 @@ public class DegreeByExecutionYearBean implements Serializable, Comparable<Degre
 	setDegree(degree);
 	setDegreeType(degree.getDegreeType());
 	setExecutionYear(executionYear);
+    }
+
+    public Set<DegreeType> getAdministratedDegreeTypes() {
+	return administratedDegreeTypes;
+    }
+
+    public void setAdministratedDegreeTypes(Set<DegreeType> administratedDegreeTypes) {
+	this.administratedDegreeTypes = administratedDegreeTypes;
+    }
+
+    public Set<Degree> getAdministratedDegrees() {
+	return administratedDegrees;
+    }
+
+    public void setAdministratedDegrees(Set<Degree> administratedDegrees) {
+	this.administratedDegrees = administratedDegrees;
     }
 
     public Degree getDegree() {
