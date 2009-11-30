@@ -110,6 +110,11 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 	return getDegreeType() != DegreeType.DEGREE;
     }
 
+    @Override
+    public boolean isRequestAvailableToSendToExternalEntity() {
+	return super.isRequestAvailableToSendToExternalEntity() && !hasRectorateSubmissionBatch();
+    }
+
     public boolean hasNumberOfPages() {
 	return getNumberOfPages() != null && getNumberOfPages().intValue() != 0;
     }

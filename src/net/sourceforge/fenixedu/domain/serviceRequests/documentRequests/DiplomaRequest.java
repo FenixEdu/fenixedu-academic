@@ -273,6 +273,18 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 	return getDegreeType() != DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA;
     }
 
+    @Override
+    public boolean isCanGenerateRegistryCode() {
+	// FIXME: romove once Registry Diploma goes online
+	if (DocumentRequestType.REGISTRY_DIPLOMA_REQUEST.getAdministrativeOfficeTypes().contains(AdministrativeOfficeType.DEGREE)
+		|| DocumentRequestType.REGISTRY_DIPLOMA_REQUEST.getAdministrativeOfficeTypes().contains(
+			AdministrativeOfficeType.MASTER_DEGREE)) {
+	    return isSendToExternalEntitySituationAccepted() && !hasRegistryCode();
+	} else {
+	    return false;
+	}
+    }
+
     @Service
     @Override
     @Checked("AcademicServiceRequestPredicates.REVERT_TO_PROCESSING_STATE")
