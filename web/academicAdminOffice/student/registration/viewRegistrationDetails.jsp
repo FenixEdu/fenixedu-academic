@@ -399,6 +399,10 @@
 					<fr:property name="key(deliver)" value="deliver"/>
 					<fr:property name="visibleIf(deliver)" value="deliveredSituationAccepted"/>
 
+                    <fr:property name="linkFormat(code)" value="/academicServiceRequestsManagement.do?method=generateRegistryCode&amp;academicServiceRequestId=${idInternal}"/>
+                    <fr:property name="key(code)" value="label.generateRegistryCode"/>
+                    <fr:property name="visibleIf(code)" value="canGenerateRegistryCode"/>
+
 					<fr:property name="order(view)" value="1"/>
 					<fr:property name="order(cancel)" value="2"/>
 					<fr:property name="order(payments)" value="3"/>
@@ -406,6 +410,7 @@
 					<fr:property name="order(receiveFrom)" value="5"/>
 					<fr:property name="order(print)" value="6"/>
 					<fr:property name="order(deliver)" value="7"/>
+                    <fr:property name="order(code)" value="8"/>
 					
 					<fr:property name="sortBy" value="requestDate=desc, activeSituation.situationDate=desc, urgentRequest=desc, description=asc"/>
 				</fr:layout>

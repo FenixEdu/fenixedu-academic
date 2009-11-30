@@ -39,7 +39,7 @@
         </fr:schema>
         <fr:layout name="tabular">
             <fr:property name="classes" value="tstyle4 thlight thcenter" />
-            <fr:property name="sortBy" value="code=asc" />
+            <fr:property name="sortBy" value="registryCode.code=asc" />
             <fr:property name="link(view)"
                 value="/student.do?method=visualizeRegistration" />
             <fr:property name="param(view)" value="registration.idInternal/registrationID" />
@@ -52,6 +52,7 @@
             <fr:property name="key(receive)" value="link.rectorateSubmission.receive" />
             <fr:property name="bundle(receive)" value="ACADEMIC_OFFICE_RESOURCES" />
             <fr:property name="visibleIf(receive)" value="activeSituation.sentToExternalEntity" />
+            <fr:property name="blankTarget(receive)" value="true" />
         </fr:layout>
     </fr:view>
 </logic:notEmpty>

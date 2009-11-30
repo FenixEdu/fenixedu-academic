@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServi
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DiplomaRequestEvent;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -36,15 +37,24 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 
     @Override
     protected void checkParameters(final DocumentRequestCreateBean bean) {
-	if (getDegreeType().isComposite()) {
-	    if (bean.getRequestedCycle() == null) {
-		throw new DomainException("DiplomaRequest.diploma.requested.cycle.must.be.given");
-	    } else if (!getDegreeType().getCycleTypes().contains(bean.getRequestedCycle())) {
-		throw new DomainException(
-			"DiplomaRequest.diploma.requested.degree.type.is.not.allowed.for.given.student.curricular.plan");
-	    }
+	if (bean.getRequestedCycle() == null) {
+	    throw new DomainException("DiplomaRequest.diploma.requested.cycle.must.be.given");
+	} else if (!getDegreeType().getCycleTypes().contains(bean.getRequestedCycle())) {
+	    throw new DomainException(
+		    "DiplomaRequest.diploma.requested.degree.type.is.not.allowed.for.given.student.curricular.plan");
+	}
+	super.setRequestedCycle(bean.getRequestedCycle());
 
-	    super.setRequestedCycle(bean.getRequestedCycle());
+	if (DocumentRequestType.REGISTRY_DIPLOMA_REQUEST.getAdministrativeOfficeTypes().contains(AdministrativeOfficeType.DEGREE)
+		|| DocumentRequestType.REGISTRY_DIPLOMA_REQUEST.getAdministrativeOfficeTypes().contains(
+			AdministrativeOfficeType.MASTER_DEGREE)) {
+	    final RegistryDiplomaRequest registryRequest = getRegistration().getRegistryDiplomaRequest(getRequestedCycle());
+	    if (registryRequest == null) {
+		throw new DomainException("DiplomaRequest.registration.withoutRegistryRequest");
+	    } else if (registryRequest.isPayedUponCreation() && registryRequest.hasEvent()
+		    && !registryRequest.getEvent().isPayed()) {
+		throw new DomainException("DiplomaRequest.registration.withoutPayedRegistryRequest");
+	    }
 	}
 
 	checkForDuplicate(bean.getRequestedCycle());
@@ -134,17 +144,24 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 		throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
 	    }
 
-//	    RegistryDiplomaRequest registryRequest = getRegistration().getRegistryDiplomaRequest(getRequestedCycle());
-//	    if (registryRequest != null) {
-//		registryRequest.getRegistryCode().addDocumentRequest(this);
-//		getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
-//	    } else {
-//		// FIXME: this else is only needed until all diplomas with no
-//		// registry diplomas are flushed away from the system.
-//		getRootDomainObject().getInstitutionUnit().getRegistryCodeGenerator().createRegistryFor(this);
-//		getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
-//	    }
-//	    generateDocument();
+	    if (DocumentRequestType.REGISTRY_DIPLOMA_REQUEST.getAdministrativeOfficeTypes().contains(
+		    AdministrativeOfficeType.DEGREE)
+		    || DocumentRequestType.REGISTRY_DIPLOMA_REQUEST.getAdministrativeOfficeTypes().contains(
+			    AdministrativeOfficeType.MASTER_DEGREE)) {
+		RegistryCode code = getRegistryCode();
+		// FIXME: later, when all lagacy diplomas are dealt with, the
+		// code can never be null, as it is created in the DR request
+		// that is a pre-requisite for this request.
+		if (code != null) {
+		    if (!code.hasDocumentRequest(this)) {
+			code.addDocumentRequest(this);
+			getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
+		    }
+		}
+		if (getLastGeneratedDocument() == null) {
+		    generateDocument();
+		}
+	    }
 	}
 
 	if (academicServiceRequestBean.isToConclude() && !isFree() && !hasEvent() && !isPayedUponCreation()) {
@@ -205,6 +222,17 @@ public class DiplomaRequest extends DiplomaRequest_Base {
     @Override
     public boolean isToPrint() {
 	return !isDelivered();
+    }
+
+    @Service
+    public void generateRegistryCode() {
+	if (getRegistryCode() == null) {
+	    getRootDomainObject().getInstitutionUnit().getRegistryCodeGenerator().createRegistryFor(this);
+	    getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
+	}
+	if (getLastGeneratedDocument() == null) {
+	    generateDocument();
+	}
     }
 
     @Override

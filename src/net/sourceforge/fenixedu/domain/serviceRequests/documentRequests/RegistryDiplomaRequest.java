@@ -111,9 +111,13 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base {
 	    if (isPayable() && !isPayed()) {
 		throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
 	    }
-	    getRootDomainObject().getInstitutionUnit().getRegistryCodeGenerator().createRegistryFor(this);
-	    getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
-	    generateDocument();
+	    if (getRegistryCode() == null) {
+		getRootDomainObject().getInstitutionUnit().getRegistryCodeGenerator().createRegistryFor(this);
+		getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
+	    }
+	    if (getLastGeneratedDocument() == null) {
+		generateDocument();
+	    }
 	} else if (academicServiceRequestBean.isToConclude() && !isFree() && !hasEvent() && !isPayedUponCreation()) {
 	    RegistryDiplomaRequestEvent.create(getAdministrativeOffice(), getRegistration().getPerson(), this);
 	} else if (academicServiceRequestBean.isToCancelOrReject() && hasEvent()) {

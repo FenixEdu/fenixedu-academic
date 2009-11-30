@@ -73,23 +73,42 @@ public class RectorateSubmissionBatch extends RectorateSubmissionBatch_Base {
 	setSubmission(new DateTime());
 	Employee employee = AccessControl.getPerson().getEmployee();
 	for (DocumentRequest document : getDocumentRequestSet()) {
-	    document.edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.CONCLUDED, employee,
-		    "Insert Template Text Here"));
+	    if (document.getAcademicServiceRequestSituationType().equals(AcademicServiceRequestSituationType.PROCESSING)) {
+		document.edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.CONCLUDED, employee,
+			"Insert Template Text Here"));
+	    }
 	    document.edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY, employee,
 		    "Insert Template Text Here"));
 	}
+    }
+
+    public boolean allDocumentsReceived() {
+	for (DocumentRequest document : getDocumentRequestSet()) {
+	    if (!document.getAcademicServiceRequestSituationType().equals(
+		    AcademicServiceRequestSituationType.RECEIVED_FROM_EXTERNAL_ENTITY)) {
+		return false;
+	    }
+	}
+	return true;
     }
 
     @Service
     public void markAsReceived() {
 	if (!getState().equals(RectorateSubmissionState.SENT))
 	    throw new DomainException("error.rectorateSubmission.attemptingToReceiveABatchNotInSentState");
-	setState(RectorateSubmissionState.RECEIVED);
-	setReception(new DateTime());
-	Employee employee = AccessControl.getPerson().getEmployee();
-	for (DocumentRequest document : getDocumentRequestSet()) {
-	    document.edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.RECEIVED_FROM_EXTERNAL_ENTITY,
-		    employee));
+	if (allDocumentsReceived()) {
+	    setState(RectorateSubmissionState.RECEIVED);
+	    setReception(new DateTime());
 	}
+    }
+
+    @Service
+    public void delete() {
+	if (hasAnyDocumentRequest()) {
+	    throw new DomainException("error.rectorateSubmission.cannotDeleteBatchWithDocuments");
+	}
+	removeAdministrativeOffice();
+	removeRootDomainObject();
+	super.deleteDomainObject();
     }
 }

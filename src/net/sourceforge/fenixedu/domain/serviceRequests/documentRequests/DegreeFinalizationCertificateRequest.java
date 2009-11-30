@@ -73,16 +73,14 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 	    throw new DomainException("DegreeFinalizationCertificateRequest.missing.language");
 	}
 
-	if (getDegreeType().isComposite()) {
-	    if (bean.getRequestedCycle() == null) {
-		throw new DomainException("DegreeFinalizationCertificateRequest.requested.cycle.must.be.given");
-	    } else if (!getDegreeType().getCycleTypes().contains(bean.getRequestedCycle())) {
-		throw new DomainException(
-			"DegreeFinalizationCertificateRequest.requested.degree.type.is.not.allowed.for.given.student.curricular.plan");
-	    }
-
-	    super.setRequestedCycle(bean.getRequestedCycle());
+	if (bean.getRequestedCycle() == null) {
+	    throw new DomainException("DegreeFinalizationCertificateRequest.requested.cycle.must.be.given");
+	} else if (!getDegreeType().getCycleTypes().contains(bean.getRequestedCycle())) {
+	    throw new DomainException(
+		    "DegreeFinalizationCertificateRequest.requested.degree.type.is.not.allowed.for.given.student.curricular.plan");
 	}
+
+	super.setRequestedCycle(bean.getRequestedCycle());
 
 	checkSpecificConditions();
     }

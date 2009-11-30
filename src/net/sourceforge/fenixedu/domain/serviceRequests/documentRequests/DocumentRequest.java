@@ -118,6 +118,14 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 	return null;
     }
 
+    @Override
+    protected void checkRulesToDelete() {
+	super.checkRulesToDelete();
+	if (hasRegistryCode()) {
+	    throw new DomainException("error.AcademicServiceRequest.cannot.be.deleted");
+	}
+    }
+
     protected void generateDocument() {
 	try {
 	    final List<AdministrativeOfficeDocument> documents = (List<AdministrativeOfficeDocument>) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator

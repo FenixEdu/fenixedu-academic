@@ -67,7 +67,9 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 	case SENT:
 	    actions.add("generateMetadata");
 	    actions.add("zipDocuments");
-	    actions.add("markAsReceived");
+	    if (batch.allDocumentsReceived()) {
+		actions.add("markAsReceived");
+	    }
 	case RECEIVED:
 	    actions.add("generateMetadata");
 	    actions.add("zipDocuments");
