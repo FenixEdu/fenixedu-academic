@@ -69,6 +69,7 @@ public class Justification extends Justification_Base {
 	public void anulate(Employee modifiedBy) {
 		if (getAnulation() != null) {
 			getAnulation().setState(AnulationState.VALID);
+			getAnulation().setModifiedBy(modifiedBy);
 		} else {
 			new Anulation(this, modifiedBy);
 		}
