@@ -219,7 +219,6 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
 	PunctualRoomsOccupationRequest roomsReserveRequest = getRoomsReserveRequest(request);
 	try {
 	    ClosePunctualRoomsOccupationRequest.run(roomsReserveRequest, getLoggedPerson(request));
-	    sendCloseRequestMessage(roomsReserveRequest);
 	} catch (DomainException domainException) {
 	    saveMessages(request, domainException);
 	}
@@ -236,22 +235,6 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
 	    saveMessages(request, domainException);
 	}
 	return seeSpecifiedRoomsReserveRequest(mapping, form, request, response);
-    }
-
-    private void sendCloseRequestMessage(PunctualRoomsOccupationRequest roomsReserveRequest) {
-	MessageResources messages = MessageResources.getMessageResources("resources/ResourceAllocationManagerResources");
-	sendMessage(roomsReserveRequest.getRequestor().getDefaultEmailAddressValue(), messages
-		.getMessage("message.room.reservation"), messages.getMessage("message.room.reservation.solved") + "\n"
-		+ messages.getMessage("message.room.reservation.request") + roomsReserveRequest.getSubject() + "\n"
-		+ messages.getMessage("message.room.reservation.description") + roomsReserveRequest.getDescription());
-    }
-
-    @Service
-    private void sendMessage(String email, String subject, String body) {
-	SystemSender systemSender = RootDomainObject.getInstance().getSystemSender();
-	if (email != null) {
-	    new Message(systemSender, systemSender.getConcreteReplyTos(), Collections.EMPTY_LIST, subject, body, email);
-	}
     }
 
     // Private Methods
