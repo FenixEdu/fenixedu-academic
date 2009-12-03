@@ -37,13 +37,15 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 
     @Override
     protected void checkParameters(final DocumentRequestCreateBean bean) {
-	if (bean.getRequestedCycle() == null) {
-	    throw new DomainException("DiplomaRequest.diploma.requested.cycle.must.be.given");
-	} else if (!getDegreeType().getCycleTypes().contains(bean.getRequestedCycle())) {
-	    throw new DomainException(
-		    "DiplomaRequest.diploma.requested.degree.type.is.not.allowed.for.given.student.curricular.plan");
+	if (bean.getHasCycleTypeDependency()) {
+	    if (bean.getRequestedCycle() == null) {
+		throw new DomainException("DiplomaRequest.diploma.requested.cycle.must.be.given");
+	    } else if (!getDegreeType().getCycleTypes().contains(bean.getRequestedCycle())) {
+		throw new DomainException(
+			"DiplomaRequest.diploma.requested.degree.type.is.not.allowed.for.given.student.curricular.plan");
+	    }
+	    super.setRequestedCycle(bean.getRequestedCycle());
 	}
-	super.setRequestedCycle(bean.getRequestedCycle());
 
 	if (DocumentRequestType.REGISTRY_DIPLOMA_REQUEST.getAdministrativeOfficeTypes().contains(AdministrativeOfficeType.DEGREE)
 		|| DocumentRequestType.REGISTRY_DIPLOMA_REQUEST.getAdministrativeOfficeTypes().contains(
