@@ -11,13 +11,7 @@ import org.joda.time.DateTime;
 public class DeleteClocking extends FenixService {
 
     public void run(Clocking clocking, Employee employee) {
-	if (clocking.getAnulation() != null) {
-	    clocking.getAnulation().setState(AnulationState.VALID);
-	    clocking.getAnulation().setLastModifiedDate(new DateTime());
-	    clocking.getAnulation().setModifiedBy(employee);
-	} else {
-	    new Anulation(clocking, employee);
-	}
+    	clocking.anulate(employee);
     }
 
 }
