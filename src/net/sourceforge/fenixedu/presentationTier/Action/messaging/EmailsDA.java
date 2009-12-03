@@ -49,11 +49,11 @@ public class EmailsDA extends FenixDispatchAction {
     public ActionForward newEmail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	EmailBean emailBean = (EmailBean) getRenderedObject("emailBean");
-	
+
 	if (emailBean == null) {
 	    emailBean = (EmailBean) request.getAttribute("emailBean");
 	}
-	
+
 	if (emailBean == null) {
 	    emailBean = new EmailBean();
 	    final Set<Sender> availableSenders = Sender.getAvailableSenders();
@@ -145,7 +145,7 @@ public class EmailsDA extends FenixDispatchAction {
 	} else {
 	    final Sender sender = message.getSender();
 	    MessageDeleteService.delete(message);
-	    return viewSentEmails(mapping, request, sender);
+	    return viewSentEmails(mapping, request, sender.getIdInternal());
 	}
     }
 
