@@ -6,16 +6,36 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import dml.runtime.RelationAdapter;
 
-public class InternalGuiding extends InternalGuiding_Base {
+public class InternalPhdParticipant extends InternalPhdParticipant_Base {
 
-    private InternalGuiding() {
+    static {
+	InternalPhdParticipantPerson.addListener(new RelationAdapter<InternalPhdParticipant, Person>() {
+
+	    @Override
+	    public void beforeAdd(InternalPhdParticipant participant, Person person) {
+		if (participant != null && person != null) {
+		    for (final PhdParticipant each : participant.getIndividualProcess().getParticipants()) {
+			if (each.isInternal() && ((InternalPhdParticipant) each).isFor(person)) {
+			    throw new DomainException("phd.InternalPhdParticipant.process.already.has.participant.for.person");
+			}
+		    }
+		}
+	    }
+
+	});
+    }
+
+    private InternalPhdParticipant() {
 	super();
     }
 
-    InternalGuiding(final Person person, final String title) {
+    InternalPhdParticipant(PhdIndividualProgramProcess process, final Person person, final String title) {
 	this();
+	init(process);
 	check(person, "error.InternalGuiding.person.cannot.be.null");
 	setPerson(person);
 	setTitle(title);

@@ -50,6 +50,13 @@
 			<a href="<%= thesisRequirementDownloadUrl.toString() %>"><bean:write name="thesisProcess" property="thesisRequirementDocument.documentType.localizedName"/> </a>
 		</li>
 		</phd:activityAvailable>
+		<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= PhdThesisProcess.RequestJuryReviews.class %>">
+		<li style="display: inline;">
+			<html:link action="/phdThesisProcess.do?method=prepareRequestJuryReviews" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
+				<bean:message bundle="PHD_RESOURCES" key="label.phd.request.jury.reviews"/>
+			</html:link>
+		</li>
+		</phd:activityAvailable>
 	</ul>
 </logic:equal>
 <br/>

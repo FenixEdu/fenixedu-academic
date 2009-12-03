@@ -312,7 +312,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	@Override
 	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
 		Object object) {
-	    return process.addGuiding((PhdProgramGuidingBean) object);
+	    return process.addGuiding((PhdParticipantBean) object);
 	}
     }
 
@@ -326,7 +326,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	@Override
 	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
 		Object object) {
-	    for (final PhdProgramGuidingBean bean : (List<PhdProgramGuidingBean>) object) {
+	    for (final PhdParticipantBean bean : (List<PhdParticipantBean>) object) {
 		process.addGuiding(bean);
 	    }
 	    return process;
@@ -342,7 +342,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	@Override
 	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
 		Object object) {
-	    return process.deleteGuiding((PhdProgramGuiding) object);
+	    return process.deleteGuiding((PhdParticipant) object);
 	}
     }
 
@@ -356,7 +356,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	@Override
 	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
 		Object object) {
-	    return process.addAssistantGuiding((PhdProgramGuidingBean) object);
+	    return process.addAssistantGuiding((PhdParticipantBean) object);
 	}
     }
 
@@ -372,7 +372,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	@Override
 	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
 		Object object) {
-	    return process.deleteAssistantGuiding((PhdProgramGuiding) object);
+	    return process.deleteAssistantGuiding((PhdParticipant) object);
 	}
     }
 
@@ -849,29 +849,29 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return this;
     }
 
-    private PhdIndividualProgramProcess addGuiding(final PhdProgramGuidingBean bean) {
-	addGuidings(createPhdProgramGuiding(bean));
+    private PhdIndividualProgramProcess addGuiding(final PhdParticipantBean bean) {
+	addGuidings(createPhdParticipant(bean));
 	return this;
     }
 
-    public PhdIndividualProgramProcess deleteGuiding(final PhdProgramGuiding guiding) {
+    public PhdIndividualProgramProcess deleteGuiding(final PhdParticipant guiding) {
 	if (hasGuidings(guiding)) {
 	    guiding.delete();
 	}
 	return this;
     }
 
-    private PhdIndividualProgramProcess addAssistantGuiding(final PhdProgramGuidingBean bean) {
-	addAssistantguidings(createPhdProgramGuiding(bean));
+    private PhdIndividualProgramProcess addAssistantGuiding(final PhdParticipantBean bean) {
+	addAssistantGuidings(createPhdParticipant(bean));
 	return this;
     }
 
-    private PhdProgramGuiding createPhdProgramGuiding(final PhdProgramGuidingBean bean) {
-	return PhdProgramGuiding.create(bean);
+    private PhdParticipant createPhdParticipant(final PhdParticipantBean bean) {
+	return PhdParticipant.create(this, bean);
     }
 
-    public PhdIndividualProgramProcess deleteAssistantGuiding(final PhdProgramGuiding assistant) {
-	if (hasAssistantguidings(assistant)) {
+    public PhdIndividualProgramProcess deleteAssistantGuiding(final PhdParticipant assistant) {
+	if (hasAssistantGuidings(assistant)) {
 	    assistant.delete();
 	}
 	return this;
@@ -1051,7 +1051,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public boolean isGuider(Person person) {
-	for (final PhdProgramGuiding guiding : getGuidings()) {
+	for (final PhdParticipant guiding : getGuidings()) {
 	    if (guiding.isFor(person)) {
 		return true;
 	    }
@@ -1061,7 +1061,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public boolean isAssistantGuider(Person person) {
-	for (final PhdProgramGuiding guiding : getAssistantguidings()) {
+	for (final PhdParticipant guiding : getAssistantGuidings()) {
 	    if (guiding.isFor(person)) {
 		return true;
 	    }
@@ -1079,9 +1079,9 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return this;
     }
 
-    public Set<PhdProgramGuiding> getGuidingsAndAssistantGuidings() {
-	final Set<PhdProgramGuiding> result = new HashSet<PhdProgramGuiding>();
-	result.addAll(getAssistantguidings());
+    public Set<PhdParticipant> getGuidingsAndAssistantGuidings() {
+	final Set<PhdParticipant> result = new HashSet<PhdParticipant>();
+	result.addAll(getAssistantGuidings());
 	result.addAll(getGuidings());
 
 	return result;

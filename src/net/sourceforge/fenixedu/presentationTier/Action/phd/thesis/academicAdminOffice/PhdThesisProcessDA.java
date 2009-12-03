@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisJuryElementBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess.AddJuryElement;
+import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess.RequestJuryReviews;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess.SubmitThesis;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.thesis.CommonPhdThesisProcessDA;
 
@@ -29,7 +30,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Forward(name = "addJuryElement", path = "/phd/thesis/academicAdminOffice/addJuryElement.jsp"),
 
-@Forward(name = "submitThesis", path = "/phd/thesis/academicAdminOffice/submitThesis.jsp")
+@Forward(name = "submitThesis", path = "/phd/thesis/academicAdminOffice/submitThesis.jsp"),
+
+@Forward(name = "requestJuryReviews", path = "/phd/thesis/academicAdminOffice/requestJuryReviews.jsp")
 
 })
 public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
@@ -111,5 +114,38 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
     }
 
     // End of submit thesis
+
+    // Request Jury Reviews
+    public ActionForward prepareRequestJuryReviews(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("requestJuryReviewsBean", new PhdThesisProcessBean());
+
+	return mapping.findForward("requestJuryReviews");
+    }
+
+    public ActionForward prepareRequestJuryReviewsInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("requestJuryReviewsBean", getRenderedObject("requestJuryReviewsBean"));
+
+	return mapping.findForward("requestJuryReviews");
+    }
+
+    public ActionForward requestJuryReviews(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	try {
+	    ExecuteProcessActivity
+		    .run(getProcess(request), RequestJuryReviews.class, getRenderedObject("requestJuryReviewsBean"));
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getMessage(), e.getArgs());
+	    return prepareRequestJuryReviewsInvalid(mapping, form, request, response);
+	}
+
+	return viewIndividualProgramProcess(request, getProcess(request));
+
+    }
+
+    // End of Request Jury Reviews
 
 }

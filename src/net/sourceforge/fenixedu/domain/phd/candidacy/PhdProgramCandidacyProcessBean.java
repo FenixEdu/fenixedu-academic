@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramFocusArea;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramGuidingBean;
+import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.joda.time.LocalDate;
@@ -58,7 +58,7 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 
     private DomainReference<PhdProgramFocusArea> focusArea;
 
-    private List<PhdProgramGuidingBean> guidings;
+    private List<PhdParticipantBean> guidings;
 
     private List<QualificationBean> qualifications;
 
@@ -240,11 +240,11 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 	this.focusArea = (focusArea != null) ? new DomainReference<PhdProgramFocusArea>(focusArea) : null;
     }
 
-    public List<PhdProgramGuidingBean> getGuidings() {
+    public List<PhdParticipantBean> getGuidings() {
 	return guidings;
     }
 
-    public void setGuidings(List<PhdProgramGuidingBean> guidings) {
+    public void setGuidings(List<PhdParticipantBean> guidings) {
 	this.guidings = guidings;
     }
 
@@ -252,7 +252,7 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 	return this.guidings != null && !this.guidings.isEmpty();
     }
 
-    public void addGuiding(final PhdProgramGuidingBean guiding) {
+    public void addGuiding(final PhdParticipantBean guiding) {
 	this.guidings.add(guiding);
     }
 

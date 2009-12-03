@@ -1260,7 +1260,7 @@ public class Person extends Person_Base {
 		&& !hasAnyPayedReceipts() && !hasParking() && !hasAnyResearchInterests() && !hasAnyProjectParticipations()
 		&& !hasAnyParticipations() && !hasAnyBoards() && !hasAnyPersonFunctions()
 		&& (!hasHomepage() || getHomepage().isDeletable()) && !hasLibraryCard() && !hasAnyAcademicServiceRequests()
-		&& !hasAnyCardGenerationEntries() && !hasAnyInternalGuidings() && !hasAnyCreatedQualifications()
+		&& !hasAnyCardGenerationEntries() && !hasAnyInternalParticipants() && !hasAnyCreatedQualifications()
 		&& !hasAnyCreateJobs();
     }
 

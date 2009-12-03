@@ -266,4 +266,15 @@
   		<!-- <put name="hideLanguage" value="false" /> -->
 	</definition>
 	
+	 <definition name="definition.phd.external.access" page="/layout/istLayout.jsp" >
+		<put name="title" value="Doutoramentos | IST" />	
+        <put name="serviceName" value="Instituto Superior Técnico" />                 	
+        <put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
+        <put name="main_navigation" value="/publico/commonNavLocalPub.jsp" />
+        <put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />	
+		<put name="body" value="/commons/blank.jsp" />
+  		<put name="footer" value="/publico/degreeSite/footer.jsp" />
+  		<!-- <put name="hideLanguage" value="false" /> -->
+	</definition>
+	
 </tiles-definitions>

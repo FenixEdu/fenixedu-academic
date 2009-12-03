@@ -10,9 +10,9 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.MasterDegreeAdministrativeOfficeGroup;
-import net.sourceforge.fenixedu.domain.phd.InternalGuiding;
+import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramGuiding;
+import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 
 import org.joda.time.LocalDate;
@@ -49,9 +49,9 @@ public class AlertService {
 
 	final Set<Person> toNotify = new HashSet<Person>();
 
-	for (final PhdProgramGuiding guiding : process.getGuidingsAndAssistantGuidings()) {
+	for (final PhdParticipant guiding : process.getGuidingsAndAssistantGuidings()) {
 	    if (guiding.isInternal()) {
-		toNotify.add(((InternalGuiding) guiding).getPerson());
+		toNotify.add(((InternalPhdParticipant) guiding).getPerson());
 	    } else {
 		new Message(RootDomainObject.getInstance().getSystemSender(), Collections.EMPTY_LIST, Collections.EMPTY_LIST,
 			subjectKey, bodyKey, Collections.singleton(guiding.getEmail()));

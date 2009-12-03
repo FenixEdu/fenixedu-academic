@@ -183,6 +183,7 @@ enum net.sourceforge.fenixedu.domain.phd.candidacy.ApplicantOverallPromise      
 enum net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntryType                                                            as PhdStudyPlanEntryType;
 enum net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationType                                                 as PhdNotificationType;
 enum net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationState                                                as PhdNotificationState;
+enum net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessType                                              		  as PhdProcessAccessType;
 enum net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType                                 as IndividualCandidacyDocumentFileType;
 enum net.sourceforge.fenixedu.domain.accounting.events.DegreeFinalizationCertificateRequestJustificationType              as DegreeFinalizationCertificateRequestJustificationType;
 enum net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestJustificationType            as AcademicServiceRequestJustificationType;
@@ -554,6 +555,17 @@ valueType pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString as MultiLanguageS
 
     internalizeWith importFromString();
 }
+
+/* Phd Module */
+valueType net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessTypeList as PhdProcessAccessTypeList {
+    externalizeWith {
+        String toString();
+    }
+    
+    internalizeWith importFromString();
+}
+
+/* End of Phd Module */
 
 
 /*
@@ -6779,23 +6791,10 @@ class phd.thesis.PhdThesisProcess extends phd.PhdProgramProcess {
 
 class phd.thesis.ThesisJuryElement extends DomainObject {
     DateTime creationDate;
-    Boolean president;
     Boolean reporter;
     Integer elementOrder;
 }
 
-    class phd.thesis.InternalThesisJuryElement extends phd.thesis.ThesisJuryElement {
-    }
-    
-    class phd.thesis.ExternalThesisJuryElement extends phd.thesis.ThesisJuryElement {
-        String name;
-        String qualification;
-        String category;
-        String institution;
-        String address;
-        String phone;
-        String email;
-    }
 
 class phd.PhdProgramServiceAgreementTemplate extends accounting.ServiceAgreementTemplate {
 }
@@ -6803,14 +6802,18 @@ class phd.PhdProgramServiceAgreementTemplate extends accounting.ServiceAgreement
 class phd.candidacy.PHDProgramCandidacy extends candidacy.StudentCandidacy {
 }
 
-class phd.PhdProgramGuiding extends DomainObject {
+class phd.PhdParticipant extends DomainObject {
+	DateTime whenCreated;
 	String title;
+    String accessHashCode;
+	PhdProcessAccessTypeList accessTypes;
+	String password;
 }
 
-    class phd.InternalGuiding extends phd.PhdProgramGuiding {
+    class phd.InternalPhdParticipant extends phd.PhdParticipant {
     }
 
-    class phd.ExternalGuiding extends phd.PhdProgramGuiding {
+    class phd.ExternalPhdParticipant extends phd.PhdParticipant {
         String name;
         String qualification;
         String category;
@@ -7183,18 +7186,18 @@ relation PhdProgramProcessDocumentPerson {
     }
 }
     
-relation PhdProgramGuidingRootDomainObject {
+relation PhdParticipantRootDomainObject {
     RootDomainObject playsRole rootDomainObject;
-    phd.PhdProgramGuiding playsRole phdProgramGuidings {
+    phd.PhdParticipant playsRole phdParticipants {
         multiplicity *;
     }
 }
 
-relation InternalGuidingPerson {
-    phd.InternalGuiding playsRole internalGuidings {
+relation InternalPhdParticipantPerson {
+    Person playsRole person;
+    phd.InternalPhdParticipant playsRole internalParticipants {
         multiplicity *;
     }
-    Person playsRole person;
 }
 
 relation phd.PhdProcessState {
@@ -7211,16 +7214,23 @@ relation PersonPhdProgramState {
     }
 }
 
+relation PhdIndividualProgramProcessPhdParticipant {
+    phd.PhdIndividualProgramProcess playsRole individualProcess;
+    phd.PhdParticipant playsRole participants {
+        multiplicity *;
+    }
+}
+
 relation PhdIndividualProgramProcessGuiding {
-    phd.PhdIndividualProgramProcess playsRole phdIndividualProgramProcess;
-    phd.PhdProgramGuiding playsRole guidings {
+    phd.PhdIndividualProgramProcess playsRole processForGuiding;
+    phd.PhdParticipant playsRole guidings {
         multiplicity *;
     }
 }
 
 relation PhdIndividualProgramProcessAssistantGuiding {
-    phd.PhdIndividualProgramProcess playsRole assistantPhdIndividualProgramProcess;
-    phd.PhdProgramGuiding playsRole assistantguidings {
+    phd.PhdIndividualProgramProcess playsRole processForAssistantGuiding;
+    phd.PhdParticipant playsRole assistantGuidings {
         multiplicity *;
     }
 }
@@ -7434,12 +7444,15 @@ relation PhdThesisProcessThesisJuryElement {
     }
 }
 
-relation PersonInternalThesisJuryElement {
-    Person playsRole person;
-    phd.thesis.InternalThesisJuryElement playsRole internalThesisJuryElements {
+relation PhdParticipantThesisJuryElement {
+    phd.PhdParticipant playsRole participant;
+    phd.thesis.ThesisJuryElement playsRole thesisJuryElements {
         multiplicity *;
     }
-} 
+}
+
+
+
 
 /* End of Phd Module */
 

@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramGuidingBean;
+import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean;
 import net.sourceforge.fenixedu.domain.phd.PhdStudyPlanBean;
 import net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntry;
 import net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntryBean;
@@ -364,7 +364,7 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
     // Phd guiding information
     private void addGuidingsContextInformation(ActionMapping mapping, HttpServletRequest request) {
 	request.setAttribute("guidings", getProcess(request).getGuidings());
-	request.setAttribute("assistantGuidings", getProcess(request).getAssistantguidings());
+	request.setAttribute("assistantGuidings", getProcess(request).getAssistantGuidings());
     }
 
     public ActionForward prepareManageGuidingInformation(ActionMapping mapping, ActionForm actionForm,
@@ -376,7 +376,7 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
     public ActionForward prepareAddGuidingInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	addGuidingsContextInformation(mapping, request);
-	request.setAttribute("guidingBean", new PhdProgramGuidingBean());
+	request.setAttribute("guidingBean", new PhdParticipantBean());
 	return mapping.findForward("manageGuidingInformation");
     }
 
@@ -398,7 +398,7 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
     public ActionForward addGuidingInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final PhdProgramGuidingBean bean = (PhdProgramGuidingBean) getRenderedObject("guidingBean");
+	final PhdParticipantBean bean = (PhdParticipantBean) getRenderedObject("guidingBean");
 	try {
 	    ExecuteProcessActivity.run(getProcess(request), AddGuidingInformation.class.getSimpleName(), bean);
 	    addSuccessMessage(request, "message.guiding.created.with.success");
@@ -431,7 +431,7 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
     public ActionForward prepareAddAssistantGuidingInformation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 	addGuidingsContextInformation(mapping, request);
-	request.setAttribute("assistantGuidingBean", new PhdProgramGuidingBean());
+	request.setAttribute("assistantGuidingBean", new PhdParticipantBean());
 	return mapping.findForward("manageGuidingInformation");
     }
 
@@ -453,7 +453,7 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
     public ActionForward addAssistantGuidingInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final PhdProgramGuidingBean bean = (PhdProgramGuidingBean) getRenderedObject("assistantGuidingBean");
+	final PhdParticipantBean bean = (PhdParticipantBean) getRenderedObject("assistantGuidingBean");
 	try {
 	    ExecuteProcessActivity.run(getProcess(request), AddAssistantGuidingInformation.class.getSimpleName(), bean);
 	    addSuccessMessage(request, "message.assistant.guiding.created.with.success");

@@ -33,8 +33,8 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramGuiding;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramGuidingBean;
+import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
+import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddCandidacyReferees;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddGuidingsInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddQualification;
@@ -44,7 +44,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditIndiv
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditPersonalInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.UploadDocuments;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.ValidatedByCandidate;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramGuidingBean.PhdProgramGuidingType;
+import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean.PhdParticipantType;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeBean;
@@ -399,15 +399,15 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	return createCandidacy(mapping, actionForm, request, response);
     }
 
-    private List<PhdProgramGuidingBean> createGuidingsMinimumList() {
-	final List<PhdProgramGuidingBean> result = new ArrayList<PhdProgramGuidingBean>();
+    private List<PhdParticipantBean> createGuidingsMinimumList() {
+	final List<PhdParticipantBean> result = new ArrayList<PhdParticipantBean>();
 
-	final PhdProgramGuidingBean g1 = new PhdProgramGuidingBean();
-	g1.setGuidingType(PhdProgramGuidingType.EXTERNAL);
+	final PhdParticipantBean g1 = new PhdParticipantBean();
+	g1.setGuidingType(PhdParticipantType.EXTERNAL);
 	g1.setWorkLocation("IST");
 
-	final PhdProgramGuidingBean g2 = new PhdProgramGuidingBean();
-	g2.setGuidingType(PhdProgramGuidingType.EXTERNAL);
+	final PhdParticipantBean g2 = new PhdParticipantBean();
+	g2.setGuidingType(PhdParticipantType.EXTERNAL);
 	// TODO: change this according to collaboration type acronym
 	g2.setWorkLocation("EPFL");
 
@@ -446,8 +446,8 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    HttpServletResponse response) {
 
 	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
-	final PhdProgramGuidingBean guiding = new PhdProgramGuidingBean();
-	guiding.setGuidingType(PhdProgramGuidingType.EXTERNAL);
+	final PhdParticipantBean guiding = new PhdParticipantBean();
+	guiding.setGuidingType(PhdParticipantType.EXTERNAL);
 	bean.addGuiding(guiding);
 
 	request.setAttribute("candidacyBean", bean);
@@ -1046,8 +1046,8 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	if (!bean.getCandidacyHashCode().getIndividualProgramProcess().hasAnyGuidings()) {
 	    bean.setGuidings(createGuidingsMinimumList());
 	} else {
-	    bean.setGuidings(new ArrayList<PhdProgramGuidingBean>());
-	    bean.addGuiding(new PhdProgramGuidingBean());
+	    bean.setGuidings(new ArrayList<PhdParticipantBean>());
+	    bean.addGuiding(new PhdParticipantBean());
 	}
 
 	RenderUtils.invalidateViewState();
@@ -1092,7 +1092,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
 	final String externalId = (String) getFromRequest(request, "removeIndex");
 	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
-	final PhdProgramGuiding guiding = getGuiding(bean.getCandidacyHashCode().getIndividualProgramProcess(), externalId);
+	final PhdParticipant guiding = getGuiding(bean.getCandidacyHashCode().getIndividualProgramProcess(), externalId);
 
 	try {
 	    ExecuteProcessActivity.run(createMockUserView(getCandidacyBean()), getCandidacyBean().getCandidacyHashCode()
@@ -1107,8 +1107,8 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	return prepareEditCandidacyGuidings(mapping, actionForm, request, response);
     }
 
-    private PhdProgramGuiding getGuiding(final PhdIndividualProgramProcess individualProgramProcess, final String externalId) {
-	for (final PhdProgramGuiding guiding : individualProgramProcess.getGuidingsSet()) {
+    private PhdParticipant getGuiding(final PhdIndividualProgramProcess individualProgramProcess, final String externalId) {
+	for (final PhdParticipant guiding : individualProgramProcess.getGuidingsSet()) {
 	    if (guiding.getExternalId().equals(externalId)) {
 		return guiding;
 	    }

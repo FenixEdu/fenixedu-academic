@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramGuiding;
+import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.notification.PhdNotification;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
@@ -93,10 +93,10 @@ public class PhdNotificationDocument extends FenixReport {
     }
 
     private void addGuidingsParameter(final PhdIndividualProgramProcess individualProgramProcess) {
-	if (!individualProgramProcess.getGuidings().isEmpty() && !individualProgramProcess.getAssistantguidings().isEmpty()) {
+	if (!individualProgramProcess.getGuidings().isEmpty() && !individualProgramProcess.getAssistantGuidings().isEmpty()) {
 	    addParameter("guidingsInformation", MessageFormat.format(getMessageFromResource(getClass().getName()
 		    + ".full.guidings.template"), buildGuidingsInformation(individualProgramProcess.getGuidings()),
-		    buildGuidingsInformation(individualProgramProcess.getAssistantguidings())));
+		    buildGuidingsInformation(individualProgramProcess.getAssistantGuidings())));
 	} else if (!individualProgramProcess.getGuidings().isEmpty()) {
 	    addParameter("guidingsInformation", MessageFormat.format(getMessageFromResource(getClass().getName()
 		    + ".guidings.only.template"), buildGuidingsInformation(individualProgramProcess.getGuidings())));
@@ -105,10 +105,10 @@ public class PhdNotificationDocument extends FenixReport {
 	}
     }
 
-    private String buildGuidingsInformation(final List<PhdProgramGuiding> guidings) {
+    private String buildGuidingsInformation(final List<PhdParticipant> guidings) {
 	final StringBuilder result = new StringBuilder();
 	for (int i = 0; i < guidings.size(); i++) {
-	    final PhdProgramGuiding guiding = guidings.get(i);
+	    final PhdParticipant guiding = guidings.get(i);
 	    result.append(guiding.getNameWithTitle());
 	    if (i == guidings.size() - 2) {
 		result.append(" ").append(getMessageFromResource("label.and")).append(" ");

@@ -6,7 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.phd.InternalGuiding;
+import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.CommonPhdIndividualProgramProcessDA;
@@ -39,8 +39,8 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 	searchBean.setFilterPhdPrograms(false);
 
 	final List<PhdIndividualProgramProcess> processes = new ArrayList<PhdIndividualProgramProcess>();
-	for (final InternalGuiding eachGuiding : getLoggedPerson(request).getInternalGuidings()) {
-	    processes.add(eachGuiding.getPhdIndividualProgramProcess());
+	for (final InternalPhdParticipant eachGuiding : getLoggedPerson(request).getInternalParticipants()) {
+	    processes.add(eachGuiding.getIndividualProcess());
 	}
 
 	searchBean.setProcesses(processes);

@@ -6,9 +6,9 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.MasterDegreeAdministrativeOfficeGroup;
-import net.sourceforge.fenixedu.domain.phd.InternalGuiding;
+import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramGuiding;
+import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 
@@ -97,9 +97,9 @@ public class PhdPublicPresentationSeminarAlert extends PhdPublicPresentationSemi
     }
 
     private void generateMessageForGuiders() {
-	for (final PhdProgramGuiding guiding : getProcess().getGuidings()) {
+	for (final PhdParticipant guiding : getProcess().getGuidings()) {
 	    if (guiding.isInternal()) {
-		generateMessage(new FixedSetGroup(((InternalGuiding) guiding).getPerson()));
+		generateMessage(new FixedSetGroup(((InternalPhdParticipant) guiding).getPerson()));
 	    } else {
 		new Message(getRootDomainObject().getSystemSender(), Collections.EMPTY_LIST, Collections.EMPTY_LIST,
 			buildMailSubject(), buildMailBody(), Collections.singleton(guiding.getEmail()));

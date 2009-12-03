@@ -6,11 +6,11 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.PersonName;
 
-public class PhdProgramGuidingBean implements Serializable {
+public class PhdParticipantBean implements Serializable {
 
     static private final long serialVersionUID = -5481393284887457872L;
 
-    private PhdProgramGuidingType guidingType;
+    private PhdParticipantType guidingType;
     private DomainReference<PersonName> personName;
 
     private String name;
@@ -22,14 +22,24 @@ public class PhdProgramGuidingBean implements Serializable {
     private String email;
     private String phone;
 
-    public PhdProgramGuidingBean() {
+    private PhdParticipant participant;
+    
+    public PhdParticipant getParticipant() {
+	return participant;
     }
 
-    public PhdProgramGuidingType getGuidingType() {
+    public void setParticipant(PhdParticipant participant) {
+	this.participant = participant;
+    }
+
+    public PhdParticipantBean() {
+    }
+
+    public PhdParticipantType getGuidingType() {
 	return guidingType;
     }
 
-    public void setGuidingType(PhdProgramGuidingType guidingType) {
+    public void setGuidingType(PhdParticipantType guidingType) {
 	this.guidingType = guidingType;
     }
 
@@ -106,14 +116,14 @@ public class PhdProgramGuidingBean implements Serializable {
     }
 
     public boolean isInternal() {
-	return getGuidingType() == PhdProgramGuidingType.INTERNAL;
+	return getGuidingType() == PhdParticipantType.INTERNAL;
     }
 
     public Person getPerson() {
 	return getPersonName().getPerson();
     }
 
-    static public enum PhdProgramGuidingType {
+    static public enum PhdParticipantType {
 	INTERNAL, EXTERNAL;
 
 	public String getName() {

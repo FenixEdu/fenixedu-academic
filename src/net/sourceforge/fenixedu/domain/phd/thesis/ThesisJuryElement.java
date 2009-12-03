@@ -4,10 +4,11 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 
 import org.joda.time.DateTime;
 
-abstract public class ThesisJuryElement extends ThesisJuryElement_Base {
+public class ThesisJuryElement extends ThesisJuryElement_Base {
 
     static public final Comparator<ThesisJuryElement> COMPARATOR_BY_ELEMENT_ORDER = new Comparator<ThesisJuryElement>() {
 	@Override
@@ -22,10 +23,15 @@ abstract public class ThesisJuryElement extends ThesisJuryElement_Base {
 	setCreationDate(new DateTime());
     }
 
-    protected void init(final PhdThesisProcess process) {
+    protected ThesisJuryElement init(final PhdThesisProcess process, PhdParticipant participant, PhdThesisJuryElementBean bean) {
 	check(process, "error.ThesisJuryElement.invalid.process");
+	check(participant, "error.ThesisJuryElement.participant.cannot.be.null");
 	setElementOrder(generateNextElementOrder(process));
 	setProcess(process);
+	setParticipant(participant);
+	setReporter(bean.isReporter());
+
+	return this;
     }
 
     private Integer generateNextElementOrder(final PhdThesisProcess process) {
@@ -46,26 +52,43 @@ abstract public class ThesisJuryElement extends ThesisJuryElement_Base {
 	removeRootDomainObject();
     }
 
-    abstract public String getName();
+    public boolean isInternal() {
+	return getParticipant().isInternal();
+    }
 
-    abstract public String getQualification();
+    public String getName() {
+	return getParticipant().getName();
+    }
 
-    abstract public String getCategory();
+    public String getQualification() {
+	return getParticipant().getQualification();
+    }
 
-    abstract public String getInstitution();
+    public String getCategory() {
+	return getParticipant().getCategory();
+    }
 
-    abstract public String getAddress();
+    public String getWorkLocation() {
+	return getParticipant().getWorkLocation();
+    }
 
-    abstract public String getPhone();
+    public String getAddress() {
+	return getParticipant().getAddress();
+    }
 
-    abstract public String getEmail();
+    public String getPhone() {
+	return getParticipant().getPhone();
+    }
+
+    public String getEmail() {
+	return getParticipant().getEmail();
+    }
 
     static public ThesisJuryElement create(final PhdThesisProcess process, final PhdThesisJuryElementBean bean) {
-	if (bean.isInternal()) {
-	    return new InternalThesisJuryElement(process, bean);
-	} else {
-	    return new ExternalThesisJuryElement(process, bean);
-	}
+	final PhdParticipant participant = bean.getParticipant() == null ? PhdParticipant.create(process
+		.getIndividualProgramProcess(), bean) : bean.getParticipant();
+
+	return new ThesisJuryElement().init(process, participant, bean);
     }
 
 }

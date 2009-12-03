@@ -10,10 +10,14 @@ import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
+import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
+import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
+import net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessType;
 
 public class PhdThesisProcess extends PhdThesisProcess_Base {
 
@@ -158,6 +162,58 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 
     }
 
+    static public class RequestJuryReviews extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
+	    if (isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		return;
+	    }
+
+	    throw new PreConditionNotValidException();
+	}
+
+	@Override
+	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
+
+	    createExternalAccesses(process);
+
+	    if (process.getActiveState() != PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK) {
+		process.createState(PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK, userView.getPerson(), null);
+	    }
+
+	    return process;
+	}
+
+	private void createExternalAccesses(PhdThesisProcess process) {
+
+	    for (final ThesisJuryElement juryElement : process.getThesisJuryElements()) {
+		if (!isCoordinatorOrGuider(process, juryElement)) {
+
+		    final PhdParticipant participant = juryElement.getParticipant();
+		    participant.addAccessType(PhdProcessAccessType.JURY_DOCUMENTS_DOWNLOAD);
+
+		    if (juryElement.getReporter().booleanValue()) {
+			participant.addAccessType(PhdProcessAccessType.JURY_REPORTER_FEEDBACK_UPLOAD);
+		    }
+		}
+	    }
+
+	}
+
+	private boolean isCoordinatorOrGuider(PhdThesisProcess process, final ThesisJuryElement juryElement) {
+	    if (!juryElement.isInternal()) {
+		return false;
+	    }
+
+	    final Person person = ((InternalPhdParticipant) juryElement.getParticipant()).getPerson();
+
+	    return process.getIndividualProgramProcess().isCoordinatorForPhdProgram(person)
+		    || (process.getIndividualProgramProcess().isGuiderOrAssistentGuider(person) && person
+			    .hasRole(RoleType.TEACHER));
+	}
+    }
+
     static private List<Activity> activities = new ArrayList<Activity>();
     static {
 	activities.add(new SubmitThesis());
@@ -165,6 +221,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	activities.add(new DownloadProvisionalThesisDocument());
 	activities.add(new DownloadFinalThesisDocument());
 	activities.add(new DownloadThesisRequirement());
+	activities.add(new RequestJuryReviews());
     }
 
     private PhdThesisProcess() {
@@ -233,5 +290,4 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
     public boolean hasThesisRequirementDocument() {
 	return getThesisRequirementDocument() != null;
     }
-
 }

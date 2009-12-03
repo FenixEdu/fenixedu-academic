@@ -1,14 +1,15 @@
 package net.sourceforge.fenixedu.domain.phd;
 
-public class ExternalGuiding extends ExternalGuiding_Base {
+public class ExternalPhdParticipant extends ExternalPhdParticipant_Base {
 
-    private ExternalGuiding() {
+    private ExternalPhdParticipant() {
 	super();
     }
 
-    ExternalGuiding(final String name, final String title, final String qualification, final String workLocation,
-	    final String email) {
+    ExternalPhdParticipant(PhdIndividualProgramProcess process, final String name, final String title,
+	    final String qualification, final String workLocation, final String email) {
 	this();
+	init(process);
 	edit(name, title, qualification, workLocation, email);
     }
 

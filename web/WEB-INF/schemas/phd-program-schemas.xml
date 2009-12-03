@@ -524,7 +524,7 @@
 </schema>
 
 
-<schema name="PhdProgramGuiding.view" type="net.sourceforge.fenixedu.domain.phd.PhdProgramGuiding" bundle="PHD_RESOURCES">
+<schema name="PhdProgramGuiding.view" type="net.sourceforge.fenixedu.domain.phd.PhdParticipant" bundle="PHD_RESOURCES">
 	<slot name="nameWithTitle">
 		<property name="classes" value="bold nowrap"/>
 	</slot>
@@ -536,14 +536,14 @@
 	<slot name="phone" />
 </schema>
 
-<schema name="PhdProgramGuiding.view.simple" type="net.sourceforge.fenixedu.domain.phd.PhdProgramGuiding" bundle="PHD_RESOURCES">
+<schema name="PhdProgramGuiding.view.simple" type="net.sourceforge.fenixedu.domain.phd.PhdParticipant" bundle="PHD_RESOURCES">
 	<slot name="nameWithTitle">
 		<property name="classes" value="bold nowrap"/>
 	</slot>
 	<slot name="qualification" />
 </schema>
 
-<schema name="PhdProgramGuidingBean.select.type" type="net.sourceforge.fenixedu.domain.phd.PhdProgramGuidingBean" bundle="PHD_RESOURCES">
+<schema name="PhdProgramGuidingBean.select.type" type="net.sourceforge.fenixedu.domain.phd.PhdParticipantBean" bundle="PHD_RESOURCES">
 	<slot name="guidingType" layout="radio-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="classes" value="nobullet liinline"/>
 		<property name="destination" value="selectType"/>
@@ -551,7 +551,7 @@
 	</slot>
 </schema>
 
-<schema name="PhdProgramGuidingBean.edit.EXTERNAL" type="net.sourceforge.fenixedu.domain.phd.PhdProgramGuidingBean" bundle="PHD_RESOURCES">
+<schema name="PhdProgramGuidingBean.edit.EXTERNAL" type="net.sourceforge.fenixedu.domain.phd.PhdParticipantBean" bundle="PHD_RESOURCES">
 	<slot name="guidingType" layout="radio-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="classes" value="nobullet liinline"/>
 		<property name="destination" value="selectType"/>
@@ -569,7 +569,7 @@
 	<slot name="phone" />
 </schema>
 
-<schema name="PhdProgramGuidingBean.edit.INTERNAL" type="net.sourceforge.fenixedu.domain.phd.PhdProgramGuidingBean" bundle="PHD_RESOURCES">
+<schema name="PhdProgramGuidingBean.edit.INTERNAL" type="net.sourceforge.fenixedu.domain.phd.PhdParticipantBean" bundle="PHD_RESOURCES">
 	<slot name="guidingType" layout="radio-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="classes" value="nobullet liinline"/>
 		<property name="destination" value="selectType"/>
@@ -727,7 +727,7 @@
 	</slot>
 </schema>
 
-<schema name="Public.PhdProgramGuidingBean.edit" type="net.sourceforge.fenixedu.domain.phd.PhdProgramGuidingBean" bundle="PHD_RESOURCES">
+<schema name="Public.PhdProgramGuidingBean.edit" type="net.sourceforge.fenixedu.domain.phd.PhdParticipantBean" bundle="PHD_RESOURCES">
 	<slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
 	</slot>
@@ -905,7 +905,7 @@
 	<slot name="name" />
 </schema>
 
-<schema name="Public.PhdProgramGuiding.view" type="net.sourceforge.fenixedu.domain.phd.PhdProgramGuiding" bundle="PHD_RESOURCES">
+<schema name="Public.PhdProgramGuiding.view" type="net.sourceforge.fenixedu.domain.phd.PhdParticipant" bundle="PHD_RESOURCES">
 	<slot name="nameWithTitle" />
 	<slot name="workLocation" />
 	<slot name="email" />
