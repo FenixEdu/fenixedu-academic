@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ClosePunctualRoomsOccupationRequest;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.RoomsReserveBean;
 import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest;
 
@@ -20,6 +21,7 @@ public class CreateNewRoomsReserveComment extends FenixService {
 
 	    } else if (resolveRequest) {
 		reserveRequest.createNewEmployeeCommentAndCloseRequest(bean.getDescription(), bean.getRequestor(), now);
+		ClosePunctualRoomsOccupationRequest.run(reserveRequest, bean.getRequestor());
 
 	    } else {
 		reserveRequest.createNewTeacherOrEmployeeComment(bean.getDescription(), bean.getRequestor(), now);
