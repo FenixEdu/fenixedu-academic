@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
+import net.sourceforge.fenixedu.domain.phd.access.PhdExternalOperationBean;
 import net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessType;
 
 public class PhdThesisProcess extends PhdThesisProcess_Base {
@@ -214,6 +215,37 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	}
     }
 
+    static abstract protected class ExternalAccessPhdActivity extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
+
+	}
+
+	@Override
+	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
+	    final PhdExternalOperationBean bean = (PhdExternalOperationBean) object;
+	    bean.getParticipant().checkAccessCredentials(bean.getEmail(), bean.getPassword());
+
+	    return internalExecuteActivity(process, userView, bean);
+	}
+
+	abstract protected PhdThesisProcess internalExecuteActivity(PhdThesisProcess process, IUserView userView,
+		PhdExternalOperationBean bean);
+
+    }
+
+    static public class JuryDocumentsDownload extends ExternalAccessPhdActivity {
+
+	@Override
+	protected PhdThesisProcess internalExecuteActivity(PhdThesisProcess process, IUserView userView,
+		PhdExternalOperationBean bean) {
+
+	    return process;
+	}
+
+    }
+
     static private List<Activity> activities = new ArrayList<Activity>();
     static {
 	activities.add(new SubmitThesis());
@@ -222,6 +254,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	activities.add(new DownloadFinalThesisDocument());
 	activities.add(new DownloadThesisRequirement());
 	activities.add(new RequestJuryReviews());
+	activities.add(new JuryDocumentsDownload());
     }
 
     private PhdThesisProcess() {

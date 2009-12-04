@@ -78,7 +78,7 @@ abstract public class PhdProgramProcess extends PhdProgramProcess_Base {
 	return result;
     }
 
-    protected PhdProgramProcessDocument getLastestDocumentVersionFor(PhdIndividualProgramDocumentType type) {
+    public PhdProgramProcessDocument getLastestDocumentVersionFor(PhdIndividualProgramDocumentType type) {
 	final Collection<PhdProgramProcessDocument> documents = filterLatestDocumentVersions(getDocumentsByType(type));
 
 	return documents.isEmpty() ? null : documents.iterator().next();

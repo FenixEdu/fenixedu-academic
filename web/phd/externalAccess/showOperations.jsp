@@ -13,16 +13,14 @@
 </div>
 
 <logic:notEmpty name="participant">
-	<fr:view schema="PhdIndividualProgramProcess.view.resume" name="participant" property="individualProcess">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle2 thlight mtop15" />
-		</fr:layout>
-	</fr:view>
+	<jsp:include page="processDetails.jsp" />
 </logic:notEmpty>
+
+<bean:define id="hash" name="participant" property="accessHashCode" />
 
 <logic:iterate id="accessType" name="participant" property="accessTypes.types">
 	<bean:define id="methodName" >prepare<bean:write name="accessType" property="descriptor"/></bean:define>
 	
-	<html:link action="<%= "/phdExternalAccess.do?method=" + methodName %>"><bean:write name="accessType" property="localizedName"/></html:link>
+	<html:link action="<%= "/phdExternalAccess.do?method=" + methodName + "&amp;hash=" + hash.toString() %>"><bean:write name="accessType" property="localizedName"/></html:link>
 	<br/>
 </logic:iterate>

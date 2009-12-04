@@ -5,6 +5,7 @@ import java.util.UUID;
 import net.sourceforge.fenixedu.applicationTier.utils.GeneratePasswordBase;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessType;
 
 import org.apache.commons.lang.StringUtils;
@@ -96,6 +97,21 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
 	}
 
 	return null;
+    }
+
+    public void checkAccessCredentials(String email, String password) {
+	if (StringUtils.isEmpty(email) || StringUtils.isEmpty(password) || !hasAccessHashCode()) {
+	    throw new DomainException("error.PhdParticipant.credential.not.valid");
+	}
+
+	if (!getEmail().equals(email) || !getPassword().equals(password)) {
+	    throw new DomainException("error.PhdParticipant.credential.not.valid");
+	}
+
+    }
+
+    private boolean hasAccessHashCode() {
+	return !StringUtils.isEmpty(getAccessHashCode());
     }
 
 }
