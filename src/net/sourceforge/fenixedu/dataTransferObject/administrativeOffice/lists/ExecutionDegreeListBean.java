@@ -5,7 +5,6 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -18,28 +17,28 @@ public class ExecutionDegreeListBean implements Serializable {
      */
     private static final long serialVersionUID = 1L;
 
-    private DomainReference<Degree> degree;
+    private Degree degree;
 
-    private DomainReference<DegreeCurricularPlan> degreeCurricularPlan;
+    private DegreeCurricularPlan degreeCurricularPlan;
 
-    private DomainReference<ExecutionDegree> executionDegree;
+    private ExecutionDegree executionDegree;
 
-    private DomainReference<ExecutionYear> executionYear;
+    private ExecutionYear executionYear;
 
-    private DomainReference<CurricularCourse> curricularCourse;
+    private CurricularCourse curricularCourse;
 
-    private DomainReference<ExecutionSemester> executionSemester;
+    private ExecutionSemester executionSemester;
 
     private AcademicInterval academicInterval;
 
     public ExecutionDegreeListBean() {
 	super();
 
-	this.degree = new DomainReference<Degree>(null);
-	this.degreeCurricularPlan = new DomainReference<DegreeCurricularPlan>(null);
-	this.executionYear = new DomainReference<ExecutionYear>(null);
-	this.curricularCourse = new DomainReference<CurricularCourse>(null);
-	this.executionDegree = new DomainReference<ExecutionDegree>(null);
+	degree = null;
+	degreeCurricularPlan = null;
+	executionYear = null;
+	curricularCourse = null;
+	executionDegree = null;
 
     }
 
@@ -62,56 +61,55 @@ public class ExecutionDegreeListBean implements Serializable {
     }
 
     public Degree getDegree() {
-	return (this.degree == null) ? null : this.degree.getObject();
+	return degree;
     }
 
     public void setDegree(Degree degree) {
-	this.degree = (degree != null) ? new DomainReference<Degree>(degree) : null;
+	this.degree = degree;
     }
 
     public DegreeCurricularPlan getDegreeCurricularPlan() {
-	return (this.degreeCurricularPlan == null) ? null : this.degreeCurricularPlan.getObject();
+	return degreeCurricularPlan;
     }
 
     public void setDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
-	this.degreeCurricularPlan = (degreeCurricularPlan != null) ? new DomainReference<DegreeCurricularPlan>(
-		degreeCurricularPlan) : null;
+	this.degreeCurricularPlan = degreeCurricularPlan;
     }
 
     public ExecutionDegree getExecutionDegree() {
-	return this.executionDegree.getObject();
+	return executionDegree;
     }
 
     public void setExecutionDegree(ExecutionDegree executionDegree) {
-	this.executionDegree = new DomainReference<ExecutionDegree>(executionDegree);
+	this.executionDegree = executionDegree;
     }
 
     @Deprecated
     public ExecutionYear getExecutionYear() {
-	return (executionYear == null) ? null : this.executionYear.getObject();
+	return executionYear;
     }
 
     @Deprecated
     public void setExecutionYear(ExecutionYear executionYear) {
-	this.executionYear = (executionYear != null) ? new DomainReference<ExecutionYear>(executionYear) : null;
+	this.executionYear = executionYear;
     }
 
     public CurricularCourse getCurricularCourse() {
-	return (this.curricularCourse == null) ? null : this.curricularCourse.getObject();
+	return curricularCourse;
     }
 
     public void setCurricularCourse(CurricularCourse curricularCourse) {
-	this.curricularCourse = (curricularCourse == null) ? null : new DomainReference<CurricularCourse>(curricularCourse);
+	this.curricularCourse = curricularCourse;
     }
 
     @Deprecated
     public ExecutionSemester getExecutionPeriod() {
-	return (this.executionSemester == null) ? null : this.executionSemester.getObject();
+	return executionSemester;
     }
 
     @Deprecated
     public void setExecutionPeriod(ExecutionSemester executionSemester) {
-	this.executionSemester = (executionSemester == null) ? null : new DomainReference<ExecutionSemester>(executionSemester);
+	this.executionSemester = executionSemester;
     }
 
     public AcademicInterval getAcademicInterval() {

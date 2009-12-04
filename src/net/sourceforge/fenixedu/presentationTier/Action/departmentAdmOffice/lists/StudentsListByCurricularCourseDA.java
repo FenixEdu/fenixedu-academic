@@ -1,7 +1,7 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.lists;
+package net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.lists;
 
 import java.util.TreeSet;
 
@@ -17,14 +17,14 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * 
  */
 
-@Mapping(path = "/studentsListByCurricularCourse", module = "academicAdminOffice")
-@Forwards( { @Forward(name = "chooseCurricularCourse", path = "/academicAdminOffice/lists/chooseCurricularCourses.jsp"),
-	@Forward(name = "studentByCurricularCourse", path = "/academicAdminOffice/lists/studentsByCurricularCourses.jsp") })
+@Mapping(path = "/studentsListByCurricularCourse", module = "departmentAdmOffice")
+@Forwards( { @Forward(name = "chooseCurricularCourse", path = "/departmentAdmOffice/lists/chooseCurricularCourses.jsp"),
+	@Forward(name = "studentByCurricularCourse", path = "/departmentAdmOffice/lists/studentsByCurricularCourses.jsp") })
 public class StudentsListByCurricularCourseDA extends
 	net.sourceforge.fenixedu.presentationTier.Action.commons.administrativeOffice.lists.StudentsListByCurricularCourseDA {
 
     @Override
     protected TreeSet<Degree> getAdministratedDegrees() {
-	return new TreeSet<Degree>(AccessControl.getPerson().getEmployee().getAdministrativeOffice().getAdministratedDegrees());
+	return new TreeSet<Degree>(AccessControl.getPerson().getEmployee().getCurrentDepartmentWorkingPlace().getDegrees());
     }
 }
