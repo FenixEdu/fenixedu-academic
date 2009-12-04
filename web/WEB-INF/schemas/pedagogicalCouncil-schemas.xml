@@ -701,33 +701,6 @@
 
 <!-- SUMMARIES -->
 
-<schema name="summary.control.allDepartments" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.DepartmentSummariesElement">
-	<slot name="department.realName" key="label.teacher.department" layout="link">
-		<property name="contextRelative" value="true"/>
-        <property name="moduleRelative" value="true"/>
-        <property name="useParent" value="true"/>
-		<property name="linkFormat" value="/summariesControl.do?method=departmentSummariesResume&amp;departmentID=${department.externalId}&amp;executionPeriodID=${executionSemester.externalId}"/>
-	</slot>
-	<slot name="numberOfExecutionCoursesWithin020" key="label.summary.0to20"/>
-	<slot name="numberOfExecutionCoursesWithin2040" key="label.summary.20to40"/>
-	<slot name="numberOfExecutionCoursesWithin4060" key="label.summary.40to60"/>
-	<slot name="numberOfExecutionCoursesWithin6080" key="label.summary.60to80"/>
-	<slot name="numberOfExecutionCoursesWithin80100" key="label.summary.80to100"/>
-</schema>
-
-<schema name="summary.control.department" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.ExecutionCourseSummaryElement">
-	<slot name="executionCourse.nome" layout="link">
-		<property name="contextRelative" value="true"/>
-        <property name="moduleRelative" value="true"/>
-        <property name="useParent" value="true"/>
-		<property name="linkFormat" value="/summariesControl.do?method=departmentSummariesResume"/>
-	</slot>
-	<slot name="teachers" layout="values-comma" schema="summary.control.teacher"/>
-	<slot name="numberOfLessonInstances"/>
-	<slot name="numberOfLessonInstancesWithSummary"/>
-	<slot name="percentageOfLessonsWithSummary"/>
-</schema>
-
 <schema name="summary.control.teacher" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.domain.Teacher">
 	<slot name="person.name" layout="link">
 		<property name="contextRelative" value="true"/>
