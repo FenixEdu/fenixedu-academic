@@ -199,14 +199,22 @@ public abstract class ResearchResultPublication extends ResearchResultPublicatio
 	publication.setCreator(getCreator());
     }
 
-    protected PreferredPublication getPreferredPublicationForCurrentUser() {
-	IUserView user = UserView.getUser();
-	Person person = user.getPerson();
+    protected PreferredPublication getPreferredPublicationForPerson(Person person) {
 	for (PreferredPublication preferred : getPersonThatPrefersSet()) {
 	    if (preferred.getPersonThatPrefers().equals(person))
 		return preferred;
 	}
 	return null;
+    }
+
+    protected PreferredPublication getPreferredPublicationForCurrentUser() {
+	IUserView user = UserView.getUser();
+	return getPreferredPublicationForPerson(user.getPerson());
+    }
+
+    public PreferredPublicationPriority getPreferredLevel(Person person) {
+	PreferredPublication preferred = getPreferredPublicationForPerson(person);
+	return preferred != null ? preferred.getPriority() : PreferredPublicationPriority.NONE;
     }
 
     public PreferredPublicationPriority getPreferredLevel() {
