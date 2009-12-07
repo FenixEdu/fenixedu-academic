@@ -2683,3 +2683,12 @@ color: #825101;
 ul#tree li {
 cursor: move;
 }
+
+
+
+span.requiredMessage {
+display: block;
+color: #777;
+font-size: 0.9em;
+margin-bottom: 1em;
+}

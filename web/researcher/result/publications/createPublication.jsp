@@ -14,7 +14,6 @@
 	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.insert"/></h2>
 	
 	
-	
 	<logic:equal name="publicationBean" property="createJournal" value="false">
 		<logic:equal name="publicationBean" property="createEvent" value="false">
 	
@@ -26,7 +25,7 @@
 				<p class="mtop15 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="label.author"/></b></p>
 				<fr:edit id="author" name="publicationBean" schema="<%= publicationBean.getParticipationSchema() %>" nested="true">
 					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle1 thright thlight"/>
+						<fr:property name="classes" value="tstyle5 mtop1 thlight"/>
 						<fr:property name="columnClasses" value="dnone,,tdclear tderror1"/>
 					</fr:layout>
 			   		<fr:destination name="invalid" path="/resultPublications/prepareCreate.do"/>
@@ -138,7 +137,7 @@
 					<fr:form action="/resultPublications/createWrapper.do">
 						<fr:edit id="publicationBean" name="publicationBean" schema="result.publication.create.Article.selectMagazine">
 							<fr:layout name="tabular">
-								<fr:property name="classes" value="tstyle5 thright thlight thtop thmiddle mtop05 dinline"/>
+								<fr:property name="classes" value="tstyle5 thright thlight thtop mtop05 dinline"/>
 					        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 								<fr:property name="requiredMarkShown" value="true"/>
 							</fr:layout>
@@ -279,7 +278,7 @@
 
 						<logic:present name="eventEditionBean" property="eventName">
 							<div class="warning0">
-								<p style="margin:0; padding: 0.5em 0.75em;">
+								<p style="margin:0 0 1em 0; padding: 0.5em 0.75em;">
 									<b><bean:message key="label.attention" bundle="RESEARCHER_RESOURCES"/>:</b><br/>
 									<bean:message key="label.informationForCreateEvent" bundle="RESEARCHER_RESOURCES"/>
 								</p>
@@ -288,7 +287,7 @@
 						
 						<fr:edit id="eventEditionBean" name="eventEditionBean" schema="result.publication.select.Event">
 							<fr:layout name="tabular">
-									<fr:property name="classes" value="tstyle5 thright thlight thtop thmiddle mtop05 dinline"/>
+									<fr:property name="classes" value="tstyle5 thright thlight thtop mtop05 dinline"/>
 						        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 						        	<fr:property name="requiredMarkShown" value="true"/>
 								</fr:layout>
@@ -308,7 +307,7 @@
 						
 						<fr:edit id="eventEditionBean" name="eventEditionBean" schema="result.publication.select.EventEdition">
 							<fr:layout name="tabular">
-									<fr:property name="classes" value="tstyle5 thright thlight thtop thmiddle mtop05 dinline"/>
+									<fr:property name="classes" value="tstyle5 thright thlight thtop mtop05 dinline"/>
 						        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 						        	<fr:property name="requiredMarkShown" value="true"/>
 								</fr:layout>
@@ -317,7 +316,7 @@
 						<br/><br/>
 						<html:submit property="goToNextStep"><bean:message key="label.chooseEventEditionFromList" bundle="RESEARCHER_RESOURCES"/></html:submit>
 					 </logic:equal>
-					 
+			 
 					<!-- Create new event --> 
 				 	<logic:equal name="eventEditionBean" property="newEventState" value="true">
 				 		<p><strong><bean:message key="label.event" bundle="RESEARCHER_RESOURCES"/></strong></p>
@@ -337,13 +336,13 @@
 
 						<fr:edit id="eventEditionBean" name="eventEditionBean" schema="result.publication.create.NewEventEdition">
 							<fr:layout name="tabular">
-									<fr:property name="classes" value="tstyle5 thright thlight thtop thmiddle mtop05 dinline"/>
+									<fr:property name="classes" value="tstyle5 thright thlight thtop mtop05 dinline"/>
 						        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 						        	<fr:property name="requiredMarkShown" value="true"/>
 								</fr:layout>
 							<fr:destination name="invalid" path="/resultPublications/prepareCreateEvent.do"/>			
 						</fr:edit>
-						<br/>
+						<br/><br/>
 						<html:submit property="goToNextStep"><bean:message key="label.insertArticle" bundle="RESEARCHER_RESOURCES"/></html:submit>
 				 	</logic:equal>
 
@@ -357,7 +356,7 @@
 					 	
 					 	<fr:edit id="eventEditionBean" name="eventEditionBean" schema="result.publication.create.NewEventEdition">
 							<fr:layout name="tabular">
-									<fr:property name="classes" value="tstyle5 thright thlight thtop thmiddle mtop05 dinline"/>
+									<fr:property name="classes" value="tstyle5 thright thlight thtop mtop05 dinline"/>
 						        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 						        	<fr:property name="requiredMarkShown" value="true"/>
 								</fr:layout>
@@ -367,7 +366,7 @@
 					 	<html:submit property="goToNextStep"><bean:message key="label.createEventEdition" bundle="RESEARCHER_RESOURCES"/></html:submit>
 				 	</logic:equal>
 				</fr:form>
-				
+
 				<!-- Auxiliary form to create a new event edition (presents a button in select event edition state) -->
 				<logic:equal name="eventEditionBean" property="selectEventEditionState" value="true">
 					<fr:form action="/resultPublications/createEvent.do">
