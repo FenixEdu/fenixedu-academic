@@ -4,16 +4,15 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <div id="foot_links">
-	
-<logic:notEmpty name="site" property="sortedFooterLinks">
-	<fr:view name="site" property="sortedFooterLinks">
-		<fr:layout name="flowLayout">
-			<fr:property name="eachLayout" value="values"/>
-			<fr:property name="eachSchema" value="showFooterLink"/>
-			<fr:property name="htmlSeparator" value="|"/>
-		</fr:layout>
-	</fr:view>
-</logic:notEmpty>
+	<logic:notEmpty name="site" property="sortedFooterLinks">
+		<fr:view name="site" property="sortedFooterLinks">
+			<fr:layout name="flowLayout">
+				<fr:property name="eachLayout" value="values"/>
+				<fr:property name="eachSchema" value="showFooterLink"/>
+				<fr:property name="htmlSeparator" value="|"/>
+			</fr:layout>
+		</fr:view>
+	</logic:notEmpty>
 </div>
 
 <div id="foot_copy">
