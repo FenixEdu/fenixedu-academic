@@ -65,9 +65,9 @@ public class CourseLoadRequest extends CourseLoadRequest_Base {
     }
 
     @Override
-    public void delete() {
+    protected void disconnect() {
 	super.getEnrolments().clear();
-	super.delete();
+	super.disconnect();
     }
 
     @Override

@@ -71,8 +71,9 @@ public class ExternalCourseLoadRequest extends ExternalCourseLoadRequest_Base {
     }
 
     @Override
-    public void delete() {
+    protected void disconnect() {
 	super.setInstitution(null);
-	super.delete();
+        super.disconnect();
     }
+    
 }

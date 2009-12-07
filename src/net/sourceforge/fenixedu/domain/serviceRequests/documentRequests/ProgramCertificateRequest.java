@@ -65,9 +65,9 @@ public class ProgramCertificateRequest extends ProgramCertificateRequest_Base {
     }
 
     @Override
-    public void delete() {
+    protected void disconnect() {
 	getEnrolments().clear();
-	super.delete();
+	super.disconnect();
     }
 
     @Override

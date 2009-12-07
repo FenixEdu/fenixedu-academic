@@ -170,7 +170,7 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 	    DiplomaRequestEvent.create(getAdministrativeOffice(), getRegistration().getPerson(), this);
 	}
 
-	if (academicServiceRequestBean.isToCancelOrReject() && hasEvent()) {
+	if (academicServiceRequestBean.isToCancelOrReject() && hasEvent() && getEvent().isOpen()) {
 	    getEvent().cancel(academicServiceRequestBean.getEmployee());
 	}
     }
@@ -226,7 +226,7 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 	return !isDelivered();
     }
 
-    @Service
+//    @Service
     public void generateRegistryCode() {
 	if (getRegistryCode() == null) {
 	    getRootDomainObject().getInstitutionUnit().getRegistryCodeGenerator().createRegistryFor(this);
@@ -287,7 +287,7 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 	}
     }
 
-    @Service
+    // @Service
     @Override
     @Checked("AcademicServiceRequestPredicates.REVERT_TO_PROCESSING_STATE")
     public void revertToProcessingState() {

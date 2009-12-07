@@ -34,9 +34,9 @@ abstract public class PersonAcademicServiceRequest extends PersonAcademicService
     }
 
     @Override
-    public void delete() {
+    protected void disconnect() {
 	super.setPerson(null);
-	super.delete();
+	super.disconnect();
     }
 
 }

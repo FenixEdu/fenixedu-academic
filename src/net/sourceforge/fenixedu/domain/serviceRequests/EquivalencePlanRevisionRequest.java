@@ -54,9 +54,9 @@ public class EquivalencePlanRevisionRequest extends EquivalencePlanRevisionReque
     }
 
     @Override
-    public void delete() {
+    protected void disconnect() {
 	super.setEquivalencePlanRequest(null);
-	super.delete();
+	super.disconnect();
     }
 
     @Override

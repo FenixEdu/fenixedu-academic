@@ -148,7 +148,6 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	throw new DomainException("error.serviceRequests.AcademicServiceRequest.cannot.modify.creationDate");
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Override
     final public void setRequestDate(DateTime requestDate) {
 	super.setRequestDate(requestDate);
@@ -266,9 +265,13 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.DELIVERED, employee, situationDate, ""));
     }
 
-    public void delete() {
+    final public void delete() {
 	checkRulesToDelete();
+	disconnect();
+	super.deleteDomainObject();
+    }
 
+    protected void disconnect() {
 	for (; !getAcademicServiceRequestSituations().isEmpty(); getAcademicServiceRequestSituations().iterator().next().delete())
 	    ;
 	super.setAdministrativeOffice(null);
@@ -277,7 +280,6 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	}
 	super.setExecutionYear(null);
 	super.setRootDomainObject(null);
-	super.deleteDomainObject();
     }
 
     protected void checkRulesToDelete() {

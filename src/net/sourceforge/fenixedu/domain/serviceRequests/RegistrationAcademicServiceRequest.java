@@ -93,9 +93,9 @@ abstract public class RegistrationAcademicServiceRequest extends RegistrationAca
     }
 
     @Override
-    public void delete() {
+    protected void disconnect() {
 	super.setRegistration(null);
-	super.delete();
+	super.disconnect();
     }
 
     @Override

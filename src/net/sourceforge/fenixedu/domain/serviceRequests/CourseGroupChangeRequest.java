@@ -83,10 +83,10 @@ public class CourseGroupChangeRequest extends CourseGroupChangeRequest_Base {
     }
 
     @Override
-    public void delete() {
+    protected void disconnect() {
 	super.setOldCourseGroup(null);
 	super.setNewCourseGroup(null);
-	super.delete();
+	super.disconnect();
     }
 
     @Override

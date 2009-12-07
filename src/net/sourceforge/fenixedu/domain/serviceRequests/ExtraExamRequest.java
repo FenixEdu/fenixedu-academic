@@ -106,9 +106,9 @@ public class ExtraExamRequest extends ExtraExamRequest_Base {
     }
 
     @Override
-    public void delete() {
+    protected void disconnect() {
 	super.setEnrolment(null);
-	super.delete();
+	super.disconnect();
     }
 
     @Override
