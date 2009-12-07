@@ -74,9 +74,9 @@
 			<band height="170"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
-						x="200"
+						x="178"
 						y="105"
-						width="160"
+						width="239"
 						height="21"
 						key="staticText-24"/>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -87,7 +87,7 @@
 					<textElement textAlignment="Center">
 						<font pdfFontName="Times-Roman" size="11"/>
 					</textElement>
-				<text><![CDATA[A Técnica Superior]]></text>
+				<text><![CDATA[A Coordenadora do Núcleo de Graduação]]></text>
 				</staticText>
 				<line direction="TopDown">
 					<reportElement

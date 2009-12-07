@@ -130,9 +130,9 @@
 				</textField>
 				<staticText>
 					<reportElement
-						x="217"
+						x="135"
 						y="607"
-						width="160"
+						width="339"
 						height="21"
 						key="staticText-4"/>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -143,7 +143,7 @@
 					<textElement textAlignment="Center">
 						<font pdfFontName="Times-Roman" size="14"/>
 					</textElement>
-				<text><![CDATA[A Técnica Superior]]></text>
+				<text><![CDATA[A Coordenadora do Núcleo de Graduação]]></text>
 				</staticText>
 				<line direction="TopDown">
 					<reportElement
