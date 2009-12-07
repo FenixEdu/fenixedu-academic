@@ -25,10 +25,6 @@ public class StudentsListByCurricularCourseDA extends
 
     @Override
     protected TreeSet<Degree> getAdministratedDegrees() {
-	TreeSet<Degree> administratedDegrees = new TreeSet<Degree>();
-	for (DegreeType degreetype : DegreeType.values()) {
-	    administratedDegrees.addAll(Degree.readAllByDegreeType(degreetype));
-	}
-	return administratedDegrees;
+	return new TreeSet<Degree>(Degree.readAllByDegreeType(DegreeType.values()));
     }
 }

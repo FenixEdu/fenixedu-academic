@@ -863,6 +863,10 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	return result;
     }
 
+    public static List<Degree> readAllByDegreeTypes(final Set<DegreeType> degreeTypes) {
+	return readAllByDegreeType(degreeTypes.toArray(new DegreeType[degreeTypes.size()]));
+    }
+
     public static List<Degree> readAllByDegreeCode(final String degreeCode) {
 	final List<Degree> result = new ArrayList<Degree>();
 	for (final Degree degree : Degree.readNotEmptyDegrees()) {

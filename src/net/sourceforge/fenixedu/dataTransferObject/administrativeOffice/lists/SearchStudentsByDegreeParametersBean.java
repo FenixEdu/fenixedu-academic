@@ -2,9 +2,12 @@ package net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.commons.DegreeByExecutionYearBean;
 import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.RegistrationRegimeType;
 import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
@@ -31,6 +34,10 @@ public class SearchStudentsByDegreeParametersBean extends DegreeByExecutionYearB
     private RegistrationRegimeType regime = null;
 
     private Country nationality = null;
+
+    public SearchStudentsByDegreeParametersBean(Set<DegreeType> administratedDegreeTypes, Set<Degree> administratedDegrees) {
+	super(administratedDegreeTypes, administratedDegrees);
+    }
 
     public List<RegistrationAgreement> getRegistrationAgreements() {
 	return registrationAgreements;

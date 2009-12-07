@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject.commons;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -21,10 +22,34 @@ public class DegreeByExecutionYearBean implements Serializable, Comparable<Degre
     public DegreeByExecutionYearBean() {
     }
 
+    public DegreeByExecutionYearBean(Set<DegreeType> administratedDegreeTypes) {
+	this(administratedDegreeTypes, new TreeSet<Degree>(Degree.readAllByDegreeTypes(administratedDegreeTypes)));
+    }
+
+    public DegreeByExecutionYearBean(Set<DegreeType> administratedDegreeTypes, Set<Degree> administratedDegrees) {
+	this.administratedDegrees = administratedDegrees;
+	this.administratedDegreeTypes = administratedDegreeTypes;
+    }
+
     public DegreeByExecutionYearBean(final Degree degree, final ExecutionYear executionYear) {
 	setDegree(degree);
 	setDegreeType(degree.getDegreeType());
 	setExecutionYear(executionYear);
+    }
+
+    public DegreeByExecutionYearBean(final Degree degree, final ExecutionYear executionYear,
+	    Set<DegreeType> administratedDegreeTypes) {
+	this(degree, executionYear, administratedDegreeTypes, new TreeSet<Degree>(Degree
+		.readAllByDegreeTypes(administratedDegreeTypes)));
+    }
+
+    public DegreeByExecutionYearBean(Degree degree, ExecutionYear executionYear, Set<DegreeType> administratedDegreeTypes,
+	    Set<Degree> administratedDegrees) {
+	setDegree(degree);
+	setDegreeType(degree.getDegreeType());
+	setExecutionYear(executionYear);
+	this.administratedDegrees = administratedDegrees;
+	this.administratedDegreeTypes = administratedDegreeTypes;
     }
 
     public Set<DegreeType> getAdministratedDegreeTypes() {

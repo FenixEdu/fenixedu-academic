@@ -19,8 +19,11 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.commons.CollectionUtils;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
@@ -88,6 +91,22 @@ public class Department extends Department_Base {
 	    }
 	}
 	return null;
+    }
+
+    public Set<DegreeType> getDegreeTypes() {
+	Set<DegreeType> degreeTypes = new TreeSet<DegreeType>();
+	for (Degree degree : getDegrees()) {
+	    degreeTypes.add(degree.getDegreeType());
+	}
+	return degreeTypes;
+    }
+
+    public Set<CycleType> getCycleTypes() {
+	TreeSet<CycleType> cycles = new TreeSet<CycleType>();
+	for (DegreeType degreeType : getDegreeTypes()) {
+	    cycles.addAll(degreeType.getCycleTypes());
+	}
+	return cycles;
     }
 
     public List<CompetenceCourse> getCompetenceCoursesByExecutionYear(ExecutionYear executionYear) {

@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.lis
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -17,24 +18,20 @@ public class StudentListByDegreeDA extends
 
     @Override
     protected TreeSet<DegreeType> getAdministratedDegreeTypes() {
-	TreeSet<DegreeType> administratedDegreeTypes = new TreeSet<DegreeType>();
-	for (Degree degree : AccessControl.getPerson().getEmployee().getCurrentDepartmentWorkingPlace().getDegrees()) {
-	    administratedDegreeTypes.add(degree.getDegreeType());
-	}
-	return administratedDegreeTypes;
+	return new TreeSet<DegreeType>(getDepartment().getDegreeTypes());
     }
 
     @Override
     protected TreeSet<Degree> getAdministratedDegrees() {
-	return new TreeSet<Degree>(AccessControl.getPerson().getEmployee().getCurrentDepartmentWorkingPlace().getDegrees());
+	return new TreeSet<Degree>(getDepartment().getDegrees());
     }
 
     @Override
     protected TreeSet<CycleType> getAdministratedCycleTypes() {
-	TreeSet<CycleType> administratedCycles = new TreeSet<CycleType>();
-	for (Degree degree : AccessControl.getPerson().getEmployee().getCurrentDepartmentWorkingPlace().getDegrees()) {
-	    administratedCycles.addAll(degree.getDegreeType().getCycleTypes());
-	}
-	return administratedCycles;
+	return new TreeSet<CycleType>(getDepartment().getCycleTypes());
+    }
+
+    private Department getDepartment() {
+	return AccessControl.getPerson().getEmployee().getCurrentDepartmentWorkingPlace();
     }
 }

@@ -4,20 +4,24 @@ import static net.sourceforge.fenixedu.util.StringUtils.EMPTY;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.lists.SearchStudents;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.SearchStudentsByDegreeParametersBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationWithStateForExecutionYearBean;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -67,9 +71,7 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
     private SearchStudentsByDegreeParametersBean getOrCreateSearchParametersBean() {
 	SearchStudentsByDegreeParametersBean bean = (SearchStudentsByDegreeParametersBean) getRenderedObject("searchParametersBean");
 	if (bean == null) {
-	    bean = new SearchStudentsByDegreeParametersBean();
-	    bean.setAdministratedDegreeTypes(getAdministratedDegreeTypes());
-	    bean.setAdministratedDegrees(getAdministratedDegrees());
+	    bean = new SearchStudentsByDegreeParametersBean(getAdministratedDegreeTypes(), getAdministratedDegrees());
 	}
 	return bean;
     }
@@ -77,9 +79,9 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
     public ActionForward searchByDegree(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	final SearchStudentsByDegreeParametersBean searchBean = (SearchStudentsByDegreeParametersBean) getRenderedObject();
+	final SearchStudentsByDegreeParametersBean searchBean = getOrCreateSearchParametersBean();
 
-	final List<RegistrationWithStateForExecutionYearBean> registrations = SearchStudents.run(searchBean);
+	final List<RegistrationWithStateForExecutionYearBean> registrations = search(searchBean);
 
 	request.setAttribute("searchParametersBean", searchBean);
 	request.setAttribute("studentCurricularPlanList", registrations);
@@ -87,12 +89,91 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 	return mapping.findForward("searchRegistrations");
     }
 
+    private static List<RegistrationWithStateForExecutionYearBean> search(final SearchStudentsByDegreeParametersBean searchbean) {
+
+	final Set<Registration> registrations = new TreeSet<Registration>(Registration.NUMBER_COMPARATOR);
+
+	final Degree chosenDegree = searchbean.getDegree();
+	final DegreeType chosenDegreeType = searchbean.getDegreeType();
+	final ExecutionYear executionYear = searchbean.getExecutionYear();
+	for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
+	    final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+	    if ((chosenDegreeType != null && degreeCurricularPlan.getDegreeType() != chosenDegreeType)) {
+		continue;
+	    }
+	    if (chosenDegree != null && degreeCurricularPlan.getDegree() != chosenDegree) {
+		continue;
+	    }
+	    if (degreeCurricularPlan.getDegreeType() != DegreeType.EMPTY) {
+		if (!searchbean.getAdministratedDegreeTypes().contains(degreeCurricularPlan.getDegreeType())) {
+		    continue;
+		}
+		if (!searchbean.getAdministratedDegrees().contains(degreeCurricularPlan.getDegree())) {
+		    continue;
+		}
+	    }
+	    degreeCurricularPlan.getRegistrations(executionYear, registrations);
+	}
+
+	return filterResults(searchbean, registrations, executionYear);
+    }
+
+    private static List<RegistrationWithStateForExecutionYearBean> filterResults(SearchStudentsByDegreeParametersBean searchbean,
+	    final Set<Registration> registrations, final ExecutionYear executionYear) {
+
+	final List<RegistrationWithStateForExecutionYearBean> result = new ArrayList<RegistrationWithStateForExecutionYearBean>();
+	for (final Registration registration : registrations) {
+
+	    if (!searchbean.getRegistrationAgreements().isEmpty()
+		    && !searchbean.getRegistrationAgreements().contains(registration.getRegistrationAgreement())) {
+		continue;
+	    }
+
+	    if (searchbean.hasAnyStudentStatuteType() && !hasStudentStatuteType(searchbean, registration)) {
+		continue;
+	    }
+
+	    final RegistrationState lastRegistrationState = registration.getLastRegistrationState(executionYear);
+	    if (lastRegistrationState == null
+		    || (!searchbean.getRegistrationStateTypes().isEmpty() && !searchbean.getRegistrationStateTypes().contains(
+			    lastRegistrationState.getStateType()))) {
+		continue;
+	    }
+
+	    if (searchbean.getActiveEnrolments() && !registration.hasAnyEnrolmentsIn(executionYear)) {
+		continue;
+	    }
+
+	    if (searchbean.getStandaloneEnrolments() && !registration.hasAnyStandaloneEnrolmentsIn(executionYear)) {
+		continue;
+	    }
+
+	    if ((searchbean.getRegime() != null) && (registration.getRegimeType(executionYear) != searchbean.getRegime())) {
+		continue;
+	    }
+
+	    if ((searchbean.getNationality() != null) && (registration.getPerson().getCountry() != searchbean.getNationality())) {
+		continue;
+	    }
+
+	    result.add(new RegistrationWithStateForExecutionYearBean(registration, lastRegistrationState.getStateType()));
+	}
+
+	return result;
+    }
+
+    static private boolean hasStudentStatuteType(final SearchStudentsByDegreeParametersBean searchbean,
+	    final Registration registration) {
+	return CollectionUtils.containsAny(searchbean.getStudentStatuteTypes(), registration.getStudent()
+		.getStatutesTypesValidOnAnyExecutionSemesterFor(searchbean.getExecutionYear()));
+    }
+
     public ActionForward exportInfoToExcel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
-	final SearchStudentsByDegreeParametersBean searchBean = (SearchStudentsByDegreeParametersBean) getRenderedObject();
+	final SearchStudentsByDegreeParametersBean searchBean = getOrCreateSearchParametersBean();
 	if (searchBean != null) {
-	    final List<RegistrationWithStateForExecutionYearBean> registrations = SearchStudents.run(searchBean);
+	    final List<RegistrationWithStateForExecutionYearBean> registrations = search(searchBean);
 
 	    try {
 		String filename;

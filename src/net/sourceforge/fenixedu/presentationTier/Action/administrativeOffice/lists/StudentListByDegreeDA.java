@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.li
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -17,18 +18,20 @@ public class StudentListByDegreeDA extends
 
     @Override
     protected TreeSet<DegreeType> getAdministratedDegreeTypes() {
-	return new TreeSet<DegreeType>(AccessControl.getPerson().getEmployee().getAdministrativeOffice()
-		.getAdministratedDegreeTypes());
+	return new TreeSet<DegreeType>(getAdministrativeOffice().getAdministratedDegreeTypes());
     }
 
     @Override
     protected TreeSet<Degree> getAdministratedDegrees() {
-	return new TreeSet<Degree>(AccessControl.getPerson().getEmployee().getAdministrativeOffice().getAdministratedDegrees());
+	return new TreeSet<Degree>(getAdministrativeOffice().getAdministratedDegrees());
     }
 
     @Override
     protected TreeSet<CycleType> getAdministratedCycleTypes() {
-	return new TreeSet<CycleType>(AccessControl.getPerson().getEmployee().getAdministrativeOffice()
-		.getAdministratedCycleTypes());
+	return new TreeSet<CycleType>(getAdministrativeOffice().getAdministratedCycleTypes());
+    }
+
+    private AdministrativeOffice getAdministrativeOffice() {
+	return AccessControl.getPerson().getEmployee().getAdministrativeOffice();
     }
 }

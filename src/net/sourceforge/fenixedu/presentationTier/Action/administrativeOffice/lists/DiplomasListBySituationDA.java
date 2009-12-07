@@ -6,18 +6,21 @@ package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.li
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Collection;
+import java.util.HashSet;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.lists.SearchDiplomas;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.SearchDiplomasBySituationParametersBean;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -70,22 +73,49 @@ public class DiplomasListBySituationDA extends FenixDispatchAction {
     public ActionForward searchBySituation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	final SearchDiplomasBySituationParametersBean bean = (SearchDiplomasBySituationParametersBean) getRenderedObject();
+	final SearchDiplomasBySituationParametersBean bean = getOrCreateSearchParametersBean();
 	request.setAttribute("searchParametersBean", bean);
 	try {
-	    request.setAttribute("diplomasList", SearchDiplomas.run(bean));
+	    request.setAttribute("diplomasList", search(bean));
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
 	}
 	return mapping.findForward("searchDiplomas");
     }
 
+    private static Collection<DiplomaRequest> search(final SearchDiplomasBySituationParametersBean bean) {
+	final Collection<DiplomaRequest> result = new HashSet<DiplomaRequest>();
+
+	for (final AcademicServiceRequest request : bean.searchAcademicServiceRequests()) {
+	    if (!request.isRequestForRegistration()) {
+		continue;
+	    }
+	    if (!request.isDocumentRequest() || !((DocumentRequest) request).isDiploma()) {
+		continue;
+	    }
+	    DiplomaRequest diplomaRequest = (DiplomaRequest) request;
+
+	    DegreeType diplomaDegreeType = diplomaRequest.getRegistration().getDegree().getDegreeType();
+	    if ((diplomaDegreeType != DegreeType.EMPTY) && (!getAdministratedDegreeTypes().contains(diplomaDegreeType))) {
+		continue;
+	    }
+
+	    result.add(diplomaRequest);
+	}
+
+	return result;
+    }
+
+    private static Collection<DegreeType> getAdministratedDegreeTypes() {
+	return AccessControl.getPerson().getEmployee().getAdministrativeOffice().getAdministratedDegreeTypes();
+    }
+
     public ActionForward exportInfoToExcel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
-	final SearchDiplomasBySituationParametersBean bean = (SearchDiplomasBySituationParametersBean) getRenderedObject();
+	final SearchDiplomasBySituationParametersBean bean = getOrCreateSearchParametersBean();
 	if (bean != null) {
-	    final Collection<DiplomaRequest> requests = SearchDiplomas.run(bean);
+	    final Collection<DiplomaRequest> requests = search(bean);
 
 	    try {
 		String filename = getResourceMessage("label.diplomas") + "_"

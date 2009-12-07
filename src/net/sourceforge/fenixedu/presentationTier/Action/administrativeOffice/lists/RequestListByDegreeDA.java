@@ -6,8 +6,9 @@ package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.li
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,7 @@ import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentReque
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
@@ -71,7 +73,7 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 
     private DegreeByExecutionYearBean getOrCreateDegreeSearchBean() {
 	DegreeByExecutionYearBean bean = (DegreeByExecutionYearBean) getRenderedObject("degreeByExecutionYearBean");
-	return (bean != null) ? bean : new DegreeByExecutionYearBean();
+	return (bean != null) ? bean : new DegreeByExecutionYearBean(getAdministratedDegreeTypes());
     }
 
     private DocumentRequestSearchBean getOrCreateRequestSearchBean() {
@@ -82,8 +84,8 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
     public ActionForward runSearchAndShowResults(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	final DegreeByExecutionYearBean degreeSearchBean = (DegreeByExecutionYearBean) getRenderedObject("degreeByExecutionYearBean");
-	final DocumentRequestSearchBean requestSearchBean = (DocumentRequestSearchBean) getRenderedObject("documentRequestSearchBean");
+	final DegreeByExecutionYearBean degreeSearchBean = getOrCreateDegreeSearchBean();
+	final DocumentRequestSearchBean requestSearchBean = getOrCreateRequestSearchBean();
 
 	final List<RegistrationAcademicServiceRequest> requestList = search(degreeSearchBean, requestSearchBean);
 
@@ -150,8 +152,12 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 	return resultList;
     }
 
-    private static Collection<DegreeType> getAdministratedDegreeTypes() {
-	return AccessControl.getPerson().getEmployee().getAdministrativeOffice().getAdministratedDegreeTypes();
+    private static Set<DegreeType> getAdministratedDegreeTypes() {
+	return new TreeSet<DegreeType>(getAdministrativeOffice().getAdministratedDegreeTypes());
+    }
+
+    private static AdministrativeOffice getAdministrativeOffice() {
+	return AccessControl.getPerson().getEmployee().getAdministrativeOffice();
     }
 
     private ArrayList<AcademicServiceRequest> getRequestsByYear(int year) {
@@ -180,8 +186,8 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
     public ActionForward exportInfoToExcel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
-	final DegreeByExecutionYearBean degreeSearchBean = (DegreeByExecutionYearBean) getRenderedObject("degreeByExecutionYearBean");
-	final DocumentRequestSearchBean requestSearchBean = (DocumentRequestSearchBean) getRenderedObject("documentRequestSearchBean");
+	final DegreeByExecutionYearBean degreeSearchBean = getOrCreateDegreeSearchBean();
+	final DocumentRequestSearchBean requestSearchBean = getOrCreateRequestSearchBean();
 	if ((degreeSearchBean == null) || (requestSearchBean == null)) {
 	    return null;
 	}

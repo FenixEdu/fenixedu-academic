@@ -9,6 +9,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+import com.sun.tools.javac.util.List;
+
 @Mapping(path = "/studentsListByDegree", module = "internationalRelatOffice")
 @Forwards( { @Forward(name = "searchRegistrations", path = "/internationalRelatOffice/lists/searchRegistrationsByDegree.jsp") })
 public class StudentListByDegreeDA extends
@@ -16,28 +18,16 @@ public class StudentListByDegreeDA extends
 
     @Override
     protected TreeSet<DegreeType> getAdministratedDegreeTypes() {
-	TreeSet<DegreeType> administratedDegreeTypes = new TreeSet<DegreeType>();
-	for (DegreeType degreetype : DegreeType.NOT_EMPTY_VALUES) {
-	    administratedDegreeTypes.add(degreetype);
-	}
-	return administratedDegreeTypes;
+	return new TreeSet<DegreeType>(DegreeType.NOT_EMPTY_VALUES);
     }
 
     @Override
     protected TreeSet<Degree> getAdministratedDegrees() {
-	TreeSet<Degree> administratedDegrees = new TreeSet<Degree>();
-	for (DegreeType degreetype : DegreeType.values()) {
-	    administratedDegrees.addAll(Degree.readAllByDegreeType(degreetype));
-	}
-	return administratedDegrees;
+	return new TreeSet<Degree>(Degree.readAllByDegreeType(DegreeType.values()));
     }
 
     @Override
     protected TreeSet<CycleType> getAdministratedCycleTypes() {
-	TreeSet<CycleType> administratedCycles = new TreeSet<CycleType>();
-	for (CycleType cycle : CycleType.values()) {
-	    administratedCycles.add(cycle);
-	}
-	return administratedCycles;
+	return new TreeSet<CycleType>(List.from(CycleType.values()));
     }
 }
