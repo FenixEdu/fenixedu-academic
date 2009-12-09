@@ -26,13 +26,13 @@
 	<li>
 		<html:link page="<%= "/teacherManagerDA.do?method=prepareAssociateTeacher&amp;objectCode=" + pageContext.findAttribute("objectCode") %>"><bean:message key="link.addTeacher"/></html:link>
 	</li>
-</ul>
+</ul> 
 </logic:equal>
-
 <table class="tstyle2 tdcenter">
 	<tr>
 		<th><bean:message key="label.istid" bundle="APPLICATION_RESOURCES" /></th>
-		<th><bean:message key="label.name" /></th>			
+		<th><bean:message key="label.name" /></th>
+		<th><bean:message key="label.teacher.responsible" /></th>			
 		<logic:equal name="isResponsible" value="true">
 			<th><bean:message key="message.edit" /></th>    
 		</logic:equal>
@@ -43,12 +43,26 @@
 		<td><bean:write name="person"  property="istUsername" /></td>
 		<td><bean:write name="person" property="name" /></td>	
 		<logic:equal name="isResponsible" value="true">
+		<logic:equal name="professorship" property="responsibleFor" value="false">
+			<td>
+				<bean:message key="label.no.capitalized" />
+			</td>
 			<bean:define id="teacherCode" name="person" property="istUsername"/>		
 			<td>
 				<html:link page="<%= "/teachersManagerDA.do?method=removeTeacher&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;teacherCode=" + teacherCode %>">
 					<bean:message key="link.removeTeacher"/>
 				</html:link>
 			</td>
+		</logic:equal>
+		<logic:equal name="professorship" property="responsibleFor" value="true">
+			<td>
+				<bean:message key="label.yes.capitalized" />
+			</td>
+			<bean:define id="teacherCode" name="person" property="istUsername"/>		
+			<td>
+				<bean:message key="label.notAvailable" />
+			</td>
+		</logic:equal>
 		</logic:equal>
 	</tr>
 	</logic:iterate>	

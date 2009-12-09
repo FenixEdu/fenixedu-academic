@@ -452,7 +452,11 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	try {
 	    DeleteProfessorshipWithPerson.run(Person.readPersonByIstUsername(teacherCodeString), rootDomainObject
 		    .readExecutionCourseByOID(objectCode));
-	} catch (FenixServiceException e) {
+	}catch (NotAuthorizedException e){
+	    final ActionErrors actionErrors = new ActionErrors();
+	    actionErrors.add("error", new ActionError("label.not.authorized.action"));
+	    saveErrors(request, actionErrors);
+	}catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	} catch (DomainException domainException) {
 	    final ActionErrors actionErrors = new ActionErrors();
