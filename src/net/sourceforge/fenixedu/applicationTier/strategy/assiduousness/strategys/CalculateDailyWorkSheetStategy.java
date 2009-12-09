@@ -31,8 +31,8 @@ public abstract class CalculateDailyWorkSheetStategy implements ICalculateDailyW
 	    boolean closingMonth) {
 	if (workDaySheet.getWorkSchedule() != null
 		&& !isDayHoliday
-		&& (!workDaySheet.getWorkSchedule().getWorkScheduleType().getScheduleClockingType().equals(
-			ScheduleClockingType.NOT_MANDATORY_CLOCKING) || closingMonth)) {
+		&& ((!workDaySheet.getWorkSchedule().getWorkScheduleType().getScheduleClockingType().equals(
+			ScheduleClockingType.NOT_MANDATORY_CLOCKING)) || closingMonth)) {
 
 	    List<Leave> dayOccurrences = assiduousness.getLeavesByType(workDaySheet.getLeaves(), JustificationType.OCCURRENCE);
 

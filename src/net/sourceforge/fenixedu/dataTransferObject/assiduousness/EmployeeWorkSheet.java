@@ -172,13 +172,13 @@ public class EmployeeWorkSheet implements Serializable {
 
     public void calculateWorkSheet(HashMap<LocalDate, WorkSchedule> workScheduleMap,
 	    HashMap<LocalDate, List<AssiduousnessRecord>> clockingsMap, HashMap<LocalDate, List<Leave>> leavesMap,
-	    Boolean extraWork) {
+	    Boolean closeMonth) {
 	for (LocalDate thisDay = beginDate; thisDay.isBefore(endDate.plusDays(1)); thisDay = thisDay.plusDays(1)) {
 	    final Schedule schedule = getEmployee().getAssiduousness().getSchedule(thisDay);
 	    if (schedule != null && getEmployee().getAssiduousness().isStatusActive(thisDay, thisDay)) {
 		WorkDaySheet workDaySheet = new WorkDaySheet(getEmployee().getAssiduousness(), thisDay, workScheduleMap
 			.get(thisDay), clockingsMap.get(thisDay), leavesMap.get(thisDay));
-		workDaySheet.calculateWorkDaySheet(true);
+		workDaySheet.calculateWorkDaySheet(closeMonth);
 		addWorkDaySheet(workDaySheet);
 	    }
 	}
