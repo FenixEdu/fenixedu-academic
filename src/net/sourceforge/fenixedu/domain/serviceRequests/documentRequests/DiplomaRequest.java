@@ -226,7 +226,7 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 	return !isDelivered();
     }
 
-//    @Service
+    @Service
     public void generateRegistryCode() {
 	if (getRegistryCode() == null) {
 	    getRootDomainObject().getInstitutionUnit().getRegistryCodeGenerator().createRegistryFor(this);
@@ -287,7 +287,7 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 	}
     }
 
-    // @Service
+    @Service
     @Override
     @Checked("AcademicServiceRequestPredicates.REVERT_TO_PROCESSING_STATE")
     public void revertToProcessingState() {
