@@ -2399,8 +2399,10 @@ public class Person extends Person_Base {
 	    for (final Registration registration : getStudent().getRegistrationsSet()) {
 		if (registration.isActive()) {
 		    final DegreeCurricularPlan degreeCurricularPlan = registration.getLastDegreeCurricularPlan();
-		    final Degree degree = degreeCurricularPlan.getDegree();
-		    organizationalUnits.add(degree.getPresentationName());
+		    if (degreeCurricularPlan != null) {
+			final Degree degree = degreeCurricularPlan.getDegree();
+			organizationalUnits.add(degree.getPresentationName());
+		    }
 		}
 	    }
 	}
