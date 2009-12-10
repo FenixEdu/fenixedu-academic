@@ -23,7 +23,7 @@
 --%>
 
 <p>
-	<html:link page="<%= "/curriculumValidation.do?method=prepareSetEvaluations&amp;studentCurricularPlanId=" + studentCurricularPlanId  %>">
+	<html:link page="<%= String.format("/curriculumValidation.do?method=prepareSetEvaluations&amp;studentCurricularPlanId=%s&amp;executionSemesterId=%s", studentCurricularPlanId, executionSemesterId)  %>">
 		<bean:message key="label.back" bundle="ACADEMIC_OFFICE_RESOURCES" />
 	</html:link>
 </p>
