@@ -155,6 +155,10 @@ public class MarkSheetEnrolmentEvaluationBean implements Serializable {
 
 	if (evaluation == null && EnrolmentEvaluationType.NORMAL.equals(this.getEnrolmentEvaluationType())
 		&& CurriculumValidationEvaluationPhase.FIRST_SEASON.equals(this.getCurriculumValidationEvaluationPhase())) {
+	    if (getEnrolment().getLatestEnrolmentEvaluationByTypeAndPhase(this.getEnrolmentEvaluationType(),
+		    CurriculumValidationEvaluationPhase.SECOND_SEASON) != null) {
+		return null;
+	    }
 	    return getEnrolment().getLatestEnrolmentEvaluationByTypeAndPhase(this.getEnrolmentEvaluationType(), null);
 	}
 
