@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.curriculum.CurriculumValidationEvaluationPhase;
+import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 
 public class MarkSheetEnrolmentEvaluationBean implements Serializable {
@@ -222,5 +223,14 @@ public class MarkSheetEnrolmentEvaluationBean implements Serializable {
 	}
 
 	return this.getEnrolmentEvaluationType().getDescription();
+    }
+
+    public boolean isEnrolmentBeMarkedAsEnroled() {
+	return !this.getEnrolment().hasAnyEvaluations();
+    }
+
+    public boolean isPossibleToUnEnrolEnrolment() {
+	return !this.getEnrolment().hasAnyEvaluations()
+		&& this.getEnrolment().getEnrollmentState().equals(EnrollmentState.ENROLLED);
     }
 }

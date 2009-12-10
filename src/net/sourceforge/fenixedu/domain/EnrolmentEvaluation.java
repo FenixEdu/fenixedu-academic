@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.curriculum.IGrade;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.EnrolmentNotPayedException;
+import net.sourceforge.fenixedu.domain.log.EnrolmentEvaluationLog;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
@@ -25,6 +26,8 @@ import net.sourceforge.fenixedu.util.MarkType;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
+
+import pt.ist.fenixWebFramework.services.Service;
 
 public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Comparable {
 
@@ -452,13 +455,18 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     }
 
     public void delete() {
+	if (!getCanBeDeleted()) {
+	    throw new DomainException("error.enrolmentEvaluation.cannot.be.deleted");
+	}
+
+	deleteObject();
+
+    }
+
+    public void deleteObject() {
 
 	if (hasImprovementOfApprovedEnrolmentEvent() && getImprovementOfApprovedEnrolmentEvent().isPayed()) {
 	    throw new DomainException("error.enrolmentEvaluation.has.been.payed");
-	}
-
-	if (!getCanBeDeleted()) {
-	    throw new DomainException("error.enrolmentEvaluation.cannot.be.deleted");
 	}
 
 	removePersonResponsibleForGrade();
@@ -653,6 +661,20 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 	}
 
 	return this.getEnrolmentEvaluationType().getDescription();
+    }
+
+    @Service
+    public void deleteEnrolmentEvaluationCurriculumValidationContext() {
+	if (!getEnrolment().getStudentCurricularPlan().getEvaluationForCurriculumValidationAllowed()) {
+	    throw new DomainException("error.curriculum.validation.enrolment.evaluatiom.removal.not.allowed");
+	}
+
+	Enrolment enrolment = getEnrolment();
+
+	EnrolmentEvaluationLog.logEnrolmentEvaluationDeletion(this);
+	deleteObject();
+
+	enrolment.changeStateIfAprovedAndEvaluationsIsEmpty();
     }
 
 }

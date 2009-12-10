@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.domain.enrolment.ExternalDegreeEnrolmentWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
+import net.sourceforge.fenixedu.domain.log.EnrolmentEvaluationLog;
 import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -50,6 +51,7 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -957,6 +959,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	enrolmentEvaluation.setCurriculumValidationEvaluationPhase(phase);
 	enrolmentEvaluation.setGradeScale(gradeScale);
 
+	EnrolmentEvaluationLog.logEnrolmentEvaluationCreation(enrolmentEvaluation);
+
 	return enrolmentEvaluation;
     }
 
@@ -1674,4 +1678,24 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return false;
     }
 
+    void changeStateIfAprovedAndEvaluationsIsEmpty() {
+	if (!getStudentCurricularPlan().getEvaluationForCurriculumValidationAllowed()) {
+	    throw new DomainException("error.curriculum.validation.enrolment.evaluatiom.removal.not.allowed");
+	}
+
+	if (getEnrollmentState().equals(EnrollmentState.APROVED) && !hasAnyEvaluations()) {
+	    setEnrollmentState(EnrollmentState.ENROLLED);
+	}
+    }
+
+    @Service
+    public void markAsTemporaryEnrolled() {
+	if (!getStudentCurricularPlan().getEvaluationForCurriculumValidationAllowed()) {
+	    throw new DomainException("error.curriculum.validation.enrolment.evaluatiom.removal.not.allowed");
+	}
+
+	if (!hasAnyEvaluations()) {
+	    setEnrollmentState(EnrollmentState.ENROLLED);
+	}
+    }
 }

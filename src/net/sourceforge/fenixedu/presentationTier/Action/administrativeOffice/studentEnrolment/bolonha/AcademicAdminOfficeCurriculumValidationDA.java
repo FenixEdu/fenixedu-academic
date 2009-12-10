@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment.bolonha;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -20,9 +22,11 @@ import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import net.sourceforge.fenixedu.domain.curriculum.CurriculumValidationEvaluationPhase;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
+import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.EnrollmentDomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.RootCurriculumGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
@@ -124,7 +128,7 @@ public class AcademicAdminOfficeCurriculumValidationDA extends FenixDispatchActi
     }
 
     public ActionForward prepareSetEvaluations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse reponse) {
+	    HttpServletResponse response) {
 	StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) readStudentCurricularPlan(request);
 	ExecutionSemester executionSemester = readExecutionSemester(request);
 
@@ -185,6 +189,8 @@ public class AcademicAdminOfficeCurriculumValidationDA extends FenixDispatchActi
 
 	request.setAttribute("entriesList", enrolmentEvaluationBeanList);
 
+	request.setAttribute("allEvaluationsBound", enrolment.getEvaluations());
+
 	return mapping.findForward("show-edit-evaluation-form");
     }
 
@@ -229,6 +235,55 @@ public class AcademicAdminOfficeCurriculumValidationDA extends FenixDispatchActi
 	studentCurricularPlan.editEndStageDate(studentEnrolmentBean.getEndStageDate());
 
 	return prepareCurriculumValidation(mapping, actionForm, request, response);
+    }
+
+    public ActionForward removeEnrolmentEvaluation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	EnrolmentEvaluation evaluationToVoid = readEnrolmentEvaluation(request);
+
+	evaluationToVoid.deleteEnrolmentEvaluationCurriculumValidationContext();
+
+	return prepareEditEvaluation(mapping, actionForm, request, response);
+    }
+
+    public ActionForward markAsTemporaryEnrolled(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	Enrolment enrolment = readEnrolment(request);
+
+	enrolment.markAsTemporaryEnrolled();
+
+	return prepareSetEvaluations(mapping, actionForm, request, response);
+    }
+
+    public ActionForward unEnrol(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	Enrolment enrolment = readEnrolment(request);
+
+	try {
+	    final RuleResult ruleResults = (RuleResult) executeService("EnrolBolonhaStudent", new Object[] {
+		    getLoggedPerson(request), readStudentCurricularPlan(request), enrolment.getExecutionPeriod(),
+		    new ArrayList<IDegreeModuleToEvaluate>(), Arrays.asList(new CurriculumModule[] { enrolment }),
+		    CurricularRuleLevel.ENROLMENT_NO_RULES });
+
+	    if (ruleResults.isWarning()) {
+		addRuleResultMessagesToActionMessages("warning", request, ruleResults);
+	    }
+
+	} catch (EnrollmentDomainException ex) {
+	    addRuleResultMessagesToActionMessages("error", request, ex.getFalseResult());
+	} catch (DomainException ex) {
+	    addActionMessage("error", request, ex.getKey(), ex.getArgs());
+	}
+
+	return prepareSetEvaluations(mapping, actionForm, request, response);
+    }
+
+    private Enrolment readEnrolment(HttpServletRequest request) {
+	return getDomainObject(request, "enrolmentId");
+    }
+
+    private EnrolmentEvaluation readEnrolmentEvaluation(HttpServletRequest request) {
+	return getDomainObject(request, "enrolmentEvaluationId");
     }
 
     private Enrolment getEnrolmentForEdition(HttpServletRequest request) {

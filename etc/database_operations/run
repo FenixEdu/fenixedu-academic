@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create Curriculum Validation Enrolment Evaluation Log" createEnrolmentEvaluationLogTable.sql

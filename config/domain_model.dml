@@ -3930,7 +3930,24 @@ class DomainObject {
         
             class log.CreditsDismissalLog extends log.DismissalLog {
             }
-
+	
+	class log.EnrolmentEvaluationLog extends DomainObject {
+		String action;
+		String who;
+		String gradeValue;
+		String gradeScale;
+		String enrolmentEvaluationType;
+		String enrolmentEvaluationState;
+		String executionSemester;
+		String curricularCourse;
+		String examDate;
+		String enrolmentEvaluationResponsible;
+		String book;
+		String page;
+		String actionDate;
+	}
+	
+	
     class material.PersonExtension extends DomainObject {
         YearMonthDay begin;
         YearMonthDay end;
@@ -17195,4 +17212,11 @@ relation DegreeOfficialPublication {
     DegreeOfficialPublication playsRole officialPublication {
         multiplicity *;
     }
+}
+
+relation EnrolmentEvaluationLogRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	log.EnrolmentEvaluationLog playsRole enrolmentEvaluationLog {
+		multiplicity *;
+	}
 }

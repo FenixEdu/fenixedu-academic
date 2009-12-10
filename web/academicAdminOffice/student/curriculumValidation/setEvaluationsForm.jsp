@@ -166,7 +166,7 @@
 <h3 class="mtop15 mbottom05"><bean:message key="label.courses.not.evaluated" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
 
 
-<fr:form action="<%= "/curriculumValidation.do?method=setEvaluations&amp;studentCurricularPlanId=" + studentCurricularPlanId + "&amp;executionSemesterId=" + executionSemesterId %>">
+<fr:form action="<%= String.format("/curriculumValidation.do?method=setEvaluations&amp;studentCurricularPlanId=%s&amp;executionSemesterId=%s", studentCurricularPlanId, executionSemesterId) %>">
 	<table class="tstyle4 tdcenter thlight mtop05">
 		<thead>
 			<tr>
@@ -188,7 +188,22 @@
 						<%= ((java.util.List<MarkSheetEnrolmentEvaluationBean>) entries).get(0).getEnrolment().getGradeScale().getDescription() %>)
 					</td>
 					<td>
-						<%= ((java.util.List<MarkSheetEnrolmentEvaluationBean>) entries).get(0).getEnrolmentState() %>
+						<bean:define id="enrolmentId"><%= ((java.util.List<MarkSheetEnrolmentEvaluationBean>) entries).get(0).getEnrolment().getExternalId() %></bean:define>
+						<p><%= ((java.util.List<MarkSheetEnrolmentEvaluationBean>) entries).get(0).getEnrolmentState() %></p>
+						
+						<% if(((java.util.List<MarkSheetEnrolmentEvaluationBean>) entries).get(0).isPossibleToUnEnrolEnrolment()) { %>
+							<p>
+							<html:link page="<%= String.format("/curriculumValidation.do?method=unEnrol&amp;studentCurricularPlanId=%s&amp;executionSemesterId=%s&amp;enrolmentId=%s", studentCurricularPlanId, executionSemesterId, enrolmentId) %>">
+								<bean:message key="label.curriculum.validation.unenrol" bundle="ACADEMIC_OFFICE_RESOURCES" />
+							</html:link>
+							</p>
+						<% } else  if(((java.util.List<MarkSheetEnrolmentEvaluationBean>) entries).get(0).isEnrolmentBeMarkedAsEnroled()) { %>
+							<p>
+							<html:link page="<%= String.format("/curriculumValidation.do?method=markAsTemporaryEnrolled&amp;studentCurricularPlanId=%s&amp;executionSemesterId=%s&amp;enrolmentId=%s", studentCurricularPlanId, executionSemesterId, enrolmentId) %>">
+								<bean:message key="label.curriculum.validation.mark.enrollment.as.temporary" bundle="ACADEMIC_OFFICE_RESOURCES" />
+							</html:link>
+							</p>
+						<% } %>
 					</td>
 					<td>
 						<%= ((java.util.List<MarkSheetEnrolmentEvaluationBean>) entries).get(0).getEnrolmentCondition() %>

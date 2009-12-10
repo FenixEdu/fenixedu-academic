@@ -2085,3 +2085,13 @@
 	<slot name="academicServiceRequestSituationType"
 		key="label.currentSituation" />
 </schema>
+
+
+<schema name="enrolment.evaluation.view" type="net.sourceforge.fenixedu.domain.EnrolmentEvaluation" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="enrolmentEvaluationTypeDescription" key="label.set.evaluation.type" />
+	<slot name="enrolment.executionPeriod.executionYear.year" key="label.set.evaluation.execution.year" />
+	<slot name="gradeValue" key="label.set.evaluation.grade.value.simple" />
+	<slot name="examDateYearMonthDay" key="label.set.evaluation.exam.date" />
+	<slot name="bookReference" key="label.set.evaluation.book.reference" />
+	<slot name="page" key="label.set.evaluation.page" />
+</schema>

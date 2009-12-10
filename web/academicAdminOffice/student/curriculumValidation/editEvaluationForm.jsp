@@ -145,4 +145,18 @@
 	<html:submit><bean:message key="label.submit" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:submit>
 </fr:form>
 
+<h2><bean:message key="title.curriculum.validation.evaluations" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
+
+<fr:view name="allEvaluationsBound" schema="enrolment.evaluation.view">
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle4 tdcenter thlight"/>
+		<fr:property name="linkFormat(remove)" value="<%= String.format("/curriculumValidation.do?method=removeEnrolmentEvaluation&amp;studentCurricularPlanId=%s&amp;executionSemesterId=%s&amp;enrolmentId=%s&amp;enrolmentEvaluationId=${externalId}", studentCurricularPlanId, executionSemesterId, enrolmentId) %>" />
+		<fr:property name="key(remove)" value="label.enrolment.evaluation.remove" />
+		<fr:property name="bundle(remove)" value="ACADEMIC_OFFICE_RESOURCES" />
+		<fr:property name="confirmationBundle(remove)" value="ACADEMIC_OFFICE_RESOURCES" />
+		<fr:property name="confirmationKey(remove)" value="label.remove.enrolmennt.evaluation.confirmation" />
+		<fr:property name="confirmationTitleKey(remove)" value="label.remove.enrolmennt.evaluation.confirmation.title" />
+	</fr:layout>
+</fr:view>
+
 </logic:equal>
