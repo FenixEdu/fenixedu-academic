@@ -1,18 +1,28 @@
 package net.sourceforge.fenixedu.domain.accounting.events.gratuity;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
+import net.sourceforge.fenixedu.dataTransferObject.accounting.SibsTransactionDetailDTO;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.Account;
+import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
+import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
+import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
+import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
@@ -79,4 +89,46 @@ public class StandaloneEnrolmentGratuityEvent extends StandaloneEnrolmentGratuit
 
 	return result;
     }
+
+    @Override
+    protected List<AccountingEventPaymentCode> createPaymentCodes() {
+	final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
+	return Collections.singletonList(createPaymentCode(entryDTO));
+    }
+
+    private AccountingEventPaymentCode createPaymentCode(final EntryDTO entryDTO) {
+	return AccountingEventPaymentCode.create(PaymentCodeType.TOTAL_GRATUITY, new YearMonthDay(),
+		calculatePaymentCodeEndDate(), this, entryDTO.getAmountToPay(), entryDTO.getAmountToPay(), getPerson());
+    }
+
+    @Override
+    protected List<AccountingEventPaymentCode> updatePaymentCodes() {
+	final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
+
+	if (!getNonProcessedPaymentCodes().isEmpty()) {
+	    getNonProcessedPaymentCodes().get(0).update(new YearMonthDay(), calculatePaymentCodeEndDate(),
+		    entryDTO.getAmountToPay(), entryDTO.getAmountToPay());
+	} else {
+	    createPaymentCode(entryDTO);
+	}
+
+	return getNonProcessedPaymentCodes();
+    }
+
+    private YearMonthDay calculatePaymentCodeEndDate() {
+	final LocalDate nextMonth = new LocalDate().plusMonths(1);
+	return new YearMonthDay(nextMonth.getYear(), nextMonth.getMonthOfYear(), 1).minusDays(1);
+    }
+
+    /**
+     * This method deposits amount to pay directly in event
+     */
+    @Override
+    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
+	    SibsTransactionDetailDTO transactionDetail) {
+	final AccountingTransaction transaction = depositAmount(responsibleUser, amountToPay,
+		EntryType.STANDALONE_ENROLMENT_GRATUITY_FEE, transactionDetail);
+	return Collections.singleton(transaction.getToAccountEntry());
+    }
+
 }
