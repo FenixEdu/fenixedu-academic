@@ -5,6 +5,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.commons.administrativeO
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -36,14 +37,17 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 
-@Forwards( {
-    	@Forward(name = "showOperations", path = "/academicAdminOffice/payments/showOperations.jsp"),
+@Forwards( { @Forward(name = "showOperations", path = "/academicAdminOffice/payments/showOperations.jsp"),
 	@Forward(name = "showEvents", path = "/academicAdminOffice/payments/showEvents.jsp"),
 	@Forward(name = "showEventsWithPayments", path = "/academicAdminOffice/payments/showEventsWithPayments.jsp"),
 	@Forward(name = "showPaymentsForEvent", path = "/academicAdminOffice/payments/showPaymentsForEvent.jsp"),
 	@Forward(name = "preparePayment", path = "/academicAdminOffice/payments/preparePayment.jsp"),
 	@Forward(name = "preparePrintGuide", path = "/guides.do?method=preparePrintGuide"),
-	@Forward(name = "showReceipt", path = "/receipts.do?method=prepareShowReceipt") })
+	@Forward(name = "showReceipt", path = "/receipts.do?method=prepareShowReceipt"),
+	@Forward(name = "showEventsWithPaymentCodes", path = "/academicAdminOffice/payments/showEventsWithPaymentCodes.jsp"),
+	@Forward(name = "showPaymentCodesForEvent", path = "/academicAdminOffice/payments/showPaymentCodesForEvent.jsp")
+
+})
 public abstract class PaymentsManagementDispatchAction extends FenixDispatchAction {
 
     protected PaymentsManagementDTO searchNotPayedEventsForPerson(HttpServletRequest request, Person person) {
@@ -223,6 +227,36 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
     public ActionForward preparePrintGuide(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	return mapping.findForward("preparePrintGuide");
+    }
+
+    public ActionForward showEventsWithPaymentCodes(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final Person person = getPerson(request);
+	request.setAttribute("person", person);
+	request.setAttribute("eventsWithPaymentCodes", searchOpenEventsWithPaymentCodes(request, person));
+
+	return mapping.findForward("showEventsWithPaymentCodes");
+    }
+
+    public ActionForward showPaymentCodesForEvent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final Event event = getEvent(request);
+	request.setAttribute("event", event);
+	request.setAttribute("accountingEventPaymentCodes", event.getNonProcessedPaymentCodes());
+
+	return mapping.findForward("showPaymentCodesForEvent");
+    }
+
+    private Collection<Event> searchOpenEventsWithPaymentCodes(HttpServletRequest request, final Person person) {
+	final Collection<Event> events = new HashSet<Event>();
+	for (final Event event : person.getNotPayedEventsPayableOn(getAdministrativeOffice(request))) {
+	    if (event.isOpen() && event.hasNonProcessedPaymentCodes()) {
+		events.add(event);
+	    }
+	}
+	return events;
     }
 
     abstract protected AdministrativeOffice getAdministrativeOffice(final HttpServletRequest request);

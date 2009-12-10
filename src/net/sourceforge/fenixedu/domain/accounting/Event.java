@@ -584,6 +584,15 @@ public abstract class Event extends Event_Base {
 	}
 	return result;
     }
+    
+    public boolean hasNonProcessedPaymentCodes() {
+	for (final AccountingEventPaymentCode paymentCode : super.getPaymentCodesSet()) {
+	    if (paymentCode.isNew()) {
+		return true;
+	    }
+	}
+	return false;
+    }
 
     public List<AccountingEventPaymentCode> getCancelledPaymentCodes() {
 	final List<AccountingEventPaymentCode> result = new ArrayList<AccountingEventPaymentCode>();
