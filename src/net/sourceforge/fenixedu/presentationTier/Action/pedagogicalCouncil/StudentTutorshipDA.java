@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.TutorateBean;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.PerformanceGridTableDTO;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -62,7 +64,11 @@ public class StudentTutorshipDA extends StudentsPerformanceGridDispatchAction {
 		request.setAttribute("performanceGridTable", performanceGridTable);
 		request.setAttribute("monitoringYear", ExecutionYear.readCurrentExecutionYear());
 	    }
-
+	    List<Teacher> tutors = new ArrayList<Teacher>();
+	    for (Tutorship t : tutorships) {
+		tutors.add(t.getTeacher());
+	    }
+	    request.setAttribute("tutors", tutors);
 	    request.setAttribute("student", student.getPerson());
 	} else {
 	    studentErrorMessage(request, bean.getPersonNumber());

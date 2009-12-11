@@ -45,6 +45,33 @@
 		   	    <fr:property name="rowClasses" value="bold,,,"/>
 		    </fr:layout>
 		</fr:view>
+		<logic:notEmpty name="tutors">
+			<table class="tstyle4 tdcenter mtop15">
+				<tr>
+					<th colspan="2">
+						<bean:message key="label.tutors" bundle="PEDAGOGICAL_COUNCIL"/>
+					</th>
+				</tr>
+				<tr>
+					<th>
+						<bean:message key="label.tutor.number" bundle="PEDAGOGICAL_COUNCIL"/>
+					</th>
+					<th>
+						<bean:message key="label.tutor.name" bundle="PEDAGOGICAL_COUNCIL"/>
+					</th>
+				</tr>
+				<logic:iterate id="tutor" name="tutors">
+					<tr>
+						<td>
+							<bean:write name="tutor" property="teacherNumber"/>
+						</td>
+						<td>
+							<bean:write name="tutor" property="person.name"/>
+						</td>
+					</tr>
+				</logic:iterate>
+			</table>
+		</logic:notEmpty>
 		<logic:notEmpty name="performanceGridTable" property="performanceGridTableLines">
 		
 		
