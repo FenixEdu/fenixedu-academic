@@ -15,6 +15,7 @@
 		<logic:equal name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee.administrativeOffice.administrativeOfficeType" value="MASTER_DEGREE">
 			<li class="navheader"><bean:message key="label.phds" bundle="PHD_RESOURCES"/></li>
 			<li><html:link page="/phdIndividualProgramProcess.do?method=manageProcesses"><bean:message key="label.phd.manageProcesses" bundle="PHD_RESOURCES"/></html:link></li>
+			<li><html:link page="/exportMasterAndPhdStudentDiploma.do?method=prepareExportation"><bean:message key="utilities.export.diplomas" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link> </li>
 		</logic:equal>
 		
 		<li class="navheader"><bean:message key="link.studentOperations" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
