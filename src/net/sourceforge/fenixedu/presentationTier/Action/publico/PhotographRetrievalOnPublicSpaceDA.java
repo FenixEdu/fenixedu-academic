@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Photograph;
+import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.presentationTier.Action.person.RetrievePersonalPhotoAction;
 
 import org.apache.struts.action.ActionForm;
@@ -19,6 +20,10 @@ public class PhotographRetrievalOnPublicSpaceDA extends RetrievePersonalPhotoAct
     public ActionForward retrievePhotographOnPublicSpace(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 	Person person = AbstractDomainObject.fromExternalId(request.getParameter("personId"));
+	return retrieve(response, person);
+    }
+
+    private ActionForward retrieve(HttpServletResponse response, Person person) {
 	final Photograph personalPhoto = person.getPersonalPhoto();
 	if (personalPhoto != null) {
 	    if (person.isPhotoPubliclyAvailable()) {
@@ -28,5 +33,11 @@ public class PhotographRetrievalOnPublicSpaceDA extends RetrievePersonalPhotoAct
 	}
 	writeUnavailablePhoto(response);
 	return null;
+    }
+
+    public ActionForward retrieveByIstId(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	User user = User.readUserByUserUId(request.getParameter("istId"));
+	return retrieve(response, user.getPerson());
     }
 }
