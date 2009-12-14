@@ -100,61 +100,72 @@ processar.
 					property="infoExecutionYear.year" /></td>
 				<td class="listClasses"><bean:write name="infoExecutionPeriod"
 					property="state" /></td>
-				<td class="listClasses"><logic:equal name="infoExecutionPeriod"
-					property="state.stateCode" value="NO">
-					<html:link module="/manager"
-						page="<%= "/manageExecutionPeriods.do?method=alterExecutionPeriodState"
-								+ "&amp;year="
-								+ year
-								+ "&amp;semester="
-								+ semester
-								+ "&amp;periodState="
-								+ "O" %>">
-						<bean:message bundle="MANAGER_RESOURCES"
-							key="link.open.execution.period" />
-					</html:link>
-				</logic:equal> <logic:equal name="infoExecutionPeriod"
-					property="state.stateCode" value="O">
-					<html:link module="/manager"
-						page="<%= "/manageExecutionPeriods.do?method=alterExecutionPeriodState"
-								+ "&amp;year="
-								+ year
-								+ "&amp;semester="
-								+ semester
-								+ "&amp;periodState="
-								+ "C" %>">
-						<bean:message bundle="MANAGER_RESOURCES"
-							key="link.current.execution.period" />
-					</html:link>
-					<br />
-					<html:link module="/manager"
-						page="<%= "/manageExecutionPeriods.do?method=alterExecutionPeriodState"
-								+ "&amp;year="
-								+ year
-								+ "&amp;semester="
-								+ semester
-								+ "&amp;periodState="
-								+ "CL" %>">
-						<bean:message bundle="MANAGER_RESOURCES"
-							key="link.close.execution.period" />
-					</html:link>
-
-				</logic:equal> <logic:equal name="infoExecutionPeriod"
-					property="state.stateCode" value="C">
-				</logic:equal> <logic:equal name="infoExecutionPeriod"
-					property="state.stateCode" value="CL">
-					<html:link module="/manager"
-						page="<%= "/manageExecutionPeriods.do?method=alterExecutionPeriodState"
-								+ "&amp;year="
-								+ year
-								+ "&amp;semester="
-								+ semester
-								+ "&amp;periodState="
-								+ "O" %>">
-						<bean:message bundle="MANAGER_RESOURCES"
-							key="link.open.execution.period" />
-					</html:link>
-				</logic:equal></td>
+				<td class="listClasses">
+					<logic:equal name="infoExecutionPeriod" property="state.stateCode" value="NO">
+						<html:link module="/manager"
+							page="<%= "/manageExecutionPeriods.do?method=alterExecutionPeriodState"
+									+ "&amp;year="
+									+ year
+									+ "&amp;semester="
+									+ semester
+									+ "&amp;periodState="
+									+ "O" %>">
+							<bean:message bundle="MANAGER_RESOURCES"
+								key="link.open.execution.period" />
+						</html:link>
+					</logic:equal>
+					<logic:equal name="infoExecutionPeriod" property="state.stateCode" value="O">
+						<html:link module="/manager"
+							page="<%= "/manageExecutionPeriods.do?method=alterExecutionPeriodState"
+									+ "&amp;year="
+									+ year
+									+ "&amp;semester="
+									+ semester
+									+ "&amp;periodState="
+									+ "NO" %>">
+							<bean:message bundle="MANAGER_RESOURCES" key="link.not.open.execution.period" />
+						</html:link>
+						<br />
+						<html:link module="/manager"
+							page="<%= "/manageExecutionPeriods.do?method=alterExecutionPeriodState"
+									+ "&amp;year="
+									+ year
+									+ "&amp;semester="
+									+ semester
+									+ "&amp;periodState="
+									+ "C" %>">
+							<bean:message bundle="MANAGER_RESOURCES"
+								key="link.current.execution.period" />
+						</html:link>
+						<br />
+						<html:link module="/manager"
+							page="<%= "/manageExecutionPeriods.do?method=alterExecutionPeriodState"
+									+ "&amp;year="
+									+ year
+									+ "&amp;semester="
+									+ semester
+									+ "&amp;periodState="
+									+ "CL" %>">
+							<bean:message bundle="MANAGER_RESOURCES"
+								key="link.close.execution.period" />
+						</html:link>
+					</logic:equal>
+					<logic:equal name="infoExecutionPeriod" property="state.stateCode" value="C">
+					</logic:equal>
+					<logic:equal name="infoExecutionPeriod" property="state.stateCode" value="CL">
+						<html:link module="/manager"
+							page="<%= "/manageExecutionPeriods.do?method=alterExecutionPeriodState"
+									+ "&amp;year="
+									+ year
+									+ "&amp;semester="
+									+ semester
+									+ "&amp;periodState="
+									+ "O" %>">
+							<bean:message bundle="MANAGER_RESOURCES"
+								key="link.open.execution.period" />
+						</html:link>
+					</logic:equal>
+				</td>
 				
 				<td class="listClasses"> 
 					<bean:define id="editURL">/manageExecutionPeriods.do?method=edit&amp;executionPeriodID=<bean:write name="infoExecutionPeriod" property="idInternal"/></bean:define>
