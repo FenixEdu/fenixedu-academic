@@ -559,6 +559,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 
 	Integer libraryCardID = new Integer(request.getParameter("libraryCardID"));
 	LibraryCard libraryCard = rootDomainObject.readLibraryCardByOID(libraryCardID);
+	PartyClassification partyClassification = PartyClassification.valueOf(request.getParameter("classification"));
 	// TODO remove this condition, when user names that already exist are no
 	// longer bigger than the max length
 	if (libraryCard.getUserName().length() > maxUserNameLength) {
@@ -568,7 +569,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	Integer number = !StringUtils.isEmpty(request.getParameter("number")) ? Integer.valueOf(request.getParameter("number"))
 		: null;
 	String name = request.getParameter("name");
-	request.setAttribute("libraryCardSearch", new LibraryCardSearch(libraryCard.getPartyClassification(), name, number));
+	request.setAttribute("libraryCardSearch", new LibraryCardSearch(partyClassification, name, number));
 	request.setAttribute("libraryCardDTO", new LibraryCardDTO(libraryCard));
 	return mapping.findForward("show-details");
     }

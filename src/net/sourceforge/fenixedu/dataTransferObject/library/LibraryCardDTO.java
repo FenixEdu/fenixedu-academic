@@ -89,7 +89,6 @@ public class LibraryCardDTO implements Serializable {
 
     public LibraryCardDTO(LibraryCard libraryCard) {
 	setLibraryCard(libraryCard);
-	setPin(libraryCard.getPin());
 	setPerson(libraryCard.getPerson());
 	setPartyClassification(libraryCard.getPartyClassification());
 	setUserName(libraryCard.getUserName());
@@ -170,7 +169,7 @@ public class LibraryCardDTO implements Serializable {
     }
 
     public LibraryCard getLibraryCard() {
-	return libraryCard != null ? libraryCard.getObject() : null;
+	return getPerson() != null ? getPerson().getLibraryCard() : null;
     }
 
     public void setLibraryCard(LibraryCard libraryCard) {
@@ -270,7 +269,7 @@ public class LibraryCardDTO implements Serializable {
     }
 
     public Integer getPin() {
-	return pin;
+	return this.pin == null ? getLibraryCard() != null ? getLibraryCard().getPin() : null : pin;
     }
 
     public void setPin(Integer pin) {
@@ -426,4 +425,17 @@ public class LibraryCardDTO implements Serializable {
 
 	return dates.toString();
     }
+
+    public PartyClassification getPersonPartyClassification() {
+	return getPerson().getPartyClassification();
+    }
+
+    public PartyClassification getLibraryCardPartyClassification() {
+	return getLibraryCard() != null ? getLibraryCard().getPartyClassification() : null;
+    }
+
+    public boolean getHasEqualPartyClassification() {
+	return getPersonPartyClassification().equals(getLibraryCardPartyClassification());
+    }
+
 }

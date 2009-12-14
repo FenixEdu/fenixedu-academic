@@ -74,6 +74,7 @@
 			<bean:message key="link.exportToExcel" bundle="LIBRARY_RESOURCES"/>
 		</html:link>
 		
+		<bean:define id="classification" name="libraryCardSearch" property="partyClassification"/>
 		<bean:define id="searchName" value="" type="java.lang.String"/>
 		<logic:notEmpty name="libraryCardSearch" property="userName">
 			<bean:define id="searchName" name="libraryCardSearch" property="userName" type="java.lang.String"/>
@@ -90,7 +91,7 @@
 		<fr:view name="resultPage" schema="library.card.list">
 			<fr:layout name="tabular-sortable">
 				<fr:property name="classes" value="tstyle1"/>
-				<fr:property name="columnClasses" value="acenter,acenter,,,,acenter,,nowrap"/>
+				<fr:property name="columnClasses" value="acenter,acenter,acenter,,,,acenter,,nowrap"/>
 				<fr:property name="rowClasses" value=",bgfafafa"/>
 				
 				<fr:property name="sortParameter" value="sortBy"/>
@@ -102,7 +103,7 @@
 				<fr:property name="key(generate)" value="link.card.create"/>
 				<fr:property name="visibleIf(generate)" value="isToGenerate"/>
 				
-				<fr:property name="link(details)" value="<%= "/cardManagement.do?method=showDetails&name=" + searchName + "&number=" + searchNumber %>"/>
+				<fr:property name="link(details)" value="<%= "/cardManagement.do?method=showDetails&classification=" + classification + "&name=" + searchName + "&number=" + searchNumber %>"/>
 				<fr:property name="param(details)" value="libraryCardID"/>
 				<fr:property name="key(details)" value="link.card.details"/>
 				<fr:property name="visibleIf(details)" value="isToViewDetails"/>

@@ -30,7 +30,7 @@ public class LibraryCardSearch implements Serializable {
 	@Override
 	public boolean add(final Person person) {
 	    if (!contains(person) && satisfiesSearch(person)) {
-		if (person.hasLibraryCard()) {
+		if (person.hasLibraryCard() && person.getLibraryCard().getPartyClassification().equals(getPartyClassification())) {
 		    libraryCardDTOs.add(new LibraryCardDTO(person.getLibraryCard()));
 		} else {
 		    libraryCardDTOs.add(new LibraryCardDTO(person, getPartyClassification()));
@@ -43,7 +43,7 @@ public class LibraryCardSearch implements Serializable {
 	public boolean add(final StudentCurricularPlan studentCurricularPlan) {
 	    final Person person = studentCurricularPlan.getRegistration().getPerson();
 	    if (!contains(person) && satisfiesNumber(person) && satisfiesUserName(person)) {
-		if (person.hasLibraryCard()) {
+		if (person.hasLibraryCard() && person.getLibraryCard().getPartyClassification().equals(getPartyClassification())) {
 		    libraryCardDTOs.add(new LibraryCardDTO(person.getLibraryCard()));
 		} else {
 		    libraryCardDTOs.add(new LibraryCardDTO(person, getPartyClassification(), studentCurricularPlan.getDegree()

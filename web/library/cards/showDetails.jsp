@@ -23,6 +23,9 @@
 	<fr:view name="libraryCardDTO" schema="library.card.generated">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight thright"/>
+			<logic:notEqual name="libraryCardDTO" property="hasEqualPartyClassification" value="true">
+				<fr:property name="rowClasses" value=",,,,,,,,error,error,,,,,"/>
+			</logic:notEqual>
 		</fr:layout>			
 	</fr:view>
 

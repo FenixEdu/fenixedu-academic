@@ -145,7 +145,8 @@
 <!-- Library Card -->
 
 <schema name="library.card.list" type="net.sourceforge.fenixedu.dataTransferObject.library.LibraryCardDTO" bundle="LIBRARY_RESOURCES">
-    <slot name="partyClassification" key="label.card.category"/>
+    <slot name="personPartyClassification" key="label.card.category.person"/>
+    <slot name="libraryCardPartyClassification" key="label.card.category.libraryCard"/>
     <slot name="number" key="label.card.number"/>
     <slot name="userName" key="label.card.name"/>
     <slot name="unitName" key="label.card.unitName"/>    
@@ -242,7 +243,8 @@
 	<slot name="phone" key="label.card.phone"/>
     <slot name="mobile" key="label.card.mobile"/>
 	<slot name="unitName" layout="menu-select" key="label.card.unitName"/>
-	<slot name="partyClassification" key="label.card.category"/>
+	<slot name="personPartyClassification" key="label.card.category.person"/>
+	<slot name="libraryCardPartyClassification" key="label.card.category.libraryCard"/>
     <slot name="validUntil" key="label.card.date"/>
 </schema>
 
@@ -290,11 +292,13 @@
 		<property name="size" value="60"/>
 		<property name="maxLength" value="50"/>
 	</slot>
-	<slot name="partyClassification" key="label.card.category" layout="menu-select">
+	<slot name="partyClassification" key="label.card.category.libraryCard" layout="menu-select">
 	    <property name="eachLayout" value="this-does-not-exist" />
     	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.LibraryCardCategoriesProvider"/>
 		<property name="nullOptionHidden" value="true"/>		
 	</slot>	
+	<slot name="personPartyClassification" key="label.card.category.person" read-only="true"/>
+	
     <slot name="validUntil" key="label.card.date">
    		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
