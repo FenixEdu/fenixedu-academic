@@ -124,7 +124,8 @@ public class EmailBean implements Serializable {
 
 	if (!StringUtils.isEmpty(bccs)) {
 	    String[] emails = bccs.split(",");
-	    for (String email : emails) {
+	    for (String emailString : emails) {
+		final String email = emailString.trim();
 		if (!email.matches(EMail.W3C_EMAIL_SINTAX_VALIDATOR)) {
 		    StringBuilder builder = new StringBuilder(resourceBundle.getString("error.email.validation.bcc.invalid"));
 		    builder.append(email);
@@ -160,7 +161,8 @@ public class EmailBean implements Serializable {
 	}
 	message.append("\n");
 
-	return new Message(getSender(), getReplyTos(), getRecipients(), getSubject(), message.toString(), getBccs());
+	final String bccs = getBccs() == null ? null : getBccs().replace(" ", "");
+	return new Message(getSender(), getReplyTos(), getRecipients(), getSubject(), message.toString(), bccs);
     }
 
 }
