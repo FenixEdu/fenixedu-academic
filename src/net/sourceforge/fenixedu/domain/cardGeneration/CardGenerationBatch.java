@@ -153,7 +153,10 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
 	final Set<StudentCurricularPlan> studentCurricularPlans = new HashSet<StudentCurricularPlan>();
 
 	for (final Registration registration : student.getRegistrationsSet()) {
-	    if (registration.getRegistrationAgreement() != RegistrationAgreement.NORMAL) {
+	    final RegistrationAgreement registrationAgreement = registration.getRegistrationAgreement();
+	    if (registrationAgreement != RegistrationAgreement.NORMAL
+		    && registrationAgreement != RegistrationAgreement.TOTAL
+		    && registrationAgreement != RegistrationAgreement.ANGOLA_TELECOM) {
 		continue;
 	    }
 	    final DegreeType degreeType = registration.getDegreeType();
