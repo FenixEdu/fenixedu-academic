@@ -225,26 +225,31 @@
 					<bean:message key="link.coordinator.tutorshipHistory"/>
 				</html:link>
 			</li>
-			<li>
-				<html:link page="<%= "/caseHandlingSecondCycleCandidacyProcess.do?method=intro&executionDegreeId=" +  executionDegreeID + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
-					<bean:message key="link.coordinator.second.cycle.applications"/>
-				</html:link>
-			</li>
-			<li>
-				<html:link page="<%= "/caseHandlingDegreeCandidacyForGraduatedPersonProcess.do?method=intro&executionDegreeId=" +  executionDegreeID + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
-					<bean:message key="link.coordinator.degree.applications.for.graduated"/>
-				</html:link>
-			</li>
-			<li>
-				<html:link page="<%= "/caseHandlingDegreeChangeCandidacyProcess.do?method=intro&executionDegreeId=" +  executionDegreeID + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
-					<bean:message key="link.coordinator.degree.change.application"/>
-				</html:link>
-			</li>
-			<li>
-				<html:link page="<%= "/caseHandlingDegreeTransferCandidacyProcess.do?method=intro&executionDegreeId=" +  executionDegreeID + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
-					<bean:message key="link.coordinator.degree.transfer.appication"/>
-				</html:link>
-			</li>
+			
+			<% if(DegreeType.BOLONHA_DEGREE.equals(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso()) || 
+					DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE.equals(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso()) ||
+					DegreeType.BOLONHA_MASTER_DEGREE.equals(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso())) { %>
+				<li>
+					<html:link page="<%= "/caseHandlingSecondCycleCandidacyProcess.do?method=intro&executionDegreeId=" +  executionDegreeID + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
+						<bean:message key="link.coordinator.second.cycle.applications"/>
+					</html:link>
+				</li>
+				<li>
+					<html:link page="<%= "/caseHandlingDegreeCandidacyForGraduatedPersonProcess.do?method=intro&executionDegreeId=" +  executionDegreeID + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
+						<bean:message key="link.coordinator.degree.applications.for.graduated"/>
+					</html:link>
+				</li>
+				<li>
+					<html:link page="<%= "/caseHandlingDegreeChangeCandidacyProcess.do?method=intro&executionDegreeId=" +  executionDegreeID + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
+						<bean:message key="link.coordinator.degree.change.application"/>
+					</html:link>
+				</li>
+				<li>
+					<html:link page="<%= "/caseHandlingDegreeTransferCandidacyProcess.do?method=intro&executionDegreeId=" +  executionDegreeID + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
+						<bean:message key="link.coordinator.degree.transfer.appication"/>
+					</html:link>
+				</li>
+			<% } %>
 			
 			<li class="navheader">
 				<bean:message key="label.coordinator.degreeSite.students"/>
