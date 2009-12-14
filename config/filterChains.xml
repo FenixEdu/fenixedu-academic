@@ -477,7 +477,7 @@
 
     <filterChain>
         <name>MasterOrCoordinatorDegreeAdministrativeOfficeAuthorization</name>
-        <expression>MasterDegreeAdministrativeOfficeAuthorization || CoordinatorAuthorization</expression>
+        <expression>ManagerAuthorization || MasterDegreeAdministrativeOfficeAuthorization || CoordinatorAuthorization</expression>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
