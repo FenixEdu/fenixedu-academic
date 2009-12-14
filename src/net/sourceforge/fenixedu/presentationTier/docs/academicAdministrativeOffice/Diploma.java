@@ -31,6 +31,8 @@ public class Diploma extends AdministrativeOfficeDocument {
 	final DiplomaRequest diplomaRequest = (DiplomaRequest) getDocumentRequest();
 	addParameter("documentRequest", diplomaRequest);
 
+	addParameter("registryCode", diplomaRequest.hasRegistryCode() ? diplomaRequest.getRegistryCode().getCode() : null);
+
 	final Registration registration = getRegistration();
 	addParameter("registration", registration);
 

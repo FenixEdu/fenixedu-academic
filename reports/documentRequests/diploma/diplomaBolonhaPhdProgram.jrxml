@@ -36,6 +36,7 @@
 	<parameter name="institutionName" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="dissertationTitle" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="classificationResult" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="registryCode" isForPrompting="false" class="java.lang.String"/>
 
 		<background>
 			<band height="0"  isSplitAllowed="true" >
@@ -516,6 +517,16 @@
 					</textElement>
 				<text><![CDATA[O Presidente do Instituto Superior Técnico]]></text>
 				</staticText>
+				<break>
+					<reportElement
+						x="0"
+						y="779"
+						width="595"
+						height="0"
+						key="element-1">
+							<printWhenExpression><![CDATA[$P{registryCode} != null]]></printWhenExpression>
+						</reportElement>
+				</break>
 			</band>
 		</detail>
 		<columnFooter>
@@ -526,6 +537,25 @@
 			<band height="0"  isSplitAllowed="true" >
 			</band>
 		</pageFooter>
+		<lastPageFooter>
+			<band height="50"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="59"
+						y="0"
+						width="468"
+						height="19"
+						key="textField-35">
+							<printWhenExpression><![CDATA[$P{registryCode} != null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["número de registo: " + $P{registryCode}]]></textFieldExpression>
+				</textField>
+			</band>
+		</lastPageFooter>
 		<summary>
 			<band height="0"  isSplitAllowed="true" >
 			</band>

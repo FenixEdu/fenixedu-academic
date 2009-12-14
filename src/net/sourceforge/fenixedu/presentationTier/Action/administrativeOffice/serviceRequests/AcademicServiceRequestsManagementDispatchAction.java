@@ -395,6 +395,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	final RegistrationAcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
 	DiplomaRequest diploma = (DiplomaRequest) academicServiceRequest;
 	diploma.generateRegistryCode();
+	addActionMessage(request, "rectorate.code.generated.with.success");
 	request.setAttribute("registration", academicServiceRequest.getRegistration());
 	return mapping.findForward("viewRegistrationDetails");
     }
