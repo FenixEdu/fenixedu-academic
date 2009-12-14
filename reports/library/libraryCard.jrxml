@@ -52,8 +52,8 @@
 			<band height="157"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="83"
-						y="126"
+						x="89"
+						y="124"
 						width="173"
 						height="13"
 						key="textField"/>
@@ -70,7 +70,7 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="203"
-						y="145"
+						y="142"
 						width="44"
 						height="12"
 						key="textField"/>
@@ -86,9 +86,9 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="55"
-						y="105"
-						width="214"
+						x="64"
+						y="103"
+						width="212"
 						height="13"
 						key="textField-1"/>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -103,8 +103,8 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="68"
-						y="145"
+						x="74"
+						y="142"
 						width="117"
 						height="12"
 						key="textField-2"/>
@@ -120,7 +120,7 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="192"
+						x="188"
 						y="28"
 						width="13"
 						height="10"
@@ -137,7 +137,7 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="213"
+						x="209"
 						y="28"
 						width="13"
 						height="10"
@@ -154,7 +154,7 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="233"
+						x="229"
 						y="28"
 						width="13"
 						height="10"
