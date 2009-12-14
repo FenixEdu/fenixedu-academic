@@ -50,7 +50,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "create-registration", path = "/candidacy/createRegistration.jsp"),
 	@Forward(name = "prepare-edit-candidacy-documents", path = "/candidacy/editCandidacyDocuments.jsp"),
 	@Forward(name = "change-process-checked-state", path = "/candidacy/changeProcessCheckedState.jsp"),
-	@Forward(name = "change-payment-checked-state", path = "/candidacy/changePaymentCheckedState.jsp")
+	@Forward(name = "change-payment-checked-state", path = "/candidacy/changePaymentCheckedState.jsp"),
+	@Forward(name = "reject-candidacy", path = "/candidacy/rejectCandidacy.jsp")
 
 })
 public class DegreeTransferIndividualCandidacyProcessDA extends IndividualCandidacyProcessDA {

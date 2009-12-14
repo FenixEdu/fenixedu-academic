@@ -667,4 +667,22 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 
 	return prepareExecuteEditDocuments(mapping, form, request, response);
     }
+
+    public ActionForward prepareExecuteRejectCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+
+	return mapping.findForward("reject-candidacy");
+    }
+
+    public ActionForward executeRejectCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	try {
+	    executeActivity(getProcess(request), "RejectCandidacy", null);
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getMessage(), e.getArgs());
+	    return mapping.findForward("reject-candidacy");
+	}
+	return listProcessAllowedActivities(mapping, form, request, response);
+    }
 }

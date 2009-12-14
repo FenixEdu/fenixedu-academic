@@ -42,6 +42,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	activities.add(new SendEmailForApplicationSubmission());
 	activities.add(new RevokeDocumentFile());
 	activities.add(new ChangePaymentCheckedState());
+	activities.add(new RejectCandidacy());
 
     }
 
@@ -615,6 +616,26 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	    return Boolean.FALSE;
 	}
 
+    }
+
+    static private class RejectCandidacy extends Activity<SecondCycleIndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	    if (process.isCandidacyCancelled() || !process.isCandidacyInStandBy()) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    process.rejectCandidacy(userView.getPerson());
+	    return process;
+	}
     }
 
 }

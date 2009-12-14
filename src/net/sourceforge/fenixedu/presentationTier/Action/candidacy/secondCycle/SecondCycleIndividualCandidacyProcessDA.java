@@ -49,7 +49,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "select-person-for-bind-with-candidacy", path = "/candidacy/selectPersonForBind.jsp"),
 	@Forward(name = "edit-personal-information-for-bind", path = "/candidacy/editPersonalInformationForCandidacyBind.jsp"),
 	@Forward(name = "change-process-checked-state", path = "/candidacy/changeProcessCheckedState.jsp"),
-	@Forward(name = "change-payment-checked-state", path = "/candidacy/changePaymentCheckedState.jsp") })
+	@Forward(name = "change-payment-checked-state", path = "/candidacy/changePaymentCheckedState.jsp"),
+	@Forward(name = "reject-candidacy", path = "/candidacy/rejectCandidacy.jsp") })
 public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacyProcessDA {
 
     @Override

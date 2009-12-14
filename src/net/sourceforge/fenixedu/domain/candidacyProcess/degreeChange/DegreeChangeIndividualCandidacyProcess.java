@@ -41,6 +41,7 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 	activities.add(new ChangeProcessCheckedState());
 	activities.add(new RevokeDocumentFile());
 	activities.add(new ChangePaymentCheckedState());
+	activities.add(new RejectCandidacy());
     }
 
     private DegreeChangeIndividualCandidacyProcess() {
@@ -577,6 +578,26 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 	    return Boolean.FALSE;
 	}
 
+    }
+
+    static private class RejectCandidacy extends Activity<DegreeChangeIndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(DegreeChangeIndividualCandidacyProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	    if (process.isCandidacyCancelled() || !process.isCandidacyInStandBy()) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected DegreeChangeIndividualCandidacyProcess executeActivity(DegreeChangeIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    process.rejectCandidacy(userView.getPerson());
+	    return process;
+	}
     }
 
 }
