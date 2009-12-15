@@ -32,8 +32,8 @@
 	<tr>
 		<th><bean:message key="label.istid" bundle="APPLICATION_RESOURCES" /></th>
 		<th><bean:message key="label.name" /></th>
-		<th><bean:message key="label.teacher.responsible" /></th>			
 		<logic:equal name="isResponsible" value="true">
+			<th><bean:message key="label.teacher.responsible" /></th>			
 			<th><bean:message key="message.edit" /></th>    
 		</logic:equal>
 	</tr>	
