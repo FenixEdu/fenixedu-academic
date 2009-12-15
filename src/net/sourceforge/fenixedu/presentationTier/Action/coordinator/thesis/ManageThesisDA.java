@@ -239,10 +239,7 @@ public class ManageThesisDA extends FenixDispatchAction {
 
     public ThesisPresentationState getFilter(HttpServletRequest request) {
 	String filter = request.getParameter("filter");
-	if (filter != null) {
-	    return ThesisPresentationState.valueOf(filter);
-	}
-	return null;
+	return filter != null && !filter.isEmpty() && !filter.equals("null") ? ThesisPresentationState.valueOf(filter) : null;
     }
 
     public ActionForward listThesis(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
