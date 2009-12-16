@@ -165,6 +165,7 @@
 	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
 	<slot name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.baseAmount"  />
 	<slot name="amountPerUnit" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.amountPerUnit" />
+	<slot name="maximumAmountDescription" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.maximumAmount" />
 </schema>
 
 <schema name="BaseAmountPlusAmountPerPagePR.view"
@@ -183,6 +184,7 @@
 <schema name="EnrolmentCertificateRequestPR.view"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EnrolmentCertificateRequestPR"
 	bundle="APPLICATION_RESOURCES" extends="CertificateRequestPR.view">
+	<slot name="maximumAmountDescription" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EnrolmentCertificateRequestPR.maximumAmount" />
 </schema>
 
 <schema name="StandaloneEnrolmentCertificateRequestPR.view"
@@ -200,6 +202,7 @@
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EquivalencePlanRequestPR"
 	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
 	<slot name="amountPerUnit" />
+	<slot name="maximumAmountDescription" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EquivalencePlanRequestPR.maximumAmount" />
 </schema>
 
 <schema name="ExtraCurricularEnrolmentCertificateRequestPR.view"
@@ -334,6 +337,7 @@
 	bundle="APPLICATION_RESOURCES">
 	<slot name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.baseAmount" />
 	<slot name="amountPerUnit" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.amountPerUnit"/>
+	<slot name="maximumAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.maximumAmount" />
 </schema>
 
 <schema name="BaseAmountPlusAmountPerPagePR.edit"
@@ -347,13 +351,13 @@
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR"
 	bundle="APPLICATION_RESOURCES" extends="BaseAmountPlusAmountPerUnitPR.edit">
 	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR.amountPerPage" />
-	<setter signature="edit(baseAmount,amountPerUnit,amountPerPage)"/>
+	<setter signature="edit(baseAmount,amountPerUnit,amountPerPage, maximumAmount)"/>
 </schema>
 
 <schema name="EnrolmentCertificateRequestPR.edit"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EnrolmentCertificateRequestPR"
 	bundle="APPLICATION_RESOURCES" extends="CertificateRequestPR.edit">
-	<setter signature="edit(baseAmount,amountPerUnit,amountPerPage)"/>
+	<setter signature="edit(baseAmount,amountPerUnit,amountPerPage, maximumAmount)"/>
 </schema>
 
 <schema name="StandaloneEnrolmentCertificateRequestPR.edit"
@@ -372,7 +376,8 @@
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EquivalencePlanRequestPR"
 	bundle="APPLICATION_RESOURCES">
 	<slot name="amountPerUnit" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<setter signature="edit(amountPerUnit)"/>
+	<slot name="maximumAmount" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<setter signature="edit(amountPerUnit, maximumAmount)"/>
 </schema>
 
 <schema name="ExtraCurricularEnrolmentCertificateRequestPR.edit"
@@ -470,6 +475,7 @@
 <schema name="BaseAmountPlusAmountPerUnitPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR" extends="PostingRule.view-student" bundle="APPLICATION_RESOURCES">
 	<slot name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.baseAmount"  />
 	<slot name="amountPerUnit" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.amountPerUnit" />
+	<slot name="maximumAmountDescription" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR.maximumAmount" />
 </schema>
 
 <schema name="BaseAmountPlusAmountPerPagePR.view-student"
@@ -485,6 +491,7 @@
 
 <schema name="EnrolmentCertificateRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EnrolmentCertificateRequestPR" 
 		extends="CertificateRequestPR.view-student" bundle="APPLICATION_RESOURCES">
+		<slot name="maximumAmountDescription" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EnrolmentCertificateRequestPR.maximumAmount" />
 </schema>
 
 <schema name="ExtraCurricularEnrolmentCertificateRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ExtraCurricularEnrolmentCertificateRequestPR" 
@@ -502,6 +509,7 @@
 <schema name="EquivalencePlanRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EquivalencePlanRequestPR" 
 		extends="PostingRule.view-student" bundle="APPLICATION_RESOURCES">
 	<slot name="amountPerUnit" />
+	<slot name="maximumAmountDescription" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EquivalencePlanRequestPR.maximumAmount" />
 </schema>
 
 <schema name="PhotocopyRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.PhotocopyRequestPR"
@@ -761,4 +769,22 @@
 	type="net.sourceforge.fenixedu.domain.accounting.PostingRule"
 	bundle="APPLICATION_RESOURCES" extends="PostingRule.view-with-eventType">
 	<slot name="formulaDescription" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.PostingRule.formulaDescription" />
+</schema>
+
+
+
+<schema name="EnrolmentCertificateRequestWithCeilingInTotalAmountForUnitsPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EnrolmentCertificateRequestWithCeilingInTotalAmountForUnitsPR"
+	bundle="APPLICATION_RESOURCES" extends="EnrolmentCertificateRequestPR.view">
+</schema>
+
+<schema name="EnrolmentCertificateRequestWithCeilingInTotalAmountForUnitsPR.view-student" 
+		type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EnrolmentCertificateRequestWithCeilingInTotalAmountForUnitsPR" 
+		extends="EnrolmentCertificateRequestPR.view-student" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="EnrolmentCertificateRequestWithCeilingInTotalAmountForUnitsPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EnrolmentCertificateRequestWithCeilingInTotalAmountForUnitsPR"
+	bundle="APPLICATION_RESOURCES" extends="EnrolmentCertificateRequestPR.edit">
+	<setter signature="edit(baseAmount,amountPerUnit,amountPerPage, maximumAmount)"/>
 </schema>

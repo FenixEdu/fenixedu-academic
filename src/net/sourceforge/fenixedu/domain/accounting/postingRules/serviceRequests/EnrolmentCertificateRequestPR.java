@@ -14,16 +14,16 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class EnrolmentCertificateRequestPR extends EnrolmentCertificateRequestPR_Base {
 
-    private EnrolmentCertificateRequestPR() {
+    protected EnrolmentCertificateRequestPR() {
 	super();
     }
 
     public EnrolmentCertificateRequestPR(final DateTime startDate, final DateTime endDate,
 	    final ServiceAgreementTemplate serviceAgreementTemplate, final Money baseAmount, final Money amountPerUnit,
-	    final Money amountPerPage) {
+	    final Money amountPerPage, final Money maximumAmount) {
 	this();
 	init(EntryType.ENROLMENT_CERTIFICATE_REQUEST_FEE, EventType.ENROLMENT_CERTIFICATE_REQUEST, startDate, endDate,
-		serviceAgreementTemplate, baseAmount, amountPerUnit, amountPerPage);
+		serviceAgreementTemplate, baseAmount, amountPerUnit, amountPerPage, maximumAmount);
     }
 
     @Override
@@ -43,10 +43,10 @@ public class EnrolmentCertificateRequestPR extends EnrolmentCertificateRequestPR
     }
 
     @Checked("PostingRulePredicates.editPredicate")
-    public EnrolmentCertificateRequestPR edit(final Money baseAmount, final Money amountPerUnit, final Money amountPerPage) {
+    public EnrolmentCertificateRequestPR edit(final Money baseAmount, final Money amountPerUnit, final Money amountPerPage,
+	    final Money maximumAmount) {
 	deactivate();
 	return new EnrolmentCertificateRequestPR(new DateTime().minus(1000), null, getServiceAgreementTemplate(), baseAmount,
-		amountPerUnit, amountPerPage);
+		amountPerUnit, amountPerPage, maximumAmount);
     }
-
 }

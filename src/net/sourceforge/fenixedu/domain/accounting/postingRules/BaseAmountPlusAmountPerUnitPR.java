@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.accounting.postingRules;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
@@ -27,14 +28,15 @@ public abstract class BaseAmountPlusAmountPerUnitPR extends BaseAmountPlusAmount
     }
 
     protected void init(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
-	    ServiceAgreementTemplate serviceAgreementTemplate, Money baseAmount, Money amountPerUnit) {
+	    ServiceAgreementTemplate serviceAgreementTemplate, Money baseAmount, Money amountPerUnit, Money maximumAmount) {
 	super.init(entryType, eventType, startDate, endDate, serviceAgreementTemplate);
-	checkParameters(baseAmount, amountPerUnit);
+	checkParameters(baseAmount, amountPerUnit, maximumAmount);
 	super.setBaseAmount(baseAmount);
 	super.setAmountPerUnit(amountPerUnit);
+	super.setMaximumAmount(maximumAmount);
     }
 
-    private void checkParameters(Money baseAmount, Money amountPerUnit) {
+    private void checkParameters(Money baseAmount, Money amountPerUnit, Money maximumAmount) {
 	if (baseAmount == null) {
 	    throw new DomainException(
 		    "error.accounting.postingRules.BaseAmountPlusAmountPerUnitGreaterThanOnePR.baseAmount.cannot.be.null");
@@ -44,6 +46,10 @@ public abstract class BaseAmountPlusAmountPerUnitPR extends BaseAmountPlusAmount
 		    "error.accounting.postingRules.BaseAmountPlusAmountPerUnitGreaterThanOnePR.amountPerUnit.cannot.be.null");
 	}
 
+	if (maximumAmount == null) {
+	    throw new DomainException(
+		    "error.accounting.postingRules.BaseAmountPlusAmountPerUnitGreaterThanOnePR.maximumAmount.cannot.be.null");
+	}
     }
 
     @Override
@@ -56,6 +62,12 @@ public abstract class BaseAmountPlusAmountPerUnitPR extends BaseAmountPlusAmount
     public void setAmountPerUnit(Money amountPerUnit) {
 	throw new DomainException(
 		"error.accounting.postingRules.BaseAmountPlusAmountPerUnitGreaterThanOnePR.cannot.modify.amountPerUnit");
+    }
+
+    @Override
+    public void setMaximumAmount(Money maximumAmount) {
+	throw new DomainException(
+		"error.accounting.postingRules.BaseAmountPlusAmountPerUnitGreaterThanOnePR.cannot.modify.maximumAmount");
     }
 
     public Money getAmountForUnits(Event event) {
@@ -100,5 +112,14 @@ public abstract class BaseAmountPlusAmountPerUnitPR extends BaseAmountPlusAmount
     }
 
     protected abstract Integer getNumberOfUnits(Event event);
+
+    public String getMaximumAmountDescription() {
+	if (Money.ZERO.equals(this.getMaximumAmount())) {
+	    return ResourceBundle.getBundle("resources.ApplicationResources").getString(
+		    "label.base.amount.plus.units.with.no.maximum.value");
+	}
+
+	return this.getMaximumAmount().getAmountAsString();
+    }
 
 }

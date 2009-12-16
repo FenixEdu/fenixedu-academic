@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
@@ -29,11 +30,30 @@ public class EquivalencePlanRequestPR extends EquivalencePlanRequestPR_Base {
     }
 
     public EquivalencePlanRequestPR(final DateTime startDate, final DateTime endDate,
-	    final ServiceAgreementTemplate serviceAgreementTemplate, final Money amountPerUnit) {
+	    final ServiceAgreementTemplate serviceAgreementTemplate, final Money amountPerUnit, final Money maximumAmount) {
 	this();
 	super.init(EntryType.EQUIVALENCE_PLAN_REQUEST_FEE, EventType.EQUIVALENCE_PLAN_REQUEST, startDate, endDate,
 		serviceAgreementTemplate);
+
+	checkParameters(amountPerUnit, maximumAmount);
+
 	setAmountPerUnit(amountPerUnit);
+	super.setMaximumAmount(maximumAmount);
+    }
+
+    private void checkParameters(Money amountPerUnit, Money maximumAmount) {
+	if (amountPerUnit == null) {
+	    throw new DomainException("error.accounting.postingRules.EquivalencePlanRequestPR.amountPerUnit.cannot.be.null");
+	}
+
+	if (maximumAmount == null) {
+	    throw new DomainException("error.accounting.postingRules.EquivalencePlanRequestPR.maximumAmount.cannot.be.null");
+	}
+    }
+
+    @Override
+    public void setMaximumAmount(final Money maximumAmount) {
+	throw new DomainException("error.accounting.postingRules.EquivalencePlanRequestPR.maximumAmount.cannot.be.modified");
     }
 
     @Override
@@ -50,7 +70,13 @@ public class EquivalencePlanRequestPR extends EquivalencePlanRequestPR_Base {
 	Money amountToPay = getAmountPerUnit();
 
 	if (planRequest.getNumberOfEquivalences() != null && planRequest.getNumberOfEquivalences().intValue() != 0) {
-	    amountToPay.multiply(planRequest.getNumberOfEquivalences().intValue());
+	    amountToPay = amountToPay.multiply(planRequest.getNumberOfEquivalences().intValue());
+	}
+
+	if (getMaximumAmount().greaterThan(Money.ZERO)) {
+	    if (amountToPay.greaterThan(getMaximumAmount())) {
+		amountToPay = getMaximumAmount();
+	    }
 	}
 
 	if (planRequest.hasAcademicServiceRequestExemption()) {
@@ -86,8 +112,18 @@ public class EquivalencePlanRequestPR extends EquivalencePlanRequestPR_Base {
     }
 
     @Checked("PostingRulePredicates.editPredicate")
-    public EquivalencePlanRequestPR edit(final Money amountPerUnit) {
+    public EquivalencePlanRequestPR edit(final Money amountPerUnit, final Money maximumAmount) {
 	deactivate();
-	return new EquivalencePlanRequestPR(new DateTime().minus(1000), null, getServiceAgreementTemplate(), amountPerUnit);
+	return new EquivalencePlanRequestPR(new DateTime().minus(1000), null, getServiceAgreementTemplate(), amountPerUnit,
+		maximumAmount);
+    }
+
+    public String getMaximumAmountDescription() {
+	if (Money.ZERO.equals(this.getMaximumAmount())) {
+	    return ResourceBundle.getBundle("resources.ApplicationResources").getString(
+		    "label.base.amount.plus.units.with.no.maximum.value");
+	}
+
+	return this.getMaximumAmount().getAmountAsString();
     }
 }

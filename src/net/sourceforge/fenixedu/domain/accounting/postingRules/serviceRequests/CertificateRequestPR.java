@@ -21,13 +21,16 @@ public class CertificateRequestPR extends CertificateRequestPR_Base {
     }
 
     public CertificateRequestPR(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
-	    ServiceAgreementTemplate serviceAgreementTemplate, Money baseAmount, Money amountPerUnit, Money amountPerPage) {
-	init(entryType, eventType, startDate, endDate, serviceAgreementTemplate, baseAmount, amountPerUnit, amountPerPage);
+	    ServiceAgreementTemplate serviceAgreementTemplate, Money baseAmount, Money amountPerUnit, Money amountPerPage,
+	    Money maximumAmount) {
+	init(entryType, eventType, startDate, endDate, serviceAgreementTemplate, baseAmount, amountPerUnit, amountPerPage,
+		maximumAmount);
     }
 
     protected void init(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
-	    ServiceAgreementTemplate serviceAgreementTemplate, Money baseAmount, Money amountPerUnit, Money amountPerPage) {
-	super.init(entryType, eventType, startDate, endDate, serviceAgreementTemplate, baseAmount, amountPerUnit);
+	    ServiceAgreementTemplate serviceAgreementTemplate, Money baseAmount, Money amountPerUnit, Money amountPerPage,
+	    Money maximumAmount) {
+	super.init(entryType, eventType, startDate, endDate, serviceAgreementTemplate, baseAmount, amountPerUnit, maximumAmount);
 	checkParameters(amountPerPage);
 	super.setAmountPerPage(amountPerPage);
     }
@@ -67,10 +70,11 @@ public class CertificateRequestPR extends CertificateRequestPR_Base {
     }
 
     @Checked("PostingRulePredicates.editPredicate")
-    public CertificateRequestPR edit(final Money baseAmount, final Money amountPerUnit, final Money amountPerPage) {
+    public CertificateRequestPR edit(final Money baseAmount, final Money amountPerUnit, final Money amountPerPage,
+	    final Money maximumAmount) {
 	deactivate();
 	return new CertificateRequestPR(getEntryType(), getEventType(), new DateTime().minus(1000), null,
-		getServiceAgreementTemplate(), baseAmount, amountPerUnit, amountPerPage);
+		getServiceAgreementTemplate(), baseAmount, amountPerUnit, amountPerPage, maximumAmount);
     }
 
 }

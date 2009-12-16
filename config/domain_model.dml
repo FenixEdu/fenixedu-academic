@@ -568,6 +568,8 @@ valueType net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessTypeList as
 /* End of Phd Module */
 
 
+
+
 /*
 *
 * Class definitions
@@ -2063,6 +2065,7 @@ class DomainObject {
             class accounting.postingRules.BaseAmountPlusAmountPerUnitPR extends accounting.postingRules.GenericSingleEntryTypePR {
                 Money amountPerUnit;
                 Money baseAmount;
+                Money maximumAmount;
             }
 
                 class accounting.postingRules.serviceRequests.CertificateRequestPR extends accounting.postingRules.BaseAmountPlusAmountPerUnitPR {
@@ -2071,7 +2074,10 @@ class DomainObject {
 
                     class accounting.postingRules.serviceRequests.EnrolmentCertificateRequestPR extends accounting.postingRules.serviceRequests.CertificateRequestPR {
                     }
-                    
+
+						class accounting.postingRules.serviceRequests.EnrolmentCertificateRequestWithCeilingInTotalAmountForUnitsPR extends accounting.postingRules.serviceRequests.EnrolmentCertificateRequestPR {
+	                    }
+					                    
                     class accounting.postingRules.serviceRequests.StandaloneEnrolmentCertificateRequestPR extends accounting.postingRules.serviceRequests.CertificateRequestPR {
                     }
                     
@@ -2142,6 +2148,7 @@ class DomainObject {
             
             class accounting.postingRules.serviceRequests.EquivalencePlanRequestPR extends accounting.postingRules.GenericSingleEntryTypePR {
                 Money amountPerUnit;
+                Money maximumAmount;
             }
             
             class accounting.postingRules.PastAdministrativeOfficeFeeAndInsurancePR extends accounting.postingRules.GenericSingleEntryTypePR {
