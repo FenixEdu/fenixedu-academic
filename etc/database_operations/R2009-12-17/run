@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add Maximum Amount to Posting Rule" addMaximumAmountToPostingRuleTable.sql
