@@ -120,7 +120,8 @@ public class DiplomasListBySituationDA extends FenixDispatchAction {
 	    try {
 		String filename = getResourceMessage("label.diplomas") + "_"
 			+ bean.getAcademicServiceRequestSituationType().getLocalizedName() + "_"
-			+ bean.getSearchBegin().toString(LOCALDATE_FORMAT) + "_" + bean.getSearchEnd().toString(LOCALDATE_FORMAT);
+			+ bean.getSearchBegin().toString(LOCALDATE_FORMAT) + "_-_"
+			+ bean.getSearchEnd().toString(LOCALDATE_FORMAT);
 
 		response.setContentType("application/vnd.ms-excel");
 		response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");

@@ -194,15 +194,13 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 	final List<RegistrationAcademicServiceRequest> requestList = search(degreeSearchBean, requestSearchBean);
 
 	try {
-	    String filename;
+	    String filename = getResourceMessage("label.requests") + "_";
 
 	    ExecutionYear executionYear = degreeSearchBean.getExecutionYear();
-	    if (degreeSearchBean.getDegree() == null) {
-		filename = executionYear.getYear();
-	    } else {
-		filename = degreeSearchBean.getDegree().getNameFor(executionYear).getContent().replace(' ', '_') + "_"
-			+ executionYear.getYear();
+	    if (degreeSearchBean.getDegree() != null) {
+		filename += degreeSearchBean.getDegree().getNameFor(executionYear).getContent().replace(' ', '_') + "_";
 	    }
+	    filename += executionYear.getYear();
 
 	    response.setContentType("application/vnd.ms-excel");
 	    response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
@@ -224,39 +222,55 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 	final StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet(
 		getResourceMessage("label.requestByDegree.unspaced"));
 
+	fillSpreadSheetFilters(degreeSearchBean, requestSearchBean, spreadsheet);
+	fillSpreadSheetResults(requestList, spreadsheet);
+	spreadsheet.getWorkbook().write(outputStream);
+    }
+
+    private void fillSpreadSheetFilters(DegreeByExecutionYearBean degreeSearchBean, DocumentRequestSearchBean requestSearchBean,
+	    final StyledExcelSpreadsheet spreadsheet) {
 	Degree degree = degreeSearchBean.getDegree();
+	DegreeType degreeType = degreeSearchBean.getDegreeType();
 	ExecutionYear executionYear = degreeSearchBean.getExecutionYear();
 	spreadsheet.newHeaderRow();
 	if (degree == null) {
-	    spreadsheet.addHeader(executionYear.getYear());
+	    if (degreeType == null) {
+		spreadsheet.addHeader(executionYear.getYear());
+	    } else {
+		spreadsheet.addHeader(getEnumNameFromResources(degreeType) + " - " + executionYear.getYear());
+	    }
 	} else {
 	    spreadsheet.addHeader(degree.getNameFor(executionYear) + " - " + executionYear.getYear());
 	}
 
 	AcademicServiceRequestType requestType = requestSearchBean.getAcademicServiceRequestType();
+	DocumentRequestType documentType = requestSearchBean.getChosenDocumentRequestType();
 	AcademicServiceRequestSituationType situationType = requestSearchBean.getAcademicServiceRequestSituationType();
-	spreadsheet.newRow();
+	spreadsheet.newHeaderRow();
 	if (requestType != null) {
 	    spreadsheet.addHeader(getResourceMessage("label.type") + ": " + getEnumNameFromResources(requestType));
 	}
-	spreadsheet.newRow();
+	if (documentType != null) {
+	    spreadsheet
+		    .addHeader(getResourceMessage("label.documentRequestsManagement.searchDocumentRequests.documentRequestType")
+			    + ": " + getEnumNameFromResources(documentType));
+	}
+	spreadsheet.newHeaderRow();
 	if (situationType != null) {
 	    spreadsheet.addHeader(getResourceMessage("label.state") + ": " + getEnumNameFromResources(situationType));
 	}
-	spreadsheet.newRow();
+	spreadsheet.newHeaderRow();
 	if (requestSearchBean.isUrgentRequest()) {
 	    spreadsheet.addHeader(getResourceMessage("label.urgent.plural"));
 	}
+    }
 
+    private void fillSpreadSheetResults(List<RegistrationAcademicServiceRequest> requestList,
+	    final StyledExcelSpreadsheet spreadsheet) {
 	spreadsheet.newRow();
 	spreadsheet.newRow();
 	spreadsheet.addCell(requestList.size() + " " + getResourceMessage("label.requests"));
-	fillSpreadSheet(requestList, spreadsheet, executionYear);
-	spreadsheet.getWorkbook().write(outputStream);
-    }
 
-    private void fillSpreadSheet(List<RegistrationAcademicServiceRequest> requestList, final StyledExcelSpreadsheet spreadsheet,
-	    ExecutionYear executionYear) {
 	setHeaders(spreadsheet);
 	for (RegistrationAcademicServiceRequest request : requestList) {
 	    spreadsheet.newRow();

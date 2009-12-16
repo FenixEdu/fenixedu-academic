@@ -145,14 +145,11 @@ public abstract class StudentsListByCurricularCourseDA extends FenixDispatchActi
 	final String year = (String) getFromRequest(request, "year");
 
 	try {
-	    String filename;
-
-	    filename = curricularCourse.getDegreeCurricularPlan().getDegree().getNameFor(executionYear).getContent().replace(' ',
-		    '_')
-		    + "_" + executionYear.getYear();
+	    String filename = getResourceMessage("label.students") + "_" + curricularCourse.getName() + "_("
+		    + curricularCourse.getDegreeCurricularPlan().getName() + ")_" + executionYear.getYear();
 
 	    response.setContentType("application/vnd.ms-excel");
-	    response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
+	    response.setHeader("Content-disposition", "attachment; filename=" + filename.replace(" ", "_") + ".xls");
 	    ServletOutputStream writer = response.getOutputStream();
 
 	    exportToXls(searchStudentByCriteria(executionYear, curricularCourse, semester), writer, executionYear,
@@ -173,18 +170,24 @@ public abstract class StudentsListByCurricularCourseDA extends FenixDispatchActi
 
 	final StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet(
 		getResourceMessage("lists.studentByCourse.unspaced"));
-	spreadsheet.newHeaderRow();
-	spreadsheet.addHeader(degree.getNameFor(executionYear) + " - " + executionYear.getYear() + " - " + year + " "
-		+ getResourceMessage("label.year") + " " + semester + " " + getResourceMessage("label.semester"));
-	spreadsheet.newRow();
-	spreadsheet.newRow();
-	spreadsheet.addCell(registrationWithStateForExecutionYearBean.size() + " " + getResourceMessage("label.students"));
-	fillSpreadSheet(registrationWithStateForExecutionYearBean, spreadsheet, executionYear);
+	fillSpreadSheetFilters(executionYear, degree, year, semester, spreadsheet);
+	fillSpreadSheetResults(registrationWithStateForExecutionYearBean, spreadsheet, executionYear);
 	spreadsheet.getWorkbook().write(outputStream);
     }
 
-    private void fillSpreadSheet(List<Enrolment> registrations, final StyledExcelSpreadsheet spreadsheet,
+    private void fillSpreadSheetFilters(ExecutionYear executionYear, Degree degree, String year, String semester,
+	    final StyledExcelSpreadsheet spreadsheet) {
+	spreadsheet.newHeaderRow();
+	spreadsheet.addHeader(degree.getNameFor(executionYear) + " - " + executionYear.getYear() + " - " + year + " "
+		+ getResourceMessage("label.year") + " " + semester + " " + getResourceMessage("label.semester"));
+    }
+
+    private void fillSpreadSheetResults(List<Enrolment> registrations, final StyledExcelSpreadsheet spreadsheet,
 	    ExecutionYear executionYear) {
+	spreadsheet.newRow();
+	spreadsheet.newRow();
+	spreadsheet.addCell(registrations.size() + " " + getResourceMessage("label.students"));
+
 	setHeaders(spreadsheet);
 	for (Enrolment registrationWithStateForExecutionYearBean : registrations) {
 	    Registration registration = registrationWithStateForExecutionYearBean.getRegistration();

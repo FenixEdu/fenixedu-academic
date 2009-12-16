@@ -172,58 +172,87 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
 	final SearchStudentsByDegreeParametersBean searchBean = getOrCreateSearchParametersBean();
-	if (searchBean != null) {
-	    final List<RegistrationWithStateForExecutionYearBean> registrations = search(searchBean);
-
-	    try {
-		String filename;
-
-		ExecutionYear executionYear = searchBean.getExecutionYear();
-		if (searchBean.getDegree() == null) {
-		    filename = executionYear.getYear();
-		} else {
-		    filename = searchBean.getDegree().getNameFor(executionYear).getContent().replace(' ', '_') + "_"
-			    + executionYear.getYear();
-		}
-
-		response.setContentType("application/vnd.ms-excel");
-		response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
-		ServletOutputStream writer = response.getOutputStream();
-
-		final String param = request.getParameter("extendedInfo");
-		boolean extendedInfo = param != null && param.length() > 0 && Boolean.valueOf(param).booleanValue();
-
-		exportToXls(registrations, writer, searchBean.getExecutionYear(), searchBean.getDegree(), extendedInfo);
-		writer.flush();
-		response.flushBuffer();
-
-	    } catch (IOException e) {
-		throw new FenixServiceException();
-	    }
+	if (searchBean == null) {
+	    return null;
 	}
-	return null;
+	final List<RegistrationWithStateForExecutionYearBean> registrations = search(searchBean);
+
+	try {
+	    String filename = getResourceMessage("label.students") + "_";
+
+	    ExecutionYear executionYear = searchBean.getExecutionYear();
+	    if (searchBean.getDegree() != null) {
+		filename = searchBean.getDegree().getNameFor(executionYear).getContent().replace(' ', '_') + "_";
+	    }
+	    filename += executionYear.getYear();
+
+	    response.setContentType("application/vnd.ms-excel");
+	    response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
+	    ServletOutputStream writer = response.getOutputStream();
+
+	    final String param = request.getParameter("extendedInfo");
+	    boolean extendedInfo = param != null && param.length() > 0 && Boolean.valueOf(param).booleanValue();
+
+	    exportToXls(registrations, writer, searchBean, extendedInfo);
+	    writer.flush();
+	    response.flushBuffer();
+	    return null;
+
+	} catch (IOException e) {
+	    throw new FenixServiceException();
+	}
     }
 
-    private void exportToXls(List<RegistrationWithStateForExecutionYearBean> registrationWithStateForExecutionYearBean,
-	    OutputStream outputStream, ExecutionYear executionYear, Degree degree, boolean extendedInfo) throws IOException {
+    private void exportToXls(List<RegistrationWithStateForExecutionYearBean> registrationList, OutputStream outputStream,
+	    SearchStudentsByDegreeParametersBean searchBean, boolean extendedInfo) throws IOException {
 
 	final StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet(
 		getResourceMessage("lists.studentByDegree.unspaced"));
-	spreadsheet.newHeaderRow();
-	if (degree == null) {
-	    spreadsheet.addHeader(executionYear.getYear());
-	} else {
-	    spreadsheet.addHeader(degree.getNameFor(executionYear) + " - " + executionYear.getYear());
-	}
-	spreadsheet.newRow();
-	spreadsheet.newRow();
-	spreadsheet.addCell(registrationWithStateForExecutionYearBean.size() + " " + getResourceMessage("label.students"));
-	fillSpreadSheet(registrationWithStateForExecutionYearBean, spreadsheet, executionYear, extendedInfo);
+	fillSpreadSheetFilters(searchBean, spreadsheet);
+	fillSpreadSheetResults(registrationList, spreadsheet, searchBean.getExecutionYear(), extendedInfo);
 	spreadsheet.getWorkbook().write(outputStream);
     }
 
-    private void fillSpreadSheet(List<RegistrationWithStateForExecutionYearBean> registrations,
+    private void fillSpreadSheetFilters(SearchStudentsByDegreeParametersBean searchBean, final StyledExcelSpreadsheet spreadsheet) {
+	Degree degree = searchBean.getDegree();
+	DegreeType degreeType = searchBean.getDegreeType();
+	ExecutionYear executionYear = searchBean.getExecutionYear();
+
+	spreadsheet.newHeaderRow();
+	if (degree == null) {
+	    if (degreeType == null) {
+		spreadsheet.addHeader(executionYear.getYear());
+	    } else {
+		spreadsheet.addHeader(getEnumNameFromResources(degreeType) + " - " + executionYear.getYear());
+	    }
+	} else {
+	    spreadsheet.addHeader(degree.getNameFor(executionYear) + " - " + executionYear.getYear());
+	}
+	spreadsheet.newHeaderRow();
+	if (searchBean.getActiveEnrolments()) {
+	    spreadsheet.addHeader(getResourceMessage("label.activeEnrolments.capitalized"));
+	}
+	spreadsheet.newHeaderRow();
+	if (searchBean.getStandaloneEnrolments()) {
+	    spreadsheet.addHeader(getResourceMessage("label.withStandaloneEnrolments.capitalized"));
+	}
+	spreadsheet.newHeaderRow();
+	if (searchBean.getRegime() != null) {
+	    spreadsheet.addHeader(getResourceMessage("registration.regime") + ": "
+		    + getEnumNameFromResources(searchBean.getRegime()));
+	}
+	spreadsheet.newHeaderRow();
+	if (searchBean.getNationality() != null) {
+	    spreadsheet.addHeader(getResourceMessage("label.nationality") + ": " + searchBean.getNationality().getName());
+	}
+    }
+
+    private void fillSpreadSheetResults(List<RegistrationWithStateForExecutionYearBean> registrations,
 	    final StyledExcelSpreadsheet spreadsheet, ExecutionYear executionYear, boolean extendedInfo) {
+	spreadsheet.newRow();
+	spreadsheet.newRow();
+	spreadsheet.addCell(registrations.size() + " " + getResourceMessage("label.students"));
+
 	setHeaders(spreadsheet, extendedInfo);
 	for (RegistrationWithStateForExecutionYearBean registrationWithStateForExecutionYearBean : registrations) {
 	    Registration registration = registrationWithStateForExecutionYearBean.getRegistration();
@@ -240,7 +269,7 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 	    spreadsheet.addCell(registration.getRegistrationAgreement().getName());
 
 	    if (extendedInfo) {
-		spreadsheet.addCell(registration.getPerson().getCountry().getName());
+		spreadsheet.addCell(person.getCountry() == null ? EMPTY : person.getCountry().getName());
 		spreadsheet.addCell(person.getDefaultEmailAddress() == null ? EMPTY : person.getDefaultEmailAddress().getValue());
 		spreadsheet.addCell(person.getGender().toLocalizedString());
 		spreadsheet.addCell(person.getDateOfBirthYearMonthDay() == null ? EMPTY : person.getDateOfBirthYearMonthDay()
@@ -336,7 +365,7 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 	}
     }
 
-    protected String getResourceMessage(String key) {
+    protected static String getResourceMessage(String key) {
 	return getResourceMessageFromModuleOrApplication(RESOURCE_MODULE, key);
     }
 
