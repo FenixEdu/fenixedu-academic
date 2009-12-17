@@ -63,6 +63,14 @@ public class SearchStudentsByDegreeParametersBean extends DegreeByExecutionYearB
 	this.studentStatuteTypes = studentStatuteTypes;
     }
 
+    public boolean hasAnyRegistrationAgreements() {
+	return this.registrationAgreements != null && !this.registrationAgreements.isEmpty();
+    }
+
+    public boolean hasAnyRegistrationStateTypes() {
+	return this.registrationStateTypes != null && !this.registrationStateTypes.isEmpty();
+    }
+
     public boolean hasAnyStudentStatuteType() {
 	return this.studentStatuteTypes != null && !this.studentStatuteTypes.isEmpty();
     }

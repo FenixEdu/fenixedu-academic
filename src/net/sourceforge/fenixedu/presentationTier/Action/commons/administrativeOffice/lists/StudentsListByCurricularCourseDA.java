@@ -153,7 +153,7 @@ public abstract class StudentsListByCurricularCourseDA extends FenixDispatchActi
 	    ServletOutputStream writer = response.getOutputStream();
 
 	    exportToXls(searchStudentByCriteria(executionYear, curricularCourse, semester), writer, executionYear,
-		    curricularCourse.getDegreeCurricularPlan().getDegree(), year, semester.toString());
+		    curricularCourse, year, semester.toString());
 	    writer.flush();
 	    response.flushBuffer();
 
@@ -165,21 +165,22 @@ public abstract class StudentsListByCurricularCourseDA extends FenixDispatchActi
 
     }
 
-    private void exportToXls(List<Enrolment> registrationWithStateForExecutionYearBean, OutputStream outputStream,
-	    ExecutionYear executionYear, Degree degree, String year, String semester) throws IOException {
+    private void exportToXls(List<Enrolment> registrations, OutputStream outputStream, ExecutionYear executionYear,
+	    CurricularCourse curricularCourse, String year, String semester) throws IOException {
 
 	final StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet(
 		getResourceMessage("lists.studentByCourse.unspaced"));
-	fillSpreadSheetFilters(executionYear, degree, year, semester, spreadsheet);
-	fillSpreadSheetResults(registrationWithStateForExecutionYearBean, spreadsheet, executionYear);
+	fillSpreadSheetFilters(executionYear, curricularCourse, year, semester, spreadsheet);
+	fillSpreadSheetResults(registrations, spreadsheet, executionYear);
 	spreadsheet.getWorkbook().write(outputStream);
     }
 
-    private void fillSpreadSheetFilters(ExecutionYear executionYear, Degree degree, String year, String semester,
-	    final StyledExcelSpreadsheet spreadsheet) {
+    private void fillSpreadSheetFilters(ExecutionYear executionYear, CurricularCourse curricularCourse, String year,
+	    String semester, final StyledExcelSpreadsheet spreadsheet) {
 	spreadsheet.newHeaderRow();
-	spreadsheet.addHeader(degree.getNameFor(executionYear) + " - " + executionYear.getYear() + " - " + year + " "
-		+ getResourceMessage("label.year") + " " + semester + " " + getResourceMessage("label.semester"));
+	spreadsheet.addHeader(curricularCourse.getDegree().getNameFor(executionYear) + " - " + curricularCourse.getName() + " - "
+		+ executionYear.getYear() + " - " + year + " " + getResourceMessage("label.year") + " " + semester + " "
+		+ getResourceMessage("label.semester"));
     }
 
     private void fillSpreadSheetResults(List<Enrolment> registrations, final StyledExcelSpreadsheet spreadsheet,

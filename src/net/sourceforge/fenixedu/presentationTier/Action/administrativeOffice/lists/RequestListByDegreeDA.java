@@ -194,13 +194,17 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 	final List<RegistrationAcademicServiceRequest> requestList = search(degreeSearchBean, requestSearchBean);
 
 	try {
-	    String filename = getResourceMessage("label.requests") + "_";
+	    String filename = getResourceMessage("label.requests");
 
+	    Degree degree = degreeSearchBean.getDegree();
+	    DegreeType degreeType = degreeSearchBean.getDegreeType();
 	    ExecutionYear executionYear = degreeSearchBean.getExecutionYear();
-	    if (degreeSearchBean.getDegree() != null) {
-		filename += degreeSearchBean.getDegree().getNameFor(executionYear).getContent().replace(' ', '_') + "_";
+	    if (degree != null) {
+		filename += "_" + degree.getNameFor(executionYear).getContent().replace(' ', '_');
+	    } else if (degreeType != null) {
+		filename += "_" + getEnumNameFromResources(degreeType).replace(' ', '_');
 	    }
-	    filename += executionYear.getYear();
+	    filename += "_" + executionYear.getYear();
 
 	    response.setContentType("application/vnd.ms-excel");
 	    response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
@@ -229,20 +233,6 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 
     private void fillSpreadSheetFilters(DegreeByExecutionYearBean degreeSearchBean, DocumentRequestSearchBean requestSearchBean,
 	    final StyledExcelSpreadsheet spreadsheet) {
-	Degree degree = degreeSearchBean.getDegree();
-	DegreeType degreeType = degreeSearchBean.getDegreeType();
-	ExecutionYear executionYear = degreeSearchBean.getExecutionYear();
-	spreadsheet.newHeaderRow();
-	if (degree == null) {
-	    if (degreeType == null) {
-		spreadsheet.addHeader(executionYear.getYear());
-	    } else {
-		spreadsheet.addHeader(getEnumNameFromResources(degreeType) + " - " + executionYear.getYear());
-	    }
-	} else {
-	    spreadsheet.addHeader(degree.getNameFor(executionYear) + " - " + executionYear.getYear());
-	}
-
 	AcademicServiceRequestType requestType = requestSearchBean.getAcademicServiceRequestType();
 	DocumentRequestType documentType = requestSearchBean.getChosenDocumentRequestType();
 	AcademicServiceRequestSituationType situationType = requestSearchBean.getAcademicServiceRequestSituationType();

@@ -27,7 +27,10 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
+import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.StringUtils;
@@ -178,13 +181,17 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 	final List<RegistrationWithStateForExecutionYearBean> registrations = search(searchBean);
 
 	try {
-	    String filename = getResourceMessage("label.students") + "_";
+	    String filename = getResourceMessage("label.students");
 
+	    Degree degree = searchBean.getDegree();
+	    DegreeType degreeType = searchBean.getDegreeType();
 	    ExecutionYear executionYear = searchBean.getExecutionYear();
-	    if (searchBean.getDegree() != null) {
-		filename = searchBean.getDegree().getNameFor(executionYear).getContent().replace(' ', '_') + "_";
+	    if (degree != null) {
+		filename += "_" + degree.getNameFor(executionYear).getContent().replace(' ', '_');
+	    } else if (degreeType != null) {
+		filename += "_" + getEnumNameFromResources(degreeType).replace(' ', '_');
 	    }
-	    filename += executionYear.getYear();
+	    filename += "_" + executionYear.getYear();
 
 	    response.setContentType("application/vnd.ms-excel");
 	    response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
@@ -214,20 +221,6 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
     }
 
     private void fillSpreadSheetFilters(SearchStudentsByDegreeParametersBean searchBean, final StyledExcelSpreadsheet spreadsheet) {
-	Degree degree = searchBean.getDegree();
-	DegreeType degreeType = searchBean.getDegreeType();
-	ExecutionYear executionYear = searchBean.getExecutionYear();
-
-	spreadsheet.newHeaderRow();
-	if (degree == null) {
-	    if (degreeType == null) {
-		spreadsheet.addHeader(executionYear.getYear());
-	    } else {
-		spreadsheet.addHeader(getEnumNameFromResources(degreeType) + " - " + executionYear.getYear());
-	    }
-	} else {
-	    spreadsheet.addHeader(degree.getNameFor(executionYear) + " - " + executionYear.getYear());
-	}
 	spreadsheet.newHeaderRow();
 	if (searchBean.getActiveEnrolments()) {
 	    spreadsheet.addHeader(getResourceMessage("label.activeEnrolments.capitalized"));
@@ -244,6 +237,27 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 	spreadsheet.newHeaderRow();
 	if (searchBean.getNationality() != null) {
 	    spreadsheet.addHeader(getResourceMessage("label.nationality") + ": " + searchBean.getNationality().getName());
+	}
+	spreadsheet.newHeaderRow();
+	if (searchBean.hasAnyRegistrationAgreements()) {
+	    spreadsheet.addHeader(getResourceMessage("label.registrationAgreement") + ":");
+	    for (RegistrationAgreement agreement : searchBean.getRegistrationAgreements()) {
+		spreadsheet.addHeader(getEnumNameFromResources(agreement));
+	    }
+	}
+	spreadsheet.newHeaderRow();
+	if (searchBean.hasAnyRegistrationStateTypes()) {
+	    spreadsheet.addHeader(getResourceMessage("label.registrationState") + ":");
+	    for (RegistrationStateType state : searchBean.getRegistrationStateTypes()) {
+		spreadsheet.addHeader(getEnumNameFromResources(state));
+	    }
+	}
+	spreadsheet.newHeaderRow();
+	if (searchBean.hasAnyStudentStatuteType()) {
+	    spreadsheet.addHeader(getResourceMessage("label.statutes") + ":");
+	    for (StudentStatuteType statute : searchBean.getStudentStatuteTypes()) {
+		spreadsheet.addHeader(getEnumNameFromResources(statute));
+	    }
 	}
     }
 
