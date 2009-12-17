@@ -67,6 +67,17 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
     }
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
+    public void changeGratuityPaymentPlan(final PaymentPlan paymentPlan) {
+	if (paymentPlan instanceof GratuityPaymentPlan) {
+	    setGratuityPaymentPlan((GratuityPaymentPlan) paymentPlan);
+	} else if (paymentPlan instanceof CustomGratuityPaymentPlan) {
+	    setGratuityPaymentPlan((CustomGratuityPaymentPlan) paymentPlan);
+	} else {
+	    throw new DomainException("error.GratuityEventWithPaymentPlan.unexpected.payment.plan.type");
+	}
+    }
+
+    @Checked("RolePredicates.MANAGER_PREDICATE")
     public void setGratuityPaymentPlan(final GratuityPaymentPlan paymentPlan) {
 	if (paymentPlan != null) {
 	    ensureServiceAgreement();
