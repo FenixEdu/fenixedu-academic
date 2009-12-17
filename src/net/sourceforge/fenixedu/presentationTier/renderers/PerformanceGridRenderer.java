@@ -184,13 +184,21 @@ public class PerformanceGridRenderer extends OutputRenderer {
 
 		List<Enrolment> enrolments = (getSemester(columnIndex) == 1 ? yearBean.getFirstSemesterEnrolments() : yearBean
 			.getSecondSemesterEnrolments());
+		double approvedSemesterECTS = (getSemester(columnIndex) == 1 ? yearBean.getApprovedFirstSemesterECTS() : yearBean.getApprovedSecondSemesterECTS());
+		double enrolledSemesterECTS = (getSemester(columnIndex) == 1 ? yearBean.getEnrolledFirstSemesterECTS() : yearBean.getEnrolledSecondSemesterECTS());
 
 		HtmlInlineContainer container = new HtmlInlineContainer();
 
 		for (Enrolment enrolment : enrolments) {
 		    HtmlText text = new HtmlText("&nbsp;", false);
-		    text.setClasses(getEnrolmentState(enrolment, bean.getCurrentMonitoringYearYear()));
+		    text.setClasses(getEnrolmentState(enrolment, bean.getCurrentMonitoringYearYear()) + " performanceGrid");
 		    container.addChild(text);
+		}
+		if(enrolledSemesterECTS > 0.0) {
+		    HtmlText textECTS = new HtmlText("<br/> " + Double.toString(approvedSemesterECTS) + " / " + Double.toString(enrolledSemesterECTS), false);
+		    textECTS.setClasses("smalltxt color888");
+		    textECTS.setTitle(RenderUtils.getResourceString(getPerformanceGridBundle(), "label.ECTS.credits.ratio"));
+		    container.addChild(textECTS);
 		}
 		return container;
 	    }

@@ -48,6 +48,14 @@
 	    </fr:edit>
     </logic:present>
 
+<style>
+td.xpto {
+height: 50px;
+}
+</style>
+
+
+
     <logic:present name="performanceGridTable">
         
         <logic:notEmpty name="performanceGridTable" property="performanceGridTableLines">
@@ -69,7 +77,7 @@
             <%
                 Integer numberOfFixedColumns = ((Integer)degreeMaxYears) * 2 + 2;
                 
-                String columnClasses = "acenter width2em,aleft width16em nowrap,acenter width2em,acenter width2em,acenter width2em,acenter,acenter";
+                String columnClasses = "acenter width2em xpto,aleft width16em nowrap,acenter width2em,acenter width2em,acenter width2em,acenter,acenter";
                 for(int i=1; i <= ((Integer)degreeMaxYears) * 2; i++){
                     columnClasses += ",nowrap";
                 }

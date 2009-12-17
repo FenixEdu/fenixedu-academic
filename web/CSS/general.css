@@ -2350,7 +2350,8 @@ table.pgrid tr td span span { display: inline; padding: 0px 4px; }
 .notApprovedMonitoringYear { background: url(../images/circle.gif) center center no-repeat; border: 1px solid #699; color: #fff;}
 .notApprovedAnotherYear { background: #fff; border: 1px solid #cc6; color: #fff;}
 
-.performanceGridLegend { padding: 1px 3px; }
+.performanceGrid { padding: 7px 2px 1px 2px !important; font-size: 1px; }
+.performanceGridLegend { padding: 7px 2px 1px 2px !important; font-size: 1px; }
 
 
 

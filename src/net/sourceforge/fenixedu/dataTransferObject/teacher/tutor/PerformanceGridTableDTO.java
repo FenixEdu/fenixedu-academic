@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Tutorship;
+import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class PerformanceGridTableDTO extends DataTranferObject {
@@ -166,54 +167,116 @@ public class PerformanceGridTableDTO extends DataTranferObject {
 	 * the performance grid
 	 */
 	public class PerformanceGridLineYearGroup implements Serializable {
-	    private List<DomainReference<Enrolment>> firstSemesterEnrolments;
-	    private List<DomainReference<Enrolment>> secondSemesterEnrolments;
+	    private List<Enrolment> firstSemesterEnrolments;
+	    private List<Enrolment> secondSemesterEnrolments;
+	    private double enrolledFirstSemesterECTS;
+	    private double approvedFirstSemesterECTS;
+	    private double enrolledSecondSemesterECTS;
+	    private double approvedSecondSemesterECTS;
 
 	    public PerformanceGridLineYearGroup() {
-		firstSemesterEnrolments = new ArrayList<DomainReference<Enrolment>>();
-		secondSemesterEnrolments = new ArrayList<DomainReference<Enrolment>>();
+		firstSemesterEnrolments = new ArrayList<Enrolment>();
+		secondSemesterEnrolments = new ArrayList<Enrolment>();
+		enrolledFirstSemesterECTS = 0.0;
+		approvedFirstSemesterECTS = 0.0;
+		enrolledSecondSemesterECTS = 0.0;
+		approvedSecondSemesterECTS = 0.0;
 	    }
 
-	    public List getFirstSemesterEnrolments() {
+	    public List<Enrolment> getFirstSemesterEnrolments() {
 		List<Enrolment> enrolments = new ArrayList<Enrolment>();
-		for (DomainReference<Enrolment> enrolmentDR : this.firstSemesterEnrolments) {
-		    enrolments.add(enrolmentDR.getObject());
+		for (Enrolment enrolmentDR : this.firstSemesterEnrolments) {
+		    enrolments.add(enrolmentDR);
 		}
 		return enrolments;
 	    }
 
 	    public void setFirstSemesterEnrolments(List<Enrolment> firstSemesterEnrolments) {
-		this.firstSemesterEnrolments = new ArrayList<DomainReference<Enrolment>>();
+		this.firstSemesterEnrolments = new ArrayList<Enrolment>();
 		for (Enrolment enrolment : firstSemesterEnrolments) {
-		    this.firstSemesterEnrolments.add(new DomainReference<Enrolment>(enrolment));
+		    this.firstSemesterEnrolments.add(enrolment);
 		}
+		updateInformationECTS();
 	    }
 
-	    public List getSecondSemesterEnrolments() {
+	    public List<Enrolment> getSecondSemesterEnrolments() {
 		List<Enrolment> enrolments = new ArrayList<Enrolment>();
-		for (DomainReference<Enrolment> enrolmentDR : this.secondSemesterEnrolments) {
-		    enrolments.add(enrolmentDR.getObject());
+		for (Enrolment enrolmentDR : this.secondSemesterEnrolments) {
+		    enrolments.add(enrolmentDR);
 		}
 		return enrolments;
 	    }
 
 	    public void setSecondSemesterEnrolments(List<Enrolment> secondSemesterEnrolments) {
-		this.secondSemesterEnrolments = new ArrayList<DomainReference<Enrolment>>();
+		this.secondSemesterEnrolments = new ArrayList<Enrolment>();
 		for (Enrolment enrolment : secondSemesterEnrolments) {
-		    this.secondSemesterEnrolments.add(new DomainReference<Enrolment>(enrolment));
+		    this.secondSemesterEnrolments.add(enrolment);
 		}
+		updateInformationECTS();
+	    }
+
+	    public double getEnrolledFirstSemesterECTS() {
+	        return enrolledFirstSemesterECTS;
+	    }
+
+	    public void setEnrolledFirstSemesterECTS(double enrolledFirstSemesterECTS) {
+	        this.enrolledFirstSemesterECTS = enrolledFirstSemesterECTS;
+	    }
+
+	    public double getApprovedFirstSemesterECTS() {
+	        return approvedFirstSemesterECTS;
+	    }
+
+	    public void setApprovedFirstSemesterECTS(double approvedFirstSemesterECTS) {
+	        this.approvedFirstSemesterECTS = approvedFirstSemesterECTS;
+	    }
+
+	    public double getEnrolledSecondSemesterECTS() {
+	        return enrolledSecondSemesterECTS;
+	    }
+
+	    public void setEnrolledSecondSemesterECTS(double enrolledSecondSemesterECTS) {
+	        this.enrolledSecondSemesterECTS = enrolledSecondSemesterECTS;
+	    }
+
+	    public double getApprovedSecondSemesterECTS() {
+	        return approvedSecondSemesterECTS;
+	    }
+
+	    public void setApprovedSecondSemesterECTS(double approvedSecondSemesterECTS) {
+	        this.approvedSecondSemesterECTS = approvedSecondSemesterECTS;
 	    }
 
 	    public void addEnrolmentToSemester(DegreeModuleScope scope, CurricularCourse curricular, Enrolment enrolment) {
 		if (curricular.isAnual()) {
-		    this.firstSemesterEnrolments.add(new DomainReference<Enrolment>(enrolment));
-		    this.secondSemesterEnrolments.add(new DomainReference<Enrolment>(enrolment));
+		    this.firstSemesterEnrolments.add(enrolment);
+		    this.secondSemesterEnrolments.add(enrolment);
 		} else {
 		    if (scope.isFirstSemester()) {
-			this.firstSemesterEnrolments.add(new DomainReference<Enrolment>(enrolment));
+			this.firstSemesterEnrolments.add(enrolment);
 		    } else if (scope.isSecondSemester()) {
-			this.secondSemesterEnrolments.add(new DomainReference<Enrolment>(enrolment));
+			this.secondSemesterEnrolments.add(enrolment);
 		    }
+		}
+		updateInformationECTS();
+	    }
+	    
+	    public void updateInformationECTS() {
+		setEnrolledFirstSemesterECTS(0.0);
+		setApprovedFirstSemesterECTS(0.0);
+		setEnrolledSecondSemesterECTS(0.0);
+		setApprovedSecondSemesterECTS(0.0);
+		for(Enrolment enrolment : getFirstSemesterEnrolments()) {
+		    if (enrolment.getEnrollmentState().equals(EnrollmentState.APROVED)) {
+			this.approvedFirstSemesterECTS += enrolment.getEctsCreditsForCurriculum().doubleValue();
+		    }
+		    this.enrolledFirstSemesterECTS += enrolment.getEctsCreditsForCurriculum().doubleValue();
+		}
+		for(Enrolment enrolment : getSecondSemesterEnrolments()) {
+		    if (enrolment.getEnrollmentState().equals(EnrollmentState.APROVED)) {
+			this.approvedSecondSemesterECTS += enrolment.getEctsCreditsForCurriculum().doubleValue();
+		    }
+		    this.enrolledSecondSemesterECTS += enrolment.getEctsCreditsForCurriculum().doubleValue();
 		}
 	    }
 	}
