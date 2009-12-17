@@ -4,9 +4,23 @@ import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean;
 
 public class PhdThesisJuryElementBean extends PhdParticipantBean {
 
-    private static final long serialVersionUID = -5365333247731361583L;
+    static private final long serialVersionUID = -5365333247731361583L;
 
+    private PhdThesisProcess thesisProcess;
     private boolean reporter;
+
+    public PhdThesisJuryElementBean(final PhdThesisProcess thesisProcess) {
+	super(thesisProcess.getIndividualProgramProcess());
+	setThesisProcess(thesisProcess);
+    }
+
+    public PhdThesisProcess getThesisProcess() {
+	return thesisProcess;
+    }
+
+    public void setThesisProcess(PhdThesisProcess thesisProcess) {
+	this.thesisProcess = thesisProcess;
+    }
 
     public boolean isReporter() {
 	return reporter;

@@ -544,19 +544,38 @@
 </schema>
 
 <schema name="PhdProgramGuidingBean.select.type" type="net.sourceforge.fenixedu.domain.phd.PhdParticipantBean" bundle="PHD_RESOURCES">
-	<slot name="guidingType" layout="radio-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+	<slot name="participantSelectType" layout="radio-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="classes" value="nobullet liinline"/>
 		<property name="destination" value="selectType"/>
 		<property name="bundle" value="PHD_RESOURCES"/>
 	</slot>
 </schema>
 
-<schema name="PhdProgramGuidingBean.edit.EXTERNAL" type="net.sourceforge.fenixedu.domain.phd.PhdParticipantBean" bundle="PHD_RESOURCES">
-	<slot name="guidingType" layout="radio-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+<schema name="PhdProgramGuidingBean.select.existing" type="net.sourceforge.fenixedu.domain.phd.PhdParticipantBean"
+	extends="PhdProgramGuidingBean.select.type" bundle="PHD_RESOURCES">
+	<slot name="participant" layout="autoComplete" required="true">
+		<property name="size" value="50"/>
+		<property name="labelField" value="nameWithTitle"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchInternalPersons"/>
+		<property name="serviceName" value="SearchPhdParticipantsByProcess"/>
+		<property name="serviceArgs" value="phdProcessOID=${individualProgramProcess.externalId}"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.phd.PhdParticipant"/>
+		<property name="minChars" value="3"/>				
+	</slot>
+</schema>
+
+<schema name="PhdProgramGuidingBean.internal.or.external" type="net.sourceforge.fenixedu.domain.phd.PhdParticipantBean"
+	extends="PhdProgramGuidingBean.select.type" bundle="PHD_RESOURCES">
+	<slot name="participantType" layout="radio-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="classes" value="nobullet liinline"/>
 		<property name="destination" value="selectType"/>
 		<property name="bundle" value="PHD_RESOURCES"/>
 	</slot>
+</schema>
+
+<schema name="PhdProgramGuidingBean.edit.EXTERNAL" type="net.sourceforge.fenixedu.domain.phd.PhdParticipantBean" 
+	extends="PhdProgramGuidingBean.internal.or.external" bundle="PHD_RESOURCES">
 	<slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="title" />
 	<slot name="qualification" />
@@ -569,12 +588,8 @@
 	<slot name="phone" />
 </schema>
 
-<schema name="PhdProgramGuidingBean.edit.INTERNAL" type="net.sourceforge.fenixedu.domain.phd.PhdParticipantBean" bundle="PHD_RESOURCES">
-	<slot name="guidingType" layout="radio-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="classes" value="nobullet liinline"/>
-		<property name="destination" value="selectType"/>
-		<property name="bundle" value="PHD_RESOURCES"/>
-	</slot>
+<schema name="PhdProgramGuidingBean.edit.INTERNAL" type="net.sourceforge.fenixedu.domain.phd.PhdParticipantBean"
+	extends="PhdProgramGuidingBean.internal.or.external" bundle="PHD_RESOURCES">
 	<slot name="personName" layout="autoComplete" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator" >
 		<property name="size" value="50"/>
 		<property name="labelField" value="person.name"/>

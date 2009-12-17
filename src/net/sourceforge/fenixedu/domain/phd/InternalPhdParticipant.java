@@ -35,10 +35,21 @@ public class InternalPhdParticipant extends InternalPhdParticipant_Base {
 
     InternalPhdParticipant(PhdIndividualProgramProcess process, final Person person, final String title) {
 	this();
+	checkPerson(process, person);
 	init(process);
-	check(person, "error.InternalGuiding.person.cannot.be.null");
 	setPerson(person);
 	setTitle(title);
+    }
+
+    private void checkPerson(PhdIndividualProgramProcess process, final Person person) {
+	check(person, "error.InternalGuiding.person.cannot.be.null");
+	check(process, "error.InternalGuiding.process.cannot.be.null");
+
+	for (final PhdParticipant participant : process.getParticipantsSet()) {
+	    if (participant.isFor(person)) {
+		throw new DomainException("error.InternalGuiding.person.already.is.participant");
+	    }
+	}
     }
 
     @Override

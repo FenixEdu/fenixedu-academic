@@ -1,8 +1,8 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+<html:xhtml/>
 
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
@@ -71,36 +71,43 @@ function toggle(obj) {
 
 		<logic:present name="guidingBean">
 			<fr:edit id="guidingBean" name="guidingBean" visible="false" />
-
-			<%-- ### select guiding type ### --%>
-			<logic:empty name="guidingBean" property="guidingType">
-				<fr:edit id="guidingBean.select.type" name="guidingBean" schema="PhdProgramGuidingBean.select.type">
-					<fr:layout name="tabular-editable">
-						<fr:property name="classes" value="tstyle2 thlight mtop15" />
-						<fr:property name="columnClasses" value=",,error0" />
-						<fr:property name="requiredMarkShown" value="true" />
-					</fr:layout>
-					<fr:destination name="cancel" path="<%= "/phdIndividualProgramProcess.do?method=prepareManageGuidingInformation&amp;processId=" + processId %>" />
-					<fr:destination name="invalid" path="<%= "/phdIndividualProgramProcess.do?method=prepareAddGuidingInformationInvalid&amp;processId=" + processId %>" />
-					<fr:destination name="selectType" path="<%= "/phdIndividualProgramProcess.do?method=prepareAddGuidingInformationSelectType&amp;processId=" + processId %>" />
-				</fr:edit>
+			<bean:define id="schema" value="" />
+	
+			<logic:empty name="guidingBean" property="participantSelectType">
+				<%-- ### select guiding type ### --%>
+				<bean:define id="schema" value="PhdProgramGuidingBean.select.type" />
 			</logic:empty>
 
-			<%-- ### fill information ### --%>
-			<logic:notEmpty name="guidingBean" property="guidingType">
-				<bean:define id="schema">PhdProgramGuidingBean.edit.<bean:write name="guidingBean" property="guidingType.name" /></bean:define>
-
-				<fr:edit id="guidingBean.edit.information" name="guidingBean" schema="<%= schema.toString() %>">
-					<fr:layout name="tabular-editable">
-						<fr:property name="classes" value="tstyle2 thlight mtop15" />
-						<fr:property name="columnClasses" value=",,error0" />
-						<fr:property name="requiredMarkShown" value="true" />
-					</fr:layout>
-					<fr:destination name="cancel" path="<%= "/phdIndividualProgramProcess.do?method=prepareManageGuidingInformation&amp;processId=" + processId %>" />
-					<fr:destination name="invalid" path="<%= "/phdIndividualProgramProcess.do?method=prepareAddGuidingInformationInvalid&amp;processId=" + processId %>" />
-					<fr:destination name="selectType" path="<%= "/phdIndividualProgramProcess.do?method=prepareAddGuidingInformationSelectType&amp;processId=" + processId %>" />
-				</fr:edit>
+			<logic:notEmpty name="guidingBean" property="participantSelectType">
+			
+				<%-- ### choose existing ### --%>
+				<logic:equal name="guidingBean" property="participantSelectType" value="EXISTING">
+					<bean:define id="schema" value="PhdProgramGuidingBean.select.existing" />
+				</logic:equal>
+				
+				<logic:equal name="guidingBean" property="participantSelectType" value="NEW">
+					<logic:empty name="guidingBean" property="participantType">
+						<%-- ### select internal or external ### --%>
+						<bean:define id="schema" value="PhdProgramGuidingBean.internal.or.external" />
+					</logic:empty>
+	
+					<logic:notEmpty name="guidingBean" property="participantType">
+						<bean:define id="schema">PhdProgramGuidingBean.edit.<bean:write name="guidingBean" property="participantType.name" /></bean:define>
+					</logic:notEmpty>
+				</logic:equal>
+				
 			</logic:notEmpty>
+				
+			<fr:edit id="guidingBean.fill.information" name="guidingBean" schema="<%= schema %>">
+				<fr:layout name="tabular-editable">
+					<fr:property name="classes" value="tstyle2 thlight mtop15" />
+					<fr:property name="columnClasses" value=",,error0" />
+					<fr:property name="requiredMarkShown" value="true" />
+				</fr:layout>
+				<fr:destination name="cancel" path="<%= "/phdIndividualProgramProcess.do?method=prepareManageGuidingInformation&amp;processId=" + processId %>" />
+				<fr:destination name="invalid" path="<%= "/phdIndividualProgramProcess.do?method=prepareAddGuidingInformationInvalid&amp;processId=" + processId %>" />
+				<fr:destination name="selectType" path="<%= "/phdIndividualProgramProcess.do?method=prepareAddGuidingInformationSelectType&amp;processId=" + processId %>" />
+			</fr:edit>
 
 			<html:submit onclick="this.form.method.value='addGuidingInformation'"><bean:message key="label.create" bundle="PHD_RESOURCES" /></html:submit>
 			<html:cancel><bean:message key="label.cancel" bundle="PHD_RESOURCES" /></html:cancel>
@@ -149,39 +156,47 @@ function toggle(obj) {
 
 	<logic:present name="assistantGuidingBean">
 		<fr:edit id="assistantGuidingBean" name="assistantGuidingBean" visible="false" />
+		<bean:define id="schema" value="" />
 
+		<logic:empty name="assistantGuidingBean" property="participantSelectType">
 			<%-- ### select guiding type ### --%>
-			<logic:empty name="assistantGuidingBean" property="guidingType">
-				<fr:edit id="assistantGuidingBean.select.type" name="assistantGuidingBean" schema="PhdProgramGuidingBean.select.type">
-					<fr:layout name="tabular-editable">
-						<fr:property name="classes" value="tstyle2 thlight mtop15" />
-						<fr:property name="columnClasses" value=",,error0" />
-						<fr:property name="requiredMarkShown" value="true" />
-					</fr:layout>
-					<fr:destination name="cancel" path="<%= "/phdIndividualProgramProcess.do?method=prepareManageGuidingInformation&amp;processId=" + processId %>" />
-					<fr:destination name="invalid" path="<%= "/phdIndividualProgramProcess.do?method=prepareAddAssistantGuidingInformationInvalid&amp;processId=" + processId %>" />
-					<fr:destination name="selectType" path="<%= "/phdIndividualProgramProcess.do?method=prepareAddAssistantGuidingInformationSelectType&amp;processId=" + processId %>" />
-				</fr:edit>
-			</logic:empty>
+			<bean:define id="schema" value="PhdProgramGuidingBean.select.type" />
+		</logic:empty>
 
-			<%-- ### fill information ### --%>
-			<logic:notEmpty name="assistantGuidingBean" property="guidingType">
-				<bean:define id="schema">PhdProgramGuidingBean.edit.<bean:write name="assistantGuidingBean" property="guidingType.name" /></bean:define>
+		<logic:notEmpty name="assistantGuidingBean" property="participantSelectType">
+		
+			<%-- ### choose existing ### --%>
+			<logic:equal name="assistantGuidingBean" property="participantSelectType" value="EXISTING">
+				<bean:define id="schema" value="PhdProgramGuidingBean.select.existing" />
+			</logic:equal>
+			
+			<logic:equal name="assistantGuidingBean" property="participantSelectType" value="NEW">
 
-				<fr:edit id="assistantGuidingBean.edit.information" name="assistantGuidingBean" schema="<%= schema.toString() %>">
-					<fr:layout name="tabular-editable">
-						<fr:property name="classes" value="tstyle2 thlight mtop15" />
-						<fr:property name="columnClasses" value=",,error0" />
-						<fr:property name="requiredMarkShown" value="true" />
-					</fr:layout>
-					<fr:destination name="cancel" path="<%= "/phdIndividualProgramProcess.do?method=prepareManageGuidingInformation&amp;processId=" + processId %>" />
-					<fr:destination name="invalid" path="<%= "/phdIndividualProgramProcess.do?method=prepareAddAssistantGuidingInformationInvalid&amp;processId=" + processId %>" />
-					<fr:destination name="selectType" path="<%= "/phdIndividualProgramProcess.do?method=prepareAddAssistantGuidingInformationSelectType&amp;processId=" + processId %>" />
-				</fr:edit>
-			</logic:notEmpty>
+				<logic:empty name="assistantGuidingBean" property="participantType">
+					<%-- ### select internal or external ### --%>
+					<bean:define id="schema" value="PhdProgramGuidingBean.internal.or.external" />
+				</logic:empty>
 
-			<html:submit onclick="this.form.method.value='addAssistantGuidingInformation'"><bean:message key="label.create" bundle="PHD_RESOURCES" /></html:submit>
-			<html:cancel><bean:message key="label.cancel" bundle="PHD_RESOURCES" /></html:cancel>
+				<logic:notEmpty name="assistantGuidingBean" property="participantType">
+					<bean:define id="schema">PhdProgramGuidingBean.edit.<bean:write name="assistantGuidingBean" property="participantType.name" /></bean:define>
+				</logic:notEmpty>
+			</logic:equal>
+			
+		</logic:notEmpty>
+		
+		<fr:edit id="assistantGuidingBean.fill.information" name="assistantGuidingBean" schema="<%= schema %>">
+			<fr:layout name="tabular-editable">
+				<fr:property name="classes" value="tstyle2 thlight mtop15" />
+				<fr:property name="columnClasses" value=",,error0" />
+				<fr:property name="requiredMarkShown" value="true" />
+			</fr:layout>
+			<fr:destination name="cancel" path="<%= "/phdIndividualProgramProcess.do?method=prepareManageGuidingInformation&amp;processId=" + processId %>" />
+			<fr:destination name="invalid" path="<%= "/phdIndividualProgramProcess.do?method=prepareAddAssistantGuidingInformationInvalid&amp;processId=" + processId %>" />
+			<fr:destination name="selectType" path="<%= "/phdIndividualProgramProcess.do?method=prepareAddAssistantGuidingInformationSelectType&amp;processId=" + processId %>" />
+		</fr:edit>
+
+		<html:submit onclick="this.form.method.value='addAssistantGuidingInformation'"><bean:message key="label.create" bundle="PHD_RESOURCES" /></html:submit>
+		<html:cancel><bean:message key="label.cancel" bundle="PHD_RESOURCES" /></html:cancel>
 	</logic:present>
 
 	<%-- ### view assistant guidings ### --%>

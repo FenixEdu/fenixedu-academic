@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
@@ -19,6 +20,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.access.PhdExternalOperationBean;
 import net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessType;
+import pt.utl.ist.fenix.tools.util.Pair;
 
 public class PhdThesisProcess extends PhdThesisProcess_Base {
 
@@ -56,6 +58,32 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	}
     }
 
+    static public class SubmitJuryElements extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
+
+	    // TODO is JURY VALIDATED?????????????????????????????'
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+
+	}
+
+	@Override
+	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
+	    final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
+
+	    for (final PhdProgramDocumentUploadBean each : bean.getDocuments()) {
+		if (each.hasAnyInformation()) {
+		    process.addDocument(each, userView.getPerson());
+		}
+	    }
+
+	    return process;
+	}
+    }
+
     static public class SubmitThesis extends PhdActivity {
 
 	@Override
@@ -85,7 +113,13 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 
 	@Override
 	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
-	    // Add pre-conditions
+	    if (process.isConcluded()) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
 	}
 
 	@Override
@@ -93,6 +127,49 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	    ThesisJuryElement.create(process, (PhdThesisJuryElementBean) object);
 	    return process;
 	}
+    }
+
+    static public class DeleteJuryElement extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
+	    if (process.isConcluded()) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
+	    final ThesisJuryElement element = (ThesisJuryElement) object;
+	    process.deleteJuryElement(element);
+	    return process;
+	}
+    }
+
+    static public class SwapJuryElementsOrder extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
+	    if (process.isConcluded()) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
+	    final Pair<ThesisJuryElement, ThesisJuryElement> elements = (Pair<ThesisJuryElement, ThesisJuryElement>) object;
+	    process.swapJuryElementsOrder(elements.getKey(), elements.getValue());
+	    return process;
+	}
+
     }
 
     // TODO: find clean solution to return documents
@@ -248,8 +325,11 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 
     static private List<Activity> activities = new ArrayList<Activity>();
     static {
-	activities.add(new SubmitThesis());
+	activities.add(new SubmitJuryElements());
 	activities.add(new AddJuryElement());
+	activities.add(new DeleteJuryElement());
+	activities.add(new SwapJuryElementsOrder());
+	activities.add(new SubmitThesis());
 	activities.add(new DownloadProvisionalThesisDocument());
 	activities.add(new DownloadFinalThesisDocument());
 	activities.add(new DownloadThesisRequirement());
@@ -259,6 +339,37 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 
     private PhdThesisProcess() {
 	super();
+    }
+
+    private void swapJuryElementsOrder(ThesisJuryElement e1, ThesisJuryElement e2) {
+	if (hasThesisJuryElements(e1) && hasThesisJuryElements(e2)) {
+	    final Integer order1 = e1.getElementOrder();
+	    final Integer order2 = e2.getElementOrder();
+	    e1.setElementOrder(order2);
+	    e2.setElementOrder(order1);
+	}
+    }
+
+    private void deleteJuryElement(ThesisJuryElement element) {
+	if (hasThesisJuryElements(element)) {
+	    final Integer elementOrder = element.getElementOrder();
+	    element.delete();
+	    reorderJuryElements(elementOrder);
+	}
+    }
+
+    private void reorderJuryElements(Integer removedElementOrder) {
+	for (final ThesisJuryElement element : getOrderedThesisJuryElements()) {
+	    if (element.getElementOrder().compareTo(removedElementOrder) > 0) {
+		element.setElementOrder(Integer.valueOf(element.getElementOrder().intValue() - 1));
+	    }
+	}
+    }
+
+    public TreeSet<ThesisJuryElement> getOrderedThesisJuryElements() {
+	final TreeSet<ThesisJuryElement> result = new TreeSet<ThesisJuryElement>(ThesisJuryElement.COMPARATOR_BY_ELEMENT_ORDER);
+	result.addAll(getThesisJuryElementsSet());
+	return result;
     }
 
     public void createState(PhdThesisProcessStateType type, Person person, String remarks) {
@@ -323,4 +434,13 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
     public boolean hasThesisRequirementDocument() {
 	return getThesisRequirementDocument() != null;
     }
+
+    boolean isConcluded() {
+	return getActiveState() == PhdThesisProcessStateType.CONCLUDED;
+    }
+
+    public PhdProgramProcessDocument getJuryElementsDocument() {
+	return getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.JURY_ELEMENTS);
+    }
+
 }

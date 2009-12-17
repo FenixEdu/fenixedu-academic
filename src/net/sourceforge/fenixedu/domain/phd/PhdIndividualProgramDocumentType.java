@@ -49,6 +49,8 @@ public enum PhdIndividualProgramDocumentType {
 
     THESIS_REQUIREMENT,
 
+    JURY_ELEMENTS,
+    
     OTHER(false);
 
     private boolean isVersioned;
@@ -57,8 +59,8 @@ public enum PhdIndividualProgramDocumentType {
 	this(true);
     }
 
-    private PhdIndividualProgramDocumentType(boolean multipleDocumentsAllowed) {
-	this.isVersioned = multipleDocumentsAllowed;
+    private PhdIndividualProgramDocumentType(boolean isVersioned) {
+	this.isVersioned = isVersioned;
     }
 
     public String getLocalizedName() {

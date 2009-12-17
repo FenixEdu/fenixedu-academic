@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.phd;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.PersonName;
 
@@ -10,8 +9,12 @@ public class PhdParticipantBean implements Serializable {
 
     static private final long serialVersionUID = -5481393284887457872L;
 
-    private PhdParticipantType guidingType;
-    private DomainReference<PersonName> personName;
+    private PhdIndividualProgramProcess individualProgramProcess;
+
+    private PhdParticipant participant;
+    private PhdParticipantSelectType participantSelectType = null;
+    private PhdParticipantType participantType = null;
+    private PersonName personName;
 
     private String name;
     private String title;
@@ -22,8 +25,18 @@ public class PhdParticipantBean implements Serializable {
     private String email;
     private String phone;
 
-    private PhdParticipant participant;
-    
+    public PhdParticipantBean(final PhdIndividualProgramProcess individualProgramProcess) {
+	setIndividualProgramProcess(individualProgramProcess);
+    }
+
+    public PhdIndividualProgramProcess getIndividualProgramProcess() {
+	return individualProgramProcess;
+    }
+
+    public void setIndividualProgramProcess(PhdIndividualProgramProcess individualProgramProcess) {
+	this.individualProgramProcess = individualProgramProcess;
+    }
+
     public PhdParticipant getParticipant() {
 	return participant;
     }
@@ -32,23 +45,32 @@ public class PhdParticipantBean implements Serializable {
 	this.participant = participant;
     }
 
-    public PhdParticipantBean() {
+    public boolean hasParticipant() {
+	return getParticipant() != null;
     }
 
-    public PhdParticipantType getGuidingType() {
-	return guidingType;
+    public PhdParticipantSelectType getParticipantSelectType() {
+	return participantSelectType;
     }
 
-    public void setGuidingType(PhdParticipantType guidingType) {
-	this.guidingType = guidingType;
+    public void setParticipantSelectType(PhdParticipantSelectType participantSelectType) {
+	this.participantSelectType = participantSelectType;
+    }
+
+    public PhdParticipantType getParticipantType() {
+	return participantType;
+    }
+
+    public void setParticipantType(PhdParticipantType participantType) {
+	this.participantType = participantType;
     }
 
     public PersonName getPersonName() {
-	return (this.personName != null) ? this.personName.getObject() : null;
+	return personName;
     }
 
     public void setPersonName(PersonName personName) {
-	this.personName = (personName != null) ? new DomainReference<PersonName>(personName) : null;
+	this.personName = personName;
     }
 
     public String getName() {
@@ -116,11 +138,19 @@ public class PhdParticipantBean implements Serializable {
     }
 
     public boolean isInternal() {
-	return getGuidingType() == PhdParticipantType.INTERNAL;
+	return getParticipantType() == PhdParticipantType.INTERNAL;
     }
 
     public Person getPerson() {
 	return getPersonName().getPerson();
+    }
+
+    static public enum PhdParticipantSelectType {
+	NEW, EXISTING;
+
+	public String getName() {
+	    return name();
+	}
     }
 
     static public enum PhdParticipantType {

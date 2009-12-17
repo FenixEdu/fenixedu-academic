@@ -4361,4 +4361,12 @@
         <filterChains>
         </filterChains>
     </service>
+	<service>
+        <name>SearchPhdParticipantsByProcess</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.phd.SearchPhdParticipantsByProcess</implementationClass>
+        <description />
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
+    </service>
 </serviceDefinitions>

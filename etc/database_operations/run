@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Remove unique index" alterTableThesisJuryElement.sql

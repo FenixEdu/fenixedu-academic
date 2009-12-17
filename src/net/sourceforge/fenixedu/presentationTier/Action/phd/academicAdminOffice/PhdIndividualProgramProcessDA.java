@@ -22,8 +22,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.PhdStudyPlanBean;
 import net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntry;
 import net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntryBean;
@@ -376,7 +376,7 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
     public ActionForward prepareAddGuidingInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	addGuidingsContextInformation(mapping, request);
-	request.setAttribute("guidingBean", new PhdParticipantBean());
+	request.setAttribute("guidingBean", new PhdParticipantBean(getProcess(request)));
 	return mapping.findForward("manageGuidingInformation");
     }
 
@@ -431,7 +431,7 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
     public ActionForward prepareAddAssistantGuidingInformation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 	addGuidingsContextInformation(mapping, request);
-	request.setAttribute("assistantGuidingBean", new PhdParticipantBean());
+	request.setAttribute("assistantGuidingBean", new PhdParticipantBean(getProcess(request)));
 	return mapping.findForward("manageGuidingInformation");
     }
 

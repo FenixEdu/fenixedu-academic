@@ -25,7 +25,7 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
 	super.setIndividualProcess(individualProcess);
     }
 
-    public void delete() {
+    private void delete() {
 	disconnect();
 	deleteDomainObject();
     }
@@ -59,13 +59,12 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
 	if (bean.isInternal()) {
 	    return new InternalPhdParticipant(process, bean.getPerson(), bean.getTitle());
 	} else {
-
-	    final ExternalPhdParticipant guiding = new ExternalPhdParticipant(process, bean.getName(), bean.getTitle(), bean
+	    final ExternalPhdParticipant participant = new ExternalPhdParticipant(process, bean.getName(), bean.getTitle(), bean
 		    .getQualification(), bean.getWorkLocation(), bean.getEmail());
 
-	    guiding.edit(bean.getCategory(), bean.getAddress(), bean.getPhone());
+	    participant.edit(bean.getCategory(), bean.getAddress(), bean.getPhone());
 
-	    return guiding;
+	    return participant;
 	}
     }
 
@@ -112,6 +111,16 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
 
     private boolean hasAccessHashCode() {
 	return !StringUtils.isEmpty(getAccessHashCode());
+    }
+
+    public void tryDelete() {
+	if (canBeDeleted()) {
+	    delete();
+	}
+    }
+
+    protected boolean canBeDeleted() {
+	return !(hasAnyThesisJuryElements() || hasProcessForGuiding() || hasProcessForAssistantGuiding());
     }
 
 }

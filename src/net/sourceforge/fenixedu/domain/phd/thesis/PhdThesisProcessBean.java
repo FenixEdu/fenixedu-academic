@@ -8,10 +8,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 
 public class PhdThesisProcessBean implements Serializable {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 1L;
+    static private final long serialVersionUID = 1L;
 
     private String remarks;
 

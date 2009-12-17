@@ -4,9 +4,12 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 
 import org.joda.time.DateTime;
+
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ThesisJuryElement extends ThesisJuryElement_Base {
 
@@ -24,14 +27,31 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
     }
 
     protected ThesisJuryElement init(final PhdThesisProcess process, PhdParticipant participant, PhdThesisJuryElementBean bean) {
+
 	check(process, "error.ThesisJuryElement.invalid.process");
-	check(participant, "error.ThesisJuryElement.participant.cannot.be.null");
+	checkParticipant(process, participant);
+
 	setElementOrder(generateNextElementOrder(process));
 	setProcess(process);
 	setParticipant(participant);
 	setReporter(bean.isReporter());
 
 	return this;
+    }
+
+    private void checkParticipant(final PhdThesisProcess process, final PhdParticipant participant) {
+	check(participant, "error.ThesisJuryElement.participant.cannot.be.null");
+
+	/*
+	 * Actually participant belongs to one process, so he can not
+	 * participate in more than one process. But this test remain here
+	 * assuring future modifications correctness
+	 */
+	for (final ThesisJuryElement element : participant.getThesisJuryElements()) {
+	    if (element.getProcess().equals(process)) {
+		throw new DomainException("error.ThesisJuryElement.participant.already.has.jury.element.in.process");
+	    }
+	}
     }
 
     private Integer generateNextElementOrder(final PhdThesisProcess process) {
@@ -42,12 +62,18 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
 		.getElementOrder().intValue() + 1);
     }
 
-    public void delete() {
+    @Service
+    void delete() {
 	disconnect();
 	deleteDomainObject();
     }
 
     protected void disconnect() {
+	
+	final PhdParticipant participant = getParticipant();
+	removeParticipant();
+	participant.tryDelete();
+	
 	removeProcess();
 	removeRootDomainObject();
     }
@@ -84,10 +110,21 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
 	return getParticipant().getEmail();
     }
 
-    static public ThesisJuryElement create(final PhdThesisProcess process, final PhdThesisJuryElementBean bean) {
-	final PhdParticipant participant = bean.getParticipant() == null ? PhdParticipant.create(process
-		.getIndividualProgramProcess(), bean) : bean.getParticipant();
+    public String getTitle() {
+	return getParticipant().getTitle();
+    }
 
+    public boolean isTopElement() {
+	return getElementOrder().intValue() == 1;
+    }
+
+    public boolean isBottomElement() {
+	return getElementOrder().intValue() == getProcess().getThesisJuryElementsCount();
+    }
+
+    static public ThesisJuryElement create(final PhdThesisProcess process, final PhdThesisJuryElementBean bean) {
+	final PhdParticipant participant = !bean.hasParticipant() ? PhdParticipant.create(process.getIndividualProgramProcess(),
+		bean) : bean.getParticipant();
 	return new ThesisJuryElement().init(process, participant, bean);
     }
 

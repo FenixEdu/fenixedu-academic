@@ -850,19 +850,20 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     private PhdIndividualProgramProcess addGuiding(final PhdParticipantBean bean) {
-	addGuidings(createPhdParticipant(bean));
+	addGuidings(bean.hasParticipant() ? bean.getParticipant() : createPhdParticipant(bean));
 	return this;
     }
 
     public PhdIndividualProgramProcess deleteGuiding(final PhdParticipant guiding) {
 	if (hasGuidings(guiding)) {
-	    guiding.delete();
+	    removeGuidings(guiding);
+	    guiding.tryDelete();
 	}
 	return this;
     }
 
     private PhdIndividualProgramProcess addAssistantGuiding(final PhdParticipantBean bean) {
-	addAssistantGuidings(createPhdParticipant(bean));
+	addAssistantGuidings(bean.hasParticipant() ? bean.getParticipant() : createPhdParticipant(bean));
 	return this;
     }
 
@@ -872,7 +873,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     public PhdIndividualProgramProcess deleteAssistantGuiding(final PhdParticipant assistant) {
 	if (hasAssistantGuidings(assistant)) {
-	    assistant.delete();
+	    removeAssistantGuidings(assistant);
+	    assistant.tryDelete();
 	}
 	return this;
     }

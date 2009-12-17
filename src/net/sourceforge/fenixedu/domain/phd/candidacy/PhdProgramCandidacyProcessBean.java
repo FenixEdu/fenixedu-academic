@@ -15,11 +15,12 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.QualificationBean;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramFocusArea;
-import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.joda.time.LocalDate;
@@ -226,6 +227,10 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
     public void setCandidacyHashCode(final PhdProgramPublicCandidacyHashCode candidacyHashCode) {
 	this.candidacyHashCode = (candidacyHashCode != null) ? new DomainReference<PhdProgramPublicCandidacyHashCode>(
 		candidacyHashCode) : null;
+    }
+    
+    public PhdIndividualProgramProcess getIndividualProgramProcess() {
+	return getCandidacyHashCode().getIndividualProgramProcess();
     }
 
     public boolean hasCandidacyHashCode() {
