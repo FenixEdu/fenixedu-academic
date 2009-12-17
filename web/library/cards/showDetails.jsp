@@ -17,6 +17,13 @@
 	</span>
 </p>
 
+<style>
+.changedCategories td {
+font-weight: bold;
+background: #ffd;
+}
+</style>
+
 <fr:form action="/cardManagement.do?method=generatePdfCard">
 	<fr:edit id="libraryCardSearch" name="libraryCardSearch" visible="false"/>
 	<fr:edit id="libraryCardDTO" name="libraryCardDTO" visible="false"/>
@@ -24,7 +31,7 @@
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight thright"/>
 			<logic:notEqual name="libraryCardDTO" property="hasEqualPartyClassification" value="true">
-				<fr:property name="rowClasses" value=",,,,,,,,error,error,,,,,"/>
+				<fr:property name="rowClasses" value=",,,,,,,,changedCategories,changedCategories,,,,,"/>
 			</logic:notEqual>
 		</fr:layout>			
 	</fr:view>

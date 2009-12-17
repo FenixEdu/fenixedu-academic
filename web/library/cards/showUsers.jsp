@@ -91,7 +91,7 @@
 		<fr:view name="resultPage" schema="library.card.list">
 			<fr:layout name="tabular-sortable">
 				<fr:property name="classes" value="tstyle1"/>
-				<fr:property name="columnClasses" value="acenter,acenter,acenter,,,,acenter,,nowrap"/>
+				<fr:property name="columnClasses" value="acenter,acenter,acenter,,,acenter,acenter,,nowrap,nowrap"/>
 				<fr:property name="rowClasses" value=",bgfafafa"/>
 				
 				<fr:property name="sortParameter" value="sortBy"/>
