@@ -64,10 +64,16 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
 
 	    // TODO is JURY VALIDATED?????????????????????????????'
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
+	    if (isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		return;
 	    }
 
+	    if (userView.getPerson() != null
+		    && process.getIndividualProgramProcess().isCoordinatorForPhdProgram(userView.getPerson())) {
+		return;
+	    }
+
+	    throw new PreConditionNotValidException();
 	}
 
 	@Override
