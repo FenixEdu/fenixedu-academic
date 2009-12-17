@@ -2161,5 +2161,16 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	}
 	return null;
     }
+    
+    public boolean isDeletable(){
+	try {
+	return this.canBeDeleted();
+	}catch(DomainException e) {
+	    return false;
+	}
+	/**
+	 * TODO: Refazer a implementacao de canBeDeleted()
+	 */
+    }
 
 }

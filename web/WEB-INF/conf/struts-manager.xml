@@ -1679,17 +1679,7 @@
 		<forward name="insertExecutionCourse" path="df.executionCourseManagement.page.insertExecutionCourse"/>
 		<forward name="firstPage" path="/executionCourseManagement.do?method=firstPage"/>
 	</action>
-
-	<action path="/editExecutionCourseChooseExPeriod"
-			type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.EditExecutionCourseDispatchAction"
-			parameter="method"
-			name="executionCourseForm"
-			scope="request"
-			input="/editExecutionCourseChooseExPeriod.do?method=prepareEditECChooseExecutionPeriod&amp;page=0">
-
-		<forward name="prepareEditECChooseExecutionPeriod" path="df.executionCourseManagement.prepareEditECChooseExecutionPeriod"/>
-		<forward name="prepareEditECChooseExecDegreeAndCurYear" path="df.executionCourseManagement.prepareEditECChooseExecDegreeAndCurYear"/>
-	</action>
+	
 	<action path="/editExecutionCourseChooseExDegree"
 			type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.EditExecutionCourseDispatchAction"
 			parameter="method"
@@ -1744,14 +1734,6 @@
 		<forward name="showSeperationPage" path="df.executionCourseManagement.seperateExecutionCourse"/>
 		<forward name="returnFromTransfer" path="/editExecutionCourseChooseExPeriod.do?method=prepareEditECChooseExecutionPeriod"/>
 	</action>	
-
-	<action path="/createSites"
-			type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.CreateSitesAction"
-			parameter="method"
-			scope="request"
-			input="/editExecutionCourseChooseExPeriod.do?method=prepareEditECChooseExecutionPeriod&amp;page=0">
-		<forward name="ShowCreatedSites" path="df.executionCourseManagement.showCreatedSites"/>
-	</action>
 	
 	<action path="/createExecutionCourses"
 			type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.CreateExecutionCoursesDispatchAction"

@@ -37,18 +37,26 @@
 								</td>
 								<td class="listClasses">
 									<bean:define id="executionCourseId" name="executionCourse" property="idInternal"/> 
-									&nbsp;<html:link module="/manager" module="/manager" page="<%="/editExecutionCourse.do?method=editExecutionCourse&amp;executionCourseId=" + executionCourseId.toString() + "&amp;executionPeriod=" + pageContext.findAttribute("executionPeriodName") + "~" + pageContext.findAttribute("executionPeriodId") + "&amp;executionDegree=" + pageContext.findAttribute("executionDegreeName") + "~" + pageContext.findAttribute("executionDegreeId") + "&amp;curYear=" + pageContext.findAttribute("curYear") + "&amp;executionCoursesNotLinked=" + pageContext.findAttribute("executionCoursesNotLinked")%>">
+									&nbsp;
+									<html:link module="/manager" module="/manager" page="<%="/editExecutionCourse.do?method=editExecutionCourse&amp;executionCourseId=" + executionCourseId.toString() + "&amp;executionPeriod=" + pageContext.findAttribute("executionPeriodName") + "~" + pageContext.findAttribute("executionPeriodId") + "&amp;executionDegree=" + pageContext.findAttribute("executionDegreeName") + "~" + pageContext.findAttribute("executionDegreeId") + "&amp;curYear=" + pageContext.findAttribute("curYear") + "&amp;executionCoursesNotLinked=" + pageContext.findAttribute("executionCoursesNotLinked")%>">
 										<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.edit"/>
 									</html:link>
 									/
 									<html:link module="/manager" module="/manager" page="<%="/editExecutionCourse.do?method=deleteExecutionCourse&amp;executionCourseId=" + executionCourseId.toString() + "&amp;executionPeriod=" + pageContext.findAttribute("executionPeriodName") + "~" + pageContext.findAttribute("executionPeriodId") + "&amp;executionDegree=" + pageContext.findAttribute("executionDegreeName") + "~" + pageContext.findAttribute("executionDegreeId") + "&amp;curYear=" + pageContext.findAttribute("curYear") + "&amp;executionCoursesNotLinked=" + pageContext.findAttribute("executionCoursesNotLinked")%>">
 										<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.delete"/>
-									</html:link>&nbsp;
+									</html:link>
+									/
+									<html:link page="<%= "/announcementSwap.do?method=prepareSwap&executionCourseId=" + executionCourseId.toString()%>">
+										<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourse.announcementMove"/>
+									</html:link>
+									&nbsp;
 								</td>
 								<td class="listClasses">
+									&nbsp;
 									<html:link module="/manager" module="/manager" page="<%="/seperateExecutionCourse.do?method=prepareTransfer&amp;executionCourseId=" + executionCourseId.toString() %>">
 										<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="link.manager.seperate.execution_course"/>
 									</html:link>
+									&nbsp;
 								</td>
 			 				</tr>
 			 			</logic:iterate>						

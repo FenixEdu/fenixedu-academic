@@ -92,6 +92,10 @@
 	<slot name="body" key="net.sourceforge.fenixedu.domain.messaging.Announcement.body.label"/>	
 </schema>
 
+<schema bundle="MESSAGING_RESOURCES" name="announcement.view-with-subject" type="net.sourceforge.fenixedu.domain.messaging.Announcement">
+	<slot name="subject" key="net.sourceforge.fenixedu.domain.messaging.Announcement.title.label"/>	
+</schema>
+
 <schema bundle="MESSAGING_RESOURCES" name="announcement.view-with-creationDate-subject-online" type="net.sourceforge.fenixedu.domain.messaging.Announcement">
 	<slot name="subject" key="net.sourceforge.fenixedu.domain.messaging.Announcement.title.label"/>	
 	<slot name="creationDate" key="net.sourceforge.fenixedu.messaging.AnnouncementBoard.creationDate"/>

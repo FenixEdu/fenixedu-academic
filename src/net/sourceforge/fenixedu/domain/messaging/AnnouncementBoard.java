@@ -315,6 +315,10 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
 	announcements.setAnnouncementBoard(this);
     }
 
+    public void removeAnnouncement(Announcement announcement){
+	announcement.getParentNode(this).delete();
+    }
+    
     private List<Announcement> filterAnnouncements(Collection<Announcement> announcements, final Predicate predicate) {
 	return (List<Announcement>) CollectionUtils.select(announcements, new Predicate() {
 	    public boolean evaluate(Object arg0) {

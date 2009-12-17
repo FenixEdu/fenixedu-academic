@@ -7,8 +7,9 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.interfaces.HasExecutionDegree;
 
-public class ImportContentBean implements Serializable {
+public class ImportContentBean implements Serializable, HasExecutionDegree {
 
     private DomainReference<ExecutionSemester> executionPeriodReference;
 

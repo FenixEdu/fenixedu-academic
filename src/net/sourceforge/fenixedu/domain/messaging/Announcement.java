@@ -346,4 +346,10 @@ public class Announcement extends Announcement_Base {
 	return (beginPublication == null || beginPublication.isBeforeNow()) && (endPublication == null || endPublication.isAfterNow());
     }
 
+    @Service
+    public void swap(AnnouncementBoard source, AnnouncementBoard destination) {
+	source.removeAnnouncement(this);
+	destination.addAnnouncements(this);
+    }
+
 }
