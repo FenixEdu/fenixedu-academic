@@ -41,10 +41,10 @@
 				</fr:slot>
 				<fr:slot name="announcements" layout="option-select" key="manager.announcements.stats.announcementsStats.label">
 					<fr:property name="eachSchema" value="announcement.view-with-subject"/>
-					<fr:property name="eachLayout" value="values"/>
+					<fr:property name="eachLayout" value="values-comma"/>
 					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.manager.AnnouncementsForBoard"/>
 					<fr:property name="saveOptions" value="true"/>
-					<fr:property name="classes" value="nobullet ulindent0"/>
+					<fr:property name="classes" value="nobullet ulindent0 mvert0"/>
 				</fr:slot>
 			</fr:schema>
 			<fr:destination name="postBack" path="/announcementSwap.do?method=postBack"/>

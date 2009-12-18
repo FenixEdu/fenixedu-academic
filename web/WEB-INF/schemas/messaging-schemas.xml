@@ -93,7 +93,11 @@
 </schema>
 
 <schema bundle="MESSAGING_RESOURCES" name="announcement.view-with-subject" type="net.sourceforge.fenixedu.domain.messaging.Announcement">
-	<slot name="subject" key="net.sourceforge.fenixedu.domain.messaging.Announcement.title.label"/>	
+	<slot name="subject" key="net.sourceforge.fenixedu.domain.messaging.Announcement.title.label">
+		<property name="classes" value="bold"/>
+	</slot>
+	<slot name="author" key="net.sourceforge.fenixedu.domain.messaging.Announcement.author"/>
+	<slot name="creationDate" key="net.sourceforge.fenixedu.messaging.AnnouncementBoard.creationDate"/>
 </schema>
 
 <schema bundle="MESSAGING_RESOURCES" name="announcement.view-with-creationDate-subject-online" type="net.sourceforge.fenixedu.domain.messaging.Announcement">
