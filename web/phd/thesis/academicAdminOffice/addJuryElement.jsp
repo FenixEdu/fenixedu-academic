@@ -49,7 +49,6 @@
 	<input type="hidden" name="method" value="" />
 	<fr:edit id="thesisJuryElementBean" name="thesisJuryElementBean" visible="false" />
 
-
 	<fr:edit id="thesisJuryElementBean.jury.type" name="thesisJuryElementBean" >
 		
 		<fr:schema bundle="PHD_RESOURCES" type="<%= PhdThesisJuryElementBean.class.getName() %>">
@@ -120,11 +119,11 @@
 					</logic:notEmpty>
 
 					<fr:slot name="title" />
-				</logic:equal>				
+				</logic:equal>
 
 				<fr:slot name="reporter" />
 
-			</logic:notEmpty>				
+			</logic:notEmpty>
 
 		</fr:schema>
 
@@ -132,10 +131,10 @@
 			<fr:property name="classes" value="tstyle2 thlight mtop15" />
 			<fr:property name="columnClasses" value=",,tdclear tderror1" />
 		</fr:layout>
-			
+
 		<fr:destination name="invalid" path="<%= "/phdThesisProcess.do?method=prepareAddJuryElementInvalid&processId=" + processId.toString() %>"/>
 		<fr:destination name="postBack" path="<%= "/phdThesisProcess.do?method=prepareAddJuryElementPostback&processId=" + processId.toString() %>"/>
-	</fr:edit>		
+	</fr:edit>
 
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='addJuryElement';"><bean:message bundle="PHD_RESOURCES" key="label.add"/></html:submit>
 	<html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='manageThesisJuryElements';"><bean:message bundle="PHD_RESOURCES" key="label.cancel"/></html:cancel>

@@ -29,5 +29,4 @@ public class PhdThesisJuryElementBean extends PhdParticipantBean {
     public void setReporter(boolean reporter) {
 	this.reporter = reporter;
     }
-
 }

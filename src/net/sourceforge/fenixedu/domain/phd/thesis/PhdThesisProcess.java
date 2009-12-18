@@ -178,6 +178,30 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 
     }
 
+    static public class AddPresidentJuryElement extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
+	    if (process.isConcluded()) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
+	    if (process.hasPresidentJuryElement()) {
+		process.getPresidentJuryElement().delete();
+	    }
+
+	    ThesisJuryElement.createPresident(process, (PhdThesisJuryElementBean) object);
+	    return process;
+	}
+    }
+
     // TODO: find clean solution to return documents
     // grouped?
     static public class DownloadProvisionalThesisDocument extends PhdActivity {
@@ -335,6 +359,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	activities.add(new AddJuryElement());
 	activities.add(new DeleteJuryElement());
 	activities.add(new SwapJuryElementsOrder());
+	activities.add(new AddPresidentJuryElement());
 	activities.add(new SubmitThesis());
 	activities.add(new DownloadProvisionalThesisDocument());
 	activities.add(new DownloadFinalThesisDocument());

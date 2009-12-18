@@ -51,16 +51,17 @@
 		<bean:write name="process" property="juryElementsDocument.documentType.localizedName"/> 
 		(<bean:message  key="label.version" bundle="PHD_RESOURCES" /> <bean:write name="process" property="juryElementsDocument.documentVersion"/>)
 	</a>
-</logic:notEmpty>
 
-<br/>
-<br/>
-<br/>
+	<br/>
+	<br/>
+	<br/>
+</logic:notEmpty>
 
 <strong>Presidente:</strong> Presidente do Conselho Científico do IST
 
 <br/>
 <strong><bean:message  key="label.phd.thesis.elements" bundle="PHD_RESOURCES"/>:</strong>
+<logic:notEmpty name="process" property="thesisJuryElements">
 <fr:view name="process" property="thesisJuryElements">
 
 	<fr:schema bundle="PHD_RESOURCES" type="<%= ThesisJuryElement.class.getName() %>">
@@ -111,19 +112,23 @@
 		<fr:property name="sortBy" value="elementOrder=asc"/>
 	</fr:layout>
 </fr:view>
+</logic:notEmpty>
 <logic:empty name="process" property="thesisJuryElements">
 	<em><bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.no.jury.elements"/></em><br/>
 	<br/>
 </logic:empty>
 
-<html:link action="/phdThesisProcess.do?method=prepareAddJuryElement" paramId="processId" paramName="process" paramProperty="externalId"> 
-	<bean:message bundle="PHD_RESOURCES" key="label.add"/>
-</html:link>,&nbsp;
 
--> presidente do júri
-<html:link action="/phdThesisProcess.do?method=prepareAddJuryElement" paramId="processId" paramName="process" paramProperty="externalId"> 
-	<bean:message bundle="PHD_RESOURCES" key="label.add"/>
-</html:link>,&nbsp;
+<ul class="operations" >
+	<li style="display: inline;">
+		<html:link action="/phdThesisProcess.do?method=prepareAddJuryElement" paramId="processId" paramName="process" paramProperty="externalId"><bean:message bundle="PHD_RESOURCES" key="label.add"/></html:link>
+	</li>
+	<li style="display: inline;">
+		<html:link action="/phdThesisProcess.do?method=prepareAddPresidentJuryElement" paramId="processId" paramName="process" paramProperty="externalId"> 
+			<bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.add.president.jury.element"/>
+		</html:link>
+	</li>
+</ul>
 
 -> pedir data de validação do júri
 <html:link action="/phdThesisProcess.do?method=prepareValidateThesisJury" paramId="processId" paramName="process" paramProperty="externalId"> 

@@ -6819,7 +6819,6 @@ class phd.thesis.ThesisJuryElement extends DomainObject {
     Integer elementOrder;
 }
 
-
 class phd.PhdProgramServiceAgreementTemplate extends accounting.ServiceAgreementTemplate {
 }
 
@@ -7468,14 +7467,17 @@ relation PhdThesisProcessThesisJuryElement {
     }
 }
 
+relation PhdThesisProcessPresidentThesisJuryElement {
+    phd.thesis.PhdThesisProcess playsRole processForPresidentJuryElement;
+    phd.thesis.ThesisJuryElement playsRole presidentJuryElement;
+}
+
 relation PhdParticipantThesisJuryElement {
     phd.PhdParticipant playsRole participant;
     phd.thesis.ThesisJuryElement playsRole thesisJuryElements {
         multiplicity *;
     }
 }
-
-
 
 
 /* End of Phd Module */

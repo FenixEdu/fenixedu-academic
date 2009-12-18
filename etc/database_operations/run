@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add new columns to thesis jury element table" changeThesisJuryElement.sql

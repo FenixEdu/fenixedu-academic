@@ -123,9 +123,30 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
     }
 
     static public ThesisJuryElement create(final PhdThesisProcess process, final PhdThesisJuryElementBean bean) {
-	final PhdParticipant participant = !bean.hasParticipant() ? PhdParticipant.create(process.getIndividualProgramProcess(),
-		bean) : bean.getParticipant();
+	final PhdParticipant participant = getOrCreateParticipant(process, bean);
 	return new ThesisJuryElement().init(process, participant, bean);
     }
 
+    private static PhdParticipant getOrCreateParticipant(final PhdThesisProcess process, final PhdThesisJuryElementBean bean) {
+	final PhdParticipant participant = !bean.hasParticipant() ? PhdParticipant.create(process.getIndividualProgramProcess(),
+		bean) : bean.getParticipant();
+	return participant;
+    }
+
+    static public ThesisJuryElement createPresident(final PhdThesisProcess process, final PhdThesisJuryElementBean bean) {
+	
+	if (process.hasPresidentJuryElement()) {
+	    throw new DomainException("error.ThesisJuryElement.president.already.exists");
+	}
+	
+	final PhdParticipant participant = getOrCreateParticipant(process, bean);
+	final ThesisJuryElement element = new ThesisJuryElement();
+	
+	element.checkParticipant(process, participant);
+	element.setElementOrder(0);
+	element.setProcessForPresidentJuryElement(process);
+	element.setParticipant(participant);
+	
+	return element;
+    }
 }

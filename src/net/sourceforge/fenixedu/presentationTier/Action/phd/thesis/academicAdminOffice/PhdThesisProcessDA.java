@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess.AddJuryElement;
+import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess.AddPresidentJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess.DeleteJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess.RequestJuryReviews;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess.SubmitJuryElements;
@@ -41,7 +42,9 @@ import pt.utl.ist.fenix.tools.util.Pair;
 
 @Forward(name = "submitThesis", path = "/phd/thesis/academicAdminOffice/submitThesis.jsp"),
 
-@Forward(name = "requestJuryReviews", path = "/phd/thesis/academicAdminOffice/requestJuryReviews.jsp")
+@Forward(name = "requestJuryReviews", path = "/phd/thesis/academicAdminOffice/requestJuryReviews.jsp"),
+
+@Forward(name = "addPresidentJuryElement", path = "/phd/thesis/academicAdminOffice/addPresidentJuryElement.jsp")
 
 })
 public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
@@ -50,39 +53,39 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
     public ActionForward prepareSubmitJuryElementsDocument(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
-	
+
 	final PhdThesisProcessBean bean = new PhdThesisProcessBean();
 	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.JURY_ELEMENTS));
 	request.setAttribute("thesisProcessBean", bean);
 
 	return mapping.findForward("submitJuryElementsDocument");
     }
-    
-    public ActionForward submitJuryElementsDocumentInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
+
+    public ActionForward submitJuryElementsDocumentInvalid(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
 	request.setAttribute("thesisProcessBean", getRenderedObject("thesisProcessBean"));
 	return mapping.findForward("submitJuryElementsDocument");
     }
-    
+
     public ActionForward submitJuryElementsDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	try {
-	    
+
 	    final IViewState viewState = RenderUtils.getViewState("thesisProcessBean.edit.documents");
 	    if (!viewState.isValid()) {
 		return submitJuryElementsDocumentInvalid(mapping, actionForm, request, response);
 	    }
 	    ExecuteProcessActivity.run(getProcess(request), SubmitJuryElements.class, getRenderedObject("thesisProcessBean"));
 	    addSuccessMessage(request, "message.thesis.jury.elements.added.with.success");
-	    
+
 	} catch (final DomainException e) {
 	    addErrorMessage(request, e.getMessage(), e.getArgs());
 	    return submitJuryElementsDocumentInvalid(mapping, actionForm, request, response);
 	}
-	
+
 	return viewIndividualProgramProcess(request, getProcess(request));
     }
-    
+
     public ActionForward manageThesisJuryElements(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	return mapping.findForward("manageThesisJuryElements");
@@ -201,6 +204,41 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
 	if (juryElement != last) {
 	    swapJuryElements(request, juryElement, last);
+	}
+
+	return manageThesisJuryElements(mapping, actionForm, request, response);
+    }
+
+    public ActionForward prepareAddPresidentJuryElement(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("thesisJuryElementBean", new PhdThesisJuryElementBean(getProcess(request)));
+	return mapping.findForward("addPresidentJuryElement");
+    }
+
+    public ActionForward prepareAddPresidentJuryElementInvalid(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("thesisJuryElementBean", getRenderedObject("thesisJuryElementBean"));
+	return mapping.findForward("addPresidentJuryElement");
+    }
+
+    public ActionForward prepareAddPresidentJuryElementPostback(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("thesisJuryElementBean", getRenderedObject("thesisJuryElementBean"));
+	RenderUtils.invalidateViewState();
+	return mapping.findForward("addPresidentJuryElement");
+    }
+
+    public ActionForward addPresidentJuryElement(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	try {
+	    ExecuteProcessActivity.run(getProcess(request), AddPresidentJuryElement.class,
+		    getRenderedObject("thesisJuryElementBean"));
+	    addSuccessMessage(request, "message.thesis.added.jury.with.success");
+
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getMessage(), e.getArgs());
+	    return prepareAddPresidentJuryElementInvalid(mapping, actionForm, request, response);
 	}
 
 	return manageThesisJuryElements(mapping, actionForm, request, response);
