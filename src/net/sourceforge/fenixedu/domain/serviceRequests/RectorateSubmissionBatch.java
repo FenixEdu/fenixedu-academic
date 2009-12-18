@@ -12,8 +12,6 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
-
 public class RectorateSubmissionBatch extends RectorateSubmissionBatch_Base {
     public RectorateSubmissionBatch(AdministrativeOffice administrativeOffice) {
 	super();
@@ -58,7 +56,6 @@ public class RectorateSubmissionBatch extends RectorateSubmissionBatch_Base {
 	}
     }
 
-     @Service
     public void closeBatch() {
 	if (!getState().equals(RectorateSubmissionState.UNSENT))
 	    throw new DomainException("error.rectorateSubmission.attemptingToCloseABatchNotInUnsentState");
@@ -66,7 +63,6 @@ public class RectorateSubmissionBatch extends RectorateSubmissionBatch_Base {
 	new RectorateSubmissionBatch(getAdministrativeOffice());
     }
 
-    @Service
     public void markAsSent() {
 	if (!getState().equals(RectorateSubmissionState.CLOSED))
 	    throw new DomainException("error.rectorateSubmission.attemptingToSendABatchNotInClosedState");
@@ -94,7 +90,6 @@ public class RectorateSubmissionBatch extends RectorateSubmissionBatch_Base {
 	return true;
     }
 
-    @Service
     public void markAsReceived() {
 	if (!getState().equals(RectorateSubmissionState.SENT))
 	    throw new DomainException("error.rectorateSubmission.attemptingToReceiveABatchNotInSentState");
@@ -105,7 +100,6 @@ public class RectorateSubmissionBatch extends RectorateSubmissionBatch_Base {
 	}
     }
 
-    @Service
     public void delete() {
 	if (hasAnyDocumentRequest()) {
 	    throw new DomainException("error.rectorateSubmission.cannotDeleteBatchWithDocuments");

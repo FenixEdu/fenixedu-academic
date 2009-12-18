@@ -44,6 +44,7 @@ import org.apache.struts.action.ActionMapping;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -165,9 +166,9 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	return mapping.findForward("viewAcademicServiceRequest");
     }
 
+    @Service
     public ActionForward revertRequestToProcessingState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-
 	final AcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
 	getAndSetUrl(form, request);
 	request.setAttribute("canRevertToProcessingState", AcademicServiceRequestPredicates.REVERT_TO_PROCESSING_STATE
@@ -390,6 +391,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	return mapping.findForward("viewRegistrationDetails");
     }
 
+    @Service
     public ActionForward generateRegistryCode(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	final RegistrationAcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);

@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.serviceRequests.RegistryCode;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
 
 public class DiplomaRequest extends DiplomaRequest_Base {
 
@@ -226,7 +225,6 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 	return !isDelivered();
     }
 
-    @Service
     public void generateRegistryCode() {
 	if (getRegistryCode() == null) {
 	    getRootDomainObject().getInstitutionUnit().getRegistryCodeGenerator().createRegistryFor(this);
@@ -287,7 +285,6 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 	}
     }
 
-    @Service
     @Override
     @Checked("AcademicServiceRequestPredicates.REVERT_TO_PROCESSING_STATE")
     public void revertToProcessingState() {
