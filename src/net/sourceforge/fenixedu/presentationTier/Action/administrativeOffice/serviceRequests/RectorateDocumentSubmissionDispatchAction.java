@@ -1,12 +1,14 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.serviceRequests;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
-import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,10 +22,6 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaS
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.RegistryDiplomaRequest;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.Archive;
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.DiskZipArchive;
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.Fetcher;
-import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.Resource;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -153,22 +151,25 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
     public ActionForward zipDocuments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	try {
+	    ByteArrayOutputStream bout = new ByteArrayOutputStream();
+	    ZipOutputStream zip = new ZipOutputStream(bout);
 	    RectorateSubmissionBatch batch = getDomainObject(request, "batchOid");
-	    Archive archive = new DiskZipArchive(response, batch.getRange());
-	    Fetcher fetcher = new Fetcher(archive, request, response);
 	    for (DocumentRequest document : batch.getDocumentRequestSet()) {
-		fetcher.queue(new Resource(document.getLastGeneratedDocument().getFilename(), document.getLastGeneratedDocument()
-			.getDownloadUrl()));
+		zip.putNextEntry(new ZipEntry(document.getLastGeneratedDocument().getFilename()));
+		zip.write(document.getLastGeneratedDocument().getContents());
+		zip.closeEntry();
 	    }
-
-	    fetcher.process();
-	    archive.finish();
+	    zip.close();
+	    response.setContentType("application/zip");
+	    response.addHeader("Content-Disposition", "attachment; filename=batch-" + batch.getRange() + ".zip");
+	    ServletOutputStream writer = response.getOutputStream();
+	    writer.write(bout.toByteArray());
+	    writer.flush();
+	    writer.close();
+	    response.flushBuffer();
+	    return null;
 	} catch (IOException e) {
 	    throw new DomainException("error.rectorateSubmission.errorGeneratingMetadata");
-	} catch (ServletException e) {
-	    throw new DomainException("error.rectorateSubmission.errorGeneratingMetadata");
 	}
-
-	return null;
     }
 }
