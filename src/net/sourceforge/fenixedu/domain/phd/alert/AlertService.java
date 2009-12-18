@@ -23,13 +23,13 @@ public class AlertService {
 
     static public void alertStudent(PhdIndividualProgramProcess process, String subjectKey, String bodyKey) {
 	final PhdCustomAlertBean alertBean = new PhdCustomAlertBean(process, true, false, false);
+
 	alertBean.setSubject(getSubjectPrefixed(process, subjectKey));
-	alertBean.setBody(getMessageFromResource(bodyKey));
+	alertBean.setBody(getBodyText(process, bodyKey));
 	alertBean.setFireDate(new LocalDate());
 	alertBean.setTargetGroup(new FixedSetGroup(process.getPerson()));
 
 	new PhdCustomAlert(alertBean);
-
     }
 
     private static String getSubjectPrefixed(PhdIndividualProgramProcess process, String subjectKey) {
@@ -42,7 +42,42 @@ public class AlertService {
 
     static private String getMessageFromResource(String key) {
 	return ResourceBundle.getBundle("resources.PhdResources", Language.getLocale()).getString(key);
+    }
 
+    static private String getBodyCommonText(final PhdIndividualProgramProcess process) {
+	final StringBuilder builder = new StringBuilder();
+
+	builder.append("------------------------------------------------------\n");
+
+	builder.append(getSlotLabel(PhdIndividualProgramProcess.class.getName(), "processNumber"));
+	builder.append(": ").append(process.getPhdIndividualProcessNumber().getFullProcessNumber()).append("\n");
+
+	builder.append(getSlotLabel(PhdIndividualProgramProcess.class.getName(), "phdProgram"));
+	if (process.hasPhdProgram()) {
+	    builder.append(": ").append(process.getPhdProgram().getName());
+	}
+	builder.append("\n");
+
+	builder.append(getSlotLabel(PhdIndividualProgramProcess.class.getName(), "activeState"));
+	builder.append(": ").append(process.getActiveState().getLocalizedName()).append("\n");
+
+	builder.append(getSlotLabel(PhdIndividualProgramProcess.class.getName(), "executionYear"));
+	builder.append(": ").append(process.getExecutionYear().getQualifiedName()).append("\n");
+
+	builder.append(getSlotLabel(PhdIndividualProgramProcess.class.getName(), "person.name"));
+	builder.append(": ").append(process.getPerson().getName()).append("\n");
+
+	builder.append("------------------------------------------------------\n\n");
+
+	return builder.toString();
+    }
+
+    static private String getBodyText(final PhdIndividualProgramProcess process, final String bodyText) {
+	return getBodyCommonText(process) + getMessageFromResource(bodyText);
+    }
+
+    static private String getSlotLabel(String className, String slotName) {
+	return getMessageFromResource("label." + className + "." + slotName);
     }
 
     static public void alertGuiders(PhdIndividualProgramProcess process, String subjectKey, String bodyKey) {
@@ -60,7 +95,7 @@ public class AlertService {
 
 	final PhdCustomAlertBean alertBean = new PhdCustomAlertBean(process, true, false, false);
 	alertBean.setSubject(getSubjectPrefixed(process, subjectKey));
-	alertBean.setBody(getMessageFromResource(bodyKey));
+	alertBean.setBody(getBodyText(process, bodyKey));
 	alertBean.setFireDate(new LocalDate());
 	alertBean.setTargetGroup(new FixedSetGroup(toNotify));
 
@@ -71,7 +106,7 @@ public class AlertService {
     static public void alertAcademicOffice(PhdIndividualProgramProcess process, String subjectKey, String bodyKey) {
 	final PhdCustomAlertBean alertBean = new PhdCustomAlertBean(process, true, false, true);
 	alertBean.setSubject(getSubjectPrefixed(process, subjectKey));
-	alertBean.setBody(getMessageFromResource(bodyKey));
+	alertBean.setBody(getBodyText(process, bodyKey));
 	alertBean.setFireDate(new LocalDate());
 	alertBean.setTargetGroup(new MasterDegreeAdministrativeOfficeGroup());
 
@@ -81,7 +116,7 @@ public class AlertService {
     static public void alertCoordinator(PhdIndividualProgramProcess process, String subjectKey, String bodyKey) {
 	final PhdCustomAlertBean alertBean = new PhdCustomAlertBean(process, true, false, false);
 	alertBean.setSubject(getSubjectPrefixed(process, subjectKey));
-	alertBean.setBody(getMessageFromResource(bodyKey));
+	alertBean.setBody(getBodyText(process, bodyKey));
 	alertBean.setFireDate(new LocalDate());
 	alertBean.setTargetGroup(new FixedSetGroup(process.getPhdProgram().getCoordinatorsFor(
 		ExecutionYear.readCurrentExecutionYear())));
