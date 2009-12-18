@@ -30,7 +30,7 @@ public class Researcher extends Researcher_Base {
 	setAllowsToBeSearched(Boolean.FALSE);
 	setAllowsContactByStudents(Boolean.FALSE);
 	setAllowsContactByMedia(Boolean.FALSE);
-	setAllowsContactByStudents(Boolean.FALSE);
+	setAllowsContactByOtherResearchers(Boolean.FALSE);
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 

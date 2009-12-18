@@ -36,11 +36,15 @@
 		<p class="mtop05"><em><bean:message key="label.no.availableContacts" bundle="RESEARCHER_RESOURCES"/>.</em></p>
 	</logic:empty>
 	
-	<p class="mtop15 mbottom05"><strong><bean:message key="label.keywords.portuguese" bundle="RESEARCHER_RESOURCES"/></strong></p>
-	<p class="mtop05"><fr:view name="researcher" property="keywordsPt"/></p>
+	<p class="mtop15 mbottom05"><strong><bean:message key="label.keywords.portuguese" bundle="RESEARCHER_RESOURCES"/></strong></p>	
+	<logic:notEmpty name="researcher" property="keywordsPt">
+		<p class="mtop05"><fr:view name="researcher" property="keywordsPt"/></p>
+	</logic:notEmpty>
 
 	<p class="mtop15 mbottom05"><strong><bean:message key="label.keywords.english" bundle="RESEARCHER_RESOURCES"/></strong></p>
-	<p class="mtop05"><fr:view name="researcher" property="keywordsEn"/></p>
+	<logic:notEmpty name="researcher" property="keywordsEn">
+		<p class="mtop05"><fr:view name="researcher" property="keywordsEn"/></p>
+	</logic:notEmpty>
 		
 		<p><html:link page="/researcherManagement.do?method=edit"><bean:message key="label.change.options" bundle="RESEARCHER_RESOURCES"/></html:link></p>
 
