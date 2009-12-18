@@ -81,5 +81,5 @@
 	</phd:activityAvailable>
 </ul>
 </logic:equal>
-<br/>
+<br/><br/>
 </logic:notEmpty>
