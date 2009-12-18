@@ -618,7 +618,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     }
 
     public boolean isPayable() {
-	return hasImprovementOfApprovedEnrolmentEvent();
+	return hasImprovementOfApprovedEnrolmentEvent() && !getImprovementOfApprovedEnrolmentEvent().isCancelled();
     }
 
     public boolean isPayed() {
