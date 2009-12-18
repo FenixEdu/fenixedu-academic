@@ -44,3 +44,5 @@ function executeWithTempFile() {
 }
 
 execute "Add new columns to thesis jury element table" changeThesisJuryElement.sql
+execute "alter Delete File Log Table" alterDeleteFileLog.sql
+
