@@ -789,6 +789,20 @@ public class CollectionRenderer extends OutputRenderer {
 	return getTableLink(name).getConfirmationBundle();
     }
 
+    public String getConfirmationArgs(String name) {
+	return getTableLink(name).getConfirmationArgs();
+    }
+
+    /**
+     * The confirmationArgs property indicates the arguments for a link
+     * confirmation.
+     * 
+     * @property
+     */
+    public void setConfirmationArgs(String name, String value) {
+	getTableLink(name).setConfirmationArgs(value);
+    }
+
     public String getBlankTarget(String name) {
 	return Boolean.toString(getTableLink(name).getBlankTarget());
     }
@@ -1277,6 +1291,8 @@ public class CollectionRenderer extends OutputRenderer {
 
 	private String confirmationBundle;
 
+	private String confirmationArgs;
+
 	private Boolean blankTarget = false;
 
 	public TableLink() {
@@ -1438,6 +1454,14 @@ public class CollectionRenderer extends OutputRenderer {
 	    this.confirmationBundle = confirmationBundle;
 	}
 
+	public String getConfirmationArgs() {
+	    return confirmationArgs;
+	}
+
+	public void setConfirmationArgs(String confirmationArgs) {
+	    this.confirmationArgs = confirmationArgs;
+	}
+
 	public Boolean getBlankTarget() {
 	    return blankTarget;
 	}
@@ -1509,8 +1533,17 @@ public class CollectionRenderer extends OutputRenderer {
 		}
 
 		if (getConfirmationKey() != null) {
-		    final String confirmationMessage = getConfirmationBundle() != null ? RenderUtils.getResourceString(
-			    getConfirmationBundle(), getConfirmationKey()) : RenderUtils.getResourceString(getConfirmationKey());
+		    String arguments = getConfirmationArgs();
+		    String[] argumentsArray = arguments.split(",");
+		    String[] formattedArgsArray = new String[argumentsArray.length];
+		    
+		    for(int i=0; i<argumentsArray.length; i++){
+			formattedArgsArray[i] = RenderUtils.getFormattedProperties(argumentsArray[i], object);
+		    }
+		    
+		    final String confirmationMessage = RenderUtils.getResourceString(getConfirmationBundle(),
+			    getConfirmationKey(), formattedArgsArray);
+
 		    link.setOnClick("return confirm('" + confirmationMessage + "');");
 		}
 

@@ -111,6 +111,9 @@
 			value="label.manager.executionCourseManagement.delete" />
 		<fr:property name="visibleIf(delete)" value="deletable" />
 		<fr:property name="bundle(delete)" value="MANAGER_RESOURCES" />
+		<fr:property name="confirmationKey(delete)" value="label.manager.delete.selected.executionCourses.certainty"/>
+		<fr:property name="confirmationBundle(delete)" value="MANAGER_RESOURCES"/>
+		<fr:property name="confirmationArgs(delete)" value="${idInternal},${nome},${sigla}"/>
 
 
 		<fr:property name="classes" value="tstyle1 thleft" />
