@@ -13,16 +13,16 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class DegreeFinalizationCertificateRequestPR extends DegreeFinalizationCertificateRequestPR_Base {
 
-    private DegreeFinalizationCertificateRequestPR() {
+    protected DegreeFinalizationCertificateRequestPR() {
 	super();
     }
 
     public DegreeFinalizationCertificateRequestPR(final DateTime startDate, DateTime endDate,
 	    final ServiceAgreementTemplate serviceAgreementTemplate, final Money baseAmount, final Money amountPerUnit,
-	    final Money amountPerPage) {
+	    final Money amountPerPage, final Money maximumAmount) {
 	this();
 	init(EntryType.DEGREE_FINALIZATION_CERTIFICATE_REQUEST_FEE, EventType.DEGREE_FINALIZATION_CERTIFICATE_REQUEST, startDate,
-		endDate, serviceAgreementTemplate, baseAmount, amountPerUnit, amountPerPage);
+		endDate, serviceAgreementTemplate, baseAmount, amountPerUnit, amountPerPage, maximumAmount);
     }
 
     @Override
@@ -39,12 +39,12 @@ public class DegreeFinalizationCertificateRequestPR extends DegreeFinalizationCe
     }
 
     @Checked("PostingRulePredicates.editPredicate")
-    public DegreeFinalizationCertificateRequestPR edit(Money baseAmount, Money amountPerUnit, Money amountPerPage) {
+    public DegreeFinalizationCertificateRequestPR edit(Money baseAmount, Money amountPerUnit, Money amountPerPage,
+	    Money maximumAmount) {
 
 	deactivate();
 
 	return new DegreeFinalizationCertificateRequestPR(new DateTime().minus(1000), null, getServiceAgreementTemplate(),
-		baseAmount, amountPerUnit, amountPerPage);
+		baseAmount, amountPerUnit, amountPerPage, maximumAmount);
     }
-
 }

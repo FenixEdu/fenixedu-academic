@@ -2087,6 +2087,12 @@ class DomainObject {
                     class accounting.postingRules.serviceRequests.DegreeFinalizationCertificateRequestPR extends accounting.postingRules.serviceRequests.CertificateRequestPR {
                     }
 
+						class accounting.postingRules.serviceRequests.DegreeFinalizationCertificateRequestWithCeilingInTotalAmountForUnitsPR extends accounting.postingRules.serviceRequests.DegreeFinalizationCertificateRequestPR {
+						}
+					
+					class accounting.postingRules.serviceRequests.ApprovementCertificateRequestPR extends accounting.postingRules.serviceRequests.CertificateRequestPR {
+					}
+						
             class accounting.postingRules.FixedAmountPR extends accounting.postingRules.GenericSingleEntryTypePR {
                 Money fixedAmount;
             }

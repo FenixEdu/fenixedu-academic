@@ -788,3 +788,35 @@
 	bundle="APPLICATION_RESOURCES" extends="EnrolmentCertificateRequestPR.edit">
 	<setter signature="edit(baseAmount,amountPerUnit,amountPerPage, maximumAmount)"/>
 </schema>
+
+<schema name="DegreeFinalizationCertificateRequestWithCeilingInTotalAmountForUnitsPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.DegreeFinalizationCertificateRequestWithCeilingInTotalAmountForUnitsPR"
+	bundle="APPLICATION_RESOURCES" extends="DegreeFinalizationCertificateRequestPR.view">
+</schema>
+
+<schema name="DegreeFinalizationCertificateRequestWithCeilingInTotalAmountForUnitsPR.view-student"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.DegreeFinalizationCertificateRequestWithCeilingInTotalAmountForUnitsPR"
+	bundle="APPLICATION_RESOURCES" extends="DegreeFinalizationCertificateRequestPR.view-student">
+</schema>
+
+<schema name="DegreeFinalizationCertificateRequestWithCeilingInTotalAmountForUnitsPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.DegreeFinalizationCertificateRequestWithCeilingInTotalAmountForUnitsPR"
+	bundle="APPLICATION_RESOURCES" extends="DegreeFinalizationCertificateRequestPR.edit">
+	<setter signature="edit(baseAmount,amountPerUnit,amountPerPage, maximumAmount)"/>
+</schema>
+
+<schema name="ApprovementCertificateRequestPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ApprovementCertificateRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="CertificateRequestPR.view">
+</schema>
+
+<schema name="ApprovementCertificateRequestPR.view-student"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ApprovementCertificateRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="CertificateRequestPR.view-student">
+</schema>
+
+<schema name="ApprovementCertificateRequestPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ApprovementCertificateRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="CertificateRequestPR.edit">
+	<setter signature="edit(baseAmount,amountPerUnit,amountPerPage, maximumAmount)"/>
+</schema>
