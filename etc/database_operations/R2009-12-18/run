@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Remove unique index" alterTableThesisJuryElement.sql
+execute "EventEdition consistency issues fix" eventEditionCorrections.sql
