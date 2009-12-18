@@ -1533,7 +1533,7 @@ public class CollectionRenderer extends OutputRenderer {
 		}
 
 		if (getConfirmationKey() != null) {
-		    String arguments = getConfirmationArgs();
+		    String arguments = getConfirmationArgs() != null ? getConfirmationArgs() : "";
 		    String[] argumentsArray = arguments.split(",");
 		    String[] formattedArgsArray = new String[argumentsArray.length];
 		    
