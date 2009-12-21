@@ -42,6 +42,28 @@ public class Proposal extends Proposal_Base {
 	}
 
     };
+    
+    public final static Comparator<Proposal> COMPARATOR_BY_STATUS = new Comparator<Proposal>() {
+
+	@Override
+	public int compare(Proposal arg0, Proposal arg1) {
+	    return arg0.getProposalStatus().compareTo(arg1.getProposalStatus());
+	}
+
+    };
+    
+    public final static Comparator<Proposal> COMPARATOR_BY_NUMBER_OF_CANDIDATES = new Comparator<Proposal>() {
+
+	@Override
+	public int compare(Proposal arg0, Proposal arg1) {
+	   if(arg1.getNumberOfCandidates() > arg0.getNumberOfCandidates()) {
+	       return -1;
+	   } else {
+	       return 1;
+	   }
+	}
+
+    };
 
     public static class StatusPredicate implements Predicate {
 	private final ProposalStatusType status;

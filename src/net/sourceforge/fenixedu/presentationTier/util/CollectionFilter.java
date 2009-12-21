@@ -54,7 +54,8 @@ public class CollectionFilter<T extends DomainObject> implements Serializable {
 	final Set<Predicate> predicates = getPredicates();
 
 	if (predicates == null || predicates.isEmpty()) {
-	    return elements;
+	    filtered.addAll(elements);
+	    return Collections.unmodifiableSet(filtered);
 	}
 	Predicate predicate;
 	if (predicates.size() == 1) {

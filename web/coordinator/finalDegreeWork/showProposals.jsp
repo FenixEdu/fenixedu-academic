@@ -8,6 +8,7 @@
 
 <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
 <bean:define id="executionDegreeOID" name="executionDegree" property="externalId" type="String"/>
+<bean:define id="sortBy" name="sortBy" scope="request" />
 
 <h2>
 	<bean:message key="title.finalDegreeWorkProposals"/>
@@ -78,7 +79,77 @@
 
 <fr:form action="<%= String.format("/manageFinalDegreeWork.do?executionDegreeOID=%s&degreeCurricularPlanID=%s",executionDegreeOID, degreeCurricularPlanID) %>">
 <input type="hidden" name="method"/>
-
+<logic:present name="filterBean">
+	<bean:define id="filterParameters" name="filterBean" property="proposalsFilterAsParameters"/>
+	<li>
+		<bean:message key="label.order.by.proposal.number" bundle="APPLICATION_RESOURCES"/>
+		(<html:link
+			page="<%= String.format("/manageFinalDegreeWork.do?method=showProposals&executionDegreeOID=%s&degreeCurricularPlanID=%s&sortBy=proposalNumber|ascending" + filterParameters, executionDegreeOID, degreeCurricularPlanID) %>">
+				<bean:message key="label.ascendant" bundle="APPLICATION_RESOURCES"/>
+		</html:link>, 
+		<html:link
+			page="<%= String.format("/manageFinalDegreeWork.do?method=showProposals&executionDegreeOID=%s&degreeCurricularPlanID=%s&sortBy=proposalNumber|descending" + filterParameters, executionDegreeOID, degreeCurricularPlanID) %>">
+				<bean:message key="label.descendant" bundle="APPLICATION_RESOURCES"/>
+		</html:link>)
+	</li>
+	<li>
+		<bean:message key="label.order.by.proposal.status" bundle="APPLICATION_RESOURCES"/>
+		(<html:link
+			page="<%= String.format("/manageFinalDegreeWork.do?method=showProposals&executionDegreeOID=%s&degreeCurricularPlanID=%s&sortBy=proposalStatus|ascending" + filterParameters, executionDegreeOID, degreeCurricularPlanID) %>">
+				<bean:message key="label.ascendant" bundle="APPLICATION_RESOURCES"/>
+		</html:link>, 
+		<html:link
+			page="<%= String.format("/manageFinalDegreeWork.do?method=showProposals&executionDegreeOID=%s&degreeCurricularPlanID=%s&sortBy=proposalStatus|descending" + filterParameters, executionDegreeOID, degreeCurricularPlanID) %>">
+				<bean:message key="label.descendant" bundle="APPLICATION_RESOURCES"/>
+		</html:link>)
+	</li>
+	<li>
+		<bean:message key="label.order.by.number.of.candidates" bundle="APPLICATION_RESOURCES"/>
+		(<html:link
+			page="<%= String.format("/manageFinalDegreeWork.do?method=showProposals&executionDegreeOID=%s&degreeCurricularPlanID=%s&sortBy=numberOfCandidates|ascending" + filterParameters, executionDegreeOID, degreeCurricularPlanID) %>">
+				<bean:message key="label.ascendant" bundle="APPLICATION_RESOURCES"/>
+		</html:link>, 
+		<html:link
+			page="<%= String.format("/manageFinalDegreeWork.do?method=showProposals&executionDegreeOID=%s&degreeCurricularPlanID=%s&sortBy=numberOfCandidates|descending" + filterParameters, executionDegreeOID, degreeCurricularPlanID) %>">
+				<bean:message key="label.descendant" bundle="APPLICATION_RESOURCES"/>
+		</html:link>)
+	</li>
+</logic:present>
+<logic:notPresent name="filterBean">
+	<li>
+		<bean:message key="label.order.by.proposal.number" bundle="APPLICATION_RESOURCES"/>
+		(<html:link
+			page="<%= String.format("/manageFinalDegreeWork.do?method=showProposals&executionDegreeOID=%s&degreeCurricularPlanID=%s&sortBy=proposalNumber|ascending", executionDegreeOID, degreeCurricularPlanID) %>">
+				<bean:message key="label.ascendant" bundle="APPLICATION_RESOURCES"/>
+		</html:link>, 
+		<html:link
+			page="<%= String.format("/manageFinalDegreeWork.do?method=showProposals&executionDegreeOID=%s&degreeCurricularPlanID=%s&sortBy=proposalNumber|descending", executionDegreeOID, degreeCurricularPlanID) %>">
+				<bean:message key="label.descendant" bundle="APPLICATION_RESOURCES"/>
+		</html:link>)
+	</li>
+	<li>
+		<bean:message key="label.order.by.proposal.status" bundle="APPLICATION_RESOURCES"/>
+		(<html:link
+			page="<%= String.format("/manageFinalDegreeWork.do?method=showProposals&executionDegreeOID=%s&degreeCurricularPlanID=%s&sortBy=proposalStatus|ascending", executionDegreeOID, degreeCurricularPlanID) %>">
+				<bean:message key="label.ascendant" bundle="APPLICATION_RESOURCES"/>
+		</html:link>, 
+		<html:link
+			page="<%= String.format("/manageFinalDegreeWork.do?method=showProposals&executionDegreeOID=%s&degreeCurricularPlanID=%s&sortBy=proposalStatus|descending", executionDegreeOID, degreeCurricularPlanID) %>">
+				<bean:message key="label.descendant" bundle="APPLICATION_RESOURCES"/>
+		</html:link>)
+	</li>
+	<li>
+		<bean:message key="label.order.by.number.of.candidates" bundle="APPLICATION_RESOURCES"/>
+		(<html:link
+			page="<%= String.format("/manageFinalDegreeWork.do?method=showProposals&executionDegreeOID=%s&degreeCurricularPlanID=%s&sortBy=numberOfCandidates|ascending", executionDegreeOID, degreeCurricularPlanID) %>">
+				<bean:message key="label.ascendant" bundle="APPLICATION_RESOURCES"/>
+		</html:link>, 
+		<html:link
+			page="<%= String.format("/manageFinalDegreeWork.do?method=showProposals&executionDegreeOID=%s&degreeCurricularPlanID=%s&sortBy=numberOfCandidates|descending", executionDegreeOID, degreeCurricularPlanID) %>">
+				<bean:message key="label.descendant" bundle="APPLICATION_RESOURCES"/>
+		</html:link>)
+	</li>
+</logic:notPresent>
 <table class="mtop1 mbottom05">
 	<tr>
 		<td><b><bean:write name="countProposals"/></b> <bean:message key="label.finalDegreeWorkProposal.results"/> <bean:write name="filterBean"/></td>
@@ -86,7 +157,7 @@
 		<logic:present name="filterBean">
 			<bean:define id="filter" name="filterBean" property="status.status"/>
 			<bean:define id="filterParameters" name="filterBean" property="proposalsFilterAsParameters"/>
-			<cp:collectionPages url="<%= "/coordinator/manageFinalDegreeWork.do?method=showProposals&filter=" +  filter + "&degreeCurricularPlanID=" + degreeCurricularPlanID + "&executionDegreeOID=" + executionDegreeOID + filterParameters %>" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages"/></td>
+			<cp:collectionPages url="<%= "/coordinator/manageFinalDegreeWork.do?method=showProposals&filter=" +  filter + "&degreeCurricularPlanID=" + degreeCurricularPlanID + "&executionDegreeOID=" + executionDegreeOID + "&sortBy=" + sortBy + filterParameters %>" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages"/></td>
 		</logic:present>
 		
 	</tr>

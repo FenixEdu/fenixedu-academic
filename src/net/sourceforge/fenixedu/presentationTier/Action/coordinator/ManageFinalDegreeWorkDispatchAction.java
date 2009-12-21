@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -302,8 +303,16 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
 	Collection<Proposal> proposals = new CollectionFilter<Proposal>(filterBean.getPredicates(),
 		Proposal.COMPARATOR_BY_PROPOSAL_NUMBER).filter(executionDegree.getProposals());
+	String sortBy = request.getParameter("sortBy");
+	if (sortBy == null) {
+	   sortBy = "proposalNumber|ascending";
+	}
+	request.setAttribute("sortBy", sortBy);
+	String attrib = sortBy.substring(0, sortBy.indexOf("|"));
+	String order = sortBy.substring(sortBy.indexOf("|") + 1, sortBy.length());
+	List<Proposal> sortedProposals = sortProposals(proposals, attrib, order);
 
-	final CollectionPager<Proposal> pager = new CollectionPager<Proposal>(proposals, 45);
+	final CollectionPager<Proposal> pager = new CollectionPager<Proposal>(sortedProposals, 45);
 
 	request.setAttribute("numberOfPages", Integer.valueOf(pager.getNumberOfPages()));
 
@@ -313,10 +322,28 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	request.setAttribute("filterBean", filterBean);
 	request.setAttribute("pageNumber", page);
 	request.setAttribute("proposals", pager.getPage(page));
-	request.setAttribute("countProposals", proposals.size());
+	request.setAttribute("countProposals", sortedProposals.size());
 	return mapping.findForward("show-proposals");
     }
-    
+
+    private List<Proposal> sortProposals(Collection<Proposal> proposals, String attrib, String order) {
+	List<Proposal> result = new ArrayList<Proposal>();
+	result.addAll(proposals);
+	Comparator<Proposal> comparator = null;
+	if(attrib.equalsIgnoreCase("proposalStatus")) {
+	    comparator = Proposal.COMPARATOR_BY_STATUS;
+	} else if(attrib.equalsIgnoreCase("numberOfCandidates")) {
+	    comparator = Proposal.COMPARATOR_BY_NUMBER_OF_CANDIDATES;
+	} else {
+	    comparator = Proposal.COMPARATOR_BY_PROPOSAL_NUMBER;
+	}
+	Collections.sort(result, comparator);
+	if(order.equalsIgnoreCase("descending")) {
+	    Collections.reverse(result);
+	}
+	return result;
+    }
+
     private ProposalsFilterBean readFilterBean(HttpServletRequest request, ProposalsSummaryBean summary) {
 	ProposalsFilterBean proposalsFilterBean = new ProposalsFilterBean(summary);
 	String proposalStatusString = request.getParameter("proposalStatusType");
