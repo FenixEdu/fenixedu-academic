@@ -266,7 +266,7 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 
 	final Money amountPerPage = certificateRequestPR.getAmountPerPage();
 	final Money baseAmountPlusAmountForUnits = certificateRequestPR.getBaseAmount().add(
-		certificateRequestPR.getAmountForUnits(certificateRequest.getEvent()));
+		certificateRequestPR.getAmountForUnits(certificateRequest.getNumberOfUnits()));
 	final Money urgencyAmount = certificateRequest.getUrgentRequest() ? certificateRequestPR.getBaseAmount() : Money.ZERO;
 
 	addParameter("amountPerPage", amountPerPage);

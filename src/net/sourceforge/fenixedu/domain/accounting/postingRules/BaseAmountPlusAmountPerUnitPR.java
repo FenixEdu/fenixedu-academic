@@ -71,7 +71,11 @@ public abstract class BaseAmountPlusAmountPerUnitPR extends BaseAmountPlusAmount
     }
 
     public Money getAmountForUnits(Event event) {
-	return getAmountPerUnit().multiply(new BigDecimal(getNumberOfUnits(event)));
+	return getAmountForUnits(getNumberOfUnits(event));
+    }
+
+    public Money getAmountForUnits(Integer numberOfUnits) {
+	return getAmountPerUnit().multiply(new BigDecimal(numberOfUnits));
     }
 
     @Override

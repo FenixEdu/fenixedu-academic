@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests;
 import java.math.BigDecimal;
 
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
-import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.util.Money;
@@ -28,12 +27,12 @@ public class DegreeFinalizationCertificateRequestWithCeilingInTotalAmountForUnit
     }
 
     @Override
-    public Money getAmountForUnits(Event event) {
-	if (getNumberOfUnits(event) <= 1) {
+    public Money getAmountForUnits(Integer numberOfUnits) {
+	if (numberOfUnits <= 1) {
 	    return Money.ZERO;
 	}
 
-	Money totalAmountOfUnits = getAmountPerUnit().multiply(new BigDecimal(getNumberOfUnits(event) - 1));
+	Money totalAmountOfUnits = getAmountPerUnit().multiply(new BigDecimal(numberOfUnits - 1));
 
 	if (this.getMaximumAmount().greaterThan(Money.ZERO)) {
 	    if (totalAmountOfUnits.greaterThan(this.getMaximumAmount())) {
@@ -42,6 +41,7 @@ public class DegreeFinalizationCertificateRequestWithCeilingInTotalAmountForUnit
 	}
 
 	return totalAmountOfUnits;
+
     }
 
     @Checked("PostingRulePredicates.editPredicate")

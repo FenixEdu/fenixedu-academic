@@ -58,7 +58,7 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
     }
 
     private Money getAmountForUnits(final EnrolmentCertificateRequest request, final EnrolmentCertificateRequestPR requestPR) {
-	return requestPR.getAmountForUnits(request.getEvent());
+	return requestPR.getAmountForUnits(request.getNumberOfUnits());
     }
 
     @Override
