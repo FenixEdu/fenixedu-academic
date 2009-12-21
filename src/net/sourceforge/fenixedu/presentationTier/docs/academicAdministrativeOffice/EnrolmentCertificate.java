@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
 
-import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.TreeSet;
 
@@ -59,7 +58,7 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
     }
 
     private Money getAmountForUnits(final EnrolmentCertificateRequest request, final EnrolmentCertificateRequestPR requestPR) {
-	return requestPR.getAmountPerUnit().multiply(new BigDecimal(request.getNumberOfUnits()));
+	return requestPR.getAmountForUnits(request.getEvent());
     }
 
     @Override

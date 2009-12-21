@@ -9,13 +9,16 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Grade;
+import net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
+import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.StringUtils;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -256,4 +259,20 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 
 	return result.toString();
     }
+
+    protected void addPriceFields() {
+	final CertificateRequest certificateRequest = (CertificateRequest) getDocumentRequest();
+	final CertificateRequestPR certificateRequestPR = (CertificateRequestPR) getPostingRule();
+
+	final Money amountPerPage = certificateRequestPR.getAmountPerPage();
+	final Money baseAmountPlusAmountForUnits = certificateRequestPR.getBaseAmount().add(
+		certificateRequestPR.getAmountForUnits(certificateRequest.getEvent()));
+	final Money urgencyAmount = certificateRequest.getUrgentRequest() ? certificateRequestPR.getBaseAmount() : Money.ZERO;
+
+	addParameter("amountPerPage", amountPerPage);
+	addParameter("baseAmountPlusAmountForUnits", baseAmountPlusAmountForUnits);
+	addParameter("urgencyAmount", urgencyAmount);
+	addParameter("printPriceFields", printPriceParameters(certificateRequest));
+    }
+
 }
