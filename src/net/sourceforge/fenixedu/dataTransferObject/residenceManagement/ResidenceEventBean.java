@@ -1,8 +1,12 @@
 package net.sourceforge.fenixedu.dataTransferObject.residenceManagement;
 
 import java.io.Serializable;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.accounting.Event;
+import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResidenceManagementUnit;
 import net.sourceforge.fenixedu.domain.residence.ResidenceYear;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -20,6 +24,7 @@ public class ResidenceEventBean implements Serializable {
     private String statusMessage;
     private String room;
 
+
     public String getRoom() {
 	return room;
     }
@@ -36,7 +41,7 @@ public class ResidenceEventBean implements Serializable {
 	this.room = room;
 	setStudent(null);
     }
-
+    
     public String getUserName() {
 	return userName;
     }
@@ -109,4 +114,9 @@ public class ResidenceEventBean implements Serializable {
 
 	return true;
     }
+
+    public void setStatusMessage(String statusMessage) {
+        this.statusMessage = statusMessage;
+    }
+
 }

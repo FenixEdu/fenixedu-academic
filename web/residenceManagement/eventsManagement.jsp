@@ -66,7 +66,11 @@
 					<bean:message key="label.importFile" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/>
 				</html:link>
 				|
+				<html:link page="<%=  "/residenceManagement.do?method=importCurrentDebts&monthOID=" + monthOID %>">
+					Actualizar dividas (Excel)
+				</html:link>
 			</logic:equal>
+			|
 			<html:link page="<%=  "/residenceManagement.do?method=editPaymentLimitDay&monthOID=" + monthOID %>">
 				<bean:message key="label.modify.limitPaymentDay" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/>
 			</html:link>

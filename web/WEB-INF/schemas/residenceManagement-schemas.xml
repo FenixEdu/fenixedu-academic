@@ -76,6 +76,17 @@
 	</slot>
 </schema>
 
+<schema name="show.residenceEventBean.debt" type="net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ResidenceEventBean" bundle="RESIDENCE_MANAGEMENT_RESOURCES" extends="show.residenceEventBean" >
+	<slot name="paidDateObject" key="label.data" />
+	<slot name="roomValuePaid" key="label.roomValuePaid" />
+</schema>
+
+<schema name="show.residenceEventBean.debt.with.status" type="net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ResidenceEventBean" bundle="RESIDENCE_MANAGEMENT_RESOURCES" extends="show.residenceEventBean.debt" >
+	<slot name="statusMessage" layout="slot-as-label">
+		<property name="bundle" value="RESIDENCE_MANAGEMENT_RESOURCES"/>
+	</slot>
+</schema>
+
 <schema name="show.residence.person" type="net.sourceforge.fenixedu.domain.Person" bundle="RESIDENCE_MANAGEMENT_RESOURCES">
 	<slot name="name" key="label.name"/>
 	<slot name="student.number" key="label.studentNumber"/>
