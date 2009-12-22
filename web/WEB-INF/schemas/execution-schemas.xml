@@ -10,6 +10,11 @@
 <schema name="net.sourceforge.fenixedu.domain.ExecutionDegree.annotation" type="net.sourceforge.fenixedu.domain.ExecutionDegree">
 	<slot name="anotation"/>
 </schema>
+
+<schema name="net.sourceforge.fenixedu.domain.ExecutionDegree.name" type="net.sourceforge.fenixedu.domain.ExecutionDegree">
+	<slot name="degreeCurricularPlan.name" key="label.degree"/>
+</schema>
+
 <schema name="executionDegree.context.choose" type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.ExecutionDegreeBean">
 	<slot name="executionDegree" layout="menu-select-postback" key="label.executionDegree.year">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionDegree.ExecutionDegreesForDegreeCurricularPlan"/>

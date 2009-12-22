@@ -136,6 +136,14 @@
             <html:link href="<%= "mailto:" + emailAddress %>" target="_blank" style="border: none" titleKey="link.email" bundle="INQUIRIES_RESOURCES">
                 <img src="<%=request.getContextPath()%>/images/icon_email.gif"/>
             </html:link>
+            
+            <logic:present role="PEDAGOGICAL_COUNCIL">
+	            <bean:define id="professorshipID" name="professorship" property="oid"/>
+		    	<html:link page="<%= "/viewInquiriesResults.do?method=showOthersTeacherCourses&professorshipID=" +  professorshipID%>">
+		        	(<bean:message key="label.inquiries.courses.other" bundle="INQUIRIES_RESOURCES"/>)
+		        </html:link>
+		    </logic:present>
+            
 		</li>
 	</logic:iterate>
 </ul>

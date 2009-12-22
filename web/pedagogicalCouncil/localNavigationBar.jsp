@@ -40,6 +40,11 @@
 				<bean:message key="label.sendEmailToGroups" bundle="RESEARCHER_RESOURCES"/>
 			</html:link>
 		</li>	
+		<li>
+			<html:link page="/sendEmailToStudents.do?method=prepare">
+				<bean:message key="link.sendEmailToStudents" bundle="PEDAGOGICAL_COUNCIL"/>
+			</html:link>
+		</li>
 		<logic:equal name="unit" property="currentUserAbleToDefineGroups" value="true">
 			<li>
 				<html:link page="<%= "/pedagogicalCouncilFiles.do?method=configureGroups&unitId=" + unitId %>">
@@ -74,11 +79,6 @@
 		<li>
 			<html:link page="/electionsPeriodsManagement.do?method=prepare&forwardTo=showVotingPeriods">
 				<bean:message key="link.showVotingPeriods" bundle="PEDAGOGICAL_COUNCIL"/>
-			</html:link>
-		</li>
-		<li>
-			<html:link page="/sendEmailToStudents.do?method=prepare">
-				<bean:message key="link.sendEmailToStudents" bundle="PEDAGOGICAL_COUNCIL"/>
 			</html:link>
 		</li>
 		<li>

@@ -1744,6 +1744,18 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	return result;
     }
 
+    public Set<ExecutionDegree> getExecutionDegrees() {
+	Set<ExecutionDegree> result = new HashSet<ExecutionDegree>();
+	for (CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
+	    ExecutionDegree executionDegree = curricularCourse.getDegreeCurricularPlan().getExecutionDegreeByYear(
+		    getExecutionYear());
+	    if (executionDegree != null) {
+		result.add(executionDegree);
+	    }
+	}
+	return result;
+    }
+
     @Override
     public Boolean getAvailableForInquiries() {
 	if (super.getAvailableForInquiries() != null) {
@@ -1771,7 +1783,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	}
 	return departments;
     }
-    
+
     public boolean isFromDepartment(final Department departmentToCheck) {
 	for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
 	    if (departmentToCheck == curricularCourse.getCompetenceCourse().getDepartmentUnit().getDepartment()) {
@@ -1779,7 +1791,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    }
 	}
 	return false;
-    }    
+    }
 
     public GenericPair<YearMonthDay, YearMonthDay> getMaxLessonsPeriod() {
 
