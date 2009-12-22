@@ -7,6 +7,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.dataTransferObject.commons.DegreeByExecutionYearBean;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.RegistrationRegimeType;
@@ -35,8 +36,18 @@ public class SearchStudentsByDegreeParametersBean extends DegreeByExecutionYearB
 
     private Country nationality = null;
 
+    private Ingression ingression = null;
+
     public SearchStudentsByDegreeParametersBean(Set<DegreeType> administratedDegreeTypes, Set<Degree> administratedDegrees) {
 	super(administratedDegreeTypes, administratedDegrees);
+    }
+
+    public Ingression getIngression() {
+	return ingression;
+    }
+
+    public void setIngression(Ingression ingression) {
+	this.ingression = ingression;
     }
 
     public List<RegistrationAgreement> getRegistrationAgreements() {

@@ -127,7 +127,7 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 	final List<RegistrationWithStateForExecutionYearBean> result = new ArrayList<RegistrationWithStateForExecutionYearBean>();
 	for (final Registration registration : registrations) {
 
-	    if (!searchbean.getRegistrationAgreements().isEmpty()
+	    if (searchbean.hasAnyRegistrationAgreements()
 		    && !searchbean.getRegistrationAgreements().contains(registration.getRegistrationAgreement())) {
 		continue;
 	    }
@@ -138,7 +138,7 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 
 	    final RegistrationState lastRegistrationState = registration.getLastRegistrationState(executionYear);
 	    if (lastRegistrationState == null
-		    || (!searchbean.getRegistrationStateTypes().isEmpty() && !searchbean.getRegistrationStateTypes().contains(
+		    || (searchbean.hasAnyRegistrationStateTypes() && !searchbean.getRegistrationStateTypes().contains(
 			    lastRegistrationState.getStateType()))) {
 		continue;
 	    }
@@ -152,6 +152,10 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 	    }
 
 	    if ((searchbean.getRegime() != null) && (registration.getRegimeType(executionYear) != searchbean.getRegime())) {
+		continue;
+	    }
+
+	    if ((searchbean.getIngression() != null) && (registration.getIngression() != searchbean.getIngression())) {
 		continue;
 	    }
 
@@ -237,6 +241,11 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 	spreadsheet.newHeaderRow();
 	if (searchBean.getNationality() != null) {
 	    spreadsheet.addHeader(getResourceMessage("label.nationality") + ": " + searchBean.getNationality().getName());
+	}
+	spreadsheet.newHeaderRow();
+	if (searchBean.getIngression() != null) {
+	    spreadsheet.addHeader(getResourceMessage("label.ingression.short") + ":"
+		    + getEnumNameFromResources(searchBean.getIngression()));
 	}
 	spreadsheet.newHeaderRow();
 	if (searchBean.hasAnyRegistrationAgreements()) {
