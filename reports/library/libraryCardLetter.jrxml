@@ -96,7 +96,7 @@
 					<textElement textAlignment="Justified">
 						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="13" isPdfEmbedded ="true"/>
 					</textElement>
-				<text><![CDATA[       É com agrado que lhe enviamos o seu novo cartão de utilizador da Biblioteca do IST (BIST) com o qual terá acesso aos espaços das bibliotecas dos campus Alamenda e Tagus Park e à utilização das valências disponibilizadas, como por exemplo, reserva e empréstimo de livros, etc..]]></text>
+				<text><![CDATA[       É com agrado que lhe enviamos o seu novo cartão de utilizador da Biblioteca do IST (BIST) com o qual terá acesso aos espaços das bibliotecas dos campus Alameda e Tagus Park e à utilização das valências disponibilizadas, como por exemplo, reserva e empréstimo de livros, etc..]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
