@@ -1,8 +1,10 @@
 package net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.commons.DegreeByExecutionYearBean;
 import net.sourceforge.fenixedu.domain.Country;
@@ -13,6 +15,9 @@ import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.RegistrationRegimeType;
 import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
+import pt.ist.fenixWebFramework.renderers.DataProvider;
+import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
+import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
 /**
  * 
@@ -21,6 +26,21 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
  */
 @SuppressWarnings("serial")
 public class SearchStudentsByDegreeParametersBean extends DegreeByExecutionYearBean {
+
+    public enum ParticipationType {
+	REGISTERED, INGRESSED
+    }
+
+    public static class ParticipationTypeProvider implements DataProvider {
+
+	public Object provide(Object source, Object currentValue) {
+	    return new TreeSet<ParticipationType>(Arrays.asList(ParticipationType.values()));
+	}
+
+	public Converter getConverter() {
+	    return new EnumConverter();
+	}
+    }
 
     private List<RegistrationAgreement> registrationAgreements = new ArrayList<RegistrationAgreement>();
 
@@ -37,6 +57,8 @@ public class SearchStudentsByDegreeParametersBean extends DegreeByExecutionYearB
     private Country nationality = null;
 
     private Ingression ingression = null;
+
+    private ParticipationType participationType = ParticipationType.REGISTERED;
 
     public SearchStudentsByDegreeParametersBean(Set<DegreeType> administratedDegreeTypes, Set<Degree> administratedDegrees) {
 	super(administratedDegreeTypes, administratedDegrees);
@@ -116,6 +138,14 @@ public class SearchStudentsByDegreeParametersBean extends DegreeByExecutionYearB
 
     public void setNationality(Country nationality) {
 	this.nationality = nationality;
+    }
+
+    public ParticipationType getParticipationType() {
+	return participationType;
+    }
+
+    public void setParticipationType(ParticipationType type) {
+	this.participationType = type;
     }
 
 }

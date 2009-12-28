@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.SearchStudentsByDegreeParametersBean;
+import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.SearchStudentsByDegreeParametersBean.ParticipationType;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationWithStateForExecutionYearBean;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -121,45 +122,50 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 	return filterResults(searchbean, registrations, executionYear);
     }
 
-    private static List<RegistrationWithStateForExecutionYearBean> filterResults(SearchStudentsByDegreeParametersBean searchbean,
+    private static List<RegistrationWithStateForExecutionYearBean> filterResults(SearchStudentsByDegreeParametersBean searchBean,
 	    final Set<Registration> registrations, final ExecutionYear executionYear) {
 
 	final List<RegistrationWithStateForExecutionYearBean> result = new ArrayList<RegistrationWithStateForExecutionYearBean>();
 	for (final Registration registration : registrations) {
 
-	    if (searchbean.hasAnyRegistrationAgreements()
-		    && !searchbean.getRegistrationAgreements().contains(registration.getRegistrationAgreement())) {
+	    if (searchBean.hasAnyRegistrationAgreements()
+		    && !searchBean.getRegistrationAgreements().contains(registration.getRegistrationAgreement())) {
 		continue;
 	    }
 
-	    if (searchbean.hasAnyStudentStatuteType() && !hasStudentStatuteType(searchbean, registration)) {
+	    if (searchBean.hasAnyStudentStatuteType() && !hasStudentStatuteType(searchBean, registration)) {
 		continue;
 	    }
 
 	    final RegistrationState lastRegistrationState = registration.getLastRegistrationState(executionYear);
 	    if (lastRegistrationState == null
-		    || (searchbean.hasAnyRegistrationStateTypes() && !searchbean.getRegistrationStateTypes().contains(
+		    || (searchBean.hasAnyRegistrationStateTypes() && !searchBean.getRegistrationStateTypes().contains(
 			    lastRegistrationState.getStateType()))) {
 		continue;
 	    }
 
-	    if (searchbean.getActiveEnrolments() && !registration.hasAnyEnrolmentsIn(executionYear)) {
+	    if (searchBean.getActiveEnrolments() && !registration.hasAnyEnrolmentsIn(executionYear)) {
 		continue;
 	    }
 
-	    if (searchbean.getStandaloneEnrolments() && !registration.hasAnyStandaloneEnrolmentsIn(executionYear)) {
+	    if (searchBean.getStandaloneEnrolments() && !registration.hasAnyStandaloneEnrolmentsIn(executionYear)) {
 		continue;
 	    }
 
-	    if ((searchbean.getRegime() != null) && (registration.getRegimeType(executionYear) != searchbean.getRegime())) {
+	    if ((searchBean.getRegime() != null) && (registration.getRegimeType(executionYear) != searchBean.getRegime())) {
 		continue;
 	    }
 
-	    if ((searchbean.getIngression() != null) && (registration.getIngression() != searchbean.getIngression())) {
+	    if ((searchBean.getNationality() != null) && (registration.getPerson().getCountry() != searchBean.getNationality())) {
 		continue;
 	    }
 
-	    if ((searchbean.getNationality() != null) && (registration.getPerson().getCountry() != searchbean.getNationality())) {
+	    if ((searchBean.getIngression() != null) && (registration.getIngression() != searchBean.getIngression())) {
+		continue;
+	    }
+
+	    if ((searchBean.getParticipationType() == ParticipationType.INGRESSED)
+		    && (registration.getIngressionYear() != executionYear)) {
 		continue;
 	    }
 
@@ -244,9 +250,12 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 	}
 	spreadsheet.newHeaderRow();
 	if (searchBean.getIngression() != null) {
-	    spreadsheet.addHeader(getResourceMessage("label.ingression.short") + ":"
+	    spreadsheet.addHeader(getResourceMessage("label.ingression.short") + ": "
 		    + getEnumNameFromResources(searchBean.getIngression()));
 	}
+	spreadsheet.newHeaderRow();
+	spreadsheet.addHeader(getResourceMessage("lists.participationType") + ": " + getEnumNameFromResources(searchBean.getParticipationType()));
+
 	spreadsheet.newHeaderRow();
 	if (searchBean.hasAnyRegistrationAgreements()) {
 	    spreadsheet.addHeader(getResourceMessage("label.registrationAgreement") + ":");

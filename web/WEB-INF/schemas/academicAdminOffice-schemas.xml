@@ -1412,7 +1412,7 @@
 
 <schema name="DegreeByExecutionYearBean.edit"
 	type="net.sourceforge.fenixedu.dataTransferObject.commons.DegreeByExecutionYearBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="executionYear" key="label.executionYear" 
+	<slot name="executionYear" key="label.executionYear.notCapitalized" 
 		layout="menu-select-postback"
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
@@ -1423,7 +1423,7 @@
 		<property name="destination" value="postBack"/>
 	</slot>
 	<slot name="degreeType" key="label.degreeType"
-		layout="menu-select-postback">
+		layout="menu-select-postback" bundle="APPLICATION_RESOURCES">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.lists.DegreeTypesForEmployeeAcademicOfficeProvider" />
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.degree.DegreeType" />
@@ -1443,8 +1443,6 @@
 <schema name="SearchStudentsByDegreeParametersBean.edit.degreeAndRegistrationInfo"
 	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.SearchStudentsByDegreeParametersBean"
 	extends="DegreeByExecutionYearBean.edit" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="activeEnrolments" key="label.activeEnrolments.capitalized" />
-	<slot name="standaloneEnrolments" key="label.withStandaloneEnrolments.capitalized" />
 	<slot name="regime" key="registration.regime"/>
 	<slot name="nationality" layout="menu-select" key="label.nationality">
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/>
@@ -1455,6 +1453,11 @@
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.candidacy.Ingression"/>
 		<property name="eachLayout" value="" />
 	</slot>
+	<slot name="participationType" layout="radio-select" key="lists.participationType">
+		<property name="providerClass" value="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.SearchStudentsByDegreeParametersBean$ParticipationTypeProvider"/>
+	</slot>
+	<slot name="activeEnrolments" key="label.activeEnrolments.capitalized" />
+	<slot name="standaloneEnrolments" key="label.withStandaloneEnrolments.capitalized" />
 </schema>
 
 <schema name="SearchStudentsByDegreeParametersBean.edit.parameters" bundle="ACADEMIC_OFFICE_RESOURCES" 
@@ -1482,6 +1485,7 @@
 		<property name="maxLength" value="10"/>
 	</slot>
 	<slot name="searchEnd" key="label.search.end" layout="picker" >
+        <validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
         <validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
 		<property name="size" value="12"/>
 		<property name="maxLength" value="10"/>
@@ -1489,6 +1493,7 @@
 	<slot name="academicServiceRequestSituationType" 
 		key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType"
 		layout="menu-select-postback">
+        <validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.serviceRequests.AcademicServiceRequestSituationTypeProvider" />
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType" />

@@ -115,6 +115,9 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
     public Collection<AcademicServiceRequest> searchRegistrationAcademicServiceRequests(final LocalDate begin,
 	    final LocalDate end, final AcademicServiceRequestSituationType situationType, final Campus campus) {
 
+	if (end == null) {
+	    throw new DomainException("error.AdministrativeOffice.no.endDate");
+	}
 	if (end.isBefore(begin)) {
 	    throw new DomainException("error.AdministrativeOffice.end.before.begin");
 	}
