@@ -109,7 +109,11 @@ public class TeachersListReportFile extends TeachersListReportFile_Base {
 		// Coluna "Nome ou área do grau"
 		Qualification qualification = getBetterQualificationOfPersonByExecutionYear(person, executionYear);
 		if (qualification != null) {
-		    row.setCell(qualification.getType().getLocalizedName());
+		    if (qualification.getType() != null) {
+			row.setCell(qualification.getType().getLocalizedName());
+		    } else {
+			row.setCell("");
+		    }
 		    row.setCell(qualification.getSchool());
 		    row.setCell(qualification.getDegree());
 		} else {
