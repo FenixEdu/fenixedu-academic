@@ -76,9 +76,12 @@ public class UnitSiteSideMenuRenderer extends UnitSiteMenuRenderer {
     protected String getPath(FilterFunctionalityContext context, Content content) {
 	Site site = (Site) context.getLastContentInPath(Site.class);
 	Section sideSection = getSideSection(site);
-	List<Content> contents = sideSection.getPathTo(content);
+	List<Content> contents = null;
+	if(sideSection != null) {
+		sideSection.getPathTo(content);
+	}
 	List<String> subPaths = new ArrayList<String>();
-	if (!contents.isEmpty()) {
+	if (contents != null && !contents.isEmpty()) {
 	    for (Content contentPath : contents.subList(0, contents.size() - 1)) {
 		subPaths.add(contentPath.getNormalizedName().getContent());
 	    }
