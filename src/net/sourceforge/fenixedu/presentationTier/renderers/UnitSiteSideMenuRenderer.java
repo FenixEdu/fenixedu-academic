@@ -78,7 +78,7 @@ public class UnitSiteSideMenuRenderer extends UnitSiteMenuRenderer {
 	Section sideSection = getSideSection(site);
 	List<Content> contents = null;
 	if(sideSection != null) {
-		sideSection.getPathTo(content);
+		contents = sideSection.getPathTo(content);
 	}
 	List<String> subPaths = new ArrayList<String>();
 	if (contents != null && !contents.isEmpty()) {
