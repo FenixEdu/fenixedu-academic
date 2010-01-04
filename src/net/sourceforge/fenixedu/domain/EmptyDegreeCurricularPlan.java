@@ -517,4 +517,12 @@ public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
 	return Collections.emptyList();
     }
 
+    /*
+     * Since empty degrees do not have execution degrees, this method must
+     * always return true
+     */
+    @Override
+    public boolean hasExecutionDegreeFor(ExecutionYear executionYear) {
+	return true;
+    }
 }
