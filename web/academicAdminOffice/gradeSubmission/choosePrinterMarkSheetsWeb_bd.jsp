@@ -16,9 +16,13 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.markSheet" property="markSheet" value="all"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	
-	
 	<html:select property="ecID" onchange="this.form.method.value='choosePrinterMarkSheetsWebPostBack';this.form.submit();">	
 		<html:options collection="periods" property="value" labelProperty="label"/>
+	</html:select>
+	<br/>
+	<html:select property="dcpID" onchange="this.form.method.value='choosePrinterMarkSheetsWebPostBack';this.form.submit();">	
+		<html:option value=""><bean:message key="label.dropDown.all" bundle="ENUMERATION_RESOURCES" /><!-- w3c complient --></html:option>
+		<html:options collection="degreeCurricularPlans" property="value" labelProperty="label"/>
 	</html:select>
 	
 	<p class="mvert2"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheet.leftToPrint" arg0="<%= markSheets.toString() %>"/>.</p>

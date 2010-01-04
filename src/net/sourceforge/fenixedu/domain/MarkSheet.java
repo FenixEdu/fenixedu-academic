@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -894,4 +895,13 @@ public class MarkSheet extends MarkSheet_Base {
     public String getCurricularCourseAcronym() {
 	return getCurricularCourse().getAcronym(getExecutionPeriod());
     }
+
+    public boolean isFor(AdministrativeOffice administrativeOffice) {
+	return getAdministrativeOfficeType().equals(administrativeOffice.getAdministrativeOfficeType());
+    }
+
+    public boolean isFor(DegreeCurricularPlan dcp) {
+	return getCurricularCourse().getDegreeCurricularPlan().equals(dcp);
+    }
+
 }

@@ -315,14 +315,12 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 	return markSheets;
     }
 
-    public Collection<MarkSheet> getWebMarkSheetsNotPrintedByAdministraticeOfficeAndCampus(
-	    AdministrativeOffice administrativeOffice, Campus campus) {
+    public Collection<MarkSheet> getWebMarkSheetsNotPrinted(AdministrativeOffice office, DegreeCurricularPlan dcp, Campus campus) {
 	final Collection<MarkSheet> markSheets = new HashSet<MarkSheet>();
 	for (final MarkSheet sheet : getMarkSheets()) {
 	    if (sheet.getSubmittedByTeacher() && !sheet.getPrinted()) {
-		if (sheet.getAdministrativeOfficeType() == administrativeOffice.getAdministrativeOfficeType()
-			&& sheet.getCurricularCourse().getDegreeCurricularPlan().getExecutionDegreeByYearAndCampus(
-				getExecutionYear(), campus) != null) {
+		if (sheet.isFor(office) && (dcp == null || sheet.isFor(dcp))
+			&& sheet.getCurricularCourse().hasExecutionDegreeByYearAndCampus(getExecutionYear(), campus)) {
 		    markSheets.add(sheet);
 		}
 	    }

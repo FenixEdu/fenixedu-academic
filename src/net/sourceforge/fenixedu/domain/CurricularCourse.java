@@ -34,6 +34,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.precedences.Restriction;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse;
+import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
@@ -2156,4 +2157,9 @@ public class CurricularCourse extends CurricularCourse_Base {
 	    return table.convert(grade);
 	return getDegree().convertGradeToEcts(curriculumLine, grade);
     }
+
+    public boolean hasExecutionDegreeByYearAndCampus(ExecutionYear executionYear, Campus campus) {
+	return getDegreeCurricularPlan().hasExecutionDegreeByYearAndCampus(executionYear, campus);
+    }
+
 }
