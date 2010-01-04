@@ -71,9 +71,11 @@ public class RectorateSubmissionBatch extends RectorateSubmissionBatch_Base {
 	setSubmitter(AccessControl.getPerson().getEmployee());
 	Employee employee = AccessControl.getPerson().getEmployee();
 	for (DocumentRequest document : getDocumentRequestSet()) {
-	    if (document.getAcademicServiceRequestSituationType().equals(AcademicServiceRequestSituationType.PROCESSING)) {
-		document.edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.CONCLUDED, employee,
-			"Insert Template Text Here"));
+	    if (!document.isSendToExternalEntitySituationAccepted()) {
+		if (document.getAcademicServiceRequestSituationType().equals(AcademicServiceRequestSituationType.PROCESSING)) {
+		    document.edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.CONCLUDED, employee,
+			    "Insert Template Text Here"));
+		}
 	    }
 	    document.edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY, employee,
 		    "Insert Template Text Here"));

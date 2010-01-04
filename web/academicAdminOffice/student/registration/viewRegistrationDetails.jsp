@@ -272,11 +272,13 @@
 					
 					<fr:property name="linkFormat(reject)" value="/academicServiceRequestsManagement.do?method=prepareRejectAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;registrationID=${registration.idInternal}"/>
 					<fr:property name="key(reject)" value="reject"/>
+                    <fr:property name="visibleIfNot(reject)" value="piggyBackedOnRegistry"/>
 	 				<%--<fr:property name="visibleIf(reject)" value="availableForEmployeeToActUpon"/>--%>
 	 				
 					<fr:property name="linkFormat(cancel)" value="/academicServiceRequestsManagement.do?method=prepareCancelAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;registrationID=${registration.idInternal}"/>
 					<fr:property name="key(cancel)" value="cancel"/>
-					<fr:property name="visibleIf(cancel)" value="loggedPersonCanCancel"/>				
+					<fr:property name="visibleIf(cancel)" value="loggedPersonCanCancel"/>
+                    <fr:property name="visibleIfNot(cancel)" value="piggyBackedOnRegistry"/>
 	 				
 	 				<fr:property name="linkFormat(payments)" value="<%="/payments.do?method=showOperations" + "&personId=${registration.person.idInternal}" %>"/>
 					<fr:property name="key(payments)" value="payments"/>
@@ -284,6 +286,8 @@
 	 				
 					<fr:property name="linkFormat(processing)" value="/academicServiceRequestsManagement.do?method=processNewAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
 					<fr:property name="key(processing)" value="processing"/>
+                    <fr:property name="visibleIf(processing)" value="newRequest"/>
+                    <fr:property name="visibleIfNot(processing)" value="piggyBackedOnRegistry"/>
 					<%--<fr:property name="visibleIf(processing)" value="availableForEmployeeToActUpon"/>--%>
 					
 					<fr:property name="order(view)" value="1" />
@@ -320,10 +324,12 @@
 	
 					<fr:property name="linkFormat(reject)" value="/academicServiceRequestsManagement.do?method=prepareRejectAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;registrationID=${registration.idInternal}"/>
 					<fr:property name="key(reject)" value="reject"/>
-	
+	                <fr:property name="visibleIfNot(reject)" value="piggyBackedOnRegistry"/>
+    
 					<fr:property name="linkFormat(cancel)" value="/academicServiceRequestsManagement.do?method=prepareCancelAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;registrationID=${registration.idInternal}"/>
 					<fr:property name="key(cancel)" value="cancel"/>
 					<fr:property name="visibleIf(cancel)" value="loggedPersonCanCancel"/>
+                    <fr:property name="visibleIfNot(cancel)" value="piggyBackedOnRegistry"/>
 
 					<fr:property name="linkFormat(payments)" value="<%="/payments.do?method=showOperations" + "&personId=${registration.person.idInternal}" %>"/>
 					<fr:property name="key(payments)" value="payments"/>
@@ -332,6 +338,7 @@
 					<fr:property name="linkFormat(send)" value="/academicServiceRequestsManagement.do?method=prepareSendAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
 					<fr:property name="key(send)" value="label.send"/>
 					<fr:property name="visibleIf(send)" value="requestAvailableToSendToExternalEntity"/>
+                    <fr:property name="visibleIfNot(send)" value="piggyBackedOnRegistry"/>
 					
 					<fr:property name="linkFormat(receiveFrom)" value="/academicServiceRequestsManagement.do?method=prepareReceiveAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
 					<fr:property name="key(receiveFrom)" value="label.receiveFrom"/>
@@ -340,6 +347,7 @@
 					<fr:property name="linkFormat(conclude)" value="/academicServiceRequestsManagement.do?method=prepareConcludeAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
 					<fr:property name="key(conclude)" value="conclude"/>
 					<fr:property name="visibleIf(conclude)" value="concludedSituationAccepted"/>
+                    <fr:property name="visibleIfNot(conclude)" value="piggyBackedOnRegistry"/>
 	
 					<fr:property name="order(view)" 		value="1" />
 					<fr:property name="order(reject)" 		value="2" />
@@ -378,6 +386,7 @@
 					<fr:property name="linkFormat(cancel)" value="/academicServiceRequestsManagement.do?method=prepareCancelAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;registrationID=${registration.idInternal}"/>
 					<fr:property name="key(cancel)" value="cancel"/>
 					<fr:property name="visibleIf(cancel)" value="loggedPersonCanCancel"/>				
+                    <fr:property name="visibleIfNot(cancel)" value="piggyBackedOnRegistry"/>
 	 				
 					<fr:property name="linkFormat(payments)" value="<%="/payments.do?method=showOperations" + "&personId=${registration.person.idInternal}" %>"/>
 					<fr:property name="key(payments)" value="payments"/>
@@ -386,6 +395,7 @@
 					<fr:property name="linkFormat(send)" value="/academicServiceRequestsManagement.do?method=prepareSendAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
 					<fr:property name="key(send)" value="label.send"/>
 					<fr:property name="visibleIf(send)" value="requestAvailableToSendToExternalEntity"/>
+                    <fr:property name="visibleIfNot(send)" value="piggyBackedOnRegistry"/>
 					
 					<fr:property name="linkFormat(receiveFrom)" value="/academicServiceRequestsManagement.do?method=prepareReceiveAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
 					<fr:property name="key(receiveFrom)" value="label.receiveFrom"/>

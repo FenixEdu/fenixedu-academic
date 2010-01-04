@@ -102,11 +102,13 @@
 				<fr:property name="key(processing)" value="processing"/>
 				<fr:property name="bundle(processing)" value="APPLICATION_RESOURCES"/>
 				<fr:property name="visibleIf(processing)" value="newRequest"/>
+                <fr:property name="visibleIfNot(processing)" value="piggyBackedOnRegistry"/>
 
 				<fr:property name="linkFormat(concluded)" value="<%= processRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
 				<fr:property name="key(concluded)" value="conclude"/>
 				<fr:property name="bundle(concluded)" value="APPLICATION_RESOURCES"/>
 				<fr:property name="visibleIf(concluded)" value="processing"/>
+                <fr:property name="visibleIfNot(concluded)" value="piggyBackedOnRegistry"/>
 
 				<fr:property name="linkFormat(delivered)" value="<%= deliveredRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
 				<fr:property name="key(delivered)" value="deliver"/>
@@ -152,11 +154,13 @@
 				<fr:property name="key(processing)" value="processing"/>
 				<fr:property name="bundle(processing)" value="APPLICATION_RESOURCES"/>
 				<fr:property name="visibleIf(processing)" value="newRequest"/>
+                <fr:property name="visibleIfNot(processing)" value="piggyBackedOnRegistry"/>
 
 				<fr:property name="linkFormat(concluded)" value="<%= processRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
 				<fr:property name="key(concluded)" value="conclude"/>
 				<fr:property name="bundle(concluded)" value="APPLICATION_RESOURCES"/>
 				<fr:property name="visibleIf(concluded)" value="processing"/>
+                <fr:property name="visibleIfNot(concluded)" value="piggyBackedOnRegistry"/>
 
 				<fr:property name="linkFormat(delivered)" value="<%= deliveredRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
 				<fr:property name="key(delivered)" value="deliver"/>

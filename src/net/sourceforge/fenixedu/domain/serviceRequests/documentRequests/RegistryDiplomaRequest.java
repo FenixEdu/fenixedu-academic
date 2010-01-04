@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,16 +25,16 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base {
 	if (isPayedUponCreation() && !isFree()) {
 	    RegistryDiplomaRequestEvent.create(getAdministrativeOffice(), getRegistration().getPerson(), this);
 	}
-	// setDiplomaSupplement(new DiplomaSupplementRequest(bean));
+	setDiplomaSupplement(new DiplomaSupplementRequest(bean));
     }
 
-    // public String getFamilyNames() {
-    // return getDiplomaSupplement().getFamilyNames();
-    // }
-    //
-    // public String getGivenNames() {
-    // return getDiplomaSupplement().getGivenNames();
-    // }
+    public String getFamilyNames() {
+	return getDiplomaSupplement().getFamilyNames();
+    }
+
+    public String getGivenNames() {
+	return getDiplomaSupplement().getGivenNames();
+    }
 
     @Override
     protected void checkParameters(DocumentRequestCreateBean bean) {
@@ -78,19 +77,12 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base {
 
     @Override
     protected List<AcademicServiceRequestSituationType> getConcludedSituationAcceptedSituationsTypes() {
-	return Collections.unmodifiableList(Arrays.asList(AcademicServiceRequestSituationType.DELIVERED,
-		AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY));
-    }
-
-    @Override
-    protected List<AcademicServiceRequestSituationType> getProcessingSituationAcceptedSituationsTypes() {
-	return Collections.unmodifiableList(Arrays.asList(AcademicServiceRequestSituationType.CANCELLED,
-		AcademicServiceRequestSituationType.REJECTED, AcademicServiceRequestSituationType.CONCLUDED));
+	return Collections.singletonList(AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY);
     }
 
     @Override
     protected List<AcademicServiceRequestSituationType> getReceivedFromExternalEntitySituationAcceptedSituationsTypes() {
-	return Collections.unmodifiableList(Arrays.asList(AcademicServiceRequestSituationType.DELIVERED));
+	return Collections.singletonList(AcademicServiceRequestSituationType.DELIVERED);
     }
 
     @Override
@@ -118,10 +110,24 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base {
 	    if (getLastGeneratedDocument() == null) {
 		generateDocument();
 	    }
-	} else if (academicServiceRequestBean.isToConclude() && !isFree() && !hasEvent() && !isPayedUponCreation()) {
-	    RegistryDiplomaRequestEvent.create(getAdministrativeOffice(), getRegistration().getPerson(), this);
-	} else if (academicServiceRequestBean.isToCancelOrReject() && hasEvent()) {
-	    getEvent().cancel(academicServiceRequestBean.getEmployee());
+	    getDiplomaSupplement().process();
+	} else if (academicServiceRequestBean.isToConclude()) {
+	    if (!isFree() && !hasEvent() && !isPayedUponCreation()) {
+		RegistryDiplomaRequestEvent.create(getAdministrativeOffice(), getRegistration().getPerson(), this);
+	    }
+	    if (getDiplomaSupplement().isConcludedSituationAccepted()) {
+		getDiplomaSupplement().conclude();
+	    }
+	} else if (academicServiceRequestBean.isToCancelOrReject()) {
+	    if (hasEvent()) {
+		getEvent().cancel(academicServiceRequestBean.getEmployee());
+	    }
+	    if (academicServiceRequestBean.isToCancel()) {
+		getDiplomaSupplement().cancel(academicServiceRequestBean.getJustification());
+	    }
+	    if (academicServiceRequestBean.isToReject()) {
+		getDiplomaSupplement().reject(academicServiceRequestBean.getJustification());
+	    }
 	}
     }
 

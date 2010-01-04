@@ -29,7 +29,6 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -490,6 +489,10 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     protected void createAcademicServiceRequestSituations(final AcademicServiceRequestBean academicServiceRequestBean) {
 	AcademicServiceRequestSituation.create(this, academicServiceRequestBean);
+    }
+
+    public boolean isPiggyBackedOnRegistry() {
+	return false;
     }
 
     final public boolean isNewRequest() {
