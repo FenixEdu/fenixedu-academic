@@ -100,9 +100,9 @@ public class ClosedMonth extends ClosedMonth_Base {
     }
 
     public static boolean getCanOpenMonth(Partial yearMonth) {
-	LocalDate today = new LocalDate();
+	LocalDate today = new LocalDate().minusMonths(1);
 	Partial monthBefore = new Partial().with(DateTimeFieldType.year(), today.getYear()).with(DateTimeFieldType.monthOfYear(),
-		today.getMonthOfYear() - 1);
+		today.getMonthOfYear());
 	if (isMonthClosed(yearMonth) && monthBefore.isEqual(yearMonth)) {
 	    return true;
 	}

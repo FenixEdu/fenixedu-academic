@@ -599,9 +599,9 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	    return null;
 	}
 
-	private String createJustification(DateTime dateTime, Duration duration, ResourceBundle bundle) {
+	private String createJustification(DateTime dateTime, Duration oldDuration, ResourceBundle bundle) {
 	    List<Assiduousness> assisuousnesssList = new ArrayList<Assiduousness>();
-	    DateTime end = dateTime.plus(duration);
+	    DateTime end = dateTime.plus(oldDuration);
 	    if (getJustificationMotive().getJustificationType().equals(JustificationType.HALF_OCCURRENCE_TIME)
 		    || getJustificationMotive().getJustificationType().equals(JustificationType.HALF_MULTIPLE_MONTH_BALANCE)
 		    || getJustificationMotive().getJustificationType().equals(JustificationType.HALF_OCCURRENCE)) {
@@ -622,7 +622,9 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	    List<Assiduousness> assiduousnessOrderedList = new ArrayList<Assiduousness>(RootDomainObject.getInstance()
 		    .getAssiduousnesss());
 	    Collections.sort(assiduousnessOrderedList, new BeanComparator("employee.employeeNumber"));
+	    Duration duration = oldDuration;
 	    for (Assiduousness assiduousness : assiduousnessOrderedList) {
+		duration = oldDuration;
 		if (satisfiedStatus(assiduousness, dateTime.toLocalDate(), end.toLocalDate())) {
 		    if (getJustificationMotive().getJustificationType().equals(JustificationType.OCCURRENCE)
 			    || getJustificationMotive().getJustificationType().equals(JustificationType.MULTIPLE_MONTH_BALANCE)) {
@@ -756,6 +758,15 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			    result.append("<br/>");
 			    continue;
 			}
+
+			if (isOverlapingOtherJustification(assiduousness, duration, null)) {
+			    result.append(assiduousness.getEmployee().getEmployeeNumber());
+			    result.append(" - ");
+			    result.append(bundle.getString("errors.overlapingOtherJustification"));
+			    result.append("<br/>");
+			    continue;
+			}
+
 			duration = null;
 		    }
 		    if (getJustificationMotive().getJustificationType().equals(JustificationType.BALANCE)

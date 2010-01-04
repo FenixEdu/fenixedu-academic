@@ -55,7 +55,8 @@ public abstract class CalculateDailyWorkSheetStategy implements ICalculateDailyW
 		    }
 		} else {
 		    if (workDaySheet.getWorkSchedule().getWorkScheduleType().getScheduleClockingType() != ScheduleClockingType.NOT_MANDATORY_CLOCKING) {
-			setUnjustifiedDay(workDaySheet, halfOccurrenceTimeLeaves, balanceLeaves, balanceOcurrenceLeaves);
+			setUnjustifiedDay(workDaySheet, halfOccurrenceTimeLeaves, balanceLeaves, balanceOcurrenceLeaves,
+				halfOccurrenceLeaves);
 		    }
 		}
 		workDaySheet.discountBalanceLeaveInFixedPeriod(balanceLeaves);
@@ -100,7 +101,7 @@ public abstract class CalculateDailyWorkSheetStategy implements ICalculateDailyW
     }
 
     protected abstract void setUnjustifiedDay(WorkDaySheet workDaySheet, List<Leave> halfOccurrenceTimeLeaves,
-	    List<Leave> balanceLeaves, List<Leave> balanceOcurrenceLeaves);
+	    List<Leave> balanceLeaves, List<Leave> balanceOcurrenceLeaves, List<Leave> halfOccurrenceLeaves);
 
     private Timeline getTimeline(WorkDaySheet workDaySheet, List<Leave> timeLeaves) {
 	Timeline timeline = new Timeline(workDaySheet.getWorkSchedule().getWorkScheduleType());

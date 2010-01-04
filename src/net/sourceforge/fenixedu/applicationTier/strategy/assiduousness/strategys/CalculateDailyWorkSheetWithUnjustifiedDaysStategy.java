@@ -11,8 +11,9 @@ public class CalculateDailyWorkSheetWithUnjustifiedDaysStategy extends Calculate
 
     @Override
     protected void setUnjustifiedDay(WorkDaySheet workDaySheet, List<Leave> halfOccurrenceTimeLeaves, List<Leave> balanceLeaves,
-	    List<Leave> balanceOcurrenceLeaves) {
-	if (balanceLeaves.isEmpty() && balanceOcurrenceLeaves.isEmpty() && halfOccurrenceTimeLeaves.isEmpty()) {
+	    List<Leave> balanceOcurrenceLeaves, List<Leave> halfOccurrenceLeaves) {
+	if (balanceLeaves.isEmpty() && balanceOcurrenceLeaves.isEmpty() && halfOccurrenceTimeLeaves.isEmpty()
+		&& halfOccurrenceLeaves.isEmpty()) {
 	    workDaySheet.setUnjustifiedDay();
 	} else {
 	    workDaySheet.setBalanceTime(Duration.ZERO.minus(workDaySheet.getWorkSchedule().getWorkScheduleType()
