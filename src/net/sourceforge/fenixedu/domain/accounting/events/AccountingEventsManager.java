@@ -70,6 +70,8 @@ public class AccountingEventsManager {
 
 	if (studentCurricularPlan.getDegreeType() == DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA) {
 	    return createDfaGratuityEvent(studentCurricularPlan, executionYear, checkConditions);
+	} else if (studentCurricularPlan.getDegreeType() == DegreeType.EMPTY) {
+	    return createStandaloneEnrolmentGratuityEvent(studentCurricularPlan, executionYear);
 	}
 
 	return createGratuityEventWithPaymentPlan(studentCurricularPlan, executionYear, checkConditions);
