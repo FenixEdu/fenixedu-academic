@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.shift.ShiftEnrollmentErrorReport;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
@@ -15,7 +16,8 @@ public class EnrollStudentInShifts extends FenixService {
 
 	final ShiftEnrollmentErrorReport errorReport = new ShiftEnrollmentErrorReport();
 
-	if (registration == null) {
+	final Shift selectedShift = rootDomainObject.readShiftByOID(shiftId);
+	if ((registration == null) || (ExecutionCourse.isEnrolled(registration.getStudent(), selectedShift.getExecutionCourse()) == false)) {
 	    throw new StudentNotFoundServiceException();
 	}
 
@@ -23,7 +25,6 @@ public class EnrollStudentInShifts extends FenixService {
 	    throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
 	}
 
-	final Shift selectedShift = rootDomainObject.readShiftByOID(shiftId);
 	if (selectedShift == null) {
 	    errorReport.getUnExistingShifts().add(shiftId);
 	}

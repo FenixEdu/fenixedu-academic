@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -12,9 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.EnrollStudentInShifts;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.OrderBibliographicReferences;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.CreateLessonPlanningBean;
+import net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.TutorateBean;
+import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.ImportLessonPlanningsBean;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.ImportLessonPlanningsBean.ImportType;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.ImportContentBean;
@@ -32,11 +37,13 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -46,6 +53,7 @@ import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -830,13 +838,41 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 	    request.setAttribute("registration", registration);
 	}
 
-	List<Registration> registrations = shift.getStudents();
+	List<Registration> registrations = new ArrayList<Registration>();
+	registrations.addAll(shift.getStudents());
+	Collections.sort(registrations, Registration.NUMBER_COMPARATOR);
 
 	request.setAttribute("registrations", registrations);
 	request.setAttribute("shift", shift);
 	request.setAttribute("executionCourseID", executionCourseID);
+	
+	request.setAttribute("personBean", new PersonBean());
 
 	return mapping.findForward("editShift");
+    }
+    
+    @Service
+    public ActionForward insertStudentInShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
+	PersonBean bean = (PersonBean) getRenderedObject("personBean");
+	String id = bean.getUsername();
+	Student student = Student.readStudentByNumber(Integer.valueOf(id));
+	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(Integer.parseInt(request.getParameter("executionCourseID")));
+
+	if (student != null) {
+	    try {
+		new EnrollStudentInShifts().run(executionCourse.getRegistration(student.getPerson()), Integer.parseInt(request.getParameter("shiftID")));
+	    } catch (FenixServiceException e) {
+		final ActionErrors actionErrors = new ActionErrors();
+		actionErrors.add("error", new ActionMessage("label.invalid.student.number"));
+		saveErrors(request, actionErrors);
+	    }
+	} else {
+	    final ActionErrors actionErrors = new ActionErrors();
+	    actionErrors.add("error", new ActionMessage("label.invalid.student.number"));
+	    saveErrors(request, actionErrors);
+	}
+	return editShift(mapping, form, request, response);
     }
 
     public ActionForward removeAttendsFromShift(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

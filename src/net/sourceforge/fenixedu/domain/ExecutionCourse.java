@@ -1607,6 +1607,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
 	return null;
     }
+    
+    public static boolean isEnrolled(Student student, ExecutionCourse executionCourse) {
+	return executionCourse.getAttendsByStudent(student) != null;
+    }
 
     public ExecutionYear getExecutionYear() {
 	return getExecutionPeriod().getExecutionYear();

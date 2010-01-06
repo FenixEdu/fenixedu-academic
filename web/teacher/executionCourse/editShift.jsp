@@ -15,7 +15,14 @@
 		</html:link>
 	</li>
 </ul>
-
+<p>
+	<span class="error0"><!-- Error messages go here -->
+		<html:errors/>
+	</span>
+	<span class="warning0"><!--  w3c complient -->
+		<html:messages id="info" message="true"/>
+	</span>
+</p>
 <logic:present name="shift">
 	<bean:define id="shiftID" name="shift" property="idInternal"/>
 	<p>
@@ -88,4 +95,20 @@
 		</logic:iterate>
 	</table>
 	</logic:notEmpty>
+	<br>
+	<b><bean:message key="label.add.student.to.shift" bundle="APPLICATION_RESOURCES"/>:</b>
+	<p>
+	<fr:form action="<%="/manageExecutionCourse.do?method=insertStudentInShift&shiftID=" + shiftID + "&executionCourseID=" + request.getParameter("executionCourseID") %>">
+		<fr:edit id="numberForm" name="personBean" schema="student.number">
+			<fr:edit id="personBean" name="personBean" visible="false" />
+			<fr:layout>
+				<fr:property name="classes" value="tstyle5 thlight thleft mtop0"/>
+				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+			</fr:layout>
+		</fr:edit>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
+			<bean:message key="button.add"/>
+		</html:submit >
+	</fr:form>
+	</p>
 </logic:present>
