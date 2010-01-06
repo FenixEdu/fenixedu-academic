@@ -1763,6 +1763,15 @@
 		input="findPerson">
 		<forward name="findPerson" path="findPerson"/>
 		<forward name="displayPerson" path="displayPerson"/>
+		<forward name="viewPerson" path="viewPerson" />
+	</action>
+
+	<action path="/partyContacts"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PartyContactsManagementDispatchAction"
+		parameter="method" scope="request">
+		<forward name="createPartyContact" path="partyContacts.createPartyContact" />
+		<forward name="editPartyContact" path="partyContacts.editPartyContact" />
+		<forward name="visualizePersonalInformation" path="visualize.personal.information" />
 	</action>
 	
 	<action path="/createInvitedPerson"

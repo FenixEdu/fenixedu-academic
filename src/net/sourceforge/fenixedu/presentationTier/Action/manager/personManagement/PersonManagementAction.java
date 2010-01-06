@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.dataTransferObject.person.InvitedPersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Person.AnyPersonSearchBean;
+import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Invitation;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -44,7 +45,7 @@ import pt.ist.fenixWebFramework.security.UserView;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 /**
- * @author Tânia Pousão
+ * @author Tï¿½nia Pousï¿½o
  * 
  */
 public class PersonManagementAction extends FenixDispatchAction {
@@ -52,6 +53,14 @@ public class PersonManagementAction extends FenixDispatchAction {
     public ActionForward firstPage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	return mapping.findForward("firstPage");
+    }
+
+    public ActionForward viewPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	Integer idInternal = getIdInternal(request, "personID");
+	Person person = (Person) rootDomainObject.readPartyByOID(idInternal);
+	request.setAttribute("person", person);
+	return mapping.findForward("viewPerson");
     }
 
     public ActionForward prepareFindPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -365,6 +374,16 @@ public class PersonManagementAction extends FenixDispatchAction {
 	return managePersonInvitations(mapping, actionForm, request, response);
     }
 
+    public ActionForward editPartyAddress(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	request.setAttribute("partyContact", getPartyContact(request));
+	return mapping.findForward("editPartyAddress");
+    }
+
+    protected PartyContact getPartyContact(final HttpServletRequest request) {
+	return rootDomainObject.readPartyContactByOID(getIntegerFromRequest(request, "addressID"));
+    }
+
     private ActionForward goToPrepareCreateNewPersonInvitationPage(ActionMapping mapping, HttpServletRequest request,
 	    InvitedPersonBean bean) {
 	request.setAttribute("initialUnit", UnitUtils.readInstitutionUnit());
@@ -441,4 +460,5 @@ public class PersonManagementAction extends FenixDispatchAction {
     private boolean isSpecified(final String string) {
 	return !StringUtils.isEmpty(string);
     }
+
 }

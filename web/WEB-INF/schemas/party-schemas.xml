@@ -197,13 +197,23 @@
 	<slot name="email"/>
 </schema>
 <schema name="net.sourceforge.fenixedu.domain.Person.personal.info" type="net.sourceforge.fenixedu.domain.Person"> 
-	<slot name="name" key="label.person.name"/>
+	<slot name="name" key="label.person.name">
+		<property name="size" value="50"/>
+	</slot>	
 	<slot name="gender" key="label.person.sex"/>
-	<slot name="idDocumentType" key="label.person.identificationDocumentType"/>
+	<slot name="idDocumentType" key="label.person.identificationDocumentType">
+		<property name="excludedValues" value="CITIZEN_CARD" />
+	</slot>
 	<slot name="documentIdNumber" key="label.person.identificationDocumentNumber"/>
-	<slot name="emissionLocationOfDocumentId" key="label.person.identificationDocumentIssuePlace"/>
-	<slot name="emissionDateOfDocumentIdYearMonthDay" key="label.person.identificationDocumentIssueDate"/>
-	<slot name="expirationDateOfDocumentIdYearMonthDay" key="label.person.identificationDocumentExpirationDate"/>
+	<slot name="emissionLocationOfDocumentId" key="label.person.identificationDocumentIssuePlace"/> 
+	<slot name="emissionDateOfDocumentIdYearMonthDay" key="label.person.identificationDocumentIssueDate">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	</slot>	 
+	<slot name="expirationDateOfDocumentIdYearMonthDay" key="label.person.identificationDocumentExpirationDate">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	</slot>
 	<slot name="socialSecurityNumber" key="label.person.contributorNumber"/>
 	<slot name="profession" key="label.person.occupation"/>
 	<slot name="maritalStatus" key="label.person.maritalStatus"/>

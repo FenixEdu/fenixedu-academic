@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.dataTransferObject.contacts.EmailAddressBean;
 import net.sourceforge.fenixedu.dataTransferObject.contacts.MobilePhoneBean;
 import net.sourceforge.fenixedu.dataTransferObject.contacts.PartyContactBean;
 import net.sourceforge.fenixedu.dataTransferObject.contacts.PhoneBean;
+import net.sourceforge.fenixedu.dataTransferObject.contacts.PhysicalAddressBean;
 import net.sourceforge.fenixedu.dataTransferObject.contacts.WebAddressBean;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
@@ -83,7 +84,9 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareCreatePhysicalAddress(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	return prepareCreatePartyContact(mapping, actionForm, request, response, PhysicalAddress.class.getSimpleName());
+	PhysicalAddressBean bean = new PhysicalAddressBean(getParty(request));
+	request.setAttribute("partyContact", bean);
+	return prepareCreatePartyContact(mapping, actionForm, request, response, bean.getContactName());
     }
 
     public ActionForward prepareCreatePhone(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -137,18 +140,13 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
     public ActionForward prepareEditPartyContact(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	PartyContact contact = getPartyContact(getParty(request), request);
-	if (contact instanceof PhysicalAddress) {
-	    request.setAttribute("partyContact", contact);
-	    request.setAttribute("partyContactClass", contact.getClass().getSimpleName());
-	} else {
-	    PartyContactBean contactBean = PartyContactBean.createFromDomain(contact);
-	    request.setAttribute("partyContact", contactBean);
-	    request.setAttribute("partyContactClass", contactBean.getContactName());
-	}
+	PartyContactBean contactBean = PartyContactBean.createFromDomain(contact);
+	request.setAttribute("partyContact", contactBean);
+	request.setAttribute("partyContactClass", contactBean.getContactName());
 	return mapping.findForward("editPartyContact");
     }
 
-    private PartyContact getPartyContact(final Party party, final HttpServletRequest request) {
+    protected PartyContact getPartyContact(final Party party, final HttpServletRequest request) {
 	final Integer contactId = getIntegerFromRequest(request, "contactId");
 	for (final PartyContact contact : party.getPartyContacts()) {
 	    if (contact.getIdInternal().equals(contactId)) {

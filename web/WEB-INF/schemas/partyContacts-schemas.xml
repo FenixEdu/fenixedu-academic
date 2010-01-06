@@ -45,6 +45,9 @@
 <schema name="contacts.Phone.manage"
 	type="net.sourceforge.fenixedu.dataTransferObject.contacts.PhoneBean"
 	extends="contacts.PartyContact.manage" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="type">
+		<property name="excludedValues" value="INSTITUTIONAL" />
+	</slot>
 	<slot name="value" key="label.partyContacts.Phone">
 		<property name="size" value="15" />
 		<property name="maxLength" value="15" />
@@ -60,6 +63,9 @@
 <schema name="contacts.MobilePhone.manage"
 	type="net.sourceforge.fenixedu.dataTransferObject.contacts.MobilePhoneBean"
 	extends="contacts.PartyContact.manage" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="type">
+		<property name="excludedValues" value="INSTITUTIONAL" />
+	</slot>
 	<slot name="value" key="label.partyContacts.MobilePhone">
 		<property name="size" value="15" />
 		<property name="maxLength" value="15" />
@@ -85,6 +91,9 @@
 <schema name="contacts.WebAddress.manage"
 	type="net.sourceforge.fenixedu.dataTransferObject.contacts.WebAddressBean"
 	extends="contacts.PartyContact.manage" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="type">
+		<property name="excludedValues" value="INSTITUTIONAL" />
+	</slot>
 	<slot name="value" key="label.partyContacts.WebAddress">
 		<property name="size" value="40" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
@@ -92,11 +101,9 @@
 </schema>
 
 <schema name="contacts.PhysicalAddress.manage"
-	type="net.sourceforge.fenixedu.domain.contacts.PhysicalAddress" bundle="ACADEMIC_OFFICE_RESOURCES"
-	constructor="party, type, defaultContact, address, areaCode, areaOfAreaCode, area, parishOfResidence, districtSubdivisionOfResidence, districtOfResidence, countryOfResidence">
-	<slot name="party" hidden="true" />
-	<slot name="type" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<slot name="defaultContact" key="label.partyContacts.defaultContact" />
+	type="net.sourceforge.fenixedu.dataTransferObject.contacts.PhysicalAddressBean" bundle="ACADEMIC_OFFICE_RESOURCES"
+	extends="contacts.PartyContact.manage" >
+
 	<slot name="address"
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="50" />
@@ -108,6 +115,7 @@
 			<property name="regexp" value="\d{4}-\d{3}" />
 			<property name="message" value="error.areaCode.invalidFormat" />
 			<property name="key" value="true" />
+			<property name="bundle" value="ACADEMIC_OFFICE_RESOURCES" />
 		</validator>
 	</slot>
 	<slot name="areaOfAreaCode"
@@ -125,8 +133,13 @@
 		<property name="format" value="${name}" />
 		<property name="sortBy" value="name" />
 	</slot>
-	<setter
-		signature="edit(type, defaultContact, address, areaCode, areaOfAreaCode, area, parishOfResidence, districtSubdivisionOfResidence, districtOfResidence, countryOfResidence)" />
+	<remove name="value" /> 
+	<remove name="visibleToPublic" /> 
+	<remove name="visibleToStudents" />
+	<remove name="visibleToAlumni" />
+	<remove name="visibleToTeachers" />
+	<remove name="visibleToEmployees" /> 
+	<remove name="visibleToManagement" />
 </schema>
 
 <schema name="contacts.PartyContact.view"
@@ -264,6 +277,55 @@
 		<property name="excludedValues" value="INSTITUTIONAL" />
 	</slot>
 </schema>
+
+<schema name="contacts.Institutional.Phone.manage"
+    type="net.sourceforge.fenixedu.dataTransferObject.contacts.PhoneBean"
+	extends="contacts.Institutional.Phone.manage-student">
+</schema>
+
+<schema name="contacts.Institutional.MobilePhone.manage"
+   type="net.sourceforge.fenixedu.dataTransferObject.contacts.MobilePhoneBean"
+	extends="contacts.Institutional.MobilePhone.manage-student">
+</schema>
+
+<schema name="contacts.Institutional.EmailAddress.manage"
+     type="net.sourceforge.fenixedu.dataTransferObject.contacts.EmailAddressBean"
+	extends="contacts.Institutional.EmailAddress.manage-student">
+</schema>
+
+<schema name="contacts.Institutional.PhysicalAddress.manage"
+     type="net.sourceforge.fenixedu.dataTransferObject.contacts.PhysicalAddressBean" bundle="ACADEMIC_OFFICE_RESOURCES"
+	extends="contacts.PhysicalAddress.manage">
+	<slot name="type">
+		<property name="readOnly" value="true" />
+	</slot>
+	<slot name="address">
+		<property name="readOnly" value="true" />
+	</slot>
+	<slot name="area">
+		<property name="readOnly" value="true" />
+	</slot>
+	<slot name="areaCode">
+		<property name="readOnly" value="true" />
+	</slot>
+	<slot name="areaOfAreaCode">
+		<property name="readOnly" value="true" />
+	</slot>
+	<slot name="parishOfResidence">
+		<property name="readOnly" value="true" />
+	</slot>
+	<slot name="districtSubdivisionOfResidence">
+			<property name="readOnly" value="true" />
+	</slot>
+	<slot name="districtOfResidence">
+		<property name="readOnly" value="true" />
+	</slot>
+	<remove name="countryOfResidence" /> 
+	<slot name="countryOfResidence.name"  key="label.countryOfResidence">
+		<property name="readOnly" value="true" />		
+	</slot>
+</schema>
+
 
 <schema name="contacts.Institutional.WebAddress.manage-student"
 	type="net.sourceforge.fenixedu.dataTransferObject.contacts.WebAddressBean"

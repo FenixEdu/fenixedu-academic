@@ -15,6 +15,7 @@
 		<put name="body" value="/manager/insertDegree_bd.jsp" />
 	</definition>
 
+
 	<definition name="show-equivalency.plan" extends="definition.manager.masterPage">
 		<put name="body" value="/manager/degreeCurricularPlan/showEquivalencyPlan.jsp"/>
 	</definition>
@@ -311,7 +312,13 @@
 	</definition>
 	<definition name="displayPerson" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/personManagement/displayPerson.jsp" />
-	</definition>	
+	</definition>
+	<definition name="viewPerson" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/personManagement/viewPerson.jsp" />
+	</definition>
+   <definition name="editPartyAddress" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/personManagement/address/editPartyAddress.jsp" />
+	</definition>
 	<definition name="displayEmployee" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/personManagement/displayEmployee.jsp" />
 	</definition>
@@ -332,7 +339,7 @@
 	</definition>	
 	<definition name="prepare-edit-person" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/personManagement/editPerson.jsp" />
-	</definition>	
+	</definition>
 	<definition name="searh-person-before-invitations-management" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/personManagement/choosePersonForManageInvitations.jsp" />
 	</definition>	
@@ -348,6 +355,18 @@
 	<definition name="prepare-create-new-person-invitation" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/personManagement/createNewPersonInvitation.jsp" />
 	</definition>	
+	
+	<definition name="partyContacts.createPartyContact" extends="definition.manager.masterPage">
+		 <put name="body" value="/manager/personManagement/contacts/createPartyContact.jsp"/>
+	</definition>
+	
+	<definition name="partyContacts.editPartyContact" extends="definition.manager.masterPage">
+		 <put name="body" value="/manager/personManagement/contacts/editPartyContact.jsp"/>
+	</definition>
+	
+	<definition name="visualize.personal.information" extends="definition.manager.masterPage">
+		 <put name="body" value="/manager/personManagement/viewPerson.jsp"/>
+	</definition>
 		
 		
 	<!-- ========== FIND PERSON MANAGEMENT ========== -->

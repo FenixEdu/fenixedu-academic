@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
 import net.sourceforge.fenixedu.domain.contacts.Phone;
+import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.contacts.WebAddress;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
@@ -166,6 +167,8 @@ public abstract class PartyContactBean implements Serializable {
 	    return new EmailAddressBean((EmailAddress) partyContact);
 	if (partyContact instanceof WebAddress)
 	    return new WebAddressBean((WebAddress) partyContact);
+	if (partyContact instanceof PhysicalAddress)
+	    return new PhysicalAddressBean((PhysicalAddress) partyContact);
 	return null;
     }
 }
