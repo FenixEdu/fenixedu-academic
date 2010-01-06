@@ -1,5 +1,11 @@
 package net.sourceforge.fenixedu.presentationTier.Action.research.result.publication;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -7,6 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateJournalIssue;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateResearchEventEdition;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.result.CreateResultUnitAssociation;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.result.publication.DeleteResultPublication;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ExecutionYearIntervalBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultDocumentFileSubmissionBean;
@@ -17,11 +24,20 @@ import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.C
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultEventAssociationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean.ResultPublicationType;
+import net.sourceforge.fenixedu.domain.CompetenceCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
@@ -578,6 +594,72 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 
 	request.setAttribute("preferredSetting", true);
 	return mapping.findForward("ListPublications");
+    }
+
+    public ActionForward setUnitToAll(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	Person person = getLoggedPerson(request);
+	request.setAttribute("personId", getLoggedPerson(request).getIdInternal());
+	request.setAttribute("units", getUnits(person));
+	return mapping.findForward("setUnitToAll");
+    }
+    
+    private Collection<Unit> getUnits(Person person) {
+	Set<Unit> units = new HashSet<Unit>();
+	for (ResearchUnit unit : person.getWorkingResearchUnits()) {
+	    units.add(unit);
+	}
+	if (person.hasEmployee() && person.getEmployee().getCurrentWorkingPlace() != null) {
+	    units.add(person.getEmployee().getCurrentWorkingPlace());
+	}
+	if (person.hasTeacher()) {
+	    for (ExecutionCourse course : person.getTeacher().getCurrentExecutionCourses()) {
+		for (Degree degree : course.getDegreesSortedByDegreeName()) {
+		    if (degree.getUnit() != null) {
+			units.add(degree.getUnit());
+		    }
+		    for (CurricularCourse curricularCourse : course.getAssociatedCurricularCourses()) {
+			CompetenceCourse competenceCourse = curricularCourse.getCompetenceCourse();
+			CompetenceCourseGroupUnit groupUnit = (competenceCourse != null) ? competenceCourse
+				.getCompetenceCourseGroupUnit() : null;
+			if (groupUnit != null) {
+			    Collection<? extends Party> scientificAreaUnits = groupUnit
+				    .getParentParties(ScientificAreaUnit.class);
+			    for (Party scientificAreaUnit : scientificAreaUnits) {
+				units.add((ScientificAreaUnit) scientificAreaUnit);
+			    }
+			}
+		    }
+
+		}
+	    }
+	}
+	return units;
+    }
+   
+    public ActionForward addUnitToAll(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	Person person = getLoggedPerson(request);
+	Unit unit = (Unit) rootDomainObject.readPartyByOID(Integer.parseInt(request.getParameter("unitID")));
+	for(ResearchResultPublication publication : getLoggedPerson(request).getResearchResultPublications()) {
+	    if(publication.getClass().getSimpleName().equalsIgnoreCase("unstructured") == false) {
+		ResultUnitAssociationCreationBean bean = new ResultUnitAssociationCreationBean(publication);
+		bean.setSuggestion(false);
+		bean.setUnit(unit);
+		try {
+		    CreateResultUnitAssociation.run(bean);
+		} catch (FileManagerException e) {
+		    e.printStackTrace();
+		    addActionMessage(request, "label.communicationError");
+		} catch (Exception e) {
+		    addActionMessage(request, e.getMessage());
+		}
+	    }
+	}
+	addActionMessage(request, "message.confirm.add.unit.to.all.publications.successful");
+	request.setAttribute("personId", person.getIdInternal());
+	request.setAttribute("units", getUnits(person));
+	return mapping.findForward("setUnitToAll");
     }
 
     public ActionForward setPreferredPublications(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

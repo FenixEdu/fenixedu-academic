@@ -43,6 +43,11 @@
 	                <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.setPreferredPublications"/>
 	            </html:link>
 	        </li>
+	        <li>
+	        	<html:link page="<%= "/publications/management.do?method=setUnitToAll" %>">
+	                <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.associate.unit.all.publications"/>
+	            </html:link>
+	        </li>
 		</ul>
 		
 		<fr:form action="/resultPublications/listPublications.do">

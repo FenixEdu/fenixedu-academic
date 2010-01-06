@@ -126,6 +126,9 @@
         <put name="body" value="/researcher/result/publications/publicationsManagement.jsp"/>
 
     </definition>
+    <definition name="setUnitToAll.publicationsManagement" extends="researcher.masterPage">
+        <put name="body" value="/researcher/result/publications/setUnitToAllPublications.jsp"/>
+    </definition>
     <definition name="publications.createPublication" extends="researcher.masterPage">
         <put name="body" value="/researcher/result/publications/createPublication.jsp"></put>
     </definition>
