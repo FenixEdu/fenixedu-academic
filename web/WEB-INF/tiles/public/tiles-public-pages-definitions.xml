@@ -174,11 +174,11 @@
 		<put name="body" value="/publico/viewRoom_bd.jsp"/>
 	</definition>
 	<definition name="df.notFound" extends="definition.public.mainPageIST">
-		<put name="main_navigation" value="/publico/degreeSite/mainNavigation.jsp" />
+		<put name="main_navigation" value="/publico/commonNavLocalPub.jsp" />
 		<put name="body" value="/publico/notFound.jsp"/>
 	</definition>
 	<definition name="df.notAuthorized" extends="definition.public.mainPageIST">
-		<put name="main_navigation" value="/publico/degreeSite/mainNavigation.jsp" />
+		<put name="main_navigation" value="/publico/commonNavLocalPub.jsp" />
 		<put name="body" value="/publico/notAuthorized.jsp"/>
 	</definition>
 	<definition name="df.page.showDegreeCurricularPlanSites" extends="definition.public.mainPageIST">
