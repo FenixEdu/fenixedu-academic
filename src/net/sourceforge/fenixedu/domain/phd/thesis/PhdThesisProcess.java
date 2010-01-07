@@ -63,7 +63,10 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	@Override
 	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
 
-	    // TODO is JURY VALIDATED?????????????????????????????'
+	    if (!process.isJuryValidated()) {
+		return;
+	    }
+
 	    if (isMasterDegreeAdministrativeOfficeEmployee(userView)) {
 		return;
 	    }
@@ -94,6 +97,11 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 
 	@Override
 	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
+
+	    if (!process.isJuryValidated()) {
+		throw new PreConditionNotValidException();
+	    }
+
 	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
@@ -119,9 +127,9 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 
 	@Override
 	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
-	    if (process.isConcluded()) {
-		throw new PreConditionNotValidException();
-	    }
+	     if (process.isJuryValidated()) {
+		 throw new PreConditionNotValidException();
+	     }
 
 	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
@@ -139,7 +147,8 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 
 	@Override
 	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
-	    if (process.isConcluded()) {
+
+	    if (process.isJuryValidated()) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -160,7 +169,8 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 
 	@Override
 	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
-	    if (process.isConcluded()) {
+
+	    if (process.isJuryValidated()) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -182,7 +192,8 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 
 	@Override
 	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
-	    if (process.isConcluded()) {
+
+	    if (process.isJuryValidated()) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -202,6 +213,29 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	}
     }
 
+    static public class ValidateJury extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
+
+	    if (process.isJuryValidated()) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
+	    final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
+	    process.setWhenJuryValidated(bean.getWhenJuryValidated());
+	    process.setWhenJuryDesignated(bean.getWhenJuryDesignated());
+	    return process;
+	}
+    }
+
     // TODO: find clean solution to return documents
     // grouped?
     static public class DownloadProvisionalThesisDocument extends PhdActivity {
@@ -214,16 +248,13 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	    }
 
 	    throw new PreConditionNotValidException();
-
 	}
 
 	@Override
 	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
 	    // nothing to be done
-
 	    return null;
 	}
-
     }
 
     static public class DownloadFinalThesisDocument extends PhdActivity {
@@ -360,6 +391,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	activities.add(new DeleteJuryElement());
 	activities.add(new SwapJuryElementsOrder());
 	activities.add(new AddPresidentJuryElement());
+	activities.add(new ValidateJury());
 	activities.add(new SubmitThesis());
 	activities.add(new DownloadProvisionalThesisDocument());
 	activities.add(new DownloadFinalThesisDocument());
@@ -370,6 +402,10 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 
     private PhdThesisProcess() {
 	super();
+    }
+
+    public boolean isJuryValidated() {
+	return getWhenJuryValidated() != null;
     }
 
     private void swapJuryElementsOrder(ThesisJuryElement e1, ThesisJuryElement e2) {
@@ -408,7 +444,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
     }
 
     @Override
-    protected Person getPerson() {
+    public Person getPerson() {
 	return getIndividualProgramProcess().getPerson();
     }
 

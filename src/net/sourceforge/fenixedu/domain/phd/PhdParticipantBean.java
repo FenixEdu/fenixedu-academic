@@ -21,6 +21,7 @@ public class PhdParticipantBean implements Serializable {
     private String qualification;
     private String category;
     private String workLocation;
+    private String institution;
     private String address;
     private String email;
     private String phone;
@@ -111,6 +112,14 @@ public class PhdParticipantBean implements Serializable {
 
     public void setWorkLocation(String workLocation) {
 	this.workLocation = workLocation;
+    }
+
+    public String getInstitution() {
+	return institution;
+    }
+
+    public void setInstitution(String institution) {
+	this.institution = institution;
     }
 
     public String getAddress() {

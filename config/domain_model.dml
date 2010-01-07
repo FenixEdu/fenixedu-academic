@@ -6817,6 +6817,8 @@ class phd.seminar.PublicPresentationSeminarProcess extends phd.PhdProgramProcess
 }
 
 class phd.thesis.PhdThesisProcess extends phd.PhdProgramProcess {
+	LocalDate whenJuryValidated;
+	LocalDate whenJuryDesignated;
 }
 
 class phd.thesis.ThesisJuryElement extends DomainObject {
@@ -6833,10 +6835,13 @@ class phd.candidacy.PHDProgramCandidacy extends candidacy.StudentCandidacy {
 
 class phd.PhdParticipant extends DomainObject {
 	DateTime whenCreated;
-	String title;
     String accessHashCode;
 	PhdProcessAccessTypeList accessTypes;
 	String password;
+	
+	String title;
+	String workLocation;
+	String institution;
 }
 
     class phd.InternalPhdParticipant extends phd.PhdParticipant {
@@ -6846,7 +6851,6 @@ class phd.PhdParticipant extends DomainObject {
         String name;
         String qualification;
         String category;
-        String workLocation;
         String address;
         String email;
         String phone;

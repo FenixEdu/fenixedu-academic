@@ -65,17 +65,17 @@
 			<bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.jury.elements"/>
 		</html:link>
 	</li>
-	<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= PhdThesisProcess.SubmitThesis.class %>">
-	<li style="display: inline;">
-		<html:link action="/phdThesisProcess.do?method=prepareSubmitThesis" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
-			<bean:message bundle="PHD_RESOURCES" key="label.phd.submit.thesis"/>
-		</html:link>
-	</li>
-	</phd:activityAvailable>
 	<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= PhdThesisProcess.RequestJuryReviews.class %>">
 	<li style="display: inline;">
 		<html:link action="/phdThesisProcess.do?method=prepareRequestJuryReviews" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
 			<bean:message bundle="PHD_RESOURCES" key="label.phd.request.jury.reviews"/>
+		</html:link>
+	</li>
+	</phd:activityAvailable>
+	<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= PhdThesisProcess.SubmitThesis.class %>">
+	<li style="display: inline;">
+		<html:link action="/phdThesisProcess.do?method=prepareSubmitThesis" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
+			<bean:message bundle="PHD_RESOURCES" key="label.phd.submit.thesis"/>
 		</html:link>
 	</li>
 	</phd:activityAvailable>

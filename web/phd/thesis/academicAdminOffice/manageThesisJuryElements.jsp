@@ -1,11 +1,13 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+<%@ taglib uri="/WEB-INF/phd.tld" prefix="phd" %>
 
+<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess"%>
+<html:xhtml/>
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 <bean:define id="individualProcessId" name="process" property="individualProgramProcess.externalId" />
@@ -42,23 +44,29 @@
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 
 <bean:define id="processId" name="process" property="externalId" />
+<bean:define id="process" name="process" />
 
+<logic:equal name="process" property="juryValidated" value="true">
+	<strong><bean:message key="label.phd.thesis.validation.date" bundle="PHD_RESOURCES"/>:</strong> <fr:view name="process" property="whenJuryValidated" />
+	<br/>
+</logic:equal>
 <logic:notEmpty name="process" property="juryElementsDocument">
-	
 	<strong><bean:message  key="label.phd.thesis.jury.elements.document" bundle="PHD_RESOURCES"/>: </strong>
 	<bean:define id="finalThesisDownloadUrl" name="process" property="juryElementsDocument.downloadUrl" />
 	<a href="<%= finalThesisDownloadUrl.toString() %>">
 		<bean:write name="process" property="juryElementsDocument.documentType.localizedName"/> 
 		(<bean:message  key="label.version" bundle="PHD_RESOURCES" /> <bean:write name="process" property="juryElementsDocument.documentVersion"/>)
 	</a>
-
-	<br/>
-	<br/>
-	<br/>
+	<br/><br/><br/>
 </logic:notEmpty>
 
 <strong>Presidente:</strong> Presidente do Conselho Científico do IST
+<logic:notEmpty name="process" property="presidentJuryElement">
+	<br/>
+	<strong>Presidente nomeado:</strong> <bean:write name="process" property="presidentJuryElement.nameWithTitle" />
+</logic:notEmpty>
 
+<br/>
 <br/>
 <strong><bean:message  key="label.phd.thesis.elements" bundle="PHD_RESOURCES"/>:</strong>
 <logic:notEmpty name="process" property="thesisJuryElements">
@@ -66,11 +74,10 @@
 
 	<fr:schema bundle="PHD_RESOURCES" type="<%= ThesisJuryElement.class.getName() %>">
 		<fr:slot name="elementOrder" />
-		<fr:slot name="name" />
-		<fr:slot name="title" />
-		<fr:slot name="qualification" />
+		<fr:slot name="nameWithTitle" />
 		<fr:slot name="category" />
 		<fr:slot name="workLocation" />
+		<fr:slot name="institution" />
 		<fr:slot name="email" />
 		<fr:slot name="reporter" />
 	</fr:schema>
@@ -121,27 +128,28 @@
 
 <ul class="operations" >
 	<li style="display: inline;">
-		<html:link action="/phdThesisProcess.do?method=prepareAddJuryElement" paramId="processId" paramName="process" paramProperty="externalId"><bean:message bundle="PHD_RESOURCES" key="label.add"/></html:link>
+		<html:link action="/phdThesisProcess.do?method=prepareAddJuryElement" paramId="processId" paramName="process" paramProperty="externalId">
+			<bean:message bundle="PHD_RESOURCES" key="label.phd.add.thesis.jury.element"/>
+		</html:link>
 	</li>
 	<li style="display: inline;">
 		<html:link action="/phdThesisProcess.do?method=prepareAddPresidentJuryElement" paramId="processId" paramName="process" paramProperty="externalId"> 
 			<bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.add.president.jury.element"/>
 		</html:link>
 	</li>
+	<phd:activityAvailable process="<%= process %>" activity="<%= PhdThesisProcess.ValidateJury.class %>">
+		<li style="display: inline;">
+			<html:link action="/phdThesisProcess.do?method=prepareValidateJury" paramId="processId" paramName="process" paramProperty="externalId"> 
+				<bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.validate.jury"/>
+			</html:link>
+		</li>
+	</phd:activityAvailable>
+	<li style="display: inline;">
+		<html:link action="/phdThesisProcess.do?method=printJuryElementsDocument" paramId="processId" paramName="process" paramProperty="externalId"> 
+			<bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.print.jury.elements"/>
+		</html:link>
+	</li>
 </ul>
-
--> pedir data de validação do júri
-<html:link action="/phdThesisProcess.do?method=prepareValidateThesisJury" paramId="processId" paramName="process" paramProperty="externalId"> 
-	<bean:message bundle="PHD_RESOURCES" key="label.add"/>
-</html:link>,&nbsp;
-
-Se o júri está validado .... é que pode imprimir
-<html:link action="/phdThesisProcess.do?method=printJuryElementsDocument" paramId="processId" paramName="process" paramProperty="externalId"> 
-	<bean:message bundle="PHD_RESOURCES" key="label.add"/>
-</html:link>
-
-
-<br/><br/>
 
 <%--  ### End of Operation Area  ### --%>
 

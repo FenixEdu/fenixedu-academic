@@ -531,6 +531,7 @@
 	<slot name="qualification" />
 	<slot name="category" />
 	<slot name="workLocation" />
+	<slot name="institution" />
 	<slot name="address" />
 	<slot name="email" />
 	<slot name="phone" />
@@ -581,6 +582,7 @@
 	<slot name="qualification" />
 	<slot name="category" />
 	<slot name="workLocation" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="institution" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="address" />
 	<slot name="email">
 		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NotRequiredEmailValidator" />
@@ -600,6 +602,8 @@
 		<property name="minChars" value="4"/>				
 	</slot>
 	<slot name="title" />
+	<slot name="workLocation" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="institution" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 </schema>
 
 <!-- Public schemas -->
@@ -1353,5 +1357,6 @@
 	<slot name="createdBy" />
 	<slot name="whenUpdated" />
 	<slot name="updatedBy" />
+	<slot name="whenJuryValidated" />
 	<slot name="activeStateRemarks"/>
 </schema>

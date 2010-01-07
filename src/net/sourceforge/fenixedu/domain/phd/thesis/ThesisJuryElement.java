@@ -48,7 +48,7 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
 	 * assuring future modifications correctness
 	 */
 	for (final ThesisJuryElement element : participant.getThesisJuryElements()) {
-	    if (element.getProcess().equals(process)) {
+	    if (element.hasProcess() && element.getProcess().equals(process)) {
 		throw new DomainException("error.ThesisJuryElement.participant.already.has.jury.element.in.process");
 	    }
 	}
@@ -69,11 +69,11 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
     }
 
     protected void disconnect() {
-	
+
 	final PhdParticipant participant = getParticipant();
 	removeParticipant();
 	participant.tryDelete();
-	
+
 	removeProcess();
 	removeRootDomainObject();
     }
@@ -86,6 +86,10 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
 	return getParticipant().getName();
     }
 
+    public String getNameWithTitle() {
+	return getParticipant().getNameWithTitle();
+    }
+
     public String getQualification() {
 	return getParticipant().getQualification();
     }
@@ -96,6 +100,10 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
 
     public String getWorkLocation() {
 	return getParticipant().getWorkLocation();
+    }
+    
+    public String getInstitution() {
+	return getParticipant().getInstitution();
     }
 
     public String getAddress() {
@@ -123,30 +131,33 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
     }
 
     static public ThesisJuryElement create(final PhdThesisProcess process, final PhdThesisJuryElementBean bean) {
-	final PhdParticipant participant = getOrCreateParticipant(process, bean);
-	return new ThesisJuryElement().init(process, participant, bean);
+	return new ThesisJuryElement().init(process, getOrCreateParticipant(process, bean), bean);
     }
 
     private static PhdParticipant getOrCreateParticipant(final PhdThesisProcess process, final PhdThesisJuryElementBean bean) {
-	final PhdParticipant participant = !bean.hasParticipant() ? PhdParticipant.create(process.getIndividualProgramProcess(),
-		bean) : bean.getParticipant();
-	return participant;
+	return !bean.hasParticipant() ? PhdParticipant.create(process.getIndividualProgramProcess(), bean) : bean
+		.getParticipant();
+    }
+    
+    public boolean isGuidingOrAssistantGuiding() {
+	return getParticipant().isGuidingOrAssistantGuiding();
     }
 
     static public ThesisJuryElement createPresident(final PhdThesisProcess process, final PhdThesisJuryElementBean bean) {
-	
+
 	if (process.hasPresidentJuryElement()) {
 	    throw new DomainException("error.ThesisJuryElement.president.already.exists");
 	}
-	
+
 	final PhdParticipant participant = getOrCreateParticipant(process, bean);
 	final ThesisJuryElement element = new ThesisJuryElement();
-	
+
 	element.checkParticipant(process, participant);
 	element.setElementOrder(0);
 	element.setProcessForPresidentJuryElement(process);
 	element.setParticipant(participant);
-	
+	element.setReporter(false);
+
 	return element;
     }
 }

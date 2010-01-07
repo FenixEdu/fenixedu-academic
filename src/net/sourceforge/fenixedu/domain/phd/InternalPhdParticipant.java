@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.util.StringUtils;
 import dml.runtime.RelationAdapter;
 
 public class InternalPhdParticipant extends InternalPhdParticipant_Base {
@@ -33,12 +34,20 @@ public class InternalPhdParticipant extends InternalPhdParticipant_Base {
 	super();
     }
 
-    InternalPhdParticipant(PhdIndividualProgramProcess process, final Person person, final String title) {
+    InternalPhdParticipant(PhdIndividualProgramProcess process, PhdParticipantBean bean) {
 	this();
-	checkPerson(process, person);
+	checkPerson(process, bean.getPerson());
 	init(process);
-	setPerson(person);
-	setTitle(title);
+	setPerson(bean.getPerson());
+	setTitle(bean.getTitle());
+
+	if (!StringUtils.isEmpty(bean.getInstitution())) {
+	    setInstitution(bean.getInstitution());
+	}
+
+	if (!StringUtils.isEmpty(bean.getWorkLocation())) {
+	    setWorkLocation(bean.getWorkLocation());
+	}
     }
 
     private void checkPerson(PhdIndividualProgramProcess process, final Person person) {
@@ -79,13 +88,21 @@ public class InternalPhdParticipant extends InternalPhdParticipant_Base {
 
     @Override
     public String getWorkLocation() {
-	if (getPerson().hasEmployee()) {
+	if (super.getWorkLocation() != null) {
+	    return super.getWorkLocation();
+
+	} else if (getPerson().hasEmployee()) {
 	    final Unit workingPlace = getPerson().getEmployee().getCurrentWorkingPlace();
 	    if (workingPlace != null) {
 		workingPlace.getName();
 	    }
 	}
 	return null;
+    }
+
+    @Override
+    public String getInstitution() {
+	return super.getInstitution() != null ? super.getInstitution() : getRootDomainObject().getInstitutionUnit().getName();
     }
 
     @Override

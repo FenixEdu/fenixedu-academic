@@ -126,11 +126,13 @@
 			</phd:activityAvailable>
 			<%-- 
 			<phd:activityAvailable process="<%= process %>" activity="<%= PhdIndividualProgramProcess.RequestPublicThesisPresentation.class %>">
+			--%>
 				<li>
 					<html:link action="/phdIndividualProgramProcess.do?method=prepareRequestPublicThesisPresentation" paramId="processId" paramName="process" paramProperty="externalId">
 						<bean:message bundle="PHD_RESOURCES" key="label.phd.request.public.thesis.presentation"/>
 					</html:link>
 				</li>
+			<%--
 			</phd:activityAvailable>
 			--%>
 		</ul>

@@ -1,8 +1,11 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd.thesis.academicAdminOffice;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
@@ -18,11 +21,15 @@ import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess.RequestJuryRe
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess.SubmitJuryElements;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess.SubmitThesis;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess.SwapJuryElementsOrder;
+import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess.ValidateJury;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.thesis.CommonPhdThesisProcessDA;
+import net.sourceforge.fenixedu.presentationTier.docs.phd.thesis.PhdThesisJuryElementsDocument;
+import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -39,6 +46,8 @@ import pt.utl.ist.fenix.tools.util.Pair;
 @Forward(name = "manageThesisJuryElements", path = "/phd/thesis/academicAdminOffice/manageThesisJuryElements.jsp"),
 
 @Forward(name = "addJuryElement", path = "/phd/thesis/academicAdminOffice/addJuryElement.jsp"),
+
+@Forward(name = "validateJury", path = "/phd/thesis/academicAdminOffice/validateJury.jsp"),
 
 @Forward(name = "submitThesis", path = "/phd/thesis/academicAdminOffice/submitThesis.jsp"),
 
@@ -244,6 +253,47 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 	return manageThesisJuryElements(mapping, actionForm, request, response);
     }
 
+    public ActionForward prepareValidateJury(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final PhdThesisProcessBean bean = new PhdThesisProcessBean();
+	bean.setWhenJuryValidated(new LocalDate());
+	
+	request.setAttribute("thesisBean", bean);
+	return mapping.findForward("validateJury");
+    }
+
+    public ActionForward prepareValidateJuryInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("thesisBean", getRenderedObject("thesisBean"));
+	return mapping.findForward("validateJury");
+    }
+
+    public ActionForward validateJury(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	try {
+	    ExecuteProcessActivity.run(getProcess(request), ValidateJury.class, getRenderedObject("thesisBean"));
+
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getMessage(), e.getArgs());
+	    return prepareValidateJuryInvalid(mapping, actionForm, request, response);
+	}
+
+	return manageThesisJuryElements(mapping, actionForm, request, response);
+    }
+
+    public ActionForward printJuryElementsDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws IOException, JRException {
+
+	final PhdThesisJuryElementsDocument report = new PhdThesisJuryElementsDocument(getProcess(request));
+	
+	writeFile(response, report.getReportFileName() + ".pdf", "application/pdf", ReportsUtils
+		.exportToProcessedPdfAsByteArray(report));
+	
+	return null;
+    }
+    
     // end thesis jury elements management
 
     // Submit thesis

@@ -1,16 +1,20 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+
+<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisJuryElementBean"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<html:xhtml/>
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 <bean:define id="processId" name="process" property="externalId" />
 
 <%-- ### Title #### --%>
 <em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
-<h2><bean:message key="label.phd.thesis.add.president.jury.element" bundle="PHD_RESOURCES" /></h2>
+<h2><bean:message key="label.phd.thesis.jury.elements" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 
 
@@ -39,13 +43,29 @@
 
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 
-<strong><bean:message  key="label.phd.thesis.add.president.jury.element" bundle="PHD_RESOURCES"/></strong><br/>
+<fr:form action="<%= "/phdThesisProcess.do?processId=" + processId.toString() %>">
+	<input type="hidden" name="method" value="" />
 
-<jsp:include page="/phd/thesis/createJuryElement.jsp">
-	<jsp:param name="createMethod" value="addPresidentJuryElement" />
-	<jsp:param name="invalidMethod" value="prepareAddPresidentJuryElementInvalid" />
-	<jsp:param name="postbackMethod" value="prepareAddPresidentJuryElementPostback" />
-</jsp:include>
+	<fr:edit id="thesisBean" name="thesisBean">
+	
+		<fr:schema bundle="PHD_RESOURCES" type="<%= PhdThesisProcessBean.class.getName() %>">
+			<fr:slot name="whenJuryValidated" required="true" />
+			<fr:slot name="whenJuryDesignated" required="true" />
+		</fr:schema>
+	
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle2 thlight mtop15" />
+			<fr:property name="columnClasses" value=",,tdclear tderror1" />
+		</fr:layout>
+		
+		
+		<fr:destination name="invalid" path="<%= "/phdThesisProcess.do?method=prepareValidateJuryInvalid&processId=" + processId.toString() %>" />
+	</fr:edit>
+
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='validateJury';"><bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.validate"/></html:submit>
+	<html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='manageThesisJuryElements';"><bean:message bundle="PHD_RESOURCES" key="label.cancel"/></html:cancel>
+
+</fr:form>
 
 <%--  ### End of Operation Area  ### --%>
 

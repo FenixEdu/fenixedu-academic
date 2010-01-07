@@ -6,17 +6,21 @@ public class ExternalPhdParticipant extends ExternalPhdParticipant_Base {
 	super();
     }
 
-    ExternalPhdParticipant(PhdIndividualProgramProcess process, final String name, final String title,
-	    final String qualification, final String workLocation, final String email) {
+    ExternalPhdParticipant(PhdIndividualProgramProcess process, PhdParticipantBean bean) {
 	this();
 	init(process);
-	edit(name, title, qualification, workLocation, email);
+	edit(bean.getName(), bean.getTitle(), bean.getQualification(), bean.getWorkLocation(), bean.getInstitution(), bean
+		.getEmail());
+	edit(bean.getCategory(), bean.getAddress(), bean.getPhone());
     }
 
-    void edit(final String name, final String title, final String qualification, final String workLocation, final String email) {
+    void edit(final String name, final String title, final String qualification, final String workLocation,
+	    final String institution, final String email) {
+
 	check(name, "error.ExternalGuiding.invalid.name");
 	// check(qualification, "error.ExternalGuiding.invalid.qualification");
 	check(workLocation, "error.ExternalGuiding.invalid.workLocation");
+	check(institution, "error.ExternalGuiding.invalid.institution");
 	// check(email, "error.ExternalGuiding.invalid.email");
 
 	setName(name);

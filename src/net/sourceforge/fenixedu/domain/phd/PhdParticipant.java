@@ -20,8 +20,7 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
     }
 
     protected void init(PhdIndividualProgramProcess individualProcess) {
-	check(individualProcess, "error.net.sourceforge.fenixedu.domain.phd.PhdParticipant.individualProcess.cannot.be.null");
-
+	check(individualProcess, "error.PhdParticipant.individualProcess.cannot.be.null");
 	super.setIndividualProcess(individualProcess);
     }
 
@@ -43,8 +42,6 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
 
     abstract public String getCategory();
 
-    abstract public String getWorkLocation();
-
     abstract public String getAddress();
 
     abstract public String getEmail();
@@ -53,19 +50,6 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
 
     public String getNameWithTitle() {
 	return StringUtils.isEmpty(getTitle()) ? getName() : getTitle() + " " + getName();
-    }
-
-    static public PhdParticipant create(final PhdIndividualProgramProcess process, final PhdParticipantBean bean) {
-	if (bean.isInternal()) {
-	    return new InternalPhdParticipant(process, bean.getPerson(), bean.getTitle());
-	} else {
-	    final ExternalPhdParticipant participant = new ExternalPhdParticipant(process, bean.getName(), bean.getTitle(), bean
-		    .getQualification(), bean.getWorkLocation(), bean.getEmail());
-
-	    participant.edit(bean.getCategory(), bean.getAddress(), bean.getPhone());
-
-	    return participant;
-	}
     }
 
     public boolean isFor(Person person) {
@@ -86,16 +70,6 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
 	    super.setAccessHashCode(UUID.randomUUID().toString());
 	    super.setPassword(new GeneratePasswordBase().generatePassword(null));
 	}
-    }
-
-    static public PhdParticipant readByAccessHashCode(String hash) {
-	for (final PhdParticipant participant : RootDomainObject.getInstance().getPhdParticipants()) {
-	    if (participant.getAccessHashCode().equals(hash)) {
-		return participant;
-	    }
-	}
-
-	return null;
     }
 
     public void checkAccessCredentials(String email, String password) {
@@ -121,6 +95,28 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
 
     protected boolean canBeDeleted() {
 	return !(hasAnyThesisJuryElements() || hasProcessForGuiding() || hasProcessForAssistantGuiding());
+    }
+
+    public boolean isGuidingOrAssistantGuiding() {
+	return hasProcessForGuiding() || hasProcessForAssistantGuiding();
+    }
+
+    static public PhdParticipant create(final PhdIndividualProgramProcess process, final PhdParticipantBean bean) {
+	if (bean.isInternal()) {
+	    return new InternalPhdParticipant(process, bean);
+	} else {
+	    return new ExternalPhdParticipant(process, bean);
+	}
+    }
+
+    static public PhdParticipant readByAccessHashCode(String hash) {
+	for (final PhdParticipant participant : RootDomainObject.getInstance().getPhdParticipants()) {
+	    if (participant.getAccessHashCode().equals(hash)) {
+		return participant;
+	    }
+	}
+
+	return null;
     }
 
 }
