@@ -21,6 +21,17 @@
     <p><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.rectorateSubmission.noRequestsInBatch" /></p>
 </logic:empty>
 
+<logic:notEmpty name="actions">
+    <bean:define id="batchOid" name="batch" property="externalId" />
+    <ul class="mtop1">
+        <logic:iterate id="action" name="actions">
+            <li><html:link
+                action="<%= "/rectorateDocumentSubmission.do?method=" + action +  "&amp;batchOid=" + batchOid %>">
+                <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="<%= "link.rectorateSubmission." + action %>" />
+            </html:link></li>
+        </logic:iterate>
+    </ul>
+</logic:notEmpty>
 <logic:notEmpty name="requests">
     <fr:view name="requests">
         <fr:schema bundle="ACADEMIC_OFFICE_RESOURCES"
@@ -55,16 +66,4 @@
             <fr:property name="blankTarget(receive)" value="true" />
         </fr:layout>
     </fr:view>
-</logic:notEmpty>
-
-<logic:notEmpty name="actions">
-    <bean:define id="batchOid" name="batch" property="externalId" />
-    <ul>
-        <logic:iterate id="action" name="actions">
-            <li><html:link
-                action="<%= "/rectorateDocumentSubmission.do?method=" + action +  "&amp;batchOid=" + batchOid %>">
-                <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="<%= "link.rectorateSubmission." + action %>" />
-            </html:link></li>
-        </logic:iterate>
-    </ul>
 </logic:notEmpty>
