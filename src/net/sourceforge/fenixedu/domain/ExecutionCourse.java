@@ -321,6 +321,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	return null;
     }
 
+    public boolean hasAttendsFor(final Student student) {
+	return getAttendsByStudent(student) != null;
+    }
+
     public List<Exam> getAssociatedExams() {
 	List<Exam> associatedExams = new ArrayList<Exam>();
 
@@ -1607,10 +1611,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
 	return null;
     }
-    
-    public static boolean isEnrolled(Student student, ExecutionCourse executionCourse) {
-	return executionCourse.getAttendsByStudent(student) != null;
-    }
 
     public ExecutionYear getExecutionYear() {
 	return getExecutionPeriod().getExecutionYear();
@@ -2177,11 +2177,11 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	}
 	return null;
     }
-    
-    public boolean isDeletable(){
+
+    public boolean isDeletable() {
 	try {
-	return this.canBeDeleted();
-	}catch(DomainException e) {
+	    return this.canBeDeleted();
+	} catch (DomainException e) {
 	    return false;
 	}
 	/**

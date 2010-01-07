@@ -17,17 +17,20 @@ public class EnrollStudentInShifts extends FenixService {
 	final ShiftEnrollmentErrorReport errorReport = new ShiftEnrollmentErrorReport();
 
 	final Shift selectedShift = rootDomainObject.readShiftByOID(shiftId);
-	if ((registration == null) || (ExecutionCourse.isEnrolled(registration.getStudent(), selectedShift.getExecutionCourse()) == false)) {
+
+	if (selectedShift == null) {
+	    errorReport.getUnExistingShifts().add(shiftId);
+	    return errorReport;
+	}
+	
+	if (registration == null || !selectedShift.getExecutionCourse().hasAttendsFor(registration.getStudent())) {
 	    throw new StudentNotFoundServiceException();
 	}
-
+	
 	if (registration.getPayedTuition() == null || registration.getPayedTuition().equals(Boolean.FALSE)) {
 	    throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
 	}
 
-	if (selectedShift == null) {
-	    errorReport.getUnExistingShifts().add(shiftId);
-	}
 
 	final Shift shiftFromStudent = findShiftOfSameTypeForSameExecutionCourse(registration, selectedShift);
 
