@@ -48,14 +48,17 @@
 		</fr:form>
 	</p>
 	<p>
-		<logic:equal name="yearMonthToExport" property="canOpenMonth" value="true">
+	<%-- 	<logic:equal name="yearMonthToExport" property="canOpenMonth" value="true">
+	--%>
 			<fr:form action="/monthClosure.do?method=openMonth">
 				<fr:edit id="yearMonthToOpen" name="yearMonthToExport" schema="show.date" visible="false"/>
 				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.open" styleClass="invisible">
 					<bean:message key="button.openMonth" />
 				</html:submit>
 			</fr:form>
+			<%-- 
 		</logic:equal>
+		--%>
 	</p>
 	<p>	
 		<fr:form action="/monthClosure.do?method=exportClosedMonthFile">
