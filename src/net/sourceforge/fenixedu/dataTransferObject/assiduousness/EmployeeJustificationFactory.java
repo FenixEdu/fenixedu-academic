@@ -759,10 +759,10 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			    continue;
 			}
 
-			if (isOverlapingOtherJustification(assiduousness, duration, null)) {
+			if (isOverlapingAnOccurrenceLeave(assiduousness)) {
 			    result.append(assiduousness.getEmployee().getEmployeeNumber());
 			    result.append(" - ");
-			    result.append(bundle.getString("errors.overlapingOtherJustification"));
+			    result.append(bundle.getString("errors.overlapingAnOccurrenceJustification"));
 			    result.append("<br/>");
 			    continue;
 			}
@@ -781,6 +781,19 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 		}
 	    }
 	    return result.toString();
+	}
+
+	private boolean isOverlapingAnOccurrenceLeave(Assiduousness assiduousness) {
+	    final List<Leave> leaves = assiduousness.getLeaves(getBeginDate(), getBeginDate());
+	    if (!leaves.isEmpty()) {
+		for (Leave leave : leaves) {
+		    if (leave.getJustificationMotive().getJustificationType().equals(JustificationType.OCCURRENCE)
+			    && !leave.isAnulated()) {
+			return true;
+		    }
+		}
+	    }
+	    return false;
 	}
 
 	private boolean satisfiedStatus(Assiduousness assiduousness, LocalDate begin, LocalDate end) {
