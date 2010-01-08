@@ -125,23 +125,23 @@
 
 	<br/>
 	<strong><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.framing"/></strong>:
-	<pre><bean:write name="finalDegreeWorkProposal" property="framing"/></pre>
+	<pre width="100%"><bean:write name="finalDegreeWorkProposal" property="framing"/></pre>
 
 	<br/>
 	<strong><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.objectives"/></strong>:
-	<pre><bean:write name="finalDegreeWorkProposal" property="objectives"/></pre>
+	<pre width="100%"><bean:write name="finalDegreeWorkProposal" property="objectives"/></pre>
 
 	<br/>
 	<strong><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.description"/></strong>:
-	<pre><bean:write name="finalDegreeWorkProposal" property="description"/></pre>
+	<pre width="100%"><bean:write name="finalDegreeWorkProposal" property="description"/></pre>
 
 	<br/>
 	<strong><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.requirements"/></strong>:
-	<pre><bean:write name="finalDegreeWorkProposal" property="requirements"/></pre>
+	<pre width="100%"><bean:write name="finalDegreeWorkProposal" property="requirements"/></pre>
 
 	<br/>
 	<strong><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.deliverable"/></strong>:
-	<pre><bean:write name="finalDegreeWorkProposal" property="deliverable"/></pre>
+	<pre width="100%"><bean:write name="finalDegreeWorkProposal" property="deliverable"/></pre>
 
 	<br/>
 	<strong><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.url"/></strong>:
@@ -151,7 +151,7 @@
 
 	<br/>
 	<strong><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.observations"/></strong>:
-	<pre><bean:write name="finalDegreeWorkProposal" property="observations"/></pre>
+	<pre width="100%"><bean:write name="finalDegreeWorkProposal" property="observations"/></pre>
 
 	<br/>
 	<strong><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.location"/></strong>:
