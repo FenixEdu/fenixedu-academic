@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
+<bean:define id="thesisOid" name="thesis" property="externalId"/>
 <bean:define id="thesisId" name="thesis" property="idInternal"/>
 <bean:define id="degreeId" name="degreeId"/>
 <bean:define id="executionYearId" name="executionYearId"/>
@@ -56,6 +57,11 @@
 				</html:link>
     		</li>
     	</logic:notPresent>
+   		<li>
+        	<html:link href="<%= request.getContextPath() + String.format("/coordinator/manageThesis.do?method=printApprovalDocument&amp;executionYearId=%s&amp;thesisID=%s", executionYearId, thesisOid) %>">
+		        <bean:message bundle="APPLICATION_RESOURCES" key="label.coordinator.list.submitted.thesis.reprint"/>
+	    	</html:link>
+   		</li>
     </logic:present>
 </ul>
 
