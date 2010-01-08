@@ -6,6 +6,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
@@ -50,6 +51,15 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base {
     @Override
     public DocumentRequestType getDocumentRequestType() {
 	return DocumentRequestType.DIPLOMA_SUPPLEMENT_REQUEST;
+    }
+
+    @Override
+    final public String getDescription() {
+	final DegreeType degreeType = getDegreeType();
+	final CycleType requestedCycle = getRequestedCycle();
+
+	return getDescription(getAcademicServiceRequestType(), getDocumentRequestType().getQualifiedName() + "."
+		+ degreeType.name() + (degreeType.isComposite() ? "." + requestedCycle.name() : ""));
     }
 
     @Override
@@ -123,9 +133,9 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base {
 		registryRequest.getRegistryCode().addDocumentRequest(this);
 		getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
 	    }
-	    // if (getLastGeneratedDocument() == null) {
-	    // generateDocument();
-	    // }
+	    if (getLastGeneratedDocument() == null) {
+		generateDocument();
+	    }
 	}
     }
 }

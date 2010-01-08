@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServi
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.RegistryDiplomaRequestEvent;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
@@ -46,6 +47,15 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base {
 	    throw new DomainException("error.registryDiploma.alreadyHasDiplomaRequest");
 	if (getRegistration().getRegistryDiplomaRequest(bean.getRequestedCycle()) != this)
 	    throw new DomainException("error.registryDiploma.alreadyRequested");
+    }
+
+    @Override
+    final public String getDescription() {
+	final DegreeType degreeType = getDegreeType();
+	final CycleType requestedCycle = getRequestedCycle();
+
+	return getDescription(getAcademicServiceRequestType(), getDocumentRequestType().getQualifiedName() + "."
+		+ degreeType.name() + (degreeType.isComposite() ? "." + requestedCycle.name() : ""));
     }
 
     @Override
