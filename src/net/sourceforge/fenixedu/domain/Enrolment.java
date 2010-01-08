@@ -31,6 +31,7 @@ import net.sourceforge.fenixedu.domain.log.EnrolmentEvaluationLog;
 import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CreditsDismissal;
@@ -1482,11 +1483,28 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     final public Proposal getDissertationProposal() {
-	final ExecutionYear previousExecutionYear = getExecutionYear().getPreviousExecutionYear();
-	if (previousExecutionYear == null) {
-	    return null;
+	final Registration registration = getRegistration();
+	final Proposal proposal = getDissertationProposal(registration, getExecutionYear());
+	if (proposal != null) {
+	    return proposal;
 	}
-	return getRegistration().getDissertationProposal(previousExecutionYear);
+	final Student student = registration.getStudent();
+	for (final Registration otherRegistration : student.getRegistrationsSet()) {
+	    final Proposal otherProposal = getDissertationProposal(otherRegistration, getExecutionYear());
+	    if (otherProposal != null) {
+		return otherProposal;
+	    }	    
+	}
+	return null;
+    }
+
+    public static Proposal getDissertationProposal(final Registration registration, final ExecutionYear executionYear) {
+	final Proposal proposal = registration.getDissertationProposal(executionYear);
+	if (proposal != null) {
+	    return proposal;
+	}
+	final ExecutionYear previousExecutionYear = executionYear.getPreviousExecutionYear();
+	return previousExecutionYear == null ? null : getDissertationProposal(registration, previousExecutionYear);
     }
 
     public Thesis getPreviousYearThesis() {
