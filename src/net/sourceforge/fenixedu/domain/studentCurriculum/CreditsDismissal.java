@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.log.CreditsDismissalLog;
@@ -129,5 +130,10 @@ public class CreditsDismissal extends CreditsDismissal_Base {
     protected void createCurriculumLineLog(final EnrolmentAction action) {
 	new CreditsDismissalLog(action, getRegistration(), getCurriculumGroup(), getCredits(), getExecutionPeriod(),
 		getCurrentUser());
+    }
+
+    @Override
+    public Grade getEctsGrade() {
+	return getStudentCurricularPlan().getDegree().convertGradeToEcts(this, getGrade());
     }
 }

@@ -41,7 +41,6 @@ import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
-import net.sourceforge.fenixedu.domain.degreeStructure.EctsConversionTable;
 import net.sourceforge.fenixedu.domain.degreeStructure.EctsCycleGraduationGradeConversionTable;
 import net.sourceforge.fenixedu.domain.degreeStructure.EctsGraduationGradeConversionTable;
 import net.sourceforge.fenixedu.domain.degreeStructure.EctsInstitutionByCurricularYearConversionTable;
@@ -1704,8 +1703,8 @@ public class Unit extends Unit_Base {
     // root institution.
     public Grade convertGradeToEcts(CurriculumLine curriculumLine, Grade grade) {
 	ExecutionYear executionYear = curriculumLine.getExecutionYear();
-	CurricularYear curricularYear = CurricularYear.readByYear(curriculumLine.getRegistration().getCurricularYear(
-		executionYear));
+	CurricularYear curricularYear = CurricularYear.readByYear(curriculumLine.getParentCycleCurriculumGroup().getCurriculum(
+		executionYear).getCurricularYear());
 	CycleType cycleType = curriculumLine.getParentCycleCurriculumGroup().getCycleType();
 	EctsInstitutionByCurricularYearConversionTable table = getEctsCourseConversionTable(executionYear.getAcademicInterval(),
 		cycleType, curricularYear);

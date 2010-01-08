@@ -303,4 +303,23 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 	new DismissalLog(action, getRegistration(), getCurricularCourse(), getCredits(), getExecutionPeriod(), getCurrentUser());
     }
 
+    public Grade getEctsGrade() {
+	Grade grade = getGrade();
+	return getCurricularCourse().convertGradeToEcts(this, grade);
+    }
+
+    public String getEnrolmentTypeName() {
+	if (isExtraCurricular()) {
+	    return "EXTRA_CURRICULAR_ENROLMENT";
+	} else if (isOptional()) {
+	    return "ENROLMENT_IN_OPTIONAL_DEGREE_MODULE";
+	} else {
+	    return "COMPULSORY_ENROLMENT";
+	}
+    }
+
+    public boolean isAnual() {
+	final CurricularCourse curricularCourse = getCurricularCourse();
+	return curricularCourse != null && curricularCourse.isAnual();
+    }
 }

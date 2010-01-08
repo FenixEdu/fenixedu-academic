@@ -71,31 +71,36 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 
     public ActionForward printDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws JRException, IOException, FenixFilterException, FenixServiceException {
-
 	final DocumentRequest documentRequest = getDocumentRequest(request);
-	final List<AdministrativeOfficeDocument> documents = (List<AdministrativeOfficeDocument>) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
-		.create(documentRequest);
-	for (final AdministrativeOfficeDocument document : documents) {
-	    document.addParameter("path", getServlet().getServletContext().getRealPath("/"));
+	try {
+	    final List<AdministrativeOfficeDocument> documents = (List<AdministrativeOfficeDocument>) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
+		    .create(documentRequest);
+	    for (final AdministrativeOfficeDocument document : documents) {
+		document.addParameter("path", getServlet().getServletContext().getRealPath("/"));
+	    }
+
+	    final AdministrativeOfficeDocument[] array = {};
+	    byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(documents.toArray(array));
+
+	    DocumentRequestGeneratedDocument.store(documentRequest, documents.iterator().next().getReportFileName() + ".pdf",
+		    data);
+	    response.setContentLength(data.length);
+	    response.setContentType("application/pdf");
+	    response.addHeader("Content-Disposition", "attachment; filename=" + documents.iterator().next().getReportFileName()
+		    + ".pdf");
+
+	    final ServletOutputStream writer = response.getOutputStream();
+	    writer.write(data);
+	    writer.flush();
+	    writer.close();
+
+	    response.flushBuffer();
+	    return mapping.findForward("");
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getKey());
+	    request.setAttribute("registration", documentRequest.getRegistration());
+	    return mapping.findForward("viewRegistrationDetails");
 	}
-
-	final AdministrativeOfficeDocument[] array = {};
-	byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(documents.toArray(array));
-
-	DocumentRequestGeneratedDocument.store(documentRequest, documents.iterator().next().getReportFileName() + ".pdf", data);
-	response.setContentLength(data.length);
-	response.setContentType("application/pdf");
-	response.addHeader("Content-Disposition", "attachment; filename=" + documents.iterator().next().getReportFileName()
-		+ ".pdf");
-
-	final ServletOutputStream writer = response.getOutputStream();
-	writer.write(data);
-	writer.flush();
-	writer.close();
-
-	response.flushBuffer();
-
-	return mapping.findForward("");
     }
 
     public ActionForward prepareConcludeDocumentRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

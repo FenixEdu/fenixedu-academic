@@ -269,8 +269,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     public Grade convertGradeToEcts(CurriculumLine curriculumLine, Grade grade) {
 	ExecutionYear executionYear = curriculumLine.getExecutionYear();
-	CurricularYear curricularYear = CurricularYear.readByYear(curriculumLine.getRegistration().getCurricularYear(
-		executionYear));
+	CurricularYear curricularYear = CurricularYear.readByYear(curriculumLine.getParentCycleCurriculumGroup().getCurriculum(
+		executionYear).getCurricularYear());
 	EctsDegreeByCurricularYearConversionTable table = getEctsCourseConversionTable(executionYear.getAcademicInterval(),
 		curricularYear);
 	if (table != null)
