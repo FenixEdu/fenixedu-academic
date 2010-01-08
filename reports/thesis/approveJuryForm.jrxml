@@ -48,6 +48,8 @@
 	<parameter name="vowel3Affiliation" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="date" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="author" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="ccDate" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="ccAuthor" isForPrompting="false" class="java.lang.String"/>
 
 
 		<group  name="a" isReprintHeaderOnEachPage="true" >
@@ -272,7 +274,25 @@
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 </graphicElement>
 				</line>
-				<staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="161"
+						y="385"
+						width="469"
+						height="37"
+						key="staticText-116"
+						positionType="FixRelativeToBottom"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font fontName="Verdana" pdfFontName="Helvetica" size="10" isPdfEmbedded ="true" pdfEncoding ="Cp1252"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Nome: " + $P{ccAuthor}]]></textFieldExpression>
+				</textField>
+				<textField>
 					<reportElement
 						x="0"
 						y="385"
@@ -288,10 +308,26 @@
 					<textElement>
 						<font fontName="Verdana" pdfFontName="Helvetica" size="10" isPdfEmbedded ="true" pdfEncoding ="Cp1252"/>
 					</textElement>
-				<text><![CDATA[Data:                                                 Nome: 
-
-Assinatura: ]]></text>
-				</staticText>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Data: " + $P{ccDate}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement
+						x="0"
+						y="405"
+						width="469"
+						height="37"
+						key="staticText-226"
+						positionType="FixRelativeToBottom"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font fontName="Verdana" pdfFontName="Helvetica" size="10" isPdfEmbedded ="true" pdfEncoding ="Cp1252"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Assinatura: "]]></textFieldExpression>
+				</textField>
 				<staticText>
 					<reportElement
 						x="0"
