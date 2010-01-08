@@ -724,8 +724,9 @@ public class Person extends Person_Base {
 	if (employee != null) {
 	    Department department = employee.getLastDepartmentWorkingPlace(executionYear.getBeginDateYearMonthDay(),
 		    executionYear.getEndDateYearMonthDay());
-	    groups.addAll(department.getVigilantGroupsForGivenExecutionYear(executionYear));
-
+	    if (department != null) {
+		groups.addAll(department.getVigilantGroupsForGivenExecutionYear(executionYear));
+	    }
 	} else {
 	    for (VigilantWrapper vigilantWrapper : this.getVigilantWrapperForExecutionYear(executionYear)) {
 		groups.add(vigilantWrapper.getVigilantGroup());
