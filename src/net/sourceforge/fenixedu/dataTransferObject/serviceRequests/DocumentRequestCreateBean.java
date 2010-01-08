@@ -14,14 +14,12 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
-import net.sourceforge.fenixedu.domain.person.PersonNamePart;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentPurposeType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.student.MobilityProgram;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.util.Money;
-import net.sourceforge.fenixedu.util.StringFormatter;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
@@ -285,10 +283,10 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
     @Override
     protected void setRegistration(Registration registration) {
 	super.setRegistration(registration);
-	String[] parts = PersonNamePart.getNameParts(registration.getStudent().getPerson().getPersonName().getName());
+	String[] parts = registration.getStudent().getPerson().getName().split("\\s+");
 	int split = parts.length > 3 ? 2 : 1;
-	setGivenNames(StringFormatter.prettyPrint(StringUtils.join(Arrays.copyOfRange(parts, 0, split), " ")));
-	setFamilyNames(StringFormatter.prettyPrint(StringUtils.join(Arrays.copyOfRange(parts, split, parts.length), " ")));
+	setGivenNames(StringUtils.join(Arrays.copyOfRange(parts, 0, split), " "));
+	setFamilyNames(StringUtils.join(Arrays.copyOfRange(parts, split, parts.length), " "));
     }
 
     public void validateNames() {
