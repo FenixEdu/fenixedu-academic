@@ -18,14 +18,15 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecu
 import net.sourceforge.fenixedu.applicationTier.Servico.content.CreateMetaDomainObectTypes;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Login;
-import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.PendingRequest;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitNamePart;
 import net.sourceforge.fenixedu.domain.person.PersonNamePart;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
+import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
 import pt.ist.fenixWebFramework.FenixWebFramework;
 import pt.ist.fenixframework.pstm.Transaction;
 import pt.utl.ist.fenix.tools.util.FileUtils;
@@ -37,6 +38,7 @@ import pt.utl.ist.fenix.tools.util.FileUtils;
  */
 public class StartupServlet extends HttpServlet {
 
+    @Override
     public void init(ServletConfig config) throws ServletException {
 	// Custodian.registerPID();
 
@@ -45,18 +47,18 @@ public class StartupServlet extends HttpServlet {
 	String domainModelPath = getServletContext().getRealPath(getInitParameter("domainmodel"));
 	FenixWebFramework.initialize(PropertiesManager.getFenixFrameworkConfig(domainModelPath));
 
-	try{
+	try {
 	    final InputStream inputStream = Authenticate.class.getResourceAsStream("/.build.version");
 	    PendingRequest.buildVersion = FileUtils.readFile(inputStream);
-	}catch(java.io.IOException e){
+	} catch (java.io.IOException e) {
 	    throw new ServletException("Unable to load build version file");
 	}
-	     
+
 	FenixService.init(RootDomainObject.getInstance());
 
 	try {
 	    try {
-		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) ReadCurrentExecutionPeriod.run();
+		InfoExecutionPeriod infoExecutionPeriod = ReadCurrentExecutionPeriod.run();
 		config.getServletContext().setAttribute(PresentationConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
 
 		setScheduleForGratuitySituationCreation();
@@ -75,7 +77,7 @@ public class StartupServlet extends HttpServlet {
 	    }
 
 	    try {
-		final Boolean result = (Boolean) CheckIsAliveService.run();
+		final Boolean result = CheckIsAliveService.run();
 
 		if (result != null && result.booleanValue()) {
 		    System.out.println("Check is alive is working.");
@@ -86,6 +88,7 @@ public class StartupServlet extends HttpServlet {
 		System.out.println("Check is alive is not working. Caught excpetion.");
 		ex.printStackTrace();
 	    }
+	    FenixReport.setRealPath(getServletContext().getRealPath("/"));
 
 	    loadLogins();
 	    loadPersonNames();
@@ -121,7 +124,7 @@ public class StartupServlet extends HttpServlet {
 	    unitName.getName();
 	}
 	end = System.currentTimeMillis();
-	System.out.println("Load of all units took: " + (end - start) + "ms.");	
+	System.out.println("Load of all units took: " + (end - start) + "ms.");
     }
 
     private void loadRoles() {
@@ -135,6 +138,7 @@ public class StartupServlet extends HttpServlet {
 
 	TimerTask gratuitySituationCreatorTask = new TimerTask() {
 
+	    @Override
 	    public void run() {
 		try {
 		    try {

@@ -75,10 +75,6 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	try {
 	    final List<AdministrativeOfficeDocument> documents = (List<AdministrativeOfficeDocument>) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
 		    .create(documentRequest);
-	    for (final AdministrativeOfficeDocument document : documents) {
-		document.addParameter("path", getServlet().getServletContext().getRealPath("/"));
-	    }
-
 	    final AdministrativeOfficeDocument[] array = {};
 	    byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(documents.toArray(array));
 
