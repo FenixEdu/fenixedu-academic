@@ -310,7 +310,8 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	}
 	final String content = mls.hasContent(getLanguage()) && !StringUtils.isEmpty(mls.getContent(getLanguage())) ? mls
 		.getContent(getLanguage()) : mls.getContent();
-	return convert(content);
+	return content;
+	// return convert(content);
     }
 
     protected String convert(final String content) {
