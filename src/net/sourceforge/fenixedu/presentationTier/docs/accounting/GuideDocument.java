@@ -15,13 +15,11 @@ import pt.utl.ist.fenix.tools.resources.IMessageResourceProvider;
 
 public class GuideDocument extends FenixReport {
 
-    private PaymentsManagementDTO paymentsManagementDTO;
+    private final PaymentsManagementDTO paymentsManagementDTO;
 
-    private IMessageResourceProvider messageResourceProvider;
+    private final IMessageResourceProvider messageResourceProvider;
 
-    private Unit unit;
-
-    private String basePath;
+    private final Unit unit;
 
     public static class GuideDocumentEntry {
 	private String description;
@@ -57,14 +55,11 @@ public class GuideDocument extends FenixReport {
     private static final long serialVersionUID = 1L;
 
     public GuideDocument(final PaymentsManagementDTO paymentsManagementDTO, final Unit unit,
-	    final IMessageResourceProvider messageResourceProvider, final String basePath) {
+	    final IMessageResourceProvider messageResourceProvider) {
 	this.paymentsManagementDTO = paymentsManagementDTO;
 	this.unit = unit;
 	this.messageResourceProvider = messageResourceProvider;
-	this.basePath = basePath;
-
 	fillReport();
-
     }
 
     @Override
@@ -77,7 +72,6 @@ public class GuideDocument extends FenixReport {
 	addParameter("documentIdType", this.paymentsManagementDTO.getPerson().getIdDocumentType().getLocalizedName());
 	addParameter("documentIdNumber", this.paymentsManagementDTO.getPerson().getDocumentIdNumber());
 	addParameter("name", this.paymentsManagementDTO.getPerson().getName());
-	addParameter("path", this.basePath);
 	addParameter("studentNumber", this.paymentsManagementDTO.getPerson().hasStudent() ? this.paymentsManagementDTO
 		.getPerson().getStudent().getNumber().toString() : null);
 

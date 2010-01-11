@@ -16,13 +16,11 @@ import pt.utl.ist.fenix.tools.resources.IMessageResourceProvider;
 
 public class ReceiptDocument extends FenixReport {
 
-    private Receipt receipt;
+    private final Receipt receipt;
 
-    private IMessageResourceProvider messageResourceProvider;
+    private final IMessageResourceProvider messageResourceProvider;
 
-    private String basePath;
-
-    private boolean original;
+    private final boolean original;
 
     public static class ReceiptDocumentEntry {
 	private String description;
@@ -57,11 +55,9 @@ public class ReceiptDocument extends FenixReport {
      */
     private static final long serialVersionUID = 1L;
 
-    public ReceiptDocument(final Receipt receipt, final IMessageResourceProvider messageResourceProvider, final String basePath,
-	    boolean original) {
+    public ReceiptDocument(final Receipt receipt, final IMessageResourceProvider messageResourceProvider, boolean original) {
 	this.receipt = receipt;
 	this.messageResourceProvider = messageResourceProvider;
-	this.basePath = basePath;
 	this.original = original;
 
 	fillReport();
@@ -78,8 +74,6 @@ public class ReceiptDocument extends FenixReport {
 	addParameter("documentIdType", this.receipt.getPerson().getIdDocumentType().getLocalizedName());
 	addParameter("documentIdNumber", this.receipt.getPerson().getDocumentIdNumber());
 	addParameter("name", this.receipt.getPerson().getName());
-
-	addParameter("path", this.basePath);
 
 	addParameter("number", this.receipt.getNumberWithSeries());
 	addParameter("year", this.receipt.getYear().toString());
@@ -101,8 +95,8 @@ public class ReceiptDocument extends FenixReport {
 	    addParameter("contributorSocialSecurityNumber", Receipt.GENERIC_CONTRIBUTOR_PARTY_NUMBER);
 	}
 
-	addParameter("studentNumber", this.receipt.getPerson().hasStudent() ? this.receipt.getPerson().getStudent().getNumber().toString()
-		: null);
+	addParameter("studentNumber", this.receipt.getPerson().hasStudent() ? this.receipt.getPerson().getStudent().getNumber()
+		.toString() : null);
 
 	addDataSourceElements(buildEntries());
 

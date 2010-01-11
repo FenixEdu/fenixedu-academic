@@ -15,13 +15,11 @@ import pt.utl.ist.fenix.tools.resources.IMessageResourceProvider;
 
 public class CreditNoteDocument extends FenixReport {
 
-    private CreditNote creditNote;
+    private final CreditNote creditNote;
 
-    private IMessageResourceProvider messageResourceProvider;
+    private final IMessageResourceProvider messageResourceProvider;
 
-    private String basePath;
-
-    private boolean original;
+    private final boolean original;
 
     public static class CreditNoteDocumentEntry {
 	private String description;
@@ -57,10 +55,9 @@ public class CreditNoteDocument extends FenixReport {
     private static final long serialVersionUID = 1L;
 
     public CreditNoteDocument(final CreditNote creditNote, final IMessageResourceProvider messageResourceProvider,
-	    final String basePath, boolean original) {
+	    boolean original) {
 	this.creditNote = creditNote;
 	this.messageResourceProvider = messageResourceProvider;
-	this.basePath = basePath;
 	this.original = original;
 
 	fillReport();
@@ -72,8 +69,6 @@ public class CreditNoteDocument extends FenixReport {
 	addParameter("documentIdType", this.creditNote.getReceipt().getPerson().getIdDocumentType().getLocalizedName());
 	addParameter("documentIdNumber", this.creditNote.getReceipt().getPerson().getDocumentIdNumber());
 	addParameter("name", this.creditNote.getReceipt().getPerson().getName());
-
-	addParameter("path", this.basePath);
 
 	addParameter("ownerUnit", this.creditNote.getReceipt().getOwnerUnit().getName());
 	addParameter("ownerUnitCostCenter", this.creditNote.getReceipt().getOwnerUnit().getCostCenterCode().toString());

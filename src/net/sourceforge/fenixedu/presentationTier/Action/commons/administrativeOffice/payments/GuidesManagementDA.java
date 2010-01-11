@@ -18,11 +18,11 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 
-@Forwards( {
-    	@Forward(name = "showGuide", path = "/academicAdminOffice/payments/guides/showGuide.jsp"),
+@Forwards( { @Forward(name = "showGuide", path = "/academicAdminOffice/payments/guides/showGuide.jsp"),
 	@Forward(name = "showEvents", path = "/payments.do?method=showEvents") })
 public abstract class GuidesManagementDA extends PaymentsManagementDispatchAction {
 
+    @Override
     public ActionForward preparePrintGuide(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
@@ -46,7 +46,7 @@ public abstract class GuidesManagementDA extends PaymentsManagementDispatchActio
 		.getMetaObject().getObject();
 
 	final GuideDocument document = new GuideDocument(managementDTO, getCurrentUnit(request),
-		getMessageResourceProvider(request), getServlet().getServletContext().getRealPath("/"));
+		getMessageResourceProvider(request));
 	final byte[] data = ReportsUtils.exportToProcessedPdfAsByteArray(document);
 
 	response.setContentLength(data.length);

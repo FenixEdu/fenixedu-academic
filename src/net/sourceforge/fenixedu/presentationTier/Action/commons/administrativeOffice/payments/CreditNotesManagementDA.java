@@ -29,8 +29,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 
-@Forwards( {
-	@Forward(name = "list", path = "/academicAdminOffice/payments/creditNotes/listCreditNotes.jsp"),
+@Forwards( { @Forward(name = "list", path = "/academicAdminOffice/payments/creditNotes/listCreditNotes.jsp"),
 	@Forward(name = "create", path = "/academicAdminOffice/payments/creditNotes/createCreditNote.jsp"),
 	@Forward(name = "show", path = "/academicAdminOffice/payments/creditNotes/showCreditNote.jsp"),
 	@Forward(name = "prepareShowReceipt", path = "/receipts.do?method=prepareShowReceipt") })
@@ -148,10 +147,8 @@ public abstract class CreditNotesManagementDA extends PaymentsManagementDispatch
 
 	try {
 
-	    final CreditNoteDocument original = new CreditNoteDocument(creditNote, getMessageResourceProvider(request),
-		    getServlet().getServletContext().getRealPath("/"), true);
-	    final CreditNoteDocument duplicate = new CreditNoteDocument(creditNote, getMessageResourceProvider(request),
-		    getServlet().getServletContext().getRealPath("/"), false);
+	    final CreditNoteDocument original = new CreditNoteDocument(creditNote, getMessageResourceProvider(request), true);
+	    final CreditNoteDocument duplicate = new CreditNoteDocument(creditNote, getMessageResourceProvider(request), false);
 
 	    final byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(original, duplicate);
 

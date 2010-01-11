@@ -221,10 +221,8 @@ public abstract class ReceiptsManagementDA extends PaymentsManagementDispatchAct
 	final Receipt receipt = (Receipt) getRenderedObject("receipt");
 	try {
 
-	    final ReceiptDocument original = new ReceiptDocument(receipt, getMessageResourceProvider(request), getServlet()
-		    .getServletContext().getRealPath("/"), true);
-	    final ReceiptDocument duplicate = new ReceiptDocument(receipt, getMessageResourceProvider(request), getServlet()
-		    .getServletContext().getRealPath("/"), false);
+	    final ReceiptDocument original = new ReceiptDocument(receipt, getMessageResourceProvider(request), true);
+	    final ReceiptDocument duplicate = new ReceiptDocument(receipt, getMessageResourceProvider(request), false);
 
 	    final byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(original, duplicate);
 
