@@ -56,14 +56,12 @@
             <fr:property name="param(view)" value="registration.idInternal/registrationID" />
             <fr:property name="key(view)" value="link.rectorateSubmission.viewRegistration" />
             <fr:property name="bundle(view)" value="ACADEMIC_OFFICE_RESOURCES" />
-            <fr:property name="blankTarget(view)" value="true" />
             <fr:property name="link(receive)"
                 value="/academicServiceRequestsManagement.do?method=prepareReceiveAcademicServiceRequest" />
             <fr:property name="param(receive)" value="idInternal/academicServiceRequestId" />
             <fr:property name="key(receive)" value="link.rectorateSubmission.receive" />
             <fr:property name="bundle(receive)" value="ACADEMIC_OFFICE_RESOURCES" />
             <fr:property name="visibleIf(receive)" value="activeSituation.sentToExternalEntity" />
-            <fr:property name="blankTarget(receive)" value="true" />
         </fr:layout>
     </fr:view>
 </logic:notEmpty>
