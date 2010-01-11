@@ -7,8 +7,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -363,14 +365,17 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 	UploadBean bean = (UploadBean) getRenderedObject("uploadBean");
 	RenderUtils.invalidateViewState("uploadBean");
 	fixBadData();
+	int[] registers = new int[2];
 	try {
-	    process(FileUtils.copyToTemporaryFile(bean.getInputStream()));
+	    registers = process(FileUtils.copyToTemporaryFile(bean.getInputStream()));
 	} catch (FileNotFoundException e) {
 	    e.printStackTrace();
 	} catch (IOException e) {
 	    e.printStackTrace();
 	}
 	request.setAttribute("readingComplete", true);
+	request.setAttribute("createdRegisters", registers[0]);
+	request.setAttribute("notCreatedRegisters", registers[1]);
 	return mapping.findForward("uploadCardInfo");
     }
 
@@ -387,12 +392,19 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
     }
 
     @Service
-    private void process(final File file) throws FileNotFoundException, IOException {
+    private int[] process(final File file) throws FileNotFoundException, IOException {
 	final String contents = FileUtils.readFile(new FileInputStream(file));
 	final String[] lines = contents.split("\n");
+	int[] registers = new int[2];
 	for (final String line : lines) {
-	    new CardEmissionEntry(line);
+	    CardEmissionEntry cardEmissionEntry = new CardEmissionEntry(line);
+	    if(cardEmissionEntry.createdRegister) {
+		++registers[0];
+	    } else {
+		++registers[1];
+	    }
 	}
+	return registers;
     }
 
     private static class CardEmissionEntry {
@@ -400,6 +412,8 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 	final Set<CardGenerationEntry> cardGenerationEntries = new HashSet<CardGenerationEntry>();
 
 	final String line;
+	
+	boolean createdRegister = false;
 
 	private CardEmissionEntry(final String line) {
 	    this.line = line;
@@ -487,11 +501,12 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 		    // Checking for the possibility of the same file submited twice
 		    boolean repetition = false;
 		    for(CardGenerationRegister cgr : person.getCardGenerationRegister()) {
-			if(emission.compareTo(cgr.getEmission()) == 0) {
+			if((cgr.getEmission() != null) && emission.compareTo(cgr.getEmission()) == 0) {
 			    repetition = true;
 			}
 		    }
-		    if(!repetition) {
+		    if(!repetition && (emission != null)) {
+			createdRegister = true;
 			new CardGenerationRegister(person, identifier, emission, withAccountInformation);
 		    }
 		}

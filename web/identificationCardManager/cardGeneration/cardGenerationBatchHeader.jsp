@@ -9,3 +9,4 @@
 <th><bean:message bundle="CARD_GENERATION_RESOURCES" key="label.card.generation.batch.sent"/></th>
 <th><bean:message bundle="CARD_GENERATION_RESOURCES" key="label.card.generation.batch.number.entries"/></th>
 <th><bean:message bundle="CARD_GENERATION_RESOURCES" key="label.card.generation.batch.number.problems"/></th>
+<th><bean:message bundle="CARD_GENERATION_RESOURCES" key="label.card.generation.batch.issued"/></th>

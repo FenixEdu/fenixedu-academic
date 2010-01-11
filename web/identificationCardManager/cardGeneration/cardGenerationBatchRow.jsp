@@ -57,4 +57,7 @@
 		<bean:size id="numberProblems" name="cardGenerationBatch" property="cardGenerationProblems"/>
    		<bean:write name="numberProblems"/>
 	</td>
+	<td>
+		<bean:write name="cardGenerationBatch" property="numberOfIssuedCards"/>
+	</td>	
 </logic:present>

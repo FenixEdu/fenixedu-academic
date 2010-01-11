@@ -133,6 +133,14 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
 	    }
 	}
     }
+    
+    public int getNumberOfIssuedCards() {
+	int result = 0;
+	for(CardGenerationEntry cardGenerationEntry : getCardGenerationEntries()) {
+	    result += cardGenerationEntry.getNumberOfCGRsAfterThisCGEAndBeforeTheNextCGE();
+	}
+	return result;
+    }
 
     private StudentCurricularPlan findStudentCurricularPlan(final Student student) {
 	final ExecutionYear executionYear = this.getExecutionYear();

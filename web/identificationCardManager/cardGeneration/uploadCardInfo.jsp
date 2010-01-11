@@ -38,4 +38,22 @@
 			<bean:message key="message.card.generation.info.upload.conclusion.text" bundle="CARD_GENERATION_RESOURCES"/>
 		</p>
 	</div>
+	<table class="tstyle4 thlight tdcenter mtop05">
+		<tr>
+			<th>
+				<bean:message key="message.number.of.created.registers" bundle="CARD_GENERATION_RESOURCES"/>
+			</th>
+			<th>
+				<bean:message key="message.number.of.not.created.registers" bundle="CARD_GENERATION_RESOURCES"/>
+			</th>
+		</tr>
+		<tr>
+			<td>
+				<bean:write name="createdRegisters"/>
+			</td>
+			<td>
+				<bean:write name="notCreatedRegisters"/>
+			</td>
+		</tr>
+	</table>
 </logic:present>
