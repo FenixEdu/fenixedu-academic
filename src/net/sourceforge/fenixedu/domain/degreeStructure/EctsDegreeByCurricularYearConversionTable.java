@@ -40,4 +40,9 @@ public class EctsDegreeByCurricularYearConversionTable extends EctsDegreeByCurri
 		new EctsComparabilityTable(table));
     }
 
+    @Override
+    public CycleType getCycle() {
+	throw new UnsupportedOperationException();
+    }
+
 }

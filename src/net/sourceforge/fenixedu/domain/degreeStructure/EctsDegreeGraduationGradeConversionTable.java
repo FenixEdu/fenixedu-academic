@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
+import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -59,5 +60,10 @@ public class EctsDegreeGraduationGradeConversionTable extends EctsDegreeGraduati
 	}
 	return new EctsDegreeGraduationGradeConversionTable(degree, executionInterval, cycle, new EctsComparabilityTable(table),
 		new EctsComparabilityPercentages(percentages));
+    }
+
+    @Override
+    public CurricularYear getCurricularYear() {
+	throw new UnsupportedOperationException();
     }
 }

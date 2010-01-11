@@ -30,6 +30,13 @@
 	  		<bean:message key="link.reports.by.degree.type" bundle="GEP_RESOURCES" />
 	  	</html:link>
 	</li>
+	<!--
+    <li>
+        <html:link page="/manageEctsComparabilityTables.do?method=index">
+            <bean:message key="link.ects.management" bundle="GEP_RESOURCES" />
+        </html:link>
+    </li>
+    -->
 
 	<li class="navheader">
 		<bean:message key="label.inquiries" bundle="INQUIRIES_RESOURCES"/>

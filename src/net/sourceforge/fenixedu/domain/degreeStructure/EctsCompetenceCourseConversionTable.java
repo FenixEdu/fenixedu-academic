@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
+import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
@@ -35,5 +36,15 @@ public class EctsCompetenceCourseConversionTable extends EctsCompetenceCourseCon
 	    }
 	}
 	return new EctsCompetenceCourseConversionTable(competence, executionInterval, new EctsComparabilityTable(table));
+    }
+
+    @Override
+    public CurricularYear getCurricularYear() {
+	throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public CycleType getCycle() {
+	throw new UnsupportedOperationException();
     }
 }
