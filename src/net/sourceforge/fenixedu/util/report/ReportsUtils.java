@@ -264,6 +264,15 @@ public class ReportsUtils extends PropertiesManager {
 	aux = createFont("Arial Black", "Arial_Black.ttf");
 	result.put(aux.getLeft(), aux.getRight());
 
+	aux = createFont("Lucida Handwriting", "LucidaHandwrit.ttf");
+	result.put(aux.getLeft(), aux.getRight());
+
+	aux = createFont("Garamond", "AGaramond.ttf");
+	result.put(aux.getLeft(), aux.getRight());
+
+	aux = createFont("Garamond Bold", "AGaramondBold.ttf");
+	result.put(aux.getLeft(), aux.getRight());
+
 	return result;
     }
 
