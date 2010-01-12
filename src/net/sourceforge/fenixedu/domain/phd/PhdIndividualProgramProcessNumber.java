@@ -8,7 +8,8 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
-public class PhdIndividualProgramProcessNumber extends PhdIndividualProgramProcessNumber_Base {
+public class PhdIndividualProgramProcessNumber extends PhdIndividualProgramProcessNumber_Base implements
+	Comparable<PhdIndividualProgramProcessNumber> {
 
     public static Comparator<PhdIndividualProgramProcessNumber> COMPARATOR_BY_NUMBER = new Comparator<PhdIndividualProgramProcessNumber>() {
 	public int compare(PhdIndividualProgramProcessNumber left, PhdIndividualProgramProcessNumber right) {
@@ -79,5 +80,11 @@ public class PhdIndividualProgramProcessNumber extends PhdIndividualProgramProce
 
     public String getFullProcessNumber() {
 	return getNumber() + "/" + getYear();
+    }
+
+    @Override
+    public int compareTo(PhdIndividualProgramProcessNumber other) {
+	int result = getYear().compareTo(other.getYear());
+	return (result != 0) ? result : getNumber().compareTo(other.getNumber());
     }
 }
