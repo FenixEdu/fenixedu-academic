@@ -49,6 +49,15 @@
 				<a href="<%= thesisRequirementDownloadUrl.toString() %>"><bean:write name="thesisProcess" property="thesisRequirementDocument.documentType.localizedName"/> </a>
 			</li>
 			</phd:activityAvailable>
+			<logic:notEmpty name="thesisProcess" property="juryPresidentDocument">
+				<li>
+				<bean:define id="url2" name="thesisProcess" property="juryPresidentDocument.downloadUrl" />
+				<a href="<%= url2.toString() %>">
+					<bean:write name="process" property="juryPresidentDocument.documentType.localizedName"/> 
+					(<bean:message  key="label.version" bundle="PHD_RESOURCES" /> <bean:write name="process" property="juryPresidentDocument.documentVersion"/>)
+				</a>
+				</li>
+			</logic:notEmpty>
 		</ul>
 	</td>
   </tr>
@@ -60,11 +69,13 @@
 			<bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.jury.elements.document"/>
 		</html:link>
 	</li>
+	<%-- 
 	<li style="display: inline;">
 		<html:link action="/phdThesisProcess.do?method=manageThesisJuryElements" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
 			<bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.jury.elements"/>
 		</html:link>
 	</li>
+	--%>
 </ul>
 </logic:equal>
 <br/>
