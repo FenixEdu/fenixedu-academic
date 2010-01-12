@@ -7,6 +7,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
@@ -145,6 +147,17 @@ public abstract class Process extends Process_Base implements Comparable<Process
 
     public String getUpdatedBy() {
 	return Collections.max(getProcessLogs(), ProcessLog.COMPARATOR_BY_WHEN).getUserName();
+    }
+
+    protected DateTime getLastExecutionDateOf(final Class<? extends Activity> clazz) {
+	final SortedSet<ProcessLog> logs = getSortedProcessLogs();
+	return logs.isEmpty() ? null : logs.last().getWhenDateTime();
+    }
+
+    protected SortedSet<ProcessLog> getSortedProcessLogs() {
+	final SortedSet<ProcessLog> logs = new TreeSet<ProcessLog>(ProcessLog.COMPARATOR_BY_WHEN);
+	logs.addAll(getProcessLogs());
+	return logs;
     }
 
     public abstract boolean canExecuteActivity(IUserView userView);
