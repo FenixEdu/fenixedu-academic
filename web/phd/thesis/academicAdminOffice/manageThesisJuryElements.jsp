@@ -37,19 +37,29 @@
 		<fr:property name="classes" value="tstyle2 thlight mtop15" />
 	</fr:layout>
 </fr:view>
-<%--  ### End Of Context Information  ### --%>
-
-<br/>
-
-<%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 
 <bean:define id="processId" name="process" property="externalId" />
 <bean:define id="process" name="process" />
 
 <logic:equal name="process" property="juryValidated" value="true">
-	<strong><bean:message key="label.phd.thesis.validation.date" bundle="PHD_RESOURCES"/>:</strong> <fr:view name="process" property="whenJuryValidated" />
+	<br/>
+	<strong><bean:message key="label.phd.thesis.jury.validation.date" bundle="PHD_RESOURCES"/>:</strong> <fr:view name="process" property="whenJuryValidated" />
+	<br/>
+	<strong><bean:message key="label.phd.thesis.jury.designation.date" bundle="PHD_RESOURCES"/>:</strong> <fr:view name="process" property="whenJuryDesignated" />
 	<br/>
 </logic:equal>
+
+<logic:notEmpty name="process" property="juryPresidentDocument">
+	<br/>
+	<strong><bean:message  key="label.phd.thesis.jury.president.document" bundle="PHD_RESOURCES"/>: </strong>
+	<bean:define id="url2" name="process" property="juryPresidentDocument.downloadUrl" />
+	<a href="<%= url2.toString() %>">
+		<bean:write name="process" property="juryPresidentDocument.documentType.localizedName"/> 
+		(<bean:message  key="label.version" bundle="PHD_RESOURCES" /> <bean:write name="process" property="juryPresidentDocument.documentVersion"/>)
+	</a>
+	<br/>
+</logic:notEmpty>
+
 <logic:notEmpty name="process" property="juryElementsDocument">
 	<strong><bean:message  key="label.phd.thesis.jury.elements.document" bundle="PHD_RESOURCES"/>: </strong>
 	<bean:define id="finalThesisDownloadUrl" name="process" property="juryElementsDocument.downloadUrl" />
@@ -57,7 +67,14 @@
 		<bean:write name="process" property="juryElementsDocument.documentType.localizedName"/> 
 		(<bean:message  key="label.version" bundle="PHD_RESOURCES" /> <bean:write name="process" property="juryElementsDocument.documentVersion"/>)
 	</a>
-	<br/><br/><br/>
+	<br/>
+	<logic:empty name="process" property="thesisJuryElements">
+		(<html:link action="/phdThesisProcess.do?method=prepareRejectJuryElements" paramId="processId" paramName="process" paramProperty="externalId">
+			<bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.reject.jury.elements"/>
+		</html:link>)
+	</logic:empty>
+	
+	<br/><br/>
 </logic:notEmpty>
 
 <strong>Presidente:</strong> Presidente do Conselho Científico do IST
@@ -65,6 +82,10 @@
 	<br/>
 	<strong>Presidente nomeado:</strong> <bean:write name="process" property="presidentJuryElement.nameWithTitle" />
 </logic:notEmpty>
+
+<%--  ### End Of Context Information  ### --%>
+
+<%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 
 <br/>
 <br/>
@@ -144,11 +165,13 @@
 			</html:link>
 		</li>
 	</phd:activityAvailable>
+	<phd:activityAvailable process="<%= process %>" activity="<%= PhdThesisProcess.PrintJuryElementsDocument.class %>">
 	<li style="display: inline;">
 		<html:link action="/phdThesisProcess.do?method=printJuryElementsDocument" paramId="processId" paramName="process" paramProperty="externalId"> 
 			<bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.print.jury.elements"/>
 		</html:link>
 	</li>
+	</phd:activityAvailable>
 </ul>
 
 <%--  ### End of Operation Area  ### --%>

@@ -13,7 +13,7 @@
 
 <%-- ### Title #### --%>
 <em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
-<h2><bean:message key="label.phd.thesis.jury.elements.document" bundle="PHD_RESOURCES" /></h2>
+<h2><bean:message key="label.phd.thesis.request.jury.elements" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 
 
@@ -37,28 +37,6 @@
 	</fr:layout>
 </fr:view>
 
-<logic:notEmpty name="process" property="juryPresidentDocument">
-	<br/>
-	<strong><bean:message  key="label.phd.thesis.jury.president.document" bundle="PHD_RESOURCES"/>: </strong>
-	<bean:define id="url2" name="process" property="juryPresidentDocument.downloadUrl" />
-	<a href="<%= url2.toString() %>">
-		<bean:write name="process" property="juryPresidentDocument.documentType.localizedName"/> 
-		(<bean:message  key="label.version" bundle="PHD_RESOURCES" /> <bean:write name="process" property="juryPresidentDocument.documentVersion"/>)
-	</a>
-	<br/>
-</logic:notEmpty>
-
-<logic:notEmpty name="process" property="juryElementsDocument">
-	<br/>
-	<strong><bean:message  key="label.phd.thesis.jury.elements.document" bundle="PHD_RESOURCES"/>: </strong>
-	<bean:define id="url1" name="process" property="juryElementsDocument.downloadUrl" />
-	<a href="<%= url1.toString() %>">
-		<bean:write name="process" property="juryElementsDocument.documentType.localizedName"/> 
-		(<bean:message  key="label.version" bundle="PHD_RESOURCES" /> <bean:write name="process" property="juryElementsDocument.documentVersion"/>)
-	</a>
-	<br/>
-</logic:notEmpty>
-
 <%--  ### End Of Context Information  ### --%>
 
 <br/>
@@ -71,15 +49,11 @@
 <fr:form action="<%= "/phdThesisProcess.do?processId=" + processId.toString() %>" encoding="multipart/form-data">
 	<input type="hidden" name="method" />
 	
-	<fr:edit id="thesisProcessBean" name="thesisProcessBean" visible="false" />
-	
-	<fr:edit id="thesisProcessBean.edit.documents" name="thesisProcessBean" property="documents">
+	<fr:edit id="thesisProcessBean" name="thesisProcessBean">
 		<fr:schema bundle="PHD_RESOURCES" type="<%= PhdThesisProcessBean.class.getName() %>">
-			<fr:slot name="type" readOnly="true" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean.type"/>
-			<fr:slot name="file" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean.file">
-				<fr:validator name="<%= FileValidator.class.getName() %>" />
-				<fr:property name="fileNameSlot" value="filename"/>
-				<fr:property name="size" value="20"/>
+			<fr:slot name="remarks" layout="longText">
+				<fr:property name="rows" value="8" />
+				<fr:property name="columns" value="80" />
 			</fr:slot>
 		</fr:schema>
 	
@@ -87,10 +61,9 @@
 			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 			<fr:property name="columnClasses" value=",,tdclear tderror1" />
 		</fr:layout>
-		
 	</fr:edit>
 
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='submitJuryElementsDocument';"><bean:message bundle="PHD_RESOURCES" key="label.submit"/></html:submit>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='requestJuryElements';"><bean:message bundle="PHD_RESOURCES" key="label.submit"/></html:submit>
 	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='viewIndividualProgramProcess';"><bean:message bundle="PHD_RESOURCES" key="label.cancel"/></html:cancel>	
 </fr:form>
 <%--  ### End of Operation Area  ### --%>
