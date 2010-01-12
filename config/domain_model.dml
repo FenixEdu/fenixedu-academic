@@ -565,6 +565,14 @@ valueType net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessTypeList as
     internalizeWith importFromString();
 }
 
+valueType net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.TypeOfProgrammeList as erasmus.TypeOfProgrammeList {
+	externalizeWith {
+		String toString();
+	}
+	
+	internalizeWith importFromString();
+}
+
 /* End of Phd Module */
 
 
@@ -6383,6 +6391,9 @@ class period.CandidacyPeriod extends DomainObject {
         
         class period.StandaloneCandidacyPeriod extends period.CandidacyProcessCandidacyPeriod {
         }
+        
+        class period.ErasmusCandidacyPeriod extends period.CandidacyProcessCandidacyPeriod {
+        }
     
     class phd.candidacy.PhdCandidacyPeriod extends period.CandidacyPeriod {
     }
@@ -6409,6 +6420,9 @@ class candidacyProcess.CandidacyProcess extends caseHandling.Process {
     class candidacyProcess.standalone.StandaloneCandidacyProcess extends candidacyProcess.CandidacyProcess {
     }
     
+    class candidacyProcess.erasmus.ErasmusCandidacyProcess extends candidacyProcess.CandidacyProcess {
+    }
+    
     class candidacyProcess.IndividualCandidacyProcess extends caseHandling.Process {
         String accessHash;
         String processCode;
@@ -6432,6 +6446,9 @@ class candidacyProcess.CandidacyProcess extends caseHandling.Process {
     }
         
     class candidacyProcess.standalone.StandaloneIndividualCandidacyProcess extends candidacyProcess.IndividualCandidacyProcess {
+    }
+    
+    class candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess extends candidacyProcess.IndividualCandidacyProcess {
     }
         
 class candidacyProcess.IndividualCandidacy extends DomainObject {
@@ -6544,6 +6561,32 @@ class candidacyProcess.IndividualCandidacyExternalPersonDetails extends candidac
 
     class candidacyProcess.standalone.StandaloneIndividualCandidacy extends candidacyProcess.IndividualCandidacy {
     }
+    
+    class candidacyProcess.erasmus.ErasmusIndividualCandidacy extends candidacyProcess.IndividualCandidacy {
+    }
+    
+    
+class candidacyProcess.erasmus.ErasmusStudentData extends DomainObject {
+	String homeInstitutionName;
+	String homeInstitutionAddress;
+	String homeInstitutionCoordinatorName;
+	String homeInstitutionPhone;
+	String homeInstitutionFax;
+	String homeInstitutionEmail;
+	
+	Boolean hasDiplomaOrDegree;
+	Integer diplomaConclusionYear;
+	String diplomaName;
+	Boolean experienceCarryingOutProject;
+	
+	LocalDate dateOfArrival;
+	LocalDate dateOfDeparture;
+	erasmus.TypeOfProgrammeList typesOfProgramme;
+	String mainSubjectThesis;
+	Boolean hasContactedOtherStaff;
+	String nameOfContact;
+}
+    
 
 class candidacyProcess.CandidacyPrecedentDegreeInformation extends DomainObject {
     SchoolLevelType schoolLevel;
@@ -16241,6 +16284,27 @@ relation StandaloneIndividualCandidacyCurricularCourses {
     }
 }
 
+relation EramusIndividualCandidacySelectedDegree {
+	Degree playsRole selectedDegree;
+	candidacyProcess.erasmus.ErasmusIndividualCandidacy playsRole selectedErasmusIndividualCandidacy {
+		multiplicity *;
+	}
+}
+
+relation EramusIndividualCandidacyErasmusStudentData {
+	candidacyProcess.erasmus.ErasmusIndividualCandidacy playsRole erasmusIndividualCandidacy;
+	candidacyProcess.erasmus.ErasmusStudentData playsRole erasmusStudentData;
+}
+
+relation ErasmusIndividualCandidacyCurricularCourses {
+	CurricularCourse playsRole curricularCourses {
+		multiplicity *;
+	}
+	candidacyProcess.erasmus.ErasmusIndividualCandidacy playsRole selectedErasmusIndividualCandidacy {
+		multiplicity *;
+	}	
+}
+
 relation CandidacyPrecedentDegreeInformationRootDomainObject {
     RootDomainObject playsRole rootDomainObject;
     candidacyProcess.CandidacyPrecedentDegreeInformation playsRole candidacyPrecedentDegreeInformations {
@@ -17236,6 +17300,14 @@ relation DegreeOfficialPublication {
 relation EnrolmentEvaluationLogRootDomainObject {
 	RootDomainObject playsRole rootDomainObject;
 	log.EnrolmentEvaluationLog playsRole enrolmentEvaluationLog {
+		multiplicity *;
+	}
+}
+
+
+relation ErasmusStudentDataRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	candidacyProcess.erasmus.ErasmusStudentData playsRole erasmusStudentData {
 		multiplicity *;
 	}
 }

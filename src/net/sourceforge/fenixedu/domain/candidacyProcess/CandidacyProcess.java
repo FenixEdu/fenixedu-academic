@@ -107,8 +107,7 @@ abstract public class CandidacyProcess extends CandidacyProcess_Base {
 
     public IndividualCandidacyProcess getOpenChildProcessByDocumentId(IDDocumentType documentType, String documentId) {
 	for (IndividualCandidacyProcess child : this.getChildProcesses()) {
-	    if (documentType.equals(child.getCandidacy().getPersonalDetails().getIdDocumentType())
-		    && documentId.equals(child.getCandidacy().getPersonalDetails().getDocumentIdNumber())
+	    if (documentId.equals(child.getCandidacy().getPersonalDetails().getDocumentIdNumber())
 		    && !child.isCandidacyCancelled()) {
 		return child;
 	    }

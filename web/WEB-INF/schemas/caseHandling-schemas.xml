@@ -1871,3 +1871,330 @@
         <property name="sortBy" value="degreeType, name"/>
     </slot>
 </schema>
+
+<!--  Erasmus Candidacies -->
+
+<schema name="ErasmusCandidacyProcessBean.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean" bundle="APPLICATION_RESOURCES">
+	<slot name="executionInterval" key="label.executionInterval" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.NotClosedExecutionYearsProvider" />
+		<property name="format" value="${qualifiedName}" />
+	</slot>
+	<slot name="start" key="label.begin" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="end" key="label.end" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+</schema>
+
+<schema name="ErasmusIndividualCandidacyProcess.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess" bundle="ACADEMIC_OFFICE_RESOURCES"
+		extends="IndividualCandidacyProcess.view">
+	<slot name="processCode" layout="null-as-label" key="label.process.id" bundle="CANDIDATE_RESOURCES"/>
+	<slot name="candidacySelectedDegree" key="label.eramsus.candidacy.choosed.degree">
+		<property name="format" value="${name} - ${sigla}" />
+	</slot>
+	<slot name="candidacy.erasmusStudentData.homeInstitutionName" key="label.erasmus.home.institution.name.detailed" read-only="true" />
+	<slot name="candidacy.erasmusStudentData.homeInstitutionAddress" key="label.erasmus.home.institution.address.detailed" read-only="true" />
+	<slot name="candidacy.erasmusStudentData.dateOfArrival" key="label.erasmus.period.of.study.date.of.arrival" read-only="true" />
+	<slot name="candidacy.erasmusStudentData.dateOfDeparture" key="label.erasmus.period.of.study.date.of.departure" read-only="true" />
+</schema>
+
+<schema name="ErasmusCandidacyProcessBean.candidacyDate" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
+	<slot name="candidacyDate" key="label.candidacy.date" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+</schema>
+
+<schema name="ErasmusIndividualCandidacyProcessBean.selectDegree.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
+   	<slot name="selectedDegree" layout="menu-select" key="label.degree.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.ErasmusIndividualCandidacyDegreesProvider" />
+        <property name="format" value="${presentationName}" />
+        <property name="sortBy" value="degreeType, name"/>
+    </slot>
+</schema>
+
+<schema name="ErasmusIndividualCandidacyProcessBean.optionalInformation" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
+<!-- 
+	<slot name="professionalStatus" layout="longText" key="label.candidacy.professionalStatus">
+    	<property name="columns" value="40" />
+    	<property name="rows" value="3" />
+	</slot>
+	<slot name="otherEducation" layout="longText" key="label.candidacy.otherEducation">
+    	<property name="columns" value="40" />
+    	<property name="rows" value="3" />
+	</slot>
+-->	
+</schema>
+
+<!-- 
+<schema name="ErasmusCandidacyProcess.candidacyDegreeBean" 
+		type="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusCandidacyProcessDA$ErasmusCandidacyDegreeBean"
+		extends="CandidacyProcess.candidacyDegreeBean" bundle="APPLICATION_RESOURCES">
+	<slot name="notes" key="label.candidacy.notes" />
+</schema>
+ -->
+
+ 
+<schema name="ErasmusIndividualCandidacyProcess.home.institution.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="candidacy.erasmusStudentData.homeInstitutionName" key="label.erasmus.home.institution.name" />
+	<slot name="candidacy.erasmusStudentData.homeInstitutionAddress" key="label.erasmus.home.institution.address" />
+	<slot name="candidacy.erasmusStudentData.homeInstitutionExchangeCoordinatorName" key="label.erasmus.home.institution.coordinator.name" />
+	<slot name="candidacy.erasmusStudentData.homeInstitutionPhone" key="label.erasmus.home.institution.phone" />
+	<slot name="candidacy.erasmusStudentData.homeInstitutionFax" key="label.erasmus.home.institution.fax" />
+	<slot name="candidacy.erasmusStudentData.homeInstitutionEmail" key="label.erasmus.home.institution.email" />
+</schema> 
+ 
+<schema name="ErasmusIndividualCandidacyProcess.home.institution.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="erasmusStudentDataBean.homeInstitutionName" key="label.erasmus.home.institution.name" >
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+			<property name="type" value="character"/>
+			<property name="length" value="255"/>
+		</validator>	
+		<property name="size" value="50"/>
+		<property name="maxLength" value="50"/>				 				
+	</slot>
+	
+	<slot name="erasmusStudentDataBean.homeInstitutionAddress" key="label.erasmus.home.institution.address" >
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+			<property name="type" value="character"/>
+			<property name="length" value="255"/>
+		</validator>			 				
+		<property name="size" value="50"/>
+		<property name="maxLength" value="50"/>				 				
+	</slot>
+	
+	<slot name="erasmusStudentDataBean.homeInstitutionExchangeCoordinatorName" key="label.erasmus.home.institution.coordinator.name" >
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+			<property name="type" value="character"/>
+			<property name="length" value="255"/>
+		</validator>			 				
+		<property name="size" value="50"/>
+		<property name="maxLength" value="50"/>				 				
+	</slot>
+	
+	<slot name="erasmusStudentDataBean.homeInstitutionPhone" key="label.erasmus.home.institution.phone" >
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+			<property name="type" value="character"/>
+			<property name="length" value="255"/>
+		</validator>			 				
+		<property name="size" value="50"/>
+		<property name="maxLength" value="50"/>				 				
+	</slot>
+	
+	<slot name="erasmusStudentDataBean.homeInstitutionFax" key="label.erasmus.home.institution.fax" >
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+			<property name="type" value="character"/>
+			<property name="length" value="255"/>
+		</validator>			 				
+		<property name="size" value="50"/>
+		<property name="maxLength" value="50"/>				 				
+	</slot>
+	
+	<slot name="erasmusStudentDataBean.homeInstitutionEmail" key="label.erasmus.home.institution.email" >
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+			<property name="type" value="character"/>
+			<property name="length" value="255"/>
+		</validator>			 				
+		<property name="size" value="50"/>
+		<property name="maxLength" value="50"/>
+	</slot>
+</schema> 
+ 
+ 
+<schema name="ErasmusIndividualCandidacyProcess.current.study.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="candidacy.erasmusStudentData.hasDiplomaOrDegree" key="label.erasmus.current.study.obtained.diploma.or.degree" />
+	<slot name="candidacy.erasmusStudentData.diplomaName" key="label.erasmus.current.study.name.of.diploma.or.degree" />
+	<slot name="candidacy.erasmusStudentData.diplomaConclusionYear" key="label.erasmus.current.study.conclusion.year.of.diploma" />
+	<slot name="candidacy.erasmusStudentData.experienceCarryingOutProject" key="label.erasmus.current.study.has.experience.carrying.out.research.project" /> 
+</schema>
+
+
+
+<schema name="ErasmusIndividualCandidacyProcess.current.study.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="erasmusStudentDataBean.hasDiplomaOrDegree" key="label.erasmus.current.study.obtained.diploma.or.degree" >
+	</slot>
+	
+	<slot name="erasmusStudentDataBean.diplomaName" key="label.erasmus.current.study.name.of.diploma.or.degree" >
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+			<property name="type" value="character"/>
+			<property name="length" value="255"/>
+		</validator>			 				
+		<property name="size" value="50" />
+		<property name="maxLength" value="50" />	
+	</slot>
+	
+	<slot name="erasmusStudentDataBean.diplomaConclusionYear" key="label.erasmus.current.study.conclusion.year.of.diploma" >
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+			<property name="type" value="character"/>
+			<property name="length" value="4"/>
+		</validator>
+		<property name="size" value="4" />
+		<property name="maxLength" value="4" />	
+	</slot>
+	
+	<slot name="erasmusStudentDataBean.experienceCarryingOutProject" key="label.erasmus.current.study.has.experience.carrying.out.research.project" >
+	</slot> 
+</schema>
+
+<schema name="ErasmusIndividualCandidacyProcess.period.of.study.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="candidacy.erasmusStudentData.dateOfArrival" key="label.erasmus.period.of.study.date.of.arrival" />
+	<slot name="candidacy.erasmusStudentData.dateOfDeparture" key="label.erasmus.period.of.study.date.of.departure" />
+	<slot name="candidacy.erasmusStudentData.typesOfProgramme" key="label.erasmus.period.of.study.typesOfProgramme" />
+	<slot name="candidacy.erasmusStudentData.mainSubjectThesis" key="label.erasmus.period.of.study.main.subject.thesis" />
+	<slot name="candidacy.erasmusStudentData.hasContactedOtherStaff" key="label.erasmus.period.of.study.has.contacted.other.staff" />
+	<slot name="candidacy.erasmusStudentData.nameOfContact" key="label.erasmus.period.of.study.name.of.contact" />
+</schema>
+
+<schema name="ErasmusIndividualCandidacyProcess.period.of.study.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="erasmusStudentDataBean.dateOfArrival" key="label.erasmus.period.of.study.date.of.arrival" >
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
+		</validator>	
+		<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	
+	<slot name="erasmusStudentDataBean.dateOfDeparture" key="label.erasmus.period.of.study.date.of.departure" >
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
+		</validator>	
+		<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	
+	<slot name="erasmusStudentDataBean.typesOfProgramme" key="label.erasmus.period.of.study.typesOfProgramme" >
+	</slot>
+	
+	<slot name="erasmusStudentDataBean.mainSubjectThesis" key="label.erasmus.period.of.study.main.subject.thesis" >
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+			<property name="type" value="character"/>
+			<property name="length" value="255"/>
+		</validator>			 				
+		<property name="size" value="50" />
+		<property name="maxLength" value="50" />	
+	</slot>
+	
+	<slot name="erasmusStudentDataBean.hasContactedOtherStaff" key="label.erasmus.period.of.study.has.contacted.other.staff" >
+	</slot>
+	
+	<slot name="erasmusStudentDataBean.nameOfContact" key="label.erasmus.period.of.study.name.of.contact" >
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+			<property name="type" value="character"/>
+			<property name="length" value="255"/>
+		</validator>			 				
+		<property name="size" value="50" />
+		<property name="maxLength" value="50" />
+	</slot>
+</schema>
+
+<schema name="ErasmusIndividualCandidacyProcess.personalDataBean" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="APPLICATION_RESOURCES">
+	<slot name="name" key="label.name" >
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+			<property name="type" value="character"/>
+			<property name="length" value="100"/>
+		</validator>
+		<property name="size" value="50"/>
+		<property name="maxlength" value="100"/>		
+	</slot>
+
+	<slot name="gender" key="label.gender" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+
+	<slot name="dateOfBirth" key="label.dateOfBirth" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.AdvancedDateValidator">
+			<property name="validationPeriod" value="PAST"/>
+			<property name="bundle" value="CANDIDATE_RESOURCES"/>
+			<property name="message" value="error.birth.date.not.less.actual.date"/>
+		</validator>	
+		<property name="size" value="12"/>
+		<property name="maxLength" value="10"/>
+	</slot>	
+	
+	<slot name="documentIdNumber" key="label.identificationNumber" >
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+			<property name="type" value="character"/>
+			<property name="length" value="50"/>
+		</validator>
+		<property name="size" value="50"/>
+		<property name="maxlength" value="50"/>			
+	</slot>
+	
+	<slot name="nationality" layout="menu-select" key="label.nationality" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/>
+		<property name="format" value="${nationality}" />
+		<property name="sortBy" value="nationality"/>
+	</slot>
+
+	<slot name="documentIdExpirationDate" key="label.documentIdExpirationDate" >
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<property name="size" value="12"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	
+	<slot name="address" key="label.address">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+			<property name="type" value="character"/>
+			<property name="length" value="100"/>
+		</validator>
+		<property name="size" value="50"/>
+		<property name="maxlength" value="100"/>
+	</slot>
+
+	<slot name="areaCode" key="label.areaCode">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+			<property name="type" value="character"/>
+			<property name="length" value="10"/>
+		</validator>
+		<property name="size" value="10"/>
+	</slot>
+
+	<slot name="area" key="label.area" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+			<property name="type" value="character"/>
+			<property name="length" value="40"/>
+		</validator>
+		<property name="size" value="40"/>
+	</slot>
+
+	<slot name="countryOfResidence" key="label.countryOfResidence" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<property name="format" value="${localizedName.content}"/>
+		<property name="sortBy" value="name=asc" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+	</slot>		
+		
+	<slot name="phone" key="label.phone">
+    	<property name="size" value="15"/>
+		<property name="maxLength" value="15"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+            <property name="regexp" value="(\d{4,15})?"/>
+            <property name="message" value="error.phone.invalidFormat"/>
+            <property name="key" value="true"/>
+        </validator>
+    </slot>
+	<slot name="email" key="label.email">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.EmailValidator"/>
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+			<property name="type" value="character"/>
+			<property name="length" value="40"/>
+		</validator>
+		<property name="size" value="40"/>
+	</slot>
+</schema>
+
+<schema name="ErasmusCandidacyProcess.degreeCourseInformationBean" type="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusIndividualCandidacyProcessDA$DegreeCourseInformationBean" bundle="ACADEMIC_OFFICE_RESOURCES" >
+	<slot name="chosenDegree" key="label.erasmus.degree" layout="menu-select-postback">
+		<property name="format" value="${presentationName}" />
+		<property name="destination" value="chooseDegreePostback"/>
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusIndividualCandidacyProcessDA$DegreesForExecutionYearProvider" />		
+	</slot>
+	
+	<slot name="chosenCourse" key="label.erasmus.course" layout="menu-select">
+		<property name="format" value="${name}" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusIndividualCandidacyProcessDA$DegreeCourseInformationBean" />
+	</slot>	
+</schema>
+
+<schema name="ErasmusIndividualCandidacyPublicProcess.personalDataBean" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="APPLICATION_RESOURCES" extends="ErasmusIndividualCandidacyProcess.personalDataBean">
+	<slot name="email" key="label.email" read-only="true" />
+</schema>

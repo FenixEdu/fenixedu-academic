@@ -181,6 +181,38 @@ public class IndividualCandidacyDocumentFileTypeEditProvider {
 
     }
 
+    public static class ErasmusIndividualCandidacyDocumentFileTypeEditProvider implements DataProvider {
+
+	@Override
+	public Converter getConverter() {
+	    // TODO Auto-generated method stub
+	    return null;
+	}
+
+	@Override
+	public Object provide(Object source, Object currentValue) {
+	    List<IndividualCandidacyDocumentFileType> fileTypesList = new ArrayList<IndividualCandidacyDocumentFileType>();
+
+	    CandidacyProcessDocumentUploadBean uploadBean = (CandidacyProcessDocumentUploadBean) source;
+	    IndividualCandidacyProcess individualCandidacyProcess = uploadBean.getIndividualCandidacyProcess();
+
+	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.PHOTO) == null) {
+		fileTypesList.add(IndividualCandidacyDocumentFileType.PHOTO);
+	    }
+
+	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION) == null) {
+		fileTypesList.add(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION);
+	    }
+
+	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.LEARNING_AGREEMENT) == null) {
+		fileTypesList.add(IndividualCandidacyDocumentFileType.LEARNING_AGREEMENT);
+	    }
+
+	    return fileTypesList;
+	}
+
+    }
+
     public static class AllDocumentFileTypeEditProvider implements DataProvider {
 	@Override
 	public Converter getConverter() {

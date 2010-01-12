@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create Table Erasmus Student Data" createTableErasmusStudentData.sql

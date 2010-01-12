@@ -1073,4 +1073,46 @@
 		<put name="body" value="/publico/candidacy/secondCycle/editCandidacyHabilitations.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
+	
+	<!-- Erasmus Candidacies -->
+	<definition name="erasmus.candidacy.process.intro" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/erasmus/intro.jsp" />
+		<put name="hideLanguage" value="true" />
+	</definition>
+	
+	<definition name="erasmus.candidacy.submission.type" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/erasmus/chooseSubmissionType.jsp" />
+		<put name="hideLanguage" value="true" />	
+	</definition>
+	
+	<definition name="erasmus.show.pre.creation.candidacy.form" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/erasmus/preCreationCandidacyForm.jsp"/>
+		<put name="hideLanguage" value="true" />
+	</definition>
+	
+	<definition name="erasmus.show.application.submission.conditions" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/erasmus/applicationSubmissionConditions.jsp" />
+		<put name="hideLanguage" value="true" />
+	</definition>
+
+    <definition name="erasmus.candidacy.creation.page" extends="definition.candidacy.process">
+    	<put name="body" value="/publico/candidacy/erasmus/createCandidacyPartOne.jsp"/>
+    	<put name="hideLanguage" value="true" />
+    </definition>    
+
+    <definition name="erasmus.candidacy.continue.creation" extends="definition.candidacy.process">
+    	<put name="body" value="/publico/candidacy/erasmus/createCandidacyPartTwo.jsp"/>
+    	<put name="hideLanguage" value="true" />
+    </definition>    
+	
+	<definition name="erasmus.fill.degree.and.courses.information" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/erasmus/fillDegreeAndCoursesInformation.jsp" />
+		<put name="hideLanguage" value="true" />
+	</definition>
+	
+	<definition name="erasmus.fill.accept.honour.declaration" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/erasmus/acceptHonourDeclaration.jsp" />
+		<put name="hideLanguage" value="true" />
+	</definition>
+	
 </tiles-definitions>

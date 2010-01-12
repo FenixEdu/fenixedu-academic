@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
 import net.sourceforge.fenixedu.domain.period.DegreeCandidacyForGraduatedPersonCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.period.DegreeChangeCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.period.DegreeTransferCandidacyPeriod;
+import net.sourceforge.fenixedu.domain.period.ErasmusCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.period.Over23CandidacyPeriod;
 import net.sourceforge.fenixedu.domain.period.SecondCycleCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.period.StandaloneCandidacyPeriod;
@@ -76,6 +77,10 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
 
     public List<SecondCycleCandidacyPeriod> getSecondCycleCandidacyPeriods() {
 	return (List<SecondCycleCandidacyPeriod>) getCandidacyPeriods(SecondCycleCandidacyPeriod.class);
+    }
+
+    public List<ErasmusCandidacyPeriod> getErasmusCandidacyPeriods() {
+	return (List<ErasmusCandidacyPeriod>) getCandidacyPeriods(ErasmusCandidacyPeriod.class);
     }
 
     public boolean hasAnySecondCycleCandidacyPeriod() {

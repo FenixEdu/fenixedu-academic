@@ -82,7 +82,7 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 	return process.getOpenChildProcessByDocumentId(documentType, identification) != null;
     }
 
-    private void setProcessCodeForThisIndividualCandidacy(CandidacyProcess process) {
+    protected void setProcessCodeForThisIndividualCandidacy(CandidacyProcess process) {
 	CandidacyPeriod period = process.getCandidacyPeriod();
 	String beginExecutionYear = String.valueOf(
 		period.getExecutionInterval().getBeginDateYearMonthDay().get(DateTimeFieldType.year())).substring(2, 4);
@@ -91,7 +91,7 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 	setProcessCode(beginExecutionYear + endExecutionYear + getIdInternal());
     }
 
-    private void setCandidacyDocumentFiles(IndividualCandidacyProcessBean bean) {
+    protected void setCandidacyDocumentFiles(IndividualCandidacyProcessBean bean) {
 	/*
 	 * 06/07/2009 - Lots of candidates camplaint about the upload of
 	 * documents in application submission. The upload of documents will be
