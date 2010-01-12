@@ -388,6 +388,18 @@ dspace.generated.document.store=true
 
 #----------------------------------------------------------------
 # Sibs Configuration
+#
+# - sibs.entityCode: institution entity code to be used in atm
+#   machines with reference to perform payments
+#
+# - sibs.sourceInstitutionId: used in header payments file, and
+#   represents institution identification accordding to transfer service (i.e. sibs).
+#	Must be given by the entity that is peforming this service.
+#    Format: '9XXXXXXX'
+#
+# - sibs.destinationInstitutionId: used in header payments file and represents entity 
+#	service identification (i.e. sibs). Default value '50000000' (sibs identification)
+#
 #----------------------------------------------------------------
 sibs.entityCode=1111
 sibs.sourceInstitutionId=11111111
