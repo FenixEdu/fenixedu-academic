@@ -51,6 +51,8 @@ public enum PhdIndividualProgramDocumentType {
 
     JURY_ELEMENTS,
     
+    JURY_PRESIDENT_ELEMENT,
+    
     OTHER(false);
 
     private boolean isVersioned;

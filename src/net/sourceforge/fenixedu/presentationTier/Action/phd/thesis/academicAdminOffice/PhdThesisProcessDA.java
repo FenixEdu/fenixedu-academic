@@ -17,8 +17,10 @@ import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess.AddJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess.AddPresidentJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess.DeleteJuryElement;
+import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess.RejectJuryElements;
+import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess.RequestJuryElements;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess.RequestJuryReviews;
-import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess.SubmitJuryElements;
+import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess.SubmitJuryElementsDocuments;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess.SubmitThesis;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess.SwapJuryElementsOrder;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess.ValidateJury;
@@ -41,9 +43,13 @@ import pt.utl.ist.fenix.tools.util.Pair;
 @Mapping(path = "/phdThesisProcess", module = "academicAdminOffice")
 @Forwards( {
 
+@Forward(name = "requestJuryElements", path = "/phd/thesis/academicAdminOffice/requestJuryElements.jsp"),
+
 @Forward(name = "submitJuryElementsDocument", path = "/phd/thesis/academicAdminOffice/submitJuryElementsDocument.jsp"),
 
 @Forward(name = "manageThesisJuryElements", path = "/phd/thesis/academicAdminOffice/manageThesisJuryElements.jsp"),
+
+@Forward(name = "rejectJuryElements", path = "/phd/thesis/academicAdminOffice/rejectJuryElements.jsp"),
 
 @Forward(name = "addJuryElement", path = "/phd/thesis/academicAdminOffice/addJuryElement.jsp"),
 
@@ -60,11 +66,35 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
     // Begin thesis jury elements management
 
+    public ActionForward prepareRequestJuryElements(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final PhdThesisProcessBean bean = new PhdThesisProcessBean();
+	request.setAttribute("thesisProcessBean", bean);
+	return mapping.findForward("requestJuryElements");
+    }
+
+    public ActionForward requestJuryElements(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	try {
+
+	    ExecuteProcessActivity.run(getProcess(request), RequestJuryElements.class, getRenderedObject("thesisProcessBean"));
+	    addSuccessMessage(request, "message.thesis.jury.elements.requested.with.success");
+
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getMessage(), e.getArgs());
+	    request.setAttribute("thesisProcessBean", getRenderedObject("thesisProcessBean"));
+	    return mapping.findForward("requestJuryElements");
+	}
+
+	return viewIndividualProgramProcess(request, getProcess(request));
+    }
+
     public ActionForward prepareSubmitJuryElementsDocument(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
 	final PhdThesisProcessBean bean = new PhdThesisProcessBean();
 	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.JURY_ELEMENTS));
+	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.JURY_PRESIDENT_ELEMENT));
 	request.setAttribute("thesisProcessBean", bean);
 
 	return mapping.findForward("submitJuryElementsDocument");
@@ -82,13 +112,16 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
 	    final IViewState viewState = RenderUtils.getViewState("thesisProcessBean.edit.documents");
 	    if (!viewState.isValid()) {
+		RenderUtils.invalidateViewState("thesisProcessBean.edit.documents");
 		return submitJuryElementsDocumentInvalid(mapping, actionForm, request, response);
 	    }
-	    ExecuteProcessActivity.run(getProcess(request), SubmitJuryElements.class, getRenderedObject("thesisProcessBean"));
+	    ExecuteProcessActivity.run(getProcess(request), SubmitJuryElementsDocuments.class,
+		    getRenderedObject("thesisProcessBean"));
 	    addSuccessMessage(request, "message.thesis.jury.elements.added.with.success");
 
 	} catch (final DomainException e) {
 	    addErrorMessage(request, e.getMessage(), e.getArgs());
+	    RenderUtils.invalidateViewState("thesisProcessBean.edit.documents");
 	    return submitJuryElementsDocumentInvalid(mapping, actionForm, request, response);
 	}
 
@@ -258,7 +291,7 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
 	final PhdThesisProcessBean bean = new PhdThesisProcessBean();
 	bean.setWhenJuryValidated(new LocalDate());
-	
+
 	request.setAttribute("thesisBean", bean);
 	return mapping.findForward("validateJury");
     }
@@ -287,13 +320,34 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 	    HttpServletResponse response) throws IOException, JRException {
 
 	final PhdThesisJuryElementsDocument report = new PhdThesisJuryElementsDocument(getProcess(request));
-	
+
 	writeFile(response, report.getReportFileName() + ".pdf", "application/pdf", ReportsUtils
 		.exportToProcessedPdfAsByteArray(report));
-	
+
 	return null;
     }
-    
+
+    public ActionForward prepareRejectJuryElements(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("thesisBean", new PhdThesisProcessBean());
+	return mapping.findForward("rejectJuryElements");
+    }
+
+    public ActionForward rejectJuryElements(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	try {
+	    ExecuteProcessActivity.run(getProcess(request), RejectJuryElements.class, getRenderedObject("thesisBean"));
+
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getMessage(), e.getArgs());
+	    request.setAttribute("thesisBean", getRenderedObject("thesisBean"));
+	    return mapping.findForward("rejectJuryElements");
+	}
+
+	return manageThesisJuryElements(mapping, actionForm, request, response);
+    }
+
     // end thesis jury elements management
 
     // Submit thesis

@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.phd.seminar;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -11,7 +10,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
-import net.sourceforge.fenixedu.domain.phd.PhdProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
 
@@ -37,7 +35,6 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 	@Override
 	protected void activityPreConditions(PublicPresentationSeminarProcess process, IUserView userView) {
 	    // Activity on main process ensures access control
-
 	}
 
 	@Override
@@ -411,17 +408,14 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 	return activities;
     }
 
+    @Override
     public PublicPresentationSeminarState getMostRecentState() {
-	return hasAnyStates() ? Collections.max(getStates(), PhdProcessState.COMPARATOR_BY_DATE) : null;
+	return (PublicPresentationSeminarState) super.getMostRecentState();
     }
 
-    public String getActiveStateRemarks() {
-	return getMostRecentState().getRemarks();
-    }
-
+    @Override
     public PublicPresentationSeminarProcessStateType getActiveState() {
-	final PublicPresentationSeminarState state = getMostRecentState();
-	return state != null ? state.getType() : null;
+	return (PublicPresentationSeminarProcessStateType) super.getActiveState();
     }
 
     private void createState(final PublicPresentationSeminarProcessStateType type, final Person person, final String remarks) {
@@ -431,16 +425,6 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
     @Override
     protected Person getPerson() {
 	return getIndividualProgramProcess().getPerson();
-    }
-
-    public boolean hasState(PublicPresentationSeminarProcessStateType type) {
-	for (final PublicPresentationSeminarState state : getStates()) {
-	    if (state.getType() == type) {
-		return true;
-	    }
-	}
-
-	return false;
     }
 
     public boolean isExempted() {

@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-public enum PhdIndividualProgramProcessState {
+public enum PhdIndividualProgramProcessState implements PhdProcessStateType {
 
     CANDIDACY(true),
 
@@ -35,6 +35,11 @@ public enum PhdIndividualProgramProcessState {
 
     public boolean isActive() {
 	return activeState;
+    }
+    
+    @Override
+    public String getName() {
+	return name();
     }
 
     public String getLocalizedName() {

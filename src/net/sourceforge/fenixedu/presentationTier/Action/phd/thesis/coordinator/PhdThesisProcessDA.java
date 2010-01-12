@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
-import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess.SubmitJuryElements;
+import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess.SubmitJuryElementsDocuments;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.thesis.CommonPhdThesisProcessDA;
 
 import org.apache.struts.action.ActionForm;
@@ -58,7 +58,7 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 	    if (!viewState.isValid()) {
 		return submitJuryElementsDocumentInvalid(mapping, actionForm, request, response);
 	    }
-	    ExecuteProcessActivity.run(getProcess(request), SubmitJuryElements.class, getRenderedObject("thesisProcessBean"));
+	    ExecuteProcessActivity.run(getProcess(request), SubmitJuryElementsDocuments.class, getRenderedObject("thesisProcessBean"));
 	    addSuccessMessage(request, "message.thesis.jury.elements.added.with.success");
 	    
 	} catch (final DomainException e) {

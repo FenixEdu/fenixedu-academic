@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.phd.thesis;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.TreeSet;
@@ -15,11 +14,14 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
-import net.sourceforge.fenixedu.domain.phd.PhdProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.access.PhdExternalOperationBean;
 import net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessType;
+import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
+
+import org.joda.time.DateTime;
+
 import pt.utl.ist.fenix.tools.util.Pair;
 
 public class PhdThesisProcess extends PhdThesisProcess_Base {
@@ -50,15 +52,37 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
 	    final PhdThesisProcess result = new PhdThesisProcess();
 	    final PhdThesisProcessBean phdThesisProcessBean = (PhdThesisProcessBean) object;
-
-	    result.createState(PhdThesisProcessStateType.WAITING_FOR_JURY_CONSTITUTION, userView.getPerson(),
-		    phdThesisProcessBean.getRemarks());
-
+	    result.createState(PhdThesisProcessStateType.NEW, userView.getPerson(), phdThesisProcessBean.getRemarks());
 	    return result;
 	}
     }
 
-    static public class SubmitJuryElements extends PhdActivity {
+    static public class RequestJuryElements extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
+	    if (!process.getActiveState().equals(PhdThesisProcessStateType.NEW)) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
+	    final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
+	    process.createState(PhdThesisProcessStateType.WAITING_FOR_JURY_CONSTITUTION, userView.getPerson(), bean.getRemarks());
+
+	    AlertService.alertCoordinator(process.getIndividualProgramProcess(),
+		    "message.phd.alert.request.jury.elements.subject", "message.phd.alert.request.jury.elements.body");
+
+	    return process;
+	}
+    }
+
+    static public class SubmitJuryElementsDocuments extends PhdActivity {
 
 	@Override
 	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
@@ -83,11 +107,65 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
 	    final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
 
+	    boolean anyDocumentSubmitted = false;
+
 	    for (final PhdProgramDocumentUploadBean each : bean.getDocuments()) {
 		if (each.hasAnyInformation()) {
+
 		    process.addDocument(each, userView.getPerson());
+		    alertIfNecessary(process, each, userView.getPerson());
+
+		    anyDocumentSubmitted = true;
 		}
 	    }
+
+	    if (anyDocumentSubmitted) {
+		if (!process.hasState(PhdThesisProcessStateType.JURY_WAITING_FOR_VALIDATION)) {
+		    process.createState(PhdThesisProcessStateType.JURY_WAITING_FOR_VALIDATION, userView.getPerson(), bean
+			    .getRemarks());
+		}
+	    }
+
+	    return process;
+	}
+
+	private void alertIfNecessary(PhdThesisProcess process, PhdProgramDocumentUploadBean each, Person person) {
+
+	    switch (each.getType()) {
+	    case JURY_PRESIDENT_ELEMENT:
+		AlertService.alertCoordinator(process.getIndividualProgramProcess(),
+			"message.phd.alert.request.jury.president.subject", "message.phd.alert.request.jury.president.body");
+		break;
+
+	    case JURY_ELEMENTS:
+		if (process.getIndividualProgramProcess().isCoordinatorForPhdProgram(person)) {
+		    AlertService
+			    .alertAcademicOffice(process.getIndividualProgramProcess(),
+				    "message.phd.alert.jury.elements.submitted.subject",
+				    "message.phd.alert.jury.elements.submitted.body");
+		}
+		break;
+	    }
+	}
+    }
+
+    static public class RejectJuryElements extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
+	    if (!process.getActiveState().equals(PhdThesisProcessStateType.JURY_WAITING_FOR_VALIDATION)
+		    || !isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
+	    process.createState(PhdThesisProcessStateType.WAITING_FOR_JURY_CONSTITUTION, userView.getPerson(),
+		    ((PhdThesisProcessBean) object).getRemarks());
+
+	    AlertService.alertCoordinator(process.getIndividualProgramProcess(),
+		    "message.phd.alert.jury.elements.rejected.subject", "message.phd.alert.jury.elements.rejected.body");
 
 	    return process;
 	}
@@ -127,9 +205,9 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 
 	@Override
 	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
-	     if (process.isJuryValidated()) {
-		 throw new PreConditionNotValidException();
-	     }
+	    if (process.isJuryValidated()) {
+		throw new PreConditionNotValidException();
+	    }
 
 	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
@@ -234,6 +312,23 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	    process.setWhenJuryDesignated(bean.getWhenJuryDesignated());
 	    return process;
 	}
+    }
+
+    static public class PrintJuryElementsDocument extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
+	    if (!process.isJuryValidated()) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
+	    // nothing to be done
+	    return process;
+	}
+
     }
 
     // TODO: find clean solution to return documents
@@ -386,12 +481,14 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 
     static private List<Activity> activities = new ArrayList<Activity>();
     static {
-	activities.add(new SubmitJuryElements());
+	activities.add(new RequestJuryElements());
+	activities.add(new SubmitJuryElementsDocuments());
 	activities.add(new AddJuryElement());
 	activities.add(new DeleteJuryElement());
 	activities.add(new SwapJuryElementsOrder());
 	activities.add(new AddPresidentJuryElement());
 	activities.add(new ValidateJury());
+	activities.add(new PrintJuryElementsDocument());
 	activities.add(new SubmitThesis());
 	activities.add(new DownloadProvisionalThesisDocument());
 	activities.add(new DownloadFinalThesisDocument());
@@ -463,17 +560,14 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	return ResourceBundle.getBundle("resources/PhdResources").getString(getClass().getSimpleName());
     }
 
+    @Override
     public PhdThesisProcessState getMostRecentState() {
-	return hasAnyStates() ? Collections.max(getStates(), PhdProcessState.COMPARATOR_BY_DATE) : null;
+	return (PhdThesisProcessState) super.getMostRecentState();
     }
 
+    @Override
     public PhdThesisProcessStateType getActiveState() {
-	final PhdThesisProcessState state = getMostRecentState();
-	return state != null ? state.getType() : null;
-    }
-
-    public String getActiveStateRemarks() {
-	return getMostRecentState().getRemarks();
+	return (PhdThesisProcessStateType) super.getActiveState();
     }
 
     // TODO: find clean solution to return specific documents
@@ -510,4 +604,15 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	return getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.JURY_ELEMENTS);
     }
 
+    public PhdProgramProcessDocument getJuryPresidentDocument() {
+	return getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.JURY_PRESIDENT_ELEMENT);
+    }
+
+    public DateTime getWhenRequestJury() {
+	return getLastExecutionDateOf(RequestJuryElements.class);
+    }
+
+    public DateTime getWhenReceivedJury() {
+	return getLastExecutionDateOf(SubmitJuryElementsDocuments.class);
+    }
 }

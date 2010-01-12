@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.phd.candidacy;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -26,7 +25,6 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState;
-import net.sourceforge.fenixedu.domain.phd.PhdProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
@@ -532,34 +530,18 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	new PhdCandidacyProcessState(this, state, person, remarks);
     }
 
-    private PhdCandidacyProcessState getMostRecentState() {
-	return hasAnyStates() ? Collections.max(getStates(), PhdProcessState.COMPARATOR_BY_DATE) : null;
+    @Override
+    public PhdCandidacyProcessState getMostRecentState() {
+	return (PhdCandidacyProcessState) super.getMostRecentState();
     }
 
+    @Override
     public PhdProgramCandidacyProcessState getActiveState() {
-	final PhdCandidacyProcessState state = getMostRecentState();
-	return (state != null) ? state.getType() : null;
-    }
-
-    public String getActiveStateRemarks() {
-	return getMostRecentState().getRemarks();
+	return (PhdProgramCandidacyProcessState) super.getActiveState();
     }
 
     public boolean isInState(final PhdProgramCandidacyProcessState state) {
 	return getActiveState().equals(state);
-    }
-
-    public boolean hasState(PhdProgramCandidacyProcessState type) {
-	final List<PhdCandidacyProcessState> states = new ArrayList<PhdCandidacyProcessState>(getStates());
-	Collections.sort(states, PhdCandidacyProcessState.COMPARATOR_BY_DATE);
-
-	for (final PhdCandidacyProcessState state : states) {
-	    if (state.getType() == type) {
-		return true;
-	    }
-	}
-
-	return false;
     }
 
     public void ratify(RatifyCandidacyBean bean, Person responsible) {

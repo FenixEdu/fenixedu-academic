@@ -1,6 +1,10 @@
 package net.sourceforge.fenixedu.domain.phd.thesis;
 
-public enum PhdThesisProcessStateType {
+import net.sourceforge.fenixedu.domain.phd.PhdProcessStateType;
+
+public enum PhdThesisProcessStateType implements PhdProcessStateType {
+    
+    NEW,
 
     WAITING_FOR_JURY_CONSTITUTION,
 
@@ -18,4 +22,8 @@ public enum PhdThesisProcessStateType {
 
     CONCLUDED;
 
+    @Override
+    public String getName() {
+	return name();
+    }
 }

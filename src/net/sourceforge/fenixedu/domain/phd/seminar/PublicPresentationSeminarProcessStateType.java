@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.domain.phd.seminar;
 
-public enum PublicPresentationSeminarProcessStateType {
+import net.sourceforge.fenixedu.domain.phd.PhdProcessStateType;
+
+public enum PublicPresentationSeminarProcessStateType implements PhdProcessStateType {
 
     WAITING_FOR_COMISSION_CONSTITUTION,
 
@@ -13,5 +15,10 @@ public enum PublicPresentationSeminarProcessStateType {
     REPORT_WAITING_FOR_VALIDATION,
 
     REPORT_VALIDATED;
+
+    @Override
+    public String getName() {
+	return name();
+    }
 
 }

@@ -1021,12 +1021,14 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return hasAnyActiveAlertFor(PhdRegistrationFormalizationAlert.class);
     }
 
+    @Override
+    public PhdProgramProcessState getMostRecentState() {
+	return (PhdProgramProcessState) super.getMostRecentState();
+    }
+
+    @Override
     public PhdIndividualProgramProcessState getActiveState() {
-	if (!hasAnyStates()) {
-	    return null;
-	}
-	final PhdProgramProcessState state = Collections.max(getStates(), PhdProcessState.COMPARATOR_BY_DATE);
-	return (state != null) ? state.getType() : null;
+	return (PhdIndividualProgramProcessState) super.getActiveState();
     }
 
     public Student getStudent() {

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.phd;
 
-public enum PhdProgramCandidacyProcessState {
+public enum PhdProgramCandidacyProcessState implements PhdProcessStateType {
 
     PRE_CANDIDATE,
 
@@ -17,5 +17,10 @@ public enum PhdProgramCandidacyProcessState {
     RATIFIED_BY_SCIENTIFIC_COUNCIL,
 
     CONCLUDED;
+
+    @Override
+    public String getName() {
+	return name();
+    }
 
 }

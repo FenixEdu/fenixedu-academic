@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.domain.phd;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +13,6 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 
 abstract public class PhdProgramProcess extends PhdProgramProcess_Base {
 
@@ -89,11 +90,41 @@ abstract public class PhdProgramProcess extends PhdProgramProcess_Base {
 		&& userView.getPerson().getEmployeeAdministrativeOffice().isMasterDegree();
     }
 
-    static protected boolean isParticipant(PhdThesisProcess process, IUserView userView) {
+    static protected boolean isParticipant(PhdProgramProcess process, IUserView userView) {
 	return isMasterDegreeAdministrativeOfficeEmployee(userView)
 		|| process.getIndividualProgramProcess().isCoordinatorForPhdProgram(userView.getPerson())
 		|| process.getIndividualProgramProcess().isGuiderOrAssistentGuider(userView.getPerson())
 		|| process.getIndividualProgramProcess().getPerson() == userView.getPerson();
+    }
+
+    public PhdProcessState getMostRecentState() {
+	return hasAnyStates() ? Collections.max(getStates(), PhdProcessState.COMPARATOR_BY_DATE) : null;
+    }
+
+    abstract public boolean hasAnyStates();
+
+    abstract public Collection<? extends PhdProcessState> getStates();
+
+    public PhdProcessStateType getActiveState() {
+	final PhdProcessState state = getMostRecentState();
+	return state != null ? state.getType() : null;
+    }
+
+    public String getActiveStateRemarks() {
+	return getMostRecentState().getRemarks();
+    }
+
+    public boolean hasState(PhdProcessStateType type) {
+	final List<PhdProcessState> states = new ArrayList<PhdProcessState>(getStates());
+	Collections.sort(states, PhdCandidacyProcessState.COMPARATOR_BY_DATE);
+
+	for (final PhdProcessState state : states) {
+	    if (state.getType().equals(type)) {
+		return true;
+	    }
+	}
+
+	return false;
     }
 
     abstract protected PhdIndividualProgramProcess getIndividualProgramProcess();
