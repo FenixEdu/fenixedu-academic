@@ -55,16 +55,25 @@
  </table>
 
 <ul class="operations">
+	<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= PhdThesisProcess.RequestJuryElements.class %>">
 	<li style="display: inline;">
-		<html:link action="/phdThesisProcess.do?method=prepareSubmitJuryElementsDocument" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
-			<bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.jury.elements.document"/>
-		</html:link>
+			<html:link action="/phdThesisProcess.do?method=prepareRequestJuryElements" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
+				<bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.request.jury.elements"/>
+			</html:link>
 	</li>
-	<li style="display: inline;">
-		<html:link action="/phdThesisProcess.do?method=manageThesisJuryElements" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
-			<bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.jury.elements"/>
-		</html:link>
-	</li>
+	</phd:activityAvailable>
+	<logic:notEqual name="thesisProcess" property="activeState.name" value="NEW">
+		<li style="display: inline;">
+			<html:link action="/phdThesisProcess.do?method=prepareSubmitJuryElementsDocument" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
+				<bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.jury.elements.document"/>
+			</html:link>
+		</li>
+		<li style="display: inline;">
+			<html:link action="/phdThesisProcess.do?method=manageThesisJuryElements" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
+				<bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.jury.elements"/>
+			</html:link>
+		</li>
+	</logic:notEqual>
 	<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= PhdThesisProcess.RequestJuryReviews.class %>">
 	<li style="display: inline;">
 		<html:link action="/phdThesisProcess.do?method=prepareRequestJuryReviews" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
