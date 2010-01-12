@@ -1,5 +1,7 @@
 <schema name="PhdIndividualProgramProcess.view.resume" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
-	<slot name="processNumber" />
+	<slot name="phdIndividualProcessNumber">
+		<property name="format" value="${number}/${year}" />
+	</slot>
 	<slot name="phdProgram" layout="null-as-label">
 		<property name="subLayout" value="values" />
 		<property name="subSchema" value="PhdProgram.name" />
@@ -1357,6 +1359,8 @@
 	<slot name="createdBy" />
 	<slot name="whenUpdated" />
 	<slot name="updatedBy" />
+	<slot name="whenRequestJury" />
+	<slot name="whenReceivedJury" />
 	<slot name="whenJuryValidated" />
 	<slot name="activeStateRemarks"/>
 </schema>
