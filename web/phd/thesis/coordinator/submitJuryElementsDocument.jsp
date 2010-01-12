@@ -56,34 +56,37 @@
 
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 
-<bean:define id="processId" name="process" property="externalId" />
-
-
-<fr:form action="<%= "/phdThesisProcess.do?processId=" + processId.toString() %>" encoding="multipart/form-data">
-	<input type="hidden" name="method" />
+<logic:equal name="process" property="activeState.name" value="WAITING_FOR_JURY_CONSTITUTION">
+	<bean:define id="processId" name="process" property="externalId" />
 	
-	<fr:edit id="thesisProcessBean" name="thesisProcessBean" visible="false" />
-	
-	<fr:edit id="thesisProcessBean.edit.documents" name="thesisProcessBean" property="documents">
-		<fr:schema bundle="PHD_RESOURCES" type="<%= PhdProgramDocumentUploadBean.class.getName() %>">
-			<fr:slot name="type" readOnly="true" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean.type"/>
-			<fr:slot name="file" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean.file" required="true">
-				<fr:validator name="<%= FileValidator.class.getName() %>" />
-				<fr:property name="fileNameSlot" value="filename"/>
-				<fr:property name="size" value="20"/>
-			</fr:slot>
-		</fr:schema>
-	
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
-			<fr:property name="columnClasses" value=",,tdclear tderror1" />
-		</fr:layout>
+	<fr:form action="<%= "/phdThesisProcess.do?processId=" + processId.toString() %>" encoding="multipart/form-data">
+		<input type="hidden" name="method" />
 		
-	</fr:edit>
+		<fr:edit id="thesisProcessBean" name="thesisProcessBean" visible="false" />
+		
+		<fr:edit id="thesisProcessBean.edit.documents" name="thesisProcessBean" property="documents">
+			<fr:schema bundle="PHD_RESOURCES" type="<%= PhdProgramDocumentUploadBean.class.getName() %>">
+				<fr:slot name="type" readOnly="true" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean.type"/>
+				<fr:slot name="file" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean.file" required="true">
+					<fr:validator name="<%= FileValidator.class.getName() %>" />
+					<fr:property name="fileNameSlot" value="filename"/>
+					<fr:property name="size" value="20"/>
+				</fr:slot>
+			</fr:schema>
+		
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
+				<fr:property name="columnClasses" value=",,tdclear tderror1" />
+			</fr:layout>
+			
+		</fr:edit>
+	
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='submitJuryElementsDocument';"><bean:message bundle="PHD_RESOURCES" key="label.submit"/></html:submit>
+		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='viewIndividualProgramProcess';"><bean:message bundle="PHD_RESOURCES" key="label.cancel"/></html:cancel>	
+	</fr:form>
 
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='submitJuryElementsDocument';"><bean:message bundle="PHD_RESOURCES" key="label.submit"/></html:submit>
-	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='viewIndividualProgramProcess';"><bean:message bundle="PHD_RESOURCES" key="label.cancel"/></html:cancel>	
-</fr:form>
+</logic:equal>
+
 <%--  ### End of Operation Area  ### --%>
 
 <%--  ### Buttons (e.g. Submit)  ### --%>
