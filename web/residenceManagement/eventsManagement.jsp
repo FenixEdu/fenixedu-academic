@@ -62,11 +62,11 @@
 
 		<p class="mtop05">
 			<logic:equal name="currentResidence" property="residencePriceTableConfigured" value="true">
-				<html:link page="<%=  "/residenceManagement.do?method=importData&monthOID=" + monthOID %>">
+				<html:link page="<%=  "/residenceManagement.do?method=importData&monthOID=" + monthOID + (request.getParameter("sortBy") != null ? "&sortBy=" + request.getParameter("sortBy") : "")%>">
 					<bean:message key="label.importFile" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/>
 				</html:link>
 				|
-				<html:link page="<%=  "/residenceManagement.do?method=importCurrentDebts&monthOID=" + monthOID %>">
+				<html:link page="<%=  "/residenceManagement.do?method=importCurrentDebts&monthOID=" + monthOID +  (request.getParameter("sortBy") != null ? "&sortBy=" + request.getParameter("sortBy") : "") %>">
 					Actualizar dividas (Excel)
 				</html:link>
 			</logic:equal>
@@ -94,7 +94,7 @@
                                 <fr:property name="sortableSlots" value="person.student.number, person.socialSecurityNumber, person.name, roomValue, room, paymentDate" />
                         </fr:layout>
 
-						<fr:destination name="personLink" path="/residenceEventManagement.do?method=viewPersonResidenceEvents&person=${person.OID}&monthOID=${residenceMonth.OID}"/>
+						<fr:destination name="personLink" path="<%= "/residenceEventManagement.do?method=viewPersonResidenceEvents&person=${person.OID}&monthOID=${residenceMonth.OID}" + (request.getParameter("sortBy") != null ? "&sortBy=" + request.getParameter("sortBy") : "") %>"/>
 				</fr:view>
 			</logic:notEmpty>
 			<logic:empty name="searchBean" property="residenceMonth.eventsWithPaymentCodes">
@@ -113,7 +113,7 @@
                                 <fr:property name="sortableSlots" value="person.student.number, person.socialSecurityNumber, person.name, roomValue, room, paymentDate" />
                      
 						</fr:layout>
-						<fr:destination name="personLink" path="/residenceEventManagement.do?method=viewPersonResidenceEvents&person=${person.OID}&monthOID=${residenceMonth.OID}"/>
+						<fr:destination name="personLink" path="<%= "/residenceEventManagement.do?method=viewPersonResidenceEvents&person=${person.OID}&monthOID=${residenceMonth.OID}" + (request.getParameter("sortBy") != null ? "&sortBy=" + request.getParameter("sortBy") : "") %>"/>
 				</fr:view>
 			</logic:notEmpty>
 			<logic:empty name="searchBean" property="residenceMonth.eventsWithoutPaymentCodes">

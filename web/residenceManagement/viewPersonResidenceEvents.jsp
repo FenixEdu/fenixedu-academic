@@ -13,7 +13,7 @@
 <bean:define id="monthOID" name="month" property="OID"/>
 
 <p>
-	<html:link page="<%= "/residenceEventManagement.do?method=manageResidenceEvents&monthOID="  + monthOID%>"> 
+	<html:link page="<%= "/residenceEventManagement.do?method=manageResidenceEvents&monthOID="  + monthOID + (request.getParameter("sortBy") != null ? "&sortBy=" + request.getParameter("sortBy") : "")%>"> 
 		&laquo; <bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>
 	</html:link>
 </p>
