@@ -103,10 +103,18 @@ public class ClosedMonth extends ClosedMonth_Base {
 	LocalDate today = new LocalDate().minusMonths(1);
 	Partial monthBefore = new Partial().with(DateTimeFieldType.year(), today.getYear()).with(DateTimeFieldType.monthOfYear(),
 		today.getMonthOfYear());
-	if (isMonthClosed(yearMonth) && monthBefore.isEqual(yearMonth)) {
-	    return true;
+	for (ClosedMonth closedMonth : RootDomainObject.getInstance().getClosedMonths()) {
+	    if (closedMonth.getClosedYearMonth().equals(yearMonth) && closedMonth.getClosedForBalance()
+		    && monthBefore.isEqual(yearMonth) && !closedMonth.hasAnyCorrection()) {
+		return true;
+	    }
 	}
 	return false;
+    }
+
+    public boolean hasAnyCorrection() {
+	return (hasAnyAssiduousnessExtraWorksCorrections() || hasAnyAssiduousnessClosedDaysCorrections()
+		|| hasAnyAssiduousnessClosedMonthsCorrections() || hasAnyClosedMonthJustificationCorrections());
     }
 
     public static boolean hasAnyMonthClosed() {
