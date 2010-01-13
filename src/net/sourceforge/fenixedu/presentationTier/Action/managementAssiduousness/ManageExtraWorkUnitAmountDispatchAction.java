@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.dataTransferObject.assiduousness.UnitExtraWorkAm
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkAmount;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -69,13 +70,16 @@ public class ManageExtraWorkUnitAmountDispatchAction extends FenixDispatchAction
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 	UnitExtraWorkAmountFactory unitExtraWorkAmountFactory = (UnitExtraWorkAmountFactory) getRenderedObject("createUnitExtraWorkAmount");
 	if (Unit.readByCostCenterCode(unitExtraWorkAmountFactory.getCostCenterCode()) == null) {
-	    setError(request, "error", "error.extraWorkAmount.inexistentCostCenter");
+	    addActionMessage(request, "error.extraWorkAmount.inexistentCostCenter");
+	} else {
+	    try {
+		ExecuteFactoryMethod.run(unitExtraWorkAmountFactory);
+	    } catch (DomainException e) {
+		addActionMessage(request, e.getMessage());
+	    }
 	}
 	YearMonth yearMonth = new YearMonth();
 	yearMonth.setYear(unitExtraWorkAmountFactory.getYear());
-
-	ExecuteFactoryMethod.run(unitExtraWorkAmountFactory);
-
 	request.setAttribute("year", yearMonth);
 	request.setAttribute("unitExtraWorkAmountList", getUnitsExtraWorkAmounts(yearMonth));
 	return mapping.findForward("show-units-extra-work-amounts");

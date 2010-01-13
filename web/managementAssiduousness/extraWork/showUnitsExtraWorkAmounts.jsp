@@ -35,6 +35,11 @@
 	</li>
 </ul>
 
+<logic:messagesPresent message="true">
+	<html:messages id="message" message="true">
+		<p><span class="error0"><bean:write name="message" /></span></p>
+	</html:messages>
+</logic:messagesPresent>
 <p>
 <logic:present name="createUnitExtraWorkAmount">
 	<fr:edit id="createUnitExtraWorkAmount" name="createUnitExtraWorkAmount" schema="edit.unitExtraWorkAmount" 
