@@ -20,3 +20,19 @@
 	</fr:layout>
 </fr:view>
 
+
+<h3 class="mbottom025"><bean:message key="label.extraCurricularActivities" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+
+<logic:empty name="student" property="extraCurricularActivitySet">
+    <p><em><bean:message key="label.studentExtraCurricularActivities.unavailable" bundle="ACADEMIC_OFFICE_RESOURCES"/>.</em></p>
+</logic:empty>
+
+<logic:notEmpty name="student" property="extraCurricularActivitySet">
+    <fr:view name="student" property="extraCurricularActivity" schema="student.extraCurricularActivities" >
+        <fr:layout name="tabular">
+            <fr:property name="classes" value="tstyle1 thlight mtop025"/>
+            <fr:property name="columnClasses" value=",acenter,acenter"/> 
+            <fr:property name="sortBy" value="end=desc"/>	    
+        </fr:layout>
+    </fr:view>
+</logic:notEmpty>
