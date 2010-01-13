@@ -1121,4 +1121,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return hasSeminarProcess() && getSeminarProcess().hasReportDocument();
     }
 
+    public Set<Person> getCoordinatorsFor(ExecutionYear executionYear) {
+	return getPhdProgram().getCoordinatorsFor(executionYear);
+    }
+
 }
