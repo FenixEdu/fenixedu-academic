@@ -1,9 +1,11 @@
 package net.sourceforge.fenixedu.domain.cardGeneration;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -140,6 +142,16 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
 	    result += cardGenerationEntry.getNumberOfCGRsAfterThisCGEAndBeforeTheNextCGE();
 	}
 	return result;
+    }
+    
+    public List<String> getSentButNotIssuedCGRs() {
+	List<String> lineEntriesSentButNotIssued = new ArrayList<String>();
+	for(CardGenerationEntry cardGenerationEntry : getCardGenerationEntries()) {
+	    if(cardGenerationEntry.getNumberOfCGRsAfterThisCGEAndBeforeTheNextCGE() > 0) {
+		lineEntriesSentButNotIssued.add(cardGenerationEntry.getLine());
+	    }
+	}
+	return lineEntriesSentButNotIssued;
     }
 
     private StudentCurricularPlan findStudentCurricularPlan(final Student student) {

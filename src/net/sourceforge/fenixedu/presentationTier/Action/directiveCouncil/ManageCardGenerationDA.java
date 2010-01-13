@@ -206,6 +206,25 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 	}
 	return null;
     }
+     
+    public ActionForward downloadCardGenerationBatchSentButNotIssued(final ActionMapping mapping, final ActionForm actionForm,
+	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+	final CardGenerationBatch cardGenerationBatch = getCardGenerationBatch(request);
+	try {
+	    final ServletOutputStream writer = response.getOutputStream();
+	    response.setHeader("Content-disposition", "attachment; filename=identificationCardsIST"
+		    + cardGenerationBatch.getCreated().toString("yyyyMMddHHmmss") + ".txt");
+	    response.setContentType("text/plain");
+	    for(String line : cardGenerationBatch.getSentButNotIssuedCGRs()) {
+		writer.print(line);
+	    }
+	    writer.flush();
+	    response.flushBuffer();
+	} catch (IOException e1) {
+	    throw new FenixActionException();
+	}
+	return null;
+    }
 
     public ActionForward editCardGenerationBatch(final ActionMapping mapping, final ActionForm actionForm,
 	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {

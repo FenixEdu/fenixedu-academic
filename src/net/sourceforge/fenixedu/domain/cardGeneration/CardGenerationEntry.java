@@ -70,10 +70,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	DateTime creationDateEnd = null;
 	if (getPerson() != null) {
 	    List<CardGenerationEntry> cardGenerationEntries = getPerson().getCardGenerationEntries();
-	    List<CardGenerationEntry> sortedEntries = new ArrayList<CardGenerationEntry>();
-	    sortedEntries.addAll(cardGenerationEntries);
-	    Collections.sort(sortedEntries, COMPARATOR_BY_CREATION_DATE);
-	    CardGenerationEntry cardGenerationEntry = getNextCGE(sortedEntries);
+	    CardGenerationEntry cardGenerationEntry = getNextCGE(cardGenerationEntries);
 	    creationDateEnd = (cardGenerationEntry == null) ? null : cardGenerationEntry.getCreated();
 	    for(CardGenerationRegister cardGenerationRegister : getPerson().getCardGenerationRegister()) {
 		LocalDate localDate = cardGenerationRegister.getEmission();
@@ -87,8 +84,11 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	return count;
     }
     
-    public CardGenerationEntry getNextCGE(List<CardGenerationEntry> sortedEntries) {
+    public CardGenerationEntry getNextCGE(List<CardGenerationEntry> cardGenerationEntries) {
 	boolean found = false;
+	List<CardGenerationEntry> sortedEntries = new ArrayList<CardGenerationEntry>();
+	sortedEntries.addAll(cardGenerationEntries);
+	Collections.sort(sortedEntries, COMPARATOR_BY_CREATION_DATE);
 	CardGenerationEntry nextCardGenerationEntry = null; 
 	for(CardGenerationEntry cardGenerationEntry : sortedEntries) {
 	    if(found) {

@@ -20,6 +20,11 @@
 	<html:link page="<%= urlDownloadBatchFile %>">
 		<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.batch.edit"/>
 	</html:link>
+	|
+	<bean:define id="sentButNotIssued" type="java.lang.String">/manageCardGeneration.do?method=downloadCardGenerationBatchSentButNotIssued&amp;cardGenerationBatchID=<bean:write name="cardGenerationBatch" property="idInternal"/></bean:define>
+	<html:link page="<%= sentButNotIssued %>">
+		<bean:message bundle="CARD_GENERATION_RESOURCES" key="label.card.generation.batch.sent.but.not.issued"/>
+	</html:link>
 	<logic:notPresent name="cardGenerationBatch" property="sent">
 	|
 		<bean:define id="setCardDate" type="java.lang.String">/manageCardGeneration.do?method=setCardDate&amp;cardGenerationBatchID=<bean:write name="cardGenerationBatch" property="idInternal"/></bean:define>
