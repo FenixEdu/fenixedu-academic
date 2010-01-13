@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.phd.alert;
 
+import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.ResourceBundle;
@@ -21,27 +22,19 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class AlertService {
 
-    static public void alertStudent(PhdIndividualProgramProcess process, String subjectKey, String bodyKey) {
-	final PhdCustomAlertBean alertBean = new PhdCustomAlertBean(process, true, false, false);
-
-	alertBean.setSubject(getSubjectPrefixed(process, subjectKey));
-	alertBean.setBody(getBodyText(process, bodyKey));
-	alertBean.setFireDate(new LocalDate());
-	alertBean.setTargetGroup(new FixedSetGroup(process.getPerson()));
-
-	new PhdCustomAlert(alertBean);
-    }
+    static private final String PREFIX_PHD_LABEL = "label.phds";
+    static private final String PHD_RESOURCES = "resources.PhdResources";
 
     private static String getSubjectPrefixed(PhdIndividualProgramProcess process, String subjectKey) {
 	return getProcessNumberPrefix(process) + getMessageFromResource(subjectKey);
     }
 
     private static String getProcessNumberPrefix(PhdIndividualProgramProcess process) {
-	return "[" + getMessageFromResource("label.phds") + " - " + process.getProcessNumber() + "] ";
+	return "[" + getMessageFromResource(PREFIX_PHD_LABEL) + " - " + process.getProcessNumber() + "] ";
     }
 
     static private String getMessageFromResource(String key) {
-	return ResourceBundle.getBundle("resources.PhdResources", Language.getLocale()).getString(key);
+	return ResourceBundle.getBundle(PHD_RESOURCES, Language.getLocale()).getString(key);
     }
 
     static private String getBodyCommonText(final PhdIndividualProgramProcess process) {
@@ -72,12 +65,23 @@ public class AlertService {
 	return builder.toString();
     }
 
-    static private String getBodyText(final PhdIndividualProgramProcess process, final String bodyText) {
+    static private String getBodyText(PhdIndividualProgramProcess process, String bodyText) {
 	return getBodyCommonText(process) + getMessageFromResource(bodyText);
     }
 
     static private String getSlotLabel(String className, String slotName) {
 	return getMessageFromResource("label." + className + "." + slotName);
+    }
+
+    static public void alertStudent(PhdIndividualProgramProcess process, String subjectKey, String bodyKey) {
+	final PhdCustomAlertBean alertBean = new PhdCustomAlertBean(process, true, false, false);
+
+	alertBean.setSubject(getSubjectPrefixed(process, subjectKey));
+	alertBean.setBody(getBodyText(process, bodyKey));
+	alertBean.setFireDate(new LocalDate());
+	alertBean.setTargetGroup(new FixedSetGroup(process.getPerson()));
+
+	new PhdCustomAlert(alertBean);
     }
 
     static public void alertGuiders(PhdIndividualProgramProcess process, String subjectKey, String bodyKey) {
@@ -117,11 +121,51 @@ public class AlertService {
 	final PhdCustomAlertBean alertBean = new PhdCustomAlertBean(process, true, false, false);
 	alertBean.setSubject(getSubjectPrefixed(process, subjectKey));
 	alertBean.setBody(getBodyText(process, bodyKey));
+	alertBean.setTargetGroup(new FixedSetGroup(process.getCoordinatorsFor(ExecutionYear.readCurrentExecutionYear())));
 	alertBean.setFireDate(new LocalDate());
-	alertBean.setTargetGroup(new FixedSetGroup(process.getPhdProgram().getCoordinatorsFor(
-		ExecutionYear.readCurrentExecutionYear())));
 
 	new PhdCustomAlert(alertBean);
     }
 
+    static public void alertCoordinator(PhdIndividualProgramProcess process, AlertMessage subject, AlertMessage body) {
+	final PhdCustomAlertBean alertBean = new PhdCustomAlertBean(process, true, false, false);
+	alertBean.setSubject(getSubjectPrefixed(process, subject));
+	alertBean.setBody(getBodyText(process, body));
+	alertBean.setTargetGroup(new FixedSetGroup(process.getCoordinatorsFor(ExecutionYear.readCurrentExecutionYear())));
+	alertBean.setFireDate(new LocalDate());
+	new PhdCustomAlert(alertBean);
+    }
+
+    static public String getSubjectPrefixed(PhdIndividualProgramProcess process, AlertMessage message) {
+	return getProcessNumberPrefix(process) + message.getMessage();
+    }
+
+    private static String getBodyText(PhdIndividualProgramProcess process, AlertMessage body) {
+	return getBodyCommonText(process) + body.getMessage();
+    }
+
+    static public class AlertMessage {
+	private String label;
+	private Object[] args;
+	private boolean isKey = true;
+
+	public AlertMessage label(String label) {
+	    this.label = label;
+	    return this;
+	}
+
+	public AlertMessage args(Object... args) {
+	    this.args = args;
+	    return this;
+	}
+
+	public AlertMessage isKey(boolean value) {
+	    this.isKey = value;
+	    return this;
+	}
+
+	public String getMessage() {
+	    return isKey ? MessageFormat.format(getMessageFromResource(label), args) : label;
+	}
+    }
 }
