@@ -1836,7 +1836,7 @@
 			<property name="type" value="character"/>
 			<property name="length" value="10"/>
 		</validator>			 			
-	</slot>z 
+	</slot>
 </schema>
 
 <schema name="PublicCandidacyProcessBean.degree.change.selectedDegree.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChangeIndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
@@ -2022,10 +2022,10 @@
 			<property name="type" value="character"/>
 			<property name="length" value="4"/>
 		</validator>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator" />
 		<property name="size" value="4" />
 		<property name="maxLength" value="4" />	
 	</slot>
-	
 	<slot name="erasmusStudentDataBean.experienceCarryingOutProject" key="label.erasmus.current.study.has.experience.carrying.out.research.project" >
 	</slot> 
 </schema>
@@ -2115,8 +2115,8 @@
 	
 	<slot name="nationality" layout="menu-select" key="label.nationality" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/>
-		<property name="format" value="${nationality}" />
-		<property name="sortBy" value="nationality"/>
+		<property name="format" value="${countryNationality}" />
+		<property name="sortBy" value="countryNationality"/>
 	</slot>
 
 	<slot name="documentIdExpirationDate" key="label.documentIdExpirationDate" >
@@ -2182,16 +2182,16 @@
 	</slot>
 </schema>
 
-<schema name="ErasmusCandidacyProcess.degreeCourseInformationBean" type="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusIndividualCandidacyProcessDA$DegreeCourseInformationBean" bundle="ACADEMIC_OFFICE_RESOURCES" >
+<schema name="ErasmusCandidacyProcess.degreeCourseInformationBean" type="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.DegreeCourseInformationBean" bundle="ACADEMIC_OFFICE_RESOURCES" >
 	<slot name="chosenDegree" key="label.erasmus.degree" layout="menu-select-postback">
 		<property name="format" value="${presentationName}" />
 		<property name="destination" value="chooseDegreePostback"/>
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusIndividualCandidacyProcessDA$DegreesForExecutionYearProvider" />		
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.DegreesForExecutionYearProvider" />		
 	</slot>
 	
 	<slot name="chosenCourse" key="label.erasmus.course" layout="menu-select">
 		<property name="format" value="${name}" />
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusIndividualCandidacyProcessDA$DegreeCourseInformationBean" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.DegreeCourseInformationBean" />
 	</slot>	
 </schema>
 

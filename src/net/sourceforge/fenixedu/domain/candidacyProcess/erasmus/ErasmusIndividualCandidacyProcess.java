@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
@@ -23,7 +24,7 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	activities.add(new EditCandidacyPersonalInformation());
 	activities.add(new EditCandidacyInformation());
 	activities.add(new EditDegreeAndCoursesInformation());
-
+	activities.add(new SendEmailForApplicationSubmission());
     }
 
     public ErasmusIndividualCandidacyProcess() {
@@ -248,6 +249,26 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	protected ErasmusIndividualCandidacyProcess executeActivity(ErasmusIndividualCandidacyProcess process,
 		IUserView userView, Object object) {
 	    return process.editDegreeAndCoursesInformation((ErasmusIndividualCandidacyProcessBean) object);
+	}
+
+    }
+
+    static private class SendEmailForApplicationSubmission extends Activity<ErasmusIndividualCandidacyProcess> {
+	@Override
+	public void checkPreConditions(ErasmusIndividualCandidacyProcess process, IUserView userView) {
+	}
+
+	@Override
+	protected ErasmusIndividualCandidacyProcess executeActivity(ErasmusIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    DegreeOfficePublicCandidacyHashCode hashCode = (DegreeOfficePublicCandidacyHashCode) object;
+	    hashCode.sendEmailForApplicationSuccessfullySubmited();
+	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return Boolean.FALSE;
 	}
 
     }

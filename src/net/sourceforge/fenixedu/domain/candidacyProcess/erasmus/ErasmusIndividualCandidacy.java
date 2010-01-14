@@ -3,12 +3,14 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus;
 import java.util.HashSet;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.joda.time.LocalDate;
 
@@ -29,6 +31,10 @@ public class ErasmusIndividualCandidacy extends ErasmusIndividualCandidacy_Base 
 
 	associateCurricularCourses(bean.getSelectedCurricularCourses());
 
+	if (bean.isToAccessFenix()) {
+	    person.addPersonRoleByRoleType(RoleType.CANDIDATE);
+	    person.getLoginIdentification().setPassword(PasswordEncryptor.encryptPassword("pass"));
+	}
     }
 
     private void associateCurricularCourses(Set<CurricularCourse> selectedCurricularCourses) {

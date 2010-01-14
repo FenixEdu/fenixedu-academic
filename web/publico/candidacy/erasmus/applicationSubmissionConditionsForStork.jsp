@@ -67,8 +67,9 @@ Incomplete forms will not be processed. If you have any question you can contact
 	<p><a href="mailto:webmaster@ist.utl.pt">Cristina Sousa</a></p>
 </div>
 
-<bean:define id="hash" name="hash"/> 
-<fr:form action='<%= mappingPath + ".do?method=prepareCandidacyCreation&hash=" + hash %>'>
+<fr:form action='<%= mappingPath + ".do?method=prepareCandidacyCreationForStork" %>'>
+	<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
+	
 	<p class="mtop2"><html:submit><bean:message key="button.continue" bundle="APPLICATION_RESOURCES"/> »</html:submit></p>
 </fr:form>
 

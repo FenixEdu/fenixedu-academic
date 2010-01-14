@@ -27,6 +27,8 @@ public class ErasmusIndividualCandidacyProcessBean extends IndividualCandidacyPr
 
     private ErasmusStudentDataBean erasmusStudentDataBean;
 
+    private Boolean toAccessFenix;
+
     public ErasmusIndividualCandidacyProcessBean() {
 	setCandidacyDate(new LocalDate());
 	initializeDocumentUploadBeans();
@@ -88,5 +90,13 @@ public class ErasmusIndividualCandidacyProcessBean extends IndividualCandidacyPr
 	List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>(this.getSelectedCurricularCourses());
 	Collections.sort(curricularCourses, CurricularCourse.COMPARATOR_BY_NAME);
 	return curricularCourses;
+    }
+
+    public boolean isToAccessFenix() {
+	return this.toAccessFenix;
+    }
+
+    public void willAccessFenix() {
+	this.toAccessFenix = true;
     }
 }

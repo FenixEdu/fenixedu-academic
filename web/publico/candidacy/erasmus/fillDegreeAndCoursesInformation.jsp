@@ -7,6 +7,12 @@
 <%@ page import="java.util.Locale"%>
 <%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%>
 
+<%!
+	static String f(String value, Object ... args) {
+    	return String.format(value, args);
+	}
+%>
+
 <html:xhtml/>
 
 <bean:define id="mappingPath" name="mappingPath"/>
@@ -15,24 +21,10 @@
 <bean:define id="applicationInformationLinkEnglish" name="application.information.link.english"/>
 
 <div class="breadcumbs">
-	<a href="http://www.ist.utl.pt">IST</a> &gt;
-	<% 
-		Locale locale = Language.getLocale();
-		if(!locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {
-	%>
-		<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://www.ist.utl.pt/pt/candidatos/"><bean:message key="title.candidate" bundle="CANDIDATE_RESOURCES"/></a> &gt;
-	<% } else { %>
-		<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://www.ist.utl.pt/en/prospective-students/"><bean:message key="title.candidate" bundle="CANDIDATE_RESOURCES"/></a> &gt;
-	<% } %>
-
-	<% 
-		if(!locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {
-	%>
-		<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href='<%= applicationInformationLinkDefault %>'><bean:write name="application.name"/> </a> &gt;
-	<% } else { %>
-		<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href='<%= applicationInformationLinkEnglish %>'><bean:write name="application.name"/> </a> &gt;
-	<% } %>
-	<bean:message key="title.submit.application" bundle="CANDIDATE_RESOURCES"/>
+	<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://gri.ist.utl.pt/en">GRI</a> &gt;
+	<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://gri.ist.utl.pt/en/ist/">Study at IST</a> &gt;
+	<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href='<%= f("%s/candidacies/erasmus", request.getContextPath()) %>'><bean:message key="title.application.name.erasmus" bundle="CANDIDATE_RESOURCES"/></a> &gt;
+	<bean:message key="erasmus.title.application.submission" bundle="CANDIDATE_RESOURCES" />
 </div>
 
 <h1><bean:write name="application.name"/></h1>
@@ -60,7 +52,10 @@
 	</ul>
 </fr:hasMessages>
 
-<fr:form id="secondCycleCandidacyForm" action='<%= mappingPath + ".do?userAction=createCandidacy" %>' encoding="multipart/form-data">
+<script src="<%= request.getContextPath() + "/javaScript/jquery/jquery.js" %>" type="text/javascript" >
+</script>
+
+<fr:form id="thisForm" action='<%= mappingPath + ".do?userAction=createCandidacy" %>'>
 
 	<input type="hidden" id="removeId" name ="removeCourseId"/>
 	<input type="hidden" id="skipValidationId" name="skipValidation" value="false"/>
@@ -74,7 +69,7 @@
 		<fr:layout name="tabular-editable">
 			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
-	        <fr:destination name="chooseDegreePostback" path="/caseHandlingErasmusIndividualCandidacyProcess.do?method=chooseDegree" />
+	        <fr:destination name="chooseDegreePostback" path="/candidacies/caseHandlingErasmusCandidacyIndividualProcess.do?method=chooseDegree" />
 		</fr:layout>
 	</fr:edit>
 		
@@ -115,7 +110,7 @@
 				
 	</logic:notEmpty>
 	
-	<html:submit onclick="this.form.method.value='acceptHonourDeclaration'; return true;"><bean:message key="label.create" bundle="APPLICATION_RESOURCES" /></html:submit>
+	<html:submit onclick="this.form.method.value='acceptHonourDeclaration'; return true;"><bean:message key="label.continue" bundle="APPLICATION_RESOURCES" /></html:submit>
 	<html:cancel onclick="this.form.method.value='listProcesses'; return true;"><bean:message key="label.cancel" bundle="APPLICATION_RESOURCES" /></html:cancel>
 
 </fr:form>
