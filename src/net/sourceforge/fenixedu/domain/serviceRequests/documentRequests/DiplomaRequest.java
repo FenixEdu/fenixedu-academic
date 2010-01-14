@@ -90,7 +90,7 @@ public class DiplomaRequest extends DiplomaRequest_Base {
     @Override
     final public String getDocumentTemplateKey() {
 	String result = getClass().getName() + "." + getDegreeType().getName();
-	if (getRequestedCycle() != null) {
+	if (getDegreeType().isComposite()) {
 	    result += "." + getRequestedCycle().name();
 	}
 
