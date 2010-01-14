@@ -13,7 +13,6 @@
 
 <html:xhtml/>
 
-
 <bean:define id="mappingPath" name="mappingPath"/>
 <bean:define id="fullPath"><%= request.getContextPath() + "/publico" + mappingPath + ".do" %></bean:define>
 
@@ -28,9 +27,27 @@
 
 <p>
 If you have national citizen card you can submit your application with it. The application will read information from your citizen card which you can use to access your application process.
-<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href='<%= f("%s/candidacies/erasmus/nationalCardSubmission", request.getContextPath()) %>'>Submit with your national citizen card »</a>
+Alternatively you can submit with an access link sent to you email.
 </p>
 
-<p>
-Alternatively you can submit with an access link sent to you email. <%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href='<%= f("%s/candidacies/erasmus/preregistration", request.getContextPath()) %>'>Submit with the access link »</a>
-</p>
+<table>
+	<tbody>
+		<tr>
+			<td>
+				<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href='<%= f("%s/candidacies/erasmus/nationalCardSubmission", request.getContextPath()) %>'>
+				<img src="<%= request.getContextPath() %>/images/stork/stork.jpg" alt="<bean:message key="stork.logo" bundle="IMAGE_RESOURCES" />" />
+				</a>
+			</td>
+			<td>
+				<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href='<%= f("%s/candidacies/erasmus/preregistration", request.getContextPath()) %>'>
+				<img src="<%= request.getContextPath() %>/images/stork/email.jpg" alt="<bean:message key="stork.logo" bundle="IMAGE_RESOURCES" />" />
+				</a>
+			</td>
+		</tr>
+		<tr>
+			<td> <%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href='<%= f("%s/candidacies/erasmus/nationalCardSubmission", request.getContextPath()) %>'>Submit with your European e-ID »</a></td>
+			<td> <%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href='<%= f("%s/candidacies/erasmus/preregistration", request.getContextPath()) %>'>Submit with the access link »</a></td>
+		</tr>
+	</tbody>
+</table>
+

@@ -1135,6 +1135,10 @@
 		<put name="body" value="/publico/candidacy/erasmus/editCandidacy.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
+	
+	<definition name="erasmus.edit.candidacy.information" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/erasmus/editCandidacyInformation.jsp"/>
+	</definition>
 
 	<definition name="erasmus.edit.candidacy.documents" extends="definition.candidacy.process">
 		<put name="body" value="/publico/candidacy/erasmus/editCandidacyDocuments.jsp"/>

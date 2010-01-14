@@ -33,18 +33,12 @@
 <bean:define id="individualCandidacyProcess" name="individualCandidacyProcessBean" property="individualCandidacyProcess"/>
 <bean:define id="individualCandidacyProcessOID" name="individualCandidacyProcess" property="OID"/>
 
-<p><a href='<%= fullPath + "?method=backToViewCandidacy&individualCandidacyProcess=" + individualCandidacyProcessOID %>'>« <bean:message key="label.back" bundle="CANDIDATE_RESOURCES"/></a></p>
+<p><a href='<%= f("%s?method=backToViewCandidacy&individualCandidacyProcess=%s", fullPath, individualCandidacyProcessOID) %>'>« <bean:message key="label.back" bundle="CANDIDATE_RESOURCES"/></a></p>
 
 <logic:equal name="individualCandidacyProcessBean" property="individualCandidacyProcess.isCandidateEmployee" value="true">
 	<p><bean:message key="message.application.employee.edition.forbidden" bundle="CANDIDATE_RESOURCES"/></p>
 </logic:equal>
 
-<logic:equal name="individualCandidacyProcessBean" property="individualCandidacyProcess.isCandidateEmployee" value="false">
-<logic:equal name="individualCandidacyProcessBean" property="individualCandidacyProcess.isCandidateWithRoles" value="true">
-	<p><bean:message key="message.application.person.with.roles.forbidden" bundle="CANDIDATE_RESOURCES"/></p>
-</logic:equal>
-
-<logic:equal name="individualCandidacyProcessBean" property="individualCandidacyProcess.isCandidateWithRoles" value="false">
 <p><span><bean:message key="message.all.fields.are.required" bundle="CANDIDATE_RESOURCES"/></span></p>
 
 <html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
@@ -60,25 +54,43 @@
 </fr:hasMessages>
 
 
-<fr:form action='<%= mappingPath + ".do?method=editCandidacyProcess" %>' >
+<fr:form action='<%= mappingPath + ".do?method=editCandidacyInformation" %>' >
 	<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
 	
-	<h2 style="margin-top: 1em;"><bean:message key="title.personal.data" bundle="CANDIDATE_RESOURCES"/></h2>
-	
-	<fr:edit id="candidacyProcess.personalDataBean"
-		name="individualCandidacyProcessBean"
-		property="personBean"
-		schema="ErasmusIndividualCandidacyPublicProcess.personalDataBean">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="thlight thleft"/>
-		        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+		<h2 class="mtop1"><bean:message key="label.erasmus.home.institution" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
+		<fr:edit 	id="erasmusIndividualCandidacyProcessBean.home.institution" 
+					name="individualCandidacyProcessBean" 
+					schema="ErasmusIndividualCandidacyProcess.home.institution.edit" >
+			<fr:layout name="tabular-editable">
+				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
+		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 			</fr:layout>
-		<fr:destination name="invalid" path='<%= mappingPath + ".do?method=executeEditCandidacyPersonalInformationInvalid" %>' />
-	</fr:edit>
+			<fr:destination name="invalid" path='<%= f("%s.do?method=editCandidacyInformationInvalid", mappingPath) %>'  />
+		</fr:edit>
+		
+		<h2 class="mtop1"><bean:message key="label.erasmus.current.study" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
+		<fr:edit 	id="erasmusIndividualCandidacyProcessBean.current.study" 
+					name="individualCandidacyProcessBean" 
+					schema="ErasmusIndividualCandidacyProcess.current.study.edit" >
+			<fr:layout name="tabular-editable">
+				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
+		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+			</fr:layout>
+			<fr:destination name="invalid" path='<%= f("%s.do?method=editCandidacyInformationInvalid", mappingPath) %>'  />
+		</fr:edit>
+		
+		<h2 class="mtop1"><bean:message key="label.erasmus.period.of.study" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
+		<fr:edit	id="erasmusIndividualCandidacyProcessBean.period.of.study"
+					name="individualCandidacyProcessBean"
+					schema="ErasmusIndividualCandidacyProcess.period.of.study.edit" >
+			<fr:layout name="tabular-editable">
+				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
+		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+			</fr:layout>
+			<fr:destination name="invalid" path='<%= f("%s.do?method=editCandidacyInformationInvalid", mappingPath) %>'  />
+		</fr:edit>
 	
 	<p class="mtop15">	
 		<html:submit><bean:message key="button.submit" bundle="APPLICATION_RESOURCES" /></html:submit>
 	</p>
 </fr:form>
-</logic:equal>
-</logic:equal>

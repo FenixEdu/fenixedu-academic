@@ -447,6 +447,46 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
     }
 
+    public ActionForward prepareEditCandidacyInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	return mapping.findForward("edit-candidacy-information");
+    }
+
+    public ActionForward editCandidacyInformationInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	return mapping.findForward("edit-candidacy-information");
+    }
+
+    public ActionForward editCandidacyInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+	ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	try {
+	    ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
+	    if (actionForwardError != null)
+		return actionForwardError;
+
+	    if (!isApplicationSubmissionPeriodValid()) {
+		return beginCandidacyProcessIntro(mapping, form, request, response);
+	    }
+
+	    executeActivity(bean.getIndividualCandidacyProcess(), "EditPublicCandidacyInformation",
+		    getIndividualCandidacyProcessBean());
+	} catch (final DomainException e) {
+	    if (e.getMessage().equals("error.IndividualCandidacyEvent.invalid.payment.code")) {
+		throw e;
+	    }
+
+	    addActionMessage(request, e.getMessage(), e.getArgs());
+	    request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	    return mapping.findForward("edit-candidacy-information");
+	}
+
+	request.setAttribute("individualCandidacyProcess", bean.getIndividualCandidacyProcess());
+	return backToViewCandidacyInternal(mapping, form, request, response);
+    }
+
     private Map<String, Attribute> buildStorkAttributes(String attrList) {
 	StringTokenizer st = new StringTokenizer(attrList, ";");
 	Map<String, Attribute> attributes = new HashMap<String, Attribute>();
