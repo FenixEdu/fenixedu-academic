@@ -90,10 +90,10 @@ public class StartupServlet extends HttpServlet {
 	    }
 	    FenixReport.setRealPath(getServletContext().getRealPath("/"));
 
-	    // loadLogins();
-	    // loadPersonNames();
-	    // loadUnitNames();
-	    // loadRoles();
+	    loadLogins();
+	    loadPersonNames();
+	    loadUnitNames();
+	    loadRoles();
 	} finally {
 	    Transaction.forceFinish();
 	}
