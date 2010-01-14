@@ -25,6 +25,9 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	activities.add(new EditCandidacyInformation());
 	activities.add(new EditDegreeAndCoursesInformation());
 	activities.add(new SendEmailForApplicationSubmission());
+	activities.add(new EditPublicCandidacyPersonalInformation());
+	activities.add(new EditPublicCandidacyInformation());
+	activities.add(new EditPublicDegreeAndCoursesInformation());
     }
 
     public ErasmusIndividualCandidacyProcess() {
@@ -269,6 +272,66 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	@Override
 	public Boolean isVisibleForAdminOffice() {
 	    return Boolean.FALSE;
+	}
+
+    }
+
+    static private class EditPublicCandidacyPersonalInformation extends Activity<ErasmusIndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(ErasmusIndividualCandidacyProcess process, IUserView userView) {
+	    if (process.isCandidacyCancelled()) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected ErasmusIndividualCandidacyProcess executeActivity(ErasmusIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    process.editPersonalCandidacyInformation(((ErasmusIndividualCandidacyProcessBean) object).getPersonBean());
+	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return Boolean.FALSE;
+	}
+
+    }
+
+    static private class EditPublicCandidacyInformation extends Activity<ErasmusIndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(ErasmusIndividualCandidacyProcess process, IUserView userView) {
+	    if (process.isCandidacyCancelled()) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected ErasmusIndividualCandidacyProcess executeActivity(ErasmusIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    return process.editCandidacyInformation((ErasmusIndividualCandidacyProcessBean) object);
+	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return Boolean.FALSE;
+	}
+    }
+
+    static private class EditPublicDegreeAndCoursesInformation extends Activity<ErasmusIndividualCandidacyProcess> {
+	@Override
+	public void checkPreConditions(ErasmusIndividualCandidacyProcess process, IUserView userView) {
+	    if (process.isCandidacyCancelled() || process.isCandidacyAccepted() || process.hasRegistrationForCandidacy()) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected ErasmusIndividualCandidacyProcess executeActivity(ErasmusIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    return process.editDegreeAndCoursesInformation((ErasmusIndividualCandidacyProcessBean) object);
 	}
 
     }

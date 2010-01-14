@@ -9,6 +9,7 @@
 <%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChangeIndividualCandidacyProcess"%>
 <%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacyProcess" %>
 <%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess" %>
+<%@ page import="net.sourceforge.fenixedu.domain.person.RoleType" %>
 
 
 <%@page import="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess"%><html:xhtml/>
@@ -18,7 +19,6 @@
     	return String.format(value, args);
 	}
 %>
-
 
 <!-- START MAIN PAGE CONTENTS HERE -->
 <bean:define id="mappingPath" name="mappingPath"/>
@@ -37,7 +37,7 @@
 <p><span class="success0"><bean:message key="message.application.submited.success" bundle="CANDIDATE_RESOURCES"/>.</span></p>
 
 <bean:define id="endSubmissionDate" name="endSubmissionDate"/>
-<bean:message key="message.application.submited.detail" bundle="CANDIDATE_RESOURCES" arg0="<%= endSubmissionDate.toString() %>"/>
+<bean:message key="erasmus.message.application.submited.detail" bundle="CANDIDATE_RESOURCES" arg0="<%= endSubmissionDate.toString() %>"/>
 
 <bean:define id="individualCandidacyProcess" name="individualCandidacyProcess"/>
 
@@ -52,26 +52,15 @@
 
 	<bean:define id="individualCandidacyProcess" name="individualCandidacyProcess"/>
 
-	<p><bean:message key="message.ist.conditions.note" bundle="CANDIDATE_RESOURCES"/></p>
 </div>
 </logic:equal>
 
-
+<% if(((IndividualCandidacyProcess) individualCandidacyProcess).getPersonalDetails().getPerson().hasRole(RoleType.CANDIDATE)) { %>
 <div>
 	Username : <%= ((IndividualCandidacyProcess) individualCandidacyProcess).getPersonalDetails().getPerson().getLoginIdentification().getUsername() %>
 </div>
+<% } %>
 
 <div class="mtop15" id="contacts">
-	<h2>Contacts</h2>
-	<p><b><a href="http://gri.ist.utl.pt/">International Relations Office (GRI)</a></b></p>
-	<p>
-		<strong>IST - Alameda </strong>
-		<br>Phone: 218 417 251 / 218 419 155 
-		<br>Fax: 218 419 344
-	</p>
-	<p>
-		<strong>IST - Taguspark</strong>
-		<br>Phone: 214 233 545
-	</p>
-	<p><a href="mailto:webmaster@ist.utl.pt">Cristina Sousa</a></p>
+	<bean:message key="erasmus.contacts.text" bundle="CANDIDATE_RESOURCES" />
 </div>

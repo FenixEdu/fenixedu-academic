@@ -27,13 +27,15 @@ public class ErasmusIndividualCandidacyProcessBean extends IndividualCandidacyPr
 
     private ErasmusStudentDataBean erasmusStudentDataBean;
 
-    private Boolean toAccessFenix;
+    private boolean toAccessFenix;
 
     public ErasmusIndividualCandidacyProcessBean() {
 	setCandidacyDate(new LocalDate());
 	initializeDocumentUploadBeans();
 	setErasmusStudentDataBean(new ErasmusStudentDataBean());
 	setSelectedCurricularCourses(new HashSet<CurricularCourse>());
+
+	this.toAccessFenix = false;
     }
 
     public ErasmusIndividualCandidacyProcessBean(final ErasmusIndividualCandidacyProcess process) {

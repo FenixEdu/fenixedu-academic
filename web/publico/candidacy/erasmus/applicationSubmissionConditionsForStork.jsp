@@ -32,39 +32,10 @@
 
 <h1><bean:write name="application.name" bundle="CANDIDATE_RESOURCES"/></h1>
 
-<p>
-Fill the form in completely and validate it (by submitting it on the web). Make sure you upload all the required documents together and send your application on time. 
-In case your application is accepted, all original documents must be delivered at the Registrar's Office before the course starts. 
-All documents and diplomas should be in English. Please join a legalized translation of all documents if written in another language. 
-Some of your personal data are filled with the information provided by your National Citizen Card.
-After the submission a process will be created and will be approved by the Internacional Relations Office and Erasmus Coordinator. 
-Some alerts will be generated in your process. These alerts are due to incoherences in your application. 
-You must read this alerts and update your application in order to fix it.
-</p>
-
-<p>
-You should, periodically, consult your process in order to see any alerts and watch your application approval. 
-</p>
-
-<p>
-<strong>Note:</strong>Please note that in order for your application to be considered valid, this form must be filled in completely and all required documents must be enclosed.
-Incomplete forms will not be processed. If you have any question you can contact International Relations Office (GRI). 
-</p>
-
+<bean:message key="erasmus.application.submission.condition.text" bundle="CANDIDATE_RESOURCES" />
 
 <div class="mtop15" id="contacts">
-	<h2>Contacts</h2>
-	<p><b><a href="http://gri.ist.utl.pt/">International Relations Office (GRI)</a></b></p>
-	<p>
-		<strong>IST - Alameda </strong>
-		<br>Phone: 218 417 251 / 218 419 155 
-		<br>Fax: 218 419 344
-	</p>
-	<p>
-		<strong>IST - Taguspark</strong>
-		<br>Phone: 214 233 545
-	</p>
-	<p><a href="mailto:webmaster@ist.utl.pt">Cristina Sousa</a></p>
+	<bean:message key="erasmus.contacts.text" bundle="CANDIDATE_RESOURCES" />
 </div>
 
 <fr:form action='<%= mappingPath + ".do?method=prepareCandidacyCreationForStork" %>'>

@@ -47,16 +47,6 @@
 </div>
 </logic:equal>
 
-<%  
-	if(!locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {		
-%>
-
-<logic:equal name="individualCandidacyProcess" property="candidacyHasVatDocument" value="false">
-	<p><em><bean:message key="message.national.candidates.must.send.vat.number.document" bundle="CANDIDATE_RESOURCES"/></em></p>
-</logic:equal>
-
-<% } %>		
-
 <logic:equal value="true" name="isApplicationSubmissionPeriodValid">
 <fr:form action='<%= mappingPath + ".do" %>' id="editCandidacyForm">
 	<input type="hidden" name="method" id="methodForm"/>

@@ -46,7 +46,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "candidacy-process-intro", path = "erasmus.candidacy.process.intro"),
 	@Forward(name = "candidacy-submission-type", path = "erasmus.candidacy.submission.type"),
 	@Forward(name = "show-pre-creation-candidacy-form", path = "erasmus.show.pre.creation.candidacy.form"),
-	@Forward(name = "show-email-message-sent", path = "show.email.message.sent"),
+	@Forward(name = "show-email-message-sent", path = "erasmus.show.email.message.sent"),
 	@Forward(name = "show-application-submission-conditions", path = "erasmus.show.application.submission.conditions"),
 	@Forward(name = "open-candidacy-processes-not-found", path = "individual.candidacy.not.found"),
 	@Forward(name = "show-candidacy-creation-page", path = "erasmus.candidacy.creation.page"),
@@ -256,7 +256,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	    if (!isValid) {
 		invalidateDocumentFileRelatedViewStates();
 		request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
-		return mapping.findForward("candidacy-continue-creation");
+		return mapping.findForward("accept-honour-declaration");
 	    }
 
 	    if (candidacyIndividualProcessExistsForThisEmail(bean.getPersonBean().getEmail())) {
@@ -267,7 +267,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 		addActionMessage("error", request, "error.must.agree.on.declaration.of.honor");
 		invalidateDocumentFileRelatedViewStates();
 		request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
-		return mapping.findForward("candidacy-continue-creation");
+		return mapping.findForward("accept-honour-declaration");
 	    }
 
 	    ErasmusIndividualCandidacyProcess process = (ErasmusIndividualCandidacyProcess) createNewPublicProcess(bean);

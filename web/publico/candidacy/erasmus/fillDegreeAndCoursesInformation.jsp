@@ -30,8 +30,10 @@
 <h1><bean:write name="application.name"/></h1>
 
 <p class="steps">
-	<span><bean:message key="label.step.one.personal.details" bundle="CANDIDATE_RESOURCES"/></span> &gt; 
-	<span class="actual"><bean:message key="label.step.two.habilitations.document.files" bundle="CANDIDATE_RESOURCES"/></span>
+	<span><bean:message key="erasmus.label.step.one.personal.details" bundle="CANDIDATE_RESOURCES"/></span> >
+	<span><bean:message key="erasmus.label.step.two.educational.background" bundle="CANDIDATE_RESOURCES" /></span> >
+	<span class="actual"><bean:message key="erasmus.label.step.three.degree.and.subjects" bundle="CANDIDATE_RESOURCES" /></span> >
+	<span><bean:message key="erasmus.label.step.four.honour.declaration" bundle="CANDIDATE_RESOURCES" /></span>	 
 </p>
 
 <p class="mtop15"><span><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></span></p>
@@ -75,30 +77,38 @@
 		
 	<html:submit onclick="$('#methodId').attr('value', 'addCourse'); $('#skipValidationId').attr('value', 'true'); $('#thisForm').submit(); return true;"><bean:message key="label.add" bundle="APPLICATION_RESOURCES" /></html:submit>
 	
-	<table class="tstyle2 thlight thcenter">
-	<tr>
-		<th><bean:message key="label.erasmus.course" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
-		<th><!-- just in case --></th>
-	</tr>
-	<logic:iterate id="course" name="individualCandidacyProcessBean" property="sortedSelectedCurricularCourses" indexId="index">
-		<bean:define id="curricularCourseId" name="course" property="externalId" />
-	<tr>
-		<td>
-			<fr:view 	name="course"
-						property="name">
-<%-- 				<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>--%>
-			</fr:view>
-		</td>
-		<td>
-			<a onclick="<%= f("$('#methodId').attr('value', 'removeCourse'); $('#skipValidationId').attr('value', 'true'); $('#removeId').attr('value', %s); $('#thisForm').submit()", curricularCourseId) %>"><bean:message key="label.erasmus.remove" bundle="ACADEMIC_OFFICE_RESOURCES" /></a>
-		</td>
-	</tr>
-	</logic:iterate>
-	</table>
+	<logic:empty name="individualCandidacyProcessBean" property="sortedSelectedCurricularCourses">
+		<p><em><bean:message key="erasmus.message.empty.courses" bundle="CANDIDATE_RESOURCES" /></em></p>
+	</logic:empty>
+	
+	<logic:notEmpty name="individualCandidacyProcessBean" property="sortedSelectedCurricularCourses">	
+		<table class="tstyle2 thlight thcenter">
+		<tr>
+			<th><bean:message key="label.erasmus.course" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
+			<th><!-- just in case --></th>
+		</tr>
+		<logic:iterate id="course" name="individualCandidacyProcessBean" property="sortedSelectedCurricularCourses" indexId="index">
+			<bean:define id="curricularCourseId" name="course" property="externalId" />
+		<tr>
+			<td>
+				<fr:view 	name="course"
+							property="name">
+	<%-- 				<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>--%>
+				</fr:view>
+			</td>
+			<td>
+				<a onclick="<%= f("$('#methodId').attr('value', 'removeCourse'); $('#skipValidationId').attr('value', 'true'); $('#removeId').attr('value', %s); $('#thisForm').submit()", curricularCourseId) %>"><bean:message key="label.erasmus.remove" bundle="ACADEMIC_OFFICE_RESOURCES" /></a>
+			</td>
+		</tr>
+		</logic:iterate>
+		</table>
+	</logic:notEmpty>
 
 	<logic:notEmpty name="individualCandidacyProcessBean" property="candidacyProcess">
 		
 		<h2 class="mtop1"><bean:message key="label.erasmus.master.programme" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
+		
+		<em>Choose the master programme you want  to follow at IST</em>
 		<fr:edit id="individualCandidacyProcessBean.degree"
 			name="individualCandidacyProcessBean"
 			schema="ErasmusIndividualCandidacyProcessBean.selectDegree.manage">
