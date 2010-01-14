@@ -6,10 +6,31 @@
 <html:xhtml/>
 
 <script src="<%= request.getContextPath() + "/javaScript/jquery/jquery.js" %>" type="text/javascript"></script>
+<logic:notPresent name="startVisible">
 <script type="text/javascript">
 	jQuery.noConflict();
 
 	jQuery(document).ready(function($){
+
+		var cssGliderDiv = {
+				'display' : 'none',
+				'padding-bottom' : '25px',
+				'padding-left' : '15px'
+		}
+		jQuery("#divAdicionar").css(cssGliderDiv);
+
+		var cssGliderButton = {
+				'cursor' : 'pointer',
+				'padding-top' : '5px'
+		}
+		jQuery("#adicionar").css(cssGliderButton);
+		jQuery("#adicionar").attr("src", "/ciapl/images/expand.png");
+
+		var cssGliderTab = {
+				'display':'block'
+		}
+		jQuery("#tabAdicionar").css(cssGliderTab);
+		
 		jQuery("#adicionar").click(function(){
 			if(jQuery("#divAdicionar").is(':hidden')){
 				jQuery("#toolTip").fadeOut(150);
@@ -19,7 +40,7 @@
 				jQuery("#divAdicionar").hide("slow");
 				jQuery("#adicionar").attr("src", "/ciapl/images/expand.png");
 			}
-		})
+		});
 
 		jQuery("#adicionar").hover(
 				function() {
@@ -33,25 +54,59 @@
 		);
 	});
 </script>
+</logic:notPresent>
+<logic:present name="startVisible">
+<script type="text/javascript">
+	jQuery.noConflict();
+
+	jQuery(document).ready(function($){
+
+		var cssGliderDiv = {
+				'padding-bottom' : '25px',
+				'padding-left' : '15px'
+		}
+		jQuery("#divAdicionar").css(cssGliderDiv);
+
+		var cssGliderButton = {
+				'cursor' : 'pointer',
+				'padding-top' : '5px'
+		}
+		jQuery("#adicionar").css(cssGliderButton);
+		jQuery("#adicionar").attr("src", "/ciapl/images/collapse.png");
+
+		var cssGliderTab = {
+				'display':'block'
+		}
+		jQuery("#tabAdicionar").css(cssGliderTab);
+		
+		jQuery("#adicionar").click(function(){
+			if(jQuery("#divAdicionar").is(':hidden')){
+				jQuery("#toolTip").fadeOut(150);
+				jQuery("#adicionar").attr("src", "/ciapl/images/collapse.png");
+				jQuery("#divAdicionar").show("slow");
+			}else{
+				jQuery("#divAdicionar").hide("slow");
+				jQuery("#adicionar").attr("src", "/ciapl/images/expand.png");
+			}
+		});
+
+		jQuery("#adicionar").hover(
+				function() {
+					if(jQuery("#divAdicionar").is(':hidden')){
+						jQuery("#toolTip").fadeIn(400);
+					}
+				},
+				function() {
+					jQuery("#toolTip").fadeOut(150);
+				}
+		);
+	});
+</script>
+</logic:present>
 
 <style>
-.startHidden {
-	display: none;
-	padding-bottom: 25px;
-	padding-left: 15px;
-}
 
-.startVisible {
-	padding-bottom: 25px;
-	padding-left: 15px;
-}
-
-.imgAnchor {
-	cursor: pointer;
-	padding-top: 5px;
-}
-
-.hideTooltip {
+.hideElement {
 	display: none;
 }
 
@@ -106,26 +161,17 @@
 </fr:view>
 
 
-<table>
+<table id="tabAdicionar" class="hideElement">
 <tr><td>
-<logic:present name="startVisible">
-	<img id="adicionar" class="imgAnchor" src="/ciapl/images/collapse.png"></img>
-</logic:present>
-<logic:notPresent name="startVisible">
-	<img id="adicionar" class="imgAnchor" src="/ciapl/images/expand.png"></img>
-</logic:notPresent>
+	<img id="adicionar" src="/ciapl/images/expand.png"></img>
 </td>
 <td>
-<span id="toolTip" class="hideTooltip"><bean:message key="label.tooltip.add.coordinator" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></span>
+<span id="toolTip" class="hideElement"><bean:message key="label.tooltip.add.coordinator" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></span>
 </td></tr>
 </table>
 
-<logic:present name="startVisible">
-	<div id="divAdicionar" class="startVisible">
-</logic:present>
-<logic:notPresent name="startVisible">
-	<div id="divAdicionar" class="startHidden">
-</logic:notPresent>
+
+<div id="divAdicionar">
 	<p class="mtop1 mbottom0"><strong><bean:message key="label.add.coordinator" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong></p>
 	<fr:form action="/curricularPlans/editExecutionDegreeCoordination.do?method=addCoordinator">
 		<fr:edit name="coordsBean" id="coordsBean">
