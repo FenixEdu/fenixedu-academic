@@ -8,6 +8,8 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 public enum PhdIndividualProgramDocumentType {
 
     CANDIDACY_FORM,
+    
+    REGISTRATION_FORM,
 
     CANDIDACY_REVIEW(false),
 
