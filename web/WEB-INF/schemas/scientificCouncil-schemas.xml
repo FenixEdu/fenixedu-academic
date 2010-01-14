@@ -45,6 +45,15 @@
     <slot name="proposedPlace" key="label.scientificCouncil.thesis.place" layout="null-as-label"/>
 </schema>
 
+<schema name="executionDegree.coordinator.view-name-role" type="net.sourceforge.fenixedu.domain.Coordinator">
+	<slot name="person.name"/>
+	<slot name="responsible">
+		<property name="trueLabel" value="coordinator.responsible.boolean.true"/>
+		<property name="falseLabel" value="coordinator.responsible.boolean.false"/>
+		<property name="bundle" value="SCIENTIFIC_COUNCIL_RESOURCES"/>
+	</slot>
+</schema>
+
 <schema name="thesis.review.person" type="net.sourceforge.fenixedu.domain.Person">
     <slot name="name" key="label.scientificCouncil.thesis.review.person.name"/>
     <slot name="teacher.category.name" key="label.scientificCouncil.thesis.review.teacher.category"/>

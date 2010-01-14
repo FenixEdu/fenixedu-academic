@@ -9,7 +9,7 @@
 
 <bean:define id="sourceExecutionCourseId" name="bean" property="sourceExecutionCourse.idInternal"/>
 
-<p class="mvert05"><strong><fr:view name="sourceExecutionCourseId"/> - <fr:view name="bean" property="sourceExecutionCourse.nome"/> (<fr:view name="bean" property="sourceExecutionCourse.sigla"/>)</strong></h3>
+<p class="mvert05"><strong><fr:view name="sourceExecutionCourseId"/> - <fr:view name="bean" property="sourceExecutionCourse.nome"/> (<fr:view name="bean" property="sourceExecutionCourse.sigla"/>)</strong></p>
 
 <bean:define id="periodId" name="bean" property="sourceExecutionCourse.executionPeriod.idInternal"/>
 <bean:define id="periodName" name="bean" property="sourceExecutionCourse.executionPeriod.name"/>

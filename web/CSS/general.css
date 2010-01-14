@@ -564,6 +564,7 @@ padding-right: 0.5em;
 .valigntop { vertical-align: top; }
 .valignbottom { vertical-align: bottom; }
 .acronym { border-bottom: 1px dotted #888; }
+.cursorpointer { cursor: pointer; }
 
 /* floats */
 .fright { float: right; }
@@ -2473,6 +2474,7 @@ text-decoration: none;
 /*color: black !important;*/
 border: none !important;
 width: 20px;
+outline: none;
 }
 a.help span {
 display: none;
@@ -2692,4 +2694,11 @@ display: block;
 color: #777;
 font-size: 0.9em;
 margin-bottom: 1em;
+}
+
+
+
+img.mbottom-fix, .mbottom-fix img { /* fixes unwanted bottom margin in images */
+display: block;
+margin: 0 auto;
 }

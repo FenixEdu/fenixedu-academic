@@ -3,6 +3,13 @@
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
+<!-- Struts/Renderers Magic -->
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+
+
 <ft:tilesView definition="scientificCouncil.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
@@ -69,6 +76,14 @@
 		</h:outputLink>
 		<h:outputText value="</p>" escape="false" />
 		
+		<!-- Your ticket out of hell! / Diogo was here. ;)-->
+		<h:outputText value="<br/><br/><p><strong>#{scouncilBundle['label.coordinationTeams']}</strong><p/>" escape="false" />
+		<h:outputText value="<p>#{scouncilBundle['editCoordinationExplanation']}<p/>" escape="false" />
+		<h:outputText value="<p><a href='#{CurricularPlansMembersManagementBackingBean.contextPath}/scientificCouncil/curricularPlans/editExecutionDegreeCoordination.do?method=prepareEditCoordination&degreeCurricularPlanId=#{CurricularPlansMembersManagementBackingBean.degreeCurricularPlan.idInternal}'>" escape="false"/>
+				<h:outputText value="#{scouncilBundle['accessCoordination']}"/>
+		<h:outputText value="</a></p>" escape="false"/>
+		<!-- Hack ends here. -->
+		
 		<h:outputText value="<br/><p>" escape="false" />
 		<h:commandButton alt="#{htmlAltBundle['commandButton.save']}" styleClass="inputbutton" value="#{scouncilBundle['button.save']}"
 			action="#{DegreeCurricularPlanManagement.editCurricularPlan}"/>
@@ -76,4 +91,7 @@
 			action="curricularPlansManagement"/>
 		<h:outputText value="</p>" escape="false" />
 	</h:form>
+	
 </ft:tilesView>
+
+

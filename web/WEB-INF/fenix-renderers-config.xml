@@ -255,7 +255,20 @@ Documentation:
     <renderer type="java.lang.Boolean" layout="boolean-changer" class="net.sourceforge.fenixedu.presentationTier.renderers.BooleanLinkChangerRenderer"/>
 	<!--@ Specific renderer for a boolean. This renderer adds a control link to change the boolean state -->
     <renderer type="boolean" layout="boolean-changer" class="net.sourceforge.fenixedu.presentationTier.renderers.BooleanLinkChangerRenderer"/>
-
+    
+    <!-- @ Boolean renderer aimed to allow a graphical view of a boolean value through the presentation of an icon
+    	 	By default: True=GreenCheck /  / False=EmptyDash -->
+	<renderer type="java.lang.Boolean" layout="boolean-icon" class="pt.ist.fenixWebFramework.renderers.BooleanImageRenderer">
+		<property name="trueIconPath" value="/images/accept.gif"/>
+		<property name="falseIconPath" value="/images/empty.gif"/>
+	</renderer>
+	<!-- @ Boolean renderer aimed to allow a graphical view of a boolean value through the presentation of an icon
+    	 	By default: True=GreenCheck /  / False=EmptyDash -->
+	<renderer type="boolean" layout="boolean-icon" class="pt.ist.fenixWebFramework.renderers.BooleanImageRenderer">
+		<property name="trueIconPath" value="/images/accept.gif"/>
+		<property name="falseIconPath" value="/images/empty.gif"/>
+	</renderer>
+	
     <!--@ The default presentation for an enum searches the bundle ENUMERATION_RESOURCES for a description
           of the enum value. The key used for seaching is the enum name. -->
     <renderer type="java.lang.Enum" class="pt.ist.fenixWebFramework.renderers.EnumRenderer">
@@ -549,7 +562,7 @@ Documentation:
     </renderer>
     
     <!--@ This layout allows several slots to be edited without a specific organization. Each slot's editor e shown after the
-          previous. You can shoose to present the slot's label or not. -->
+          previous. You can choose to present the slot's label or not. -->
     <renderer mode="input" type="java.lang.Object" layout="flow" class="pt.ist.fenixWebFramework.renderers.FlowInputRenderer">
             <property name="labelTerminator" value=":"/>
     </renderer>
