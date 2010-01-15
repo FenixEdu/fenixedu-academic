@@ -39,10 +39,13 @@
 	<table class="mvert1 tdtop">
 		<tbody>
 			<tr>
-				<td><html:img align="middle"
-					src="<%=request.getContextPath() + "/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto"%>"
+				<td>
+					<html:img align="middle"
+					action="<%=request.getContextPath() + "/person/retrievePersonalPhoto.do?method=retrieveByID"%>"
 					altKey="personPhoto" bundle="IMAGE_RESOURCES"
-					style="border: 1px solid #aaa; padding: 3px;" /></td>
+					paramId="personCode" paramName="person" paramProperty="idInternal"
+					style="border: 1px solid #aaa; padding: 3px;" /> </td> 
+					
 				<td>
 				<div style="padding: 0 2em;">
 				<div class="infoop2"><bean:message
