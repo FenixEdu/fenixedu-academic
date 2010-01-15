@@ -1221,10 +1221,6 @@
 	<slot name="type" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 </schema>
 
-<schema name="RegistrationFormalizationBean.edit" type="net.sourceforge.fenixedu.domain.phd.candidacy.RegistrationFormalizationBean" bundle="PHD_RESOURCES">
-	<slot name="whenStartedStudies" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-</schema>
-
 <schema name="PublicPhdCandidacyBean.view" type="net.sourceforge.fenixedu.presentationTier.Action.phd.coordinator.publicProgram.PublicPhdProgramCandidacyProcessDA$PublicPhdCandidacyBean" bundle="PHD_RESOURCES">
 	<slot name="email" />
 	<slot name="name" layout="null-as-label" />
@@ -1363,4 +1359,11 @@
 	<slot name="whenReceivedJury" />
 	<slot name="whenJuryValidated" />
 	<slot name="activeStateRemarks"/>
+</schema>
+
+<schema name="Registration.degreeNameWithDegreeCurricularPlanName" type="net.sourceforge.fenixedu.domain.student.Registration" bundle="PHD_RESOURCES">
+	<slot name="degreeNameWithDegreeCurricularPlanName" />
+	<slot name="startDate" layout="null-as-label"/>
+	<slot name="activeStateType" />
+
 </schema>

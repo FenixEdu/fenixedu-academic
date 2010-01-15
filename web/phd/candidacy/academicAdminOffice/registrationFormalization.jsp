@@ -2,7 +2,9 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
-<html:xhtml/>
+
+<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.RegistrationFormalizationBean"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.academicAdminOffice.PhdProgramCandidacyProcessDA"%><html:xhtml/>
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 
@@ -82,14 +84,44 @@
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 <fr:form action="<%= "/phdProgramCandidacyProcess.do?method=registrationFormalization&processId=" + processId.toString() %>">
   	
-	<fr:edit id="registrationFormalizationBean" name="registrationFormalizationBean" schema="RegistrationFormalizationBean.edit">
+  	<fr:edit id="registrationFormalizationBean" name="registrationFormalizationBean" visible="false" /> 
+  	
+	<fr:edit id="bean.whenStartedStudies" name="registrationFormalizationBean">
+		<fr:schema bundle="PHD_RESOURCES" type="<%= RegistrationFormalizationBean.class.getName() %>">
+			<fr:slot name="whenStartedStudies" required="true" />
+		</fr:schema>
+
 		<fr:layout name="layout">
 			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 			<fr:property name="columnClasses" value=",,tdclear tderror1" />
 			<fr:property name="requiredMarkShown" value="true" />
 		</fr:layout>
 		<fr:destination name="invalid" path="/phdProgramCandidacyProcess.do?method=registrationFormalizationInvalid" />
-</fr:edit>
+	</fr:edit>
+
+	<logic:equal name="registrationFormalizationBean" property="selectRegistration" value="true">
+		<br/>
+		<strong><bean:message key="label.phd.registrationFormalization.choose.registration" bundle="PHD_RESOURCES" />:</strong>
+		<fr:edit id="bean.registration" name="registrationFormalizationBean">
+
+			<fr:schema bundle="PHD_RESOURCES" type="<%= RegistrationFormalizationBean.class.getName() %>">
+				<fr:slot name="registration" layout="radio-select" required="true">	
+					<fr:property name="providerClass" value="<%= PhdProgramCandidacyProcessDA.PhdRegistrationFormalizationRegistrations.class.getName() %>" />
+			        <fr:property name="eachLayout" value="values-dash" />
+					<fr:property name="eachSchema" value="Registration.degreeNameWithDegreeCurricularPlanName" />		
+				</fr:slot>
+			</fr:schema>
+	
+			<fr:layout name="layout">
+				<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
+				<fr:property name="columnClasses" value=",,tdclear tderror1" />
+				<fr:property name="requiredMarkShown" value="true" />
+			</fr:layout>
+			<fr:destination name="invalid" path="/phdProgramCandidacyProcess.do?method=registrationFormalizationInvalid" />
+		</fr:edit>
+
+	</logic:equal>
+
 	
 <%--  ### Buttons (e.g. Submit)  ### --%>
 <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.phd.registrationFormalization"/></html:submit>

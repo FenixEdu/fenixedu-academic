@@ -38,12 +38,15 @@ import net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationBean;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.CommonPhdCandidacyDA;
 import net.sourceforge.fenixedu.presentationTier.docs.phd.notification.PhdCandidacyDeclarationDocument;
 import net.sourceforge.fenixedu.presentationTier.docs.phd.notification.PhdNotificationDocument;
+import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.renderers.DataProvider;
+import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -405,13 +408,13 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
     public ActionForward prepareRegistrationFormalization(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	checkCandidacyDocuments(request);
-	final RegistrationFormalizationBean bean = new RegistrationFormalizationBean();
+	checkCandidacyPreConditions(request);
+	final RegistrationFormalizationBean bean = new RegistrationFormalizationBean(getProcess(request));
 	request.setAttribute("registrationFormalizationBean", bean);
 	return mapping.findForward("registrationFormalization");
     }
 
-    private void checkCandidacyDocuments(final HttpServletRequest request) {
+    private void checkCandidacyPreConditions(final HttpServletRequest request) {
 	final PhdProgramCandidacyProcess process = getProcess(request);
 	final Person person = process.getPerson();
 
@@ -420,11 +423,16 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 	request.setAttribute("healthBulletin", process.hasAnyDocuments(PhdIndividualProgramDocumentType.HEALTH_BULLETIN));
 	request.setAttribute("habilitationsCertificates", person.getAssociatedQualificationsCount() == process
 		.getDocumentsCount(PhdIndividualProgramDocumentType.HABILITATION_CERTIFICATE_DOCUMENT));
+
+	if (!process.hasStudyPlan()) {
+	    addWarningMessage(request,
+		    "error.phd.candidacy.PhdProgramCandidacyProcess.registrationFormalization.must.create.study.plan");
+	}
     }
 
     public ActionForward registrationFormalizationInvalid(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
-	checkCandidacyDocuments(request);
+	checkCandidacyPreConditions(request);
 	request.setAttribute("registrationFormalizationBean", getRenderedObject("registrationFormalizationBean"));
 	return mapping.findForward("registrationFormalization");
     }
@@ -433,8 +441,15 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 	    HttpServletResponse response) {
 
 	try {
-	    ExecuteProcessActivity.run(getProcess(request), RegistrationFormalization.class,
-		    getRenderedObject("registrationFormalizationBean"));
+
+	    final RegistrationFormalizationBean bean = (RegistrationFormalizationBean) getRenderedObject("registrationFormalizationBean");
+
+	    if (!bean.hasRegistration() && mustSelectFirstAnyRegistratiom(request)) {
+		bean.setSelectRegistration(true);
+		return registrationFormalizationInvalid(mapping, actionForm, request, response);
+	    }
+
+	    ExecuteProcessActivity.run(getProcess(request), RegistrationFormalization.class, bean);
 
 	    // TODO: message and warning due to insurance, enrolment debts, etc
 	    // etc
@@ -448,5 +463,28 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 
 	return viewIndividualProgramProcess(request, getProcess(request));
     }
+
     // End of RegistrationFormalization
+
+    private boolean mustSelectFirstAnyRegistratiom(HttpServletRequest request) {
+	final PhdProgramCandidacyProcess process = getProcess(request);
+
+	return process.hasStudyPlan() && process.hasPhdProgram()
+		&& process.hasActiveRegistrationFor(process.getPhdProgramLastActiveDegreeCurricularPlan());
+    }
+
+    static public class PhdRegistrationFormalizationRegistrations implements DataProvider {
+
+	@Override
+	public Converter getConverter() {
+	    return new DomainObjectKeyConverter();
+	}
+
+	@Override
+	public Object provide(Object source, Object currentValue) {
+	    final RegistrationFormalizationBean bean = (RegistrationFormalizationBean) source;
+	    return bean.getAvailableRegistrationsToAssociate();
+	}
+    }
+
 }

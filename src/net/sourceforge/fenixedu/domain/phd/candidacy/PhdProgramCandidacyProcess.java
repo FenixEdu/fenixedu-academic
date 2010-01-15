@@ -200,7 +200,6 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
 	    return process;
 	}
-
     }
 
     static public class RatifyCandidacy extends PhdActivity {
@@ -577,7 +576,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     private PhdProgramCandidacyProcess registrationFormalization(final RegistrationFormalizationBean bean,
 	    final Person responsible) {
 
-	if (!getIndividualProgramProcess().hasStudyPlan()) {
+	if (!hasStudyPlan()) {
 	    throw new DomainException(
 		    "error.phd.candidacy.PhdProgramCandidacyProcess.registrationFormalization.must.create.study.plan");
 	}
@@ -592,7 +591,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	final ExecutionYear executionYear = ExecutionYear.readByDateTime(bean.getWhenStartedStudies());
 
 	if (hasCurricularStudyPlan()) {
-	    final DegreeCurricularPlan dcp = getLastActiveDegreeCurricularPlan();
+	    final DegreeCurricularPlan dcp = getPhdProgramLastActiveDegreeCurricularPlan();
 	    assertCandidacy(dcp, executionYear);
 	    assertRegistration(bean, dcp, executionYear);
 	}
@@ -637,17 +636,28 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     private void assertRegistration(final RegistrationFormalizationBean bean, final DegreeCurricularPlan dcp,
 	    final ExecutionYear executionYear) {
 
-	if (getPerson().getStudent().hasActiveRegistrationFor(dcp)) {
-	    throw new DomainException("error.PhdProgramCandidacyProcess.regisration.formalization.already.has.registration");
-	}
-
-	final Registration registration = new Registration(getPerson(), dcp, getCandidacy(), RegistrationAgreement.NORMAL, null,
-		executionYear);
+	final Registration registration = getOrCreateRegistration(bean, dcp, executionYear);
 
 	registration.setHomologationDate(getWhenRatified());
 	registration.setStudiesStartDate(bean.getWhenStartedStudies());
 	registration.setIngression(Ingression.CIA3C);
 	registration.setPhdIndividualProgramProcess(getIndividualProgramProcess());
+    }
+
+    private Registration getOrCreateRegistration(final RegistrationFormalizationBean bean, final DegreeCurricularPlan dcp,
+	    final ExecutionYear executionYear) {
+
+	final Registration registration;
+	if (hasActiveRegistrationFor(dcp)) {
+	    if (!bean.hasRegistration()) {
+		throw new DomainException("error.PhdProgramCandidacyProcess.regisration.formalization.already.has.registration");
+	    }
+	    registration = bean.getRegistration();
+	} else {
+	    registration = new Registration(getPerson(), dcp, getCandidacy(), RegistrationAgreement.NORMAL, null, executionYear);
+	}
+
+	return registration;
     }
 
     private void assertDebts(final ExecutionYear executionYear) {
@@ -672,19 +682,30 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     private boolean hasCurricularStudyPlan() {
-	return getIndividualProgramProcess().hasStudyPlan()
-		&& !getIndividualProgramProcess().getStudyPlan().getExempted().booleanValue();
+	return hasStudyPlan() && !getIndividualProgramProcess().getStudyPlan().getExempted().booleanValue();
     }
 
-    private DegreeCurricularPlan getLastActiveDegreeCurricularPlan() {
-	return getPhdProgram().getDegree().getLastActiveDegreeCurricularPlan();
+    public DegreeCurricularPlan getPhdProgramLastActiveDegreeCurricularPlan() {
+	return hasPhdProgram() ? getPhdProgram().getDegree().getLastActiveDegreeCurricularPlan() : null;
     }
 
     private PhdProgram getPhdProgram() {
 	return getIndividualProgramProcess().getPhdProgram();
     }
 
+    public boolean hasPhdProgram() {
+	return getPhdProgram() != null;
+    }
+
     public Set<PhdProgramProcessDocument> getLatestDocumentVersions() {
 	return filterLatestDocumentVersions(getDocuments());
+    }
+
+    public boolean hasStudyPlan() {
+	return getIndividualProgramProcess().hasStudyPlan();
+    }
+
+    public boolean hasActiveRegistrationFor(DegreeCurricularPlan degreeCurricularPlan) {
+	return getPerson().getStudent().hasActiveRegistrationFor(degreeCurricularPlan);
     }
 }
