@@ -44,3 +44,4 @@ function executeWithTempFile() {
 }
 
 execute "Create Table Erasmus Student Data" createTableErasmusStudentData.sql
+execute "Registry Code Generator Split" registryCodeGeneratorSplit.sql

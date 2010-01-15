@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.serviceRequests;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.RegistryDiplomaRequest;
@@ -13,6 +14,9 @@ public class RegistryCode extends RegistryCode_Base {
 	setRegistryCodeGenerator(generator);
 	addDocumentRequest(request);
 	String type = null;
+	if (cycle == null) {
+	    cycle = getCycle(request);
+	}
 	switch (cycle) {
 	case FIRST_CYCLE:
 	    type = "L";
@@ -24,7 +28,7 @@ public class RegistryCode extends RegistryCode_Base {
 	    type = "D";
 	    break;
 	}
-	setCode(generator.getNextNumber() + "/ISTC" + type + "/" + new LocalDate().toString("yy"));
+	setCode(generator.getNextNumber(cycle) + "/ISTC" + type + "/" + new LocalDate().toString("yy"));
     }
 
     protected RegistryCode(InstitutionRegistryCodeGenerator generator, RegistryDiplomaRequest request) {
@@ -33,6 +37,17 @@ public class RegistryCode extends RegistryCode_Base {
 
     protected RegistryCode(InstitutionRegistryCodeGenerator generator, DiplomaRequest request) {
 	this(generator, request, request.getWhatShouldBeRequestedCycle());
+    }
+
+    public CycleType getCycle(DocumentRequest request) {
+	switch (request.getDegreeType()) {
+	case DEGREE:
+	    return CycleType.FIRST_CYCLE;
+	case MASTER_DEGREE:
+	    return CycleType.SECOND_CYCLE;
+	default:
+	    throw new DomainException("error.registryCode.unableToGuessCycleTypeToGenerateCode");
+	}
     }
 
     @Override

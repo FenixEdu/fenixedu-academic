@@ -4739,7 +4739,9 @@ class DomainObject {
         }
 
     class serviceRequests.InstitutionRegistryCodeGenerator extends DomainObject {
-        Integer current;
+        Integer currentFirstCycle;
+        Integer currentSecondCycle;
+        Integer currentThirdCycle;
     }
 
     class serviceRequests.RegistryCode extends DomainObject {
