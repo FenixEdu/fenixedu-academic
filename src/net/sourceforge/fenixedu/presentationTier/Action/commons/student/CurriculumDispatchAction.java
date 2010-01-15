@@ -68,12 +68,17 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 	if (registrationOID != null) {
 	    registration = rootDomainObject.readRegistrationByOID(registrationOID);
 	} else if (loggedStudent != null) {
-	    if (loggedStudent.getRegistrations().size() == 1) {
-		registration = loggedStudent.getRegistrations().get(0);
-	    } else {
+	    /** We no longer want to filter students with 1 registration only.
+	     *  All taskflows are now forced to render "chooseRegistration.jsp" in order to
+	     *  make it possible to present the ExtraCurricularActivities information.
+	     *  This old block of code is kept commented only for legacy purpose.
+	     */
+	    //if (loggedStudent.getRegistrations().size() == 1) {
+		//registration = loggedStudent.getRegistrations().get(0);
+	    //} else {
 		request.setAttribute("student", loggedStudent);
 		return mapping.findForward("chooseRegistration");
-	    }
+	    //}
 	}
 
 	if (registration == null) {
