@@ -41,11 +41,11 @@
 			<tr>
 				<td>
 					<html:img align="middle"
-					action="<%=request.getContextPath() + "/person/retrievePersonalPhoto.do?method=retrieveByID"%>"
+					src="<%=request.getContextPath() + "/person/retrievePersonalPhoto.do?method=retrieveByID"%>"
 					altKey="personPhoto" bundle="IMAGE_RESOURCES"
 					paramId="personCode" paramName="person" paramProperty="idInternal"
-					style="border: 1px solid #aaa; padding: 3px;" /> </td> 
-					
+					style="border: 1px solid #aaa; padding: 3px;" /> 
+				</td> 	
 				<td>
 				<div style="padding: 0 2em;">
 				<div class="infoop2"><bean:message
