@@ -7,6 +7,11 @@
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message key="label.extraCurricularActivities.manage" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
+<html:link action="/student.do?method=visualizeStudent" paramId="studentID" paramName="student"
+    paramProperty="idInternal">
+    <bean:message key="link.back" bundle="COMMON_RESOURCES" />
+</html:link>
+
 <html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
     <p>
         <span class="error"><!-- Error messages go here --><bean:write name="message" /></span>

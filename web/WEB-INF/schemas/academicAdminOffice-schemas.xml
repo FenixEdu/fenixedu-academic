@@ -786,15 +786,25 @@
 	constructor="student, type, start, end">
 	<slot name="student" hidden="true" />
 	<slot name="type" key="label.extraCurricularActivity.type" layout="menu-select"
-		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		required="true">
 		<property name="format" value="${name}" />
-        <property name="choiceType" value="net.sourceforge.fenixedu.domain.student.curriculum.ExtraCurricularActivityType" />
+		<property name="choiceType"
+			value="net.sourceforge.fenixedu.domain.student.curriculum.ExtraCurricularActivityType" />
 	</slot>
 	<slot name="start" key="label.extraCurricularActivity.start"
-		layout="year-month"
-		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+		layout="year-month" required="true">
+		<validator
+			class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
+			<property name="dateFormat" value="MM/yyyy" />
+		</validator>
+	</slot>
 	<slot name="end" key="label.extraCurricularActivity.end" layout="year-month"
-		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+		required="true">
+		<validator
+			class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
+			<property name="dateFormat" value="MM/yyyy" />
+		</validator>
+	</slot>
 </schema>
 
 <schema name="student.extraCurricularActivity.import"
