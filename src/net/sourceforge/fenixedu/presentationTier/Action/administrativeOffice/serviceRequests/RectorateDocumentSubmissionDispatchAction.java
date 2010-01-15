@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionBatch;
 import net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionState;
@@ -59,18 +60,21 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 	    }
 	    break;
 	case CLOSED:
-	    actions.add("generateMetadata");
+	    actions.add("generateMetadataForRegistry");
+	    actions.add("generateMetadataForDiplomas");
 	    actions.add("zipDocuments");
 	    actions.add("markAsSent");
 	    break;
 	case SENT:
-	    actions.add("generateMetadata");
+	    actions.add("generateMetadataForRegistry");
+	    actions.add("generateMetadataForDiplomas");
 	    actions.add("zipDocuments");
 	    if (batch.allDocumentsReceived()) {
 		actions.add("markAsReceived");
 	    }
 	case RECEIVED:
-	    actions.add("generateMetadata");
+	    actions.add("generateMetadataForRegistry");
+	    actions.add("generateMetadataForDiplomas");
 	    actions.add("zipDocuments");
 	}
 	request.setAttribute("batch", batch);
@@ -103,11 +107,33 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 	return viewBatch(mapping, actionForm, request, response);
     }
 
-    public ActionForward generateMetadata(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+    public ActionForward generateMetadataForRegistry(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	RectorateSubmissionBatch batch = getDomainObject(request, "batchOid");
-	SimplifiedSpreadsheetBuilder<DocumentRequest> builder = new SimplifiedSpreadsheetBuilder<DocumentRequest>(batch
-		.getDocumentRequestSet()) {
+	Set<DocumentRequest> docs = new HashSet<DocumentRequest>();
+	for (DocumentRequest document : batch.getDocumentRequestSet()) {
+	    if (!(document instanceof DiplomaRequest)) {
+		docs.add(document);
+	    }
+	}
+	return generateMetadata(docs, batch, "registos-", request, response);
+    }
+
+    public ActionForward generateMetadataForDiplomas(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	RectorateSubmissionBatch batch = getDomainObject(request, "batchOid");
+	Set<DocumentRequest> docs = new HashSet<DocumentRequest>();
+	for (DocumentRequest document : batch.getDocumentRequestSet()) {
+	    if (document instanceof DiplomaRequest) {
+		docs.add(document);
+	    }
+	}
+	return generateMetadata(docs, batch, "cartas-", request, response);
+    }
+
+    private ActionForward generateMetadata(Set<DocumentRequest> documents, RectorateSubmissionBatch batch, String prefix,
+	    HttpServletRequest request, HttpServletResponse response) {
+	SimplifiedSpreadsheetBuilder<DocumentRequest> builder = new SimplifiedSpreadsheetBuilder<DocumentRequest>(documents) {
 	    private final ResourceBundle enumeration = ResourceBundle.getBundle("resources/EnumerationResources", new Locale(
 		    "pt", "PT"));
 
@@ -120,7 +146,8 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 		    addColumn("Ciclo", enumeration.getString(((RegistryDiplomaRequest) document).getRequestedCycle().name()));
 		    break;
 		case DIPLOMA_REQUEST:
-		    addColumn("Ciclo", enumeration.getString(((DiplomaRequest) document).getWhatShouldBeRequestedCycle().name()));
+		    CycleType cycle = ((DiplomaRequest) document).getWhatShouldBeRequestedCycle();
+		    addColumn("Ciclo", cycle != null ? enumeration.getString(cycle.name()) : null);
 		    break;
 		case DIPLOMA_SUPPLEMENT_REQUEST:
 		    addColumn("Ciclo", enumeration.getString(((DiplomaSupplementRequest) document).getRequestedCycle().name()));
@@ -131,12 +158,14 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 		addColumn("Tipo de Curso", enumeration.getString(document.getDegreeType().name()));
 		addColumn("Nº de Aluno", document.getStudent().getNumber());
 		addColumn("Nome", document.getPerson().getName());
-		addColumn("Ficheiro", document.getLastGeneratedDocument().getFilename());
+		if (!(document instanceof DiplomaRequest)) {
+		    addColumn("Ficheiro", document.getLastGeneratedDocument().getFilename());
+		}
 	    }
 	};
 	try {
 	    response.setContentType("application/vnd.ms-excel");
-	    response.setHeader("Content-disposition", "attachment; filename=" + batch.getRange() + ".xls");
+	    response.setHeader("Content-disposition", "attachment; filename=" + prefix + batch.getRange() + ".xls");
 	    final ServletOutputStream writer = response.getOutputStream();
 	    builder.build(WorkbookExportFormat.EXCEL, writer);
 	    writer.flush();
@@ -155,13 +184,15 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 	    ZipOutputStream zip = new ZipOutputStream(bout);
 	    RectorateSubmissionBatch batch = getDomainObject(request, "batchOid");
 	    for (DocumentRequest document : batch.getDocumentRequestSet()) {
-		zip.putNextEntry(new ZipEntry(document.getLastGeneratedDocument().getFilename()));
-		zip.write(document.getLastGeneratedDocument().getContents());
-		zip.closeEntry();
+		if (!(document instanceof DiplomaRequest)) {
+		    zip.putNextEntry(new ZipEntry(document.getLastGeneratedDocument().getFilename()));
+		    zip.write(document.getLastGeneratedDocument().getContents());
+		    zip.closeEntry();
+		}
 	    }
 	    zip.close();
 	    response.setContentType("application/zip");
-	    response.addHeader("Content-Disposition", "attachment; filename=batch-" + batch.getRange() + ".zip");
+	    response.addHeader("Content-Disposition", "attachment; filename=documentos-" + batch.getRange() + ".zip");
 	    ServletOutputStream writer = response.getOutputStream();
 	    writer.write(bout.toByteArray());
 	    writer.flush();
