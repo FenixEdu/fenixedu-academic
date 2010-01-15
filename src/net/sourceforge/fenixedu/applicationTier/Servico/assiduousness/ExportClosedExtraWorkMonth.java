@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive;
 import net.sourceforge.fenixedu.domain.assiduousness.Leave;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.DayType;
-import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationGroup;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.exceptions.InvalidGiafCodeException;
 import net.sourceforge.fenixedu.domain.space.Campus;
@@ -110,18 +109,18 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 		closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear())).withField(DateTimeFieldType.dayOfMonth(),
 		1);
 	LocalDate endDate = beginDate.withField(DateTimeFieldType.dayOfMonth(), beginDate.dayOfMonth().getMaximumValue());
-	LocalDate beginUnpaidLicenseDate = beginDate.plusMonths(1);
-	LocalDate endUnpaidLicenseDate = beginUnpaidLicenseDate.withField(DateTimeFieldType.dayOfMonth(), beginUnpaidLicenseDate
-		.dayOfMonth().getMaximumValue());
+	LocalDate beginProcessingMonthDate = beginDate.plusMonths(1);
+	LocalDate endProcessingMonthDate = beginProcessingMonthDate.withField(DateTimeFieldType.dayOfMonth(),
+		beginProcessingMonthDate.dayOfMonth().getMaximumValue());
 
 	Set<AssiduousnessRecord> allAssiduousnessRecord = AssiduousnessRecordMonthIndex.getAssiduousnessRecordBetweenDates(
-		beginDate.toDateTimeAtStartOfDay(), endUnpaidLicenseDate.plusDays(1).toDateTimeAtStartOfDay());
+		beginDate.toDateTimeAtStartOfDay(), endProcessingMonthDate.plusDays(1).toDateTimeAtStartOfDay());
 
 	StringBuilder result = new StringBuilder();
 	HashMap<Assiduousness, List<LeaveBean>> allLeaves = getLeaves(allAssiduousnessRecord, beginDate, endDate, false);
 
-	HashMap<Assiduousness, List<LeaveBean>> allUnpaidLicenseLeaves = getLeaves(allAssiduousnessRecord,
-		beginUnpaidLicenseDate, endUnpaidLicenseDate, true);
+	HashMap<Assiduousness, List<LeaveBean>> allProcessingMonthLeaves = getLeaves(allAssiduousnessRecord,
+		beginProcessingMonthDate, endProcessingMonthDate, true);
 	StateWrapper state = new StateWrapper();
 	state.a66JustificationMotive = JustificationMotive.getA66JustificationMotive();
 	if (state.a66JustificationMotive == null) {
@@ -142,12 +141,12 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 			.getAssiduousnessStatusHistory().getAssiduousness()), state);
 
 		result.append(lineResult);
-		List<LeaveBean> leaveBeanList = allUnpaidLicenseLeaves.get(assiduousnessClosedMonth
+		List<LeaveBean> leaveBeanList = allProcessingMonthLeaves.get(assiduousnessClosedMonth
 			.getAssiduousnessStatusHistory().getAssiduousness());
 		if (leaveBeanList != null) {
 		    for (LeaveBean leaveBean : leaveBeanList) {
-			result.append(getLeaveLine(assiduousnessClosedMonth, leaveBean, beginUnpaidLicenseDate,
-				endUnpaidLicenseDate, closedMonth.getClosedMonthFirstDay().plusMonths(1), state));
+			result.append(getLeaveLine(assiduousnessClosedMonth, leaveBean, beginProcessingMonthDate,
+				endProcessingMonthDate, closedMonth.getClosedMonthFirstDay().plusMonths(1), state));
 		    }
 		}
 	    }
@@ -517,21 +516,17 @@ public class ExportClosedExtraWorkMonth extends FenixService {
     }
 
     private static HashMap<Assiduousness, List<LeaveBean>> getLeaves(Set<AssiduousnessRecord> assiduousnessRecords,
-	    LocalDate beginDate, LocalDate endDate, Boolean unpaidLicenceLeaves) {
+	    LocalDate beginDate, LocalDate endDate, Boolean processingInCurrentMonth) {
 	HashMap<Assiduousness, List<Leave>> assiduousnessLeaves = new HashMap<Assiduousness, List<Leave>>();
 	Interval interval = new Interval(beginDate.toDateTimeAtStartOfDay(), Assiduousness.defaultEndWorkDay.toDateTime(endDate
 		.toDateMidnight()));
 	for (AssiduousnessRecord assiduousnessRecord : assiduousnessRecords) {
 	    if (assiduousnessRecord.isLeave() && !assiduousnessRecord.isAnulated()) {
 		Leave leave = ((Leave) assiduousnessRecord);
-		if ((!unpaidLicenceLeaves && (leave.getJustificationMotive().getJustificationGroup() == null || leave
-			.getJustificationMotive().getJustificationGroup().equals(JustificationGroup.UNPAID_LICENCES) == unpaidLicenceLeaves))
-			|| (unpaidLicenceLeaves && (leave.getJustificationMotive().getJustificationGroup() != null && leave
-				.getJustificationMotive().getJustificationGroup().equals(JustificationGroup.UNPAID_LICENCES) == unpaidLicenceLeaves))) {
+		if (processingInCurrentMonth == leave.getJustificationMotive().getProcessingInCurrentMonth()) {
 		    Interval leaveInterval = new Interval(assiduousnessRecord.getDate(), ((Leave) assiduousnessRecord)
 			    .getEndDate().plusSeconds(1));
 		    if (leaveInterval.overlaps(interval)) {
-
 			List<Leave> leavesList = assiduousnessLeaves.get(assiduousnessRecord.getAssiduousness());
 			if (leavesList == null) {
 			    leavesList = new ArrayList<Leave>();
