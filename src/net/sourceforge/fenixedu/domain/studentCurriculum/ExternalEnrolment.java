@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
 import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -190,12 +191,14 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
     }
 
     @Override
-    public Grade getEctsGrade() {
+    public Grade getEctsGrade(StudentCurricularPlan scp) {
 	Grade grade = getGrade();
 	Set<Dismissal> dismissals = new HashSet<Dismissal>();
 	for (EnrolmentWrapper wrapper : getEnrolmentWrappersSet()) {
-	    for (Dismissal dismissal : wrapper.getCredits().getDismissalsSet()) {
-		dismissals.add(dismissal);
+	    if (wrapper.getCredits().getStudentCurricularPlan().equals(scp)) {
+		for (Dismissal dismissal : wrapper.getCredits().getDismissalsSet()) {
+		    dismissals.add(dismissal);
+		}
 	    }
 	}
 	if (dismissals.isEmpty()) {
@@ -207,10 +210,10 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	    if (dismissal.getCurricularCourse() != null)
 		return dismissal.getCurricularCourse().convertGradeToEcts(dismissal, grade);
 	    else
-		return dismissal.getRegistration().getDegree().convertGradeToEcts(dismissal, grade);
+		return scp.getDegree().convertGradeToEcts(dismissal, grade);
 	} else {
 	    Dismissal dismissal = dismissals.iterator().next();
-	    return dismissal.getRegistration().getDegree().convertGradeToEcts(dismissal, grade);
+	    return scp.getDegree().convertGradeToEcts(dismissal, grade);
 	}
     }
 

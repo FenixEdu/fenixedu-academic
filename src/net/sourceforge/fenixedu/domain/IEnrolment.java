@@ -31,7 +31,7 @@ public interface IEnrolment extends ICurriculumEntry {
 
     Double getEctsCredits();
 
-    Grade getEctsGrade();
+    Grade getEctsGrade(StudentCurricularPlan scp);
 
     boolean isAnual();
 

@@ -76,7 +76,8 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 	addParameter("familyName", ((DiplomaSupplementRequest) getDocumentRequest()).getFamilyNames());
 	addParameter("givenName", ((DiplomaSupplementRequest) getDocumentRequest()).getGivenNames());
 	addParameter("birthDay", person.getDateOfBirthYearMonthDay().toString(DD_SLASH_MM_SLASH_YYYY, getLocale()));
-	addParameter("nationality", StringFormatter.prettyPrint(person.getCountry().getCountryNationality().getPreferedContent()));
+	addParameter("nationality", StringFormatter.prettyPrint(person.getCountry().getCountryNationality().getContent(
+		getLanguage())));
 	addParameter("documentIdType", applyMessageArguments(getResourceBundle().getString("diploma.supplement.one.five.one"),
 		getEnumerationBundle().getString(person.getIdDocumentType().getName())));
 	addParameter("documentIdNumber", person.getDocumentIdNumber());
@@ -369,7 +370,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 		this.type = getEnumerationBundle().getString(enrolment.getEnrolmentTypeName());
 		this.duration = getResourceBundle().getString(
 			enrolment.isAnual() ? "diploma.supplement.annual" : "diploma.supplement.semestral");
-		this.ectsScale = enrolment.getEctsGrade().getValue();
+		this.ectsScale = enrolment.getEctsGrade(getRegistration().getLastStudentCurricularPlan()).getValue();
 	    } else if (entry instanceof Dismissal && ((Dismissal) entry).getCredits().isEquivalence()) {
 		Dismissal dismissal = (Dismissal) entry;
 		this.type = getEnumerationBundle().getString(dismissal.getEnrolmentTypeName());

@@ -787,19 +787,21 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     @Override
-    public Grade getEctsGrade() {
+    public Grade getEctsGrade(StudentCurricularPlan scp) {
 	Grade grade = getGrade();
 	if (getEnrolmentWrappersCount() > 0) {
 	    Set<Dismissal> dismissals = new HashSet<Dismissal>();
 	    for (EnrolmentWrapper wrapper : getEnrolmentWrappersSet()) {
-		for (Dismissal dismissal : wrapper.getCredits().getDismissalsSet()) {
-		    dismissals.add(dismissal);
+		if (wrapper.getCredits().getStudentCurricularPlan().equals(scp)) {
+		    for (Dismissal dismissal : wrapper.getCredits().getDismissalsSet()) {
+			dismissals.add(dismissal);
+		    }
 		}
 	    }
 	    Dismissal dismissal = dismissals.iterator().next();
 	    if (dismissals.size() == 1) {
 		if (dismissal instanceof OptionalDismissal || dismissal instanceof CreditsDismissal) {
-		    return getCurricularCourse().convertGradeToEcts(this, grade);
+		    return scp.getDegree().convertGradeToEcts(dismissal, grade);
 		} else {
 		    CurricularCourse curricularCourse = dismissal.getCurricularCourse();
 		    // FIXME: some optional dismissals not correctly marked as
@@ -813,7 +815,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 		// if more than one exists we can't base the conversion on the
 		// origin, so step up to the degree, on a context based on one
 		// of the sources.
-		return getStudentCurricularPlan().getDegree().convertGradeToEcts(dismissal, grade);
+		return scp.getDegree().convertGradeToEcts(dismissal, grade);
 	    }
 	} else {
 	    return getCurricularCourse().convertGradeToEcts(this, grade);
@@ -1493,7 +1495,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	    final Proposal otherProposal = getDissertationProposal(otherRegistration, getExecutionYear());
 	    if (otherProposal != null) {
 		return otherProposal;
-	    }	    
+	    }
 	}
 	return null;
     }

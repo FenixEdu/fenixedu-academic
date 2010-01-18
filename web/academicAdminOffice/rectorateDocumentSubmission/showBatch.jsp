@@ -56,6 +56,11 @@
             <fr:property name="param(view)" value="registration.idInternal/registrationID" />
             <fr:property name="key(view)" value="link.rectorateSubmission.viewRegistration" />
             <fr:property name="bundle(view)" value="ACADEMIC_OFFICE_RESOURCES" />
+            <fr:property name="link(print)"
+                value="/documentRequestsManagement.do?method=printDocument" />
+            <fr:property name="param(print)" value="idInternal/documentRequestId" />
+            <fr:property name="key(print)" value="link.rectorateSubmission.reprint" />
+            <fr:property name="bundle(print)" value="ACADEMIC_OFFICE_RESOURCES" />
             <fr:property name="link(receive)"
                 value="/academicServiceRequestsManagement.do?method=prepareReceiveAcademicServiceRequest" />
             <fr:property name="param(receive)" value="idInternal/academicServiceRequestId" />
