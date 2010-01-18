@@ -53,6 +53,8 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class MonthClosureDispatchAction extends FenixDispatchAction {
 
+    private static final String EMPTY_STRING = "";
+
     public ActionForward prepareToCloseMonth(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	YearMonth yearMonthToExport = getYearMonthToClose(false, request);
@@ -241,6 +243,12 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 		spreadsheet.addHeader(1, columnNumber++, justificationMotive.getAcronym());
 	    }
 	}
+	spreadsheet.addHeader("Saldo");
+	spreadsheet.addHeader("Saldo Injustificado");
+	spreadsheet.addHeader("Faltas Injustificadas em dias completos");
+	spreadsheet.addHeader("Faltas Injustificadas por tempo em falta");
+	spreadsheet.addHeader("Faltas por conta do periodo de férias");
+
 	spreadsheet.mergeCells(0, 1, 0, 0);
 	spreadsheet.mergeCells(0, 1, 1, 1);
 
@@ -253,9 +261,18 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	    for (JustificationMotive justificationMotive : justifications.keySet()) {
 		double leavesDaysByJustificationMotive = getLeavesDaysByJustificationMotive(justificationMotive,
 			assiduousnessClosedMonth);
-		spreadsheet.addCell(leavesDaysByJustificationMotive == 0 ? "" : leavesDaysByJustificationMotive, justifications
-			.get(justificationMotive));
+		spreadsheet.addCell(leavesDaysByJustificationMotive == 0 ? EMPTY_STRING : leavesDaysByJustificationMotive,
+			justifications.get(justificationMotive));
 	    }
+	    spreadsheet.addDuration(assiduousnessClosedMonth.getBalance());
+	    spreadsheet.addDuration(assiduousnessClosedMonth.getTotalUnjustifiedBalance());
+	    spreadsheet.addCell(assiduousnessClosedMonth.getUnjustifiedDays() == 0 ? EMPTY_STRING : assiduousnessClosedMonth
+		    .getUnjustifiedDays());
+	    spreadsheet.addCell(assiduousnessClosedMonth.getAccumulatedUnjustifiedDays() == 0 ? EMPTY_STRING
+		    : assiduousnessClosedMonth.getAccumulatedUnjustifiedDays());
+	    spreadsheet.addCell(assiduousnessClosedMonth.getAccumulatedArticle66Days() == 0 ? EMPTY_STRING
+		    : assiduousnessClosedMonth.getAccumulatedArticle66Days());
+
 	}
 	spreadsheet.setRegionBorder(0, spreadsheet.getRow().getRowNum() + 1, 0, spreadsheet.getMaxiumColumnNumber() - 1);
 
@@ -284,6 +301,12 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	    }
 	}
 
+	spreadsheet.addHeader("Saldo");
+	spreadsheet.addHeader("Saldo Injustificado");
+	spreadsheet.addHeader("Faltas Injustificadas em dias completos");
+	spreadsheet.addHeader("Faltas Injustificadas por tempo em falta");
+	spreadsheet.addHeader("Faltas por conta do periodo de férias");
+
 	for (AssiduousnessClosedMonth assiduousnessClosedMonth : closedMonth.getAssiduousnessClosedMonths()) {
 	    Map<JustificationGroup, Double> justificationsValues = new HashMap<JustificationGroup, Double>();
 	    spreadsheet.newRow();
@@ -295,7 +318,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 		double leavesDaysByJustificationMotive = getLeavesDaysByJustificationMotive(justificationMotive,
 			assiduousnessClosedMonth);
 		if (justificationMotive.getJustificationGroup() == null) {
-		    spreadsheet.addCell(leavesDaysByJustificationMotive == 0 ? "" : leavesDaysByJustificationMotive,
+		    spreadsheet.addCell(leavesDaysByJustificationMotive == 0 ? EMPTY_STRING : leavesDaysByJustificationMotive,
 			    justificationsByGroups.get(justificationMotive.getAcronym()));
 		} else {
 		    Double value = justificationsValues.get(justificationMotive.getJustificationGroup());
@@ -308,8 +331,17 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	    }
 	    for (JustificationGroup justificationGroup : justificationsValues.keySet()) {
 		Double value = justificationsValues.get(justificationGroup);
-		spreadsheet.addCell(value == 0 ? "" : value, justificationsByGroups.get(justificationGroup.name()));
+		spreadsheet.addCell(value == 0 ? EMPTY_STRING : value, justificationsByGroups.get(justificationGroup.name()));
 	    }
+
+	    spreadsheet.addDuration(assiduousnessClosedMonth.getBalance());
+	    spreadsheet.addDuration(assiduousnessClosedMonth.getTotalUnjustifiedBalance());
+	    spreadsheet.addCell(assiduousnessClosedMonth.getUnjustifiedDays() == 0 ? EMPTY_STRING : assiduousnessClosedMonth
+		    .getUnjustifiedDays());
+	    spreadsheet.addCell(assiduousnessClosedMonth.getAccumulatedUnjustifiedDays() == 0 ? EMPTY_STRING
+		    : assiduousnessClosedMonth.getAccumulatedUnjustifiedDays());
+	    spreadsheet.addCell(assiduousnessClosedMonth.getAccumulatedArticle66Days() == 0 ? EMPTY_STRING
+		    : assiduousnessClosedMonth.getAccumulatedArticle66Days());
 	}
 	spreadsheet.setRegionBorder(0, spreadsheet.getRow().getRowNum() + 1, 0, spreadsheet.getMaxiumColumnNumber() - 1);
 
@@ -707,8 +739,8 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	spreadsheet.addCell(assiduousnessStatusHistory.getAssiduousness().getEmployee().getPerson().getName());
 	spreadsheet.addCell(assiduousnessStatusHistory.getAssiduousnessStatus().getDescription());
 	spreadsheet.addDateCell(localDate);
-	spreadsheet.addCell(newAcronym == null ? "" : newAcronym);
-	spreadsheet.addCell(oldAcronym == null ? "" : oldAcronym);
+	spreadsheet.addCell(newAcronym == null ? EMPTY_STRING : newAcronym);
+	spreadsheet.addCell(oldAcronym == null ? EMPTY_STRING : oldAcronym);
     }
 
     private void fillRow(StyledExcelSpreadsheet spreadsheet, AssiduousnessStatusHistory assiduousnessStatusHistory,
