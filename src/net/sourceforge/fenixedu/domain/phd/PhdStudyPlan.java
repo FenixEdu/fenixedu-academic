@@ -63,11 +63,12 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
 	super.setExempted(exempted);
 
 	if (!exempted) {
+	    check(degree, "error.net.sourceforge.fenixedu.domain.phd.PhdStudyPlan.degree.cannot.be.null");
+
 	    if (!degree.isEmpty() && !degree.isDEA()) {
 		throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.PhdStudyPlan.degree.must.be.of.type.DEA");
 	    }
 
-	    check(degree, "error.net.sourceforge.fenixedu.domain.phd.PhdStudyPlan.degree.cannot.be.null");
 	    super.setDegree(degree);
 	}
     }
@@ -195,6 +196,6 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
     }
 
     public boolean isExempted() {
-	return getExempted();
+	return getExempted() != null && getExempted().booleanValue();
     }
 }

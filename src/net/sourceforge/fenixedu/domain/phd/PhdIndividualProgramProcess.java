@@ -30,6 +30,8 @@ import net.sourceforge.fenixedu.domain.phd.alert.PhdAlert;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlert;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlertBean;
+import net.sourceforge.fenixedu.domain.phd.alert.PhdFinalProofRequestAlert;
+import net.sourceforge.fenixedu.domain.phd.alert.PhdPublicPresentationSeminarAlert;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdRegistrationFormalizationAlert;
 import net.sourceforge.fenixedu.domain.phd.alert.PublicPhdMissingCandidacyValidationAlert;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
@@ -1123,6 +1125,23 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     public Set<Person> getCoordinatorsFor(ExecutionYear executionYear) {
 	return getPhdProgram().getCoordinatorsFor(executionYear);
+    }
+
+    public boolean hasPhdPublicPresentationSeminarAlert() {
+	return hasPhdAlert(PhdPublicPresentationSeminarAlert.class);
+    }
+
+    public boolean hasPhdFinalProofRequestAlert() {
+	return hasPhdAlert(PhdFinalProofRequestAlert.class);
+    }
+
+    protected boolean hasPhdAlert(final Class<? extends PhdAlert> clazz) {
+	for (final PhdAlert alert : getAlerts()) {
+	    if (clazz.isAssignableFrom(alert.getClass())) {
+		return true;
+	    }
+	}
+	return false;
     }
 
 }

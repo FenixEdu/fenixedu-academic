@@ -47,8 +47,18 @@ public class RegistrationFormalizationBean implements Serializable {
     }
 
     public Collection<Registration> getAvailableRegistrationsToAssociate() {
-	return Collections.singleton(process.getPerson().getStudent().getActiveRegistrationFor(
-		process.getPhdProgramLastActiveDegreeCurricularPlan()));
+	if (!process.getPerson().hasStudent()) {
+	    return Collections.emptySet();
+	}
+
+	final Registration registration = process.getPerson().getStudent().getActiveRegistrationFor(
+		process.getPhdProgramLastActiveDegreeCurricularPlan());
+
+	if (registration != null) {
+	    return Collections.singleton(registration);
+	}
+
+	return Collections.emptySet();
     }
 
     public boolean hasRegistration() {

@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessS
 import net.sourceforge.fenixedu.domain.phd.candidacy.RatifyCandidacyBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.RegistrationFormalizationBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.AddNotification;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.AssociateRegistration;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.DeleteDocument;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RatifyCandidacy;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RegistrationFormalization;
@@ -78,7 +79,9 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Forward(name = "createNotification", path = "/phd/candidacy/academicAdminOffice/createNotification.jsp"),
 
-@Forward(name = "registrationFormalization", path = "/phd/candidacy/academicAdminOffice/registrationFormalization.jsp")
+@Forward(name = "registrationFormalization", path = "/phd/candidacy/academicAdminOffice/registrationFormalization.jsp"),
+
+@Forward(name = "associateRegistration", path = "/phd/candidacy/academicAdminOffice/associateRegistration.jsp")
 
 })
 public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
@@ -427,6 +430,8 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 	if (!process.hasStudyPlan()) {
 	    addWarningMessage(request,
 		    "error.phd.candidacy.PhdProgramCandidacyProcess.registrationFormalization.must.create.study.plan");
+	} else if (process.isStudyPlanExempted()) {
+	    addWarningMessage(request, "message.phd.candidacy.registration.formalization.study.plan.is.exempted");
 	}
     }
 
@@ -487,4 +492,36 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 	}
     }
 
+    public ActionForward prepareAssociateRegistration(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	
+	final PhdProgramCandidacyProcess process = getProcess(request);
+	final RegistrationFormalizationBean bean = new RegistrationFormalizationBean(process);
+	bean.setWhenStartedStudies(process.getWhenStartedStudies());
+	
+	request.setAttribute("registrationFormalizationBean", bean);
+	return mapping.findForward("associateRegistration");
+    }
+
+    public ActionForward associateRegistrationInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("registrationFormalizationBean", getRenderedObject("registrationFormalizationBean"));
+	return mapping.findForward("associateRegistration");
+    }
+
+    public ActionForward associateRegistration(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	try {
+	    ExecuteProcessActivity.run(getProcess(request), AssociateRegistration.class,
+		    getRenderedObject("registrationFormalizationBean"));
+	    addSuccessMessage(request, "message.registration.associated.successfuly");
+
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	    return associateRegistrationInvalid(mapping, actionForm, request, response);
+	}
+
+	return viewIndividualProgramProcess(request, getProcess(request));
+    }
 }

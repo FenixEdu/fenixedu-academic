@@ -384,6 +384,27 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
     }
 
+    static public class AssociateRegistration extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
+
+	    if (!process.isInState(PhdProgramCandidacyProcessState.CONCLUDED)) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (!process.hasStudyPlan() || process.getIndividualProgramProcess().hasRegistration()) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
+	    return process.associateRegistration((RegistrationFormalizationBean) object);
+	}
+
+    }
+
     static private List<Activity> activities = new ArrayList<Activity>();
     static {
 	activities.add(new UploadDocuments());
@@ -402,6 +423,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
 	activities.add(new AddNotification());
 	activities.add(new RegistrationFormalization());
+	activities.add(new AssociateRegistration());
     }
 
     private PhdProgramCandidacyProcess(final PhdProgramCandidacyProcessBean bean, final Person person) {
@@ -587,16 +609,8 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	getIndividualProgramProcess().setWhenStartedStudies(bean.getWhenStartedStudies());
 
 	assertPersonInformation();
-
-	final ExecutionYear executionYear = ExecutionYear.readByDateTime(bean.getWhenStartedStudies());
-
-	if (hasCurricularStudyPlan()) {
-	    final DegreeCurricularPlan dcp = getPhdProgramLastActiveDegreeCurricularPlan();
-	    assertCandidacy(dcp, executionYear);
-	    assertRegistration(bean, dcp, executionYear);
-	}
-
-	assertDebts(executionYear);
+	assertStudyPlanInformation(bean);
+	assertDebts(bean);
 	assertRegistrationFormalizationAlerts();
 
 	getIndividualProgramProcess().createState(PhdIndividualProgramProcessState.WORK_DEVELOPMENT, responsible);
@@ -604,12 +618,31 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	return this;
     }
 
+    private void assertStudyPlanInformation(final RegistrationFormalizationBean bean) {
+	final ExecutionYear executionYear = ExecutionYear.readByDateTime(bean.getWhenStartedStudies());
+	if (hasCurricularStudyPlan()) {
+	    final DegreeCurricularPlan dcp = getPhdProgramLastActiveDegreeCurricularPlan();
+	    assertCandidacy(dcp, executionYear);
+	    assertRegistration(bean, dcp, executionYear);
+	}
+    }
+
+    public PhdProgramCandidacyProcess associateRegistration(final RegistrationFormalizationBean bean) {
+
+	if (isStudyPlanExempted()) {
+	    throw new DomainException(
+		    "error.phd.candidacy.PhdProgramCandidacyProcess.associateRegistration.study.plan.is.exempted");
+	}
+
+	assertStudyPlanInformation(bean);
+	assertDebts(bean);
+	assertRegistrationFormalizationAlerts();
+
+	return this;
+    }
+
     private void assertPersonInformation() {
 	final Person person = getPerson();
-
-	if (!person.hasStudent()) {
-	    new Student(person);
-	}
 
 	person.addPersonRoleByRoleType(RoleType.PERSON);
 	person.addPersonRoleByRoleType(RoleType.STUDENT);
@@ -636,6 +669,10 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     private void assertRegistration(final RegistrationFormalizationBean bean, final DegreeCurricularPlan dcp,
 	    final ExecutionYear executionYear) {
 
+	if (!getPerson().hasStudent()) {
+	    new Student(getPerson());
+	}
+
 	final Registration registration = getOrCreateRegistration(bean, dcp, executionYear);
 
 	registration.setHomologationDate(getWhenRatified());
@@ -660,13 +697,15 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	return registration;
     }
 
-    private void assertDebts(final ExecutionYear executionYear) {
+    private void assertDebts(final RegistrationFormalizationBean bean) {
 	assertPhdRegistrationFee();
-	assertInsuranceEvent(executionYear);
+	assertInsuranceEvent(ExecutionYear.readByDateTime(bean.getWhenStartedStudies()));
     }
 
     private void assertPhdRegistrationFee() {
-	new PhdRegistrationFee(getPerson(), getIndividualProgramProcess());
+	if (!getIndividualProgramProcess().hasRegistrationFee()) {
+	    new PhdRegistrationFee(getPerson(), getIndividualProgramProcess());
+	}
     }
 
     private void assertInsuranceEvent(final ExecutionYear executionYear) {
@@ -677,12 +716,16 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     private void assertRegistrationFormalizationAlerts() {
-	new PhdPublicPresentationSeminarAlert(getIndividualProgramProcess());
-	new PhdFinalProofRequestAlert(getIndividualProgramProcess());
+	if (!getIndividualProgramProcess().hasPhdPublicPresentationSeminarAlert()) {
+	    new PhdPublicPresentationSeminarAlert(getIndividualProgramProcess());
+	}
+	if (!getIndividualProgramProcess().hasPhdFinalProofRequestAlert()) {
+	    new PhdFinalProofRequestAlert(getIndividualProgramProcess());
+	}
     }
 
     private boolean hasCurricularStudyPlan() {
-	return hasStudyPlan() && !getIndividualProgramProcess().getStudyPlan().getExempted().booleanValue();
+	return hasStudyPlan() && !getIndividualProgramProcess().getStudyPlan().isExempted();
     }
 
     public DegreeCurricularPlan getPhdProgramLastActiveDegreeCurricularPlan() {
@@ -705,7 +748,15 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	return getIndividualProgramProcess().hasStudyPlan();
     }
 
+    public boolean isStudyPlanExempted() {
+	return hasStudyPlan() && getIndividualProgramProcess().getStudyPlan().isExempted();
+    }
+
     public boolean hasActiveRegistrationFor(DegreeCurricularPlan degreeCurricularPlan) {
-	return getPerson().getStudent().hasActiveRegistrationFor(degreeCurricularPlan);
+	return getPerson().hasStudent() ? getPerson().getStudent().hasActiveRegistrationFor(degreeCurricularPlan) : false;
+    }
+
+    public LocalDate getWhenStartedStudies() {
+	return getIndividualProgramProcess().getWhenStartedStudies();
     }
 }

@@ -5,11 +5,14 @@
 <%@ taglib uri="/WEB-INF/phd.tld" prefix="phd" %>
 
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RequestCandidacyReview"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RequestCandidacyReview"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RejectCandidacyProcess"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RatifyCandidacy"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RegistrationFormalization"%><strong><bean:message  key="label.phd.candidacyProcess" bundle="PHD_RESOURCES"/></strong>
+<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RegistrationFormalization"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.AssociateRegistration"%>
+
+<strong><bean:message  key="label.phd.candidacyProcess" bundle="PHD_RESOURCES"/></strong>
 <br/>
 
 <bean:define id="candidacyProcess" name="process" property="candidacyProcess" />
@@ -82,6 +85,13 @@
 				</html:link>
 			</li>
 		</logic:notEmpty>
+		<phd:activityAvailable process="<%= candidacyProcess %>" activity="<%= PhdProgramCandidacyProcess.AssociateRegistration.class %>">
+			<li style="display: inline;">
+				<html:link action="/phdProgramCandidacyProcess.do?method=prepareAssociateRegistration&language=en" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
+					<bean:message bundle="PHD_RESOURCES" key="label.phd.registrationFormalization.associate.registration"/>
+				</html:link>
+			</li>
+		</phd:activityAvailable>
 	</ul>	
 </logic:equal>
 
