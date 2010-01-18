@@ -3,8 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.st
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.curriculum.ExtraCurricularActivity;
@@ -14,6 +12,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -31,9 +30,18 @@ public class StudentExtraCurricularActivitiesDA extends FenixDispatchAction {
 	return mapping.findForward("manageActivities");
     }
 
+    public ActionForward createActivity(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	ExtraCurricularActivity activity = (ExtraCurricularActivity) getRenderedObject();
+	RenderUtils.invalidateViewState();
+	request.setAttribute("student", activity.getStudent());
+	return mapping.findForward("manageActivities");
+    }
+
     public ActionForward deleteActivity(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	    HttpServletResponse response) {
 	ExtraCurricularActivity activity = DomainObject.fromExternalId(request.getParameter("activityId"));
+	RenderUtils.invalidateViewState();
 	final Student student = activity.getStudent();
 	activity.delete();
 	request.setAttribute("student", student);
