@@ -644,6 +644,10 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     private void assertPersonInformation() {
 	final Person person = getPerson();
 
+	if (!getPerson().hasStudent()) {
+	    new Student(getPerson());
+	}
+
 	person.addPersonRoleByRoleType(RoleType.PERSON);
 	person.addPersonRoleByRoleType(RoleType.STUDENT);
 	person.addPersonRoleByRoleType(RoleType.RESEARCHER);
@@ -668,10 +672,6 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
     private void assertRegistration(final RegistrationFormalizationBean bean, final DegreeCurricularPlan dcp,
 	    final ExecutionYear executionYear) {
-
-	if (!getPerson().hasStudent()) {
-	    new Student(getPerson());
-	}
 
 	final Registration registration = getOrCreateRegistration(bean, dcp, executionYear);
 
