@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.util.email.Message;
+import net.sourceforge.fenixedu.util.phd.PhdProperties;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -39,8 +40,8 @@ public class PublicPhdMissingCandidacyValidationAlert extends PublicPhdMissingCa
     private MultiLanguageString generateBody(final PhdIndividualProgramProcess process) {
 	// TODO: if collaboration type change, then message must be different
 	final ResourceBundle bundle = getResourceBundle(Locale.ENGLISH);
-	final String body = String.format(bundle.getString("message.phd.email.body.missing.candidacy.validation"), process
-		.getCandidacyProcess().getCandidacyHashCode().getValue());
+	final String body = String.format(bundle.getString("message.phd.email.body.missing.candidacy.validation"), PhdProperties
+		.getPublicAccessLink(), process.getCandidacyProcess().getCandidacyHashCode().getValue());
 	return MultiLanguageString.i18n().add("en", body).finish();
     }
 

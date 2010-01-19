@@ -6,6 +6,7 @@ import java.util.UUID;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdCandidacyRefereeAlert;
+import net.sourceforge.fenixedu.util.phd.PhdProperties;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -61,6 +62,7 @@ public class PhdCandidacyReferee extends PhdCandidacyReferee_Base {
 
     private String createBody() {
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
-	return String.format(bundle.getString("message.phd.email.body.referee"), getValue());
+	return String.format(bundle.getString("message.phd.email.body.referee"), PhdProperties.getPublicRefereeFormLink(),
+		getValue());
     }
 }

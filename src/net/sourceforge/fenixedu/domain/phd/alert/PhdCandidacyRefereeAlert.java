@@ -8,6 +8,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
 import net.sourceforge.fenixedu.domain.util.email.Message;
+import net.sourceforge.fenixedu.util.phd.PhdProperties;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -41,7 +42,8 @@ public class PhdCandidacyRefereeAlert extends PhdCandidacyRefereeAlert_Base {
     private MultiLanguageString generateBody(final PhdCandidacyReferee referee) {
 	// TODO: if collaboration type change, then message must be different
 	final ResourceBundle bundle = getResourceBundle(Locale.ENGLISH);
-	final String body = String.format(bundle.getString("message.phd.email.body.referee"), referee.getValue());
+	final String body = String.format(bundle.getString("message.phd.email.body.referee"), PhdProperties
+		.getPublicRefereeFormLink(), referee.getValue());
 	return MultiLanguageString.i18n().add("en", body).finish();
     }
 

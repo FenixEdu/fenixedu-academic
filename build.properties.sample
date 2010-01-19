@@ -489,6 +489,15 @@ nameresolution.name=fenixRemoteRequests
 nameresolution.password=password
 
 
+#---------------------------------------------------------------
+# PhdProcess properties
+# 
+# set all properties with prefix 'phd.'
+#--------------------------------------------------------------
+phd.public.access.link=https://fenix.ist.utl.pt/candidacies/phd-program/access
+phd.public.submission.link=https://fenix.ist.utl.pt/candidacies/phd-program/submission
+phd.public.referee.form.link=https://fenix.ist.utl.pt/candidacies/phd-program/referee-form
+
 #
 #
 #
