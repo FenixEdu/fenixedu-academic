@@ -12,6 +12,10 @@
 
 	jQuery(document).ready(function($){
 
+		var contextPath = "<%=request.getContextPath()%>";
+		var srcExpand = contextPath + "/images/expand.png";
+		var srcCollapse = contextPath + "/images/collapse.png";
+
 		var cssGliderDiv = {
 				'display' : 'none',
 				'padding-bottom' : '25px',
@@ -24,7 +28,7 @@
 				'padding-top' : '5px'
 		}
 		jQuery("#adicionar").css(cssGliderButton);
-		jQuery("#adicionar").attr("src", "/ciapl/images/expand.png");
+		jQuery("#adicionar").attr("src", srcExpand);
 
 		var cssGliderTab = {
 				'display':'block'
@@ -34,11 +38,11 @@
 		jQuery("#adicionar").click(function(){
 			if(jQuery("#divAdicionar").is(':hidden')){
 				jQuery("#toolTip").fadeOut(150);
-				jQuery("#adicionar").attr("src", "/ciapl/images/collapse.png");
+				jQuery("#adicionar").attr("src", srcCollapse);
 				jQuery("#divAdicionar").show("slow");
 			}else{
 				jQuery("#divAdicionar").hide("slow");
-				jQuery("#adicionar").attr("src", "/ciapl/images/expand.png");
+				jQuery("#adicionar").attr("src", srcExpand);
 			}
 		});
 
@@ -61,6 +65,10 @@
 
 	jQuery(document).ready(function($){
 
+		var contextPath = "<%=request.getContextPath()%>";
+		var srcExpand = contextPath + "/images/expand.png";
+		var srcCollapse = contextPath + "/images/collapse.png";
+
 		var cssGliderDiv = {
 				'padding-bottom' : '25px',
 				'padding-left' : '15px'
@@ -72,7 +80,7 @@
 				'padding-top' : '5px'
 		}
 		jQuery("#adicionar").css(cssGliderButton);
-		jQuery("#adicionar").attr("src", "/ciapl/images/collapse.png");
+		jQuery("#adicionar").attr("src", srcCollapse);
 
 		var cssGliderTab = {
 				'display':'block'
@@ -82,11 +90,11 @@
 		jQuery("#adicionar").click(function(){
 			if(jQuery("#divAdicionar").is(':hidden')){
 				jQuery("#toolTip").fadeOut(150);
-				jQuery("#adicionar").attr("src", "/ciapl/images/collapse.png");
+				jQuery("#adicionar").attr("src", srcCollapse);
 				jQuery("#divAdicionar").show("slow");
 			}else{
 				jQuery("#divAdicionar").hide("slow");
-				jQuery("#adicionar").attr("src", "/ciapl/images/expand.png");
+				jQuery("#adicionar").attr("src", srcExpand);
 			}
 		});
 
@@ -163,7 +171,7 @@
 
 <table id="tabAdicionar" class="hideElement">
 <tr><td>
-	<img id="adicionar" src="/ciapl/images/expand.png"></img>
+	<img id="adicionar" src="<%= request.getContextPath() + "/images/expand.png"%>"></img>
 </td>
 <td>
 <span id="toolTip" class="hideElement"><bean:message key="label.tooltip.add.coordinator" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></span>
