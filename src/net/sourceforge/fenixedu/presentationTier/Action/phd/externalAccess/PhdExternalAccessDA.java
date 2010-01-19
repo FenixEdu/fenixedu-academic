@@ -1,6 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd.externalAccess;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -99,23 +102,38 @@ public class PhdExternalAccessDA extends PhdProcessDA {
 	try {
 
 	    final PhdIndividualProgramProcess process = getProcess(request);
-
 	    ExecuteProcessActivity.run(process.getThesisProcess(), JuryDocumentsDownload.class, getOperationBean());
-
-	    // TODO: zip with required documents
-	    final PhdProgramProcessDocument document = process.getCandidacyProcess().getLastestDocumentVersionFor(
-		    PhdIndividualProgramDocumentType.CV);
-
-	    writeFile(response, document.getFilename(), document.getMimeType(), document.getContents());
+	    writeFile(response, getZipFilename(process), "application/zip", createZip(process));
 
 	    return null;
 
 	} catch (DomainException e) {
 	    addErrorMessage(request, e.getKey(), e.getArgs());
-
 	    return prepareJuryDocumentsDownloadInvalid(mapping, form, request, response);
 	}
-
     }
+
+    private String getZipFilename(PhdIndividualProgramProcess process) {
+	return process.getProcessNumber().replace("/", "-") + "-Documents.zip";
+    }
+
+    private byte[] createZip(final PhdIndividualProgramProcess process) throws IOException {
+	final ByteArrayOutputStream result = new ByteArrayOutputStream();
+	final ZipOutputStream zipFile = new ZipOutputStream(result);
+
+	createZipEntry(zipFile, process.getCandidacyProcess().getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.CV));
+
+	// TODO: add remaining documents here
+
+	return result.toByteArray();
+    }
+
+    private void createZipEntry(final ZipOutputStream zipFile, final PhdProgramProcessDocument document) throws IOException {
+	zipFile.putNextEntry(new ZipEntry(document.getFilename()));
+	zipFile.write(document.getContents());
+	zipFile.closeEntry();
+    }
+
     // end jury document download
+
 }
