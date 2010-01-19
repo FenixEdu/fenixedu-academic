@@ -310,6 +310,11 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	    final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
 	    process.setWhenJuryValidated(bean.getWhenJuryValidated());
 	    process.setWhenJuryDesignated(bean.getWhenJuryDesignated());
+
+	    /*
+	     * TODO: SEND ALERT!!!!!!!!!!!!
+	     */
+
 	    return process;
 	}
     }
@@ -430,9 +435,11 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 		    if (juryElement.getReporter().booleanValue()) {
 			participant.addAccessType(PhdProcessAccessType.JURY_REPORTER_FEEDBACK_UPLOAD);
 		    }
+		    
+		    //TODO: send login information
+		    //TODO: generate alert
 		}
 	    }
-
 	}
 
 	private boolean isCoordinatorOrGuider(PhdThesisProcess process, final ThesisJuryElement juryElement) {
