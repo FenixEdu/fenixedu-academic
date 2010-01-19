@@ -4,12 +4,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.student;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.student.GroupEnrolment;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentsWithoutGroup;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.student.VerifyStudentGroupAtributes;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -29,13 +23,15 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NoChangeMadeS
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonValidChangeServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.GroupEnrolment;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadExportGroupingsByGrouping;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentsWithoutGroup;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.VerifyStudentGroupAtributes;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentsWithoutGroup.NewStudentGroupAlreadyExists;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExportGrouping;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentsWithoutGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
@@ -107,7 +103,8 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 	InfoSiteStudentsWithoutGroup studentsNotEnroled = null;
 
 	try {
-	    studentsNotEnroled = (InfoSiteStudentsWithoutGroup) ReadStudentsWithoutGroup.run(groupPropertiesCode, userView.getUtilizador());
+	    studentsNotEnroled = (InfoSiteStudentsWithoutGroup) ReadStudentsWithoutGroup.run(groupPropertiesCode, userView
+		    .getUtilizador());
 
 	} catch (ExistingServiceException e) {
 	    ActionErrors actionErrors1 = new ActionErrors();

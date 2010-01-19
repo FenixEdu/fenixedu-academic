@@ -33,7 +33,7 @@ public class ExportParkingData extends FenixAction {
 	    final OutputStream outputStream = response.getOutputStream();
 	    outputStream.write(parkingDataReportFile.getFile().getContents());
 	    outputStream.close();
-	} 
+	}
 	return null;
     }
 

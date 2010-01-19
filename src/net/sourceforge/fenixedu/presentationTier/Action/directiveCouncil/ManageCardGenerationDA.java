@@ -5,12 +5,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -37,7 +34,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.manager.payments.SIBSPaymentsDA.UploadBean;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -51,7 +47,7 @@ import pt.utl.ist.fenix.tools.util.FileUtils;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class ManageCardGenerationDA extends FenixDispatchAction {
-    
+
     static public class UploadBean implements Serializable {
 
 	private static final long serialVersionUID = 82359323827088875L;
@@ -83,9 +79,9 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 	setContext(request);
 	return mapping.findForward("firstPage");
     }
-    
-    public ActionForward uploadCardInfo(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
-	    final HttpServletResponse response) {
+
+    public ActionForward uploadCardInfo(final ActionMapping mapping, final ActionForm actionForm,
+	    final HttpServletRequest request, final HttpServletResponse response) {
 	request.setAttribute("uploadBean", new UploadBean());
 	return mapping.findForward("uploadCardInfo");
     }
@@ -206,7 +202,7 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 	}
 	return null;
     }
-     
+
     public ActionForward downloadCardGenerationBatchSentButNotIssued(final ActionMapping mapping, final ActionForm actionForm,
 	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 	final CardGenerationBatch cardGenerationBatch = getCardGenerationBatch(request);
@@ -215,7 +211,7 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 	    response.setHeader("Content-disposition", "attachment; filename=identificationCardsIST"
 		    + cardGenerationBatch.getCreated().toString("yyyyMMddHHmmss") + ".txt");
 	    response.setContentType("text/plain");
-	    for(String line : cardGenerationBatch.getSentButNotIssuedCGRs()) {
+	    for (String line : cardGenerationBatch.getSentButNotIssuedCGRs()) {
 		writer.print(line);
 	    }
 	    writer.flush();
@@ -378,9 +374,9 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 	}
 	return firstPage(mapping, actionForm, request, response);
     }
-    
-    public ActionForward readCardInfo(final ActionMapping mapping, final ActionForm actionForm,
-	    final HttpServletRequest request, final HttpServletResponse response) {
+
+    public ActionForward readCardInfo(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+	    final HttpServletResponse response) {
 	UploadBean bean = (UploadBean) getRenderedObject("uploadBean");
 	RenderUtils.invalidateViewState("uploadBean");
 	fixBadData();
@@ -406,7 +402,8 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
     @Service
     private void switchPerson(final int personId, final int cardGenerationEntryId) {
 	final Person person = (Person) rootDomainObject.readPartyByOID(new Integer(personId));
-	final CardGenerationEntry cardGenerationEntry = rootDomainObject.readCardGenerationEntryByOID(new Integer(cardGenerationEntryId));
+	final CardGenerationEntry cardGenerationEntry = rootDomainObject.readCardGenerationEntryByOID(new Integer(
+		cardGenerationEntryId));
 	cardGenerationEntry.setPerson(person);
     }
 
@@ -417,7 +414,7 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 	int[] registers = new int[2];
 	for (final String line : lines) {
 	    CardEmissionEntry cardEmissionEntry = new CardEmissionEntry(line);
-	    if(cardEmissionEntry.createdRegister) {
+	    if (cardEmissionEntry.createdRegister) {
 		++registers[0];
 	    } else {
 		++registers[1];
@@ -431,7 +428,7 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 	final Set<CardGenerationEntry> cardGenerationEntries = new HashSet<CardGenerationEntry>();
 
 	final String line;
-	
+
 	boolean createdRegister = false;
 
 	private CardEmissionEntry(final String line) {
@@ -455,7 +452,8 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 			System.out.println("identifier: " + identifier);
 			for (final CardGenerationEntry cge : cardGenerationEntries) {
 			    final Person p = cge.getPerson();
-			    System.out.println("CGE.id: " + cge.getIdInternal() + " " + "P.id: " + (p == null ? "" : p.getIdInternal() + " (" + p.getUsername() + ")"));
+			    System.out.println("CGE.id: " + cge.getIdInternal() + " " + "P.id: "
+				    + (p == null ? "" : p.getIdInternal() + " (" + p.getUsername() + ")"));
 			    System.out.println(cge.getLine());
 			}
 			throw new Error("Card emitted matches multiple people! " + line);
@@ -488,7 +486,7 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 				month = dp1;
 			    } else {
 				day = dp1;
-				month = dp2;				    
+				month = dp2;
 			    }
 			}
 		    } else if (hi1 == -1) {
@@ -503,11 +501,11 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 			    year = Integer.parseInt(date.substring(si2 + 1));
 			    if (dp1 > 12) {
 				day = dp1;
-				month = dp2;				    
+				month = dp2;
 			    } else {
 				day = dp2;
 				month = dp1;
-			    }				
+			    }
 			}
 		    } else {
 			System.out.println("hi1: " + hi1);
@@ -517,14 +515,15 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 
 		    LocalDate emission = year == -1 ? null : new LocalDate(year, month, day);
 		    final boolean withAccountInformation = type.indexOf('n') > type.indexOf('b');
-		    // Checking for the possibility of the same file submited twice
+		    // Checking for the possibility of the same file submited
+		    // twice
 		    boolean repetition = false;
-		    for(CardGenerationRegister cgr : person.getCardGenerationRegister()) {
-			if((cgr.getEmission() != null) && emission.compareTo(cgr.getEmission()) == 0) {
+		    for (CardGenerationRegister cgr : person.getCardGenerationRegister()) {
+			if ((cgr.getEmission() != null) && emission.compareTo(cgr.getEmission()) == 0) {
 			    repetition = true;
 			}
 		    }
-		    if(!repetition && (emission != null)) {
+		    if (!repetition && (emission != null)) {
 			createdRegister = true;
 			new CardGenerationRegister(person, identifier, emission, withAccountInformation);
 		    }

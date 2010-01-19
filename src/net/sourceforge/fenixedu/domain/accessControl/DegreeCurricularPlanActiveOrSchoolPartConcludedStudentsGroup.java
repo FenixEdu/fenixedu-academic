@@ -19,8 +19,10 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
 /**
- * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/> <br/>
- *         <br/> Created on 16:54:06,17/Mar/2006
+ * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/>
+ * <br/>
+ * <br/>
+ *         Created on 16:54:06,17/Mar/2006
  * @version $Id:
  *          DegreeCurricularPlanActiveOrSchoolPartConcludedStudentsGroup.java
  *          23397 2006-11-17 14:31:10Z cfgi $

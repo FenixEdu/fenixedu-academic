@@ -357,7 +357,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	    buffer.append("<a href='").append(homePageUrl).append("' target='_blank'>").append(person.getNickname()).append(
 		    "</a>");
 	    // buffer.append(" <image
-	    //src='").append(getContextPath()).append("/images/external.gif'/>");
+	    // src='").append(getContextPath()).append("/images/external.gif'/>");
 	} else {
 	    buffer.append(person.getNickname());
 	}
@@ -375,14 +375,14 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 		buffer.append("<li>");
 
 		// if
-		//(contract.getEmployee().getPerson().getGender().equals(Gender.
+		// (contract.getEmployee().getPerson().getGender().equals(Gender.
 		// MALE))
 		// {
 		// buffer.append("<image
 		// src='").append(getContextPath()).append(
 		// "/images/worker-icon.png'/>").append(" ");
 		// } else if
-		//(contract.getEmployee().getPerson().getGender().equals(Gender.
+		// (contract.getEmployee().getPerson().getGender().equals(Gender.
 		// FEMALE))
 		// {
 		// buffer.append("<image

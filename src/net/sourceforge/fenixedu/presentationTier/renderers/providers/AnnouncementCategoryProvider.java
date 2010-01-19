@@ -12,7 +12,6 @@ public class AnnouncementCategoryProvider implements DataProvider {
     public Converter getConverter() {
 	return new DomainObjectKeyArrayConverter();
     }
-    
 
     @Override
     public Object provide(Object source, Object currentValue) {

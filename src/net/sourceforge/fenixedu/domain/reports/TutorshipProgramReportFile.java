@@ -56,7 +56,8 @@ public class TutorshipProgramReportFile extends TutorshipProgramReportFile_Base 
 
 			    for (final Registration otherRegistration : registration.getStudent().getRegistrationsSet()) {
 				if (otherRegistration.getDegree() == registration.getDegree()) {
-				    for (final StudentCurricularPlan studentCurricularPlan : otherRegistration.getStudentCurricularPlansSet()) {
+				    for (final StudentCurricularPlan studentCurricularPlan : otherRegistration
+					    .getStudentCurricularPlansSet()) {
 					for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
 					    final ExecutionSemester executionSemester = enrolment.getExecutionPeriod();
 					    if (executionSemester.getExecutionYear() == executionYear) {
@@ -65,11 +66,12 @@ public class TutorshipProgramReportFile extends TutorshipProgramReportFile_Base 
 						    aprovalCounter++;
 						    final Grade grade = enrolment.getGrade();
 						    if (grade.isNumeric()) {
-							final double credits = enrolment.getEctsCreditsForCurriculum().doubleValue();
+							final double credits = enrolment.getEctsCreditsForCurriculum()
+								.doubleValue();
 							totalCredits += credits;
-							bigDecimal = bigDecimal == null ?
-								grade.getNumericValue().multiply(new BigDecimal(credits)) :
-								bigDecimal.add(grade.getNumericValue().multiply(new BigDecimal(credits)));
+							bigDecimal = bigDecimal == null ? grade.getNumericValue().multiply(
+								new BigDecimal(credits)) : bigDecimal.add(grade.getNumericValue()
+								.multiply(new BigDecimal(credits)));
 						    }
 						}
 					    }
@@ -89,10 +91,12 @@ public class TutorshipProgramReportFile extends TutorshipProgramReportFile_Base 
 			    }
 			    row.setCell(Integer.toString(enrolmentCounter));
 			    row.setCell(Integer.toString(aprovalCounter));
-			    row.setCell(registration.getEntryGrade() != null ? registration.getEntryGrade().toString() : StringUtils.EMPTY);
+			    row.setCell(registration.getEntryGrade() != null ? registration.getEntryGrade().toString()
+				    : StringUtils.EMPTY);
 			    final CandidacyInformationBean candidacyInformationBean = registration.getCandidacyInformationBean();
 			    final Boolean dislocated = candidacyInformationBean.getDislocatedFromPermanentResidence();
-			    final String dislocatedString = dislocated == null ? "" : (dislocated.booleanValue() ? "Deslocado" : "Não Deslocado");
+			    final String dislocatedString = dislocated == null ? "" : (dislocated.booleanValue() ? "Deslocado"
+				    : "Não Deslocado");
 			    row.setCell(dislocatedString);
 			}
 		    }

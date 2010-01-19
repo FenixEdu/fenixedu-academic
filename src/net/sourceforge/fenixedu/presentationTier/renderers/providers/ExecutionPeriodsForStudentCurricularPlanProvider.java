@@ -56,8 +56,7 @@ public class ExecutionPeriodsForStudentCurricularPlanProvider implements DataPro
 	 * of result
 	 */
 
-	Collections.sort(executionPeriodsInTimePeriod, new ReverseComparator(
-		ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR));
+	Collections.sort(executionPeriodsInTimePeriod, new ReverseComparator(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR));
 
 	return executionPeriodsInTimePeriod;
     }

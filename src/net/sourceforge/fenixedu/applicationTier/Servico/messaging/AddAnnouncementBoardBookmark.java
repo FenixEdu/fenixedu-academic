@@ -9,8 +9,8 @@ import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
- * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/> Created on
- *         Jun 5, 2006, 10:55:27 AM
+ * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/>
+ *         Created on Jun 5, 2006, 10:55:27 AM
  * 
  */
 public class AddAnnouncementBoardBookmark extends FenixService {

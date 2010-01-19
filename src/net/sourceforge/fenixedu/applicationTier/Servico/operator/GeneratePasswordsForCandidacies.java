@@ -1,9 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.operator;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -14,6 +10,8 @@ import net.sourceforge.fenixedu.applicationTier.utils.GeneratePassword;
 import net.sourceforge.fenixedu.dataTransferObject.person.PasswordBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class GeneratePasswordsForCandidacies extends FenixService {
 

@@ -73,7 +73,7 @@ public class ExternalCourseLoadRequest extends ExternalCourseLoadRequest_Base {
     @Override
     protected void disconnect() {
 	super.setInstitution(null);
-        super.disconnect();
+	super.disconnect();
     }
-    
+
 }

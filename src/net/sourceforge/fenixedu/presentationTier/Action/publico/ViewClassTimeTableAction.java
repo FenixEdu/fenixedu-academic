@@ -43,7 +43,8 @@ public class ViewClassTimeTableAction extends FenixContextAction {
 
 	String className = request.getParameter("className");
 
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+		.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 	request.setAttribute("degreeInitials", "");
 	request.setAttribute("nameDegreeCurricularPlan", "");
 	request.setAttribute("degreeCurricularPlanID", "");

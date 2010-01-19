@@ -4,10 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -27,6 +23,8 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author asnr and scpo
@@ -36,8 +34,8 @@ public class GroupEnrolment extends FenixService {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
-    public static Boolean run(Integer groupingID, Integer shiftID, Integer groupNumber, List studentUsernames, String studentUsername)
-	    throws FenixServiceException {
+    public static Boolean run(Integer groupingID, Integer shiftID, Integer groupNumber, List studentUsernames,
+	    String studentUsername) throws FenixServiceException {
 	final Grouping grouping = rootDomainObject.readGroupingByOID(groupingID);
 	if (grouping == null) {
 	    throw new NonExistingServiceException();

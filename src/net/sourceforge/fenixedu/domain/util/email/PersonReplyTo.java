@@ -26,7 +26,7 @@ public class PersonReplyTo extends PersonReplyTo_Base {
 	} else {
 	    for (final Message message : getMessagesSet()) {
 		removeMessages(message);
-	    }	    
+	    }
 	}
     }
 

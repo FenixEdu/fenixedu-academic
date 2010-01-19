@@ -13,7 +13,7 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path="/managePersonFunctions", module = "scientificCouncil")
+@Mapping(path = "/managePersonFunctions", module = "scientificCouncil")
 public class ManagePersonFunctions extends FenixDispatchAction {
 
     public ActionForward deletePersonFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -25,7 +25,8 @@ public class ManagePersonFunctions extends FenixDispatchAction {
 
 	personFunction.delete();
 
-	final ActionForward actionForward = new ActionForward("/functionsManagement/listPersonFunctions.faces?personID=" + person.getIdInternal() + "&contentContextPath_PATH=/conselho-cientifico/conselho-cientifico");
+	final ActionForward actionForward = new ActionForward("/functionsManagement/listPersonFunctions.faces?personID="
+		+ person.getIdInternal() + "&contentContextPath_PATH=/conselho-cientifico/conselho-cientifico");
 	actionForward.setRedirect(false);
 	return actionForward;
     }

@@ -23,7 +23,7 @@ public class FENIX_LIDQuestionCorrectionStrategy extends QuestionCorrectionStrat
     public StudentTestQuestion getMark(StudentTestQuestion studentTestQuestion) {
 	if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getType().intValue() == QuestionType.LID) {
 	    if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getCardinalityType().getType().intValue() == CardinalityType.MULTIPLE) {
-		//2*(correctOptionsChosen+wrongOptionNotChosen)/allOptionNumber-
+		// 2*(correctOptionsChosen+wrongOptionNotChosen)/allOptionNumber-
 		// 1
 		Integer fenixCorrectResponseIndex = getFenixCorrectResponseIndex(studentTestQuestion.getSubQuestionByItem()
 			.getResponseProcessingInstructions());

@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.candidate;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.candidate.ChangeApplicationInfo;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -15,6 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.general.ReadAllCountries;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.candidate.ChangeApplicationInfo;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.commons.candidate.ReadMasterDegreeCandidateByID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
@@ -26,7 +25,6 @@ import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.GenderHelper;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
@@ -131,7 +129,8 @@ public class ChangeApplicationInfoDispatchAction extends FenixDispatchAction {
 
 	try {
 
-	    masterDegreeCandidate = (InfoMasterDegreeCandidate) ChangeApplicationInfo.run(masterDegreeCandidate, infoPerson, userView, isNewPerson);
+	    masterDegreeCandidate = (InfoMasterDegreeCandidate) ChangeApplicationInfo.run(masterDegreeCandidate, infoPerson,
+		    userView, isNewPerson);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}

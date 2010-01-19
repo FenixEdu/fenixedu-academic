@@ -133,9 +133,11 @@ public class SearchAction extends FenixDispatchAction {
      * @param request
      * @param response
      * @return if search result size equals to 1 returns <code>list-one</code>
-     *         forward. <br/> if search result size greater then 1 returns
-     *         <code>list-many</code> forward. <br/> if search result size
-     *         equals to 0 returns <code>inputForward</code>
+     *         forward. <br/>
+     *         if search result size greater then 1 returns
+     *         <code>list-many</code> forward. <br/>
+     *         if search result size equals to 0 returns
+     *         <code>inputForward</code>
      * 
      * @throws Exception
      * 

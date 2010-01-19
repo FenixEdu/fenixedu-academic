@@ -98,10 +98,10 @@ public class AssociateRoomToExamDA extends FenixDateAndTimeContextDispatchAction
 	int dayOfWeekInt = examDate.get(Calendar.DAY_OF_WEEK);
 	DiaSemana dayOfWeek = new DiaSemana(dayOfWeekInt);
 
-
-	List<InfoRoom> availableInfoRoom = (List<InfoRoom>) ReadAvailableRoomsForExam.run(YearMonthDay.fromCalendarFields(examDate), YearMonthDay.fromCalendarFields(examDate),
-		HourMinuteSecond.fromCalendarFields(examStartTime), HourMinuteSecond.fromCalendarFields(examEndTime), dayOfWeek,
-		null, null, Boolean.FALSE);
+	List<InfoRoom> availableInfoRoom = (List<InfoRoom>) ReadAvailableRoomsForExam.run(YearMonthDay
+		.fromCalendarFields(examDate), YearMonthDay.fromCalendarFields(examDate), HourMinuteSecond
+		.fromCalendarFields(examStartTime), HourMinuteSecond.fromCalendarFields(examEndTime), dayOfWeek, null, null,
+		Boolean.FALSE);
 
 	String[] rooms = (String[]) examForm.get("rooms");
 	List<InfoRoom> selectedRooms = new ArrayList<InfoRoom>();
@@ -155,7 +155,8 @@ public class AssociateRoomToExamDA extends FenixDateAndTimeContextDispatchAction
 	String[] scopeIDArray = (String[]) examForm.get("scopes");
 	request.setAttribute("scopes", scopeIDArray);
 
-	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute(PresentationConstants.EXECUTION_COURSE);
+	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request
+		.getAttribute(PresentationConstants.EXECUTION_COURSE);
 	request.setAttribute("executionCourseOID", infoExecutionCourse.getIdInternal());
 
 	return mapping.findForward("AssociateRoom");
@@ -186,7 +187,8 @@ public class AssociateRoomToExamDA extends FenixDateAndTimeContextDispatchAction
 	String executionDegreeOID = (String) request.getAttribute(PresentationConstants.EXECUTION_DEGREE_OID);
 	request.setAttribute("executionDegreeOID", executionDegreeOID);
 
-	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute(PresentationConstants.EXECUTION_COURSE);
+	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request
+		.getAttribute(PresentationConstants.EXECUTION_COURSE);
 	request.setAttribute("executionCourseOID", infoExecutionCourse.getIdInternal());
 
 	return mapping.findForward("forwardChoose");

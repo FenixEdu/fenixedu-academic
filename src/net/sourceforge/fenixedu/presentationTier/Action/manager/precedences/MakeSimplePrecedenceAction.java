@@ -4,8 +4,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager.precedences;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.precedences.InsertSimplePrecedence;
-
 import java.util.Collections;
 import java.util.List;
 
@@ -15,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadCurricularCoursesByDegreeCurricularPlan;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.precedences.InsertSimplePrecedence;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionByNumberOfDoneCurricularCourses;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionDoneCurricularCourse;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse;
@@ -23,7 +22,6 @@ import net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrWillB
 import net.sourceforge.fenixedu.domain.precedences.RestrictionNotDoneCurricularCourse;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionNotEnrolledInCurricularCourse;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionPeriodToApply;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.PeriodToApplyRestriction;
 
@@ -135,7 +133,8 @@ public class MakeSimplePrecedenceAction extends FenixDispatchAction {
 	request.setAttribute("precedentCurricularCourseID", precedentCurricularCourseID);
 
 	try {
-	    InsertSimplePrecedence.run(classeNameRestriction, curricularCourseToAddPrecedenceID, precedentCurricularCourseID, number);
+	    InsertSimplePrecedence.run(classeNameRestriction, curricularCourseToAddPrecedenceID, precedentCurricularCourseID,
+		    number);
 	} catch (FenixServiceException e) {
 	    e.printStackTrace();
 	    errors.add("impossibleInsertPrecedence", new ActionError("error.manager.impossible.insertPrecedence"));

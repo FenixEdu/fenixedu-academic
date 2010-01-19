@@ -89,7 +89,8 @@ public class DelegateCurricularCourseStudentsGroup extends LeafGroup {
     }
 
     public CurricularCourse getCurricularCourse() {
-	return (CurricularCourse) (curricularCourseId != null ? RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseId) : null);
+	return (CurricularCourse) (curricularCourseId != null ? RootDomainObject.getInstance().readDegreeModuleByOID(
+		curricularCourseId) : null);
     }
 
     private int getNumberOfEnrolledStudents() {

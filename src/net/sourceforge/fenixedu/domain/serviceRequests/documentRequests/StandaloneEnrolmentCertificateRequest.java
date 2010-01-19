@@ -5,9 +5,9 @@ import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class StandaloneEnrolmentCertificateRequest extends StandaloneEnrolmentCertificateRequest_Base {
-    
-    public  StandaloneEnrolmentCertificateRequest() {
-        super();
+
+    public StandaloneEnrolmentCertificateRequest() {
+	super();
     }
 
     public StandaloneEnrolmentCertificateRequest(DocumentRequestCreateBean bean) {
@@ -19,11 +19,11 @@ public class StandaloneEnrolmentCertificateRequest extends StandaloneEnrolmentCe
 
     @Override
     protected void checkParameters(final DocumentRequestCreateBean bean) {
-	if (bean.getEnrolments()== null || bean.getEnrolments().isEmpty()) {
+	if (bean.getEnrolments() == null || bean.getEnrolments().isEmpty()) {
 	    throw new DomainException("error.StandaloneEnrolmentCertificateRequest.no.enrolments");
 	}
     }
-    
+
     @Override
     public Integer getNumberOfUnits() {
 	return super.getEnrolmentsCount();
@@ -43,10 +43,10 @@ public class StandaloneEnrolmentCertificateRequest extends StandaloneEnrolmentCe
     public EventType getEventType() {
 	return EventType.STANDALONE_ENROLMENT_APPROVEMENT_CERTIFICATE_REQUEST;
     }
-    
+
     @Override
     public boolean isAvailableForTransitedRegistrations() {
 	return true;
     }
-    
+
 }

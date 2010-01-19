@@ -5,10 +5,6 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -26,6 +22,9 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.struts.util.MessageResources;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author asnr and scpo

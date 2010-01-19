@@ -33,7 +33,7 @@ public class NotifyStudentGroup extends FenixService {
 		.getStudentGroup().getGroupNumber() });
 	Sender sender = ExecutionCourseSender.newInstance(course);
 	Recipient recipient = new Recipient(groupName, new FixedSetGroup(recievers));
-	new Message(sender, sender.getConcreteReplyTos(), recipient.asCollection(),
-		submission.getProject().getName(), submission.getTeacherObservation(), "");
+	new Message(sender, sender.getConcreteReplyTos(), recipient.asCollection(), submission.getProject().getName(), submission
+		.getTeacherObservation(), "");
     }
 }

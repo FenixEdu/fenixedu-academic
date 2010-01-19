@@ -3,8 +3,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.thesis;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.thesis.ReadActiveMasterDegreeThesis;
-
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Formatter;
@@ -15,12 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.thesis.ReadActiveMasterDegreeThesis;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.thesis.ListMasterDegreeProofsBean;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesis;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -39,8 +37,8 @@ public class ListMasterDegreeThesisDispatchAction extends FenixDispatchAction {
 	if (bean == null) {
 	    bean = new ListMasterDegreeProofsBean();
 	} else {
-	    Collection<MasterDegreeThesis> masterDegreeThesisCollection = (Collection<MasterDegreeThesis>) ReadActiveMasterDegreeThesis.run(bean.getThesisState(), bean.getYear(),
-			    bean.getDegree());
+	    Collection<MasterDegreeThesis> masterDegreeThesisCollection = (Collection<MasterDegreeThesis>) ReadActiveMasterDegreeThesis
+		    .run(bean.getThesisState(), bean.getYear(), bean.getDegree());
 
 	    if (bean.getGenerateFile()) {
 		request.setAttribute("chooseDegreeAndYearBean", bean);

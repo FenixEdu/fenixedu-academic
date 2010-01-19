@@ -1,12 +1,11 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.RemoveDegreeFromDepartment;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.RemoveDegreeFromDepartment;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Department.DepartmentDegreeBean;

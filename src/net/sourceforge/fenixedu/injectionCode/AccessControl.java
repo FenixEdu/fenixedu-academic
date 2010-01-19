@@ -10,8 +10,10 @@ import net.sourceforge.fenixedu.domain.Person;
 import pt.ist.fenixWebFramework.security.UserView;
 
 /**
- * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/> <br/>
- *         <br/> Created on 17:31:53,23/Nov/2005
+ * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/>
+ * <br/>
+ * <br/>
+ *         Created on 17:31:53,23/Nov/2005
  * @version $Id$
  */
 public class AccessControl {
@@ -37,8 +39,8 @@ public class AccessControl {
 
 	if (!result) {
 	    StringBuilder message = new StringBuilder();
-	    message.append("User ").append(requester == null ? "" : requester.getUsername()).append(" tried to execute access content instance number")
-		    .append(c.getIdInternal());
+	    message.append("User ").append(requester == null ? "" : requester.getUsername()).append(
+		    " tried to execute access content instance number").append(c.getIdInternal());
 	    message.append("but he/she is not authorized to do so");
 
 	    throw new IllegalDataAccessException(message.toString(), requester);

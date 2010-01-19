@@ -4,8 +4,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.guide.reimbursementGuide;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.reimbursementGuide.CreateReimbursementGuide;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -16,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.reimbursementGuide.CreateReimbursementGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry;
 import net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide.InfoReimbursementGuideEntry;
@@ -25,8 +24,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidGuideSituationActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSituationActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoEntryChosenActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -116,10 +115,11 @@ public class CreateReimbursementGuideDispatchAction extends FenixDispatchAction 
 	    }
 
 	    if (infoReimbursementGuideEntries.size() == 0)
-		throw new NoEntryChosenActionException(); //,mapping.findForward
+		throw new NoEntryChosenActionException(); // ,mapping.findForward
 	    // ("error")
 
-	    Integer reimbursementGuideID = (Integer) CreateReimbursementGuide.run(infoGuide.getIdInternal(), remarks, infoReimbursementGuideEntries, userView);
+	    Integer reimbursementGuideID = (Integer) CreateReimbursementGuide.run(infoGuide.getIdInternal(), remarks,
+		    infoReimbursementGuideEntries, userView);
 
 	    request.setAttribute(PresentationConstants.REIMBURSEMENT_GUIDE, reimbursementGuideID);
 

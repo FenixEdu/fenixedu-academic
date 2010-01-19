@@ -5,10 +5,6 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +14,8 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -27,8 +25,8 @@ public class ReadAttendsByStudentIdAndExecutionPeriodId extends FenixService {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
-    public static List<InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers> run(Integer studentId, Integer executionPeriodId,
-	    Boolean onlyEnrolledCourses, Boolean onlyAttendsWithTeachers) {
+    public static List<InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers> run(Integer studentId,
+	    Integer executionPeriodId, Boolean onlyEnrolledCourses, Boolean onlyAttendsWithTeachers) {
 
 	final List<InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers> infoAttendsList = new ArrayList<InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers>();
 

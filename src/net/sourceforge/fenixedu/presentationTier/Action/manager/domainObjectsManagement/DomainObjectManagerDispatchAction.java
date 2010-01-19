@@ -3,8 +3,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager.domainObjectsManagement;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteObjectByOID;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -17,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteObjectByOID;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;

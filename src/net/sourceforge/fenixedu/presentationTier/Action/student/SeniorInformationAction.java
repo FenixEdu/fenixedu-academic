@@ -4,11 +4,10 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.student;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.student.senior.ReadStudentSenior;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.student.senior.ReadStudentSenior;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Senior;
 import net.sourceforge.fenixedu.domain.student.Student;

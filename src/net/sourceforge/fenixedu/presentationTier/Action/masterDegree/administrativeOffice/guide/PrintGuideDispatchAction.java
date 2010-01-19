@@ -41,16 +41,16 @@ public class PrintGuideDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("PrintReady");
 
     }
-    
+
     public ActionForward printByNumberAndYear(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
 	final InfoGuide infoGuide = InfoGuideWithPersonAndExecutionDegreeAndContributor
 		.newInfoFromDomain(Guide.readLastVersionByNumberAndYear(getIntegerFromRequest(request, "number"),
 			getIntegerFromRequest(request, "year")));
-	
+
 	request.setAttribute(PresentationConstants.GUIDE, infoGuide);
-	
+
 	final Locale locale = new Locale("pt", "PT");
 	final String formatedDate = "Lisboa, "
 		+ DateFormat.getDateInstance(DateFormat.LONG, locale).format(infoGuide.getCreationDate());

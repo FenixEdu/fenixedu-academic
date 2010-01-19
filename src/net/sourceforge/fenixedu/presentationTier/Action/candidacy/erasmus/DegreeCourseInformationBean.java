@@ -28,61 +28,61 @@ public class DegreeCourseInformationBean implements java.io.Serializable, DataPr
     ExecutionYear executionYear;
 
     public DegreeCourseInformationBean(final ExecutionYear executionYear) {
-        setExecutionYear(executionYear);
+	setExecutionYear(executionYear);
     }
 
     public DegreeCourseInformationBean() {
     }
 
     public Degree getChosenDegree() {
-        return chosenDegree;
+	return chosenDegree;
     }
 
     public void setChosenDegree(Degree chosenDegree) {
-        this.chosenDegree = chosenDegree;
+	this.chosenDegree = chosenDegree;
     }
 
     public CurricularCourse getChosenCourse() {
-        return chosenCourse;
+	return chosenCourse;
     }
 
     public void setChosenCourse(CurricularCourse chosenCourse) {
-        this.chosenCourse = chosenCourse;
+	this.chosenCourse = chosenCourse;
     }
 
     public ExecutionYear getExecutionYear() {
-        return executionYear;
+	return executionYear;
     }
 
     public void setExecutionYear(ExecutionYear executionYear) {
-        this.executionYear = executionYear;
+	this.executionYear = executionYear;
     }
 
     private List<DegreeCurricularPlan> getChosenDegreeCurricularPlans() {
-        if (getChosenDegree() != null) {
-    	return getChosenDegree().getDegreeCurricularPlansForYear(getExecutionYear());
-        }
+	if (getChosenDegree() != null) {
+	    return getChosenDegree().getDegreeCurricularPlansForYear(getExecutionYear());
+	}
 
-        return new ArrayList<DegreeCurricularPlan>();
+	return new ArrayList<DegreeCurricularPlan>();
     }
 
     private SortedSet<CurricularCourse> getCurricularCoursesForChosenDegree() {
-        final SortedSet<CurricularCourse> result = new TreeSet<CurricularCourse>(CurricularCourse.COMPARATOR_BY_NAME);
+	final SortedSet<CurricularCourse> result = new TreeSet<CurricularCourse>(CurricularCourse.COMPARATOR_BY_NAME);
 
-        for (DegreeCurricularPlan degreeCurricularPlan : getChosenDegreeCurricularPlans()) {
-    	result.addAll(degreeCurricularPlan.getCurricularCourses());
-        }
+	for (DegreeCurricularPlan degreeCurricularPlan : getChosenDegreeCurricularPlans()) {
+	    result.addAll(degreeCurricularPlan.getCurricularCourses());
+	}
 
-        return result;
+	return result;
     }
 
     public Object provide(Object source, Object currentValue) {
-        final DegreeCourseInformationBean chooseDegreeBean = (DegreeCourseInformationBean) source;
+	final DegreeCourseInformationBean chooseDegreeBean = (DegreeCourseInformationBean) source;
 
-        return chooseDegreeBean.getCurricularCoursesForChosenDegree();
+	return chooseDegreeBean.getCurricularCoursesForChosenDegree();
     }
 
     public Converter getConverter() {
-        return new DomainObjectKeyConverter();
+	return new DomainObjectKeyConverter();
     }
 }

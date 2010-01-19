@@ -50,7 +50,8 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
 	request.setAttribute(PresentationConstants.CURRICULAR_YEAR_OID,
 		contextSelectionBean.getCurricularYear() != null ? contextSelectionBean.getCurricularYear().getIdInternal()
 			: null);
-	request.setAttribute(PresentationConstants.EXECUTION_DEGREE_OID, contextSelectionBean.getExecutionDegree().getIdInternal());
+	request.setAttribute(PresentationConstants.EXECUTION_DEGREE_OID, contextSelectionBean.getExecutionDegree()
+		.getIdInternal());
 
 	request.setAttribute("execution_course_name", contextSelectionBean.getCourseName().replaceAll("%", "%25"));
 

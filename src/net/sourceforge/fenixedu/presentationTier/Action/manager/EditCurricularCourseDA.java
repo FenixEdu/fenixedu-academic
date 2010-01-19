@@ -3,8 +3,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.EditCurricularCourse;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.EditCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseEditor;
 import net.sourceforge.fenixedu.domain.GradeScale;
@@ -182,7 +181,6 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
 	    regimeType = RegimeType.valueOf(regimeTypeString);
 	}
 	newInfoCurricularCourse.setRegimeType(regimeType);
-
 
 	try {
 	    EditCurricularCourse.run(newInfoCurricularCourse);

@@ -56,12 +56,13 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 	professorShip.setHours((hours == null) ? new Double(0.0) : hours);
 	professorShip.setExecutionCourse(executionCourse);
 	professorShip.setPerson(teacher.getPerson());
-	
+
 	professorShip.setResponsibleFor(responsibleFor);
 	executionCourse.moveSummariesFromTeacherToProfessorship(teacher, professorShip);
-	
+
 	return professorShip;
     }
+
     @Service
     public static Professorship create(Boolean responsibleFor, ExecutionCourse executionCourse, Person person, Double hours)
 	    throws MaxResponsibleForExceed, InvalidCategory {
@@ -71,7 +72,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 		throw new DomainException("error.teacher.already.associated.to.professorship");
 	    }
 	}
-	
+
 	if (responsibleFor == null || executionCourse == null || person == null)
 	    throw new NullPointerException();
 
@@ -79,26 +80,20 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 	professorShip.setHours((hours == null) ? new Double(0.0) : hours);
 	professorShip.setExecutionCourse(executionCourse);
 	professorShip.setPerson(person);
-	
+
 	if (responsibleFor.booleanValue() && professorShip.getPerson().getTeacher() != null) {
-	    ResponsibleForValidator.getInstance().validateResponsibleForList(professorShip.getPerson().getTeacher(), professorShip.getExecutionCourse(), professorShip);
+	    ResponsibleForValidator.getInstance().validateResponsibleForList(professorShip.getPerson().getTeacher(),
+		    professorShip.getExecutionCourse(), professorShip);
 	    professorShip.setResponsibleFor(Boolean.TRUE);
-	}else{
+	} else {
 	    professorShip.setResponsibleFor(Boolean.FALSE);
 	}
 	if (person.getTeacher() != null) {
 	    executionCourse.moveSummariesFromTeacherToProfessorship(person.getTeacher(), professorShip);
 	}
-	
-	
-	
-	
-	
-	
 
 	return professorShip;
     }
-    
 
     public void delete() {
 	if (canBeDeleted()) {

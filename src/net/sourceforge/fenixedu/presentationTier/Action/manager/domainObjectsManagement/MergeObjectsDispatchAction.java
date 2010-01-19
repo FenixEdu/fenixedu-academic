@@ -3,10 +3,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager.domainObjectsManagement;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteObjectByOID;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.TransferDomainObjectProperty;
-
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,11 +17,12 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteObjectByOID;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.TransferDomainObjectProperty;
 import net.sourceforge.fenixedu.dataTransferObject.MergeSlotDTO;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.struts.action.ActionForm;
@@ -204,8 +201,8 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
 	Integer sourceOrder = Integer.valueOf(request.getParameter("source"));
 	String slotName = request.getParameter("slotName");
 
-	TransferDomainObjectProperty.run((sourceOrder == 1) ? domainObject1 : domainObject2, (sourceOrder == 1) ? domainObject2 : domainObject1,
-		slotName);
+	TransferDomainObjectProperty.run((sourceOrder == 1) ? domainObject1 : domainObject2, (sourceOrder == 1) ? domainObject2
+		: domainObject1, slotName);
 
 	return chooseObjects(mapping, form, request, response);
 

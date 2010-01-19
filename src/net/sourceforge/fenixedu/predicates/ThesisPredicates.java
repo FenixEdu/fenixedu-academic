@@ -51,8 +51,7 @@ public class ThesisPredicates {
 	public boolean evaluate(Thesis thesis) {
 	    Person person = AccessControl.getPerson();
 	    return (person.getStudent() == thesis.getStudent() && thesis.isWaitingConfirmation())
-		    || person.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
-		    || person.hasRole(RoleType.SCIENTIFIC_COUNCIL);
+		    || person.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE) || person.hasRole(RoleType.SCIENTIFIC_COUNCIL);
 	}
 
     };

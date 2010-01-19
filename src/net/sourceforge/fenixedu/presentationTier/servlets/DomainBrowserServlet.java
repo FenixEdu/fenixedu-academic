@@ -618,7 +618,7 @@ public class DomainBrowserServlet extends HttpServlet {
 			}
 		    } else if (name.equals("OID")) {
 			params.oid = Long.parseLong(value);
-                        DomainObject domObj = Transaction.getObjectForOID(params.oid);
+			DomainObject domObj = Transaction.getObjectForOID(params.oid);
 			params.domClass = domainModel.findClass(domObj.getClass().getName());
 		    } else if (name.equals("role")) {
 			params.roleName = value;

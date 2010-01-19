@@ -18,7 +18,7 @@ public class UnitAnnouncementsDA extends UnitSiteAnnouncementManagement {
 	addExtraParameter(request, builder, "siteId");
 	addExtraParameter(request, builder, "tabularVersion");
 	addExtraParameter(request, builder, "oid");
-	
+
 	return builder.toString();
     }
 

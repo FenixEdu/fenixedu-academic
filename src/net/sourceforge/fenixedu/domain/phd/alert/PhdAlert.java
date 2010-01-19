@@ -131,7 +131,7 @@ abstract public class PhdAlert extends PhdAlert_Base {
 	removeRootDomainObjectForActivePhdAlerts();
 	removeRootDomainObject();
     }
-    
+
     public void delete() {
 	disconnect();
 	super.deleteDomainObject();

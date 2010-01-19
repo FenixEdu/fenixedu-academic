@@ -27,11 +27,14 @@ public class AllSecondCycleStudentsGroup extends Group {
 	    if (degree.isBolonhaDegree() && degree.getDegreeType().hasCycleTypes(CycleType.SECOND_CYCLE)) {
 		for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
 		    if (degreeCurricularPlan.isActive()) {
-			for (final StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlansSet()) {
+			for (final StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan
+				.getStudentCurricularPlansSet()) {
 			    if (studentCurricularPlan.isActive()) {
-				final CycleCurriculumGroup cycleCurriculumGroup = studentCurricularPlan.getCycle(CycleType.SECOND_CYCLE);
+				final CycleCurriculumGroup cycleCurriculumGroup = studentCurricularPlan
+					.getCycle(CycleType.SECOND_CYCLE);
 				if (cycleCurriculumGroup != null && !cycleCurriculumGroup.isConcluded()) {
-				    final CycleCurriculumGroup firstCycleCurriculumGroup = studentCurricularPlan.getCycle(CycleType.FIRST_CYCLE);
+				    final CycleCurriculumGroup firstCycleCurriculumGroup = studentCurricularPlan
+					    .getCycle(CycleType.FIRST_CYCLE);
 				    if (firstCycleCurriculumGroup == null || firstCycleCurriculumGroup.isConcluded()) {
 					elements.add(studentCurricularPlan.getPerson());
 				    }

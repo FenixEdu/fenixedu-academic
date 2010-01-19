@@ -47,15 +47,15 @@ public class UnitAnnouncementBoard extends UnitAnnouncementBoard_Base {
     public Unit getUnit() {
 	return getParty();
     }
-    
+
     @Override
     public Boolean getInitialAnnouncementsApprovedState() {
 	return isCurrentUserApprover();
     }
-    
-    public String getSiteParamForAnnouncementBoard(Announcement announcement){
+
+    public String getSiteParamForAnnouncementBoard(Announcement announcement) {
 	String base = super.getSiteParamForAnnouncementBoard(announcement);
-	
+
 	StringBuffer actionPath = new StringBuffer();
 	actionPath.append("&");
 	actionPath.append(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME);

@@ -1,9 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.reimbursementGuide;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
@@ -34,21 +30,23 @@ import net.sourceforge.fenixedu.domain.transactions.ReimbursementTransaction;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.State;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">Jo�o Mota </a> <br/>
- *         <strong>Description: </strong> <br/> This service edits a
- *         reimbursement guide. Editing a reimbursement guide is in reallity the
- *         creation of a new reimbursement guide situation associated with the
- *         reimbursement guide in question. The former active situation of the
- *         reimbursement guide changes state and a new situation with an active
- *         state. Also there are some rules related with the
- *         ReimbursementGuideSituationState that the service enforces. The
- *         allowed states are: a) if the current state is issued it can be
- *         changed to approved,payed and annulled b) if the current state is
- *         approved it can be changed to payed and annuled c) if the current
- *         state is payed it cannot be changed d) if the current state is
- *         annuled it cannot be changed
+ *         <strong>Description: </strong> <br/>
+ *         This service edits a reimbursement guide. Editing a reimbursement
+ *         guide is in reallity the creation of a new reimbursement guide
+ *         situation associated with the reimbursement guide in question. The
+ *         former active situation of the reimbursement guide changes state and
+ *         a new situation with an active state. Also there are some rules
+ *         related with the ReimbursementGuideSituationState that the service
+ *         enforces. The allowed states are: a) if the current state is issued
+ *         it can be changed to approved,payed and annulled b) if the current
+ *         state is approved it can be changed to payed and annuled c) if the
+ *         current state is payed it cannot be changed d) if the current state
+ *         is annuled it cannot be changed
  */
 public class EditReimbursementGuide extends FenixService {
 

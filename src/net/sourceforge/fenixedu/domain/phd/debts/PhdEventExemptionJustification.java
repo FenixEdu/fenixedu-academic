@@ -17,7 +17,7 @@ public class PhdEventExemptionJustification extends PhdEventExemptionJustificati
 
 	check(justificationType, "error.PhdEventExemptionJustificationType.invalid.justification.type");
 	check(dispatchDate, "error.PhdEventExemptionJustificationType.invalid.dispatch.date");
-	
+
 	init(exemption, reason);
 	setJustificationType(justificationType);
 	setDispatchDate(dispatchDate);

@@ -287,7 +287,7 @@ public class StringFormatter {
      * 
      * @param uglyWord
      *            the string to capitalize
-     * @param originalWordEndsWithSpecialChar 
+     * @param originalWordEndsWithSpecialChar
      * @return the capitalized word
      */
     public static String capitalizeWord(String uglyWord, boolean originalWordEndsWithSpecialChar) {

@@ -140,6 +140,6 @@ public class PhotographUploadBean implements Serializable {
 	    writer.write(null, new IIOImage(image, null, null), param);
 	    compressedContents = outputStream.toByteArray();
 	}
-	    
+
     }
 }

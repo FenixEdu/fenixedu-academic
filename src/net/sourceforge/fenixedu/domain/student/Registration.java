@@ -3401,9 +3401,11 @@ public class Registration extends Registration_Base {
 	    }
 	    final Proposal proposalAttributedByTeacher = group.getProposalAttributedByTeacher();
 	    if (proposalAttributedByTeacher != null && proposalAttributedByTeacher.isForExecutionYear(executionYear)) {
-		//if (proposalAttributedByTeacher.isProposalConfirmedByTeacherAndStudents(group)) {
-		    return proposalAttributedByTeacher;
-		//}
+		// if
+		// (proposalAttributedByTeacher.isProposalConfirmedByTeacherAndStudents(group))
+		// {
+		return proposalAttributedByTeacher;
+		// }
 	    }
 	}
 	return null;

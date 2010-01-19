@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.Grade;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -105,7 +104,7 @@ public interface ICurriculumEntry {
 	    final YearMonthDay localDate1 = curriculumEntry1.getApprovementDate();
 	    final YearMonthDay localDate2 = curriculumEntry2.getApprovementDate();
 	    final int c = localDate1.compareTo(localDate2);
-	    return c == 0 ? COMPARATOR_BY_ID.compare(curriculumEntry1, curriculumEntry2): c;
+	    return c == 0 ? COMPARATOR_BY_ID.compare(curriculumEntry1, curriculumEntry2) : c;
 	}
     };
 

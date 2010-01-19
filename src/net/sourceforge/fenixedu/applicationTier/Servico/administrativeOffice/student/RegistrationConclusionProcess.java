@@ -20,9 +20,9 @@ public class RegistrationConclusionProcess extends FenixService {
 	    registration.conclude(cycleCurriculumGroup);
 
 	    if (conclusionBean.hasEnteredConclusionDate()) {
-		
+
 		checkEnteredConclusionDate(conclusionBean);
-		
+
 		cycleCurriculumGroup.editConclusionInformation(AccessControl.getPerson(), cycleCurriculumGroup.getFinalAverage(),
 			new YearMonthDay(conclusionBean.getEnteredConclusionDate()), null);
 	    }
@@ -31,9 +31,9 @@ public class RegistrationConclusionProcess extends FenixService {
 	    registration.conclude();
 
 	    if (conclusionBean.hasEnteredConclusionDate()) {
-		
+
 		checkEnteredConclusionDate(conclusionBean);
-		
+
 		registration.editConclusionInformation(AccessControl.getPerson(), registration.getFinalAverage(),
 			new YearMonthDay(conclusionBean.getEnteredConclusionDate()), null);
 	    }
@@ -42,11 +42,11 @@ public class RegistrationConclusionProcess extends FenixService {
 
     private void checkEnteredConclusionDate(final RegistrationConclusionBean conclusionBean) {
 	final YearMonthDay startDate = conclusionBean.getRegistration().getStartDate();
-	
+
 	if (startDate.isAfter(conclusionBean.getEnteredConclusionDate())) {
 	    throw new DomainException("error.RegistrationConclusionProcess.start.date.is.after.entered.date");
 	}
-	
+
     }
 
 }

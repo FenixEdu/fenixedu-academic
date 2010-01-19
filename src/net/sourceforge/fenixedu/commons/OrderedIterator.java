@@ -7,8 +7,10 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/> <br/>
- *         <br/> Created on 18:43:06,3/Nov/2005
+ * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/>
+ * <br/>
+ * <br/>
+ *         Created on 18:43:06,3/Nov/2005
  * @version $Id$
  */
 public class OrderedIterator<T> implements Iterator {

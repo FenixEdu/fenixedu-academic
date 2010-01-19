@@ -62,14 +62,14 @@ public class SummariesSearchBean implements Serializable {
     }
 
     public SortedSet<Summary> search() {
-	
+
 	final SortedSet<Summary> summaries;
-	if (isAscendant()){
-	    summaries =  new TreeSet<Summary>(Summary.COMPARATOR_BY_DATE_AND_HOUR_ASC);
-	}else{
-	    summaries =  new TreeSet<Summary>(Summary.COMPARATOR_BY_DATE_AND_HOUR);
+	if (isAscendant()) {
+	    summaries = new TreeSet<Summary>(Summary.COMPARATOR_BY_DATE_AND_HOUR_ASC);
+	} else {
+	    summaries = new TreeSet<Summary>(Summary.COMPARATOR_BY_DATE_AND_HOUR);
 	}
-	
+
 	for (final Summary summary : getExecutionCourse().getAssociatedSummariesSet()) {
 	    final Shift shift = summary.getShift();
 	    if (getShift() == null || getShift() == shift) {
@@ -92,7 +92,7 @@ public class SummariesSearchBean implements Serializable {
     public SortedSet<Summary> getSummaries() {
 	return search();
     }
-    
+
     public SortedSet<Summary> getSummariesInverted() {
 	final SortedSet<Summary> summaries = new TreeSet<Summary>(Summary.COMPARATOR_BY_DATE_AND_HOUR_ASC);
 	summaries.addAll(search());

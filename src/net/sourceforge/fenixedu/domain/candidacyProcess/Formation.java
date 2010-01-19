@@ -3,10 +3,10 @@ package net.sourceforge.fenixedu.domain.candidacyProcess;
 import java.util.Formatter;
 import java.util.ResourceBundle;
 
-import org.apache.commons.lang.StringUtils;
-
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+
+import org.apache.commons.lang.StringUtils;
 
 public class Formation extends Formation_Base {
 

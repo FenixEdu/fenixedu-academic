@@ -37,6 +37,6 @@ abstract public class PhdProcessState extends PhdProcessState_Base {
 	removePerson();
 	removeRootDomainObject();
     }
-    
+
     abstract public PhdProcessStateType getType();
 }

@@ -1,11 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.gratuity;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuitySituationById;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.CreateGuideFromTransactions;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.transactions.ReadAllTransactionsByGratuitySituationID;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -19,6 +13,9 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuitySituationById;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.transactions.ReadAllTransactionsByGratuitySituationID;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.CreateGuideFromTransactions;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentById;
 import net.sourceforge.fenixedu.dataTransferObject.InfoContributor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
@@ -132,7 +129,8 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
 	infoGuide.setYear(new Integer(Calendar.getInstance().get(Calendar.YEAR)));
 
 	try {
-	    infoGuide = (InfoGuide) CreateGuideFromTransactions.run(infoGuide, "", GuideState.PAYED, Arrays.asList(transactionsWithoutGuide));
+	    infoGuide = (InfoGuide) CreateGuideFromTransactions.run(infoGuide, "", GuideState.PAYED, Arrays
+		    .asList(transactionsWithoutGuide));
 
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);

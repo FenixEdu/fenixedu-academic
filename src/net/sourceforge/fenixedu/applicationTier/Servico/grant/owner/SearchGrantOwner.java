@@ -61,7 +61,8 @@ public class SearchGrantOwner extends FenixService {
 	// Search by name IF search by ID has failed
 	if (person == null && grantOwner == null) {
 	    if (!StringUtils.isEmpty(name)) {
-		Integer tempNumberOfElementInSpan = Integer.valueOf(PresentationConstants.NUMBER_OF_ELEMENTS_IN_SPAN.intValue() - 1);
+		Integer tempNumberOfElementInSpan = Integer
+			.valueOf(PresentationConstants.NUMBER_OF_ELEMENTS_IN_SPAN.intValue() - 1);
 		if (onlyGrantOwner.booleanValue()) {
 		    grantOwnerList = GrantOwner.readGrantOwnerByName(name, startIndex, tempNumberOfElementInSpan);
 		    numberOfResultsByName = GrantOwner.countAllGrantOwnerByName(name);

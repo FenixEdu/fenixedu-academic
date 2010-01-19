@@ -27,7 +27,7 @@ public class RegistrationStateLog extends RegistrationStateLog_Base {
 	setStateDate(state.getStateDate());
 	setStateType(state.getClass().getName());
 	setAction(action);
-	
+
 	if (person != null) {
 	    setWho(person.getIstUsername());
 	}

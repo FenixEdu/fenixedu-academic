@@ -129,11 +129,12 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
     List getDetailedProfessorships(IUserView userView, Integer personId, DynaActionForm actionForm, HttpServletRequest request)
 	    throws FenixServiceException, FenixFilterException {
 
-	List<Professorship> professorshipList = ((Person) RootDomainObject.getInstance().readPartyByOID(personId)).getProfessorships();
-	
+	List<Professorship> professorshipList = ((Person) RootDomainObject.getInstance().readPartyByOID(personId))
+		.getProfessorships();
+
 	ExecutionYear executionYear = RootDomainObject.getInstance().readExecutionYearByOID(
 		((Integer) actionForm.get("executionYearId")));
-	if (executionYear == null){
+	if (executionYear == null) {
 	    executionYear = ExecutionYear.readCurrentExecutionYear();
 	}
 	final List<Professorship> responsibleFors = new ArrayList();
@@ -143,8 +144,8 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
 	    }
 	}
 
-	List detailedProfessorshipList = (List) CollectionUtils.collect(responsibleFors,
-		new Professorships2DetailProfessorship());
+	List detailedProfessorshipList = (List) CollectionUtils
+		.collect(responsibleFors, new Professorships2DetailProfessorship());
 
 	request.setAttribute("args", new TreeMap());
 	return detailedProfessorshipList;
@@ -220,7 +221,7 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
 	    } else {
 		request.setAttribute("isDepartmentManager", Boolean.FALSE);
 	    }
-	}else{
+	} else {
 	    request.setAttribute("isDepartmentManager", Boolean.TRUE);
 	}
 

@@ -4,14 +4,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.gratuity;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuitySituationByStudentCurricularPlanByGratuityValues;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlan;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlansByNumberAndDegreeType;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -21,7 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlan;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlansByNumberAndDegreeType;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuitySituationByStudentCurricularPlanByGratuityValues;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues;
@@ -30,7 +26,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -118,7 +113,8 @@ public class ExemptionGratuityAction extends FenixDispatchAction {
 	List<InfoStudentCurricularPlan> infoStudentCurricularPlans = new ArrayList<InfoStudentCurricularPlan>();
 
 	try {
-	    List<StudentCurricularPlan> studentCurricularPlans = (List) ReadStudentCurricularPlansByNumberAndDegreeType.run(studentNumber, DegreeType.MASTER_DEGREE);
+	    List<StudentCurricularPlan> studentCurricularPlans = (List) ReadStudentCurricularPlansByNumberAndDegreeType.run(
+		    studentNumber, DegreeType.MASTER_DEGREE);
 
 	    for (StudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
 		if (studentCurricularPlan.getDegreeCurricularPlan().getExecutionYears().contains(executionYear)) {
@@ -179,7 +175,8 @@ public class ExemptionGratuityAction extends FenixDispatchAction {
 	InfoGratuityValues infoGratuityValues = null;
 
 	try {
-	    infoGratuityValues = (InfoGratuityValues) ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear.run(infoStudentCurricularPlan.getInfoDegreeCurricularPlan().getIdInternal(), executionYear);
+	    infoGratuityValues = (InfoGratuityValues) ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear.run(
+		    infoStudentCurricularPlan.getInfoDegreeCurricularPlan().getIdInternal(), executionYear);
 	} catch (FenixServiceException fenixServiceException) {
 	    fenixServiceException.printStackTrace();
 	    errors.add("noGratuitySituation", new ActionError("error.impossible.insertExemptionGratuity"));
@@ -203,7 +200,8 @@ public class ExemptionGratuityAction extends FenixDispatchAction {
 	InfoGratuitySituation infoGratuitySituation = null;
 
 	try {
-	    infoGratuitySituation = (InfoGratuitySituation) ReadGratuitySituationByStudentCurricularPlanByGratuityValues.run(studentCurricularPlanID, infoGratuityValues.getIdInternal());
+	    infoGratuitySituation = (InfoGratuitySituation) ReadGratuitySituationByStudentCurricularPlanByGratuityValues.run(
+		    studentCurricularPlanID, infoGratuityValues.getIdInternal());
 	} catch (FenixServiceException fenixServiceException) {
 	    fenixServiceException.printStackTrace();
 	    errors.add("noGratuitySituation", new ActionError("error.impossible.insertExemptionGratuity"));

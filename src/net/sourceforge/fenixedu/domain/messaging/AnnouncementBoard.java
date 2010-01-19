@@ -204,7 +204,7 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
 	    }
 	}
     }
-    
+
     @Override
     public boolean isDeletable() {
 	return super.isDeletable() && !hasAnyChildren();
@@ -315,10 +315,10 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
 	announcements.setAnnouncementBoard(this);
     }
 
-    public void removeAnnouncement(Announcement announcement){
+    public void removeAnnouncement(Announcement announcement) {
 	announcement.getParentNode(this).delete();
     }
-    
+
     private List<Announcement> filterAnnouncements(Collection<Announcement> announcements, final Predicate predicate) {
 	return (List<Announcement>) CollectionUtils.select(announcements, new Predicate() {
 	    public boolean evaluate(Object arg0) {
@@ -425,16 +425,16 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
     public Boolean getInitialAnnouncementsApprovedState() {
 	return false;
     }
-    
-    public String getSiteParamForAnnouncementBoard(Announcement announcement){
-	
+
+    public String getSiteParamForAnnouncementBoard(Announcement announcement) {
+
 	StringBuffer actionPath = new StringBuffer();
 	actionPath.append("&announcementId=");
 	actionPath.append(announcement.getIdInternal());
 
 	return actionPath.toString();
     }
-    
+
     @Service
     public FileContent addFileToBoard(String fileName, byte[] content, String creatorName) {
 	return new PublicBoardFileContent(fileName, content, creatorName, this);

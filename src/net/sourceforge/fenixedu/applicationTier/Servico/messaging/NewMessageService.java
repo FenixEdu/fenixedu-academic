@@ -11,8 +11,8 @@ import pt.ist.fenixWebFramework.services.Service;
 public class NewMessageService {
 
     @Service
-    public static Message run(final Sender sender, final Collection<ReplyTo> replyTos,
-	    final Collection<Recipient> recipients, final String subject, final String body, final String bccs) {
+    public static Message run(final Sender sender, final Collection<ReplyTo> replyTos, final Collection<Recipient> recipients,
+	    final String subject, final String body, final String bccs) {
 	return new Message(sender, replyTos, recipients, subject, body, bccs);
     }
 

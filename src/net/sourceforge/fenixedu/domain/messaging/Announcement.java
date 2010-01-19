@@ -342,8 +342,9 @@ public class Announcement extends Announcement_Base {
     public boolean isInPublicationPeriod() {
 	DateTime beginPublication = getPublicationBegin();
 	DateTime endPublication = getPublicationEnd();
-	
-	return (beginPublication == null || beginPublication.isBeforeNow()) && (endPublication == null || endPublication.isAfterNow());
+
+	return (beginPublication == null || beginPublication.isBeforeNow())
+		&& (endPublication == null || endPublication.isAfterNow());
     }
 
     @Service

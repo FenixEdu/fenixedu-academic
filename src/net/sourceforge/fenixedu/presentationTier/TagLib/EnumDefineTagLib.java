@@ -12,8 +12,10 @@ import org.apache.struts.util.MessageResources;
 import org.apache.struts.util.RequestUtils;
 
 /**
- * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/> <br/>
- *         <br/> Created on 16:13:53,23/Set/2005
+ * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/>
+ * <br/>
+ * <br/>
+ *         Created on 16:13:53,23/Set/2005
  * @version $Id$
  */
 public class EnumDefineTagLib extends BodyTagSupport {

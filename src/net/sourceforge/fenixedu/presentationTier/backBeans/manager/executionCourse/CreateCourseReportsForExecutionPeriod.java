@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.manager.executionCourse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.gesdis.CreateCourseReports;
-
 import java.util.List;
 
 import javax.faces.event.ActionEvent;
@@ -10,8 +8,8 @@ import javax.faces.model.SelectItem;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionPeriods;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.gesdis.CreateCourseReports;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 import org.apache.commons.collections.CollectionUtils;

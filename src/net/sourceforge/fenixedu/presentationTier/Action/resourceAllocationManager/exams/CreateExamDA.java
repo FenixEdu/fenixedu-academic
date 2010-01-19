@@ -1,19 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.exams;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadAvailableRoomsForExam;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadExecutionCourseWithAssociatedCurricularCourses;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadExecutionCourseWithAssociatedCurricularCourses;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadExecutionCourseWithAssociatedCurricularCourses;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadExecutionCourseWithAssociatedCurricularCourses;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadExecutionCourseWithAssociatedCurricularCourses;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadExecutionCourseWithAssociatedCurricularCourses;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -25,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadRoomByOID;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadAvailableRoomsForExam;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadExecutionCourseWithAssociatedCurricularCourses;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
@@ -32,8 +20,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.Util;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 import net.sourceforge.fenixedu.util.DiaSemana;
@@ -198,7 +186,8 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
 	    InfoExecutionCourse executionCourse;
 	    try {
-		executionCourse = (InfoExecutionCourse) ReadExecutionCourseWithAssociatedCurricularCourses.run(new Integer(executionCourseArray[i]));
+		executionCourse = (InfoExecutionCourse) ReadExecutionCourseWithAssociatedCurricularCourses.run(new Integer(
+			executionCourseArray[i]));
 	    } catch (Exception ex) {
 		throw new Exception(ex);
 	    }
@@ -265,7 +254,8 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
 	    InfoExecutionCourse executionCourse;
 	    try {
-		executionCourse = (InfoExecutionCourse) ReadExecutionCourseWithAssociatedCurricularCourses.run(new Integer(executionCourseArray[i]));
+		executionCourse = (InfoExecutionCourse) ReadExecutionCourseWithAssociatedCurricularCourses.run(new Integer(
+			executionCourseArray[i]));
 	    } catch (Exception ex) {
 		throw new Exception(ex);
 	    }
@@ -384,7 +374,8 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
 	    InfoExecutionCourse executionCourse;
 	    try {
-		executionCourse = (InfoExecutionCourse) ReadExecutionCourseWithAssociatedCurricularCourses.run(new Integer(executionCourseArray[i]));
+		executionCourse = (InfoExecutionCourse) ReadExecutionCourseWithAssociatedCurricularCourses.run(new Integer(
+			executionCourseArray[i]));
 	    } catch (Exception ex) {
 		throw new Exception(ex);
 	    }
@@ -436,7 +427,8 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
 	    InfoExecutionCourse executionCourse;
 	    try {
-		executionCourse = (InfoExecutionCourse) ReadExecutionCourseWithAssociatedCurricularCourses.run(element.getIdInternal());
+		executionCourse = (InfoExecutionCourse) ReadExecutionCourseWithAssociatedCurricularCourses.run(element
+			.getIdInternal());
 	    } catch (Exception ex) {
 		throw new Exception(ex);
 	    }
@@ -604,7 +596,8 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
 	    InfoExecutionCourse executionCourse;
 	    try {
-		executionCourse = (InfoExecutionCourse) ReadExecutionCourseWithAssociatedCurricularCourses.run(new Integer(executionCourseArray[i]));
+		executionCourse = (InfoExecutionCourse) ReadExecutionCourseWithAssociatedCurricularCourses.run(new Integer(
+			executionCourseArray[i]));
 	    } catch (Exception ex) {
 		throw new Exception(ex);
 	    }
@@ -665,10 +658,10 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 	    return prepare(mapping, form, request, response);
 	}
 
-
-	List<InfoRoom> availableInfoRoom = (List<InfoRoom>) ReadAvailableRoomsForExam.run(YearMonthDay.fromCalendarFields(examDate), YearMonthDay.fromCalendarFields(examDate),
-		HourMinuteSecond.fromCalendarFields(examStartTime), HourMinuteSecond.fromCalendarFields(examEndTime), dayOfWeek,
-		null, null, Boolean.FALSE);
+	List<InfoRoom> availableInfoRoom = (List<InfoRoom>) ReadAvailableRoomsForExam.run(YearMonthDay
+		.fromCalendarFields(examDate), YearMonthDay.fromCalendarFields(examDate), HourMinuteSecond
+		.fromCalendarFields(examStartTime), HourMinuteSecond.fromCalendarFields(examEndTime), dayOfWeek, null, null,
+		Boolean.FALSE);
 
 	String[] rooms = (String[]) examForm.get("rooms");
 	List<InfoRoom> selectedRooms = new ArrayList<InfoRoom>();

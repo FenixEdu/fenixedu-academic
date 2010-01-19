@@ -10,8 +10,10 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
- * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/> <br/>
- *         <br/> Created on 19:48:00,26/Set/2005
+ * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/>
+ * <br/>
+ * <br/>
+ *         Created on 19:48:00,26/Set/2005
  * @version $Id: ReadDomainExecutionCourseByID.java,v 1.2 2005/12/16 16:05:59
  *          lepc Exp $
  */

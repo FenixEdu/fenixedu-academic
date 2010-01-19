@@ -25,8 +25,9 @@ public class StudentGroup extends StudentGroup_Base {
 
     private static class StudentGroupAttendListener extends RelationAdapter<StudentGroup, Attends> {
 	@Override
-	public void beforeRemove(StudentGroup studentGroup, Attends attends) { 
-	    if (!studentGroup.getProjectSubmissions().isEmpty() && !studentGroup.getGrouping().isPersonTeacher(AccessControl.getPerson())) {
+	public void beforeRemove(StudentGroup studentGroup, Attends attends) {
+	    if (!studentGroup.getProjectSubmissions().isEmpty()
+		    && !studentGroup.getGrouping().isPersonTeacher(AccessControl.getPerson())) {
 		throw new DomainException("error.studentGroup.cannotRemoveAttendsBecauseAlreadyHasProjectSubmissions");
 	    }
 
@@ -34,11 +35,11 @@ public class StudentGroup extends StudentGroup_Base {
 	}
 
     }
-    
-    public boolean wasDeleted(){
+
+    public boolean wasDeleted() {
 	return !this.getValid();
     }
-    
+
     public StudentGroup() {
 	super();
 	super.setValid(true);
@@ -60,9 +61,9 @@ public class StudentGroup extends StudentGroup_Base {
 
     public void delete() {
 	// teacher type of deletion after project submission
-	if (hasAnyProjectSubmissions() && this.getGrouping().isPersonTeacher(AccessControl.getPerson())){
+	if (hasAnyProjectSubmissions() && this.getGrouping().isPersonTeacher(AccessControl.getPerson())) {
 	    this.setValid(false);
-	}else if( !hasAnyProjectSubmissions() && !hasAnyAttends()){ 
+	} else if (!hasAnyProjectSubmissions() && !hasAnyAttends()) {
 	    removeShift();
 	    removeGrouping();
 	    removeRootDomainObject();

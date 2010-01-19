@@ -23,8 +23,8 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixDateAndTimeDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.RequestUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.RequestUtils;
 
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -93,7 +93,8 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
 	    HttpServletResponse response) throws Exception {
 	String inputPage = request.getParameter(PresentationConstants.INPUT_PAGE);
 
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+		.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
 	// TODO: this semester and curricular year list needs to be refactored
 	// in order to incorporate masters
@@ -248,7 +249,8 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
 	    request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
 	}
 
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+		.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 	Integer executionPeriodID = (Integer) escolherContextoForm.get("indice");
 	if (executionPeriodID == null) {
 	    executionPeriodID = getFromRequest("indice", request);
@@ -289,7 +291,8 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
 	    RequestUtils.setExecutionDegreeToRequest(request, infoExecutionDegree);
 
 	    request.setAttribute("infoDegreeCurricularPlan", infoExecutionDegree.getInfoDegreeCurricularPlan());
-	    request.setAttribute(PresentationConstants.INFO_DEGREE_CURRICULAR_PLAN, infoExecutionDegree.getInfoDegreeCurricularPlan());
+	    request.setAttribute(PresentationConstants.INFO_DEGREE_CURRICULAR_PLAN, infoExecutionDegree
+		    .getInfoDegreeCurricularPlan());
 	}
 
 	String nextPage = request.getParameter("nextPage");

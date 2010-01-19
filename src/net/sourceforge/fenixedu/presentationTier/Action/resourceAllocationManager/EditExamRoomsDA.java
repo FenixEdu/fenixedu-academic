@@ -54,7 +54,8 @@ public class EditExamRoomsDA extends
 	DynaActionForm editExamRoomsForm = (DynaActionForm) form;
 
 	ContextUtils.setExecutionCourseContext(request);
-	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute(PresentationConstants.EXECUTION_COURSE);
+	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request
+		.getAttribute(PresentationConstants.EXECUTION_COURSE);
 
 	Season oldExamsSeason = new Season(new Integer(request.getParameter("oldExamSeason")));
 
@@ -114,7 +115,8 @@ public class EditExamRoomsDA extends
 	DynaActionForm editExamRoomsForm = (DynaActionForm) form;
 
 	ContextUtils.setExecutionCourseContext(request);
-	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute(PresentationConstants.EXECUTION_COURSE);
+	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request
+		.getAttribute(PresentationConstants.EXECUTION_COURSE);
 
 	Season oldExamsSeason = new Season(new Integer(request.getParameter("oldExamSeason")));
 

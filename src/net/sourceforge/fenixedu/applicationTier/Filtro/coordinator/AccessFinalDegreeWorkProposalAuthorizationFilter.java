@@ -46,8 +46,9 @@ public class AccessFinalDegreeWorkProposalAuthorizationFilter extends DomainObje
 	    }
 	    for (final ScientificCommission scientificCommission : person.getScientificCommissionsSet()) {
 		if (executionDegree == scientificCommission.getExecutionDegree()
-			|| (executionDegree.getDegreeCurricularPlan() == scientificCommission.getExecutionDegree().getDegreeCurricularPlan()
-				&& executionDegree.getExecutionYear() == scientificCommission.getExecutionDegree().getExecutionYear().getPreviousExecutionYear())) {
+			|| (executionDegree.getDegreeCurricularPlan() == scientificCommission.getExecutionDegree()
+				.getDegreeCurricularPlan() && executionDegree.getExecutionYear() == scientificCommission
+				.getExecutionDegree().getExecutionYear().getPreviousExecutionYear())) {
 		    return true;
 		}
 	    }

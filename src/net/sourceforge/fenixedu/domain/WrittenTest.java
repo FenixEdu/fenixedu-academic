@@ -21,9 +21,7 @@ import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
-import org.joda.time.DateTime;
 import org.joda.time.Interval;
-import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -167,7 +165,8 @@ public class WrittenTest extends WrittenTest_Base {
 	for (ExecutionCourse executionCourse : getAssociatedExecutionCoursesSet()) {
 	    if (executionCourse.teacherLecturesExecutionCourse(teacher)) {
 		for (Lesson lesson : executionCourse.getLessons()) {
-		    if (lesson.getRoomOccupation() != null && lesson.isAllIntervalIn(new Interval(getBeginningDateTime(), getEndDateTime()))) {
+		    if (lesson.getRoomOccupation() != null
+			    && lesson.isAllIntervalIn(new Interval(getBeginningDateTime(), getEndDateTime()))) {
 			rooms.add(lesson.getRoomOccupation().getRoom());
 		    }
 		}
@@ -180,7 +179,8 @@ public class WrittenTest extends WrittenTest_Base {
 	Collection<AllocatableSpace> rooms = new ArrayList<AllocatableSpace>();
 	for (ExecutionCourse executionCourse : getAssociatedExecutionCoursesSet()) {
 	    for (Lesson lesson : executionCourse.getLessons()) {
-		if (lesson.getRoomOccupation() != null && lesson.isAllIntervalIn(new Interval(getBeginningDateTime(), getEndDateTime()))) {
+		if (lesson.getRoomOccupation() != null
+			&& lesson.isAllIntervalIn(new Interval(getBeginningDateTime(), getEndDateTime()))) {
 		    rooms.add(lesson.getRoomOccupation().getRoom());
 		}
 	    }
@@ -248,10 +248,9 @@ public class WrittenTest extends WrittenTest_Base {
 	builder.append(")");
 	return builder.toString();
     }
-    
-    public List<EventBean>  getAllEvents(Registration registration,
-	    String scheme, String serverName, int serverPort){
-	return getAllEvents(this.getDescription(), registration,scheme,serverName,serverPort);
+
+    public List<EventBean> getAllEvents(Registration registration, String scheme, String serverName, int serverPort) {
+	return getAllEvents(this.getDescription(), registration, scheme, serverName, serverPort);
     }
 
 }

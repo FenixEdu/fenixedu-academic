@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.enrolments;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.registration.TransitToBolonha;
-
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.registration.TransitToBolonha;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.commons.student.StudentNumberBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.BolonhaStudentEnrollmentBean;
@@ -177,8 +176,7 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
 
 	final StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(request);
 	try {
-	    TransitToBolonha.run(null,
-		    studentCurricularPlan.getRegistration().getSourceRegistrationForTransition(), date);
+	    TransitToBolonha.run(null, studentCurricularPlan.getRegistration().getSourceRegistrationForTransition(), date);
 	} catch (final DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
 	    return prepareTransit(mapping, actionForm, request, response);

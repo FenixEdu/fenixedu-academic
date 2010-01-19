@@ -11,8 +11,9 @@ public class MarkPunctualRoomsOccupationCommentsAsRead extends FenixService {
     @Service
     public static void run(PunctualRoomsOccupationRequest request, boolean forTeacher) {
 	Person person = AccessControl.getPerson();
-	
-	if (person.hasRole(RoleType.TEACHER) || person.hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER) || person.hasAnyProfessorships()){
+
+	if (person.hasRole(RoleType.TEACHER) || person.hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER)
+		|| person.hasAnyProfessorships()) {
 	    if (request != null) {
 		if (forTeacher) {
 		    request.setTeacherReadComments(request.getCommentsCount());

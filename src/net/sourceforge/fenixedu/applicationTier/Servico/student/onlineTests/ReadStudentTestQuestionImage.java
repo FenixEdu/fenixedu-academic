@@ -29,8 +29,7 @@ public class ReadStudentTestQuestionImage extends FenixService {
 	    String feedbackId, Integer itemIndex, String path) throws FenixServiceException {
 	final Question question = rootDomainObject.readQuestionByOID(questionId);
 	for (StudentTestQuestion studentTestQuestion : registration.getStudentTestsQuestions()) {
-	    if (studentTestQuestion.getDistributedTest() == distributedTest
-		    && studentTestQuestion.getQuestion() == question) {
+	    if (studentTestQuestion.getDistributedTest() == distributedTest && studentTestQuestion.getQuestion() == question) {
 		ParseSubQuestion parse = new ParseSubQuestion();
 		try {
 		    parse.parseStudentTestQuestion(studentTestQuestion, path.replace('\\', '/'));

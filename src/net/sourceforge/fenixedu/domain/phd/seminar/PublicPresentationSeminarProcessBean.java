@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.domain.phd.seminar;
 
 import java.io.Serializable;
 
-import org.joda.time.LocalDate;
-
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
+
+import org.joda.time.LocalDate;
 
 public class PublicPresentationSeminarProcessBean implements Serializable {
 

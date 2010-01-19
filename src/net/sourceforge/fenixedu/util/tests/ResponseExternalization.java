@@ -9,37 +9,37 @@ import java.io.UnsupportedEncodingException;
 public class ResponseExternalization {
 
     public static String externalize(Response source) {
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        XMLEncoder encoder = new XMLEncoder(out);
-        encoder.writeObject(source);
-        encoder.close();
-        try {
-            // I think that this is wrong and that we should get the
-            // bytes of the ByteArrayOutputStream interpreted as
-            // UTF-8, which is what the XMLEncoder produces in the
-            // first place.
-            // WARNING: If this is changed, the internalize method
-            // should be changed accordingly.
-            return out.toString("ISO-8859-1");
-        } catch (UnsupportedEncodingException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            return out.toString();
-        }
+	ByteArrayOutputStream out = new ByteArrayOutputStream();
+	XMLEncoder encoder = new XMLEncoder(out);
+	encoder.writeObject(source);
+	encoder.close();
+	try {
+	    // I think that this is wrong and that we should get the
+	    // bytes of the ByteArrayOutputStream interpreted as
+	    // UTF-8, which is what the XMLEncoder produces in the
+	    // first place.
+	    // WARNING: If this is changed, the internalize method
+	    // should be changed accordingly.
+	    return out.toString("ISO-8859-1");
+	} catch (UnsupportedEncodingException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	    return out.toString();
+	}
     }
 
     public static Response internalize(String source) {
-        String xmlResponse = null;
-        try {
-            // This latin1 to UTF-8 conversion actually undoes the
-            // "bug" of the externalize method.
-            xmlResponse = new String(source.getBytes("latin1"), "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+	String xmlResponse = null;
+	try {
+	    // This latin1 to UTF-8 conversion actually undoes the
+	    // "bug" of the externalize method.
+	    xmlResponse = new String(source.getBytes("latin1"), "UTF-8");
+	} catch (UnsupportedEncodingException e) {
+	    e.printStackTrace();
+	}
 
-        Response response = getResponse(xmlResponse);
-        return response;
+	Response response = getResponse(xmlResponse);
+	return response;
     }
 
     private static Response getResponse(String xmlResponse) {

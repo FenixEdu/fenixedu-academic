@@ -25,7 +25,8 @@ public class CreateThesisAbstractFile extends CreateThesisFile {
     }
 
     @Override
-    protected void updateThesis(Thesis thesis, ThesisFile file, String title, String subTitle, Language language, String fileName, File fileToUpload) throws FenixServiceException, IOException {
+    protected void updateThesis(Thesis thesis, ThesisFile file, String title, String subTitle, Language language,
+	    String fileName, File fileToUpload) throws FenixServiceException, IOException {
 	thesis.setExtendedAbstract(file);
     }
 

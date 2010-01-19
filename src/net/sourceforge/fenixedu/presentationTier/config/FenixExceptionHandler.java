@@ -9,7 +9,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean;
 import net.sourceforge.fenixedu.domain.log.requests.ErrorLog;
 import net.sourceforge.fenixedu.domain.log.requests.RequestLog;
@@ -17,9 +16,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSessionActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.util.ExceptionInformation;
-import net.sourceforge.fenixedu.util.ArrayUtils;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -29,7 +26,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ExceptionHandler;
 import org.apache.struts.config.ExceptionConfig;
 
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixframework.pstm.Transaction;
 
 /**
@@ -94,28 +90,34 @@ public class FenixExceptionHandler extends ExceptionHandler {
 
 	ExceptionInformation exceptionInfo = ExceptionInformation.buildExceptionInfo(request, ex);
 	String requestContext = exceptionInfo.getRequestContext();
-//	String sessionContext = exceptionInfo.getSessionContext();
-//	String stackTrace = exceptionInfo.getStackTrace();
+	// String sessionContext = exceptionInfo.getSessionContext();
+	// String stackTrace = exceptionInfo.getStackTrace();
 
 	request.setAttribute(PresentationConstants.ORIGINAL_MAPPING_KEY, mapping);
 	request.setAttribute(PresentationConstants.EXCEPTION_STACK_TRACE, ex.getStackTrace());
 	request.setAttribute(PresentationConstants.REQUEST_CONTEXT, requestContext);
 
-//	String[] parameters = ArrayUtils.toStringArray(request.getParameterNames(), "_request_checksum_", "jsessionid");
-//	ErrorLogger errorLogger = new ErrorLogger(request.getRequestURI(), request.getHeader("referer"), parameters, request
-//		.getQueryString(), UserView.getUser() == null ? StringUtils.EMPTY : ((IUserView) UserView.getUser())
-//		.getUtilizador(), requestContext, sessionContext, stackTrace, ex.getClass().getName(), request.getMethod().equalsIgnoreCase("POST"));
+	// String[] parameters =
+	// ArrayUtils.toStringArray(request.getParameterNames(),
+	// "_request_checksum_", "jsessionid");
+	// ErrorLogger errorLogger = new ErrorLogger(request.getRequestURI(),
+	// request.getHeader("referer"), parameters, request
+	// .getQueryString(), UserView.getUser() == null ? StringUtils.EMPTY :
+	// ((IUserView) UserView.getUser())
+	// .getUtilizador(), requestContext, sessionContext, stackTrace,
+	// ex.getClass().getName(),
+	// request.getMethod().equalsIgnoreCase("POST"));
 
-//	errorLogger.start();
+	// errorLogger.start();
 
 	SupportRequestBean requestBean = exceptionInfo.getRequestBean();
 
-//	try {
-//	    errorLogger.join();
-//	    requestBean.setErrorLog(errorLogger.getErrorLog());
-//	} catch (InterruptedException e) {
-//	    e.printStackTrace();
-//	}
+	// try {
+	// errorLogger.join();
+	// requestBean.setErrorLog(errorLogger.getErrorLog());
+	// } catch (InterruptedException e) {
+	// e.printStackTrace();
+	// }
 
 	request.setAttribute("requestBean", requestBean);
 	request.setAttribute("exceptionInfo", exceptionInfo.getExceptionInfo());
@@ -144,7 +146,7 @@ public class FenixExceptionHandler extends ExceptionHandler {
 	private String exceptionType;
 
 	private ErrorLog errorLog;
-	
+
 	private Boolean post;
 
 	public ErrorLogger(String path, String referer, String[] parameters, String queryString, String user,

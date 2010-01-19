@@ -29,7 +29,8 @@ public class SopRoomTimeTableLessonContentRenderer implements LessonSlotContentR
 	    strBuffer.append(context).append("/resourceAllocationManager/");
 	    strBuffer.append("manageExecutionCourse.do?method=prepare&amp;page=0&amp;");
 	    strBuffer.append(PresentationConstants.ACADEMIC_INTERVAL + "=");
-	    strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getAcademicInterval().getResumedRepresentationInStringFormat());
+	    strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getAcademicInterval()
+		    .getResumedRepresentationInStringFormat());
 	    strBuffer.append("&amp;execution_course_oid=");
 	    strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getIdInternal());
 	    strBuffer.append("'>");
@@ -48,7 +49,8 @@ public class SopRoomTimeTableLessonContentRenderer implements LessonSlotContentR
 	    strBuffer.append(context).append("/resourceAllocationManager/");
 	    strBuffer.append("manageExecutionCourse.do?method=prepare&amp;page=0&amp;");
 	    strBuffer.append(PresentationConstants.ACADEMIC_INTERVAL + "=");
-	    strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getAcademicInterval().getResumedRepresentationInStringFormat());
+	    strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getAcademicInterval()
+		    .getResumedRepresentationInStringFormat());
 	    strBuffer.append("&amp;execution_course_oid=");
 	    strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getIdInternal());
 	    strBuffer.append("'>");

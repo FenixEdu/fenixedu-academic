@@ -36,7 +36,7 @@ public enum PhdIndividualProgramProcessState implements PhdProcessStateType {
     public boolean isActive() {
 	return activeState;
     }
-    
+
     @Override
     public String getName() {
 	return name();

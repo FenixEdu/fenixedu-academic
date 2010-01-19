@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.dataTransferObject.externalServices;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -23,8 +22,8 @@ public class ResearcherDTO {
 	this.setKeywordsPortuguese(researcher.getKeywordsPt() != null ? researcher.getKeywordsPt() : "");
 	this.setKeywordsEnglish(researcher.getKeywordsEn() != null ? researcher.getKeywordsEn() : "");
 	this.units = getAssociatedUnitNames(researcher.getPerson().getAssociatedResearchOrDepartmentUnits());
-	
-	if(researcher.getAllowsContactByMedia()) {
+
+	if (researcher.getAllowsContactByMedia()) {
 	    this.contacts = getContacts(researcher);
 	}
     }
@@ -153,11 +152,11 @@ public class ResearcherDTO {
     }
 
     public Contact[] getContacts() {
-        return contacts;
+	return contacts;
     }
 
     public void setContacts(Contact[] contacts) {
-        this.contacts = contacts;
+	this.contacts = contacts;
     }
-    
+
 }

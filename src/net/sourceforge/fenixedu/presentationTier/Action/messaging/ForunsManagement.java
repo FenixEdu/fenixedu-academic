@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.domain.messaging.ConversationThread;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
-import net.sourceforge.fenixedu.presentationTier.util.HostRedirector;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -39,8 +38,8 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
- * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/> Created on
- *         May 5, 2006, 10:42:00 AM
+ * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/>
+ *         Created on May 5, 2006, 10:42:00 AM
  * 
  * @author pcma
  */

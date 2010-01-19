@@ -113,6 +113,7 @@ public abstract class CreateThesisFile extends FenixService {
 
     protected abstract void removePreviousFile(Thesis thesis);
 
-    protected abstract void updateThesis(Thesis thesis, ThesisFile file, String title, String subTitle, Language language, String fileName, File fileToUpload) throws FenixServiceException, IOException;
+    protected abstract void updateThesis(Thesis thesis, ThesisFile file, String title, String subTitle, Language language,
+	    String fileName, File fileToUpload) throws FenixServiceException, IOException;
 
 }

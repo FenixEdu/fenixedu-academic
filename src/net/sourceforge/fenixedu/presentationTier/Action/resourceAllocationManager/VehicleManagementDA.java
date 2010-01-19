@@ -1,9 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DeleteVehicleAllocation;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.CreateVehicleAllocation;
-
 import java.math.BigDecimal;
 import java.util.Set;
 
@@ -12,6 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.CreateVehicleAllocation;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DeleteVehicleAllocation;
 import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.VehicleAllocationBean;
 import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.VehicleAllocationHistoryBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;

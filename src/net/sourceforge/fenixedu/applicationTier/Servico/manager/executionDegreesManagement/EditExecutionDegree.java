@@ -1,9 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.executionDegreesManagement;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 import java.util.Date;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -14,6 +10,9 @@ import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.joda.time.YearMonthDay;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class EditExecutionDegree extends FenixService {
 

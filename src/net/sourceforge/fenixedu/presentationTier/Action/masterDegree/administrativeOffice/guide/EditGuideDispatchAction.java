@@ -131,10 +131,9 @@ public class EditGuideDispatchAction extends FenixDispatchAction {
 	    return mapping.getInputForward();
 	}
 
-
 	try {
-	    ChangeGuideSituation.run(guideNumber, guideYear, guideVersion, calendar.getTime(), remarks, situationOfGuide, paymentType,
-		userView);
+	    ChangeGuideSituation.run(guideNumber, guideYear, guideVersion, calendar.getTime(), remarks, situationOfGuide,
+		    paymentType, userView);
 	} catch (NonValidChangeServiceException e) {
 	    throw new NonValidChangeActionException(e);
 	} catch (ExistingServiceException e) {
@@ -269,7 +268,8 @@ public class EditGuideDispatchAction extends FenixDispatchAction {
 	InfoGuide result = null;
 	try {
 
-	    result = (InfoGuide) EditGuideInformation.run(infoGuide, quantityList, contributorNumber, othersRemarks, othersQuantity, othersPrice);
+	    result = (InfoGuide) EditGuideInformation.run(infoGuide, quantityList, contributorNumber, othersRemarks,
+		    othersQuantity, othersPrice);
 	} catch (InvalidChangeServiceException e) {
 	    throw new InvalidChangeActionException(e);
 	} catch (NoChangeMadeServiceException e) {

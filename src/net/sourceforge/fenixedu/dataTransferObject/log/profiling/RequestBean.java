@@ -74,27 +74,27 @@ public class RequestBean implements Serializable {
     }
 
     public String getModuleName() {
-        return moduleName;
+	return moduleName;
     }
 
     public void setModuleName(String moduleName) {
-        this.moduleName = moduleName;
+	this.moduleName = moduleName;
     }
 
     public LocalDate getDate() {
-        return date;
+	return date;
     }
 
     public void setDate(LocalDate date) {
-        this.date = date;
+	this.date = date;
     }
 
     public String getServerName() {
-        return serverName;
+	return serverName;
     }
 
     public void setServerName(String serverName) {
-        this.serverName = serverName;
+	this.serverName = serverName;
     }
 
 }

@@ -135,19 +135,19 @@ public class AlumniSearchBean implements Serializable {
     }
 
     public Integer getStudentNumber() {
-        return studentNumber;
+	return studentNumber;
     }
 
     public void setStudentNumber(Integer studentNumber) {
-        this.studentNumber = studentNumber;
+	this.studentNumber = studentNumber;
     }
 
     public String getDocumentIdNumber() {
-        return documentIdNumber;
+	return documentIdNumber;
     }
 
     public void setDocumentIdNumber(String documentIdNumber) {
-        this.documentIdNumber = documentIdNumber;
+	this.documentIdNumber = documentIdNumber;
     }
 
 }

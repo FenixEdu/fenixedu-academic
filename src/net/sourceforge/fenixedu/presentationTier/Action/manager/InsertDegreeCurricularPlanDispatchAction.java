@@ -3,8 +3,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.InsertDegreeCurricularPlan;
-
 import java.util.Calendar;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.InsertDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanEditor;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -25,7 +24,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActio
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidArgumentsActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.MarkType;
 
 import org.apache.struts.action.ActionForm;
@@ -120,7 +118,6 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
 	infoDegreeCurricularPlan.setGradeScale(gradeScale);
 	InfoDegree infoDegree = new InfoDegree(degree);
 	infoDegreeCurricularPlan.setInfoDegree(infoDegree);
-
 
 	try {
 	    InsertDegreeCurricularPlan.run(infoDegreeCurricularPlan);

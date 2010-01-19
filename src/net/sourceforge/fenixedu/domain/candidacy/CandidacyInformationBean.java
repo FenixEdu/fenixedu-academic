@@ -499,7 +499,7 @@ public class CandidacyInformationBean implements Serializable {
 	}
 	return result;
     }
-    
+
     public String getFormattedValues() {
 	Formatter result = new Formatter();
 
@@ -510,5 +510,5 @@ public class CandidacyInformationBean implements Serializable {
 
 	return result.toString();
     }
-    
+
 }

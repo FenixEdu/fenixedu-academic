@@ -19,8 +19,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 /**
- * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/> Created on
- *         Jun 8, 2006, 2:28:29 PM
+ * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/>
+ *         Created on Jun 8, 2006, 2:28:29 PM
  * 
  */
 public class WebSiteAnnouncementManagement extends AnnouncementManagement {

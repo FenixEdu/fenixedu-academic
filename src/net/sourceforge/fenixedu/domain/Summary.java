@@ -40,7 +40,7 @@ public class Summary extends Summary_Base {
 	    }
 	}
     };
-    
+
     public static final Comparator<Summary> COMPARATOR_BY_DATE_AND_HOUR_ASC = new Comparator<Summary>() {
 	public int compare(final Summary o1, final Summary o2) {
 	    final int c1 = o2.getSummaryDateYearMonthDay().compareTo(o1.getSummaryDateYearMonthDay());

@@ -35,7 +35,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.GratuityValue
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidChangeActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidInformationInFormActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidStudentNumberActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;

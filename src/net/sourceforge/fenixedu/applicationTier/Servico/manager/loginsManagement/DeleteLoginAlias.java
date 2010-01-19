@@ -1,11 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.loginsManagement;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.LoginAlias;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteLoginAlias extends FenixService {
 

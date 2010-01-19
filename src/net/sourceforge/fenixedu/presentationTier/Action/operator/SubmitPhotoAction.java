@@ -93,7 +93,7 @@ public class SubmitPhotoAction extends FenixDispatchAction {
     private ByteArrayOutputStream processImage(byte[] content, ContentType contentType) throws IOException {
 	ByteArrayInputStream inputStream = new ByteArrayInputStream(content);
 	BufferedImage photoImage = ImageIO.read(inputStream);
-	
+
 	// calculate resize factor
 	double resizeFactor = Math.min((double) outputPhotoWidth / photoImage.getWidth(), (double) outputPhotoHeight
 		/ photoImage.getHeight());
@@ -103,7 +103,7 @@ public class SubmitPhotoAction extends FenixDispatchAction {
 	    outputStream.write(content);
 	    return outputStream;
 	}
-	
+
 	// resize image
 	AffineTransform tx = new AffineTransform();
 	tx.scale(resizeFactor, resizeFactor);
@@ -124,6 +124,6 @@ public class SubmitPhotoAction extends FenixDispatchAction {
 	writer.write(null, new IIOImage(photoImage, null, null), param);
 
 	return outputStream;
-	
+
     }
 }

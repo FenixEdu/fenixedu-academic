@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
@@ -26,10 +25,10 @@ public class CreateEnrolmentPeriods {
 
 	final ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodID);
 	for (final ExecutionDegree executionDegree : executionSemester.getExecutionYear().getExecutionDegrees()) {
-	    
+
 	    final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 	    if (degreeType == null || degreeType == degreeCurricularPlan.getDegree().getDegreeType()) {
-		
+
 		createPeriod(enrolmentPeriodClassName, startDate, endDate, executionSemester, degreeCurricularPlan);
 	    }
 	}
@@ -38,7 +37,7 @@ public class CreateEnrolmentPeriods {
     private static void createPeriod(final String enrolmentPeriodClassName, final Date startDate, final Date endDate,
 	    final ExecutionSemester executionSemester, final DegreeCurricularPlan degreeCurricularPlan)
 	    throws FenixServiceException {
-	
+
 	if (EnrolmentPeriodInClasses.class.getName().equals(enrolmentPeriodClassName)) {
 
 	    new EnrolmentPeriodInClasses(degreeCurricularPlan, executionSemester, startDate, endDate);

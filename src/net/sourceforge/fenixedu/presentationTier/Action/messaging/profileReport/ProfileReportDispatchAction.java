@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.messaging.profileReport;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -81,7 +80,7 @@ public class ProfileReportDispatchAction extends FenixDispatchAction {
 
     private List<ModuleBean> getRequestsFor(String serverName, String moduleName, LocalDate date) {
 	ProfileReport report = getReportFor(date);
-	ModuleBean bean = report.getReportForServerAndModule(serverName,moduleName);
+	ModuleBean bean = report.getReportForServerAndModule(serverName, moduleName);
 	return bean != null ? bean.getRequests() : Collections.EMPTY_LIST;
     }
 

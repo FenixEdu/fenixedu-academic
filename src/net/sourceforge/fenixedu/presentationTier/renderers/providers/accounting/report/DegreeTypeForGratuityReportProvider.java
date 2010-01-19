@@ -21,7 +21,6 @@ public class DegreeTypeForGratuityReportProvider implements DataProvider {
 	     * 
 	     */
 	    private static final long serialVersionUID = 1L;
-	    
 
 	    @Override
 	    public Object convert(Class type, Object value) {

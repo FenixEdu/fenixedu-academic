@@ -319,14 +319,14 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 	try {
 
 	    infoScheduleing = ReadFinalDegreeWorkProposalSubmisionPeriod.run(infoExecutionDegree.getExecutionDegree());
-	    if (infoScheduleing == null
-		    || infoScheduleing.getStartOfProposalPeriod() == null
+	    if (infoScheduleing == null || infoScheduleing.getStartOfProposalPeriod() == null
 		    || infoScheduleing.getEndOfProposalPeriod() == null
 		    || infoScheduleing.getStartOfProposalPeriod().getTime() > Calendar.getInstance().getTimeInMillis()
 		    || infoScheduleing.getEndOfProposalPeriod().getTime() < Calendar.getInstance().getTimeInMillis()) {
 		ActionErrors actionErrors = new ActionErrors();
 
-		if (infoScheduleing != null && infoScheduleing.getStartOfProposalPeriod() != null && infoScheduleing.getEndOfProposalPeriod() != null) {
+		if (infoScheduleing != null && infoScheduleing.getStartOfProposalPeriod() != null
+			&& infoScheduleing.getEndOfProposalPeriod() != null) {
 		    actionErrors.add("finalDegreeWorkProposal.ProposalPeriod.validator.OutOfPeriod", new ActionError(
 			    "finalDegreeWorkProposal.ProposalPeriod.validator.OutOfPeriod"));
 		    request.setAttribute("infoScheduleing", infoScheduleing);
@@ -398,20 +398,21 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 
 	    return prepareFinalWorkInformation(mapping, form, request, response);
 	}
-	
+
 	final Person person;
-	if (number.substring(0, 3).equals("ist")){
+	if (number.substring(0, 3).equals("ist")) {
 	    person = Person.readPersonByIstUsername(number);
-	}else{
+	} else {
 	    final Employee employee = Employee.readByNumber(Integer.valueOf(number));
-	    if (employee == null){
+	    if (employee == null) {
 		person = null;
-	    }else{
+	    } else {
 		person = employee.getPerson();
 	    }
 	}
 
-	if (person == null || !(person.hasRole(RoleType.TEACHER) || person.hasAnyProfessorships() || person.hasRole(RoleType.RESEARCHER))) {
+	if (person == null
+		|| !(person.hasRole(RoleType.TEACHER) || person.hasAnyProfessorships() || person.hasRole(RoleType.RESEARCHER))) {
 	    ActionErrors actionErrors = new ActionErrors();
 	    actionErrors.add("finalWorkInformationForm.unexistingTeacher", new ActionError(
 		    "finalWorkInformationForm.unexistingTeacher"));
@@ -580,13 +581,14 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 		    finalWorkForm.set("companyName", infoProposal.getCompanyName());
 		    if (infoProposal.getOrientator() != null && infoProposal.getOrientator().getIdInternal() != null) {
 			finalWorkForm.set("orientatorOID", infoProposal.getOrientator().getIdInternal().toString());
-			
+
 			Employee employee = infoProposal.getOrientator().getPerson().getEmployee();
-			if (employee != null){
+			if (employee != null) {
 			    finalWorkForm.set("responsableTeacherNumber", employee.getEmployeeNumber().toString());
-			}else{
-			    finalWorkForm.set("responsableTeacherNumber", infoProposal.getOrientator().getPerson().getIstUsername());
-			} 
+			} else {
+			    finalWorkForm.set("responsableTeacherNumber", infoProposal.getOrientator().getPerson()
+				    .getIstUsername());
+			}
 			finalWorkForm.set("responsableTeacherName", infoProposal.getOrientator().getNome());
 
 			if (userView.getPerson() == infoProposal.getOrientator().getPerson()) {
@@ -598,11 +600,12 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 		    if (infoProposal.getCoorientator() != null && infoProposal.getCoorientator().getIdInternal() != null) {
 			finalWorkForm.set("coorientatorOID", infoProposal.getCoorientator().getIdInternal().toString());
 			Employee employee = infoProposal.getCoorientator().getPerson().getEmployee();
-			if (employee != null){
+			if (employee != null) {
 			    finalWorkForm.set("coResponsableTeacherNumber", employee.getEmployeeNumber().toString());
-			}else{
-			    finalWorkForm.set("coResponsableTeacherNumber", infoProposal.getCoorientator().getPerson().getIstUsername());
-			} 
+			} else {
+			    finalWorkForm.set("coResponsableTeacherNumber", infoProposal.getCoorientator().getPerson()
+				    .getIstUsername());
+			}
 			finalWorkForm.set("coResponsableTeacherName", infoProposal.getCoorientator().getNome());
 		    }
 		    if (infoProposal.getExecutionDegree() != null && infoProposal.getExecutionDegree().getIdInternal() != null) {

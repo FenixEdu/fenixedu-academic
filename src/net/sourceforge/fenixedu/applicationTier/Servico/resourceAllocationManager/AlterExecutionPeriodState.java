@@ -13,8 +13,7 @@ public class AlterExecutionPeriodState extends FenixService {
     public void run(InfoExecutionPeriod infoExecutionPeriod, PeriodState periodState) throws FenixServiceException {
 
 	final ExecutionSemester executionSemester = ExecutionYear.readExecutionYearByName(
-		infoExecutionPeriod.getInfoExecutionYear().getYear()).getExecutionSemesterFor(
-		infoExecutionPeriod.getSemester());
+		infoExecutionPeriod.getInfoExecutionYear().getYear()).getExecutionSemesterFor(infoExecutionPeriod.getSemester());
 	if (executionSemester == null) {
 	    throw new InvalidArgumentsServiceException();
 	}

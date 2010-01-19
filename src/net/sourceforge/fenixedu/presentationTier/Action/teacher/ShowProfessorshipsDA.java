@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.util.LabelValueBeanUtils;
 
@@ -53,7 +52,7 @@ public class ShowProfessorshipsDA extends FenixDispatchAction {
 	if (userView != null) {
 	    final Person person = userView.getPerson();
 	    if (person != null) {
-    		    for (final Professorship professorship : person.getProfessorshipsSet()) {
+		for (final Professorship professorship : person.getProfessorshipsSet()) {
 		    final ExecutionCourse executionCourse = professorship.getExecutionCourse();
 		    final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
 

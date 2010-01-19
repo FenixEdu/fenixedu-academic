@@ -16,8 +16,8 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
- * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/> Created on
- *         May 18, 2006, 12:07:00 PM
+ * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/>
+ *         Created on May 18, 2006, 12:07:00 PM
  * 
  */
 public class ExpandExecutionCourseMailAlias extends FenixService {

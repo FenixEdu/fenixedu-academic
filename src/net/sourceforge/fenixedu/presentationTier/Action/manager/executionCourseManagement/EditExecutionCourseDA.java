@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourse
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -11,7 +13,6 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 @Mapping(path = "/editExecutionCourseChooseExPeriod", module = "manager")
 @Forwards( {

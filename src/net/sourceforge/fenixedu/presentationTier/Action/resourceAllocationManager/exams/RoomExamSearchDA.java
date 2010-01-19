@@ -92,7 +92,8 @@ public class RoomExamSearchDA extends FenixContextDispatchAction {
 
 	IUserView userView = getUserView(request);
 
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+		.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
 	List infoRoomExamsMaps;
 

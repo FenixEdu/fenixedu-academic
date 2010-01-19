@@ -2,8 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 
 import java.io.Serializable;
 
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
-
 import net.sourceforge.fenixedu.domain.research.result.publication.BookPart;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import bibtex.dom.BibtexEntry;
@@ -121,7 +119,7 @@ public class BookPartBean extends ResultPublicationBean implements Serializable 
     @Override
     protected void fillBibTeXFields(BibtexEntry bibtexEntry) {
 	super.fillBibTeXFields(bibtexEntry);
-	
+
 	setYearFromBibtexEntry(bibtexEntry);
 	setMonthFromBibtexEntry(bibtexEntry);
 

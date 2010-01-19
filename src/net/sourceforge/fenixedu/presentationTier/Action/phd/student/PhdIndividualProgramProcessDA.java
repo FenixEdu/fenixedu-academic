@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd.student;
 
-import java.util.Collections;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

@@ -104,16 +104,16 @@ public class Campus extends Campus_Base {
 	} else {
 	    return DEFAULT_UNIVERSITY_CODE;
 	}
-    }    
-    
+    }
+
     public Boolean isCampusAlameda() {
 	return this.getName().equals(ALAMEDA_NAME);
     }
-    
+
     public Boolean isCampusTaguspark() {
 	return this.getName().equals(TAGUSPARK_NAME);
     }
-    
+
     public static abstract class CampusFactory implements Serializable, FactoryExecutor {
 	private String name;
 

@@ -45,7 +45,8 @@ public final class SessionUtils {
 	IUserView userView = UserView.getUser();
 	// Ler Disciplinas em Execucao
 	InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request.getAttribute(PresentationConstants.CURRICULAR_YEAR);
-	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
+	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
+		.getAttribute(PresentationConstants.EXECUTION_DEGREE);
 	AcademicInterval academicInterval = AcademicInterval.getAcademicIntervalFromResumedString((String) request
 		.getAttribute(PresentationConstants.ACADEMIC_INTERVAL));
 
@@ -68,8 +69,10 @@ public final class SessionUtils {
 	IUserView userView = UserView.getUser();
 	// Ler Disciplinas em Execucao
 	InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request.getAttribute(PresentationConstants.CURRICULAR_YEAR);
-	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
+		.getAttribute(PresentationConstants.EXECUTION_DEGREE);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+		.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
 	infoCourseList = LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular.run(infoExecutionDegree, infoExecutionPeriod,
 		infoCurricularYear.getYear());

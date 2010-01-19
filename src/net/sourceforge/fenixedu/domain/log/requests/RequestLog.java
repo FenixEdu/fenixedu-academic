@@ -31,7 +31,7 @@ public class RequestLog extends RequestLog_Base {
 
     public static RequestLog registerError(String path, String referer, String[] parameters, String queryString, String user,
 	    String requestAttributes, String sessionAttributes, String stackTrace, String exceptionType, Boolean post) {
-	
+
 	RequestLog requestLog = new RequestLog(queryString, referer, user, requestAttributes, sessionAttributes, path, post,
 		parameters);
 	RequestLogDay.getToday().addLogs(requestLog);

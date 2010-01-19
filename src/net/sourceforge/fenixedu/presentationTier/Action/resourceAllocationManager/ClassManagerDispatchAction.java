@@ -163,8 +163,10 @@ public class ClassManagerDispatchAction extends FenixClassAndExecutionDegreeAndC
 
     private InfoClass getInfoTurma(IUserView userView, String className, HttpServletRequest request) throws Exception {
 	/* :FIXME: put this 2 variables into parameters */
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
-	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+		.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
+		.getAttribute(PresentationConstants.EXECUTION_DEGREE);
 
 	InfoClass classView = LerTurma.run(className, infoExecutionDegree, infoExecutionPeriod);
 	return classView;
@@ -172,8 +174,10 @@ public class ClassManagerDispatchAction extends FenixClassAndExecutionDegreeAndC
 
     private void setLessonListToSession(HttpServletRequest request, IUserView userView, String className) throws Exception {
 
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
-	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+		.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
+		.getAttribute(PresentationConstants.EXECUTION_DEGREE);
 
 	InfoClass infoClass = null;
 	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());

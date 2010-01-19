@@ -33,7 +33,8 @@ public class CreateThesisDissertationFile extends CreateThesisFile {
     }
 
     @Override
-    protected void updateThesis(Thesis thesis, ThesisFile file, String title, String subTitle, Language language, String fileName, File fileToUpload) throws FenixServiceException, IOException {
+    protected void updateThesis(Thesis thesis, ThesisFile file, String title, String subTitle, Language language,
+	    String fileName, File fileToUpload) throws FenixServiceException, IOException {
 	if (title == null || subTitle == null) {
 	    throw new DomainException("thesis.files.dissertation.title.required");
 	}
@@ -57,9 +58,8 @@ public class CreateThesisDissertationFile extends CreateThesisFile {
 	    VirtualPath filePath = getVirtualPath(thesis);
 	    FileDescriptor descriptor = saveFile(filePath, fileName, true, metaData, fileToUpload);
 
-	    publication.addDocumentFile(file.getFilename(), file.getFilename(), permittedGroupType,
-		    file.getMimeType(), file.getChecksum(), file.getChecksumAlgorithm(), file.getSize(),
-		    descriptor.getUniqueId(), permittedGroup);
+	    publication.addDocumentFile(file.getFilename(), file.getFilename(), permittedGroupType, file.getMimeType(), file
+		    .getChecksum(), file.getChecksumAlgorithm(), file.getSize(), descriptor.getUniqueId(), permittedGroup);
 	    publication.setThesis(thesis);
 
 	}

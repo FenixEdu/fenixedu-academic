@@ -4,8 +4,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager.uploadFiles;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.gratuity.ProcessSibsPaymentFile;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -17,9 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree.DuplicateSibsPaymentFileProcessingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.gratuity.ProcessSibsPaymentFile;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -74,7 +72,6 @@ public class UploadFilesAction extends FenixDispatchAction {
 	reader.close();
 
 	String fileName = uploadedFile.getFileName();
-
 
 	try {
 	    ProcessSibsPaymentFile.run(fileName, fileEntries, userView);

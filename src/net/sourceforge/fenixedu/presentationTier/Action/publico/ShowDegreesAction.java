@@ -34,7 +34,8 @@ public class ShowDegreesAction extends FenixContextDispatchAction {
 	ActionErrors errors = new ActionErrors();
 
 	Boolean inEnglish = new Boolean(false);
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+		.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 	InfoExecutionYear infoExecutionYear = null;
 	if (infoExecutionPeriod != null) {
 	    infoExecutionYear = infoExecutionPeriod.getInfoExecutionYear();
@@ -63,7 +64,8 @@ public class ShowDegreesAction extends FenixContextDispatchAction {
 	    throws Exception {
 	ActionErrors errors = new ActionErrors();
 
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+		.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 	InfoExecutionYear infoExecutionYear = null;
 	String ano = null;
 	if (infoExecutionPeriod != null) {

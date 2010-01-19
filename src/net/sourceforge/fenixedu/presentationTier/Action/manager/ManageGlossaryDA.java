@@ -4,20 +4,17 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteGlossaryEntry;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateGlossaryEntry;
-
 import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateGlossaryEntry;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteGlossaryEntry;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadGlossaryEntries;
 import net.sourceforge.fenixedu.dataTransferObject.support.InfoGlossaryEntry;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;

@@ -3,12 +3,12 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public class UnitCostCenterCode extends UnitCostCenterCode_Base {
-    
+
     public UnitCostCenterCode(final Unit unit, final Integer costCenterCode) {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
-        setUnit(unit);
-        setCostCenterCode(costCenterCode);
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+	setUnit(unit);
+	setCostCenterCode(costCenterCode);
     }
 
     public void delete() {

@@ -1,13 +1,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ChangeCandidacyApprovanceStatus extends FenixService {
 

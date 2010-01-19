@@ -25,7 +25,8 @@ public class AdministrativeOfficeFeeAndInsuranceExemptionJustificationByDispatch
     }
 
     private void init(AdministrativeOfficeFeeAndInsuranceExemption exemption,
-	    AdministrativeOfficeFeeAndInsuranceExemptionJustificationType justificationType, String reason, YearMonthDay dispatchDate) {
+	    AdministrativeOfficeFeeAndInsuranceExemptionJustificationType justificationType, String reason,
+	    YearMonthDay dispatchDate) {
 	checkParameters(justificationType, reason, dispatchDate);
 
 	super.init(exemption, justificationType, reason);

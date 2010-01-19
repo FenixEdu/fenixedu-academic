@@ -33,7 +33,7 @@ public class PhysicalAddress extends PhysicalAddress_Base {
 		return address;
 	    }
 	}
-	
+
 	return new PhysicalAddress(party, type, isDefault, data);
     }
 

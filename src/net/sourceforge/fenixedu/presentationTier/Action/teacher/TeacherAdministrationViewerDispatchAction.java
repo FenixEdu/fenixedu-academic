@@ -61,7 +61,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentsAndGroups;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTeachers;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
-import net.sourceforge.fenixedu.dataTransferObject.personnelSection.payrollSection.BonusInstallment;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.ImportContentBean;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
@@ -86,7 +85,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
-import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
@@ -409,12 +407,12 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward associateTeacher(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 	if (isCancelled(request)) {
-	    RenderUtils.invalidateViewState();	
+	    RenderUtils.invalidateViewState();
 	    DynaActionForm teacherForm = (DynaActionForm) form;
-	    teacherForm.set("teacherNumber","");
+	    teacherForm.set("teacherNumber", "");
 	    return prepareAssociateTeacher(mapping, form, request, response);
 	}
-	
+
 	Integer objectCode = getObjectCode(request);
 	DynaActionForm teacherForm = (DynaActionForm) form;
 	String id = (String) teacherForm.get("teacherNumber");
@@ -452,11 +450,11 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	try {
 	    DeleteProfessorshipWithPerson.run(Person.readPersonByIstUsername(teacherCodeString), rootDomainObject
 		    .readExecutionCourseByOID(objectCode));
-	}catch (NotAuthorizedException e){
+	} catch (NotAuthorizedException e) {
 	    final ActionErrors actionErrors = new ActionErrors();
 	    actionErrors.add("error", new ActionError("label.not.authorized.action"));
 	    saveErrors(request, actionErrors);
-	}catch (FenixServiceException e) {
+	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	} catch (DomainException domainException) {
 	    final ActionErrors actionErrors = new ActionErrors();

@@ -52,6 +52,6 @@ public class EquivalencePlanRequestEvent extends EquivalencePlanRequestEvent_Bas
 
     @Override
     public boolean isExemptionAppliable() {
-        return true;
+	return true;
     }
 }

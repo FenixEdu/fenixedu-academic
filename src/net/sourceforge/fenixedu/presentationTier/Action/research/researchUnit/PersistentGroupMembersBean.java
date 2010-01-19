@@ -70,7 +70,7 @@ public class PersistentGroupMembersBean implements Serializable {
 	this.people.clear();
 	this.people.addAll(people);
     }
-    
+
     public void addPeople(List<Person> people) {
 	this.people.addAll(people);
     }

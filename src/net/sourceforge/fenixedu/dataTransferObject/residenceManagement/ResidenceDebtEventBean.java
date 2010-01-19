@@ -3,14 +3,11 @@ package net.sourceforge.fenixedu.dataTransferObject.residenceManagement;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
 import net.sourceforge.fenixedu.domain.residence.ResidenceMonth;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.YearMonthDay;
-
-import sun.misc.Perf.GetPerfAction;
 
 public class ResidenceDebtEventBean extends ResidenceEventBean {
 
@@ -48,21 +45,21 @@ public class ResidenceDebtEventBean extends ResidenceEventBean {
 	if (!super.getStatus()) {
 	    return false;
 	}
-	
+
 	String date = getPaidDate();
 	Pattern p = Pattern.compile("^(\\d\\d).(\\d\\d).((\\d\\d){1,2})$");
 	Matcher m = p.matcher(date);
-	
+
 	if (!m.matches()) {
 	    setStatusMessage("label.error.invalid.date");
 	    return false;
 	}
-	
+
 	int day = Integer.valueOf(m.group(1));
 	int month = Integer.valueOf(m.group(2));
 	int year = m.group(3).length() == 2 ? 2000 + Integer.valueOf(m.group(3)) : Integer.valueOf(m.group(3));
 	this.setPaidDateObject(new YearMonthDay(year, month, day));
-	
+
 	if (getPaidDate() == null) {
 	    setStatusMessage("label.error.invalid.date");
 	    return false;

@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.log.requests.RequestLogDay;
-import net.sourceforge.fenixedu.domain.log.requests.RequestLogYear;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.ErrorLogDispatchAction.RequestLogDayBean;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;

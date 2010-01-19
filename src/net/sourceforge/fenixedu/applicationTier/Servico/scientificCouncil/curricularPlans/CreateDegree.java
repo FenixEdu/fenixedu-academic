@@ -1,9 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -13,14 +9,16 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class CreateDegree extends FenixService {
 
     @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
     @Service
-    public static void run(String name, String nameEn, String acronym, DegreeType degreeType, Double ectsCredits, GradeScale gradeScale,
-	    String prevailingScientificArea) throws FenixServiceException {
+    public static void run(String name, String nameEn, String acronym, DegreeType degreeType, Double ectsCredits,
+	    GradeScale gradeScale, String prevailingScientificArea) throws FenixServiceException {
 
 	if (name == null || nameEn == null || acronym == null || degreeType == null || ectsCredits == null) {
 	    throw new InvalidArgumentsServiceException();

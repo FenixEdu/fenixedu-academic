@@ -1,9 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.studentCurricularPlan;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 import java.util.Calendar;
 import java.util.List;
 
@@ -17,13 +13,15 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class EditPosGradStudentCurricularPlanStateAndCredits extends FenixService {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
-    public static void run(IUserView userView, Integer studentCurricularPlanId, String currentState, Double credits, String startDate,
-	    List<Integer> extraCurricularOIDs, String observations, Integer branchId, String specialization)
+    public static void run(IUserView userView, Integer studentCurricularPlanId, String currentState, Double credits,
+	    String startDate, List<Integer> extraCurricularOIDs, String observations, Integer branchId, String specialization)
 	    throws FenixServiceException {
 	final StudentCurricularPlan scp = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanId);
 	if (scp == null) {

@@ -26,8 +26,10 @@ import javassist.bytecode.AnnotationsAttribute;
 import org.apache.commons.collections.map.HashedMap;
 
 /**
- * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/> <br/>
- *         <br/> Created on 8:38:20,24/Nov/2005
+ * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/>
+ * <br/>
+ * <br/>
+ *         Created on 8:38:20,24/Nov/2005
  * @version $Id: AccesControlChecksInjector.java,v 1.4 2006/01/16 10:32:14 cfgi
  *          Exp $
  */

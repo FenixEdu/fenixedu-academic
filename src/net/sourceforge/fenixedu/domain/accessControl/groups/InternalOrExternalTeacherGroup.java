@@ -18,27 +18,27 @@ public class InternalOrExternalTeacherGroup extends DomainBackedGroup<Person> {
     public InternalOrExternalTeacherGroup() {
 	super(null);
     }
-    
+
     @Override
     public boolean isMember(Person person) {
-	
-        return person != null && (person.hasRole(RoleType.TEACHER) || person.hasAnyProfessorships());
+
+	return person != null && (person.hasRole(RoleType.TEACHER) || person.hasAnyProfessorships());
     }
 
     @Override
     public Set<Person> getElements() {
 	HashSet<Person> set = new HashSet<Person>();
-	
+
 	for (Party party : RootDomainObject.getInstance().getPartys()) {
-	    if (party instanceof Person && ((Person) party).hasAnyProfessorships()){
+	    if (party instanceof Person && ((Person) party).hasAnyProfessorships()) {
 		set.add((Person) party);
 	    }
 	}
-	
-	for (Teacher teacher : RootDomainObject.getInstance().getTeachers()){
+
+	for (Teacher teacher : RootDomainObject.getInstance().getTeachers()) {
 	    set.add(teacher.getPerson());
 	}
-	
+
 	return set;
     }
 
@@ -46,8 +46,8 @@ public class InternalOrExternalTeacherGroup extends DomainBackedGroup<Person> {
     protected Argument[] getExpressionArguments() {
 	return new Argument[] {};
     }
-    
-    public static class Builder implements GroupBuilder{
+
+    public static class Builder implements GroupBuilder {
 
 	@Override
 	public Group build(Object[] arguments) {
@@ -63,7 +63,7 @@ public class InternalOrExternalTeacherGroup extends DomainBackedGroup<Person> {
 	public int getMinArguments() {
 	    return 0;
 	}
-	
+
     }
 
 }

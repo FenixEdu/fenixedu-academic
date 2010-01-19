@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.WrittenTest;
-import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
@@ -35,7 +34,7 @@ public class StudentPortalBean implements Serializable {
 	    private String register;
 	    private String enrolment;
 	    private String room;
-	    
+
 	    private boolean registered;
 
 	    public EvaluationAnnouncement(WrittenTest writtenTest) {
@@ -111,7 +110,7 @@ public class StudentPortalBean implements Serializable {
 	    public String getRegister() {
 		return register;
 	    }
-	    
+
 	    public boolean getRegistered() {
 		return registered;
 	    }
@@ -125,10 +124,12 @@ public class StudentPortalBean implements Serializable {
 	    }
 
 	    public void setRealization(WrittenEvaluation writtenEvaluation) {
-		this.realization = YearMonthDay.fromDateFields(writtenEvaluation.getBeginningDateTime().toDate()).toString() + " " +
-			writtenEvaluation.getBeginningDateTime().getHourOfDay() + ":"
-			+ ((writtenEvaluation.getBeginningDateTime().getMinuteOfHour() == 0) ?
-				"00" : writtenEvaluation.getBeginningDateTime().getMinuteOfHour());
+		this.realization = YearMonthDay.fromDateFields(writtenEvaluation.getBeginningDateTime().toDate()).toString()
+			+ " "
+			+ writtenEvaluation.getBeginningDateTime().getHourOfDay()
+			+ ":"
+			+ ((writtenEvaluation.getBeginningDateTime().getMinuteOfHour() == 0) ? "00" : writtenEvaluation
+				.getBeginningDateTime().getMinuteOfHour());
 	    }
 
 	    public void setRealization(Grouping grouping) {
@@ -139,9 +140,9 @@ public class StudentPortalBean implements Serializable {
 		ResourceBundle resource = ResourceBundle.getBundle("resources.StudentResources", Language.getLocale());
 		if (writtenEvaluation.getEnrollmentBeginDayDateYearMonthDay() != null
 			&& writtenEvaluation.getEnrollmentEndDayDateYearMonthDay() != null) {
-		    this.enrolment = writtenEvaluation.getEnrollmentBeginDayDateYearMonthDay().toString() + " " +
-		    	resource.getString("message.out.until") + " " +
-		    	writtenEvaluation.getEnrollmentEndDayDateYearMonthDay().toString();
+		    this.enrolment = writtenEvaluation.getEnrollmentBeginDayDateYearMonthDay().toString() + " "
+			    + resource.getString("message.out.until") + " "
+			    + writtenEvaluation.getEnrollmentEndDayDateYearMonthDay().toString();
 		} else {
 		    this.enrolment = "-";
 		    this.register = "-";
@@ -150,9 +151,9 @@ public class StudentPortalBean implements Serializable {
 
 	    public void setEnrolment(Grouping grouping) {
 		ResourceBundle resource = ResourceBundle.getBundle("resources.StudentResources", Language.getLocale());
-		this.enrolment = YearMonthDay.fromDateFields(grouping.getEnrolmentBeginDayDate()).toString() + " " +
-	    		resource.getString("message.out.until") + " " + 
-			YearMonthDay.fromDateFields(grouping.getEnrolmentEndDayDate()).toString();
+		this.enrolment = YearMonthDay.fromDateFields(grouping.getEnrolmentBeginDayDate()).toString() + " "
+			+ resource.getString("message.out.until") + " "
+			+ YearMonthDay.fromDateFields(grouping.getEnrolmentEndDayDate()).toString();
 	    }
 
 	    public void setRoom(WrittenEvaluation writtenEvaluation) {
@@ -163,14 +164,14 @@ public class StudentPortalBean implements Serializable {
 		    this.room = "-";
 		}
 	    }
-	    
+
 	    public void setRoom(String room) {
 		this.room = room;
 	    }
 
 	    public void setRegister(Boolean registered) {
 		ResourceBundle resource = ResourceBundle.getBundle("resources.StudentResources", Language.getLocale());
-		if(registered) {
+		if (registered) {
 		    this.register = resource.getString("label.enroled");
 		    setRegistered(true);
 		} else {
@@ -178,7 +179,7 @@ public class StudentPortalBean implements Serializable {
 		    setRegistered(false);
 		}
 	    }
-	    
+
 	    public void setRegistered(Boolean registered) {
 		this.registered = registered;
 	    }

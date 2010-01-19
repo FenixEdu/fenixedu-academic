@@ -252,7 +252,8 @@ public class GroupBuilderRegistry {
 		InternalPersonGroup.class, ExecutionCourseResponsiblesGroup.class, InstitutionSiteManagers.class,
 		TeachersAndInstitutionSiteManagersGroup.class, PedagogicalCouncilMembersGroup.class,
 		ScientificCouncilMembersGroup.class, AllTeachersGroup.class, AllEmployeesGroup.class, AllStudentsGroup.class,
-		AllResearchersGroup.class, InternalOrExternalTeacherGroup.class, AllSecondCycleStudentsGroup.class, AllFirstCycleStudentsGroup.class };
+		AllResearchersGroup.class, InternalOrExternalTeacherGroup.class, AllSecondCycleStudentsGroup.class,
+		AllFirstCycleStudentsGroup.class };
 
 	for (Class groupClass : groups) {
 	    String className = groupClass.getSimpleName();

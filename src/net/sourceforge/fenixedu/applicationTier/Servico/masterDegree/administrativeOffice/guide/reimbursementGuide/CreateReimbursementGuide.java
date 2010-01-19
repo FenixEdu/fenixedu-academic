@@ -3,10 +3,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.reimbursementGuide;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
@@ -28,21 +24,23 @@ import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntr
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSituation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.State;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">Jo�o Mota </a> <br/>
- *         <strong>Description: </strong> <br/> This service creates a
- *         reimbursement guide and associates it with a payment guide. It also
- *         creates the reimbursement guide situation and sets it to the ISSUED
- *         state. If any problem occurs during the execution of the service a
- *         FenixServiceException is thrown. If the payment guide doesn't have a
- *         PAYED state active an InvalidGuideSituationServiceException is
- *         thrown. If the value of the reimbursement exceeds the total of the
- *         payment guide an InvalidReimbursementValueServiceException is thrown
- *         and if the sum of all the reimbursements associated with the payment
- *         guide exceeds the total an
- *         InvalidReimbursementValueSumServiceException is thrown. <br/> The
- *         service also generates the number of the new reimbursement guide
+ *         <strong>Description: </strong> <br/>
+ *         This service creates a reimbursement guide and associates it with a
+ *         payment guide. It also creates the reimbursement guide situation and
+ *         sets it to the ISSUED state. If any problem occurs during the
+ *         execution of the service a FenixServiceException is thrown. If the
+ *         payment guide doesn't have a PAYED state active an
+ *         InvalidGuideSituationServiceException is thrown. If the value of the
+ *         reimbursement exceeds the total of the payment guide an
+ *         InvalidReimbursementValueServiceException is thrown and if the sum of
+ *         all the reimbursements associated with the payment guide exceeds the
+ *         total an InvalidReimbursementValueSumServiceException is thrown. <br/>
+ *         The service also generates the number of the new reimbursement guide
  *         using a sequential method.
  */
 public class CreateReimbursementGuide extends FenixService {

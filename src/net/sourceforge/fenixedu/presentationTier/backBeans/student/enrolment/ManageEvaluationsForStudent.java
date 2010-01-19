@@ -61,11 +61,11 @@ public class ManageEvaluationsForStudent extends DisplayEvaluationsForStudentToE
 
 	final String evaluationType = getEvaluationTypeString();
 	for (final Registration registration : getStudent().getStudent().getRegistrations()) {
-	    
+
 	    if (!registration.hasStateType(getExecutionPeriod(), RegistrationStateType.REGISTERED)) {
 		continue;
 	    }
-	    
+
 	    for (final WrittenEvaluation writtenEvaluation : registration.getWrittenEvaluations(getExecutionPeriod())) {
 		if (writtenEvaluation instanceof Exam) {
 		    final Exam exam = (Exam) writtenEvaluation;

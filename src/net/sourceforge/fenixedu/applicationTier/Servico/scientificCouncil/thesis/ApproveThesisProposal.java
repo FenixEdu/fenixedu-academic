@@ -96,15 +96,17 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
 	String currentPersonName = currentPerson.getNickname();
 
 	if (thesis.isCoordinator()) {
-		return getMessage(COORDINATOR_BODY_KEY, year, degreeName, studentName, studentNumber, presidentName, presidentAffiliation,
-			orientatorName, orientatorAffiliation, includeFlag(coorientatorName), coorientatorName, coorientatorAffiliation,
-			includeFlag(vowel1Name), vowel1Name, vowel1Affiliation, includeFlag(vowel2Name), vowel2Name, vowel2Affiliation,
-			includeFlag(vowel3Name), vowel3Name, vowel3Affiliation, date, currentPersonName);
+	    return getMessage(COORDINATOR_BODY_KEY, year, degreeName, studentName, studentNumber, presidentName,
+		    presidentAffiliation, orientatorName, orientatorAffiliation, includeFlag(coorientatorName), coorientatorName,
+		    coorientatorAffiliation, includeFlag(vowel1Name), vowel1Name, vowel1Affiliation, includeFlag(vowel2Name),
+		    vowel2Name, vowel2Affiliation, includeFlag(vowel3Name), vowel3Name, vowel3Affiliation, date,
+		    currentPersonName);
 	} else {
-		return getMessage(BODY_KEY, year, degreeName, studentName, studentNumber, presidentName, presidentAffiliation,
-			orientatorName, orientatorAffiliation, includeFlag(coorientatorName), coorientatorName, coorientatorAffiliation,
-			includeFlag(vowel1Name), vowel1Name, vowel1Affiliation, includeFlag(vowel2Name), vowel2Name, vowel2Affiliation,
-			includeFlag(vowel3Name), vowel3Name, vowel3Affiliation, date, currentPersonName);
+	    return getMessage(BODY_KEY, year, degreeName, studentName, studentNumber, presidentName, presidentAffiliation,
+		    orientatorName, orientatorAffiliation, includeFlag(coorientatorName), coorientatorName,
+		    coorientatorAffiliation, includeFlag(vowel1Name), vowel1Name, vowel1Affiliation, includeFlag(vowel2Name),
+		    vowel2Name, vowel2Affiliation, includeFlag(vowel3Name), vowel3Name, vowel3Affiliation, date,
+		    currentPersonName);
 	}
     }
 

@@ -3,10 +3,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.EndCurricularCourseScope;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadCurricularCourseScope;
-
 import java.util.Calendar;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,13 +13,14 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.EndCurricularCourseScope;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadCurricularCourseScope;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeEditor;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidArgumentsActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.Data;
 
 import org.apache.struts.action.ActionForm;
@@ -47,7 +44,6 @@ public class EndCurricularCourseScopeDA extends FenixDispatchAction {
 
 	Integer curricularCourseScopeId = new Integer(request.getParameter("curricularCourseScopeId"));
 	InfoCurricularCourseScope oldInfoCurricularCourseScope = null;
-
 
 	try {
 	    oldInfoCurricularCourseScope = (InfoCurricularCourseScope) ReadCurricularCourseScope.run(curricularCourseScopeId);
@@ -90,7 +86,6 @@ public class EndCurricularCourseScopeDA extends FenixDispatchAction {
 	    endDateCalendar.setTime(Data.convertStringDate(endDateString, "/"));
 	    newInfoCurricularCourseScope.setEndDate(endDateCalendar);
 	}
-
 
 	try {
 	    EndCurricularCourseScope.run(newInfoCurricularCourseScope);

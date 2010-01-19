@@ -57,7 +57,8 @@ public class ViewClassTimeTableActionNew extends FenixAction {
 	String className = request.getParameter("className");
 	Integer indice = (Integer) escolherContextoForm.get("indice");
 	escolherContextoForm.set("indice", indice);
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+		.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 	request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
 
 	String classIdString = request.getParameter("classId");

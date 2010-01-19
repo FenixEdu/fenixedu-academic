@@ -1,9 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.research.result.publication;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -596,14 +594,14 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 	return mapping.findForward("ListPublications");
     }
 
-    public ActionForward setUnitToAll(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward setUnitToAll(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	Person person = getLoggedPerson(request);
 	request.setAttribute("personId", getLoggedPerson(request).getIdInternal());
 	request.setAttribute("units", getUnits(person));
 	return mapping.findForward("setUnitToAll");
     }
-    
+
     private Collection<Unit> getUnits(Person person) {
 	Set<Unit> units = new HashSet<Unit>();
 	for (ResearchUnit unit : person.getWorkingResearchUnits()) {
@@ -636,13 +634,13 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 	}
 	return units;
     }
-   
-    public ActionForward addUnitToAll(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+
+    public ActionForward addUnitToAll(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	Person person = getLoggedPerson(request);
 	Unit unit = (Unit) rootDomainObject.readPartyByOID(Integer.parseInt(request.getParameter("unitID")));
-	for(ResearchResultPublication publication : getLoggedPerson(request).getResearchResultPublications()) {
-	    if(publication.getClass().getSimpleName().equalsIgnoreCase("unstructured") == false) {
+	for (ResearchResultPublication publication : getLoggedPerson(request).getResearchResultPublications()) {
+	    if (publication.getClass().getSimpleName().equalsIgnoreCase("unstructured") == false) {
 		ResultUnitAssociationCreationBean bean = new ResultUnitAssociationCreationBean(publication);
 		bean.setSuggestion(false);
 		bean.setUnit(unit);

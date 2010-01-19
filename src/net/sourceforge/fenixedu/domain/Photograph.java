@@ -169,7 +169,7 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
 	if (resizeFactor == 1) {
 	    return new ByteArray(content);
 	}
-	
+
 	// resize image
 	AffineTransform tx = new AffineTransform();
 	tx.scale(resizeFactor, resizeFactor);

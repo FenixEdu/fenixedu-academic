@@ -26,24 +26,25 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/ICalTimeTable", module = "student")
 @Forwards( { @Forward(name = "viewOptions", path = "icalendar-view-options"),
-	     @Forward(name = "chooseRegistration", path = "icalendar-choose-registration") })
+	@Forward(name = "chooseRegistration", path = "icalendar-choose-registration") })
 public class ICalStudentTimeTable extends FenixDispatchAction {
 
     public ActionForward show(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
-	if (getRenderedObject("bean") == null){
-	    Registration registration = rootDomainObject.readRegistrationByOID(Integer.valueOf(request.getParameter("registrationId")));
-	    
-	    return forwardToShow(registration, mapping, request);    
-	}else{
-	    if (((RegistrationsBean) getRenderedObject("bean")).getSelected() != null){
+	if (getRenderedObject("bean") == null) {
+	    Registration registration = rootDomainObject.readRegistrationByOID(Integer.valueOf(request
+		    .getParameter("registrationId")));
+
+	    return forwardToShow(registration, mapping, request);
+	} else {
+	    if (((RegistrationsBean) getRenderedObject("bean")).getSelected() != null) {
 		return forwardToShow(((RegistrationsBean) getRenderedObject("bean")).getSelected(), mapping, request);
-	    }else{
+	    } else {
 		return prepare(mapping, form, request, response);
 	    }
-	    
+
 	}
-	
+
     }
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
@@ -60,8 +61,8 @@ public class ICalStudentTimeTable extends FenixDispatchAction {
 	}
     }
 
-    public ActionForward generateKey(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-    	throws Exception{
+    public ActionForward generateKey(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	try {
 	    AccessControl.getPerson().getUser().generateNewKey();
 	} catch (Exception E) {

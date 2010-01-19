@@ -25,7 +25,7 @@ public class ReadOpenExecutionPeriodsByTeacherExecutionCourses extends FenixServ
     public static List run(IUserView userView) throws FenixServiceException {
 
 	final List<InfoExecutionPeriod> result = new ArrayList<InfoExecutionPeriod>();
-	final Person person = userView.getPerson();	
+	final Person person = userView.getPerson();
 	final List<ExecutionSemester> executionSemesters = new ArrayList<ExecutionSemester>();
 
 	for (final Professorship professorship : person.getProfessorshipsSet()) {

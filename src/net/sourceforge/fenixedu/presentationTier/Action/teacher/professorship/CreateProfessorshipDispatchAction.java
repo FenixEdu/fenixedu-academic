@@ -9,11 +9,9 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sound.midi.MidiDevice.Info;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionPeriods;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadTeacherByNumber;
 import net.sourceforge.fenixedu.applicationTier.Servico.degree.execution.ReadExecutionCoursesByExecutionDegreeService;
 import net.sourceforge.fenixedu.applicationTier.Servico.degree.execution.ReadExecutionDegreesByExecutionYearAndDegreeType;
 import net.sourceforge.fenixedu.applicationTier.Servico.department.professorship.ReadExecutionCoursesByTeacherResponsibility;
@@ -21,7 +19,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -53,7 +50,8 @@ public class CreateProfessorshipDispatchAction extends FenixDispatchAction {
 	final Integer executionCourseId = Integer.valueOf((String) personExecutionCourseForm.get("executionCourseId"));
 	final Boolean responsibleFor = (Boolean) personExecutionCourseForm.get("responsibleFor");
 
-	Professorship.create(responsibleFor, rootDomainObject.readExecutionCourseByOID(executionCourseId),getPerson(personExecutionCourseForm), 0.0);
+	Professorship.create(responsibleFor, rootDomainObject.readExecutionCourseByOID(executionCourseId),
+		getPerson(personExecutionCourseForm), 0.0);
 
 	return mapping.findForward("final-step");
     }

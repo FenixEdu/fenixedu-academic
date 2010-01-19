@@ -159,7 +159,8 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends FenixService {
 		    if (firstCycleCurriculumGroup != null) {
 			final Double completedCreditsFirstCycle = firstCycleCurriculumGroup.getAprovedEctsCredits();
 			if (minimumCompletedCreditsFirstCycle > completedCreditsFirstCycle) {
-			    final String[] args = { completedCreditsFirstCycle.toString(), minimumCompletedCreditsFirstCycle.toString() };
+			    final String[] args = { completedCreditsFirstCycle.toString(),
+				    minimumCompletedCreditsFirstCycle.toString() };
 			    throw new InsufficientCompletedCreditsInFirstCycleException(null, args);
 			}
 		    }

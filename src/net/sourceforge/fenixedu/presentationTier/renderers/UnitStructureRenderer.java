@@ -195,8 +195,8 @@ public class UnitStructureRenderer extends OutputRenderer {
 
     /**
      * Indicates the url for each person's homepage. The url can have the form
-     * <code>/path/%s/subpath</code> where <code>%s</code> will be replaced
-     * by the person's system's username.
+     * <code>/path/%s/subpath</code> where <code>%s</code> will be replaced by
+     * the person's system's username.
      * 
      * @property
      */

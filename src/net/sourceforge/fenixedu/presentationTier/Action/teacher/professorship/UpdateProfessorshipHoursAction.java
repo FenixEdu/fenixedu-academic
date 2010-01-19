@@ -4,15 +4,13 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.teacher.professorship;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.UpdateProfessorshipsHours;
-
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.UpdateProfessorshipsHours;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
@@ -42,7 +40,6 @@ public class UpdateProfessorshipHoursAction extends Action {
 	HashMap hours = (HashMap) professorshipsHours.get("hours");
 	Integer teacherId = (Integer) professorshipsHours.get("teacherId");
 	Integer executionYearId = (Integer) professorshipsHours.get("executionYearId");
-
 
 	IUserView userView = UserView.getUser();
 	UpdateProfessorshipsHours.run(teacherId, executionYearId, hours);

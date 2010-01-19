@@ -262,8 +262,8 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
 
 	sortExecutionDegrees(result);
 
-	request.setAttribute(PresentationConstants.DEGREE_LIST, ExecutionDegreesFormat.buildLabelValueBeansForExecutionDegree(result,
-		getResources(request, "ENUMERATION_RESOURCES"), request));
+	request.setAttribute(PresentationConstants.DEGREE_LIST, ExecutionDegreesFormat.buildLabelValueBeansForExecutionDegree(
+		result, getResources(request, "ENUMERATION_RESOURCES"), request));
 
 	request.setAttribute(PresentationConstants.ENROLMENT_YEAR_LIST_KEY, getListOfChosenCurricularYears());
 	request.setAttribute(PresentationConstants.ENROLMENT_SEMESTER_LIST_KEY, getListOfChosenCurricularSemesters());

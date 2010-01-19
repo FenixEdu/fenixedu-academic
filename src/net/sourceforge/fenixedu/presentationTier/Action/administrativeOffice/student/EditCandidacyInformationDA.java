@@ -21,9 +21,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(path = "/editCandidacyInformation", module = "academicAdminOffice")
 @Forwards( {
 
-	@Forward(name = "editCandidacyInformation", path = "/academicAdminOffice/student/registration/editCandidacyInformation.jsp"),
+@Forward(name = "editCandidacyInformation", path = "/academicAdminOffice/student/registration/editCandidacyInformation.jsp"),
 
-	@Forward(name = "viewRegistrationDetails", path = "/student.do?method=visualizeRegistration")
+@Forward(name = "viewRegistrationDetails", path = "/student.do?method=visualizeRegistration")
 
 })
 public class EditCandidacyInformationDA extends FenixDispatchAction {

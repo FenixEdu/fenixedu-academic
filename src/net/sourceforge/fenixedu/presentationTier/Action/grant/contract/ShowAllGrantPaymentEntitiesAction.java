@@ -4,18 +4,16 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.grant.contract;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadAllGrantPaymentEntitiesByClassName;
-
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadAllGrantPaymentEntitiesByClassName;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantProject;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

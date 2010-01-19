@@ -27,7 +27,7 @@ public class InquiriesBlock implements Serializable {
     public InquiriesBlock(Boolean required) {
 	this.required = required;
     }
-    
+
     public InquiriesBlock(String title, Boolean required) {
 	this.header = new QuestionHeader(title);
 	this.required = required;

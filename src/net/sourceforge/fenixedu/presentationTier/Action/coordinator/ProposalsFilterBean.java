@@ -9,13 +9,9 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseAttendsBean.StudentAttendsStateType;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.CandidacyAttributionType;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.util.BundleUtil;
-import net.sourceforge.fenixedu.util.WorkingStudentSelectionType;
 
 import org.apache.commons.collections.Predicate;
 
@@ -154,7 +150,8 @@ public class ProposalsFilterBean implements Serializable {
     public String toString() {
 	StringBuffer label = new StringBuffer();
 	List<String> filters = new ArrayList<String>();
-	final String string = BundleUtil.getString("resources.EnumerationResources", Language.getLocale(), ProposalStatusType.class.getSimpleName() + "." + getStatus().getStatus().name());
+	final String string = BundleUtil.getString("resources.EnumerationResources", Language.getLocale(),
+		ProposalStatusType.class.getSimpleName() + "." + getStatus().getStatus().name());
 	filters.add(string);
 	if (getAttribution() != AttributionFilter.ALL) {
 	    filters.add(RenderUtils.getEnumString(getAttribution()));

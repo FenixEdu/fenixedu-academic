@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
-import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
@@ -28,7 +27,6 @@ import org.apache.struts.util.MessageResources;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.utl.ist.fenix.tools.util.EMail;
 
 /**
  * @author asnr and scpo
@@ -95,9 +93,8 @@ public class UnEnrollStudentInGroup extends FenixService {
 	    executionCourseNames.append(executionCourse.getNome());
 	}
 
-	final String message = messages.getMessage("message.body.grouping.change.unenrolment",
-		registration.getNumber().toString(), studentGroup.getGroupNumber().toString(),
-		attend.getExecutionCourse().getNome());
+	final String message = messages.getMessage("message.body.grouping.change.unenrolment", registration.getNumber()
+		.toString(), studentGroup.getGroupNumber().toString(), attend.getExecutionCourse().getNome());
 
 	SystemSender systemSender = rootDomainObject.getSystemSender();
 	new Message(systemSender, systemSender.getConcreteReplyTos(), recipients, messages

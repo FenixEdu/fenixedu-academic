@@ -38,8 +38,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/studentDismissals", module = "academicAdminOffice", formBean = "studentDismissalForm")
-@Forwards( {
-	@Forward(name = "manage", path = "/academicAdminOffice/dismissal/managementDismissals.jsp"),
+@Forwards( { @Forward(name = "manage", path = "/academicAdminOffice/dismissal/managementDismissals.jsp"),
 	@Forward(name = "chooseEquivalents", path = "/academicAdminOffice/dismissal/chooseEquivalents.jsp"),
 	@Forward(name = "visualizeRegistration", path = "/student.do?method=visualizeRegistration"),
 	@Forward(name = "chooseDismissalEnrolments", path = "/academicAdminOffice/dismissal/chooseDismissalEnrolments.jsp"),

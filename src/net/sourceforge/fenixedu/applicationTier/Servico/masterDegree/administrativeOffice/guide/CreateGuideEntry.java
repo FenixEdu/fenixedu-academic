@@ -1,14 +1,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideEntry;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * 
@@ -19,8 +17,8 @@ public class CreateGuideEntry extends FenixService {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
     @Service
-    public static void run(Integer guideID, GraduationType graduationType, DocumentType documentType, String description, Double price,
-	    Integer quantity) {
+    public static void run(Integer guideID, GraduationType graduationType, DocumentType documentType, String description,
+	    Double price, Integer quantity) {
 
 	Guide guide = rootDomainObject.readGuideByOID(guideID);
 

@@ -9,10 +9,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/pricesManagement", module = "academicAdminOffice")
-@Forwards( {
-	@Forward(name = "viewPrices", path = "/academicAdminOffice/pricesManagement/viewPrices.jsp"),
-	@Forward(name = "editPrice", path = "/academicAdminOffice/pricesManagement/editPrice.jsp")
-})
+@Forwards( { @Forward(name = "viewPrices", path = "/academicAdminOffice/pricesManagement/viewPrices.jsp"),
+	@Forward(name = "editPrice", path = "/academicAdminOffice/pricesManagement/editPrice.jsp") })
 public class AcademicAdminOfficePricesManagementDispatchAction extends PricesManagementDispatchAction {
 
     @Override

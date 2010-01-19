@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
-
 public class ViewInquiriesResultPageDTO extends SearchInquiriesResultPageDTO {
 
     private Integer degreeCurricularPlanID;
@@ -18,8 +17,8 @@ public class ViewInquiriesResultPageDTO extends SearchInquiriesResultPageDTO {
 
     public DegreeCurricularPlan getDegreeCurricularPlan() {
 	final Integer degreeCurricularPlanID = getDegreeCurricularPlanID();
-	return degreeCurricularPlanID == null ? null : RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+	return degreeCurricularPlanID == null ? null : RootDomainObject.getInstance().readDegreeCurricularPlanByOID(
+		degreeCurricularPlanID);
     }
-
 
 }

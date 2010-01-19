@@ -46,8 +46,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation.EvaluationManagementBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
@@ -133,7 +133,8 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	} else if (getRequestParameter(PresentationConstants.ACADEMIC_INTERVAL) != null) {
 	    String academicIntervalStr = getRequestParameter(PresentationConstants.ACADEMIC_INTERVAL);
 	    if (academicIntervalStr != null && !academicIntervalStr.equals("null")) {
-		final String academicIntervalStrArg = academicIntervalStr.indexOf('-') > 0 ? academicIntervalStr.replaceAll("-", "_") : academicIntervalStr;
+		final String academicIntervalStrArg = academicIntervalStr.indexOf('-') > 0 ? academicIntervalStr.replaceAll("-",
+			"_") : academicIntervalStr;
 		academicInterval = AcademicInterval.getAcademicIntervalFromResumedString(academicIntervalStrArg);
 	    }
 	}

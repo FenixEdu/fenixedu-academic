@@ -47,7 +47,7 @@ public class RoomsReserveManagementDA extends FenixDispatchAction {
 	    GanttDiagram diagram = GanttDiagram.getNewWeeklyGanttDiagram(new ArrayList<GanttDiagramEvent>(result), firstDay);
 	    request.setAttribute("ganttDiagram", diagram);
 	}
-	
+
 	return mapping.findForward("viewRoomsReserves");
     }
 

@@ -18,8 +18,7 @@ public class CASFilter extends pt.ist.fenixWebFramework.servlets.filters.CASFilt
 	if (pendingRequest == null) {
 	    pendingRequest = (String) request.getAttribute("pendingRequest");
 	}
-	final String serviceString = encodeUrl(RequestUtils.generateRedirectLink(casConfig.getServiceUrl(),
-		pendingRequest));
+	final String serviceString = encodeUrl(RequestUtils.generateRedirectLink(casConfig.getServiceUrl(), pendingRequest));
 	final String casLoginUrl = casConfig.getCasLoginUrl();
 	final String casLoginString = casLoginUrl + "?service=" + serviceString;
 	response.sendRedirect(casLoginString);

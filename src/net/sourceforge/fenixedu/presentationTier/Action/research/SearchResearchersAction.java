@@ -52,7 +52,7 @@ public class SearchResearchersAction extends FenixDispatchAction {
 	String keywords = bean.getString();
 	if (keywords != null) {
 	    String[] keywordsArray = filterKeywords(keywords.split(" "));
-	    
+
 	    List<Researcher> results = new ArrayList<Researcher>();
 	    for (Researcher researcher : rootDomainObject.getResearchers()) {
 		if (researcher.getAllowsToBeSearched() && researcher.hasAtLeastOneKeyword(keywordsArray)) {
@@ -65,9 +65,9 @@ public class SearchResearchersAction extends FenixDispatchAction {
 	}
 	return search(mapping, form, request, response);
     }
-    
+
     private static final int MIN_KEYWORD_LENGTH = 1;
-    
+
     private String[] filterKeywords(String[] keywords) {
 	Collection<String> keywordsList = Arrays.asList(keywords);
 	CollectionUtils.filter(keywordsList, new Predicate() {
@@ -77,7 +77,7 @@ public class SearchResearchersAction extends FenixDispatchAction {
 		return ((String) arg0).length() > MIN_KEYWORD_LENGTH;
 	    }
 	});
-	
+
 	return keywordsList.toArray(new String[0]);
     }
 

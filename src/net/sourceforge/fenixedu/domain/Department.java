@@ -140,7 +140,7 @@ public class Department extends Department_Base {
 
 	return executionCourses;
     }
-    
+
     public List<TeacherPersonalExpectation> getTeachersPersonalExpectationsByExecutionYear(ExecutionYear executionYear) {
 	List<Teacher> teachersFromDepartment = getAllTeachers(executionYear.getBeginDateYearMonthDay(), executionYear
 		.getEndDateYearMonthDay());

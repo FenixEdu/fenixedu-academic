@@ -4,10 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 import java.util.Iterator;
 import java.util.List;
 
@@ -27,6 +23,8 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author joaosa and rmalo
@@ -37,7 +35,8 @@ public class UnEnrollGroupShift extends FenixService {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
-    public static Boolean run(Integer studentGroupCode, Integer groupPropertiesCode, String username) throws FenixServiceException {
+    public static Boolean run(Integer studentGroupCode, Integer groupPropertiesCode, String username)
+	    throws FenixServiceException {
 	Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
 
 	if (groupProperties == null) {

@@ -9,5 +9,4 @@ public class StudentsSite extends StudentsSite_Base {
 	setUnit(unit);
     }
 
-   
 }

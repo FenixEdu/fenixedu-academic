@@ -1,9 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +13,8 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.teacher.Category;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadDepartmentTotalCreditsByPeriod extends FenixService {
 

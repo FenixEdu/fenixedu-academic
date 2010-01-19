@@ -134,7 +134,8 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
 	    HttpServletResponse response) throws Exception {
 	String inputPage = request.getParameter(PresentationConstants.INPUT_PAGE);
 
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+		.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
 	String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
 	Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
@@ -248,7 +249,8 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 	DynaActionForm escolherContextoForm = (DynaActionForm) form;
 
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+		.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
 	Integer semestre = infoExecutionPeriod.getSemester();
 	Integer anoCurricular = (Integer) escolherContextoForm.get("curYear");

@@ -1,9 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.resourceManager;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceManager.DeleteMaterial;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceManager.CreateMaterial;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceManager.CreateMaterial;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceManager.DeleteMaterial;
 import net.sourceforge.fenixedu.dataTransferObject.resourceManager.MaterialBean;
 import net.sourceforge.fenixedu.dataTransferObject.resourceManager.MaterialBean.MaterialType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;

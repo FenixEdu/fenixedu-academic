@@ -52,7 +52,7 @@ public class RegistrationRegime extends RegistrationRegime_Base {
 	if (registration.hasRegistrationRegime(executionYear, type)) {
 	    throw new DomainException("error.RegistrationRegime.already.has.regime.type.in.given.executionYear");
 	}
-	
+
 	if (registration.getDegree().isEmpty()) {
 	    throw new DomainException("error.RegistrationRegime.cannot.apply.to.empty.degrees");
 	}

@@ -1,14 +1,12 @@
 package net.sourceforge.fenixedu.presentationTier.Action.research.activity;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateResearchActivityParticipation;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateResearchEvent;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateResearchActivityParticipation;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateResearchEvent;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateResearchEventEdition;
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchEventEditionCreationBean;
 import net.sourceforge.fenixedu.domain.Person;
@@ -113,8 +111,8 @@ public class CreateEventEditionDispatchAction extends FenixDispatchAction {
 	ResearchEventEditionCreationBean bean = (ResearchEventEditionCreationBean) getEventEditionBean(request);
 
 	try {
-	    ResearchEvent event = (ResearchEvent) CreateResearchEvent.run(bean.getEventName(),
-		    bean.getEventType(), bean.getLocationType(), bean.getUrl());
+	    ResearchEvent event = (ResearchEvent) CreateResearchEvent.run(bean.getEventName(), bean.getEventType(), bean
+		    .getLocationType(), bean.getUrl());
 	    EventEdition edition = (EventEdition) CreateResearchEventEdition.run(event, bean);
 	    bean.setEvent(event);
 	    bean.setEventEdition(edition);
@@ -139,8 +137,8 @@ public class CreateEventEditionDispatchAction extends FenixDispatchAction {
 
 	if (bean.getEditionRole() != null) {
 	    try {
-		CreateResearchActivityParticipation.run(bean.getEventEdition(),
-			bean.getEditionRole(), person, bean.getRoleMessage());
+		CreateResearchActivityParticipation.run(bean.getEventEdition(), bean.getEditionRole(), person, bean
+			.getRoleMessage());
 	    } catch (DomainException e) {
 		addActionMessage(request, e.getMessage());
 		request.setAttribute("existentEventBean", bean);

@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -18,7 +17,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.EnrollS
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.OrderBibliographicReferences;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.CreateLessonPlanningBean;
-import net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.TutorateBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.ImportLessonPlanningsBean;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.ImportLessonPlanningsBean.ImportType;
@@ -845,23 +843,25 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 	request.setAttribute("registrations", registrations);
 	request.setAttribute("shift", shift);
 	request.setAttribute("executionCourseID", executionCourseID);
-	
+
 	request.setAttribute("personBean", new PersonBean());
 
 	return mapping.findForward("editShift");
     }
-    
+
     @Service
     public ActionForward insertStudentInShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 	PersonBean bean = (PersonBean) getRenderedObject("personBean");
 	String id = bean.getUsername();
 	Student student = Student.readStudentByNumber(Integer.valueOf(id));
-	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(Integer.parseInt(request.getParameter("executionCourseID")));
+	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(Integer.parseInt(request
+		.getParameter("executionCourseID")));
 
 	if (student != null) {
 	    try {
-		new EnrollStudentInShifts().run(executionCourse.getRegistration(student.getPerson()), Integer.parseInt(request.getParameter("shiftID")));
+		new EnrollStudentInShifts().run(executionCourse.getRegistration(student.getPerson()), Integer.parseInt(request
+			.getParameter("shiftID")));
 	    } catch (FenixServiceException e) {
 		final ActionErrors actionErrors = new ActionErrors();
 		actionErrors.add("error", new ActionMessage("label.invalid.student.number"));

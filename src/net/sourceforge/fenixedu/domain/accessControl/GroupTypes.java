@@ -5,8 +5,10 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
 /**
- * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/> <br/>
- *         <br/> Created on 0:35:00,22/Set/2005
+ * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/>
+ * <br/>
+ * <br/>
+ *         Created on 0:35:00,22/Set/2005
  * @version $Id$
  */
 public enum GroupTypes {

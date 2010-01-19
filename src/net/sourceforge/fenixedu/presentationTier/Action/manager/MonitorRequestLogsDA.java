@@ -4,10 +4,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.ConfirmManagerIdentity;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.ConfirmManagerIdentity;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -28,8 +24,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ConfirmManagerIdentity;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.renderer.BarChart;
 import net.sourceforge.fenixedu.util.renderer.TimeLineChart;
 import net.sourceforge.fenixedu.util.renderer.container.RequestEntry;

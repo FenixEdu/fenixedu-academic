@@ -6,12 +6,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.joda.time.DateTime;
-
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+
+import org.joda.time.DateTime;
+
 import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 

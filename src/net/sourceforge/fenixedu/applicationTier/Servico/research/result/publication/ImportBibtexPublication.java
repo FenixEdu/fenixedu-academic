@@ -168,7 +168,7 @@ public class ImportBibtexPublication extends ResultPublicationService {
 
 	for (BibtexParticipatorBean participator : participators) {
 	    if (participator.getPerson() != null) {
-		if (personImporting  == participator.getPerson())
+		if (personImporting == participator.getPerson())
 		    return participator;
 	    }
 	}

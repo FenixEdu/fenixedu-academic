@@ -12,11 +12,11 @@ public abstract class Activity<P extends Process> {
     protected void executePosConditions(P process, IUserView userView, Object object) {
 	new ProcessLog(process, userView, this);
     }
-    
+
     public Boolean isVisibleForAdminOffice() {
 	return Boolean.TRUE;
     }
-    
+
     final public P execute(P process, IUserView userView, Object object) {
 	checkPreConditions(process, userView);
 	P modifiedProcess = executeActivity(process, userView, object);

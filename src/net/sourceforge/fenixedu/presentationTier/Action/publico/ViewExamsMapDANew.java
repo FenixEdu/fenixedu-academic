@@ -27,8 +27,8 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -68,9 +68,11 @@ public class ViewExamsMapDANew extends FenixContextDispatchAction {
 	List lista = (List) request.getAttribute("lista");
 	request.setAttribute("lista", lista);
 
-	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
+	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
+		.getAttribute(PresentationConstants.EXECUTION_DEGREE);
 	final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
-	infoExecutionDegree = infoExecutionDegree == null || infoExecutionDegree.getExecutionDegree() == null ? findLatestInfoExecutionDegree(degreeCurricularPlan) : infoExecutionDegree;
+	infoExecutionDegree = infoExecutionDegree == null || infoExecutionDegree.getExecutionDegree() == null ? findLatestInfoExecutionDegree(degreeCurricularPlan)
+		: infoExecutionDegree;
 	if (infoExecutionDegree == null || infoExecutionDegree.getExecutionDegree() == null) {
 	    request.setAttribute("infoDegreeCurricularPlan", "");
 	} else {
@@ -82,7 +84,8 @@ public class ViewExamsMapDANew extends FenixContextDispatchAction {
 	Integer indice = getFromRequest("indice", request);
 	request.setAttribute("indice", indice);
 
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+		.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 	request.setAttribute(PresentationConstants.EXECUTION_PERIOD, infoExecutionPeriod);
 	request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
 
@@ -105,7 +108,8 @@ public class ViewExamsMapDANew extends FenixContextDispatchAction {
 
     private InfoExecutionDegree findLatestInfoExecutionDegree(DegreeCurricularPlan degreeCurricularPlan) {
 	final Set<ExecutionDegree> executionDegrees = degreeCurricularPlan.getExecutionDegreesSet();
-	final ExecutionDegree executionDegree = Collections.max(executionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR);
+	final ExecutionDegree executionDegree = Collections.max(executionDegrees,
+		ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR);
 	return new InfoExecutionDegree(executionDegree);
     }
 

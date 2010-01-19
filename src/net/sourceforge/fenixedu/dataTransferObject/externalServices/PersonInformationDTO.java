@@ -81,7 +81,7 @@ public class PersonInformationDTO {
     private String employeeUnit;
 
     private List<String> studentDegrees;
-    
+
     private String campus;
 
     public PersonInformationDTO(final Person person) {
@@ -127,9 +127,9 @@ public class PersonInformationDTO {
 	    if (lastActiveRegistration != null) {
 		this.campus = lastActiveRegistration.getCampus().getName();
 	    }
-	    
+
 	}
-	
+
 	if (person.hasTeacher() && person.getTeacher().getCurrentWorkingDepartment() != null) {
 	    this.teacherDepartment = person.getTeacher().getCurrentWorkingDepartment().getRealName();
 	}
@@ -372,12 +372,11 @@ public class PersonInformationDTO {
     }
 
     public String getCampus() {
-        return campus;
+	return campus;
     }
 
     public void setCampus(String campus) {
-        this.campus = campus;
+	this.campus = campus;
     }
 
-    
 }

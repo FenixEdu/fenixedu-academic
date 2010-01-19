@@ -1,9 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.thesis;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -23,6 +19,9 @@ import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.collections.CollectionUtils;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
+
 /**
  * 
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
@@ -33,9 +32,9 @@ public class CreateMasterDegreeThesis extends FenixService {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
-    public static void run(IUserView userView, Integer studentCurricularPlanID, String dissertationTitle, List<Integer> guidersNumbers,
-	    List<Integer> assistentGuidersNumbers, List<Integer> externalGuidersIDs, List<Integer> externalAssistentGuidersIDs)
-	    throws FenixServiceException {
+    public static void run(IUserView userView, Integer studentCurricularPlanID, String dissertationTitle,
+	    List<Integer> guidersNumbers, List<Integer> assistentGuidersNumbers, List<Integer> externalGuidersIDs,
+	    List<Integer> externalAssistentGuidersIDs) throws FenixServiceException {
 
 	// check duplicate guiders and assistent guiders
 	if (CollectionUtils.intersection(guidersNumbers, assistentGuidersNumbers).size() > 0) {

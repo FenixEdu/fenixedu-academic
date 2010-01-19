@@ -50,7 +50,6 @@ public class ShowShiftListAction extends Action {
 		.getInfoEnrolmentWithShift().get(indexi.intValue()))).getTypeLessonsAndInfoShifts().get(indexj.intValue()))
 		.getTypeLesson();
 
-
 	List shiftsList = new ArrayList();
 
 	try {
@@ -72,7 +71,8 @@ public class ShowShiftListAction extends Action {
 	    while (iterator.hasNext()) {
 		InfoShift element = (InfoShift) iterator.next();
 
-		List students = (ArrayList) LerAlunosDeTurno.run(new ShiftKey(element.getNome(), element.getInfoDisciplinaExecucao()));
+		List students = (ArrayList) LerAlunosDeTurno.run(new ShiftKey(element.getNome(), element
+			.getInfoDisciplinaExecucao()));
 		Integer vacancy = element.getLotacao();
 
 		vacancy = new Integer(vacancy.intValue() - students.size());

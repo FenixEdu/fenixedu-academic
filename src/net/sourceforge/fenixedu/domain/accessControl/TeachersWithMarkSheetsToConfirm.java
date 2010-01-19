@@ -28,7 +28,7 @@ public class TeachersWithMarkSheetsToConfirm extends TeachersByExecutionPeriodDe
 	}
 	return teachers;
     }
-    
+
     public static class Builder implements GroupBuilder {
 
 	public Group build(Object[] arguments) {

@@ -23,10 +23,10 @@ public class ReadExecutionCoursesByTeacherResponsibility extends FenixService {
 
     @Service
     public static List run(String id) throws FenixServiceException {
-	
+
 	final List<InfoExecutionCourse> infoExecutionCourses = new ArrayList<InfoExecutionCourse>();
 	Person person = Person.readPersonByIstUsername(id);
-	if (person.getTeacher() != null){
+	if (person.getTeacher() != null) {
 	    Teacher teacher = person.getTeacher();
 
 	    final List<Professorship> responsibilities = teacher.responsibleFors();
@@ -37,7 +37,7 @@ public class ReadExecutionCoursesByTeacherResponsibility extends FenixService {
 		}
 	    }
 	    return infoExecutionCourses;
-	}else{
+	} else {
 	    return new ArrayList<Professorship>();
 	}
     }

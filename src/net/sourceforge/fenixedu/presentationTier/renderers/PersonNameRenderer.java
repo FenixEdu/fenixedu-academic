@@ -92,7 +92,7 @@ public class PersonNameRenderer extends StringRenderer {
 		buffer.append(" ");
 	    }
 
-	    buffer.append(StringFormatter.capitalizeWord(part,false));
+	    buffer.append(StringFormatter.capitalizeWord(part, false));
 	}
 
 	return buffer.toString();

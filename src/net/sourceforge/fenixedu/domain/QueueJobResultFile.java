@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.documents.GeneratedDocumentType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class QueueJobResultFile extends QueueJobResultFile_Base {

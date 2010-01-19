@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.RemoverAula;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,11 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerAulasDeTurno;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadShiftByOID;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.RemoverAula;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.ShiftKey;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
@@ -44,14 +42,14 @@ public class RemoverAulaDeTurnoFormAction extends FenixShiftAndExecutionCourseAn
 
 	InfoShift infoTurno = (InfoShift) ReadShiftByOID.run(shiftOID);
 
-	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute(PresentationConstants.EXECUTION_COURSE);
+	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request
+		.getAttribute(PresentationConstants.EXECUTION_COURSE);
 
 	Integer indexAula = (Integer) editarAulasDeTurnoForm.get("indexAula");
 
 	List infoAulas = (ArrayList) LerAulasDeTurno.run(new ShiftKey(infoTurno.getNome(), infoExecutionCourse));
 
 	InfoLesson infoLesson = (InfoLesson) infoAulas.get(indexAula.intValue());
-
 
 	RemoverAula.run(infoLesson, infoTurno);
 

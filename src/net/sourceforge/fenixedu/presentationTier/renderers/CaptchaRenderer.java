@@ -59,7 +59,7 @@ public class CaptchaRenderer extends InputRenderer {
     @Override
     protected Layout getLayout(Object object, Class type) {
 	return new Layout() {
-	    
+
 	    protected String getResourceMessage(String message) {
 		return RenderUtils.getResourceString("RENDERER_RESOURCES", message);
 	    }

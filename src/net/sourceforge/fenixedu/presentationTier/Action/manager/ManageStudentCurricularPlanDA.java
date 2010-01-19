@@ -4,16 +4,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadStudentCurricularInformation;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.TransferEnrollments;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateStudentCurricularPlan;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteEnrollment;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteStudentCurricularPlan;
-
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
@@ -25,11 +15,15 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateStudentCurricularPlan;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteEnrollment;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteStudentCurricularPlan;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadDegreeCurricularPlansByDegreeType;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadStudentCurricularInformation;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.TransferEnrollments;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -168,8 +162,7 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
 
 	    final IUserView userView = UserView.getUser();
 
-	    TransferEnrollments.run(selectedStudentCurricularPlanId, enrollmentIDsToTransfer,
-		    selectedCurriculumGroupID);
+	    TransferEnrollments.run(selectedStudentCurricularPlanId, enrollmentIDsToTransfer, selectedCurriculumGroupID);
 	}
 
 	return show(mapping, form, request, response);

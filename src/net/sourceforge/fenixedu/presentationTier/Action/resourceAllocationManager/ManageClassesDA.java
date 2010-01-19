@@ -46,7 +46,8 @@ public class ManageClassesDA extends FenixExecutionDegreeAndCurricularYearContex
 	AcademicInterval academicInterval = AcademicInterval.getAcademicIntervalFromResumedString((String) request
 		.getAttribute(PresentationConstants.ACADEMIC_INTERVAL));
 	InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request.getAttribute(PresentationConstants.CURRICULAR_YEAR);
-	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
+	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
+		.getAttribute(PresentationConstants.EXECUTION_DEGREE);
 
 	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
 
@@ -84,7 +85,8 @@ public class ManageClassesDA extends FenixExecutionDegreeAndCurricularYearContex
 	IUserView userView = UserView.getUser();
 
 	InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request.getAttribute(PresentationConstants.CURRICULAR_YEAR);
-	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
+	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
+		.getAttribute(PresentationConstants.EXECUTION_DEGREE);
 	AcademicInterval academicInterval = AcademicInterval.getAcademicIntervalFromResumedString((String) request
 		.getAttribute(PresentationConstants.ACADEMIC_INTERVAL));
 

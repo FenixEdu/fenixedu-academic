@@ -41,7 +41,7 @@ public class RaidesDfaReportFile extends RaidesDfaReportFile_Base {
     public DegreeType getDegreeType() {
 	return DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA;
     }
-    
+
     @Override
     public void renderReport(Spreadsheet spreadsheet) throws Exception {
 
@@ -82,9 +82,9 @@ public class RaidesDfaReportFile extends RaidesDfaReportFile_Base {
 		}
 
 		count++;
-//		 if (count == 20) {
-//		    break;
-//		}
+		// if (count == 20) {
+		// break;
+		// }
 	    }
 
 	}

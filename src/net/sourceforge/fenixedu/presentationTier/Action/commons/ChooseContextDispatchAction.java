@@ -27,8 +27,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixDateAndTimeDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.RequestUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.RequestUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -132,7 +132,8 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
 	    HttpServletResponse response) throws Exception {
 	String inputPage = request.getParameter(PresentationConstants.INPUT_PAGE);
 
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+		.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
 	// TODO: this semester and curricular year list needs to be refactored
 	// in order to incorporate masters
@@ -242,7 +243,8 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 	DynaActionForm escolherContextoForm = (DynaActionForm) form;
 
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+		.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
 	Integer semestre = infoExecutionPeriod.getSemester();
 	Integer anoCurricular = (Integer) escolherContextoForm.get("curYear");

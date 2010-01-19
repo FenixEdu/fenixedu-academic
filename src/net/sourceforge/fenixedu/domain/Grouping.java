@@ -372,7 +372,7 @@ public class Grouping extends Grouping_Base {
 	studentGroups.addAll(getStudentGroups());
 	return studentGroups;
     }
-    
+
     public boolean isPersonTeacher(Person person) {
 	for (ExecutionCourse ec : getExecutionCourses()) {
 	    for (Professorship professorship : ec.getProfessorships()) {
@@ -383,22 +383,22 @@ public class Grouping extends Grouping_Base {
 	}
 	return false;
     }
-    
+
     @Override
     public List<StudentGroup> getStudentGroups() {
-	List<StudentGroup> result = new ArrayList<StudentGroup>(); 
-	for(StudentGroup sg : super.getStudentGroups()){
-	    if (!sg.wasDeleted()){
+	List<StudentGroup> result = new ArrayList<StudentGroup>();
+	for (StudentGroup sg : super.getStudentGroups()) {
+	    if (!sg.wasDeleted()) {
 		result.add(sg);
 	    }
 	}
 	return Collections.unmodifiableList(result);
     }
-    
+
     public List<StudentGroup> getDeletedStudentGroups() {
-	List<StudentGroup> result = new ArrayList<StudentGroup>(); 
-	for(StudentGroup sg : super.getStudentGroups()){
-	    if (!sg.getValid()){
+	List<StudentGroup> result = new ArrayList<StudentGroup>();
+	for (StudentGroup sg : super.getStudentGroups()) {
+	    if (!sg.getValid()) {
 		result.add(sg);
 	    }
 	}
@@ -427,5 +427,5 @@ public class Grouping extends Grouping_Base {
 	// TODO Auto-generated method stub
 	return this.getStudentGroups().contains(studentGroups);
     }
-    
+
 }

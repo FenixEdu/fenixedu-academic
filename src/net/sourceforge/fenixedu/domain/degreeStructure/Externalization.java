@@ -20,8 +20,8 @@ public class Externalization {
 	if ((source != null) && (source.length() > 0)) {
 	    return read(source);
 	} else {
-            return new BibliographicReferences();
-        }
+	    return new BibliographicReferences();
+	}
     }
 
     private static final String NEW_LINE = "\r\n";
@@ -68,10 +68,10 @@ public class Externalization {
 	bibliographicReferences.createBibliographicReference(source.substring(0, indexOfSep1), source.substring(indexOfSep1
 		+ ELEMENT_SEPARATOR.length(), indexOfSep2), source.substring(indexOfSep2 + ELEMENT_SEPARATOR.length(),
 		indexOfSep3), source.substring(indexOfSep3 + ELEMENT_SEPARATOR.length(), indexOfSep4), source.substring(
-		indexOfSep4 + ELEMENT_SEPARATOR.length(), indexOfSep5),source.substring(indexOfSep5
-		+ ELEMENT_SEPARATOR.length(), indexOfSep6).equals("null") ? BibliographicReferenceType.MAIN : BibliographicReferenceType
-		.valueOf(source.substring(indexOfSep5 + ELEMENT_SEPARATOR.length(), indexOfSep6)), Integer.valueOf(source
-		.substring(indexOfSep6 + ELEMENT_SEPARATOR.length(), indexOfSep7)));
+		indexOfSep4 + ELEMENT_SEPARATOR.length(), indexOfSep5), source.substring(
+		indexOfSep5 + ELEMENT_SEPARATOR.length(), indexOfSep6).equals("null") ? BibliographicReferenceType.MAIN
+		: BibliographicReferenceType.valueOf(source.substring(indexOfSep5 + ELEMENT_SEPARATOR.length(), indexOfSep6)),
+		Integer.valueOf(source.substring(indexOfSep6 + ELEMENT_SEPARATOR.length(), indexOfSep7)));
 
 	if (indexOfSep7 + NEW_LINE.length() < source.length()) {
 	    fillBibliographicReferences(bibliographicReferences, source.substring(indexOfSep7 + NEW_LINE.length()));

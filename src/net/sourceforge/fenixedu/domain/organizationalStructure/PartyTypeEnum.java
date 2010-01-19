@@ -33,9 +33,9 @@ public enum PartyTypeEnum {
     PEDAGOGICAL_COUNCIL,
 
     SCIENTIFIC_COUNCIL,
-    
+
     MANAGEMENT_COUNCIL,
-    
+
     PHD_PROGRAM_UNIT;
 
     public String getName() {

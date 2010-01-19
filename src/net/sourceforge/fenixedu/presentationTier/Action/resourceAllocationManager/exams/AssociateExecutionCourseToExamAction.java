@@ -72,7 +72,8 @@ public class AssociateExecutionCourseToExamAction
 	ContextUtils.setCurricularYearsContext(request);
 
 	IUserView userView = UserView.getUser();
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+		.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
 	/* Criar o bean de anos curriculares */
 	List anosCurriculares = createCurricularYearList();
@@ -107,7 +108,8 @@ public class AssociateExecutionCourseToExamAction
 	String nextPage = request.getParameter("nextPage");
 	request.setAttribute(PresentationConstants.NEXT_PAGE, nextPage);
 
-	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute(PresentationConstants.EXECUTION_COURSE);
+	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request
+		.getAttribute(PresentationConstants.EXECUTION_COURSE);
 
 	request.setAttribute("executionCourseOID", infoExecutionCourse.getIdInternal());
 
@@ -135,7 +137,8 @@ public class AssociateExecutionCourseToExamAction
 	ContextUtils.setExecutionPeriodContext(request);
 	ContextUtils.setCurricularYearsContext(request);
 
-	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute(PresentationConstants.EXECUTION_COURSE);
+	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request
+		.getAttribute(PresentationConstants.EXECUTION_COURSE);
 
 	request.setAttribute("executionCourseOID", infoExecutionCourse.getIdInternal());
 

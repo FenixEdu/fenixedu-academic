@@ -1,13 +1,10 @@
 package net.sourceforge.fenixedu.presentationTier.Action.research.activity;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateResearchActivityParticipation;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateResearchActivityParticipation;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateJournalIssue;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateResearchActivityParticipation;
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchJournalIssueCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.CreateIssueBean;
 import net.sourceforge.fenixedu.domain.Person;
@@ -138,8 +135,7 @@ public class CreateJournalIssueDispatchAction extends FenixDispatchAction {
 
 	if (bean.getRole() != null) {
 	    try {
-		CreateResearchActivityParticipation.run(bean.getJournalIssue(), bean.getRole(),
-			person, bean.getRoleMessage());
+		CreateResearchActivityParticipation.run(bean.getJournalIssue(), bean.getRole(), person, bean.getRoleMessage());
 
 	    } catch (DomainException e) {
 		addActionMessage(request, e.getMessage());
@@ -160,8 +156,7 @@ public class CreateJournalIssueDispatchAction extends FenixDispatchAction {
 	    return prepareJournalIssueSearch(mapping, form, request, response);
 
 	try {
-	    CreateResearchActivityParticipation.run(bean.getJournalIssue(), bean.getRole(), person,
-		    bean.getRoleMessage());
+	    CreateResearchActivityParticipation.run(bean.getJournalIssue(), bean.getRole(), person, bean.getRoleMessage());
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	    request.setAttribute("inexistentJournalBean", bean);

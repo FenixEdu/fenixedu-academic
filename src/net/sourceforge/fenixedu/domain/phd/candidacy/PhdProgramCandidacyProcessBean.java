@@ -228,7 +228,7 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 	this.candidacyHashCode = (candidacyHashCode != null) ? new DomainReference<PhdProgramPublicCandidacyHashCode>(
 		candidacyHashCode) : null;
     }
-    
+
     public PhdIndividualProgramProcess getIndividualProgramProcess() {
 	return getCandidacyHashCode().getIndividualProgramProcess();
     }

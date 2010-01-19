@@ -70,7 +70,7 @@ public class TimeTableRenderer {
 	strBuffer.append(">");
 
 	final SchoolClass schoolClass = (SchoolClass) pageContext.getRequest().getAttribute("schoolClass");
-	
+
 	if (schoolClass != null) {
 	    final String className = schoolClass.getNome();
 	    strBuffer.append("<caption>");

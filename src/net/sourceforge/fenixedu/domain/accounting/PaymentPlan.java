@@ -189,7 +189,7 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
 
 	    Money installmentAmount = installment.calculateAmount(this.event, this.currentTransactionDate,
 		    this.discountPercentage, isToApplyPenalty(this.event, installment));
-	    
+
 	    if (hasDiscountValue()) {
 		installmentAmount = installmentAmount.subtract(this.discountValue);
 		this.discountedValue = this.discountValue;
@@ -230,8 +230,8 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
 		    this.discountedValue = Money.ZERO;
 		}
 	    } else {
-		result = installment.calculateAmount(this.event, this.when, this.discountPercentage, isToApplyPenalty(this.event,
-			installment)).subtract(this.discountedValue);
+		result = installment.calculateAmount(this.event, this.when, this.discountPercentage,
+			isToApplyPenalty(this.event, installment)).subtract(this.discountedValue);
 		this.discountedValue = Money.ZERO;
 	    }
 	    usedDiscountValue = false;

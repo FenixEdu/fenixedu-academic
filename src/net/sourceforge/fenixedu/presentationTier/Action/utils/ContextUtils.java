@@ -391,7 +391,8 @@ public class ContextUtils {
 	ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
 	ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
 
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+		.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
 	/* Obtain a list of curricular years */
 	List labelListOfCurricularYears = getLabelListOfCurricularYears();
@@ -456,10 +457,10 @@ public class ContextUtils {
 	return false;
     }
 
-    //--------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
     // -----
     // Read from request utils
-    //--------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
     // -----
     private static String readRequestValue(HttpServletRequest request, String name) {
 	String obj = null;
@@ -558,7 +559,8 @@ public class ContextUtils {
     public static List createExecutionDegreeList(HttpServletRequest request) throws FenixServiceException, FenixFilterException {
 	IUserView userView = UserView.getUser();
 
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+		.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
 	/* Cria o form bean com as licenciaturas em execucao. */
 
@@ -656,7 +658,8 @@ public class ContextUtils {
 	    context.setCourseName(courseName);
 	}
 	request.setAttribute(PresentationConstants.CONTEXT_SELECTION_BEAN, context);
-	request.setAttribute(PresentationConstants.ACADEMIC_INTERVAL, context.getAcademicInterval().getResumedRepresentationInStringFormat());
+	request.setAttribute(PresentationConstants.ACADEMIC_INTERVAL, context.getAcademicInterval()
+		.getResumedRepresentationInStringFormat());
 	request.setAttribute(PresentationConstants.EXECUTION_DEGREE, new InfoExecutionDegree(context.getExecutionDegree()));
 	request.setAttribute(PresentationConstants.CURRICULAR_YEAR, new InfoCurricularYear(context.getCurricularYear()));
     }

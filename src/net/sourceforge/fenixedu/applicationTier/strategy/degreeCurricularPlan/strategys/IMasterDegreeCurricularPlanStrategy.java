@@ -14,9 +14,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public interface IMasterDegreeCurricularPlanStrategy extends IDegreeCurricularPlanStrategy {
 
     /**
-     * Checks if the Master Degree Registration has finished his scholar part.
-     * <br/> All his credits are added and compared to the ones required by his
-     * Degree Curricular Plan.
+     * Checks if the Master Degree Registration has finished his scholar part. <br/>
+     * All his credits are added and compared to the ones required by his Degree
+     * Curricular Plan.
      * 
      * @param The
      *            Registration's Curricular Plan

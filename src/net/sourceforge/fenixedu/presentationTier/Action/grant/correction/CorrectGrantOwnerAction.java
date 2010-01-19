@@ -1,13 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.grant.correction;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.grant.owner.EditGrantOwner;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.person.ChangePersonUsername;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.grant.owner.SearchGrantOwner;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.grant.owner.SearchGrantOwner;
-
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,13 +7,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.CloseLogin;
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.owner.EditGrantOwner;
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.owner.SearchGrantOwner;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.ChangePersonUsername;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -68,7 +62,8 @@ public class CorrectGrantOwnerAction extends FenixDispatchAction {
 
 	// Read the new person
 
-	List infoPersonList = (List) SearchGrantOwner.run(null, documentIdNumber.toString(), documentIdType, null, new Boolean(false), null);
+	List infoPersonList = (List) SearchGrantOwner.run(null, documentIdNumber.toString(), documentIdType, null, new Boolean(
+		false), null);
 
 	if (infoPersonList.isEmpty() || infoPersonList.size() > 1) {
 	    return setError(request, mapping, "errors.grant.correction.unknownPerson", null, null);

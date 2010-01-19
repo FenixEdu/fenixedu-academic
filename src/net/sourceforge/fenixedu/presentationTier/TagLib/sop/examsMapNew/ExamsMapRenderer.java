@@ -257,11 +257,12 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 
 		    } else if (showCreateExamLink && user.equals("sop")) {
 			strBuffer.append("<a href='" + addPublicPrefix("showExamsManagement.do") + "?method=createByCourse&amp;"
-				+ PresentationConstants.EXECUTION_COURSE_OID + "=" + infoExecutionCourse.getIdInternal() + "&amp;"
-				+ PresentationConstants.EXECUTION_PERIOD_OID + "="
+				+ PresentationConstants.EXECUTION_COURSE_OID + "=" + infoExecutionCourse.getIdInternal()
+				+ "&amp;" + PresentationConstants.EXECUTION_PERIOD_OID + "="
 				+ infoExecutionCourse.getInfoExecutionPeriod().getIdInternal() + "&amp;"
-				+ PresentationConstants.EXECUTION_DEGREE_OID + "=" + examsMap.getInfoExecutionDegree().getIdInternal()
-				+ "&amp;" + PresentationConstants.CURRICULAR_YEAR_OID + "=" + curricularYear.toString() + "'>");
+				+ PresentationConstants.EXECUTION_DEGREE_OID + "="
+				+ examsMap.getInfoExecutionDegree().getIdInternal() + "&amp;"
+				+ PresentationConstants.CURRICULAR_YEAR_OID + "=" + curricularYear.toString() + "'>");
 		    }
 
 		    strBuffer.append(infoExecutionCourse.getSigla());
@@ -376,15 +377,17 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 				    strBuffer.append("<tr>");
 				    strBuffer.append("<td>");
 
-				    strBuffer.append("<a href='" + addPublicPrefix("showExamsManagement.do")
-					    + "?method=edit&amp;" + PresentationConstants.EXECUTION_COURSE_OID + "="
-					    + infoExecutionCourse.getIdInternal() + "&amp;"
-					    + PresentationConstants.EXECUTION_PERIOD_OID + "="
-					    + infoExecutionCourse.getInfoExecutionPeriod().getIdInternal() + "&amp;"
-					    + PresentationConstants.EXECUTION_DEGREE_OID + "="
-					    + examsMap.getInfoExecutionDegree().getIdInternal() + "&amp;"
-					    + PresentationConstants.CURRICULAR_YEAR_OID + "=" + curricularYear.toString() + "&amp;"
-					    + PresentationConstants.EXAM_OID + "=" + season1Exam.getIdInternal() + "'>");
+				    strBuffer
+					    .append("<a href='" + addPublicPrefix("showExamsManagement.do") + "?method=edit&amp;"
+						    + PresentationConstants.EXECUTION_COURSE_OID + "="
+						    + infoExecutionCourse.getIdInternal() + "&amp;"
+						    + PresentationConstants.EXECUTION_PERIOD_OID + "="
+						    + infoExecutionCourse.getInfoExecutionPeriod().getIdInternal() + "&amp;"
+						    + PresentationConstants.EXECUTION_DEGREE_OID + "="
+						    + examsMap.getInfoExecutionDegree().getIdInternal() + "&amp;"
+						    + PresentationConstants.CURRICULAR_YEAR_OID + "=" + curricularYear.toString()
+						    + "&amp;" + PresentationConstants.EXAM_OID + "="
+						    + season1Exam.getIdInternal() + "'>");
 				}
 
 				if (user.equals("sop")) {
@@ -405,7 +408,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 				    strBuffer.append(season1Exam.getBeginningHour());
 				    strBuffer.append("</td>");
 				    // strBuffer.append("-");
-				    //strBuffer.append(season1Exam.getEndHour())
+				    // strBuffer.append(season1Exam.getEndHour())
 				    // ;
 				}
 
@@ -481,15 +484,17 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 				    strBuffer.append("</td>");
 				    strBuffer.append("<td>");
 
-				    strBuffer.append("<a href='" + addPublicPrefix("showExamsManagement.do")
-					    + "?method=delete&amp;" + PresentationConstants.EXECUTION_COURSE_OID + "="
-					    + infoExecutionCourse.getIdInternal() + "&amp;"
-					    + PresentationConstants.EXECUTION_PERIOD_OID + "="
-					    + infoExecutionCourse.getInfoExecutionPeriod().getIdInternal() + "&amp;"
-					    + PresentationConstants.EXECUTION_DEGREE_OID + "="
-					    + examsMap.getInfoExecutionDegree().getIdInternal() + "&amp;"
-					    + PresentationConstants.CURRICULAR_YEAR_OID + "=" + curricularYear.toString() + "&amp;"
-					    + PresentationConstants.EXAM_OID + "=" + season1Exam.getIdInternal() + "'>");
+				    strBuffer
+					    .append("<a href='" + addPublicPrefix("showExamsManagement.do")
+						    + "?method=delete&amp;" + PresentationConstants.EXECUTION_COURSE_OID + "="
+						    + infoExecutionCourse.getIdInternal() + "&amp;"
+						    + PresentationConstants.EXECUTION_PERIOD_OID + "="
+						    + infoExecutionCourse.getInfoExecutionPeriod().getIdInternal() + "&amp;"
+						    + PresentationConstants.EXECUTION_DEGREE_OID + "="
+						    + examsMap.getInfoExecutionDegree().getIdInternal() + "&amp;"
+						    + PresentationConstants.CURRICULAR_YEAR_OID + "=" + curricularYear.toString()
+						    + "&amp;" + PresentationConstants.EXAM_OID + "="
+						    + season1Exam.getIdInternal() + "'>");
 				    strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.delete"));
 				    strBuffer.append("</a>");
 				    strBuffer.append("</td>");
@@ -502,15 +507,17 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 
 				    strBuffer.append("<td>");
 
-				    strBuffer.append("<a href='" + addPublicPrefix("showExamsManagement.do")
-					    + "?method=edit&amp;" + PresentationConstants.EXECUTION_COURSE_OID + "="
-					    + infoExecutionCourse.getIdInternal() + "&amp;"
-					    + PresentationConstants.EXECUTION_PERIOD_OID + "="
-					    + infoExecutionCourse.getInfoExecutionPeriod().getIdInternal() + "&amp;"
-					    + PresentationConstants.EXECUTION_DEGREE_OID + "="
-					    + examsMap.getInfoExecutionDegree().getIdInternal() + "&amp;"
-					    + PresentationConstants.CURRICULAR_YEAR_OID + "=" + curricularYear.toString() + "&amp;"
-					    + PresentationConstants.EXAM_OID + "=" + season2Exam.getIdInternal() + "'>");
+				    strBuffer
+					    .append("<a href='" + addPublicPrefix("showExamsManagement.do") + "?method=edit&amp;"
+						    + PresentationConstants.EXECUTION_COURSE_OID + "="
+						    + infoExecutionCourse.getIdInternal() + "&amp;"
+						    + PresentationConstants.EXECUTION_PERIOD_OID + "="
+						    + infoExecutionCourse.getInfoExecutionPeriod().getIdInternal() + "&amp;"
+						    + PresentationConstants.EXECUTION_DEGREE_OID + "="
+						    + examsMap.getInfoExecutionDegree().getIdInternal() + "&amp;"
+						    + PresentationConstants.CURRICULAR_YEAR_OID + "=" + curricularYear.toString()
+						    + "&amp;" + PresentationConstants.EXAM_OID + "="
+						    + season2Exam.getIdInternal() + "'>");
 				}
 
 				if (user.equals("sop")) {
@@ -532,7 +539,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 				    strBuffer.append(season2Exam.getBeginningHour());
 				    strBuffer.append("</td>");
 				    // strBuffer.append("-");
-				    //strBuffer.append(season2Exam.getEndHour())
+				    // strBuffer.append(season2Exam.getEndHour())
 				    // ;
 				}
 
@@ -611,15 +618,17 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 				if (user.equals("sop")) {
 				    strBuffer.append("</td>");
 				    strBuffer.append("<td>");
-				    strBuffer.append("<a href='" + addPublicPrefix("showExamsManagement.do")
-					    + "?method=delete&amp;" + PresentationConstants.EXECUTION_COURSE_OID + "="
-					    + infoExecutionCourse.getIdInternal() + "&amp;"
-					    + PresentationConstants.EXECUTION_PERIOD_OID + "="
-					    + infoExecutionCourse.getInfoExecutionPeriod().getIdInternal() + "&amp;"
-					    + PresentationConstants.EXECUTION_DEGREE_OID + "="
-					    + examsMap.getInfoExecutionDegree().getIdInternal() + "&amp;"
-					    + PresentationConstants.CURRICULAR_YEAR_OID + "=" + curricularYear.toString() + "&amp;"
-					    + PresentationConstants.EXAM_OID + "=" + season2Exam.getIdInternal() + "'>");
+				    strBuffer
+					    .append("<a href='" + addPublicPrefix("showExamsManagement.do")
+						    + "?method=delete&amp;" + PresentationConstants.EXECUTION_COURSE_OID + "="
+						    + infoExecutionCourse.getIdInternal() + "&amp;"
+						    + PresentationConstants.EXECUTION_PERIOD_OID + "="
+						    + infoExecutionCourse.getInfoExecutionPeriod().getIdInternal() + "&amp;"
+						    + PresentationConstants.EXECUTION_DEGREE_OID + "="
+						    + examsMap.getInfoExecutionDegree().getIdInternal() + "&amp;"
+						    + PresentationConstants.CURRICULAR_YEAR_OID + "=" + curricularYear.toString()
+						    + "&amp;" + PresentationConstants.EXAM_OID + "="
+						    + season2Exam.getIdInternal() + "'>");
 				    strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.delete"));
 				    strBuffer.append("</a>");
 				    strBuffer.append("</td>");

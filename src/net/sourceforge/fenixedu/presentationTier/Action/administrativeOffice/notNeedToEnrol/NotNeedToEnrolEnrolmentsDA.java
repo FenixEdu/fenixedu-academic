@@ -35,8 +35,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/notNeedToEnrolEnrolments", module = "academicAdminOffice", formBean = "notNeedToEnrolForm")
-@Forwards( {
-	@Forward(name = "chooseStudent", path = "/academicAdminOffice/notNeedToEnrol/chooseStudent.jsp"),
+@Forwards( { @Forward(name = "chooseStudent", path = "/academicAdminOffice/notNeedToEnrol/chooseStudent.jsp"),
 	@Forward(name = "chooseNotNeedToEnrol", path = "/academicAdminOffice/notNeedToEnrol/chooseNotNeedToEnrol.jsp"),
 	@Forward(name = "showAprovedEnrolments", path = "/academicAdminOffice/notNeedToEnrol/showAprovedEnrolments.jsp") })
 public class NotNeedToEnrolEnrolmentsDA extends FenixDispatchAction {

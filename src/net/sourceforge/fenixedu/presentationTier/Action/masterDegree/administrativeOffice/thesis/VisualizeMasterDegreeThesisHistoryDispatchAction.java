@@ -38,7 +38,8 @@ public class VisualizeMasterDegreeThesisHistoryDispatchAction extends FenixDispa
 	    request.setAttribute(PresentationConstants.GUIDERS_LIST, masterDegreeThesisDataVersion.getGuiders());
 
 	if (!masterDegreeThesisDataVersion.getAssistentGuiders().isEmpty())
-	    request.setAttribute(PresentationConstants.ASSISTENT_GUIDERS_LIST, masterDegreeThesisDataVersion.getAssistentGuiders());
+	    request.setAttribute(PresentationConstants.ASSISTENT_GUIDERS_LIST, masterDegreeThesisDataVersion
+		    .getAssistentGuiders());
 
 	if (!masterDegreeThesisDataVersion.getExternalAssistentGuiders().isEmpty())
 	    request.setAttribute(PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, masterDegreeThesisDataVersion

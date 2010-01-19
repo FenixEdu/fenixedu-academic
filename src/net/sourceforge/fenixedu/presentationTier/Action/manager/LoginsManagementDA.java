@@ -1,12 +1,10 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.loginsManagement.DeleteLoginPeriod;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.loginsManagement.DeleteLoginAlias;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.loginsManagement.DeleteLoginAlias;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.loginsManagement.DeleteLoginPeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchParameters;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;

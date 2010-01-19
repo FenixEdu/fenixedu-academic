@@ -414,7 +414,7 @@ public abstract class Enum implements Comparable, Serializable {
 	return (Enum) entry.map.get(getName());
     }
 
-    //--------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
     // ------
 
     /**
@@ -564,7 +564,7 @@ public abstract class Enum implements Comparable, Serializable {
 		entry.list.addAll(loopEntry.list);
 		entry.map.putAll(loopEntry.map);
 		break; // stop here, as this will already have had superclasses
-		       // added
+		// added
 	    }
 	    cls = cls.getSuperclass();
 	}

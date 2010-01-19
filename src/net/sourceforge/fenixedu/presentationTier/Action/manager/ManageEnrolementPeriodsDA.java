@@ -144,7 +144,7 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
 			o2.getDegreeCurricularPlan().getDegree().getNameFor(executionSemester.getAcademicInterval()));
 	    }
 	});
-	
+
 	comparatorChain.addComparator(EnrolmentPeriod.COMPARATOR_BY_ID);
 
 	Collections.sort(enrolmentPeriods, comparatorChain);

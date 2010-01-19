@@ -25,6 +25,7 @@ public abstract class DepartmentByExecutionYearGroup extends LeafGroup {
     }
 
     private transient SoftReference<Department> departmentRef = null;
+
     public Department getDepartment() {
 	Department result = departmentRef == null ? null : departmentRef.get();
 	if (result == null) {
@@ -40,6 +41,7 @@ public abstract class DepartmentByExecutionYearGroup extends LeafGroup {
     }
 
     private transient SoftReference<ExecutionYear> executionYearRef = null;
+
     public ExecutionYear getExecutionYear() {
 	ExecutionYear result = executionYearRef == null ? null : executionYearRef.get();
 	if (result == null) {

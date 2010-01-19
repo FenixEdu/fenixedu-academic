@@ -64,8 +64,8 @@ public class ChangeMasterDegreeThesisDispatchAction extends FenixDispatchAction 
 
 	try {
 	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", PresentationConstants.ASSISTENT_GUIDERS_LIST,
-		    actionErrors);
+	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
+		    PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
 	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
 		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);

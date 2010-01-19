@@ -4,14 +4,13 @@
 
 package net.sourceforge.fenixedu.presentationTier.Action.grant.contract;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadAllContractsByGrantOwner;
-
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadAllContractsByGrantOwner;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
@@ -49,7 +48,8 @@ public class ManageGrantContractAction extends FenixDispatchAction {
 	// Needed for return to manage contracts
 	request.setAttribute("idInternal", idInternal);
 
-	InfoGrantOwner infoGrantOwner = (InfoGrantOwner) ServiceUtils.executeService("ReadGrantOwner", new Object[] { idInternal });
+	InfoGrantOwner infoGrantOwner = (InfoGrantOwner) ServiceUtils.executeService("ReadGrantOwner",
+		new Object[] { idInternal });
 	request.setAttribute("grantOwnerNumber", infoGrantOwner.getGrantOwnerNumber());
 	request.setAttribute("grantOwnerName", infoGrantOwner.getPersonInfo().getNome());
 

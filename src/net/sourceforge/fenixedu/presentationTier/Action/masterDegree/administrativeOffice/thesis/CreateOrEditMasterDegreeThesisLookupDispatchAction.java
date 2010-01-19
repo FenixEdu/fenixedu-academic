@@ -8,9 +8,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
@@ -20,10 +17,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.LookupDispatchAction;
-
-import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.services.ServiceManager;
-import pt.ist.fenixWebFramework.services.ServiceManagerException;
 
 public class CreateOrEditMasterDegreeThesisLookupDispatchAction extends LookupDispatchAction {
 
@@ -35,8 +28,8 @@ public class CreateOrEditMasterDegreeThesisLookupDispatchAction extends LookupDi
 
 	try {
 	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", PresentationConstants.ASSISTENT_GUIDERS_LIST,
-		    actionErrors);
+	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
+		    PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
 	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
 		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
@@ -61,8 +54,8 @@ public class CreateOrEditMasterDegreeThesisLookupDispatchAction extends LookupDi
 
 	try {
 	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", PresentationConstants.ASSISTENT_GUIDERS_LIST,
-		    actionErrors);
+	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
+		    PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
 	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
 		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
@@ -94,8 +87,8 @@ public class CreateOrEditMasterDegreeThesisLookupDispatchAction extends LookupDi
 
 	try {
 	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", PresentationConstants.ASSISTENT_GUIDERS_LIST,
-		    actionErrors);
+	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
+		    PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
 	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
 		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
@@ -123,8 +116,8 @@ public class CreateOrEditMasterDegreeThesisLookupDispatchAction extends LookupDi
 
 	try {
 	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", PresentationConstants.ASSISTENT_GUIDERS_LIST,
-		    actionErrors);
+	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
+		    PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
 	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
 		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
@@ -152,8 +145,8 @@ public class CreateOrEditMasterDegreeThesisLookupDispatchAction extends LookupDi
 
 	try {
 	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", PresentationConstants.ASSISTENT_GUIDERS_LIST,
-		    actionErrors);
+	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
+		    PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
 	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
 		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
@@ -178,8 +171,8 @@ public class CreateOrEditMasterDegreeThesisLookupDispatchAction extends LookupDi
 
 	try {
 	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", PresentationConstants.ASSISTENT_GUIDERS_LIST,
-		    actionErrors);
+	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
+		    PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
 	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
 		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
 	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
@@ -205,8 +198,8 @@ public class CreateOrEditMasterDegreeThesisLookupDispatchAction extends LookupDi
 
 	try {
 	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", PresentationConstants.ASSISTENT_GUIDERS_LIST,
-		    actionErrors);
+	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
+		    PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
 	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
 		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
 	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
@@ -233,8 +226,8 @@ public class CreateOrEditMasterDegreeThesisLookupDispatchAction extends LookupDi
 
 	try {
 	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", PresentationConstants.ASSISTENT_GUIDERS_LIST,
-		    actionErrors);
+	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
+		    PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
 	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
 		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
 	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
@@ -258,8 +251,8 @@ public class CreateOrEditMasterDegreeThesisLookupDispatchAction extends LookupDi
 
 	try {
 	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", PresentationConstants.ASSISTENT_GUIDERS_LIST,
-		    actionErrors);
+	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
+		    PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
 	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
 		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
 	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
@@ -291,8 +284,8 @@ public class CreateOrEditMasterDegreeThesisLookupDispatchAction extends LookupDi
 
 	try {
 	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", PresentationConstants.ASSISTENT_GUIDERS_LIST,
-		    actionErrors);
+	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
+		    PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
 	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
 		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
@@ -325,8 +318,8 @@ public class CreateOrEditMasterDegreeThesisLookupDispatchAction extends LookupDi
 
 	try {
 	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", PresentationConstants.ASSISTENT_GUIDERS_LIST,
-		    actionErrors);
+	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
+		    PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
 	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
 		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
@@ -358,8 +351,8 @@ public class CreateOrEditMasterDegreeThesisLookupDispatchAction extends LookupDi
 
 	try {
 	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", PresentationConstants.ASSISTENT_GUIDERS_LIST,
-		    actionErrors);
+	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
+		    PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
 	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
 		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);

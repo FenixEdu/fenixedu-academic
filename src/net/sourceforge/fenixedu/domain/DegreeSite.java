@@ -48,7 +48,7 @@ public class DegreeSite extends DegreeSite_Base {
 	// unable to optimize because we cannot track changes to name correctly.
 	// don't call super.setNormalizedName() !
     }
-    
+
     public Unit getUnit() {
 	Unit unit = super.getUnit();
 	if (unit == null) {
@@ -59,10 +59,10 @@ public class DegreeSite extends DegreeSite_Base {
 	}
 	return unit;
     }
-    
+
     @Service
     private void updateUnit(Unit unit) {
 	setUnit(unit);
     }
-    
+
 }

@@ -14,7 +14,6 @@ public class AnnouncementForwardAction extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	
 	String forwardTo = "/announcements/manageUnitAnnouncementBoard.do?method=" + request.getParameter("method") + "&oid="
 		+ request.getParameter("oid") + "&announcementBoardId=" + request.getParameter("announcementBoardId")
 		+ "&returnAction=" + request.getParameter("returnAction") + "&returnMethod="

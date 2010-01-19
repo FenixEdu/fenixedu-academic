@@ -50,7 +50,7 @@ public class Alumni extends Alumni_Base {
     }
 
     public Alumni readByStudentNumber(Integer studentNumber) {
-        return Student.readStudentByNumber(studentNumber).getAlumni();
+	return Student.readStudentByNumber(studentNumber).getAlumni();
     }
 
     public Boolean hasDocumentIdNumber(String documentIdNumber) {

@@ -4,8 +4,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadCategories;
-
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadCategories;
 import net.sourceforge.fenixedu.presentationTier.Action.framework.CRUDActionByOID;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;

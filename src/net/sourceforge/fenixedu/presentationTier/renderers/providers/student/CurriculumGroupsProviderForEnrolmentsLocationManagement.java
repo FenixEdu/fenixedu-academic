@@ -21,7 +21,7 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 public class CurriculumGroupsProviderForEnrolmentsLocationManagement implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-	
+
 	final EnrolmentLocationBean bean = (EnrolmentLocationBean) source;
 	final Set<DegreeModule> result = new TreeSet<DegreeModule>(DegreeModule.COMPARATOR_BY_NAME);
 

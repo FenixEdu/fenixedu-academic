@@ -455,7 +455,7 @@ public abstract class ResearchResult extends ResearchResult_Base {
     }
 
     public boolean isDeletableByUser(Person person) {
-	return getCreator().equals(person); 
+	return getCreator().equals(person);
     }
 
     public boolean isDeletableByCurrentUser() {

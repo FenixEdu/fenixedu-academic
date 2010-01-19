@@ -12,9 +12,9 @@ public abstract class DomainBackedGroup<T extends DomainObject> extends LeafGrou
     public DomainBackedGroup(T object) {
 	super();
 
-//	if (object == null) {
-//	    throw new DomainException("accessControl.group.domainBacked.null");
-//	}
+	// if (object == null) {
+	// throw new DomainException("accessControl.group.domainBacked.null");
+	// }
 
 	this.reference = new DomainReference<T>(object);
     }

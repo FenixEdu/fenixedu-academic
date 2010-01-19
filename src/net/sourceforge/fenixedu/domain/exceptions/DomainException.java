@@ -9,7 +9,7 @@ public class DomainException extends RuntimeException {
     protected DomainException() {
 	this(null, (String[]) null);
     }
-    
+
     public DomainException(final String key, final String... args) {
 	super(key); // setting the message attribute
 	this.key = key;

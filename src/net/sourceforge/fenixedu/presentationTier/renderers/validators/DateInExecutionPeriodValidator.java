@@ -22,7 +22,7 @@ public class DateInExecutionPeriodValidator extends DateValidator {
     public DateInExecutionPeriodValidator() {
 	super();
     }
-    
+
     public DateInExecutionPeriodValidator(HtmlChainValidator htmlChainValidator) {
 	super(htmlChainValidator);
     }

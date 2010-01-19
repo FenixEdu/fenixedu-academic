@@ -2,10 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 
 import java.util.Collections;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.GenericEvent;
 import net.sourceforge.fenixedu.domain.Person;
@@ -17,6 +13,9 @@ import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import org.apache.struts.util.MessageResources;
 import org.joda.time.DateTime;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
+
 public class ClosePunctualRoomsOccupationRequest extends FenixService {
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
@@ -27,27 +26,27 @@ public class ClosePunctualRoomsOccupationRequest extends FenixService {
 	    sendCloseRequestMessage(request);
 	}
     }
-    
+
     private static void sendCloseRequestMessage(PunctualRoomsOccupationRequest roomsReserveRequest) {
 	MessageResources messages = MessageResources.getMessageResources("resources/ResourceAllocationManagerResources");
 	String body = messages.getMessage("message.room.reservation.solved") + "\n\n"
-			+ messages.getMessage("message.room.reservation.request.number")
-			+ "\n" + roomsReserveRequest.getIdentification() + "\n\n";
+		+ messages.getMessage("message.room.reservation.request.number") + "\n" + roomsReserveRequest.getIdentification()
+		+ "\n\n";
 	body += messages.getMessage("message.room.reservation.request") + "\n";
-	if(roomsReserveRequest.getSubject() != null) {
+	if (roomsReserveRequest.getSubject() != null) {
 	    body += roomsReserveRequest.getSubject();
 	} else {
 	    body += "-";
 	}
 	body += "\n\n" + messages.getMessage("label.rooms.reserve.periods") + ":";
-	for(GenericEvent genericEvent : roomsReserveRequest.getGenericEvents()) {
+	for (GenericEvent genericEvent : roomsReserveRequest.getGenericEvents()) {
 	    body += "\n\t" + genericEvent.getGanttDiagramEventPeriod() + genericEvent.getGanttDiagramEventObservations();
 	}
-	if(roomsReserveRequest.getGenericEvents().isEmpty()) {
+	if (roomsReserveRequest.getGenericEvents().isEmpty()) {
 	    body += "\n-";
 	}
 	body += "\n\n" + messages.getMessage("message.room.reservation.description") + "\n";
-	if(roomsReserveRequest.getDescription() != null) {
+	if (roomsReserveRequest.getDescription() != null) {
 	    body += roomsReserveRequest.getDescription();
 	} else {
 	    body += "-";

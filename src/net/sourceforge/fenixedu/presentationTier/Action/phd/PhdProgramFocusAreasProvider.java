@@ -7,6 +7,6 @@ public class PhdProgramFocusAreasProvider extends AbstractDomainObjectProvider {
 
     @Override
     public Object provide(Object source, Object current) {
-	return RootDomainObject.getInstance().getPhdProgramFocusAreas();	
+	return RootDomainObject.getInstance().getPhdProgramFocusAreas();
     }
 }

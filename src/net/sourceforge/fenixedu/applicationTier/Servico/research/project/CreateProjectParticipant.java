@@ -1,9 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.project;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.InsertExternalPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -15,6 +11,8 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.project.Project;
 import net.sourceforge.fenixedu.domain.research.project.ProjectParticipation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateProjectParticipant extends FenixService {
 
@@ -34,7 +32,8 @@ public class CreateProjectParticipant extends FenixService {
      */
     @Checked("RolePredicates.RESEARCHER_PREDICATE")
     @Service
-    public static ProjectParticipation run(ProjectParticipantSimpleCreationBean bean, Integer projectId) throws FenixServiceException {
+    public static ProjectParticipation run(ProjectParticipantSimpleCreationBean bean, Integer projectId)
+	    throws FenixServiceException {
 	ProjectParticipation participation = null;
 	final Project project = rootDomainObject.readProjectByOID(projectId);
 	if (project == null) {
@@ -64,7 +63,8 @@ public class CreateProjectParticipant extends FenixService {
      */
     @Checked("RolePredicates.RESEARCHER_PREDICATE")
     @Service
-    public static ProjectParticipation run(ProjectParticipantFullCreationBean bean, Integer projectId) throws FenixServiceException {
+    public static ProjectParticipation run(ProjectParticipantFullCreationBean bean, Integer projectId)
+	    throws FenixServiceException {
 	final ProjectParticipation participation;
 	final ExternalContract externalPerson;
 
@@ -96,7 +96,8 @@ public class CreateProjectParticipant extends FenixService {
 
     @Checked("RolePredicates.RESEARCHER_PREDICATE")
     @Service
-    public static ProjectParticipation run(ProjectParticipantUnitCreationBean bean, Integer projectId) throws FenixServiceException {
+    public static ProjectParticipation run(ProjectParticipantUnitCreationBean bean, Integer projectId)
+	    throws FenixServiceException {
 	final ProjectParticipation participation;
 	final Unit unit;
 

@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.SupportLesson;
-import net.sourceforge.fenixedu.domain.Teacher;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -29,7 +28,7 @@ public class DissociateProfessorShipsAndResponsibleFor extends FenixService {
 	    throw new FenixServiceException("nullPersonNumber");
 	}
 	final Person person = Person.readPersonByIstUsername(personNumber);
-	//final Teacher teacher = Teacher.readByNumber(teacherNumber);
+	// final Teacher teacher = Teacher.readByNumber(teacherNumber);
 	if (person == null) {
 	    throw new NonExistingServiceException("noPerson");
 	}
@@ -100,7 +99,7 @@ public class DissociateProfessorShipsAndResponsibleFor extends FenixService {
 	    professorshipsNotRemoved.put("supportLessons", professorshipsWithSupportLessons);
 	    professorshipsNotRemoved.put("shifts", professorshipsWithShifts);
 	}
-	
+
 	return professorshipsNotRemoved;
     }
 

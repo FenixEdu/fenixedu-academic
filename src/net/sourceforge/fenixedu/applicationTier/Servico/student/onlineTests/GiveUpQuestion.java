@@ -4,10 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 import java.util.List;
 import java.util.Set;
 
@@ -25,6 +21,8 @@ import net.sourceforge.fenixedu.util.tests.ResponseLID;
 import net.sourceforge.fenixedu.util.tests.ResponseNUM;
 import net.sourceforge.fenixedu.util.tests.ResponseProcessing;
 import net.sourceforge.fenixedu.util.tests.ResponseSTR;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Susana Fernandes
@@ -99,8 +97,8 @@ public class GiveUpQuestion extends FenixService {
 	return;
     }
 
-    private static Double getNextQuestionValue(StudentTestQuestion thisStudentTestQuestion, StudentTestQuestion nextStudentTestQuestion,
-	    String path) throws FenixServiceException {
+    private static Double getNextQuestionValue(StudentTestQuestion thisStudentTestQuestion,
+	    StudentTestQuestion nextStudentTestQuestion, String path) throws FenixServiceException {
 	ParseSubQuestion parse = new ParseSubQuestion();
 	try {
 	    parse.parseStudentTestQuestion(nextStudentTestQuestion, path);

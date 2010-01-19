@@ -46,7 +46,8 @@ public class SelectRoomsFormAction extends FenixContextAction {
 		"building"), readIntegerFormValue(roomForm, "floor"), readTypeRoomFormValue(roomForm, "type"),
 		readIntegerFormValue(roomForm, "capacityNormal"), readIntegerFormValue(roomForm, "capacityExame")));
 
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+		.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
 	request.setAttribute("objectCode", infoExecutionPeriod.getIdInternal());
 

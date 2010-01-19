@@ -10,7 +10,7 @@ public enum ProfessionalSituationType {
 	    false), REQUESTED_FROM(false, false),
 
     EXERCISE_OF_FUNCTIONS(false, false),
-	    
+
     LIFETIME_TEACHER_BY_DIRECTIVE_COUNCIL_AUTHORIZATION(false, false),
 
     // Functions Accumulation

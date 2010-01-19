@@ -1,13 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.ImportFunctionalities;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.CreateGroupAvailability;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.ArrangeFunctionalities;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.DeleteFunctionality;
-
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +7,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.ArrangeFunctionalities;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.CreateGroupAvailability;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.DeleteFunctionality;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.ImportFunctionalities;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;

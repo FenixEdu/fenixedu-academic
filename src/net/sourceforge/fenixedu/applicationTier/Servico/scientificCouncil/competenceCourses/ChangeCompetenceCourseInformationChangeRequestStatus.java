@@ -60,7 +60,8 @@ public class ChangeCompetenceCourseInformationChangeRequestStatus extends FenixS
 	}
     }
 
-    private static void createLoads(CompetenceCourseInformationChangeRequest changeRequest, CompetenceCourseInformation information) {
+    private static void createLoads(CompetenceCourseInformationChangeRequest changeRequest,
+	    CompetenceCourseInformation information) {
 	CompetenceCourseLoad courseLoad = new CompetenceCourseLoad(changeRequest.getTheoreticalHours(), changeRequest
 		.getProblemsHours(), changeRequest.getLaboratorialHours(), changeRequest.getSeminaryHours(), changeRequest
 		.getFieldWorkHours(), changeRequest.getTrainingPeriodHours(), changeRequest.getTutorialOrientationHours(),

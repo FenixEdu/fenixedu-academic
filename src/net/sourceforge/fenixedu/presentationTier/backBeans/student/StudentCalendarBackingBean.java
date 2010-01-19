@@ -72,8 +72,7 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 	if (executionSemesters == null) {
 	    final Registration registration = getStudent();
 
-	    executionSemesters = new TreeSet<ExecutionSemester>(
-		    ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
+	    executionSemesters = new TreeSet<ExecutionSemester>(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
 	    if (registration != null) {
 		for (final Attends attends : registration.getAssociatedAttends()) {
 		    executionSemesters.add(attends.getExecutionCourse().getExecutionPeriod());
@@ -157,7 +156,8 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 	final ExecutionSemester executionSemester = getExecutionPeriod();
 	final String evaluationTypeClassname = getEvaluationTypeClassname();
 	final Registration registration = getStudent();
-	final StudentCurricularPlan studentCurricularPlan = registration == null ? null : registration.getActiveStudentCurricularPlan();
+	final StudentCurricularPlan studentCurricularPlan = registration == null ? null : registration
+		.getActiveStudentCurricularPlan();
 	final DegreeCurricularPlan degreeCurricularPlan = (studentCurricularPlan != null) ? studentCurricularPlan
 		.getDegreeCurricularPlan() : null;
 	final ExecutionDegree executionDegree = findExecutinDegree(degreeCurricularPlan, executionSemester);

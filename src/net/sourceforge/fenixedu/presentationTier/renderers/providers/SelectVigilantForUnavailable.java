@@ -16,23 +16,22 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class SelectVigilantForUnavailable implements DataProvider {
 
-	public Object provide(Object source, Object currentValue) {
+    public Object provide(Object source, Object currentValue) {
 
-		UnavailablePeriodBean bean = (UnavailablePeriodBean) source;
-		VigilantGroup vigilantGroup = bean.getSelectedVigilantGroup();
+	UnavailablePeriodBean bean = (UnavailablePeriodBean) source;
+	VigilantGroup vigilantGroup = bean.getSelectedVigilantGroup();
 
-		List<VigilantWrapper> vigilantWrappers = new ArrayList<VigilantWrapper>();
-		if (vigilantGroup != null) {
-			vigilantWrappers.addAll(vigilantGroup.getVigilantWrappers());
-			Collections.sort(vigilantWrappers,
-					new BeanComparator("person.name"));
-		}
-		return vigilantWrappers;
-
+	List<VigilantWrapper> vigilantWrappers = new ArrayList<VigilantWrapper>();
+	if (vigilantGroup != null) {
+	    vigilantWrappers.addAll(vigilantGroup.getVigilantWrappers());
+	    Collections.sort(vigilantWrappers, new BeanComparator("person.name"));
 	}
+	return vigilantWrappers;
 
-	public Converter getConverter() {
-		return new DomainObjectKeyConverter();
-	}
+    }
+
+    public Converter getConverter() {
+	return new DomainObjectKeyConverter();
+    }
 
 }

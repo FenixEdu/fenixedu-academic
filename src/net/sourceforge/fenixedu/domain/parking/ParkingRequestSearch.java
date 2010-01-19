@@ -64,11 +64,10 @@ public class ParkingRequestSearch implements Serializable {
 		final ParkingParty parkingParty = person.getParkingParty();
 		if (parkingParty != null) {
 		    for (final ParkingRequest parkingRequest : parkingParty.getParkingRequestsSet()) {
-			if (satisfiedPersonClassification(parkingRequest)
-				&& satisfiedRequestState(parkingRequest)
+			if (satisfiedPersonClassification(parkingRequest) && satisfiedRequestState(parkingRequest)
 				&& satisfiedCarPlateNumber(parkingRequest)) {
 			    parkingRequests.add(parkingRequest);
-			}			
+			}
 		    }
 		}
 	    }
@@ -78,7 +77,7 @@ public class ParkingRequestSearch implements Serializable {
 			&& satisfiedCarPlateNumber(request)) {
 		    parkingRequests.add(request);
 		}
-	    }	    
+	    }
 	}
 
 	setSearchResult(parkingRequests);
@@ -97,8 +96,7 @@ public class ParkingRequestSearch implements Serializable {
 
     private boolean satisfiedPersonClassification(ParkingRequest request) {
 	final ParkingParty parkingParty = request.getParkingParty();
-	if (getPartyClassification() == null
-		|| parkingParty.getParty().getPartyClassification() == getPartyClassification()) {
+	if (getPartyClassification() == null || parkingParty.getParty().getPartyClassification() == getPartyClassification()) {
 	    if (getPartyClassification() == PartyClassification.TEACHER) {
 		final Person person = (Person) parkingParty.getParty();
 		final Teacher teacher = person.getTeacher();

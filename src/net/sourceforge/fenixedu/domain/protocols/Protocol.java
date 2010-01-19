@@ -362,8 +362,8 @@ public class Protocol extends Protocol_Base {
 		.getExcelStyle().getVerticalHeaderStyle(), 500);
 	spreadsheet.addHeader(resourceBundle.getString(ProtocolActionType.POST_GRADUATION.toString()), spreadsheet
 		.getExcelStyle().getVerticalHeaderStyle(), 500);
-	spreadsheet.addHeader(resourceBundle.getString(ProtocolActionType.DOUBLE_DEGREE.toString()), spreadsheet
-		.getExcelStyle().getVerticalHeaderStyle(), 500);
+	spreadsheet.addHeader(resourceBundle.getString(ProtocolActionType.DOUBLE_DEGREE.toString()), spreadsheet.getExcelStyle()
+		.getVerticalHeaderStyle(), 500);
 	spreadsheet.addHeader(bundle.getString("label.protocol.otherActionTypes"), 10000);
 	spreadsheet.addHeader(bundle.getString("label.protocol.observations"), 10000);
 	spreadsheet.addHeader(bundle.getString("label.protocol.units"), 10000);

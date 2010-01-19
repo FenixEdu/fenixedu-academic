@@ -49,7 +49,8 @@ public class VisualizeMasterDegreeThesisDispatchAction extends FenixDispatchActi
 	}
 
 	if (masterDegreeThesisDataVersion.getAssistentGuiders().isEmpty() == false) {
-	    request.setAttribute(PresentationConstants.ASSISTENT_GUIDERS_LIST, masterDegreeThesisDataVersion.getAssistentGuiders());
+	    request.setAttribute(PresentationConstants.ASSISTENT_GUIDERS_LIST, masterDegreeThesisDataVersion
+		    .getAssistentGuiders());
 	}
 
 	if (masterDegreeThesisDataVersion.getExternalAssistentGuiders().isEmpty() == false) {

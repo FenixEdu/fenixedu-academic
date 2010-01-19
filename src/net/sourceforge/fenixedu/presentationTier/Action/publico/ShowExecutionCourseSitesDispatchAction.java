@@ -61,7 +61,8 @@ public class ShowExecutionCourseSitesDispatchAction extends FenixDispatchAction 
     }
 
     private InfoExecutionPeriod getPreviousExecutionPeriod(HttpServletRequest request) {
-	final InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+	final InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+		.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
 	final ExecutionSemester executionSemester = infoExecutionPeriod.getExecutionPeriod();
 	final ExecutionSemester nextExecutionSemester = executionSemester.getNextExecutionPeriod();

@@ -42,9 +42,9 @@ public class InfoCountry extends InfoObject {
     public static InfoCountry newInfoFromDomain(final Country country) {
 	return country == null ? null : new InfoCountry(country);
     }
-    
+
     public String getNameAndNationality() {
-    	return getCountry().getName() + " - " + getCountry().getNationality();
+	return getCountry().getName() + " - " + getCountry().getNationality();
     }
 
     @Override

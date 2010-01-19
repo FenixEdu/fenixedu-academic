@@ -12,7 +12,7 @@ public enum EntryPhase {
     SECOND_PHASE(2),
 
     THIRD_PHASE(3);
-    
+
     private int phaseNumber;
 
     private EntryPhase(int phaseNumber) {
@@ -38,9 +38,9 @@ public enum EntryPhase {
     public String getLocalizedName(final Locale locale) {
 	return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getQualifiedName());
     }
-    
+
     public int getPhaseNumber() {
-        return phaseNumber;
+	return phaseNumber;
     }
 
     static public EntryPhase valueOf(int phaseNumber) {

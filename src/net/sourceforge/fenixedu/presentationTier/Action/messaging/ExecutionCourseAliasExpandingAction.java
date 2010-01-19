@@ -18,8 +18,10 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 /**
- * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/> <br/>
- *         <br/> Created on 0:32:09,17/Out/2005
+ * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/>
+ * <br/>
+ * <br/>
+ *         Created on 0:32:09,17/Out/2005
  * @version $Id: ExecutionCourseAliasExpandingAction.java 36441 2008-06-07
  *          00:49:33Z lepc $
  */

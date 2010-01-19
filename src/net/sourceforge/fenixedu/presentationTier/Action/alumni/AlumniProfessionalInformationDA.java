@@ -110,7 +110,7 @@ public class AlumniProfessionalInformationDA extends AlumniEntityManagementDA {
 
 	return innerProfessionalInformation(mapping, actionForm, request, response);
     }
-    
+
     protected Job getJob(HttpServletRequest request) {
 	return rootDomainObject.readJobByOID(getIntegerFromRequest(request, "jobId"));
     }

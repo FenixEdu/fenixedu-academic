@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.coordinator.transition;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.competenceCourses.ChangeCompetenceCourseInformationChangeRequestStatus;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -11,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.competenceCourses.ChangeCompetenceCourseInformationChangeRequestStatus;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Person;
@@ -64,8 +63,7 @@ public class ManageCompetenceCourseInformationChangeRequests extends FenixDispat
 	CompetenceCourseInformationChangeRequest changeRequest = getChangeRequest(request);
 	if (changeRequest != null && isAllowedToViewChangeRequest(getLoggedPerson(request), changeRequest)) {
 	    try {
-		ChangeCompetenceCourseInformationChangeRequestStatus.run(changeRequest,
-			getLoggedPerson(request), status);
+		ChangeCompetenceCourseInformationChangeRequestStatus.run(changeRequest, getLoggedPerson(request), status);
 	    } catch (DomainException e) {
 		addActionMessage(request, e.getMessage());
 	    }

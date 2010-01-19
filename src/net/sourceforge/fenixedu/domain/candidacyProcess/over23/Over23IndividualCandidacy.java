@@ -216,7 +216,7 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 	registration.setRegistrationYear(getCandidacyExecutionInterval());
 	return registration;
     }
-    
+
     @Override
     public void exportValues(StringBuilder result) {
 	super.exportValues(result);

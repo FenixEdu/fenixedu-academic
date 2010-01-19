@@ -1,17 +1,13 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.academicCalendarManagement.DeleteAcademicCalendarEntry;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.academicCalendarManagement.CreateAcademicCalendarEntry;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.academicCalendarManagement.CreateAcademicCalendarEntry;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.academicCalendarManagement.CreateAcademicCalendarEntry;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.academicCalendarManagement.DeleteAcademicCalendarEntry;
 import net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;

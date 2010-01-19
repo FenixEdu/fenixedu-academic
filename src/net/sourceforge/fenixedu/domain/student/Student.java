@@ -137,7 +137,6 @@ public class Student extends Student_Base {
 	return null;
     }
 
-
     // -------------------------------------------------------------
     // read static methods
     // -------------------------------------------------------------
@@ -167,8 +166,6 @@ public class Student extends Student_Base {
 	    }
 	}
     }
-
-
 
     public String getName() {
 	return getPerson().getName();
@@ -485,7 +482,7 @@ public class Student extends Student_Base {
     }
 
     public void delete() {
-	
+
 	for (; hasAnyStudentDataByExecutionYear(); getStudentDataByExecutionYear().get(0).delete())
 	    ;
 	for (; !getRegistrations().isEmpty(); getRegistrations().get(0).delete())
@@ -497,7 +494,7 @@ public class Student extends Student_Base {
 	getDelegateElections().clear();
 
 	setNumber(null);
-	
+
 	removePerson();
 	removeRootDomainObject();
 	deleteDomainObject();

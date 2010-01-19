@@ -67,8 +67,9 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 			    + infoExecutionCourse.getInfoExecutionPeriod().getInfoExecutionYear().getYear() + "&amp;season="
 			    + infoExam.getSeason().getseason() + "&amp;" + PresentationConstants.EXECUTION_PERIOD_OID + "="
 			    + infoExecutionCourse.getInfoExecutionPeriod().getIdInternal() + "&amp;"
-			    + PresentationConstants.EXECUTION_DEGREE_OID + "=" + examsMap.getInfoExecutionDegree().getIdInternal()
-			    + "&amp;" + PresentationConstants.EXECUTION_COURSE_OID + "=" + infoExecutionCourse.getIdInternal()
+			    + PresentationConstants.EXECUTION_DEGREE_OID + "="
+			    + examsMap.getInfoExecutionDegree().getIdInternal() + "&amp;"
+			    + PresentationConstants.EXECUTION_COURSE_OID + "=" + infoExecutionCourse.getIdInternal()
 			    + getCurricularYearsArgs() + "'>");
 
 		    if (isOnValidWeekDay) {

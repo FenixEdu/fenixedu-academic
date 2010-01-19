@@ -36,7 +36,8 @@ public class EscolherContextoFormAction extends FenixContextAction {
 
 	IUserView userView = UserView.getUser();
 
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+		.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
 	Integer semestre = infoExecutionPeriod.getSemester();
 	Integer anoCurricular = (Integer) escolherContextoForm.get("anoCurricular");

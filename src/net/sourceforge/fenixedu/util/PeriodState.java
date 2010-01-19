@@ -58,18 +58,18 @@ public class PeriodState extends FenixUtil {
     }
 
     public static PeriodState valueOf(String code) {
-        if (code == null) {
-            return null;
-        } else if (code.equals(PeriodState.CURRENT_CODE)) {
-            return PeriodState.CURRENT;
-        } else if (code.equals(PeriodState.OPEN_CODE)) {
-            return PeriodState.OPEN;
-        } else if (code.equals(PeriodState.NOT_OPEN_CODE)) {
-            return PeriodState.NOT_OPEN;
-        } else if (code.equals(PeriodState.CLOSED_CODE)) {
-            return PeriodState.CLOSED;
-        }
+	if (code == null) {
+	    return null;
+	} else if (code.equals(PeriodState.CURRENT_CODE)) {
+	    return PeriodState.CURRENT;
+	} else if (code.equals(PeriodState.OPEN_CODE)) {
+	    return PeriodState.OPEN;
+	} else if (code.equals(PeriodState.NOT_OPEN_CODE)) {
+	    return PeriodState.NOT_OPEN;
+	} else if (code.equals(PeriodState.CLOSED_CODE)) {
+	    return PeriodState.CLOSED;
+	}
 
-        return null;
+	return null;
     }
 }

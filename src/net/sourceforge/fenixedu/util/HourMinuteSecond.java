@@ -817,7 +817,6 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
 	return toDateMidnight(zone).toInterval();
     }
 
-
     // -----------------------------------------------------------------------
     /**
      * Converts this object to a LocalTime.
@@ -829,13 +828,13 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
     }
 
     /**
-     * Constructs a HourMinuteSecond from a LocalTime, using exactly
-     * the same fields, but ignoring the millis.
+     * Constructs a HourMinuteSecond from a LocalTime, using exactly the same
+     * fields, but ignoring the millis.
      * 
      * @return the created HourMinuteSecond
      */
     public static HourMinuteSecond fromLocalTime(LocalTime time) {
-        return new HourMinuteSecond(time.getHourOfDay(), time.getMinuteOfHour(), time.getSecondOfMinute());
+	return new HourMinuteSecond(time.getHourOfDay(), time.getMinuteOfHour(), time.getSecondOfMinute());
     }
 
     // -----------------------------------------------------------------------
@@ -982,7 +981,7 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
 	    return iHourMinuteSecond.getValue(iFieldIndex);
 	}
 
-	//----------------------------------------------------------------------
+	// ----------------------------------------------------------------------
 	// -
 	/**
 	 * Adds to the value of this field in a copy of this HourMinuteSecond.
@@ -1029,7 +1028,7 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
 	    return new HourMinuteSecond(iHourMinuteSecond, newValues);
 	}
 
-	//----------------------------------------------------------------------
+	// ----------------------------------------------------------------------
 	// -
 	/**
 	 * Sets this field in a copy of the HourMinuteSecond.
@@ -1087,7 +1086,7 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
 	    return setCopy(text, null);
 	}
 
-	//----------------------------------------------------------------------
+	// ----------------------------------------------------------------------
 	// -
 	/**
 	 * Returns a new HourMinuteSecond with this field set to the maximum

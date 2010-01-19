@@ -1,9 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.resourceManager;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceManager.DeleteVehicle;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceManager.CreateVehicle;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceManager.CreateVehicle;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceManager.DeleteVehicle;
 import net.sourceforge.fenixedu.dataTransferObject.resourceManager.VehicleBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.resource.Vehicle;
@@ -98,8 +96,8 @@ public class VehicleManagementDA extends FenixDispatchAction {
 	VehicleBean bean = (VehicleBean) getRenderedObject("createVehicleBeanID");
 
 	try {
-	    CreateVehicle.run(bean.getNumberPlate(), bean.getMake(), bean.getModel(),
-		    bean.getAcquisition(), bean.getCease(), bean.getAllocationCostMultiplier());
+	    CreateVehicle.run(bean.getNumberPlate(), bean.getMake(), bean.getModel(), bean.getAcquisition(), bean.getCease(),
+		    bean.getAllocationCostMultiplier());
 
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());

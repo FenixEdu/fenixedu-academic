@@ -17,10 +17,11 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/editOldMarkSheet", module = "academicAdminOffice", formBean = "markSheetManagementForm", input = "/markSheetManagement.do?method=prepareSearchMarkSheet")
-@Forwards( {
-	@Forward(name = "editMarkSheet", path = "/academicAdminOffice/gradeSubmission/oldMarkSheets/editMarkSheet.jsp"),
+@Forwards( { @Forward(name = "editMarkSheet", path = "/academicAdminOffice/gradeSubmission/oldMarkSheets/editMarkSheet.jsp"),
 	@Forward(name = "searchMarkSheetFilled", path = "/oldMarkSheetManagement.do?method=prepareSearchMarkSheetFilled") })
-	//@Forward(name = "editArchiveInformation", path = "/academicAdminOffice/gradeSubmission/editMarkSheetArchiveInformation.jsp") })
+// @Forward(name = "editArchiveInformation", path =
+// "/academicAdminOffice/gradeSubmission/editMarkSheetArchiveInformation.jsp")
+// })
 public class OldMarkSheetEditDispatchAction extends MarkSheetEditDispatchAction {
 
     @Override

@@ -52,11 +52,9 @@ public class SchoolUnit extends SchoolUnit_Base {
 
     private static SchoolUnit createNewUnit(Unit parentUnit, SchoolUnit schoolUnit, Boolean checkExistingUnit) {
 	if (parentUnit.isCountryUnit()) {
-	    schoolUnit.addParentUnit(parentUnit, AccountabilityType
-		    .readByType(AccountabilityTypeEnum.GEOGRAPHIC));
+	    schoolUnit.addParentUnit(parentUnit, AccountabilityType.readByType(AccountabilityTypeEnum.GEOGRAPHIC));
 	} else if (parentUnit.isUniversityUnit()) {
-	    schoolUnit.addParentUnit(parentUnit, AccountabilityType
-		    .readByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
+	    schoolUnit.addParentUnit(parentUnit, AccountabilityType.readByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
 	}
 
 	if (checkExistingUnit) {

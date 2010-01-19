@@ -28,9 +28,9 @@ public class RemoveProfessorshipAction extends Action {
 
 	String id = (String) teacherExecutionCourseForm.get("teacherNumber");
 	Integer executionCourseId = Integer.valueOf((String) teacherExecutionCourseForm.get("executionCourseId"));
-	
-	RemoveProfessorshipWithPerson.run(Person.readPersonByIstUsername(id), 
-		RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId));
+
+	RemoveProfessorshipWithPerson.run(Person.readPersonByIstUsername(id), RootDomainObject.getInstance()
+		.readExecutionCourseByOID(executionCourseId));
 	return mapping.findForward("successfull-delete");
     }
 }

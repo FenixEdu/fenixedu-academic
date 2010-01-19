@@ -4,13 +4,12 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class ShiftDistributionEntry extends ShiftDistributionEntry_Base {
 
@@ -71,7 +70,7 @@ public class ShiftDistributionEntry extends ShiftDistributionEntry_Base {
     public void changeShift(Shift newShift) {
 	super.setShift(newShift);
     }
-    
+
     @Checked("RolePredicates.MANAGER_PREDICATE")
     public void changeExecutionDegree(final ExecutionDegree executionDegree) {
 	super.setExecutionDegree(executionDegree);

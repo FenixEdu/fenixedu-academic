@@ -416,7 +416,8 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	try {
 	    final MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
 
-	    infoMasterDegreeCandidateChanged = (InfoMasterDegreeCandidate) EditMasterDegreeCandidate.run(masterDegreeCandidate, newCandidate, infoPerson);
+	    infoMasterDegreeCandidateChanged = (InfoMasterDegreeCandidate) EditMasterDegreeCandidate.run(masterDegreeCandidate,
+		    newCandidate, infoPerson);
 	} catch (ExistingServiceException e) {
 	    throw new ExistingActionException("Esta Person", e);
 	} catch (FenixServiceException e) {

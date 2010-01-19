@@ -3,10 +3,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -19,7 +15,8 @@ import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.Student;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Susana Fernandes
@@ -36,8 +33,8 @@ public class ReadStudentTest extends FenixService {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
-    public static List<StudentTestQuestion> run(Registration registration, DistributedTest distributedTest, Boolean log, String path)
-	    throws FenixServiceException {
+    public static List<StudentTestQuestion> run(Registration registration, DistributedTest distributedTest, Boolean log,
+	    String path) throws FenixServiceException {
 	if (distributedTest == null) {
 	    throw new InvalidArgumentsServiceException();
 	}

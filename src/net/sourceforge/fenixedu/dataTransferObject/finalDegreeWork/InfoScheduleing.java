@@ -236,11 +236,11 @@ public class InfoScheduleing extends InfoObject {
     }
 
     public Integer getMinimumCompletedCreditsFirstCycle() {
-        return minimumCompletedCreditsFirstCycle;
+	return minimumCompletedCreditsFirstCycle;
     }
 
     public void setMinimumCompletedCreditsFirstCycle(Integer minimumCompletedCreditsFirstCycle) {
-        this.minimumCompletedCreditsFirstCycle = minimumCompletedCreditsFirstCycle;
+	this.minimumCompletedCreditsFirstCycle = minimumCompletedCreditsFirstCycle;
     }
 
     public Integer getMinimumCompletedCreditsSecondCycle() {

@@ -20,13 +20,11 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/managePasswords", module = "student")
-@Forwards( {
-    @Forward(name = "manage.passwords", path = "df.page.manage.passwords")
-})
+@Forwards( { @Forward(name = "manage.passwords", path = "df.page.manage.passwords") })
 public class ManagePasswordsAction extends FenixDispatchAction {
 
-    public ActionForward managePasswords(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws FenixActionException, FenixFilterException {
+    public ActionForward managePasswords(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 	return mapping.findForward("manage.passwords");
     }
 
@@ -37,16 +35,16 @@ public class ManagePasswordsAction extends FenixDispatchAction {
     }
 
     @Service
-    public ActionForward generatePassword(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-    		throws FenixActionException, FenixFilterException {
+    public ActionForward generatePassword(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 	final Student student = getStudent(request);
 	student.generateExportInformationPassword();
 	return managePasswords(mapping, form, request, response);
     }
 
     @Service
-    public ActionForward deletePassword(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-    		throws FenixActionException, FenixFilterException {
+    public ActionForward deletePassword(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 	final Student student = getStudent(request);
 	student.deleteExportInformationPassword();
 	return managePasswords(mapping, form, request, response);

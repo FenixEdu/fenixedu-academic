@@ -6,12 +6,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
-
 public class PendingRequest extends PendingRequest_Base {
 
     public static String buildVersion;
-    
+
     public PendingRequest(HttpServletRequest request) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
@@ -30,7 +28,7 @@ public class PendingRequest extends PendingRequest_Base {
 		    final int paramIndex = queryString.indexOf(key);
 		    final int nextChar = paramIndex + key.length();
 		    isParam = paramIndex >= 0 && queryString.length() > nextChar && queryString.charAt(nextChar) == '='
-			&& (paramIndex == 0 || queryString.charAt(paramIndex - 1) == '&');
+			    && (paramIndex == 0 || queryString.charAt(paramIndex - 1) == '&');
 		}
 		addPendingRequestParameter(new PendingRequestParameter(key, request.getParameter(key), !isParam));
 	    }
@@ -47,7 +45,7 @@ public class PendingRequest extends PendingRequest_Base {
 	    } else if (object instanceof String) {
 		addPendingRequestParameter(new PendingRequestParameter(key, (String) object, true));
 	    } else {
-		 // Not sure how to procede here...
+		// Not sure how to procede here...
 	    }
 	}
     }

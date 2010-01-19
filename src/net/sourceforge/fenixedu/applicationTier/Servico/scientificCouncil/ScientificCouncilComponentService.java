@@ -5,15 +5,13 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Factory.ScientificCouncilComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author João Mota
@@ -25,8 +23,8 @@ public class ScientificCouncilComponentService extends FenixService {
 
     @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
     @Service
-    public static SiteView run(ISiteComponent bodyComponent, Integer degreeId, Integer curricularYear, Integer degreeCurricularPlanId)
-	    throws FenixServiceException {
+    public static SiteView run(ISiteComponent bodyComponent, Integer degreeId, Integer curricularYear,
+	    Integer degreeCurricularPlanId) throws FenixServiceException {
 
 	ScientificCouncilComponentBuilder componentBuilder = ScientificCouncilComponentBuilder.getInstance();
 	bodyComponent = componentBuilder.getComponent(bodyComponent, degreeId, curricularYear, degreeCurricularPlanId);

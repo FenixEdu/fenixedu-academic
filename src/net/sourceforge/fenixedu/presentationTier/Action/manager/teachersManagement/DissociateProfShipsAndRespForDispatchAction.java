@@ -39,13 +39,14 @@ public class DissociateProfShipsAndRespForDispatchAction extends FenixDispatchAc
 
 	DynaActionForm teacherNumberForm = (DynaActionForm) form;
 
-	// Integer teacherNumber = Integer.valueOf((String) teacherNumberForm.get("teacherNumber"));
-	String personId = (String)teacherNumberForm.get("teacherNumber");
+	// Integer teacherNumber = Integer.valueOf((String)
+	// teacherNumberForm.get("teacherNumber"));
+	String personId = (String) teacherNumberForm.get("teacherNumber");
 	// InfoTeacher infoTeacher = null;
 	Person person = null;
 
-	
-	//infoTeacher = (InfoTeacher) ReadInfoTeacherByTeacherNumber.run(teacherNumber);
+	// infoTeacher = (InfoTeacher)
+	// ReadInfoTeacherByTeacherNumber.run(teacherNumber);
 	person = Person.readPersonByIstUsername(personId);
 
 	if (person == null) {
@@ -74,7 +75,8 @@ public class DissociateProfShipsAndRespForDispatchAction extends FenixDispatchAc
 	HashMap professorshipsNotRemoved = null;
 
 	try {
-	    professorshipsNotRemoved = (HashMap) DissociateProfessorShipsAndResponsibleFor.run(personNumber, professorshipsToDelete, responsibleForsToDelete);
+	    professorshipsNotRemoved = (HashMap) DissociateProfessorShipsAndResponsibleFor.run(personNumber,
+		    professorshipsToDelete, responsibleForsToDelete);
 
 	} catch (NonExistingServiceException e) {
 	    if (e.getMessage().equals("noTeacher")) {
@@ -94,9 +96,8 @@ public class DissociateProfShipsAndRespForDispatchAction extends FenixDispatchAc
 	    }
 	}
 	/*
-	if (!errors.isEmpty()) {
-	    return mapping.getInputForward();
-	}*/
+	 * if (!errors.isEmpty()) { return mapping.getInputForward(); }
+	 */
 
 	if (professorshipsNotRemoved != null && professorshipsNotRemoved.size() > 0) {
 	    errors = createErrors(request, professorshipsNotRemoved, "supportLessons", "PSWithSL",

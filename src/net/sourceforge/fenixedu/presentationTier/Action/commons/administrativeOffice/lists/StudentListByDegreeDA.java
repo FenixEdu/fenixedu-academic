@@ -254,7 +254,8 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 		    + getEnumNameFromResources(searchBean.getIngression()));
 	}
 	spreadsheet.newHeaderRow();
-	spreadsheet.addHeader(getResourceMessage("lists.participationType") + ": " + getEnumNameFromResources(searchBean.getParticipationType()));
+	spreadsheet.addHeader(getResourceMessage("lists.participationType") + ": "
+		+ getEnumNameFromResources(searchBean.getParticipationType()));
 
 	spreadsheet.newHeaderRow();
 	if (searchBean.hasAnyRegistrationAgreements()) {

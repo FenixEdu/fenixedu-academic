@@ -16,11 +16,12 @@ import org.apache.commons.collections.Predicate;
 
 import pt.ist.fenixWebFramework.services.Service;
 
-public class DeleteProfessorshipWithPerson extends AbstractModifyProfessorshipWithPerson{
+public class DeleteProfessorshipWithPerson extends AbstractModifyProfessorshipWithPerson {
 
     private static boolean isSamePersonAsBeingRemoved(Person loggedPerson, Person selectedPerson) {
 	return loggedPerson == selectedPerson;
     }
+
     @Service
     public static Boolean run(Person person, ExecutionCourse executionCourse) throws NotAuthorizedException {
 	try {
@@ -28,7 +29,7 @@ public class DeleteProfessorshipWithPerson extends AbstractModifyProfessorshipWi
 	    final Person loggedPerson = AccessControl.getPerson();
 
 	    Professorship selectedProfessorship = null;
-		selectedProfessorship = person.getProfessorshipByExecutionCourse(executionCourse);
+	    selectedProfessorship = person.getProfessorshipByExecutionCourse(executionCourse);
 
 	    if ((loggedPerson == null) || (selectedProfessorship == null) || !loggedPerson.hasRole(RoleType.TEACHER)
 		    || isSamePersonAsBeingRemoved(loggedPerson, selectedProfessorship.getPerson())

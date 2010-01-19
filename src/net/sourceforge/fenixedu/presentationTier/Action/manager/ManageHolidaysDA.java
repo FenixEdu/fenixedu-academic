@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteHoliday;
-
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteHoliday;
 import net.sourceforge.fenixedu.domain.Holiday;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 

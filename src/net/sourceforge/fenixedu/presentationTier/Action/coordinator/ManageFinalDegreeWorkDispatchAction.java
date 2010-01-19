@@ -289,10 +289,10 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	final ProposalsSummaryBean proposalsSummaryBean = new ProposalsSummaryBean(executionDegree, degreeCurricularPlan);
 
 	ProposalsFilterBean filterBean;
-	if(request.getParameter("proposalStatusType") == null) {
+	if (request.getParameter("proposalStatusType") == null) {
 	    filterBean = (ProposalsFilterBean) getRenderedObject("filterBean");
 	    if (filterBean == null) {
-		   filterBean = new ProposalsFilterBean(proposalsSummaryBean);
+		filterBean = new ProposalsFilterBean(proposalsSummaryBean);
 	    }
 	} else {
 	    filterBean = readFilterBean(request, proposalsSummaryBean);
@@ -305,7 +305,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 		Proposal.COMPARATOR_BY_PROPOSAL_NUMBER).filter(executionDegree.getProposals());
 	String sortBy = request.getParameter("sortBy");
 	if (sortBy == null) {
-	   sortBy = "proposalNumber|ascending";
+	    sortBy = "proposalNumber|ascending";
 	}
 	request.setAttribute("sortBy", sortBy);
 	String attrib = sortBy.substring(0, sortBy.indexOf("|"));
@@ -330,15 +330,15 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	List<Proposal> result = new ArrayList<Proposal>();
 	result.addAll(proposals);
 	Comparator<Proposal> comparator = null;
-	if(attrib.equalsIgnoreCase("proposalStatus")) {
+	if (attrib.equalsIgnoreCase("proposalStatus")) {
 	    comparator = Proposal.COMPARATOR_BY_STATUS;
-	} else if(attrib.equalsIgnoreCase("numberOfCandidates")) {
+	} else if (attrib.equalsIgnoreCase("numberOfCandidates")) {
 	    comparator = Proposal.COMPARATOR_BY_NUMBER_OF_CANDIDATES;
 	} else {
 	    comparator = Proposal.COMPARATOR_BY_PROPOSAL_NUMBER;
 	}
 	Collections.sort(result, comparator);
-	if(order.equalsIgnoreCase("descending")) {
+	if (order.equalsIgnoreCase("descending")) {
 	    Collections.reverse(result);
 	}
 	return result;
@@ -352,40 +352,40 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	int count;
 
 	ProposalStatusType proposalStatusType;
-	if(proposalStatusString.equalsIgnoreCase("TOTAL")) {
+	if (proposalStatusString.equalsIgnoreCase("TOTAL")) {
 	    proposalStatusType = ProposalStatusType.TOTAL;
 	    count = summary.getTotalProposalsCount();
-	} else if(proposalStatusString.equalsIgnoreCase("FOR_APPROVAL")) {
+	} else if (proposalStatusString.equalsIgnoreCase("FOR_APPROVAL")) {
 	    proposalStatusType = ProposalStatusType.FOR_APPROVAL;
 	    count = summary.getForApprovalProposalsCount();
-	} else if(proposalStatusString.equalsIgnoreCase("APPROVED")) {
+	} else if (proposalStatusString.equalsIgnoreCase("APPROVED")) {
 	    proposalStatusType = ProposalStatusType.APPROVED;
 	    count = summary.getApprovedProposalsCount();
 	} else {
 	    proposalStatusType = ProposalStatusType.PUBLISHED;
 	    count = summary.getPublishedProposalsCount();
 	}
-	
+
 	AttributionFilter attributionFilter;
-	if(attributionFilterString.equalsIgnoreCase("ATTRIBUTED")) {
+	if (attributionFilterString.equalsIgnoreCase("ATTRIBUTED")) {
 	    attributionFilter = AttributionFilter.ATTRIBUTED;
-	} else if(attributionFilterString.equalsIgnoreCase("NOT_ATTRIBUTED")) {
+	} else if (attributionFilterString.equalsIgnoreCase("NOT_ATTRIBUTED")) {
 	    attributionFilter = AttributionFilter.NOT_ATTRIBUTED;
 	} else {
 	    attributionFilter = AttributionFilter.ALL;
 	}
-	
+
 	WithCandidatesFilter withCandidatesFilter;
-	if(withCandidatesFilterString.equalsIgnoreCase("WITH_CANDIDATES")) {
+	if (withCandidatesFilterString.equalsIgnoreCase("WITH_CANDIDATES")) {
 	    withCandidatesFilter = WithCandidatesFilter.WITH_CANDIDATES;
-	} else if(withCandidatesFilterString.equalsIgnoreCase("WITHOUT_CANDIDATES")) {
+	} else if (withCandidatesFilterString.equalsIgnoreCase("WITHOUT_CANDIDATES")) {
 	    withCandidatesFilter = WithCandidatesFilter.WITHOUT_CANDIDATES;
 	} else {
 	    withCandidatesFilter = WithCandidatesFilter.ALL;
 	}
 	proposalsFilterBean.setAttribution(attributionFilter);
 	proposalsFilterBean.setWithCandidates(withCandidatesFilter);
-	
+
 	proposalsFilterBean.setStatus(new StatusCountPair(proposalStatusType, count));
 	return proposalsFilterBean;
     }

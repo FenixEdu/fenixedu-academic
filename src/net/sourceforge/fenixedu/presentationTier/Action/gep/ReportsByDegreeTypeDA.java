@@ -248,7 +248,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 
 	return mapping.findForward("selectDegreeType");
     }
-    
+
     @SuppressWarnings("unused")
     public ActionForward downloadTimetables(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {

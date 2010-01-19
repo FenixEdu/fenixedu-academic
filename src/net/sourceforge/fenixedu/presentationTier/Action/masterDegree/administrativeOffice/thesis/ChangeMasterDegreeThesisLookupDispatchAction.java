@@ -60,8 +60,8 @@ public class ChangeMasterDegreeThesisLookupDispatchAction extends CreateOrEditMa
 	try {
 	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", PresentationConstants.ASSISTENT_GUIDERS_LIST,
-		    actionErrors);
+	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
+		    PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
 	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
 		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
 	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,

@@ -39,7 +39,7 @@ public class ProtocolAction implements Serializable {
     }
 
     public boolean contains(List<ProtocolActionType> protocolActionTypes) {
-        return getProtocolActionTypes().containsAll(protocolActionTypes);
+	return getProtocolActionTypes().containsAll(protocolActionTypes);
     }
 
     public boolean contains(ProtocolActionType protocolActionType) {
@@ -68,34 +68,33 @@ public class ProtocolAction implements Serializable {
 	return stringBuilder.toString();
     }
 
-
     private static final String protocolActionTypeSeparator = ",";
     private static final String protocolActionStringSeparator = ";";
 
     public String toString() {
-        StringBuilder dest = new StringBuilder();
-        for (ProtocolActionType protocolActionType : getProtocolActionTypes()) {
-            if (dest.length() != 0) {
-                dest.append(protocolActionTypeSeparator);
-            }
-            dest.append(protocolActionType.name());
-        }
+	StringBuilder dest = new StringBuilder();
+	for (ProtocolActionType protocolActionType : getProtocolActionTypes()) {
+	    if (dest.length() != 0) {
+		dest.append(protocolActionTypeSeparator);
+	    }
+	    dest.append(protocolActionType.name());
+	}
 
-        dest.append(protocolActionStringSeparator);
-        if (!StringUtils.isEmpty(getOtherTypes())) {
-            dest.append(getOtherTypes());
-        }
-        return dest.toString();
+	dest.append(protocolActionStringSeparator);
+	if (!StringUtils.isEmpty(getOtherTypes())) {
+	    dest.append(getOtherTypes());
+	}
+	return dest.toString();
     }
 
     public static ProtocolAction fromString(String extRep) {
-        String[] tokens = extRep.split(protocolActionStringSeparator, 2);
-        EnumSet<ProtocolActionType> protocolsActionsTypes = EnumSet.noneOf(ProtocolActionType.class);
-        for (String enumTokens : tokens[0].split(protocolActionTypeSeparator)) {
-            if (!StringUtils.isEmpty(enumTokens)) {
-                protocolsActionsTypes.add(ProtocolActionType.valueOf(enumTokens));
-            }
-        }
-        return new ProtocolAction(protocolsActionsTypes, tokens[1].length() != 0 ? tokens[1] : null);
+	String[] tokens = extRep.split(protocolActionStringSeparator, 2);
+	EnumSet<ProtocolActionType> protocolsActionsTypes = EnumSet.noneOf(ProtocolActionType.class);
+	for (String enumTokens : tokens[0].split(protocolActionTypeSeparator)) {
+	    if (!StringUtils.isEmpty(enumTokens)) {
+		protocolsActionsTypes.add(ProtocolActionType.valueOf(enumTokens));
+	    }
+	}
+	return new ProtocolAction(protocolsActionsTypes, tokens[1].length() != 0 ? tokens[1] : null);
     }
 }

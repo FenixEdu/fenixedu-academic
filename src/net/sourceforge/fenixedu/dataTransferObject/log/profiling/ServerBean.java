@@ -80,10 +80,10 @@ public class ServerBean implements Serializable {
     }
 
     public LocalDate getDate() {
-        return date;
+	return date;
     }
 
     public void setDate(LocalDate date) {
-        this.date = date;
+	this.date = date;
     }
 }

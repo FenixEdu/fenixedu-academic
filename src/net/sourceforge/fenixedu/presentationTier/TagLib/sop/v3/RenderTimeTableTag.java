@@ -137,7 +137,8 @@ public final class RenderTimeTableTag extends TagSupport {
 
     /**
      * Method generateTimeTable.
-     * @param startTimeTableHour 
+     * 
+     * @param startTimeTableHour
      * 
      * @param listaAulas
      * @return TimeTable

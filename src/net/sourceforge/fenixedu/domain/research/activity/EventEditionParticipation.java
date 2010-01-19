@@ -2,11 +2,12 @@ package net.sourceforge.fenixedu.domain.research.activity;
 
 import java.util.List;
 
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
+
+import org.joda.time.YearMonthDay;
+
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class EventEditionParticipation extends EventEditionParticipation_Base {

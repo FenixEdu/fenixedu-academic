@@ -3,8 +3,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.EditDegreeCurricularPlan;
-
 import java.util.Calendar;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.EditDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanEditor;
@@ -193,7 +192,6 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
 	newInfoDegreeCP.setAnotation(anotationtring);
 	newInfoDegreeCP.setGradeScale(gradeScale);
 	newInfoDegreeCP.setInfoDegree(infoDegree);
-
 
 	try {
 	    EditDegreeCurricularPlan.run(newInfoDegreeCP);

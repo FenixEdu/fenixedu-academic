@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.person;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.CreateGroupAvailability;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -14,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.CreateGroupAvailability;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.AddFunctionalityToContainer;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.AddPortalToContainer;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.AddSectionToContainer;

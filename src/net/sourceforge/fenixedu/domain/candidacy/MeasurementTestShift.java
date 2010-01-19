@@ -4,10 +4,11 @@ import java.util.Comparator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.joda.time.DateTime;
-
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.joda.time.DateTime;
+
 import dml.runtime.RelationAdapter;
 
 public class MeasurementTestShift extends MeasurementTestShift_Base {

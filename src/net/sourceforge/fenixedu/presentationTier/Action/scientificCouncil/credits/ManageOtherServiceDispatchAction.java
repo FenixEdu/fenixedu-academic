@@ -3,23 +3,19 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.CreateOtherService;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.EditOtherService;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.DeleteOtherServiceByOID;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.CreateOtherService;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.DeleteOtherServiceByOID;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.EditOtherService;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.OtherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

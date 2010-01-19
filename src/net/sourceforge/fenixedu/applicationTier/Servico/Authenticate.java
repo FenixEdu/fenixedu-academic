@@ -290,12 +290,12 @@ public class Authenticate extends FenixService implements Serializable {
     }
 
     private void setLoginHostNameAndDateTime(final String remoteHost, Person person) {
-        //	final User user = person.getUser();
-        //	RegisterUserLoginThread.runThread(user, remoteHost);
+	// final User user = person.getUser();
+	// RegisterUserLoginThread.runThread(user, remoteHost);
     }
 
     public static CASReceipt getCASReceipt(final String serverName, final String casTicket, final String requestURL)
-    		throws UnsupportedEncodingException, CASAuthenticationException {
+	    throws UnsupportedEncodingException, CASAuthenticationException {
 	final String casValidateUrl = FenixWebFramework.getConfig().getCasConfig(serverName).getCasValidateUrl();
 	final String casServiceUrl = URLEncoder.encode(requestURL.replace("http://", "https://").replace(":8080", ""), "UTF-8");
 

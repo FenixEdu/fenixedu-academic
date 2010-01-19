@@ -120,7 +120,8 @@ public class Project extends Project_Base {
     }
 
     public boolean canAddNewSubmissionWithoutExceedLimit(StudentGroup studentGroup) {
-	return (countProjectSubmissionsForStudentGroup(studentGroup) + 1) <= getMaxSubmissionsToKeep() && !(studentGroup.wasDeleted());
+	return (countProjectSubmissionsForStudentGroup(studentGroup) + 1) <= getMaxSubmissionsToKeep()
+		&& !(studentGroup.wasDeleted());
     }
 
     public int countProjectSubmissionsForStudentGroup(StudentGroup studentGroup) {
@@ -186,11 +187,10 @@ public class Project extends Project_Base {
 
 	for (final ProjectSubmission projectSubmission : getProjectSubmissions()) {
 	    final StudentGroup studentGroup = projectSubmission.getStudentGroup();
-	    
-	    if (studentGroup.wasDeleted())
-	    	{
-			continue;
-	    	}
+
+	    if (studentGroup.wasDeleted()) {
+		continue;
+	    }
 	    final ProjectSubmission lastProjectSubmission = lastProjectSubmissionByStudentGroup.get(studentGroup);
 
 	    if (lastProjectSubmission == null) {
@@ -202,17 +202,16 @@ public class Project extends Project_Base {
 
 	return lastProjectSubmissionByStudentGroup.values();
     }
-    
+
     public Collection<ProjectSubmission> getLastProjectSubmissionForEachDeletedStudentGroup() {
 	final Map<StudentGroup, ProjectSubmission> lastProjectSubmissionByStudentGroup = new HashMap<StudentGroup, ProjectSubmission>();
 
 	for (final ProjectSubmission projectSubmission : getProjectSubmissions()) {
 	    final StudentGroup studentGroup = projectSubmission.getStudentGroup();
-	    
-	    if (!studentGroup.wasDeleted())
-	    	{
-			continue;
-	    	}
+
+	    if (!studentGroup.wasDeleted()) {
+		continue;
+	    }
 
 	    final ProjectSubmission lastProjectSubmission = lastProjectSubmissionByStudentGroup.get(studentGroup);
 
@@ -246,19 +245,19 @@ public class Project extends Project_Base {
 
 	return result;
     }
-    
-    public List<EventBean> getAllEvents(ExecutionCourse executionCourse,String scheme, String serverName, int serverPort){
+
+    public List<EventBean> getAllEvents(ExecutionCourse executionCourse, String scheme, String serverName, int serverPort) {
 	List<EventBean> result = new ArrayList<EventBean>();
-	result.add(new EventBean("Inicio " + this.getName() + " : " + executionCourse.getNome(),
-		this.getProjectBeginDateTime(), this.getProjectBeginDateTime().plusHours(1),false, null,null,this.getDescription()));
-	if (this.getOnlineSubmissionsAllowed()){
-	    String url =  scheme + "://" + serverName + ((serverPort == 80 || serverPort == 443)? "" : ":"+serverPort) +  "/privado";
-	    result.add(new EventBean("Fim " + this.getName() + " : " + executionCourse.getNome(),
-		    this.getProjectEndDateTime().minusHours(1), this.getProjectEndDateTime(),false, "Sistema Fenix",
-		    url,this.getDescription()));	    
-	}else{
-	    result.add(new EventBean("Fim " + this.getName() + " : " + executionCourse.getNome(),
-		    this.getProjectEndDateTime().minusHours(1), this.getProjectEndDateTime(),false, null,null,this.getDescription()));
+	result.add(new EventBean("Inicio " + this.getName() + " : " + executionCourse.getNome(), this.getProjectBeginDateTime(),
+		this.getProjectBeginDateTime().plusHours(1), false, null, null, this.getDescription()));
+	if (this.getOnlineSubmissionsAllowed()) {
+	    String url = scheme + "://" + serverName + ((serverPort == 80 || serverPort == 443) ? "" : ":" + serverPort)
+		    + "/privado";
+	    result.add(new EventBean("Fim " + this.getName() + " : " + executionCourse.getNome(), this.getProjectEndDateTime()
+		    .minusHours(1), this.getProjectEndDateTime(), false, "Sistema Fenix", url, this.getDescription()));
+	} else {
+	    result.add(new EventBean("Fim " + this.getName() + " : " + executionCourse.getNome(), this.getProjectEndDateTime()
+		    .minusHours(1), this.getProjectEndDateTime(), false, null, null, this.getDescription()));
 	}
 	return result;
     }

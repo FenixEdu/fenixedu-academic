@@ -629,8 +629,8 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
 		throw new DomainException("error.StudentInquiriesCourseResult.executionDegreeAndCourseYearDoesntMatch",
 			executionDegree.getExecutionYear().getName(), executionDegree.getPresentationName(), executionCourse
 				.getExecutionYear().getName(), executionCourse.getNome());
-	    }	    
-	    
+	    }
+
 	    Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(Integer.valueOf(columns[teacherHeaderIndex]));
 	    if (teacher == null) {
 		throw new DomainException("error.StudentInquiriesCourseResult.teacherNotFound", columns[teacherHeaderIndex]);
@@ -641,7 +641,7 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
 		throw new DomainException("error.StudentInquiriesCourseResult.professorshipNotFound",
 			columns[teacherHeaderIndex], columns[executionCourseHeaderIndex]);
 	    }
-	    
+
 	    final ShiftType shiftType = ShiftType.valueOf(columns[shiftTypeHeaderIndex]);
 	    StudentInquiriesTeachingResult studentInquiriesTeachingResult = professorship.getStudentInquiriesTeachingResult(
 		    executionDegree, shiftType);

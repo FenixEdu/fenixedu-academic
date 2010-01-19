@@ -42,8 +42,8 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
 	}
     }
 
-    public static NoCourseGroupCurriculumGroup create(
-	    final NoCourseGroupCurriculumGroupType groupType, final RootCurriculumGroup curriculumGroup) {
+    public static NoCourseGroupCurriculumGroup create(final NoCourseGroupCurriculumGroupType groupType,
+	    final RootCurriculumGroup curriculumGroup) {
 	switch (groupType) {
 	case PROPAEDEUTICS:
 	    return new PropaedeuticsCurriculumGroup(curriculumGroup);

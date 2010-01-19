@@ -54,12 +54,11 @@ public class ContextFilter implements Filter {
 	return path.contains("/CSS/") || path.contains("/javaScript/") || path.endsWith(".jsp") || path.contains("images/")
 		|| path.contains("/checkPasswordKerberos.do") || path.contains("/loginCAS.do") || path.contains("/ajax/")
 		|| path.contains("/checkPasswordKerberos.do") || path.contains("/loginCAS.do") || path.endsWith("/redirect.do")
-		|| path.endsWith("/userDoesNotExistOrIsInactive.do")
-		|| path.contains("/home.do") || path.contains("/logoff.do") || path.contains("/siteMap.do")
-		|| path.contains("/login.do") || path.startsWith("/external/") || path.startsWith("/isAlive.do")
-		|| path.endsWith(".html") || path.endsWith(".htm") || path.startsWith("/exceptionHandlingAction.do")
-		|| path.startsWith("/showErrorPageRegistered.do") || path.startsWith("/services")
-		|| path.contains("/loginExpired.do") || path.contains("/summariesRSS.do");
+		|| path.endsWith("/userDoesNotExistOrIsInactive.do") || path.contains("/home.do") || path.contains("/logoff.do")
+		|| path.contains("/siteMap.do") || path.contains("/login.do") || path.startsWith("/external/")
+		|| path.startsWith("/isAlive.do") || path.endsWith(".html") || path.endsWith(".htm")
+		|| path.startsWith("/exceptionHandlingAction.do") || path.startsWith("/showErrorPageRegistered.do")
+		|| path.startsWith("/services") || path.contains("/loginExpired.do") || path.contains("/summariesRSS.do");
     }
 
     private FunctionalityContext getContextAttibute(final HttpServletRequest httpServletRequest) {

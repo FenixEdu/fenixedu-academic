@@ -1,9 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DeleteCourseLoad;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.EditExecutionCourse;
-
 import java.util.Collections;
 import java.util.List;
 
@@ -12,6 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DeleteCourseLoad;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.EditExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.CourseLoadBean;
@@ -39,7 +37,8 @@ public class ManageExecutionCourseDA extends FenixExecutionCourseAndExecutionDeg
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 
-	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute(PresentationConstants.EXECUTION_COURSE);
+	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request
+		.getAttribute(PresentationConstants.EXECUTION_COURSE);
 	ExecutionCourse executionCourse = infoExecutionCourse.getExecutionCourse();
 	readAndSetExecutionCourseClasses(request, executionCourse);
 	request.setAttribute("courseLoadBean", new CourseLoadBean(executionCourse));

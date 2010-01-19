@@ -435,9 +435,9 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 		    if (juryElement.getReporter().booleanValue()) {
 			participant.addAccessType(PhdProcessAccessType.JURY_REPORTER_FEEDBACK_UPLOAD);
 		    }
-		    
-		    //TODO: send login information
-		    //TODO: generate alert
+
+		    // TODO: send login information
+		    // TODO: generate alert
 		}
 	    }
 	}

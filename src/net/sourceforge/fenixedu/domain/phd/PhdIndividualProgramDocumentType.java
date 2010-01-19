@@ -8,7 +8,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 public enum PhdIndividualProgramDocumentType {
 
     CANDIDACY_FORM,
-    
+
     REGISTRATION_FORM,
 
     CANDIDACY_REVIEW(false),
@@ -52,9 +52,9 @@ public enum PhdIndividualProgramDocumentType {
     THESIS_REQUIREMENT,
 
     JURY_ELEMENTS,
-    
+
     JURY_PRESIDENT_ELEMENT,
-    
+
     OTHER(false);
 
     private boolean isVersioned;

@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.log.requests.ExceptionType;
 import net.sourceforge.fenixedu.domain.log.requests.RequestLog;
 import net.sourceforge.fenixedu.domain.log.requests.RequestLogDay;
@@ -132,7 +131,7 @@ public class ErrorLogDispatchAction extends FenixDispatchAction {
 
     public ActionForward listErrors(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	
+
 	getErrors(request, (RequestLogDay) RequestLogDay.fromExternalId(request.getParameter("requestLogDay")));
 
 	return mapping.findForward("errorsList");
@@ -267,10 +266,10 @@ public class ErrorLogDispatchAction extends FenixDispatchAction {
 	    requestLogs.addAll(day.getLogs());
 	    day = day.getNext();
 	}
-	if (day != null){
+	if (day != null) {
 	    requestLogs.addAll(day.getLogs());
 	}
-	
+
 	CollectionUtils.filter(requestLogs, filterForParameter(filter, parameter));
 	return requestLogs;
     }
@@ -288,12 +287,10 @@ public class ErrorLogDispatchAction extends FenixDispatchAction {
 	if (requestLogToBean == null) {
 	    requestLogToBean = new RequestLogDayBean();
 	}
-	
-	
-	
-	request.setAttribute("addr", "/errorReport.do?method=filter&filterBy=" + request.getParameter("filterBy")
-		    + "&parameter=" + request.getParameter("parameter"));
-	
+
+	request.setAttribute("addr", "/errorReport.do?method=filter&filterBy=" + request.getParameter("filterBy") + "&parameter="
+		+ request.getParameter("parameter"));
+
 	if (requestLogFromBean.getDay() == null || requestLogToBean.getDay() == null) {
 	    request.setAttribute("from", requestLogFromBean);
 	    request.setAttribute("to", requestLogToBean);
@@ -304,14 +301,13 @@ public class ErrorLogDispatchAction extends FenixDispatchAction {
 
 	String filteringType = request.getParameter("filterBy");
 	String parameter = request.getParameter("parameter");
-	
 
 	if (parameter == null || filteringType == null) {
 	    throw new FenixActionException("parameter is required");
 	}
 	List<RequestLog> requestLogsFiltered = filterRequestLog(filteringType, parameter, requestLogFromBean, requestLogToBean);
 	int total = requestLogsFiltered.size();
-	
+
 	Collections.sort(requestLogsFiltered, new Comparator<RequestLog>() {
 	    @Override
 	    public int compare(RequestLog o1, RequestLog o2) {

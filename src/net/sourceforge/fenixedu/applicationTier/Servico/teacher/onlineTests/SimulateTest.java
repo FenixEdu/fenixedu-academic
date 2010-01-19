@@ -58,11 +58,11 @@ public class SimulateTest extends FenixService {
 	// infoDistributedTest.setInfoTestScope(InfoTestScope.newInfoFromDomain(
 	// testScope));
 	// infoDistributedTest.setTestType(testType);
-	//infoDistributedTest.setCorrectionAvailability(correctionAvailability);
+	// infoDistributedTest.setCorrectionAvailability(correctionAvailability);
 	// infoDistributedTest.setImsFeedback(imsfeedback);
 	// infoDistributedTest.setTestInformation(testInformation);
 	// infoDistributedTest.setTitle(test.getTitle());
-	//infoDistributedTest.setNumberOfQuestions(test.getTestQuestionsCount())
+	// infoDistributedTest.setNumberOfQuestions(test.getTestQuestionsCount())
 	// ;
 	//
 	// List<InfoStudentTestQuestion> infoStudentTestQuestionList =
@@ -87,7 +87,7 @@ public class SimulateTest extends FenixService {
 	// if ((!infoDistributedTest.getTestType().equals(new
 	// TestType(TestType.INQUIRY)))
 	// &&
-	//infoStudentTestQuestion.getQuestion().getResponseProcessingInstructions
+	// infoStudentTestQuestion.getQuestion().getResponseProcessingInstructions
 	// ().size() != 0) {
 	//
 	// infoStudentTestQuestion =

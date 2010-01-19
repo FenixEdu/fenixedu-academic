@@ -18,7 +18,6 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.fortuna.ical4j.model.property.Location;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
@@ -26,7 +25,6 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.LessonSpaceOccupation;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
@@ -284,7 +282,7 @@ public class Lesson extends Lesson_Base {
 
     public void deleteLessonInstanceIn(YearMonthDay day) {
 
-//	throw new UnsupportedOperationException();
+	// throw new UnsupportedOperationException();
 
 	if (day == null) {
 	    return;
@@ -292,10 +290,13 @@ public class Lesson extends Lesson_Base {
 	LessonInstance lessonInstance = getLessonInstanceFor(day);
 	if (lessonInstance == null) {
 	    throw new UnsupportedOperationException();
-//	    if (!wasFinished() && !getPeriod().getStartYearMonthDay().isAfter(day)) {
-//		edit(day.plusDays(1), getPeriod().getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay(), getDiaSemana(),
-//			getInicio(), getFim(), getFrequency(), true, day);
-//	    }
+	    // if (!wasFinished() &&
+	    // !getPeriod().getStartYearMonthDay().isAfter(day)) {
+	    // edit(day.plusDays(1),
+	    // getPeriod().getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay(),
+	    // getDiaSemana(),
+	    // getInicio(), getFim(), getFrequency(), true, day);
+	    // }
 	} else {
 	    lessonInstance.delete();
 	}
@@ -994,31 +995,32 @@ public class Lesson extends Lesson_Base {
 	    LessonInstance lessonInstance = hashmap.get(beginDate);
 	    EventBean bean;
 	    String location = null;
-	    
-	    String url =  scheme + "://" + serverName + ((serverPort == 80 || serverPort == 443)? "" : ":"+serverPort) +  getExecutionCourse().getSite().getReversePath();
-	    
+
+	    String url = scheme + "://" + serverName + ((serverPort == 80 || serverPort == 443) ? "" : ":" + serverPort)
+		    + getExecutionCourse().getSite().getReversePath();
+
 	    if (lessonInstance != null) {
-		
+
 		if (lessonInstance.getLessonInstanceSpaceOccupation() != null) {
 		    location = lessonInstance.getLessonInstanceSpaceOccupation().getRoom().getName();
 		}
 		String summary = null;
-		if (lessonInstance.getSummary() != null){
+		if (lessonInstance.getSummary() != null) {
 		    summary = lessonInstance.getSummary().getSummaryText().toString();
 		    Pattern p = Pattern.compile("<[a-zA-Z0-9\\/]*[^>]*>");
 		    Matcher matcher = p.matcher(summary);
 		    summary = matcher.replaceAll("");
-		    
+
 		    p = Pattern.compile("\\s(\\s)*");
 		    matcher = p.matcher(summary);
 		    summary = matcher.replaceAll(" ");
 		}
-		
+
 		bean = new EventBean(getShift().getExecutionCourse().getNome() + " : "
 			+ getShift().getShiftTypesCapitalizedPrettyPrint(), lessonInstance.getBeginDateTime(), lessonInstance
-			.getEndDateTime(), false, location, url+ "/sumarios", summary);
+			.getEndDateTime(), false, location, url + "/sumarios", summary);
 	    } else {
-		if (getLessonSpaceOccupation() != null){
+		if (getLessonSpaceOccupation() != null) {
 		    location = getLessonSpaceOccupation().getRoom().getName();
 		}
 		DateTime endDate = new DateTime(aDay.getYear(), aDay.getMonthOfYear(), aDay.getDayOfMonth(),
@@ -1026,8 +1028,7 @@ public class Lesson extends Lesson_Base {
 				.getSecondOfMinute(), 0);
 
 		bean = new EventBean(getShift().getExecutionCourse().getNome() + " : "
-			+ getShift().getShiftTypesCapitalizedPrettyPrint(), beginDate, endDate, false, location,
-			url, null);
+			+ getShift().getShiftTypesCapitalizedPrettyPrint(), beginDate, endDate, false, location, url, null);
 	    }
 
 	    result.add(bean);

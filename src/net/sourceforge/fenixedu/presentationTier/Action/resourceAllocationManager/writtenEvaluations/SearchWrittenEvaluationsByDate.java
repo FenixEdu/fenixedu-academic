@@ -107,8 +107,8 @@ public class SearchWrittenEvaluationsByDate extends FenixContextDispatchAction {
 
     private AcademicInterval getAcademicInterval(DynaActionForm dynaActionForm, HttpServletRequest request)
 	    throws FenixFilterException, FenixServiceException {
-	return AcademicInterval
-		.getAcademicIntervalFromResumedString(dynaActionForm.getString(PresentationConstants.ACADEMIC_INTERVAL));
+	return AcademicInterval.getAcademicIntervalFromResumedString(dynaActionForm
+		.getString(PresentationConstants.ACADEMIC_INTERVAL));
     }
 
     private Date getDate(final DynaActionForm dynaActionForm) throws ParseException {

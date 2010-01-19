@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiriesQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.StudentInquiryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherDTO;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherInquiryDTO;
-import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;

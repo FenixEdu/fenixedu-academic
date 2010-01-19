@@ -76,8 +76,8 @@ public class VisualizeMasterDegreeProofDispatchAction extends FenixDispatchActio
 	simpleDateFormat.applyPattern("dd-MM-yyyy k:mm:ss");
 	String formattedLastModification = simpleDateFormat.format(lastModification);
 
-	request.setAttribute(PresentationConstants.DISSERTATION_TITLE, masterDegreeThesis.getActiveMasterDegreeThesisDataVersion()
-		.getDissertationTitle());
+	request.setAttribute(PresentationConstants.DISSERTATION_TITLE, masterDegreeThesis
+		.getActiveMasterDegreeThesisDataVersion().getDissertationTitle());
 	request.setAttribute(PresentationConstants.FINAL_RESULT, masterDegreeProofVersion.getFinalResult().name());
 	request.setAttribute(PresentationConstants.ATTACHED_COPIES_NUMBER, masterDegreeProofVersion.getAttachedCopiesNumber());
 	request.setAttribute(PresentationConstants.PROOF_DATE, formattedProofDate);

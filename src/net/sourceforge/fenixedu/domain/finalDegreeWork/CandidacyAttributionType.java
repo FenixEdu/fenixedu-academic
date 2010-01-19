@@ -14,7 +14,8 @@ public enum CandidacyAttributionType {
     }
 
     public String getDescription() {
-	return BundleUtil.getResourceString("resources.ApplicationResources", this.getClass().getSimpleName() + "." + this + "." + "description");
+	return BundleUtil.getResourceString("resources.ApplicationResources", this.getClass().getSimpleName() + "." + this + "."
+		+ "description");
     }
 
     public String getDescription(int count) {

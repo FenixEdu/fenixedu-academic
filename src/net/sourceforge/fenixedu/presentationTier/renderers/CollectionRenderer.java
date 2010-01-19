@@ -1536,11 +1536,11 @@ public class CollectionRenderer extends OutputRenderer {
 		    String arguments = getConfirmationArgs() != null ? getConfirmationArgs() : "";
 		    String[] argumentsArray = arguments.split(",");
 		    String[] formattedArgsArray = new String[argumentsArray.length];
-		    
-		    for(int i=0; i<argumentsArray.length; i++){
+
+		    for (int i = 0; i < argumentsArray.length; i++) {
 			formattedArgsArray[i] = RenderUtils.getFormattedProperties(argumentsArray[i], object);
 		    }
-		    
+
 		    final String confirmationMessage = RenderUtils.getResourceString(getConfirmationBundle(),
 			    getConfirmationKey(), formattedArgsArray);
 

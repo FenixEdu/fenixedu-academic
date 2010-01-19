@@ -207,8 +207,7 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
     }
 
     public String getRepresentationInStringFormat() {
-	return getEntryClassName() + FULL_SEPARATOR + getEntryIdInternal() + FULL_SEPARATOR
-		+ getAcademicCalendarIdInternal();
+	return getEntryClassName() + FULL_SEPARATOR + getEntryIdInternal() + FULL_SEPARATOR + getAcademicCalendarIdInternal();
     }
 
     public static AcademicInterval getAcademicIntervalFromString(String representationInStringFormat) {

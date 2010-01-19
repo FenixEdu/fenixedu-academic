@@ -6,19 +6,12 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
-/**
- * Serviço LerAluno.
- * 
- * @author tfc130
- */
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadStudent extends FenixService {
 
@@ -30,12 +23,12 @@ public class ReadStudent extends FenixService {
 
 	InfoStudent infoStudent = null;
 
-	////////////////////////////////////////////////////////////////////////
+	// //////////////////////////////////////////////////////////////////////
 	// //////////////////////////////////
 	// Isto não é para ficar assim. Está assim temporariamente até se
 	// saber como é feita de facto a distinção
 	// dos aluno, referente ao tipo, a partir da página de login.
-	////////////////////////////////////////////////////////////////////////
+	// //////////////////////////////////////////////////////////////////////
 	// //////////////////////////////////
 	Registration registration = Registration.readStudentByNumberAndDegreeType(number, DegreeType.DEGREE);
 

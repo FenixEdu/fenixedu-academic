@@ -39,7 +39,7 @@ import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
 @Mapping(path = "/curriculumLineLogs", module = "manager")
 @Forwards( { @Forward(name = "searchCurriculumLineLogs", path = "/manager/viewCurriculumLineLogs.jsp"),
-    @Forward(name = "viewCurriculumLineLogStatistics", path = "/manager/viewCurriculumLineLogStatistics.jsp") })
+	@Forward(name = "viewCurriculumLineLogStatistics", path = "/manager/viewCurriculumLineLogStatistics.jsp") })
 public class CurriculumLineLogsDA extends FenixDispatchAction {
 
     public ActionForward prepareViewCurriculumLineLogs(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -82,7 +82,7 @@ public class CurriculumLineLogsDA extends FenixDispatchAction {
 	    unenrolments = new int[numberOfIntervals];
 
 	    for (final CurriculumLineLog curriculumLineLog : executionSemester.getCurriculumLineLogsSet()) {
-		if (curriculumLineLog instanceof EnrolmentLog)  {
+		if (curriculumLineLog instanceof EnrolmentLog) {
 		    final DateTime dateTime = curriculumLineLog.getDateDateTime();
 		    if (enrolmentPeriod.contains(dateTime)) {
 			final long offset = dateTime.getMillis() - start;
@@ -168,7 +168,8 @@ public class CurriculumLineLogsDA extends FenixDispatchAction {
 	if (executionSemester != null) {
 	    request.setAttribute("executionSemester", executionSemester);
 
-	    final CurriculumLineLogStatisticsCalculator curriculumLineLogStatisticsCalculator = new CurriculumLineLogStatisticsCalculator(executionSemester);
+	    final CurriculumLineLogStatisticsCalculator curriculumLineLogStatisticsCalculator = new CurriculumLineLogStatisticsCalculator(
+		    executionSemester);
 	    request.setAttribute("curriculumLineLogStatisticsCalculator", curriculumLineLogStatisticsCalculator);
 	    return mapping.findForward("viewCurriculumLineLogStatistics");
 	}
@@ -176,13 +177,14 @@ public class CurriculumLineLogsDA extends FenixDispatchAction {
 	return prepareViewCurriculumLineLogs(mapping, form, request, response);
     }
 
-    public ActionForward viewCurriculumLineLogStatisticsChartOperations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws IOException {
+    public ActionForward viewCurriculumLineLogStatisticsChartOperations(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 	final ExecutionSemester executionSemester = getDomainObject(request, "executionSemesterId");
 
 	if (executionSemester != null) {
-	    final CurriculumLineLogStatisticsCalculator curriculumLineLogStatisticsCalculator = new CurriculumLineLogStatisticsCalculator(executionSemester);
+	    final CurriculumLineLogStatisticsCalculator curriculumLineLogStatisticsCalculator = new CurriculumLineLogStatisticsCalculator(
+		    executionSemester);
 
 	    ServletOutputStream writer = null;
 	    try {

@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.precedences;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.precedences.ReadPrecedencesFromDegreeCurricularPlan;
-
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.precedences.ReadPrecedencesFromDegreeCurricularPlan;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
@@ -33,7 +31,6 @@ public class ReadPrecedencesFromDegreeCurricularPlanAction extends FenixAction {
 
 	Integer degreeID = new Integer(request.getParameter("degreeId"));
 	Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanId"));
-
 
 	try {
 	    Map result = (Map) ReadPrecedencesFromDegreeCurricularPlan.run(degreeCurricularPlanID);

@@ -389,7 +389,7 @@ public class ExecutionCourseSiteComponentBuilder {
 	// String sigla = ((InfoDegree) ((InfoDegreeCurricularPlan)
 	// ((InfoCurricularCourse)
 	// ((List)
-	//infoCurricularCourseList.get(k)).get(0)).getInfoDegreeCurricularPlan()
+	// infoCurricularCourseList.get(k)).get(0)).getInfoDegreeCurricularPlan()
 	// ).getInfoDegree()).getSigla();
 	// if (sigla.equals(currentSigla)) {
 	// ((List)infoCurricularCourseList.get(k)).add(infoCurricularCourse);

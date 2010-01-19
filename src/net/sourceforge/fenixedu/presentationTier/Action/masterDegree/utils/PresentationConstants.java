@@ -9,10 +9,10 @@ package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils;
 
 public abstract class PresentationConstants {
 
-    //--------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
     // -----
     // Master Degree Constants - For Master Degree
-    //--------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
     // -----
 
     public static final String STUDENT = "student";

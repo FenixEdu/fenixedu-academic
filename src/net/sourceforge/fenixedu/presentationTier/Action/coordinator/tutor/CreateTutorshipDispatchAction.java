@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.StudentsByE
 import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipErrorBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlanEquivalencePlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -61,12 +60,13 @@ public class CreateTutorshipDispatchAction extends TutorManagementDispatchAction
 	}
 
 	List<StudentsByEntryYearBean> studentsWithoutTutorBeans;
-	if((request.getParameter("showAll") != null) && (request.getParameter("showAll").equalsIgnoreCase("true"))) {
-	    studentsWithoutTutorBeans = getAllStudentsWithoutTutorByEntryYearBeans(degreeCurricularPlanID, executionDegreeId, request.getParameter("showAll"));
+	if ((request.getParameter("showAll") != null) && (request.getParameter("showAll").equalsIgnoreCase("true"))) {
+	    studentsWithoutTutorBeans = getAllStudentsWithoutTutorByEntryYearBeans(degreeCurricularPlanID, executionDegreeId,
+		    request.getParameter("showAll"));
 	    request.setAttribute("showAll", "true");
 	} else {
-	    studentsWithoutTutorBeans = getStudentsWithoutTutorByEntryYearBeans(degreeCurricularPlanID,
-		executionDegreeId, "false");
+	    studentsWithoutTutorBeans = getStudentsWithoutTutorByEntryYearBeans(degreeCurricularPlanID, executionDegreeId,
+		    "false");
 	}
 
 	if (request.getParameter("selectedEntryYear") != null) {
@@ -234,7 +234,7 @@ public class CreateTutorshipDispatchAction extends TutorManagementDispatchAction
 
 	return beans;
     }
-    
+
     private List<StudentsByEntryYearBean> getAllStudentsWithoutTutorByEntryYearBeans(Integer degreeCurricularPlanID,
 	    Integer executionDegreeID, String showAll) {
 	final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) RootDomainObject.readDomainObjectByOID(
@@ -245,11 +245,11 @@ public class CreateTutorshipDispatchAction extends TutorManagementDispatchAction
 	ExecutionYear entryYear = ExecutionYear.readCurrentExecutionYear();
 
 	Degree sourceDegree = degreeCurricularPlan.getEquivalencePlan().getSourceDegree();
-	while((degreeCurricularPlan.getExecutionDegreeByYear(entryYear) != null)
+	while ((degreeCurricularPlan.getExecutionDegreeByYear(entryYear) != null)
 		|| (sourceDegree.getDegreeCurricularPlansForYear(entryYear).isEmpty() == false)) {
 	    List<StudentCurricularPlan> studentsWithoutTutor = degreeCurricularPlan
 		    .getStudentsWithoutTutorGivenEntryYear(entryYear);
-	    for(DegreeCurricularPlan oldDegreeCurricularPlan : sourceDegree.getDegreeCurricularPlansForYear(entryYear)) {
+	    for (DegreeCurricularPlan oldDegreeCurricularPlan : sourceDegree.getDegreeCurricularPlansForYear(entryYear)) {
 		studentsWithoutTutor.addAll(oldDegreeCurricularPlan.getStudentsWithoutTutorGivenEntryYear(entryYear));
 	    }
 	    if (!studentsWithoutTutor.isEmpty()) {

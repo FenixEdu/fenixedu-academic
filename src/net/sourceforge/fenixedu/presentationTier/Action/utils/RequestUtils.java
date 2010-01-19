@@ -5,29 +5,24 @@
 package net.sourceforge.fenixedu.presentationTier.Action.utils;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.PendingRequest;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.util.HostRedirector;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -126,9 +121,10 @@ public class RequestUtils {
     public static void sendLoginRedirect(HttpServletRequest request, HttpServletResponse response) throws IOException {
 	request.getSession(true);
 	PendingRequest pendingRequest = storeRequest(request);
-	response.sendRedirect(generateRedirectLink(HostRedirector.getRedirectPageLogin(request.getRequestURL().toString()),pendingRequest));
+	response.sendRedirect(generateRedirectLink(HostRedirector.getRedirectPageLogin(request.getRequestURL().toString()),
+		pendingRequest));
     }
-    
+
     public static String generateRedirectLink(String url, PendingRequest pendingRequest) {
 	return generateRedirectLink(url, pendingRequest == null ? null : pendingRequest.getExternalId());
     }
@@ -137,16 +133,16 @@ public class RequestUtils {
 	if (externalId == null || externalId.length() == 0 || externalId.equals("null")) {
 	    return url;
 	}
-	String param = "pendingRequest=" +  externalId;
-	if (url.contains("?")){
-	    if (url.contains("&")){
+	String param = "pendingRequest=" + externalId;
+	if (url.contains("?")) {
+	    if (url.contains("&")) {
 		return url + "&" + param;
-	    }else if (url.charAt(url.length() - 1) != '?'){
+	    } else if (url.charAt(url.length() - 1) != '?') {
 		return url + "&" + param;
-	    }else{
+	    } else {
 		return url + param;
 	    }
-	}else{
+	} else {
 	    return url + "?" + param;
 	}
     }

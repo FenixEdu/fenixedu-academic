@@ -30,12 +30,12 @@ public class AnnouncementSwap extends FenixDispatchAction {
 	Boolean chooseNotLinked = Boolean.valueOf(request.getParameter("executionCoursesNotLinked"));
 	Integer executionCourseId = Integer.valueOf(request.getParameter("executionCourseId"));
 	Integer executionPeriodId = Integer.valueOf(request.getParameter("executionPeriodId"));
-	
+
 	ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
 	ExecutionSemester executionPeriod = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodId);
-	
+
 	ExecutionCourseBean sessionBean = new ExecutionCourseBean();
-	
+
 	sessionBean.setSourceExecutionCourse(executionCourse);
 	sessionBean.setExecutionSemester(executionPeriod);
 	sessionBean.setChooseNotLinked(chooseNotLinked);

@@ -39,7 +39,7 @@ public class ContentInjectionRewriter extends RequestRewriter {
 	super(httpServletRequest);
 	final FunctionalityContext functionalityContext = AbstractFunctionalityContext.getCurrentContext(httpServletRequest);
 	String currentContextPath = functionalityContext == null ? null : functionalityContext.getCurrentContextPath();
-	contextPath = currentContextPath  == null ? null : currentContextPath.replace("<", "&lt;").replace(">", "&gt;");
+	contextPath = currentContextPath == null ? null : currentContextPath.replace("<", "&lt;").replace(">", "&gt;");
     }
 
     private static final char[] CLOSE = ">".toCharArray();

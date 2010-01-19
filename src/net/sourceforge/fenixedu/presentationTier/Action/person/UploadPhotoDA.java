@@ -1,19 +1,17 @@
 package net.sourceforge.fenixedu.presentationTier.Action.person;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.fileManager.UploadOwnPhoto;
-
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.fileManager.UploadOwnPhoto;
 import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean.UnableToProcessTheImage;
 import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
 
@@ -94,8 +92,8 @@ public class UploadPhotoDA extends FenixDispatchAction {
 	PhotographUploadBean photo = (PhotographUploadBean) getRenderedObject();
 	RenderUtils.invalidateViewState();
 
-	UploadOwnPhoto.run(new ByteArray(photo.getFileInputStream()).getBytes(),
-		new ByteArray(photo.getCompressedInputStream()).getBytes(), ContentType.getContentType(photo.getContentType()));
+	UploadOwnPhoto.run(new ByteArray(photo.getFileInputStream()).getBytes(), new ByteArray(photo.getCompressedInputStream())
+		.getBytes(), ContentType.getContentType(photo.getContentType()));
 	return mapping.findForward("visualizePersonalInformation");
     }
 

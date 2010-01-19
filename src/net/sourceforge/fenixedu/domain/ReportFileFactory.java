@@ -79,10 +79,9 @@ public class ReportFileFactory {
 	teachersListFromGiafReportFile.setExecutionYear(executionYear);
 	return teachersListFromGiafReportFile;
     }
-    
+
     @Service
-    public static GepReportFile createTimetablesReportFile(String type, DegreeType degreeType,
-	    ExecutionYear executionYear) {
+    public static GepReportFile createTimetablesReportFile(String type, DegreeType degreeType, ExecutionYear executionYear) {
 	final TimetablesReportFile timetablesReportFile = new TimetablesReportFile();
 	timetablesReportFile.setType(type);
 	timetablesReportFile.setDegreeType(degreeType);

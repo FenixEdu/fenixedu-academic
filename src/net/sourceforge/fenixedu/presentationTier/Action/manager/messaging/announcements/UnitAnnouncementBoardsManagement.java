@@ -191,7 +191,8 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
 
 	Collection<AnnouncementBoardApproversBean> approvers = new ArrayList<AnnouncementBoardApproversBean>();
 	for (Person person : board.getUnit().getSite().getManagers()) {
-	    approvers.add(new AnnouncementBoardApproversBean(person, board.getApprovers() != null ? board.getApprovers().isMember(person) : false));
+	    approvers.add(new AnnouncementBoardApproversBean(person, board.getApprovers() != null ? board.getApprovers()
+		    .isMember(person) : false));
 	}
 
 	request.setAttribute("approvers", approvers);

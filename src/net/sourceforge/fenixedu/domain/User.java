@@ -86,14 +86,14 @@ public class User extends User_Base {
     public void logout() {
 	setLogoutDateTime(new DateTime());
     }
-    
+
     @Service
-    public void generateNewKey() throws Exception{
+    public void generateNewKey() throws Exception {
 	KeyGenerator kgen = KeyGenerator.getInstance("AES");
-	kgen.init(128);	
+	kgen.init(128);
 	SecretKey skey = kgen.generateKey();
 	byte[] raw = skey.getEncoded();
-	
+
 	setPrivateKey(new ByteArray(raw));
 	setPrivateKeyCreation(new DateTime());
 	setPrivateKeyValidity(getPrivateKeyCreation().plusYears(1));

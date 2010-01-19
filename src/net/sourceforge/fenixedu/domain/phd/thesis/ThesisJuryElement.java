@@ -101,7 +101,7 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
     public String getWorkLocation() {
 	return getParticipant().getWorkLocation();
     }
-    
+
     public String getInstitution() {
 	return getParticipant().getInstitution();
     }
@@ -138,7 +138,7 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
 	return !bean.hasParticipant() ? PhdParticipant.create(process.getIndividualProgramProcess(), bean) : bean
 		.getParticipant();
     }
-    
+
     public boolean isGuidingOrAssistantGuiding() {
 	return getParticipant().isGuidingOrAssistantGuiding();
     }

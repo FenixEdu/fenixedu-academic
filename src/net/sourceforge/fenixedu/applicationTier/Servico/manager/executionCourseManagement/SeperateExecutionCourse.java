@@ -1,9 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -27,6 +23,9 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class SeperateExecutionCourse extends FenixService {
 
@@ -66,7 +65,8 @@ public class SeperateExecutionCourse extends FenixService {
 	}
     }
 
-    private static void transferAttends(final ExecutionCourse originExecutionCourse, final ExecutionCourse destinationExecutionCourse) {
+    private static void transferAttends(final ExecutionCourse originExecutionCourse,
+	    final ExecutionCourse destinationExecutionCourse) {
 	final List<CurricularCourse> curricularCourses = destinationExecutionCourse.getAssociatedCurricularCourses();
 	for (int i = 0; i < originExecutionCourse.getAttends().size(); i++) {
 	    final Attends attends = originExecutionCourse.getAttends().get(i);
@@ -78,8 +78,8 @@ public class SeperateExecutionCourse extends FenixService {
 	}
     }
 
-    private static void transferShifts(final ExecutionCourse originExecutionCourse, final ExecutionCourse destinationExecutionCourse,
-	    final Integer[] shiftIdsToTransfer) {
+    private static void transferShifts(final ExecutionCourse originExecutionCourse,
+	    final ExecutionCourse destinationExecutionCourse, final Integer[] shiftIdsToTransfer) {
 	for (final Integer shiftId : shiftIdsToTransfer) {
 	    final Shift shift = (Shift) findDomainObjectByID(originExecutionCourse.getAssociatedShifts(), shiftId);
 	    List<CourseLoad> courseLoads = shift.getCourseLoads();
@@ -118,7 +118,8 @@ public class SeperateExecutionCourse extends FenixService {
 	}
     }
 
-    private static void associateGroupings(final ExecutionCourse originExecutionCourse, final ExecutionCourse destinationExecutionCourse) {
+    private static void associateGroupings(final ExecutionCourse originExecutionCourse,
+	    final ExecutionCourse destinationExecutionCourse) {
 	for (final Grouping grouping : originExecutionCourse.getGroupings()) {
 	    for (final StudentGroup studentGroup : grouping.getStudentGroups()) {
 		studentGroup.getAttends().clear();
@@ -152,8 +153,8 @@ public class SeperateExecutionCourse extends FenixService {
 	return destinationExecutionCourse;
     }
 
-    private static String getUniqueExecutionCourseCode(final String executionCourseName, final ExecutionSemester executionSemester,
-	    final String originalExecutionCourseCode) {
+    private static String getUniqueExecutionCourseCode(final String executionCourseName,
+	    final ExecutionSemester executionSemester, final String originalExecutionCourseCode) {
 	Set<String> executionCourseCodes = getExecutionCourseCodes(executionSemester);
 	return CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod.getUniqueSigla(executionCourseCodes,
 		originalExecutionCourseCode);

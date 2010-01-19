@@ -42,7 +42,6 @@ public class MasterDegreeListingDispatchAction extends FenixDispatchAction {
 
 	DegreeType degreeType = DegreeType.MASTER_DEGREE;
 
-
 	List result = null;
 	try {
 	    result = (List) ReadAllMasterDegrees.run(degreeType);

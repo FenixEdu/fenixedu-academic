@@ -18,31 +18,31 @@ public class DegreesForExecutionYearProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 
-        final SortedSet<Degree> result = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
-        final DegreeCourseInformationBean chooseDegreeBean = (DegreeCourseInformationBean) source;
+	final SortedSet<Degree> result = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
+	final DegreeCourseInformationBean chooseDegreeBean = (DegreeCourseInformationBean) source;
 
-        for (final Degree degree : Degree.readAllByDegreeType(DegreeType.BOLONHA_DEGREE,
-    	    DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE)) {
-    	if (matchesExecutionYear(degree, chooseDegreeBean.getExecutionYear())) {
-    	    result.add(degree);
-    	}
-        }
+	for (final Degree degree : Degree.readAllByDegreeType(DegreeType.BOLONHA_DEGREE,
+		DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE)) {
+	    if (matchesExecutionYear(degree, chooseDegreeBean.getExecutionYear())) {
+		result.add(degree);
+	    }
+	}
 
-        return result;
+	return result;
     }
 
     private boolean matchesExecutionYear(Degree degree, ExecutionYear executionYear) {
-        for (final ExecutionDegree executionDegree : executionYear.getExecutionDegrees()) {
-    	if (executionDegree.getDegree() == degree) {
-    	    return true;
-    	}
-        }
+	for (final ExecutionDegree executionDegree : executionYear.getExecutionDegrees()) {
+	    if (executionDegree.getDegree() == degree) {
+		return true;
+	    }
+	}
 
-        return false;
+	return false;
     }
 
     public Converter getConverter() {
-        return new DomainObjectKeyConverter();
+	return new DomainObjectKeyConverter();
     }
 
 }

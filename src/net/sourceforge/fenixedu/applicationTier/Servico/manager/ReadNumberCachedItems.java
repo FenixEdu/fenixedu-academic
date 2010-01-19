@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.Transaction;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -19,8 +18,9 @@ public class ReadNumberCachedItems extends FenixService {
     public static Integer run() throws FenixServiceException {
 	Integer numberCachedObjects = null;
 
-        // this is no longer available
-	//numberCachedObjects = Transaction.getCache().getNumberOfCachedItems();
+	// this is no longer available
+	// numberCachedObjects =
+	// Transaction.getCache().getNumberOfCachedItems();
 	numberCachedObjects = 0;
 
 	return numberCachedObjects;

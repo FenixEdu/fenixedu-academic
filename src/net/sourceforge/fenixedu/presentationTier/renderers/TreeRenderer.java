@@ -153,10 +153,12 @@ public class TreeRenderer extends OutputRenderer {
      * 
      * <ul>
      * <li><strong><tt>treeRenderer_saveTree(<em>id</em>)</tt></strong>: submits
-     * the current tree structure to be saved</li> <li><strong><tt>
-     * treeRenderer_expandAll(<em>id</em>)</tt></strong>: expands all nodes of
-     * the tree</li> <li><strong><tt>treeRenderer_collapseAll(<em>id</em>)</tt>
-     * </strong>: collapse all nodes of the tree</li>
+     * the current tree structure to be saved</li>
+     * <li><strong><tt>
+     * treeRenderer_expandAll(<em>id</em>)</tt></strong>: expands
+     * all nodes of the tree</li>
+     * <li><strong><tt>treeRenderer_collapseAll(<em>id</em>)</tt> </strong>:
+     * collapse all nodes of the tree</li>
      * </ul>
      * 
      * @property

@@ -1,14 +1,12 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.RemovePersistentGroupMember;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeletePersistentGroup;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeletePersistentGroup;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.RemovePersistentGroupMember;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;

@@ -1,9 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -14,6 +10,8 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class EditTeacherMasterDegreeCredits extends FenixService {
 

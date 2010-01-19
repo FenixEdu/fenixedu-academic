@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.thesis;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.thesis.ChangeMasterDegreeProof;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -18,6 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ScholarshipNotFinishedServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.thesis.ChangeMasterDegreeProof;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification;
@@ -25,7 +24,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActio
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ScholarshipNotFinishedActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.util.Data;
 
@@ -275,10 +273,9 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 	    Integer scpID, List<Integer> juriesNumbers, List<Integer> externalJuriesIDs) throws NonExistingActionException,
 	    ScholarshipNotFinishedActionException, ExistingActionException, FenixFilterException {
 
-
 	try {
-	    ChangeMasterDegreeProof.run(userView, scpID, proofDate, thesisDeliveryDate, finalResult, attachedCopiesNumber, juriesNumbers,
-		externalJuriesIDs);
+	    ChangeMasterDegreeProof.run(userView, scpID, proofDate, thesisDeliveryDate, finalResult, attachedCopiesNumber,
+		    juriesNumbers, externalJuriesIDs);
 	} catch (NonExistingServiceException e) {
 	    throw new NonExistingActionException(e.getMessage(), mapping.findForward("start"));
 	} catch (ScholarshipNotFinishedServiceException e) {

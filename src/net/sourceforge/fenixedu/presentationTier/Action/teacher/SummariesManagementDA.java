@@ -77,10 +77,10 @@ public class SummariesManagementDA extends FenixDispatchAction {
 
 	Teacher loggedTeacher;
 	Professorship loggedProfessorship;
-	if (! StringUtils.isEmpty(teacherNumber)) {
-	    loggedTeacher =  Teacher.readByNumber(Integer.valueOf(teacherNumber));
+	if (!StringUtils.isEmpty(teacherNumber)) {
+	    loggedTeacher = Teacher.readByNumber(Integer.valueOf(teacherNumber));
 	    loggedProfessorship = loggedTeacher.getProfessorshipByExecutionCourse(executionCourse);
-	}else{
+	} else {
 	    loggedProfessorship = AccessControl.getPerson().getProfessorshipByExecutionCourse(executionCourse);
 	}
 
@@ -373,7 +373,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	readAndSaveNextPossibleSummaryLessonsAndDates(request, executionCourse);
 	request.setAttribute("showSummariesBean", new ShowSummariesBean(new SummaryTeacherBean(professorshipLogged),
 		executionCourse, ListSummaryType.ALL_CONTENT, professorshipLogged));
-	if (professorshipLogged.getTeacher() != null){
+	if (professorshipLogged.getTeacher() != null) {
 	    request.setAttribute("teacherNumber", professorshipLogged.getTeacher().getTeacherNumber().toString());
 	}
 	request.setAttribute("summaries", teacherSummaries);

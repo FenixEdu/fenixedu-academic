@@ -32,8 +32,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author lmre
  */
 @Mapping(path = "/chooseExecutionYearAndDegreeCurricularPlan", module = "academicAdminOffice", formBean = "executionYearDegreeCurricularPlanForm")
-@Forwards( {
-	@Forward(name = "chooseExecutionYear", path = "/commons/curriculumHistoric/chooseDegreeCPlanExecutionYear.jsp"),
+@Forwards( { @Forward(name = "chooseExecutionYear", path = "/commons/curriculumHistoric/chooseDegreeCPlanExecutionYear.jsp"),
 	@Forward(name = "showActiveCurricularCourses", path = "/commons/curriculumHistoric/showActiveCurricularCourseScopes.jsp") })
 public class DegreeCurricularPlanExecutionYearDispacthAction extends FenixDispatchAction {
 

@@ -494,11 +494,11 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 
     public ActionForward prepareAssociateRegistration(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	
+
 	final PhdProgramCandidacyProcess process = getProcess(request);
 	final RegistrationFormalizationBean bean = new RegistrationFormalizationBean(process);
 	bean.setWhenStartedStudies(process.getWhenStartedStudies());
-	
+
 	request.setAttribute("registrationFormalizationBean", bean);
 	return mapping.findForward("associateRegistration");
     }

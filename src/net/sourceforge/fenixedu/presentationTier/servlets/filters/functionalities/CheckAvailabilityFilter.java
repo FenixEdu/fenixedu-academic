@@ -42,13 +42,15 @@ public class CheckAvailabilityFilter implements Filter {
 
     private static final String errorPage = "/publico/notFound.do";
     private static final String unathorizedPage = "/publico/notAuthorized.do";
+
     /**
      * Initializes the filter. There are two init parameters that are used by
      * this filter.
      * 
      * <ul>
      * <li><strong>error.page</strong>: the page were the user will be
-     * redirected when a functionality is not available</li> <li>
+     * redirected when a functionality is not available</li>
+     * <li>
      * <strong>testing.prefix</strong>: the prefix that is being used for
      * testing and that will be removed when redirecting (does not affect the
      * <code>error.page</code> address)</li>
@@ -112,7 +114,7 @@ public class CheckAvailabilityFilter implements Filter {
 	    final HttpServletResponse response) throws IOException, ServletException {
 	dispatch(request, response, unathorizedPage);
     }
-    
+
     protected static void dispatch(final HttpServletRequest request, final HttpServletResponse response, final String path)
 	    throws IOException, ServletException {
 	final RequestDispatcher dispatcher = request.getRequestDispatcher(path);

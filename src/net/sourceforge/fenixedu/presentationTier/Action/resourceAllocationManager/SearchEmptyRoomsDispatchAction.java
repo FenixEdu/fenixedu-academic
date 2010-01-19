@@ -1,18 +1,16 @@
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadAvailableRoomsForExam;
-
 import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadAvailableRoomsForExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.Util;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
@@ -99,7 +97,8 @@ public class SearchEmptyRoomsDispatchAction extends FenixContextDispatchAction {
 		return prepare(mapping, form, request, response);
 	    }
 
-	    List<InfoRoom> emptyRoomsList = (List<InfoRoom>) ReadAvailableRoomsForExam.run(startDate, endDate, startTime, endTime, weekDay, normalCapacity, FrequencyType.WEEKLY, Boolean.TRUE);
+	    List<InfoRoom> emptyRoomsList = (List<InfoRoom>) ReadAvailableRoomsForExam.run(startDate, endDate, startTime,
+		    endTime, weekDay, normalCapacity, FrequencyType.WEEKLY, Boolean.TRUE);
 	    Collections.sort(emptyRoomsList);
 
 	    if (emptyRoomsList == null || emptyRoomsList.isEmpty()) {

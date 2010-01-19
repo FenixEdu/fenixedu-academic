@@ -4,8 +4,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.guide;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.ChooseGuideByPersonID;
-
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
@@ -15,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.ChooseGuideByPersonID;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentByNumberAndDegreeType;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -167,7 +166,6 @@ public class GuideListingDispatchAction extends FenixDispatchAction {
 	IUserView userView = getUserView(request);
 
 	Integer personID = Integer.valueOf(request.getParameter("personID"));
-
 
 	List result = null;
 	try {

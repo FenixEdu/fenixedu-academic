@@ -137,7 +137,7 @@ public class StandaloneCandidacyProcess extends StandaloneCandidacyProcess_Base 
 		throw new PreConditionNotValidException();
 	    }
 
-	     if (!process.isInStandBy()) {
+	    if (!process.isInStandBy()) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -160,7 +160,7 @@ public class StandaloneCandidacyProcess extends StandaloneCandidacyProcess_Base 
 	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
-	     if (process.isInStandBy()) {
+	    if (process.isInStandBy()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -179,7 +179,7 @@ public class StandaloneCandidacyProcess extends StandaloneCandidacyProcess_Base 
 		throw new PreConditionNotValidException();
 	    }
 
-	     if (process.isInStandBy()) {
+	    if (process.isInStandBy()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -216,7 +216,7 @@ public class StandaloneCandidacyProcess extends StandaloneCandidacyProcess_Base 
 		throw new PreConditionNotValidException();
 	    }
 
-	     if (!process.isSentToCoordinator()) {
+	    if (!process.isSentToCoordinator()) {
 		throw new PreConditionNotValidException();
 	    }
 	}

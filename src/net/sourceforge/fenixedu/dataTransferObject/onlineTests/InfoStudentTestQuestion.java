@@ -150,7 +150,7 @@ public class InfoStudentTestQuestion extends InfoObject implements Comparable {
 	    setCorrectionFormula(studentTestQuestion.getCorrectionFormula());
 	    // if (studentTestQuestion.getResponse() != null) {
 	    // XMLDecoder decoder = new XMLDecoder(new
-	    //ByteArrayInputStream(studentTestQuestion.getResponse().getBytes())
+	    // ByteArrayInputStream(studentTestQuestion.getResponse().getBytes())
 	    // );
 	    // setResponse((Response) decoder.readObject());
 	    // decoder.close();

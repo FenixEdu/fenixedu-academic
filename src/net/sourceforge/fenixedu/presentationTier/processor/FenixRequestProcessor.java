@@ -26,5 +26,4 @@ public class FenixRequestProcessor extends RequestProcessor {
 	return true;
     }
 
-
 }

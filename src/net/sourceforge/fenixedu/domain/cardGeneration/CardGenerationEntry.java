@@ -5,9 +5,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
-
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainObject;
@@ -20,6 +17,10 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.StringUtils;
+
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class CardGenerationEntry extends CardGenerationEntry_Base {
@@ -53,7 +54,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	}
 	return null;
     }
-    
+
     public static final Comparator<CardGenerationEntry> COMPARATOR_BY_CREATION_DATE = new Comparator<CardGenerationEntry>() {
 
 	@Override
@@ -63,7 +64,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	}
 
     };
-    
+
     public int getNumberOfCGRsAfterThisCGEAndBeforeTheNextCGE() {
 	int count = 0;
 	DateTime creationDateStart = getCreated();
@@ -72,10 +73,10 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	    List<CardGenerationEntry> cardGenerationEntries = getPerson().getCardGenerationEntries();
 	    CardGenerationEntry cardGenerationEntry = getNextCGE(cardGenerationEntries);
 	    creationDateEnd = (cardGenerationEntry == null) ? null : cardGenerationEntry.getCreated();
-	    for(CardGenerationRegister cardGenerationRegister : getPerson().getCardGenerationRegister()) {
+	    for (CardGenerationRegister cardGenerationRegister : getPerson().getCardGenerationRegister()) {
 		LocalDate localDate = cardGenerationRegister.getEmission();
-		if((localDate != null) && (localDate.isAfter(creationDateStart.toLocalDate()))) {
-		    if((creationDateEnd == null) || (localDate.isBefore(creationDateEnd.toLocalDate()))) {
+		if ((localDate != null) && (localDate.isAfter(creationDateStart.toLocalDate()))) {
+		    if ((creationDateEnd == null) || (localDate.isBefore(creationDateEnd.toLocalDate()))) {
 			++count;
 		    }
 		}
@@ -83,19 +84,19 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	}
 	return count;
     }
-    
+
     public CardGenerationEntry getNextCGE(List<CardGenerationEntry> cardGenerationEntries) {
 	boolean found = false;
 	List<CardGenerationEntry> sortedEntries = new ArrayList<CardGenerationEntry>();
 	sortedEntries.addAll(cardGenerationEntries);
 	Collections.sort(sortedEntries, COMPARATOR_BY_CREATION_DATE);
-	CardGenerationEntry nextCardGenerationEntry = null; 
-	for(CardGenerationEntry cardGenerationEntry : sortedEntries) {
-	    if(found) {
+	CardGenerationEntry nextCardGenerationEntry = null;
+	for (CardGenerationEntry cardGenerationEntry : sortedEntries) {
+	    if (found) {
 		nextCardGenerationEntry = cardGenerationEntry;
 		break;
 	    } else {
-		if(CardGenerationEntry.COMPARATOR_BY_CREATION_DATE.compare(cardGenerationEntry, this) == 0) {
+		if (CardGenerationEntry.COMPARATOR_BY_CREATION_DATE.compare(cardGenerationEntry, this) == 0) {
 		    found = true;
 		}
 	    }

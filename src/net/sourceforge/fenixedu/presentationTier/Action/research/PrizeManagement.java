@@ -1,12 +1,11 @@
 package net.sourceforge.fenixedu.presentationTier.Action.research;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.research.prizes.CreatePrize;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.prizes.CreatePrize;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonNameBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -79,8 +78,7 @@ public class PrizeManagement extends FenixDispatchAction {
 	if (viewState != null) {
 	    PrizeBean bean = (PrizeBean) viewState.getMetaObject().getObject();
 	    try {
-		CreatePrize.run(bean.getName(), bean.getDescription(), bean.getYear(),
-			bean.getPerson());
+		CreatePrize.run(bean.getName(), bean.getDescription(), bean.getYear(), bean.getPerson());
 	    } catch (DomainException e) {
 		addActionMessage(request, e.getMessage());
 	    }

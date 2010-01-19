@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.log.requests;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;

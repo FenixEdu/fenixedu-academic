@@ -36,8 +36,7 @@ import pt.utl.ist.fenix.tools.util.FileUtils;
 	@Forward(name = "thesis-declaration-view", path = "/student/thesis/viewDeclaration.jsp"),
 	@Forward(name = "thesis-upload-dissertation", path = "/student/thesis/uploadDissertation.jsp"),
 	@Forward(name = "thesis-upload-abstract", path = "/student/thesis/uploadAbstract.jsp"),
-	@Forward(name = "thesis-list-enrolments", path = "/student/thesis/listEnrolments.jsp")
-})
+	@Forward(name = "thesis-list-enrolments", path = "/student/thesis/listEnrolments.jsp") })
 public class ThesisSubmissionDA extends FenixDispatchAction {
 
     public Student getStudent(HttpServletRequest request) {
@@ -79,11 +78,11 @@ public class ThesisSubmissionDA extends FenixDispatchAction {
 	final Student student = getStudent(request);
 	final TreeSet<Enrolment> enrolments = student.getDissertationEnrolments(null);
 	request.setAttribute("enrolments", enrolments);
-	return mapping.findForward("thesis-list-enrolments");	    
+	return mapping.findForward("thesis-list-enrolments");
     }
 
-    public ActionForward prepareThesisSubmissionByEnrolment(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+    public ActionForward prepareThesisSubmissionByEnrolment(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	final Enrolment enrolment = getDomainObject(request, "enrolmentId");
 	if (enrolment == null) {
 	    request.setAttribute("noEnrolment", true);

@@ -50,7 +50,8 @@ public class ChooseDegreeAndYearContextDA extends FenixContextDispatchAction {
 
 	IUserView userView = UserView.getUser();
 
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+		.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
 	/* Criar o bean de anos curriculares */
 	List anosCurriculares = createCurricularYearList();

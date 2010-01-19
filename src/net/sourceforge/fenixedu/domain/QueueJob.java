@@ -28,7 +28,7 @@ public abstract class QueueJob extends QueueJob_Base {
     public String getFilename() {
 	return "ficheiro";
     }
-    
+
     public static class FindQueueJobsForAClass implements Predicate {
 
 	Class aClass;
@@ -42,19 +42,19 @@ public abstract class QueueJob extends QueueJob_Base {
 	    try {
 		aClass.cast(queueJob);
 		return true;
-		
+
 	    } catch (ClassCastException E) {
 		return false;
 	    }
 
 	}
     }
-    
-    public static List<QueueJob> getAllJobsForClassOrSubClass(Class aClass, int max){
+
+    public static List<QueueJob> getAllJobsForClassOrSubClass(Class aClass, int max) {
 	Predicate predicate = new FindQueueJobsForAClass(aClass);
-	List<QueueJob> tempList = (List<QueueJob>) org.apache.commons.collections.CollectionUtils.select(
-		RootDomainObject.getInstance().getQueueJob(), predicate);
-	
+	List<QueueJob> tempList = (List<QueueJob>) org.apache.commons.collections.CollectionUtils.select(RootDomainObject
+		.getInstance().getQueueJob(), predicate);
+
 	return tempList.size() > max ? tempList.subList(0, max) : tempList;
     }
 

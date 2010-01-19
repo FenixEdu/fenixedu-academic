@@ -533,11 +533,11 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends FenixServi
     // } else {
     // throw new
     // InsufficientSibsPaymentPhaseCodesServiceException(gratuitySituation
-    //.getGratuityValues().getExecutionDegree().getDegreeCurricularPlan().getName
+    // .getGratuityValues().getExecutionDegree().getDegreeCurricularPlan().getName
     // ()
     // + " - "
     // +
-    //gratuitySituation.getGratuityValues().getExecutionDegree().getExecutionYear
+    // gratuitySituation.getGratuityValues().getExecutionDegree().getExecutionYear
     // ()
     // .getYear());
     // }

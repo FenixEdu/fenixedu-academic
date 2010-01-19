@@ -1,12 +1,11 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.student.administrativeOfficeServices.CreateOptionalEnrolment;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.administrativeOfficeServices.CreateOptionalEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentEnrolmentBean;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentOptionalEnrolmentBean;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -18,7 +17,6 @@ import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -70,9 +68,8 @@ public class StudentOptionalEnrolmentsDA extends FenixDispatchAction {
 	final Context context = rootDomainObject.readContextByOID(contextID);
 
 	try {
-	    CreateOptionalEnrolment.run(studentCurricularPlan, executionSemester,
-		    (CurriculumGroup) rootDomainObject.readCurriculumModuleByOID(curriculumGroupID),
-		    rootDomainObject.readContextByOID(contextID),
+	    CreateOptionalEnrolment.run(studentCurricularPlan, executionSemester, (CurriculumGroup) rootDomainObject
+		    .readCurriculumModuleByOID(curriculumGroupID), rootDomainObject.readContextByOID(contextID),
 		    (CurricularCourse) rootDomainObject.readDegreeModuleByOID(optionalCCID), EnrollmentCondition.VALIDATED);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());

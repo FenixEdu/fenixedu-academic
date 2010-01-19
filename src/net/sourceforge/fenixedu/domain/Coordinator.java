@@ -1,8 +1,5 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.text.Collator;
-import java.util.Comparator;
-
 import pt.ist.fenixWebFramework.services.Service;
 
 public class Coordinator extends Coordinator_Base {
@@ -35,24 +32,24 @@ public class Coordinator extends Coordinator_Base {
     public Teacher getTeacher() {
 	return getPerson().getTeacher();
     }
-    
+
     @Service
-    public static Coordinator createCoordinator(ExecutionDegree executionDegree, Person person, Boolean responsible){
+    public static Coordinator createCoordinator(ExecutionDegree executionDegree, Person person, Boolean responsible) {
 	return new Coordinator(executionDegree, person, responsible);
     }
-    
+
     @Service
-    public void removeCoordinator(){
+    public void removeCoordinator() {
 	this.delete();
     }
-    
+
     @Service
-    public void setAsResponsible(){
+    public void setAsResponsible() {
 	this.setResponsible(Boolean.valueOf(true));
     }
-    
+
     @Service
-    public void setAsNotResponsible(){
+    public void setAsNotResponsible() {
 	this.setResponsible(Boolean.valueOf(false));
     }
 

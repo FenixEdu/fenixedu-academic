@@ -190,19 +190,19 @@ public class AlumniJobBean implements Serializable {
     }
 
     public JobApplicationType getApplicationType() {
-        return applicationType;
+	return applicationType;
     }
 
     public void setApplicationType(JobApplicationType applicationType) {
-        this.applicationType = applicationType;
+	this.applicationType = applicationType;
     }
 
     public SalaryType getSalaryType() {
-        return salaryType;
+	return salaryType;
     }
 
     public void setSalaryType(SalaryType salaryType) {
-        this.salaryType = salaryType;
+	this.salaryType = salaryType;
     }
 
 }

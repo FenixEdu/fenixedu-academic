@@ -1,12 +1,11 @@
 package net.sourceforge.fenixedu.presentationTier.Action.spaceManager;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.space.DeletePersonSpaceOccupation;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.space.DeletePersonSpaceOccupation;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation;

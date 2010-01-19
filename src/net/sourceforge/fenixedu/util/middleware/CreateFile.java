@@ -22,10 +22,10 @@ public class CreateFile {
 
     public static final int MAX_MAIL = 39;
 
-    //««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««
+    // ««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««
     // «««««««««««««««««««««««««««««««««««
     // fileWithMarksList
-    //»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»
+    // »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»
     // »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»
     public static List fileWithMarksList(List curricularCoursesList, List enrolmentEvaluationList) throws Exception {
 	List fileList = new ArrayList();

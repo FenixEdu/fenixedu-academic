@@ -42,8 +42,8 @@ public class PeopleForUnitGroups implements DataProvider {
 	    }
 	}
 	for (PersistentGroupMembers persistentGroupMembers : unit.getPersistentGroups()) {
-	    for(Person person : persistentGroupMembers.getPersons()){
-		if (! people.contains(person)){
+	    for (Person person : persistentGroupMembers.getPersons()) {
+		if (!people.contains(person)) {
 		    people.add(person);
 		}
 	    }

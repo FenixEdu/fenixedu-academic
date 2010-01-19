@@ -147,8 +147,8 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 		    strBuffer.append("<a href='viewExamsMap.do?method=create&amp;indexExecutionCourse=" + i + "&amp;"
 			    + PresentationConstants.EXECUTION_PERIOD_OID + "="
 			    + infoExecutionCourse.getInfoExecutionPeriod().getIdInternal() + "&amp;"
-			    + PresentationConstants.EXECUTION_DEGREE_OID + "=" + examsMap.getInfoExecutionDegree().getIdInternal()
-			    + getCurricularYearsArgs() + "'>");
+			    + PresentationConstants.EXECUTION_DEGREE_OID + "="
+			    + examsMap.getInfoExecutionDegree().getIdInternal() + getCurricularYearsArgs() + "'>");
 		}
 
 		strBuffer.append(infoExecutionCourse.getSigla());
@@ -173,8 +173,8 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 			strBuffer.append("&amp;indexExecutionCourse=" + i);
 			strBuffer.append("&amp;" + PresentationConstants.EXECUTION_PERIOD_OID + "="
 				+ infoExecutionCourse.getInfoExecutionPeriod().getIdInternal() + "&amp;"
-				+ PresentationConstants.EXECUTION_DEGREE_OID + "=" + examsMap.getInfoExecutionDegree().getIdInternal()
-				+ getCurricularYearsArgs());
+				+ PresentationConstants.EXECUTION_DEGREE_OID + "="
+				+ examsMap.getInfoExecutionDegree().getIdInternal() + getCurricularYearsArgs());
 			strBuffer.append("'>");
 		    }
 
@@ -196,8 +196,8 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 			strBuffer.append("&amp;indexExecutionCourse=" + i);
 			strBuffer.append("&amp;" + PresentationConstants.EXECUTION_PERIOD_OID + "="
 				+ infoExecutionCourse.getInfoExecutionPeriod().getIdInternal() + "&amp;"
-				+ PresentationConstants.EXECUTION_DEGREE_OID + "=" + examsMap.getInfoExecutionDegree().getIdInternal()
-				+ getCurricularYearsArgs());
+				+ PresentationConstants.EXECUTION_DEGREE_OID + "="
+				+ examsMap.getInfoExecutionDegree().getIdInternal() + getCurricularYearsArgs());
 			strBuffer.append("'>");
 			strBuffer.append("Definir comentário");
 			strBuffer.append("</a>");

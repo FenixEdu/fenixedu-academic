@@ -3,12 +3,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.grant.contract;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.EditGrantInsurance;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadPaymentEntityByNumberAndClass;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadGrantInsuranceByGrantContract;
-
 import java.text.SimpleDateFormat;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.EditGrantInsurance;
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadGrantInsuranceByGrantContract;
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadPaymentEntityByNumberAndClass;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContract;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantCostCenter;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantInsurance;
@@ -120,7 +117,8 @@ public class EditGrantInsuranceAction extends FenixDispatchAction {
 		    throw new Error("unkown type: " + infoGrantInsurance.getInfoGrantPaymentEntity());
 		}
 
-		InfoGrantPaymentEntity infoGrantPaymentEntity = (InfoGrantPaymentEntity) ReadPaymentEntityByNumberAndClass.run(infoGrantInsurance.getInfoGrantPaymentEntity().getNumber(), classname);
+		InfoGrantPaymentEntity infoGrantPaymentEntity = (InfoGrantPaymentEntity) ReadPaymentEntityByNumberAndClass.run(
+			infoGrantInsurance.getInfoGrantPaymentEntity().getNumber(), classname);
 
 		if (infoGrantPaymentEntity == null) {
 		    if (verifyStringParameterInForm(editGrantInsuranceForm, "project")) {

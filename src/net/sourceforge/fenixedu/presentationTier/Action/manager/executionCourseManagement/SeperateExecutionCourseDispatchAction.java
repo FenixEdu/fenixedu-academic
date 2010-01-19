@@ -1,9 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.SeperateExecutionCourse;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.ReadExecutionCourseWithShiftsAndCurricularCoursesByOID;
-
 import java.util.Collections;
 import java.util.List;
 
@@ -13,11 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.ReadExecutionCourseWithShiftsAndCurricularCoursesByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.ReadExecutionDegreesByExecutionPeriodId;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.SeperateExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
@@ -48,7 +45,8 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
 
 	Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
 
-	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ReadExecutionCourseWithShiftsAndCurricularCoursesByOID.run(executionCourseId);
+	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ReadExecutionCourseWithShiftsAndCurricularCoursesByOID
+		.run(executionCourseId);
 	request.setAttribute("infoExecutionCourse", infoExecutionCourse);
 
 	List executionDegrees = (List) ReadExecutionDegreesByExecutionPeriodId.run(infoExecutionCourse.getInfoExecutionPeriod()
@@ -124,8 +122,7 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
 	    destinationExecutionCourseID = new Integer(destinationExecutionCourseIDString);
 	}
 
-	SeperateExecutionCourse.run(executionCourseId,
-		destinationExecutionCourseID, makeIntegerArray(shiftIdsToTransfer),
+	SeperateExecutionCourse.run(executionCourseId, destinationExecutionCourseID, makeIntegerArray(shiftIdsToTransfer),
 		makeIntegerArray(curricularCourseIdsToTransfer));
 
 	return mapping.findForward("returnFromTransfer");

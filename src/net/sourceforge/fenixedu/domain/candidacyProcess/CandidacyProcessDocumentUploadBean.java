@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.domain.candidacyProcess;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,7 +23,7 @@ public class CandidacyProcessDocumentUploadBean implements Serializable {
     private String fileName;
 
     private Long id;
-    
+
     private DomainReference<IndividualCandidacyDocumentFile> documentFile;
 
     public CandidacyProcessDocumentUploadBean() {
@@ -80,11 +79,11 @@ public class CandidacyProcessDocumentUploadBean implements Serializable {
     public Long getId() {
 	return this.id;
     }
-    
+
     public IndividualCandidacyDocumentFile getDocumentFile() {
 	return this.documentFile != null ? this.documentFile.getObject() : null;
     }
-    
+
     public void setDocumentFile(IndividualCandidacyDocumentFile documentFile) {
 	this.documentFile = documentFile != null ? new DomainReference<IndividualCandidacyDocumentFile>(documentFile) : null;
     }

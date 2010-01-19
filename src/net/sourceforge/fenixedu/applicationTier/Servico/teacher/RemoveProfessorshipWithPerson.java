@@ -14,7 +14,7 @@ import org.apache.commons.collections.Predicate;
 
 import pt.ist.fenixWebFramework.services.Service;
 
-public class RemoveProfessorshipWithPerson extends AbstractModifyProfessorshipWithPerson{
+public class RemoveProfessorshipWithPerson extends AbstractModifyProfessorshipWithPerson {
     @Service
     public static Boolean run(Person person, ExecutionCourse executionCourse) throws NotAuthorizedException {
 	AbstractModifyProfessorshipWithPerson.run(person);

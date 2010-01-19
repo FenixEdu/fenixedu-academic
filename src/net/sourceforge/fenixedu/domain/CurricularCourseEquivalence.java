@@ -43,8 +43,8 @@ public class CurricularCourseEquivalence extends CurricularCourseEquivalence_Bas
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public CurricularCourseEquivalence(final DegreeCurricularPlan degreeCurricularPlan, final CurricularCourse equivalentCurricularCourse,
-	    final Collection<CurricularCourse> oldCurricularCourses) {
+    public CurricularCourseEquivalence(final DegreeCurricularPlan degreeCurricularPlan,
+	    final CurricularCourse equivalentCurricularCourse, final Collection<CurricularCourse> oldCurricularCourses) {
 	this();
 	checkIfEquivalenceAlreadyExists(equivalentCurricularCourse, oldCurricularCourses);
 

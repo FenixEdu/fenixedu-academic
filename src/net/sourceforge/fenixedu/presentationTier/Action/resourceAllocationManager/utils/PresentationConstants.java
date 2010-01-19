@@ -11,10 +11,10 @@ public abstract class PresentationConstants {
 
     public static String USERNAME = "username";
 
-    //--------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
     // -----
     // Degree Administrative Office Constants
-    //--------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
     // -----
     public static final String ENROLMENT_TO_REMOVE_LIST_KEY = "erolmentsToRemoveList";
 
@@ -37,19 +37,19 @@ public abstract class PresentationConstants {
 
     public static final String CURRICULUM = "curriculum";
 
-    //--------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
     // -----
     // General Purpose Constants - For Specialized Action Mapping
-    //--------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
     // -----
     public static final String INPUT_PAGE = "inputPage";
 
     public static final String NEXT_PAGE = "nextPage";
 
-    //--------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
     // -----
     // General Purpose Constants - For Context
-    //--------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
     // -----
     public static final String CLASS_VIEW_OID = "class_oid";
 
@@ -109,10 +109,10 @@ public abstract class PresentationConstants {
 
     public static final String SELECTED_ROOMS = "selectedRooms";
 
-    //--------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
     // -----
     // Constants - For Manager
-    //--------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
     // -----
     public static final String DEGREE = "degree";
 
@@ -122,10 +122,10 @@ public abstract class PresentationConstants {
 
     public static final String CACHED_RESPONSES_TIMEOUT = "CACHED_RESPONSES_TIMEOUT";
 
-    //--------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
     // -----
     // GesDis Constants - For GesDis
-    //--------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
     // -----
     public static final String INDEX = "index";
 
@@ -171,10 +171,10 @@ public abstract class PresentationConstants {
 
     public static final String INFO_EVALUATION = "info_evaluation";
 
-    //--------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
     // -----
     // Master Degree Constants - For Master Degree
-    //--------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
     // -----
     public static final String SPECIALIZATIONS = "specializations";
 
@@ -227,7 +227,6 @@ public abstract class PresentationConstants {
     public static final String REQUESTER_NUMBER = "requester_number";
 
     public static final String PRINT_PASSWORD = "print_password";
-
 
     public static final String DATE = "date";
 
@@ -375,10 +374,10 @@ public abstract class PresentationConstants {
 
     public static final String REIMBURSEMENT_GUIDE_STATES_LIST = "reimbursement_guide_states_list";
 
-    //--------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
     // -----
     // Person Constants - For Person
-    //--------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
     // -----
     public static final String IDENTIFICATION_DOCUMENT_TYPE_LIST = "identification_document_type_list";
 
@@ -410,26 +409,26 @@ public abstract class PresentationConstants {
 
     public static final int LIMIT_FINDED_PERSONS_TOTAL = 200;
 
-    //--------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
     // -----
     // SOP Constants - For Context
-    //--------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
     // -----
     public static final String LABELLIST_CURRICULAR_YEARS = "anosCurriculares";
 
-    //--------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
     // -----
     // SOP Constants - For Working Area
-    //--------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
     // -----
     public static String LIST_EXECUTION_PERIODS = "listExecutionPeriods";
 
     public static String LIST_WORKING_AREAS = "listWorkingAreas";
 
-    //--------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
     // -----
     // SOP Constants - For Exams
-    //--------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
     // -----
     public static final String CURRICULAR_YEARS_LIST = "curricularYearsList";
 
@@ -497,10 +496,10 @@ public abstract class PresentationConstants {
 
     public static final String ROOMS_LIST = "rooms_list";
 
-    //--------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
     // -----
     // SOP Constants - For Timetables Management
-    //--------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
     // -----
     public static final String ALL_INFO_VIEW_CLASS_SCHEDULE = "ALL_INFO_VIEW_CLASS_SCHEDULE";
 
@@ -514,10 +513,10 @@ public abstract class PresentationConstants {
 
     public static final String SHIFTS = "shifts";
 
-    //--------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
     // -----
     // Messy Constants Section - For All Sorts of Purposes
-    //--------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
     // -----
     // TODO : Clean this up.
     public static final String CONTEXT_PREFIX = "context.";

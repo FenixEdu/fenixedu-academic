@@ -1,9 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.activity;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.ParticipantBean;
@@ -24,14 +20,16 @@ import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchA
 
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CreateResearchActivityParticipation extends FenixService {
 
     @Checked("RolePredicates.RESEARCHER_PREDICATE")
     @Service
-    public static void run(ResearchEvent event, ResearchActivityParticipationRole role, Person person, MultiLanguageString roleMessage)
-	    throws FenixServiceException {
+    public static void run(ResearchEvent event, ResearchActivityParticipationRole role, Person person,
+	    MultiLanguageString roleMessage) throws FenixServiceException {
 
 	new EventParticipation(person, role, event, roleMessage);
     }
@@ -63,13 +61,15 @@ public class CreateResearchActivityParticipation extends FenixService {
 
     @Checked("RolePredicates.RESEARCHER_PREDICATE")
     @Service
-    public static void run(JournalIssue issue, ResearchActivityParticipationRole role, Person person, MultiLanguageString roleMessage) {
+    public static void run(JournalIssue issue, ResearchActivityParticipationRole role, Person person,
+	    MultiLanguageString roleMessage) {
 	new JournalIssueParticipation(issue, role, person, roleMessage);
     }
 
     @Checked("RolePredicates.RESEARCHER_PREDICATE")
     @Service
-    public static void run(EventEdition edition, ResearchActivityParticipationRole role, Person person, MultiLanguageString roleMessage) {
+    public static void run(EventEdition edition, ResearchActivityParticipationRole role, Person person,
+	    MultiLanguageString roleMessage) {
 	new EventEditionParticipation(person, role, edition, roleMessage);
     }
 

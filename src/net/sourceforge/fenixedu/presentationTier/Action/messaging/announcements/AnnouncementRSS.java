@@ -28,7 +28,7 @@ import com.sun.syndication.feed.synd.SyndContentImpl;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
- *         <br>
+ * <br>
  *         Created on Jul 20, 2006,8:42:24 AM
  * 
  */
@@ -118,7 +118,8 @@ public class AnnouncementRSS extends RSSAction {
     }
 
     private String getEntryLink(HttpServletRequest request, Announcement announcement) throws FenixActionException {
-	return getBaseUrl(request, announcement) + announcement.getAnnouncementBoard().getSiteParamForAnnouncementBoard(announcement);
+	return getBaseUrl(request, announcement)
+		+ announcement.getAnnouncementBoard().getSiteParamForAnnouncementBoard(announcement);
     }
 
     public String getBaseUrl(HttpServletRequest request, Announcement announcement) {
@@ -135,9 +136,10 @@ public class AnnouncementRSS extends RSSAction {
 	    actionPath.append("?");
 	}
 
-	return  scheme + "://" + serverName + ((serverPort == 80 || serverPort == 443)? "" : ":"+serverPort) + context +  actionPath.toString();
+	return scheme + "://" + serverName + ((serverPort == 80 || serverPort == 443) ? "" : ":" + serverPort) + context
+		+ actionPath.toString();
     }
-    
+
     protected String getDirectAnnouncementBaseUrl(HttpServletRequest request, Announcement announcement) {
 	return "/publico/announcementManagement.do?method=viewAnnouncement";
     }

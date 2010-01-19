@@ -4,10 +4,6 @@
 
 package net.sourceforge.fenixedu.presentationTier.Action.grant.contract;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.EditGrantPart;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadPaymentEntityByNumberAndClass;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,6 +11,8 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.InvalidPartResponsibleTeacherException;
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.EditGrantPart;
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadPaymentEntityByNumberAndClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantCostCenter;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantPart;
@@ -114,7 +112,8 @@ public class EditGrantPartAction extends FenixDispatchAction {
 		    paymentEntityClass = GrantCostCenter.class.getName();
 		}
 
-		InfoGrantPaymentEntity infoGrantPaymentEntity = (InfoGrantPaymentEntity) ReadPaymentEntityByNumberAndClass.run(infoGrantPart.getInfoGrantPaymentEntity().getNumber(), paymentEntityClass);
+		InfoGrantPaymentEntity infoGrantPaymentEntity = (InfoGrantPaymentEntity) ReadPaymentEntityByNumberAndClass.run(
+			infoGrantPart.getInfoGrantPaymentEntity().getNumber(), paymentEntityClass);
 
 		if (infoGrantPaymentEntity == null) {
 		    if (verifyStringParameterInForm(editGrantPartForm, "project")) {

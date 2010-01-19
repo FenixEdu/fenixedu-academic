@@ -78,9 +78,8 @@ public class BolonhaStudentEnrollmentDispatchAction extends AbstractBolonhaStude
     private void addOutOfPeriodMessage(final HttpServletRequest request, final String message,
 	    final EnrolmentPeriod nextEnrollmentPeriod) {
 	if (nextEnrollmentPeriod != null) {
-	    addActionMessage(request, message, nextEnrollmentPeriod.getStartDateDateTime().toString(
-		    "dd/MM/yyyy HH:mm"), nextEnrollmentPeriod.getEndDateDateTime().toString(
-		    DateFormatUtil.DEFAULT_DATE_FORMAT));
+	    addActionMessage(request, message, nextEnrollmentPeriod.getStartDateDateTime().toString("dd/MM/yyyy HH:mm"),
+		    nextEnrollmentPeriod.getEndDateDateTime().toString(DateFormatUtil.DEFAULT_DATE_FORMAT));
 	} else {
 	    addActionMessage(request, "message.out.curricular.course.enrolment.period.default");
 	}

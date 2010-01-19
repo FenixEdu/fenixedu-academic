@@ -36,39 +36,40 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
     public ActionForward prepareSubmitJuryElementsDocument(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
-	
+
 	final PhdThesisProcessBean bean = new PhdThesisProcessBean();
 	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.JURY_ELEMENTS));
 	request.setAttribute("thesisProcessBean", bean);
 
 	return mapping.findForward("submitJuryElementsDocument");
     }
-    
-    public ActionForward submitJuryElementsDocumentInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
+
+    public ActionForward submitJuryElementsDocumentInvalid(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
 	request.setAttribute("thesisProcessBean", getRenderedObject("thesisProcessBean"));
 	return mapping.findForward("submitJuryElementsDocument");
     }
-    
+
     public ActionForward submitJuryElementsDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	try {
-	    
+
 	    final IViewState viewState = RenderUtils.getViewState("thesisProcessBean.edit.documents");
 	    if (!viewState.isValid()) {
 		return submitJuryElementsDocumentInvalid(mapping, actionForm, request, response);
 	    }
-	    ExecuteProcessActivity.run(getProcess(request), SubmitJuryElementsDocuments.class, getRenderedObject("thesisProcessBean"));
+	    ExecuteProcessActivity.run(getProcess(request), SubmitJuryElementsDocuments.class,
+		    getRenderedObject("thesisProcessBean"));
 	    addSuccessMessage(request, "message.thesis.jury.elements.added.with.success");
-	    
+
 	} catch (final DomainException e) {
 	    addErrorMessage(request, e.getMessage(), e.getArgs());
 	    return submitJuryElementsDocumentInvalid(mapping, actionForm, request, response);
 	}
-	
+
 	return viewIndividualProgramProcess(request, getProcess(request));
     }
-    
+
     public ActionForward manageThesisJuryElements(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	return mapping.findForward("manageThesisJuryElements");

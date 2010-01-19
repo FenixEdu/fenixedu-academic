@@ -1,20 +1,14 @@
 package net.sourceforge.fenixedu.domain.messaging;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Comparator;
 import java.util.Iterator;
 
-import javax.servlet.http.HttpServletRequest;
-
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseBoardPermittedGroupType;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 

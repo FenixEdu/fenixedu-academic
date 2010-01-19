@@ -12,10 +12,6 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.candidate;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
@@ -33,12 +29,15 @@ import net.sourceforge.fenixedu.util.State;
 
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
+
 public class ChangeApplicationInfo extends FenixService {
 
     @Checked("RolePredicates.MASTER_DEGREE_CANDIDATE_PREDICATE")
     @Service
-    public static InfoMasterDegreeCandidate run(InfoMasterDegreeCandidate newMasterDegreeCandidate, InfoPersonEditor infoPersonEditor,
-	    IUserView userView, Boolean isNewPerson) throws FenixServiceException {
+    public static InfoMasterDegreeCandidate run(InfoMasterDegreeCandidate newMasterDegreeCandidate,
+	    InfoPersonEditor infoPersonEditor, IUserView userView, Boolean isNewPerson) throws FenixServiceException {
 
 	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(newMasterDegreeCandidate
 		.getInfoExecutionDegree().getIdInternal());

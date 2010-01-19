@@ -5,14 +5,6 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
-/**
- * @author Luis Cruz & Sara Ribeiro
- * 
- */
 import java.util.List;
 import java.util.Set;
 
@@ -24,6 +16,9 @@ import net.sourceforge.fenixedu.domain.Shift;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadAvailableShiftsForClass extends FenixService {
 

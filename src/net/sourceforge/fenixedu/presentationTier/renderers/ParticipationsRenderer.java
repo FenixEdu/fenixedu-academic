@@ -166,8 +166,12 @@ public class ParticipationsRenderer extends OutputRenderer {
 				container.addChild(new HtmlText(" - "));
 			    }
 			    if (journalParticipation.getBeginDate() != null) {
-				container.addChild(new HtmlText(" "
-					+ RenderUtils.getResourceString("RESEARCHER_RESOURCES", (journalParticipation.getEndDate() != null) ? "label.date.from" : "label.date.from.without.to") + " "));
+				container
+					.addChild(new HtmlText(" "
+						+ RenderUtils
+							.getResourceString("RESEARCHER_RESOURCES", (journalParticipation
+								.getEndDate() != null) ? "label.date.from"
+								: "label.date.from.without.to") + " "));
 				container.addChild(new HtmlText(journalParticipation.getBeginDate().toString("dd-MM-yyyy")));
 			    }
 			    if (journalParticipation.getEndDate() != null) {

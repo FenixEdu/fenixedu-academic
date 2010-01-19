@@ -38,7 +38,8 @@ public class SubmitFinalWorkProposalAuthorization extends Filtro {
     }
 
     private boolean authorized(final Person person, final Scheduleing scheduleing) {
-	if ((person.hasRole(RoleType.TEACHER) || person.hasAnyProfessorships() || person.hasRole(RoleType.RESEARCHER))&& scheduleing.isInsideProposalSubmissionPeriod()) {
+	if ((person.hasRole(RoleType.TEACHER) || person.hasAnyProfessorships() || person.hasRole(RoleType.RESEARCHER))
+		&& scheduleing.isInsideProposalSubmissionPeriod()) {
 	    return true;
 	}
 	return isCoordinatorOrDepartmentAdminOffice(person, scheduleing);

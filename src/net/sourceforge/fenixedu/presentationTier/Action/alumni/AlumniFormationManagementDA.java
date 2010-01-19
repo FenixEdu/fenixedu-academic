@@ -76,8 +76,7 @@ public class AlumniFormationManagementDA extends AlumniEntityManagementDA {
 	    if (formationInfo.hasAssociatedFormation()) {
 		executeService("EditFormation", new Object[] { formationInfo });
 	    } else {
-		executeService("CreateFormation",
-			new Object[] { getAlumniFromLoggedPerson(request), formationInfo });
+		executeService("CreateFormation", new Object[] { getAlumniFromLoggedPerson(request), formationInfo });
 	    }
 	} catch (DomainException e) {
 	    addActionMessage("error", request, e.getMessage());

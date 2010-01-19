@@ -98,7 +98,8 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
     }
 
     protected boolean intersects(YearMonthDay startDate, YearMonthDay endDate) {
-	return getBeginDate() != null && getEndDate() != null && !getBeginDate().isAfter(endDate) && !getEndDate().isBefore(startDate);
+	return getBeginDate() != null && getEndDate() != null && !getBeginDate().isAfter(endDate)
+		&& !getEndDate().isBefore(startDate);
     }
 
     public boolean alreadyWasOccupiedBy(final EventSpaceOccupation occupation) {

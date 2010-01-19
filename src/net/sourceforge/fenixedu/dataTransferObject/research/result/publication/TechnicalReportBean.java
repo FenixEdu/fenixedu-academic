@@ -2,8 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 
 import java.io.Serializable;
 
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
-
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport;
 import bibtex.dom.BibtexEntry;
@@ -56,7 +54,7 @@ public class TechnicalReportBean extends ResultPublicationBean implements Serial
     protected void fillBibTeXFields(BibtexEntry bibtexEntry) {
 	// setUnitFromBibtexEntry("organization", bibtexEntry);
 	super.fillBibTeXFields(bibtexEntry);
-	
+
 	setYearFromBibtexEntry(bibtexEntry);
 	setMonthFromBibtexEntry(bibtexEntry);
 

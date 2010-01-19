@@ -165,9 +165,8 @@ public class Exam extends Exam_Base {
 	return room.isFree(getBeginningDateTime().toYearMonthDay(), getEndDateTime().toYearMonthDay(),
 		getBeginningDateHourMinuteSecond(), getEndDateHourMinuteSecond(), getDayOfWeek(), null, null, null);
     }
-    
-    public List<EventBean>  getAllEvents(Registration registration,
-	    String scheme, String serverName, int serverPort){
-	return getAllEvents("Exame (" + this.getSeason() +")", registration,scheme,serverName,serverPort);
+
+    public List<EventBean> getAllEvents(Registration registration, String scheme, String serverName, int serverPort) {
+	return getAllEvents("Exame (" + this.getSeason() + ")", registration, scheme, serverName, serverPort);
     }
 }

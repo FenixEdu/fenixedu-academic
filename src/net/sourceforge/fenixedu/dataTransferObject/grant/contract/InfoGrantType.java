@@ -8,8 +8,6 @@ import java.util.Date;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantType;
 
-import org.joda.time.LocalDate;
-
 /**
  * @author Barbosa
  * @author Pica

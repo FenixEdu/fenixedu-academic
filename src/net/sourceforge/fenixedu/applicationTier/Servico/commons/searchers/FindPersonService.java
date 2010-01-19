@@ -23,18 +23,17 @@ public class FindPersonService extends SearchService {
 
 	String request = (String) searchParameters.get("teacherNumber");
 	Person person;
-	if (request.substring(0, 3).equals("ist")){
+	if (request.substring(0, 3).equals("ist")) {
 	    person = Person.readPersonByIstUsername(request);
-	}else{
+	} else {
 	    Teacher teacher = Teacher.readByNumber(Integer.valueOf(request));
-	    if (teacher == null){
+	    if (teacher == null) {
 		person = null;
-	    }else{
+	    } else {
 		person = teacher.getPerson();
 	    }
-	    
+
 	}
-	
 
 	List<Person> returnList = new ArrayList<Person>();
 	if (person != null) {

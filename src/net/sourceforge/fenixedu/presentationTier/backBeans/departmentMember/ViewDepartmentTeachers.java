@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.departmentMember;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.person.function.ReadPersonFunctionsByPersonIDAndExecutionYearID;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -19,6 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.function.ReadPersonFunctionsByPersonIDAndExecutionYearID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -316,8 +315,9 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
 
 	    Teacher teacher = rootDomainObject.readTeacherByOID(getSelectedTeacherID());
 
-	    List<PersonFunction> result = new ArrayList<PersonFunction>((List<PersonFunction>) ReadPersonFunctionsByPersonIDAndExecutionYearID.run(teacher.getPerson().getIdInternal(),
-			    executionYearID));
+	    List<PersonFunction> result = new ArrayList<PersonFunction>(
+		    (List<PersonFunction>) ReadPersonFunctionsByPersonIDAndExecutionYearID.run(teacher.getPerson()
+			    .getIdInternal(), executionYearID));
 
 	    ComparatorChain comparatorChain = new ComparatorChain();
 	    BeanComparator beginDateComparator = new BeanComparator("beginDate");

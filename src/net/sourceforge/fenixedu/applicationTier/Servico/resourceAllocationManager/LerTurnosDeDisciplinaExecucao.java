@@ -5,16 +5,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
-/**
- * Servi�o LerTurnosDeDisciplinaExecucao.
- * 
- * @author tfc130
- */
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -24,6 +14,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class LerTurnosDeDisciplinaExecucao extends FenixService {
 

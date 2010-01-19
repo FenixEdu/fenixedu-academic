@@ -15,7 +15,8 @@ public class EmptyDegreeImprovementStudentCurriculumGroupBean extends Improvemen
 
     static private final long serialVersionUID = 1L;
 
-    public EmptyDegreeImprovementStudentCurriculumGroupBean(final CurriculumGroup curriculumGroup, final ExecutionSemester executionSemester) {
+    public EmptyDegreeImprovementStudentCurriculumGroupBean(final CurriculumGroup curriculumGroup,
+	    final ExecutionSemester executionSemester) {
 	super(curriculumGroup, executionSemester);
     }
 
@@ -28,7 +29,7 @@ public class EmptyDegreeImprovementStudentCurriculumGroupBean extends Improvemen
 	for (final CurriculumGroup curriculumGroup : filterGroups(parentGroup)) {
 	    result.add(new EmptyDegreeImprovementStudentCurriculumGroupBean(curriculumGroup, executionSemester));
 	}
-	
+
 	return result;
     }
 
@@ -36,16 +37,16 @@ public class EmptyDegreeImprovementStudentCurriculumGroupBean extends Improvemen
 	final Set<CurriculumGroup> groups = new TreeSet<CurriculumGroup>(CurriculumModule.COMPARATOR_BY_NAME_AND_ID);
 
 	for (final CurriculumModule curriculumModule : parentGroup.getCurriculumModules()) {
-	    
+
 	    if (!curriculumModule.isLeaf()) {
-		
+
 		if (curriculumModule.isNoCourseGroupCurriculumGroup()) {
 		    final NoCourseGroupCurriculumGroup noCourseGroup = (NoCourseGroupCurriculumGroup) curriculumModule;
 		    if (noCourseGroup.getNoCourseGroupCurriculumGroupType() != NoCourseGroupCurriculumGroupType.STANDALONE) {
 			continue;
 		    }
 		}
-		
+
 		groups.add((CurriculumGroup) curriculumModule);
 	    }
 	}

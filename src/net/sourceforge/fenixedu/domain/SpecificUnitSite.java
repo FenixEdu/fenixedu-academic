@@ -7,16 +7,16 @@ import net.sourceforge.fenixedu.injectionCode.IGroup;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public abstract class SpecificUnitSite extends SpecificUnitSite_Base {
-    
+
     protected SpecificUnitSite() {
 	super();
     }
-    
-    public  SpecificUnitSite(Unit unit) {
-        super();
-        setUnit(unit);
+
+    public SpecificUnitSite(Unit unit) {
+	super();
+	setUnit(unit);
     }
-    
+
     @Override
     public IGroup getOwner() {
 	return new GroupUnion(new FixedSetGroup(getManagers()));

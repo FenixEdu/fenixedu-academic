@@ -37,20 +37,20 @@ public class ShowStudyPlanForCandidateAction extends FenixAction {
     }
 
     private InfoMasterDegreeCandidate getMasterDegreeCandidate(IUserView userView, HttpServletRequest request) {
-	    List candidates = null;
-	    try {
-		candidates = (List) ReadPersonCandidates.run(userView.getUtilizador());
-	    } catch (Exception e) {
-		return null;
-	    }
+	List candidates = null;
+	try {
+	    candidates = (List) ReadPersonCandidates.run(userView.getUtilizador());
+	} catch (Exception e) {
+	    return null;
+	}
 
-	    if (candidates.size() == 1) {
-		request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE, candidates.get(0));
-	    } else {
-		request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_LIST, candidates);
-	    }
+	if (candidates.size() == 1) {
+	    request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE, candidates.get(0));
+	} else {
+	    request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_LIST, candidates);
+	}
 
-	    return (InfoMasterDegreeCandidate) candidates.get(0);
+	return (InfoMasterDegreeCandidate) candidates.get(0);
     }
 
     private ArrayList getCandidateStudyPlanByCandidateID(Integer candidateID, IUserView userView) {

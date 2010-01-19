@@ -1,9 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.research.result;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.research.teacher.RemoveResultFromTeacherInformationSheet;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.research.teacher.AddResultToTeacherInformationSheet;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,12 +7,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.teacher.AddResultToTeacherInformationSheet;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.teacher.RemoveResultFromTeacherInformationSheet;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import net.sourceforge.fenixedu.domain.research.result.ResultTeacher;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

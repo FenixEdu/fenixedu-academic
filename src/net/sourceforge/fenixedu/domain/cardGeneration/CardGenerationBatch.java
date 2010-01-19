@@ -135,19 +135,19 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
 	    }
 	}
     }
-    
+
     public int getNumberOfIssuedCards() {
 	int result = 0;
-	for(CardGenerationEntry cardGenerationEntry : getCardGenerationEntries()) {
+	for (CardGenerationEntry cardGenerationEntry : getCardGenerationEntries()) {
 	    result += cardGenerationEntry.getNumberOfCGRsAfterThisCGEAndBeforeTheNextCGE();
 	}
 	return result;
     }
-    
+
     public List<String> getSentButNotIssuedCGRs() {
 	List<String> lineEntriesSentButNotIssued = new ArrayList<String>();
-	for(CardGenerationEntry cardGenerationEntry : getCardGenerationEntries()) {
-	    if(cardGenerationEntry.getNumberOfCGRsAfterThisCGEAndBeforeTheNextCGE() > 0) {
+	for (CardGenerationEntry cardGenerationEntry : getCardGenerationEntries()) {
+	    if (cardGenerationEntry.getNumberOfCGRsAfterThisCGEAndBeforeTheNextCGE() > 0) {
 		lineEntriesSentButNotIssued.add(cardGenerationEntry.getLine());
 	    }
 	}
@@ -174,8 +174,7 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
 
 	for (final Registration registration : student.getRegistrationsSet()) {
 	    final RegistrationAgreement registrationAgreement = registration.getRegistrationAgreement();
-	    if (registrationAgreement != RegistrationAgreement.NORMAL
-		    && registrationAgreement != RegistrationAgreement.TOTAL
+	    if (registrationAgreement != RegistrationAgreement.NORMAL && registrationAgreement != RegistrationAgreement.TOTAL
 		    && registrationAgreement != RegistrationAgreement.ANGOLA_TELECOM) {
 		continue;
 	    }

@@ -143,10 +143,10 @@ public class SpacePredicates {
 	    if (loggedPerson.hasRole(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE)) {
 		return true;
 	    }
-	    
-		if (loggedPerson.getProfessorshipsCount() > 0) {
-			return true;
-		}
+
+	    if (loggedPerson.getProfessorshipsCount() > 0) {
+		return true;
+	    }
 
 	    ResourceAllocationRole.checkIfPersonHasPermissionToManageSchedulesAllocation(loggedPerson);
 	    return true;

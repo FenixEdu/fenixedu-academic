@@ -92,10 +92,10 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 	final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
 	final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
 
-	//----------------------------------------------------------------------
+	// ----------------------------------------------------------------------
 	// ---------------------------------------------
 	// TODO: refactor this code, should be more generic
-	//----------------------------------------------------------------------
+	// ----------------------------------------------------------------------
 	// ---------------------------------------------
 
 	if (!studentCurricularPlan.isActive() && !studentCurricularPlan.getRegistration().isConcluded()) {
@@ -139,10 +139,10 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 	    }
 	}
 
-	//----------------------------------------------------------------------
+	// ----------------------------------------------------------------------
 	// ---------------------------------------------
 	// TODO: refactor this code, should be more generic
-	//----------------------------------------------------------------------
+	// ----------------------------------------------------------------------
 	// ---------------------------------------------
 
     }
@@ -233,8 +233,8 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
     private void addOutOfPeriodMessage(HttpServletRequest request, final EnrolmentPeriod nextEnrollmentPeriod) {
 	if (nextEnrollmentPeriod != null) {
 	    addActionMessage(request, "message.out.curricular.course.enrolment.period", nextEnrollmentPeriod
-		    .getStartDateDateTime().toString("dd/MM/yyyy HH:mm"), nextEnrollmentPeriod
-		    .getEndDateDateTime().toString(DateFormatUtil.DEFAULT_DATE_FORMAT));
+		    .getStartDateDateTime().toString("dd/MM/yyyy HH:mm"), nextEnrollmentPeriod.getEndDateDateTime().toString(
+		    DateFormatUtil.DEFAULT_DATE_FORMAT));
 	} else {
 	    addActionMessage(request, "message.out.curricular.course.enrolment.period.default");
 	}

@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.phd.thesis;
 import net.sourceforge.fenixedu.domain.phd.PhdProcessStateType;
 
 public enum PhdThesisProcessStateType implements PhdProcessStateType {
-    
+
     NEW,
 
     WAITING_FOR_JURY_CONSTITUTION,

@@ -22,8 +22,7 @@ public class ExternalContract extends ExternalContract_Base {
 	}
 
 	super.init(person, beginDate, endDate, institution);
-	AccountabilityType accountabilityType = AccountabilityType
-		.readByType(AccountabilityTypeEnum.WORKING_CONTRACT);
+	AccountabilityType accountabilityType = AccountabilityType.readByType(AccountabilityTypeEnum.WORKING_CONTRACT);
 	setAccountabilityType(accountabilityType);
 
 	PersonName personName = person.getPersonName();

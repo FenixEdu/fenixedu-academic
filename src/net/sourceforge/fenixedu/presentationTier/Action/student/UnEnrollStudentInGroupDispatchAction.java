@@ -4,12 +4,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.student;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.student.UnEnrollStudentInGroup;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentGroupInformation;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.student.VerifyStudentGroupAtributes;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -19,11 +13,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentGroupInformation;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.UnEnrollStudentInGroup;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.VerifyStudentGroupAtributes;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -88,7 +84,6 @@ public class UnEnrollStudentInGroupDispatchAction extends FenixDispatchAction {
 	}
 
 	ISiteComponent viewStudentGroup;
-
 
 	try {
 	    viewStudentGroup = (InfoSiteStudentGroup) ReadStudentGroupInformation.run(studentGroupCode);

@@ -90,7 +90,8 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
     public ActionForward goBack(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 
-	ActionMapping originalMapping = (ActionMapping) request.getSession().getAttribute(PresentationConstants.ORIGINAL_MAPPING_KEY);
+	ActionMapping originalMapping = (ActionMapping) request.getSession().getAttribute(
+		PresentationConstants.ORIGINAL_MAPPING_KEY);
 	sessionRemover(request);
 
 	ActionForward actionForward = originalMapping.getInputForward();

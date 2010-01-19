@@ -128,7 +128,8 @@ public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
 
 	int index = Integer.parseInt((String) chooseExamContextoForm.get("index"));
 
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+		.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
 	List executionDegreeList = ReadExecutionDegreesByExecutionYear.run(infoExecutionPeriod.getInfoExecutionYear());
 	Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());

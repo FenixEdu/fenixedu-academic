@@ -1,12 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.functionalities.ExpressionGroupAvailability;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * Creates a new {@link ExpresssionGroupAvailability} based on the expression

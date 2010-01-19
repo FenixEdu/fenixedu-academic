@@ -4,12 +4,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.student;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.student.EnrollGroupShift;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadGroupingShifts;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.student.VerifyStudentGroupAtributes;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -26,11 +20,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChange
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidStudentNumberServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.EnrollGroupShift;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadGroupingShifts;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.VerifyStudentGroupAtributes;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShifts;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -57,7 +53,8 @@ public class EnrollStudentGroupShiftDispatchAction extends FenixDispatchAction {
 	Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 
 	try {
-	    VerifyStudentGroupAtributes.run(groupPropertiesCode, null, studentGroupCode, userView.getUtilizador(), new Integer(5));
+	    VerifyStudentGroupAtributes
+		    .run(groupPropertiesCode, null, studentGroupCode, userView.getUtilizador(), new Integer(5));
 
 	} catch (NotAuthorizedException e) {
 	    ActionErrors actionErrors2 = new ActionErrors();
@@ -187,7 +184,6 @@ public class EnrollStudentGroupShiftDispatchAction extends FenixDispatchAction {
 
 	}
 	Integer newShiftCode = new Integer(newShiftString);
-
 
 	try {
 	    EnrollGroupShift.run(studentGroupCode, groupPropertiesCode, newShiftCode, userView.getUtilizador());

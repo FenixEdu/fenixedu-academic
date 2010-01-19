@@ -2,12 +2,11 @@ package net.sourceforge.fenixedu.presentationTier.Action.personnelSection;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.presentationTier.Action.commons.UnitFunctionalities;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.presentationTier.Action.commons.UnitFunctionalities;
 
 @Mapping(path = "/personnelUnitFunctionalities", module = "personnelSection")
 @Forwards( { @Forward(name = "managePersistedGroups", path = "manage-persisted-groups"),

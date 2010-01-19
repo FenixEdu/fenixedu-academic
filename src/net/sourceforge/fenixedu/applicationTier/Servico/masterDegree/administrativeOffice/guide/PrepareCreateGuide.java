@@ -4,10 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -36,6 +32,9 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
+
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
@@ -43,8 +42,8 @@ public class PrepareCreateGuide extends FenixService {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
-    public static InfoGuide run(String graduationType, InfoExecutionDegree infoExecutionDegree, Integer number, String requesterType,
-	    Party contributorParty) throws FenixServiceException {
+    public static InfoGuide run(String graduationType, InfoExecutionDegree infoExecutionDegree, Integer number,
+	    String requesterType, Party contributorParty) throws FenixServiceException {
 
 	MasterDegreeCandidate masterDegreeCandidate = null;
 	InfoGuide infoGuide = new InfoGuideWithPersonAndExecutionDegreeAndContributor();

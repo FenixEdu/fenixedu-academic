@@ -23,9 +23,12 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 /**
- * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/> <br/>
- *         <br/> Created on 12:08:43,13/Out/2005
- * @version $Id$
+ * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/>
+ * <br/>
+ * <br/>
+ *         Created on 12:08:43,13/Out/2005
+ * @version $Id: Authentication.java 39213 2008-10-22 14:59:02Z
+ *          ist148357@IST.UTL.PT $
  */
 public class Authentication extends FenixAction {
     final static String allowedProtocol = "https";

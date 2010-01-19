@@ -57,8 +57,7 @@ public class DepartmentUnit extends DepartmentUnit_Base {
 	departmentUnit.init(new MultiLanguageString(Language.getDefaultLanguage(), departmentName), null, departmentAcronym,
 		new YearMonthDay(), null, null, null, null, null);
 	if (parentUnit.isCountryUnit()) {
-	    departmentUnit.addParentUnit(parentUnit, AccountabilityType
-		    .readByType(AccountabilityTypeEnum.GEOGRAPHIC));
+	    departmentUnit.addParentUnit(parentUnit, AccountabilityType.readByType(AccountabilityTypeEnum.GEOGRAPHIC));
 	} else {
 	    departmentUnit.addParentUnit(parentUnit, AccountabilityType
 		    .readByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));

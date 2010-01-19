@@ -3,10 +3,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.AssociateExecutionCourseToCurricularCourse;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadExecutionCoursesByExecutionPeriod;
-
 import java.util.Collections;
 import java.util.List;
 
@@ -18,13 +14,14 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.AssociateExecutionCourseToCurricularCourse;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadExecutionCoursesByExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -46,7 +43,6 @@ public class AssociateExecutionCourseToCurricularCourseDA extends FenixDispatchA
 	IUserView userView = UserView.getUser();
 
 	Integer executionPeriodId = new Integer(request.getParameter("executionPeriodId"));
-
 
 	List infoExecutionCoursesList = null;
 	try {
@@ -85,7 +81,6 @@ public class AssociateExecutionCourseToCurricularCourseDA extends FenixDispatchA
 	    return mapping.findForward("viewExecutionCoursesToAssociate");
 
 	Integer executionCourseId = new Integer((String) associateForm.get("executionCourseId"));
-
 
 	try {
 	    AssociateExecutionCourseToCurricularCourse.run(executionCourseId, curricularCourseId, executionPeriodId);

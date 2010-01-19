@@ -1,9 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.DeleteExpectationEvaluationGroup;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.CreateExpectationEvaluationGroup;
-
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -12,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.CreateExpectationEvaluationGroup;
+import net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.DeleteExpectationEvaluationGroup;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.department.ExpectationEvaluationGroupBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ExecutionYearBean;
@@ -84,8 +82,7 @@ public class ExpectationsEvaluationGroupsDA extends FenixDispatchAction {
 	ExpectationEvaluationGroupBean bean = (ExpectationEvaluationGroupBean) viewState.getMetaObject().getObject();
 
 	try {
-	    CreateExpectationEvaluationGroup.run(bean.getAppraiser(), bean.getEvaluated(),
-		    bean.getExecutionYear());
+	    CreateExpectationEvaluationGroup.run(bean.getAppraiser(), bean.getEvaluated(), bean.getExecutionYear());
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	}

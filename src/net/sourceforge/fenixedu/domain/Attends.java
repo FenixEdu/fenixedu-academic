@@ -73,8 +73,8 @@ public class Attends extends Attends_Base {
 
 	@Override
 	public int compare(Attends o1, Attends o2) {
-	    final ExecutionCourse executionCourse1 =  o1.getExecutionCourse();
-	    final ExecutionCourse executionCourse2 =  o2.getExecutionCourse();
+	    final ExecutionCourse executionCourse1 = o1.getExecutionCourse();
+	    final ExecutionCourse executionCourse2 = o2.getExecutionCourse();
 	    final int c = Collator.getInstance().compare(executionCourse1.getNome(), executionCourse2.getNome());
 	    return c == 0 ? DomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c;
 	}

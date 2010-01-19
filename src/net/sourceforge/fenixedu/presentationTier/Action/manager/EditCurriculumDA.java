@@ -3,10 +3,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.EditCurriculum;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadCurriculum;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,6 +10,8 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.EditCurriculum;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadCurriculum;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -22,7 +20,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -49,7 +46,6 @@ public class EditCurriculumDA extends FenixDispatchAction {
 	String language = request.getParameter("language");
 
 	InfoCurriculum infoCurriculum = null;
-
 
 	try {
 	    infoCurriculum = (InfoCurriculum) ReadCurriculum.run(curricularCourseId);
@@ -120,7 +116,6 @@ public class EditCurriculumDA extends FenixDispatchAction {
 
 	Integer executionYearId = (Integer) editForm.get("executionYearId");
 	infoCurriculum.setExecutionYearId(executionYearId);
-
 
 	try {
 	    EditCurriculum.run(infoCurriculum, request.getParameter("language"), userView.getUtilizador());

@@ -23,10 +23,10 @@ public class EnrolmentLog extends EnrolmentLog_Base {
 	this();
 	init(action, registration, curricularCourse, executionSemester, who);
     }
-    
+
     @Override
     public CurricularCourse getDegreeModule() {
-        return (CurricularCourse) super.getDegreeModule();
+	return (CurricularCourse) super.getDegreeModule();
     }
 
     @Override

@@ -11,10 +11,8 @@ import java.util.Map;
 import java.util.Properties;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-
 import pt.ist.fenixWebFramework.Config;
 import pt.ist.fenixWebFramework.Config.CasConfig;
-
 import pt.ist.fenixframework.pstm.dml.FenixDomainModelWithOCC;
 
 /**
@@ -71,14 +69,14 @@ public class PropertiesManager extends pt.utl.ist.fenix.tools.util.PropertiesMan
 
 	return new Config() {
 	    {
-                domainModelClass = FenixDomainModelWithOCC.class;
+		domainModelClass = FenixDomainModelWithOCC.class;
 		domainModelPath = domainModel;
 		dbAlias = getProperty("db.alias");
 		dbUsername = getProperty("db.user");
 		dbPassword = getProperty("db.pass");
 		appName = getProperty("app.name");
-                rootClass = RootDomainObject.class;
-                collectDataAccessPatterns = false;
+		rootClass = RootDomainObject.class;
+		collectDataAccessPatterns = false;
 		appContext = getProperty("app.context");
 		filterRequestWithDigest = getBooleanProperty("filter.request.with.digest");
 		tamperingRedirect = getProperty("login.page");

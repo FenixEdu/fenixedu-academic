@@ -216,35 +216,35 @@ public class PerformanceGridTableDTO extends DataTranferObject {
 	    }
 
 	    public double getEnrolledFirstSemesterECTS() {
-	        return enrolledFirstSemesterECTS;
+		return enrolledFirstSemesterECTS;
 	    }
 
 	    public void setEnrolledFirstSemesterECTS(double enrolledFirstSemesterECTS) {
-	        this.enrolledFirstSemesterECTS = enrolledFirstSemesterECTS;
+		this.enrolledFirstSemesterECTS = enrolledFirstSemesterECTS;
 	    }
 
 	    public double getApprovedFirstSemesterECTS() {
-	        return approvedFirstSemesterECTS;
+		return approvedFirstSemesterECTS;
 	    }
 
 	    public void setApprovedFirstSemesterECTS(double approvedFirstSemesterECTS) {
-	        this.approvedFirstSemesterECTS = approvedFirstSemesterECTS;
+		this.approvedFirstSemesterECTS = approvedFirstSemesterECTS;
 	    }
 
 	    public double getEnrolledSecondSemesterECTS() {
-	        return enrolledSecondSemesterECTS;
+		return enrolledSecondSemesterECTS;
 	    }
 
 	    public void setEnrolledSecondSemesterECTS(double enrolledSecondSemesterECTS) {
-	        this.enrolledSecondSemesterECTS = enrolledSecondSemesterECTS;
+		this.enrolledSecondSemesterECTS = enrolledSecondSemesterECTS;
 	    }
 
 	    public double getApprovedSecondSemesterECTS() {
-	        return approvedSecondSemesterECTS;
+		return approvedSecondSemesterECTS;
 	    }
 
 	    public void setApprovedSecondSemesterECTS(double approvedSecondSemesterECTS) {
-	        this.approvedSecondSemesterECTS = approvedSecondSemesterECTS;
+		this.approvedSecondSemesterECTS = approvedSecondSemesterECTS;
 	    }
 
 	    public void addEnrolmentToSemester(DegreeModuleScope scope, CurricularCourse curricular, Enrolment enrolment) {
@@ -260,19 +260,19 @@ public class PerformanceGridTableDTO extends DataTranferObject {
 		}
 		updateInformationECTS();
 	    }
-	    
+
 	    public void updateInformationECTS() {
 		setEnrolledFirstSemesterECTS(0.0);
 		setApprovedFirstSemesterECTS(0.0);
 		setEnrolledSecondSemesterECTS(0.0);
 		setApprovedSecondSemesterECTS(0.0);
-		for(Enrolment enrolment : getFirstSemesterEnrolments()) {
+		for (Enrolment enrolment : getFirstSemesterEnrolments()) {
 		    if (enrolment.getEnrollmentState().equals(EnrollmentState.APROVED)) {
 			this.approvedFirstSemesterECTS += enrolment.getEctsCreditsForCurriculum().doubleValue();
 		    }
 		    this.enrolledFirstSemesterECTS += enrolment.getEctsCreditsForCurriculum().doubleValue();
 		}
-		for(Enrolment enrolment : getSecondSemesterEnrolments()) {
+		for (Enrolment enrolment : getSecondSemesterEnrolments()) {
 		    if (enrolment.getEnrollmentState().equals(EnrollmentState.APROVED)) {
 			this.approvedSecondSemesterECTS += enrolment.getEctsCreditsForCurriculum().doubleValue();
 		    }

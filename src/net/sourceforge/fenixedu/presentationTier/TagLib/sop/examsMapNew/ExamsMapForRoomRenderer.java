@@ -142,7 +142,7 @@ public class ExamsMapForRoomRenderer implements IExamsMapRenderer {
 		    strBuffer.append("<td>");
 		    for (int iterEC = 0; iterEC < infoExam.getAssociatedExecutionCourse().size(); iterEC++) {
 			InfoExecutionCourse infoEC = (InfoExecutionCourse) infoExam.getAssociatedExecutionCourse().get(iterEC);
-			 strBuffer.append(infoEC.getSigla());
+			strBuffer.append(infoEC.getSigla());
 			// strBuffer.append("</a>");
 
 			strBuffer.append("<br/>");

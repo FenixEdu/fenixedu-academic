@@ -3,10 +3,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.InsertCurricularCourseScopeAtCurricularCourse;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadBranchesByDegreeCurricularPlan;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -20,6 +16,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPer
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.InsertCurricularCourseScopeAtCurricularCourse;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadBranchesByDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeEditor;
@@ -30,7 +28,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.Data;
 
 import org.apache.struts.action.ActionForm;
@@ -50,7 +47,6 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
 	Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
-
 
 	List result = null;
 	try {
@@ -126,7 +122,6 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
 	    infoCurricularCourseScope.setBeginDate(beginDateCalendar);
 	}
 	infoCurricularCourseScope.setAnotation((String) dynaForm.get("anotation"));
-
 
 	try {
 	    InsertCurricularCourseScopeAtCurricularCourse.run(infoCurricularCourseScope);

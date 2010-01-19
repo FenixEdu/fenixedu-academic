@@ -19,11 +19,11 @@ public class ManageThesisContext implements Serializable {
     }
 
     public ExecutionDegree getExecutionDegree() {
-        return executionDegree == null ? null : executionDegree.getObject();
+	return executionDegree == null ? null : executionDegree.getObject();
     }
 
     public void setExecutionDegree(ExecutionDegree executionDegree) {
-        this.executionDegree = executionDegree == null ? null : new DomainReference<ExecutionDegree>(executionDegree);
+	this.executionDegree = executionDegree == null ? null : new DomainReference<ExecutionDegree>(executionDegree);
     }
 
     public ExecutionDegree getPreviousExecutionDegree() {
@@ -44,7 +44,8 @@ public class ManageThesisContext implements Serializable {
     }
 
     public SortedSet<ExecutionDegree> getAvailableExecutionDegrees() {
-	final SortedSet<ExecutionDegree> executionDegrees = new TreeSet<ExecutionDegree>(ExecutionDegree.REVERSE_EXECUTION_DEGREE_COMPARATORY_BY_YEAR);
+	final SortedSet<ExecutionDegree> executionDegrees = new TreeSet<ExecutionDegree>(
+		ExecutionDegree.REVERSE_EXECUTION_DEGREE_COMPARATORY_BY_YEAR);
 	final ExecutionDegree executionDegree = getExecutionDegree();
 	if (executionDegree != null) {
 	    final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();

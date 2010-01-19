@@ -228,19 +228,25 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 	return bundleMappings;
     }
 
-//    public ActionForward printAllDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-//	    HttpServletResponse response) throws FenixServiceException {
-//
-//	request.setAttribute("candidacy", getCandidacy(request));
-//	request.setAttribute("registration", getCandidacy(request).getRegistration());
-//	request.setAttribute("executionYear", getCandidacy(request).getExecutionDegree().getExecutionYear());
-//	request.setAttribute("person", getCandidacy(request).getRegistration().getPerson());
-//	request.setAttribute("campus", getCandidacy(request).getRegistration().getCampus().getName());
-//
-//	final List<InfoLesson> infoLessons = (List) ReadStudentTimeTable.run(getCandidacy(request).getRegistration());
-//	request.setAttribute("infoLessons", infoLessons);
-//
-//	return mapping.findForward("printAllDocuments");
-//    }
+    // public ActionForward printAllDocuments(ActionMapping mapping, ActionForm
+    // form, HttpServletRequest request,
+    // HttpServletResponse response) throws FenixServiceException {
+    //
+    // request.setAttribute("candidacy", getCandidacy(request));
+    // request.setAttribute("registration",
+    // getCandidacy(request).getRegistration());
+    // request.setAttribute("executionYear",
+    // getCandidacy(request).getExecutionDegree().getExecutionYear());
+    // request.setAttribute("person",
+    // getCandidacy(request).getRegistration().getPerson());
+    // request.setAttribute("campus",
+    // getCandidacy(request).getRegistration().getCampus().getName());
+    //
+    // final List<InfoLesson> infoLessons = (List)
+    // ReadStudentTimeTable.run(getCandidacy(request).getRegistration());
+    // request.setAttribute("infoLessons", infoLessons);
+    //
+    // return mapping.findForward("printAllDocuments");
+    // }
 
 }

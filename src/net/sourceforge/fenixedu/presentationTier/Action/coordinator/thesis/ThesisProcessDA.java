@@ -16,14 +16,12 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path="/thesisProcess", module="coordinator")
-@Forwards( {
-    @Forward(name="showInformation", path="/coordinator/thesis/showInformation.jsp")
-})
+@Mapping(path = "/thesisProcess", module = "coordinator")
+@Forwards( { @Forward(name = "showInformation", path = "/coordinator/thesis/showInformation.jsp") })
 public class ThesisProcessDA extends FenixDispatchAction {
 
-    public ActionForward showInformation(final ActionMapping mapping, final ActionForm form,
-	    final HttpServletRequest request, final HttpServletResponse response) {
+    public ActionForward showInformation(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+	    final HttpServletResponse response) {
 	final ManageThesisContext manageThesisContext = processContext(request);
 	return mapping.findForward("showInformation");
     }

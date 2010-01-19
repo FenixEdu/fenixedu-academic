@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus;
 
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

@@ -127,10 +127,10 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 	// Degrees that use the Mixed Average (Average between Simple and
 	// Weighted average)
 	// if
-	//((this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MT02/04")
+	// ((this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MT02/04")
 	// )
 	// ||
-	//(this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MT03/05"))
+	// (this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MT03/05"))
 	// ){
 	// Double simpleAverage =
 	// this.calculateStudentRegularAverage(studentCurricularPlan);
@@ -140,7 +140,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 	// infoFinalResult.setAverageSimple(String.valueOf(simpleAverage));
 	// infoFinalResult.setAverageWeighted(String.valueOf(weightedAverage));
 	//			
-	//infoFinalResult.setFinalAverage(String.valueOf(NumberUtils.formatNumber
+	// infoFinalResult.setFinalAverage(String.valueOf(NumberUtils.formatNumber
 	// (new
 	// Double((simpleAverage.floatValue()+weightedAverage.floatValue())/2),
 	// 0)));

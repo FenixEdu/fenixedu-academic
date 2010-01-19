@@ -104,7 +104,8 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 	InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
 
 	try {
-	    infoDegreeCurricularPlan = (InfoDegreeCurricularPlan) ReadDegreeCurricularPlanHistoryByDegreeCurricularPlanID.run(degreeCurricularPlanID);
+	    infoDegreeCurricularPlan = (InfoDegreeCurricularPlan) ReadDegreeCurricularPlanHistoryByDegreeCurricularPlanID
+		    .run(degreeCurricularPlanID);
 
 	} catch (NonExistingServiceException e) {
 	    addErrorMessage(request, "chosenDegree", "error.coordinator.noExecutionDegree");
@@ -247,7 +248,8 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 	InfoCurriculum infoCurriculum = null;
 
 	try {
-	    infoCurriculum = (InfoCurriculum) ReadCurrentCurriculumByCurricularCourseCode.run(infoExecutionDegreeCode, infoCurricularCourseCode);
+	    infoCurriculum = (InfoCurriculum) ReadCurrentCurriculumByCurricularCourseCode.run(infoExecutionDegreeCode,
+		    infoCurricularCourseCode);
 
 	} catch (NonExistingServiceException e) {
 	    addErrorMessage(request, "chosenCurricularCourse", "error.coordinator.chosenCurricularCourse");
@@ -318,7 +320,8 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 	InfoCurriculum infoCurriculum = null;
 
 	try {
-	    infoCurriculum = (InfoCurriculum) ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName.run(null, infoCurricularCourseCode, executionYear);
+	    infoCurriculum = (InfoCurriculum) ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName.run(null,
+		    infoCurricularCourseCode, executionYear);
 
 	} catch (NonExistingServiceException e) {
 	    if (e.getMessage().equals("noCurricularCourse")) {
@@ -397,7 +400,8 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 	InfoCurriculum infoCurriculum = null;
 
 	try {
-	    infoCurriculum = (InfoCurriculum) ReadCurrentCurriculumByCurricularCourseCode.run(infoExecutionDegreeCode, infoCurricularCourseCode);
+	    infoCurriculum = (InfoCurriculum) ReadCurrentCurriculumByCurricularCourseCode.run(infoExecutionDegreeCode,
+		    infoCurricularCourseCode);
 
 	} catch (NonExistingServiceException e) {
 	    addErrorMessage(request, "chosenCurricularCourse", "error.coordinator.chosenCurricularCourse");

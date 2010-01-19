@@ -69,7 +69,8 @@ public class OutputUtils {
 
     /**
      * Escapes HTML meta characters "&", " <", ">" and turns "\n" line breaks
-     * into HTML line breaks ("<br/> ");
+     * into HTML line breaks ("<br/>
+     * ");
      * 
      * @param text
      *            some string, for example "x > 0 && y < 100"
