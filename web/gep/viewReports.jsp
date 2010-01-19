@@ -46,12 +46,26 @@
 	<fr:view name="queueJobList" schema="latestJobsByType">
     	<fr:layout name="tabular">
     		<fr:property name="classes" value="tstyle1 mtop05" />
-    		<fr:property name="columnClasses" value="acenter,,,,,," />
+    		<fr:property name="columnClasses" value=",,,acenter,,,,,," />
 			<fr:property name="link(Download)" value="/downloadQueuedJob.do?method=downloadFile"/>
-			<fr:property name="bundle(Download)" value="GEP_RESOURCES"/>
 			<fr:property name="param(Download)" value="idInternal/id"/>
+			<fr:property name="bundle(Download)" value="GEP_RESOURCES"/>
 			<fr:property name="visibleIf(Download)" value="done"/>
 			<fr:property name="module(Download)" value=""/>
+			
+			<fr:property name="link(sendJob)" value="<%= "/gep/reportsByDegreeType.do?method=resendJobFromViewReports&executionYearID=" + request.getParameter("executionYearID") + "&degreeType=" + request.getParameter("degreeType") + "&type=" + request.getParameter("type") %>"/>
+			<fr:property name="param(sendJob)" value="idInternal/id"/>
+			<fr:property name="key(sendJob)" value="label.sendJob"/>
+			<fr:property name="bundle(sendJob)" value="GEP_RESOURCES"/>
+			<fr:property name="visibleIf(sendJob)" value="isNotDoneAndCancelled"/>
+			<fr:property name="module(sendJob)" value=""/>
+			
+			<fr:property name="link(Cancel)" value="<%= "/gep/reportsByDegreeType.do?method=cancelQueuedJobFromViewReports&executionYearID=" + request.getParameter("executionYearID") + "&degreeType=" + request.getParameter("degreeType") + "&type=" + request.getParameter("type") %>"/>
+			<fr:property name="param(Cancel)" value="idInternal/id"/>
+			<fr:property name="key(Cancel)" value="label.cancel"/>
+			<fr:property name="bundle(Cancel)" value="GEP_RESOURCES"/>
+			<fr:property name="visibleIf(Cancel)" value="isNotDoneAndNotCancelled"/>
+			<fr:property name="module(Cancel)" value=""/>
 		</fr:layout>
 	</fr:view>
 
@@ -59,5 +73,5 @@
 
 
 <logic:empty name="queueJobList">
-	<h3 class="mtop15 mbottom05"><bean:message key="label.gep.listing.type.non.existing" bundle="GEP_RESOURCES" /></h3>
+	<p class="mtop15 mbottom05"><em><bean:message key="label.gep.listing.type.non.existing" bundle="GEP_RESOURCES" /></em></p>
 </logic:empty>

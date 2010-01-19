@@ -29,6 +29,24 @@ public abstract class QueueJob extends QueueJob_Base {
 	return "ficheiro";
     }
 
+    public boolean getIsNotDoneAndCancelled() {
+	boolean cancelled = false;
+	List<QueueJob> undoneJobs = RootDomainObject.getInstance().getQueueJobUndone();
+	if(undoneJobs.contains(this) == false) {
+	    cancelled = true;
+	}
+	return (!getDone()) && (cancelled);
+    }
+
+    public boolean getIsNotDoneAndNotCancelled() {
+	boolean cancelled = false;
+	List<QueueJob> undoneJobs = RootDomainObject.getInstance().getQueueJobUndone();
+	if(undoneJobs.contains(this) == false) {
+	    cancelled = true;
+	}
+	return (!getDone()) && (!cancelled);
+    }
+
     public static class FindQueueJobsForAClass implements Predicate {
 
 	Class aClass;
