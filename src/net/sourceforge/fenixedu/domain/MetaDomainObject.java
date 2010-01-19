@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import net.sourceforge.fenixedu.domain.contents.Portal;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -65,7 +66,7 @@ public class MetaDomainObject extends MetaDomainObject_Base {
      * @return a MetaDomainObject that is the reification of the given type of
      *         <code>null</code> if none is available
      */
-    private static final Map<Class, MetaDomainObject> metaDomainObjectMap = new HashMap<Class, MetaDomainObject>();
+    private static final Map<Class, MetaDomainObject> metaDomainObjectMap = new ConcurrentHashMap<Class, MetaDomainObject>();
 
     public static MetaDomainObject getMeta(Class type) {
 	final MetaDomainObject result = metaDomainObjectMap.get(type);
