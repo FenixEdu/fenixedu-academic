@@ -48,6 +48,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.excel.SimplifiedSpreadsheetBuilder;
+import pt.utl.ist.fenix.tools.excel.WorkbookExportFormat;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
 @Mapping(path = "/manageEctsComparabilityTables", module = "gep")
@@ -79,8 +80,22 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
     public ActionForward exportTemplate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	EctsTableFilter filter = readFilter(request);
-	exportTemplate(request, filter);
-	return null;
+	try {
+	    try {
+		SimplifiedSpreadsheetBuilder<?> builder = exportTemplate(request, filter);
+		response.setContentType("application/vnd.ms-excel");
+		response.setHeader("Content-disposition", "attachment; filename=template.xls");
+		builder.build(WorkbookExportFormat.EXCEL, response.getOutputStream());
+		return null;
+	    } finally {
+		response.flushBuffer();
+	    }
+	} catch (IOException e) {
+	    addActionMessage(request, "error.ects.comparabilityTables.ioException");
+	    processStatus(request, filter);
+	    request.setAttribute("filter", filter);
+	    return mapping.findForward("index");
+	}
     }
 
     public ActionForward importTables(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -127,14 +142,14 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 	}
     }
 
-    private void exportTemplate(HttpServletRequest request, EctsTableFilter filter) {
+    private SimplifiedSpreadsheetBuilder<?> exportTemplate(HttpServletRequest request, EctsTableFilter filter) {
 	switch (filter.getType()) {
 	case ENROLMENT:
-	    exportEnrolmentTemplate(filter);
-	    break;
+	    return exportEnrolmentTemplate(filter);
 	case GRADUATION:
-	    exportGraduationTemplate(filter);
-	    break;
+	    return exportGraduationTemplate(filter);
+	default:
+	    throw new Error();
 	}
     }
 
@@ -166,17 +181,16 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 	}
     }
 
-    private void exportEnrolmentTemplate(EctsTableFilter filter) {
+    private SimplifiedSpreadsheetBuilder<?> exportEnrolmentTemplate(EctsTableFilter filter) {
 	switch (filter.getLevel()) {
 	case COMPETENCE_COURSE:
-	    exportEnrolmentByCompetenceCourseTemplate(filter);
-	    break;
+	    return exportEnrolmentByCompetenceCourseTemplate(filter);
 	case DEGREE:
-	    exportEnrolmentByDegreeTemplate(filter);
-	    break;
+	    return exportEnrolmentByDegreeTemplate(filter);
 	case CURRICULAR_YEAR:
-	    exportEnrolmentByCurricularYearTemplate(filter);
-	    break;
+	    return exportEnrolmentByCurricularYearTemplate(filter);
+	default:
+	    throw new Error();
 	}
     }
 
@@ -205,14 +219,14 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 	}
     }
 
-    private void exportGraduationTemplate(EctsTableFilter filter) {
+    private SimplifiedSpreadsheetBuilder<IEctsConversionTable> exportGraduationTemplate(EctsTableFilter filter) {
 	switch (filter.getLevel()) {
 	case DEGREE:
-	    exportGraduationByDegreeTemplate(filter);
-	    break;
+	    return exportGraduationByDegreeTemplate(filter);
 	case CYCLE:
-	    exportGraduationByCycleTemplate(filter);
-	    break;
+	    return exportGraduationByCycleTemplate(filter);
+	default:
+	    throw new Error();
 	}
     }
 
@@ -430,9 +444,9 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 	return tables;
     }
 
-    private void exportEnrolmentByCurricularYearTemplate(EctsTableFilter filter) {
+    private SimplifiedSpreadsheetBuilder<IEctsConversionTable> exportEnrolmentByCurricularYearTemplate(EctsTableFilter filter) {
 	// TODO Auto-generated method stub
-
+	return null;
     }
 
     private void importEnrolmentByCurricularYearTables(AcademicInterval executionInterval, String file) {
@@ -473,9 +487,9 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 	return tables;
     }
 
-    private void exportGraduationByDegreeTemplate(EctsTableFilter filter) {
+    private SimplifiedSpreadsheetBuilder<IEctsConversionTable> exportGraduationByDegreeTemplate(EctsTableFilter filter) {
 	// TODO Auto-generated method stub
-
+	return null;
     }
 
     private void importGraduationByDegreeTables(AcademicInterval executionInterval, String file) {
@@ -517,9 +531,9 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 	return tables;
     }
 
-    private void exportGraduationByCycleTemplate(EctsTableFilter filter) {
+    private SimplifiedSpreadsheetBuilder<IEctsConversionTable> exportGraduationByCycleTemplate(EctsTableFilter filter) {
 	// TODO Auto-generated method stub
-
+	return null;
     }
 
     private void importGraduationByCycleTables(AcademicInterval executionInterval, String file) {
