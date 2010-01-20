@@ -284,6 +284,9 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 	if (hasAnyAcademicServiceRequests()) {
 	    throw new DomainException("error.AdministrativeOffice.cannot.delete");
 	}
+	if (hasPhdProcessesManager()) {
+	    throw new DomainException("error.AdministrativeOffice.cannot.delete");
+	}
     }
 
     public boolean isDegree() {

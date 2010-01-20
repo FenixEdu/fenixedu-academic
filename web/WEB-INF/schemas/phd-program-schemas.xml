@@ -1365,5 +1365,12 @@
 	<slot name="degreeNameWithDegreeCurricularPlanName" />
 	<slot name="startDate" layout="null-as-label"/>
 	<slot name="activeStateType" />
+</schema>
 
+<schema name="phd.show.permissions.member" type="net.sourceforge.fenixedu.domain.Person" bundle="PHD_RESOURCES">
+	<slot name="name" />
+	<slot name="employee" layout="format">
+		<property name="format" value=" (F${employeeNumber})" />
+		<property name="classes" value="nowrap" />
+	</slot>
 </schema>

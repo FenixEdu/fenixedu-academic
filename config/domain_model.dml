@@ -184,6 +184,7 @@ enum net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntryType                  
 enum net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationType                                                 as PhdNotificationType;
 enum net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationState                                                as PhdNotificationState;
 enum net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessType                                              		  as PhdProcessAccessType;
+enum net.sourceforge.fenixedu.domain.phd.permissions.PhdPermissionType													  as PhdPermissionType;
 enum net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType                                 as IndividualCandidacyDocumentFileType;
 enum net.sourceforge.fenixedu.domain.accounting.events.DegreeFinalizationCertificateRequestJustificationType              as DegreeFinalizationCertificateRequestJustificationType;
 enum net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestJustificationType            as AcademicServiceRequestJustificationType;
@@ -564,6 +565,8 @@ valueType net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessTypeList as
     
     internalizeWith importFromString();
 }
+/* End of Phd Module */
+
 
 valueType net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.TypeOfProgrammeList as erasmus.TypeOfProgrammeList {
 	externalizeWith {
@@ -572,10 +575,6 @@ valueType net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.TypeOfProgram
 	
 	internalizeWith importFromString();
 }
-
-/* End of Phd Module */
-
-
 
 
 /*
@@ -7032,6 +7031,15 @@ class phd.debts.PhdEventExemptionJustification extends accounting.events.Exempti
 class phd.debts.PhdRegistrationFeePenaltyExemption extends accounting.events.PenaltyExemption {
 }
 
+class phd.PhdProcessesManager extends DomainObject {
+	DateTime whenCreated;
+}
+
+class phd.permissions.PhdPermission extends DomainObject {
+    DateTime whenCreated;
+	PhdPermissionType type;
+    Group members;
+}
 
 /* End of Phd Module */
 
@@ -7130,13 +7138,6 @@ relation MeasurementTestCampus {
     }
 }
 
-
-
-
-
-
-
- 
 /* Phd Module */
 
 
@@ -7150,6 +7151,32 @@ relation PhdProgramRootDomainObject {
 relation PhdProgramFocusAreaRootDomainObject {
     RootDomainObject playsRole rootDomainObject;
     phd.PhdProgramFocusArea playsRole phdProgramFocusAreas {
+        multiplicity *;
+    }
+}
+
+relation PhdProcessesManagerRootDomainObject {
+    RootDomainObject playsRole rootDomainObject;
+    phd.PhdProcessesManager playsRole processesManagers {
+        multiplicity *;
+    }
+}
+
+relation PhdProcessesManagerAdministrativeOffice {
+	phd.PhdProcessesManager playsRole phdProcessesManager;
+	administrativeOffice.AdministrativeOffice playsRole administrativeOffice;
+}
+
+relation PhdPermissionRootDomainObject {
+    RootDomainObject playsRole rootDomainObject;
+    phd.permissions.PhdPermission playsRole phdPermissions {
+        multiplicity *;
+    }
+}
+
+relation PhdProcessesManagerPhdPermissions {
+    phd.PhdProcessesManager playsRole phdProcessesManager;
+    phd.permissions.PhdPermission playsRole permissions {
         multiplicity *;
     }
 }
