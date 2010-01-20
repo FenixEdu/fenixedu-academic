@@ -275,14 +275,7 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 
     @Override
     public boolean isCanGenerateRegistryCode() {
-	// FIXME: romove once Registry Diploma goes online
-	if (DocumentRequestType.REGISTRY_DIPLOMA_REQUEST.getAdministrativeOfficeTypes().contains(AdministrativeOfficeType.DEGREE)
-		|| DocumentRequestType.REGISTRY_DIPLOMA_REQUEST.getAdministrativeOfficeTypes().contains(
-			AdministrativeOfficeType.MASTER_DEGREE)) {
-	    return isSendToExternalEntitySituationAccepted() && !hasRegistryCode();
-	} else {
-	    return false;
-	}
+	return isSendToExternalEntitySituationAccepted() && !hasRegistryCode();
     }
 
     @Override
