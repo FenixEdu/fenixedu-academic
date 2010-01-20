@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.dataTransferObject.candidacy;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.SchoolLevelType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -20,9 +19,9 @@ public class PrecedentDegreeInformationBean implements Serializable {
 
     private static final long serialVersionUID = 574983352972623607L;
 
-    private DomainReference<PrecedentDegreeInformation> precedentDegreeInformation;
+    private PrecedentDegreeInformation precedentDegreeInformation;
 
-    private DomainReference<Unit> institution;
+    private Unit institution;
 
     private String institutionName;
 
@@ -36,31 +35,31 @@ public class PrecedentDegreeInformationBean implements Serializable {
 
     private String otherSchoolLevel;
 
-    private DomainReference<Country> country;
+    private Country country;
 
     public PrecedentDegreeInformationBean() {
 	super();
     }
 
     public PrecedentDegreeInformationBean(PrecedentDegreeInformation information) {
-	precedentDegreeInformation = new DomainReference<PrecedentDegreeInformation>(information);
+	precedentDegreeInformation = information;
 	degreeDesignation = information.getDegreeDesignation();
 	conclusionGrade = information.getConclusionGrade();
 	conclusionYear = information.getConclusionYear();
-	country = (information.getCountry() == null) ? null : new DomainReference<Country>(information.getCountry());
-	institution = information.getInstitution() == null ? null : new DomainReference<Unit>(information.getInstitution());
+	country = (information.getCountry() == null) ? null : information.getCountry();
+	institution = information.getInstitution() == null ? null : information.getInstitution();
     }
 
     public PrecedentDegreeInformation getPrecedentDegreeInformation() {
-	return precedentDegreeInformation.getObject();
+	return precedentDegreeInformation;
     }
 
     public Unit getInstitution() {
-	return (institution == null) ? null : institution.getObject();
+	return institution;
     }
 
     public void setInstitution(Unit institution) {
-	this.institution = (institution == null) ? null : new DomainReference<Unit>(institution);
+	this.institution = institution;
     }
 
     public String getConclusionGrade() {
@@ -80,11 +79,11 @@ public class PrecedentDegreeInformationBean implements Serializable {
     }
 
     public Country getCountry() {
-	return (country == null) ? null : country.getObject();
+	return country;
     }
 
     public void setCountry(Country country) {
-	this.country = (country == null) ? null : new DomainReference<Country>(country);
+	this.country = country;
     }
 
     public String getDegreeDesignation() {
@@ -104,11 +103,11 @@ public class PrecedentDegreeInformationBean implements Serializable {
     }
 
     public UnitName getInstitutionUnitName() {
-	return (institution == null) ? null : institution.getObject().getUnitName();
+	return (institution == null) ? null : institution.getUnitName();
     }
 
     public void setInstitutionUnitName(UnitName institutionUnitName) {
-	this.institution = (institutionUnitName == null) ? null : new DomainReference<Unit>(institutionUnitName.getUnit());
+	this.institution = (institutionUnitName == null) ? null : institutionUnitName.getUnit();
     }
 
     public SchoolLevelType getSchoolLevel() {

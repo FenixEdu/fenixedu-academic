@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.accounting;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -11,20 +10,19 @@ import pt.ist.fenixWebFramework.services.Service;
 public class PaymentCodeMapping extends PaymentCodeMapping_Base {
 
     static public class PaymentCodeMappingBean implements Serializable {
-	private DomainReference<ExecutionInterval> executionInterval;
-	private DomainReference<PaymentCode> oldCode;
-	private DomainReference<PaymentCode> newCode;
+	private ExecutionInterval executionInterval;
+	private PaymentCode oldCode;
+	private PaymentCode newCode;
 
 	public PaymentCodeMappingBean() {
 	}
 
 	public ExecutionInterval getExecutionInterval() {
-	    return (this.executionInterval != null) ? this.executionInterval.getObject() : null;
+	    return this.executionInterval;
 	}
 
 	public void setExecutionInterval(final ExecutionInterval executionInterval) {
-	    this.executionInterval = (executionInterval != null) ? new DomainReference<ExecutionInterval>(executionInterval)
-		    : null;
+	    this.executionInterval = executionInterval;
 	}
 
 	public boolean hasExecutionInterval() {
@@ -32,19 +30,19 @@ public class PaymentCodeMapping extends PaymentCodeMapping_Base {
 	}
 
 	public PaymentCode getOldCode() {
-	    return (this.oldCode != null) ? this.oldCode.getObject() : null;
+	    return this.oldCode;
 	}
 
 	public void setOldCode(final PaymentCode oldCode) {
-	    this.oldCode = (oldCode != null) ? new DomainReference<PaymentCode>(oldCode) : null;
+	    this.oldCode = oldCode;
 	}
 
 	public PaymentCode getNewCode() {
-	    return (this.newCode != null) ? this.newCode.getObject() : null;
+	    return this.newCode;
 	}
 
 	public void setNewCode(PaymentCode newCode) {
-	    this.newCode = (newCode != null) ? new DomainReference<PaymentCode>(newCode) : null;
+	    this.newCode = newCode;
 	}
 
 	public PaymentCodeMapping create() {

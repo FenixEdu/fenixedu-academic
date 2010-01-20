@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.dataTransferObject.assiduousness;
 import java.io.Serializable;
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.assiduousness.Leave;
 
 import org.joda.time.DateTime;
@@ -20,7 +19,7 @@ public class LeaveBean implements Serializable {
 
     };
 
-    private DomainReference<Leave> leave;
+    private Leave leave;
 
     private DateTime date;
 
@@ -39,11 +38,11 @@ public class LeaveBean implements Serializable {
     }
 
     public Leave getLeave() {
-	return leave != null ? leave.getObject() : null;
+	return leave;
     }
 
     public void setLeave(Leave leave) {
-	this.leave = leave != null ? new DomainReference<Leave>(leave) : null;
+	this.leave = leave;
     }
 
     public DateTime getDate() {

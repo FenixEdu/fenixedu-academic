@@ -6,17 +6,16 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
 
 public class StudentsPerformanceInfoBean implements Serializable {
-    private DomainReference<Person> person;
-    private DomainReference<Degree> degree;
-    private DomainReference<ExecutionYear> studentsEntryYear;
-    private DomainReference<ExecutionYear> currentMonitoringYear;
+    private Person person;
+    private Degree degree;
+    private ExecutionYear studentsEntryYear;
+    private ExecutionYear currentMonitoringYear;
     private Integer degreeCurricularPeriod = 5; // default
     private boolean activeTutorships;
 
@@ -34,53 +33,53 @@ public class StudentsPerformanceInfoBean implements Serializable {
     }
 
     public Degree getDegree() {
-	return (degree == null ? null : degree.getObject());
+	return (degree);
     }
 
     public void setDegree(Degree degree) {
-	this.degree = new DomainReference<Degree>(degree);
+	this.degree = degree;
 	this.degreeCurricularPeriod = (degree != null ? (int) degree.getDegreeType().getAcademicPeriod().getWeight()
 		: getDegreeCurricularPeriod());
     }
 
     public ExecutionYear getCurrentMonitoringYear() {
-	return (currentMonitoringYear == null ? null : currentMonitoringYear.getObject());
+	return (currentMonitoringYear);
     }
 
     public void setCurrentMonitoringYear(ExecutionYear currentMonitoringYear) {
-	this.currentMonitoringYear = new DomainReference<ExecutionYear>(currentMonitoringYear);
+	this.currentMonitoringYear = currentMonitoringYear;
     }
 
     public ExecutionYear getStudentsEntryYear() {
-	return (studentsEntryYear == null ? null : studentsEntryYear.getObject());
+	return (studentsEntryYear);
     }
 
     public void setStudentsEntryYear(ExecutionYear studentsEntryYear) {
-	this.studentsEntryYear = new DomainReference<ExecutionYear>(studentsEntryYear);
+	this.studentsEntryYear = studentsEntryYear;
     }
 
     public Person getPerson() {
-	return (person == null ? null : person.getObject());
+	return (person);
     }
 
     public void setPerson(Person person) {
-	this.person = new DomainReference<Person>(person);
+	this.person = person;
     }
 
     public void setStudentsEntryYearFromList(List<ExecutionYear> studentsEntryYears) {
-	if (!studentsEntryYears.contains(this.studentsEntryYear.getObject())) {
+	if (!studentsEntryYears.contains(this.studentsEntryYear)) {
 	    setStudentsEntryYear(studentsEntryYears.get(0));
 	}
     }
 
     public void setStudentsEntryYearFromSet(Set<ExecutionYear> studentsEntryYears) {
-	if (!studentsEntryYears.contains(this.studentsEntryYear.getObject())) {
+	if (!studentsEntryYears.contains(this.studentsEntryYear)) {
 	    setStudentsEntryYear(studentsEntryYears.iterator().next());
 	}
     }
 
     public void setCurrentMonitoringYearFromList(List<ExecutionYear> monitoringYears) {
-	if (!monitoringYears.contains(this.currentMonitoringYear.getObject())) {
+	if (!monitoringYears.contains(this.currentMonitoringYear)) {
 	    setCurrentMonitoringYear(monitoringYears.get(0));
 	}
     }

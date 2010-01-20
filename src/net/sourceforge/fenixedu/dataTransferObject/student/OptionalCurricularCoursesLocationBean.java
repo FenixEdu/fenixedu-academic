@@ -8,7 +8,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.OptionalEnrolment;
@@ -21,7 +20,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 
 public class OptionalCurricularCoursesLocationBean implements Serializable {
 
-    private DomainReference<StudentCurricularPlan> studentCurricularPlan;
+    private StudentCurricularPlan studentCurricularPlan;
 
     private List<EnrolmentLocationBean> enrolmentBeans;
 
@@ -34,12 +33,11 @@ public class OptionalCurricularCoursesLocationBean implements Serializable {
     }
 
     public StudentCurricularPlan getStudentCurricularPlan() {
-	return (this.studentCurricularPlan != null) ? this.studentCurricularPlan.getObject() : null;
+	return this.studentCurricularPlan;
     }
 
     public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
-	this.studentCurricularPlan = (studentCurricularPlan != null) ? new DomainReference<StudentCurricularPlan>(
-		studentCurricularPlan) : null;
+	this.studentCurricularPlan = studentCurricularPlan;
     }
 
     public List<EnrolmentLocationBean> getEnrolmentBeans() {
@@ -84,29 +82,28 @@ public class OptionalCurricularCoursesLocationBean implements Serializable {
     }
 
     static public class EnrolmentLocationBean implements Serializable {
-	private DomainReference<Enrolment> enrolment;
+	private Enrolment enrolment;
 
-	private DomainReference<OptionalCurricularCourse> optionalCurricularCourse;
+	private OptionalCurricularCourse optionalCurricularCourse;
 
 	public EnrolmentLocationBean(final Enrolment enrolment) {
 	    setEnrolment(enrolment);
 	}
 
 	public Enrolment getEnrolment() {
-	    return (this.enrolment != null) ? this.enrolment.getObject() : null;
+	    return this.enrolment;
 	}
 
 	public void setEnrolment(Enrolment enrolment) {
-	    this.enrolment = (enrolment != null) ? new DomainReference<Enrolment>(enrolment) : null;
+	    this.enrolment = enrolment;
 	}
 
 	public OptionalCurricularCourse getOptionalCurricularCourse() {
-	    return (this.optionalCurricularCourse != null) ? this.optionalCurricularCourse.getObject() : null;
+	    return this.optionalCurricularCourse;
 	}
 
 	public void setOptionalCurricularCourse(OptionalCurricularCourse optionalCurricularCourse) {
-	    this.optionalCurricularCourse = (optionalCurricularCourse != null) ? new DomainReference<OptionalCurricularCourse>(
-		    optionalCurricularCourse) : null;
+	    this.optionalCurricularCourse = optionalCurricularCourse;
 	}
 
 	public CurriculumGroup getCurriculumGroup(final StudentCurricularPlan studentCurricularPlan) {
@@ -126,28 +123,28 @@ public class OptionalCurricularCoursesLocationBean implements Serializable {
     }
 
     static public class OptionalEnrolmentLocationBean implements Serializable {
-	private DomainReference<OptionalEnrolment> enrolment;
+	private OptionalEnrolment enrolment;
 
-	private DomainReference<CurriculumGroup> curriculumGroup;
+	private CurriculumGroup curriculumGroup;
 
 	public OptionalEnrolmentLocationBean(final OptionalEnrolment enrolment) {
 	    setEnrolment(enrolment);
 	}
 
 	public OptionalEnrolment getEnrolment() {
-	    return (this.enrolment != null) ? this.enrolment.getObject() : null;
+	    return this.enrolment;
 	}
 
 	public void setEnrolment(OptionalEnrolment enrolment) {
-	    this.enrolment = (enrolment != null) ? new DomainReference<OptionalEnrolment>(enrolment) : null;
+	    this.enrolment = enrolment;
 	}
 
 	public CurriculumGroup getCurriculumGroup() {
-	    return (this.curriculumGroup != null) ? this.curriculumGroup.getObject() : null;
+	    return this.curriculumGroup;
 	}
 
 	public void setCurriculumGroup(CurriculumGroup curriculumGroup) {
-	    this.curriculumGroup = (curriculumGroup != null) ? new DomainReference<CurriculumGroup>(curriculumGroup) : null;
+	    this.curriculumGroup = curriculumGroup;
 	}
 
 	public StudentCurricularPlan getStudentCurricularPlan() {

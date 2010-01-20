@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonPlanning;
@@ -23,27 +22,27 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class SummariesManagementBean implements Serializable {
 
-    private DomainReference<ExecutionCourse> executionCourseReference;
+    private ExecutionCourse executionCourseReference;
 
     private SummaryType summaryType;
 
     private ShiftType lessonType;
 
-    private DomainReference<Lesson> lessonReference;
+    private Lesson lessonReference;
 
-    private DomainReference<Shift> shiftReference;
+    private Shift shiftReference;
 
     private YearMonthDay summaryDate;
 
     private Partial summaryTime;
 
-    private DomainReference<Professorship> professorshipReference;
+    private Professorship professorshipReference;
 
-    private DomainReference<Teacher> teacherReference;
+    private Teacher teacherReference;
 
     private String teacherName;
 
-    private DomainReference<AllocatableSpace> roomReference;
+    private AllocatableSpace roomReference;
 
     private Integer studentsNumber;
 
@@ -51,13 +50,13 @@ public class SummariesManagementBean implements Serializable {
 
     private MultiLanguageString summaryText;
 
-    private DomainReference<LessonPlanning> lessonPlannigReference;
+    private LessonPlanning lessonPlannigReference;
 
-    private DomainReference<Summary> lastSummaryReference;
+    private Summary lastSummaryReference;
 
-    private DomainReference<Summary> summaryReference;
+    private Summary summaryReference;
 
-    private DomainReference<Professorship> professorshipLoggedReference;
+    private Professorship professorshipLoggedReference;
 
     private List<NextPossibleSummaryLessonsAndDatesBean> nextPossibleSummaryLessonsAndDatesBean;
 
@@ -113,83 +112,83 @@ public class SummariesManagementBean implements Serializable {
     }
 
     public Summary getSummary() {
-	return (this.summaryReference != null) ? this.summaryReference.getObject() : null;
+	return this.summaryReference;
     }
 
     public void setSummary(Summary summary) {
-	this.summaryReference = (summary != null) ? new DomainReference<Summary>(summary) : null;
+	this.summaryReference = summary;
     }
 
     public ExecutionCourse getExecutionCourse() {
-	return (this.executionCourseReference != null) ? this.executionCourseReference.getObject() : null;
+	return this.executionCourseReference;
     }
 
     public void setExecutionCourse(ExecutionCourse executionCourse) {
-	this.executionCourseReference = (executionCourse != null) ? new DomainReference<ExecutionCourse>(executionCourse) : null;
+	this.executionCourseReference = executionCourse;
     }
 
     public Teacher getTeacher() {
-	return (this.teacherReference != null) ? this.teacherReference.getObject() : null;
+	return this.teacherReference;
     }
 
     public void setTeacher(Teacher teacher) {
-	this.teacherReference = (teacher != null) ? new DomainReference<Teacher>(teacher) : null;
+	this.teacherReference = teacher;
     }
 
     public Professorship getProfessorshipLogged() {
-	return (this.professorshipLoggedReference != null) ? this.professorshipLoggedReference.getObject() : null;
+	return this.professorshipLoggedReference;
     }
 
     public void setProfessorshipLogged(Professorship professorship) {
-	this.professorshipLoggedReference = (professorship != null) ? new DomainReference<Professorship>(professorship) : null;
+	this.professorshipLoggedReference = professorship;
     }
 
     public Summary getLastSummary() {
-	return (this.lastSummaryReference != null) ? this.lastSummaryReference.getObject() : null;
+	return this.lastSummaryReference;
     }
 
     public void setLastSummary(Summary summary) {
-	this.lastSummaryReference = (summary != null) ? new DomainReference<Summary>(summary) : null;
+	this.lastSummaryReference = summary;
     }
 
     public LessonPlanning getLessonPlanning() {
-	return (this.lessonPlannigReference != null) ? this.lessonPlannigReference.getObject() : null;
+	return this.lessonPlannigReference;
     }
 
     public void setLessonPlanning(LessonPlanning lessonPlanning) {
-	this.lessonPlannigReference = (lessonPlanning != null) ? new DomainReference<LessonPlanning>(lessonPlanning) : null;
+	this.lessonPlannigReference = lessonPlanning;
     }
 
     public Professorship getProfessorship() {
-	return (this.professorshipReference != null) ? this.professorshipReference.getObject() : null;
+	return this.professorshipReference;
     }
 
     public void setProfessorship(Professorship professorship) {
-	this.professorshipReference = (professorship != null) ? new DomainReference<Professorship>(professorship) : null;
+	this.professorshipReference = professorship;
     }
 
     public Lesson getLesson() {
-	return (this.lessonReference != null) ? this.lessonReference.getObject() : null;
+	return this.lessonReference;
     }
 
     public void setLesson(Lesson lesson) {
-	this.lessonReference = (lesson != null) ? new DomainReference<Lesson>(lesson) : null;
+	this.lessonReference = lesson;
     }
 
     public Shift getShift() {
-	return (this.shiftReference != null) ? this.shiftReference.getObject() : null;
+	return this.shiftReference;
     }
 
     public void setShift(Shift shift) {
-	this.shiftReference = (shift != null) ? new DomainReference<Shift>(shift) : null;
+	this.shiftReference = shift;
     }
 
     public AllocatableSpace getSummaryRoom() {
-	return (this.roomReference != null) ? this.roomReference.getObject() : null;
+	return this.roomReference;
     }
 
     public void setSummaryRoom(AllocatableSpace room) {
-	this.roomReference = (room != null) ? new DomainReference<AllocatableSpace>(room) : null;
+	this.roomReference = room;
     }
 
     public SummaryType getSummaryType() {

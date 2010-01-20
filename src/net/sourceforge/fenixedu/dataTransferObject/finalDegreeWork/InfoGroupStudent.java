@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 
 /**
@@ -15,10 +14,10 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
  */
 public class InfoGroupStudent extends InfoObject {
 
-    private DomainReference<GroupStudent> groupStudentDomainReference;
+    private GroupStudent groupStudentDomainReference;
 
     public InfoGroupStudent(final GroupStudent groupStudent) {
-	groupStudentDomainReference = new DomainReference<GroupStudent>(groupStudent);
+	groupStudentDomainReference = groupStudent;
     }
 
     public static InfoGroupStudent newInfoFromDomain(GroupStudent groupStudent) {
@@ -26,7 +25,7 @@ public class InfoGroupStudent extends InfoObject {
     }
 
     private GroupStudent getGroupStudent() {
-	return groupStudentDomainReference == null ? null : groupStudentDomainReference.getObject();
+	return groupStudentDomainReference;
     }
 
     public boolean equals(Object obj) {

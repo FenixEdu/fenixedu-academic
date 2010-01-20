@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.inquiries.teacher.TeachingInquiry;
 
@@ -20,7 +19,7 @@ import org.joda.time.DateTime;
  */
 public class TeachingInquiryDTO implements Serializable {
 
-    private DomainReference<Professorship> professorship;
+    private Professorship professorship;
 
     private InquiriesBlock firstPageFirstBlock;
 
@@ -472,11 +471,11 @@ public class TeachingInquiryDTO implements Serializable {
     }
 
     public Professorship getProfessorship() {
-	return professorship == null ? null : professorship.getObject();
+	return professorship;
     }
 
     public void setProfessorship(Professorship professorship) {
-	this.professorship = new DomainReference<Professorship>(professorship);
+	this.professorship = professorship;
     }
 
     public InquiriesBlock getFirstPageFirstBlock() {

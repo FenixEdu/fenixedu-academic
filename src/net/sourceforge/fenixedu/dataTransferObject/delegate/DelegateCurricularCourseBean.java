@@ -7,7 +7,6 @@ import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -17,13 +16,13 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
 public class DelegateCurricularCourseBean implements Serializable {
-    private DomainReference<CurricularCourse> curricularCourse;
+    private CurricularCourse curricularCourse;
 
-    private DomainReference<ExecutionYear> executionYear;
+    private ExecutionYear executionYear;
 
-    private DomainReference<ExecutionSemester> executionSemester;
+    private ExecutionSemester executionSemester;
 
-    private List<DomainReference<Student>> enrolledStudents;
+    private List<Student> enrolledStudents;
 
     private Integer curricularYear;
 
@@ -44,41 +43,41 @@ public class DelegateCurricularCourseBean implements Serializable {
     }
 
     public CurricularCourse getCurricularCourse() {
-	return (curricularCourse == null ? null : curricularCourse.getObject());
+	return (curricularCourse);
     }
 
     public void setCurricularCourse(CurricularCourse curricularCourse) {
-	this.curricularCourse = new DomainReference<CurricularCourse>(curricularCourse);
+	this.curricularCourse = curricularCourse;
     }
 
     public ExecutionYear getExecutionYear() {
-	return (executionYear == null ? null : executionYear.getObject());
+	return (executionYear);
     }
 
     public void setExecutionYear(ExecutionYear executionYear) {
-	this.executionYear = new DomainReference<ExecutionYear>(executionYear);
+	this.executionYear = executionYear;
     }
 
     public ExecutionSemester getExecutionPeriod() {
-	return (executionSemester == null ? null : executionSemester.getObject());
+	return (executionSemester);
     }
 
     public void setExecutionPeriod(ExecutionSemester executionSemester) {
-	this.executionSemester = new DomainReference<ExecutionSemester>(executionSemester);
+	this.executionSemester = executionSemester;
     }
 
     public List<Student> getEnrolledStudents() {
 	List<Student> result = new ArrayList<Student>();
-	for (DomainReference<Student> studentDR : this.enrolledStudents) {
-	    result.add(studentDR.getObject());
+	for (Student studentDR : this.enrolledStudents) {
+	    result.add(studentDR);
 	}
 	return result;
     }
 
     public void setEnrolledStudents(List<Student> students) {
-	this.enrolledStudents = new ArrayList<DomainReference<Student>>();
+	this.enrolledStudents = new ArrayList<Student>();
 	for (Student student : students) {
-	    this.enrolledStudents.add(new DomainReference<Student>(student));
+	    this.enrolledStudents.add(student);
 	}
     }
 

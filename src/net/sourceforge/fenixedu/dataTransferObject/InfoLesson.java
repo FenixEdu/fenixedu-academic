@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.Calendar;
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.ShiftType;
@@ -32,14 +31,14 @@ public class InfoLesson extends InfoShowOccupation implements Comparable<InfoLes
 
     };
 
-    private DomainReference<Lesson> lesson;
+    private Lesson lesson;
     private InfoRoom infoSala;
     private InfoShift infoShift;
     private InfoRoomOccupation infoRoomOccupation;
 
     public InfoLesson(Lesson lesson) {
 	super.copyFromDomain(lesson);
-	this.lesson = new DomainReference<Lesson>(lesson);
+	this.lesson = lesson;
     }
 
     @Override
@@ -133,6 +132,6 @@ public class InfoLesson extends InfoShowOccupation implements Comparable<InfoLes
     }
 
     private Lesson getLesson() {
-	return lesson == null ? null : lesson.getObject();
+	return lesson;
     }
 }

@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.util.Month;
@@ -12,7 +11,7 @@ import net.sourceforge.fenixedu.util.Month;
 public class TutorshipManagementBean implements Serializable {
     private Integer teacherNumber;
 
-    private DomainReference<Teacher> teacher;
+    private Teacher teacher;
 
     private Integer executionDegreeID;
 
@@ -28,10 +27,10 @@ public class TutorshipManagementBean implements Serializable {
 
     private Integer numberOfCurrentTutorships;
 
-    private List<DomainReference<Tutorship>> studentsList;
+    private List<Tutorship> studentsList;
 
     private TutorshipManagementBean() {
-	this.studentsList = new ArrayList<DomainReference<Tutorship>>();
+	this.studentsList = new ArrayList<Tutorship>();
 	this.setDefaultFields();
     }
 
@@ -66,16 +65,16 @@ public class TutorshipManagementBean implements Serializable {
 
     public List<Tutorship> getStudentsList() {
 	List<Tutorship> students = new ArrayList<Tutorship>();
-	for (DomainReference<Tutorship> tutor : this.studentsList) {
-	    students.add(tutor.getObject());
+	for (Tutorship tutor : this.studentsList) {
+	    students.add(tutor);
 	}
 	return students;
     }
 
     public void setStudentsList(List<Tutorship> students) {
-	this.studentsList = new ArrayList<DomainReference<Tutorship>>();
+	this.studentsList = new ArrayList<Tutorship>();
 	for (Tutorship tutor : students) {
-	    this.studentsList.add(new DomainReference<Tutorship>(tutor));
+	    this.studentsList.add(tutor);
 	}
     }
 
@@ -96,11 +95,11 @@ public class TutorshipManagementBean implements Serializable {
     }
 
     public Teacher getTeacher() {
-	return (teacher == null ? null : teacher.getObject());
+	return (teacher);
     }
 
     public void setTeacher(Teacher teacher) {
-	this.teacher = new DomainReference<Teacher>(teacher);
+	this.teacher = teacher;
     }
 
     public Integer getNumberOfCurrentTutorships() {

@@ -10,8 +10,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.domain.DomainReference;
 
 import org.apache.commons.collections.Predicate;
 
@@ -83,26 +81,6 @@ public class CollectionUtils extends org.apache.commons.collections.CollectionUt
 	}
 
 	return results;
-    }
-
-    public static <T extends DomainObject> List<T> toObjects(List<DomainReference<T>> references) {
-	List<T> objects = new ArrayList<T>();
-
-	for (DomainReference<T> reference : references) {
-	    objects.add(reference.getObject());
-	}
-
-	return objects;
-    }
-
-    public static <T extends DomainObject> List<DomainReference<T>> toReferences(List<T> objects) {
-	List<DomainReference<T>> references = new ArrayList<DomainReference<T>>();
-
-	for (T object : objects) {
-	    references.add(new DomainReference<T>(object));
-	}
-
-	return references;
     }
 
     public static <T> List<T> filter(Collection<T> collection, pt.utl.ist.fenix.tools.predicates.Predicate<T> predicate) {

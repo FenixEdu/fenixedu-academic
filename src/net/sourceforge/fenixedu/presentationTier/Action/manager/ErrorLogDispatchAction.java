@@ -11,7 +11,6 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.log.requests.ExceptionType;
 import net.sourceforge.fenixedu.domain.log.requests.RequestLog;
 import net.sourceforge.fenixedu.domain.log.requests.RequestLogDay;
@@ -41,34 +40,34 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 public class ErrorLogDispatchAction extends FenixDispatchAction {
 
     public static class RequestLogDayBean implements Serializable {
-	private DomainReference<RequestLogDay> day;
-	private DomainReference<RequestLogMonth> month;
-	private DomainReference<RequestLogYear> year;
+	private RequestLogDay day;
+	private RequestLogMonth month;
+	private RequestLogYear year;
 
 	public RequestLogDay getDay() {
-	    return (day == null) ? null : day.getObject();
+	    return day;
 	}
 
 	public void setDay(RequestLogDay day) {
-	    this.day = new DomainReference<RequestLogDay>(day);
+	    this.day = day;
 	    ;
 	}
 
 	public RequestLogMonth getMonth() {
-	    return (month == null) ? null : month.getObject();
+	    return month;
 	}
 
 	public void setMonth(RequestLogMonth month) {
-	    this.month = new DomainReference<RequestLogMonth>(month);
+	    this.month = month;
 	    ;
 	}
 
 	public RequestLogYear getYear() {
-	    return (year == null) ? null : year.getObject();
+	    return year;
 	}
 
 	public void setYear(RequestLogYear year) {
-	    this.year = new DomainReference<RequestLogYear>(year);
+	    this.year = year;
 	}
     }
 

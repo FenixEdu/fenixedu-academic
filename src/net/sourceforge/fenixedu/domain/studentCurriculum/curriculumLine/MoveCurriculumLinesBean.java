@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.enrolment.CurriculumModuleMoveWrapper;
@@ -16,7 +15,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 public class MoveCurriculumLinesBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private DomainReference<StudentCurricularPlan> studentCurricularPlan;
+    private StudentCurricularPlan studentCurricularPlan;
     private List<CurriculumLineLocationBean> curriculumLineLocations;
     private boolean withRules = true;
 
@@ -42,12 +41,11 @@ public class MoveCurriculumLinesBean implements Serializable {
     }
 
     public StudentCurricularPlan getStudentCurricularPlan() {
-	return (this.studentCurricularPlan != null) ? this.studentCurricularPlan.getObject() : null;
+	return this.studentCurricularPlan;
     }
 
     public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
-	this.studentCurricularPlan = (studentCurricularPlan != null) ? new DomainReference<StudentCurricularPlan>(
-		studentCurricularPlan) : null;
+	this.studentCurricularPlan = studentCurricularPlan;
     }
 
     public Set<IDegreeModuleToEvaluate> getIDegreeModulesToEvaluate(final ExecutionSemester executionSemester) {

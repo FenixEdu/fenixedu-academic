@@ -6,7 +6,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
@@ -21,16 +20,16 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
  */
 public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
 
-    private final DomainReference<DegreeCurricularPlan> degreeCurricularPlanDomainReference;
+    private final DegreeCurricularPlan degreeCurricularPlanDomainReference;
 
     private final boolean showEnVersion = (Language.getUserLanguage() == Language.en);
 
     public InfoDegreeCurricularPlan(final DegreeCurricularPlan degreeCurricularPlan) {
-	degreeCurricularPlanDomainReference = new DomainReference<DegreeCurricularPlan>(degreeCurricularPlan);
+	degreeCurricularPlanDomainReference = degreeCurricularPlan;
     }
 
     public DegreeCurricularPlan getDegreeCurricularPlan() {
-	return degreeCurricularPlanDomainReference == null ? null : degreeCurricularPlanDomainReference.getObject();
+	return degreeCurricularPlanDomainReference;
     }
 
     @Override

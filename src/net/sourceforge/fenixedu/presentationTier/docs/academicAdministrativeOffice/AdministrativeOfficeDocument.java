@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Map.Entry;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.OptionalEnrolment;
@@ -59,7 +58,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
 
     static final protected char END_CHAR = '-';
 
-    protected DomainReference<DocumentRequest> documentRequestDomainReference;
+    protected DocumentRequest documentRequestDomainReference;
 
     public static class AdministrativeOfficeDocumentCreator {
 
@@ -122,13 +121,13 @@ public class AdministrativeOfficeDocument extends FenixReport {
     public AdministrativeOfficeDocument(final DocumentRequest documentRequest, final Locale locale) {
 	super(locale);
 	setResourceBundle(ResourceBundle.getBundle("resources.AcademicAdminOffice", locale));
-	this.documentRequestDomainReference = new DomainReference<DocumentRequest>(documentRequest);
+	this.documentRequestDomainReference = documentRequest;
 
 	fillReport();
     }
 
     protected DocumentRequest getDocumentRequest() {
-	return documentRequestDomainReference.getObject();
+	return documentRequestDomainReference;
     }
 
     @Override

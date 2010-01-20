@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externa
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
 import net.sourceforge.fenixedu.domain.Grade;
@@ -11,8 +10,8 @@ import org.joda.time.YearMonthDay;
 
 public class CreateExternalEnrolmentBean implements Serializable {
 
-    private DomainReference<ExternalCurricularCourse> externalCurricularCourse;
-    private DomainReference<ExecutionSemester> executionSemester;
+    private ExternalCurricularCourse externalCurricularCourse;
+    private ExecutionSemester executionSemester;
 
     private Integer studentNumber;
     private Grade grade;
@@ -27,12 +26,11 @@ public class CreateExternalEnrolmentBean implements Serializable {
     }
 
     public ExternalCurricularCourse getExternalCurricularCourse() {
-	return (this.externalCurricularCourse != null) ? this.externalCurricularCourse.getObject() : null;
+	return this.externalCurricularCourse;
     }
 
     public void setExternalCurricularCourse(ExternalCurricularCourse externalCurricularCourse) {
-	this.externalCurricularCourse = (externalCurricularCourse != null) ? new DomainReference<ExternalCurricularCourse>(
-		externalCurricularCourse) : null;
+	this.externalCurricularCourse = externalCurricularCourse;
     }
 
     public Integer getStudentNumber() {
@@ -44,11 +42,11 @@ public class CreateExternalEnrolmentBean implements Serializable {
     }
 
     public ExecutionSemester getExecutionPeriod() {
-	return (this.executionSemester != null) ? this.executionSemester.getObject() : null;
+	return this.executionSemester;
     }
 
     public void setExecutionPeriod(ExecutionSemester executionSemester) {
-	this.executionSemester = (executionSemester != null) ? new DomainReference<ExecutionSemester>(executionSemester) : null;
+	this.executionSemester = executionSemester;
     }
 
     public YearMonthDay getEvaluationDate() {

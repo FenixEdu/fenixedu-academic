@@ -6,7 +6,6 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -17,11 +16,11 @@ public class BoardSearchBean implements Serializable, HasExecutionSemester {
 
     private Boolean searchExecutionCourseBoards;
 
-    private DomainReference<Unit> unit;
+    private Unit unit;
 
-    private DomainReference<ExecutionSemester> executionSemester;
+    private ExecutionSemester executionSemester;
 
-    private DomainReference<ExecutionDegree> executionDegree;
+    private ExecutionDegree executionDegree;
 
     public BoardSearchBean() {
 	super();
@@ -36,11 +35,11 @@ public class BoardSearchBean implements Serializable, HasExecutionSemester {
     }
 
     public ExecutionDegree getExecutionDegree() {
-	return executionDegree == null ? null : executionDegree.getObject();
+	return executionDegree;
     }
 
     public void setExecutionDegree(ExecutionDegree executionDegree) {
-	this.executionDegree = executionDegree == null ? null : new DomainReference<ExecutionDegree>(executionDegree);
+	this.executionDegree = executionDegree;
     }
 
     public ExecutionSemester getExecutionPeriod() {
@@ -48,19 +47,19 @@ public class BoardSearchBean implements Serializable, HasExecutionSemester {
 	    final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
 	    setExecutionPeriod(executionSemester);
 	}
-	return executionSemester.getObject();
+	return executionSemester;
     }
 
     public void setExecutionPeriod(ExecutionSemester executionSemester) {
-	this.executionSemester = executionSemester == null ? null : new DomainReference<ExecutionSemester>(executionSemester);
+	this.executionSemester = executionSemester;
     }
 
     public void setUnit(Unit unit) {
-	this.unit = new DomainReference<Unit>(unit);
+	this.unit = unit;
     }
 
     public Unit getUnit() {
-	return this.unit == null ? null : this.unit.getObject();
+	return this.unit;
     }
 
     public Set getSearchResult() {

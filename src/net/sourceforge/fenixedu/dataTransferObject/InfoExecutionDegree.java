@@ -7,7 +7,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -29,18 +28,18 @@ public class InfoExecutionDegree extends InfoObject {
 
     };
 
-    private final DomainReference<ExecutionDegree> executionDegreeDomainReference;
+    private final ExecutionDegree executionDegreeDomainReference;
 
     private String qualifiedName;
 
     private boolean getNextExecutionYear = false;
 
     public InfoExecutionDegree(final ExecutionDegree executionDegree) {
-	executionDegreeDomainReference = new DomainReference<ExecutionDegree>(executionDegree);
+	executionDegreeDomainReference = executionDegree;
     }
 
     public ExecutionDegree getExecutionDegree() {
-	return executionDegreeDomainReference == null ? null : executionDegreeDomainReference.getObject();
+	return executionDegreeDomainReference;
     }
 
     public InfoExecutionYear getInfoExecutionYear() {

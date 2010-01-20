@@ -6,14 +6,13 @@ package net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismiss
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 
 public class SelectedDismissal implements Serializable {
 
-    private DomainReference<CurriculumGroup> curriculumGroup;
+    private CurriculumGroup curriculumGroup;
 
-    private DomainReference<CurricularCourse> curricularCourse;
+    private CurricularCourse curricularCourse;
 
     public SelectedDismissal(CurriculumGroup curriculumGroup, CurricularCourse curricularCourse) {
 	setCurriculumGroup(curriculumGroup);
@@ -21,19 +20,19 @@ public class SelectedDismissal implements Serializable {
     }
 
     public CurriculumGroup getCurriculumGroup() {
-	return (this.curriculumGroup != null) ? this.curriculumGroup.getObject() : null;
+	return this.curriculumGroup;
     }
 
     public void setCurriculumGroup(CurriculumGroup curriculumGroup) {
-	this.curriculumGroup = (curriculumGroup != null) ? new DomainReference<CurriculumGroup>(curriculumGroup) : null;
+	this.curriculumGroup = curriculumGroup;
     }
 
     public CurricularCourse getCurricularCourse() {
-	return (this.curricularCourse != null) ? this.curricularCourse.getObject() : null;
+	return this.curricularCourse;
     }
 
     public void setCurricularCourse(CurricularCourse curricularCourse) {
-	this.curricularCourse = (curricularCourse != null) ? new DomainReference<CurricularCourse>(curricularCourse) : null;
+	this.curricularCourse = curricularCourse;
     }
 
     public static String getKey(CurriculumGroup curriculumGroup, CurricularCourse curricularCourse) {

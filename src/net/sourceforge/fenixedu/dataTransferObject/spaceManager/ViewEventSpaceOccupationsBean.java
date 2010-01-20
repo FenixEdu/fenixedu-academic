@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.spaceManager;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 
@@ -18,7 +17,7 @@ public class ViewEventSpaceOccupationsBean implements Serializable {
 
     private YearMonthDay day;
 
-    private DomainReference<AllocatableSpace> allocatableSpaceReference;
+    private AllocatableSpace allocatableSpaceReference;
 
     public static int MONDAY_IN_JODA_TIME = 1;
     public static int SATURDAY_IN_JODA_TIME = 6;
@@ -41,11 +40,11 @@ public class ViewEventSpaceOccupationsBean implements Serializable {
     }
 
     public AllocatableSpace getAllocatableSpace() {
-	return allocatableSpaceReference != null ? allocatableSpaceReference.getObject() : null;
+	return allocatableSpaceReference;
     }
 
     public void setAllocatableSpace(AllocatableSpace space) {
-	this.allocatableSpaceReference = space != null ? new DomainReference<AllocatableSpace>(space) : null;
+	this.allocatableSpaceReference = space;
     }
 
     public Partial getYear() {

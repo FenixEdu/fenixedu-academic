@@ -3,15 +3,14 @@ package net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.CurricularYear;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 
 public class ContextSelectionBean implements Serializable {
     private AcademicInterval academicInterval;
-    private DomainReference<CurricularYear> curricularYear;
-    private DomainReference<ExecutionDegree> executionDegree;
+    private CurricularYear curricularYear;
+    private ExecutionDegree executionDegree;
     private String courseName;
 
     public ContextSelectionBean(AcademicInterval academicInterval) {
@@ -37,19 +36,19 @@ public class ContextSelectionBean implements Serializable {
     }
 
     public CurricularYear getCurricularYear() {
-	return (this.curricularYear != null) ? this.curricularYear.getObject() : null;
+	return this.curricularYear;
     }
 
     public void setCurricularYear(CurricularYear curricularYear) {
-	this.curricularYear = (curricularYear != null) ? new DomainReference<CurricularYear>(curricularYear) : null;
+	this.curricularYear = curricularYear;
     }
 
     public ExecutionDegree getExecutionDegree() {
-	return (this.executionDegree != null) ? this.executionDegree.getObject() : null;
+	return this.executionDegree;
     }
 
     public void setExecutionDegree(ExecutionDegree executionDegree) {
-	this.executionDegree = (executionDegree != null) ? new DomainReference<ExecutionDegree>(executionDegree) : null;
+	this.executionDegree = executionDegree;
     }
 
     public String getCourseName() {

@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
 
@@ -12,7 +11,7 @@ public class CreateCreditNoteBean implements Serializable {
 
     private List<CreditNoteEntryDTO> creditNoteEntryDTOs;
 
-    private DomainReference<Receipt> receipt;
+    private Receipt receipt;
 
     public CreateCreditNoteBean(final Receipt receipt) {
 	setReceipt(receipt);
@@ -20,11 +19,11 @@ public class CreateCreditNoteBean implements Serializable {
     }
 
     public Receipt getReceipt() {
-	return (this.receipt != null) ? this.receipt.getObject() : null;
+	return this.receipt;
     }
 
     public void setReceipt(Receipt receipt) {
-	this.receipt = (receipt != null) ? new DomainReference<Receipt>(receipt) : null;
+	this.receipt = receipt;
     }
 
     public List<CreditNoteEntryDTO> getCreditNoteEntryDTOs() {

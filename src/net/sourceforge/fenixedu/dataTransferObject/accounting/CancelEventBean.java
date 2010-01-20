@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.accounting;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 
@@ -13,9 +12,9 @@ public class CancelEventBean implements Serializable {
      */
     private static final long serialVersionUID = -5181800965583788267L;
 
-    private DomainReference<Event> event;
+    private Event event;
 
-    private DomainReference<Employee> employee;
+    private Employee employee;
 
     private String justification;
 
@@ -26,20 +25,20 @@ public class CancelEventBean implements Serializable {
     }
 
     public Event getEvent() {
-	return (this.event != null) ? this.event.getObject() : null;
+	return this.event;
     }
 
     public void setEvent(Event event) {
-	this.event = (event != null) ? new DomainReference<Event>(event) : null;
+	this.event = event;
     }
 
     public Employee getEmployee() {
-	return (this.employee != null) ? this.employee.getObject() : null;
+	return this.employee;
 
     }
 
     public void setEmployee(Employee employee) {
-	this.employee = (employee != null) ? new DomainReference<Employee>(employee) : null;
+	this.employee = employee;
     }
 
     public String getJustification() {

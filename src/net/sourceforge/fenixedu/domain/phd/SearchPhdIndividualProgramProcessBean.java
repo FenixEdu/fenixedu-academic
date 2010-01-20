@@ -6,7 +6,6 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.commons.CollectionUtils;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 
@@ -23,7 +22,7 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
      */
     private static final long serialVersionUID = -5653277152319382139L;
 
-    private DomainReference<ExecutionYear> executionYear;
+    private ExecutionYear executionYear;
 
     private PhdIndividualProgramProcessState processState;
 
@@ -31,11 +30,11 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
 
     private Integer studentNumber;
 
-    private List<DomainReference<PhdProgram>> phdPrograms;
+    private List<PhdProgram> phdPrograms;
 
     private Boolean filterPhdPrograms = Boolean.TRUE;
 
-    private List<DomainReference<PhdIndividualProgramProcess>> processes;
+    private List<PhdIndividualProgramProcess> processes;
 
     private Boolean filterPhdProcesses = Boolean.TRUE;
 
@@ -77,8 +76,8 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
 
     public List<PhdProgram> getPhdPrograms() {
 	final List<PhdProgram> result = new ArrayList<PhdProgram>();
-	for (final DomainReference<PhdProgram> each : this.phdPrograms) {
-	    result.add(each.getObject());
+	for (final PhdProgram each : this.phdPrograms) {
+	    result.add(each);
 	}
 
 	return result;
@@ -89,20 +88,20 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
     }
 
     public void setPhdPrograms(Collection<PhdProgram> phdPrograms) {
-	final List<DomainReference<PhdProgram>> result = new ArrayList<DomainReference<PhdProgram>>();
+	final List<PhdProgram> result = new ArrayList<PhdProgram>();
 	for (final PhdProgram each : phdPrograms) {
-	    result.add(new DomainReference<PhdProgram>(each));
+	    result.add(each);
 	}
 
 	this.phdPrograms = result;
     }
 
     public ExecutionYear getExecutionYear() {
-	return (this.executionYear != null) ? this.executionYear.getObject() : null;
+	return this.executionYear;
     }
 
     public void setExecutionYear(ExecutionYear executionYear) {
-	this.executionYear = (executionYear != null) ? new DomainReference<ExecutionYear>(executionYear) : null;
+	this.executionYear = executionYear;
     }
 
     public PhdIndividualProgramProcessState getProcessState() {
@@ -131,17 +130,17 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
 
     public List<PhdIndividualProgramProcess> getProcesses() {
 	final List<PhdIndividualProgramProcess> result = new ArrayList<PhdIndividualProgramProcess>();
-	for (final DomainReference<PhdIndividualProgramProcess> each : this.processes) {
-	    result.add(each.getObject());
+	for (final PhdIndividualProgramProcess each : this.processes) {
+	    result.add(each);
 	}
 
 	return result;
     }
 
     public void setProcesses(List<PhdIndividualProgramProcess> processes) {
-	final List<DomainReference<PhdIndividualProgramProcess>> result = new ArrayList<DomainReference<PhdIndividualProgramProcess>>();
+	final List<PhdIndividualProgramProcess> result = new ArrayList<PhdIndividualProgramProcess>();
 	for (final PhdIndividualProgramProcess each : processes) {
-	    result.add(new DomainReference<PhdIndividualProgramProcess>(each));
+	    result.add(each);
 	}
 
 	this.processes = result;

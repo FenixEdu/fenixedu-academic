@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.department;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
 
@@ -76,9 +75,9 @@ public class TeacherPersonalExpectationBean implements Serializable {
 
     private String autoEvaluation;
 
-    private DomainReference<ExecutionYear> executionYearReference;
+    private ExecutionYear executionYearReference;
 
-    private DomainReference<Teacher> teacherReference;
+    private Teacher teacherReference;
 
     public TeacherPersonalExpectationBean(ExecutionYear executionYear, Teacher teacher) {
 	setExecutionYear(executionYear);
@@ -86,19 +85,19 @@ public class TeacherPersonalExpectationBean implements Serializable {
     }
 
     public ExecutionYear getExecutionYear() {
-	return (this.executionYearReference != null) ? this.executionYearReference.getObject() : null;
+	return this.executionYearReference;
     }
 
     public void setExecutionYear(ExecutionYear executionYear) {
-	this.executionYearReference = (executionYear != null) ? new DomainReference<ExecutionYear>(executionYear) : null;
+	this.executionYearReference = executionYear;
     }
 
     public Teacher getTeacher() {
-	return (this.teacherReference != null) ? this.teacherReference.getObject() : null;
+	return this.teacherReference;
     }
 
     public void setTeacher(Teacher teacher) {
-	this.teacherReference = (teacher != null) ? new DomainReference<Teacher>(teacher) : null;
+	this.teacherReference = teacher;
     }
 
     public String getAutoEvaluation() {

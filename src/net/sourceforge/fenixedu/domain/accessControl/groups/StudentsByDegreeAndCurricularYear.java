@@ -5,7 +5,6 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -17,17 +16,17 @@ import net.sourceforge.fenixedu.domain.student.Student;
 
 public class StudentsByDegreeAndCurricularYear extends LeafGroup {
 
-    private final DomainReference<Degree> degree;
+    private final Degree degree;
 
-    private final DomainReference<CurricularYear> curricularYear;
+    private final CurricularYear curricularYear;
 
-    private final DomainReference<ExecutionYear> executionYear;
+    private final ExecutionYear executionYear;
 
     public StudentsByDegreeAndCurricularYear(final Degree degree, final CurricularYear curricularYear,
 	    final ExecutionYear executionYear) {
-	this.degree = new DomainReference<Degree>(degree);
-	this.executionYear = new DomainReference<ExecutionYear>(executionYear);
-	this.curricularYear = new DomainReference<CurricularYear>(curricularYear);
+	this.degree = degree;
+	this.executionYear = executionYear;
+	this.curricularYear = curricularYear;
     }
 
     @Override
@@ -46,15 +45,15 @@ public class StudentsByDegreeAndCurricularYear extends LeafGroup {
     }
 
     public Degree getDegree() {
-	return (degree != null ? degree.getObject() : null);
+	return (degree);
     }
 
     public CurricularYear getCurricularYear() {
-	return (curricularYear != null ? curricularYear.getObject() : null);
+	return (curricularYear);
     }
 
     public ExecutionYear getExecutionYear() {
-	return (executionYear != null ? executionYear.getObject() : null);
+	return (executionYear);
     }
 
     public static class Builder implements GroupBuilder {

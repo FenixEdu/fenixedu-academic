@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 
 public class PaymentPlanBean implements Serializable {
@@ -24,29 +23,29 @@ public class PaymentPlanBean implements Serializable {
 
     private boolean forPartialRegime;
 
-    private List<DomainReference<DegreeCurricularPlan>> degreeCurricularPlans;
+    private List<DegreeCurricularPlan> degreeCurricularPlans;
 
-    private DomainReference<ExecutionYear> executionYear;
+    private ExecutionYear executionYear;
 
     public PaymentPlanBean(ExecutionYear executionYear) {
 	this.installments = new ArrayList<InstallmentBean>();
-	this.degreeCurricularPlans = new ArrayList<DomainReference<DegreeCurricularPlan>>();
+	this.degreeCurricularPlans = new ArrayList<DegreeCurricularPlan>();
 	setExecutionYear(executionYear);
     }
 
     public List<DegreeCurricularPlan> getDegreeCurricularPlans() {
 	final List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
-	for (final DomainReference<DegreeCurricularPlan> each : this.degreeCurricularPlans) {
-	    result.add(each.getObject());
+	for (final DegreeCurricularPlan each : this.degreeCurricularPlans) {
+	    result.add(each);
 	}
 
 	return result;
     }
 
     public void setDegreeCurricularPlans(List<DegreeCurricularPlan> degreeCurricularPlans) {
-	final List<DomainReference<DegreeCurricularPlan>> result = new ArrayList<DomainReference<DegreeCurricularPlan>>();
+	final List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
 	for (final DegreeCurricularPlan each : degreeCurricularPlans) {
-	    result.add(new DomainReference<DegreeCurricularPlan>(each));
+	    result.add(each);
 	}
 
 	this.degreeCurricularPlans = result;
@@ -85,11 +84,11 @@ public class PaymentPlanBean implements Serializable {
     }
 
     public ExecutionYear getExecutionYear() {
-	return (this.executionYear != null) ? this.executionYear.getObject() : null;
+	return this.executionYear;
     }
 
     public void setExecutionYear(ExecutionYear executionYear) {
-	this.executionYear = (executionYear != null) ? new DomainReference<ExecutionYear>(executionYear) : null;
+	this.executionYear = executionYear;
     }
 
     public List<InstallmentBean> getSelectedInstallments() {

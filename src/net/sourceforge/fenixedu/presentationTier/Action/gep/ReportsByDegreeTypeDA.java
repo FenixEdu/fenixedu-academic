@@ -1,18 +1,15 @@
 package net.sourceforge.fenixedu.presentationTier.Action.gep;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.QueueJob;
-import net.sourceforge.fenixedu.domain.QueueJobWithFile;
 import net.sourceforge.fenixedu.domain.ReportFileFactory;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.reports.CourseLoadAndResponsiblesReportFile;
@@ -49,13 +46,13 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class ReportsByDegreeTypeDA extends FenixDispatchAction {
-    
+
     private static final int MAX_AUTHORIZED_REPORT_FILES = 20;
 
     public static class ReportBean implements Serializable {
 	private DegreeType degreeType;
 
-	private DomainReference<ExecutionYear> executionYearReference;
+	private ExecutionYear executionYearReference;
 
 	public DegreeType getDegreeType() {
 	    return degreeType;
@@ -66,7 +63,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	}
 
 	public ExecutionYear getExecutionYear() {
-	    return executionYearReference == null ? null : executionYearReference.getObject();
+	    return executionYearReference;
 	}
 
 	public Integer getExecutionYearOID() {
@@ -74,7 +71,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	}
 
 	public void setExecutionYear(final ExecutionYear executionYear) {
-	    executionYearReference = executionYear == null ? null : new DomainReference<ExecutionYear>(executionYear);
+	    executionYearReference = executionYear;
 	}
 
 	public ExecutionYear getExecutionYearFourYearsBack() {
@@ -124,44 +121,46 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	countReports(request, degreeType, executionYear);
 	return mapping.findForward("selectDegreeType");
     }
-    
+
     private void countReports(HttpServletRequest request, DegreeType degreeType, ExecutionYear executionYear) {
-	for(Integer i = 1;; ++i) {
+	for (Integer i = 1;; ++i) {
 	    Class aClass = getClassForParameter(i.toString());
-	    if(aClass == null) {
+	    if (aClass == null) {
 		break;
 	    }
 	    request.setAttribute("numberOfReportsType" + i, getCountReportsForParameters(degreeType, executionYear, aClass));
 	}
     }
-    
+
     private int getCountReportsForParameters(DegreeType degreeType, ExecutionYear executionYear, Class reportClass) {
 	Predicate predicate = new FindSelectedGepReports(executionYear, degreeType, reportClass);
 
 	List<GepReportFile> selectedJobs = (List<GepReportFile>) org.apache.commons.collections.CollectionUtils.select(
 		rootDomainObject.getQueueJob(), predicate);
-	
+
 	return getValidCounterForReports(selectedJobs.size());
     }
-    
+
     private int getValidCounterForReports(int totalCounter) {
-	if(totalCounter > MAX_AUTHORIZED_REPORT_FILES) {
+	if (totalCounter > MAX_AUTHORIZED_REPORT_FILES) {
 	    return MAX_AUTHORIZED_REPORT_FILES;
 	} else {
 	    return totalCounter;
 	}
     }
-    
-    public ActionForward cancelQueuedJob(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+
+    public ActionForward cancelQueuedJob(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	cancelQueuedJob(request);
 	return selectDegreeType(mapping, actionForm, request, response);
     }
-    
-    public ActionForward cancelQueuedJobFromViewReports(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+
+    public ActionForward cancelQueuedJobFromViewReports(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	cancelQueuedJob(request);
 	return viewReports(mapping, actionForm, request, response);
     }
-    
+
     @Service
     private void cancelQueuedJob(HttpServletRequest request) {
 	int oid = Integer.valueOf(request.getParameter("id"));
@@ -172,17 +171,19 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	    }
 	}
     }
-    
-    public ActionForward resendJob(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+
+    public ActionForward resendJob(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	resendJob(request);
 	return selectDegreeType(mapping, actionForm, request, response);
     }
-    
-    public ActionForward resendJobFromViewReports(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+
+    public ActionForward resendJobFromViewReports(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	resendJob(request);
 	return viewReports(mapping, actionForm, request, response);
     }
-    
+
     @Service
     private void resendJob(HttpServletRequest request) {
 	int oid = Integer.valueOf(request.getParameter("id"));
@@ -193,15 +194,16 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	    }
 	}
     }
-    
+
     private boolean isRepeatedJob(Person person, HttpServletRequest request, Class aClass) {
 	final DegreeType degreeType = getDegreeType(request);
 	request.setAttribute("degreeType", degreeType);
 	final ExecutionYear executionYear = getExecutionYear(request);
 	request.setAttribute("executionYearID", (executionYear == null) ? null : executionYear.getIdInternal());
 	for (QueueJob queueJob : QueueJob.getAllJobsForClassOrSubClass(GepReportFile.class, 5)) {
-	    GepReportFile gepReportFile = (GepReportFile)queueJob;
-	    if ((gepReportFile.getPerson() == person) && (gepReportFile.getClass() == aClass) && (!gepReportFile.getDone()) && (gepReportFile.getExecutionYear() == executionYear) && (gepReportFile.getDegreeType() == degreeType)) {
+	    GepReportFile gepReportFile = (GepReportFile) queueJob;
+	    if ((gepReportFile.getPerson() == person) && (gepReportFile.getClass() == aClass) && (!gepReportFile.getDone())
+		    && (gepReportFile.getExecutionYear() == executionYear) && (gepReportFile.getDegreeType() == degreeType)) {
 		return true;
 	    }
 	}
@@ -225,7 +227,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
     @SuppressWarnings("unused")
     public ActionForward downloadEurAce(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
-	if(isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
+	if (isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
 	    return selectDegreeType(mapping, actionForm, request, response);
 	}
 	final DegreeType degreeType = getDegreeType(request);
@@ -240,7 +242,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
     @SuppressWarnings("unused")
     public ActionForward downloadEctsLabelForCurricularCourses(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws IOException {
-	if(isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
+	if (isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
 	    return selectDegreeType(mapping, actionForm, request, response);
 	}
 
@@ -257,7 +259,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
     @SuppressWarnings("unused")
     public ActionForward downloadEctsLabelForDegrees(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
-	if(isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
+	if (isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
 	    return selectDegreeType(mapping, actionForm, request, response);
 	}
 	final DegreeType degreeType = getDegreeType(request);
@@ -272,7 +274,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
     @SuppressWarnings("unused")
     public ActionForward downloadStatusAndAproval(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
-	if(isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
+	if (isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
 	    return selectDegreeType(mapping, actionForm, request, response);
 	}
 	final DegreeType degreeType = getDegreeType(request);
@@ -287,7 +289,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
     @SuppressWarnings("unused")
     public ActionForward downloadEti(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
-	if(isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
+	if (isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
 	    return selectDegreeType(mapping, actionForm, request, response);
 	}
 	final DegreeType degreeType = getDegreeType(request);
@@ -302,7 +304,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
     @SuppressWarnings("unused")
     public ActionForward downloadCourseLoadAndResponsibles(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws IOException {
-	if(isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
+	if (isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
 	    return selectDegreeType(mapping, actionForm, request, response);
 	}
 	final DegreeType degreeType = getDegreeType(request);
@@ -318,7 +320,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
     @SuppressWarnings("unused")
     public ActionForward downloadRegistrations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
-	if(isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
+	if (isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
 	    return selectDegreeType(mapping, actionForm, request, response);
 	}
 	final DegreeType degreeType = getDegreeType(request);
@@ -333,7 +335,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
     @SuppressWarnings("unused")
     public ActionForward downloadFlunked(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
-	if(isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
+	if (isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
 	    return selectDegreeType(mapping, actionForm, request, response);
 	}
 	final DegreeType degreeType = getDegreeType(request);
@@ -348,7 +350,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
     @SuppressWarnings("unused")
     public ActionForward downloadTeachersListFromAplica(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
-	if(isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
+	if (isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
 	    return selectDegreeType(mapping, actionForm, request, response);
 	}
 	final DegreeType degreeType = getDegreeType(request);
@@ -363,7 +365,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
     @SuppressWarnings("unused")
     public ActionForward downloadTeachersListFromGiaf(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
-	if(isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
+	if (isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
 	    return selectDegreeType(mapping, actionForm, request, response);
 	}
 	final DegreeType degreeType = getDegreeType(request);
@@ -378,7 +380,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
     @SuppressWarnings("unused")
     public ActionForward downloadTimetables(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
-	if(isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
+	if (isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
 	    return selectDegreeType(mapping, actionForm, request, response);
 	}
 	final DegreeType degreeType = getDegreeType(request);
@@ -393,7 +395,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
     @SuppressWarnings("unused")
     public ActionForward downloadDissertationsProposals(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
-	if(isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
+	if (isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
 	    return selectDegreeType(mapping, actionForm, request, response);
 	}
 	final DegreeType degreeType = getDegreeType(request);
@@ -409,7 +411,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
     @SuppressWarnings("unused")
     public ActionForward downloadDissertationsWithExternalAffiliations(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws IOException {
-	if(isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
+	if (isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
 	    return selectDegreeType(mapping, actionForm, request, response);
 	}
 	final DegreeType degreeType = getDegreeType(request);
@@ -425,7 +427,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
     @SuppressWarnings("unused")
     public ActionForward downloadGraduations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
-	if(isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
+	if (isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
 	    return selectDegreeType(mapping, actionForm, request, response);
 	}
 	final DegreeType degreeType = getDegreeType(request);
@@ -440,7 +442,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
     @SuppressWarnings("unused")
     public ActionForward downloadTeachersByShift(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
-	if(isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
+	if (isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
 	    return selectDegreeType(mapping, actionForm, request, response);
 	}
 	final DegreeType degreeType = getDegreeType(request);
@@ -455,7 +457,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
     @SuppressWarnings("unused")
     public ActionForward downloadCourseLoads(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
-	if(isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
+	if (isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
 	    return selectDegreeType(mapping, actionForm, request, response);
 	}
 	final DegreeType degreeType = getDegreeType(request);
@@ -470,7 +472,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
     @SuppressWarnings("unused")
     public ActionForward downloadTutorshipProgram(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
-	if(isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
+	if (isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
 	    return selectDegreeType(mapping, actionForm, request, response);
 	}
 	final DegreeType degreeType = getDegreeType(request);
@@ -484,7 +486,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 
     public ActionForward downloadRaidesGraduation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	if(isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
+	if (isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
 	    return selectDegreeType(mapping, actionForm, request, response);
 	}
 	prepareNewJobResponse(request, ReportFileFactory.createRaidesGraduationReportFile(getFormat(request),
@@ -494,7 +496,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 
     public ActionForward downloadRaidesDfa(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	if(isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
+	if (isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
 	    return selectDegreeType(mapping, actionForm, request, response);
 	}
 	prepareNewJobResponse(request, ReportFileFactory.createRaidesDfaReportFile(getFormat(request), getDegreeType(request),
@@ -504,7 +506,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 
     public ActionForward downloadRaidesPhd(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	if(isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
+	if (isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
 	    return selectDegreeType(mapping, actionForm, request, response);
 	}
 	prepareNewJobResponse(request, ReportFileFactory.createRaidesPhdReportFile(getFormat(request), getDegreeType(request),

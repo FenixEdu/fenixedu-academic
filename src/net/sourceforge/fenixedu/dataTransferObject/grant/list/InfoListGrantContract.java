@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantOrien
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantPart;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantSubsidyWithContract;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPart;
@@ -28,14 +27,14 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
  */
 public class InfoListGrantContract extends InfoObject {
 
-    private final DomainReference<GrantContract> domainReference;
+    private final GrantContract domainReference;
 
     public InfoListGrantContract(final GrantContract domainObject) {
-	domainReference = new DomainReference<GrantContract>(domainObject);
+	domainReference = domainObject;
     }
 
     private GrantContract getGrantContract() {
-	return domainReference == null ? null : domainReference.getObject();
+	return domainReference;
     }
 
     @Override

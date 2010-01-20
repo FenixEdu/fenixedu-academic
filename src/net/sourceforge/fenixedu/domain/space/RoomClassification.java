@@ -7,7 +7,6 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
@@ -232,7 +231,7 @@ public class RoomClassification extends RoomClassification_Base {
     }
 
     public static class RoomClassificationFactoryEditor extends RoomClassificationFactory {
-	private DomainReference<RoomClassification> roomClassificationReference;
+	private RoomClassification roomClassificationReference;
 
 	public RoomClassificationFactoryEditor(String code, MultiLanguageString name) {
 	    super();
@@ -245,12 +244,12 @@ public class RoomClassification extends RoomClassification_Base {
 	}
 
 	public RoomClassification getRoomClassification() {
-	    return roomClassificationReference == null ? null : roomClassificationReference.getObject();
+	    return roomClassificationReference;
 	}
 
 	public void setRoomClassification(final RoomClassification roomClassification) {
 	    if (roomClassification != null) {
-		roomClassificationReference = new DomainReference<RoomClassification>(roomClassification);
+		roomClassificationReference = roomClassification;
 	    }
 	}
 

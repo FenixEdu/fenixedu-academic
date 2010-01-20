@@ -9,7 +9,6 @@ package net.sourceforge.fenixedu.dataTransferObject;
 /**
  * @author tfc130
  */
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.Building;
 import net.sourceforge.fenixedu.domain.space.RoomClassification;
@@ -17,10 +16,10 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class InfoRoom extends InfoObject implements Comparable {
 
-    private final DomainReference<AllocatableSpace> room;
+    private final AllocatableSpace room;
 
     public InfoRoom(final AllocatableSpace room) {
-	this.room = new DomainReference<AllocatableSpace>(room);
+	this.room = room;
     }
 
     public String getNome() {
@@ -76,7 +75,7 @@ public class InfoRoom extends InfoObject implements Comparable {
     }
 
     public AllocatableSpace getRoom() {
-	return room == null ? null : room.getObject();
+	return room;
     }
 
 }

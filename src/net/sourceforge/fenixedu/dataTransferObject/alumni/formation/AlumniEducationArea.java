@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.dataTransferObject.alumni.formation;
 import java.io.Serializable;
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.EducationArea;
 
 public class AlumniEducationArea implements Serializable {
@@ -17,18 +16,18 @@ public class AlumniEducationArea implements Serializable {
 	}
     };
 
-    private DomainReference<EducationArea> educationArea;
+    private EducationArea educationArea;
 
     public AlumniEducationArea(EducationArea area) {
-	educationArea = new DomainReference<EducationArea>(area);
+	educationArea = area;
     }
 
     public EducationArea getEducationArea() {
-	return (this.educationArea != null) ? this.educationArea.getObject() : null;
+	return this.educationArea;
     }
 
     public void setEducationArea(EducationArea educationArea) {
-	this.educationArea = (educationArea != null) ? new DomainReference<EducationArea>(educationArea) : null;
+	this.educationArea = educationArea;
     }
 
     // FIXME only used for presentation display purposes

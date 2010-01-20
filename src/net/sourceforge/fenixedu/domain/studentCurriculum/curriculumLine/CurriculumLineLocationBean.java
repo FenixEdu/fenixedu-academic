@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.studentCurriculum.curriculumLine;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
@@ -11,9 +10,9 @@ public class CurriculumLineLocationBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private DomainReference<CurriculumLine> curriculumLine;
+    private CurriculumLine curriculumLine;
 
-    private DomainReference<CurriculumGroup> curriculumGroup;
+    private CurriculumGroup curriculumGroup;
 
     private boolean withRules = true;
 
@@ -29,19 +28,19 @@ public class CurriculumLineLocationBean implements Serializable {
     }
 
     public CurriculumLine getCurriculumLine() {
-	return (this.curriculumLine != null) ? this.curriculumLine.getObject() : null;
+	return this.curriculumLine;
     }
 
     public void setCurriculumLine(CurriculumLine curriculumLine) {
-	this.curriculumLine = (curriculumLine != null) ? new DomainReference<CurriculumLine>(curriculumLine) : null;
+	this.curriculumLine = curriculumLine;
     }
 
     public CurriculumGroup getCurriculumGroup() {
-	return (this.curriculumGroup != null) ? this.curriculumGroup.getObject() : null;
+	return this.curriculumGroup;
     }
 
     public void setCurriculumGroup(CurriculumGroup curriculumGroup) {
-	this.curriculumGroup = (curriculumGroup != null) ? new DomainReference<CurriculumGroup>(curriculumGroup) : null;
+	this.curriculumGroup = curriculumGroup;
     }
 
     public static CurriculumLineLocationBean buildFrom(final CurriculumLine curriculumLine, final boolean withRules) {

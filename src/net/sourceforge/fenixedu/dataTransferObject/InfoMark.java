@@ -6,7 +6,6 @@
 
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Mark;
 
 /**
@@ -16,10 +15,10 @@ import net.sourceforge.fenixedu.domain.Mark;
 
 public class InfoMark extends InfoObject {
 
-    private final DomainReference<Mark> markDomainReference;
+    private final Mark markDomainReference;
 
     public InfoMark(final Mark mark) {
-	markDomainReference = new DomainReference<Mark>(mark);
+	markDomainReference = mark;
     }
 
     public static InfoMark newInfoFromDomain(Mark mark) {
@@ -27,7 +26,7 @@ public class InfoMark extends InfoObject {
     }
 
     private Mark getMarkObject() {
-	return (markDomainReference == null) ? null : markDomainReference.getObject();
+	return markDomainReference;
     }
 
     @Override

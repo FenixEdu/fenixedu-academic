@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -14,7 +13,7 @@ import net.sourceforge.fenixedu.util.Month;
 public class StudentsByEntryYearBean implements Serializable {
     private Integer teacherNumber;
 
-    private DomainReference<Teacher> teacher;
+    private Teacher teacher;
 
     private Integer executionDegreeID;
 
@@ -24,13 +23,13 @@ public class StudentsByEntryYearBean implements Serializable {
 
     private Integer tutorshipEndYear;
 
-    private List<DomainReference<StudentCurricularPlan>> studentsList;
+    private List<StudentCurricularPlan> studentsList;
 
-    private List<DomainReference<StudentCurricularPlan>> studentsToCreateTutorshipList;
+    private List<StudentCurricularPlan> studentsToCreateTutorshipList;
 
     private Integer numberOfStudentsToCreateTutorship;
 
-    private DomainReference<ExecutionYear> executionYear;
+    private ExecutionYear executionYear;
 
     private String showAll;
 
@@ -43,40 +42,40 @@ public class StudentsByEntryYearBean implements Serializable {
     }
 
     public StudentsByEntryYearBean(ExecutionYear executionYear) {
-	this.studentsList = new ArrayList<DomainReference<StudentCurricularPlan>>();
-	this.studentsToCreateTutorshipList = new ArrayList<DomainReference<StudentCurricularPlan>>();
-	this.executionYear = new DomainReference<ExecutionYear>(executionYear);
+	this.studentsList = new ArrayList<StudentCurricularPlan>();
+	this.studentsToCreateTutorshipList = new ArrayList<StudentCurricularPlan>();
+	this.executionYear = executionYear;
     }
 
     public List<StudentCurricularPlan> getStudentsList() {
 	List<StudentCurricularPlan> students = new ArrayList<StudentCurricularPlan>();
-	for (DomainReference<StudentCurricularPlan> student : this.studentsList) {
-	    students.add(student.getObject());
+	for (StudentCurricularPlan student : this.studentsList) {
+	    students.add(student);
 	}
 	return students;
     }
 
     public void setStudentsList(List<StudentCurricularPlan> students) {
-	this.studentsList = new ArrayList<DomainReference<StudentCurricularPlan>>();
+	this.studentsList = new ArrayList<StudentCurricularPlan>();
 	for (StudentCurricularPlan student : students) {
-	    this.studentsList.add(new DomainReference<StudentCurricularPlan>(student));
+	    this.studentsList.add(student);
 	}
     }
 
     public ExecutionYear getExecutionYear() {
-	return (executionYear == null ? null : executionYear.getObject());
+	return (executionYear);
     }
 
     public void setExecutionYear(ExecutionYear executionYear) {
-	this.executionYear = new DomainReference<ExecutionYear>(executionYear);
+	this.executionYear = executionYear;
     }
 
     public Teacher getTeacher() {
-	return (teacher == null ? null : teacher.getObject());
+	return (teacher);
     }
 
     public void setTeacher(Teacher teacher) {
-	this.teacher = new DomainReference<Teacher>(teacher);
+	this.teacher = teacher;
     }
 
     public Integer getNumberOfStudentsWithoutTutor() {
@@ -101,16 +100,16 @@ public class StudentsByEntryYearBean implements Serializable {
 
     public List<StudentCurricularPlan> getStudentsToCreateTutorshipList() {
 	List<StudentCurricularPlan> students = new ArrayList<StudentCurricularPlan>();
-	for (DomainReference<StudentCurricularPlan> student : this.studentsToCreateTutorshipList) {
-	    students.add(student.getObject());
+	for (StudentCurricularPlan student : this.studentsToCreateTutorshipList) {
+	    students.add(student);
 	}
 	return students;
     }
 
     public void setStudentsToCreateTutorshipList(List<StudentCurricularPlan> students) {
-	this.studentsToCreateTutorshipList = new ArrayList<DomainReference<StudentCurricularPlan>>();
+	this.studentsToCreateTutorshipList = new ArrayList<StudentCurricularPlan>();
 	for (StudentCurricularPlan student : students) {
-	    this.studentsToCreateTutorshipList.add(new DomainReference<StudentCurricularPlan>(student));
+	    this.studentsToCreateTutorshipList.add(student);
 	}
     }
 
@@ -139,13 +138,13 @@ public class StudentsByEntryYearBean implements Serializable {
     }
 
     public void selectStudentsToCreateTutorshipList() {
-	this.studentsToCreateTutorshipList = new ArrayList<DomainReference<StudentCurricularPlan>>();
+	this.studentsToCreateTutorshipList = new ArrayList<StudentCurricularPlan>();
 	int i = 0;
 	Iterator iterator = this.studentsList.iterator();
 	while (iterator.hasNext() && i < this.numberOfStudentsToCreateTutorship) {
-	    StudentCurricularPlan scp = ((DomainReference<StudentCurricularPlan>) iterator.next()).getObject();
+	    StudentCurricularPlan scp = ((StudentCurricularPlan) iterator.next());
 	    if (scp.isLastStudentCurricularPlanFromRegistration() && scp.getRegistration().isActive()) {
-		this.studentsToCreateTutorshipList.add(new DomainReference<StudentCurricularPlan>(scp));
+		this.studentsToCreateTutorshipList.add(scp);
 		i++;
 	    }
 	}

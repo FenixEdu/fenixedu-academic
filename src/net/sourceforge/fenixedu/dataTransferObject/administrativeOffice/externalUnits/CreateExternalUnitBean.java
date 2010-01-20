@@ -2,13 +2,12 @@ package net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externa
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 public class CreateExternalUnitBean implements Serializable {
 
-    private DomainReference<Unit> parentUnit;
+    private Unit parentUnit;
     private PartyTypeEnum unitType;
     private String unitName;
     private String unitCode;
@@ -22,11 +21,11 @@ public class CreateExternalUnitBean implements Serializable {
     }
 
     public Unit getParentUnit() {
-	return (this.parentUnit != null) ? this.parentUnit.getObject() : null;
+	return this.parentUnit;
     }
 
     public void setParentUnit(Unit parentUnit) {
-	this.parentUnit = (parentUnit != null) ? new DomainReference<Unit>(parentUnit) : null;
+	this.parentUnit = parentUnit;
     }
 
     public PartyTypeEnum getUnitType() {

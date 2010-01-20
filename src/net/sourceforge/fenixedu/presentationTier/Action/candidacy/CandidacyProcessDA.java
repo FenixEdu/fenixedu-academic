@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
@@ -224,25 +223,25 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
      */
     static public class CandidacyDegreeBean implements Serializable, Comparable<CandidacyDegreeBean> {
 
-	private DomainReference<IndividualCandidacyPersonalDetails> details;
-	private DomainReference<Degree> degree;
+	private IndividualCandidacyPersonalDetails details;
+	private Degree degree;
 	private IndividualCandidacyState state;
 	private boolean isRegistrationCreated;
 
 	public IndividualCandidacyPersonalDetails getPersonalDetails() {
-	    return (this.details != null) ? this.details.getObject() : null;
+	    return this.details;
 	}
 
 	public void setPersonalDetails(IndividualCandidacyPersonalDetails details) {
-	    this.details = (details != null) ? new DomainReference<IndividualCandidacyPersonalDetails>(details) : null;
+	    this.details = details;
 	}
 
 	public Degree getDegree() {
-	    return (this.degree != null) ? this.degree.getObject() : null;
+	    return this.degree;
 	}
 
 	public void setDegree(Degree degree) {
-	    this.degree = (degree != null) ? new DomainReference<Degree>(degree) : null;
+	    this.degree = degree;
 	}
 
 	public IndividualCandidacyState getState() {
@@ -408,18 +407,18 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private DomainReference<Degree> degree;
+	private Degree degree;
 
 	public ChooseDegreeBean() {
 
 	}
 
 	public Degree getDegree() {
-	    return this.degree != null ? this.degree.getObject() : null;
+	    return this.degree;
 	}
 
 	public void setDegree(Degree degree) {
-	    this.degree = degree != null ? new DomainReference<Degree>(degree) : null;
+	    this.degree = degree;
 	}
     }
 

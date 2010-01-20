@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.activity.EventType;
 import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
@@ -26,9 +25,9 @@ public abstract class ConferenceArticlesBean extends ResultPublicationBean imple
     //
     // private YearMonthDay eventEndDate;
 
-    private DomainReference<EventEdition> eventEdition;
+    private EventEdition eventEdition;
 
-    private DomainReference<ResearchEvent> event;
+    private ResearchEvent event;
 
     @Override
     public void setCreateEvent(Boolean createEvent) {
@@ -93,18 +92,18 @@ public abstract class ConferenceArticlesBean extends ResultPublicationBean imple
     }
 
     public EventEdition getEventEdition() {
-	return (eventEdition != null) ? eventEdition.getObject() : null;
+	return eventEdition;
     }
 
     public void setEventEdition(EventEdition eventEdition) {
-	this.eventEdition = (eventEdition != null) ? new DomainReference<EventEdition>(eventEdition) : null;
+	this.eventEdition = eventEdition;
     }
 
     public ResearchEvent getEvent() {
-	return (event != null) ? event.getObject() : null;
+	return event;
     }
 
     public void setEvent(ResearchEvent event) {
-	this.event = (event != null) ? new DomainReference<ResearchEvent>(event) : null;
+	this.event = event;
     }
 }

@@ -11,7 +11,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.Branch;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
@@ -26,19 +25,18 @@ import org.apache.commons.lang.StringUtils;
  */
 public class FinalDegreeWorkProposalHeader extends InfoObject {
 
-    private DomainReference<Proposal> proposalDomainReference;
+    private final Proposal proposalDomainReference;
 
-    private DomainReference<ExecutionDegree> executionDegreeDomainReference;
+    private final ExecutionDegree executionDegreeDomainReference;
 
     public FinalDegreeWorkProposalHeader(final Proposal proposal) {
-	proposalDomainReference = new DomainReference<Proposal>(proposal);
-	executionDegreeDomainReference = new DomainReference<ExecutionDegree>(proposal.getScheduleing().getExecutionDegrees()
-		.get(0));
+	proposalDomainReference = proposal;
+	executionDegreeDomainReference = proposal.getScheduleing().getExecutionDegrees().get(0);
     }
 
     public FinalDegreeWorkProposalHeader(final Proposal proposal, final ExecutionDegree executionDegree) {
-	proposalDomainReference = new DomainReference<Proposal>(proposal);
-	executionDegreeDomainReference = new DomainReference<ExecutionDegree>(executionDegree);
+	proposalDomainReference = proposal;
+	executionDegreeDomainReference = executionDegree;
     }
 
     public static FinalDegreeWorkProposalHeader newInfoFromDomain(final Proposal proposal) {
@@ -50,19 +48,21 @@ public class FinalDegreeWorkProposalHeader extends InfoObject {
     }
 
     private Proposal getProposal() {
-	return proposalDomainReference == null ? null : proposalDomainReference.getObject();
+	return proposalDomainReference;
     }
 
     private ExecutionDegree getExecutionDegree() {
-	return executionDegreeDomainReference == null ? null : executionDegreeDomainReference.getObject();
+	return executionDegreeDomainReference;
     }
 
+    @Override
     public boolean equals(Object obj) {
 	return obj instanceof FinalDegreeWorkProposalHeader
 		&& getProposal() == ((FinalDegreeWorkProposalHeader) obj).getProposal()
 		&& getExecutionDegree() == ((FinalDegreeWorkProposalHeader) obj).getExecutionDegree();
     }
 
+    @Override
     public int hashCode() {
 	return getProposal().hashCode();
     }

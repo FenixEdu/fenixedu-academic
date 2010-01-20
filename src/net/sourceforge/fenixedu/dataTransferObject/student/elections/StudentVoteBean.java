@@ -7,7 +7,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.CurricularYear;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.elections.DelegateElectionPeriod;
 import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
@@ -17,7 +16,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class StudentVoteBean implements Serializable {
 
-    private DomainReference<Student> student;
+    private Student student;
     private boolean selectedStudent;
 
     public StudentVoteBean() {
@@ -29,12 +28,12 @@ public class StudentVoteBean implements Serializable {
     }
 
     public Student getStudent() {
-	return (this.student == null) ? null : student.getObject();
+	return (this.student == null) ? null : student;
 
     }
 
     public void setStudent(Student student) {
-	this.student = (student != null) ? new DomainReference<Student>(student) : null;
+	this.student = student;
 
     }
 

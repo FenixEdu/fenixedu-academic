@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.student.IStudentCurricularPlanBean;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -16,29 +15,28 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 
 public class StudentEnrolmentBean implements Serializable, IStudentCurricularPlanBean {
 
-    private DomainReference<StudentCurricularPlan> studentCurricularPlan;
-    private DomainReference<ExecutionSemester> executionSemester;
-    private List<DomainReference<CurriculumModule>> curriculumModules;
+    private StudentCurricularPlan studentCurricularPlan;
+    private ExecutionSemester executionSemester;
+    private List<CurriculumModule> curriculumModules;
     private List<DegreeModuleToEnrol> degreeModulesToEnrol;
     private CurriculumModuleBean curriculumModuleBean;
     private boolean canEnrolWithoutRules = false;
     private boolean canMoveCurriculumLinesWithoutRules = false;
 
     public StudentCurricularPlan getStudentCurricularPlan() {
-	return (this.studentCurricularPlan == null) ? null : this.studentCurricularPlan.getObject();
+	return this.studentCurricularPlan;
     }
 
     public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
-	this.studentCurricularPlan = (studentCurricularPlan != null) ? new DomainReference<StudentCurricularPlan>(
-		studentCurricularPlan) : null;
+	this.studentCurricularPlan = studentCurricularPlan;
     }
 
     public ExecutionSemester getExecutionPeriod() {
-	return (this.executionSemester == null) ? null : this.executionSemester.getObject();
+	return this.executionSemester;
     }
 
     public void setExecutionPeriod(ExecutionSemester executionSemester) {
-	this.executionSemester = (executionSemester != null) ? new DomainReference<ExecutionSemester>(executionSemester) : null;
+	this.executionSemester = executionSemester;
     }
 
     public List<CurriculumModule> getCurriculumModules() {
@@ -47,8 +45,8 @@ public class StudentEnrolmentBean implements Serializable, IStudentCurricularPla
 	}
 
 	List<CurriculumModule> result = new ArrayList<CurriculumModule>();
-	for (DomainReference<CurriculumModule> curriculumModule : this.curriculumModules) {
-	    result.add(curriculumModule.getObject());
+	for (CurriculumModule curriculumModule : this.curriculumModules) {
+	    result.add(curriculumModule);
 	}
 
 	return result;
@@ -58,9 +56,9 @@ public class StudentEnrolmentBean implements Serializable, IStudentCurricularPla
 	if (curriculumModules == null) {
 	    this.curriculumModules = null;
 	} else {
-	    this.curriculumModules = new ArrayList<DomainReference<CurriculumModule>>();
+	    this.curriculumModules = new ArrayList<CurriculumModule>();
 	    for (CurriculumModule curriculumModule : curriculumModules) {
-		this.curriculumModules.add(new DomainReference<CurriculumModule>(curriculumModule));
+		this.curriculumModules.add(curriculumModule);
 	    }
 	}
     }

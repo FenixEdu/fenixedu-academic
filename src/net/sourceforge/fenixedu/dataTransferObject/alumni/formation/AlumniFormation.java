@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.EducationArea;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Formation;
@@ -34,13 +33,13 @@ public class AlumniFormation implements Serializable, IFormation {
     private QualificationType formationDegree;
 
     private List<AlumniEducationArea> allAreas;
-    private DomainReference<EducationArea> educationArea;
+    private EducationArea educationArea;
 
     private AcademicalInstitutionType institutionType;
-    private DomainReference<AcademicalInstitutionUnit> parentUnit;
-    private DomainReference<AcademicalInstitutionUnit> childUnit;
+    private AcademicalInstitutionUnit parentUnit;
+    private AcademicalInstitutionUnit childUnit;
     private String foreignUnit;
-    private DomainReference<CountryUnit> countryUnit;
+    private CountryUnit countryUnit;
 
     private String formationBeginYear;
     private String formationEndYear;
@@ -48,7 +47,7 @@ public class AlumniFormation implements Serializable, IFormation {
     private BigDecimal formationCredits;
     private Integer formationHours;
 
-    private DomainReference<Formation> formation;
+    private Formation formation;
 
     public AlumniFormation() {
 	setTypeSchema("alumni.formation.degree");
@@ -250,16 +249,16 @@ public class AlumniFormation implements Serializable, IFormation {
     }
 
     public EducationArea getEducationArea() {
-	return (this.educationArea != null) ? this.educationArea.getObject() : null;
+	return this.educationArea;
     }
 
     public void setEducationArea(EducationArea educationArea) {
-	this.educationArea = (educationArea != null) ? new DomainReference<EducationArea>(educationArea) : null;
+	this.educationArea = educationArea;
     }
 
     public void setEducationArea(Integer educationAreaId) {
-	this.educationArea = (educationAreaId != null) ? new DomainReference<EducationArea>(RootDomainObject.getInstance()
-		.readEducationAreaByOID(educationAreaId)) : null;
+	this.educationArea = (educationAreaId != null) ? RootDomainObject.getInstance().readEducationAreaByOID(educationAreaId)
+		: null;
     }
 
     public AcademicalInstitutionUnit getInstitution() {
@@ -282,19 +281,19 @@ public class AlumniFormation implements Serializable, IFormation {
     }
 
     public AcademicalInstitutionUnit getParentInstitution() {
-	return (this.parentUnit != null) ? this.parentUnit.getObject() : null;
+	return this.parentUnit;
     }
 
     public void setParentInstitution(AcademicalInstitutionUnit parentUnit) {
-	this.parentUnit = (parentUnit != null) ? new DomainReference<AcademicalInstitutionUnit>(parentUnit) : null;
+	this.parentUnit = parentUnit;
     }
 
     public AcademicalInstitutionUnit getChildInstitution() {
-	return (this.childUnit != null) ? this.childUnit.getObject() : null;
+	return this.childUnit;
     }
 
     public void setChildInstitution(AcademicalInstitutionUnit childUnit) {
-	this.childUnit = (childUnit != null) ? new DomainReference<AcademicalInstitutionUnit>(childUnit) : null;
+	this.childUnit = childUnit;
     }
 
     public AcademicalInstitutionType getInstitutionType() {
@@ -306,11 +305,11 @@ public class AlumniFormation implements Serializable, IFormation {
     }
 
     public Formation getAssociatedFormation() {
-	return (this.formation != null) ? this.formation.getObject() : null;
+	return this.formation;
     }
 
     public void setAssociatedFormation(Formation formation) {
-	this.formation = (formation != null) ? new DomainReference<Formation>(formation) : null;
+	this.formation = formation;
     }
 
     public boolean hasAssociatedFormation() {
@@ -354,11 +353,11 @@ public class AlumniFormation implements Serializable, IFormation {
     }
 
     public void setCountryUnit(CountryUnit countryUnit) {
-	this.countryUnit = (countryUnit != null) ? new DomainReference<CountryUnit>(countryUnit) : null;
+	this.countryUnit = countryUnit;
     }
 
     public CountryUnit getCountryUnit() {
-	return (this.countryUnit != null) ? this.countryUnit.getObject() : null;
+	return this.countryUnit;
     }
 
     public boolean isNationalInstitution() {

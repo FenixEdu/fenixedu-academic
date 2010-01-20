@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -45,26 +44,26 @@ public class TutorSearchBean implements Serializable {
 
     private static final long serialVersionUID = 161580136110904806L;
 
-    private DomainReference<Department> department;
+    private Department department;
 
-    private DomainReference<Teacher> teacher;
+    private Teacher teacher;
 
     private Boolean onlyTutors = Boolean.TRUE;
 
     public Department getDepartment() {
-	return department == null ? null : department.getObject();
+	return department;
     }
 
     public void setDepartment(Department department) {
-	this.department = department == null ? null : new DomainReference<Department>(department);
+	this.department = department;
     }
 
     public Teacher getTeacher() {
-	return teacher == null ? null : teacher.getObject();
+	return teacher;
     }
 
     public void setTeacher(Teacher teacher) {
-	this.teacher = teacher == null ? null : new DomainReference<Teacher>(teacher);
+	this.teacher = teacher;
     }
 
     public Boolean getOnlyTutors() {

@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.person;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.MetaDomainObject;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Portal;
@@ -10,11 +9,11 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PortalBean implements Serializable {
 
-    private DomainReference<MetaDomainObject> metaDomainObject;
+    private MetaDomainObject metaDomainObject;
 
-    private DomainReference<Container> container;
+    private Container container;
 
-    private DomainReference<Portal> portal;
+    private Portal portal;
 
     private MultiLanguageString name;
 
@@ -52,11 +51,11 @@ public class PortalBean implements Serializable {
     }
 
     public MetaDomainObject getMetaDomainObject() {
-	return metaDomainObject.getObject();
+	return metaDomainObject;
     }
 
     public void setMetaDomainObject(MetaDomainObject metaDomainObject) {
-	this.metaDomainObject = new DomainReference<MetaDomainObject>(metaDomainObject);
+	this.metaDomainObject = metaDomainObject;
     }
 
     public String getPrefix() {
@@ -76,18 +75,18 @@ public class PortalBean implements Serializable {
     }
 
     public Container getContainer() {
-	return container.getObject();
+	return container;
     }
 
     public void setContainer(Container container) {
-	this.container = new DomainReference<Container>(container);
+	this.container = container;
     }
 
     public void setPortal(Portal portal) {
-	this.portal = new DomainReference<Portal>(portal);
+	this.portal = portal;
     }
 
     public Portal getPortal() {
-	return this.portal.getObject();
+	return this.portal;
     }
 }

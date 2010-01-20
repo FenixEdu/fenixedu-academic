@@ -5,7 +5,6 @@ package net.sourceforge.fenixedu.dataTransferObject.student;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.util.workflow.StateBean;
@@ -16,13 +15,13 @@ import net.sourceforge.fenixedu.domain.util.workflow.StateBean;
  */
 public class RegistrationStateBean extends StateBean implements Serializable {
 
-    DomainReference<Registration> registration;
+    Registration registration;
 
     String remarks;
 
     public RegistrationStateBean(Registration registration) {
 	super();
-	this.registration = new DomainReference<Registration>(registration);
+	this.registration = registration;
 	setStateDate(null);
     }
 
@@ -31,7 +30,7 @@ public class RegistrationStateBean extends StateBean implements Serializable {
     }
 
     public Registration getRegistration() {
-	return registration == null ? null : registration.getObject();
+	return registration;
     }
 
     public String getRemarks() {
@@ -42,7 +41,7 @@ public class RegistrationStateBean extends StateBean implements Serializable {
 	return getNextState() == null ? null : RegistrationStateType.valueOf(getNextState());
     }
 
-    public void setRegistration(DomainReference<Registration> registration) {
+    public void setRegistration(Registration registration) {
 	this.registration = registration;
     }
 

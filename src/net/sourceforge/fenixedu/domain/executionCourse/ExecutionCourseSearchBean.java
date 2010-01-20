@@ -7,36 +7,33 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 
 public class ExecutionCourseSearchBean implements Serializable {
 
-    private DomainReference<ExecutionSemester> executionPeriodDomainReference;
-    private DomainReference<ExecutionDegree> executionDegreeDomainReference;
+    private ExecutionSemester executionPeriodDomainReference;
+    private ExecutionDegree executionDegreeDomainReference;
 
     public ExecutionCourseSearchBean() {
 	super();
     }
 
     public ExecutionDegree getExecutionDegree() {
-	return executionDegreeDomainReference == null ? null : executionDegreeDomainReference.getObject();
+	return executionDegreeDomainReference;
     }
 
     public void setExecutionDegree(ExecutionDegree executionDegree) {
-	this.executionDegreeDomainReference = executionDegree == null ? null : new DomainReference<ExecutionDegree>(
-		executionDegree);
+	this.executionDegreeDomainReference = executionDegree;
     }
 
     public ExecutionSemester getExecutionPeriod() {
-	return executionPeriodDomainReference == null ? null : executionPeriodDomainReference.getObject();
+	return executionPeriodDomainReference;
     }
 
     public void setExecutionPeriod(ExecutionSemester executionSemester) {
-	this.executionPeriodDomainReference = executionSemester == null ? null : new DomainReference<ExecutionSemester>(
-		executionSemester);
+	this.executionPeriodDomainReference = executionSemester;
     }
 
     public Collection<ExecutionCourse> search(final Collection<ExecutionCourse> result) {

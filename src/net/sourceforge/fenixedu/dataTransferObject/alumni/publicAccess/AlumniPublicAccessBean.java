@@ -5,7 +5,6 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniAddressBean;
 import net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniJobBean;
 import net.sourceforge.fenixedu.domain.Alumni;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Job;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
@@ -14,19 +13,19 @@ import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 
 public class AlumniPublicAccessBean implements Serializable {
 
-    private DomainReference<Alumni> alumni;
+    private Alumni alumni;
 
     private String phone;
-    private DomainReference<Phone> currentPhone;
+    private Phone currentPhone;
 
     private String email;
-    private DomainReference<EmailAddress> currentEmail;
+    private EmailAddress currentEmail;
 
     private AlumniAddressBean addressBean;
-    private DomainReference<PhysicalAddress> currentAddress;
+    private PhysicalAddress currentAddress;
 
     private AlumniJobBean jobBean;
-    private DomainReference<Job> currentJob;
+    private Job currentJob;
 
     // private String password;
     // private String passwordConfirmation;
@@ -78,11 +77,11 @@ public class AlumniPublicAccessBean implements Serializable {
     }
 
     public Alumni getAlumni() {
-	return (this.alumni != null) ? this.alumni.getObject() : null;
+	return this.alumni;
     }
 
     public void setAlumni(Alumni alumni) {
-	this.alumni = new DomainReference<Alumni>(alumni);
+	this.alumni = alumni;
     }
 
     public String getPhone() {
@@ -134,35 +133,35 @@ public class AlumniPublicAccessBean implements Serializable {
     // }
 
     public Phone getCurrentPhone() {
-	return (this.currentPhone != null) ? this.currentPhone.getObject() : null;
+	return this.currentPhone;
     }
 
     private void setCurrentPhone(Phone phone) {
-	this.currentPhone = (phone != null) ? new DomainReference<Phone>(phone) : null;
+	this.currentPhone = phone;
     }
 
     public EmailAddress getCurrentEmail() {
-	return (this.currentEmail != null) ? this.currentEmail.getObject() : null;
+	return this.currentEmail;
     }
 
     private void setCurrentEmail(EmailAddress email) {
-	this.currentEmail = (email != null) ? new DomainReference<EmailAddress>(email) : null;
+	this.currentEmail = email;
     }
 
     public PhysicalAddress getCurrentPhysicalAddress() {
-	return (this.currentAddress != null) ? this.currentAddress.getObject() : null;
+	return this.currentAddress;
     }
 
     private void setCurrentPhysicalAddress(PhysicalAddress address) {
-	this.currentAddress = (address != null) ? new DomainReference<PhysicalAddress>(address) : null;
+	this.currentAddress = address;
     }
 
     public Job getCurrentJob() {
-	return (this.currentJob != null) ? this.currentJob.getObject() : null;
+	return this.currentJob;
     }
 
     private void setCurrentJob(Job job) {
-	this.currentJob = (job != null) ? new DomainReference<Job>(job) : null;
+	this.currentJob = job;
     }
 
 }

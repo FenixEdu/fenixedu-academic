@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
@@ -17,16 +16,16 @@ public class InfoSiteEvaluationMarks extends DataTranferObject implements ISiteC
 
     private Integer evaluationID;
 
-    private DomainReference<Evaluation> evaluation;
+    private Evaluation evaluation;
 
-    private DomainReference<ExecutionCourse> executionCourse;
+    private ExecutionCourse executionCourse;
 
     public Evaluation getEvaluation() {
-	return evaluation == null ? null : evaluation.getObject();
+	return evaluation;
     }
 
     public void setEvaluation(Evaluation evaluation) {
-	this.evaluation = new DomainReference<Evaluation>(evaluation);
+	this.evaluation = evaluation;
     }
 
     public Integer getEvaluationID() {
@@ -44,11 +43,11 @@ public class InfoSiteEvaluationMarks extends DataTranferObject implements ISiteC
     }
 
     public ExecutionCourse getExecutionCourse() {
-	return executionCourse == null ? null : executionCourse.getObject();
+	return executionCourse;
     }
 
     public void setExecutionCourse(ExecutionCourse executionCourse) {
-	this.executionCourse = new DomainReference<ExecutionCourse>(executionCourse);
+	this.executionCourse = executionCourse;
     }
 
 }

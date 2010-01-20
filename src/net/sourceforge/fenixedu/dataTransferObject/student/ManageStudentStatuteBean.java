@@ -5,7 +5,6 @@ package net.sourceforge.fenixedu.dataTransferObject.student;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
@@ -19,34 +18,34 @@ public class ManageStudentStatuteBean implements Serializable {
 
     private StudentStatuteType statuteType;
 
-    private DomainReference<ExecutionSemester> beginExecutionPeriod;
+    private ExecutionSemester beginExecutionPeriod;
 
-    private DomainReference<ExecutionSemester> executionPeriod;
+    private ExecutionSemester executionPeriod;
 
-    private DomainReference<ExecutionSemester> endExecutionPeriod;
+    private ExecutionSemester endExecutionPeriod;
 
-    private DomainReference<Student> student;
+    private Student student;
 
     public ManageStudentStatuteBean(Student student) {
 	super();
-	this.student = new DomainReference<Student>(student);
-	this.executionPeriod = new DomainReference<ExecutionSemester>(ExecutionSemester.readActualExecutionSemester());
+	this.student = student;
+	this.executionPeriod = ExecutionSemester.readActualExecutionSemester();
     }
 
     public ExecutionSemester getExecutionPeriod() {
-	return (executionPeriod != null) ? executionPeriod.getObject() : null;
+	return executionPeriod;
     }
 
     public void setExecutionPeriod(ExecutionSemester executionSemester) {
-	executionPeriod = (executionSemester != null) ? new DomainReference<ExecutionSemester>(executionSemester) : null;
+	executionPeriod = executionSemester;
     }
 
     public ExecutionSemester getBeginExecutionPeriod() {
-	return beginExecutionPeriod != null ? beginExecutionPeriod.getObject() : null;
+	return beginExecutionPeriod;
     }
 
     public ExecutionSemester getEndExecutionPeriod() {
-	return endExecutionPeriod != null ? endExecutionPeriod.getObject() : null;
+	return endExecutionPeriod;
     }
 
     public StudentStatuteType getStatuteType() {
@@ -54,16 +53,15 @@ public class ManageStudentStatuteBean implements Serializable {
     }
 
     public Student getStudent() {
-	return student != null ? student.getObject() : null;
+	return student;
     }
 
     public void setBeginExecutionPeriod(ExecutionSemester beginExecutionPeriod) {
-	this.beginExecutionPeriod = beginExecutionPeriod != null ? new DomainReference<ExecutionSemester>(beginExecutionPeriod)
-		: null;
+	this.beginExecutionPeriod = beginExecutionPeriod;
     }
 
     public void setEndExecutionPeriod(ExecutionSemester endExecutionPeriod) {
-	this.endExecutionPeriod = endExecutionPeriod != null ? new DomainReference<ExecutionSemester>(endExecutionPeriod) : null;
+	this.endExecutionPeriod = endExecutionPeriod;
     }
 
     public void setStatuteType(StudentStatuteType statuteType) {
@@ -71,7 +69,7 @@ public class ManageStudentStatuteBean implements Serializable {
     }
 
     public void setStudent(Student student) {
-	this.student = student != null ? new DomainReference<Student>(student) : null;
+	this.student = student;
     }
 
 }

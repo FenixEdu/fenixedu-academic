@@ -3,11 +3,10 @@ package net.sourceforge.fenixedu.dataTransferObject.alumni.formation;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.Alumni;
-import net.sourceforge.fenixedu.domain.DomainReference;
 
 public class AlumniFormationBean implements Serializable {
 
-    private DomainReference<Alumni> alumni;
+    private Alumni alumni;
     private AlumniFormation alumniFormation;
 
     public AlumniFormationBean(Alumni alumni) {
@@ -16,11 +15,11 @@ public class AlumniFormationBean implements Serializable {
     }
 
     public Alumni getAlumni() {
-	return (this.alumni != null) ? this.alumni.getObject() : null;
+	return this.alumni;
     }
 
     public void setAlumni(Alumni alumni) {
-	this.alumni = new DomainReference<Alumni>(alumni);
+	this.alumni = alumni;
     }
 
     public AlumniFormation getAlumniFormation() {
@@ -32,7 +31,7 @@ public class AlumniFormationBean implements Serializable {
     }
 
     public int getSize() {
-	return this.alumni.getObject().getFormations().size();
+	return this.alumni.getFormations().size();
     }
 
 }

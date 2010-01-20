@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonInstance;
 import net.sourceforge.fenixedu.domain.Shift;
@@ -12,14 +11,14 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class InfoLessonInstance extends InfoShowOccupation {
 
-    private DomainReference<LessonInstance> lessonInstanceReference;
+    private LessonInstance lessonInstanceReference;
 
     public InfoLessonInstance(LessonInstance lessonInstance) {
-	this.lessonInstanceReference = new DomainReference<LessonInstance>(lessonInstance);
+	this.lessonInstanceReference = lessonInstance;
     }
 
     public LessonInstance getLessonInstance() {
-	return lessonInstanceReference == null ? null : lessonInstanceReference.getObject();
+	return lessonInstanceReference;
     }
 
     @Override

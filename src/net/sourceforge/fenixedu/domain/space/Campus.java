@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.space;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.resource.Resource;
@@ -163,15 +162,15 @@ public class Campus extends Campus_Base {
     }
 
     public static class CampusFactoryEditor extends CampusFactory {
-	private DomainReference<Campus> campusReference;
+	private Campus campusReference;
 
 	public Campus getSpace() {
-	    return campusReference == null ? null : campusReference.getObject();
+	    return campusReference;
 	}
 
 	public void setSpace(Campus campus) {
 	    if (campus != null) {
-		this.campusReference = new DomainReference<Campus>(campus);
+		this.campusReference = campus;
 	    }
 	}
 

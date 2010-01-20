@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoNonAffiliatedTeac
 import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.EntryPhase;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.Exam;
@@ -32,10 +31,10 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
  */
 public class InfoExecutionCourse extends InfoObject {
 
-    private final DomainReference<ExecutionCourse> executionCourseDomainReference;
+    private final ExecutionCourse executionCourseDomainReference;
 
     public InfoExecutionCourse(final ExecutionCourse executionCourse) {
-	executionCourseDomainReference = new DomainReference<ExecutionCourse>(executionCourse);
+	executionCourseDomainReference = executionCourse;
     }
 
     public static InfoExecutionCourse newInfoFromDomain(final ExecutionCourse executionCourse) {
@@ -43,7 +42,7 @@ public class InfoExecutionCourse extends InfoObject {
     }
 
     public ExecutionCourse getExecutionCourse() {
-	return executionCourseDomainReference == null ? null : executionCourseDomainReference.getObject();
+	return executionCourseDomainReference;
     }
 
     @Override

@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -17,10 +16,10 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class InfoPerson extends InfoObject {
 
-    private final DomainReference<Person> person;
+    private final Person person;
 
     public InfoPerson(Person person) {
-	this.person = new DomainReference<Person>(person);
+	this.person = person;
     }
 
     @Override
@@ -232,7 +231,7 @@ public class InfoPerson extends InfoObject {
     }
 
     public Person getPerson() {
-	return person == null ? null : person.getObject();
+	return person;
     }
 
 }

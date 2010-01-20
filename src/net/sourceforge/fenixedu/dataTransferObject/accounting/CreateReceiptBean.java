@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
@@ -21,9 +20,9 @@ public class CreateReceiptBean implements Serializable {
      */
     private static final long serialVersionUID = -3609194839690577766L;
 
-    private DomainReference<Person> person;
+    private Person person;
 
-    private DomainReference<Party> contributorParty;
+    private Party contributorParty;
 
     private List<SelectableEntryBean> entries;
 
@@ -42,12 +41,12 @@ public class CreateReceiptBean implements Serializable {
     }
 
     public Party getContributorParty() {
-	return (this.contributorParty != null) ? this.contributorParty.getObject()
-		: StringUtils.isEmpty(this.contributorNumber) ? null : Party.readByContributorNumber(this.contributorNumber);
+	return (this.contributorParty != null) ? this.contributorParty : StringUtils.isEmpty(this.contributorNumber) ? null
+		: Party.readByContributorNumber(this.contributorNumber);
     }
 
     public void setContributorParty(Party contributorParty) {
-	this.contributorParty = (contributorParty != null) ? new DomainReference<Party>(contributorParty) : null;
+	this.contributorParty = contributorParty;
     }
 
     public boolean isUsingContributorParty() {
@@ -59,20 +58,19 @@ public class CreateReceiptBean implements Serializable {
     }
 
     public PartySocialSecurityNumber getContributorPartySocialSecurityNumber() {
-	return (this.contributorParty != null) ? this.contributorParty.getObject().getPartySocialSecurityNumber() : null;
+	return (this.contributorParty != null) ? this.contributorParty.getPartySocialSecurityNumber() : null;
     }
 
     public void setContributorPartySocialSecurityNumber(PartySocialSecurityNumber partySocialSecurityNumber) {
-	this.contributorParty = (partySocialSecurityNumber != null) ? new DomainReference<Party>(partySocialSecurityNumber
-		.getParty()) : null;
+	this.contributorParty = (partySocialSecurityNumber != null) ? partySocialSecurityNumber.getParty() : null;
     }
 
     public void setPerson(Person person) {
-	this.person = (person != null) ? new DomainReference<Person>(person) : null;
+	this.person = person;
     }
 
     public Person getPerson() {
-	return (this.person != null) ? this.person.getObject() : null;
+	return this.person;
     }
 
     public List<SelectableEntryBean> getEntries() {
@@ -84,8 +82,7 @@ public class CreateReceiptBean implements Serializable {
     }
 
     public String getContributorNumber() {
-	return (StringUtils.isEmpty(contributorNumber) && person != null) ? person.getObject().getSocialSecurityNumber()
-		: contributorNumber;
+	return (StringUtils.isEmpty(contributorNumber) && person != null) ? person.getSocialSecurityNumber() : contributorNumber;
     }
 
     public void setContributorNumber(String contributorNumber) {

@@ -4,7 +4,6 @@ import java.util.Comparator;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.util.PeriodState;
 
@@ -23,12 +22,12 @@ public class InfoExecutionPeriod extends InfoObject implements Comparable {
 
     };
 
-    private DomainReference<ExecutionSemester> executionPeriodDomainReference;
+    private ExecutionSemester executionPeriodDomainReference;
 
     private String qualifiedName;
 
     public InfoExecutionPeriod(final ExecutionSemester executionSemester) {
-	executionPeriodDomainReference = new DomainReference<ExecutionSemester>(executionSemester);
+	executionPeriodDomainReference = executionSemester;
     }
 
     private InfoExecutionYear infoExecutionYear = null;
@@ -140,11 +139,11 @@ public class InfoExecutionPeriod extends InfoObject implements Comparable {
     }
 
     public ExecutionSemester getExecutionPeriod() {
-	return executionPeriodDomainReference == null ? null : executionPeriodDomainReference.getObject();
+	return executionPeriodDomainReference;
     }
 
     public void setExecutionPeriod(ExecutionSemester executionSemester) {
-	executionPeriodDomainReference = new DomainReference<ExecutionSemester>(executionSemester);
+	executionPeriodDomainReference = executionSemester;
     }
 
 }

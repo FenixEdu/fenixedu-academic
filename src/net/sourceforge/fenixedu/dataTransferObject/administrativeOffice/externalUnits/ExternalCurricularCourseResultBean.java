@@ -4,14 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.LinkObject;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 public class ExternalCurricularCourseResultBean extends AbstractExternalUnitResultBean {
 
-    private DomainReference<ExternalCurricularCourse> externalCurricularCourse;
+    private ExternalCurricularCourse externalCurricularCourse;
 
     public ExternalCurricularCourseResultBean(final ExternalCurricularCourse externalCurricularCourse,
 	    PartyTypeEnum parentUnitType) {
@@ -25,12 +24,11 @@ public class ExternalCurricularCourseResultBean extends AbstractExternalUnitResu
     }
 
     public ExternalCurricularCourse getExternalCurricularCourse() {
-	return (this.externalCurricularCourse != null) ? this.externalCurricularCourse.getObject() : null;
+	return this.externalCurricularCourse;
     }
 
     public void setExternalCurricularCourse(ExternalCurricularCourse externalCurricularCourse) {
-	this.externalCurricularCourse = (externalCurricularCourse != null) ? new DomainReference<ExternalCurricularCourse>(
-		externalCurricularCourse) : null;
+	this.externalCurricularCourse = externalCurricularCourse;
     }
 
     @Override

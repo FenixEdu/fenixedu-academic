@@ -2,13 +2,12 @@ package net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.e
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 
 public class SpecialSeasonToEnrolBean implements Serializable {
 
-    private DomainReference<Enrolment> enrolment;
+    private Enrolment enrolment;
     private boolean toSubmit;
     private EnrollmentCondition enrolmentCondition;
 
@@ -21,11 +20,11 @@ public class SpecialSeasonToEnrolBean implements Serializable {
     }
 
     public Enrolment getEnrolment() {
-	return enrolment.getObject();
+	return enrolment;
     }
 
     public void setEnrolment(Enrolment enrolment) {
-	this.enrolment = new DomainReference<Enrolment>(enrolment);
+	this.enrolment = enrolment;
     }
 
     public boolean isToSubmit() {

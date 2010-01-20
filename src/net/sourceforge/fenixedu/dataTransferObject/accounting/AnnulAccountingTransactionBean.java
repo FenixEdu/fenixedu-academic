@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.accounting;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
@@ -17,7 +16,7 @@ public class AnnulAccountingTransactionBean implements Serializable {
      */
     private static final long serialVersionUID = 1104560585375265754L;
 
-    private DomainReference<AccountingTransaction> transaction;
+    private AccountingTransaction transaction;
 
     private String reason;
 
@@ -26,11 +25,11 @@ public class AnnulAccountingTransactionBean implements Serializable {
     }
 
     public AccountingTransaction getTransaction() {
-	return (this.transaction != null) ? this.transaction.getObject() : null;
+	return this.transaction;
     }
 
     public void setTransaction(AccountingTransaction transaction) {
-	this.transaction = (transaction != null) ? new DomainReference<AccountingTransaction>(transaction) : null;
+	this.transaction = transaction;
     }
 
     public String getReason() {

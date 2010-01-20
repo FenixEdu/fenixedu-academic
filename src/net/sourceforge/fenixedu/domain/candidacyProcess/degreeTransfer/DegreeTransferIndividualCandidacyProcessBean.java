@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
@@ -21,7 +20,7 @@ import org.joda.time.LocalDate;
 
 public class DegreeTransferIndividualCandidacyProcessBean extends IndividualCandidacyProcessWithPrecedentDegreeInformationBean {
 
-    private DomainReference<Degree> selectDegree;
+    private Degree selectDegree;
 
     public DegreeTransferIndividualCandidacyProcessBean() {
 	setCandidacyDate(new LocalDate());
@@ -100,11 +99,11 @@ public class DegreeTransferIndividualCandidacyProcessBean extends IndividualCand
     }
 
     public Degree getSelectedDegree() {
-	return (this.selectDegree != null) ? this.selectDegree.getObject() : null;
+	return this.selectDegree;
     }
 
     public void setSelectedDegree(final Degree selectDegree) {
-	this.selectDegree = (selectDegree != null) ? new DomainReference<Degree>(selectDegree) : null;
+	this.selectDegree = selectDegree;
     }
 
     @Override

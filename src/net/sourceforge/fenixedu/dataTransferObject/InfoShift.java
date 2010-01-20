@@ -14,7 +14,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
@@ -42,10 +41,10 @@ public class InfoShift extends InfoObject {
 
     };
 
-    private final DomainReference<Shift> shift;
+    private final Shift shift;
 
     public InfoShift(final Shift shift) {
-	this.shift = new DomainReference<Shift>(shift);
+	this.shift = shift;
     }
 
     public Integer getSize() {
@@ -161,7 +160,7 @@ public class InfoShift extends InfoObject {
     }
 
     public Shift getShift() {
-	return shift == null ? null : shift.getObject();
+	return shift;
     }
 
     public boolean containsType(ShiftType shiftType) {

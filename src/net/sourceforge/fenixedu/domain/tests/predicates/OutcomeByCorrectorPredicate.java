@@ -2,19 +2,18 @@ package net.sourceforge.fenixedu.domain.tests.predicates;
 
 import java.util.HashMap;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.tests.NewCorrector;
 import net.sourceforge.fenixedu.domain.tests.NewQuestion;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean;
 
 public class OutcomeByCorrectorPredicate extends AtomicPredicate implements Predicate {
-    private final DomainReference<NewCorrector> corrector;
+    private final NewCorrector corrector;
 
     public OutcomeByCorrectorPredicate(NewCorrector corrector) {
 	super();
 
-	this.corrector = new DomainReference<NewCorrector>(corrector);
+	this.corrector = corrector;
     }
 
     public OutcomeByCorrectorPredicate(PredicateBean predicateBean) {
@@ -32,7 +31,7 @@ public class OutcomeByCorrectorPredicate extends AtomicPredicate implements Pred
     }
 
     public NewCorrector getCorrector() {
-	return corrector.getObject();
+	return corrector;
     }
 
     public boolean uses(Object object) {

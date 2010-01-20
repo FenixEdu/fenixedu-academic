@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -14,7 +13,7 @@ import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 public class UnitFileUploadBean extends UnitFileBean implements Serializable {
 
-    private DomainReference<Unit> unit;
+    private Unit unit;
 
     private String fileName;
     private Long fileSize;
@@ -26,12 +25,12 @@ public class UnitFileUploadBean extends UnitFileBean implements Serializable {
     private String authorsName;
 
     public UnitFileUploadBean(Unit unit) {
-	this.unit = new DomainReference<Unit>(unit);
+	this.unit = unit;
 	permittedGroups = new ArrayList<IGroup>();
     }
 
     public Unit getUnit() {
-	return this.unit.getObject();
+	return this.unit;
     }
 
     public String getAuthorsName() {

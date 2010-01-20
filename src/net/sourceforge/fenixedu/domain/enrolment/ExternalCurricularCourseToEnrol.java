@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
@@ -16,12 +15,12 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 
 public class ExternalCurricularCourseToEnrol extends DegreeModuleToEnrol {
 
-    private DomainReference<CurricularCourse> curricularCourse;
+    private CurricularCourse curricularCourse;
 
     public ExternalCurricularCourseToEnrol(final CurriculumGroup curriculumGroup, final CurricularCourse curricularCourse,
 	    final ExecutionSemester executionSemester) {
 	super(curriculumGroup, null, executionSemester);
-	this.curricularCourse = new DomainReference<CurricularCourse>(curricularCourse);
+	this.curricularCourse = curricularCourse;
     }
 
     @Override
@@ -50,7 +49,7 @@ public class ExternalCurricularCourseToEnrol extends DegreeModuleToEnrol {
     }
 
     public CurricularCourse getDegreeModule() {
-	return (this.curricularCourse == null) ? null : this.curricularCourse.getObject();
+	return this.curricularCourse;
     }
 
     @Override

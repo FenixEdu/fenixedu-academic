@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.student
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externalUnits.ExternalCurricularCourseResultBean;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
 import net.sourceforge.fenixedu.domain.Grade;
@@ -13,7 +12,7 @@ import org.joda.time.YearMonthDay;
 public class ExternalCurricularCourseEnrolmentBean implements Serializable {
 
     private ExternalCurricularCourseResultBean externalCurricularCourseResultBean;
-    private DomainReference<ExecutionSemester> executionSemester;
+    private ExecutionSemester executionSemester;
     private YearMonthDay evaluationDate;
     private Grade grade;
     private Double ectsCredits;
@@ -31,11 +30,11 @@ public class ExternalCurricularCourseEnrolmentBean implements Serializable {
     }
 
     public ExecutionSemester getExecutionPeriod() {
-	return (this.executionSemester != null) ? this.executionSemester.getObject() : null;
+	return this.executionSemester;
     }
 
     public void setExecutionPeriod(ExecutionSemester executionSemester) {
-	this.executionSemester = (executionSemester != null) ? new DomainReference<ExecutionSemester>(executionSemester) : null;
+	this.executionSemester = executionSemester;
     }
 
     public ExternalCurricularCourse getExternalCurricularCourse() {

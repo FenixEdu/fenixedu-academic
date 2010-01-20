@@ -6,7 +6,6 @@ import java.util.Collection;
 
 import net.sourceforge.fenixedu.dataTransferObject.student.IStudentCurricularPlanBean;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Grade;
@@ -19,12 +18,12 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 
 public class DismissalBean implements Serializable, IStudentCurricularPlanBean {
 
-    private DomainReference<StudentCurricularPlan> studentCurricularPlan;
-    private DomainReference<ExecutionSemester> executionSemester;
+    private StudentCurricularPlan studentCurricularPlan;
+    private ExecutionSemester executionSemester;
     private Collection<SelectedCurricularCourse> dismissals;
     private Collection<SelectedOptionalCurricularCourse> optionalDismissals;
-    private DomainReference<CourseGroup> courseGroup;
-    private DomainReference<CurriculumGroup> curriculumGroup;
+    private CourseGroup courseGroup;
+    private CurriculumGroup curriculumGroup;
     private Collection<SelectedEnrolment> enrolments;
     private Collection<SelectedExternalEnrolment> externalEnrolments;
     private DismissalType dismissalType;
@@ -101,36 +100,35 @@ public class DismissalBean implements Serializable, IStudentCurricularPlanBean {
     }
 
     public CourseGroup getCourseGroup() {
-	return (this.courseGroup != null) ? this.courseGroup.getObject() : null;
+	return this.courseGroup;
     }
 
     public void setCourseGroup(CourseGroup courseGroup) {
-	this.courseGroup = (courseGroup != null) ? new DomainReference<CourseGroup>(courseGroup) : null;
+	this.courseGroup = courseGroup;
     }
 
     public CurriculumGroup getCurriculumGroup() {
-	return (this.curriculumGroup != null) ? this.curriculumGroup.getObject() : null;
+	return this.curriculumGroup;
     }
 
     public void setCurriculumGroup(CurriculumGroup curriculumGroup) {
-	this.curriculumGroup = (curriculumGroup != null) ? new DomainReference<CurriculumGroup>(curriculumGroup) : null;
+	this.curriculumGroup = curriculumGroup;
     }
 
     public StudentCurricularPlan getStudentCurricularPlan() {
-	return (this.studentCurricularPlan != null) ? this.studentCurricularPlan.getObject() : null;
+	return this.studentCurricularPlan;
     }
 
     public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
-	this.studentCurricularPlan = (studentCurricularPlan != null) ? new DomainReference<StudentCurricularPlan>(
-		studentCurricularPlan) : null;
+	this.studentCurricularPlan = studentCurricularPlan;
     }
 
     public ExecutionSemester getExecutionPeriod() {
-	return (this.executionSemester != null) ? this.executionSemester.getObject() : null;
+	return this.executionSemester;
     }
 
     public void setExecutionPeriod(ExecutionSemester executionSemester) {
-	this.executionSemester = (executionSemester != null) ? new DomainReference<ExecutionSemester>(executionSemester) : null;
+	this.executionSemester = executionSemester;
     }
 
     public DismissalType getDismissalType() {
@@ -191,9 +189,9 @@ public class DismissalBean implements Serializable, IStudentCurricularPlanBean {
 
 	private Boolean selected = Boolean.FALSE;
 
-	private DomainReference<CurricularCourse> curricularCourse;
-	private DomainReference<CurriculumGroup> curriculumGroup;
-	private DomainReference<StudentCurricularPlan> studentCurricularPlan;
+	private CurricularCourse curricularCourse;
+	private CurriculumGroup curriculumGroup;
+	private StudentCurricularPlan studentCurricularPlan;
 
 	public SelectedCurricularCourse(CurricularCourse curricularCourse, StudentCurricularPlan studentCurricularPlan) {
 	    setCurricularCourse(curricularCourse);
@@ -201,11 +199,11 @@ public class DismissalBean implements Serializable, IStudentCurricularPlanBean {
 	}
 
 	public CurricularCourse getCurricularCourse() {
-	    return (this.curricularCourse != null) ? this.curricularCourse.getObject() : null;
+	    return this.curricularCourse;
 	}
 
 	public void setCurricularCourse(CurricularCourse curricularCourse) {
-	    this.curricularCourse = (curricularCourse != null) ? new DomainReference<CurricularCourse>(curricularCourse) : null;
+	    this.curricularCourse = curricularCourse;
 	}
 
 	public Boolean getSelected() {
@@ -217,20 +215,19 @@ public class DismissalBean implements Serializable, IStudentCurricularPlanBean {
 	}
 
 	public CurriculumGroup getCurriculumGroup() {
-	    return (this.curriculumGroup != null) ? this.curriculumGroup.getObject() : null;
+	    return this.curriculumGroup;
 	}
 
 	public void setCurriculumGroup(CurriculumGroup curriculumGroup) {
-	    this.curriculumGroup = (curriculumGroup != null) ? new DomainReference<CurriculumGroup>(curriculumGroup) : null;
+	    this.curriculumGroup = curriculumGroup;
 	}
 
 	public StudentCurricularPlan getStudentCurricularPlan() {
-	    return (this.studentCurricularPlan != null) ? this.studentCurricularPlan.getObject() : null;
+	    return this.studentCurricularPlan;
 	}
 
 	public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
-	    this.studentCurricularPlan = (studentCurricularPlan != null) ? new DomainReference<StudentCurricularPlan>(
-		    studentCurricularPlan) : null;
+	    this.studentCurricularPlan = studentCurricularPlan;
 	}
 
 	public String getKey() {
@@ -289,18 +286,18 @@ public class DismissalBean implements Serializable, IStudentCurricularPlanBean {
 
 	private Boolean selected = Boolean.FALSE;
 
-	private DomainReference<Enrolment> enrolment;
+	private Enrolment enrolment;
 
 	public SelectedEnrolment(Enrolment enrolment) {
 	    setEnrolment(enrolment);
 	}
 
 	public Enrolment getEnrolment() {
-	    return (this.enrolment != null) ? this.enrolment.getObject() : null;
+	    return this.enrolment;
 	}
 
 	public void setEnrolment(Enrolment enrolment) {
-	    this.enrolment = (enrolment != null) ? new DomainReference<Enrolment>(enrolment) : null;
+	    this.enrolment = enrolment;
 	}
 
 	public Boolean getSelected() {
@@ -333,19 +330,18 @@ public class DismissalBean implements Serializable, IStudentCurricularPlanBean {
 
 	private Boolean selected = Boolean.FALSE;
 
-	private DomainReference<ExternalEnrolment> externalEnrolment;
+	private ExternalEnrolment externalEnrolment;
 
 	public SelectedExternalEnrolment(ExternalEnrolment externalEnrolment) {
 	    setExternalEnrolment(externalEnrolment);
 	}
 
 	public ExternalEnrolment getExternalEnrolment() {
-	    return (this.externalEnrolment != null) ? this.externalEnrolment.getObject() : null;
+	    return this.externalEnrolment;
 	}
 
 	public void setExternalEnrolment(ExternalEnrolment externalEnrolment) {
-	    this.externalEnrolment = (externalEnrolment != null) ? new DomainReference<ExternalEnrolment>(externalEnrolment)
-		    : null;
+	    this.externalEnrolment = externalEnrolment;
 	}
 
 	public Boolean getSelected() {

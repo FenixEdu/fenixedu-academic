@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
@@ -34,7 +33,7 @@ public class PhdNotificationDocument extends FenixReport {
      */
     private static final long serialVersionUID = 1L;
 
-    private DomainReference<PhdNotification> notification;
+    private PhdNotification notification;
 
     private Language language;
 
@@ -45,11 +44,11 @@ public class PhdNotificationDocument extends FenixReport {
     }
 
     private PhdNotification getNotification() {
-	return (this.notification != null) ? this.notification.getObject() : null;
+	return this.notification;
     }
 
     private void setNotification(PhdNotification notification) {
-	this.notification = (notification != null) ? new DomainReference<PhdNotification>(notification) : null;
+	this.notification = notification;
     }
 
     public Language getLanguage() {

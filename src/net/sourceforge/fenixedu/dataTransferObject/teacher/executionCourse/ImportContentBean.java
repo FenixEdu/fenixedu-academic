@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.CurricularYear;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -11,13 +10,13 @@ import net.sourceforge.fenixedu.domain.interfaces.HasExecutionDegree;
 
 public class ImportContentBean implements Serializable, HasExecutionDegree {
 
-    private DomainReference<ExecutionSemester> executionPeriodReference;
+    private ExecutionSemester executionPeriodReference;
 
-    private DomainReference<ExecutionDegree> executionDegreeReference;
+    private ExecutionDegree executionDegreeReference;
 
-    private DomainReference<CurricularYear> curricularYearReference;
+    private CurricularYear curricularYearReference;
 
-    private DomainReference<ExecutionCourse> executionCourseReference;
+    private ExecutionCourse executionCourseReference;
 
     public ImportContentBean() {
 	setExecutionPeriod(null);
@@ -27,35 +26,35 @@ public class ImportContentBean implements Serializable, HasExecutionDegree {
     }
 
     public ExecutionCourse getExecutionCourse() {
-	return this.executionCourseReference.getObject();
+	return this.executionCourseReference;
     }
 
     public void setExecutionCourse(ExecutionCourse executionCourse) {
-	this.executionCourseReference = new DomainReference<ExecutionCourse>(executionCourse);
+	this.executionCourseReference = executionCourse;
     }
 
     public ExecutionSemester getExecutionPeriod() {
-	return this.executionPeriodReference.getObject();
+	return this.executionPeriodReference;
     }
 
     public void setExecutionPeriod(ExecutionSemester executionSemester) {
-	this.executionPeriodReference = new DomainReference<ExecutionSemester>(executionSemester);
+	this.executionPeriodReference = executionSemester;
     }
 
     public ExecutionDegree getExecutionDegree() {
-	return this.executionDegreeReference.getObject();
+	return this.executionDegreeReference;
     }
 
     public void setExecutionDegree(ExecutionDegree executionDegree) {
-	this.executionDegreeReference = new DomainReference<ExecutionDegree>(executionDegree);
+	this.executionDegreeReference = executionDegree;
     }
 
     public CurricularYear getCurricularYear() {
-	return this.curricularYearReference.getObject();
+	return this.curricularYearReference;
     }
 
     public void setCurricularYear(CurricularYear curricularYear) {
-	this.curricularYearReference = new DomainReference<CurricularYear>(curricularYear);
+	this.curricularYearReference = curricularYear;
     }
 
 }

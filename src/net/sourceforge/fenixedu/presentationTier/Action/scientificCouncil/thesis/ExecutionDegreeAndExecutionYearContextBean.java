@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesi
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.interfaces.HasExecutionYear;
@@ -11,26 +10,26 @@ public class ExecutionDegreeAndExecutionYearContextBean implements Serializable,
 
     private static final long serialVersionUID = 1L;
 
-    private DomainReference<ExecutionYear> executionYear;
-    private DomainReference<ExecutionDegree> executionDegree;
+    private ExecutionYear executionYear;
+    private ExecutionDegree executionDegree;
 
     public ExecutionDegreeAndExecutionYearContextBean() {
     }
 
     public ExecutionDegree getExecutionDegree() {
-	return executionDegree == null ? null : executionDegree.getObject();
+	return executionDegree;
     }
 
     public void setExecutionDegree(final ExecutionDegree executionDegree) {
-	this.executionDegree = executionDegree == null ? null : new DomainReference<ExecutionDegree>(executionDegree);
+	this.executionDegree = executionDegree;
     }
 
     public ExecutionYear getExecutionYear() {
-	return executionYear == null ? null : executionYear.getObject();
+	return executionYear;
     }
 
     public void setExecutionYear(ExecutionYear executionYear) {
-	this.executionYear = executionYear == null ? null : new DomainReference<ExecutionYear>(executionYear);
+	this.executionYear = executionYear;
     }
 
 }

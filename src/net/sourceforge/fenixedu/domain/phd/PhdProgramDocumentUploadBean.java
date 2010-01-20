@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
-
 import org.apache.commons.lang.StringUtils;
 
 import pt.utl.ist.fenix.tools.util.FileUtils;
@@ -25,7 +23,7 @@ public class PhdProgramDocumentUploadBean implements Serializable {
 
     private String remarks;
 
-    private DomainReference<PhdIndividualProgramProcess> individualProgramProcess;
+    private PhdIndividualProgramProcess individualProgramProcess;
 
     public PhdProgramDocumentUploadBean() {
 
@@ -93,11 +91,10 @@ public class PhdProgramDocumentUploadBean implements Serializable {
     }
 
     public PhdIndividualProgramProcess getIndividualProgramProcess() {
-	return (this.individualProgramProcess != null) ? this.individualProgramProcess.getObject() : null;
+	return this.individualProgramProcess;
     }
 
     public void setIndividualProgramProcess(final PhdIndividualProgramProcess individualProgramProcess) {
-	this.individualProgramProcess = (individualProgramProcess != null) ? new DomainReference<PhdIndividualProgramProcess>(
-		individualProgramProcess) : null;
+	this.individualProgramProcess = individualProgramProcess;
     }
 }

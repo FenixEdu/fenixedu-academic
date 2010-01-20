@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.research.activity;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
@@ -12,7 +11,7 @@ import org.joda.time.YearMonthDay;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ResearchScientificJournalCreationBean implements Serializable {
-    private DomainReference<ScientificJournal> scientificJournal;
+    private ScientificJournal scientificJournal;
 
     private String scientificJournalName;
 
@@ -83,11 +82,11 @@ public class ResearchScientificJournalCreationBean implements Serializable {
     }
 
     public ScientificJournal getScientificJournal() {
-	return this.scientificJournal.getObject();
+	return this.scientificJournal;
     }
 
     public void setScientificJournal(ScientificJournal scientificJournal) {
-	this.scientificJournal = new DomainReference<ScientificJournal>(scientificJournal);
+	this.scientificJournal = scientificJournal;
     }
 
     public ScopeType getLocationType() {

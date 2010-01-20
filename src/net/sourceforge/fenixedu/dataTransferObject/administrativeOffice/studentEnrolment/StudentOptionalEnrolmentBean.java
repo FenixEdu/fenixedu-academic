@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -13,13 +12,13 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 
 public class StudentOptionalEnrolmentBean implements Serializable {
 
-    private DomainReference<StudentCurricularPlan> studentCurricularPlan;
-    private DomainReference<ExecutionSemester> executionSemester;
-    private DomainReference<CurriculumGroup> curriculumGroup;
-    private DomainReference<Context> context;
+    private StudentCurricularPlan studentCurricularPlan;
+    private ExecutionSemester executionSemester;
+    private CurriculumGroup curriculumGroup;
+    private Context context;
     private DegreeType degreeType;
-    private DomainReference<Degree> degree;
-    private DomainReference<DegreeCurricularPlan> degreeCurricularPlan;
+    private Degree degree;
+    private DegreeCurricularPlan degreeCurricularPlan;
 
     public StudentOptionalEnrolmentBean() {
 
@@ -34,36 +33,35 @@ public class StudentOptionalEnrolmentBean implements Serializable {
     }
 
     public StudentCurricularPlan getStudentCurricularPlan() {
-	return (this.studentCurricularPlan == null) ? null : this.studentCurricularPlan.getObject();
+	return this.studentCurricularPlan;
     }
 
     public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
-	this.studentCurricularPlan = (studentCurricularPlan != null) ? new DomainReference<StudentCurricularPlan>(
-		studentCurricularPlan) : null;
+	this.studentCurricularPlan = studentCurricularPlan;
     }
 
     public ExecutionSemester getExecutionPeriod() {
-	return (this.executionSemester == null) ? null : this.executionSemester.getObject();
+	return this.executionSemester;
     }
 
     public void setExecutionPeriod(ExecutionSemester executionSemester) {
-	this.executionSemester = (executionSemester != null) ? new DomainReference<ExecutionSemester>(executionSemester) : null;
+	this.executionSemester = executionSemester;
     }
 
     public CurriculumGroup getCurriculumGroup() {
-	return (this.curriculumGroup == null) ? null : this.curriculumGroup.getObject();
+	return this.curriculumGroup;
     }
 
     public void setCurriculumGroup(CurriculumGroup curriculumGroup) {
-	this.curriculumGroup = (curriculumGroup != null) ? new DomainReference<CurriculumGroup>(curriculumGroup) : null;
+	this.curriculumGroup = curriculumGroup;
     }
 
     public Context getContex() {
-	return (this.context == null) ? null : this.context.getObject();
+	return this.context;
     }
 
     public void setContext(Context context) {
-	this.context = (context != null) ? new DomainReference<Context>(context) : null;
+	this.context = context;
     }
 
     public DegreeType getDegreeType() {
@@ -75,20 +73,19 @@ public class StudentOptionalEnrolmentBean implements Serializable {
     }
 
     public Degree getDegree() {
-	return (this.degree == null) ? null : this.degree.getObject();
+	return this.degree;
     }
 
     public void setDegree(Degree degree) {
-	this.degree = (degree != null) ? new DomainReference<Degree>(degree) : null;
+	this.degree = degree;
     }
 
     public DegreeCurricularPlan getDegreeCurricularPlan() {
-	return (this.degreeCurricularPlan == null) ? null : this.degreeCurricularPlan.getObject();
+	return this.degreeCurricularPlan;
     }
 
     public void setDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
-	this.degreeCurricularPlan = (degreeCurricularPlan != null) ? new DomainReference<DegreeCurricularPlan>(
-		degreeCurricularPlan) : null;
+	this.degreeCurricularPlan = degreeCurricularPlan;
     }
 
 }

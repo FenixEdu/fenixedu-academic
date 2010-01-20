@@ -7,7 +7,6 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.EvaluationMethod;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -15,7 +14,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 public class ExecutionCourseWithNoEvaluationMethodSearchBean implements Serializable {
 
-    private DomainReference<ExecutionSemester> executionSemester;
+    private ExecutionSemester executionSemester;
 
     private List<DegreeType> degreeTypes;
 
@@ -82,11 +81,11 @@ public class ExecutionCourseWithNoEvaluationMethodSearchBean implements Serializ
     }
 
     public ExecutionSemester getExecutionPeriod() {
-	return executionSemester == null ? null : executionSemester.getObject();
+	return executionSemester;
     }
 
     public void setExecutionPeriod(ExecutionSemester executionSemester) {
-	this.executionSemester = executionSemester == null ? null : new DomainReference<ExecutionSemester>(executionSemester);
+	this.executionSemester = executionSemester;
     }
 
     public int getTotal() {

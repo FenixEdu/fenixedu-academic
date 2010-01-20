@@ -6,7 +6,6 @@ import java.io.Serializable;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 
 public class CurricularCourseMarksheetManagementBean implements Serializable {
@@ -29,8 +28,8 @@ public class CurricularCourseMarksheetManagementBean implements Serializable {
 	}
     };
 
-    private DomainReference<CurricularCourse> curricularCourse;
-    private DomainReference<ExecutionSemester> executionSemester;
+    private CurricularCourse curricularCourse;
+    private ExecutionSemester executionSemester;
 
     public CurricularCourseMarksheetManagementBean(final CurricularCourse curricularCourse,
 	    final ExecutionSemester executionSemester) {
@@ -39,19 +38,19 @@ public class CurricularCourseMarksheetManagementBean implements Serializable {
     }
 
     public CurricularCourse getCurricularCourse() {
-	return (this.curricularCourse != null) ? this.curricularCourse.getObject() : null;
+	return this.curricularCourse;
     }
 
     public void setCurricularCourse(CurricularCourse curricularCourse) {
-	this.curricularCourse = (curricularCourse != null) ? new DomainReference<CurricularCourse>(curricularCourse) : null;
+	this.curricularCourse = curricularCourse;
     }
 
     public ExecutionSemester getExecutionSemester() {
-	return (this.executionSemester != null) ? this.executionSemester.getObject() : null;
+	return this.executionSemester;
     }
 
     public void setgetExecutionSemester(ExecutionSemester attribute) {
-	this.executionSemester = (attribute != null) ? new DomainReference<ExecutionSemester>(attribute) : null;
+	this.executionSemester = attribute;
     }
 
     public String getKey() {

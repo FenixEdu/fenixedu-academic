@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -13,19 +12,19 @@ import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 
 public class VigilancyCourseGroupBean implements Serializable {
 
-    private List<DomainReference<ExecutionCourse>> courses;
+    private List<ExecutionCourse> courses;
 
-    private List<DomainReference<ExecutionCourse>> coursesToAdd;
+    private List<ExecutionCourse> coursesToAdd;
 
-    private DomainReference<ExecutionCourse> externalCourse;
+    private ExecutionCourse externalCourse;
 
-    private DomainReference<Unit> selectedUnit;
+    private Unit selectedUnit;
 
-    private DomainReference<Department> selectedDepartment;
+    private Department selectedDepartment;
 
-    private DomainReference<VigilantGroup> selectedGroup;
+    private VigilantGroup selectedGroup;
 
-    private DomainReference<CompetenceCourseGroupUnit> selectedCompetenceCourseGroupUnit;
+    private CompetenceCourseGroupUnit selectedCompetenceCourseGroupUnit;
 
     public VigilancyCourseGroupBean() {
 
@@ -34,77 +33,69 @@ public class VigilancyCourseGroupBean implements Serializable {
 	setSelectedDepartment(null);
 	setSelectedCompetenceCourseGroupUnit(null);
 	setExternalCourse(null);
-	courses = new ArrayList<DomainReference<ExecutionCourse>>();
-	coursesToAdd = new ArrayList<DomainReference<ExecutionCourse>>();
+	courses = new ArrayList<ExecutionCourse>();
+	coursesToAdd = new ArrayList<ExecutionCourse>();
     }
 
     public ExecutionCourse getExternalCourse() {
-	return externalCourse.getObject();
+	return externalCourse;
     }
 
     public void setExternalCourse(ExecutionCourse course) {
-	externalCourse = new DomainReference<ExecutionCourse>(course);
+	externalCourse = course;
     }
 
     public VigilantGroup getSelectedVigilantGroup() {
-	return this.selectedGroup.getObject();
+	return this.selectedGroup;
     }
 
     public void setSelectedVigilantGroup(VigilantGroup group) {
-	this.selectedGroup = new DomainReference<VigilantGroup>(group);
+	this.selectedGroup = group;
     }
 
     public Unit getSelectedUnit() {
-	return selectedUnit.getObject();
+	return selectedUnit;
     }
 
     public void setSelectedUnit(Unit unit) {
-	this.selectedUnit = new DomainReference<Unit>(unit);
+	this.selectedUnit = unit;
     }
 
     public CompetenceCourseGroupUnit getSelectedCompetenceCourseGroupUnit() {
-	return selectedCompetenceCourseGroupUnit.getObject();
+	return selectedCompetenceCourseGroupUnit;
     }
 
     public void setSelectedCompetenceCourseGroupUnit(CompetenceCourseGroupUnit unit) {
-	this.selectedCompetenceCourseGroupUnit = new DomainReference<CompetenceCourseGroupUnit>(unit);
+	this.selectedCompetenceCourseGroupUnit = unit;
     }
 
     public Department getSelectedDepartment() {
-	return selectedDepartment.getObject();
+	return selectedDepartment;
     }
 
     public void setSelectedDepartment(Department department) {
-	this.selectedDepartment = new DomainReference<Department>(department);
+	this.selectedDepartment = department;
     }
 
-    public List getCourses() {
-	List<ExecutionCourse> courses = new ArrayList<ExecutionCourse>();
-	for (DomainReference reference : this.courses) {
-	    courses.add((ExecutionCourse) reference.getObject());
-	}
-	return courses;
+    public List<ExecutionCourse> getCourses() {
+	return this.courses;
     }
 
     public void setCourses(List<ExecutionCourse> courses) {
-	this.courses = new ArrayList<DomainReference<ExecutionCourse>>();
+	this.courses = new ArrayList<ExecutionCourse>();
 	for (ExecutionCourse course : courses) {
-	    this.courses.add(new DomainReference<ExecutionCourse>(course));
+	    this.courses.add(course);
 	}
     }
 
-    public List getCoursesToAdd() {
-	List<ExecutionCourse> courses = new ArrayList<ExecutionCourse>();
-	for (DomainReference reference : this.coursesToAdd) {
-	    courses.add((ExecutionCourse) reference.getObject());
-	}
-	return courses;
+    public List<ExecutionCourse> getCoursesToAdd() {
+	return coursesToAdd;
     }
 
     public void setCoursesToAdd(List<ExecutionCourse> courses) {
-	this.coursesToAdd = new ArrayList<DomainReference<ExecutionCourse>>();
+	this.coursesToAdd = new ArrayList<ExecutionCourse>();
 	for (ExecutionCourse course : courses) {
-	    this.coursesToAdd.add(new DomainReference<ExecutionCourse>(course));
+	    this.coursesToAdd.add(course);
 	}
     }
 

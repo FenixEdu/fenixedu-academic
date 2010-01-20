@@ -5,7 +5,6 @@ import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion;
 import net.sourceforge.fenixedu.domain.tests.NewChoice;
 import net.sourceforge.fenixedu.domain.tests.NewCorrector;
@@ -28,17 +27,17 @@ public class PredicateBean implements Serializable {
 
     private List<Predicate> selectedPredicates;
 
-    private DomainReference<NewQuestion> question;
+    private NewQuestion question;
 
     private PredicateType predicateType;
 
     private CompositePredicateType compositePredicateType;
 
-    private DomainReference<NewChoice> choice;
+    private NewChoice choice;
 
-    private DomainReference<NewCorrector> corrector;
+    private NewCorrector corrector;
 
-    private DomainReference<NewAtomicQuestion> atomicQuestion;
+    private NewAtomicQuestion atomicQuestion;
 
     private int count;
 
@@ -93,11 +92,11 @@ public class PredicateBean implements Serializable {
     }
 
     public NewQuestion getQuestion() {
-	return question.getObject();
+	return question;
     }
 
     public void setQuestion(NewQuestion question) {
-	this.question = new DomainReference<NewQuestion>(question);
+	this.question = question;
     }
 
     public PredicateType getPredicateType() {
@@ -117,27 +116,27 @@ public class PredicateBean implements Serializable {
     }
 
     public NewChoice getChoice() {
-	return choice.getObject();
+	return choice;
     }
 
     public void setChoice(NewChoice choice) {
-	this.choice = new DomainReference<NewChoice>(choice);
+	this.choice = choice;
     }
 
     public NewCorrector getCorrector() {
-	return corrector.getObject();
+	return corrector;
     }
 
     public void setCorrector(NewCorrector corrector) {
-	this.corrector = new DomainReference<NewCorrector>(corrector);
+	this.corrector = corrector;
     }
 
     public NewAtomicQuestion getAtomicQuestion() {
-	return atomicQuestion.getObject();
+	return atomicQuestion;
     }
 
     public void setAtomicQuestion(NewAtomicQuestion atomicQuestion) {
-	this.atomicQuestion = new DomainReference<NewAtomicQuestion>(atomicQuestion);
+	this.atomicQuestion = atomicQuestion;
     }
 
     public int getCount() {

@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.teacher.tests;
 import java.io.InputStream;
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.tests.NewPresentationMaterialType;
 import net.sourceforge.fenixedu.domain.tests.NewTestElement;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
@@ -12,7 +11,7 @@ public class PresentationMaterialBean implements Serializable {
 
     private NewPresentationMaterialType presentationMaterialType;
 
-    private DomainReference<NewTestElement> testElement;
+    private NewTestElement testElement;
 
     private String returnPath;
 
@@ -56,11 +55,11 @@ public class PresentationMaterialBean implements Serializable {
     }
 
     public NewTestElement getTestElement() {
-	return testElement.getObject();
+	return testElement;
     }
 
     public void setTestElement(NewTestElement testElement) {
-	this.testElement = new DomainReference<NewTestElement>(testElement);
+	this.testElement = testElement;
     }
 
     public String getContextKey() {

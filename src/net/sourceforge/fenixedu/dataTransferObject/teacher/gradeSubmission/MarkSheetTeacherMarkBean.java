@@ -7,12 +7,11 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 
 public class MarkSheetTeacherMarkBean extends DataTranferObject {
 
-    private DomainReference<Attends> attends;
+    private Attends attends;
 
     private EnrolmentEvaluationType enrolmentEvaluationType;
 
@@ -35,11 +34,11 @@ public class MarkSheetTeacherMarkBean extends DataTranferObject {
     }
 
     public Attends getAttends() {
-	return (this.attends != null) ? this.attends.getObject() : null;
+	return this.attends;
     }
 
     public void setAttends(Attends attends) {
-	this.attends = (attends != null) ? new DomainReference<Attends>(attends) : null;
+	this.attends = attends;
     }
 
     public boolean isToSubmitMark() {

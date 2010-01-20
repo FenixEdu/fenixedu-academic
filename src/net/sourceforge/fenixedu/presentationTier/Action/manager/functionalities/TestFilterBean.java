@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Hashtable;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
@@ -18,14 +17,14 @@ public class TestFilterBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String personName;
-    private DomainReference<Person> person;
+    private Person person;
     private Integer personId;
     private String parameters;
 
     public TestFilterBean() {
 	super();
 
-	this.person = new DomainReference<Person>(null);
+	this.person = null;
     }
 
     public String getPersonName() {
@@ -37,11 +36,11 @@ public class TestFilterBean implements Serializable {
     }
 
     public Person getPerson() {
-	return this.person.getObject();
+	return this.person;
     }
 
     public void setPerson(Person person) {
-	this.person = new DomainReference<Person>(person);
+	this.person = person;
     }
 
     public Integer getPersonId() {

@@ -5,7 +5,6 @@ package net.sourceforge.fenixedu.dataTransferObject.student;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -19,11 +18,11 @@ public class ChooseStudentCurricularPlanBean implements Serializable {
 
     private Integer number;
 
-    private DomainReference<Student> student;
+    private Student student;
 
-    private DomainReference<Registration> registration;
+    private Registration registration;
 
-    private DomainReference<StudentCurricularPlan> studentCurricularPlan;
+    private StudentCurricularPlan studentCurricularPlan;
 
     public ChooseStudentCurricularPlanBean(StudentCurricularPlan studentCurricularPlan) {
 	setStudentCurricularPlan(studentCurricularPlan);
@@ -35,15 +34,15 @@ public class ChooseStudentCurricularPlanBean implements Serializable {
     }
 
     public Student getStudent() {
-	return student == null ? null : student.getObject();
+	return student;
     }
 
     public void setStudent(Student student) {
-	this.student = student == null ? null : new DomainReference<Student>(student);
+	this.student = student;
     }
 
     public Registration getRegistration() {
-	return registration == null ? null : registration.getObject();
+	return registration;
     }
 
     public void setRegistration(Registration registration) {
@@ -51,17 +50,16 @@ public class ChooseStudentCurricularPlanBean implements Serializable {
 	    this.registration = null;
 	    this.studentCurricularPlan = null;
 	} else {
-	    this.registration = new DomainReference<Registration>(registration);
+	    this.registration = registration;
 	}
     }
 
     public StudentCurricularPlan getStudentCurricularPlan() {
-	return this.studentCurricularPlan == null ? null : studentCurricularPlan.getObject();
+	return this.studentCurricularPlan == null ? null : studentCurricularPlan;
     }
 
     public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
-	this.studentCurricularPlan = studentCurricularPlan == null ? null : new DomainReference<StudentCurricularPlan>(
-		studentCurricularPlan);
+	this.studentCurricularPlan = studentCurricularPlan;
     }
 
     public Integer getNumber() {

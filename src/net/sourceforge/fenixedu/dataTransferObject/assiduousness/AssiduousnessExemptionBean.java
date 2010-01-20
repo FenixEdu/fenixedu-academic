@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessExemption;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessExemptionShift;
@@ -26,7 +25,7 @@ public class AssiduousnessExemptionBean implements Serializable, FactoryExecutor
 
     private List<AssiduousnessExemptionShiftBean> assiduousnessExemptionShifts;
 
-    private DomainReference<AssiduousnessExemption> assiduousnessExemption;
+    private AssiduousnessExemption assiduousnessExemption;
 
     public class AssiduousnessExemptionShiftBean implements Serializable {
 	private YearMonthDay firstShiftYearMonthDay;
@@ -196,11 +195,11 @@ public class AssiduousnessExemptionBean implements Serializable, FactoryExecutor
     }
 
     public AssiduousnessExemption getAssiduousnessExemption() {
-	return assiduousnessExemption == null ? null : assiduousnessExemption.getObject();
+	return assiduousnessExemption;
     }
 
     public void setAssiduousnessExemption(AssiduousnessExemption assiduousnessExemption) {
-	this.assiduousnessExemption = new DomainReference<AssiduousnessExemption>(assiduousnessExemption);
+	this.assiduousnessExemption = assiduousnessExemption;
     }
 
 }

@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.resource.Vehicle;
 
@@ -17,9 +16,9 @@ public class VehicleAllocationBean implements Serializable {
 
     private DateTime endDateTime;
 
-    private DomainReference<Party> partyReference;
+    private Party partyReference;
 
-    private DomainReference<Vehicle> vehicleReference;
+    private Vehicle vehicleReference;
 
     private BigDecimal distance;
 
@@ -38,19 +37,19 @@ public class VehicleAllocationBean implements Serializable {
     }
 
     public Party getRequestor() {
-	return (this.partyReference != null) ? this.partyReference.getObject() : null;
+	return this.partyReference;
     }
 
     public void setRequestor(Party requestor) {
-	this.partyReference = (requestor != null) ? new DomainReference<Party>(requestor) : null;
+	this.partyReference = requestor;
     }
 
     public Vehicle getVehicle() {
-	return (this.vehicleReference != null) ? this.vehicleReference.getObject() : null;
+	return this.vehicleReference;
     }
 
     public void setVehicle(Vehicle vehicle) {
-	this.vehicleReference = (vehicle != null) ? new DomainReference<Vehicle>(vehicle) : null;
+	this.vehicleReference = vehicle;
     }
 
     public String getReason() {

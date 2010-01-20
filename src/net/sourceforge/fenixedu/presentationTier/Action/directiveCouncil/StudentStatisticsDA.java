@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -31,8 +30,8 @@ public class StudentStatisticsDA extends FenixDispatchAction {
 
     public static class ContextBean implements Serializable, HasExecutionYear, HasDegreeType {
 	private DegreeType degreeType;
-	private DomainReference<ExecutionYear> executionYearReference;
-	private DomainReference<ExecutionDegree> executionDegreeReference;
+	private ExecutionYear executionYearReference;
+	private ExecutionDegree executionDegreeReference;
 
 	public DegreeType getDegreeType() {
 	    return degreeType;
@@ -43,19 +42,19 @@ public class StudentStatisticsDA extends FenixDispatchAction {
 	}
 
 	public ExecutionYear getExecutionYear() {
-	    return executionYearReference == null ? null : executionYearReference.getObject();
+	    return executionYearReference;
 	}
 
 	public void setExecutionYear(final ExecutionYear executionYear) {
-	    executionYearReference = executionYear == null ? null : new DomainReference<ExecutionYear>(executionYear);
+	    executionYearReference = executionYear;
 	}
 
 	public ExecutionDegree getExecutionDegree() {
-	    return executionDegreeReference == null ? null : executionDegreeReference.getObject();
+	    return executionDegreeReference;
 	}
 
 	public void setExecutionDegree(final ExecutionDegree executionDegree) {
-	    executionDegreeReference = executionDegree == null ? null : new DomainReference<ExecutionDegree>(executionDegree);
+	    executionDegreeReference = executionDegree;
 	}
 
 	public ExecutionYear getExecutionYearFourYearsBack() {

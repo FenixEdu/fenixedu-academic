@@ -2,12 +2,11 @@ package net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 
 public class CardGenerationContext implements Serializable {
 
-    private DomainReference<ExecutionYear> executionYear;
+    private ExecutionYear executionYear;
 
     public CardGenerationContext() {
 	executionYear = executionYearDR(ExecutionYear.readCurrentExecutionYear());
@@ -18,15 +17,15 @@ public class CardGenerationContext implements Serializable {
     }
 
     public ExecutionYear getExecutionYear() {
-	return executionYear == null ? null : executionYear.getObject();
+	return executionYear;
     }
 
     public void setExecutionYear(final ExecutionYear executionYear) {
 	this.executionYear = executionYearDR(executionYear);
     }
 
-    private DomainReference<ExecutionYear> executionYearDR(final ExecutionYear executionYear) {
-	return new DomainReference<ExecutionYear>(executionYear);
+    private ExecutionYear executionYearDR(final ExecutionYear executionYear) {
+	return executionYear;
     }
 
 }

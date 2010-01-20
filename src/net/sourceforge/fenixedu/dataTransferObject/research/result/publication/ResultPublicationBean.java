@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
@@ -70,11 +69,11 @@ public abstract class ResultPublicationBean implements Serializable {
 	}
     }
 
-    private DomainReference<Unit> unit;
+    private Unit unit;
 
-    private DomainReference<Person> person;
+    private Person person;
 
-    private DomainReference<Country> country;
+    private Country country;
 
     private ResultPublicationType publicationType;
 
@@ -332,11 +331,11 @@ public abstract class ResultPublicationBean implements Serializable {
     }
 
     public Person getPerson() {
-	return (this.person == null) ? null : this.person.getObject();
+	return this.person;
     }
 
     public void setPerson(Person person) {
-	this.person = (person != null) ? new DomainReference<Person>(person) : null;
+	this.person = person;
     }
 
     public String getPublisher() {
@@ -356,11 +355,11 @@ public abstract class ResultPublicationBean implements Serializable {
     }
 
     public Country getCountry() {
-	return (this.country == null) ? null : this.country.getObject();
+	return this.country;
     }
 
     public void setCountry(Country country) {
-	this.country = (country != null) ? new DomainReference<Country>(country) : null;
+	this.country = country;
     }
 
     public String getCountryName() {
@@ -487,10 +486,10 @@ public abstract class ResultPublicationBean implements Serializable {
     }
 
     public Unit getUnit() {
-	return this.unit.getObject();
+	return this.unit;
     }
 
     public void setUnit(Unit unit) {
-	this.unit = new DomainReference<Unit>(unit);
+	this.unit = unit;
     }
 }

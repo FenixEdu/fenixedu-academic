@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.assiduousness.Schedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
@@ -18,13 +17,13 @@ import org.joda.time.LocalDate;
 
 public class EmployeeScheduleFactory implements Serializable, FactoryExecutor {
 
-    DomainReference<WorkScheduleType> choosenWorkSchedule;
+    WorkScheduleType choosenWorkSchedule;
 
-    DomainReference<Employee> employee;
+    Employee employee;
 
-    DomainReference<Employee> modifiedBy;
+    Employee modifiedBy;
 
-    DomainReference<Schedule> schedule;
+    Schedule schedule;
 
     LocalDate beginDate;
 
@@ -104,14 +103,14 @@ public class EmployeeScheduleFactory implements Serializable, FactoryExecutor {
 
     public void setEmployee(Employee employee) {
 	if (employee != null) {
-	    this.employee = new DomainReference<Employee>(employee);
+	    this.employee = employee;
 	} else {
 	    this.employee = null;
 	}
     }
 
     public Employee getEmployee() {
-	return employee == null ? null : employee.getObject();
+	return employee;
     }
 
     public List<EmployeeWorkWeekScheduleBean> getEmployeeWorkWeekScheduleList() {
@@ -152,12 +151,12 @@ public class EmployeeScheduleFactory implements Serializable, FactoryExecutor {
     }
 
     public Employee getModifiedBy() {
-	return modifiedBy == null ? null : modifiedBy.getObject();
+	return modifiedBy;
     }
 
     public void setModifiedBy(Employee modifiedBy) {
 	if (modifiedBy != null) {
-	    this.modifiedBy = new DomainReference<Employee>(modifiedBy);
+	    this.modifiedBy = modifiedBy;
 	} else {
 	    this.modifiedBy = null;
 	}
@@ -180,12 +179,12 @@ public class EmployeeScheduleFactory implements Serializable, FactoryExecutor {
     }
 
     public WorkScheduleType getChoosenWorkSchedule() {
-	return choosenWorkSchedule == null ? null : choosenWorkSchedule.getObject();
+	return choosenWorkSchedule;
     }
 
     public void setChoosenWorkSchedule(WorkScheduleType choosenWorkSchedule) {
 	if (choosenWorkSchedule != null) {
-	    this.choosenWorkSchedule = new DomainReference<WorkScheduleType>(choosenWorkSchedule);
+	    this.choosenWorkSchedule = choosenWorkSchedule;
 	} else {
 	    this.choosenWorkSchedule = null;
 	}
@@ -261,12 +260,12 @@ public class EmployeeScheduleFactory implements Serializable, FactoryExecutor {
     }
 
     public Schedule getSchedule() {
-	return schedule == null ? null : schedule.getObject();
+	return schedule;
     }
 
     public void setSchedule(Schedule schedule) {
 	if (schedule != null) {
-	    this.schedule = new DomainReference<Schedule>(schedule);
+	    this.schedule = schedule;
 	}
     }
 }

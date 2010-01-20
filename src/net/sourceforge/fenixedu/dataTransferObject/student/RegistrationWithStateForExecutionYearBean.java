@@ -5,7 +5,6 @@ package net.sourceforge.fenixedu.dataTransferObject.student;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
@@ -17,20 +16,20 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
 @SuppressWarnings("serial")
 public class RegistrationWithStateForExecutionYearBean implements Serializable {
 
-    private DomainReference<Registration> registration;
+    private Registration registration;
 
-    private DomainReference<ExecutionYear> executionYear;
+    private ExecutionYear executionYear;
 
     private RegistrationStateType registrationState;
 
     public RegistrationWithStateForExecutionYearBean(Registration registration, ExecutionYear executionYear) {
 	super();
-	this.registration = new DomainReference<Registration>(registration);
-	this.executionYear = new DomainReference<ExecutionYear>(executionYear);
+	this.registration = registration;
+	this.executionYear = executionYear;
     }
 
     public RegistrationWithStateForExecutionYearBean(Registration registration, RegistrationStateType registrationState) {
-	this.registration = new DomainReference<Registration>(registration);
+	this.registration = registration;
 	this.registrationState = registrationState;
     }
 
@@ -40,11 +39,11 @@ public class RegistrationWithStateForExecutionYearBean implements Serializable {
     }
 
     private ExecutionYear getExecutionYear() {
-	return executionYear.getObject();
+	return executionYear;
     }
 
     public Registration getRegistration() {
-	return registration.getObject();
+	return registration;
     }
 
 }

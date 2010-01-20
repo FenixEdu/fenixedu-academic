@@ -3,12 +3,11 @@ package net.sourceforge.fenixedu.dataTransferObject.spaceManager;
 import java.io.InputStream;
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.space.SpaceInformation;
 
 public class CreateBlueprintSubmissionBean implements Serializable {
 
-    private DomainReference<SpaceInformation> spaceInformationReference;
+    private SpaceInformation spaceInformationReference;
 
     private String filename;
 
@@ -16,7 +15,7 @@ public class CreateBlueprintSubmissionBean implements Serializable {
 
     public CreateBlueprintSubmissionBean(SpaceInformation spaceInformationReference) {
 	super();
-	this.spaceInformationReference = new DomainReference<SpaceInformation>(spaceInformationReference);
+	this.spaceInformationReference = spaceInformationReference;
     }
 
     public String getFilename() {
@@ -36,11 +35,10 @@ public class CreateBlueprintSubmissionBean implements Serializable {
     }
 
     public void setSpaceInformation(SpaceInformation spaceInformationReference) {
-	this.spaceInformationReference = (spaceInformationReference != null) ? new DomainReference<SpaceInformation>(
-		spaceInformationReference) : null;
+	this.spaceInformationReference = spaceInformationReference;
     }
 
     public SpaceInformation getSpaceInformation() {
-	return (this.spaceInformationReference != null) ? this.spaceInformationReference.getObject() : null;
+	return this.spaceInformationReference;
     }
 }

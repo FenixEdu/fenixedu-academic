@@ -8,7 +8,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -33,11 +32,11 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 
     private LocalDate candidacyDate;
 
-    private DomainReference<PhdProgram> program;
+    private PhdProgram program;
 
-    private DomainReference<ExecutionYear> executionYear;
+    private ExecutionYear executionYear;
 
-    private DomainReference<Degree> degree;
+    private Degree degree;
 
     private String thesisTitle;
 
@@ -55,9 +54,9 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 
     private PhdProgramCandidacyProcessState state = PhdProgramCandidacyProcessState.STAND_BY_WITH_MISSING_INFORMATION;
 
-    private DomainReference<PhdProgramPublicCandidacyHashCode> candidacyHashCode;
+    private PhdProgramPublicCandidacyHashCode candidacyHashCode;
 
-    private DomainReference<PhdProgramFocusArea> focusArea;
+    private PhdProgramFocusArea focusArea;
 
     private List<PhdParticipantBean> guidings;
 
@@ -94,11 +93,11 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
     }
 
     public PhdProgram getProgram() {
-	return (this.program != null) ? this.program.getObject() : null;
+	return this.program;
     }
 
     public void setProgram(PhdProgram program) {
-	this.program = (program != null) ? new DomainReference<PhdProgram>(program) : null;
+	this.program = program;
     }
 
     public PersonBean getPersonBean() {
@@ -110,11 +109,11 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
     }
 
     public ExecutionYear getExecutionYear() {
-	return (this.executionYear != null) ? this.executionYear.getObject() : null;
+	return this.executionYear;
     }
 
     public void setExecutionYear(ExecutionYear executionYear) {
-	this.executionYear = (executionYear != null) ? new DomainReference<ExecutionYear>(executionYear) : null;
+	this.executionYear = executionYear;
     }
 
     public Person getOrCreatePersonFromBean() {
@@ -132,7 +131,7 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
     }
 
     public Degree getDegree() {
-	return (this.degree != null) ? this.degree.getObject() : null;
+	return this.degree;
     }
 
     public boolean hasDegree() {
@@ -140,7 +139,7 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
     }
 
     public void setDegree(Degree degree) {
-	this.degree = (degree != null) ? new DomainReference<Degree>(degree) : null;
+	this.degree = degree;
     }
 
     public ExecutionDegree getExecutionDegree() {
@@ -221,12 +220,11 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
     }
 
     public PhdProgramPublicCandidacyHashCode getCandidacyHashCode() {
-	return (this.candidacyHashCode != null) ? this.candidacyHashCode.getObject() : null;
+	return this.candidacyHashCode;
     }
 
     public void setCandidacyHashCode(final PhdProgramPublicCandidacyHashCode candidacyHashCode) {
-	this.candidacyHashCode = (candidacyHashCode != null) ? new DomainReference<PhdProgramPublicCandidacyHashCode>(
-		candidacyHashCode) : null;
+	this.candidacyHashCode = candidacyHashCode;
     }
 
     public PhdIndividualProgramProcess getIndividualProgramProcess() {
@@ -238,11 +236,11 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
     }
 
     public PhdProgramFocusArea getFocusArea() {
-	return (this.focusArea != null) ? this.focusArea.getObject() : null;
+	return this.focusArea;
     }
 
     public void setFocusArea(final PhdProgramFocusArea focusArea) {
-	this.focusArea = (focusArea != null) ? new DomainReference<PhdProgramFocusArea>(focusArea) : null;
+	this.focusArea = focusArea;
     }
 
     public List<PhdParticipantBean> getGuidings() {

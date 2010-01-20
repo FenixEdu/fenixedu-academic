@@ -9,7 +9,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
@@ -22,7 +21,7 @@ import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
  */
 public class InfoWrittenEvaluation extends InfoEvaluation {
 
-    protected DomainReference<WrittenEvaluation> writtenEvaluation;
+    protected WrittenEvaluation writtenEvaluation;
 
     protected Calendar day;
 
@@ -184,10 +183,10 @@ public class InfoWrittenEvaluation extends InfoEvaluation {
     }
 
     public WrittenEvaluation getWrittenEvaluation() {
-	return writtenEvaluation == null ? null : writtenEvaluation.getObject();
+	return writtenEvaluation;
     }
 
     public void setWrittenEvaluation(WrittenEvaluation writtenEvaluation) {
-	this.writtenEvaluation = writtenEvaluation == null ? null : new DomainReference<WrittenEvaluation>(writtenEvaluation);
+	this.writtenEvaluation = writtenEvaluation;
     }
 }

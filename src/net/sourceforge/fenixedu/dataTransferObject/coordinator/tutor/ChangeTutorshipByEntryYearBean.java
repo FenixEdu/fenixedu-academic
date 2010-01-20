@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.util.Month;
@@ -14,19 +13,19 @@ import org.joda.time.DateTimeFieldType;
 public class ChangeTutorshipByEntryYearBean implements Serializable {
     List<ChangeTutorshipBean> changeTutorshipsBeans;
 
-    private DomainReference<ExecutionYear> executionYear;
+    private ExecutionYear executionYear;
 
     public ChangeTutorshipByEntryYearBean(ExecutionYear executionYear) {
 	this.changeTutorshipsBeans = new ArrayList<ChangeTutorshipBean>();
-	this.executionYear = new DomainReference<ExecutionYear>(executionYear);
+	this.executionYear = executionYear;
     }
 
     public ExecutionYear getExecutionYear() {
-	return (executionYear == null ? null : executionYear.getObject());
+	return (executionYear);
     }
 
     public void setExecutionYear(ExecutionYear executionYear) {
-	this.executionYear = new DomainReference<ExecutionYear>(executionYear);
+	this.executionYear = executionYear;
     }
 
     public List<ChangeTutorshipBean> getChangeTutorshipsBeans() {
@@ -43,7 +42,7 @@ public class ChangeTutorshipByEntryYearBean implements Serializable {
     }
 
     public class ChangeTutorshipBean implements Serializable {
-	private DomainReference<Tutorship> tutorship;
+	private Tutorship tutorship;
 
 	private Month tutorshipEndMonth;
 
@@ -67,11 +66,11 @@ public class ChangeTutorshipByEntryYearBean implements Serializable {
 	}
 
 	public Tutorship getTutorship() {
-	    return (tutorship == null ? null : tutorship.getObject());
+	    return (tutorship);
 	}
 
 	public void setTutorship(Tutorship tutorship) {
-	    this.tutorship = new DomainReference<Tutorship>(tutorship);
+	    this.tutorship = tutorship;
 	}
 
 	public Month getTutorshipEndMonth() {

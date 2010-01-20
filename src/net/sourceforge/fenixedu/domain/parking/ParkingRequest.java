@@ -8,7 +8,6 @@ import java.io.Serializable;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.DeleteFileRequest;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.PartyClassification;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
@@ -102,7 +101,7 @@ public class ParkingRequest extends ParkingRequest_Base {
     }
 
     public static abstract class ParkingRequestFactory implements Serializable, FactoryExecutor {
-	private DomainReference<ParkingParty> parkingParty;
+	private ParkingParty parkingParty;
 
 	private Integer firstVechicleID;
 
@@ -320,12 +319,12 @@ public class ParkingRequest extends ParkingRequest_Base {
 	}
 
 	public ParkingParty getParkingParty() {
-	    return parkingParty == null ? null : parkingParty.getObject();
+	    return parkingParty;
 	}
 
 	public void setParkingParty(ParkingParty parkingParty) {
 	    if (parkingParty != null) {
-		this.parkingParty = new DomainReference<ParkingParty>(parkingParty);
+		this.parkingParty = parkingParty;
 	    }
 	}
 
@@ -754,7 +753,7 @@ public class ParkingRequest extends ParkingRequest_Base {
     }
 
     public static class ParkingRequestFactoryEditor extends ParkingRequestFactory {
-	private DomainReference<ParkingRequest> parkingRequest;
+	private ParkingRequest parkingRequest;
 
 	public ParkingRequestFactoryEditor(ParkingParty parkingParty) {
 	    super(parkingParty);
@@ -802,12 +801,12 @@ public class ParkingRequest extends ParkingRequest_Base {
 	}
 
 	public ParkingRequest getParkingRequest() {
-	    return parkingRequest == null ? null : parkingRequest.getObject();
+	    return parkingRequest;
 	}
 
 	public void setParkingRequest(ParkingRequest parkingRequest) {
 	    if (parkingRequest != null) {
-		this.parkingRequest = new DomainReference<ParkingRequest>(parkingRequest);
+		this.parkingRequest = parkingRequest;
 	    }
 	}
 

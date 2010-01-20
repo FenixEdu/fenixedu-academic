@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
@@ -13,9 +12,9 @@ import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 
 public class CompetenceCourseInformationRequestBean implements Serializable {
 
-    private DomainReference<CompetenceCourse> competenceCourse;
+    private CompetenceCourse competenceCourse;
 
-    private DomainReference<ExecutionSemester> executionSemester;
+    private ExecutionSemester executionSemester;
 
     private String justification;
 
@@ -90,19 +89,19 @@ public class CompetenceCourseInformationRequestBean implements Serializable {
     }
 
     public ExecutionSemester getExecutionPeriod() {
-	return executionSemester.getObject();
+	return executionSemester;
     }
 
     public void setExecutionPeriod(ExecutionSemester period) {
-	executionSemester = new DomainReference<ExecutionSemester>(period);
+	executionSemester = period;
     }
 
     public CompetenceCourse getCompetenceCourse() {
-	return competenceCourse.getObject();
+	return competenceCourse;
     }
 
     public void setCompetenceCourse(CompetenceCourse course) {
-	competenceCourse = new DomainReference<CompetenceCourse>(course);
+	competenceCourse = course;
     }
 
     public CompetenceCourseLevel getCompetenceCourseLevel() {

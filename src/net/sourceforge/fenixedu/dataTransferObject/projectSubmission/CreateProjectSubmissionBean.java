@@ -4,7 +4,6 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.domain.StudentGroup;
@@ -12,51 +11,51 @@ import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class CreateProjectSubmissionBean implements Serializable {
 
-    private DomainReference<StudentGroup> studentGroupReference;
+    private StudentGroup studentGroupReference;
 
-    private DomainReference<Attends> attendsReference;
+    private Attends attendsReference;
 
-    private DomainReference<Project> projectReference;
+    private Project projectReference;
 
-    private DomainReference<Person> personReference;
+    private Person personReference;
 
     private transient InputStream inputStream;
 
     private String filename;
 
     public StudentGroup getStudentGroup() {
-	return (this.studentGroupReference != null) ? this.studentGroupReference.getObject() : null;
+	return this.studentGroupReference;
 
     }
 
     public void setStudentGroup(StudentGroup studentGroup) {
-	this.studentGroupReference = (studentGroup != null) ? new DomainReference<StudentGroup>(studentGroup) : null;
+	this.studentGroupReference = studentGroup;
     }
 
     public Attends getAttends() {
-	return (this.attendsReference != null) ? this.attendsReference.getObject() : null;
+	return this.attendsReference;
 
     }
 
     public void setAttends(Attends attends) {
-	this.attendsReference = (attends != null) ? new DomainReference<Attends>(attends) : null;
+	this.attendsReference = attends;
 
     }
 
     public Project getProject() {
-	return (this.projectReference != null) ? this.projectReference.getObject() : null;
+	return this.projectReference;
     }
 
     public void setProject(Project project) {
-	this.projectReference = (project != null) ? new DomainReference<Project>(project) : null;
+	this.projectReference = project;
     }
 
     public Person getPerson() {
-	return (this.personReference != null) ? this.personReference.getObject() : null;
+	return this.personReference;
     }
 
     public void setPerson(Person person) {
-	this.personReference = (person != null) ? new DomainReference<Person>(person) : null;
+	this.personReference = person;
     }
 
     public InputStream getInputStream() {

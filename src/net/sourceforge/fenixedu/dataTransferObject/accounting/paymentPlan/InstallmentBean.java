@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.util.Money;
 
@@ -24,7 +23,7 @@ public class InstallmentBean implements Serializable {
 
     private BigDecimal ectsForAmount;
 
-    private List<DomainReference<ExecutionSemester>> executionSemesters;
+    private List<ExecutionSemester> executionSemesters;
 
     private YearMonthDay startDate;
 
@@ -139,17 +138,17 @@ public class InstallmentBean implements Serializable {
 
     public List<ExecutionSemester> getExecutionSemesters() {
 	final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
-	for (final DomainReference<ExecutionSemester> each : this.executionSemesters) {
-	    result.add(each.getObject());
+	for (final ExecutionSemester each : this.executionSemesters) {
+	    result.add(each);
 	}
 
 	return result;
     }
 
     public void setExecutionSemesters(List<ExecutionSemester> executionSemesters) {
-	final List<DomainReference<ExecutionSemester>> result = new ArrayList<DomainReference<ExecutionSemester>>();
+	final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
 	for (final ExecutionSemester each : executionSemesters) {
-	    result.add(new DomainReference<ExecutionSemester>(each));
+	    result.add(each);
 	}
 
 	this.executionSemesters = result;

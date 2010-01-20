@@ -8,7 +8,6 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.District;
 import net.sourceforge.fenixedu.domain.DistrictSubdivision;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.GrantOwnerType;
 import net.sourceforge.fenixedu.domain.ProfessionType;
 import net.sourceforge.fenixedu.domain.ProfessionalSituationConditionType;
@@ -31,13 +30,13 @@ public class OriginInformationBean implements Serializable {
 
     private Boolean dislocatedFromPermanentResidence;
 
-    private DomainReference<District> schoolTimeDistrictOfResidence;// nonpersistent
+    private District schoolTimeDistrictOfResidence;// nonpersistent
 
-    private DomainReference<DistrictSubdivision> schoolTimeDistrictSubdivisionOfResidence;
+    private DistrictSubdivision schoolTimeDistrictSubdivisionOfResidence;
 
     private GrantOwnerType grantOwnerType;
 
-    private DomainReference<Unit> grantOwnerProvider;
+    private Unit grantOwnerProvider;
 
     private String grantOwnerProviderName;
 
@@ -80,21 +79,19 @@ public class OriginInformationBean implements Serializable {
     }
 
     public District getSchoolTimeDistrictOfResidence() {
-	return (this.schoolTimeDistrictOfResidence != null) ? this.schoolTimeDistrictOfResidence.getObject() : null;
+	return this.schoolTimeDistrictOfResidence;
     }
 
     public void setSchoolTimeDistrictOfResidence(District district) {
-	this.schoolTimeDistrictOfResidence = (district != null) ? new DomainReference<District>(district) : null;
+	this.schoolTimeDistrictOfResidence = district;
     }
 
     public DistrictSubdivision getSchoolTimeDistrictSubdivisionOfResidence() {
-	return (this.schoolTimeDistrictSubdivisionOfResidence != null) ? this.schoolTimeDistrictSubdivisionOfResidence
-		.getObject() : null;
+	return this.schoolTimeDistrictSubdivisionOfResidence;
     }
 
     public void setSchoolTimeDistrictSubdivisionOfResidence(DistrictSubdivision districtSubdivision) {
-	this.schoolTimeDistrictSubdivisionOfResidence = (districtSubdivision != null) ? new DomainReference<DistrictSubdivision>(
-		districtSubdivision) : null;
+	this.schoolTimeDistrictSubdivisionOfResidence = districtSubdivision;
     }
 
     public GrantOwnerType getGrantOwnerType() {
@@ -106,11 +103,11 @@ public class OriginInformationBean implements Serializable {
     }
 
     public Unit getGrantOwnerProvider() {
-	return (this.grantOwnerProvider != null) ? this.grantOwnerProvider.getObject() : null;
+	return this.grantOwnerProvider;
     }
 
     public void setGrantOwnerProvider(Unit grantOwnerProvider) {
-	this.grantOwnerProvider = (grantOwnerProvider != null) ? new DomainReference<Unit>(grantOwnerProvider) : null;
+	this.grantOwnerProvider = grantOwnerProvider;
     }
 
     public String getGrantOwnerProviderName() {
@@ -122,12 +119,11 @@ public class OriginInformationBean implements Serializable {
     }
 
     public UnitName getGrantOwnerProviderUnitName() {
-	return (grantOwnerProvider == null) ? null : grantOwnerProvider.getObject().getUnitName();
+	return (grantOwnerProvider == null) ? null : grantOwnerProvider.getUnitName();
     }
 
     public void setGrantOwnerProviderUnitName(UnitName grantOwnerProviderUnitName) {
-	this.grantOwnerProvider = (grantOwnerProviderUnitName == null) ? null : new DomainReference<Unit>(
-		grantOwnerProviderUnitName.getUnit());
+	this.grantOwnerProvider = (grantOwnerProviderUnitName == null) ? null : grantOwnerProviderUnitName.getUnit();
     }
 
     public Integer getNumberOfCandidaciesToHigherSchool() {

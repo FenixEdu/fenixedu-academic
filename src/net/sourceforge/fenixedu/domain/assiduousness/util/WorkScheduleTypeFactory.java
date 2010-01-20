@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
@@ -93,7 +92,7 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 
     private ScheduleClockingType scheduleClockingType;
 
-    private DomainReference<Employee> modifiedBy;
+    private Employee modifiedBy;
 
     public WorkScheduleTypeFactory() {
 	setBeginValidDate(new LocalDate(1970, 01, 02));
@@ -325,12 +324,12 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
     }
 
     public Employee getModifiedBy() {
-	return modifiedBy == null ? null : modifiedBy.getObject();
+	return modifiedBy;
     }
 
     public void setModifiedBy(Employee modifiedBy) {
 	if (modifiedBy != null) {
-	    this.modifiedBy = new DomainReference<Employee>(modifiedBy);
+	    this.modifiedBy = modifiedBy;
 	}
     }
 
@@ -537,15 +536,15 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
     }
 
     public static class WorkScheduleTypeFactoryEditor extends WorkScheduleTypeFactory {
-	private DomainReference<WorkScheduleType> workScheduleType;
+	private WorkScheduleType workScheduleType;
 
 	public WorkScheduleType getWorkScheduleType() {
-	    return workScheduleType == null ? null : workScheduleType.getObject();
+	    return workScheduleType;
 	}
 
 	public void setWorkScheduleType(WorkScheduleType workScheduleType) {
 	    if (workScheduleType != null) {
-		this.workScheduleType = new DomainReference<WorkScheduleType>(workScheduleType);
+		this.workScheduleType = workScheduleType;
 		setOldIdInternal(getWorkScheduleType().getIdInternal());
 		setScheduleClockingType(workScheduleType.getScheduleClockingType());
 		setBeginValidDate(getWorkScheduleType().getBeginValidDate());

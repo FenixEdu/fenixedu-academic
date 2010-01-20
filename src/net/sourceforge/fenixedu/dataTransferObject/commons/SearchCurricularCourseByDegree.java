@@ -8,7 +8,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
@@ -18,9 +17,9 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class SearchCurricularCourseByDegree implements Serializable {
 
-    private DomainReference<ExecutionSemester> executionSemester;
+    private ExecutionSemester executionSemester;
     private DegreeByExecutionYearBean degreeBean;
-    private DomainReference<DegreeCurricularPlan> degreeCurricularPlan;
+    private DegreeCurricularPlan degreeCurricularPlan;
     private CurricularCourseByExecutionSemesterBean curricularCourseBean;
 
     public SearchCurricularCourseByDegree(final ExecutionSemester executionSemester) {
@@ -28,11 +27,11 @@ public class SearchCurricularCourseByDegree implements Serializable {
     }
 
     public ExecutionSemester getExecutionSemester() {
-	return (this.executionSemester != null) ? this.executionSemester.getObject() : null;
+	return this.executionSemester;
     }
 
     public void setExecutionSemester(ExecutionSemester executionSemester) {
-	this.executionSemester = (executionSemester != null) ? new DomainReference<ExecutionSemester>(executionSemester) : null;
+	this.executionSemester = executionSemester;
     }
 
     public DegreeByExecutionYearBean getDegreeBean() {
@@ -50,13 +49,12 @@ public class SearchCurricularCourseByDegree implements Serializable {
     }
 
     public DegreeCurricularPlan getDegreeCurricularPlan() {
-	return (this.degreeCurricularPlan != null) ? this.degreeCurricularPlan.getObject() : null;
+	return this.degreeCurricularPlan;
     }
 
     public void setDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
 	if (hasDegreeBean() && getDegreeBean().getDegree().hasDegreeCurricularPlans(degreeCurricularPlan)) {
-	    this.degreeCurricularPlan = (degreeCurricularPlan != null) ? new DomainReference<DegreeCurricularPlan>(
-		    degreeCurricularPlan) : null;
+	    this.degreeCurricularPlan = degreeCurricularPlan;
 	} else {
 	    this.degreeCurricularPlan = null;
 	}

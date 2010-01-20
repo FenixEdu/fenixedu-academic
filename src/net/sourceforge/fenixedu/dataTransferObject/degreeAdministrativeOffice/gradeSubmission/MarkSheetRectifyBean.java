@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.g
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.MarkSheet;
@@ -10,8 +9,8 @@ import net.sourceforge.fenixedu.domain.MarkSheetType;
 
 public class MarkSheetRectifyBean extends MarkSheetManagementBaseBean {
 
-    private DomainReference<MarkSheet> markSheet;
-    private DomainReference<EnrolmentEvaluation> enrolmentEvaluation;
+    private MarkSheet markSheet;
+    private EnrolmentEvaluation enrolmentEvaluation;
     private MarkSheetType markSheetType;
 
     private Integer studentNumber;
@@ -20,11 +19,11 @@ public class MarkSheetRectifyBean extends MarkSheetManagementBaseBean {
     private String reason;
 
     public MarkSheet getMarkSheet() {
-	return (this.markSheet == null) ? null : this.markSheet.getObject();
+	return this.markSheet;
     }
 
     public void setMarkSheet(MarkSheet markSheet) {
-	this.markSheet = (markSheet != null) ? new DomainReference<MarkSheet>(markSheet) : null;
+	this.markSheet = markSheet;
     }
 
     public Date getEvaluationDate() {
@@ -64,12 +63,11 @@ public class MarkSheetRectifyBean extends MarkSheetManagementBaseBean {
     }
 
     public EnrolmentEvaluation getEnrolmentEvaluation() {
-	return (this.enrolmentEvaluation == null) ? null : this.enrolmentEvaluation.getObject();
+	return this.enrolmentEvaluation;
     }
 
     public void setEnrolmentEvaluation(EnrolmentEvaluation enrolmentEvaluation) {
-	this.enrolmentEvaluation = (enrolmentEvaluation != null) ? new DomainReference<EnrolmentEvaluation>(enrolmentEvaluation)
-		: null;
+	this.enrolmentEvaluation = enrolmentEvaluation;
     }
 
     public void setMarkSheetType(MarkSheetType markSheetType) {

@@ -3,12 +3,11 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean.ResultPublicationType;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 
 public class ExecutionYearIntervalBean extends ExecutionYearBean implements Serializable {
 
-    private DomainReference<ExecutionYear> finalExecutionYear;
+    private ExecutionYear finalExecutionYear;
     private ResultPublicationType publicationType;
 
     public ExecutionYearIntervalBean() {
@@ -30,11 +29,11 @@ public class ExecutionYearIntervalBean extends ExecutionYearBean implements Seri
     }
 
     public void setFinalExecutionYear(ExecutionYear executionYear) {
-	this.finalExecutionYear = new DomainReference<ExecutionYear>(executionYear);
+	this.finalExecutionYear = executionYear;
     }
 
     public ExecutionYear getFinalExecutionYear() {
-	return this.finalExecutionYear.getObject();
+	return this.finalExecutionYear;
     }
 
     public ExecutionYear getFirstNonNullExecutionYear() {

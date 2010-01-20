@@ -1,14 +1,13 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Professorship;
 
 public class InfoProfessorship extends InfoObject {
 
-    private DomainReference<Professorship> professorship;
+    private Professorship professorship;
 
     private InfoProfessorship(final Professorship professorship) {
-	this.professorship = new DomainReference<Professorship>(professorship);
+	this.professorship = professorship;
     }
 
     public static InfoProfessorship newInfoFromDomain(Professorship professorship) {
@@ -42,6 +41,6 @@ public class InfoProfessorship extends InfoObject {
     }
 
     private Professorship getProfessorship() {
-	return professorship == null ? null : professorship.getObject();
+	return professorship;
     }
 }

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.dataTransferObject.PageContainerBean;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
@@ -13,7 +12,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 public class NotNeedToEnrolEnrolmentsBean extends PageContainerBean {
 
     private Integer number;
-    private DomainReference<Student> student;
+    private Student student;
     private Collection<SelectedAprovedEnrolment> aprovedEnrolments;
     private Collection<SelectedExternalEnrolment> externalEnrolments;
 
@@ -26,11 +25,11 @@ public class NotNeedToEnrolEnrolmentsBean extends PageContainerBean {
     }
 
     public Student getStudent() {
-	return (this.student != null) ? this.student.getObject() : null;
+	return this.student;
     }
 
     public void setStudent(Student student) {
-	this.student = (student != null) ? new DomainReference<Student>(student) : null;
+	this.student = student;
     }
 
     public void setAprovedEnrolments(Collection<SelectedAprovedEnrolment> enrolments) {
@@ -77,19 +76,19 @@ public class NotNeedToEnrolEnrolmentsBean extends PageContainerBean {
 
     public static class SelectedAprovedEnrolment implements Serializable {
 	private Boolean selected;
-	private DomainReference<Enrolment> aprovedEnrolment;
+	private Enrolment aprovedEnrolment;
 
 	public SelectedAprovedEnrolment(Enrolment enrolment, Boolean selected) {
-	    this.aprovedEnrolment = new DomainReference<Enrolment>(enrolment);
+	    this.aprovedEnrolment = enrolment;
 	    this.selected = selected;
 	}
 
 	public Enrolment getAprovedEnrolment() {
-	    return (this.aprovedEnrolment != null) ? this.aprovedEnrolment.getObject() : null;
+	    return this.aprovedEnrolment;
 	}
 
 	public void setAprovedEnrolment(Enrolment aprovedEnrolment) {
-	    this.aprovedEnrolment = (aprovedEnrolment != null) ? new DomainReference<Enrolment>(aprovedEnrolment) : null;
+	    this.aprovedEnrolment = aprovedEnrolment;
 	}
 
 	public Boolean getSelected() {
@@ -103,20 +102,19 @@ public class NotNeedToEnrolEnrolmentsBean extends PageContainerBean {
 
     public static class SelectedExternalEnrolment implements Serializable {
 	private Boolean selected;
-	private DomainReference<ExternalEnrolment> externalEnrolment;
+	private ExternalEnrolment externalEnrolment;
 
 	public SelectedExternalEnrolment(ExternalEnrolment externalEnrolment, Boolean selected) {
-	    this.externalEnrolment = new DomainReference<ExternalEnrolment>(externalEnrolment);
+	    this.externalEnrolment = externalEnrolment;
 	    this.selected = selected;
 	}
 
 	public ExternalEnrolment getExternalEnrolment() {
-	    return (this.externalEnrolment != null) ? this.externalEnrolment.getObject() : null;
+	    return this.externalEnrolment;
 	}
 
 	public void setExternalEnrolment(ExternalEnrolment externalEnrolment) {
-	    this.externalEnrolment = (externalEnrolment != null) ? new DomainReference<ExternalEnrolment>(externalEnrolment)
-		    : null;
+	    this.externalEnrolment = externalEnrolment;
 	}
 
 	public Boolean getSelected() {

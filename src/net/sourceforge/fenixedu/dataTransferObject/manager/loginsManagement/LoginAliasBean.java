@@ -2,14 +2,13 @@ package net.sourceforge.fenixedu.dataTransferObject.manager.loginsManagement;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.LoginAliasType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
 public class LoginAliasBean implements Serializable {
 
-    private DomainReference<Login> loginReference;
+    private Login loginReference;
 
     private String alias;
 
@@ -23,11 +22,11 @@ public class LoginAliasBean implements Serializable {
     }
 
     public Login getLogin() {
-	return loginReference == null ? null : loginReference.getObject();
+	return loginReference;
     }
 
     public void setLogin(Login login) {
-	this.loginReference = login == null ? null : new DomainReference<Login>(login);
+	this.loginReference = login;
     }
 
     public String getAlias() {

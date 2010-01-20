@@ -428,7 +428,7 @@ public class Assiduousness extends Assiduousness_Base {
 	    }
 
 	}
-	return lastActiveStatus == null ? null : lastActiveStatus;
+	return lastActiveStatus;
     }
 
     public AssiduousnessStatusHistory getCurrentOrLastAssiduousnessStatusHistory() {

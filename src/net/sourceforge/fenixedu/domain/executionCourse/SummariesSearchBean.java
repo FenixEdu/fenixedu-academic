@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
@@ -13,36 +12,36 @@ import net.sourceforge.fenixedu.domain.Summary;
 
 public class SummariesSearchBean implements Serializable {
 
-    private final DomainReference<ExecutionCourse> executionCourseDomainReference;
+    private final ExecutionCourse executionCourseDomainReference;
 
     private ShiftType shiftType;
-    private DomainReference<Shift> shiftDomainReference;
-    private DomainReference<Professorship> professorshipDomainReference;
+    private Shift shiftDomainReference;
+    private Professorship professorshipDomainReference;
     private Boolean showOtherProfessors;
     private Boolean ascendant = false;
 
     public SummariesSearchBean(final ExecutionCourse executionCourse) {
-	this.executionCourseDomainReference = new DomainReference<ExecutionCourse>(executionCourse);
+	this.executionCourseDomainReference = executionCourse;
     }
 
     public ExecutionCourse getExecutionCourse() {
-	return executionCourseDomainReference.getObject();
+	return executionCourseDomainReference;
     }
 
     public Professorship getProfessorship() {
-	return professorshipDomainReference == null ? null : professorshipDomainReference.getObject();
+	return professorshipDomainReference;
     }
 
     public void setProfessorship(final Professorship professorship) {
-	professorshipDomainReference = new DomainReference<Professorship>(professorship);
+	professorshipDomainReference = professorship;
     }
 
     public Shift getShift() {
-	return shiftDomainReference == null ? null : shiftDomainReference.getObject();
+	return shiftDomainReference;
     }
 
     public void setShift(final Shift shift) {
-	shiftDomainReference = new DomainReference<Shift>(shift);
+	shiftDomainReference = shift;
     }
 
     public ShiftType getShiftType() {

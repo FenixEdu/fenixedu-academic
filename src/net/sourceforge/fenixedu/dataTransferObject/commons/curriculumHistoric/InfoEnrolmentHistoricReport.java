@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.dataTransferObject.commons.curriculumHistoric;
 import java.io.Serializable;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Grade;
@@ -16,14 +15,14 @@ public class InfoEnrolmentHistoricReport implements Serializable {
 
     final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
 
-    private DomainReference<Enrolment> enrolment;
+    private Enrolment enrolment;
 
     public Enrolment getEnrolment() {
-	return this.enrolment == null ? null : this.enrolment.getObject();
+	return this.enrolment;
     }
 
     private void setEnrolment(final Enrolment enrolment) {
-	this.enrolment = (enrolment == null) ? null : new DomainReference<Enrolment>(enrolment);
+	this.enrolment = enrolment;
 
     }
 

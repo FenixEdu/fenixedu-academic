@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain.enrolment;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.OptionalEnrolment;
@@ -21,7 +20,7 @@ public class EnroledOptionalEnrolment extends EnroledCurriculumModuleWrapper {
      */
     private static final long serialVersionUID = 3085559707039631255L;
 
-    private DomainReference<OptionalCurricularCourse> optionalCurricularCourse;
+    private OptionalCurricularCourse optionalCurricularCourse;
 
     public EnroledOptionalEnrolment(CurriculumModule curriculumModule, OptionalCurricularCourse optionalCurricularCourse,
 	    ExecutionSemester executionSemester) {
@@ -31,12 +30,11 @@ public class EnroledOptionalEnrolment extends EnroledCurriculumModuleWrapper {
     }
 
     public OptionalCurricularCourse getOptionalCurricularCourse() {
-	return (this.optionalCurricularCourse != null) ? this.optionalCurricularCourse.getObject() : null;
+	return this.optionalCurricularCourse;
     }
 
     public void setOptionalCurricularCourse(OptionalCurricularCourse optionalCurricularCourse) {
-	this.optionalCurricularCourse = (optionalCurricularCourse != null) ? new DomainReference<OptionalCurricularCourse>(
-		optionalCurricularCourse) : null;
+	this.optionalCurricularCourse = optionalCurricularCourse;
     }
 
     @Override
@@ -60,7 +58,7 @@ public class EnroledOptionalEnrolment extends EnroledCurriculumModuleWrapper {
 
 	}
 
-	return (context != null) ? context.getObject() : null;
+	return context;
     }
 
     @Override

@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -13,33 +12,32 @@ public class DFACandidacyBean implements Serializable {
 
     private DegreeType degreeType;
 
-    private DomainReference<Degree> degree;
+    private Degree degree;
 
-    private DomainReference<DegreeCurricularPlan> degreeCurricularPlan;
+    private DegreeCurricularPlan degreeCurricularPlan;
 
-    private DomainReference<ExecutionDegree> executionDegree;
+    private ExecutionDegree executionDegree;
 
-    private DomainReference<ExecutionYear> executionYear;
+    private ExecutionYear executionYear;
 
     public DFACandidacyBean() {
 	degreeType = DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA;
     }
 
     public Degree getDegree() {
-	return (this.degree == null) ? null : this.degree.getObject();
+	return this.degree;
     }
 
     public void setDegree(Degree degree) {
-	this.degree = (degree != null) ? new DomainReference<Degree>(degree) : null;
+	this.degree = degree;
     }
 
     public DegreeCurricularPlan getDegreeCurricularPlan() {
-	return (this.degreeCurricularPlan == null) ? null : this.degreeCurricularPlan.getObject();
+	return this.degreeCurricularPlan;
     }
 
     public void setDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
-	this.degreeCurricularPlan = (degreeCurricularPlan != null) ? new DomainReference<DegreeCurricularPlan>(
-		degreeCurricularPlan) : null;
+	this.degreeCurricularPlan = degreeCurricularPlan;
     }
 
     public ExecutionDegree getExecutionDegree() {
@@ -48,15 +46,15 @@ public class DFACandidacyBean implements Serializable {
     }
 
     public void setExecutionDegree(ExecutionDegree executionDegree) {
-	this.executionDegree = (executionDegree != null) ? new DomainReference<ExecutionDegree>(executionDegree) : null;
+	this.executionDegree = executionDegree;
     }
 
     public ExecutionYear getExecutionYear() {
-	return (this.executionYear == null) ? null : this.executionYear.getObject();
+	return this.executionYear;
     }
 
     public void setExecutionYear(ExecutionYear executionYear) {
-	this.executionYear = (executionYear != null) ? new DomainReference<ExecutionYear>(executionYear) : null;
+	this.executionYear = executionYear;
     }
 
     public DegreeType getDegreeType() {

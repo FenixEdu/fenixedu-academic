@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
@@ -11,11 +10,11 @@ import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 
 public class ResultParticipationCreationBean implements Serializable {
-    private DomainReference<ResearchResult> result;
+    private ResearchResult result;
 
-    private DomainReference<UnitName> organizationNameObject;
+    private UnitName organizationNameObject;
 
-    private DomainReference<PersonName> participator;
+    private PersonName participator;
 
     private ResultParticipationRole role;
 
@@ -30,7 +29,7 @@ public class ResultParticipationCreationBean implements Serializable {
     private String email;
 
     public ResultParticipationCreationBean(ResearchResult result) {
-	setResult(new DomainReference<ResearchResult>(result));
+	setResult(result);
 	setRole(ResultParticipationRole.getDefaultRole());
 	setOrganizationNameObject(null);
 	setOrganizationName(null);
@@ -74,11 +73,11 @@ public class ResultParticipationCreationBean implements Serializable {
     }
 
     public PersonName getParticipator() {
-	return participator.getObject();
+	return participator;
     }
 
     public void setParticipator(PersonName participator) {
-	this.participator = new DomainReference<PersonName>(participator);
+	this.participator = participator;
     }
 
     public String getParticipatorName() {
@@ -90,10 +89,10 @@ public class ResultParticipationCreationBean implements Serializable {
     }
 
     public ResearchResult getResult() {
-	return result.getObject();
+	return result;
     }
 
-    public void setResult(DomainReference<ResearchResult> result) {
+    public void setResult(ResearchResult result) {
 	this.result = result;
     }
 
@@ -106,7 +105,7 @@ public class ResultParticipationCreationBean implements Serializable {
     }
 
     public ExternalContract getExternalPerson() {
-	return (this.participator == null) ? null : this.participator.getObject().getPerson().getExternalContract();
+	return (this.participator == null) ? null : this.participator.getPerson().getExternalContract();
     }
 
     public void setExternalPerson(ExternalContract externalPerson) {
@@ -159,11 +158,11 @@ public class ResultParticipationCreationBean implements Serializable {
     }
 
     public UnitName getOrganizationNameObject() {
-	return organizationNameObject.getObject();
+	return organizationNameObject;
     }
 
     public void setOrganizationNameObject(UnitName name) {
-	organizationNameObject = new DomainReference<UnitName>(name);
+	organizationNameObject = name;
     }
 
 }

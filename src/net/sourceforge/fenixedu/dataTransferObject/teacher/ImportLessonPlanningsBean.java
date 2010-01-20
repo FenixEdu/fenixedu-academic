@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.dataTransferObject.teacher;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.ImportContentBean;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
 
@@ -11,9 +10,9 @@ public class ImportLessonPlanningsBean extends ImportContentBean implements Seri
 
     private ImportType importType;
 
-    private DomainReference<Shift> shiftReference;
+    private Shift shiftReference;
 
-    private DomainReference<ExecutionCourse> executionCourseToReference;
+    private ExecutionCourse executionCourseToReference;
 
     public ImportLessonPlanningsBean(ExecutionCourse executionCourse) {
 	super();
@@ -22,11 +21,11 @@ public class ImportLessonPlanningsBean extends ImportContentBean implements Seri
     }
 
     public ExecutionCourse getExecutionCourseTo() {
-	return this.executionCourseToReference.getObject();
+	return this.executionCourseToReference;
     }
 
     public void setExecutionCourseTo(ExecutionCourse executionCourse) {
-	this.executionCourseToReference = new DomainReference<ExecutionCourse>(executionCourse);
+	this.executionCourseToReference = executionCourse;
     }
 
     public ImportType getImportType() {
@@ -38,11 +37,11 @@ public class ImportLessonPlanningsBean extends ImportContentBean implements Seri
     }
 
     public Shift getShift() {
-	return this.shiftReference.getObject();
+	return this.shiftReference;
     }
 
     public void setShift(Shift shift) {
-	this.shiftReference = new DomainReference<Shift>(shift);
+	this.shiftReference = shift;
     }
 
     public static enum ImportType {

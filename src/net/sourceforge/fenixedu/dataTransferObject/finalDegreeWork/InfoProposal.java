@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.Branch;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
@@ -24,10 +23,10 @@ import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
  */
 public class InfoProposal extends InfoObject {
 
-    private DomainReference<Proposal> proposalDomainReference;
+    private Proposal proposalDomainReference;
 
     public InfoProposal(final Proposal proposal) {
-	proposalDomainReference = new DomainReference<Proposal>(proposal);
+	proposalDomainReference = proposal;
     }
 
     public static InfoProposal newInfoFromDomain(final Proposal proposal) {
@@ -35,7 +34,7 @@ public class InfoProposal extends InfoObject {
     }
 
     private Proposal getProposal() {
-	return proposalDomainReference == null ? null : proposalDomainReference.getObject();
+	return proposalDomainReference;
     }
 
     @Override

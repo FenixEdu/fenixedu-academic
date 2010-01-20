@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.student.IStudentCurricularPlanBean;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
@@ -24,15 +23,15 @@ public class BolonhaStudentEnrollmentBean implements Serializable, IStudentCurri
 
     private static final long serialVersionUID = -5614162187691303580L;
 
-    private DomainReference<StudentCurricularPlan> studentCurricularPlan;
+    private StudentCurricularPlan studentCurricularPlan;
 
-    private DomainReference<ExecutionSemester> executionSemester;
+    private ExecutionSemester executionSemester;
 
     private StudentCurriculumGroupBean rootStudentCurriculumGroupBean;
 
     private List<IDegreeModuleToEvaluate> degreeModulesToEvaluate;
 
-    private List<DomainReference<CurriculumModule>> curriculumModulesToRemove;
+    private List<CurriculumModule> curriculumModulesToRemove;
 
     private IDegreeModuleToEvaluate optionalDegreeModuleToEnrol;
 
@@ -64,20 +63,19 @@ public class BolonhaStudentEnrollmentBean implements Serializable, IStudentCurri
     }
 
     public StudentCurricularPlan getStudentCurricularPlan() {
-	return (this.studentCurricularPlan != null) ? this.studentCurricularPlan.getObject() : null;
+	return this.studentCurricularPlan;
     }
 
     private void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
-	this.studentCurricularPlan = (studentCurricularPlan != null) ? new DomainReference<StudentCurricularPlan>(
-		studentCurricularPlan) : null;
+	this.studentCurricularPlan = studentCurricularPlan;
     }
 
     public ExecutionSemester getExecutionPeriod() {
-	return (this.executionSemester != null) ? this.executionSemester.getObject() : null;
+	return this.executionSemester;
     }
 
     public void setExecutionPeriod(ExecutionSemester executionSemester) {
-	this.executionSemester = (executionSemester != null) ? new DomainReference<ExecutionSemester>(executionSemester) : null;
+	this.executionSemester = executionSemester;
     }
 
     public StudentCurriculumGroupBean getRootStudentCurriculumGroupBean() {
@@ -115,18 +113,18 @@ public class BolonhaStudentEnrollmentBean implements Serializable, IStudentCurri
     public List<CurriculumModule> getCurriculumModulesToRemove() {
 	final List<CurriculumModule> result = new ArrayList<CurriculumModule>();
 
-	for (final DomainReference<CurriculumModule> domainReference : this.curriculumModulesToRemove) {
-	    result.add(domainReference.getObject());
+	for (final CurriculumModule domainReference : this.curriculumModulesToRemove) {
+	    result.add(domainReference);
 	}
 
 	return result;
     }
 
     public void setCurriculumModulesToRemove(List<CurriculumModule> curriculumModules) {
-	this.curriculumModulesToRemove = new ArrayList<DomainReference<CurriculumModule>>();
+	this.curriculumModulesToRemove = new ArrayList<CurriculumModule>();
 
 	for (final CurriculumModule curriculumModule : curriculumModules) {
-	    this.curriculumModulesToRemove.add(new DomainReference<CurriculumModule>(curriculumModule));
+	    this.curriculumModulesToRemove.add(curriculumModule);
 	}
     }
 

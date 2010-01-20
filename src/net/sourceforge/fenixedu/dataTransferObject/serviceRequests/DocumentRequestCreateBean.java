@@ -6,7 +6,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -52,7 +51,7 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
 
     private String otherPurpose;
 
-    private DomainReference<CurriculumGroup> branchCurriculumGroup;
+    private CurriculumGroup branchCurriculumGroup;
 
     private String branch;
 
@@ -92,15 +91,15 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
 
     private boolean toUseAll = false;
 
-    private List<DomainReference<Enrolment>> enrolments;
+    private List<Enrolment> enrolments;
 
-    private DomainReference<ExecutionSemester> executionSemester;
+    private ExecutionSemester executionSemester;
 
-    private List<DomainReference<Exam>> exams;
+    private List<Exam> exams;
 
     private Integer numberOfCourseLoads;
 
-    private DomainReference<Unit> institution;
+    private Unit institution;
 
     private Integer numberOfPrograms;
 
@@ -116,8 +115,8 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
 
     public DocumentRequestCreateBean(Registration registration) {
 	super(registration);
-	this.enrolments = new ArrayList<DomainReference<Enrolment>>();
-	this.exams = new ArrayList<DomainReference<Exam>>();
+	this.enrolments = new ArrayList<Enrolment>();
+	this.exams = new ArrayList<Exam>();
 	pastRequestDate = new LocalDate();
     }
 
@@ -357,17 +356,17 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
 
     public List<Enrolment> getEnrolments() {
 	final List<Enrolment> result = new ArrayList<Enrolment>();
-	for (final DomainReference<Enrolment> each : this.enrolments) {
-	    result.add(each.getObject());
+	for (final Enrolment each : this.enrolments) {
+	    result.add(each);
 	}
 
 	return result;
     }
 
     public void setEnrolments(List<Enrolment> enrolments) {
-	final List<DomainReference<Enrolment>> enrolmentsToSet = new ArrayList<DomainReference<Enrolment>>();
+	final List<Enrolment> enrolmentsToSet = new ArrayList<Enrolment>();
 	for (final Enrolment enrolment : enrolments) {
-	    enrolmentsToSet.add(new DomainReference<Enrolment>(enrolment));
+	    enrolmentsToSet.add(enrolment);
 	}
 
 	this.enrolments = enrolmentsToSet;
@@ -375,28 +374,28 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
 
     public List<Exam> getExams() {
 	final List<Exam> result = new ArrayList<Exam>();
-	for (final DomainReference<Exam> each : this.exams) {
-	    result.add(each.getObject());
+	for (final Exam each : this.exams) {
+	    result.add(each);
 	}
 
 	return result;
     }
 
     public void setExams(List<Exam> exams) {
-	final List<DomainReference<Exam>> result = new ArrayList<DomainReference<Exam>>();
+	final List<Exam> result = new ArrayList<Exam>();
 	for (final Exam each : exams) {
-	    result.add(new DomainReference<Exam>(each));
+	    result.add(each);
 	}
 
 	this.exams = result;
     }
 
     public ExecutionSemester getExecutionPeriod() {
-	return (this.executionSemester != null) ? this.executionSemester.getObject() : null;
+	return this.executionSemester;
     }
 
     public void setExecutionPeriod(ExecutionSemester executionSemester) {
-	this.executionSemester = (executionSemester != null) ? new DomainReference<ExecutionSemester>(executionSemester) : null;
+	this.executionSemester = executionSemester;
     }
 
     public Integer getNumberOfCourseLoads() {
@@ -408,15 +407,15 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
     }
 
     public UnitName getInstitutionName() {
-	return (this.institution != null) ? this.institution.getObject().getUnitName() : null;
+	return (this.institution != null) ? this.institution.getUnitName() : null;
     }
 
     public void setInstitutionName(final UnitName institutionName) {
-	this.institution = (institutionName != null) ? new DomainReference<Unit>(institutionName.getUnit()) : null;
+	this.institution = (institutionName != null) ? institutionName.getUnit() : null;
     }
 
     public Unit getInstitution() {
-	return (this.institution != null) ? this.institution.getObject() : null;
+	return this.institution;
     }
 
     public Integer getNumberOfPrograms() {
@@ -436,12 +435,11 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
     }
 
     public CurriculumGroup getBranchCurriculumGroup() {
-	return branchCurriculumGroup != null ? branchCurriculumGroup.getObject() : null;
+	return branchCurriculumGroup;
     }
 
     public void setBranchCurriculumGroup(CurriculumGroup branchCurriculumGroup) {
-	this.branchCurriculumGroup = (branchCurriculumGroup != null ? new DomainReference<CurriculumGroup>(branchCurriculumGroup)
-		: null);
+	this.branchCurriculumGroup = (branchCurriculumGroup);
     }
 
     public String getBranchName() {

@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 
 /**
@@ -14,12 +13,12 @@ import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 
 public class InfoSite extends InfoObject implements ISiteComponent {
 
-    private final DomainReference<ExecutionCourseSite> site;
+    private final ExecutionCourseSite site;
 
     private InfoExecutionCourse infoExecutionCourse;
 
     public InfoSite(final ExecutionCourseSite site) {
-	this.site = new DomainReference<ExecutionCourseSite>(site);
+	this.site = site;
     }
 
     /**
@@ -102,6 +101,6 @@ public class InfoSite extends InfoObject implements ISiteComponent {
     }
 
     private ExecutionCourseSite getSite() {
-	return site == null ? null : site.getObject();
+	return site;
     }
 }

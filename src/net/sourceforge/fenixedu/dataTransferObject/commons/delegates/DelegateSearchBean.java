@@ -5,7 +5,6 @@ import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -20,21 +19,21 @@ import org.joda.time.YearMonthDay;
 public class DelegateSearchBean implements Serializable {
     private DegreeType degreeType;
 
-    private DomainReference<Degree> degree;
+    private Degree degree;
 
     private String delegateName;
 
     private Integer studentNumber;
 
-    private DomainReference<Person> delegate;
+    private Person delegate;
 
-    private DomainReference<PersonFunction> delegateFunction;
+    private PersonFunction delegateFunction;
 
     private FunctionType delegateType;
 
-    private DomainReference<CurricularYear> curricularYear;
+    private CurricularYear curricularYear;
 
-    private DomainReference<ExecutionYear> executionYear;
+    private ExecutionYear executionYear;
 
     private DelegateSearchType delegateSearchType;
 
@@ -94,11 +93,11 @@ public class DelegateSearchBean implements Serializable {
     }
 
     public Degree getDegree() {
-	return degree.getObject();
+	return degree;
     }
 
     public void setDegree(Degree degree) {
-	this.degree = new DomainReference<Degree>(degree);
+	this.degree = degree;
     }
 
     public DegreeType getDegreeType() {
@@ -126,11 +125,11 @@ public class DelegateSearchBean implements Serializable {
     }
 
     public Person getDelegate() {
-	return delegate.getObject();
+	return delegate;
     }
 
     public void setDelegate(Person delegate) {
-	this.delegate = new DomainReference<Person>(delegate);
+	this.delegate = delegate;
     }
 
     public FunctionType getDelegateType() {
@@ -142,27 +141,27 @@ public class DelegateSearchBean implements Serializable {
     }
 
     public CurricularYear getCurricularYear() {
-	return curricularYear.getObject();
+	return curricularYear;
     }
 
     public void setCurricularYear(CurricularYear curricularYear) {
-	this.curricularYear = new DomainReference<CurricularYear>(curricularYear);
+	this.curricularYear = curricularYear;
     }
 
     public ExecutionYear getExecutionYear() {
-	return executionYear.getObject();
+	return executionYear;
     }
 
     public void setExecutionYear(ExecutionYear executionYear) {
-	this.executionYear = new DomainReference<ExecutionYear>(executionYear);
+	this.executionYear = executionYear;
     }
 
     public PersonFunction getDelegateFunction() {
-	return delegateFunction.getObject();
+	return delegateFunction;
     }
 
     public void setDelegateFunction(PersonFunction delegateFunction) {
-	this.delegateFunction = new DomainReference<PersonFunction>(delegateFunction);
+	this.delegateFunction = delegateFunction;
     }
 
     public boolean getOnlyActiveDelegates() {

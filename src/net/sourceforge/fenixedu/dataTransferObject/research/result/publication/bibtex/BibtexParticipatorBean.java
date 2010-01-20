@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationCreationBean.ParticipationType;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
@@ -17,17 +16,17 @@ public class BibtexParticipatorBean implements Serializable {
 
     private String bibtexPerson;
 
-    private DomainReference<PersonName> personNameObject;
+    private PersonName personNameObject;
 
-    private DomainReference<Person> person;
+    private Person person;
 
     private String personName;
 
     private ResultParticipationRole personRole;
 
-    private DomainReference<UnitName> organizatioNameObject;
+    private UnitName organizatioNameObject;
 
-    private DomainReference<Unit> organization;
+    private Unit organization;
 
     private String organizationName;
 
@@ -55,11 +54,11 @@ public class BibtexParticipatorBean implements Serializable {
     /**/
 
     public UnitName getOrganizationNameObject() {
-	return organizatioNameObject.getObject();
+	return organizatioNameObject;
     }
 
     public void setOrganizationNameObject(UnitName unitName) {
-	organizatioNameObject = new DomainReference<UnitName>(unitName);
+	organizatioNameObject = unitName;
     }
 
     public Unit getOrganization() {
@@ -80,7 +79,7 @@ public class BibtexParticipatorBean implements Serializable {
     }
 
     public Person getPerson() {
-	PersonName personName = personNameObject.getObject();
+	PersonName personName = personNameObject;
 	return (personName == null) ? null : personName.getPerson();
     }
 
@@ -89,11 +88,11 @@ public class BibtexParticipatorBean implements Serializable {
     }
 
     public PersonName getPersonNameObject() {
-	return personNameObject.getObject();
+	return personNameObject;
     }
 
     public void setPersonNameObject(PersonName personName) {
-	this.personNameObject = new DomainReference<PersonName>(personName);
+	this.personNameObject = personName;
     }
 
     public String getPersonName() {

@@ -8,7 +8,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
@@ -128,7 +127,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
 	private static final long serialVersionUID = 1L;
 
-	private DomainReference<PhdProgramPublicCandidacyHashCode> hashCode;
+	private PhdProgramPublicCandidacyHashCode hashCode;
 
 	private String email;
 	private String name;
@@ -153,11 +152,11 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	}
 
 	public PhdProgramPublicCandidacyHashCode getHashCode() {
-	    return (this.hashCode != null) ? this.hashCode.getObject() : null;
+	    return this.hashCode;
 	}
 
 	public void setHashCode(PhdProgramPublicCandidacyHashCode hashCode) {
-	    this.hashCode = (hashCode != null) ? new DomainReference<PhdProgramPublicCandidacyHashCode>(hashCode) : null;
+	    this.hashCode = hashCode;
 	}
 
 	public String getEmail() {

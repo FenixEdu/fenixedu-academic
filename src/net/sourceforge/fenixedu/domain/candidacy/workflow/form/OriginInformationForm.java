@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.SchoolLevelType;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType;
@@ -33,11 +32,11 @@ public class OriginInformationForm extends Form {
 
     private Integer conclusionYear;
 
-    private DomainReference<Unit> institution;
+    private Unit institution;
 
     private String institutionName;
 
-    private DomainReference<Country> countryWhereFinishedPrecedentDegree;
+    private Country countryWhereFinishedPrecedentDegree;
 
     private Integer numberOfCandidaciesToHigherSchool;
 
@@ -99,28 +98,27 @@ public class OriginInformationForm extends Form {
     }
 
     public UnitName getInstitutionUnitName() {
-	return (institution == null) ? null : institution.getObject().getUnitName();
+	return (institution == null) ? null : institution.getUnitName();
     }
 
     public void setInstitutionUnitName(UnitName institutionUnitName) {
-	this.institution = (institutionUnitName == null) ? null : new DomainReference<Unit>(institutionUnitName.getUnit());
+	this.institution = (institutionUnitName == null) ? null : institutionUnitName.getUnit();
     }
 
     public Country getCountryWhereFinishedPrecedentDegree() {
-	return (this.countryWhereFinishedPrecedentDegree != null) ? this.countryWhereFinishedPrecedentDegree.getObject() : null;
+	return this.countryWhereFinishedPrecedentDegree;
     }
 
     public void setCountryWhereFinishedPrecedentDegree(Country countryWhereFinishedPrecedentDegree) {
-	this.countryWhereFinishedPrecedentDegree = (countryWhereFinishedPrecedentDegree != null) ? new DomainReference<Country>(
-		countryWhereFinishedPrecedentDegree) : null;
+	this.countryWhereFinishedPrecedentDegree = countryWhereFinishedPrecedentDegree;
     }
 
     public Unit getInstitution() {
-	return (this.institution != null) ? this.institution.getObject() : null;
+	return this.institution;
     }
 
     public void setInstitution(Unit unit) {
-	this.institution = (unit != null) ? new DomainReference<Unit>(unit) : null;
+	this.institution = unit;
     }
 
     public Integer getNumberOfCandidaciesToHigherSchool() {

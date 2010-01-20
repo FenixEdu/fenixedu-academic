@@ -5,7 +5,6 @@ package net.sourceforge.fenixedu.dataTransferObject.student;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.student.StudentStatute;
 import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
@@ -19,13 +18,13 @@ public class StudentStatuteBean implements Serializable {
 
     private StudentStatuteType statuteType;
 
-    private DomainReference<ExecutionSemester> executionSemester;
+    private ExecutionSemester executionSemester;
 
-    private DomainReference<StudentStatute> studentStatute;
+    private StudentStatute studentStatute;
 
     public StudentStatuteBean(StudentStatuteType statuteType, ExecutionSemester executionSemester) {
 	this.statuteType = statuteType;
-	this.executionSemester = new DomainReference<ExecutionSemester>(executionSemester);
+	this.executionSemester = executionSemester;
     }
 
     public StudentStatuteBean(StudentStatuteType statuteType) {
@@ -33,16 +32,16 @@ public class StudentStatuteBean implements Serializable {
     }
 
     public StudentStatuteBean(StudentStatute studentStatute, ExecutionSemester executionSemester) {
-	this.executionSemester = new DomainReference<ExecutionSemester>(executionSemester);
-	this.studentStatute = new DomainReference<StudentStatute>(studentStatute);
+	this.executionSemester = executionSemester;
+	this.studentStatute = studentStatute;
     }
 
     public StudentStatuteBean(StudentStatute studentStatute) {
-	this.studentStatute = new DomainReference<StudentStatute>(studentStatute);
+	this.studentStatute = studentStatute;
     }
 
     public ExecutionSemester getExecutionPeriod() {
-	return executionSemester.getObject();
+	return executionSemester;
     }
 
     public StudentStatuteType getStatuteType() {
@@ -50,7 +49,7 @@ public class StudentStatuteBean implements Serializable {
     }
 
     public StudentStatute getStudentStatute() {
-	return studentStatute != null ? studentStatute.getObject() : null;
+	return studentStatute;
     }
 
     public String getBeginPeriodFormatted() {

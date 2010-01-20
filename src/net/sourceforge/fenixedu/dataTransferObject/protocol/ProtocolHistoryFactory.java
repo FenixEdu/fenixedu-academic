@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.protocol;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.protocols.Protocol;
 import net.sourceforge.fenixedu.domain.protocols.ProtocolHistory;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
@@ -12,7 +11,7 @@ import org.joda.time.YearMonthDay;
 
 public abstract class ProtocolHistoryFactory implements Serializable, FactoryExecutor {
 
-    private DomainReference<Protocol> protocol;
+    private Protocol protocol;
 
     public ProtocolHistoryFactory(Protocol protocol) {
 	setProtocol(protocol);
@@ -109,12 +108,12 @@ public abstract class ProtocolHistoryFactory implements Serializable, FactoryExe
     }
 
     public Protocol getProtocol() {
-	return protocol != null ? protocol.getObject() : null;
+	return protocol;
     }
 
     public void setProtocol(Protocol protocol) {
 	if (protocol != null) {
-	    this.protocol = new DomainReference<Protocol>(protocol);
+	    this.protocol = protocol;
 	} else {
 	    this.protocol = null;
 	}

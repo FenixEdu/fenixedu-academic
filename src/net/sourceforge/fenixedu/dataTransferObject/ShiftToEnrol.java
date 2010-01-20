@@ -1,13 +1,12 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 
 public class ShiftToEnrol extends DataTranferObject {
 
-    private DomainReference<ExecutionCourse> executionCourse;
+    private ExecutionCourse executionCourse;
 
     private ShiftType theoricType;
 
@@ -23,19 +22,19 @@ public class ShiftToEnrol extends DataTranferObject {
     private ShiftType trainingType;
     private ShiftType tutorialOrientationType;
 
-    private DomainReference<Shift> theoricShift;
+    private Shift theoricShift;
 
-    private DomainReference<Shift> praticShift;
+    private Shift praticShift;
 
-    private DomainReference<Shift> laboratoryShift;
+    private Shift laboratoryShift;
 
-    private DomainReference<Shift> theoricoPraticShift;
+    private Shift theoricoPraticShift;
 
-    private DomainReference<Shift> fieldWorkShift;
-    private DomainReference<Shift> problemsShift;
-    private DomainReference<Shift> seminaryShift;
-    private DomainReference<Shift> trainingShift;
-    private DomainReference<Shift> tutorialOrientationShift;
+    private Shift fieldWorkShift;
+    private Shift problemsShift;
+    private Shift seminaryShift;
+    private Shift trainingShift;
+    private Shift tutorialOrientationShift;
 
     private boolean enrolled;
 
@@ -48,19 +47,19 @@ public class ShiftToEnrol extends DataTranferObject {
     }
 
     public ExecutionCourse getExecutionCourse() {
-	return executionCourse == null ? null : executionCourse.getObject();
+	return executionCourse;
     }
 
     public void setExecutionCourse(ExecutionCourse executionCourse) {
-	this.executionCourse = executionCourse == null ? null : new DomainReference<ExecutionCourse>(executionCourse);
+	this.executionCourse = executionCourse;
     }
 
     public Shift getLaboratoryShift() {
-	return laboratoryShift == null ? null : laboratoryShift.getObject();
+	return laboratoryShift;
     }
 
     public void setLaboratoryShift(Shift laboratoryShift) {
-	this.laboratoryShift = laboratoryShift == null ? null : new DomainReference<Shift>(laboratoryShift);
+	this.laboratoryShift = laboratoryShift;
     }
 
     public ShiftType getLaboratoryType() {
@@ -72,11 +71,11 @@ public class ShiftToEnrol extends DataTranferObject {
     }
 
     public Shift getPraticShift() {
-	return praticShift == null ? null : praticShift.getObject();
+	return praticShift;
     }
 
     public void setPraticShift(Shift praticShift) {
-	this.praticShift = praticShift == null ? null : new DomainReference<Shift>(praticShift);
+	this.praticShift = praticShift;
     }
 
     public ShiftType getPraticType() {
@@ -88,11 +87,11 @@ public class ShiftToEnrol extends DataTranferObject {
     }
 
     public Shift getTheoricoPraticShift() {
-	return theoricoPraticShift == null ? null : theoricoPraticShift.getObject();
+	return theoricoPraticShift;
     }
 
     public void setTheoricoPraticShift(Shift theoricoPraticShift) {
-	this.theoricoPraticShift = theoricoPraticShift == null ? null : new DomainReference<Shift>(theoricoPraticShift);
+	this.theoricoPraticShift = theoricoPraticShift;
     }
 
     public ShiftType getTheoricoPraticType() {
@@ -104,11 +103,11 @@ public class ShiftToEnrol extends DataTranferObject {
     }
 
     public Shift getTheoricShift() {
-	return theoricShift == null ? null : theoricShift.getObject();
+	return theoricShift;
     }
 
     public void setTheoricShift(Shift theoricShift) {
-	this.theoricShift = theoricShift == null ? null : new DomainReference<Shift>(theoricShift);
+	this.theoricShift = theoricShift;
     }
 
     public ShiftType getTheoricType() {
@@ -160,44 +159,43 @@ public class ShiftToEnrol extends DataTranferObject {
     }
 
     public Shift getFieldWorkShift() {
-	return fieldWorkShift == null ? null : fieldWorkShift.getObject();
+	return fieldWorkShift;
     }
 
     public void setFieldWorkShift(Shift fieldWorkShift) {
-	this.fieldWorkShift = fieldWorkShift == null ? null : new DomainReference<Shift>(fieldWorkShift);
+	this.fieldWorkShift = fieldWorkShift;
     }
 
     public Shift getProblemsShift() {
-	return problemsShift == null ? null : problemsShift.getObject();
+	return problemsShift;
     }
 
     public void setProblemsShift(Shift problemsShift) {
-	this.problemsShift = problemsShift == null ? null : new DomainReference<Shift>(problemsShift);
+	this.problemsShift = problemsShift;
     }
 
     public Shift getSeminaryShift() {
-	return seminaryShift == null ? null : seminaryShift.getObject();
+	return seminaryShift;
     }
 
     public void setSeminaryShift(Shift seminaryShift) {
-	this.seminaryShift = seminaryShift == null ? null : new DomainReference<Shift>(seminaryShift);
+	this.seminaryShift = seminaryShift;
     }
 
     public Shift getTrainingShift() {
-	return trainingShift == null ? null : trainingShift.getObject();
+	return trainingShift;
     }
 
     public void setTrainingShift(Shift trainingShift) {
-	this.trainingShift = trainingShift == null ? null : new DomainReference<Shift>(trainingShift);
+	this.trainingShift = trainingShift;
     }
 
     public Shift getTutorialOrientationShift() {
-	return tutorialOrientationShift == null ? null : tutorialOrientationShift.getObject();
+	return tutorialOrientationShift;
     }
 
     public void setTutorialOrientationShift(Shift tutorialOrientationShift) {
-	this.tutorialOrientationShift = tutorialOrientationShift == null ? null : new DomainReference<Shift>(
-		tutorialOrientationShift);
+	this.tutorialOrientationShift = tutorialOrientationShift;
     }
 
 }

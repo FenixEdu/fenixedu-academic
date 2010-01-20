@@ -48,7 +48,7 @@ public class ImportBibtexBean implements Serializable {
 
     public BibtexPublicationBean getCurrentBibtexPublication() {
 	BibtexPublicationBean bean = bibtexPublications.get(currentPublicationPosition);
-	return (bean != null) ? bean : null;
+	return bean;
     }
 
     public String getCurrentBibtex() {

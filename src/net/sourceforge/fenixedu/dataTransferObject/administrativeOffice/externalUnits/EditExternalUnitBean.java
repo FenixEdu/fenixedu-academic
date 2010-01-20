@@ -1,11 +1,10 @@
 package net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externalUnits;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 public class EditExternalUnitBean extends CreateExternalUnitBean {
 
-    private DomainReference<Unit> externalUnit;
+    private Unit externalUnit;
 
     public EditExternalUnitBean(final Unit unit) {
 	super();
@@ -17,10 +16,10 @@ public class EditExternalUnitBean extends CreateExternalUnitBean {
     }
 
     public Unit getExternalUnit() {
-	return (this.externalUnit != null) ? this.externalUnit.getObject() : null;
+	return this.externalUnit;
     }
 
     public void setExternalUnit(Unit externalUnit) {
-	this.externalUnit = (externalUnit != null) ? new DomainReference<Unit>(externalUnit) : null;
+	this.externalUnit = externalUnit;
     }
 }

@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.messaging;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.messaging.ConversationThread;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -11,14 +10,14 @@ public class CreateConversationMessageBean implements Serializable {
 
     private MultiLanguageString body;
 
-    private DomainReference<Person> creatorReference;
+    private Person creatorReference;
 
-    private DomainReference<ConversationThread> conversationThreadReference;
+    private ConversationThread conversationThreadReference;
 
     public CreateConversationMessageBean() {
 	super();
-	creatorReference = new DomainReference<Person>(null);
-	conversationThreadReference = new DomainReference<ConversationThread>(null);
+	creatorReference = null;
+	conversationThreadReference = null;
     }
 
     public MultiLanguageString getBody() {
@@ -30,21 +29,21 @@ public class CreateConversationMessageBean implements Serializable {
     }
 
     public Person getCreator() {
-	return this.creatorReference.getObject();
+	return this.creatorReference;
 
     }
 
     public void setCreator(Person creator) {
-	this.creatorReference = new DomainReference<Person>(creator);
+	this.creatorReference = creator;
     }
 
     public ConversationThread getConversationThread() {
-	return this.conversationThreadReference.getObject();
+	return this.conversationThreadReference;
 
     }
 
     public void setConversationThread(ConversationThread conversationThread) {
-	this.conversationThreadReference = new DomainReference<ConversationThread>(conversationThread);
+	this.conversationThreadReference = conversationThread;
     }
 
 }

@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain.contacts;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.DomainReference;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -17,7 +16,7 @@ public class PhysicalAddressData implements Serializable {
     private String districtSubdivisionOfResidence;
     private String districtOfResidence;
 
-    private DomainReference<Country> countryOfResidence;
+    private Country countryOfResidence;
 
     public PhysicalAddressData() {
     }
@@ -115,11 +114,11 @@ public class PhysicalAddressData implements Serializable {
     }
 
     public Country getCountryOfResidence() {
-	return (this.countryOfResidence != null) ? this.countryOfResidence.getObject() : null;
+	return this.countryOfResidence;
     }
 
     public PhysicalAddressData setCountryOfResidence(Country countryOfResidence) {
-	this.countryOfResidence = (countryOfResidence != null) ? new DomainReference<Country>(countryOfResidence) : null;
+	this.countryOfResidence = countryOfResidence;
 	return this;
     }
 

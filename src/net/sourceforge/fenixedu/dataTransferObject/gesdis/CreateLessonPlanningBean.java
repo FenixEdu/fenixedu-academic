@@ -2,14 +2,13 @@ package net.sourceforge.fenixedu.dataTransferObject.gesdis;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CreateLessonPlanningBean implements Serializable {
 
-    private DomainReference<ExecutionCourse> executionCourseReference;
+    private ExecutionCourse executionCourseReference;
 
     private MultiLanguageString title;
 
@@ -22,12 +21,11 @@ public class CreateLessonPlanningBean implements Serializable {
     }
 
     public ExecutionCourse getExecutionCourse() {
-	return (this.executionCourseReference != null) ? this.executionCourseReference.getObject() : null;
+	return this.executionCourseReference;
     }
 
     public void setExecutionCourse(ExecutionCourse executionCourseReference) {
-	this.executionCourseReference = (executionCourseReference != null) ? new DomainReference<ExecutionCourse>(
-		executionCourseReference) : null;
+	this.executionCourseReference = executionCourseReference;
     }
 
     public ShiftType getLessonType() {

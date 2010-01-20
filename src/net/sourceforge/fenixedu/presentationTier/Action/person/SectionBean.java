@@ -2,20 +2,19 @@ package net.sourceforge.fenixedu.presentationTier.Action.person;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class SectionBean implements Serializable {
 
-    private DomainReference<Container> container;
+    private Container container;
 
     private MultiLanguageString name;
 
     private boolean visible;
 
-    private DomainReference<Section> nextSection;
+    private Section nextSection;
 
     public SectionBean(Container container) {
 	setContainer(container);
@@ -23,11 +22,11 @@ public class SectionBean implements Serializable {
     }
 
     public void setContainer(Container container) {
-	this.container = new DomainReference<Container>(container);
+	this.container = container;
     }
 
     public Container getContainer() {
-	return this.container.getObject();
+	return this.container;
     }
 
     public MultiLanguageString getName() {
@@ -47,11 +46,11 @@ public class SectionBean implements Serializable {
     }
 
     public void setNextSection(Section section) {
-	this.nextSection = new DomainReference<Section>(section);
+	this.nextSection = section;
     }
 
     public Section getNextSection() {
-	return this.nextSection.getObject();
+	return this.nextSection;
     }
 
 }

@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.teacherCredits;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingForDepartmentAdmOfficeCE;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingForTeacherCE;
@@ -17,7 +16,7 @@ public class TeacherCreditsPeriodBean implements Serializable {
     private DateTime beginForDepartmentAdmOffice;
     private DateTime endForDepartmentAdmOffice;
 
-    private DomainReference<ExecutionSemester> executionPeriodReference;
+    private ExecutionSemester executionPeriodReference;
 
     private boolean teacher;
 
@@ -33,11 +32,11 @@ public class TeacherCreditsPeriodBean implements Serializable {
     }
 
     public ExecutionSemester getExecutionPeriod() {
-	return executionPeriodReference != null ? executionPeriodReference.getObject() : null;
+	return executionPeriodReference;
     }
 
     public void setExecutionPeriod(ExecutionSemester executionSemester) {
-	executionPeriodReference = executionSemester != null ? new DomainReference<ExecutionSemester>(executionSemester) : null;
+	executionPeriodReference = executionSemester;
     }
 
     public DateTime getBeginForTeacher() {

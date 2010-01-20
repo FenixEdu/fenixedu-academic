@@ -2,17 +2,16 @@ package net.sourceforge.fenixedu.dataTransferObject.department;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
 
 public class ExpectationEvaluationGroupBean implements Serializable {
 
-    private DomainReference<ExecutionYear> executionYearReference;
+    private ExecutionYear executionYearReference;
 
-    private DomainReference<Teacher> appraiserReference;
+    private Teacher appraiserReference;
 
-    private DomainReference<Teacher> evaluatedReference;
+    private Teacher evaluatedReference;
 
     public ExpectationEvaluationGroupBean(Teacher teacher, ExecutionYear executionYear) {
 	setAppraiser(teacher);
@@ -20,26 +19,26 @@ public class ExpectationEvaluationGroupBean implements Serializable {
     }
 
     public ExecutionYear getExecutionYear() {
-	return (this.executionYearReference != null) ? this.executionYearReference.getObject() : null;
+	return this.executionYearReference;
     }
 
     public void setExecutionYear(ExecutionYear executionYear) {
-	this.executionYearReference = (executionYear != null) ? new DomainReference<ExecutionYear>(executionYear) : null;
+	this.executionYearReference = executionYear;
     }
 
     public Teacher getAppraiser() {
-	return (this.appraiserReference != null) ? this.appraiserReference.getObject() : null;
+	return this.appraiserReference;
     }
 
     public void setAppraiser(Teacher teacher) {
-	this.appraiserReference = (teacher != null) ? new DomainReference<Teacher>(teacher) : null;
+	this.appraiserReference = teacher;
     }
 
     public Teacher getEvaluated() {
-	return (this.evaluatedReference != null) ? this.evaluatedReference.getObject() : null;
+	return this.evaluatedReference;
     }
 
     public void setEvaluated(Teacher teacher) {
-	this.evaluatedReference = (teacher != null) ? new DomainReference<Teacher>(teacher) : null;
+	this.evaluatedReference = teacher;
     }
 }

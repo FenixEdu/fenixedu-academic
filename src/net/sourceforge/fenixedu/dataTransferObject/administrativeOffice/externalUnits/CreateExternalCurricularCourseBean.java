@@ -2,12 +2,11 @@ package net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externa
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 public class CreateExternalCurricularCourseBean implements Serializable {
 
-    private DomainReference<Unit> parentUnit;
+    private Unit parentUnit;
     private String name;
     private String code;
     private boolean enrolStudent;
@@ -23,11 +22,11 @@ public class CreateExternalCurricularCourseBean implements Serializable {
     }
 
     public Unit getParentUnit() {
-	return (this.parentUnit != null) ? this.parentUnit.getObject() : null;
+	return this.parentUnit;
     }
 
     public void setParentUnit(Unit parentUnit) {
-	this.parentUnit = (parentUnit != null) ? new DomainReference<Unit>(parentUnit) : null;
+	this.parentUnit = parentUnit;
     }
 
     public String getCode() {

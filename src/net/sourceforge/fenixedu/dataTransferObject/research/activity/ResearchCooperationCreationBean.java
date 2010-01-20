@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.research.activity;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 import net.sourceforge.fenixedu.domain.research.activity.Cooperation;
@@ -15,9 +14,9 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ResearchCooperationCreationBean implements Serializable {
 
-    private DomainReference<Cooperation> cooperation;
+    private Cooperation cooperation;
 
-    private DomainReference<UnitName> unitNameObject;
+    private UnitName unitNameObject;
 
     private ResearchActivityParticipationRole role;
 
@@ -49,11 +48,11 @@ public class ResearchCooperationCreationBean implements Serializable {
     }
 
     public Cooperation getCooperation() {
-	return cooperation.getObject();
+	return cooperation;
     }
 
     public void setCooperation(Cooperation cooperation) {
-	this.cooperation = new DomainReference<Cooperation>(cooperation);
+	this.cooperation = cooperation;
     }
 
     public CooperationType getType() {
@@ -131,11 +130,11 @@ public class ResearchCooperationCreationBean implements Serializable {
     }
 
     public UnitName getUnitNameObject() {
-	return unitNameObject.getObject();
+	return unitNameObject;
     }
 
     public void setUnitNameObject(UnitName unitName) {
-	this.unitNameObject = new DomainReference<UnitName>(unitName);
+	this.unitNameObject = unitName;
     }
 
     public Unit getUnit() {

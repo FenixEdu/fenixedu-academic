@@ -5,7 +5,6 @@ package net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candida
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacySituationType;
 import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
 import net.sourceforge.fenixedu.domain.util.workflow.StateBean;
@@ -16,7 +15,7 @@ import net.sourceforge.fenixedu.domain.util.workflow.StateBean;
  */
 public class SelectDFACandidacyBean extends StateBean implements Serializable {
 
-    private DomainReference<DFACandidacy> candidacy;
+    private DFACandidacy candidacy;
 
     private String remarks;
 
@@ -25,7 +24,7 @@ public class SelectDFACandidacyBean extends StateBean implements Serializable {
     public SelectDFACandidacyBean(DFACandidacy candidacy) {
 	super();
 	if (candidacy != null) {
-	    this.candidacy = new DomainReference<DFACandidacy>(candidacy);
+	    this.candidacy = candidacy;
 	    if (candidacy.getActiveCandidacySituation().getCandidacySituationType().equals(CandidacySituationType.SUBSTITUTE)) {
 		setSelectionSituation(CandidacySituationType.SUBSTITUTE);
 	    }
@@ -41,11 +40,11 @@ public class SelectDFACandidacyBean extends StateBean implements Serializable {
     }
 
     public DFACandidacy getCandidacy() {
-	return (this.candidacy == null) ? null : this.candidacy.getObject();
+	return this.candidacy;
     }
 
     public void setCandidacy(DFACandidacy candidacy) {
-	this.candidacy = (candidacy != null) ? new DomainReference<DFACandidacy>(candidacy) : null;
+	this.candidacy = candidacy;
     }
 
     public Integer getOrder() {

@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
@@ -19,11 +18,11 @@ public class CycleEnrolmentBean implements Serializable {
 
     private static final long serialVersionUID = -7926077929745839701L;
 
-    private DomainReference<StudentCurricularPlan> studentCurricularPlan;
+    private StudentCurricularPlan studentCurricularPlan;
 
-    private DomainReference<ExecutionSemester> executionSemester;
+    private ExecutionSemester executionSemester;
 
-    private DomainReference<CycleCourseGroup> cycleCourseGroupToEnrol;
+    private CycleCourseGroup cycleCourseGroupToEnrol;
 
     private CycleType sourceCycleAffinity;
 
@@ -44,29 +43,27 @@ public class CycleEnrolmentBean implements Serializable {
     }
 
     public StudentCurricularPlan getStudentCurricularPlan() {
-	return (this.studentCurricularPlan != null) ? this.studentCurricularPlan.getObject() : null;
+	return this.studentCurricularPlan;
     }
 
     public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
-	this.studentCurricularPlan = (studentCurricularPlan != null) ? new DomainReference<StudentCurricularPlan>(
-		studentCurricularPlan) : null;
+	this.studentCurricularPlan = studentCurricularPlan;
     }
 
     public ExecutionSemester getExecutionPeriod() {
-	return (this.executionSemester != null) ? this.executionSemester.getObject() : null;
+	return this.executionSemester;
     }
 
     public void setExecutionPeriod(ExecutionSemester executionSemester) {
-	this.executionSemester = (executionSemester != null) ? new DomainReference<ExecutionSemester>(executionSemester) : null;
+	this.executionSemester = executionSemester;
     }
 
     public CycleCourseGroup getCycleCourseGroupToEnrol() {
-	return (this.cycleCourseGroupToEnrol != null) ? this.cycleCourseGroupToEnrol.getObject() : null;
+	return this.cycleCourseGroupToEnrol;
     }
 
     public void setCycleCourseGroupToEnrol(CycleCourseGroup cycleCourseGroup) {
-	this.cycleCourseGroupToEnrol = (cycleCourseGroup != null) ? new DomainReference<CycleCourseGroup>(cycleCourseGroup)
-		: null;
+	this.cycleCourseGroupToEnrol = cycleCourseGroup;
     }
 
     public CycleType getSourceCycleAffinity() {

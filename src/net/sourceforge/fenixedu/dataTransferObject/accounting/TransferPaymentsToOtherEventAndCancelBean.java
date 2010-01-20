@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.accounting;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 
@@ -13,11 +12,11 @@ public class TransferPaymentsToOtherEventAndCancelBean implements Serializable {
      */
     private static final long serialVersionUID = -2180918685540833101L;
 
-    private DomainReference<Event> sourceEvent;
+    private Event sourceEvent;
 
-    private DomainReference<Event> targetEvent;
+    private Event targetEvent;
 
-    private DomainReference<Employee> employee;
+    private Employee employee;
 
     private String cancelJustification;
 
@@ -27,27 +26,27 @@ public class TransferPaymentsToOtherEventAndCancelBean implements Serializable {
     }
 
     public Event getTargetEvent() {
-	return (this.targetEvent != null) ? this.targetEvent.getObject() : null;
+	return this.targetEvent;
     }
 
     public void setTargetEvent(Event event) {
-	this.targetEvent = (event != null) ? new DomainReference<Event>(event) : null;
+	this.targetEvent = event;
     }
 
     public Event getSourceEvent() {
-	return (this.sourceEvent != null) ? this.sourceEvent.getObject() : null;
+	return this.sourceEvent;
     }
 
     public void setSourceEvent(Event event) {
-	this.sourceEvent = (event != null) ? new DomainReference<Event>(event) : null;
+	this.sourceEvent = event;
     }
 
     public Employee getEmployee() {
-	return (this.employee != null) ? this.employee.getObject() : null;
+	return this.employee;
     }
 
     public void setEmployee(Employee employee) {
-	this.employee = (employee != null) ? new DomainReference<Employee>(employee) : null;
+	this.employee = employee;
     }
 
     public String getCancelJustification() {

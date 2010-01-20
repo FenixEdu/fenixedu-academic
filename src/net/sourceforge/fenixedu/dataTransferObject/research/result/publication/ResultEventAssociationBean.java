@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.activity.EventType;
 import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
@@ -11,8 +10,8 @@ import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import org.joda.time.YearMonthDay;
 
 public class ResultEventAssociationBean implements Serializable {
-    private DomainReference<ResearchEvent> event;
-    private DomainReference<EventEdition> eventEdition;
+    private ResearchEvent event;
+    private EventEdition eventEdition;
     private String eventName;
     private EventType eventType;
     private ScopeType locationType;
@@ -84,19 +83,19 @@ public class ResultEventAssociationBean implements Serializable {
     }
 
     public ResearchEvent getEvent() {
-	return event.getObject();
+	return event;
     }
 
     public void setEvent(ResearchEvent event) {
-	this.event = new DomainReference<ResearchEvent>(event);
+	this.event = event;
     }
 
     public EventEdition getEventEdition() {
-	return (eventEdition != null) ? eventEdition.getObject() : null;
+	return eventEdition;
     }
 
     public void setEventEdition(EventEdition eventEdition) {
-	this.eventEdition = (eventEdition != null) ? new DomainReference<EventEdition>(eventEdition) : null;
+	this.eventEdition = eventEdition;
     }
 
     public String getEdition() {

@@ -4,13 +4,12 @@ import java.io.Serializable;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.research.activity.Cooperation;
 import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
 
 public class CooperationParticipantBean extends ParticipantBean implements Serializable {
 
-    DomainReference<Cooperation> cooperation;
+    Cooperation cooperation;
 
     public CooperationParticipantBean() {
 	super();
@@ -18,11 +17,11 @@ public class CooperationParticipantBean extends ParticipantBean implements Seria
     }
 
     public Cooperation getCooperation() {
-	return this.cooperation.getObject();
+	return this.cooperation;
     }
 
     public void setCooperation(Cooperation cooperation) {
-	this.cooperation = new DomainReference<Cooperation>(cooperation);
+	this.cooperation = cooperation;
     }
 
     @Override

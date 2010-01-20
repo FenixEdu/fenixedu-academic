@@ -2,14 +2,13 @@ package net.sourceforge.fenixedu.presentationTier.Action.teacher.tests;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.tests.NewQuestionGroup;
 import net.sourceforge.fenixedu.domain.tests.NewQuestionType;
 
 public class AtomicQuestionBean implements Serializable {
     private NewQuestionType questionType;
 
-    private DomainReference<NewQuestionGroup> parentQuestionGroup;
+    private NewQuestionGroup parentQuestionGroup;
 
     public AtomicQuestionBean(NewQuestionGroup parentQuestionGroup) {
 	super();
@@ -26,10 +25,10 @@ public class AtomicQuestionBean implements Serializable {
     }
 
     public NewQuestionGroup getParentQuestionGroup() {
-	return parentQuestionGroup.getObject();
+	return parentQuestionGroup;
     }
 
     public void setParentQuestionGroup(NewQuestionGroup parentQuestionGroup) {
-	this.parentQuestionGroup = new DomainReference<NewQuestionGroup>(parentQuestionGroup);
+	this.parentQuestionGroup = parentQuestionGroup;
     }
 }

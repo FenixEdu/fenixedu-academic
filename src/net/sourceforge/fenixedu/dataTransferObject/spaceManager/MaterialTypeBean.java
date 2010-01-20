@@ -1,34 +1,32 @@
 package net.sourceforge.fenixedu.dataTransferObject.spaceManager;
 
 import net.sourceforge.fenixedu.dataTransferObject.resourceManager.MaterialBean;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.material.Material;
 import net.sourceforge.fenixedu.domain.space.SpaceInformation;
 
 public class MaterialTypeBean extends MaterialBean {
 
-    private DomainReference<SpaceInformation> spaceInformationReference;
+    private SpaceInformation spaceInformationReference;
 
-    private DomainReference<Material> materialReference;
+    private Material materialReference;
 
     public MaterialTypeBean(SpaceInformation spaceInformationReference) {
 	setSpaceInformation(spaceInformationReference);
     }
 
     public void setSpaceInformation(SpaceInformation spaceInformationReference) {
-	this.spaceInformationReference = (spaceInformationReference != null) ? new DomainReference<SpaceInformation>(
-		spaceInformationReference) : null;
+	this.spaceInformationReference = spaceInformationReference;
     }
 
     public SpaceInformation getSpaceInformation() {
-	return (this.spaceInformationReference != null) ? this.spaceInformationReference.getObject() : null;
+	return this.spaceInformationReference;
     }
 
     public void setMaterial(Material material) {
-	this.materialReference = (material != null) ? new DomainReference<Material>(material) : null;
+	this.materialReference = material;
     }
 
     public Material getMaterial() {
-	return (this.materialReference != null) ? this.materialReference.getObject() : null;
+	return this.materialReference;
     }
 }

@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesCourseResult;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesTeachingResult;
@@ -18,13 +17,13 @@ import net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesTeachingResult;
  */
 public class StudentInquiriesCourseResultBean implements Serializable {
 
-    private DomainReference<StudentInquiriesCourseResult> studentInquiriesCourseResult;
+    private StudentInquiriesCourseResult studentInquiriesCourseResult;
 
-    private List<DomainReference<StudentInquiriesTeachingResult>> studentInquiriesTeachingResults = new ArrayList<DomainReference<StudentInquiriesTeachingResult>>();
+    private List<StudentInquiriesTeachingResult> studentInquiriesTeachingResults = new ArrayList<StudentInquiriesTeachingResult>();
 
     public StudentInquiriesCourseResultBean(final StudentInquiriesCourseResult studentInquiriesCourseResult) {
 	super();
-	this.studentInquiriesCourseResult = new DomainReference<StudentInquiriesCourseResult>(studentInquiriesCourseResult);
+	this.studentInquiriesCourseResult = studentInquiriesCourseResult;
     }
 
     public ExecutionDegree getExecutionDegree() {
@@ -32,27 +31,25 @@ public class StudentInquiriesCourseResultBean implements Serializable {
     }
 
     public StudentInquiriesCourseResult getStudentInquiriesCourseResult() {
-	return studentInquiriesCourseResult.getObject();
+	return studentInquiriesCourseResult;
     }
 
     public List<StudentInquiriesTeachingResult> getStudentInquiriesTeachingResults() {
 	List<StudentInquiriesTeachingResult> result = new ArrayList<StudentInquiriesTeachingResult>();
-	for (DomainReference<StudentInquiriesTeachingResult> domainReference : studentInquiriesTeachingResults) {
-	    result.add(domainReference.getObject());
+	for (StudentInquiriesTeachingResult domainReference : studentInquiriesTeachingResults) {
+	    result.add(domainReference);
 	}
 	return result;
     }
 
     public void setStudentInquiriesTeachingResults(List<StudentInquiriesTeachingResult> studentInquiriesTeachingResults) {
 	for (StudentInquiriesTeachingResult studentInquiriesTeachingResult : studentInquiriesTeachingResults) {
-	    this.studentInquiriesTeachingResults.add(new DomainReference<StudentInquiriesTeachingResult>(
-		    studentInquiriesTeachingResult));
+	    this.studentInquiriesTeachingResults.add(studentInquiriesTeachingResult);
 	}
     }
 
     public void addStudentInquiriesTeachingResult(StudentInquiriesTeachingResult studentInquiriesTeachingResult) {
-	this.studentInquiriesTeachingResults.add(new DomainReference<StudentInquiriesTeachingResult>(
-		studentInquiriesTeachingResult));
+	this.studentInquiriesTeachingResults.add(studentInquiriesTeachingResult);
     }
 
     public boolean isToImproove() {

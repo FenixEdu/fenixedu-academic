@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 
@@ -17,7 +16,7 @@ abstract public class CreatePostingRuleBean implements Serializable {
 
     private DateTime startDate;
 
-    private DomainReference<ServiceAgreementTemplate> serviceAgreementTemplate;
+    private ServiceAgreementTemplate serviceAgreementTemplate;
 
     private Class<? extends PostingRule> rule;
 
@@ -44,12 +43,11 @@ abstract public class CreatePostingRuleBean implements Serializable {
     }
 
     public ServiceAgreementTemplate getServiceAgreementTemplate() {
-	return (this.serviceAgreementTemplate != null) ? this.serviceAgreementTemplate.getObject() : null;
+	return this.serviceAgreementTemplate;
     }
 
     public void setServiceAgreementTemplate(ServiceAgreementTemplate serviceAgreementTemplate) {
-	this.serviceAgreementTemplate = (serviceAgreementTemplate != null) ? new DomainReference<ServiceAgreementTemplate>(
-		serviceAgreementTemplate) : null;
+	this.serviceAgreementTemplate = serviceAgreementTemplate;
     }
 
     public Class<? extends PostingRule> getRule() {

@@ -1,12 +1,11 @@
 package net.sourceforge.fenixedu.domain.elections;
 
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.student.Student;
 
 public class DelegateElectionResultsByStudentDTO extends DataTranferObject {
-    private DomainReference<Student> student;
-    private DomainReference<DelegateElection> election;
+    private Student student;
+    private DelegateElection election;
     private Integer votesNumber;
     private Double votesPercentage;
     private Double votesRelativePercentage;
@@ -27,19 +26,19 @@ public class DelegateElectionResultsByStudentDTO extends DataTranferObject {
     }
 
     public Student getStudent() {
-	return (student == null ? null : student.getObject());
+	return (student);
     }
 
     public void setStudent(Student student) {
-	this.student = new DomainReference<Student>(student);
+	this.student = student;
     }
 
     public DelegateElection getElection() {
-	return (election == null ? null : election.getObject());
+	return (election);
     }
 
     public void setElection(DelegateElection election) {
-	this.election = new DomainReference<DelegateElection>(election);
+	this.election = election;
     }
 
     public Integer getVotesNumber() {

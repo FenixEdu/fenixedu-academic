@@ -31,7 +31,7 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
 	init(candidacy, AccessControl.getPerson());
 	registerCandidacy(registrationAgreement, cycleType, studentNumber);
 
-	((StudentCandidacy) candidacy).setIngression(ingression != null ? ingression : null);
+	((StudentCandidacy) candidacy).setIngression(ingression);
 	((StudentCandidacy) candidacy).setEntryPhase(entryPhase);
     }
 

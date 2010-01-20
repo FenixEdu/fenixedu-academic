@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.student
 import java.io.Serializable;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 
@@ -15,7 +14,7 @@ public class CurriculumModuleBean implements Serializable {
     private List<DegreeModuleToEnrol> groupsToEnrol;
     private List<DegreeModuleToEnrol> curricularCoursesToEnrol;
 
-    private DomainReference<CurriculumModule> curriculumModule;
+    private CurriculumModule curriculumModule;
 
     public List<CurriculumModuleBean> getCurricularCoursesEnroled() {
 	return curricularCoursesEnroled;
@@ -50,11 +49,11 @@ public class CurriculumModuleBean implements Serializable {
     }
 
     public CurriculumModule getCurriculumModule() {
-	return (this.curriculumModule == null) ? null : this.curriculumModule.getObject();
+	return this.curriculumModule;
     }
 
     public void setCurriculumModule(CurriculumModule curriculumModule) {
-	this.curriculumModule = (curriculumModule != null) ? new DomainReference<CurriculumModule>(curriculumModule) : null;
+	this.curriculumModule = curriculumModule;
     }
 
 }

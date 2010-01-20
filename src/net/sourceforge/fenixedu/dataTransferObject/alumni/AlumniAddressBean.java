@@ -4,16 +4,15 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.Alumni;
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 
 public class AlumniAddressBean implements Serializable {
 
-    private DomainReference<Alumni> alumni;
+    private Alumni alumni;
     private String address;
     private String areaCode;
     private String areaOfAreaCode;
-    private DomainReference<Country> country;
+    private Country country;
 
     public AlumniAddressBean(Alumni alumni) {
 	setAlumni(alumni);
@@ -28,11 +27,11 @@ public class AlumniAddressBean implements Serializable {
     }
 
     public void setAlumni(Alumni alumni) {
-	this.alumni = (alumni != null) ? new DomainReference<Alumni>(alumni) : null;
+	this.alumni = alumni;
     }
 
     public Alumni getAlumni() {
-	return (this.alumni != null) ? this.alumni.getObject() : null;
+	return this.alumni;
     }
 
     public String getAddress() {
@@ -60,11 +59,11 @@ public class AlumniAddressBean implements Serializable {
     }
 
     public Country getCountry() {
-	return (this.country != null) ? this.country.getObject() : null;
+	return this.country;
     }
 
     public void setCountry(Country country) {
-	this.country = (country != null) ? new DomainReference<Country>(country) : null;
+	this.country = country;
     }
 
 }

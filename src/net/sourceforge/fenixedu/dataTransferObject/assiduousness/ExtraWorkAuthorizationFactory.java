@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.EmployeeExtraWorkAuthorization;
@@ -24,13 +23,13 @@ public class ExtraWorkAuthorizationFactory implements FactoryExecutor, Serializa
 
     Integer payingCostCenterCode;
 
-    DomainReference<Unit> workingUnit;
+    Unit workingUnit;
 
-    DomainReference<Unit> payingUnit;
+    Unit payingUnit;
 
-    DomainReference<Employee> modifiedBy;
+    Employee modifiedBy;
 
-    DomainReference<ExtraWorkAuthorization> extraWorkAuthorization;
+    ExtraWorkAuthorization extraWorkAuthorization;
 
     List<EmployeeExtraWorkAuthorizationBean> employeesExtraWorkAuthorizations = new ArrayList<EmployeeExtraWorkAuthorizationBean>();
 
@@ -117,48 +116,48 @@ public class ExtraWorkAuthorizationFactory implements FactoryExecutor, Serializa
     }
 
     public Employee getModifiedBy() {
-	return modifiedBy == null ? null : modifiedBy.getObject();
+	return modifiedBy;
     }
 
     public void setModifiedBy(Employee modifiedBy) {
 	if (modifiedBy != null) {
-	    this.modifiedBy = new DomainReference<Employee>(modifiedBy);
+	    this.modifiedBy = modifiedBy;
 	} else {
 	    this.modifiedBy = null;
 	}
     }
 
     public Unit getPayingUnit() {
-	return payingUnit == null ? null : payingUnit.getObject();
+	return payingUnit;
     }
 
     public void setPayingUnit(Unit payingUnit) {
 	if (payingUnit != null) {
-	    this.payingUnit = new DomainReference<Unit>(payingUnit);
+	    this.payingUnit = payingUnit;
 	} else {
 	    this.payingUnit = null;
 	}
     }
 
     public Unit getWorkingUnit() {
-	return workingUnit == null ? null : workingUnit.getObject();
+	return workingUnit;
     }
 
     public void setWorkingUnit(Unit workingUnit) {
 	if (workingUnit != null) {
-	    this.workingUnit = new DomainReference<Unit>(workingUnit);
+	    this.workingUnit = workingUnit;
 	} else {
 	    this.workingUnit = null;
 	}
     }
 
     public ExtraWorkAuthorization getExtraWorkAuthorization() {
-	return extraWorkAuthorization == null ? null : extraWorkAuthorization.getObject();
+	return extraWorkAuthorization;
     }
 
     public void setExtraWorkAuthorization(ExtraWorkAuthorization extraWorkAuthorization) {
 	if (extraWorkAuthorization != null) {
-	    this.extraWorkAuthorization = new DomainReference<ExtraWorkAuthorization>(extraWorkAuthorization);
+	    this.extraWorkAuthorization = extraWorkAuthorization;
 	} else {
 	    this.extraWorkAuthorization = null;
 	}

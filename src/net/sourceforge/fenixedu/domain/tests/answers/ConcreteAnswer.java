@@ -3,9 +3,7 @@ package net.sourceforge.fenixedu.domain.tests.answers;
 import java.io.Serializable;
 import java.util.List;
 
-import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.domain.DomainReference;
 
 public class ConcreteAnswer implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -17,14 +15,10 @@ public class ConcreteAnswer implements Serializable {
     }
 
     public ConcreteAnswer(List<? extends DomainObject> answer) {
-	this.answer = CollectionUtils.toReferences(answer);
+	this.answer = answer;
     }
 
     public Object getAnswer() {
-	if (answer instanceof List) {
-	    return CollectionUtils.toObjects((List<DomainReference<DomainObject>>) answer);
-	}
-
 	return answer;
     }
 
@@ -42,20 +36,17 @@ public class ConcreteAnswer implements Serializable {
      * public void setDateAnswer(DateTime answer) { this.answer = answer; }
      * 
      * public List<NewChoice> getMultipleChoiceAnswer() { List<NewChoice>
-     * choices = new ArrayList<NewChoice>(); List<DomainReference<NewChoice>>
-     * answer = (List<DomainReference<NewChoice>>) this.answer;
+     * choices = new ArrayList<NewChoice>(); List<NewChoice> answer =
+     * (List<NewChoice>) this.answer;
      * 
-     * for(DomainReference<NewChoice> choice : answer) {
-     * choices.add(choice.getObject()); }
+     * for(NewChoice choice : answer) { choices.add(choice.getObject()); }
      * 
      * return choices; }
      * 
      * public void setMultipleChoiceAnswer(List<NewChoice> answer) {
-     * List<DomainReference<NewChoice>> choices = new
-     * ArrayList<DomainReference<NewChoice>>();
+     * List<NewChoice> choices = new ArrayList<NewChoice>();
      * 
-     * for(NewChoice choice : answer) { choices.add(new
-     * DomainReference<NewChoice>(choice)); }
+     * for(NewChoice choice : answer) { choices.add(new NewChoice(choice)); }
      * 
      * this.answer = choices; }
      */

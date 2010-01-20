@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
@@ -18,16 +17,16 @@ public class ItemCreator implements Serializable {
     private boolean visible;
     private boolean showName;
 
-    private DomainReference<Section> section;
-    private DomainReference<Item> nextItem;
+    private Section section;
+    private Item nextItem;
 
     private Group permittedGroup;
 
     public ItemCreator(Section section) {
 	super();
 
-	this.section = new DomainReference<Section>(section);
-	this.nextItem = new DomainReference<Item>(null);
+	this.section = section;
+	this.nextItem = null;
 	this.visible = true;
 	this.showName = true;
 	this.permittedGroup = new EveryoneGroup();
@@ -66,15 +65,15 @@ public class ItemCreator implements Serializable {
     }
 
     public Item getNextItem() {
-	return this.nextItem.getObject();
+	return this.nextItem;
     }
 
     public void setNextItem(Item nextItem) {
-	this.nextItem = new DomainReference<Item>(nextItem);
+	this.nextItem = nextItem;
     }
 
     public Section getSection() {
-	return this.section.getObject();
+	return this.section;
     }
 
     public Group getPermittedGroup() {

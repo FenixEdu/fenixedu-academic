@@ -119,7 +119,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 
     protected void init(Registration registration, Person responsiblePerson, DateTime stateDate) {
 	setStateDate(stateDate != null ? stateDate : new DateTime());
-	setRegistration(registration != null ? registration : null);
+	setRegistration(registration);
 	setResponsiblePerson(selectPerson(responsiblePerson));
     }
 

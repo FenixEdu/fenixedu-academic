@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.accounting;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.util.Money;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
@@ -11,7 +10,7 @@ public class CreditNoteEntryDTO implements Serializable {
 
     private boolean selected;
 
-    private DomainReference<Entry> entry;
+    private Entry entry;
 
     private Money amountToPay;
 
@@ -42,11 +41,11 @@ public class CreditNoteEntryDTO implements Serializable {
     }
 
     public Entry getEntry() {
-	return (this.entry != null) ? this.entry.getObject() : null;
+	return this.entry;
     }
 
     public void setEntry(Entry entry) {
-	this.entry = (entry != null) ? new DomainReference<Entry>(entry) : null;
+	this.entry = entry;
     }
 
     public LabelFormatter getDescription() {

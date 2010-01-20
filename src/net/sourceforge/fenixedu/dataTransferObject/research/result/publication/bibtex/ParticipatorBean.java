@@ -2,14 +2,13 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result.publication.
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 
 public class ParticipatorBean implements Serializable {
 
     private String personName;
 
-    private DomainReference<Person> person;
+    private Person person;
 
     // private boolean other = false;
 
@@ -25,11 +24,11 @@ public class ParticipatorBean implements Serializable {
     }
 
     public Person getPerson() {
-	return (this.person == null) ? null : this.person.getObject();
+	return this.person;
     }
 
     public void setPerson(Person person) {
-	this.person = (person != null) ? new DomainReference<Person>(person) : null;
+	this.person = person;
     }
 
     public String getPersonName() {

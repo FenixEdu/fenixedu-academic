@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.teacher;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -13,9 +12,9 @@ public class RoomsReserveBean implements Serializable {
 
     private MultiLanguageString description;
 
-    private DomainReference<Person> personReference;
+    private Person personReference;
 
-    private DomainReference<PunctualRoomsOccupationRequest> requestReference;
+    private PunctualRoomsOccupationRequest requestReference;
 
     public RoomsReserveBean(Person requestor) {
 	setRequestor(requestor);
@@ -27,19 +26,19 @@ public class RoomsReserveBean implements Serializable {
     }
 
     public Person getRequestor() {
-	return (this.personReference != null) ? this.personReference.getObject() : null;
+	return this.personReference;
     }
 
     public void setRequestor(Person requestor) {
-	this.personReference = (requestor != null) ? new DomainReference<Person>(requestor) : null;
+	this.personReference = requestor;
     }
 
     public PunctualRoomsOccupationRequest getReserveRequest() {
-	return (this.requestReference != null) ? this.requestReference.getObject() : null;
+	return this.requestReference;
     }
 
     public void setReserveRequest(PunctualRoomsOccupationRequest request) {
-	this.requestReference = (request != null) ? new DomainReference<PunctualRoomsOccupationRequest>(request) : null;
+	this.requestReference = request;
     }
 
     public MultiLanguageString getDescription() {

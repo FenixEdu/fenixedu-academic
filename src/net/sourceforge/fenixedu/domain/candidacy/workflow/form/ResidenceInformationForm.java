@@ -6,7 +6,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.District;
 import net.sourceforge.fenixedu.domain.DistrictSubdivision;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.util.workflow.Form;
@@ -32,15 +31,15 @@ public class ResidenceInformationForm extends Form {
 
     private String parishOfResidence;
 
-    private DomainReference<District> districtOfResidence;
+    private District districtOfResidence;
 
-    private DomainReference<DistrictSubdivision> districtSubdivisionOfResidence;
+    private DistrictSubdivision districtSubdivisionOfResidence;
 
     private Boolean dislocatedFromPermanentResidence;
 
-    private DomainReference<District> schoolTimeDistrictOfResidence;
+    private District schoolTimeDistrictOfResidence;
 
-    private DomainReference<DistrictSubdivision> schoolTimeDistrictSubdivisionOfResidence;
+    private DistrictSubdivision schoolTimeDistrictSubdivisionOfResidence;
 
     private String schoolTimeAddress;
 
@@ -52,7 +51,7 @@ public class ResidenceInformationForm extends Form {
 
     private String schoolTimeParishOfResidence;
 
-    private DomainReference<Country> countryOfResidence;
+    private Country countryOfResidence;
 
     public ResidenceInformationForm() {
 	super();
@@ -136,20 +135,19 @@ public class ResidenceInformationForm extends Form {
     }
 
     public District getDistrictOfResidence() {
-	return (this.districtOfResidence != null) ? this.districtOfResidence.getObject() : null;
+	return this.districtOfResidence;
     }
 
     public void setDistrictOfResidence(District district) {
-	this.districtOfResidence = (district != null) ? new DomainReference<District>(district) : null;
+	this.districtOfResidence = district;
     }
 
     public DistrictSubdivision getDistrictSubdivisionOfResidence() {
-	return (this.districtSubdivisionOfResidence != null) ? this.districtSubdivisionOfResidence.getObject() : null;
+	return this.districtSubdivisionOfResidence;
     }
 
     public void setDistrictSubdivisionOfResidence(DistrictSubdivision districtSubdivision) {
-	this.districtSubdivisionOfResidence = (districtSubdivision != null) ? new DomainReference<DistrictSubdivision>(
-		districtSubdivision) : null;
+	this.districtSubdivisionOfResidence = districtSubdivision;
     }
 
     public String getParishOfResidence() {
@@ -161,11 +159,11 @@ public class ResidenceInformationForm extends Form {
     }
 
     public Country getCountryOfResidence() {
-	return (this.countryOfResidence != null) ? this.countryOfResidence.getObject() : null;
+	return this.countryOfResidence;
     }
 
     public void setCountryOfResidence(Country countryOfResidence) {
-	this.countryOfResidence = (countryOfResidence != null) ? new DomainReference<Country>(countryOfResidence) : null;
+	this.countryOfResidence = countryOfResidence;
     }
 
     public Boolean getDislocatedFromPermanentResidence() {
@@ -177,21 +175,19 @@ public class ResidenceInformationForm extends Form {
     }
 
     public District getSchoolTimeDistrictOfResidence() {
-	return (this.schoolTimeDistrictOfResidence != null) ? this.schoolTimeDistrictOfResidence.getObject() : null;
+	return this.schoolTimeDistrictOfResidence;
     }
 
     public void setSchoolTimeDistrictOfResidence(District district) {
-	this.schoolTimeDistrictOfResidence = (district != null) ? new DomainReference<District>(district) : null;
+	this.schoolTimeDistrictOfResidence = district;
     }
 
     public DistrictSubdivision getSchoolTimeDistrictSubdivisionOfResidence() {
-	return (this.schoolTimeDistrictSubdivisionOfResidence != null) ? this.schoolTimeDistrictSubdivisionOfResidence
-		.getObject() : null;
+	return this.schoolTimeDistrictSubdivisionOfResidence;
     }
 
     public void setSchoolTimeDistrictSubdivisionOfResidence(DistrictSubdivision districtSubdivision) {
-	this.schoolTimeDistrictSubdivisionOfResidence = (districtSubdivision != null) ? new DomainReference<DistrictSubdivision>(
-		districtSubdivision) : null;
+	this.schoolTimeDistrictSubdivisionOfResidence = districtSubdivision;
     }
 
     public String getSchoolTimeAddress() {

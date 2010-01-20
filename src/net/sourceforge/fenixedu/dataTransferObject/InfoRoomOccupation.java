@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.space.EventSpaceOccupation;
 import net.sourceforge.fenixedu.util.DiaSemana;
@@ -17,10 +16,10 @@ import net.sourceforge.fenixedu.util.DiaSemana;
  */
 public class InfoRoomOccupation extends InfoObject {
 
-    private DomainReference<EventSpaceOccupation> roomOccupationDomainReference;
+    private EventSpaceOccupation roomOccupationDomainReference;
 
     public InfoRoomOccupation(final EventSpaceOccupation roomOccupation) {
-	roomOccupationDomainReference = new DomainReference<EventSpaceOccupation>(roomOccupation);
+	roomOccupationDomainReference = roomOccupation;
     }
 
     public static InfoRoomOccupation newInfoFromDomain(final EventSpaceOccupation roomOccupation) {
@@ -28,7 +27,7 @@ public class InfoRoomOccupation extends InfoObject {
     }
 
     private EventSpaceOccupation getRoomOccupation() {
-	return roomOccupationDomainReference == null ? null : roomOccupationDomainReference.getObject();
+	return roomOccupationDomainReference;
     }
 
     public FrequencyType getFrequency() {

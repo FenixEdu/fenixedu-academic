@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.util.workflow.Form;
 
@@ -22,7 +21,7 @@ public class FiliationForm extends Form {
 
     private YearMonthDay dateOfBirth;
 
-    private DomainReference<Country> nationality;
+    private Country nationality;
 
     private String parishOfBirth;
 
@@ -34,7 +33,7 @@ public class FiliationForm extends Form {
 
     private String motherName;
 
-    private DomainReference<Country> countryOfBirth;
+    private Country countryOfBirth;
 
     public FiliationForm() {
 	super();
@@ -103,11 +102,11 @@ public class FiliationForm extends Form {
     }
 
     public Country getNationality() {
-	return (this.nationality != null) ? this.nationality.getObject() : null;
+	return this.nationality;
     }
 
     public void setNationality(Country nationality) {
-	this.nationality = (nationality != null) ? new DomainReference<Country>(nationality) : null;
+	this.nationality = nationality;
     }
 
     public String getParishOfBirth() {
@@ -119,11 +118,11 @@ public class FiliationForm extends Form {
     }
 
     public Country getCountryOfBirth() {
-	return (this.countryOfBirth != null) ? this.countryOfBirth.getObject() : null;
+	return this.countryOfBirth;
     }
 
     public void setCountryOfBirth(Country countryOfBirth) {
-	this.countryOfBirth = (countryOfBirth != null) ? new DomainReference<Country>(countryOfBirth) : null;
+	this.countryOfBirth = countryOfBirth;
     }
 
     @Override

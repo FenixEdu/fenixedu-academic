@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.person;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -16,11 +15,11 @@ public class PersonFileSourceBean implements PersonFileSource {
      */
     private static final long serialVersionUID = 1L;
 
-    private DomainReference<Unit> unit;
+    private Unit unit;
     private int count;
 
     public PersonFileSourceBean(Unit unit) {
-	this.unit = new DomainReference<Unit>(unit);
+	this.unit = unit;
 	this.count = -1;
     }
 
@@ -29,7 +28,7 @@ public class PersonFileSourceBean implements PersonFileSource {
     }
 
     public Unit getUnit() {
-	return this.unit.getObject();
+	return this.unit;
     }
 
     public int getCount() {

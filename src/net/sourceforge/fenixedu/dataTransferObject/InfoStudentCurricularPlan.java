@@ -14,7 +14,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -31,10 +30,10 @@ import org.apache.commons.collections.comparators.ComparatorChain;
  */
 public class InfoStudentCurricularPlan extends InfoObject implements Serializable, Comparable {
 
-    private final DomainReference<StudentCurricularPlan> studentCurricularPlan;
+    private final StudentCurricularPlan studentCurricularPlan;
 
     public InfoStudentCurricularPlan(final StudentCurricularPlan studentCurricularPlan) {
-	this.studentCurricularPlan = new DomainReference<StudentCurricularPlan>(studentCurricularPlan);
+	this.studentCurricularPlan = studentCurricularPlan;
     }
 
     public boolean equals(Object obj) {
@@ -159,7 +158,7 @@ public class InfoStudentCurricularPlan extends InfoObject implements Serializabl
     }
 
     public StudentCurricularPlan getStudentCurricularPlan() {
-	return studentCurricularPlan == null ? null : studentCurricularPlan.getObject();
+	return studentCurricularPlan;
     }
 
 }

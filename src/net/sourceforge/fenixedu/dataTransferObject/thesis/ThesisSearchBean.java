@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.thesis;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.Person;
@@ -24,7 +23,7 @@ public class ThesisSearchBean implements Serializable {
 
     private ThesisLibraryState state;
 
-    private DomainReference<ExecutionYear> year;
+    private ExecutionYear year;
 
     public ThesisSearchBean() {
 	ExecutionYear last = null;
@@ -93,10 +92,10 @@ public class ThesisSearchBean implements Serializable {
     }
 
     public ExecutionYear getYear() {
-	return (this.year != null) ? this.year.getObject() : null;
+	return this.year;
     }
 
     public void setYear(ExecutionYear year) {
-	this.year = (year != null) ? new DomainReference<ExecutionYear>(year) : null;
+	this.year = year;
     }
 }

@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
@@ -19,21 +18,21 @@ public class FixedSetGroup extends LeafGroup {
 
     private static final long serialVersionUID = 1L;
 
-    private final List<DomainReference<Person>> persons;
+    private final List<Person> persons;
 
     protected FixedSetGroup() {
 	super();
 
-	this.persons = new ArrayList<DomainReference<Person>>();
+	this.persons = new ArrayList<Person>();
     }
 
     @Override
     public String getName() {
-	Iterator<DomainReference<Person>> iter = persons.iterator();
+	Iterator<Person> iter = persons.iterator();
 	Person person;
 	String name = new String();
 	while (iter.hasNext()) {
-	    person = iter.next().getObject();
+	    person = iter.next();
 	    name += person.getName();
 	    if (iter.hasNext())
 		name += "\n";
@@ -45,7 +44,7 @@ public class FixedSetGroup extends LeafGroup {
 	this();
 
 	for (Person person : persons) {
-	    this.persons.add(new DomainReference<Person>(person));
+	    this.persons.add(person);
 	}
     }
 
@@ -53,7 +52,7 @@ public class FixedSetGroup extends LeafGroup {
 	this();
 
 	for (Person person : persons) {
-	    this.persons.add(new DomainReference<Person>(person));
+	    this.persons.add(person);
 	}
     }
 
@@ -61,8 +60,8 @@ public class FixedSetGroup extends LeafGroup {
     public Set<Person> getElements() {
 	Set<Person> elements = super.buildSet();
 
-	for (DomainReference<Person> reference : this.persons) {
-	    Person person = reference.getObject();
+	for (Person reference : this.persons) {
+	    Person person = reference;
 
 	    if (person != null) {
 		elements.add(person);

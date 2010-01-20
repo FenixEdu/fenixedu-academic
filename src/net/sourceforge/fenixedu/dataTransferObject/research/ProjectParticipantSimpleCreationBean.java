@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.research;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.domain.research.project.ProjectParticipation;
@@ -10,7 +9,7 @@ import net.sourceforge.fenixedu.domain.research.project.ProjectParticipation.Pro
 
 public class ProjectParticipantSimpleCreationBean implements Serializable {
 
-    private DomainReference<Person> person;
+    private Person person;
     private ProjectParticipationType role;
     private String personName;
 
@@ -31,15 +30,15 @@ public class ProjectParticipantSimpleCreationBean implements Serializable {
     }
 
     public Person getPerson() {
-	return (this.person == null) ? null : this.person.getObject();
+	return this.person;
     }
 
     public void setPerson(Person person) {
-	this.person = (person != null) ? new DomainReference<Person>(person) : null;
+	this.person = person;
     }
 
     public ExternalContract getExternalPerson() {
-	return (this.person == null) ? null : this.person.getObject().getExternalContract();
+	return (this.person == null) ? null : this.person.getExternalContract();
     }
 
     public void setExternalPerson(ExternalContract externalPerson) {

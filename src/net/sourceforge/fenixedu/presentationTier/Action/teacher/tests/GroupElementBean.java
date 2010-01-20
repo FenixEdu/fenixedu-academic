@@ -2,15 +2,14 @@ package net.sourceforge.fenixedu.presentationTier.Action.teacher.tests;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.tests.NewQuestion;
 import net.sourceforge.fenixedu.domain.tests.NewQuestionGroup;
 
 public class GroupElementBean implements Serializable {
 
-    DomainReference<NewQuestionGroup> parent;
+    NewQuestionGroup parent;
 
-    DomainReference<NewQuestion> child;
+    NewQuestion child;
 
     public GroupElementBean(NewQuestion child) {
 	super();
@@ -20,19 +19,19 @@ public class GroupElementBean implements Serializable {
     }
 
     public NewQuestion getChild() {
-	return child.getObject();
+	return child;
     }
 
     public void setChild(NewQuestion child) {
-	this.child = new DomainReference<NewQuestion>(child);
+	this.child = child;
     }
 
     public NewQuestionGroup getParent() {
-	return parent.getObject();
+	return parent;
     }
 
     public void setParent(NewQuestionGroup parent) {
-	this.parent = new DomainReference<NewQuestionGroup>(parent);
+	this.parent = parent;
     }
 
 }

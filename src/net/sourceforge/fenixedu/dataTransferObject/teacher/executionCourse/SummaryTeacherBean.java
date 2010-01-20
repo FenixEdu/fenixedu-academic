@@ -2,13 +2,12 @@ package net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Professorship;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class SummaryTeacherBean implements Serializable {
 
-    private DomainReference<Professorship> professorshipReference;
+    private Professorship professorshipReference;
 
     private Boolean others;
 
@@ -35,11 +34,11 @@ public class SummaryTeacherBean implements Serializable {
     }
 
     public Professorship getProfessorship() {
-	return (this.professorshipReference != null) ? this.professorshipReference.getObject() : null;
+	return this.professorshipReference;
     }
 
     public void setProfessorship(Professorship professorship) {
-	this.professorshipReference = (professorship != null) ? new DomainReference<Professorship>(professorship) : null;
+	this.professorshipReference = professorship;
     }
 
     public String getLabel() {

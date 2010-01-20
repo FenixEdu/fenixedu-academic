@@ -32,7 +32,7 @@ public abstract class QueueJob extends QueueJob_Base {
     public boolean getIsNotDoneAndCancelled() {
 	boolean cancelled = false;
 	List<QueueJob> undoneJobs = RootDomainObject.getInstance().getQueueJobUndone();
-	if(undoneJobs.contains(this) == false) {
+	if (undoneJobs.contains(this) == false) {
 	    cancelled = true;
 	}
 	return (!getDone()) && (cancelled);
@@ -41,7 +41,7 @@ public abstract class QueueJob extends QueueJob_Base {
     public boolean getIsNotDoneAndNotCancelled() {
 	boolean cancelled = false;
 	List<QueueJob> undoneJobs = RootDomainObject.getInstance().getQueueJobUndone();
-	if(undoneJobs.contains(this) == false) {
+	if (undoneJobs.contains(this) == false) {
 	    cancelled = true;
 	}
 	return (!getDone()) && (!cancelled);

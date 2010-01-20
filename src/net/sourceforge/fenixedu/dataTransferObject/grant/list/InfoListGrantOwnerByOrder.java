@@ -9,7 +9,6 @@ import java.text.DecimalFormatSymbols;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.util.NameUtils;
 
@@ -21,7 +20,7 @@ import org.apache.commons.lang.StringUtils;
  */
 public class InfoListGrantOwnerByOrder extends InfoObject {
 
-    private final DomainReference<GrantOwner> domainReference;
+    private final GrantOwner domainReference;
 
     private Integer contractNumber;
     // Only used in the list of grant owner by criteria
@@ -51,11 +50,11 @@ public class InfoListGrantOwnerByOrder extends InfoObject {
     private Double valueOfGrantPayment = 0.0;
 
     public InfoListGrantOwnerByOrder(final GrantOwner domainObject) {
-	domainReference = new DomainReference<GrantOwner>(domainObject);
+	domainReference = domainObject;
     }
 
     public GrantOwner getGrantOwner() {
-	return domainReference == null ? null : domainReference.getObject();
+	return domainReference;
     }
 
     @Override

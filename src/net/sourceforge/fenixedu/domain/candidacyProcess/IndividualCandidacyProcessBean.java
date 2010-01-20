@@ -6,7 +6,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
@@ -21,11 +20,11 @@ abstract public class IndividualCandidacyProcessBean implements Serializable {
     // this must be set to false if you want to use external persons
     private Boolean internalPersonCandidacy = Boolean.TRUE;
 
-    private DomainReference<CandidacyProcess> candidacyProcess;
+    private CandidacyProcess candidacyProcess;
 
-    private DomainReference<DegreeOfficePublicCandidacyHashCode> publicCandidacyHashCode;
+    private DegreeOfficePublicCandidacyHashCode publicCandidacyHashCode;
 
-    private DomainReference<IndividualCandidacyProcess> individualCandidacyProcess;
+    private IndividualCandidacyProcess individualCandidacyProcess;
 
     private ChoosePersonBean choosePersonBean;
 
@@ -74,11 +73,11 @@ abstract public class IndividualCandidacyProcessBean implements Serializable {
     }
 
     public CandidacyProcess getCandidacyProcess() {
-	return (this.candidacyProcess != null) ? this.candidacyProcess.getObject() : null;
+	return this.candidacyProcess;
     }
 
     public void setCandidacyProcess(CandidacyProcess candidacyProcess) {
-	this.candidacyProcess = (candidacyProcess != null) ? new DomainReference<CandidacyProcess>(candidacyProcess) : null;
+	this.candidacyProcess = candidacyProcess;
     }
 
     public boolean hasCandidacyProcess() {
@@ -192,22 +191,19 @@ abstract public class IndividualCandidacyProcessBean implements Serializable {
     }
 
     public IndividualCandidacyProcess getIndividualCandidacyProcess() {
-	return this.individualCandidacyProcess != null ? this.individualCandidacyProcess.getObject() : null;
+	return this.individualCandidacyProcess;
     }
 
     public void setIndividualCandidacyProcess(IndividualCandidacyProcess individualCandidacyProcess) {
-	this.individualCandidacyProcess = individualCandidacyProcess != null ? new DomainReference<IndividualCandidacyProcess>(
-		individualCandidacyProcess) : null;
+	this.individualCandidacyProcess = individualCandidacyProcess;
     }
 
     public DegreeOfficePublicCandidacyHashCode getPublicCandidacyHashCode() {
-	return (this.publicCandidacyHashCode != null) ? this.publicCandidacyHashCode.getObject() : null;
+	return this.publicCandidacyHashCode;
     }
 
     public void setPublicCandidacyHashCode(DegreeOfficePublicCandidacyHashCode publicCandidacyHashCode) {
-	this.publicCandidacyHashCode = (publicCandidacyHashCode != null) ? new DomainReference<DegreeOfficePublicCandidacyHashCode>(
-		publicCandidacyHashCode)
-		: null;
+	this.publicCandidacyHashCode = publicCandidacyHashCode;
     }
 
     public String getObservations() {

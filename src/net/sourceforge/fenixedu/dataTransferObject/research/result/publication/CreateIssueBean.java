@@ -2,14 +2,13 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import net.sourceforge.fenixedu.util.Month;
 
 public class CreateIssueBean implements Serializable {
 
-    private DomainReference<ScientificJournal> journal;
+    private ScientificJournal journal;
     private String journalName = null;
     private String scientificJournalName;
     private ScopeType location;
@@ -35,15 +34,15 @@ public class CreateIssueBean implements Serializable {
     }
 
     public CreateIssueBean() {
-	journal = new DomainReference<ScientificJournal>(null);
+	journal = null;
     }
 
     public ScientificJournal getJournal() {
-	return journal.getObject();
+	return journal;
     }
 
     public void setJournal(ScientificJournal journal) {
-	this.journal = new DomainReference<ScientificJournal>(journal);
+	this.journal = journal;
     }
 
     public String getJournalName() {
@@ -55,7 +54,7 @@ public class CreateIssueBean implements Serializable {
     }
 
     public Boolean getJournalAlreadyChosen() {
-	return journal.getObject() != null;
+	return journal != null;
     }
 
     public Boolean getIssueAlreadyChosen() {

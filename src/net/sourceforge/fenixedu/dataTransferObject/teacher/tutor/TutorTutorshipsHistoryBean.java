@@ -4,12 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Teacher;
 
 public class TutorTutorshipsHistoryBean implements Serializable {
 
-    private DomainReference<Teacher> teacher;
+    private Teacher teacher;
 
     private List<StudentsByTutorBean> activeTutorshipsByEntryYear;
 
@@ -44,11 +43,11 @@ public class TutorTutorshipsHistoryBean implements Serializable {
     }
 
     public Teacher getTeacher() {
-	return (teacher == null ? null : teacher.getObject());
+	return (teacher);
     }
 
     public void setTeacher(Teacher teacher) {
-	this.teacher = new DomainReference<Teacher>(teacher);
+	this.teacher = teacher;
     }
 
     public Integer getNumberOfCurrentTutorships() {

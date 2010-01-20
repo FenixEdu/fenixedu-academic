@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.domain.DomainReference;
 
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
@@ -74,11 +73,11 @@ public class VariantBean implements Serializable {
     }
 
     public DomainObject getDomainObject() {
-	return Type.DOMAIN_REFERENCE.equals(type) ? ((DomainReference<DomainObject>) (this.value)).getObject() : null;
+	return Type.DOMAIN_REFERENCE.equals(type) ? ((DomainObject) (this.value)) : null;
     }
 
     public void setDomainObject(DomainObject domainObject) {
-	this.value = new DomainReference<DomainObject>(domainObject);
+	this.value = domainObject;
 	setType(Type.DOMAIN_REFERENCE);
     }
 

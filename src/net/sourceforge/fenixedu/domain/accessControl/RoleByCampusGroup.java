@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain.accessControl;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
@@ -14,15 +13,15 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 public abstract class RoleByCampusGroup extends Group {
 
     private final RoleType roleType;
-    private final DomainReference<Campus> campus;
+    private final Campus campus;
 
     public RoleByCampusGroup(RoleType type, Campus campus) {
 	this.roleType = type;
-	this.campus = new DomainReference<Campus>(campus);
+	this.campus = campus;
     }
 
     public Campus getCampus() {
-	return campus.getObject();
+	return campus;
     }
 
     @Override

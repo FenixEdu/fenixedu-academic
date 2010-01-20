@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.messaging;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -13,14 +12,14 @@ public class CreateConversationThreadAndMessageBean implements Serializable {
 
     private MultiLanguageString body;
 
-    private DomainReference<Person> creatorReference;
+    private Person creatorReference;
 
-    private DomainReference<Forum> forumReference;
+    private Forum forumReference;
 
     public CreateConversationThreadAndMessageBean() {
 	super();
-	creatorReference = new DomainReference<Person>(null);
-	forumReference = new DomainReference<Forum>(null);
+	creatorReference = null;
+	forumReference = null;
     }
 
     public MultiLanguageString getSubject() {
@@ -40,21 +39,21 @@ public class CreateConversationThreadAndMessageBean implements Serializable {
     }
 
     public Person getCreator() {
-	return this.creatorReference.getObject();
+	return this.creatorReference;
 
     }
 
     public void setCreator(Person creator) {
-	this.creatorReference = new DomainReference<Person>(creator);
+	this.creatorReference = creator;
     }
 
     public Forum getForum() {
-	return this.forumReference.getObject();
+	return this.forumReference;
 
     }
 
     public void setForum(Forum forum) {
-	this.forumReference = new DomainReference<Forum>(forum);
+	this.forumReference = forum;
     }
 
 }

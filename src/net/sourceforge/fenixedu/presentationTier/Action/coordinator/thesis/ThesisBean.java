@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ChangeThesisPerson.PersonTarget;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
@@ -24,16 +23,16 @@ public class ThesisBean implements Serializable {
      */
     private static final long serialVersionUID = 1L;
 
-    private DomainReference<Student> student;
+    private Student student;
 
     private PersonTarget targetType;
-    private DomainReference<ThesisEvaluationParticipant> target;
+    private ThesisEvaluationParticipant target;
 
-    private DomainReference<Degree> degree;
+    private Degree degree;
     private boolean internal;
     private String rawPersonName;
-    private DomainReference<PersonName> personName;
-    private DomainReference<UnitName> unitName;
+    private PersonName personName;
+    private UnitName unitName;
     private String rawUnitName;
 
     private MultiLanguageString title;
@@ -42,16 +41,16 @@ public class ThesisBean implements Serializable {
     private String mark;
     private DateTime discussion;
 
-    private DomainReference<Thesis> thesis;
+    private Thesis thesis;
 
     public ThesisBean() {
 	super();
 
-	this.degree = new DomainReference<Degree>(null);
-	this.student = new DomainReference<Student>(null);
-	this.personName = new DomainReference<PersonName>(null);
-	this.unitName = new DomainReference<UnitName>(null);
-	this.target = new DomainReference<ThesisEvaluationParticipant>(null);
+	this.degree = null;
+	this.student = null;
+	this.personName = null;
+	this.unitName = null;
+	this.target = null;
 
 	this.internal = true;
     }
@@ -62,19 +61,19 @@ public class ThesisBean implements Serializable {
     }
 
     public Degree getDegree() {
-	return this.degree.getObject();
+	return this.degree;
     }
 
     public void setDegree(Degree degree) {
-	this.degree = new DomainReference<Degree>(degree);
+	this.degree = degree;
     }
 
     public Student getStudent() {
-	return this.student.getObject();
+	return this.student;
     }
 
     public void setStudent(Student student) {
-	this.student = new DomainReference<Student>(student);
+	this.student = student;
     }
 
     public PersonTarget getTargetType() {
@@ -86,11 +85,11 @@ public class ThesisBean implements Serializable {
     }
 
     public ThesisEvaluationParticipant getTarget() {
-	return this.target.getObject();
+	return this.target;
     }
 
     public void setTarget(ThesisEvaluationParticipant target) {
-	this.target = new DomainReference<ThesisEvaluationParticipant>(target);
+	this.target = target;
     }
 
     public Person getPerson() {
@@ -104,7 +103,7 @@ public class ThesisBean implements Serializable {
     }
 
     public PersonName getPersonName() {
-	return this.personName.getObject();
+	return this.personName;
     }
 
     public boolean isInternal() {
@@ -116,7 +115,7 @@ public class ThesisBean implements Serializable {
     }
 
     public void setPersonName(PersonName personName) {
-	this.personName = new DomainReference<PersonName>(personName);
+	this.personName = personName;
     }
 
     public Unit getUnit() {
@@ -130,11 +129,11 @@ public class ThesisBean implements Serializable {
     }
 
     public UnitName getUnitName() {
-	return this.unitName.getObject();
+	return this.unitName;
     }
 
     public void setUnitName(UnitName unitName) {
-	this.unitName = new DomainReference<UnitName>(unitName);
+	this.unitName = unitName;
     }
 
     public String getRawPersonName() {
@@ -194,11 +193,11 @@ public class ThesisBean implements Serializable {
     }
 
     public Thesis getThesis() {
-	return thesis == null ? null : thesis.getObject();
+	return thesis;
     }
 
     public void setThesis(final Thesis thesis) {
-	this.thesis = thesis == null ? null : new DomainReference<Thesis>(thesis);
+	this.thesis = thesis;
     }
 
 }

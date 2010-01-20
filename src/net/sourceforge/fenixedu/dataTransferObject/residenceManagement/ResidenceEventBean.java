@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.residenceManagement;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResidenceManagementUnit;
 import net.sourceforge.fenixedu.domain.residence.ResidenceYear;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -15,7 +14,7 @@ public class ResidenceEventBean implements Serializable {
     private String userName;
     private String fiscalNumber;
     private String name;
-    private DomainReference<Student> student;
+    private Student student;
     private Money roomValue;
     private String statusMessage;
     private String room;
@@ -70,11 +69,11 @@ public class ResidenceEventBean implements Serializable {
     }
 
     public void setStudent(Student student) {
-	this.student = new DomainReference<Student>(student);
+	this.student = student;
     }
 
     public Student getStudent() {
-	return this.student.getObject();
+	return this.student;
     }
 
     public String getStatusMessage() {

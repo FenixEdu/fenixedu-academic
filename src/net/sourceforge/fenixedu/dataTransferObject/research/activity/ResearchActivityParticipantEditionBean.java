@@ -3,14 +3,13 @@ package net.sourceforge.fenixedu.dataTransferObject.research.activity;
 import java.io.Serializable;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.research.activity.Participation;
 import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ResearchActivityParticipantEditionBean implements Serializable {
 
-    private DomainReference<Participation> participation;
+    private Participation participation;
     private ResearchActivityParticipationRole role;
     private MultiLanguageString roleMessage;
 
@@ -30,11 +29,11 @@ public class ResearchActivityParticipantEditionBean implements Serializable {
     }
 
     public Participation getParticipation() {
-	return participation.getObject();
+	return participation;
     }
 
     public void setParticipation(Participation participation) {
-	this.participation = new DomainReference<Participation>(participation);
+	this.participation = participation;
     }
 
     public ResearchActivityParticipationRole getRole() {

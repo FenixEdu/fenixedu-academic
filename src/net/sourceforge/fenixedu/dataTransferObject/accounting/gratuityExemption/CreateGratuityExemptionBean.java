@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.dataTransferObject.accounting.gratuityExemption
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemptionJustificationType;
 import net.sourceforge.fenixedu.util.Money;
@@ -12,7 +11,7 @@ import org.joda.time.YearMonthDay;
 
 public class CreateGratuityExemptionBean implements Serializable {
 
-    private DomainReference<GratuityEvent> gratuityEvent;
+    private GratuityEvent gratuityEvent;
 
     private GratuityExemptionJustificationType exemptionJustificationType;
 
@@ -48,11 +47,11 @@ public class CreateGratuityExemptionBean implements Serializable {
     }
 
     public GratuityEvent getGratuityEvent() {
-	return (gratuityEvent != null) ? this.gratuityEvent.getObject() : null;
+	return (gratuityEvent != null) ? this.gratuityEvent : null;
     }
 
     public void setGratuityEvent(GratuityEvent gratuityEvent) {
-	this.gratuityEvent = (gratuityEvent != null) ? new DomainReference<GratuityEvent>(gratuityEvent) : null;
+	this.gratuityEvent = gratuityEvent;
     }
 
     public BigDecimal getPercentage() {

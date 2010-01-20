@@ -1,11 +1,10 @@
 package net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externalUnits;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
 
 public class EditExternalCurricularCourseBean extends CreateExternalCurricularCourseBean {
 
-    private DomainReference<ExternalCurricularCourse> externalCurricularCourse;
+    private ExternalCurricularCourse externalCurricularCourse;
 
     public EditExternalCurricularCourseBean(final ExternalCurricularCourse externalCurricularCourse) {
 	setParentUnit(externalCurricularCourse.getUnit());
@@ -18,12 +17,11 @@ public class EditExternalCurricularCourseBean extends CreateExternalCurricularCo
     }
 
     public ExternalCurricularCourse getExternalCurricularCourse() {
-	return (this.externalCurricularCourse != null) ? this.externalCurricularCourse.getObject() : null;
+	return this.externalCurricularCourse;
     }
 
     public void setExternalCurricularCourse(final ExternalCurricularCourse externalCurricularCourse) {
-	this.externalCurricularCourse = (externalCurricularCourse != null) ? new DomainReference<ExternalCurricularCourse>(
-		externalCurricularCourse) : null;
+	this.externalCurricularCourse = externalCurricularCourse;
     }
 
 }

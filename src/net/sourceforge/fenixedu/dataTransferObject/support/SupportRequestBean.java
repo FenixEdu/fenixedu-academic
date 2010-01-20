@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.support;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.log.requests.ErrorLog;
@@ -13,11 +12,11 @@ public class SupportRequestBean implements Serializable {
 
     private String responseEmail;
     private SupportRequestType requestType;
-    private DomainReference<Content> requestContext;
+    private Content requestContext;
     private String subject;
     private String message;
     private SupportRequestPriority requestPriority;
-    private DomainReference<ErrorLog> errorLog;
+    private ErrorLog errorLog;
 
     public SupportRequestBean() {
     }
@@ -31,11 +30,11 @@ public class SupportRequestBean implements Serializable {
     }
 
     public void setRequestContext(Content content) {
-	this.requestContext = (content != null) ? new DomainReference<Content>(content) : null;
+	this.requestContext = content;
     }
 
     public Content getRequestContext() {
-	return (this.requestContext != null) ? this.requestContext.getObject() : null;
+	return this.requestContext;
     }
 
     public String getResponseEmail() {
@@ -79,11 +78,11 @@ public class SupportRequestBean implements Serializable {
     }
 
     public ErrorLog getErrorLog() {
-	return (this.errorLog != null) ? this.errorLog.getObject() : null;
+	return this.errorLog;
     }
 
     public void setErrorLog(ErrorLog errorLog) {
-	this.errorLog = (errorLog != null) ? new DomainReference<ErrorLog>(errorLog) : null;
+	this.errorLog = errorLog;
     }
 
 }

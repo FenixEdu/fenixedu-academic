@@ -2,12 +2,11 @@ package net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.g
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.MarkSheet;
 
 public class MarkSheetToConfirmSendMailBean implements Serializable {
 
-    private DomainReference<MarkSheet> markSheet;
+    private MarkSheet markSheet;
     private boolean toSubmit;
 
     public MarkSheetToConfirmSendMailBean(MarkSheet markSheet, boolean toSubmit) {
@@ -16,11 +15,11 @@ public class MarkSheetToConfirmSendMailBean implements Serializable {
     }
 
     public MarkSheet getMarkSheet() {
-	return (this.markSheet != null) ? this.markSheet.getObject() : null;
+	return this.markSheet;
     }
 
     public void setMarkSheet(MarkSheet markSheet) {
-	this.markSheet = (markSheet != null) ? new DomainReference<MarkSheet>(markSheet) : null;
+	this.markSheet = markSheet;
     }
 
     public boolean isToSubmit() {

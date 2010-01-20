@@ -8,22 +8,21 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
-import pt.ist.fenixWebFramework.util.DomainReference;
 
 public class ManageThesisContext implements Serializable {
 
-    private DomainReference<ExecutionDegree> executionDegree = null;
+    private ExecutionDegree executionDegree = null;
 
     public ManageThesisContext(final ExecutionDegree executionDegree) {
 	setExecutionDegree(executionDegree);
     }
 
     public ExecutionDegree getExecutionDegree() {
-	return executionDegree == null ? null : executionDegree.getObject();
+	return executionDegree;
     }
 
     public void setExecutionDegree(ExecutionDegree executionDegree) {
-	this.executionDegree = executionDegree == null ? null : new DomainReference<ExecutionDegree>(executionDegree);
+	this.executionDegree = executionDegree;
     }
 
     public ExecutionDegree getPreviousExecutionDegree() {

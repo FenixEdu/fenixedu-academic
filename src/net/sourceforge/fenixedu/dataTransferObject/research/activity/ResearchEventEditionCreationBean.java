@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.research.activity;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
 
@@ -10,7 +9,7 @@ import org.joda.time.YearMonthDay;
 
 public class ResearchEventEditionCreationBean extends ResearchEventCreationBean implements Serializable {
 
-    private DomainReference<EventEdition> edition;
+    private EventEdition edition;
     private ResearchActivityParticipationRole editionRole;
     private String eventEditionName;
     private YearMonthDay endDate;
@@ -45,15 +44,15 @@ public class ResearchEventEditionCreationBean extends ResearchEventCreationBean 
 
     public ResearchEventEditionCreationBean() {
 	super();
-	this.edition = new DomainReference<EventEdition>(null);
+	this.edition = null;
     }
 
     public EventEdition getEventEdition() {
-	return this.edition.getObject();
+	return this.edition;
     }
 
     public void setEventEdition(EventEdition edition) {
-	this.edition = new DomainReference<EventEdition>(edition);
+	this.edition = edition;
     }
 
     public YearMonthDay getEndDate() {

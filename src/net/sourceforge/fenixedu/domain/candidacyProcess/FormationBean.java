@@ -5,7 +5,6 @@ import java.util.Set;
 import java.util.UUID;
 
 import net.sourceforge.fenixedu.dataTransferObject.alumni.formation.IFormation;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
@@ -23,20 +22,20 @@ public class FormationBean implements Serializable, IFormation {
     private String formationBeginYear;
     private String formationEndYear;
 
-    private DomainReference<Formation> formation;
+    private Formation formation;
 
     private String designation;
 
     private Boolean concluded;
 
     private String institutionName;
-    private DomainReference<Unit> institutionUnit;
+    private Unit institutionUnit;
 
     private String id;
 
     private String conclusionGrade;
 
-    private DomainReference<ExecutionYear> conclusionExecutionYear;
+    private ExecutionYear conclusionExecutionYear;
 
     public FormationBean(Boolean hasConcluded) {
 	this.id = UUID.randomUUID().toString();
@@ -74,11 +73,11 @@ public class FormationBean implements Serializable, IFormation {
     }
 
     public Formation getFormation() {
-	return formation != null ? formation.getObject() : null;
+	return formation;
     }
 
     public void setFormation(Formation formation) {
-	this.formation = formation != null ? new DomainReference<Formation>(formation) : null;
+	this.formation = formation;
     }
 
     public int getFirstYear() {
@@ -114,19 +113,19 @@ public class FormationBean implements Serializable, IFormation {
     }
 
     public Unit getInstitutionUnit() {
-	return this.institutionUnit != null ? this.institutionUnit.getObject() : null;
+	return this.institutionUnit;
     }
 
     public void setInstitutionUnit(Unit unit) {
-	this.institutionUnit = unit != null ? new DomainReference<Unit>(unit) : null;
+	this.institutionUnit = unit;
     }
 
     public UnitName getInstitutionUnitName() {
-	return (institutionUnit == null) ? null : institutionUnit.getObject().getUnitName();
+	return (institutionUnit == null) ? null : institutionUnit.getUnitName();
     }
 
     public void setInstitutionUnitName(UnitName institutionUnitName) {
-	this.institutionUnit = (institutionUnitName == null) ? null : new DomainReference<Unit>(institutionUnitName.getUnit());
+	this.institutionUnit = (institutionUnitName == null) ? null : institutionUnitName.getUnit();
     }
 
     public String getId() {
@@ -142,11 +141,11 @@ public class FormationBean implements Serializable, IFormation {
     }
 
     public ExecutionYear getConclusionExecutionYear() {
-	return this.conclusionExecutionYear != null ? this.conclusionExecutionYear.getObject() : null;
+	return this.conclusionExecutionYear;
     }
 
     public void setConclusionExecutionYear(ExecutionYear executionYear) {
-	this.conclusionExecutionYear = executionYear != null ? new DomainReference<ExecutionYear>(executionYear) : null;
+	this.conclusionExecutionYear = executionYear;
     }
 
     public Boolean validate(Set<String> designationErrorSet, Set<String> institutionErrorSet, Set<String> durationErrorSet) {

@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -11,16 +10,16 @@ public class FileItemPermissionBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private DomainReference<FileContent> fileItem;
+    private FileContent fileItem;
     private Group permittedGroup;
 
     public FileItemPermissionBean(FileContent fileItem) {
-	this.fileItem = new DomainReference<FileContent>(fileItem);
+	this.fileItem = fileItem;
 	this.permittedGroup = fileItem.getPermittedGroup();
     }
 
     public FileContent getFileItem() {
-	return this.fileItem.getObject();
+	return this.fileItem;
     }
 
     public Group getPermittedGroup() {

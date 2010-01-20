@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.student.curriculum;
 
 import java.math.BigDecimal;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Grade;
@@ -12,11 +11,11 @@ import org.joda.time.YearMonthDay;
 
 public class NotInDegreeCurriculumCurriculumEntry extends CurriculumEntry {
 
-    private final DomainReference<Enrolment> enrolmentDomainReference;
+    private final Enrolment enrolmentDomainReference;
 
     public NotInDegreeCurriculumCurriculumEntry(final Enrolment enrolment) {
 	super();
-	this.enrolmentDomainReference = new DomainReference<Enrolment>(enrolment);
+	this.enrolmentDomainReference = enrolment;
     }
 
     @Override
@@ -25,7 +24,7 @@ public class NotInDegreeCurriculumCurriculumEntry extends CurriculumEntry {
     }
 
     public Enrolment getEnrolment() {
-	return enrolmentDomainReference.getObject();
+	return enrolmentDomainReference;
     }
 
     public BigDecimal getEctsCreditsForCurriculum() {

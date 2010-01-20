@@ -5,7 +5,6 @@
 package net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 
 /**
@@ -14,10 +13,10 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
  */
 public class InfoGroupProposal extends InfoObject {
 
-    private DomainReference<GroupProposal> groupProposalDomainReference;
+    private GroupProposal groupProposalDomainReference;
 
     public InfoGroupProposal(final GroupProposal groupProposal) {
-	groupProposalDomainReference = new DomainReference<GroupProposal>(groupProposal);
+	groupProposalDomainReference = groupProposal;
     }
 
     public static InfoGroupProposal newInfoFromDomain(final GroupProposal groupProposal) {
@@ -25,7 +24,7 @@ public class InfoGroupProposal extends InfoObject {
     }
 
     private GroupProposal getGroupProposal() {
-	return groupProposalDomainReference == null ? null : groupProposalDomainReference.getObject();
+	return groupProposalDomainReference;
     }
 
     @Override

@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -26,14 +25,14 @@ public class MarkSheetEnrolmentEvaluationBean implements Serializable {
 
     private String gradeValue;
     private Date evaluationDate;
-    private DomainReference<Enrolment> enrolment;
+    private Enrolment enrolment;
     private String bookReference;
     private String page;
 
     // used to edit
-    private DomainReference<EnrolmentEvaluation> enrolmentEvaluation;
+    private EnrolmentEvaluation enrolmentEvaluation;
 
-    private DomainReference<ExecutionSemester> executionSemester;
+    private ExecutionSemester executionSemester;
 
     private Boolean enrolmentEvaluationSet;
 
@@ -82,11 +81,11 @@ public class MarkSheetEnrolmentEvaluationBean implements Serializable {
     }
 
     public Enrolment getEnrolment() {
-	return (this.enrolment == null) ? null : this.enrolment.getObject();
+	return this.enrolment;
     }
 
     public void setEnrolment(Enrolment enrolment) {
-	this.enrolment = (enrolment != null) ? new DomainReference<Enrolment>(enrolment) : null;
+	this.enrolment = enrolment;
     }
 
     public String getGradeValue() {
@@ -102,14 +101,13 @@ public class MarkSheetEnrolmentEvaluationBean implements Serializable {
     }
 
     public EnrolmentEvaluation getEnrolmentEvaluation() {
-	return (this.enrolmentEvaluation == null) ? null : this.enrolmentEvaluation.getObject();
+	return this.enrolmentEvaluation;
     }
 
     public void setEnrolmentEvaluation(EnrolmentEvaluation enrolmentEvaluation) {
-	this.enrolmentEvaluation = (enrolmentEvaluation != null) ? new DomainReference<EnrolmentEvaluation>(enrolmentEvaluation)
-		: null;
+	this.enrolmentEvaluation = enrolmentEvaluation;
 	if (this.enrolmentEvaluation != null) {
-	    setEnrolment(this.enrolmentEvaluation.getObject().getEnrolment());
+	    setEnrolment(this.enrolmentEvaluation.getEnrolment());
 	}
     }
 
@@ -130,11 +128,11 @@ public class MarkSheetEnrolmentEvaluationBean implements Serializable {
     }
 
     public ExecutionSemester getExecutionSemester() {
-	return executionSemester != null ? this.executionSemester.getObject() : null;
+	return executionSemester != null ? this.executionSemester : null;
     }
 
     public void setExecutionSemester(ExecutionSemester executionSemester) {
-	this.executionSemester = executionSemester != null ? new DomainReference<ExecutionSemester>(executionSemester) : null;
+	this.executionSemester = executionSemester;
     }
 
     public Boolean getHasGrade() {

@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.util.StringUtils;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.EMail;
@@ -15,28 +14,28 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class EmailBean implements Serializable {
 
-    private DomainReference<Sender> sender;
-    private Set<DomainReference<Recipient>> recipients;
+    private Sender sender;
+    private Set<Recipient> recipients;
     private String tos, ccs, bccs;
     private String subject, message;
-    private Set<DomainReference<ReplyTo>> replyTos;
+    private Set<ReplyTo> replyTos;
 
     public EmailBean() {
     }
 
     public Sender getSender() {
-	return sender == null ? null : sender.getObject();
+	return sender;
     }
 
     public void setSender(final Sender sender) {
-	this.sender = sender == null ? null : new DomainReference<Sender>(sender);
+	this.sender = sender;
     }
 
     public List<Recipient> getRecipients() {
 	final List<Recipient> result = new ArrayList<Recipient>();
 	if (recipients != null) {
-	    for (final DomainReference<Recipient> recipient : recipients) {
-		result.add(recipient.getObject());
+	    for (final Recipient recipient : recipients) {
+		result.add(recipient);
 	    }
 	}
 	return result;
@@ -46,9 +45,9 @@ public class EmailBean implements Serializable {
 	if (recipients == null) {
 	    this.recipients = null;
 	} else {
-	    this.recipients = new HashSet<DomainReference<Recipient>>();
+	    this.recipients = new HashSet<Recipient>();
 	    for (final Recipient recipient : recipients) {
-		this.recipients.add(new DomainReference<Recipient>(recipient));
+		this.recipients.add(recipient);
 	    }
 	}
     }
@@ -56,8 +55,8 @@ public class EmailBean implements Serializable {
     public List<ReplyTo> getReplyTos() {
 	final List<ReplyTo> result = new ArrayList<ReplyTo>();
 	if (replyTos != null) {
-	    for (final DomainReference<ReplyTo> replyTo : replyTos) {
-		result.add(replyTo.getObject());
+	    for (final ReplyTo replyTo : replyTos) {
+		result.add(replyTo);
 	    }
 	}
 	return result;
@@ -67,9 +66,9 @@ public class EmailBean implements Serializable {
 	if (replyTos == null) {
 	    this.replyTos = null;
 	} else {
-	    this.replyTos = new HashSet<DomainReference<ReplyTo>>();
+	    this.replyTos = new HashSet<ReplyTo>();
 	    for (final ReplyTo replyTo : replyTos) {
-		this.replyTos.add(new DomainReference<ReplyTo>(replyTo));
+		this.replyTos.add(replyTo);
 	    }
 	}
     }

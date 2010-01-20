@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
@@ -16,7 +15,7 @@ public class RegistrationCurriculumBean extends RegistrationSelectExecutionYearB
 
     private static final long serialVersionUID = 5825221957160251388L;
 
-    private DomainReference<CycleCurriculumGroup> cycleCurriculumGroup;
+    private CycleCurriculumGroup cycleCurriculumGroup;
 
     public RegistrationCurriculumBean(Registration registration) {
 	setRegistration(registration);
@@ -31,12 +30,11 @@ public class RegistrationCurriculumBean extends RegistrationSelectExecutionYearB
     }
 
     public CycleCurriculumGroup getCycleCurriculumGroup() {
-	return (this.cycleCurriculumGroup != null) ? this.cycleCurriculumGroup.getObject() : null;
+	return this.cycleCurriculumGroup;
     }
 
     public void setCycleCurriculumGroup(CycleCurriculumGroup cycleCurriculumGroup) {
-	this.cycleCurriculumGroup = (cycleCurriculumGroup != null) ? new DomainReference<CycleCurriculumGroup>(
-		cycleCurriculumGroup) : null;
+	this.cycleCurriculumGroup = cycleCurriculumGroup;
     }
 
     public boolean hasCycleCurriculumGroup() {

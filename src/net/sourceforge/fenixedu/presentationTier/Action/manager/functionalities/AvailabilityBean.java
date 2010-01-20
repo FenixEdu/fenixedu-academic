@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.functionalities.ExpressionGroupAvailability;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
@@ -11,12 +10,12 @@ public class AvailabilityBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private DomainReference<Module> module;
+    private Module module;
 
     public AvailabilityBean(Module module) {
 	super();
 
-	this.module = new DomainReference<Module>(module);
+	this.module = module;
     }
 
     private ExpressionGroupAvailability getGroupAvailability() {
@@ -24,7 +23,7 @@ public class AvailabilityBean implements Serializable {
     }
 
     public Container getModule() {
-	return this.module.getObject();
+	return this.module;
     }
 
     public String getExpression() {

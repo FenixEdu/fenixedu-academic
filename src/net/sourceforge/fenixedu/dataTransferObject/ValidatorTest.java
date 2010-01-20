@@ -3,13 +3,12 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Grade;
 
 public class ValidatorTest implements Serializable {
 
     private Grade grade;
-    private DomainReference<Degree> degree;
+    private Degree degree;
     private Integer number;
 
     public Grade getGrade() {
@@ -21,11 +20,11 @@ public class ValidatorTest implements Serializable {
     }
 
     public Degree getDegree() {
-	return degree != null ? degree.getObject() : null;
+	return degree;
     }
 
     public void setDegree(Degree degree) {
-	this.degree = (degree != null ? new DomainReference<Degree>(degree) : null);
+	this.degree = (degree);
     }
 
     public Integer getNumber() {

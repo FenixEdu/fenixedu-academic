@@ -3,12 +3,11 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
 
 public class DegreeChangeIndividualCandidacyResultBean implements Serializable {
 
-    private DomainReference<DegreeChangeIndividualCandidacyProcess> candidacyProcess;
+    private DegreeChangeIndividualCandidacyProcess candidacyProcess;
     private BigDecimal affinity;
     private Integer degreeNature;
     private BigDecimal approvedEctsRate;
@@ -29,12 +28,11 @@ public class DegreeChangeIndividualCandidacyResultBean implements Serializable {
     }
 
     public DegreeChangeIndividualCandidacyProcess getCandidacyProcess() {
-	return (this.candidacyProcess != null) ? this.candidacyProcess.getObject() : null;
+	return this.candidacyProcess;
     }
 
     public void setCandidacyProcess(DegreeChangeIndividualCandidacyProcess candidacyProcess) {
-	this.candidacyProcess = (candidacyProcess != null) ? new DomainReference<DegreeChangeIndividualCandidacyProcess>(
-		candidacyProcess) : null;
+	this.candidacyProcess = candidacyProcess;
     }
 
     public String getStudentNumber() {

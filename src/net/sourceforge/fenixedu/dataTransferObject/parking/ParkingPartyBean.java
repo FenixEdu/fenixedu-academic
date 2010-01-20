@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.parking.ParkingGroup;
 import net.sourceforge.fenixedu.domain.parking.ParkingParty;
@@ -15,7 +14,7 @@ import org.joda.time.DateTime;
 
 public class ParkingPartyBean implements FactoryExecutor, Serializable {
 
-    private DomainReference<ParkingParty> parkingParty;
+    private ParkingParty parkingParty;
 
     private Long cardNumber;
 
@@ -27,7 +26,7 @@ public class ParkingPartyBean implements FactoryExecutor, Serializable {
 
     private DateTime cardEndDate;
 
-    private DomainReference<ParkingGroup> parkingGroup;
+    private ParkingGroup parkingGroup;
 
     private Boolean cardAlwaysValid;
 
@@ -57,12 +56,12 @@ public class ParkingPartyBean implements FactoryExecutor, Serializable {
     }
 
     public ParkingParty getParkingParty() {
-	return parkingParty == null ? null : parkingParty.getObject();
+	return parkingParty;
     }
 
     public void setParkingParty(ParkingParty parkingParty) {
 	if (parkingParty != null) {
-	    this.parkingParty = new DomainReference<ParkingParty>(parkingParty);
+	    this.parkingParty = parkingParty;
 	} else {
 	    this.parkingParty = null;
 	}
@@ -93,12 +92,12 @@ public class ParkingPartyBean implements FactoryExecutor, Serializable {
     }
 
     public ParkingGroup getParkingGroup() {
-	return parkingGroup == null ? null : parkingGroup.getObject();
+	return parkingGroup;
     }
 
     public void setParkingGroup(ParkingGroup parkingGroup) {
 	if (parkingGroup != null) {
-	    this.parkingGroup = new DomainReference<ParkingGroup>(parkingGroup);
+	    this.parkingGroup = parkingGroup;
 	} else {
 	    this.parkingGroup = null;
 	}

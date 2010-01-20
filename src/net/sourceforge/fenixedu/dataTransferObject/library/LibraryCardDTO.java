@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.PartyClassification;
 import net.sourceforge.fenixedu.domain.Person;
@@ -33,11 +32,11 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class LibraryCardDTO implements Serializable {
 
-    private DomainReference<LibraryCard> libraryCard;
+    private LibraryCard libraryCard;
 
-    private DomainReference<Person> person;
+    private Person person;
 
-    private DomainReference<Unit> unit;
+    private Unit unit;
 
     private PartyClassification partyClassification;
 
@@ -173,23 +172,23 @@ public class LibraryCardDTO implements Serializable {
     }
 
     public void setLibraryCard(LibraryCard libraryCard) {
-	this.libraryCard = libraryCard != null ? new DomainReference<LibraryCard>(libraryCard) : null;
+	this.libraryCard = libraryCard;
     }
 
     public Person getPerson() {
-	return person != null ? person.getObject() : null;
+	return person;
     }
 
     public void setPerson(Person person) {
-	this.person = person != null ? new DomainReference<Person>(person) : null;
+	this.person = person;
     }
 
     public Unit getUnit() {
-	return unit != null ? unit.getObject() : null;
+	return unit;
     }
 
     public void setUnit(Unit unit) {
-	this.unit = unit != null ? new DomainReference<Unit>(unit) : null;
+	this.unit = unit;
     }
 
     public PartyClassification getPartyClassification() {

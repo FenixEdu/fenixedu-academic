@@ -11,8 +11,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
@@ -23,10 +23,9 @@ import pt.utl.ist.berserk.logic.serviceManager.ServiceParameters;
  */
 public class ExecutionPeriodsEnrollmentFenix extends Filtro {
 
-    private static final DomainReference<ExecutionSemester> since = new DomainReference<ExecutionSemester>(
-	    ExecutionSemester.class, 81);
+    private static final ExecutionSemester since = ExecutionYear.readExecutionYearByName("2004/2005").getFirstExecutionPeriod();
 
-    private Date masterDegreeFirstExecutionPeriodDate = new GregorianCalendar(2002, Calendar.SEPTEMBER, 01).getTime();
+    private final Date masterDegreeFirstExecutionPeriodDate = new GregorianCalendar(2002, Calendar.SEPTEMBER, 01).getTime();
 
     /*
      * (non-Javadoc)
@@ -35,6 +34,7 @@ public class ExecutionPeriodsEnrollmentFenix extends Filtro {
      * ServidorAplicacao.Filtro.AccessControlFilter#execute(pt.utl.ist.berserk
      * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
      */
+    @Override
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
 	List serviceResult = (List) response.getReturnObject();
 	ServiceParameters parameters = request.getServiceParameters();
@@ -49,7 +49,7 @@ public class ExecutionPeriodsEnrollmentFenix extends Filtro {
 	    InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) iter.next();
 	    ExecutionSemester executionSemester = infoExecutionPeriod.getExecutionPeriod();
 
-	    if (executionSemester.isAfterOrEquals(since.getObject())) {
+	    if (executionSemester.isAfterOrEquals(since)) {
 		newRes.add(infoExecutionPeriod);
 	    } else if (executionSemester.getBeginDate().after(this.masterDegreeFirstExecutionPeriodDate)
 		    && degreeType != null

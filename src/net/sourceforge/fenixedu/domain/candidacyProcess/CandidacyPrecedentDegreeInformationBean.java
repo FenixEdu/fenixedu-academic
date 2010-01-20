@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -16,10 +15,10 @@ import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import org.joda.time.LocalDate;
 
 public class CandidacyPrecedentDegreeInformationBean implements Serializable {
-    private DomainReference<CandidacyPrecedentDegreeInformation> precedentDegreeInformation;
+    private CandidacyPrecedentDegreeInformation precedentDegreeInformation;
     private String degreeDesignation;
     private LocalDate conclusionDate;
-    private DomainReference<Unit> institution;
+    private Unit institution;
     private String institutionName;
     private String conclusionGrade;
     private Integer numberOfEnroledCurricularCourses;
@@ -27,7 +26,7 @@ public class CandidacyPrecedentDegreeInformationBean implements Serializable {
     private BigDecimal gradeSum;
     private BigDecimal approvedEcts;
     private BigDecimal enroledEcts;
-    private DomainReference<Country> country;
+    private Country country;
 
     public CandidacyPrecedentDegreeInformationBean() {
     }
@@ -90,8 +89,7 @@ public class CandidacyPrecedentDegreeInformationBean implements Serializable {
     }
 
     private void setInstitutionValue(final CandidacyPrecedentDegreeInformation precedentDegreeInformation) {
-	institution = precedentDegreeInformation.hasInstitution() ? new DomainReference<Unit>(precedentDegreeInformation
-		.getInstitution()) : null;
+	institution = precedentDegreeInformation.hasInstitution() ? precedentDegreeInformation.getInstitution() : null;
     }
 
     public String getDegreeDesignation() {
@@ -111,11 +109,11 @@ public class CandidacyPrecedentDegreeInformationBean implements Serializable {
     }
 
     public UnitName getInstitutionUnitName() {
-	return (institution == null) ? null : institution.getObject().getUnitName();
+	return (institution == null) ? null : institution.getUnitName();
     }
 
     public void setInstitutionUnitName(UnitName institutionUnitName) {
-	this.institution = (institutionUnitName == null) ? null : new DomainReference<Unit>(institutionUnitName.getUnit());
+	this.institution = (institutionUnitName == null) ? null : institutionUnitName.getUnit();
     }
 
     public String getInstitutionName() {
@@ -143,13 +141,11 @@ public class CandidacyPrecedentDegreeInformationBean implements Serializable {
     }
 
     public CandidacyPrecedentDegreeInformation getPrecedentDegreeInformation() {
-	return (this.precedentDegreeInformation != null) ? this.precedentDegreeInformation.getObject() : null;
+	return this.precedentDegreeInformation;
     }
 
     public void setPrecedentDegreeInformation(final CandidacyPrecedentDegreeInformation precedentDegreeInformation) {
-	this.precedentDegreeInformation = (precedentDegreeInformation != null) ? new DomainReference<CandidacyPrecedentDegreeInformation>(
-		precedentDegreeInformation)
-		: null;
+	this.precedentDegreeInformation = precedentDegreeInformation;
     }
 
     public Integer getNumberOfEnroledCurricularCourses() {
@@ -193,10 +189,10 @@ public class CandidacyPrecedentDegreeInformationBean implements Serializable {
     }
 
     public Country getCountry() {
-	return this.country != null ? this.country.getObject() : null;
+	return this.country;
     }
 
     public void setCountry(Country country) {
-	this.country = country != null ? new DomainReference<Country>(country) : null;
+	this.country = country;
     }
 }

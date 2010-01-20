@@ -6,7 +6,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DomainReference;
 
 public class PhdStudyPlanEntryBean implements Serializable {
 
@@ -15,15 +14,15 @@ public class PhdStudyPlanEntryBean implements Serializable {
      */
     private static final long serialVersionUID = 1L;
 
-    private DomainReference<Degree> degree;
+    private Degree degree;
 
-    private List<DomainReference<CompetenceCourse>> competenceCourses;
+    private List<CompetenceCourse> competenceCourses;
 
     private String courseName;
 
     private PhdStudyPlanEntryType entryType;
 
-    private DomainReference<PhdStudyPlan> studyPlan;
+    private PhdStudyPlan studyPlan;
 
     private Boolean internalEntry;
 
@@ -61,34 +60,34 @@ public class PhdStudyPlanEntryBean implements Serializable {
     }
 
     public PhdStudyPlan getStudyPlan() {
-	return (this.studyPlan != null) ? this.studyPlan.getObject() : null;
+	return this.studyPlan;
     }
 
     public void setStudyPlan(PhdStudyPlan studyPlan) {
-	this.studyPlan = (studyPlan != null) ? new DomainReference<PhdStudyPlan>(studyPlan) : null;
+	this.studyPlan = studyPlan;
     }
 
     public Degree getDegree() {
-	return (this.degree != null) ? this.degree.getObject() : null;
+	return this.degree;
     }
 
     public void setDegree(Degree degree) {
-	this.degree = (degree != null) ? new DomainReference<Degree>(degree) : null;
+	this.degree = degree;
     }
 
     public List<CompetenceCourse> getCompetenceCourses() {
 	final List<CompetenceCourse> result = new ArrayList<CompetenceCourse>();
-	for (final DomainReference<CompetenceCourse> each : this.competenceCourses) {
-	    result.add(each.getObject());
+	for (final CompetenceCourse each : this.competenceCourses) {
+	    result.add(each);
 	}
 
 	return result;
     }
 
     public void setCompetenceCourses(List<CompetenceCourse> competenceCourses) {
-	final List<DomainReference<CompetenceCourse>> result = new ArrayList<DomainReference<CompetenceCourse>>();
+	final List<CompetenceCourse> result = new ArrayList<CompetenceCourse>();
 	for (final CompetenceCourse each : competenceCourses) {
-	    result.add(new DomainReference<CompetenceCourse>(each));
+	    result.add(each);
 	}
 
 	this.competenceCourses = result;

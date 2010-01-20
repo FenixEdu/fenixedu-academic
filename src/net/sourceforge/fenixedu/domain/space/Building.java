@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.resource.Resource;
@@ -145,15 +144,15 @@ public class Building extends Building_Base {
 
     public static class BuildingFactoryCreator extends BuildingFactory {
 
-	private DomainReference<Space> surroundingSpaceReference;
+	private Space surroundingSpaceReference;
 
 	public Space getSurroundingSpace() {
-	    return surroundingSpaceReference == null ? null : surroundingSpaceReference.getObject();
+	    return surroundingSpaceReference;
 	}
 
 	public void setSurroundingSpace(Space surroundingSpace) {
 	    if (surroundingSpace != null) {
-		this.surroundingSpaceReference = new DomainReference<Space>(surroundingSpace);
+		this.surroundingSpaceReference = surroundingSpace;
 	    }
 	}
 
@@ -164,15 +163,15 @@ public class Building extends Building_Base {
 
     public static class BuildingFactoryEditor extends BuildingFactory {
 
-	private DomainReference<Building> buildingReference;
+	private Building buildingReference;
 
 	public Building getSpace() {
-	    return buildingReference == null ? null : buildingReference.getObject();
+	    return buildingReference;
 	}
 
 	public void setSpace(Building building) {
 	    if (building != null) {
-		this.buildingReference = new DomainReference<Building>(building);
+		this.buildingReference = building;
 	    }
 	}
 

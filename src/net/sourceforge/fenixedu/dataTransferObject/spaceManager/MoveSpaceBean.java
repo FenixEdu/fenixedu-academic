@@ -2,15 +2,14 @@ package net.sourceforge.fenixedu.dataTransferObject.spaceManager;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.space.SpaceState;
 
 public class MoveSpaceBean implements Serializable {
 
-    private DomainReference<Space> selectedParentSpaceReference;
+    private Space selectedParentSpaceReference;
 
-    private DomainReference<Space> spaceReference;
+    private Space spaceReference;
 
     private SpaceState spaceState;
 
@@ -30,19 +29,19 @@ public class MoveSpaceBean implements Serializable {
     }
 
     public void setSelectedParentSpace(Space parentSpace) {
-	this.selectedParentSpaceReference = (parentSpace != null) ? new DomainReference<Space>(parentSpace) : null;
+	this.selectedParentSpaceReference = parentSpace;
     }
 
     public Space getSelectedParentSpace() {
-	return (this.selectedParentSpaceReference != null) ? this.selectedParentSpaceReference.getObject() : null;
+	return this.selectedParentSpaceReference;
     }
 
     public void setSpace(Space thisSpace) {
-	this.spaceReference = (thisSpace != null) ? new DomainReference<Space>(thisSpace) : null;
+	this.spaceReference = thisSpace;
     }
 
     public Space getSpace() {
-	return (this.spaceReference != null) ? this.spaceReference.getObject() : null;
+	return this.spaceReference;
     }
 
     public SpaceState getSpaceState() {

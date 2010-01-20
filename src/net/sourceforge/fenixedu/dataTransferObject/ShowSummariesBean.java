@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SummaryTeacherBean;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
@@ -13,15 +12,15 @@ public class ShowSummariesBean implements Serializable {
 
     private SummaryTeacherBean summaryTeacher;
 
-    private DomainReference<Shift> shiftReference;
+    private Shift shiftReference;
 
     private ShiftType shiftType;
 
     private ListSummaryType listSummaryType;
 
-    private DomainReference<ExecutionCourse> executionCourseReference;
+    private ExecutionCourse executionCourseReference;
 
-    private DomainReference<Professorship> professorshipLoggedReference;
+    private Professorship professorshipLoggedReference;
 
     private SummariesOrder summariesOrder;
 
@@ -39,11 +38,11 @@ public class ShowSummariesBean implements Serializable {
     }
 
     public Professorship getProfessorshipLogged() {
-	return (this.professorshipLoggedReference != null) ? this.professorshipLoggedReference.getObject() : null;
+	return this.professorshipLoggedReference;
     }
 
     public void setProfessorshipLogged(Professorship professorship) {
-	this.professorshipLoggedReference = (professorship != null) ? new DomainReference<Professorship>(professorship) : null;
+	this.professorshipLoggedReference = professorship;
     }
 
     public SummaryTeacherBean getSummaryTeacher() {
@@ -55,11 +54,11 @@ public class ShowSummariesBean implements Serializable {
     }
 
     public Shift getShift() {
-	return (this.shiftReference != null) ? this.shiftReference.getObject() : null;
+	return this.shiftReference;
     }
 
     public void setShift(Shift shift) {
-	this.shiftReference = (shift != null) ? new DomainReference<Shift>(shift) : null;
+	this.shiftReference = shift;
     }
 
     public ShiftType getShiftType() {
@@ -79,11 +78,11 @@ public class ShowSummariesBean implements Serializable {
     }
 
     public ExecutionCourse getExecutionCourse() {
-	return (this.executionCourseReference != null) ? this.executionCourseReference.getObject() : null;
+	return this.executionCourseReference;
     }
 
     public void setExecutionCourse(ExecutionCourse executionCourse) {
-	this.executionCourseReference = (executionCourse != null) ? new DomainReference<ExecutionCourse>(executionCourse) : null;
+	this.executionCourseReference = executionCourse;
     }
 
     public SummariesOrder getSummariesOrder() {

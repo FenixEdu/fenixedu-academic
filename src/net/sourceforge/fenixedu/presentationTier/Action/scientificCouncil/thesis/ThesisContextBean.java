@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesi
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 
 public class ThesisContextBean implements Serializable {
@@ -13,8 +12,8 @@ public class ThesisContextBean implements Serializable {
      */
     private static final long serialVersionUID = 1L;
 
-    private DomainReference<Degree> degree;
-    private DomainReference<ExecutionYear> executionYear;
+    private Degree degree;
+    private ExecutionYear executionYear;
 
     public ThesisContextBean(Degree degree, ExecutionYear executionYear) {
 	setDegree(degree);
@@ -22,19 +21,19 @@ public class ThesisContextBean implements Serializable {
     }
 
     public Degree getDegree() {
-	return this.degree.getObject();
+	return this.degree;
     }
 
     public void setDegree(Degree degree) {
-	this.degree = new DomainReference<Degree>(degree);
+	this.degree = degree;
     }
 
     public ExecutionYear getExecutionYear() {
-	return this.executionYear.getObject();
+	return this.executionYear;
     }
 
     public void setExecutionYear(ExecutionYear executionYear) {
-	this.executionYear = new DomainReference<ExecutionYear>(executionYear);
+	this.executionYear = executionYear;
     }
 
 }

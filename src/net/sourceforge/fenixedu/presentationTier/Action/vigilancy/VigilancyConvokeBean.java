@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
@@ -13,40 +12,40 @@ import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 
 public class VigilancyConvokeBean implements Serializable {
 
-    private DomainReference<Unit> unit;
+    private Unit unit;
 
-    private DomainReference<WrittenEvaluation> writtenEvaluation;
+    private WrittenEvaluation writtenEvaluation;
 
-    private DomainReference<VigilantGroup> vigilantGroup;
+    private VigilantGroup vigilantGroup;
 
-    private Collection<DomainReference<VigilantWrapper>> vigilantsSugestion;
+    private Collection<VigilantWrapper> vigilantsSugestion;
 
     private Boolean convokeIsFinal;
 
     private Integer numberOfVigilantsToSelect;
 
     public Unit getUnit() {
-	return (this.unit != null) ? this.unit.getObject() : null;
+	return this.unit;
     }
 
     public void setUnit(Unit unit) {
-	this.unit = (unit != null) ? new DomainReference<Unit>(unit) : null;
+	this.unit = unit;
     }
 
     public WrittenEvaluation getWrittenEvaluation() {
-	return (this.writtenEvaluation == null) ? null : this.writtenEvaluation.getObject();
+	return this.writtenEvaluation;
     }
 
     public void setWrittenEvaluation(WrittenEvaluation writtenEvaluation) {
-	this.writtenEvaluation = (writtenEvaluation != null) ? new DomainReference<WrittenEvaluation>(writtenEvaluation) : null;
+	this.writtenEvaluation = writtenEvaluation;
     }
 
     public VigilantGroup getVigilantGroup() {
-	return (this.vigilantGroup == null) ? null : this.vigilantGroup.getObject();
+	return this.vigilantGroup;
     }
 
     public void setVigilantGroup(VigilantGroup vigilantGroup) {
-	this.vigilantGroup = (vigilantGroup != null) ? new DomainReference<VigilantGroup>(vigilantGroup) : null;
+	this.vigilantGroup = vigilantGroup;
     }
 
     public Boolean getConvokeIsFinal() {
@@ -67,18 +66,18 @@ public class VigilancyConvokeBean implements Serializable {
 
     public List<VigilantWrapper> getVigilantsSugestion() {
 	List vigilants = new ArrayList<VigilantWrapper>();
-	for (DomainReference<VigilantWrapper> vigilant : this.vigilantsSugestion) {
+	for (VigilantWrapper vigilant : this.vigilantsSugestion) {
 	    if (vigilant != null)
-		vigilants.add(vigilant.getObject());
+		vigilants.add(vigilant);
 	}
 	return vigilants;
     }
 
     public void setVigilantsSugestion(List<VigilantWrapper> vigilantsList) {
-	this.vigilantsSugestion = new ArrayList<DomainReference<VigilantWrapper>>();
+	this.vigilantsSugestion = new ArrayList<VigilantWrapper>();
 	for (VigilantWrapper vigilant : vigilantsList) {
 	    if (vigilant != null) {
-		this.vigilantsSugestion.add(new DomainReference(vigilant));
+		this.vigilantsSugestion.add(vigilant);
 	    }
 	}
     }

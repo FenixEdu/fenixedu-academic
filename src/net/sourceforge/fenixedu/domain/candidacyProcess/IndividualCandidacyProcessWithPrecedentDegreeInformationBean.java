@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -20,7 +19,7 @@ abstract public class IndividualCandidacyProcessWithPrecedentDegreeInformationBe
 
     private CandidacyPrecedentDegreeInformationBean precedentDegreeInformation;
 
-    private DomainReference<StudentCurricularPlan> precedentStudentCurricularPlan;
+    private StudentCurricularPlan precedentStudentCurricularPlan;
 
     public PrecedentDegreeType getPrecedentDegreeType() {
 	return precedentDegreeType;
@@ -109,7 +108,7 @@ abstract public class IndividualCandidacyProcessWithPrecedentDegreeInformationBe
     }
 
     public StudentCurricularPlan getPrecedentStudentCurricularPlan() {
-	return (this.precedentStudentCurricularPlan != null) ? this.precedentStudentCurricularPlan.getObject() : null;
+	return this.precedentStudentCurricularPlan;
     }
 
     public boolean hasPrecedentStudentCurricularPlan() {
@@ -117,9 +116,7 @@ abstract public class IndividualCandidacyProcessWithPrecedentDegreeInformationBe
     }
 
     public void setPrecedentStudentCurricularPlan(StudentCurricularPlan precedentStudentCurricularPlan) {
-	this.precedentStudentCurricularPlan = (precedentStudentCurricularPlan != null) ? new DomainReference<StudentCurricularPlan>(
-		precedentStudentCurricularPlan)
-		: null;
+	this.precedentStudentCurricularPlan = precedentStudentCurricularPlan;
     }
 
     // static information

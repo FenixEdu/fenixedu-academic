@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.util.Month;
 
@@ -13,10 +12,10 @@ public class MergeJournalIssuePageContainerBean extends MergeResearchActivityPag
     private Boolean specialIssue;
     private String specialIssueComment;
 
-    private DomainReference<ScientificJournal> scientificJournal;
+    private ScientificJournal scientificJournal;
 
     public MergeJournalIssuePageContainerBean(ScientificJournal scientificJournal) {
-	this.scientificJournal = new DomainReference<ScientificJournal>(scientificJournal);
+	this.scientificJournal = scientificJournal;
     }
 
     public String getVolume() {
@@ -76,11 +75,11 @@ public class MergeJournalIssuePageContainerBean extends MergeResearchActivityPag
     }
 
     public ScientificJournal getScientificJournal() {
-	return (this.scientificJournal != null) ? this.scientificJournal.getObject() : null;
+	return this.scientificJournal;
     }
 
     public void setScientificJournal(ScientificJournal scientificJournal) {
-	this.scientificJournal = (scientificJournal != null) ? new DomainReference<ScientificJournal>(scientificJournal) : null;
+	this.scientificJournal = scientificJournal;
     }
 
 }

@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.enrolment;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
@@ -14,7 +13,7 @@ public class OptionalDegreeModuleToEnrol extends DegreeModuleToEnrol {
      */
     private static final long serialVersionUID = -7335154953414429996L;
 
-    private DomainReference<CurricularCourse> curricularCourse;
+    private CurricularCourse curricularCourse;
 
     public OptionalDegreeModuleToEnrol(CurriculumGroup curriculumGroup, Context context, ExecutionSemester executionSemester,
 	    CurricularCourse curricularCourse) {
@@ -24,11 +23,11 @@ public class OptionalDegreeModuleToEnrol extends DegreeModuleToEnrol {
     }
 
     public CurricularCourse getCurricularCourse() {
-	return (this.curricularCourse != null) ? this.curricularCourse.getObject() : null;
+	return this.curricularCourse;
     }
 
     public void setCurricularCourse(CurricularCourse curricularCourse) {
-	this.curricularCourse = (curricularCourse != null) ? new DomainReference<CurricularCourse>(curricularCourse) : null;
+	this.curricularCourse = curricularCourse;
     }
 
     @Override

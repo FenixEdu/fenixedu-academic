@@ -5,18 +5,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 
 public class VigilantBean implements Serializable {
 
-    private DomainReference<ExecutionYear> executionYear;
+    private ExecutionYear executionYear;
 
-    private List<DomainReference<VigilantGroup>> vigilantGroups = new ArrayList<DomainReference<VigilantGroup>>();
+    private List<VigilantGroup> vigilantGroups = new ArrayList<VigilantGroup>();
 
-    private DomainReference<VigilantGroup> selectedVigilantGroup;
+    private VigilantGroup selectedVigilantGroup;
 
     private boolean showIncompatibilities = Boolean.FALSE;
 
@@ -36,7 +35,7 @@ public class VigilantBean implements Serializable {
 
     private boolean showOwnVigilancies = Boolean.FALSE;
 
-    public List<DomainReference<Vigilancy>> activeOtherCourseVigilancies;
+    public List<Vigilancy> activeOtherCourseVigilancies;
 
     private final HashMap<String, String> schemas = new HashMap<String, String>();
 
@@ -158,36 +157,36 @@ public class VigilantBean implements Serializable {
     }
 
     public ExecutionYear getExecutionYear() {
-	return executionYear.getObject();
+	return executionYear;
     }
 
     public void setExecutionYear(ExecutionYear executionYear) {
-	this.executionYear = new DomainReference<ExecutionYear>(executionYear);
+	this.executionYear = executionYear;
 
     }
 
     public VigilantGroup getSelectedVigilantGroup() {
-	return selectedVigilantGroup.getObject();
+	return selectedVigilantGroup;
     }
 
     public void setSelectedVigilantGroup(VigilantGroup group) {
-	this.selectedVigilantGroup = new DomainReference<VigilantGroup>(group);
+	this.selectedVigilantGroup = group;
     }
 
     public List getVigilantGroups() {
 	List groups = new ArrayList<VigilantGroup>();
-	for (DomainReference<VigilantGroup> vigilantGroup : this.vigilantGroups) {
+	for (VigilantGroup vigilantGroup : this.vigilantGroups) {
 	    if (vigilantGroup != null)
-		groups.add(vigilantGroup.getObject());
+		groups.add(vigilantGroup);
 	}
 	return groups;
     }
 
     public void setVigilantGroups(List<VigilantGroup> groups) {
-	this.vigilantGroups = new ArrayList<DomainReference<VigilantGroup>>();
+	this.vigilantGroups = new ArrayList<VigilantGroup>();
 	for (VigilantGroup group : groups) {
 	    if (group != null) {
-		this.vigilantGroups.add(new DomainReference(group));
+		this.vigilantGroups.add(group);
 	    }
 	}
     }
@@ -255,16 +254,16 @@ public class VigilantBean implements Serializable {
     }
 
     public void setActiveOtherCourseVigilancies(List<Vigilancy> activeOtherCourseVigilancies) {
-	this.activeOtherCourseVigilancies = new ArrayList<DomainReference<Vigilancy>>();
+	this.activeOtherCourseVigilancies = new ArrayList<Vigilancy>();
 	for (Vigilancy activeOtherCourseVigilancy : activeOtherCourseVigilancies) {
-	    this.activeOtherCourseVigilancies.add(new DomainReference<Vigilancy>(activeOtherCourseVigilancy));
+	    this.activeOtherCourseVigilancies.add(activeOtherCourseVigilancy);
 	}
     }
 
     public List<Vigilancy> getActiveOtherCourseVigilancies() {
 	List<Vigilancy> activeOtherCourseVigilancies = new ArrayList<Vigilancy>();
-	for (DomainReference<Vigilancy> activeOtherCourseVigilancy : this.activeOtherCourseVigilancies) {
-	    activeOtherCourseVigilancies.add(activeOtherCourseVigilancy.getObject());
+	for (Vigilancy activeOtherCourseVigilancy : this.activeOtherCourseVigilancies) {
+	    activeOtherCourseVigilancies.add(activeOtherCourseVigilancy);
 	}
 	return activeOtherCourseVigilancies;
     }

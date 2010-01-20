@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Comparator;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonInstance;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -29,9 +28,9 @@ public class NextPossibleSummaryLessonsAndDatesBean implements Serializable {
 
     private ShiftType lessonType;
 
-    private DomainReference<Lesson> lessonReference;
+    private Lesson lessonReference;
 
-    private DomainReference<Shift> shiftReference;
+    private Shift shiftReference;
 
     private YearMonthDay date;
 
@@ -41,7 +40,7 @@ public class NextPossibleSummaryLessonsAndDatesBean implements Serializable {
 
     private HourMinuteSecond time;
 
-    private DomainReference<AllocatableSpace> roomReference;
+    private AllocatableSpace roomReference;
 
     public NextPossibleSummaryLessonsAndDatesBean() {
     }
@@ -168,27 +167,27 @@ public class NextPossibleSummaryLessonsAndDatesBean implements Serializable {
     }
 
     public Lesson getLesson() {
-	return (this.lessonReference != null) ? this.lessonReference.getObject() : null;
+	return this.lessonReference;
     }
 
     public void setLesson(Lesson lesson) {
-	this.lessonReference = (lesson != null) ? new DomainReference<Lesson>(lesson) : null;
+	this.lessonReference = lesson;
     }
 
     public AllocatableSpace getRoom() {
-	return (this.roomReference != null) ? this.roomReference.getObject() : null;
+	return this.roomReference;
     }
 
     public void setRoom(AllocatableSpace room) {
-	this.roomReference = (room != null) ? new DomainReference<AllocatableSpace>(room) : null;
+	this.roomReference = room;
     }
 
     public Shift getShift() {
-	return (this.shiftReference != null) ? this.shiftReference.getObject() : null;
+	return this.shiftReference;
     }
 
     public void setShift(Shift shift) {
-	this.shiftReference = (shift != null) ? new DomainReference<Shift>(shift) : null;
+	this.shiftReference = shift;
     }
 
     public ShiftType getLessonType() {

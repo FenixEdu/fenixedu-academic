@@ -2,15 +2,14 @@ package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.st
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice;
 
 public class StudentDataByExecutionYearBean implements Serializable {
 
-    private DomainReference<Student> student;
-    private DomainReference<ExecutionYear> executionYear;
+    private Student student;
+    private ExecutionYear executionYear;
     private StudentPersonalDataAuthorizationChoice choice;
 
     public StudentDataByExecutionYearBean(final Student student) {
@@ -18,19 +17,19 @@ public class StudentDataByExecutionYearBean implements Serializable {
     }
 
     public Student getStudent() {
-	return (this.student != null) ? this.student.getObject() : null;
+	return this.student;
     }
 
     public void setStudent(Student student) {
-	this.student = (student != null) ? new DomainReference<Student>(student) : null;
+	this.student = student;
     }
 
     public ExecutionYear getExecutionYear() {
-	return (this.executionYear != null) ? this.executionYear.getObject() : null;
+	return this.executionYear;
     }
 
     public void setExecutionYear(ExecutionYear executionYear) {
-	this.executionYear = (executionYear != null) ? new DomainReference<ExecutionYear>(executionYear) : null;
+	this.executionYear = executionYear;
     }
 
     public StudentPersonalDataAuthorizationChoice getChoice() {

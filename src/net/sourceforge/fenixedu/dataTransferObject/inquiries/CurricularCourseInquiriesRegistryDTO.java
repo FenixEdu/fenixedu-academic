@@ -8,7 +8,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 
@@ -18,7 +17,7 @@ import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
  */
 public class CurricularCourseInquiriesRegistryDTO implements Serializable {
 
-    private DomainReference<InquiriesRegistry> inquiriesRegistry;
+    private InquiriesRegistry inquiriesRegistry;
 
     private Integer weeklyHoursSpentPercentage;
 
@@ -36,11 +35,11 @@ public class CurricularCourseInquiriesRegistryDTO implements Serializable {
     }
 
     public InquiriesRegistry getInquiriesRegistry() {
-	return inquiriesRegistry.getObject();
+	return inquiriesRegistry;
     }
 
     public void setInquiriesRegistry(InquiriesRegistry inquiriesRegistry) {
-	this.inquiriesRegistry = new DomainReference<InquiriesRegistry>(inquiriesRegistry);
+	this.inquiriesRegistry = inquiriesRegistry;
 	setWeeklyHoursSpentPercentage(inquiriesRegistry.getWeeklyHoursSpentPercentage());
 	setStudyDaysSpentInExamsSeason(inquiriesRegistry.getStudyDaysSpentInExamsSeason());
     }

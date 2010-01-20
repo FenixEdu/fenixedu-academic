@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.accounting.EditReceipt;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.CreateReceiptBean;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
@@ -51,11 +50,11 @@ public abstract class ReceiptsManagementDA extends PaymentsManagementDispatchAct
 	 */
 	private static final long serialVersionUID = -1140016139503995375L;
 
-	private DomainReference<Receipt> receipt;
+	private Receipt receipt;
 
-	private DomainReference<Party> contributorParty;
+	private Party contributorParty;
 
-	private DomainReference<Employee> employee;
+	private Employee employee;
 
 	private String contributorNumber;
 
@@ -70,37 +69,36 @@ public abstract class ReceiptsManagementDA extends PaymentsManagementDispatchAct
 	}
 
 	public Receipt getReceipt() {
-	    return (this.receipt != null) ? this.receipt.getObject() : null;
+	    return this.receipt;
 	}
 
 	public void setReceipt(Receipt receipt) {
-	    this.receipt = (receipt != null) ? new DomainReference<Receipt>(receipt) : null;
+	    this.receipt = receipt;
 	}
 
 	public Party getContributorParty() {
-	    return (this.contributorParty != null) ? this.contributorParty.getObject() : StringUtils
-		    .isEmpty(this.contributorNumber) ? null : Party.readByContributorNumber(this.contributorNumber);
+	    return (this.contributorParty != null) ? this.contributorParty : StringUtils.isEmpty(this.contributorNumber) ? null
+		    : Party.readByContributorNumber(this.contributorNumber);
 	}
 
 	public void setContributorParty(Party contributorParty) {
-	    this.contributorParty = (contributorParty != null) ? new DomainReference<Party>(contributorParty) : null;
+	    this.contributorParty = contributorParty;
 	}
 
 	public void setContributorPartySocialSecurityNumber(PartySocialSecurityNumber partySocialSecurityNumber) {
-	    this.contributorParty = (partySocialSecurityNumber != null) ? new DomainReference<Party>(partySocialSecurityNumber
-		    .getParty()) : null;
+	    this.contributorParty = (partySocialSecurityNumber != null) ? partySocialSecurityNumber.getParty() : null;
 	}
 
 	public PartySocialSecurityNumber getContributorPartySocialSecurityNumber() {
-	    return this.contributorParty != null ? this.contributorParty.getObject().getPartySocialSecurityNumber() : null;
+	    return this.contributorParty != null ? this.contributorParty.getPartySocialSecurityNumber() : null;
 	}
 
 	public Employee getEmployee() {
-	    return (this.employee != null) ? this.employee.getObject() : null;
+	    return this.employee;
 	}
 
 	public void setEmployee(Employee employee) {
-	    this.employee = (employee != null) ? new DomainReference<Employee>(employee) : null;
+	    this.employee = employee;
 	}
 
 	public String getContributorNumber() {

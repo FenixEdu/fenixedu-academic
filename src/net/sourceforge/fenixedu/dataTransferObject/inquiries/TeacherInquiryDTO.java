@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ShiftType;
 
@@ -29,7 +28,7 @@ public class TeacherInquiryDTO implements Serializable {
 
     private InquiriesBlock thirdPageSixthBlock;
 
-    private DomainReference<ExecutionCourse> executionCourse;
+    private ExecutionCourse executionCourse;
 
     private TeacherDTO teacherDTO;
 
@@ -38,7 +37,7 @@ public class TeacherInquiryDTO implements Serializable {
     private boolean filled = false;
 
     protected TeacherInquiryDTO(final TeacherDTO teacherDTO, final ExecutionCourse executionCourse, final ShiftType shiftType) {
-	this.executionCourse = new DomainReference<ExecutionCourse>(executionCourse);
+	this.executionCourse = executionCourse;
 	this.shiftType = shiftType;
 	this.teacherDTO = teacherDTO;
 	buildQuestionBlocks();
@@ -65,7 +64,7 @@ public class TeacherInquiryDTO implements Serializable {
     }
 
     public ExecutionCourse getExecutionCourse() {
-	return executionCourse.getObject();
+	return executionCourse;
     }
 
     public ShiftType getShiftType() {

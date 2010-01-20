@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.serviceRequests;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
@@ -10,9 +9,9 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 
 public class DocumentRequestEditBean implements Serializable {
 
-    private DomainReference<Employee> employee;
+    private Employee employee;
 
-    private DomainReference<DocumentRequest> documentRequest;
+    private DocumentRequest documentRequest;
 
     private AcademicServiceRequestSituationType academicServiceRequestSituationType;
 
@@ -36,19 +35,19 @@ public class DocumentRequestEditBean implements Serializable {
     }
 
     public DocumentRequest getDocumentRequest() {
-	return (this.documentRequest != null) ? this.documentRequest.getObject() : null;
+	return this.documentRequest;
     }
 
     public void setDocumentRequest(DocumentRequest documentRequest) {
-	this.documentRequest = (documentRequest != null) ? new DomainReference<DocumentRequest>(documentRequest) : null;
+	this.documentRequest = documentRequest;
     }
 
     public Employee getEmployee() {
-	return (this.employee != null) ? this.employee.getObject() : null;
+	return this.employee;
     }
 
     public void setEmployee(Employee employee) {
-	this.employee = (employee != null) ? new DomainReference<Employee>(employee) : null;
+	this.employee = employee;
     }
 
     public AcademicServiceRequestSituationType getAcademicServiceRequestSituationType() {

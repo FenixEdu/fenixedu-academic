@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -22,9 +21,9 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public abstract class ParticipantBean implements Serializable {
 
-    private DomainReference<Person> person;
+    private Person person;
 
-    private DomainReference<Unit> unit;
+    private Unit unit;
 
     private ResearchActivityParticipationRole role;
 
@@ -78,11 +77,11 @@ public abstract class ParticipantBean implements Serializable {
     }
 
     public Person getPerson() {
-	return this.person.getObject();
+	return this.person;
     }
 
     public void setPerson(Person person) {
-	this.person = new DomainReference<Person>(person);
+	this.person = person;
     }
 
     public String getPersonName() {
@@ -102,23 +101,20 @@ public abstract class ParticipantBean implements Serializable {
     }
 
     public Unit getUnit() {
-	return this.unit.getObject();
+	return this.unit;
     }
 
     public void setUnit(Unit organization) {
-	this.unit = new DomainReference<Unit>(organization);
+	this.unit = organization;
     }
 
     public ExternalContract getExternalPerson() {
-	if (!person.isNullReference())
-	    return person.getObject().getExternalContract();
-	else
-	    return new DomainReference<ExternalContract>(null).getObject();
+	return person != null ? person.getExternalContract() : null;
     }
 
     public void setExternalPerson(ExternalContract externalPerson) {
 	if (externalPerson == null) {
-	    this.person = new DomainReference<Person>(null);
+	    this.person = null;
 	} else {
 	    setPerson(externalPerson.getPerson());
 	}

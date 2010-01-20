@@ -2,12 +2,11 @@ package net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.g
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 
 public class GradesToSubmitExecutionCourseSendMailBean implements Serializable {
 
-    private DomainReference<ExecutionCourse> executionCourse;
+    private ExecutionCourse executionCourse;
     private boolean toSubmit;
 
     public GradesToSubmitExecutionCourseSendMailBean(ExecutionCourse executionCourse, boolean toSubmit) {
@@ -16,11 +15,11 @@ public class GradesToSubmitExecutionCourseSendMailBean implements Serializable {
     }
 
     public ExecutionCourse getExecutionCourse() {
-	return (this.executionCourse != null) ? this.executionCourse.getObject() : null;
+	return this.executionCourse;
     }
 
     public void setExecutionCourse(ExecutionCourse executionCourse) {
-	this.executionCourse = (executionCourse != null) ? new DomainReference<ExecutionCourse>(executionCourse) : null;
+	this.executionCourse = executionCourse;
     }
 
     public boolean isToSubmit() {

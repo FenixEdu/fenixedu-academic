@@ -12,7 +12,6 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.Person;
@@ -31,7 +30,7 @@ import org.joda.time.DateTime;
  */
 public class StudentInquiryDTO implements Serializable {
 
-    private DomainReference<InquiriesRegistry> inquiriesRegistry;
+    private InquiriesRegistry inquiriesRegistry;
 
     Map<TeacherDTO, Collection<? extends TeacherInquiryDTO>> teachersInquiries = new TreeMap<TeacherDTO, Collection<? extends TeacherInquiryDTO>>(
 	    new BeanComparator("name"));
@@ -58,7 +57,7 @@ public class StudentInquiryDTO implements Serializable {
 
     private StudentInquiryDTO(InquiriesRegistry inquiriesRegistry) {
 
-	this.inquiriesRegistry = new DomainReference<InquiriesRegistry>(inquiriesRegistry);
+	this.inquiriesRegistry = inquiriesRegistry;
 	this.startDateTime = new DateTime();
 
 	buildQuestionBlocks();
@@ -163,7 +162,7 @@ public class StudentInquiryDTO implements Serializable {
     }
 
     public InquiriesRegistry getInquiriesRegistry() {
-	return inquiriesRegistry.getObject();
+	return inquiriesRegistry;
     }
 
     public long getAnswerDuration() {

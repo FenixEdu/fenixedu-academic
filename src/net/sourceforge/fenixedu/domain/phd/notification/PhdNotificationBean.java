@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.phd.notification;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 
 public class PhdNotificationBean implements Serializable {
@@ -14,7 +13,7 @@ public class PhdNotificationBean implements Serializable {
 
     private PhdNotificationType type;
 
-    private DomainReference<PhdProgramCandidacyProcess> candidacyProcess;
+    private PhdProgramCandidacyProcess candidacyProcess;
 
     public PhdNotificationBean(PhdProgramCandidacyProcess candidacyProcess) {
 	setCandidacyProcess(candidacyProcess);
@@ -29,12 +28,11 @@ public class PhdNotificationBean implements Serializable {
     }
 
     public PhdProgramCandidacyProcess getCandidacyProcess() {
-	return (this.candidacyProcess != null) ? this.candidacyProcess.getObject() : null;
+	return this.candidacyProcess;
     }
 
     public void setCandidacyProcess(PhdProgramCandidacyProcess candidacyProcess) {
-	this.candidacyProcess = (candidacyProcess != null) ? new DomainReference<PhdProgramCandidacyProcess>(candidacyProcess)
-		: null;
+	this.candidacyProcess = candidacyProcess;
     }
 
 }

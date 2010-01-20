@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCategory;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -19,14 +18,14 @@ import net.sourceforge.fenixedu.domain.Teacher;
  */
 public class InfoTeacher extends InfoObject {
 
-    private DomainReference<Teacher> teacher;
+    private Teacher teacher;
 
     // This constructor is needed because of CRUDActionByOID. Do not delete it.
     public InfoTeacher() {
     }
 
     public InfoTeacher(final Teacher teacher) {
-	this.teacher = new DomainReference<Teacher>(teacher);
+	this.teacher = teacher;
     }
 
     public List getProfessorShipsExecutionCourses() {
@@ -59,10 +58,12 @@ public class InfoTeacher extends InfoObject {
 	return InfoCategory.newInfoFromDomain(getTeacher().getCategory());
     }
 
+    @Override
     public boolean equals(Object obj) {
-	return obj != null && getTeacher() == ((InfoTeacher) obj).teacher.getObject();
+	return obj != null && getTeacher() == ((InfoTeacher) obj).teacher;
     }
 
+    @Override
     public String toString() {
 	return getTeacher().toString();
     }
@@ -80,11 +81,11 @@ public class InfoTeacher extends InfoObject {
     public void setIdInternal(Integer integer) {
 	// This attribution is needed because of CRUDActionByOID. Do not delete
 	// it.
-	this.teacher = new DomainReference<Teacher>(RootDomainObject.getInstance().readTeacherByOID(integer));
+	this.teacher = RootDomainObject.getInstance().readTeacherByOID(integer);
     }
 
     public Teacher getTeacher() {
-	return teacher == null ? null : teacher.getObject();
+	return teacher;
     }
 
 }

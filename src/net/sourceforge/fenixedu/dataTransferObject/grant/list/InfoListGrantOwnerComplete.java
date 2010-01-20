@@ -11,7 +11,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwnerWithPerson;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
@@ -22,14 +21,14 @@ import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
  */
 public class InfoListGrantOwnerComplete extends InfoObject {
 
-    private final DomainReference<GrantOwner> domainReference;
+    private final GrantOwner domainReference;
 
     public InfoListGrantOwnerComplete(final GrantOwner domainObject) {
-	domainReference = new DomainReference<GrantOwner>(domainObject);
+	domainReference = domainObject;
     }
 
     private GrantOwner getGrantOwner() {
-	return domainReference == null ? null : domainReference.getObject();
+	return domainReference;
     }
 
     @Override

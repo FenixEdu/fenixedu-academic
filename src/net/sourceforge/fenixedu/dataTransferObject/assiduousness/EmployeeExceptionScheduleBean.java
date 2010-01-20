@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.PageContainerBean;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.assiduousness.Schedule;
 
@@ -12,11 +11,11 @@ import org.joda.time.LocalDate;
 
 public class EmployeeExceptionScheduleBean extends PageContainerBean {
 
-    DomainReference<Employee> employee;
+    Employee employee;
 
-    DomainReference<Employee> modifiedBy;
+    Employee modifiedBy;
 
-    DomainReference<Schedule> schedule;
+    Schedule schedule;
 
     LocalDate beginDate;
 
@@ -41,14 +40,14 @@ public class EmployeeExceptionScheduleBean extends PageContainerBean {
 
     public void setEmployee(Employee employee) {
 	if (employee != null) {
-	    this.employee = new DomainReference<Employee>(employee);
+	    this.employee = employee;
 	} else {
 	    this.employee = null;
 	}
     }
 
     public Employee getEmployee() {
-	return employee == null ? null : employee.getObject();
+	return employee;
     }
 
     public List<EmployeeWorkWeekScheduleBean> getEmployeeWorkWeekScheduleList() {
@@ -56,12 +55,12 @@ public class EmployeeExceptionScheduleBean extends PageContainerBean {
     }
 
     public Employee getModifiedBy() {
-	return modifiedBy == null ? null : modifiedBy.getObject();
+	return modifiedBy;
     }
 
     public void setModifiedBy(Employee modifiedBy) {
 	if (modifiedBy != null) {
-	    this.modifiedBy = new DomainReference<Employee>(modifiedBy);
+	    this.modifiedBy = modifiedBy;
 	} else {
 	    this.modifiedBy = null;
 	}
@@ -84,12 +83,12 @@ public class EmployeeExceptionScheduleBean extends PageContainerBean {
     }
 
     public Schedule getSchedule() {
-	return schedule == null ? null : schedule.getObject();
+	return schedule;
     }
 
     public void setSchedule(Schedule schedule) {
 	if (schedule != null) {
-	    this.schedule = new DomainReference<Schedule>(schedule);
+	    this.schedule = schedule;
 	}
     }
 

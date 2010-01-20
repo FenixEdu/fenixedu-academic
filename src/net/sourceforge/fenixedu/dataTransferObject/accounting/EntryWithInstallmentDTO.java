@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.accounting;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.Installment;
@@ -11,7 +10,7 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class EntryWithInstallmentDTO extends EntryDTO implements Serializable {
 
-    private DomainReference<Installment> installment;
+    private Installment installment;
 
     public EntryWithInstallmentDTO(EntryType entryType, Event event, Money totalAmount, LabelFormatter description,
 	    Installment installment) {
@@ -25,11 +24,11 @@ public class EntryWithInstallmentDTO extends EntryDTO implements Serializable {
     }
 
     public Installment getInstallment() {
-	return (this.installment != null) ? this.installment.getObject() : null;
+	return this.installment;
     }
 
     public void setInstallment(Installment installment) {
-	this.installment = (installment != null) ? new DomainReference<Installment>(installment) : null;
+	this.installment = installment;
     }
 
 }

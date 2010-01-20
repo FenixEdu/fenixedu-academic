@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.student.YearDelegate;
 import net.sourceforge.fenixedu.domain.student.YearDelegateCourseInquiry;
@@ -21,9 +20,9 @@ import org.joda.time.DateTime;
  */
 public class YearDelegateCourseInquiryDTO implements Serializable {
 
-    private DomainReference<ExecutionCourse> executionCourse;
+    private ExecutionCourse executionCourse;
 
-    private DomainReference<YearDelegate> delegate;
+    private YearDelegate delegate;
 
     private InquiriesBlock firstBlock;
 
@@ -44,11 +43,11 @@ public class YearDelegateCourseInquiryDTO implements Serializable {
     private DateTime startDateTime;
 
     public ExecutionCourse getExecutionCourse() {
-	return executionCourse.getObject();
+	return executionCourse;
     }
 
     public YearDelegate getDelegate() {
-	return delegate.getObject();
+	return delegate;
     }
 
     public long getAnswerDuration() {
@@ -57,16 +56,16 @@ public class YearDelegateCourseInquiryDTO implements Serializable {
 
     public YearDelegateCourseInquiryDTO(final ExecutionCourse executionCourse, final YearDelegate delegate) {
 	super();
-	this.executionCourse = new DomainReference<ExecutionCourse>(executionCourse);
-	this.delegate = new DomainReference<YearDelegate>(delegate);
+	this.executionCourse = executionCourse;
+	this.delegate = delegate;
 	this.startDateTime = new DateTime();
 	buildQuestionBlocks(null);
     }
 
     public YearDelegateCourseInquiryDTO(final YearDelegateCourseInquiry inquiry) {
 	super();
-	this.executionCourse = new DomainReference<ExecutionCourse>(inquiry.getExecutionCourse());
-	this.delegate = new DomainReference<YearDelegate>(inquiry.getDelegate());
+	this.executionCourse = inquiry.getExecutionCourse();
+	this.delegate = inquiry.getDelegate();
 	this.startDateTime = new DateTime();
 	buildQuestionBlocks(inquiry);
     }

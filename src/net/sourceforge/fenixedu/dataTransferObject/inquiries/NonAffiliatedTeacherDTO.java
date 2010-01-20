@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 
 /**
@@ -12,15 +11,15 @@ import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
  */
 public class NonAffiliatedTeacherDTO extends TeacherDTO {
 
-    private DomainReference<NonAffiliatedTeacher> nonAffiliatedTeacher;
+    private NonAffiliatedTeacher nonAffiliatedTeacher;
 
     public NonAffiliatedTeacherDTO(NonAffiliatedTeacher nonAffiliatedTeacher) {
-	this.nonAffiliatedTeacher = new DomainReference<NonAffiliatedTeacher>(nonAffiliatedTeacher);
+	this.nonAffiliatedTeacher = nonAffiliatedTeacher;
     }
 
     @Override
     public NonAffiliatedTeacher getTeacher() {
-	return nonAffiliatedTeacher.getObject();
+	return nonAffiliatedTeacher;
     }
 
     @Override

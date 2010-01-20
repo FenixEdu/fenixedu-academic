@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import pt.utl.ist.fenix.tools.file.FileSearchCriteria;
 import pt.utl.ist.fenix.tools.file.FileSearchCriteria.SearchField;
 import pt.utl.ist.fenix.tools.file.FilesetMetadataQuery.ConjunctionType;
@@ -15,7 +14,7 @@ public class SearchDSpaceBean implements Serializable {
     protected static final int pageSize = 15;
 
     List<SearchElement> searchElements;
-    List<DomainReference> results;
+    List<DomainObject> results;
 
     private int page;
     private int totalItems;
@@ -98,9 +97,9 @@ public class SearchDSpaceBean implements Serializable {
     }
 
     public void setResults(List<DomainObject> results) {
-	this.results = new ArrayList<DomainReference>();
+	this.results = new ArrayList<DomainObject>();
 	for (DomainObject result : results) {
-	    this.results.add(new DomainReference(result));
+	    this.results.add(result);
 	}
     }
 
@@ -108,8 +107,8 @@ public class SearchDSpaceBean implements Serializable {
 	if (this.results == null)
 	    return null;
 	List<DomainObject> objects = new ArrayList<DomainObject>();
-	for (DomainReference reference : this.results) {
-	    objects.add(reference.getObject());
+	for (DomainObject reference : this.results) {
+	    objects.add(reference);
 	}
 	return objects;
     }

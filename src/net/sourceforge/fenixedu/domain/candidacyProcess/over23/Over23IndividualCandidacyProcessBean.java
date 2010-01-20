@@ -7,7 +7,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.FormationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
@@ -17,9 +16,9 @@ import org.joda.time.LocalDate;
 
 public class Over23IndividualCandidacyProcessBean extends IndividualCandidacyProcessBean {
 
-    private DomainReference<Degree> degreeToAdd;
+    private Degree degreeToAdd;
 
-    private List<DomainReference<Degree>> selectedDegrees;
+    private List<Degree> selectedDegrees;
 
     private String disabilities;
 
@@ -66,11 +65,11 @@ public class Over23IndividualCandidacyProcessBean extends IndividualCandidacyPro
     }
 
     public Degree getDegreeToAdd() {
-	return (this.degreeToAdd != null) ? this.degreeToAdd.getObject() : null;
+	return this.degreeToAdd;
     }
 
     public void setDegreeToAdd(Degree degreeToAdd) {
-	this.degreeToAdd = (degreeToAdd != null) ? new DomainReference<Degree>(degreeToAdd) : null;
+	this.degreeToAdd = degreeToAdd;
     }
 
     public boolean hasDegreeToAdd() {
@@ -83,21 +82,21 @@ public class Over23IndividualCandidacyProcessBean extends IndividualCandidacyPro
 
     public List<Degree> getSelectedDegrees() {
 	final List<Degree> result = new ArrayList<Degree>();
-	for (final DomainReference<Degree> degree : selectedDegrees) {
-	    result.add(degree.getObject());
+	for (final Degree degree : selectedDegrees) {
+	    result.add(degree);
 	}
 	return result;
     }
 
     public void setSelectedDegrees(final List<Degree> degrees) {
-	selectedDegrees = new ArrayList<DomainReference<Degree>>();
+	selectedDegrees = new ArrayList<Degree>();
 	for (final Degree degree : degrees) {
-	    selectedDegrees.add(new DomainReference<Degree>(degree));
+	    selectedDegrees.add(degree);
 	}
     }
 
     public void addDegree(final Degree degree) {
-	selectedDegrees.add(new DomainReference<Degree>(degree));
+	selectedDegrees.add(degree);
     }
 
     public void addDegrees(final Collection<Degree> degrees) {
@@ -107,9 +106,9 @@ public class Over23IndividualCandidacyProcessBean extends IndividualCandidacyPro
     }
 
     public void removeDegree(final Degree degree) {
-	final Iterator<DomainReference<Degree>> iter = selectedDegrees.iterator();
+	final Iterator<Degree> iter = selectedDegrees.iterator();
 	while (iter.hasNext()) {
-	    if (iter.next().getObject() == degree) {
+	    if (iter.next() == degree) {
 		iter.remove();
 		break;
 	    }

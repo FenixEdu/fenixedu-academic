@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.phd.alert;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.MasterDegreeAdministrativeOfficeGroup;
@@ -37,13 +36,13 @@ public class PhdCustomAlertBean implements Serializable {
 
     private LocalDate fireDate;
 
-    private DomainReference<Person> personToAdd;
+    private Person personToAdd;
 
     private Boolean userDefined = true;
 
     private Boolean shared = false;
 
-    private DomainReference<PhdIndividualProgramProcess> process;
+    private PhdIndividualProgramProcess process;
 
     private Group targetGroup;
 
@@ -124,11 +123,11 @@ public class PhdCustomAlertBean implements Serializable {
     }
 
     public Person getPersonToAdd() {
-	return (this.personToAdd != null) ? this.personToAdd.getObject() : null;
+	return this.personToAdd;
     }
 
     public void setPersonToAdd(Person personToAdd) {
-	this.personToAdd = (personToAdd != null) ? new DomainReference<Person>(personToAdd) : null;
+	this.personToAdd = personToAdd;
     }
 
     public Boolean getUserDefined() {
@@ -148,11 +147,11 @@ public class PhdCustomAlertBean implements Serializable {
     }
 
     public PhdIndividualProgramProcess getProcess() {
-	return (this.process != null) ? this.process.getObject() : null;
+	return this.process;
     }
 
     public void setProcess(PhdIndividualProgramProcess process) {
-	this.process = (process != null) ? new DomainReference<PhdIndividualProgramProcess>(process) : null;
+	this.process = process;
     }
 
 }

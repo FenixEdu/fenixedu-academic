@@ -7,7 +7,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.report.GratuityReportingService;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -34,7 +33,7 @@ public class GratuityReportsDA extends FenixDispatchAction {
 
 	private static final long serialVersionUID = 1L;
 
-	private DomainReference<ExecutionYear> executionYear;
+	private ExecutionYear executionYear;
 
 	private LocalDate startDate;
 
@@ -51,11 +50,11 @@ public class GratuityReportsDA extends FenixDispatchAction {
 	}
 
 	public ExecutionYear getExecutionYear() {
-	    return (this.executionYear != null) ? this.executionYear.getObject() : null;
+	    return this.executionYear;
 	}
 
 	public void setExecutionYear(ExecutionYear executionYear) {
-	    this.executionYear = (executionYear != null) ? new DomainReference<ExecutionYear>(executionYear) : null;
+	    this.executionYear = executionYear;
 	}
 
 	public LocalDate getStartDate() {

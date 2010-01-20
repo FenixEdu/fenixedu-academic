@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.Calendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.GenericEvent;
 import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationComment;
 import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest;
@@ -25,28 +24,28 @@ public class InfoGenericEvent extends InfoShowOccupation implements GanttDiagram
 
     private int diaSemana;
 
-    private final DomainReference<GenericEvent> genericEventReference;
+    private final GenericEvent genericEventReference;
 
     public InfoGenericEvent(GenericEvent genericEvent) {
-	genericEventReference = new DomainReference<GenericEvent>(genericEvent);
+	genericEventReference = genericEvent;
     }
 
     public InfoGenericEvent(GenericEvent genericEvent, int diaSemana_) {
-	genericEventReference = new DomainReference<GenericEvent>(genericEvent);
+	genericEventReference = genericEvent;
 	diaSemana = diaSemana_;
 	beginTime = genericEvent.getBeginTimeCalendar();
 	endTime = genericEvent.getEndTimeCalendar();
     }
 
     public InfoGenericEvent(GenericEvent genericEvent, int diaSemana_, Calendar beginTime_, Calendar endTime_) {
-	genericEventReference = new DomainReference<GenericEvent>(genericEvent);
+	genericEventReference = genericEvent;
 	diaSemana = diaSemana_;
 	beginTime = beginTime_;
 	endTime = endTime_;
     }
 
     public GenericEvent getGenericEvent() {
-	return genericEventReference == null ? null : genericEventReference.getObject();
+	return genericEventReference;
     }
 
     @Override

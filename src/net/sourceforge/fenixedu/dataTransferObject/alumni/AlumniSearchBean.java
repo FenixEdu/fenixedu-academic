@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -15,14 +14,14 @@ public class AlumniSearchBean implements Serializable {
 
     private int totalItems;
 
-    private DomainReference<ExecutionYear> firstExecutionYear;
-    private DomainReference<ExecutionYear> finalExecutionYear;
+    private ExecutionYear firstExecutionYear;
+    private ExecutionYear finalExecutionYear;
     private String name;
     private Integer studentNumber;
     private String documentIdNumber;
     private DegreeType degreeType;
-    private DomainReference<Degree> degree;
-    private List<DomainReference<Registration>> alumni;
+    private Degree degree;
+    private List<Registration> alumni;
 
     public AlumniSearchBean() {
 	this("", ExecutionYear.readFirstExecutionYear(), ExecutionYear.readLastExecutionYear());
@@ -41,40 +40,40 @@ public class AlumniSearchBean implements Serializable {
     }
 
     public ExecutionYear getFirstExecutionYear() {
-	return (this.firstExecutionYear != null) ? this.firstExecutionYear.getObject() : ExecutionYear.readFirstExecutionYear();
+	return (this.firstExecutionYear != null) ? this.firstExecutionYear : ExecutionYear.readFirstExecutionYear();
     }
 
     public void setFirstExecutionYear(ExecutionYear executionYear) {
-	this.firstExecutionYear = new DomainReference<ExecutionYear>(executionYear);
+	this.firstExecutionYear = executionYear;
     }
 
     public ExecutionYear getFinalExecutionYear() {
-	return (this.finalExecutionYear != null) ? this.finalExecutionYear.getObject() : ExecutionYear.readLastExecutionYear();
+	return (this.finalExecutionYear != null) ? this.finalExecutionYear : ExecutionYear.readLastExecutionYear();
     }
 
     public void setFinalExecutionYear(ExecutionYear executionYear) {
-	this.finalExecutionYear = new DomainReference<ExecutionYear>(executionYear);
+	this.finalExecutionYear = executionYear;
     }
 
     public List<Registration> getAlumni() {
 	if (this.alumni == null)
 	    return null;
 	List<Registration> alumni = new ArrayList<Registration>();
-	for (DomainReference<Registration> reference : this.alumni) {
-	    alumni.add(reference.getObject());
+	for (Registration reference : this.alumni) {
+	    alumni.add(reference);
 	}
 	return alumni;
     }
 
     public void setAlumni(List<Registration> alumni) {
 	if (this.alumni == null) {
-	    this.alumni = new ArrayList<DomainReference<Registration>>(alumni.size());
+	    this.alumni = new ArrayList<Registration>(alumni.size());
 	} else {
 	    this.alumni.clear();
 	}
 
 	for (Registration person : alumni) {
-	    this.alumni.add(new DomainReference<Registration>(person));
+	    this.alumni.add(person);
 	}
     }
 
@@ -127,11 +126,11 @@ public class AlumniSearchBean implements Serializable {
     }
 
     public Degree getDegree() {
-	return (this.degree != null) ? this.degree.getObject() : null;
+	return this.degree;
     }
 
     public void setDegree(Degree degree) {
-	this.degree = new DomainReference<Degree>(degree);
+	this.degree = degree;
     }
 
     public Integer getStudentNumber() {

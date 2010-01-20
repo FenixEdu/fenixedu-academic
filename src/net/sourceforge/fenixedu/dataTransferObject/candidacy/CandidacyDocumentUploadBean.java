@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyDocument;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyDocumentFile;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
@@ -30,14 +29,14 @@ public class CandidacyDocumentUploadBean implements Serializable {
 
     private String actualFile;
 
-    private DomainReference<CandidacyDocument> candidacyDocument;
+    private CandidacyDocument candidacyDocument;
 
     public CandidacyDocumentUploadBean(CandidacyDocument candidacyDocument) {
 	super();
 	CandidacyDocumentFile file = candidacyDocument.getFile();
 	this.documentDescription = candidacyDocument.getDocumentDescription();
 	this.actualFile = (file != null) ? file.getFilename() + " - " + file.getUploadTime().toString("dd/MM/yyyy hh:mm") : null;
-	this.candidacyDocument = new DomainReference<CandidacyDocument>(candidacyDocument);
+	this.candidacyDocument = candidacyDocument;
     }
 
     public String getActualFile() {
@@ -46,7 +45,7 @@ public class CandidacyDocumentUploadBean implements Serializable {
     }
 
     public CandidacyDocument getCandidacyDocument() {
-	return candidacyDocument.getObject();
+	return candidacyDocument;
     }
 
     public InputStream getFileInputStream() {

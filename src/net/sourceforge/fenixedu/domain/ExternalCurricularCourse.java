@@ -106,7 +106,7 @@ public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
 	    }
 	}
 
-	return (schoolUnit != null) ? schoolUnit : (universityUnit != null) ? universityUnit : null;
+	return (schoolUnit != null) ? schoolUnit : universityUnit;
     }
 
     static public ExternalCurricularCourse readExternalCurricularCourse(Unit unit, String name, String code) {

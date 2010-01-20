@@ -6,7 +6,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DistrictSubdivision;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ProfessionType;
 import net.sourceforge.fenixedu.domain.ProfessionalSituationConditionType;
@@ -30,7 +29,7 @@ import org.joda.time.YearMonthDay;
  */
 public class PersonBean implements Serializable {
 
-    private DomainReference<Person> person;
+    private Person person;
 
     // personal information
     private String name; // read only
@@ -79,7 +78,7 @@ public class PersonBean implements Serializable {
     // birth information
     private YearMonthDay dateOfBirth;
 
-    private DomainReference<Country> nationality;
+    private Country nationality;
 
     private String parishOfBirth;
 
@@ -91,7 +90,7 @@ public class PersonBean implements Serializable {
 
     private String motherName;
 
-    private DomainReference<Country> countryOfBirth;
+    private Country countryOfBirth;
 
     // residence
     private String address;
@@ -108,9 +107,9 @@ public class PersonBean implements Serializable {
 
     private String districtOfResidence;
 
-    private DomainReference<DistrictSubdivision> districtSubdivisionOfResidenceObject;
+    private DistrictSubdivision districtSubdivisionOfResidenceObject;
 
-    private DomainReference<Country> countryOfResidence;
+    private Country countryOfResidence;
 
     private boolean createLoginIdentificationAndUserIfNecessary = true;
 
@@ -295,19 +294,19 @@ public class PersonBean implements Serializable {
     }
 
     public Country getCountryOfBirth() {
-	return countryOfBirth == null ? null : countryOfBirth.getObject();
+	return countryOfBirth;
     }
 
     public void setCountryOfBirth(Country countryOfBirth) {
-	this.countryOfBirth = countryOfBirth == null ? null : new DomainReference<Country>(countryOfBirth);
+	this.countryOfBirth = countryOfBirth;
     }
 
     public Country getCountryOfResidence() {
-	return countryOfResidence == null ? null : countryOfResidence.getObject();
+	return countryOfResidence;
     }
 
     public void setCountryOfResidence(Country countryOfResidence) {
-	this.countryOfResidence = countryOfResidence == null ? null : new DomainReference<Country>(countryOfResidence);
+	this.countryOfResidence = countryOfResidence;
     }
 
     public boolean hasCountryOfResidence() {
@@ -340,12 +339,11 @@ public class PersonBean implements Serializable {
     }
 
     public DistrictSubdivision getDistrictSubdivisionOfResidenceObject() {
-	return (this.districtSubdivisionOfResidenceObject != null) ? this.districtSubdivisionOfResidenceObject.getObject() : null;
+	return this.districtSubdivisionOfResidenceObject;
     }
 
     public void setDistrictSubdivisionOfResidenceObject(DistrictSubdivision districtSubdivision) {
-	this.districtSubdivisionOfResidenceObject = (districtSubdivision != null) ? new DomainReference<DistrictSubdivision>(
-		districtSubdivision) : null;
+	this.districtSubdivisionOfResidenceObject = districtSubdivision;
     }
 
     public String getDistrictSubdivisionOfBirth() {
@@ -486,11 +484,11 @@ public class PersonBean implements Serializable {
     }
 
     public Country getNationality() {
-	return nationality == null ? null : nationality.getObject();
+	return nationality;
     }
 
     public void setNationality(Country nationality) {
-	this.nationality = nationality == null ? null : new DomainReference<Country>(nationality);
+	this.nationality = nationality;
     }
 
     public String getParishOfBirth() {
@@ -585,11 +583,11 @@ public class PersonBean implements Serializable {
     }
 
     public Person getPerson() {
-	return person == null ? null : person.getObject();
+	return person;
     }
 
     public void setPerson(Person person) {
-	this.person = person == null ? null : new DomainReference<Person>(person);
+	this.person = person;
     }
 
     public List<PhysicalAddress> getSortedPhysicalAdresses() {

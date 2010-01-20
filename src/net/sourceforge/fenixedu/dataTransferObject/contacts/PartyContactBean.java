@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.contacts;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
@@ -14,9 +13,9 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
 public abstract class PartyContactBean implements Serializable {
 
-    private DomainReference<Party> party;
+    private Party party;
 
-    private DomainReference<PartyContact> contact;
+    private PartyContact contact;
 
     private String value;
 
@@ -53,19 +52,19 @@ public abstract class PartyContactBean implements Serializable {
     }
 
     public Party getParty() {
-	return (this.party != null) ? this.party.getObject() : null;
+	return this.party;
     }
 
     public void setParty(Party party) {
-	this.party = (party != null) ? new DomainReference<Party>(party) : null;
+	this.party = party;
     }
 
     public PartyContact getContact() {
-	return (this.contact != null) ? this.contact.getObject() : null;
+	return this.contact;
     }
 
     public void setContact(PartyContact contact) {
-	this.contact = (contact != null) ? new DomainReference<PartyContact>(contact) : null;
+	this.contact = contact;
     }
 
     public String getValue() {

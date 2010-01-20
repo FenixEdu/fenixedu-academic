@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.dataTransferObject.person;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
@@ -8,11 +7,11 @@ import org.joda.time.YearMonthDay;
 
 public class InvitedPersonBean extends ExternalPersonBean {
 
-    private DomainReference<Person> invitedPersonReference;
+    private Person invitedPersonReference;
 
-    private DomainReference<Party> responsibleReference;
+    private Party responsibleReference;
 
-    private DomainReference<Person> responsiblePersonReference;
+    private Person responsiblePersonReference;
 
     private YearMonthDay begin;
 
@@ -23,27 +22,27 @@ public class InvitedPersonBean extends ExternalPersonBean {
     }
 
     public Person getInvitedPerson() {
-	return invitedPersonReference == null ? null : invitedPersonReference.getObject();
+	return invitedPersonReference;
     }
 
     public void setInvitedPerson(Person person) {
-	this.invitedPersonReference = person == null ? null : new DomainReference<Person>(person);
+	this.invitedPersonReference = person;
     }
 
     public Party getResponsible() {
-	return responsibleReference == null ? null : responsibleReference.getObject();
+	return responsibleReference;
     }
 
     public void setResponsible(Party party) {
-	this.responsibleReference = party == null ? null : new DomainReference<Party>(party);
+	this.responsibleReference = party;
     }
 
     public Person getResponsiblePerson() {
-	return responsiblePersonReference == null ? null : responsiblePersonReference.getObject();
+	return responsiblePersonReference;
     }
 
     public void setResponsiblePerson(Person person) {
-	this.responsiblePersonReference = person == null ? null : new DomainReference<Person>(person);
+	this.responsiblePersonReference = person;
 	setResponsible(person);
     }
 

@@ -5,7 +5,6 @@ package net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candida
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.student.EnrolmentModel;
 
@@ -21,11 +20,11 @@ public class RegisterCandidacyBean implements Serializable {
 
     private YearMonthDay startDate = new YearMonthDay();
 
-    private DomainReference<StudentCandidacy> candidacy;
+    private StudentCandidacy candidacy;
 
     public RegisterCandidacyBean(StudentCandidacy candidacy) {
 	super();
-	this.candidacy = new DomainReference<StudentCandidacy>(candidacy);
+	this.candidacy = candidacy;
     }
 
     public EnrolmentModel getEnrolmentModel() {
@@ -45,7 +44,7 @@ public class RegisterCandidacyBean implements Serializable {
     }
 
     public StudentCandidacy getCandidacy() {
-	return candidacy == null ? null : candidacy.getObject();
+	return candidacy;
     }
 
 }

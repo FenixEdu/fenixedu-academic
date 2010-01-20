@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.docs.phd.notification;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
@@ -20,7 +19,7 @@ public class PhdCandidacyDeclarationDocument extends FenixReport {
      */
     private static final long serialVersionUID = 1L;
 
-    private DomainReference<PhdProgramCandidacyProcess> candidacyProcess;
+    private PhdProgramCandidacyProcess candidacyProcess;
 
     private Language language;
 
@@ -40,11 +39,11 @@ public class PhdCandidacyDeclarationDocument extends FenixReport {
     }
 
     public PhdProgramCandidacyProcess getCandidacyProcess() {
-	return (this.candidacyProcess != null) ? this.candidacyProcess.getObject() : null;
+	return this.candidacyProcess;
     }
 
     public void setCandidacyProcess(PhdProgramCandidacyProcess arg) {
-	this.candidacyProcess = (arg != null) ? new DomainReference<PhdProgramCandidacyProcess>(arg) : null;
+	this.candidacyProcess = arg;
     }
 
     @Override

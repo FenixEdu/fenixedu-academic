@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.UnitFile;
 import net.sourceforge.fenixedu.domain.UnitFileTag;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -14,7 +13,7 @@ import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 public class UnitFileBean implements Serializable {
 
-    private DomainReference<UnitFile> file;
+    private UnitFile file;
 
     private String name;
 
@@ -25,12 +24,12 @@ public class UnitFileBean implements Serializable {
     private String tags;
 
     protected UnitFileBean() {
-	this.file = new DomainReference<UnitFile>(null);
+	this.file = null;
 	groups = new ArrayList<IGroup>();
     }
 
     public UnitFileBean(UnitFile file) {
-	this.file = new DomainReference<UnitFile>(file);
+	this.file = file;
 	this.name = file.getDisplayName();
 	this.description = file.getDescription();
 	setupGroups(file.getPermittedGroup());
@@ -72,7 +71,7 @@ public class UnitFileBean implements Serializable {
     }
 
     public UnitFile getFile() {
-	return file.getObject();
+	return file;
     }
 
     public List<IGroup> getGroups() {

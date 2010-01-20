@@ -2,13 +2,12 @@ package net.sourceforge.fenixedu.dataTransferObject.accounting;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.CandidacyExemptionJustificationType;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyEvent;
 
 public class SecondCycleIndividualCandidacyExemptionBean implements Serializable {
 
-    private DomainReference<SecondCycleIndividualCandidacyEvent> event;
+    private SecondCycleIndividualCandidacyEvent event;
 
     private CandidacyExemptionJustificationType justificationType;
 
@@ -17,11 +16,11 @@ public class SecondCycleIndividualCandidacyExemptionBean implements Serializable
     }
 
     public SecondCycleIndividualCandidacyEvent getEvent() {
-	return (this.event != null) ? this.event.getObject() : null;
+	return this.event;
     }
 
     public void setEvent(SecondCycleIndividualCandidacyEvent event) {
-	this.event = (event != null) ? new DomainReference<SecondCycleIndividualCandidacyEvent>(event) : null;
+	this.event = event;
     }
 
     public CandidacyExemptionJustificationType getJustificationType() {

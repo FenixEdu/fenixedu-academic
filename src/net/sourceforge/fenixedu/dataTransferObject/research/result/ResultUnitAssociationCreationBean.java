@@ -4,27 +4,26 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation.ResultUnitAssociationRole;
 
 public class ResultUnitAssociationCreationBean implements Serializable {
-    private DomainReference<ResearchResult> result;
-    private DomainReference<Unit> unit;
-    private List<DomainReference<Unit>> suggestedUnits;
+    private ResearchResult result;
+    private Unit unit;
+    private List<Unit> suggestedUnits;
     private String role;
     private String unitName;
     private UnitType unitType;
     private boolean isSuggestion;
 
     public ResultUnitAssociationCreationBean(ResearchResult result) {
-	setResult(new DomainReference<ResearchResult>(result));
+	setResult(result);
 	setUnit(null);
 	setUnitName(null);
 	setRole(ResultUnitAssociationRole.getDefaultRole());
 	setUnitType(UnitType.ACADEMIC_UNIT);
-	suggestedUnits = new ArrayList<DomainReference<Unit>>();
+	suggestedUnits = new ArrayList<Unit>();
 	setSuggestion(false);
     }
 
@@ -45,18 +44,18 @@ public class ResultUnitAssociationCreationBean implements Serializable {
     }
 
     public Unit getUnit() {
-	return (this.unit == null) ? null : this.unit.getObject();
+	return this.unit;
     }
 
     public void setUnit(Unit unit) {
-	this.unit = (unit != null) ? new DomainReference<Unit>(unit) : null;
+	this.unit = unit;
     }
 
     public ResearchResult getResult() {
-	return result.getObject();
+	return result;
     }
 
-    public void setResult(DomainReference<ResearchResult> result) {
+    public void setResult(ResearchResult result) {
 	this.result = result;
     }
 
@@ -83,8 +82,8 @@ public class ResultUnitAssociationCreationBean implements Serializable {
 
     public List<Unit> getSuggestedUnits() {
 	List<Unit> units = new ArrayList<Unit>();
-	for (DomainReference<Unit> suggestedUnit : this.suggestedUnits) {
-	    units.add(suggestedUnit.getObject());
+	for (Unit suggestedUnit : this.suggestedUnits) {
+	    units.add(suggestedUnit);
 	}
 	return units;
     }
@@ -92,7 +91,7 @@ public class ResultUnitAssociationCreationBean implements Serializable {
     public void setSuggestedUnits(List<Unit> units) {
 	this.suggestedUnits.clear();
 	for (Unit unit : units) {
-	    suggestedUnits.add(new DomainReference<Unit>(unit));
+	    suggestedUnits.add(unit);
 	}
     }
 

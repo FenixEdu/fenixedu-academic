@@ -9,7 +9,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
@@ -20,10 +19,10 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
  */
 public class InfoGroup extends InfoObject {
 
-    private DomainReference<FinalDegreeWorkGroup> groupDomainReference;
+    private FinalDegreeWorkGroup groupDomainReference;
 
     public InfoGroup(final FinalDegreeWorkGroup group) {
-	groupDomainReference = new DomainReference<FinalDegreeWorkGroup>(group);
+	groupDomainReference = group;
     }
 
     public static InfoGroup newInfoFromDomain(final FinalDegreeWorkGroup group) {
@@ -31,7 +30,7 @@ public class InfoGroup extends InfoObject {
     }
 
     public FinalDegreeWorkGroup getGroup() {
-	return groupDomainReference == null ? null : groupDomainReference.getObject();
+	return groupDomainReference;
     }
 
     public boolean equals(Object obj) {

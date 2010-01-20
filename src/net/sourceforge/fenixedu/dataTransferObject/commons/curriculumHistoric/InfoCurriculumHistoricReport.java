@@ -8,7 +8,6 @@ import java.util.Collection;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 
@@ -26,7 +25,7 @@ public class InfoCurriculumHistoricReport implements Serializable {
 
     Collection<InfoEnrolmentHistoricReport> enrolments;
 
-    DomainReference<CurricularCourse> curricularCourse;
+    CurricularCourse curricularCourse;
 
     AcademicInterval academicInterval;
 
@@ -55,11 +54,11 @@ public class InfoCurriculumHistoricReport implements Serializable {
     }
 
     public CurricularCourse getCurricularCourse() {
-	return this.curricularCourse == null ? null : this.curricularCourse.getObject();
+	return this.curricularCourse;
     }
 
     private void setCurricularCourse(final CurricularCourse curricularCourse) {
-	this.curricularCourse = (curricularCourse == null) ? null : new DomainReference<CurricularCourse>(curricularCourse);
+	this.curricularCourse = curricularCourse;
 
     }
 

@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -19,14 +18,14 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class AllStudentsByCampus extends Group {
 
-    private final DomainReference<Campus> campus;
+    private final Campus campus;
 
     public AllStudentsByCampus(Campus campus) {
-	this.campus = new DomainReference<Campus>(campus);
+	this.campus = campus;
     }
 
     public Campus getCampus() {
-	return campus.getObject();
+	return campus;
     }
 
     @Override

@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -16,15 +15,15 @@ import net.sourceforge.fenixedu.domain.student.Student;
 public class DelegateBean implements Serializable {
     private DegreeType degreeType;
 
-    private DomainReference<ExecutionYear> executionYear;
+    private ExecutionYear executionYear;
 
-    private DomainReference<Degree> degree;
+    private Degree degree;
 
-    private DomainReference<CurricularYear> curricularYear;
+    private CurricularYear curricularYear;
 
-    private DomainReference<Student> delegate;
+    private Student delegate;
 
-    private DomainReference<Person> ggaeDelegate;
+    private Person ggaeDelegate;
 
     private FunctionType delegateType;
 
@@ -32,9 +31,9 @@ public class DelegateBean implements Serializable {
 
     private String personUsername;
 
-    private DomainReference<Function> ggaeDelegateFunction;
+    private Function ggaeDelegateFunction;
 
-    private DomainReference<DelegateElection> delegateElection;
+    private DelegateElection delegateElection;
 
     public DelegateBean() {
 	setDegreeType(null);
@@ -46,19 +45,19 @@ public class DelegateBean implements Serializable {
     }
 
     public CurricularYear getCurricularYear() {
-	return (curricularYear == null ? null : curricularYear.getObject());
+	return (curricularYear);
     }
 
     public void setCurricularYear(CurricularYear curricularYear) {
-	this.curricularYear = new DomainReference<CurricularYear>(curricularYear);
+	this.curricularYear = curricularYear;
     }
 
     public Degree getDegree() {
-	return (degree == null ? null : degree.getObject());
+	return (degree);
     }
 
     public void setDegree(Degree degree) {
-	this.degree = new DomainReference<Degree>(degree);
+	this.degree = degree;
     }
 
     public DegreeType getDegreeType() {
@@ -70,35 +69,35 @@ public class DelegateBean implements Serializable {
     }
 
     public ExecutionYear getExecutionYear() {
-	return (executionYear == null ? null : executionYear.getObject());
+	return (executionYear);
     }
 
     public void setDelegateElection(DelegateElection election) {
-	this.delegateElection = new DomainReference<DelegateElection>(election);
+	this.delegateElection = election;
     }
 
     public DelegateElection getDelegateElection() {
-	return (delegateElection == null ? null : delegateElection.getObject());
+	return (delegateElection);
     }
 
     public void setExecutionYear(ExecutionYear executionYear) {
-	this.executionYear = new DomainReference<ExecutionYear>(executionYear);
+	this.executionYear = executionYear;
     }
 
     public Student getDelegate() {
-	return (delegate == null ? null : delegate.getObject());
+	return (delegate);
     }
 
     public void setDelegate(Student delegate) {
-	this.delegate = new DomainReference<Student>(delegate);
+	this.delegate = delegate;
     }
 
     public Person getGgaeDelegate() {
-	return (ggaeDelegate == null ? null : ggaeDelegate.getObject());
+	return (ggaeDelegate);
     }
 
     public void setGgaeDelegate(Person ggaeDelegate) {
-	this.ggaeDelegate = new DomainReference<Person>(ggaeDelegate);
+	this.ggaeDelegate = ggaeDelegate;
     }
 
     public Integer getStudentNumber() {
@@ -138,11 +137,11 @@ public class DelegateBean implements Serializable {
     }
 
     public Function getGgaeDelegateFunction() {
-	return (ggaeDelegateFunction == null ? null : ggaeDelegateFunction.getObject());
+	return (ggaeDelegateFunction);
     }
 
     public void setGgaeDelegateFunction(Function delegateFunction) {
-	this.ggaeDelegateFunction = new DomainReference<Function>(delegateFunction);
+	this.ggaeDelegateFunction = delegateFunction;
     }
 
     /*

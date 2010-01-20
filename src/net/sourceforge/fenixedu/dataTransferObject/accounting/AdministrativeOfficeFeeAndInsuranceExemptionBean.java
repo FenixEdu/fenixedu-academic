@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.accounting;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustificationType;
 
@@ -15,7 +14,7 @@ public class AdministrativeOfficeFeeAndInsuranceExemptionBean implements Seriali
      */
     private static final long serialVersionUID = 1L;
 
-    private DomainReference<AdministrativeOfficeFeeAndInsuranceEvent> administrativeOfficeFeeAndInsuranceEvent;
+    private AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent;
 
     private AdministrativeOfficeFeeAndInsuranceExemptionJustificationType justificationType;
 
@@ -28,15 +27,12 @@ public class AdministrativeOfficeFeeAndInsuranceExemptionBean implements Seriali
     }
 
     public AdministrativeOfficeFeeAndInsuranceEvent getAdministrativeOfficeFeeAndInsuranceEvent() {
-	return (this.administrativeOfficeFeeAndInsuranceEvent != null) ? this.administrativeOfficeFeeAndInsuranceEvent
-		.getObject() : null;
+	return this.administrativeOfficeFeeAndInsuranceEvent;
     }
 
     public void setAdministrativeOfficeFeeAndInsuranceEvent(
 	    AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent) {
-	this.administrativeOfficeFeeAndInsuranceEvent = (administrativeOfficeFeeAndInsuranceEvent != null) ? new DomainReference<AdministrativeOfficeFeeAndInsuranceEvent>(
-		administrativeOfficeFeeAndInsuranceEvent)
-		: null;
+	this.administrativeOfficeFeeAndInsuranceEvent = administrativeOfficeFeeAndInsuranceEvent;
     }
 
     public AdministrativeOfficeFeeAndInsuranceExemptionJustificationType getJustificationType() {

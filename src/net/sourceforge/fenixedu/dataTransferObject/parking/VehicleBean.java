@@ -2,15 +2,14 @@ package net.sourceforge.fenixedu.dataTransferObject.parking;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.parking.ParkingParty;
 import net.sourceforge.fenixedu.domain.parking.Vehicle;
 
 public class VehicleBean implements Serializable {
 
-    private DomainReference<Vehicle> vehicle;
+    private Vehicle vehicle;
 
-    private DomainReference<ParkingParty> parkingParty;
+    private ParkingParty parkingParty;
 
     private String vehiclePlateNumber;
 
@@ -32,24 +31,24 @@ public class VehicleBean implements Serializable {
     }
 
     public Vehicle getVehicle() {
-	return vehicle == null ? null : vehicle.getObject();
+	return vehicle;
     }
 
     public void setVehicle(Vehicle vehicle) {
 	if (vehicle != null) {
-	    this.vehicle = new DomainReference<Vehicle>(vehicle);
+	    this.vehicle = vehicle;
 	} else {
 	    this.vehicle = null;
 	}
     }
 
     public ParkingParty getParkingParty() {
-	return parkingParty == null ? null : parkingParty.getObject();
+	return parkingParty;
     }
 
     public void setParkingParty(ParkingParty parkingParty) {
 	if (parkingParty != null) {
-	    this.parkingParty = new DomainReference<ParkingParty>(parkingParty);
+	    this.parkingParty = parkingParty;
 	} else {
 	    this.parkingParty = null;
 	}

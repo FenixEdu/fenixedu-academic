@@ -2,12 +2,11 @@ package net.sourceforge.fenixedu.dataTransferObject.person;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 
 public class PasswordBean implements Serializable {
 
-    private DomainReference<Person> person;
+    private Person person;
 
     private String password;
 
@@ -18,11 +17,11 @@ public class PasswordBean implements Serializable {
     }
 
     public Person getPerson() {
-	return (this.person != null) ? this.person.getObject() : null;
+	return this.person;
     }
 
     private void setPerson(Person person) {
-	this.person = (person != null) ? new DomainReference<Person>(person) : null;
+	this.person = person;
     }
 
     public String getPassword() {

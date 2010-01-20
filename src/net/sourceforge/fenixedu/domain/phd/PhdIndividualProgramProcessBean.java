@@ -4,8 +4,6 @@ import static net.sourceforge.fenixedu.util.StringUtils.isEmpty;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
-
 import org.joda.time.LocalDate;
 
 public class PhdIndividualProgramProcessBean implements Serializable {
@@ -47,9 +45,9 @@ public class PhdIndividualProgramProcessBean implements Serializable {
     private PhdIndividualProgramCollaborationType collaborationType;
     private String otherCollaborationType;
 
-    private DomainReference<PhdIndividualProgramProcess> individualProgramProcess;
-    private DomainReference<PhdProgram> phdProgram;
-    private DomainReference<PhdProgramFocusArea> focusArea;
+    private PhdIndividualProgramProcess individualProgramProcess;
+    private PhdProgram phdProgram;
+    private PhdProgramFocusArea focusArea;
 
     private QualificationExamsResult qualificationExamsRequired;
     private QualificationExamsResult qualificationExamsPerformed;
@@ -114,20 +112,19 @@ public class PhdIndividualProgramProcessBean implements Serializable {
     }
 
     public PhdIndividualProgramProcess getIndividualProgramProcess() {
-	return (this.individualProgramProcess != null) ? this.individualProgramProcess.getObject() : null;
+	return this.individualProgramProcess;
     }
 
     public void setIndividualProgramProcess(final PhdIndividualProgramProcess individualProgramProcess) {
-	this.individualProgramProcess = (individualProgramProcess != null) ? new DomainReference<PhdIndividualProgramProcess>(
-		individualProgramProcess) : null;
+	this.individualProgramProcess = individualProgramProcess;
     }
 
     public PhdProgram getPhdProgram() {
-	return (this.phdProgram != null) ? this.phdProgram.getObject() : null;
+	return this.phdProgram;
     }
 
     public void setPhdProgram(final PhdProgram phdProgram) {
-	this.phdProgram = (phdProgram != null) ? new DomainReference<PhdProgram>(phdProgram) : null;
+	this.phdProgram = phdProgram;
     }
 
     public boolean hasPhdProgram() {
@@ -135,11 +132,11 @@ public class PhdIndividualProgramProcessBean implements Serializable {
     }
 
     public PhdProgramFocusArea getFocusArea() {
-	return (this.focusArea != null) ? this.focusArea.getObject() : null;
+	return this.focusArea;
     }
 
     public void setFocusArea(final PhdProgramFocusArea focusArea) {
-	this.focusArea = (focusArea != null) ? new DomainReference<PhdProgramFocusArea>(focusArea) : null;
+	this.focusArea = focusArea;
     }
 
     public boolean hasFocusArea() {

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -19,44 +18,44 @@ public class DegreeModuleToEnrol implements Serializable, IDegreeModuleToEvaluat
 
     private static final long serialVersionUID = -6337658191828772384L;
 
-    private DomainReference<CurriculumGroup> curriculumGroup;
+    private CurriculumGroup curriculumGroup;
 
-    private DomainReference<Context> context;
+    private Context context;
 
-    private DomainReference<ExecutionSemester> executionSemester;
+    private ExecutionSemester executionSemester;
 
     protected DegreeModuleToEnrol() {
     }
 
     public DegreeModuleToEnrol(final CurriculumGroup curriculumGroup, final Context context,
 	    final ExecutionSemester executionSemester) {
-	this.curriculumGroup = new DomainReference<CurriculumGroup>(curriculumGroup);
-	this.context = new DomainReference<Context>(context);
-	this.executionSemester = new DomainReference<ExecutionSemester>(executionSemester);
+	this.curriculumGroup = curriculumGroup;
+	this.context = context;
+	this.executionSemester = executionSemester;
     }
 
     public CurriculumGroup getCurriculumGroup() {
-	return (this.curriculumGroup == null) ? null : this.curriculumGroup.getObject();
+	return this.curriculumGroup;
     }
 
     public void setCurriculumGroup(CurriculumGroup curriculumGroup) {
-	this.curriculumGroup = (curriculumGroup != null) ? new DomainReference<CurriculumGroup>(curriculumGroup) : null;
+	this.curriculumGroup = curriculumGroup;
     }
 
     public Context getContext() {
-	return (this.context == null) ? null : this.context.getObject();
+	return this.context;
     }
 
     public void setContext(Context context) {
-	this.context = (context != null) ? new DomainReference<Context>(context) : null;
+	this.context = context;
     }
 
     public ExecutionSemester getExecutionPeriod() {
-	return (this.executionSemester != null) ? this.executionSemester.getObject() : null;
+	return this.executionSemester;
     }
 
     public void setExecutionPeriod(ExecutionSemester executionSemester) {
-	this.executionSemester = (executionSemester != null) ? new DomainReference<ExecutionSemester>(executionSemester) : null;
+	this.executionSemester = executionSemester;
     }
 
     public String getKey() {

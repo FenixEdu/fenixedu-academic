@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartySocialSecurityNumber;
@@ -23,7 +22,7 @@ public class PaymentsManagementDTO implements Serializable {
      */
     private static final long serialVersionUID = 3591155631181117718L;
 
-    private DomainReference<Person> person;
+    private Person person;
 
     private List<EntryDTO> entryDTOs;
 
@@ -31,7 +30,7 @@ public class PaymentsManagementDTO implements Serializable {
 
     private boolean differedPayment;
 
-    private DomainReference<Party> contributorParty;
+    private Party contributorParty;
 
     private String contributorNumber;
 
@@ -47,11 +46,11 @@ public class PaymentsManagementDTO implements Serializable {
     }
 
     public Person getPerson() {
-	return (this.person != null) ? this.person.getObject() : null;
+	return this.person;
     }
 
     public void setPerson(Person person) {
-	this.person = (person != null) ? new DomainReference<Person>(person) : null;
+	this.person = person;
     }
 
     public void addEntryDTO(EntryDTO entryDTO) {
@@ -105,21 +104,20 @@ public class PaymentsManagementDTO implements Serializable {
     }
 
     public Party getContributorParty() {
-	return (this.contributorParty != null) ? this.contributorParty.getObject()
-		: StringUtils.isEmpty(this.contributorNumber) ? null : Party.readByContributorNumber(this.contributorNumber);
+	return (this.contributorParty != null) ? this.contributorParty : StringUtils.isEmpty(this.contributorNumber) ? null
+		: Party.readByContributorNumber(this.contributorNumber);
     }
 
     public void setContributorParty(Party contributorParty) {
-	this.contributorParty = (contributorParty != null) ? new DomainReference<Party>(contributorParty) : null;
+	this.contributorParty = contributorParty;
     }
 
     public PartySocialSecurityNumber getContributorPartySocialSecurityNumber() {
-	return (this.contributorParty != null) ? this.contributorParty.getObject().getPartySocialSecurityNumber() : null;
+	return (this.contributorParty != null) ? this.contributorParty.getPartySocialSecurityNumber() : null;
     }
 
     public void setContributorPartySocialSecurityNumber(PartySocialSecurityNumber partySocialSecurityNumber) {
-	this.contributorParty = (partySocialSecurityNumber != null) ? new DomainReference<Party>(partySocialSecurityNumber
-		.getParty()) : null;
+	this.contributorParty = (partySocialSecurityNumber != null) ? partySocialSecurityNumber.getParty() : null;
     }
 
     public String getContributorName() {

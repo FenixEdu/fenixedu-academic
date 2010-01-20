@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.research;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -11,7 +10,7 @@ public class PrizeBean implements Serializable {
     private Integer year;
     private MultiLanguageString name;
     private MultiLanguageString description;
-    private DomainReference<Person> person;
+    private Person person;
 
     public PrizeBean(Person person) {
 	setPerson(person);
@@ -22,11 +21,11 @@ public class PrizeBean implements Serializable {
     }
 
     public Person getPerson() {
-	return this.person.getObject();
+	return this.person;
     }
 
     public void setPerson(Person person) {
-	this.person = new DomainReference<Person>(person);
+	this.person = person;
     }
 
     public MultiLanguageString getDescription() {

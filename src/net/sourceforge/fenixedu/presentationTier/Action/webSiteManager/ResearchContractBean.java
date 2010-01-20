@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.webSiteManager;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract.ResearchContractType;
@@ -15,7 +14,7 @@ public class ResearchContractBean implements Serializable {
 
     private Boolean externalPerson;
 
-    private DomainReference<PersonName> personName;
+    private PersonName personName;
 
     private String personNameString;
 
@@ -23,7 +22,7 @@ public class ResearchContractBean implements Serializable {
 
     private YearMonthDay end;
 
-    private DomainReference<ResearchUnit> unit;
+    private ResearchUnit unit;
 
     private String email;
 
@@ -86,19 +85,19 @@ public class ResearchContractBean implements Serializable {
     }
 
     public PersonName getPersonName() {
-	return personName.getObject();
+	return personName;
     }
 
     public void setPersonName(PersonName personName) {
-	this.personName = new DomainReference<PersonName>(personName);
+	this.personName = personName;
     }
 
     public ResearchUnit getUnit() {
-	return unit.getObject();
+	return unit;
     }
 
     public void setUnit(ResearchUnit unit) {
-	this.unit = new DomainReference<ResearchUnit>(unit);
+	this.unit = unit;
     }
 
     public String getPersonNameString() {

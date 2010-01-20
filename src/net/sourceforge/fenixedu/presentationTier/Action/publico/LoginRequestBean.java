@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.LoginRequest;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.Gender;
@@ -10,7 +9,7 @@ import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 
 public class LoginRequestBean implements Serializable {
 
-    private DomainReference<Person> person;
+    private Person person;
 
     private String name;
 
@@ -99,11 +98,11 @@ public class LoginRequestBean implements Serializable {
     }
 
     public Person getPerson() {
-	return person.getObject();
+	return person;
     }
 
     public void setPerson(Person person) {
-	this.person = new DomainReference<Person>(person);
+	this.person = person;
 	this.name = person.getName();
 	this.documentIDNumber = person.getIdDocuments().get(0).getValue();
 	this.documentType = person.getIdDocuments().get(0).getIdDocumentType().getValue();

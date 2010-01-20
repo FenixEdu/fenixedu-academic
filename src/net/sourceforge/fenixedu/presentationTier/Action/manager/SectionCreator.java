@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
@@ -17,20 +16,20 @@ public class SectionCreator implements Serializable {
 
     private boolean visible;
 
-    private DomainReference<Section> nextSection;
+    private Section nextSection;
 
-    private DomainReference<Site> site;
+    private Site site;
 
-    private DomainReference<Section> superiorSection;
+    private Section superiorSection;
 
     private Group permittedGroup;
 
     public SectionCreator(Site site) {
 	super();
 
-	this.site = new DomainReference<Site>(site);
-	this.superiorSection = new DomainReference<Section>(null);
-	this.nextSection = new DomainReference<Section>(null);
+	this.site = site;
+	this.superiorSection = null;
+	this.nextSection = null;
 	this.visible = true;
 	this.permittedGroup = new EveryoneGroup();
     }
@@ -58,23 +57,23 @@ public class SectionCreator implements Serializable {
     }
 
     public Section getNextSection() {
-	return this.nextSection.getObject();
+	return this.nextSection;
     }
 
     public void setNextSection(Section nextSection) {
-	this.nextSection = new DomainReference<Section>(nextSection);
+	this.nextSection = nextSection;
     }
 
     public Site getSite() {
-	return this.site.getObject();
+	return this.site;
     }
 
     public Section getSuperiorSection() {
-	return this.superiorSection.getObject();
+	return this.superiorSection;
     }
 
     public void setSuperiorSection(Section superiorSection) {
-	this.superiorSection = new DomainReference<Section>(superiorSection);
+	this.superiorSection = superiorSection;
     }
 
     public Group getPermittedGroup() {

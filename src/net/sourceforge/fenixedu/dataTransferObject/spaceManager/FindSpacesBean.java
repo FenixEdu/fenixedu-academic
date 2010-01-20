@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.LinkObject;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.Building;
 import net.sourceforge.fenixedu.domain.space.Campus;
@@ -16,13 +15,13 @@ public class FindSpacesBean implements Serializable {
 
     private String labelToSearch;
 
-    private DomainReference<Building> buildingReference;
+    private Building buildingReference;
 
-    private DomainReference<Campus> campusReference;
+    private Campus campusReference;
 
     private List<LinkObject> spacePath;
 
-    private DomainReference<Space> selectedSpaceReference;
+    private Space selectedSpaceReference;
 
     private Boolean extraOptions;
 
@@ -87,11 +86,11 @@ public class FindSpacesBean implements Serializable {
     }
 
     public void setSpace(Space space) {
-	this.selectedSpaceReference = space != null ? new DomainReference<Space>(space) : null;
+	this.selectedSpaceReference = space;
     }
 
     public Space getSpace() {
-	return this.selectedSpaceReference != null ? this.selectedSpaceReference.getObject() : null;
+	return this.selectedSpaceReference;
     }
 
     public void setAcademicInterval(AcademicInterval academicInterval) {
@@ -103,19 +102,19 @@ public class FindSpacesBean implements Serializable {
     }
 
     public void setBuilding(Building building) {
-	this.buildingReference = building != null ? new DomainReference<Building>(building) : null;
+	this.buildingReference = building;
     }
 
     public Building getBuilding() {
-	return this.buildingReference != null ? this.buildingReference.getObject() : null;
+	return this.buildingReference;
     }
 
     public void setCampus(Campus floor) {
-	this.campusReference = floor != null ? new DomainReference<Campus>(floor) : null;
+	this.campusReference = floor;
     }
 
     public Campus getCampus() {
-	return this.campusReference != null ? this.campusReference.getObject() : null;
+	return this.campusReference;
     }
 
     public String getLabelToSearch() {

@@ -4,13 +4,12 @@ import java.io.Serializable;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
 import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
 
 public class JournalIssueParticipantBean extends ParticipantBean implements Serializable {
 
-    DomainReference<JournalIssue> issue;
+    JournalIssue issue;
 
     public JournalIssueParticipantBean() {
 	super();
@@ -18,11 +17,11 @@ public class JournalIssueParticipantBean extends ParticipantBean implements Seri
     }
 
     public void setJournalIssue(JournalIssue issue) {
-	this.issue = new DomainReference<JournalIssue>(issue);
+	this.issue = issue;
     }
 
     public JournalIssue getJournalIssue() {
-	return this.issue.getObject();
+	return this.issue;
     }
 
     @Override

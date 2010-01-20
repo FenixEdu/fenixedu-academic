@@ -4,13 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.LinkObject;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 public class ExternalUnitResultBean extends AbstractExternalUnitResultBean {
 
-    private DomainReference<Unit> unit;
+    private Unit unit;
 
     public ExternalUnitResultBean(final Unit unit, final PartyTypeEnum parentUnitType) {
 	super();
@@ -24,11 +23,11 @@ public class ExternalUnitResultBean extends AbstractExternalUnitResultBean {
 
     @Override
     public Unit getUnit() {
-	return (this.unit != null) ? this.unit.getObject() : null;
+	return this.unit;
     }
 
     public void setUnit(Unit unit) {
-	this.unit = (unit != null) ? new DomainReference<Unit>(unit) : null;
+	this.unit = unit;
     }
 
     public PartyTypeEnum getType() {

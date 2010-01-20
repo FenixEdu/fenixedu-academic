@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.FormationBean;
@@ -17,7 +16,7 @@ import org.joda.time.LocalDate;
 
 public class SecondCycleIndividualCandidacyProcessBean extends IndividualCandidacyProcessWithPrecedentDegreeInformationBean {
 
-    private DomainReference<Degree> selectedDegree;
+    private Degree selectedDegree;
 
     private String professionalStatus;
 
@@ -61,11 +60,11 @@ public class SecondCycleIndividualCandidacyProcessBean extends IndividualCandida
     }
 
     public Degree getSelectedDegree() {
-	return (this.selectedDegree != null) ? this.selectedDegree.getObject() : null;
+	return this.selectedDegree;
     }
 
     public void setSelectedDegree(Degree selectedDegree) {
-	this.selectedDegree = (selectedDegree != null) ? new DomainReference<Degree>(selectedDegree) : null;
+	this.selectedDegree = selectedDegree;
     }
 
     public String getProfessionalStatus() {

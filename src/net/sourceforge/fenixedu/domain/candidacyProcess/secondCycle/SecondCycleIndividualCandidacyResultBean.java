@@ -3,12 +3,11 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
 
 public class SecondCycleIndividualCandidacyResultBean implements Serializable {
 
-    private DomainReference<SecondCycleIndividualCandidacyProcess> candidacyProcess;
+    private SecondCycleIndividualCandidacyProcess candidacyProcess;
     private Integer professionalExperience;
     private BigDecimal affinity;
     private Integer degreeNature;
@@ -33,12 +32,11 @@ public class SecondCycleIndividualCandidacyResultBean implements Serializable {
     }
 
     public SecondCycleIndividualCandidacyProcess getCandidacyProcess() {
-	return (this.candidacyProcess != null) ? this.candidacyProcess.getObject() : null;
+	return this.candidacyProcess;
     }
 
     public void setCandidacyProcess(final SecondCycleIndividualCandidacyProcess candidacyProcess) {
-	this.candidacyProcess = (candidacyProcess != null) ? new DomainReference<SecondCycleIndividualCandidacyProcess>(
-		candidacyProcess) : null;
+	this.candidacyProcess = candidacyProcess;
     }
 
     public BigDecimal getAffinity() {

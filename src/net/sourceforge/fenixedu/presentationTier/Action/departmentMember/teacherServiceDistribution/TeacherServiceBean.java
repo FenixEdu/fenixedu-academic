@@ -5,18 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
 
 public class TeacherServiceBean implements Serializable {
 
-    private DomainReference<ExecutionYear> executionYear;
-    private DomainReference<ExecutionSemester> executionSemester;
-    private DomainReference<Department> department;
-    private List<DomainReference<TSDProcess>> tsdProcesss;
-    private DomainReference<TSDProcess> copyFromtsdProcess;
+    private ExecutionYear executionYear;
+    private ExecutionSemester executionSemester;
+    private Department department;
+    private List<TSDProcess> tsdProcesss;
+    private TSDProcess copyFromtsdProcess;
 
     private String name;
 
@@ -33,54 +32,54 @@ public class TeacherServiceBean implements Serializable {
 	this.setExecutionYear(null);
 	this.setDepartment(null);
 	this.setCopyFromTSDProcess(null);
-	this.tsdProcesss = new ArrayList<DomainReference<TSDProcess>>();
+	this.tsdProcesss = new ArrayList<TSDProcess>();
     }
 
     public void setExecutionYear(ExecutionYear executionYear) {
-	this.executionYear = new DomainReference<ExecutionYear>(executionYear);
+	this.executionYear = executionYear;
     }
 
     public ExecutionYear getExecutionYear() {
-	return this.executionYear.getObject();
+	return this.executionYear;
     }
 
     public void setExecutionPeriod(ExecutionSemester executionSemester) {
-	this.executionSemester = new DomainReference<ExecutionSemester>(executionSemester);
+	this.executionSemester = executionSemester;
     }
 
     public ExecutionSemester getExecutionPeriod() {
-	return this.executionSemester.getObject();
+	return this.executionSemester;
     }
 
     public void setTSDProcess(List<TSDProcess> serviceDistributions) {
-	this.tsdProcesss = new ArrayList<DomainReference<TSDProcess>>();
+	this.tsdProcesss = new ArrayList<TSDProcess>();
 	for (TSDProcess distribution : serviceDistributions) {
-	    this.tsdProcesss.add(new DomainReference<TSDProcess>(distribution));
+	    this.tsdProcesss.add(distribution);
 	}
     }
 
     public List<TSDProcess> getTSDProcess() {
 	List<TSDProcess> distributions = new ArrayList<TSDProcess>();
-	for (DomainReference<TSDProcess> distribution : this.tsdProcesss) {
-	    distributions.add(distribution.getObject());
+	for (TSDProcess distribution : this.tsdProcesss) {
+	    distributions.add(distribution);
 	}
 	return distributions;
     }
 
     public void setDepartment(Department department) {
-	this.department = new DomainReference<Department>(department);
+	this.department = department;
     }
 
     public Department getDepartment() {
-	return this.department.getObject();
+	return this.department;
     }
 
     public void setCopyFromTSDProcess(TSDProcess tsdProcess) {
-	this.copyFromtsdProcess = new DomainReference<TSDProcess>(tsdProcess);
+	this.copyFromtsdProcess = tsdProcess;
     }
 
     public TSDProcess getCopyFromTSDProcess() {
-	return this.copyFromtsdProcess.getObject();
+	return this.copyFromtsdProcess;
     }
 
 }

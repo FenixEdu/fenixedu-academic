@@ -8,7 +8,6 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory.CorrectionType;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
@@ -27,11 +26,11 @@ public class RegularizationMonthFactory implements Serializable, FactoryExecutor
 
     private SortedMap<LocalDate, RegularizationDayBean> regularizationMap = new TreeMap<LocalDate, RegularizationDayBean>();
 
-    private DomainReference<JustificationMotive> justificationMotive;
+    private JustificationMotive justificationMotive;
 
-    private DomainReference<Assiduousness> assiduousness;
+    private Assiduousness assiduousness;
 
-    private DomainReference<Employee> modifiedBy;
+    private Employee modifiedBy;
 
     private CorrectionType correctionType;
 
@@ -109,32 +108,32 @@ public class RegularizationMonthFactory implements Serializable, FactoryExecutor
     }
 
     public Assiduousness getAssiduousness() {
-	return assiduousness == null ? null : assiduousness.getObject();
+	return assiduousness;
     }
 
     public void setAssiduousness(Assiduousness assiduousness) {
 	if (assiduousness != null) {
-	    this.assiduousness = new DomainReference<Assiduousness>(assiduousness);
+	    this.assiduousness = assiduousness;
 	}
     }
 
     public Employee getModifiedBy() {
-	return modifiedBy == null ? null : modifiedBy.getObject();
+	return modifiedBy;
     }
 
     public void setModifiedBy(Employee modifiedBy) {
 	if (modifiedBy != null) {
-	    this.modifiedBy = new DomainReference<Employee>(modifiedBy);
+	    this.modifiedBy = modifiedBy;
 	}
     }
 
     public JustificationMotive getJustificationMotive() {
-	return justificationMotive == null ? null : justificationMotive.getObject();
+	return justificationMotive;
     }
 
     public void setJustificationMotive(JustificationMotive justificationMotive) {
 	if (justificationMotive != null) {
-	    this.justificationMotive = new DomainReference<JustificationMotive>(justificationMotive);
+	    this.justificationMotive = justificationMotive;
 	}
     }
 

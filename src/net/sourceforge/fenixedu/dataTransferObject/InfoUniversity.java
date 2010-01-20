@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.University;
 
 /**
@@ -11,10 +10,10 @@ import net.sourceforge.fenixedu.domain.University;
 
 public class InfoUniversity extends InfoObject {
 
-    private final DomainReference<University> university;
+    private final University university;
 
     public InfoUniversity(final University university) {
-	this.university = new DomainReference<University>(university);
+	this.university = university;
     }
 
     public boolean equals(Object obj) {
@@ -44,7 +43,7 @@ public class InfoUniversity extends InfoObject {
     }
 
     private University getUniversity() {
-	return university == null ? null : university.getObject();
+	return university;
     }
 
 }

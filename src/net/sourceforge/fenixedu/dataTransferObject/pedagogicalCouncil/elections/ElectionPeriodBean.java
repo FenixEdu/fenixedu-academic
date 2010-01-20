@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
@@ -14,17 +13,17 @@ import org.joda.time.YearMonthDay;
 public class ElectionPeriodBean implements Serializable {
     private DegreeType degreeType;
 
-    private DomainReference<ExecutionYear> executionYear;
+    private ExecutionYear executionYear;
 
-    private DomainReference<Degree> degree;
+    private Degree degree;
 
-    private DomainReference<CurricularYear> curricularYear;
+    private CurricularYear curricularYear;
 
     private YearMonthDay startDate;
 
     private YearMonthDay endDate;
 
-    private DomainReference<DelegateElection> election;
+    private DelegateElection election;
 
     private boolean removeCandidacyPeriod;
 
@@ -34,19 +33,19 @@ public class ElectionPeriodBean implements Serializable {
     }
 
     public CurricularYear getCurricularYear() {
-	return (curricularYear == null ? null : curricularYear.getObject());
+	return (curricularYear);
     }
 
     public void setCurricularYear(CurricularYear curricularYear) {
-	this.curricularYear = new DomainReference<CurricularYear>(curricularYear);
+	this.curricularYear = curricularYear;
     }
 
     public Degree getDegree() {
-	return (degree == null ? null : degree.getObject());
+	return (degree);
     }
 
     public void setDegree(Degree degree) {
-	this.degree = new DomainReference<Degree>(degree);
+	this.degree = degree;
     }
 
     public DegreeType getDegreeType() {
@@ -74,11 +73,11 @@ public class ElectionPeriodBean implements Serializable {
     }
 
     public DelegateElection getElection() {
-	return (election == null ? null : election.getObject());
+	return (election);
     }
 
     public void setElection(DelegateElection election) {
-	this.election = new DomainReference<DelegateElection>(election);
+	this.election = election;
     }
 
     public boolean getRemoveCandidacyPeriod() {
@@ -90,10 +89,10 @@ public class ElectionPeriodBean implements Serializable {
     }
 
     public ExecutionYear getExecutionYear() {
-	return (executionYear == null ? null : executionYear.getObject());
+	return (executionYear);
     }
 
     public void setExecutionYear(ExecutionYear executionYear) {
-	this.executionYear = new DomainReference<ExecutionYear>(executionYear);
+	this.executionYear = executionYear;
     }
 }

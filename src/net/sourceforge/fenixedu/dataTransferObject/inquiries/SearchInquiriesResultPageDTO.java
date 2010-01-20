@@ -4,7 +4,6 @@
 package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -17,15 +16,15 @@ public class SearchInquiriesResultPageDTO extends ActionForm {
 
     private Long executionSemesterID;
 
-    private DomainReference<ExecutionSemester> executionSemester;
+    private ExecutionSemester executionSemester;
 
     private Long executionDegreeID;
 
-    private DomainReference<ExecutionDegree> executionDegree;
+    private ExecutionDegree executionDegree;
 
     private Long executionCourseID;
 
-    private DomainReference<ExecutionCourse> executionCourse;
+    private ExecutionCourse executionCourse;
 
     public Long getExecutionSemesterID() {
 	return executionSemesterID;
@@ -37,8 +36,8 @@ public class SearchInquiriesResultPageDTO extends ActionForm {
 
     public void setExecutionSemesterID(Long executionSemesterID) {
 	this.executionSemesterID = executionSemesterID;
-	this.executionSemester = isNullOrZero(executionSemesterID) ? null : new DomainReference<ExecutionSemester>(
-		(ExecutionSemester) DomainObject.fromOID(executionSemesterID));
+	this.executionSemester = isNullOrZero(executionSemesterID) ? null : (ExecutionSemester) DomainObject
+		.fromOID(executionSemesterID);
     }
 
     private boolean isNullOrZero(Long id) {
@@ -51,8 +50,7 @@ public class SearchInquiriesResultPageDTO extends ActionForm {
 
     public void setExecutionDegreeID(Long executionDegreeID) {
 	this.executionDegreeID = executionDegreeID;
-	this.executionDegree = isNullOrZero(executionDegreeID) ? null : new DomainReference<ExecutionDegree>(
-		(ExecutionDegree) DomainObject.fromOID(executionDegreeID));
+	this.executionDegree = isNullOrZero(executionDegreeID) ? null : (ExecutionDegree) DomainObject.fromOID(executionDegreeID);
     }
 
     public Long getExecutionCourseID() {
@@ -61,24 +59,23 @@ public class SearchInquiriesResultPageDTO extends ActionForm {
 
     public void setExecutionCourseID(Long executionCourseID) {
 	this.executionCourseID = executionCourseID;
-	this.executionCourse = isNullOrZero(executionCourseID) ? null : new DomainReference<ExecutionCourse>(
-		(ExecutionCourse) DomainObject.fromOID(executionCourseID));
+	this.executionCourse = isNullOrZero(executionCourseID) ? null : (ExecutionCourse) DomainObject.fromOID(executionCourseID);
     }
 
     public ExecutionSemester getExecutionSemester() {
-	return executionSemester == null ? null : executionSemester.getObject();
+	return executionSemester;
     }
 
     public void setExecutionSemester(ExecutionSemester executionSemester) {
-	this.executionSemester = new DomainReference<ExecutionSemester>(executionSemester);
+	this.executionSemester = executionSemester;
     }
 
     public ExecutionDegree getExecutionDegree() {
-	return executionDegree == null ? null : executionDegree.getObject();
+	return executionDegree;
     }
 
     public ExecutionCourse getExecutionCourse() {
-	return executionCourse == null ? null : executionCourse.getObject();
+	return executionCourse;
     }
 
     public String getMethod() {

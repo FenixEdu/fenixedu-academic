@@ -5,7 +5,6 @@ package net.sourceforge.fenixedu.dataTransferObject.student;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 import net.sourceforge.fenixedu.domain.student.ExternalRegistrationData;
@@ -16,9 +15,9 @@ import net.sourceforge.fenixedu.domain.student.ExternalRegistrationData;
  */
 public class ExternalRegistrationDataBean implements Serializable {
 
-    private DomainReference<Unit> institution;
+    private Unit institution;
 
-    private DomainReference<ExternalRegistrationData> externalRegistrationData;
+    private ExternalRegistrationData externalRegistrationData;
 
     private String institutionName;
 
@@ -26,9 +25,8 @@ public class ExternalRegistrationDataBean implements Serializable {
 
     public ExternalRegistrationDataBean(ExternalRegistrationData externalRegistrationData) {
 	super();
-	this.externalRegistrationData = new DomainReference<ExternalRegistrationData>(externalRegistrationData);
-	this.institution = (externalRegistrationData.getInstitution() == null) ? null : new DomainReference<Unit>(
-		externalRegistrationData.getInstitution());
+	this.externalRegistrationData = externalRegistrationData;
+	this.institution = (externalRegistrationData.getInstitution() == null) ? null : externalRegistrationData.getInstitution();
 	setCoordinatorName(externalRegistrationData.getCoordinatorName());
     }
 
@@ -41,19 +39,19 @@ public class ExternalRegistrationDataBean implements Serializable {
     }
 
     public Unit getInstitution() {
-	return (institution == null) ? null : institution.getObject();
+	return institution;
     }
 
     public void setInstitution(Unit institution) {
-	this.institution = (institution == null) ? null : new DomainReference<Unit>(institution);
+	this.institution = institution;
     }
 
     public UnitName getInstitutionUnitName() {
-	return (institution == null) ? null : institution.getObject().getUnitName();
+	return (institution == null) ? null : institution.getUnitName();
     }
 
     public void setInstitutionUnitName(UnitName institutionUnitName) {
-	this.institution = (institution == null) ? null : new DomainReference<Unit>(institutionUnitName.getUnit());
+	this.institution = (institution == null) ? null : institutionUnitName.getUnit();
     }
 
     public String getInstitutionName() {
@@ -65,7 +63,7 @@ public class ExternalRegistrationDataBean implements Serializable {
     }
 
     public ExternalRegistrationData getExternalRegistrationData() {
-	return externalRegistrationData.getObject();
+	return externalRegistrationData;
     }
 
 }

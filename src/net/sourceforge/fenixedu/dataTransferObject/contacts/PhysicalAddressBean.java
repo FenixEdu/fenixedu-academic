@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject.contacts;
 
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
@@ -20,7 +19,7 @@ public class PhysicalAddressBean extends PartyContactBean {
     private String districtSubdivisionOfResidence;
     private String districtOfResidence;
 
-    private DomainReference<Country> countryOfResidence;
+    private Country countryOfResidence;
 
     public PhysicalAddressBean(Party party) {
 	super(party);
@@ -96,11 +95,11 @@ public class PhysicalAddressBean extends PartyContactBean {
     }
 
     public Country getCountryOfResidence() {
-	return (this.countryOfResidence != null) ? this.countryOfResidence.getObject() : null;
+	return this.countryOfResidence;
     }
 
     public void setCountryOfResidence(Country countryOfResidence) {
-	this.countryOfResidence = (countryOfResidence != null) ? new DomainReference<Country>(countryOfResidence) : null;
+	this.countryOfResidence = countryOfResidence;
     }
 
     @Override

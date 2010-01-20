@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesi
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
 
@@ -13,7 +12,7 @@ public class TeacherThesisCreditsInfoBean implements Serializable {
      */
     private static final long serialVersionUID = 1L;
 
-    private DomainReference<Student> student;
+    private Student student;
     private String dissertationTitle;
     private ThesisParticipationType teacherParticipationType;
     private Integer creditsPercentage;
@@ -27,12 +26,12 @@ public class TeacherThesisCreditsInfoBean implements Serializable {
 	setCreditsPercentage(creditsPercentage);
     }
 
-    public DomainReference<Student> getStudent() {
+    public Student getStudent() {
 	return student;
     }
 
     public void setStudent(Student student) {
-	this.student = new DomainReference<Student>(student);
+	this.student = student;
     }
 
     public String getDissertationTitle() {

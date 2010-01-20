@@ -3,14 +3,13 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities
 import java.io.Serializable;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 
 public class TestFilterResultBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private DomainReference<Functionality> functionality;
+    private Functionality functionality;
     private boolean accessible;
 
     private Map<String, String[]> parameters;
@@ -18,7 +17,7 @@ public class TestFilterResultBean implements Serializable {
     public TestFilterResultBean(Functionality functionality, boolean accessible, Map<String, String[]> parameters) {
 	super();
 
-	this.functionality = new DomainReference<Functionality>(functionality);
+	this.functionality = functionality;
 	this.accessible = accessible;
 	this.parameters = parameters;
     }
@@ -28,7 +27,7 @@ public class TestFilterResultBean implements Serializable {
     }
 
     public Functionality getFunctionality() {
-	return this.functionality.getObject();
+	return this.functionality;
     }
 
     public String getPublicPath() {

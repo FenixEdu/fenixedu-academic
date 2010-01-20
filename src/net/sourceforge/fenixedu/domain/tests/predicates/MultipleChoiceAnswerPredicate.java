@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.tests.predicates;
 
 import java.util.HashMap;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.tests.NewChoice;
 import net.sourceforge.fenixedu.domain.tests.NewMultipleChoiceQuestion;
@@ -10,11 +9,11 @@ import net.sourceforge.fenixedu.domain.tests.NewQuestion;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean;
 
 public class MultipleChoiceAnswerPredicate extends AtomicPredicate implements Predicate {
-    private final DomainReference<NewChoice> choice;
+    private final NewChoice choice;
 
     public MultipleChoiceAnswerPredicate(NewChoice choice) {
 	super();
-	this.choice = new DomainReference<NewChoice>(choice);
+	this.choice = choice;
     }
 
     public MultipleChoiceAnswerPredicate(PredicateBean predicateBean) {
@@ -32,7 +31,7 @@ public class MultipleChoiceAnswerPredicate extends AtomicPredicate implements Pr
     }
 
     public NewChoice getChoice() {
-	return choice.getObject();
+	return choice;
     }
 
     public boolean uses(Object object) {

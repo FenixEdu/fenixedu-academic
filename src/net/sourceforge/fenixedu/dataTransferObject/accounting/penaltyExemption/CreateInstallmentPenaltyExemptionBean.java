@@ -4,13 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.accounting.Installment;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
 
 public class CreateInstallmentPenaltyExemptionBean extends CreatePenaltyExemptionBean implements Serializable {
 
-    private List<DomainReference<Installment>> installments;
+    private List<Installment> installments;
 
     public CreateInstallmentPenaltyExemptionBean(GratuityEventWithPaymentPlan gratuityEventWithPaymentPlan) {
 	super(gratuityEventWithPaymentPlan);
@@ -28,17 +27,17 @@ public class CreateInstallmentPenaltyExemptionBean extends CreatePenaltyExemptio
 
     public List<Installment> getInstallments() {
 	final List<Installment> result = new ArrayList<Installment>();
-	for (final DomainReference<Installment> installment : installments) {
-	    result.add(installment.getObject());
+	for (final Installment installment : installments) {
+	    result.add(installment);
 	}
 
 	return result;
     }
 
     public void setInstallments(List<Installment> installments) {
-	final List<DomainReference<Installment>> result = new ArrayList<DomainReference<Installment>>();
+	final List<Installment> result = new ArrayList<Installment>();
 	for (final Installment installment : installments) {
-	    result.add(new DomainReference<Installment>(installment));
+	    result.add(installment);
 	}
 
 	this.installments = result;

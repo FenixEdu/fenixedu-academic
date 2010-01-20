@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.domain.research.result.publication.Article;
@@ -24,18 +23,18 @@ public class ArticleBean extends ResultPublicationBean implements Serializable {
 
     private Integer issn;
 
-    private DomainReference<JournalIssue> journalIssue;
+    private JournalIssue journalIssue;
 
-    private DomainReference<ScientificJournal> scientificJournal;
+    private ScientificJournal scientificJournal;
 
     private String scientificJournalName;
 
     public ScientificJournal getScientificJournal() {
-	return scientificJournal.getObject();
+	return scientificJournal;
     }
 
     public void setScientificJournal(ScientificJournal scientificJournal) {
-	this.scientificJournal = new DomainReference<ScientificJournal>(scientificJournal);
+	this.scientificJournal = scientificJournal;
     }
 
     public String getScientificJournalName() {
@@ -51,8 +50,8 @@ public class ArticleBean extends ResultPublicationBean implements Serializable {
 	this.setPublicationType(ResultPublicationType.Article);
 	this.setActiveSchema("result.publication.create.Article");
 	this.setParticipationSchema("resultParticipation.simple");
-	journalIssue = new DomainReference<JournalIssue>(null);
-	scientificJournal = new DomainReference<ScientificJournal>(null);
+	journalIssue = null;
+	scientificJournal = null;
     }
 
     public ArticleBean(Article article) {
@@ -165,10 +164,10 @@ public class ArticleBean extends ResultPublicationBean implements Serializable {
     }
 
     public JournalIssue getJournalIssue() {
-	return journalIssue.getObject();
+	return journalIssue;
     }
 
     public void setJournalIssue(JournalIssue journalIssue) {
-	this.journalIssue = new DomainReference<JournalIssue>(journalIssue);
+	this.journalIssue = journalIssue;
     }
 }

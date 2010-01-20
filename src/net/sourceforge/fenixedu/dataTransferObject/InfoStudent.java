@@ -6,7 +6,6 @@
 
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
@@ -16,10 +15,10 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class InfoStudent extends InfoObject {
 
-    private final DomainReference<Registration> registration;
+    private final Registration registration;
 
     public InfoStudent(final Registration registration) {
-	this.registration = new DomainReference<Registration>(registration);
+	this.registration = registration;
     }
 
     public InfoPerson getInfoPerson() {
@@ -73,6 +72,6 @@ public class InfoStudent extends InfoObject {
     }
 
     private Registration getRegistration() {
-	return registration == null ? null : registration.getObject();
+	return registration;
     }
 }

@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.assiduousness.Periodicity;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType;
@@ -30,15 +29,15 @@ public class EmployeeWorkWeekScheduleBean implements Serializable {
 
     Boolean chooseFriday;
 
-    DomainReference<WorkScheduleType> mondaySchedule;
+    WorkScheduleType mondaySchedule;
 
-    DomainReference<WorkScheduleType> tuesdaySchedule;
+    WorkScheduleType tuesdaySchedule;
 
-    DomainReference<WorkScheduleType> wednesdaySchedule;
+    WorkScheduleType wednesdaySchedule;
 
-    DomainReference<WorkScheduleType> thursdaySchedule;
+    WorkScheduleType thursdaySchedule;
 
-    DomainReference<WorkScheduleType> fridaySchedule;
+    WorkScheduleType fridaySchedule;
 
     Integer workWeekNumber;
 
@@ -491,60 +490,60 @@ public class EmployeeWorkWeekScheduleBean implements Serializable {
     }
 
     public WorkScheduleType getFridaySchedule() {
-	return fridaySchedule == null ? null : fridaySchedule.getObject();
+	return fridaySchedule;
     }
 
     public void setFridaySchedule(WorkScheduleType fridaySchedule) {
 	if (fridaySchedule != null) {
-	    this.fridaySchedule = new DomainReference<WorkScheduleType>(fridaySchedule);
+	    this.fridaySchedule = fridaySchedule;
 	} else {
 	    this.fridaySchedule = null;
 	}
     }
 
     public WorkScheduleType getMondaySchedule() {
-	return mondaySchedule == null ? null : mondaySchedule.getObject();
+	return mondaySchedule;
     }
 
     public void setMondaySchedule(WorkScheduleType mondaySchedule) {
 	if (mondaySchedule != null) {
-	    this.mondaySchedule = new DomainReference<WorkScheduleType>(mondaySchedule);
+	    this.mondaySchedule = mondaySchedule;
 	} else {
 	    this.mondaySchedule = null;
 	}
     }
 
     public WorkScheduleType getThursdaySchedule() {
-	return thursdaySchedule == null ? null : thursdaySchedule.getObject();
+	return thursdaySchedule;
     }
 
     public void setThursdaySchedule(WorkScheduleType thursdaySchedule) {
 	if (thursdaySchedule != null) {
-	    this.thursdaySchedule = new DomainReference<WorkScheduleType>(thursdaySchedule);
+	    this.thursdaySchedule = thursdaySchedule;
 	} else {
 	    this.thursdaySchedule = null;
 	}
     }
 
     public WorkScheduleType getTuesdaySchedule() {
-	return tuesdaySchedule == null ? null : tuesdaySchedule.getObject();
+	return tuesdaySchedule;
     }
 
     public void setTuesdaySchedule(WorkScheduleType tuesdaySchedule) {
 	if (tuesdaySchedule != null) {
-	    this.tuesdaySchedule = new DomainReference<WorkScheduleType>(tuesdaySchedule);
+	    this.tuesdaySchedule = tuesdaySchedule;
 	} else {
 	    this.tuesdaySchedule = null;
 	}
     }
 
     public WorkScheduleType getWednesdaySchedule() {
-	return wednesdaySchedule == null ? null : wednesdaySchedule.getObject();
+	return wednesdaySchedule;
     }
 
     public void setWendsaySchedule(WorkScheduleType wednesdaySchedule) {
 	if (wednesdaySchedule != null) {
-	    this.wednesdaySchedule = new DomainReference<WorkScheduleType>(wednesdaySchedule);
+	    this.wednesdaySchedule = wednesdaySchedule;
 	} else {
 	    this.wednesdaySchedule = null;
 	}

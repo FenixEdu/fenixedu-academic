@@ -7,7 +7,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -109,18 +108,18 @@ public class PermissionManagementDA extends FenixDispatchAction {
 
 	private static final long serialVersionUID = 1L;
 
-	private DomainReference<Person> person;
+	private Person person;
 
 	public Member(final Person person) {
-	    this.person = new DomainReference<Person>(person);
+	    this.person = person;
 	}
 
 	public Person getPerson() {
-	    return this.person != null ? this.person.getObject() : null;
+	    return this.person;
 	}
 
 	public void setPerson(final Person person) {
-	    this.person = person != null ? new DomainReference<Person>(person) : null;
+	    this.person = person;
 	}
 
 	@Override
@@ -181,7 +180,7 @@ public class PermissionManagementDA extends FenixDispatchAction {
 	private static final long serialVersionUID = 1L;
 
 	private Boolean selected;
-	private DomainReference<Person> person;
+	private Person person;
 
 	public PermissionMemberBean(final AdministrativeOfficePermission permission, final Person person) {
 	    setSelected(permission.isMember(person));
@@ -197,11 +196,11 @@ public class PermissionManagementDA extends FenixDispatchAction {
 	}
 
 	public Person getPerson() {
-	    return this.person != null ? this.person.getObject() : null;
+	    return this.person;
 	}
 
 	public void setPerson(Person person) {
-	    this.person = person != null ? new DomainReference<Person>(person) : null;
+	    this.person = person;
 	}
 
 	@Override

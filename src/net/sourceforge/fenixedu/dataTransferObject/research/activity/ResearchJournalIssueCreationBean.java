@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.research.activity;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
@@ -10,9 +9,9 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ResearchJournalIssueCreationBean implements Serializable {
 
-    private DomainReference<ScientificJournal> journal;
+    private ScientificJournal journal;
 
-    private DomainReference<JournalIssue> issue;
+    private JournalIssue issue;
 
     private String scientificJournalName;
 
@@ -31,16 +30,16 @@ public class ResearchJournalIssueCreationBean implements Serializable {
     }
 
     public ResearchJournalIssueCreationBean() {
-	this.issue = new DomainReference<JournalIssue>(null);
-	this.journal = new DomainReference<ScientificJournal>(null);
+	this.issue = null;
+	this.journal = null;
     }
 
     public JournalIssue getJournalIssue() {
-	return issue.getObject();
+	return issue;
     }
 
     public void setJournalIssue(JournalIssue issue) {
-	this.issue = new DomainReference<JournalIssue>(issue);
+	this.issue = issue;
     }
 
     public ResearchActivityParticipationRole getRole() {
@@ -60,11 +59,11 @@ public class ResearchJournalIssueCreationBean implements Serializable {
     }
 
     public ScientificJournal getScientificJournal() {
-	return this.journal.getObject();
+	return this.journal;
     }
 
     public void setScientificJournal(ScientificJournal journal) {
-	this.journal = new DomainReference<ScientificJournal>(journal);
+	this.journal = journal;
     }
 
     public String getScientificJournalName() {

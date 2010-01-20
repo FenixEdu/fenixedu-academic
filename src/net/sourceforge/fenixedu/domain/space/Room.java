@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
@@ -156,7 +155,7 @@ public class Room extends Room_Base {
 
 	private String doorNumber;
 
-	private DomainReference<RoomClassification> roomClassificationReference;
+	private RoomClassification roomClassificationReference;
 
 	private Integer examCapacity;
 
@@ -259,12 +258,11 @@ public class Room extends Room_Base {
 	}
 
 	public RoomClassification getRoomClassification() {
-	    return (this.roomClassificationReference != null) ? this.roomClassificationReference.getObject() : null;
+	    return this.roomClassificationReference;
 	}
 
 	public void setRoomClassification(RoomClassification roomClassification) {
-	    this.roomClassificationReference = (roomClassification != null) ? new DomainReference<RoomClassification>(
-		    roomClassification) : null;
+	    this.roomClassificationReference = roomClassification;
 	}
 
 	public String getDoorNumber() {
@@ -294,15 +292,15 @@ public class Room extends Room_Base {
 
     public static class RoomFactoryCreator extends RoomFactory {
 
-	private DomainReference<Space> surroundingSpaceReference;
+	private Space surroundingSpaceReference;
 
 	public Space getSurroundingSpace() {
-	    return surroundingSpaceReference == null ? null : surroundingSpaceReference.getObject();
+	    return surroundingSpaceReference;
 	}
 
 	public void setSurroundingSpace(Space surroundingSpace) {
 	    if (surroundingSpace != null) {
-		this.surroundingSpaceReference = new DomainReference<Space>(surroundingSpace);
+		this.surroundingSpaceReference = surroundingSpace;
 	    }
 	}
 
@@ -316,15 +314,15 @@ public class Room extends Room_Base {
 
     public static class RoomFactoryEditor extends RoomFactory {
 
-	private DomainReference<Room> roomReference;
+	private Room roomReference;
 
 	public Room getSpace() {
-	    return roomReference == null ? null : roomReference.getObject();
+	    return roomReference;
 	}
 
 	public void setSpace(Room room) {
 	    if (room != null) {
-		this.roomReference = new DomainReference<Room>(room);
+		this.roomReference = room;
 	    }
 	}
 

@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.EmployeeExtraWorkAuthorization;
@@ -33,7 +32,7 @@ public class ExtraWorkRequestFactory implements Serializable, FactoryExecutor {
 
     private boolean performPayment;
 
-    private DomainReference<Unit> unit;
+    private Unit unit;
 
     private List<EmployeeExtraWorkRequestFactory> employeesExtraWorkRequests;
 
@@ -86,12 +85,12 @@ public class ExtraWorkRequestFactory implements Serializable, FactoryExecutor {
     }
 
     public Unit getUnit() {
-	return unit == null ? null : unit.getObject();
+	return unit;
     }
 
     public void setUnit(Unit unit) {
 	if (unit != null) {
-	    this.unit = new DomainReference<Unit>(unit);
+	    this.unit = unit;
 	    setEmployeesExtraWorkRequests(getUnit().getExtraWorkRequests(getYear(), getMonth(),
 		    getYearMonthHoursDone().getYear(), getYearMonthHoursDone().getMonth()));
 	    addEmployeeExtraWorkRequest();

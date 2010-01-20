@@ -1,13 +1,13 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.domain.DomainReference;
+import pt.ist.fenixWebFramework.util.DomainReference;
 
 public abstract class DomainBackedGroup<T extends DomainObject> extends LeafGroup {
 
     private static final long serialVersionUID = 1L;
 
-    private final DomainReference<T> reference;
+    private final T reference;
 
     public DomainBackedGroup(T object) {
 	super();
@@ -16,7 +16,7 @@ public abstract class DomainBackedGroup<T extends DomainObject> extends LeafGrou
 	// throw new DomainException("accessControl.group.domainBacked.null");
 	// }
 
-	this.reference = new DomainReference<T>(object);
+	this.reference = object;
     }
 
     /**
@@ -29,7 +29,7 @@ public abstract class DomainBackedGroup<T extends DomainObject> extends LeafGrou
      *         object was deleted
      */
     public T getObject() {
-	return this.reference.getObject();
+	return this.reference;
     }
 
     @Override

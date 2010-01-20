@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
@@ -140,15 +139,15 @@ public class RoomSubdivision extends RoomSubdivision_Base {
 
     public static class RoomSubdivisionFactoryCreator extends RoomSubdivisionFactory {
 
-	private DomainReference<Space> surroundingSpaceReference;
+	private Space surroundingSpaceReference;
 
 	public Space getSurroundingSpace() {
-	    return surroundingSpaceReference == null ? null : surroundingSpaceReference.getObject();
+	    return surroundingSpaceReference;
 	}
 
 	public void setSurroundingSpace(Space surroundingSpace) {
 	    if (surroundingSpace != null) {
-		this.surroundingSpaceReference = new DomainReference<Space>(surroundingSpace);
+		this.surroundingSpaceReference = surroundingSpace;
 	    }
 	}
 
@@ -159,15 +158,15 @@ public class RoomSubdivision extends RoomSubdivision_Base {
 
     public static class RoomSubdivisionFactoryEditor extends RoomSubdivisionFactory {
 
-	private DomainReference<RoomSubdivision> roomSubdivisionReference;
+	private RoomSubdivision roomSubdivisionReference;
 
 	public RoomSubdivision getSpace() {
-	    return roomSubdivisionReference == null ? null : roomSubdivisionReference.getObject();
+	    return roomSubdivisionReference;
 	}
 
 	public void setSpace(RoomSubdivision roomSubdivision) {
 	    if (roomSubdivision != null) {
-		this.roomSubdivisionReference = new DomainReference<RoomSubdivision>(roomSubdivision);
+		this.roomSubdivisionReference = roomSubdivision;
 	    }
 	}
 

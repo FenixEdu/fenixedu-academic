@@ -16,7 +16,8 @@ import org.apache.struts.util.RequestUtils;
  * <br/>
  * <br/>
  *         Created on 16:13:53,23/Set/2005
- * @version $Id$
+ * @version $Id: EnumDefineTagLib.java 45653 2010-01-19 18:39:54Z
+ *          ist148357@IST.UTL.PT $
  */
 public class EnumDefineTagLib extends BodyTagSupport {
     private String id;

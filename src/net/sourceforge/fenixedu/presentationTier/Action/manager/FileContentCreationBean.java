@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager;
 import java.io.InputStream;
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -13,8 +12,8 @@ public class FileContentCreationBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private DomainReference<Container> fileHolder;
-    private DomainReference<Site> site;
+    private Container fileHolder;
+    private Site site;
 
     private String fileName;
     private Long fileSize;
@@ -31,19 +30,19 @@ public class FileContentCreationBean implements Serializable {
     }
 
     public Container getFileHolder() {
-	return fileHolder.getObject();
+	return fileHolder;
     }
 
     public void setFileHolder(Container fileHolder) {
-	this.fileHolder = new DomainReference<Container>(fileHolder);
+	this.fileHolder = fileHolder;
     }
 
     public Site getSite() {
-	return site.getObject();
+	return site;
     }
 
     public void setSite(Site site) {
-	this.site = new DomainReference<Site>(site);
+	this.site = site;
     }
 
     public void setAuthorsName(String authorsName) {

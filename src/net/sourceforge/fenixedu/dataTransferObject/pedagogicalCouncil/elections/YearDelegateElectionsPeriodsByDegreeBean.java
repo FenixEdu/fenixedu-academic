@@ -6,21 +6,20 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
 import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
 
 public class YearDelegateElectionsPeriodsByDegreeBean implements Serializable {
-    private DomainReference<ExecutionYear> executionYear;
-    private DomainReference<Degree> degree;
-    private List<DomainReference<YearDelegateElection>> elections;
+    private ExecutionYear executionYear;
+    private Degree degree;
+    private List<YearDelegateElection> elections;
 
-    private List<DomainReference<DelegateElection>> firstYearElections;
-    private List<DomainReference<DelegateElection>> secondYearElections;
-    private List<DomainReference<DelegateElection>> thirdYearElections;
-    private List<DomainReference<DelegateElection>> fourthYearElections;
-    private List<DomainReference<DelegateElection>> fifthYearElections;
+    private List<DelegateElection> firstYearElections;
+    private List<DelegateElection> secondYearElections;
+    private List<DelegateElection> thirdYearElections;
+    private List<DelegateElection> fourthYearElections;
+    private List<DelegateElection> fifthYearElections;
 
     public YearDelegateElectionsPeriodsByDegreeBean(Degree degree, ExecutionYear executionYear,
 	    List<YearDelegateElection> elections) {
@@ -33,34 +32,34 @@ public class YearDelegateElectionsPeriodsByDegreeBean implements Serializable {
     }
 
     public Degree getDegree() {
-	return (degree == null ? null : degree.getObject());
+	return (degree);
     }
 
     public void setDegree(Degree degree) {
-	this.degree = new DomainReference<Degree>(degree);
+	this.degree = degree;
     }
 
     public List<YearDelegateElection> getElections() {
 	List<YearDelegateElection> result = new ArrayList<YearDelegateElection>();
-	for (DomainReference<YearDelegateElection> electionDR : this.elections) {
-	    result.add(electionDR.getObject());
+	for (YearDelegateElection electionDR : this.elections) {
+	    result.add(electionDR);
 	}
 	return result;
     }
 
     public void setElections(List<YearDelegateElection> elections) {
-	this.elections = new ArrayList<DomainReference<YearDelegateElection>>();
+	this.elections = new ArrayList<YearDelegateElection>();
 	for (YearDelegateElection election : elections) {
-	    this.elections.add(new DomainReference<YearDelegateElection>(election));
+	    this.elections.add(election);
 	}
     }
 
     public ExecutionYear getExecutionYear() {
-	return (executionYear == null ? null : executionYear.getObject());
+	return (executionYear);
     }
 
     public void setExecutionYear(ExecutionYear executionYear) {
-	this.executionYear = new DomainReference<ExecutionYear>(executionYear);
+	this.executionYear = executionYear;
     }
 
     private void setElectionsByYear(int year) {
@@ -85,11 +84,11 @@ public class YearDelegateElectionsPeriodsByDegreeBean implements Serializable {
 	}
     }
 
-    public List<DomainReference<DelegateElection>> getElectionsGivenYear(int year) {
-	List<DomainReference<DelegateElection>> givenYearElections = new ArrayList<DomainReference<DelegateElection>>();
+    public List<DelegateElection> getElectionsGivenYear(int year) {
+	List<DelegateElection> givenYearElections = new ArrayList<DelegateElection>();
 	for (DelegateElection election : getElections()) {
 	    if (((YearDelegateElection) election).getCurricularYear().getYear() == year) {
-		givenYearElections.add(new DomainReference<DelegateElection>(election));
+		givenYearElections.add(election);
 	    }
 	}
 	return givenYearElections;
@@ -97,40 +96,40 @@ public class YearDelegateElectionsPeriodsByDegreeBean implements Serializable {
 
     public List<YearDelegateElection> getFirstYearElections() {
 	List<YearDelegateElection> result = new ArrayList<YearDelegateElection>();
-	for (DomainReference<DelegateElection> electionDR : this.firstYearElections) {
-	    result.add((YearDelegateElection) electionDR.getObject());
+	for (DelegateElection electionDR : this.firstYearElections) {
+	    result.add((YearDelegateElection) electionDR);
 	}
 	return result;
     }
 
     public List<YearDelegateElection> getSecondYearElections() {
 	List<YearDelegateElection> result = new ArrayList<YearDelegateElection>();
-	for (DomainReference<DelegateElection> electionDR : this.secondYearElections) {
-	    result.add((YearDelegateElection) electionDR.getObject());
+	for (DelegateElection electionDR : this.secondYearElections) {
+	    result.add((YearDelegateElection) electionDR);
 	}
 	return result;
     }
 
     public List<YearDelegateElection> getThirdYearElections() {
 	List<YearDelegateElection> result = new ArrayList<YearDelegateElection>();
-	for (DomainReference<DelegateElection> electionDR : this.thirdYearElections) {
-	    result.add((YearDelegateElection) electionDR.getObject());
+	for (DelegateElection electionDR : this.thirdYearElections) {
+	    result.add((YearDelegateElection) electionDR);
 	}
 	return result;
     }
 
     public List<YearDelegateElection> getFourthYearElections() {
 	List<YearDelegateElection> result = new ArrayList<YearDelegateElection>();
-	for (DomainReference<DelegateElection> electionDR : this.fourthYearElections) {
-	    result.add((YearDelegateElection) electionDR.getObject());
+	for (DelegateElection electionDR : this.fourthYearElections) {
+	    result.add((YearDelegateElection) electionDR);
 	}
 	return result;
     }
 
     public List<YearDelegateElection> getFifthYearElections() {
 	List<YearDelegateElection> result = new ArrayList<YearDelegateElection>();
-	for (DomainReference<DelegateElection> electionDR : this.fifthYearElections) {
-	    result.add((YearDelegateElection) electionDR.getObject());
+	for (DelegateElection electionDR : this.fifthYearElections) {
+	    result.add((YearDelegateElection) electionDR);
 	}
 	return result;
     }

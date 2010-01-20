@@ -9,7 +9,6 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 
@@ -45,7 +44,7 @@ public class InfoGrantContractRegime extends InfoObject {
 
     private InfoGrantCostCenter grantCostCenterInfo;
 
-    private DomainReference<GrantContract> grantContract;
+    private GrantContract grantContract;
 
     /**
      * @return Returns the costCenterKey.
@@ -281,11 +280,11 @@ public class InfoGrantContractRegime extends InfoObject {
     }
 
     public GrantContract getGrantContract() {
-	return grantContract != null ? grantContract.getObject() : null;
+	return grantContract;
     }
 
     public void setGrantContract(GrantContract grantContract) {
-	this.grantContract = grantContract != null ? new DomainReference<GrantContract>(grantContract) : null;
+	this.grantContract = grantContract;
     }
 
 }

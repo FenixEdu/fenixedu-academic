@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
@@ -45,11 +44,11 @@ public class ProtocolSearch implements Serializable {
 
     private String otherProtocolActionTypes;
 
-    private DomainReference<UnitName> partnerName;
+    private UnitName partnerName;
 
     private String partnerNameString;
 
-    private DomainReference<Country> country;
+    private Country country;
 
     private boolean actives;
 
@@ -267,11 +266,11 @@ public class ProtocolSearch implements Serializable {
     }
 
     public UnitName getPartnerName() {
-	return partnerName != null ? partnerName.getObject() : null;
+	return partnerName;
     }
 
     public void setPartnerName(UnitName partnerName) {
-	this.partnerName = new DomainReference<UnitName>(partnerName);
+	this.partnerName = partnerName;
     }
 
     public List<ProtocolActionType> getProtocolActionTypes() {
@@ -299,11 +298,11 @@ public class ProtocolSearch implements Serializable {
     }
 
     public Country getCountry() {
-	return country != null ? country.getObject() : null;
+	return country;
     }
 
     public void setCountry(Country country) {
-	this.country = new DomainReference<Country>(country);
+	this.country = country;
     }
 
     public boolean isActives() {

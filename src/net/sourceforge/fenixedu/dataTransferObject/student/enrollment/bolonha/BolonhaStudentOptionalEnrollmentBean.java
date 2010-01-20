@@ -5,7 +5,6 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -21,15 +20,15 @@ public class BolonhaStudentOptionalEnrollmentBean implements Serializable {
 
     private DegreeType degreeType;
 
-    private DomainReference<Degree> degree;
+    private Degree degree;
 
-    private DomainReference<DegreeCurricularPlan> degreeCurricularPlan;
+    private DegreeCurricularPlan degreeCurricularPlan;
 
-    private DomainReference<ExecutionSemester> executionSemester;
+    private ExecutionSemester executionSemester;
 
-    private DomainReference<CurricularCourse> selectedOptionalCurricularCourse;
+    private CurricularCourse selectedOptionalCurricularCourse;
 
-    private DomainReference<StudentCurricularPlan> studentCurricularPlan;
+    private StudentCurricularPlan studentCurricularPlan;
 
     private IDegreeModuleToEvaluate selectedDegreeModuleToEnrol;
 
@@ -56,11 +55,11 @@ public class BolonhaStudentOptionalEnrollmentBean implements Serializable {
     }
 
     public Degree getDegree() {
-	return (this.degree != null) ? this.degree.getObject() : null;
+	return this.degree;
     }
 
     public void setDegree(Degree degree) {
-	this.degree = (degree != null) ? new DomainReference<Degree>(degree) : null;
+	this.degree = degree;
     }
 
     public boolean hasDegree() {
@@ -68,20 +67,19 @@ public class BolonhaStudentOptionalEnrollmentBean implements Serializable {
     }
 
     public DegreeCurricularPlan getDegreeCurricularPlan() {
-	return (this.degreeCurricularPlan != null) ? this.degreeCurricularPlan.getObject() : null;
+	return this.degreeCurricularPlan;
     }
 
     public void setDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
-	this.degreeCurricularPlan = (degreeCurricularPlan != null) ? new DomainReference<DegreeCurricularPlan>(
-		degreeCurricularPlan) : null;
+	this.degreeCurricularPlan = degreeCurricularPlan;
     }
 
     public ExecutionSemester getExecutionPeriod() {
-	return (this.executionSemester != null) ? this.executionSemester.getObject() : null;
+	return this.executionSemester;
     }
 
     public void setExecutionPeriod(ExecutionSemester executionSemester) {
-	this.executionSemester = (executionSemester != null) ? new DomainReference<ExecutionSemester>(executionSemester) : null;
+	this.executionSemester = executionSemester;
     }
 
     public ExecutionYear getExecutionYear() {
@@ -89,13 +87,11 @@ public class BolonhaStudentOptionalEnrollmentBean implements Serializable {
     }
 
     public CurricularCourse getSelectedOptionalCurricularCourse() {
-	return (this.selectedOptionalCurricularCourse != null) ? this.selectedOptionalCurricularCourse.getObject() : null;
+	return this.selectedOptionalCurricularCourse;
     }
 
     public void setSelectedOptionalCurricularCourse(CurricularCourse selectedOptionalCurricularCourse) {
-	this.selectedOptionalCurricularCourse = (selectedOptionalCurricularCourse != null) ? new DomainReference<CurricularCourse>(
-		selectedOptionalCurricularCourse)
-		: null;
+	this.selectedOptionalCurricularCourse = selectedOptionalCurricularCourse;
     }
 
     public IDegreeModuleToEvaluate getSelectedDegreeModuleToEnrol() {
@@ -107,12 +103,11 @@ public class BolonhaStudentOptionalEnrollmentBean implements Serializable {
     }
 
     public StudentCurricularPlan getStudentCurricularPlan() {
-	return (this.studentCurricularPlan != null) ? this.studentCurricularPlan.getObject() : null;
+	return this.studentCurricularPlan;
     }
 
     public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
-	this.studentCurricularPlan = (studentCurricularPlan != null) ? new DomainReference<StudentCurricularPlan>(
-		studentCurricularPlan) : null;
+	this.studentCurricularPlan = studentCurricularPlan;
     }
 
 }

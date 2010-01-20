@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.assiduousness;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.assiduousness.EmployeeExtraWorkAuthorization;
 import net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkAuthorization;
@@ -26,13 +25,13 @@ public class EmployeeExtraWorkAuthorizationBean implements Serializable {
 
     String employeeNumber;
 
-    DomainReference<Employee> employee;
+    Employee employee;
 
-    DomainReference<ExtraWorkAuthorization> extraWorkAuthorization;
+    ExtraWorkAuthorization extraWorkAuthorization;
 
-    DomainReference<EmployeeExtraWorkAuthorization> employeeExtraWorkAuthorization;
+    EmployeeExtraWorkAuthorization employeeExtraWorkAuthorization;
 
-    DomainReference<Employee> modifiedBy;
+    Employee modifiedBy;
 
     public EmployeeExtraWorkAuthorizationBean(ExtraWorkAuthorization extraWorkAuthorization,
 	    EmployeeExtraWorkAuthorization employeeExtraWorkAuthorization) {
@@ -55,49 +54,48 @@ public class EmployeeExtraWorkAuthorizationBean implements Serializable {
     }
 
     public Employee getEmployee() {
-	return employee == null ? null : employee.getObject();
+	return employee;
     }
 
     public void setEmployee(Employee employee) {
 	if (employee != null) {
-	    this.employee = new DomainReference<Employee>(employee);
+	    this.employee = employee;
 	} else {
 	    this.employee = null;
 	}
     }
 
     public EmployeeExtraWorkAuthorization getEmployeeExtraWorkAuthorization() {
-	return employeeExtraWorkAuthorization == null ? null : employeeExtraWorkAuthorization.getObject();
+	return employeeExtraWorkAuthorization;
     }
 
     public void setEmployeeExtraWorkAuthorization(EmployeeExtraWorkAuthorization employeeExtraWorkAuthorization) {
 	if (employeeExtraWorkAuthorization != null) {
-	    this.employeeExtraWorkAuthorization = new DomainReference<EmployeeExtraWorkAuthorization>(
-		    employeeExtraWorkAuthorization);
+	    this.employeeExtraWorkAuthorization = employeeExtraWorkAuthorization;
 	} else {
 	    this.employeeExtraWorkAuthorization = null;
 	}
     }
 
     public ExtraWorkAuthorization getExtraWorkAuthorization() {
-	return extraWorkAuthorization == null ? null : extraWorkAuthorization.getObject();
+	return extraWorkAuthorization;
     }
 
     public void setExtraWorkAuthorization(ExtraWorkAuthorization extraWorkAuthorization) {
 	if (extraWorkAuthorization != null) {
-	    this.extraWorkAuthorization = new DomainReference<ExtraWorkAuthorization>(extraWorkAuthorization);
+	    this.extraWorkAuthorization = extraWorkAuthorization;
 	} else {
 	    this.extraWorkAuthorization = null;
 	}
     }
 
     public Employee getModifiedBy() {
-	return modifiedBy == null ? null : modifiedBy.getObject();
+	return modifiedBy;
     }
 
     public void setModifiedBy(Employee modifiedBy) {
 	if (modifiedBy != null) {
-	    this.modifiedBy = new DomainReference<Employee>(modifiedBy);
+	    this.modifiedBy = modifiedBy;
 	} else {
 	    this.modifiedBy = null;
 	}

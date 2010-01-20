@@ -2,11 +2,10 @@ package net.sourceforge.fenixedu.dataTransferObject.teacher.tutor;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Teacher;
 
 public class TutorBean implements Serializable {
-    private DomainReference<Teacher> teacher;
+    private Teacher teacher;
 
     private Integer teacherNumber;
 
@@ -45,11 +44,11 @@ public class TutorBean implements Serializable {
     }
 
     public Teacher getTeacher() {
-	return (teacher == null ? null : teacher.getObject());
+	return (teacher);
     }
 
     public void setTeacher(Teacher teacher) {
-	this.teacher = new DomainReference<Teacher>(teacher);
+	this.teacher = teacher;
     }
 
     public Integer getTeacherNumber() {

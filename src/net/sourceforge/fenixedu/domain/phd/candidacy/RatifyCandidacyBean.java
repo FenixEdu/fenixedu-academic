@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.phd.candidacy;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 
@@ -17,7 +16,7 @@ public class RatifyCandidacyBean implements Serializable {
 
     private PhdProgramDocumentUploadBean ratificationFile;
 
-    private DomainReference<PhdProgramCandidacyProcess> process;
+    private PhdProgramCandidacyProcess process;
 
     private int maxDaysToFormalizeRegistration = DEFAULT_MAX_DAYS_TO_FORMALIZE_REGISTRATION;
 
@@ -27,11 +26,11 @@ public class RatifyCandidacyBean implements Serializable {
     }
 
     public PhdProgramCandidacyProcess getProcess() {
-	return (this.process != null) ? this.process.getObject() : null;
+	return this.process;
     }
 
     public void setProcess(PhdProgramCandidacyProcess process) {
-	this.process = (process != null) ? new DomainReference<PhdProgramCandidacyProcess>(process) : null;
+	this.process = process;
     }
 
     public LocalDate getWhenRatified() {

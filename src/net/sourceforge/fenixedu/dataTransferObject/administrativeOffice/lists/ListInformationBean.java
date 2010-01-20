@@ -8,7 +8,6 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
@@ -31,7 +30,7 @@ public class ListInformationBean extends ExecutionDegreeListBean {
 
     private EnrollmentState enrollmentState;
 
-    private DomainReference<RegistrationState> registrationState;
+    private RegistrationState registrationState;
 
     private Collection<DegreeModuleScope> degreeModuleScope;
 
@@ -90,11 +89,11 @@ public class ListInformationBean extends ExecutionDegreeListBean {
     }
 
     public RegistrationState getRegistrationState() {
-	return (this.registrationState == null) ? null : this.registrationState.getObject();
+	return this.registrationState;
     }
 
     public void setRegistrationState(RegistrationState registrationState) {
-	this.registrationState = (registrationState != null) ? new DomainReference<RegistrationState>(registrationState) : null;
+	this.registrationState = registrationState;
     }
 
     public EnrollmentState getEnrollmentState() {

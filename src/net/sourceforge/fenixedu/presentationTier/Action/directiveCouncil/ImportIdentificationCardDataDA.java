@@ -8,7 +8,6 @@ import java.nio.charset.Charset;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -95,8 +94,8 @@ public class ImportIdentificationCardDataDA extends FenixDispatchAction {
 	private Long fileSize;
 	private String fileName;
 
-	private DomainReference<ExecutionYear> selectedExecutionYear;
-	private DomainReference<CardGenerationBatch> selectedCardGenerationBatch;
+	private ExecutionYear selectedExecutionYear;
+	private CardGenerationBatch selectedCardGenerationBatch;
 
 	public ImportIdentificationCardDataBean() {
 
@@ -127,20 +126,19 @@ public class ImportIdentificationCardDataDA extends FenixDispatchAction {
 	}
 
 	public ExecutionYear getSelectedExecutionYear() {
-	    return this.selectedExecutionYear != null ? this.selectedExecutionYear.getObject() : null;
+	    return this.selectedExecutionYear;
 	}
 
 	public void setSelectedExecutionYear(ExecutionYear executionYear) {
-	    this.selectedExecutionYear = (executionYear != null ? new DomainReference<ExecutionYear>(executionYear) : null);
+	    this.selectedExecutionYear = (executionYear);
 	}
 
 	public CardGenerationBatch getSelectedCardGenerationBatch() {
-	    return this.selectedCardGenerationBatch != null ? this.selectedCardGenerationBatch.getObject() : null;
+	    return this.selectedCardGenerationBatch;
 	}
 
 	public void setSelectedCardGenerationBatch(CardGenerationBatch cardGenerationBatch) {
-	    this.selectedCardGenerationBatch = cardGenerationBatch != null ? new DomainReference<CardGenerationBatch>(
-		    cardGenerationBatch) : null;
+	    this.selectedCardGenerationBatch = cardGenerationBatch;
 	}
     }
 

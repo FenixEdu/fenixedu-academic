@@ -7,7 +7,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Tutorship;
@@ -15,9 +14,9 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class PerformanceGridTableDTO extends DataTranferObject {
-    private DomainReference<ExecutionYear> studentEntryYear;
+    private ExecutionYear studentEntryYear;
 
-    private DomainReference<ExecutionYear> monitoringYear;
+    private ExecutionYear monitoringYear;
 
     private List<PerformanceGridLine> performanceGridTableLines;
 
@@ -28,19 +27,19 @@ public class PerformanceGridTableDTO extends DataTranferObject {
     }
 
     public ExecutionYear getMonitoringYear() {
-	return (monitoringYear == null) ? null : this.monitoringYear.getObject();
+	return (monitoringYear == null) ? null : this.monitoringYear;
     }
 
     public void setMonitoringYear(ExecutionYear monitoringYear) {
-	this.monitoringYear = new DomainReference<ExecutionYear>(monitoringYear);
+	this.monitoringYear = monitoringYear;
     }
 
     public ExecutionYear getStudentEntryYear() {
-	return (studentEntryYear == null) ? null : this.studentEntryYear.getObject();
+	return (studentEntryYear == null) ? null : this.studentEntryYear;
     }
 
     public void setStudentEntryYear(ExecutionYear studentEntryYear) {
-	this.studentEntryYear = new DomainReference<ExecutionYear>(studentEntryYear);
+	this.studentEntryYear = studentEntryYear;
     }
 
     public List<PerformanceGridLine> getPerformanceGridTableLines() {
@@ -64,9 +63,9 @@ public class PerformanceGridTableDTO extends DataTranferObject {
      * Performance Grid Line (one for each student)
      */
     public class PerformanceGridLine {
-	private DomainReference<Registration> registration;
+	private Registration registration;
 
-	private DomainReference<Tutorship> tutorship;
+	private Tutorship tutorship;
 
 	private Double aritmeticAverage;
 
@@ -84,19 +83,19 @@ public class PerformanceGridTableDTO extends DataTranferObject {
 	}
 
 	public Registration getRegistration() {
-	    return (registration == null ? null : registration.getObject());
+	    return (registration);
 	}
 
 	public void setRegistration(Registration registration) {
-	    this.registration = new DomainReference<Registration>(registration);
+	    this.registration = registration;
 	}
 
 	public Tutorship getTutorship() {
-	    return (tutorship == null ? null : tutorship.getObject());
+	    return (tutorship);
 	}
 
 	public void setTutorship(Tutorship tutorship) {
-	    this.tutorship = new DomainReference<Tutorship>(tutorship);
+	    this.tutorship = tutorship;
 	}
 
 	public List<Integer> getApprovedRatioBySemester() {

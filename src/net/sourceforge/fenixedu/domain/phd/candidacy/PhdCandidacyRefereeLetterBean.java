@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramFocusArea;
 import pt.utl.ist.fenix.tools.util.FileUtils;
@@ -15,8 +14,8 @@ public class PhdCandidacyRefereeLetterBean implements Serializable {
 
     static private final long serialVersionUID = 6105525451822275989L;
 
-    private DomainReference<PhdCandidacyReferee> candidacyReferee;
-    private DomainReference<PhdCandidacyRefereeLetter> letter;
+    private PhdCandidacyReferee candidacyReferee;
+    private PhdCandidacyRefereeLetter letter;
 
     private String howLongKnownApplicant;
     private String capacity;
@@ -35,7 +34,7 @@ public class PhdCandidacyRefereeLetterBean implements Serializable {
     private String refereeAddress;
     private String refereeCity;
     private String refereeZipCode;
-    private DomainReference<Country> refereeCountry;
+    private Country refereeCountry;
 
     private transient InputStream file;
     private byte[] fileContent;
@@ -70,19 +69,15 @@ public class PhdCandidacyRefereeLetterBean implements Serializable {
     }
 
     public PhdCandidacyReferee getCandidacyReferee() {
-	return (this.candidacyReferee != null) ? this.candidacyReferee.getObject() : null;
-    }
-
-    public void setCandidacyReferee(final PhdCandidacyReferee candidacyReferee) {
-	this.candidacyReferee = (candidacyReferee != null) ? new DomainReference<PhdCandidacyReferee>(candidacyReferee) : null;
+	return this.candidacyReferee;
     }
 
     public PhdCandidacyRefereeLetter getLetter() {
-	return (this.letter != null) ? this.letter.getObject() : null;
+	return this.letter;
     }
 
     public void setLetter(final PhdCandidacyRefereeLetter letter) {
-	this.letter = (letter != null) ? new DomainReference<PhdCandidacyRefereeLetter>(letter) : null;
+	this.letter = letter;
     }
 
     public String getComparisonGroup() {
@@ -142,11 +137,11 @@ public class PhdCandidacyRefereeLetterBean implements Serializable {
     }
 
     public Country getRefereeCountry() {
-	return (this.refereeCountry != null) ? this.refereeCountry.getObject() : null;
+	return this.refereeCountry;
     }
 
     public void setRefereeCountry(Country refereeCountry) {
-	this.refereeCountry = (refereeCountry != null) ? new DomainReference<Country>(refereeCountry) : null;
+	this.refereeCountry = refereeCountry;
     }
 
     public String getComments() {
@@ -262,7 +257,7 @@ public class PhdCandidacyRefereeLetterBean implements Serializable {
 	this.potencialToExcelPhd = potencialToExcelPhd;
     }
 
-    public void setCandidacyReferee(DomainReference<PhdCandidacyReferee> candidacyReferee) {
+    public void setCandidacyReferee(PhdCandidacyReferee candidacyReferee) {
 	this.candidacyReferee = candidacyReferee;
     }
 

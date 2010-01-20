@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 
 /**
@@ -14,10 +13,10 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
  */
 public class InfoExternalPerson extends InfoObject {
 
-    private DomainReference<ExternalContract> externalPersonDomainReference;
+    private ExternalContract externalPersonDomainReference;
 
     public InfoExternalPerson(final ExternalContract externalPerson) {
-	externalPersonDomainReference = new DomainReference<ExternalContract>(externalPerson);
+	externalPersonDomainReference = externalPerson;
     }
 
     public static InfoExternalPerson newInfoFromDomain(final ExternalContract externalPerson) {
@@ -25,7 +24,7 @@ public class InfoExternalPerson extends InfoObject {
     }
 
     private ExternalContract getExternalPerson() {
-	return externalPersonDomainReference == null ? null : externalPersonDomainReference.getObject();
+	return externalPersonDomainReference;
     }
 
     public boolean equals(Object obj) {

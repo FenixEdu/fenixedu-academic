@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarMana
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry;
 
@@ -29,11 +28,11 @@ public class CalendarEntryBean implements Serializable {
 
     private Partial endDateToDisplay;
 
-    private DomainReference<AcademicCalendarEntry> entryReference;
+    private AcademicCalendarEntry entryReference;
 
-    private DomainReference<AcademicCalendarEntry> templateEntryReference;
+    private AcademicCalendarEntry templateEntryReference;
 
-    private DomainReference<AcademicCalendarRootEntry> selectedRootEntryReference;
+    private AcademicCalendarRootEntry selectedRootEntryReference;
 
     public CalendarEntryBean() {
     }
@@ -82,28 +81,27 @@ public class CalendarEntryBean implements Serializable {
     }
 
     public AcademicCalendarRootEntry getRootEntry() {
-	return selectedRootEntryReference == null ? null : selectedRootEntryReference.getObject();
+	return selectedRootEntryReference;
     }
 
     public void setRootEntry(AcademicCalendarRootEntry entry) {
-	this.selectedRootEntryReference = entry == null ? null : new DomainReference<AcademicCalendarRootEntry>(entry);
+	this.selectedRootEntryReference = entry;
     }
 
     public AcademicCalendarEntry getTemplateEntry() {
-	return templateEntryReference == null ? null : templateEntryReference.getObject();
+	return templateEntryReference;
     }
 
     public void setTemplateEntry(AcademicCalendarEntry entry) {
-	this.templateEntryReference = entry == null ? null : new DomainReference<AcademicCalendarEntry>(entry);
+	this.templateEntryReference = entry;
     }
 
     public AcademicCalendarEntry getEntry() {
-	return entryReference == null ? null : entryReference.getObject();
+	return entryReference;
     }
 
     public void setEntry(AcademicCalendarEntry academicCalendarEntry) {
-	this.entryReference = academicCalendarEntry == null ? null : new DomainReference<AcademicCalendarEntry>(
-		academicCalendarEntry);
+	this.entryReference = academicCalendarEntry;
     }
 
     public Class<? extends AcademicCalendarEntry> getType() {

@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -21,25 +20,25 @@ import org.joda.time.DateTime;
 
 public class VigilantGroupBean extends VigilantBean implements Serializable {
 
-    private DomainReference<Person> person;
+    private Person person;
 
-    private DomainReference<Unit> unit;
+    private Unit unit;
 
-    private DomainReference<Unit> selectedUnit;
+    private Unit selectedUnit;
 
-    private DomainReference<Department> selectedDepartment;
+    private Department selectedDepartment;
 
-    private DomainReference<VigilantWrapper> selectedVigilantWrapper;
+    private VigilantWrapper selectedVigilantWrapper;
 
-    private List<DomainReference<Employee>> employees = new ArrayList<DomainReference<Employee>>();
+    private List<Employee> employees = new ArrayList<Employee>();
 
     private String name;
 
     private String ConvokeStrategy;
 
-    private DomainReference<ExamCoordinator> examCoordinator;
+    private ExamCoordinator examCoordinator;
 
-    private List<DomainReference<ExamCoordinator>> examCoordinators = new ArrayList<DomainReference<ExamCoordinator>>();
+    private List<ExamCoordinator> examCoordinators = new ArrayList<ExamCoordinator>();
 
     private DateTime beginFirstUnavailablePeriod;
 
@@ -55,7 +54,7 @@ public class VigilantGroupBean extends VigilantBean implements Serializable {
 
     private boolean showCoordinators = Boolean.TRUE;
 
-    private List<DomainReference<VigilantWrapper>> vigilants = new ArrayList<DomainReference<VigilantWrapper>>();
+    private List<VigilantWrapper> vigilants = new ArrayList<VigilantWrapper>();
 
     private String username = "";
 
@@ -161,69 +160,69 @@ public class VigilantGroupBean extends VigilantBean implements Serializable {
     }
 
     public VigilantWrapper getSelectedVigilantWrapper() {
-	return this.selectedVigilantWrapper.getObject();
+	return this.selectedVigilantWrapper;
     }
 
     public void setSelectedVigilantWrapper(VigilantWrapper vigilantWrapper) {
-	this.selectedVigilantWrapper = new DomainReference<VigilantWrapper>(vigilantWrapper);
+	this.selectedVigilantWrapper = vigilantWrapper;
     }
 
     public Person getPerson() {
-	return (this.person == null) ? null : this.person.getObject();
+	return this.person;
     }
 
     public void setPerson(Person person) {
-	this.person = (person != null) ? new DomainReference<Person>(person) : null;
+	this.person = person;
     }
 
     public void setExamCoordinator(ExamCoordinator examCoordinator) {
-	this.examCoordinator = (examCoordinator != null) ? new DomainReference<ExamCoordinator>(examCoordinator) : null;
+	this.examCoordinator = examCoordinator;
     }
 
     public ExamCoordinator getExamCoordinator() {
-	return (this.examCoordinator == null) ? null : this.examCoordinator.getObject();
+	return this.examCoordinator;
     }
 
     public Unit getUnit() {
-	return (this.unit != null) ? this.unit.getObject() : null;
+	return this.unit;
     }
 
     public void setUnit(Unit unit) {
-	this.unit = (unit != null) ? new DomainReference<Unit>(unit) : null;
+	this.unit = unit;
     }
 
     public List getEmployees() {
 	List employees = new ArrayList<Employee>();
-	for (DomainReference<Employee> employee : this.employees) {
+	for (Employee employee : this.employees) {
 	    if (employee != null)
-		employees.add(employee.getObject());
+		employees.add(employee);
 	}
 	return employees;
     }
 
     public void setEmployees(List<Employee> employeesList) {
-	this.employees = new ArrayList<DomainReference<Employee>>();
+	this.employees = new ArrayList<Employee>();
 	for (Employee employee : employeesList) {
 	    if (employee != null) {
-		this.employees.add(new DomainReference(employee));
+		this.employees.add(employee);
 	    }
 	}
     }
 
     public List getExamCoordinators() {
 	List coordinators = new ArrayList<ExamCoordinator>();
-	for (DomainReference<ExamCoordinator> coordinator : this.examCoordinators) {
+	for (ExamCoordinator coordinator : this.examCoordinators) {
 	    if (coordinator != null)
-		coordinators.add(coordinator.getObject());
+		coordinators.add(coordinator);
 	}
 	return coordinators;
     }
 
     public void setExamCoordinators(List<ExamCoordinator> coordinatorsList) {
-	this.examCoordinators = new ArrayList<DomainReference<ExamCoordinator>>();
+	this.examCoordinators = new ArrayList<ExamCoordinator>();
 	for (ExamCoordinator coordinator : coordinatorsList) {
 	    if (coordinator != null) {
-		this.examCoordinators.add(new DomainReference(coordinator));
+		this.examCoordinators.add(coordinator);
 	    }
 	}
     }
@@ -238,18 +237,18 @@ public class VigilantGroupBean extends VigilantBean implements Serializable {
 
     public List<VigilantWrapper> getVigilants() {
 	List<VigilantWrapper> vigilants = new ArrayList<VigilantWrapper>();
-	for (DomainReference<VigilantWrapper> vigilant : this.vigilants) {
+	for (VigilantWrapper vigilant : this.vigilants) {
 	    if (vigilant != null)
-		vigilants.add(vigilant.getObject());
+		vigilants.add(vigilant);
 	}
 	return vigilants;
     }
 
     public void setVigilants(List<VigilantWrapper> vigilants) {
-	this.vigilants = new ArrayList<DomainReference<VigilantWrapper>>();
+	this.vigilants = new ArrayList<VigilantWrapper>();
 	for (VigilantWrapper vigilant : vigilants) {
 	    if (vigilant != null) {
-		this.vigilants.add(new DomainReference(vigilant));
+		this.vigilants.add(vigilant);
 	    }
 	}
     }
@@ -268,23 +267,23 @@ public class VigilantGroupBean extends VigilantBean implements Serializable {
     }
 
     public void resetEmployees() {
-	this.employees = new ArrayList<DomainReference<Employee>>();
+	this.employees = new ArrayList<Employee>();
     }
 
     public Unit getSelectedUnit() {
-	return selectedUnit.getObject();
+	return selectedUnit;
     }
 
     public void setSelectedUnit(Unit unit) {
-	this.selectedUnit = new DomainReference<Unit>(unit);
+	this.selectedUnit = unit;
     }
 
     public Department getSelectedDepartment() {
-	return selectedDepartment.getObject();
+	return selectedDepartment;
     }
 
     public void setSelectedDepartment(Department department) {
-	this.selectedDepartment = new DomainReference<Department>(department);
+	this.selectedDepartment = department;
     }
 
     public String getUsername() {

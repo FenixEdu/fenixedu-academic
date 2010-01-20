@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain.candidacy.workflow.form;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.GrantOwnerType;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ProfessionType;
@@ -55,7 +54,7 @@ public class PersonalInformationForm extends Form {
 
     private GrantOwnerType grantOwnerType;
 
-    private DomainReference<Unit> grantOwnerProvider;
+    private Unit grantOwnerProvider;
 
     private String grantOwnerProviderName;
 
@@ -202,11 +201,11 @@ public class PersonalInformationForm extends Form {
     }
 
     public Unit getGrantOwnerProvider() {
-	return (this.grantOwnerProvider != null) ? this.grantOwnerProvider.getObject() : null;
+	return this.grantOwnerProvider;
     }
 
     public void setGrantOwnerProvider(Unit grantOwnerProvider) {
-	this.grantOwnerProvider = (grantOwnerProvider != null) ? new DomainReference<Unit>(grantOwnerProvider) : null;
+	this.grantOwnerProvider = grantOwnerProvider;
     }
 
     public String getGrantOwnerProviderName() {
@@ -218,12 +217,11 @@ public class PersonalInformationForm extends Form {
     }
 
     public UnitName getGrantOwnerProviderUnitName() {
-	return (grantOwnerProvider == null) ? null : grantOwnerProvider.getObject().getUnitName();
+	return (grantOwnerProvider == null) ? null : grantOwnerProvider.getUnitName();
     }
 
     public void setGrantOwnerProviderUnitName(UnitName grantOwnerProviderUnitName) {
-	this.grantOwnerProvider = (grantOwnerProviderUnitName == null) ? null : new DomainReference<Unit>(
-		grantOwnerProviderUnitName.getUnit());
+	this.grantOwnerProvider = (grantOwnerProviderUnitName == null) ? null : grantOwnerProviderUnitName.getUnit();
     }
 
     @Override

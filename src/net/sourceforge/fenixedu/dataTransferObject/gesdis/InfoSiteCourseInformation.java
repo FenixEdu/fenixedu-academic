@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.Curriculum;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -53,25 +52,25 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
  */
 public class InfoSiteCourseInformation extends DataTranferObject implements ISiteComponent {
 
-    private DomainReference<ExecutionCourse> executionCourseDomainReference;
+    private ExecutionCourse executionCourseDomainReference;
 
-    private DomainReference<ExecutionYear> executionYearDomainReference;
+    private ExecutionYear executionYearDomainReference;
 
     public InfoSiteCourseInformation(final ExecutionCourse executionCourse) {
-	executionCourseDomainReference = new DomainReference<ExecutionCourse>(executionCourse);
+	executionCourseDomainReference = executionCourse;
     }
 
     public InfoSiteCourseInformation(final ExecutionCourse executionCourse, final ExecutionYear executionYear) {
 	this(executionCourse);
-	executionYearDomainReference = new DomainReference<ExecutionYear>(executionYear);
+	executionYearDomainReference = executionYear;
     }
 
     public ExecutionCourse getExecutionCourse() {
-	return this.executionCourseDomainReference == null ? null : this.executionCourseDomainReference.getObject();
+	return this.executionCourseDomainReference;
     }
 
     private ExecutionYear getExecutionYear() {
-	return this.executionYearDomainReference == null ? null : this.executionYearDomainReference.getObject();
+	return this.executionYearDomainReference;
     }
 
     // =================== FIELDS RETRIEVED BY DOMAIN LOGIC

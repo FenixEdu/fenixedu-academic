@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Exam;
 
@@ -15,9 +14,9 @@ public class ExamDateCertificateExamSelectionEntryBean implements Serializable {
      */
     private static final long serialVersionUID = 1L;
 
-    private DomainReference<Enrolment> enrolment;
+    private Enrolment enrolment;
 
-    private DomainReference<Exam> exam;
+    private Exam exam;
 
     public ExamDateCertificateExamSelectionEntryBean(final Enrolment enrolment, final Exam exam) {
 	setEnrolment(enrolment);
@@ -25,19 +24,19 @@ public class ExamDateCertificateExamSelectionEntryBean implements Serializable {
     }
 
     public Enrolment getEnrolment() {
-	return (this.enrolment != null) ? this.enrolment.getObject() : null;
+	return this.enrolment;
     }
 
     public void setEnrolment(Enrolment enrolment) {
-	this.enrolment = (enrolment != null) ? new DomainReference<Enrolment>(enrolment) : null;
+	this.enrolment = enrolment;
     }
 
     public Exam getExam() {
-	return (this.exam != null) ? this.exam.getObject() : null;
+	return this.exam;
     }
 
     public void setExam(Exam exam) {
-	this.exam = (exam != null) ? new DomainReference<Exam>(exam) : null;
+	this.exam = exam;
     }
 
     public Set<DegreeModuleScope> getDegreeModuleScopesForEnrolment() {

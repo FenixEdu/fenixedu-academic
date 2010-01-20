@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.FileContentCreationBean.EducationalResourceType;
@@ -13,8 +12,8 @@ import pt.utl.ist.fenix.tools.file.FilesetMetadataQuery.ConjunctionType;
 
 public class SearchDSpaceCoursesBean extends SearchDSpaceBean {
 
-    DomainReference<ExecutionYear> executionYear;
-    DomainReference<ExecutionSemester> executionSemester;
+    ExecutionYear executionYear;
+    ExecutionSemester executionSemester;
     List<EducationalResourceType> educationalResourceTypes;
 
     public SearchDSpaceCoursesBean() {
@@ -33,19 +32,19 @@ public class SearchDSpaceCoursesBean extends SearchDSpaceBean {
     }
 
     public ExecutionYear getExecutionYear() {
-	return executionYear.getObject();
+	return executionYear;
     }
 
     public void setExecutionYear(ExecutionYear executionYear) {
-	this.executionYear = new DomainReference<ExecutionYear>(executionYear);
+	this.executionYear = executionYear;
     }
 
     public ExecutionSemester getExecutionPeriod() {
-	return executionSemester.getObject();
+	return executionSemester;
     }
 
     public void setExecutionPeriod(ExecutionSemester executionSemester) {
-	this.executionSemester = new DomainReference<ExecutionSemester>(executionSemester);
+	this.executionSemester = executionSemester;
     }
 
     @Override

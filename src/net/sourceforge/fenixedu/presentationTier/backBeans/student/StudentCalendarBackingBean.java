@@ -156,8 +156,7 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 	final ExecutionSemester executionSemester = getExecutionPeriod();
 	final String evaluationTypeClassname = getEvaluationTypeClassname();
 	final Registration registration = getStudent();
-	final StudentCurricularPlan studentCurricularPlan = registration == null ? null : registration
-		.getActiveStudentCurricularPlan();
+	final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
 	final DegreeCurricularPlan degreeCurricularPlan = (studentCurricularPlan != null) ? studentCurricularPlan
 		.getDegreeCurricularPlan() : null;
 	final ExecutionDegree executionDegree = findExecutinDegree(degreeCurricularPlan, executionSemester);

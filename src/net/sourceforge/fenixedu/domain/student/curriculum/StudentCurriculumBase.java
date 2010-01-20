@@ -5,16 +5,15 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 abstract public class StudentCurriculumBase implements Serializable, ICurriculum {
 
-    final private DomainReference<Registration> registrationDomainReference;
+    final private Registration registrationDomainReference;
 
-    final private DomainReference<ExecutionYear> executionYearDomainReference;
+    final private ExecutionYear executionYearDomainReference;
 
     static final protected int SCALE = 2;
 
@@ -25,16 +24,16 @@ abstract public class StudentCurriculumBase implements Serializable, ICurriculum
 	if (registration == null) {
 	    throw new NullPointerException("error.registration.cannot.be.null");
 	}
-	this.registrationDomainReference = new DomainReference<Registration>(registration);
-	this.executionYearDomainReference = new DomainReference<ExecutionYear>(executionYear);
+	this.registrationDomainReference = registration;
+	this.executionYearDomainReference = executionYear;
     }
 
     final public Registration getRegistration() {
-	return registrationDomainReference.getObject();
+	return registrationDomainReference;
     }
 
     final public ExecutionYear getExecutionYear() {
-	return executionYearDomainReference.getObject();
+	return executionYearDomainReference;
     }
 
     final public StudentCurricularPlan getStudentCurricularPlan() {

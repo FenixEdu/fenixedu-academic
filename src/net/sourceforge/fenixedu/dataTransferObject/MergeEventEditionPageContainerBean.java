@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 
 import org.joda.time.YearMonthDay;
@@ -13,10 +12,10 @@ public class MergeEventEditionPageContainerBean extends MergeResearchActivityPag
     private YearMonthDay startDate;
     private YearMonthDay endDate;
 
-    private DomainReference<ResearchEvent> event;
+    private ResearchEvent event;
 
     public MergeEventEditionPageContainerBean(ResearchEvent event) {
-	this.event = new DomainReference<ResearchEvent>(event);
+	this.event = event;
     }
 
     public String getEdition() {
@@ -68,10 +67,10 @@ public class MergeEventEditionPageContainerBean extends MergeResearchActivityPag
     }
 
     public ResearchEvent getEvent() {
-	return (this.event != null) ? this.event.getObject() : null;
+	return this.event;
     }
 
     public void setEvent(ResearchEvent event) {
-	this.event = (event != null) ? new DomainReference<ResearchEvent>(event) : null;
+	this.event = event;
     }
 }

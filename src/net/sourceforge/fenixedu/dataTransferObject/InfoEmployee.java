@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Employee;
 
 /**
@@ -14,10 +13,10 @@ import net.sourceforge.fenixedu.domain.Employee;
  */
 public class InfoEmployee extends InfoObject {
 
-    private final DomainReference<Employee> employeeDomainReference;
+    private final Employee employeeDomainReference;
 
     public InfoEmployee(final Employee employee) {
-	employeeDomainReference = new DomainReference<Employee>(employee);
+	employeeDomainReference = employee;
     }
 
     public static InfoEmployee newInfoFromDomain(final Employee employee) {
@@ -25,7 +24,7 @@ public class InfoEmployee extends InfoObject {
     }
 
     private Employee getEmployee() {
-	return employeeDomainReference == null ? null : employeeDomainReference.getObject();
+	return employeeDomainReference;
     }
 
     public boolean equals(Object obj) {

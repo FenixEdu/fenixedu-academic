@@ -8,7 +8,6 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.Account;
@@ -43,7 +42,7 @@ abstract public class DFAGratuityPR extends DFAGratuityPR_Base implements IGratu
 
 	private BigDecimal dfaPartialAcceptedPercentage;
 
-	private DomainReference<DFAGratuityPR> dfaGratuityPR;
+	private DFAGratuityPR dfaGratuityPR;
 
 	protected DFAGratuityPREditor() {
 	}
@@ -73,11 +72,11 @@ abstract public class DFAGratuityPR extends DFAGratuityPR_Base implements IGratu
 	}
 
 	public DFAGratuityPR getDfaGratuityPR() {
-	    return (this.dfaGratuityPR != null) ? this.dfaGratuityPR.getObject() : null;
+	    return this.dfaGratuityPR;
 	}
 
 	public void setDfaGratuityPR(final DFAGratuityPR dfaGratuityPR) {
-	    this.dfaGratuityPR = (dfaGratuityPR != null) ? new DomainReference<DFAGratuityPR>(dfaGratuityPR) : null;
+	    this.dfaGratuityPR = dfaGratuityPR;
 	}
 
     }

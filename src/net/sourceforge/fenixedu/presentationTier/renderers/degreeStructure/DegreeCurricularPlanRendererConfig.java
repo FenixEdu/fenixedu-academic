@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
@@ -20,8 +19,8 @@ public class DegreeCurricularPlanRendererConfig implements Serializable {
     static private final String METHOD = "${method}";
     static private final String VIEW_CC_URL_TEMPLATE = MAPPING + "?method=" + METHOD;
 
-    private DomainReference<DegreeCurricularPlan> degreeCurricularPlan;
-    private DomainReference<ExecutionYear> executionInterval;
+    private DegreeCurricularPlan degreeCurricularPlan;
+    private ExecutionYear executionInterval;
 
     private OrganizeType organizeBy = OrganizeType.GROUPS;
     private boolean showRules = false;
@@ -34,20 +33,19 @@ public class DegreeCurricularPlanRendererConfig implements Serializable {
     }
 
     public DegreeCurricularPlan getDegreeCurricularPlan() {
-	return (this.degreeCurricularPlan != null) ? this.degreeCurricularPlan.getObject() : null;
+	return this.degreeCurricularPlan;
     }
 
     public void setDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
-	this.degreeCurricularPlan = (degreeCurricularPlan != null) ? new DomainReference<DegreeCurricularPlan>(
-		degreeCurricularPlan) : null;
+	this.degreeCurricularPlan = degreeCurricularPlan;
     }
 
     public ExecutionYear getExecutionInterval() {
-	return (this.executionInterval != null) ? this.executionInterval.getObject() : null;
+	return this.executionInterval;
     }
 
     public void setExecutionInterval(ExecutionYear executionInterval) {
-	this.executionInterval = (executionInterval != null) ? new DomainReference<ExecutionYear>(executionInterval) : null;
+	this.executionInterval = executionInterval;
     }
 
     public OrganizeType getOrganizeBy() {

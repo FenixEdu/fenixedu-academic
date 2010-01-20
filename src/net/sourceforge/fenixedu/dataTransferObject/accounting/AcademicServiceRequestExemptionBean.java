@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.accounting;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestJustificationType;
 import net.sourceforge.fenixedu.util.Money;
@@ -13,7 +12,7 @@ public class AcademicServiceRequestExemptionBean implements Serializable {
 
     static private final long serialVersionUID = 1L;
 
-    private DomainReference<AcademicServiceRequestEvent> event;
+    private AcademicServiceRequestEvent event;
 
     private AcademicServiceRequestJustificationType justificationType;
 
@@ -28,11 +27,11 @@ public class AcademicServiceRequestExemptionBean implements Serializable {
     }
 
     public AcademicServiceRequestEvent getEvent() {
-	return (this.event != null) ? this.event.getObject() : null;
+	return this.event;
     }
 
     public void setEvent(AcademicServiceRequestEvent event) {
-	this.event = (event != null) ? new DomainReference<AcademicServiceRequestEvent>(event) : null;
+	this.event = event;
     }
 
     public AcademicServiceRequestJustificationType getJustificationType() {

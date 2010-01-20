@@ -2,12 +2,11 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.standalone;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
 
 public class StandaloneIndividualCandidacyResultBean implements Serializable {
 
-    private DomainReference<StandaloneIndividualCandidacyProcess> candidacyProcess;
+    private StandaloneIndividualCandidacyProcess candidacyProcess;
     private IndividualCandidacyState state;
 
     public StandaloneIndividualCandidacyResultBean(final StandaloneIndividualCandidacyProcess process) {
@@ -18,12 +17,11 @@ public class StandaloneIndividualCandidacyResultBean implements Serializable {
     }
 
     public StandaloneIndividualCandidacyProcess getCandidacyProcess() {
-	return (this.candidacyProcess != null) ? this.candidacyProcess.getObject() : null;
+	return this.candidacyProcess;
     }
 
     public void setCandidacyProcess(StandaloneIndividualCandidacyProcess candidacyProcess) {
-	this.candidacyProcess = (candidacyProcess != null) ? new DomainReference<StandaloneIndividualCandidacyProcess>(
-		candidacyProcess) : null;
+	this.candidacyProcess = candidacyProcess;
     }
 
     public IndividualCandidacyState getState() {

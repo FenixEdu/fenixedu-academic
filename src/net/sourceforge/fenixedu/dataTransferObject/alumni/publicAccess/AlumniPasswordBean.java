@@ -4,13 +4,12 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.Alumni;
 import net.sourceforge.fenixedu.domain.AlumniRequestType;
-import net.sourceforge.fenixedu.domain.DomainReference;
 
 import org.joda.time.YearMonthDay;
 
 public class AlumniPasswordBean implements Serializable {
 
-    private DomainReference<Alumni> alumni;
+    private Alumni alumni;
     private String contactEmail;
     private String documentIdNumber;
     private String fullName;
@@ -37,11 +36,11 @@ public class AlumniPasswordBean implements Serializable {
     }
 
     public Alumni getAlumni() {
-	return (this.alumni != null) ? this.alumni.getObject() : null;
+	return this.alumni;
     }
 
     public void setAlumni(Alumni alumni) {
-	this.alumni = new DomainReference<Alumni>(alumni);
+	this.alumni = alumni;
     }
 
     public String getContactEmail() {

@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.SpecialSeasonCode;
@@ -14,18 +13,18 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 public class SpecialSeasonEnrolmentBean implements Serializable {
 
     private Integer studentNumber;
-    private DomainReference<Registration> student;
-    private DomainReference<ExecutionYear> executionYear;
+    private Registration student;
+    private ExecutionYear executionYear;
     private Collection<SpecialSeasonToEnrolBean> specialSeasonToEnrol;
     private Collection<SpecialSeasonToEnrolBean> specialSeasonAlreadyEnroled;
-    private DomainReference<SpecialSeasonCode> specialSeasonCode;
+    private SpecialSeasonCode specialSeasonCode;
 
     public ExecutionYear getExecutionYear() {
-	return (this.executionYear != null) ? executionYear.getObject() : null;
+	return (this.executionYear != null) ? executionYear : null;
     }
 
     public void setExecutionYear(ExecutionYear executionYear) {
-	this.executionYear = new DomainReference<ExecutionYear>(executionYear);
+	this.executionYear = executionYear;
     }
 
     public Collection<SpecialSeasonToEnrolBean> getSpecialSeasonAlreadyEnroled() {
@@ -45,11 +44,11 @@ public class SpecialSeasonEnrolmentBean implements Serializable {
     }
 
     public Registration getStudent() {
-	return (this.student != null) ? student.getObject() : null;
+	return (this.student != null) ? student : null;
     }
 
     public void setStudent(Registration registration) {
-	this.student = new DomainReference<Registration>(registration);
+	this.student = registration;
     }
 
     public Integer getStudentNumber() {
@@ -69,11 +68,11 @@ public class SpecialSeasonEnrolmentBean implements Serializable {
     }
 
     public SpecialSeasonCode getSpecialSeasonCode() {
-	return (this.specialSeasonCode != null) ? specialSeasonCode.getObject() : null;
+	return (this.specialSeasonCode != null) ? specialSeasonCode : null;
     }
 
     public void setSpecialSeasonCode(SpecialSeasonCode specialSeasonCode) {
-	this.specialSeasonCode = new DomainReference<SpecialSeasonCode>(specialSeasonCode);
+	this.specialSeasonCode = specialSeasonCode;
     }
 
     private Collection<Enrolment> getSubmited(Collection<SpecialSeasonToEnrolBean> specialSeasonToEnrolBean) {

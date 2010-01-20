@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.g
 import java.util.Collection;
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.domain.Teacher;
 
@@ -12,7 +11,7 @@ public class MarkSheetManagementEditBean extends MarkSheetManagementBaseBean {
     private Integer teacherNumber;
     private Date evaluationDate;
 
-    private DomainReference<MarkSheet> markSheet;
+    private MarkSheet markSheet;
 
     private Collection<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationBeansToEdit;
     private Collection<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationBeansToAppend;
@@ -37,11 +36,11 @@ public class MarkSheetManagementEditBean extends MarkSheetManagementBaseBean {
     }
 
     public MarkSheet getMarkSheet() {
-	return (this.markSheet != null) ? this.markSheet.getObject() : null;
+	return this.markSheet;
     }
 
     public void setMarkSheet(MarkSheet markSheet) {
-	this.markSheet = (markSheet != null) ? new DomainReference<MarkSheet>(markSheet) : null;
+	this.markSheet = markSheet;
     }
 
     public Collection<MarkSheetEnrolmentEvaluationBean> getEnrolmentEvaluationBeansToAppend() {

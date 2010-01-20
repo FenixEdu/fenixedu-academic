@@ -8,15 +8,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
-
 public class CandidacyProcessDocumentUploadBean implements Serializable {
     /**
      * 
      */
     private static final long serialVersionUID = 1L;
 
-    DomainReference<IndividualCandidacyProcess> individualCandidacyProcess;
+    IndividualCandidacyProcess individualCandidacyProcess;
     private IndividualCandidacyDocumentFileType type;
     private transient InputStream stream;
     private long fileSize;
@@ -24,7 +22,7 @@ public class CandidacyProcessDocumentUploadBean implements Serializable {
 
     private Long id;
 
-    private DomainReference<IndividualCandidacyDocumentFile> documentFile;
+    private IndividualCandidacyDocumentFile documentFile;
 
     public CandidacyProcessDocumentUploadBean() {
 	this.id = System.currentTimeMillis();
@@ -68,12 +66,11 @@ public class CandidacyProcessDocumentUploadBean implements Serializable {
     }
 
     public IndividualCandidacyProcess getIndividualCandidacyProcess() {
-	return this.individualCandidacyProcess != null ? this.individualCandidacyProcess.getObject() : null;
+	return this.individualCandidacyProcess;
     }
 
     public void setIndividualCandidacyProcess(IndividualCandidacyProcess individualCandidacyProcess) {
-	this.individualCandidacyProcess = individualCandidacyProcess != null ? new DomainReference<IndividualCandidacyProcess>(
-		individualCandidacyProcess) : null;
+	this.individualCandidacyProcess = individualCandidacyProcess;
     }
 
     public Long getId() {
@@ -81,10 +78,10 @@ public class CandidacyProcessDocumentUploadBean implements Serializable {
     }
 
     public IndividualCandidacyDocumentFile getDocumentFile() {
-	return this.documentFile != null ? this.documentFile.getObject() : null;
+	return this.documentFile;
     }
 
     public void setDocumentFile(IndividualCandidacyDocumentFile documentFile) {
-	this.documentFile = documentFile != null ? new DomainReference<IndividualCandidacyDocumentFile>(documentFile) : null;
+	this.documentFile = documentFile;
     }
 }

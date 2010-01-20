@@ -162,7 +162,7 @@ public class ThesisDocumentConfirmationDA extends FenixDispatchAction {
 	final Person person = AccessControl.getPerson();
 	if (person != null) {
 	    final Teacher teacher = person.getTeacher();
-	    return teacher == null ? null : teacher;
+	    return teacher;
 	}
 	return null;
     }

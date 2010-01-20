@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.resourceManager;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.material.Extension;
 import net.sourceforge.fenixedu.domain.material.FireExtinguisher;
 import net.sourceforge.fenixedu.domain.material.Material;
@@ -22,7 +21,7 @@ public class MaterialBean implements Serializable {
 
     private YearMonthDay cease;
 
-    private DomainReference<Unit> ownerReference;
+    private Unit ownerReference;
 
     private String delivererEnterprise;
 
@@ -134,10 +133,10 @@ public class MaterialBean implements Serializable {
     }
 
     public Unit getOwner() {
-	return (this.ownerReference != null) ? this.ownerReference.getObject() : null;
+	return this.ownerReference;
     }
 
     public void setOwner(Unit owner) {
-	this.ownerReference = (owner != null) ? new DomainReference<Unit>(owner) : null;
+	this.ownerReference = owner;
     }
 }

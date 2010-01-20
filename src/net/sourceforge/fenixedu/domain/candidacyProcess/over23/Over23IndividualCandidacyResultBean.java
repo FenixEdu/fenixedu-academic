@@ -3,16 +3,15 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.over23;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
 
 public class Over23IndividualCandidacyResultBean implements Serializable {
 
-    private DomainReference<Over23IndividualCandidacyProcess> candidacyProcess;
+    private Over23IndividualCandidacyProcess candidacyProcess;
 
     private IndividualCandidacyState state;
 
-    private DomainReference<Degree> acceptedDegree;
+    private Degree acceptedDegree;
 
     public Over23IndividualCandidacyResultBean(final Over23IndividualCandidacyProcess candidacyProcess) {
 	setCandidacyProcess(candidacyProcess);
@@ -25,12 +24,11 @@ public class Over23IndividualCandidacyResultBean implements Serializable {
     }
 
     public Over23IndividualCandidacyProcess getCandidacyProcess() {
-	return (this.candidacyProcess != null) ? this.candidacyProcess.getObject() : null;
+	return this.candidacyProcess;
     }
 
     public void setCandidacyProcess(final Over23IndividualCandidacyProcess candidacyProcess) {
-	this.candidacyProcess = (candidacyProcess != null) ? new DomainReference<Over23IndividualCandidacyProcess>(
-		candidacyProcess) : null;
+	this.candidacyProcess = candidacyProcess;
     }
 
     public IndividualCandidacyState getState() {
@@ -42,11 +40,11 @@ public class Over23IndividualCandidacyResultBean implements Serializable {
     }
 
     public Degree getAcceptedDegree() {
-	return (this.acceptedDegree != null) ? this.acceptedDegree.getObject() : null;
+	return this.acceptedDegree;
     }
 
     public void setAcceptedDegree(final Degree acceptedDegree) {
-	this.acceptedDegree = (acceptedDegree != null) ? new DomainReference<Degree>(acceptedDegree) : null;
+	this.acceptedDegree = acceptedDegree;
     }
 
     public boolean isValid() {

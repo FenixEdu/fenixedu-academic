@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
@@ -48,13 +47,13 @@ public class AssiduousnessExportChoices implements Serializable {
 
     private String scheduleAcronym;
 
-    private DomainReference<WorkScheduleType> workScheduleType;
+    private WorkScheduleType workScheduleType;
 
     private String justificationMotiveAcronym;
 
-    private DomainReference<JustificationMotive> justificationMotive;
+    private JustificationMotive justificationMotive;
 
-    private DomainReference<AssiduousnessStatus> assiduousnessStatus;
+    private AssiduousnessStatus assiduousnessStatus;
 
     private String assiduousnessStatusDescription;
 
@@ -250,24 +249,24 @@ public class AssiduousnessExportChoices implements Serializable {
     }
 
     public WorkScheduleType getWorkScheduleType() {
-	return workScheduleType == null ? null : workScheduleType.getObject();
+	return workScheduleType;
     }
 
     public void setWorkScheduleType(WorkScheduleType workScheduleType) {
 	if (workScheduleType != null) {
-	    this.workScheduleType = new DomainReference<WorkScheduleType>(workScheduleType);
+	    this.workScheduleType = workScheduleType;
 	} else {
 	    this.workScheduleType = null;
 	}
     }
 
     public JustificationMotive getJustificationMotive() {
-	return justificationMotive == null ? null : justificationMotive.getObject();
+	return justificationMotive;
     }
 
     public void setJustificationMotive(JustificationMotive justificationMotive) {
 	if (justificationMotive != null) {
-	    this.justificationMotive = new DomainReference<JustificationMotive>(justificationMotive);
+	    this.justificationMotive = justificationMotive;
 	} else {
 	    this.justificationMotive = null;
 	}
@@ -282,12 +281,12 @@ public class AssiduousnessExportChoices implements Serializable {
     }
 
     public AssiduousnessStatus getAssiduousnessStatus() {
-	return assiduousnessStatus == null ? null : assiduousnessStatus.getObject();
+	return assiduousnessStatus;
     }
 
     public void setAssiduousnessStatus(AssiduousnessStatus assiduousnessStatus) {
 	if (assiduousnessStatus != null) {
-	    this.assiduousnessStatus = new DomainReference<AssiduousnessStatus>(assiduousnessStatus);
+	    this.assiduousnessStatus = assiduousnessStatus;
 	} else {
 	    this.assiduousnessStatus = null;
 	}

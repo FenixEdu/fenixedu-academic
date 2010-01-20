@@ -48,8 +48,7 @@ public class SearchCoursesInformationAction extends SearchAction {
     @Override
     protected void doAfterSearch(SearchActionMapping mapping, HttpServletRequest request, Collection result) {
 	final InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute("infoExecutionDegree");
-	final InfoDegreeCurricularPlan infoDegreeCurricularPlan = infoExecutionDegree == null ? null : infoExecutionDegree
-		.getInfoDegreeCurricularPlan();
+	final InfoDegreeCurricularPlan infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan();
 
 	// sort the result list
 	final Comparator comparator = new Comparator() {

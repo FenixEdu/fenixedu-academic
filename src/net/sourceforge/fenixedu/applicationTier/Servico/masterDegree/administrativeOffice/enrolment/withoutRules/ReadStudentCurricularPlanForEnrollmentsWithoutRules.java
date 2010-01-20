@@ -13,8 +13,7 @@ public class ReadStudentCurricularPlanForEnrollmentsWithoutRules extends FenixSe
     public StudentCurricularPlan run(Registration registration, DegreeType degreeType, ExecutionSemester executionSemester)
 	    throws FenixServiceException {
 
-	final StudentCurricularPlan studentCurricularPlan = (registration == null) ? null : registration
-		.getLastStudentCurricularPlan();
+	final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
 	if (studentCurricularPlan == null) {
 	    throw new FenixServiceException("error.student.curriculum.noCurricularPlans");
 	}

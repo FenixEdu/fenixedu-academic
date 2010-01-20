@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain.util.search;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
@@ -16,9 +15,9 @@ public class StudentSearchBean implements FactoryExecutor, Serializable {
 
     private Integer studentNumber;
 
-    private DomainReference<DegreeCurricularPlan> degreeCurricularPlan;
+    private DegreeCurricularPlan degreeCurricularPlan;
 
-    private DomainReference<DegreeCurricularPlan> oldDegreeCurricularPlan;
+    private DegreeCurricularPlan oldDegreeCurricularPlan;
 
     public Object execute() {
 	return search();
@@ -37,21 +36,19 @@ public class StudentSearchBean implements FactoryExecutor, Serializable {
     }
 
     public DegreeCurricularPlan getDegreeCurricularPlan() {
-	return degreeCurricularPlan == null ? null : degreeCurricularPlan.getObject();
+	return degreeCurricularPlan;
     }
 
     public void setDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
-	this.degreeCurricularPlan = degreeCurricularPlan == null ? null : new DomainReference<DegreeCurricularPlan>(
-		degreeCurricularPlan);
+	this.degreeCurricularPlan = degreeCurricularPlan;
     }
 
     public DegreeCurricularPlan getOldDegreeCurricularPlan() {
-	return (this.oldDegreeCurricularPlan != null) ? this.oldDegreeCurricularPlan.getObject() : null;
+	return this.oldDegreeCurricularPlan;
     }
 
     public void setOldDegreeCurricularPlan(DegreeCurricularPlan oldDegreeCurricularPlan) {
-	this.oldDegreeCurricularPlan = (oldDegreeCurricularPlan != null) ? new DomainReference<DegreeCurricularPlan>(
-		oldDegreeCurricularPlan) : null;
+	this.oldDegreeCurricularPlan = oldDegreeCurricularPlan;
     }
 
 }

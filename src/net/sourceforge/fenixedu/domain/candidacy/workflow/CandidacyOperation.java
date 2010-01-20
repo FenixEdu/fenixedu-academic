@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain.candidacy.workflow;
 import java.util.Comparator;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyOperationType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -19,7 +18,7 @@ public abstract class CandidacyOperation extends Operation {
 	}
     };
 
-    private DomainReference<Candidacy> candidacy;
+    private Candidacy candidacy;
 
     protected CandidacyOperation(Set<RoleType> roleTypes, Candidacy candidacy) {
 	super(roleTypes);
@@ -27,11 +26,11 @@ public abstract class CandidacyOperation extends Operation {
     }
 
     public Candidacy getCandidacy() {
-	return (this.candidacy != null) ? this.candidacy.getObject() : null;
+	return this.candidacy;
     }
 
     private void setCandidacy(Candidacy candidacy) {
-	this.candidacy = (candidacy != null) ? new DomainReference<Candidacy>(candidacy) : null;
+	this.candidacy = candidacy;
     }
 
     @Override

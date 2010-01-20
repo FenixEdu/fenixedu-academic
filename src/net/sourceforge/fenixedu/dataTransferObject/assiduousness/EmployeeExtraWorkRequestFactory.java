@@ -7,7 +7,6 @@ import java.text.DecimalFormatSymbols;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.EmployeeExtraWorkAuthorization;
@@ -56,11 +55,11 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 
     private Double amount = 0.0;
 
-    private DomainReference<Employee> modifiedBy;
+    private Employee modifiedBy;
 
-    private DomainReference<Employee> employee;
+    private Employee employee;
 
-    private DomainReference<ExtraWorkRequest> extraWorkRequest;
+    private ExtraWorkRequest extraWorkRequest;
 
     private ExtraWorkRequestFactory extraWorkRequestFactory;
 
@@ -148,22 +147,22 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
     }
 
     public Employee getModifiedBy() {
-	return modifiedBy == null ? null : modifiedBy.getObject();
+	return modifiedBy;
     }
 
     public void setModifiedBy(Employee modifiedBy) {
 	if (modifiedBy != null) {
-	    this.modifiedBy = new DomainReference<Employee>(modifiedBy);
+	    this.modifiedBy = modifiedBy;
 	}
     }
 
     public Employee getEmployee() {
-	return employee == null ? null : employee.getObject();
+	return employee;
     }
 
     public void setEmployee(Employee employee) {
 	if (employee != null) {
-	    this.employee = new DomainReference<Employee>(employee);
+	    this.employee = employee;
 	}
     }
 
@@ -240,7 +239,7 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
     }
 
     public ExtraWorkRequest getExtraWorkRequest() {
-	return extraWorkRequest == null ? null : extraWorkRequest.getObject();
+	return extraWorkRequest;
     }
 
     public Integer getIdInternal() {
@@ -249,7 +248,7 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 
     public void setExtraWorkRequest(ExtraWorkRequest extraWorkRequest) {
 	if (extraWorkRequest != null) {
-	    this.extraWorkRequest = new DomainReference<ExtraWorkRequest>(extraWorkRequest);
+	    this.extraWorkRequest = extraWorkRequest;
 	}
     }
 

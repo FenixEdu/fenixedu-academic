@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.person;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.PersonName;
 
@@ -10,7 +9,7 @@ public class PersonNameBean implements Serializable {
 
     private boolean external;
 
-    private DomainReference<PersonName> personName;
+    private PersonName personName;
     private String name;
 
     public String getName() {
@@ -28,11 +27,11 @@ public class PersonNameBean implements Serializable {
     }
 
     public PersonName getPersonName() {
-	return personName.getObject();
+	return personName;
     }
 
     public void setPersonName(PersonName personName) {
-	this.personName = new DomainReference<PersonName>(personName);
+	this.personName = personName;
     }
 
     public Person getPerson() {

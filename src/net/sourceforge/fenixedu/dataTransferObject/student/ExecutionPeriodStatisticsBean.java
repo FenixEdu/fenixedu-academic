@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -13,7 +12,7 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 
 public class ExecutionPeriodStatisticsBean implements Serializable {
 
-    private DomainReference<ExecutionSemester> executionSemester;
+    private ExecutionSemester executionSemester;
     private List<Enrolment> enrolmentsWithinExecutionPeriod;
     private Integer totalEnrolmentsNumber;
     private Integer approvedEnrolmentsNumber;
@@ -34,11 +33,11 @@ public class ExecutionPeriodStatisticsBean implements Serializable {
     }
 
     public ExecutionSemester getExecutionPeriod() {
-	return (executionSemester == null ? null : executionSemester.getObject());
+	return (executionSemester);
     }
 
     public void setExecutionPeriod(ExecutionSemester executionSemester) {
-	this.executionSemester = new DomainReference<ExecutionSemester>(executionSemester);
+	this.executionSemester = executionSemester;
     }
 
     public List<Enrolment> getEnrolmentsWithinExecutionPeriod() {

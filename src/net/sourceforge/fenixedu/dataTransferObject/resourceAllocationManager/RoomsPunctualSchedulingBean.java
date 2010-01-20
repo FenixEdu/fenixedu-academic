@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.GenericEvent;
 import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest;
@@ -24,7 +23,7 @@ public class RoomsPunctualSchedulingBean implements Serializable {
 
     private Boolean markSunday;
 
-    private DomainReference<PunctualRoomsOccupationRequest> roomsReserveRequestReference;
+    private PunctualRoomsOccupationRequest roomsReserveRequestReference;
 
     private Integer roomsReserveRequestIdentification;
 
@@ -44,11 +43,11 @@ public class RoomsPunctualSchedulingBean implements Serializable {
 
     private FrequencyType frequency;
 
-    private List<DomainReference<AllocatableSpace>> roomsReferences;
+    private List<AllocatableSpace> roomsReferences;
 
-    private DomainReference<AllocatableSpace> selectedRoomReference;
+    private AllocatableSpace selectedRoomReference;
 
-    private DomainReference<GenericEvent> genericEventReference;
+    private GenericEvent genericEventReference;
 
     private Boolean ganttDiagramAvailable;
 
@@ -212,67 +211,66 @@ public class RoomsPunctualSchedulingBean implements Serializable {
 	if (roomsReferences == null) {
 	    return result;
 	}
-	for (DomainReference<AllocatableSpace> domainReference : roomsReferences) {
-	    result.add(domainReference.getObject());
+	for (AllocatableSpace domainReference : roomsReferences) {
+	    result.add(domainReference);
 	}
 	return result;
     }
 
     public void setRooms(List<AllocatableSpace> rooms) {
 	if (roomsReferences == null) {
-	    roomsReferences = new ArrayList<DomainReference<AllocatableSpace>>();
+	    roomsReferences = new ArrayList<AllocatableSpace>();
 	}
 	for (AllocatableSpace room : rooms) {
-	    roomsReferences.add(new DomainReference<AllocatableSpace>(room));
+	    roomsReferences.add(room);
 	}
     }
 
     public void addNewRoom(AllocatableSpace space) {
 	if (space != null) {
 	    if (roomsReferences == null) {
-		roomsReferences = new ArrayList<DomainReference<AllocatableSpace>>();
+		roomsReferences = new ArrayList<AllocatableSpace>();
 	    }
-	    for (DomainReference<AllocatableSpace> domainReference : roomsReferences) {
-		if (domainReference.getObject().equals(space)) {
+	    for (AllocatableSpace domainReference : roomsReferences) {
+		if (domainReference.equals(space)) {
 		    return;
 		}
 	    }
-	    roomsReferences.add(new DomainReference<AllocatableSpace>(space));
+	    roomsReferences.add(space);
 	}
     }
 
     public void removeRoom(AllocatableSpace oldRoom) {
 	if (oldRoom != null) {
 	    if (roomsReferences == null) {
-		roomsReferences = new ArrayList<DomainReference<AllocatableSpace>>();
+		roomsReferences = new ArrayList<AllocatableSpace>();
 	    }
-	    roomsReferences.remove(new DomainReference<AllocatableSpace>(oldRoom));
+	    roomsReferences.remove(oldRoom);
 	}
     }
 
     public AllocatableSpace getSelectedRoom() {
-	return (this.selectedRoomReference != null) ? this.selectedRoomReference.getObject() : null;
+	return this.selectedRoomReference;
     }
 
     public void setSelectedRoom(AllocatableSpace selectedRoom) {
-	this.selectedRoomReference = (selectedRoom != null) ? new DomainReference<AllocatableSpace>(selectedRoom) : null;
+	this.selectedRoomReference = selectedRoom;
     }
 
     public GenericEvent getGenericEvent() {
-	return (this.genericEventReference != null) ? this.genericEventReference.getObject() : null;
+	return this.genericEventReference;
     }
 
     public void setGenericEvent(GenericEvent genericEvent) {
-	this.genericEventReference = (genericEvent != null) ? new DomainReference<GenericEvent>(genericEvent) : null;
+	this.genericEventReference = genericEvent;
     }
 
     public PunctualRoomsOccupationRequest getRoomsReserveRequest() {
-	return (this.roomsReserveRequestReference != null) ? this.roomsReserveRequestReference.getObject() : null;
+	return this.roomsReserveRequestReference;
     }
 
     public void setRoomsReserveRequest(PunctualRoomsOccupationRequest request) {
-	this.roomsReserveRequestReference = (request != null) ? new DomainReference<PunctualRoomsOccupationRequest>(request)
-		: null;
+	this.roomsReserveRequestReference = request;
     }
 
     public MultiLanguageString getCompleteDescription() {

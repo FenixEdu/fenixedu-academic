@@ -11,14 +11,13 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Teacher;
 
 public class MarkSheetTeacherGradeSubmissionBean extends DataTranferObject {
 
-    private DomainReference<ExecutionCourse> executionCourse;
-    private DomainReference<CurricularCourse> selectedCurricularCourse;
+    private ExecutionCourse executionCourse;
+    private CurricularCourse selectedCurricularCourse;
 
     private Date evaluationDate;
     private Collection<MarkSheetTeacherMarkBean> marksToSubmit;
@@ -26,20 +25,19 @@ public class MarkSheetTeacherGradeSubmissionBean extends DataTranferObject {
     private transient Teacher responsibleTeacher;
 
     public CurricularCourse getSelectedCurricularCourse() {
-	return (this.selectedCurricularCourse != null) ? this.selectedCurricularCourse.getObject() : null;
+	return this.selectedCurricularCourse;
     }
 
     public void setSelectedCurricularCourse(CurricularCourse selectedCurricularCourse) {
-	this.selectedCurricularCourse = (selectedCurricularCourse != null) ? new DomainReference<CurricularCourse>(
-		selectedCurricularCourse) : null;
+	this.selectedCurricularCourse = selectedCurricularCourse;
     }
 
     public ExecutionCourse getExecutionCourse() {
-	return (this.executionCourse != null) ? this.executionCourse.getObject() : null;
+	return this.executionCourse;
     }
 
     public void setExecutionCourse(ExecutionCourse executionCourse) {
-	this.executionCourse = (executionCourse != null) ? new DomainReference<ExecutionCourse>(executionCourse) : null;
+	this.executionCourse = executionCourse;
     }
 
     public Collection<MarkSheetTeacherMarkBean> getMarksToSubmit() {

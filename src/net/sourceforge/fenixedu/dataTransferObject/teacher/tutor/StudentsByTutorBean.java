@@ -4,19 +4,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
 
 public class StudentsByTutorBean implements Serializable {
-    private DomainReference<Teacher> teacher;
-    private DomainReference<ExecutionYear> studentsEntryYear;
-    private List<DomainReference<Tutorship>> studentsList;
+    private Teacher teacher;
+    private ExecutionYear studentsEntryYear;
+    private List<Tutorship> studentsList;
 
     public StudentsByTutorBean(Teacher teacher) {
 	setTeacher(teacher);
-	studentsList = new ArrayList<DomainReference<Tutorship>>();
+	studentsList = new ArrayList<Tutorship>();
     }
 
     public StudentsByTutorBean(Teacher teacher, ExecutionYear studentsEntryYear, List<Tutorship> studentsList) {
@@ -26,33 +25,33 @@ public class StudentsByTutorBean implements Serializable {
     }
 
     public Teacher getTeacher() {
-	return (teacher == null ? null : teacher.getObject());
+	return (teacher);
     }
 
     public void setTeacher(Teacher teacher) {
-	this.teacher = new DomainReference<Teacher>(teacher);
+	this.teacher = teacher;
     }
 
     public ExecutionYear getStudentsEntryYear() {
-	return (studentsEntryYear == null ? null : studentsEntryYear.getObject());
+	return (studentsEntryYear);
     }
 
     public void setStudentsEntryYear(ExecutionYear studentsEntryYear) {
-	this.studentsEntryYear = new DomainReference<ExecutionYear>(studentsEntryYear);
+	this.studentsEntryYear = studentsEntryYear;
     }
 
     public List<Tutorship> getStudentsList() {
 	List<Tutorship> students = new ArrayList<Tutorship>();
-	for (DomainReference<Tutorship> tutor : this.studentsList) {
-	    students.add(tutor.getObject());
+	for (Tutorship tutor : this.studentsList) {
+	    students.add(tutor);
 	}
 	return students;
     }
 
     public void setStudentsList(List<Tutorship> students) {
-	this.studentsList = new ArrayList<DomainReference<Tutorship>>();
+	this.studentsList = new ArrayList<Tutorship>();
 	for (Tutorship tutor : students) {
-	    this.studentsList.add(new DomainReference<Tutorship>(tutor));
+	    this.studentsList.add(tutor);
 	}
     }
 }

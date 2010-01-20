@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkAmount;
 import net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkMovement;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -21,9 +20,9 @@ public class UnitExtraWorkAmountFactory implements Serializable, FactoryExecutor
 
     private Double amount;
 
-    private DomainReference<Unit> unit;
+    private Unit unit;
 
-    private DomainReference<UnitExtraWorkAmount> unitExtraWorkAmount;
+    private UnitExtraWorkAmount unitExtraWorkAmount;
 
     public UnitExtraWorkAmountFactory() {
 	super();
@@ -67,20 +66,19 @@ public class UnitExtraWorkAmountFactory implements Serializable, FactoryExecutor
     }
 
     public Unit getUnit() {
-	return unit == null ? null : unit.getObject();
+	return unit;
     }
 
     public void setUnit(Unit unit) {
-	this.unit = unit != null ? new DomainReference<Unit>(unit) : null;
+	this.unit = unit;
     }
 
     public UnitExtraWorkAmount getUnitExtraWorkAmount() {
-	return unitExtraWorkAmount == null ? null : unitExtraWorkAmount.getObject();
+	return unitExtraWorkAmount;
     }
 
     public void setUnitExtraWorkAmount(UnitExtraWorkAmount unitExtraWorkAmount) {
-	this.unitExtraWorkAmount = unitExtraWorkAmount != null ? new DomainReference<UnitExtraWorkAmount>(unitExtraWorkAmount)
-		: null;
+	this.unitExtraWorkAmount = unitExtraWorkAmount;
     }
 
     public List<UnitExtraWorkMovement> getOrderedMovements() {

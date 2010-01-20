@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.tests.NewModelGroup;
 import net.sourceforge.fenixedu.domain.tests.NewModelRestriction;
@@ -14,9 +13,9 @@ import org.joda.time.DateTime;
 
 public class TestModelBean implements Serializable {
 
-    private DomainReference<NewModelGroup> modelGroup;
+    private NewModelGroup modelGroup;
 
-    private DomainReference<NewTestModel> testModel;
+    private NewTestModel testModel;
 
     String name;
 
@@ -26,7 +25,7 @@ public class TestModelBean implements Serializable {
 
     private List<NewModelRestriction> selectedAtomicQuestionRestrictions;
 
-    private DomainReference<ExecutionCourse> executionCourse;
+    private ExecutionCourse executionCourse;
 
     private boolean useVariations;
 
@@ -56,19 +55,19 @@ public class TestModelBean implements Serializable {
     }
 
     public NewModelGroup getModelGroup() {
-	return modelGroup.getObject();
+	return modelGroup;
     }
 
     public void setModelGroup(NewModelGroup modelGroup) {
-	this.modelGroup = new DomainReference<NewModelGroup>(modelGroup);
+	this.modelGroup = modelGroup;
     }
 
     public NewTestModel getTestModel() {
-	return testModel.getObject();
+	return testModel;
     }
 
     public void setTestModel(NewTestModel testModel) {
-	this.testModel = new DomainReference<NewTestModel>(testModel);
+	this.testModel = testModel;
     }
 
     public String getName() {
@@ -104,11 +103,11 @@ public class TestModelBean implements Serializable {
     }
 
     public ExecutionCourse getExecutionCourse() {
-	return executionCourse.getObject();
+	return executionCourse;
     }
 
     public void setExecutionCourse(ExecutionCourse executionCourse) {
-	this.executionCourse = new DomainReference<ExecutionCourse>(executionCourse);
+	this.executionCourse = executionCourse;
     }
 
     public DateTime getFinalDate() {

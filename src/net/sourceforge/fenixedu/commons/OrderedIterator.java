@@ -11,7 +11,8 @@ import java.util.List;
  * <br/>
  * <br/>
  *         Created on 18:43:06,3/Nov/2005
- * @version $Id$
+ * @version $Id: OrderedIterator.java 45653 2010-01-19 18:39:54Z
+ *          ist148357@IST.UTL.PT $
  */
 public class OrderedIterator<T> implements Iterator {
 

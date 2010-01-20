@@ -10,7 +10,6 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Shift;
@@ -26,13 +25,13 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class SearchExecutionCourseAttendsBean implements Serializable {
 
-    private DomainReference<ExecutionCourse> executionCourse;
+    private ExecutionCourse executionCourse;
     private Boolean viewPhoto;
     private Collection<StudentAttendsStateType> attendsStates;
     private Collection<WorkingStudentSelectionType> workingStudentTypes;
-    private Collection<DomainReference<DegreeCurricularPlan>> degreeCurricularPlans;
-    private Collection<DomainReference<Shift>> shifts;
-    private Collection<DomainReference<Attends>> attendsResult;
+    private Collection<DegreeCurricularPlan> degreeCurricularPlans;
+    private Collection<Shift> shifts;
+    private Collection<Attends> attendsResult;
     private transient Map<Integer, Integer> enrolmentsNumberMap;
 
     public String getEnumerationResourcesString(String name) {
@@ -50,15 +49,15 @@ public class SearchExecutionCourseAttendsBean implements Serializable {
 	setWorkingStudentTypes(Arrays.asList(WorkingStudentSelectionType.values()));
 	setShifts(getExecutionCourse().getAssociatedShifts());
 	setDegreeCurricularPlans(getExecutionCourse().getAttendsDegreeCurricularPlans());
-	attendsResult = new ArrayList<DomainReference<Attends>>();
+	attendsResult = new ArrayList<Attends>();
     }
 
     public ExecutionCourse getExecutionCourse() {
-	return (this.executionCourse != null) ? this.executionCourse.getObject() : null;
+	return this.executionCourse;
     }
 
     public void setExecutionCourse(ExecutionCourse executionCourse) {
-	this.executionCourse = (executionCourse != null) ? new DomainReference<ExecutionCourse>(executionCourse) : null;
+	this.executionCourse = executionCourse;
     }
 
     public Boolean getViewPhoto() {
@@ -86,32 +85,32 @@ public class SearchExecutionCourseAttendsBean implements Serializable {
 
     public Collection<DegreeCurricularPlan> getDegreeCurricularPlans() {
 	Collection<DegreeCurricularPlan> dcps = new ArrayList<DegreeCurricularPlan>();
-	for (DomainReference<DegreeCurricularPlan> degreeCurricularPlan : degreeCurricularPlans) {
-	    dcps.add(degreeCurricularPlan.getObject());
+	for (DegreeCurricularPlan degreeCurricularPlan : degreeCurricularPlans) {
+	    dcps.add(degreeCurricularPlan);
 	}
 	return dcps;
     }
 
     public void setShifts(Collection<Shift> shifts) {
-	Collection<DomainReference<Shift>> drShifts = new ArrayList<DomainReference<Shift>>();
+	Collection<Shift> drShifts = new ArrayList<Shift>();
 	for (Shift shift : shifts) {
-	    drShifts.add(new DomainReference<Shift>(shift));
+	    drShifts.add(shift);
 	}
 	this.shifts = drShifts;
     }
 
     public Collection<Shift> getShifts() {
 	Collection<Shift> shifts = new ArrayList<Shift>();
-	for (DomainReference<Shift> shift : this.shifts) {
-	    shifts.add(shift.getObject());
+	for (Shift shift : this.shifts) {
+	    shifts.add(shift);
 	}
 	return shifts;
     }
 
     public void setDegreeCurricularPlans(Collection<DegreeCurricularPlan> degreeCurricularPlans) {
-	Collection<DomainReference<DegreeCurricularPlan>> dcps = new ArrayList<DomainReference<DegreeCurricularPlan>>();
+	Collection<DegreeCurricularPlan> dcps = new ArrayList<DegreeCurricularPlan>();
 	for (DegreeCurricularPlan dcp : degreeCurricularPlans) {
-	    dcps.add(new DomainReference<DegreeCurricularPlan>(dcp));
+	    dcps.add(dcp);
 	}
 	this.degreeCurricularPlans = dcps;
     }
@@ -126,16 +125,16 @@ public class SearchExecutionCourseAttendsBean implements Serializable {
 
     public Collection<Attends> getAttendsResult() {
 	Collection<Attends> attends = new ArrayList<Attends>();
-	for (DomainReference<Attends> attendRef : attendsResult) {
-	    attends.add(attendRef.getObject());
+	for (Attends attendRef : attendsResult) {
+	    attends.add(attendRef);
 	}
 	return attends;
     }
 
     public void setAttendsResult(Collection<Attends> atts) {
-	ArrayList<DomainReference<Attends>> results = new ArrayList<DomainReference<Attends>>();
+	ArrayList<Attends> results = new ArrayList<Attends>();
 	for (Attends attend : atts) {
-	    results.add(new DomainReference<Attends>(attend));
+	    results.add(attend);
 	}
 	this.attendsResult = results;
     }
@@ -231,18 +230,18 @@ public class SearchExecutionCourseAttendsBean implements Serializable {
 	    attendTypeValues += getEnumerationResourcesString(attendType.getQualifiedName());
 	}
 
-	for (DomainReference<DegreeCurricularPlan> degree : degreeCurricularPlans) {
+	for (DegreeCurricularPlan degree : degreeCurricularPlans) {
 	    if (!degreeNameValues.isEmpty()) {
 		degreeNameValues += ", ";
 	    }
-	    degreeNameValues += degree.getObject().getName();
+	    degreeNameValues += degree.getName();
 	}
 
-	for (DomainReference<Shift> shift : shifts) {
+	for (Shift shift : shifts) {
 	    if (!shiftsValues.isEmpty()) {
 		shiftsValues += ", ";
 	    }
-	    shiftsValues += shift.getObject().getPresentationName();
+	    shiftsValues += shift.getPresentationName();
 	}
 
 	for (WorkingStudentSelectionType workingStudent : workingStudentTypes) {

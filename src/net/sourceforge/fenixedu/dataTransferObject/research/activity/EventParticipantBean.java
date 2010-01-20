@@ -4,13 +4,12 @@ import java.io.Serializable;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
 
 public class EventParticipantBean extends ParticipantBean implements Serializable {
 
-    DomainReference<ResearchEvent> event;
+    ResearchEvent event;
 
     public EventParticipantBean() {
 	super();
@@ -18,11 +17,11 @@ public class EventParticipantBean extends ParticipantBean implements Serializabl
     }
 
     public ResearchEvent getEvent() {
-	return this.event.getObject();
+	return this.event;
     }
 
     public void setEvent(ResearchEvent event) {
-	this.event = new DomainReference<ResearchEvent>(event);
+	this.event = event;
     }
 
     @Override

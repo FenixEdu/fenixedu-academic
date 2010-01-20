@@ -2,18 +2,17 @@ package net.sourceforge.fenixedu.domain.tests.predicates;
 
 import java.util.HashMap;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion;
 import net.sourceforge.fenixedu.domain.tests.NewQuestion;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean;
 
 public class AnsweredQuestionPredicate extends AtomicPredicate implements Predicate {
-    private final DomainReference<NewAtomicQuestion> atomicQuestion;
+    private final NewAtomicQuestion atomicQuestion;
 
     public AnsweredQuestionPredicate(NewAtomicQuestion atomicQuestion) {
 	super();
-	this.atomicQuestion = new DomainReference<NewAtomicQuestion>(atomicQuestion);
+	this.atomicQuestion = atomicQuestion;
     }
 
     public AnsweredQuestionPredicate(PredicateBean predicateBean) {
@@ -25,7 +24,7 @@ public class AnsweredQuestionPredicate extends AtomicPredicate implements Predic
     }
 
     public NewAtomicQuestion getAtomicQuestion() {
-	return atomicQuestion.getObject();
+	return atomicQuestion;
     }
 
     public boolean uses(Object object) {

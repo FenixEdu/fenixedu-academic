@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.RoomClassification;
@@ -13,13 +12,13 @@ public class InfoRoomEditor extends InfoObject implements Comparable {
 
     protected Integer _pisoReference;
 
-    protected DomainReference<RoomClassification> _tipoReference;
+    protected RoomClassification _tipoReference;
 
     protected Integer _capacidadeNormal;
 
     protected Integer _capacidadeExame;
 
-    private DomainReference<AllocatableSpace> roomReference;
+    private AllocatableSpace roomReference;
 
     public InfoRoomEditor() {
     }
@@ -29,7 +28,7 @@ public class InfoRoomEditor extends InfoObject implements Comparable {
 	setNome(nome);
 	setEdificio(edificio);
 	setPiso(piso);
-	setTipoReference(new DomainReference<RoomClassification>(tipo));
+	setTipoReference(tipo);
 	setCapacidadeNormal(capacidadeNormal);
 	setCapacidadeExame(capacidadeExame);
     }
@@ -37,7 +36,7 @@ public class InfoRoomEditor extends InfoObject implements Comparable {
     public InfoRoomEditor(Integer capacidadeNormal, Integer capacidadeExame, AllocatableSpace room) {
 	setCapacidadeNormal(capacidadeNormal);
 	setCapacidadeExame(capacidadeExame);
-	setRoomReference(new DomainReference<AllocatableSpace>(room));
+	setRoomReference(room);
     }
 
     public String getNome() {
@@ -65,15 +64,15 @@ public class InfoRoomEditor extends InfoObject implements Comparable {
     }
 
     public RoomClassification getTipo() {
-	return this._tipoReference == null ? null : this._tipoReference.getObject();
+	return this._tipoReference;
     }
 
-    public void setTipoReference(DomainReference<RoomClassification> tipo) {
+    public void setTipoReference(RoomClassification tipo) {
 	_tipoReference = tipo;
     }
 
     public AllocatableSpace getRoom() {
-	return getRoomReference() == null ? null : getRoomReference().getObject();
+	return getRoomReference() == null ? null : getRoomReference();
     }
 
     public Integer getCapacidadeNormal() {
@@ -105,7 +104,7 @@ public class InfoRoomEditor extends InfoObject implements Comparable {
 	if (sala != null) {
 	    setCapacidadeNormal(sala.getCapacidadeNormal());
 	    setCapacidadeExame(sala.getCapacidadeExame());
-	    setRoomReference(new DomainReference<AllocatableSpace>(sala));
+	    setRoomReference(sala);
 	}
     }
 
@@ -126,11 +125,11 @@ public class InfoRoomEditor extends InfoObject implements Comparable {
 	return 0;
     }
 
-    public DomainReference<AllocatableSpace> getRoomReference() {
+    public AllocatableSpace getRoomReference() {
 	return roomReference;
     }
 
-    public void setRoomReference(DomainReference<AllocatableSpace> roomReference) {
+    public void setRoomReference(AllocatableSpace roomReference) {
 	this.roomReference = roomReference;
     }
 }

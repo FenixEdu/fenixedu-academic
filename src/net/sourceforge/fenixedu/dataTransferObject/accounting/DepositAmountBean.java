@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.accounting;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.util.Money;
@@ -18,7 +17,7 @@ public class DepositAmountBean implements Serializable {
 
     private EntryType entryType;
 
-    private DomainReference<Event> event;
+    private Event event;
 
     private Money amount;
 
@@ -32,11 +31,7 @@ public class DepositAmountBean implements Serializable {
     }
 
     public Event getEvent() {
-	return (this.event != null) ? this.event.getObject() : null;
-    }
-
-    public void setEvent(Event event) {
-	this.event = (event != null) ? new DomainReference<Event>(event) : null;
+	return this.event;
     }
 
     public Money getAmount() {
@@ -63,7 +58,7 @@ public class DepositAmountBean implements Serializable {
 	this.reason = reason;
     }
 
-    public void setEvent(DomainReference<Event> event) {
+    public void setEvent(Event event) {
 	this.event = event;
     }
 
