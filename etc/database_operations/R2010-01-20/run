@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create new phd permission tables" createPhdPermissionTables.sql
+execute "Update starting numbers in rectorate submission" registryCodeStartNumbers.sql
