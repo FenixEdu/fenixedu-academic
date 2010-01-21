@@ -2903,7 +2903,6 @@ public class Person extends Person_Base {
 	    if (requester.hasRole(RoleType.STUDENT) || requester.hasRole(RoleType.ALUMNI) || requester.hasRole(RoleType.EMPLOYEE)) {
 		return getAvailablePhoto();
 	    }
-	    return true;
 	}
 	return false;
     }
