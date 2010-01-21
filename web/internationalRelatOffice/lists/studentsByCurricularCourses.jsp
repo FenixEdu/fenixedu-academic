@@ -44,7 +44,7 @@
 		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.studentCurricularPlan.lists.total" arg0="<%= enrolmentListSize.toString() %>"/>
 	</p>
 
-	<fr:view schema="enrolmentStudentsList.view" name="enrolmentList">
+	<fr:view schema="internationalRelatOffice.enrolmentStudentsList.view" name="enrolmentList">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thright thlight thcenter"/>
 		</fr:layout>	

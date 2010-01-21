@@ -1490,7 +1490,7 @@
 	</slot>
 </schema>
 
-<schema name="studentCurricularPlanList.view" 
+<schema name="academicAdminOffice.studentCurricularPlanList.view" 
 	type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationWithStateForExecutionYearBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="registration.number" key="label.number" read-only="true" layout="link">
 		<property name="linkFormat" value="/academicAdminOffice/student.do?method=visualizeRegistration&amp;registrationID=${registration.idInternal}"/>
@@ -1540,10 +1540,10 @@
 	</slot>	
 </schema>
 
-<schema name="enrolmentStudentsList.view" type="net.sourceforge.fenixedu.domain.Enrolment" bundle="ACADEMIC_OFFICE_RESOURCES">
+<schema name="academicAdminOffice.enrolmentStudentsList.view" type="net.sourceforge.fenixedu.domain.Enrolment" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="studentCurricularPlan.registration.number" key="label.number" read-only="true" layout="link">
-	<property name="linkFormat" value="/academicAdminOffice/viewCurriculum.do?method=prepare&amp;registrationOID=${studentCurricularPlan.registration.idInternal}"/>
-	<property name="contextRelative" value="true"/>
+		<property name="linkFormat" value="/academicAdminOffice/viewCurriculum.do?method=prepare&amp;registrationOID=${studentCurricularPlan.registration.idInternal}"/>
+		<property name="contextRelative" value="true"/>
         <property name="useParent" value="true"/>
 	</slot>     
 	<slot name="studentCurricularPlan.registration.person.istUsername" key="label.username" read-only="true"/>

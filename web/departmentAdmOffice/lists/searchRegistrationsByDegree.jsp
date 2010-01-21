@@ -43,7 +43,7 @@
 	<p class="mtop2">
 		 <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.studentCurricularPlan.lists.total" arg0="<%= studentCurricularPlanListSize.toString() %>"/> 
 	</p>
-	<fr:view schema="studentCurricularPlanList.view" name="studentCurricularPlanList">
+	<fr:view schema="departmentAdmOffice.studentCurricularPlanList.view" name="studentCurricularPlanList">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thright thlight thcenter tdcenter"/>
 		</fr:layout>	
