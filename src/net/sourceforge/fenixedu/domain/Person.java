@@ -2900,9 +2900,10 @@ public class Person extends Person_Base {
 		    && (requester.hasRole(RoleType.TEACHER) || requester.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE))) {
 		return true;
 	    }
-	    if (requester.hasRole(RoleType.STUDENT) || requester.hasRole(RoleType.ALUMNI)) {
+	    if (requester.hasRole(RoleType.STUDENT) || requester.hasRole(RoleType.ALUMNI) || requester.hasRole(RoleType.EMPLOYEE)) {
 		return getAvailablePhoto();
 	    }
+	    return true;
 	}
 	return false;
     }
