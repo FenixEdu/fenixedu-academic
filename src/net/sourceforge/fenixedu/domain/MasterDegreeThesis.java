@@ -37,7 +37,8 @@ public class MasterDegreeThesis extends MasterDegreeThesis_Base {
     }
 
     public YearMonthDay getProofDateYearMonthDay() {
-	return getActiveMasterDegreeProofVersion().getProofDateYearMonthDay();
+	final MasterDegreeProofVersion version = getActiveMasterDegreeProofVersion();
+	return version != null ? version.getProofDateYearMonthDay() : null;
     }
 
     public MasterDegreeProofVersion getActiveMasterDegreeProofVersion() {

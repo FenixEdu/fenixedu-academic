@@ -2477,14 +2477,26 @@ public class Registration extends Registration_Base {
     public ExecutionYear calculateConclusionYear() {
 	ExecutionYear result = getLastApprovementExecutionYear();
 
-	if (result == null && hasState(RegistrationStateType.CONCLUDED)) {
-	    final SortedSet<RegistrationState> states = new TreeSet<RegistrationState>(RegistrationState.DATE_COMPARATOR);
-	    states.addAll(getRegistrationStates(RegistrationStateType.CONCLUDED));
+	if (result == null) {
+	    if (hasState(RegistrationStateType.CONCLUDED)) {
+		return getFirstRegistrationState(RegistrationStateType.CONCLUDED).getExecutionYear();
 
-	    return states.first().getExecutionYear();
+	    } else if (isOldMasterDegree() && hasState(RegistrationStateType.SCHOOLPARTCONCLUDED)) {
+		return getFirstRegistrationState(RegistrationStateType.SCHOOLPARTCONCLUDED).getExecutionYear();
+	    }
 	}
 
 	return result;
+    }
+
+    private RegistrationState getFirstRegistrationState(final RegistrationStateType stateType) {
+	final SortedSet<RegistrationState> states = new TreeSet<RegistrationState>(RegistrationState.DATE_COMPARATOR);
+	states.addAll(getRegistrationStates(stateType));
+	return states.first();
+    }
+
+    private boolean isOldMasterDegree() {
+	return getDegreeType().equals(DegreeType.MASTER_DEGREE);
     }
 
     public YearMonthDay getConclusionDate() {
@@ -2534,6 +2546,7 @@ public class Registration extends Registration_Base {
 	    return getLastStudentCurricularPlan().getLastApprovementDate();
 	} else {
 	    YearMonthDay result = null;
+	    
 	    for (final StudentCurricularPlan plan : getStudentCurricularPlansSet()) {
 		final YearMonthDay date = plan.getLastApprovementDate();
 		if (date != null && (result == null || result.isBefore(date))) {
@@ -2546,13 +2559,14 @@ public class Registration extends Registration_Base {
 		if (date != null && (result == null || result.isBefore(date))) {
 		    result = new YearMonthDay(date);
 		}
+		
+		if (result == null && hasState(RegistrationStateType.SCHOOLPARTCONCLUDED)) {
+		    return getFirstRegistrationState(RegistrationStateType.SCHOOLPARTCONCLUDED).getStateDate().toYearMonthDay();
+		}
 	    }
 
 	    if (result == null && hasState(RegistrationStateType.CONCLUDED)) {
-		final SortedSet<RegistrationState> states = new TreeSet<RegistrationState>(RegistrationState.DATE_COMPARATOR);
-		states.addAll(getRegistrationStates(RegistrationStateType.CONCLUDED));
-
-		return states.last().getStateDate().toYearMonthDay();
+		return getFirstRegistrationState(RegistrationStateType.CONCLUDED).getStateDate().toYearMonthDay();
 	    }
 
 	    return result;
@@ -3346,7 +3360,8 @@ public class Registration extends Registration_Base {
     final public LocalDate getDissertationThesisDiscussedDate() {
 	if (hasDissertationThesis()) {
 	    if (getDegreeType() == DegreeType.MASTER_DEGREE) {
-		return getMasterDegreeThesis().getProofDateYearMonthDay().toLocalDate();
+		final YearMonthDay proofDateYearMonthDay = getMasterDegreeThesis().getProofDateYearMonthDay();
+		return proofDateYearMonthDay != null ? proofDateYearMonthDay.toLocalDate() : null;
 	    } else {
 		final Thesis thesis = getDissertationEnrolment().getThesis();
 		return thesis.hasCurrentDiscussedDate() ? thesis.getCurrentDiscussedDate().toLocalDate() : null;

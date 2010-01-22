@@ -23,7 +23,7 @@ public class RegistrationConclusionProcess extends RegistrationConclusionProcess
 	final ExecutionYear conclusionYear = bean.getConclusionYear();
 
 	check(registration, "error.RegistrationConclusionProcess.argument.must.not.be.null");
-	check(conclusionYear, "error.RegistrationConclusionProcess.argument.must.not.be.null");
+	check(conclusionYear, "error.RegistrationConclusionProcess.conclusionYear.cannot.be.null");
 
 	super.setRegistration(registration);
 	super.setConclusionYear(conclusionYear);
