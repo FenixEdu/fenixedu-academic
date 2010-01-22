@@ -2114,3 +2114,7 @@
 	<slot name="conclusionDate" key="label.export.diploma.conclusionDate" />
 	<slot name="filename" key="label.export.diploma.filename" />
 </schema>
+
+<schema name="DocumentFieldsCustomization.edit" type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment.bolonha.CurriculumValidationDocumentRequestsManagementDispatchAction$DocumentFieldsCustomization" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="conclusionDate" key="label.curriculum.validation.conclusion.date" />
+</schema>

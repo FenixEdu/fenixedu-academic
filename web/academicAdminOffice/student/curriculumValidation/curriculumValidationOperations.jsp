@@ -5,6 +5,15 @@
 
 <html:xhtml/>
 
+<%! 
+	private static String f(String format, Object ... args) {
+    	return String.format(format, args);
+	}
+
+%>
+
+
+
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 
 <h2><bean:message key="title.curriculum.validation" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
@@ -32,6 +41,13 @@
 	<li>
 		<html:link page="<%= "/curriculumValidation.do?method=prepareEditEndStageDate&amp;studentCurricularPlanId=" + studentCurricularPlanId  %>">
 			<bean:message key="label.curriculum.validation.set.end.stage.date" bundle="ACADEMIC_OFFICE_RESOURCES" />
+		</html:link>
+	</li>
+	
+	
+	<li>
+		<html:link page="<%= f("/curriculumValidationDocumentRequestsManagement.do?method=listDocuments&amp;studentCurricularPlanId=%s", studentCurricularPlanId) %>">
+			<bean:message key="label.curriculum.validation.print.documents" />
 		</html:link>
 	</li>
 </ul>

@@ -53,7 +53,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 })
 public class DocumentRequestsManagementDispatchAction extends FenixDispatchAction {
 
-    private DocumentRequest getDocumentRequest(HttpServletRequest request) {
+    protected DocumentRequest getDocumentRequest(HttpServletRequest request) {
 	return (DocumentRequest) rootDomainObject.readAcademicServiceRequestByOID(getRequestParameterAsInteger(request,
 		"documentRequestId"));
     }
