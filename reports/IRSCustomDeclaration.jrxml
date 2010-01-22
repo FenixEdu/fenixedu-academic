@@ -35,6 +35,7 @@
 	<parameter name="documentIdNumber" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="date" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="idDocumentType" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="signature" isForPrompting="false" class="java.io.File"/>
 
 		<background>
 			<band height="0"  isSplitAllowed="true" >
@@ -297,13 +298,13 @@
 			</band>
 		</pageFooter>
 		<summary>
-			<band height="65"  isSplitAllowed="true" >
+			<band height="116"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
 						x="68"
 						y="24"
-						width="468"
-						height="41"
+						width="451"
+						height="28"
 						key="staticText-3"
 						positionType="Float"/>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -314,8 +315,19 @@
 					<textElement textAlignment="Right" lineSpacing="1_1_2">
 						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
 					</textElement>
-				<text><![CDATA[                          A Técnica Superior]]></text>
+				<text><![CDATA[                          Coordenadora do Núcleo de Graduação]]></text>
 				</staticText>
+				<image  evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="263"
+						y="46"
+						width="330"
+						height="63"
+						key="image-1"/>
+					<box></box>
+					<graphicElement stretchType="NoStretch"/>
+					<imageExpression class="java.io.File"><![CDATA[$P{signature}]]></imageExpression>
+				</image>
 			</band>
 		</summary>
 </jasperReport>
