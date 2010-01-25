@@ -114,6 +114,7 @@ import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.ReadableInstant;
@@ -140,6 +141,12 @@ public class Registration extends Registration_Base {
 	    return comparationResult == 0 ? o1.getIdInternal().compareTo(o2.getIdInternal()) : comparationResult;
 	}
     };
+
+    static public final ComparatorChain COMPARATOR_BY_NUMBER_THEN_ID = new ComparatorChain();
+    static {
+	COMPARATOR_BY_NUMBER_THEN_ID.addComparator(NUMBER_COMPARATOR);
+	COMPARATOR_BY_NUMBER_THEN_ID.addComparator(COMPARATOR_BY_ID);
+    }
 
     private transient Double approvationRatio;
 
@@ -2546,7 +2553,7 @@ public class Registration extends Registration_Base {
 	    return getLastStudentCurricularPlan().getLastApprovementDate();
 	} else {
 	    YearMonthDay result = null;
-	    
+
 	    for (final StudentCurricularPlan plan : getStudentCurricularPlansSet()) {
 		final YearMonthDay date = plan.getLastApprovementDate();
 		if (date != null && (result == null || result.isBefore(date))) {
@@ -2559,7 +2566,7 @@ public class Registration extends Registration_Base {
 		if (date != null && (result == null || result.isBefore(date))) {
 		    result = new YearMonthDay(date);
 		}
-		
+
 		if (result == null && hasState(RegistrationStateType.SCHOOLPARTCONCLUDED)) {
 		    return getFirstRegistrationState(RegistrationStateType.SCHOOLPARTCONCLUDED).getStateDate().toYearMonthDay();
 		}

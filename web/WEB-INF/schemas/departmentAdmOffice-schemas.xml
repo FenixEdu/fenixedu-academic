@@ -2,6 +2,7 @@
 	type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationWithStateForExecutionYearBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="registration.number" key="label.number" read-only="true"/>
 	<slot name="registration.person.name" key="label.name" read-only="true"/>
+	<slot name="registration.degree.sigla" key="label.degree" read-only="true"/>
   	<slot name="activeStateType" key="label.registration.state" />
 	<slot name="registration.registrationAgreement" key="label.registrationAgreement" />
 </schema>

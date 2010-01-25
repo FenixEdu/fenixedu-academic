@@ -95,7 +95,7 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 
     private static List<RegistrationWithStateForExecutionYearBean> search(final SearchStudentsByDegreeParametersBean searchbean) {
 
-	final Set<Registration> registrations = new TreeSet<Registration>(Registration.NUMBER_COMPARATOR);
+	final Set<Registration> registrations = new TreeSet<Registration>(Registration.COMPARATOR_BY_NUMBER_THEN_ID);
 
 	final Degree chosenDegree = searchbean.getDegree();
 	final DegreeType chosenDegreeType = searchbean.getDegreeType();
@@ -118,16 +118,13 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 	    }
 	    degreeCurricularPlan.getRegistrations(executionYear, registrations);
 	}
-
 	return filterResults(searchbean, registrations, executionYear);
     }
 
     private static List<RegistrationWithStateForExecutionYearBean> filterResults(SearchStudentsByDegreeParametersBean searchBean,
 	    final Set<Registration> registrations, final ExecutionYear executionYear) {
-
 	final List<RegistrationWithStateForExecutionYearBean> result = new ArrayList<RegistrationWithStateForExecutionYearBean>();
 	for (final Registration registration : registrations) {
-
 	    if (searchBean.hasAnyRegistrationAgreements()
 		    && !searchBean.getRegistrationAgreements().contains(registration.getRegistrationAgreement())) {
 		continue;
@@ -171,7 +168,6 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 
 	    result.add(new RegistrationWithStateForExecutionYearBean(registration, lastRegistrationState.getStateType()));
 	}
-
 	return result;
     }
 

@@ -22,7 +22,7 @@ public class StudentListByDegreeDA extends
 
     @Override
     protected TreeSet<Degree> getAdministratedDegrees() {
-	return new TreeSet<Degree>(Degree.readAllByDegreeType(DegreeType.values()));
+	return new TreeSet<Degree>(Degree.readAllByDegreeTypes(DegreeType.NOT_EMPTY_VALUES));
     }
 
     @Override
