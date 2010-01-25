@@ -22,6 +22,32 @@ public class RectorateSubmissionBatch extends RectorateSubmissionBatch_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
+    public boolean isUnsent() {
+	return getState().equals(RectorateSubmissionState.UNSENT);
+    }
+
+    public boolean isClosed() {
+	return getState().equals(RectorateSubmissionState.CLOSED);
+    }
+
+    public boolean isSent() {
+	return getState().equals(RectorateSubmissionState.SENT);
+    }
+
+    public boolean isReceived() {
+	return getState().equals(RectorateSubmissionState.RECEIVED);
+    }
+
+    public RectorateSubmissionBatch getNextRectorateSubmissionBatch() {
+	RectorateSubmissionBatch next = null;
+	for (RectorateSubmissionBatch batch : getAdministrativeOffice().getRectorateSubmissionBatchSet()) {
+	    if (batch.getCreation().isAfter(getCreation()) && (next == null || batch.getCreation().isBefore(next.getCreation()))) {
+		next = batch;
+	    }
+	}
+	return next;
+    }
+
     public String getRange() {
 	String first = null;
 	String last = null;
@@ -110,4 +136,5 @@ public class RectorateSubmissionBatch extends RectorateSubmissionBatch_Base {
 	removeRootDomainObject();
 	super.deleteDomainObject();
     }
+
 }

@@ -32,6 +32,11 @@
         </logic:iterate>
     </ul>
 </logic:notEmpty>
+
+<html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
+    <p><span class="error0"><!-- Error messages go here --><bean:write name="message" /></span></p>
+</html:messages>
+
 <logic:notEmpty name="requests">
     <fr:view name="requests">
         <fr:schema bundle="ACADEMIC_OFFICE_RESOURCES"
@@ -51,22 +56,31 @@
         <fr:layout name="tabular">
             <fr:property name="classes" value="tstyle4 thlight thcenter" />
             <fr:property name="sortBy" value="registryCode.code=asc" />
-            <fr:property name="link(view)"
-                value="/student.do?method=visualizeRegistration" />
+            <fr:property name="link(view)" value="/student.do?method=visualizeRegistration" />
             <fr:property name="param(view)" value="registration.idInternal/registrationID" />
             <fr:property name="key(view)" value="link.rectorateSubmission.viewRegistration" />
             <fr:property name="bundle(view)" value="ACADEMIC_OFFICE_RESOURCES" />
-            <fr:property name="link(print)"
-                value="/documentRequestsManagement.do?method=printDocument" />
+
+            <fr:property name="link(print)" value="/documentRequestsManagement.do?method=printDocument" />
             <fr:property name="param(print)" value="idInternal/documentRequestId" />
             <fr:property name="key(print)" value="link.rectorateSubmission.reprint" />
             <fr:property name="bundle(print)" value="ACADEMIC_OFFICE_RESOURCES" />
+
             <fr:property name="link(receive)"
                 value="/academicServiceRequestsManagement.do?method=prepareReceiveAcademicServiceRequest" />
             <fr:property name="param(receive)" value="idInternal/academicServiceRequestId" />
             <fr:property name="key(receive)" value="link.rectorateSubmission.receive" />
             <fr:property name="bundle(receive)" value="ACADEMIC_OFFICE_RESOURCES" />
             <fr:property name="visibleIf(receive)" value="activeSituation.sentToExternalEntity" />
+
+            <fr:property name="link(delay)" value="/rectorateDocumentSubmission.do?method=delayRequest" />
+            <fr:property name="param(delay)" value="externalId/academicServiceRequestOid" />
+            <fr:property name="key(delay)" value="link.rectorateSubmission.delay" />
+            <fr:property name="bundle(delay)" value="ACADEMIC_OFFICE_RESOURCES" />
+            <fr:property name="visibleIf(delay)" value="rectorateSubmissionBatch.closed" />
+            <fr:property name="visibleIfNot(delay)" value="piggyBackedOnRegistry" />
+            <fr:property name="confirmationKey(delay)" value="label.rectorateSubmission.delay" />
+            <fr:property name="confirmationBundle(delay)" value="ACADEMIC_OFFICE_RESOURCES" />
         </fr:layout>
     </fr:view>
 </logic:notEmpty>

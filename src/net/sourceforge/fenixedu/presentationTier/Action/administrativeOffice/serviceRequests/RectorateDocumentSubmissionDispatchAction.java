@@ -203,4 +203,22 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 	    throw new DomainException("error.rectorateSubmission.errorGeneratingMetadata");
 	}
     }
+
+    @Service
+    public ActionForward delayRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	DocumentRequest document = getDomainObject(request, "academicServiceRequestOid");
+	request.setAttribute("batchOid", document.getRectorateSubmissionBatch().getExternalId());
+	if (document.isPiggyBackedOnRegistry()) {
+	    addActionMessage(request, "error.rectorateSubmissionBatch.cannotDelayPiggyBackedDocument");
+	} else {
+	    RectorateSubmissionBatch next = document.getRectorateSubmissionBatch().getNextRectorateSubmissionBatch();
+	    if (document.isRegistryDiploma()) {
+		RegistryDiplomaRequest registry = (RegistryDiplomaRequest) document;
+		registry.getDiplomaSupplement().setRectorateSubmissionBatch(next);
+	    }
+	    document.setRectorateSubmissionBatch(next);
+	}
+	return viewBatch(mapping, actionForm, request, response);
+    }
 }
