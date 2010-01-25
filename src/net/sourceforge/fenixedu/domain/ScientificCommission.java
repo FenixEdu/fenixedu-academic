@@ -24,6 +24,19 @@ public class ScientificCommission extends ScientificCommission_Base {
 	setPerson(person);
     }
 
+    public Coordinator getCoordinator() {
+	for (Coordinator coordinator : getExecutionDegree().getCoordinatorsList()) {
+	    if (this.getPerson().equals(coordinator.getPerson())) {
+		return coordinator;
+	    }
+	}
+	return null;
+    }
+
+    public Boolean getHasCoordinator() {
+	return getCoordinator() != null;
+    }
+
     public Boolean isContact() {
 	return getContact() == null ? false : getContact();
     }

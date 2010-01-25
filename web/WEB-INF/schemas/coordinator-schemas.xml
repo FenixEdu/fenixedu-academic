@@ -462,8 +462,19 @@
         <property name="format" value="${name} (${loginIdentification.mostImportantAlias})"/>
     </slot>
     <slot name="contact" key="label.scientificCommission.contact"/>
-    <slot name="person.email" key="email"/>
+    <slot name="person.email" key="email"/> 
+    <slot name="hasCoordinator" key="label.coordinator"  bundle="APPLICATION_RESOURCES" /> 
+	<slot name="coordinator" key="label.responsible" layout="null-as-label"  bundle="APPLICATION_RESOURCES" >
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="coordinator.responsible"/> 
+	</slot>
+	
 </schema>
+
+<schema name="coordinator.responsible" type="net.sourceforge.fenixedu.domain.Coordinator">
+    <slot name="responsible"/>
+</schema>
+
 
 <schema name="coordinator.commissionTeam.addMember" type="net.sourceforge.fenixedu.dataTransferObject.VariantBean">
     <slot name="integer" key="label.mecanographicNumber">
