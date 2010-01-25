@@ -45,7 +45,7 @@
             <fr:slot name="documentRequestType" key="label.rectorateSubmission.registryCode" />
             <fr:slot name="requestedCycle" key="label.rectorateSubmission.requestedCycle" />
             <fr:slot name="degreeType" key="label.degreeType" />
-            <fr:slot name="student.number" key="label.studentNumber" />
+            <fr:slot name="registration.number" key="label.studentNumber" />
             <fr:slot name="person.name" key="label.Student.Person.name" />
             <fr:slot name="academicServiceRequestSituationType" key="label.currentSituation" />
             <fr:slot name="lastGeneratedDocument" layout="link" key="label.rectorateSubmission.document">
