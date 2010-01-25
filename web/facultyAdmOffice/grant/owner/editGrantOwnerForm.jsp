@@ -57,7 +57,7 @@
 			<bean:message key="label.grant.owner.infoperson.idType"/>:
 		</td>
 		<td>
-			<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.person.IDDocumentType"/>
+			<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.person.IDDocumentType" excludedFields="CITIZEN_CARD"/>
 			<html:select bundle="HTMLALT_RESOURCES" altKey="select.idType" property="idType">
 				<html:option key="dropDown.Default" value=""/>
 				<html:options collection="values" property="value" labelProperty="label"/>
