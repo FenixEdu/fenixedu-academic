@@ -22,7 +22,7 @@
 
 <logic:notEmpty name="researchUnit" property="allCurrentActiveSubUnits"> 
 <bean:define id="unitName" name="researchUnit" property="name" type="java.lang.String"/>
-	<logic:iterate id="unit" name="researchUnit" property="allCurrentActiveSubUnits"> 
+	<logic:iterate id="unit" name="researchUnit" property="allCurrentActiveSubUnitsOrdered"> 
 
 
 		<fr:view name="unit">

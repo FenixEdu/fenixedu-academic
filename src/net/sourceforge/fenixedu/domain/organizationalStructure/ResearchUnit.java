@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
@@ -134,6 +136,12 @@ public class ResearchUnit extends ResearchUnit_Base {
 
     public Collection<Unit> getAllCurrentActiveSubUnits() {
 	return this.getAllActiveSubUnits(new YearMonthDay(), AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE);
+    }
+
+    public Collection<Unit> getAllCurrentActiveSubUnitsOrdered() {
+	SortedSet<Unit> subUnits = new TreeSet<Unit>(Unit.COMPARATOR_BY_NAME_AND_ID);
+	subUnits.addAll(getAllCurrentActiveSubUnits());
+	return subUnits;
     }
 
     public Collection<Person> getResearchers() {
