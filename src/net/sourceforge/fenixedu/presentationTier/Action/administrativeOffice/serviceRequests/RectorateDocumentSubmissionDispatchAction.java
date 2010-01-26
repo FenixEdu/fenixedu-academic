@@ -53,24 +53,25 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 	    HttpServletResponse response) {
 	RectorateSubmissionBatch batch = getDomainObject(request, "batchOid");
 	Set<String> actions = new HashSet<String>();
+	Set<String> confirmActions = new HashSet<String>();
 	switch (batch.getState()) {
 	case UNSENT:
 	    if (batch.hasAnyDocumentRequest()) {
-		actions.add("closeBatch");
+		confirmActions.add("closeBatch");
 	    }
 	    break;
 	case CLOSED:
 	    actions.add("generateMetadataForRegistry");
 	    actions.add("generateMetadataForDiplomas");
 	    actions.add("zipDocuments");
-	    actions.add("markAsSent");
+	    confirmActions.add("markAsSent");
 	    break;
 	case SENT:
 	    actions.add("generateMetadataForRegistry");
 	    actions.add("generateMetadataForDiplomas");
 	    actions.add("zipDocuments");
 	    if (batch.allDocumentsReceived()) {
-		actions.add("markAsReceived");
+		confirmActions.add("markAsReceived");
 	    }
 	case RECEIVED:
 	    actions.add("generateMetadataForRegistry");
@@ -80,6 +81,7 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 	request.setAttribute("batch", batch);
 	request.setAttribute("requests", batch.getDocumentRequestSet());
 	request.setAttribute("actions", actions);
+	request.setAttribute("confirmActions", confirmActions);
 	return mapping.findForward("viewBatch");
     }
 

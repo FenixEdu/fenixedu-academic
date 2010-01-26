@@ -21,11 +21,24 @@
     <p><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.rectorateSubmission.noRequestsInBatch" /></p>
 </logic:empty>
 
+<bean:define id="batchOid" name="batch" property="externalId" />
+<bean:define id="confirmMessage">
+    <bean:message key="label.rectorateSubmission.confirmActions" bundle="ACADEMIC_OFFICE_RESOURCES" />
+</bean:define>
 <logic:notEmpty name="actions">
-    <bean:define id="batchOid" name="batch" property="externalId" />
     <ul class="mtop1">
         <logic:iterate id="action" name="actions">
             <li><html:link
+                action="<%= "/rectorateDocumentSubmission.do?method=" + action +  "&amp;batchOid=" + batchOid %>">
+                <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="<%= "link.rectorateSubmission." + action %>" />
+            </html:link></li>
+        </logic:iterate>
+    </ul>
+</logic:notEmpty>
+<logic:notEmpty name="confirmActions">
+    <ul class="mtop1">
+        <logic:iterate id="action" name="confirmActions">
+            <li><html:link onclick="<%= "return confirm('" + confirmMessage + "');" %>"
                 action="<%= "/rectorateDocumentSubmission.do?method=" + action +  "&amp;batchOid=" + batchOid %>">
                 <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="<%= "link.rectorateSubmission." + action %>" />
             </html:link></li>
