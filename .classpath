@@ -44,9 +44,7 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/dwr.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/ehcache-1.0.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/exml.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-r44585.jar" sourcepath="/fenix-framework"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-tools.jar" sourcepath="/fenix-tools"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework.jar" sourcepath="/fenix-web-framework"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/fmap-0.5-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/fop-0.20.5.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/gdbms-1.0.jar"/>
@@ -132,5 +130,7 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/xml-apis.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/XmlSchema-1.1.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/xstream-1.1.1.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-r45415.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-r45789.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
