@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
-import pt.ist.fenixWebFramework.util.DomainReference;
 
 public abstract class DomainBackedGroup<T extends DomainObject> extends LeafGroup {
 
