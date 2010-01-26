@@ -30,7 +30,7 @@ public class FileLinkRenderer extends OutputRenderer {
 
 	    @Override
 	    public HtmlComponent createComponent(Object object, Class type) {
-		if (object instanceof File) {
+		if (object != null && object instanceof File) {
 		    File file = (File) object;
 		    HtmlBlockContainer container = new HtmlBlockContainer();
 		    container.addChild(new HtmlText(new String(ContentInjectionRewriter.BLOCK_HAS_CONTEXT_PREFIX), false));
@@ -42,7 +42,6 @@ public class FileLinkRenderer extends OutputRenderer {
 		    return container;
 		}
 		return new HtmlLink();
-
 	    }
 
 	    private HtmlLink getLink(File file) {
