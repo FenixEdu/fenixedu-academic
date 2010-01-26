@@ -39,6 +39,7 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.FenixWebFramework;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.ist.fenixframework.pstm.Transaction;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 import edu.yale.its.tp.cas.client.CASAuthenticationException;
@@ -94,8 +95,7 @@ public class Authenticate extends FenixService implements Serializable {
     }
 
     protected class UserView implements IUserView {
-
-	final private Person personRef;
+	final private String personOid;
 
 	final private Collection<RoleType> roleTypes;
 
@@ -108,7 +108,7 @@ public class Authenticate extends FenixService implements Serializable {
 	private final DateTime userCreationDateTime = new DateTime();
 
 	private UserView(final Person person, final Set allowedRoles) {
-	    this.personRef = person;
+	    this.personOid = person != null ? person.getExternalId() : null;
 
 	    final Collection<Role> roles = getInfoRoles(person, allowedRoles);
 	    if (roles != null) {
@@ -132,7 +132,7 @@ public class Authenticate extends FenixService implements Serializable {
 	}
 
 	public Person getPerson() {
-	    return personRef;
+	    return personOid != null ? (Person) AbstractDomainObject.fromExternalId(personOid) : null;
 	}
 
 	public String getUtilizador() {
@@ -162,12 +162,12 @@ public class Authenticate extends FenixService implements Serializable {
 	    }
 
 	    UserView other = (UserView) obj;
-	    return this.personRef.equals(other.personRef) && this.roleTypes.equals(other.roleTypes);
+	    return this.personOid.equals(other.personOid) && this.roleTypes.equals(other.roleTypes);
 	}
 
 	@Override
 	public int hashCode() {
-	    return this.personRef.hashCode() + this.roleTypes.hashCode();
+	    return this.personOid.hashCode() + this.roleTypes.hashCode();
 	}
 
 	public String getPrivateConstantForDigestCalculation() {
@@ -270,6 +270,7 @@ public class Authenticate extends FenixService implements Serializable {
 	    this.remoteHost = remoteHost;
 	}
 
+	@Override
 	public void run() {
 	    Transaction.withTransaction(this);
 	}
