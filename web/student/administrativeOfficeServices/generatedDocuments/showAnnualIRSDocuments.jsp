@@ -13,11 +13,8 @@
 	<logic:notEmpty name="annualIRSDocuments">	
 		<fr:view name="annualIRSDocuments" schema="AnnualIRSDeclarationDocument.view">
 			<fr:layout name="tabular" >
-				<fr:property name="classes" value="tstyle2 thlight thcenter mtop05" />
-						<fr:property name="linkFormat(download)" value="${downloadUrl}"/>
-						<fr:property name="key(download)" value="label.download"/>
-						<fr:property name="contextRelative(download)" value="false" />
-						<fr:property name="bundle(download)" value="STUDENT_RESOURCES" />
+				<fr:property name="classes" value="tstyle1 thlight mtop05 ulnomargin tdcenter" />
+				<fr:property name="columnClasses" value=",,nowrap,nowrap," />
 			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>

@@ -1941,6 +1941,7 @@
 	<slot name="year" />
 	<slot name="filename" />
    	<slot name="size"/>
+   	<slot name="this" layout="link" key="documents.link" />
 </schema>
 
 <schema name="academicAdminOffice.show.permissions" type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.permissionManagement.PermissionManagementDA$PermissionViewBean" bundle="ACADEMIC_OFFICE_RESOURCES">
