@@ -24,4 +24,8 @@ public enum Month {
     public static Month fromDateTime(DateTime time) {
 	return Month.values()[time.getMonthOfYear() - 1];
     }
+
+    public static Month fromInt(int num) {
+	return Month.values()[num - 1];
+    }
 }

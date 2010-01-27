@@ -73,6 +73,24 @@ public class ChangeTutorshipByEntryYearBean implements Serializable {
 	    this.tutorship = tutorship;
 	}
 
+	public String getTutorshipEndMonthYear() {
+	    return generateMonthYearOption(tutorshipEndMonth.getNumberOfMonth(), tutorshipEndYear);
+	}
+
+	/*
+	 * Receives the MonthYear in the format MM/YYYY
+	 */
+	public void setTutorshipEndMonthYear(String tutorshipEndMonthYear) {
+	    String[] parts = tutorshipEndMonthYear.split("/");
+
+	    this.tutorshipEndMonth = Month.fromInt(Integer.parseInt(parts[0]));
+	    this.tutorshipEndYear = Integer.parseInt(parts[1]);
+	}
+
+	public String generateMonthYearOption(int month, int year) {
+	    return month + "/" + year;
+	}
+
 	public Month getTutorshipEndMonth() {
 	    return tutorshipEndMonth;
 	}

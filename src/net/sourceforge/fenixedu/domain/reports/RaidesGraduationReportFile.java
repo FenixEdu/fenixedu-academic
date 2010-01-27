@@ -132,7 +132,10 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	    for (StudentCurricularPlan studentCurricularPlan : executionDegree.getDegreeCurricularPlan()
 		    .getStudentCurricularPlans()) {
 		if (!studentCurricularPlan.getStartDateYearMonthDay().isAfter(executionYear.getEndDateYearMonthDay())) {
-		    result.add(studentCurricularPlan);
+		    if ((studentCurricularPlan.getRegistration().getNumber() > 64200 && studentCurricularPlan.getRegistration()
+			    .getNumber() < 64300)
+			    || studentCurricularPlan.getRegistration().getNumber() == 44278)
+			result.add(studentCurricularPlan);
 		}
 	    }
 	}

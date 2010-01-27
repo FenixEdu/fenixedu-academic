@@ -808,14 +808,8 @@
 	<slot name="tutorship.studentCurricularPlan.registration.person.name" key="label.coordinator.studentName" read-only="true"/>
 	<slot name="tutorship.studentCurricularPlan.registration.degree.sigla" key="label.degreeCurricularPlan.degree.sigla" read-only="true"/>
 	<slot name="tutorship.startDate" key="label.tutorship.startDate" read-only="true"/>
-	<slot name="tutorshipEndMonth" key="label.tutorship.endMonth" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">				
-		<property name="choiceType" value="net.sourceforge.fenixedu.util.Month" />
-		<property name="saveOptions" value="true"/>
-		<property name="nullOptionHidden" value="true"/>
-		<property name="eachLayout" value="this-does-not-exist" />
-    </slot>
-    <slot name="tutorshipEndYear" key="label.tutorship.endYear" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">				
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.coordinator.tutor.YearsProviderForTutorshipManagement"/>				
+    <slot name="tutorshipEndMonthYear" key="label.tutorship.endMonthYear" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">				
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.coordinator.tutor.MonthYearsProviderTutorshipManagement"/>				
 		<property name="saveOptions" value="true"/>
 		<property name="nullOptionHidden" value="true"/>
     </slot>
