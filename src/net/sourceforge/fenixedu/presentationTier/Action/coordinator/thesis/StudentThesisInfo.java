@@ -1,12 +1,14 @@
 package net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis;
 
+import java.io.Serializable;
+
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
-public class StudentThesisInfo {
+public class StudentThesisInfo implements Serializable {
 
     private Student student;
     private Enrolment enrolment;
