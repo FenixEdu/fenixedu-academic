@@ -84,9 +84,9 @@ abstract public class CandidacyProcess extends CandidacyProcess_Base {
 	Set<T> candidacyProcessList = RootDomainObject.readAllDomainObjects(clazz);
 
 	for (T process : candidacyProcessList) {
-	    if (process.hasCandidacyPeriod() && executionInterval.equals(process.getCandidacyPeriod().getExecutionInterval()))
-		;
-	    return process;
+	    if (process.hasCandidacyPeriod() && executionInterval.equals(process.getCandidacyPeriod().getExecutionInterval())) {
+		return process;
+	    }
 	}
 
 	return null;
