@@ -449,7 +449,7 @@
 
 <schema name="coordinator.thesis.table" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.StudentThesisInfo" bundle="APPLICATION_RESOURCES">
     <slot name="student.number" key="label.student.number.short"/>
-    <slot name="student.person.name" key="student"/>
+    <slot name="student.person.name" key="label.student.name"/>
     <slot name="semester" key="label.semester.short"/>
     <slot name="title" key="label.coordinator.title" layout="short">
         <property name="length" value="60"/>
