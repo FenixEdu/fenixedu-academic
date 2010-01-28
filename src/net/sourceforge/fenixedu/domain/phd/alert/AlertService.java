@@ -167,5 +167,9 @@ public class AlertService {
 	public String getMessage() {
 	    return isKey ? MessageFormat.format(getMessageFromResource(label), args) : label;
 	}
+
+	static public String get(String label, Object... args) {
+	    return new AlertMessage().label(label).args(args).getMessage();
+	}
     }
 }
