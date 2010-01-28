@@ -10,14 +10,23 @@
     <html:form action="/studentTimeTable.do" target="_blank">
        	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="showTimeTable"/>
        
-       	<p class="mtop2">
-       		<bean:message  key="label.studentCurricularPlan"/>
-               	<html:select property="registrationId">
-       			<html:options collection="registrations" property="idInternal" labelProperty="degreeNameWithDegreeCurricularPlanName"/>
-       		</html:select>
-       	</p>
+       <logic:notEmpty name="registrations">
+       		<p class="mtop2">
+       			<bean:message  key="label.studentCurricularPlan"/>
+            	   	<html:select property="registrationId">
+       				<html:options collection="registrations" property="idInternal" labelProperty="degreeNameWithDegreeCurricularPlanName"/>
+       			</html:select>
+      	 	</p>
        
-       	<p class="mtop2"><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.continue" /></html:submit></p>
+       		<p class="mtop2">
+       			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
+       				<bean:message key="button.continue" />
+       			</html:submit>
+       		</p>
+       	</logic:notEmpty>
+       	<logic:empty  name="registrations">
+       		<p class="mvert15"><em><bean:message key="message.no.registration" bundle="STUDENT_RESOURCES"/></em></p>
+       	</logic:empty>
     </html:form>
 </logic:present>
 
