@@ -28,7 +28,7 @@ public enum PhdProcessAccessType {
     }
 
     public String getLocalizedName(final Locale locale) {
-	return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getQualifiedName());
+	return ResourceBundle.getBundle("resources.PhdResources", locale).getString(getQualifiedName());
     }
 
     public String getQualifiedName() {
