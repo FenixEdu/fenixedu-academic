@@ -157,15 +157,15 @@ public class Context extends Context_Base implements Comparable<Context> {
 	checkExistingCourseGroupContexts(getParentCourseGroup(), getChildDegreeModule(), getCurricularPeriod(), begin, end);
 	setBeginExecutionPeriod(begin);
 	setEndExecutionPeriod(end);
-	checkCurriculumLines();
+	checkCurriculumLines(getChildDegreeModule());
     }
 
-    private void checkCurriculumLines() {
-	for (final CurriculumModule curriculumModule : getChildDegreeModule().getCurriculumModules()) {
+    private void checkCurriculumLines(final DegreeModule degreeModule) {
+	for (final CurriculumModule curriculumModule : degreeModule.getCurriculumModules()) {
 	    if (curriculumModule.isCurriculumLine()) {
 		final CurriculumLine curriculumLine = (CurriculumLine) curriculumModule;
 		if (curriculumLine.hasExecutionPeriod()
-			&& !getChildDegreeModule().hasAnyOpenParentContexts(curriculumLine.getExecutionPeriod())) {
+			&& !degreeModule.hasAnyOpenParentContexts(curriculumLine.getExecutionPeriod())) {
 		    throw new DomainException("error.Context.cannot.modify.begin.and.end.because.of.enroled.curriculumLines");
 		}
 	    }
@@ -173,8 +173,16 @@ public class Context extends Context_Base implements Comparable<Context> {
     }
 
     public void delete() {
-	removeCurricularPeriod();
+
+	final DegreeModule degreeModule = getChildDegreeModule();
 	removeChildDegreeModule();
+	/*
+	 * First remove child and then check if all curriculum lines remain
+	 * valid
+	 */
+	checkCurriculumLines(degreeModule);
+
+	removeCurricularPeriod();
 	removeParentCourseGroup();
 	removeBeginExecutionPeriod();
 	removeEndExecutionPeriod();
