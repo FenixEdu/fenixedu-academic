@@ -46,9 +46,10 @@
 	<strong><bean:message key="label.phd.thesis.jury.validation.date" bundle="PHD_RESOURCES"/>:</strong> <fr:view name="process" property="whenJuryValidated" />
 	<br/>
 	<strong><bean:message key="label.phd.thesis.jury.designation.date" bundle="PHD_RESOURCES"/>:</strong> <fr:view name="process" property="whenJuryDesignated" />
-	<br/>
 </logic:equal>
 
+	<br/>
+	
 <logic:notEmpty name="process" property="juryPresidentDocument">
 	<br/>
 	<strong><bean:message  key="label.phd.thesis.jury.president.document" bundle="PHD_RESOURCES"/>: </strong>
@@ -69,9 +70,11 @@
 	</a>
 	<br/>
 	<logic:empty name="process" property="thesisJuryElements">
+	<phd:activityAvailable process="<%= process %>" activity="<%= PhdThesisProcess.RejectJuryElements.class %>">
 		(<html:link action="/phdThesisProcess.do?method=prepareRejectJuryElements" paramId="processId" paramName="process" paramProperty="externalId">
 			<bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.reject.jury.elements"/>
 		</html:link>)
+	</phd:activityAvailable>
 	</logic:empty>
 	
 	<br/><br/>
