@@ -304,6 +304,12 @@ public class UICourseGroup extends UIDegreeModule {
 	    writer.append(" , ");
 	    encodeLink("deleteCourseGroup.faces", editAndDeleteAditionalParameters, false, "delete");
 	}
+
+	if (this.courseGroup.isCycleCourseGroup() && loggedPersonHasRoleManager()) {
+	    writer.append(" , ");
+	    encodeLink("editCycleCourseGroupInformation.faces", editAndDeleteAditionalParameters, false, "editInformation");
+	}
+
 	writer.append(") ");
 	writer.endElement("td");
     }

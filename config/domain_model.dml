@@ -3026,7 +3026,12 @@ class DomainObject {
 
             class degreeStructure.RootCourseGroup extends degreeStructure.CourseGroup {
             }
-
+	
+	
+	class degreeStructure.CycleCourseGroupInformation extends DomainObject {
+		MultiLanguageString graduatedTitle;
+	}
+	
     class finalDegreeWork.FinalDegreeWorkGroup extends DomainObject {
     }
 
@@ -17340,4 +17345,26 @@ relation ErasmusStudentDataRootDomainObject {
 	candidacyProcess.erasmus.ErasmusStudentData playsRole erasmusStudentData {
 		multiplicity *;
 	}
+}
+
+
+relation CycleCourseGroupInformationRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	degreeStructure.CycleCourseGroupInformation playsRole cycleCourseGroupInformation {
+		multiplicity *;
+	}
+}
+
+relation CycleCourseGroupInformationExecutionYear {
+	ExecutionYear playsRole executionYear;
+	degreeStructure.CycleCourseGroupInformation playsRole cycleCourseGroupInformation {
+		multiplicity *;
+	}
+}
+
+relation CycleCourseGroupCycleCourseGroupInformation {
+	degreeStructure.CycleCourseGroup playsRole cycleCourseGroup;
+	degreeStructure.CycleCourseGroupInformation playsRole cycleCourseGroupInformation {
+		multiplicity *;
+	}	
 }

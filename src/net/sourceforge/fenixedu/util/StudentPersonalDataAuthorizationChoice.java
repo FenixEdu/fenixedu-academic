@@ -4,6 +4,8 @@
  */
 package net.sourceforge.fenixedu.util;
 
+import java.util.ResourceBundle;
+
 /**
  * @author Ricardo Rodrigues
  * 
@@ -32,5 +34,10 @@ public enum StudentPersonalDataAuthorizationChoice {
 
     public String getFullyQualifiedName() {
 	return StudentPersonalDataAuthorizationChoice.class.getName() + "." + name();
+    }
+
+    public String getDescription() {
+	final ResourceBundle ENUMERATION_RESOURCES = ResourceBundle.getBundle("resources.EnumerationResources");
+	return ENUMERATION_RESOURCES.getString(getQualifiedName());
     }
 }

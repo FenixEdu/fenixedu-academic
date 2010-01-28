@@ -322,6 +322,14 @@
 		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curricularPlans.CourseGroupManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+	
+	<managed-bean>
+		<description>CycleCourseGroupInformationManagementBackingBean</description>
+		<managed-bean-name>CycleCourseGroupInformationManagement</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curricularPlans.CycleCourseGroupInformationManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	
 	<managed-bean>
 		<description>CourseGroupReportBackingBean</description>
 		<managed-bean-name>CourseGroupReport</managed-bean-name>
@@ -352,6 +360,10 @@
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>	
 	<!-- END: OrganizationalStructure Managed Beans -->
+	
+	
+	
+	
 	
 	<!-- MANAGER ORGANIZATIONAL STRUCTURE MANAGEMENT -->
 	
