@@ -10,16 +10,19 @@ public class PhdProperties {
 	return PropertiesManager.getProperty(key);
     }
 
-    static public String getPublicAccessLink() {
-	return getProperty("phd.public.access.link");
+    static public String getPublicCandidacyAccessLink() {
+	return getProperty("phd.public.candidacy.access.link");
     }
 
-    static public String getPublicSubmissionLink() {
-	return getProperty("phd.public.submission.link");
+    static public String getPublicCandidacySubmissionLink() {
+	return getProperty("phd.public.candidacy.submission.link");
     }
 
-    static public String getPublicRefereeFormLink() {
-	return getProperty("phd.public.referee.form.link");
+    static public String getPublicCandidacyRefereeFormLink() {
+	return getProperty("phd.public.candidacy.referee.form.link");
     }
 
+    static public String getPhdExternalAccessLink() {
+	return getProperty("phd.public.external.access.link");
+    }
 }
