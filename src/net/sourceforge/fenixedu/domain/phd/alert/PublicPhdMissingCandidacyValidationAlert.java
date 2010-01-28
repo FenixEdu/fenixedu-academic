@@ -41,7 +41,7 @@ public class PublicPhdMissingCandidacyValidationAlert extends PublicPhdMissingCa
 	// TODO: if collaboration type change, then message must be different
 	final ResourceBundle bundle = getResourceBundle(Locale.ENGLISH);
 	final String body = String.format(bundle.getString("message.phd.email.body.missing.candidacy.validation"), PhdProperties
-		.getPublicAccessLink(), process.getCandidacyProcess().getCandidacyHashCode().getValue());
+		.getPublicCandidacyAccessLink(), process.getCandidacyProcess().getCandidacyHashCode().getValue());
 	return MultiLanguageString.i18n().add("en", body).finish();
     }
 
