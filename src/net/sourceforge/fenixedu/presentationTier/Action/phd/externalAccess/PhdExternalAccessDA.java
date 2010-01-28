@@ -62,7 +62,6 @@ public class PhdExternalAccessDA extends PhdProcessDA {
     private PhdParticipant getPhdParticipant(HttpServletRequest request) {
 	final PhdExternalOperationBean bean = getOperationBean();
 	return bean != null ? bean.getParticipant() : PhdParticipant.readByAccessHashCode(getHash(request));
-
     }
 
     private PhdExternalOperationBean getOperationBean() {
@@ -121,14 +120,17 @@ public class PhdExternalAccessDA extends PhdProcessDA {
 	final ByteArrayOutputStream result = new ByteArrayOutputStream();
 	final ZipOutputStream zipFile = new ZipOutputStream(result);
 
-	createZipEntry(zipFile, process.getCandidacyProcess().getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.CV));
+	zipEntry(zipFile, process.getCandidacyProcess().getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.CV));
+	zipEntry(zipFile, process.getThesisProcess().getLastestDocumentVersionFor(
+		PhdIndividualProgramDocumentType.PROVISIONAL_THESIS));
 
-	// TODO: add remaining documents here
+	// TODO: add remaining documents here (Abstract /resume)
 
+	zipFile.close();
 	return result.toByteArray();
     }
 
-    private void createZipEntry(final ZipOutputStream zipFile, final PhdProgramProcessDocument document) throws IOException {
+    private void zipEntry(final ZipOutputStream zipFile, final PhdProgramProcessDocument document) throws IOException {
 	zipFile.putNextEntry(new ZipEntry(document.getFilename()));
 	zipFile.write(document.getContents());
 	zipFile.closeEntry();
