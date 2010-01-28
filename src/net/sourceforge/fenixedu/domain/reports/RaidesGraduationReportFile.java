@@ -92,10 +92,10 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 			if ((lastState.isActive() || lastState == RegistrationStateType.CONCLUDED)
 				&& (cycleCGroup.isConcluded(executionYear.getPreviousExecutionYear()) == ConclusionValue.CONCLUDED)) {
 			    reportRaidesGraduate(spreadsheet, registration, executionYear, cycleType, true,
-				    registrationConclusionBean.getConclusionDate());
+				    registrationConclusionBean.getConclusionDate(), registrationConclusionBean.getAverage());
 			} else if ((lastState.isActive() || lastState == RegistrationStateType.CONCLUDED)
 				&& registration.getLastDegreeCurricularPlan().hasExecutionDegreeFor(executionYear)) {
-			    reportRaidesGraduate(spreadsheet, registration, executionYear, cycleType, false, null);
+			    reportRaidesGraduate(spreadsheet, registration, executionYear, cycleType, false, null, null);
 			}
 		    }
 		}
@@ -132,10 +132,7 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	    for (StudentCurricularPlan studentCurricularPlan : executionDegree.getDegreeCurricularPlan()
 		    .getStudentCurricularPlans()) {
 		if (!studentCurricularPlan.getStartDateYearMonthDay().isAfter(executionYear.getEndDateYearMonthDay())) {
-		    if ((studentCurricularPlan.getRegistration().getNumber() > 64200 && studentCurricularPlan.getRegistration()
-			    .getNumber() < 64300)
-			    || studentCurricularPlan.getRegistration().getNumber() == 44278)
-			result.add(studentCurricularPlan);
+		    result.add(studentCurricularPlan);
 		}
 	    }
 	}
@@ -222,7 +219,7 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
     }
 
     private void reportRaidesGraduate(final Spreadsheet sheet, final Registration registration, ExecutionYear executionYear,
-	    final CycleType cycleType, final boolean concluded, final YearMonthDay conclusionDate) {
+	    final CycleType cycleType, final boolean concluded, final YearMonthDay conclusionDate, BigDecimal average) {
 
 	final Row row = sheet.addRow();
 	final Person graduate = registration.getPerson();
@@ -238,8 +235,7 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	row.setCell(String.valueOf(concluded));
 
 	// Média do Ciclo
-	row.setCell(concluded ? printBigDecimal(lastStudentCurricularPlan.getCycle(cycleType).getCurriculum(
-		executionYear.getPreviousExecutionYear()).getAverage()) : "n/a");
+	row.setCell(concluded ? printBigDecimal(average) : "n/a");
 
 	// Data de Conclusão
 	row.setCell(conclusionDate != null ? conclusionDate.toString("dd-MM-yyyy") : "");
