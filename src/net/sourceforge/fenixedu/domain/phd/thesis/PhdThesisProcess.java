@@ -405,11 +405,15 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 
 	@Override
 	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
-	    if (isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		return;
+
+	    if (!process.isJuryValidated()) {
+		throw new PreConditionNotValidException();
 	    }
 
-	    throw new PreConditionNotValidException();
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+
 	}
 
 	@Override
@@ -458,11 +462,6 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
     static abstract protected class ExternalAccessPhdActivity extends PhdActivity {
 
 	@Override
-	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
-
-	}
-
-	@Override
 	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
 	    final PhdExternalOperationBean bean = (PhdExternalOperationBean) object;
 	    bean.getParticipant().checkAccessCredentials(bean.getEmail(), bean.getPassword());
@@ -476,6 +475,12 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
     }
 
     static public class JuryDocumentsDownload extends ExternalAccessPhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
+	    // TODO Auto-generated method stub
+
+	}
 
 	@Override
 	protected PhdThesisProcess internalExecuteActivity(PhdThesisProcess process, IUserView userView,
@@ -496,6 +501,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	activities.add(new AddPresidentJuryElement());
 	activities.add(new ValidateJury());
 	activities.add(new PrintJuryElementsDocument());
+	activities.add(new RejectJuryElements());
 	activities.add(new SubmitThesis());
 	activities.add(new DownloadProvisionalThesisDocument());
 	activities.add(new DownloadFinalThesisDocument());
