@@ -158,7 +158,7 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 		    addColumn("Ciclo", null);
 		}
 		addColumn("Tipo de Curso", enumeration.getString(document.getDegreeType().name()));
-		addColumn("Nº de Aluno", document.getStudent().getNumber());
+		addColumn("Nº de Aluno", document.getRegistration().getNumber());
 		addColumn("Nome", document.getPerson().getName());
 		if (!(document instanceof DiplomaRequest)) {
 		    addColumn("Ficheiro", document.getLastGeneratedDocument().getFilename());
