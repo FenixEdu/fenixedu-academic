@@ -158,6 +158,18 @@ public class StudentPortalBean implements Serializable {
 
 	    public void setRoom(WrittenEvaluation writtenEvaluation) {
 		ResourceBundle resource = ResourceBundle.getBundle("resources.StudentResources", Language.getLocale());
+		for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : writtenEvaluation
+			.getWrittenEvaluationEnrolments()) {
+		    if (writtenEvaluationEnrolment.getStudent() != null
+			    && writtenEvaluationEnrolment.getStudent().getStudent() == getStudent()) {
+			if(writtenEvaluationEnrolment.getRoom() != null) {
+			    this.room = writtenEvaluationEnrolment.getRoom().getIdentification();
+			    return;
+			} else {
+			    break;
+			}
+		    }
+		}
 		if (writtenEvaluation.getAssociatedRooms().isEmpty() == false) {
 		    this.room = writtenEvaluation.getAssociatedRoomsAsString();
 		} else {
