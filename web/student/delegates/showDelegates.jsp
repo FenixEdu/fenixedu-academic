@@ -60,6 +60,9 @@
 	</logic:present>
 </logic:present>
 
+<logic:notPresent name="searchBean">
+		<p class="mvert15"><em><bean:message key="message.no.delegates" bundle="DELEGATES_RESOURCES"/></em></p>
+</logic:notPresent>
 
 <!-- GGAE DELEGATES -->
 <logic:present name="ggaeDelegates" >

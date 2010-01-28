@@ -29,6 +29,10 @@ public class DelegatesInfoDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) {
 	final Person person = getLoggedPerson(request);
 	final Student student = person.getStudent();
+	
+	if(student.getLastActiveRegistration() == null) {
+	    return mapping.findForward("showDegreeDelegates");
+	}
 	final Degree degree = student.getLastActiveRegistration().getDegree();
 
 	DelegateSearchBean bean = new DelegateSearchBean();
