@@ -62,7 +62,7 @@ public class PhdCandidacyReferee extends PhdCandidacyReferee_Base {
 
     private String createBody() {
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
-	return String.format(bundle.getString("message.phd.email.body.referee"), PhdProperties.getPublicRefereeFormLink(),
+	return String.format(bundle.getString("message.phd.email.body.referee"), PhdProperties.getPublicCandidacyRefereeFormLink(),
 		getValue());
     }
 }
