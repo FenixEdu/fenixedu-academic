@@ -226,7 +226,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
 	final String subject = bundle.getString("message.phd.email.subject.send.link.to.submission");
 	final String body = bundle.getString("message.phd.email.body.send.link.to.submission");
-	hashCode.sendEmail(subject, String.format(body, PhdProperties.getPublicSubmissionLink(), hashCode.getValue()));
+	hashCode.sendEmail(subject, String.format(body, PhdProperties.getPublicCandidacySubmissionLink(), hashCode.getValue()));
     }
 
     public ActionForward prepareCandidacyIdentificationRecovery(ActionMapping mapping, ActionForm form,
@@ -263,7 +263,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
 	final String subject = bundle.getString("message.phd.email.subject.recovery.access");
 	final String body = bundle.getString("message.phd.email.body.recovery.access");
-	candidacyHashCode.sendEmail(subject, String.format(body, PhdProperties.getPublicAccessLink(), candidacyHashCode
+	candidacyHashCode.sendEmail(subject, String.format(body, PhdProperties.getPublicCandidacyAccessLink(), candidacyHashCode
 		.getValue()));
     }
 
@@ -568,7 +568,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	final String subject = bundle.getString("message.phd.email.subject.application.submited");
 	final String body = bundle.getString("message.phd.email.body.application.submited");
 	hashCode.sendEmail(subject, String.format(body, hashCode.getPhdProgramCandidacyProcess().getProcessNumber(),
-		PhdProperties.getPublicAccessLink(), hashCode.getValue()));
+		PhdProperties.getPublicCandidacyAccessLink(), hashCode.getValue()));
     }
 
     private void clearDocumentsInformation(final PhdProgramCandidacyProcessBean bean) {
