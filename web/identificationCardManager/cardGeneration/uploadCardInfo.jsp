@@ -56,4 +56,18 @@
 			</td>
 		</tr>
 	</table>
+	<table class="tstyle4 thlight tdcenter mtop05">
+		<tr>
+			<th>
+				<bean:message key="message.lines.of.not.created.registers" bundle="CARD_GENERATION_RESOURCES"/>
+			</th>
+		</tr>
+		<logic:iterate id="line" name="notCreatedLines">
+			<tr>
+				<td>
+					<bean:write name="line"/>
+				</td>
+			</tr>
+		</logic:iterate>
+	</table>
 </logic:present>

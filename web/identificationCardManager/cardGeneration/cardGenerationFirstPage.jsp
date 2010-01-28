@@ -50,6 +50,11 @@
 		<html:link page="<%= urlEmpty %>">
 			<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.create.batch.empty" />
 		</html:link>
+		|
+		<bean:define id="sentButNotIssued" type="java.lang.String">/manageCardGeneration.do?method=downloadCardGenerationBatchSentButNotIssuedByYear&amp;executionYearID=<bean:write name="cardGenerationContext" property="executionYear.idInternal"/></bean:define>
+		<html:link page="<%= sentButNotIssued %>">
+			<bean:message bundle="CARD_GENERATION_RESOURCES" key="label.card.generation.batch.sent.but.not.issued"/>
+		</html:link>
 	</p>
 </logic:notEqual>
 

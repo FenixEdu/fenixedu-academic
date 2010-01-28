@@ -6,8 +6,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -203,6 +205,27 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 	return null;
     }
 
+    public ActionForward downloadCardGenerationBatchSentButNotIssuedByYear(final ActionMapping mapping, final ActionForm actionForm,
+	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+	final ExecutionYear executionYear = getExecutionYear(request);
+	try {
+	    final ServletOutputStream writer = response.getOutputStream();
+	    response.setHeader("Content-disposition", "attachment; filename=identificationCardsIST"
+		    + executionYear.getQualifiedName() + ".txt");
+	    response.setContentType("text/plain");
+	    for(CardGenerationBatch cardGenerationBatch : executionYear.getCardGenerationBatches()) {
+		for (String line : cardGenerationBatch.getSentButNotIssuedCGRs()) {
+		    writer.print(line);
+		}
+	    }
+	    writer.flush();
+	    response.flushBuffer();
+	} catch (IOException e1) {
+	    throw new FenixActionException();
+	}
+	return null;
+    }
+    
     public ActionForward downloadCardGenerationBatchSentButNotIssued(final ActionMapping mapping, final ActionForm actionForm,
 	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 	final CardGenerationBatch cardGenerationBatch = getCardGenerationBatch(request);
@@ -380,17 +403,14 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 	UploadBean bean = (UploadBean) getRenderedObject("uploadBean");
 	RenderUtils.invalidateViewState("uploadBean");
 	fixBadData();
-	int[] registers = new int[2];
 	try {
-	    registers = process(FileUtils.copyToTemporaryFile(bean.getInputStream()));
+	    process(request, FileUtils.copyToTemporaryFile(bean.getInputStream()));
 	} catch (FileNotFoundException e) {
 	    e.printStackTrace();
 	} catch (IOException e) {
 	    e.printStackTrace();
 	}
 	request.setAttribute("readingComplete", true);
-	request.setAttribute("createdRegisters", registers[0]);
-	request.setAttribute("notCreatedRegisters", registers[1]);
 	return mapping.findForward("uploadCardInfo");
     }
 
@@ -408,19 +428,24 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
     }
 
     @Service
-    private int[] process(final File file) throws FileNotFoundException, IOException {
+    private void process(HttpServletRequest request, final File file) throws FileNotFoundException, IOException {
 	final String contents = FileUtils.readFile(new FileInputStream(file));
 	final String[] lines = contents.split("\n");
-	int[] registers = new int[2];
+	int createdRegisters = 0;
+	int notCreatedRegisters = 0;
+	List<String> notCreatedLines = new ArrayList<String>();
 	for (final String line : lines) {
 	    CardEmissionEntry cardEmissionEntry = new CardEmissionEntry(line);
 	    if (cardEmissionEntry.createdRegister) {
-		++registers[0];
+		++createdRegisters;
 	    } else {
-		++registers[1];
+		++notCreatedRegisters;
+		notCreatedLines.add(line);
 	    }
 	}
-	return registers;
+	request.setAttribute("createdRegisters", createdRegisters);
+	request.setAttribute("notCreatedRegisters", notCreatedRegisters);
+	request.setAttribute("notCreatedLines", notCreatedLines);
     }
 
     private static class CardEmissionEntry {

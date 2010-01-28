@@ -63,21 +63,6 @@
 			</fr:layout>
 		</fr:view>
 
-	<h3><bean:message key="label.card.generation.emission"/>:</h3>
-	<logic:empty name="person" property="cardGenerationRegister">
-		<bean:message key="label.message.no.card.registers" bundle="CARD_GENERATION_RESOURCES" />
-	</logic:empty>
-	<logic:notEmpty name="person" property="cardGenerationRegister">
-		<fr:view name="person" property="cardGenerationRegister" schema="card.generation.register.card.list">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle1 thlight thtop mtop05"/>
-				<fr:property name="rowClasses" value=",bgcolorfafafa"/>
-				<fr:property name="columnClasses" value="acenter,acenter,,acenter,acenter,acenter,acenter"/>
-			</fr:layout>
-		</fr:view>
-	</logic:notEmpty>
-
-
 	<logic:present name="cardGenerationEntry">
 	
 	<!-- 
@@ -187,6 +172,20 @@
 			</tr>
 		</table>
 	</logic:present>
+	
+	<h3><bean:message key="label.card.generation.emission"/>:</h3>
+	<logic:empty name="person" property="cardGenerationRegister">
+		<bean:message key="label.message.no.card.registers" bundle="CARD_GENERATION_RESOURCES" />
+	</logic:empty>
+	<logic:notEmpty name="person" property="cardGenerationRegister">
+		<fr:view name="person" property="cardGenerationRegister" schema="card.generation.register.card.list">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle1 thlight thtop mtop05"/>
+				<fr:property name="rowClasses" value=",bgcolorfafafa"/>
+				<fr:property name="columnClasses" value="acenter,acenter,,acenter,acenter,acenter,acenter"/>
+			</fr:layout>
+		</fr:view>
+	</logic:notEmpty>
 
 	<br/>
 	<br/>
