@@ -43,7 +43,7 @@ public class PhdCandidacyRefereeAlert extends PhdCandidacyRefereeAlert_Base {
 	// TODO: if collaboration type change, then message must be different
 	final ResourceBundle bundle = getResourceBundle(Locale.ENGLISH);
 	final String body = String.format(bundle.getString("message.phd.email.body.referee"), PhdProperties
-		.getPublicRefereeFormLink(), referee.getValue());
+		.getPublicCandidacyRefereeFormLink(), referee.getValue());
 	return MultiLanguageString.i18n().add("en", body).finish();
     }
 
