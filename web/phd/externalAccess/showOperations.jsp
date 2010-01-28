@@ -19,11 +19,14 @@
 
 <bean:define id="hash" name="participant" property="accessHashCode" />
 
-<logic:iterate id="accessType" name="participant" property="accessTypes.types">
-	<bean:define id="methodName" >prepare<bean:write name="accessType" property="descriptor"/></bean:define>
-	
-	<html:link action="<%= "/phdExternalAccess.do?method=" + methodName + "&amp;hash=" + hash.toString() %>">
-		<bean:write name="accessType" property="localizedName"/>
-	</html:link>
-	<br/>
-</logic:iterate>
+<ul>
+	<logic:iterate id="accessType" name="participant" property="accessTypes.types">
+		<bean:define id="methodName" >prepare<bean:write name="accessType" property="descriptor"/></bean:define>
+		
+		<li>	
+		<html:link action="<%= "/phdExternalAccess.do?method=" + methodName + "&amp;hash=" + hash.toString() %>">
+			<bean:write name="accessType" property="localizedName"/>
+		</html:link>
+		</li>
+	</logic:iterate>
+</ul>
