@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessType;
+import net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessTypeList;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
@@ -17,6 +18,7 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setWhenCreated(new DateTime());
+	setAccessTypes(PhdProcessAccessTypeList.EMPTY);
     }
 
     protected void init(PhdIndividualProgramProcess individualProcess) {

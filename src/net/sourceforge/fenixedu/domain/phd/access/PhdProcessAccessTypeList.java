@@ -6,19 +6,17 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.commons.lang.StringUtils;
 
 public class PhdProcessAccessTypeList implements Serializable {
 
-    private static final EmptyPhdProcessAccessList EMPTY = new EmptyPhdProcessAccessList();
+    public static final PhdProcessAccessTypeList EMPTY = new EmptyPhdProcessAccessList();
 
     private static class EmptyPhdProcessAccessList extends PhdProcessAccessTypeList {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	static private final long serialVersionUID = 1L;
 
 	@Override
 	public Set<PhdProcessAccessType> getTypes() {
@@ -34,10 +32,9 @@ public class PhdProcessAccessTypeList implements Serializable {
 
     static private final long serialVersionUID = 1L;
 
-    private final Set<PhdProcessAccessType> types = new HashSet<PhdProcessAccessType>();
+    private final Set<PhdProcessAccessType> types = new TreeSet<PhdProcessAccessType>();
 
     private PhdProcessAccessTypeList() {
-
     }
 
     private PhdProcessAccessTypeList(final String types) {
