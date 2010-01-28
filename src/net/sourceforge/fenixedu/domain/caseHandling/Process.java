@@ -150,13 +150,17 @@ public abstract class Process extends Process_Base implements Comparable<Process
     }
 
     protected DateTime getLastExecutionDateOf(final Class<? extends Activity> clazz) {
-	final SortedSet<ProcessLog> logs = getSortedProcessLogs();
+	final SortedSet<ProcessLog> logs = getSortedProcessLogs(clazz);
 	return logs.isEmpty() ? null : logs.last().getWhenDateTime();
     }
 
-    protected SortedSet<ProcessLog> getSortedProcessLogs() {
+    protected SortedSet<ProcessLog> getSortedProcessLogs(final Class<? extends Activity> clazz) {
 	final SortedSet<ProcessLog> logs = new TreeSet<ProcessLog>(ProcessLog.COMPARATOR_BY_WHEN);
-	logs.addAll(getProcessLogs());
+	for (final ProcessLog log : getProcessLogs()) {
+	    if (log.isFor(clazz)) {
+		logs.add(log);
+	    }
+	}
 	return logs;
     }
 

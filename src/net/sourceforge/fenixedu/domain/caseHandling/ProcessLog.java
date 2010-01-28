@@ -27,4 +27,8 @@ public class ProcessLog extends ProcessLog_Base {
 	setWhenDateTime(new DateTime());
     }
 
+    public boolean isFor(final Class<? extends Activity> clazz) {
+	return getActivity().equals(clazz.getName());
+    }
+
 }
