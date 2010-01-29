@@ -18,13 +18,13 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 @Mapping(path = "/phdIndividualProgramProcess", module = "coordinator")
 @Forwards(tileProperties = @Tile(navLocal = "/coordinator/localNavigationBar.jsp"), value = {
 
-	@Forward(name = "manageProcesses", path = "/phd/coordinator/manageProcesses.jsp", tileProperties = @Tile(navLocal = "/coordinator/localNavigationBar.jsp")),
+    @Forward(name = "manageProcesses", path = "/phd/coordinator/manageProcesses.jsp"),
 
-	@Forward(name = "viewProcess", path = "/phd/coordinator/viewProcess.jsp", tileProperties = @Tile(navLocal = "/coordinator/localNavigationBar.jsp")),
+    @Forward(name = "viewProcess", path = "/phd/coordinator/viewProcess.jsp"),
 
-	@Forward(name = "viewAlertMessages", path = "/phd/coordinator/viewAlertMessages.jsp", tileProperties = @Tile(navLocal = "/coordinator/localNavigationBar.jsp")),
+    @Forward(name = "viewAlertMessages", path = "/phd/coordinator/viewAlertMessages.jsp"),
 
-	@Forward(name = "viewProcessAlertMessages", path = "/phd/coordinator/viewProcessAlertMessages.jsp", tileProperties = @Tile(navLocal = "/coordinator/localNavigationBar.jsp"))
+    @Forward(name = "viewProcessAlertMessages", path = "/phd/coordinator/viewProcessAlertMessages.jsp")
 
 })
 public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramProcessDA {

@@ -18,15 +18,15 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 @Mapping(path = "/phdIndividualProgramProcess", module = "teacher")
 @Forwards(tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp"), value = {
 
-	@Forward(name = "manageProcesses", path = "/phd/teacher/manageProcesses.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+    @Forward(name = "manageProcesses", path = "/phd/teacher/manageProcesses.jsp"),
 
-	@Forward(name = "viewProcess", path = "/phd/teacher/viewProcess.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+    @Forward(name = "viewProcess", path = "/phd/teacher/viewProcess.jsp"),
 
-	@Forward(name = "viewAlertMessages", path = "/phd/teacher/viewAlertMessages.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+    @Forward(name = "viewAlertMessages", path = "/phd/teacher/viewAlertMessages.jsp"),
 
-	@Forward(name = "viewProcessAlertMessages", path = "/phd/teacher/viewProcessAlertMessages.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+    @Forward(name = "viewProcessAlertMessages", path = "/phd/teacher/viewProcessAlertMessages.jsp"),
 
-	@Forward(name = "requestPublicPresentationSeminarComission", path = "/phd/teacher/requestPublicPresentationSeminarComission.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp"))
+    @Forward(name = "requestPublicPresentationSeminarComission", path = "/phd/teacher/requestPublicPresentationSeminarComission.jsp")
 
 })
 public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramProcessDA {
