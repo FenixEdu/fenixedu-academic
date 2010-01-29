@@ -3308,6 +3308,16 @@ public class Person extends Person_Base {
 	    }
 	});
     }
+    
+    public List<Professorship> getProfessorshipsByExecutionSemester(final ExecutionSemester executionSemester) {
+	List<Professorship> professorships = new ArrayList<Professorship>();
+	for (Professorship professorship : getProfessorships()) {
+	    if(professorship.getExecutionCourse().getExecutionPeriod() == executionSemester) {
+		professorships.add(professorship);
+	    }
+	}
+	return professorships;
+    }
 
     public void updateResponsabilitiesFor(Integer executionYearId, List<Integer> executionCourses)
 	    throws MaxResponsibleForExceed, InvalidCategory {

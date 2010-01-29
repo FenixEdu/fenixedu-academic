@@ -9,7 +9,7 @@
 <logic:present role="PEDAGOGICAL_COUNCIL">
 
 	<em><bean:message key="pedagogical.council" bundle="PEDAGOGICAL_COUNCIL"/></em>
-	<h2><bean:message key="label.evaluationMethod" bundle="APPLICATION_RESOURCES"/></h2>
-		
+	<h2><bean:message key="link.summaries.control"/></h2>
+			
 	<jsp:include page="../../directiveCouncil/summariesControl/listTeachersSummariesControlCore.jsp"/>
 </logic:present>

@@ -19,82 +19,251 @@
 			</em>
 		</p>
 	</html:messages>
+		
+	<logic:present name="executionSemesters">	
+		<fr:form action="/summariesControl.do?method=listSummariesControl">			
+			<fr:edit id="executionSemester" name="executionSemesters">
+				<fr:schema bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.DepartmentSummaryElement">
+					<fr:slot name="executionSemester" layout="menu-select-postback" key="label.curricular.course.semester" bundle="APPLICATION_RESOURCES">
+						<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.NotClosedExecutionPeriodsProvider"/>
+						<fr:property name="choiceType"	value="net.sourceforge.fenixedu.domain.ExecutionSemester"/>
+						<fr:property name="format" value="${executionYear.year} - ${semester}º Semestre" />
+					</fr:slot>										
+				</fr:schema>
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="thlight"/>
+				</fr:layout>
+			</fr:edit>											
+		</fr:form>
+	</logic:present>
 	
-	<html:form action="/summariesControl">
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="listSummariesControl"/>
+	<logic:present name="summariesResumeMap">								
+		<fr:view name="summariesResumeMap" schema="summary.control.allDepartments">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle4 mtop05"/>
+				<fr:property name="columnClasses" value=",acenter,acenter,acenter,acenter,acenter,acenter bgcolorf5f5f5"/>
+			</fr:layout>
+		</fr:view>															
+	</logic:present>
+			
 	
-		<table class="tstyle5 mvert05">
-			<td>
-				<html:select bundle="HTMLALT_RESOURCES" altKey="select.department" property="department" onchange="this.form.method.value='listExecutionPeriods';this.form.submit()">
-					<html:option key="choose.department" value=""/>
-					<html:options collection="departments" property="value" labelProperty="label"/>
-				</html:select>
-				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-					<bean:message key="button.submit"/>
-				</html:submit>
-			</td>
-		
-			<logic:notEmpty name="executionPeriods">
-				<tr>
-					<td>
-						<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionPeriod" property="executionPeriod" onchange="this.form.submit()">
-								<html:option key="choose.execution.period" value=""/>
-								<html:options collection="executionPeriods" property="value" labelProperty="label"/>
-						</html:select>
-						<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-							<bean:message key="button.submit"/>
-						</html:submit>
-					</td>
-				</tr>		
-			</logic:notEmpty>
-		</table>		
-		
-		
-		<logic:present name="listElements">
+	<logic:present name="departmentResume">
+		<bean:define id="executionSemesterID" name="departmentResume" property="executionSemester.externalId"/>
+		<fr:form action="/summariesControl.do?method=listDepartmentSummariesControl">
+			<html:link page="<%= "/summariesControl.do?method=listSummariesControl&amp;executionSemesterID=" + executionSemesterID %>">
+				<bean:message key="button.back" />
+			</html:link>	
+			<fr:edit id="departmentResume" name="departmentResume">
+				<fr:schema bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.DepartmentSummaryElement">
+					<fr:slot name="executionSemester" layout="menu-select-postback" key="label.curricular.course.semester" bundle="APPLICATION_RESOURCES">
+						<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.NotClosedExecutionPeriodsProvider"/>
+						<fr:property name="choiceType"	value="net.sourceforge.fenixedu.domain.ExecutionSemester"/>
+						<fr:property name="format" value="${executionYear.year} - ${semester}º Semestre" />
+					</fr:slot>									
+				</fr:schema>
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="thlight"/>
+				</fr:layout>							
+			</fr:edit>											
+		</fr:form>
+	</logic:present>
+	
 
-			<bean:define id="url" type="java.lang.String">/summariesControl.do?method=exportToExcel&department=<bean:write name="summariesControlForm" property="department"/>&executionPeriod=<bean:write name="summariesControlForm" property="executionPeriod"/></bean:define> 						
-			<bean:define id="url2" type="java.lang.String">/summariesControl.do?method=exportToCSV&department=<bean:write name="summariesControlForm" property="department"/>&executionPeriod=<bean:write name="summariesControlForm" property="executionPeriod"/></bean:define> 						
-			
-			<p class="mvert15">
-			<html:link page="<%= url %>">
-				<html:img border="0" src="<%= request.getContextPath() + "/images/excel.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES" />
-				<bean:message key="link.export.to.excel"/>						
-			</html:link>
-			
-			&nbsp;
-			
-			<html:link page="<%= url2 %>">			
-				<html:img border="0" src="<%= request.getContextPath() + "/images/icon_csv.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES" />
-				<bean:message key="link.export.to.csv"/>						
-			</html:link>
-			</p>
-			
+<style type="text/css">
+.anchorBiggerPadding a {
+padding-left: 3px;
+padding-right: 3px;
+}
+</style>
 
+	
+	<logic:present name="departmentResumeList">	
+		<bean:define id="columnClasses" value="acenter,acenter,acenter,acenter,acenter,highlight1 acenter"/>
+		<logic:equal name="departmentResume" property="summaryControlCategoryString" value="BETWEEN_0_20">
+			<bean:define id="columnClasses" value="highlight1 acenter,acenter,acenter,acenter,acenter,acenter"/>
+		</logic:equal>
+		<logic:equal name="departmentResume" property="summaryControlCategoryString" value="BETWEEN_20_40">
+			<bean:define id="columnClasses" value="acenter,highlight1 acenter,acenter,acenter,acenter,acenter"/>
+		</logic:equal>
+		<logic:equal name="departmentResume" property="summaryControlCategoryString" value="BETWEEN_40_60">
+			<bean:define id="columnClasses" value="acenter,acenter,highlight1 acenter,acenter,acenter,acenter"/>
+		</logic:equal>
+		<logic:equal name="departmentResume" property="summaryControlCategoryString" value="BETWEEN_60_80">
+			<bean:define id="columnClasses" value="acenter,acenter,acenter,highlight1 acenter,acenter,acenter"/>
+		</logic:equal>
+		<logic:equal name="departmentResume" property="summaryControlCategoryString" value="BETWEEN_80_100">
+			<bean:define id="columnClasses" value="acenter,acenter,acenter,acenter,highlight1 acenter,acenter"/>
+		</logic:equal>
+			
+		<fr:view name="departmentResumeList">
+			<fr:schema bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.DepartmentSummaryElement">													
+				<fr:slot name="numberOfExecutionCoursesWithin020" layout="link" key="label.summary.0to20">				
+					<fr:property name="contextRelative" value="true"/>
+				    <fr:property name="moduleRelative" value="true"/>
+					<fr:property name="useParent" value="true"/>
+					<fr:property name="linkIf" value="toDisplayCategoryLink020"/>
+					<fr:property name="linkFormat" value="/summariesControl.do?method=departmentSummariesResume&amp;executionSemesterID=${executionSemester.externalId}&amp;departmentID=${department.externalId}&amp;categoryControl=BETWEEN_0_20"/>
+				</fr:slot>
+				<fr:slot name="numberOfExecutionCoursesWithin2040" layout="link" key="label.summary.20to40">				
+					<fr:property name="contextRelative" value="true"/>
+				    <fr:property name="moduleRelative" value="true"/>
+					<fr:property name="useParent" value="true"/>
+					<fr:property name="linkIf" value="toDisplayCategoryLink2040"/>
+					<fr:property name="linkFormat" value="/summariesControl.do?method=departmentSummariesResume&amp;executionSemesterID=${executionSemester.externalId}&amp;departmentID=${department.externalId}&amp;categoryControl=BETWEEN_20_40"/>
+				</fr:slot>
+				<fr:slot name="numberOfExecutionCoursesWithin4060" layout="link" key="label.summary.40to60">				
+					<fr:property name="contextRelative" value="true"/>
+				    <fr:property name="moduleRelative" value="true"/>
+					<fr:property name="useParent" value="true"/>
+					<fr:property name="linkIf" value="toDisplayCategoryLink4060"/>
+					<fr:property name="linkFormat" value="/summariesControl.do?method=departmentSummariesResume&amp;executionSemesterID=${executionSemester.externalId}&amp;departmentID=${department.externalId}&amp;categoryControl=BETWEEN_40_60"/>
+				</fr:slot>
+				<fr:slot name="numberOfExecutionCoursesWithin6080" layout="link" key="label.summary.60to80">				
+					<fr:property name="contextRelative" value="true"/>
+				    <fr:property name="moduleRelative" value="true"/>
+					<fr:property name="useParent" value="true"/>
+					<fr:property name="linkIf" value="toDisplayCategoryLink6080"/>
+					<fr:property name="linkFormat" value="/summariesControl.do?method=departmentSummariesResume&amp;executionSemesterID=${executionSemester.externalId}&amp;departmentID=${department.externalId}&amp;categoryControl=BETWEEN_60_80"/>
+				</fr:slot>
+				<fr:slot name="numberOfExecutionCoursesWithin80100" layout="link" key="label.summary.80to100">				
+					<fr:property name="contextRelative" value="true"/>
+				    <fr:property name="moduleRelative" value="true"/>
+					<fr:property name="useParent" value="true"/>
+					<fr:property name="linkIf" value="toDisplayCategoryLink80100"/>
+					<fr:property name="linkFormat" value="/summariesControl.do?method=departmentSummariesResume&amp;executionSemesterID=${executionSemester.externalId}&amp;departmentID=${department.externalId}&amp;categoryControl=BETWEEN_80_100"/>
+				</fr:slot>
+				<fr:slot name="numberOfExecutionCoursesWithin0100" layout="link" key="label.summary.total">				
+					<fr:property name="contextRelative" value="true"/>
+				    <fr:property name="moduleRelative" value="true"/>
+					<fr:property name="useParent" value="true"/>
+					<fr:property name="linkIf" value="toDisplayCategoryLink0100"/>
+					<fr:property name="linkFormat" value="/summariesControl.do?method=departmentSummariesResume&amp;executionSemesterID=${executionSemester.externalId}&amp;departmentID=${department.externalId}&amp;categoryControl="/>
+				</fr:slot>
+			</fr:schema>
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle4 mtop05 anchorBiggerPadding"/>
+				<fr:property name="columnClasses" value="<%= columnClasses %>"/>
+			</fr:layout>							
+		</fr:view>
+	</logic:present>
+		
+	<logic:present name="departmentResume">		
+		<bean:define id="departmentID" name="departmentResume" property="department.externalId" type="java.lang.String"/>
+		<bean:define id="executionSemesterID" name="departmentResume" property="executionSemester.externalId" type="java.lang.String"/>
+		<bean:define id="categoryControl" value=""/>		
+		<logic:notEmpty name="departmentResume" property="summaryControlCategory">
+			<bean:define id="categoryControl" name="departmentResume" property="summaryControlCategoryString" type="java.lang.String"/>
+		</logic:notEmpty>
+		<h3><fr:view name="departmentResume" property="department.realName"/></h3>
+		<logic:empty name="departmentResume" property="executionCourses">
+			<em><bean:message key="message.summary.noExecutionCourses" bundle="PEDAGOGICAL_COUNCIL"/></em>
+		</logic:empty>
+		<logic:notEmpty name="departmentResume" property="executionCourses">
+			<bean:define id="departmentResume" name="departmentResume" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.DepartmentSummaryElement"/>
 			
 			<%
 				String sortCriteria = request.getParameter("sortBy");
 			
 				if (sortCriteria == null) {
-				    sortCriteria = "teacherNumber=ascending";
+				    sortCriteria = "executionCourse.nome=ascending";
 				}
-			%>
-			
-			<bean:define id="department" type="java.lang.String" name="department"/>
-			<bean:define id="executionPeriod" type="java.lang.String" name="executionPeriod"/>
-			
-			<p>
-				<fr:view name="listElements" schema="summaries.control.list">
-					<fr:layout name="tabular-sortable">
-						<fr:property name="classes" value="tstyle4 thsmalltxt mtop05"/>
-						<fr:property name="columnClasses" value=",acenter,acenter,,smalltxt,aright,aright,bold aright, aright,bold aright"/>
-						<fr:property name="suffixes" value=",,,,,h,h,%,h,%"/>
-						<fr:property name="sortUrl" value="<%= "/summariesControl.do?method=listSummariesControl&department=" + department + "&executionPeriod=" + executionPeriod %>"/>
-						<fr:property name="sortParameter" value="sortBy"/>
-						<fr:property name="sortBy" value="<%= sortCriteria %>"/>
+			%>	
+		
+			<fr:view name="departmentResume" property="executionCourses">
+				<fr:schema bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.ExecutionCourseSummaryElement">
+					<fr:slot name="executionCourse.nome" layout="link" key="label.executionCourse.name">
+						<fr:property name="contextRelative" value="true"/>
+				        <fr:property name="moduleRelative" value="true"/>
+				        <fr:property name="useParent" value="true"/>
+						<fr:property name="linkFormat" value="<%= "/summariesControl.do?method=executionCourseSummariesControl&amp;executionCourseID=${executionCourse.externalId}&amp;departmentID="+departmentID+"&amp;categoryControl="+categoryControl.toString() %>"/>
+					</fr:slot>
+					<fr:slot name="persons" key="label.teachers" layout="flowLayout" bundle="GLOBAL_RESOURCES" >
+						<fr:property name="eachSchema" value="summary.control.teacher"/>
+						<fr:property name="eachLayout" value="values-comma"/>
+						<fr:property name="htmlSeparator" value=","/>						
+					</fr:slot>
+					<fr:slot name="numberOfLessonInstances" key="label.summary.numberOfLessonInstances"/>
+					<fr:slot name="numberOfLessonInstancesWithSummary" key="label.summary.numberOfLessonInstancesWithSummary"/>
+					<fr:slot name="percentageOfLessonsWithSummary" key="label.summary.percentageOfLessonsWithSummary"/>
+				</fr:schema>
+				<fr:layout name="tabular-sortable">				
+					<fr:property name="sortUrl" value="<%= "/summariesControl.do?method=departmentSummariesResume&amp;executionSemesterID="+executionSemesterID+"&amp;departmentID="+departmentID+"&amp;categoryControl="+categoryControl.toString() %>"/>
+					<fr:property name="sortParameter" value="sortBy"/>
+					<fr:property name="sortableSlots" value="numberOfLessonInstances,numberOfLessonInstancesWithSummary,percentageOfLessonsWithSummary"/>
+					<fr:property name="sortBy" value="<%= sortCriteria %>"/>
+					<fr:property name="classes" value="tstyle4 mtop05"/>
+					<fr:property name="columnClasses" value=",,acenter,acenter,acenter"/>					
+				</fr:layout>				
+				<fr:destination name="teacherLink" path="<%= "/summariesControl.do?method=teacherSummariesControl&amp;executionSemesterID=" + departmentResume.getExecutionSemester().getExternalId() + "&amp;personID=${externalId}&amp;departmentID="+departmentID.toString()+"&amp;categoryControl="+categoryControl.toString() %>"/>
+			</fr:view>
+		</logic:notEmpty>
+	</logic:present>	
+		
+	<logic:present name="executionCoursesResume">		
+		<bean:define id="executionSemesterID" name="executionCourse" property="executionPeriod.externalId"/>		
+		<bean:define id="departmentID" name="departmentID" type="java.lang.String"/>		
+		<bean:define id="categoryControl" name="categoryControl" type="java.lang.String"/>
+		
+		<p class="mtop15">
+			<html:link page="<%= "/summariesControl.do?method=departmentSummariesResume&amp;departmentID="+ departmentID +"&amp;categoryControl="+ categoryControl + "&amp;executionSemesterID=" + executionSemesterID %>">
+				<bean:message key="button.back" />
+			</html:link>
+		</p>
+		
+		<h3 class="mbottom05">				 
+			<fr:view name="executionCourse" property="executionPeriod">
+				<fr:layout>
+					<fr:property name="format" value="${executionYear.year} - ${semester}º Sem" />
+				</fr:layout>
+			</fr:view> - 
+			<fr:view name="executionCourse" property="nome"/>
+		</h3>					
+
+		<fr:view name="executionCoursesResume" schema="summaries.control.list">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle4 mtop05"/>
+				<fr:property name="columnClasses" value=",acenter,acenter,,smalltxt,aright,aright,bold aright, aright,bold aright"/>
+				<fr:property name="suffixes" value=",,,,,h,h,%,h,%"/>
+			</fr:layout>
+		</fr:view>				
+	</logic:present>
+					
+	<logic:present name="last4SemestersSummaryControl">
+		<bean:define id="executionSemesterID" name="executionSemesterID"/>		
+		<bean:define id="departmentID" name="departmentID" type="java.lang.String"/>		
+		<bean:define id="categoryControl" name="categoryControl" type="java.lang.String"/>
+		
+		<p class="mtop15">
+			<html:link page="<%= "/summariesControl.do?method=departmentSummariesResume&amp;departmentID="+ departmentID +"&amp;categoryControl="+ categoryControl + "&amp;executionSemesterID=" + executionSemesterID %>">
+				<bean:message key="button.back" />
+			</html:link>
+		</p>
+		
+		<h3>			
+			<fr:view name="person" property="name"/>
+		</h3>		
+		<logic:iterate id="executionCoursesPair" name="last4SemestersSummaryControl">
+			<bean:define id="executionSemester" name="executionCoursesPair" property="key"/>
+			<bean:define id="executionCoursesResume" name="executionCoursesPair" property="value"/>
+			<h4 class="mtop15 mbottom05">				 
+				<fr:view name="executionSemester">
+					<fr:layout>
+						<fr:property name="format" value="${executionYear.year} - ${semester}º Sem" />
 					</fr:layout>
 				</fr:view>
-			</p>		
-			
-		</logic:present>
-					
-	</html:form>
+			</h4>
+			<logic:notEmpty name="executionCoursesResume">
+				<fr:view name="executionCoursesResume" schema="summaries.control.list">
+					<fr:layout name="tabular">
+						<fr:property name="classes" value="tstyle4  mvert05"/>
+						<fr:property name="columnClasses" value=",acenter,acenter,,smalltxt,aright,aright,bold aright, aright,bold aright"/>
+						<fr:property name="suffixes" value=",,,,,h,h,%,h,%"/>
+					</fr:layout>
+				</fr:view>
+			</logic:notEmpty>
+			<logic:empty name="executionCoursesResume">
+				<em><bean:message key="message.summary.noDataForThisSemester" bundle="PEDAGOGICAL_COUNCIL"/></em>
+			</logic:empty>
+		</logic:iterate>			
+	</logic:present>					
+	

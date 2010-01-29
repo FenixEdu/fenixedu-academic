@@ -732,7 +732,8 @@ a.color007b4d { color: #007b4d !important; }
 .bgcolor2 { background-color: #fcfae4; }
 .bgcolor3 { background-color: #fafaf6; }
 .bgcolor4 { background-color: #f8f8f8; }
-.bgcolorfafafa { background-color: #fbfbfb; }
+.bgcolorfafafa { background-color: #fbfbfb !important; }
+.bgcolorf5f5f5 { background-color: #f5f5f5 !important; }
 .bgdfd { background-color: #dfd !important; }
 .bgfdd { background-color: #fdd !important; }
 

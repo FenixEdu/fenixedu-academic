@@ -17,15 +17,8 @@
             <form-property name="specialization" type="java.lang.String"/>
             <form-property name="degree" type="java.lang.String"/>
             <form-property name="situation" type="java.lang.String" />
-    	</form-bean>
-    	<form-bean name="summariesControlForm" 
-	  			 type="org.apache.struts.validator.DynaValidatorForm"
-                 dynamic="true">
-            <form-property name="page" type="java.lang.Integer" initial="0" />
-            <form-property name="executionPeriod" type="java.lang.String"/>
-            <form-property name="department" type="java.lang.String"/>           
-    	</form-bean> 	
-    	 <form-bean name="assiduousnessForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+    	</form-bean>    	 	
+    	<form-bean name="assiduousnessForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 	    	<form-property name="method" type="java.lang.String" />
 	    </form-bean>	
     </form-beans>
@@ -80,7 +73,6 @@
 	<action path="/summariesControl"
 		type="net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.SummariesControlAction"
 		parameter="method"
-		name="summariesControlForm"
 		scope="request"
 		input="/index.do">
 		<forward name="success" path="teacherSummariesControlList" />			
@@ -142,6 +134,7 @@
     <message-resources parameter="resources.CardGenerationResources" key="CARD_GENERATION_RESOURCES" null="false"/>
     <message-resources parameter="resources.ManagerResources" key="MANAGER_RESOURCES" null="false"/>
     <message-resources parameter="resources.MessagingResources" key="MESSAGING_RESOURCES" null="false"/>
+    <message-resources parameter="resources.PedagogicalCouncilResources" key="PEDAGOGICAL_COUNCIL" null="false"/>
 
 	<!-- ========== Plug Ins Configuration ================================= -->
 	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">

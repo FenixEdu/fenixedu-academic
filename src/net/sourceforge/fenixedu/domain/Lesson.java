@@ -31,6 +31,7 @@ import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
+import org.joda.time.LocalDate;
 import org.joda.time.Minutes;
 import org.joda.time.YearMonthDay;
 
@@ -340,7 +341,7 @@ public class Lesson extends Lesson_Base {
 	if (startDate != null && endDate != null && !startDate.isAfter(endDate) && createLessonInstances) {
 
 	    SortedSet<YearMonthDay> possibleLessonDates = getAllValidLessonDatesWithoutInstancesDates(startDate, endDate);
-	    List<LessonInstance> allLessonInstancesUntil = getAllLessonInstancesUntil(endDate);
+	    List<LessonInstance> allLessonInstancesUntil = getAllLessonInstancesUntil(endDate.toLocalDate());
 
 	    for (LessonInstance lessonInstance : allLessonInstancesUntil) {
 		possibleLessonDates.remove(lessonInstance.getDay());
@@ -718,7 +719,7 @@ public class Lesson extends Lesson_Base {
 	return dates;
     }
 
-    public List<LessonInstance> getAllLessonInstancesUntil(YearMonthDay day) {
+    public List<LessonInstance> getAllLessonInstancesUntil(LocalDate day) {
 	List<LessonInstance> result = new ArrayList<LessonInstance>();
 	if (day != null) {
 	    for (LessonInstance instance : getLessonInstances()) {
@@ -745,6 +746,7 @@ public class Lesson extends Lesson_Base {
 
     private SortedSet<YearMonthDay> getAllValidLessonDatesWithoutInstancesDates(YearMonthDay startDateToSearch,
 	    YearMonthDay endDateToSearch) {
+
 	SortedSet<YearMonthDay> result = new TreeSet<YearMonthDay>();
 	startDateToSearch = startDateToSearch != null ? getValidBeginDate(startDateToSearch) : null;
 
@@ -983,7 +985,7 @@ public class Lesson extends Lesson_Base {
     public List<EventBean> getAllLessonsEvents(String scheme, String serverName, int serverPort) {
 	HashMap<DateTime, LessonInstance> hashmap = new HashMap<DateTime, LessonInstance>();
 	ArrayList<EventBean> result = new ArrayList<EventBean>();
-	for (LessonInstance lessonInstance : getAllLessonInstancesUntil(getLessonEndDay())) {
+	for (LessonInstance lessonInstance : getAllLessonInstancesUntil(getLessonEndDay().toLocalDate())) {
 	    hashmap.put(lessonInstance.getBeginDateTime(), lessonInstance);
 	}
 
