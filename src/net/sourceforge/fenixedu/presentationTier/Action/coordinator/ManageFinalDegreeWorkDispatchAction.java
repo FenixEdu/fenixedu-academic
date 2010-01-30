@@ -997,7 +997,8 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	final ExecutionDegree executionDegree = (ExecutionDegree) readDomainObject(request, ExecutionDegree.class,
 		infoExecutionDegree.getIdInternal());
 	request.setAttribute("executionDegree", executionDegree);
-	request.setAttribute("executionDegreeOID", executionDegree.getIdInternal());
+	//request.setAttribute("executionDegreeOID", executionDegree.getIdInternal());
+	request.setAttribute("executionDegreeOID", executionDegree.getExternalId());
 	final Scheduleing scheduleing = executionDegree.getScheduling();
 	final List branches = new ArrayList();
 	for (final ExecutionDegree ed : scheduleing.getExecutionDegrees()) {
