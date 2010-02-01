@@ -93,7 +93,7 @@
 						<logic:iterate id="professorship" name="executionCourse" property="professorships">
 							<logic:equal name="professorship" property="responsibleFor" value="true">
 								<p>
-									<bean:define id="email" name="professorship" property="teacher.person.email"/>
+									<bean:define id="email" name="professorship" property="person.email"/>
 									<a href="mailto:<%= email %>">
 										<bean:write name="professorship" property="person.name"/>
 										(<bean:write name="professorship" property="person.istUsername"/>)
@@ -106,10 +106,10 @@
 						<logic:iterate id="professorship" name="executionCourse" property="professorships">
 							<logic:notEqual name="professorship" property="responsibleFor" value="true">
 								<p>
-									<bean:define id="email" name="professorship" property="teacher.person.email"/>
+									<bean:define id="email" name="professorship" property="person.email"/>
 									<a href="mailto:<%= email %>">
-										<bean:write name="professorship" property="teacher.person.name"/>
-										(<bean:write name="professorship" property="teacher.teacherNumber"/>)
+										<bean:write name="professorship" property="person.name"/>
+										(<bean:write name="professorship" property="person.istUsername"/>)
 									</a>
 								</p>
 							</logic:notEqual>
