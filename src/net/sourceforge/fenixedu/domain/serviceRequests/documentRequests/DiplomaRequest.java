@@ -49,12 +49,14 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 	if (DocumentRequestType.REGISTRY_DIPLOMA_REQUEST.getAdministrativeOfficeTypes().contains(AdministrativeOfficeType.DEGREE)
 		|| DocumentRequestType.REGISTRY_DIPLOMA_REQUEST.getAdministrativeOfficeTypes().contains(
 			AdministrativeOfficeType.MASTER_DEGREE)) {
-	    final RegistryDiplomaRequest registryRequest = getRegistration().getRegistryDiplomaRequest(getRequestedCycle());
-	    if (registryRequest == null) {
-		throw new DomainException("DiplomaRequest.registration.withoutRegistryRequest");
-	    } else if (registryRequest.isPayedUponCreation() && registryRequest.hasEvent()
-		    && !registryRequest.getEvent().isPayed()) {
-		throw new DomainException("DiplomaRequest.registration.withoutPayedRegistryRequest");
+	    if (getRegistration().isBolonha()) {
+		final RegistryDiplomaRequest registryRequest = getRegistration().getRegistryDiplomaRequest(getRequestedCycle());
+		if (registryRequest == null) {
+		    throw new DomainException("DiplomaRequest.registration.withoutRegistryRequest");
+		} else if (registryRequest.isPayedUponCreation() && registryRequest.hasEvent()
+			&& !registryRequest.getEvent().isPayed()) {
+		    throw new DomainException("DiplomaRequest.registration.withoutPayedRegistryRequest");
+		}
 	    }
 	}
 
