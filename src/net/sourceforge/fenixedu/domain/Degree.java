@@ -280,7 +280,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     public EctsGraduationGradeConversionTable getGraduationConversionTable(AcademicInterval year, CycleType cycle) {
-	EctsDegreeGraduationGradeConversionTable table = getEctsGraduationGradeConversionTable(year);
+	EctsDegreeGraduationGradeConversionTable table = getEctsGraduationGradeConversionTable(year, cycle);
 	if (table != null)
 	    return table;
 	Unit school = RootDomainObject.getInstance().getInstitutionUnit();
@@ -297,9 +297,9 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	return null;
     }
 
-    public EctsDegreeGraduationGradeConversionTable getEctsGraduationGradeConversionTable(AcademicInterval year) {
+    public EctsDegreeGraduationGradeConversionTable getEctsGraduationGradeConversionTable(AcademicInterval year, CycleType cycle) {
 	for (EctsDegreeGraduationGradeConversionTable table : getEctsGraduationGradeConversionTables()) {
-	    if (table.getYear().equals(year)) {
+	    if (table.getYear().equals(year) && table.getCycle().equals(cycle)) {
 		return table;
 	    }
 	}

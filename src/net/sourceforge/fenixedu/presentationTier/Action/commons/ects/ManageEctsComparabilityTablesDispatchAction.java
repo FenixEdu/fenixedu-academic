@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.commons.ects;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -36,8 +35,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -258,25 +255,15 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 	return tables;
     }
 
-    private SimplifiedSpreadsheetBuilder<CompetenceCourse> exportEnrolmentByCompetenceCourseTemplate(EctsTableFilter filter) {
+    private SimplifiedSpreadsheetBuilder<IEctsConversionTable> exportEnrolmentByCompetenceCourseTemplate(EctsTableFilter filter) {
 	final ExecutionYear year = (ExecutionYear) ExecutionYear.getExecutionInterval(filter.getExecutionInterval());
-	List<CompetenceCourse> competences = new ArrayList<CompetenceCourse>();
-	for (CompetenceCourse competenceCourse : rootDomainObject.getCompetenceCoursesSet()) {
-	    if ((competenceCourse.getCurricularStage() == CurricularStage.PUBLISHED || competenceCourse.getCurricularStage() == CurricularStage.APPROVED)
-		    && competenceCourse.hasActiveScopesInExecutionYear(year)
-		    && competenceCourse.getActiveEnrollments(year).size() > 0) {
-		competences.add(competenceCourse);
-	    }
-	}
-	ComparatorChain chain = new ComparatorChain();
-	chain.addComparator(new BeanComparator("departmentUnit.name"));
-	chain.addComparator(new BeanComparator("name"));
-	Collections.sort(competences, chain);
-	SimplifiedSpreadsheetBuilder<CompetenceCourse> builder = new SimplifiedSpreadsheetBuilder<CompetenceCourse>(competences) {
+	SimplifiedSpreadsheetBuilder<IEctsConversionTable> builder = new SimplifiedSpreadsheetBuilder<IEctsConversionTable>(
+		processEnrolmentByCompetenceCourseStatus(filter)) {
 	    private final ResourceBundle bundle = ResourceBundle.getBundle("resources.GEPResources");
 
 	    @Override
-	    protected void makeLine(CompetenceCourse competence) {
+	    protected void makeLine(IEctsConversionTable table) {
+		CompetenceCourse competence = (CompetenceCourse) table.getTargetEntity();
 		addColumn(bundle.getString("label.externalId"), competence.getExternalId());
 		addColumn(bundle.getString("label.departmentUnit.name"), competence.getDepartmentUnit().getName());
 		addColumn(bundle.getString("label.competenceCourse.name"), competence.getName());
@@ -349,28 +336,8 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
     }
 
     private SimplifiedSpreadsheetBuilder<IEctsConversionTable> exportEnrolmentByDegreeTemplate(EctsTableFilter filter) {
-	ExecutionYear year = (ExecutionYear) ExecutionYear.getExecutionInterval(filter.getExecutionInterval());
-	Set<IEctsConversionTable> tables = new HashSet<IEctsConversionTable>();
-	for (Degree degree : rootDomainObject.getDegreesSet()) {
-	    if (degree.getDegreeCurricularPlansExecutionYears().contains(year)
-		    && (degree.getDegreeType().equals(DegreeType.BOLONHA_DEGREE)
-			    || degree.getDegreeType().equals(DegreeType.BOLONHA_MASTER_DEGREE) || degree.getDegreeType().equals(
-			    DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE))) {
-		for (int i = 1; i <= degree.getDegreeType().getYears(); i++) {
-		    EctsDegreeByCurricularYearConversionTable table = degree.getEctsCourseConversionTable(filter
-			    .getExecutionInterval(), CurricularYear.readByYear(i));
-		    if (table != null) {
-			tables.add(table);
-		    } else {
-			tables.add(new NullEctsConversionTable(degree, CurricularYear.readByYear(i)));
-		    }
-		}
-	    }
-	}
-	// Collections.sort(degrees,
-	// Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
 	SimplifiedSpreadsheetBuilder<IEctsConversionTable> builder = new SimplifiedSpreadsheetBuilder<IEctsConversionTable>(
-		tables) {
+		processEnrolmentByDegreeStatus(filter)) {
 	    private final ResourceBundle bundle = ResourceBundle.getBundle("resources.GEPResources");
 
 	    @Override
@@ -379,7 +346,7 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 		addColumn(bundle.getString("label.externalId"), degree.getExternalId());
 		addColumn(bundle.getString("label.degreeType"), degree.getDegreeType().getLocalizedName());
 		addColumn(bundle.getString("label.name"), degree.getName());
-		addColumn(bundle.getString("label.curricularYear"), table.getCurricularYear());
+		addColumn(bundle.getString("label.curricularYear"), table.getCurricularYear().getYear());
 		addColumn("10", null);
 		addColumn("11", null);
 		addColumn("12", null);
@@ -445,8 +412,30 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
     }
 
     private SimplifiedSpreadsheetBuilder<IEctsConversionTable> exportEnrolmentByCurricularYearTemplate(EctsTableFilter filter) {
-	// TODO Auto-generated method stub
-	return null;
+	SimplifiedSpreadsheetBuilder<IEctsConversionTable> builder = new SimplifiedSpreadsheetBuilder<IEctsConversionTable>(
+		processEnrolmentByCurricularYearStatus(filter)) {
+	    private final ResourceBundle bundle = ResourceBundle.getBundle("resources.GEPResources");
+
+	    @Override
+	    protected void makeLine(IEctsConversionTable table) {
+		// FIXME: should not depend on ordinal(), use a resource bundle
+		// or something.
+		addColumn(bundle.getString("label.cycle"), table.getCycle().ordinal() + 1);
+		addColumn(bundle.getString("label.curricularYear"), table.getCurricularYear().getYear());
+		addColumn("10", null);
+		addColumn("11", null);
+		addColumn("12", null);
+		addColumn("13", null);
+		addColumn("14", null);
+		addColumn("15", null);
+		addColumn("16", null);
+		addColumn("17", null);
+		addColumn("18", null);
+		addColumn("19", null);
+		addColumn("20", null);
+	    }
+	};
+	return builder;
     }
 
     private void importEnrolmentByCurricularYearTables(AcademicInterval executionInterval, String file) {
@@ -472,14 +461,17 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 	ExecutionYear year = (ExecutionYear) ExecutionYear.getExecutionInterval(filter.getExecutionInterval());
 	Set<IEctsConversionTable> tables = new HashSet<IEctsConversionTable>();
 	for (Degree degree : rootDomainObject.getDegreesSet()) {
-	    if (degree.getDegreeCurricularPlansExecutionYears().contains(year)) {
-		for (int i = 1; i <= degree.getDegreeType().getYears(); i++) {
+	    if (degree.getDegreeCurricularPlansExecutionYears().contains(year)
+		    && (degree.getDegreeType().equals(DegreeType.BOLONHA_DEGREE)
+			    || degree.getDegreeType().equals(DegreeType.BOLONHA_MASTER_DEGREE) || degree.getDegreeType().equals(
+			    DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE))) {
+		for (CycleType cycle : degree.getDegreeType().getCycleTypes()) {
 		    EctsDegreeGraduationGradeConversionTable table = degree.getEctsGraduationGradeConversionTable(filter
-			    .getExecutionInterval());
+			    .getExecutionInterval(), cycle);
 		    if (table != null) {
 			tables.add(table);
 		    } else {
-			tables.add(new NullEctsConversionTable(degree));
+			tables.add(new NullEctsConversionTable(degree, cycle));
 		    }
 		}
 	    }
@@ -488,8 +480,42 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
     }
 
     private SimplifiedSpreadsheetBuilder<IEctsConversionTable> exportGraduationByDegreeTemplate(EctsTableFilter filter) {
-	// TODO Auto-generated method stub
-	return null;
+	SimplifiedSpreadsheetBuilder<IEctsConversionTable> builder = new SimplifiedSpreadsheetBuilder<IEctsConversionTable>(
+		processGraduationByDegreeStatus(filter)) {
+	    private final ResourceBundle bundle = ResourceBundle.getBundle("resources.GEPResources");
+
+	    @Override
+	    protected void makeLine(IEctsConversionTable table) {
+		Degree degree = (Degree) table.getTargetEntity();
+		addColumn(bundle.getString("label.externalId"), degree.getExternalId());
+		addColumn(bundle.getString("label.degreeType"), degree.getDegreeType().getLocalizedName());
+		addColumn(bundle.getString("label.name"), degree.getName());
+		addColumn(bundle.getString("label.cycle"), table.getCycle() != null ? table.getCycle().ordinal() + 1 : null);
+		addColumn("10", null);
+		addColumn("11", null);
+		addColumn("12", null);
+		addColumn("13", null);
+		addColumn("14", null);
+		addColumn("15", null);
+		addColumn("16", null);
+		addColumn("17", null);
+		addColumn("18", null);
+		addColumn("19", null);
+		addColumn("20", null);
+		addColumn("10", null);
+		addColumn("11", null);
+		addColumn("12", null);
+		addColumn("13", null);
+		addColumn("14", null);
+		addColumn("15", null);
+		addColumn("16", null);
+		addColumn("17", null);
+		addColumn("18", null);
+		addColumn("19", null);
+		addColumn("20", null);
+	    }
+	};
+	return builder;
     }
 
     private void importGraduationByDegreeTables(AcademicInterval executionInterval, String file) {
@@ -532,8 +558,40 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
     }
 
     private SimplifiedSpreadsheetBuilder<IEctsConversionTable> exportGraduationByCycleTemplate(EctsTableFilter filter) {
-	// TODO Auto-generated method stub
-	return null;
+	SimplifiedSpreadsheetBuilder<IEctsConversionTable> builder = new SimplifiedSpreadsheetBuilder<IEctsConversionTable>(
+		processEnrolmentByCurricularYearStatus(filter)) {
+	    private final ResourceBundle bundle = ResourceBundle.getBundle("resources.GEPResources");
+
+	    @Override
+	    protected void makeLine(IEctsConversionTable table) {
+		// FIXME: should not depend on ordinal(), use a resource bundle
+		// or something.
+		addColumn(bundle.getString("label.cycle"), table.getCycle().ordinal() + 1);
+		addColumn("10", null);
+		addColumn("11", null);
+		addColumn("12", null);
+		addColumn("13", null);
+		addColumn("14", null);
+		addColumn("15", null);
+		addColumn("16", null);
+		addColumn("17", null);
+		addColumn("18", null);
+		addColumn("19", null);
+		addColumn("20", null);
+		addColumn("10", null);
+		addColumn("11", null);
+		addColumn("12", null);
+		addColumn("13", null);
+		addColumn("14", null);
+		addColumn("15", null);
+		addColumn("16", null);
+		addColumn("17", null);
+		addColumn("18", null);
+		addColumn("19", null);
+		addColumn("20", null);
+	    }
+	};
+	return builder;
     }
 
     private void importGraduationByCycleTables(AcademicInterval executionInterval, String file) {

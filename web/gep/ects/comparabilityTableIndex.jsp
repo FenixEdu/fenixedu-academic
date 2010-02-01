@@ -108,6 +108,7 @@
                             <fr:slot name="targetEntity.externalId" key="label.externalId" />
                             <fr:slot name="targetEntity.degreeType.localizedName" key="label.degreeType" />
                             <fr:slot name="targetEntity.name" key="label.name" />
+                            <fr:slot name="cycle" key="label.cycle" />
                             <bean:define id="sortByArg"
                                 value="targetEntity.degreeType.localizedName,targetEntity.name" />
                         </logic:equal>
