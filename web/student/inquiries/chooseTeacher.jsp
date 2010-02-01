@@ -32,8 +32,10 @@
 	<logic:iterate id="teacherInquiry" name="studentInquiry" property="teachersInquiries">
 			<tr>
 				<td class="acenter">
-					<bean:define id="personID" name="teacherInquiry" property="key.personID"/>
-					<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>					
+					<logic:present name="teacherInquiry" property="key.personID">
+						<bean:define id="personID" name="teacherInquiry" property="key.personID"/>
+						<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
+					</logic:present>					
 				</td>
 				<td>				
 					<bean:write name="teacherInquiry" property="key.name"/>
