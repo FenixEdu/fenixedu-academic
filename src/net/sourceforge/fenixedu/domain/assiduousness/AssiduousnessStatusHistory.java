@@ -62,7 +62,7 @@ public class AssiduousnessStatusHistory extends AssiduousnessStatusHistory_Base 
     public void editAssiduousnessStatusHistory(LocalDate endDate, Employee modifiedBy) {
 	if (endDate != null) {
 	    LocalDate lastLocalDateClosed = ClosedMonth.getLastClosedLocalDate();
-	    if (!endDate.isAfter(lastLocalDateClosed)) {
+	    if (endDate.isBefore(lastLocalDateClosed)) {
 		throw new DomainException("error.datesInclosedMonth");
 	    }
 	    if (!endDate.isAfter(getBeginDate())) {
