@@ -8,17 +8,29 @@
 <em>Cartões de Identificação</em>
 <h2><bean:message key="link.manage.card.generation" /></h2>
 
-<p>
-	<html:link page="/manageCardGeneration.do?method=showCategoryCodes">
-		<bean:message key="link.manage.card.generation.consult.category.codes" />
-	</html:link>
-</p>
+<logic:present name="crossReferenceResult">
+	<pre><bean:write name="crossReferenceResult"/></pre>
+</logic:present>
 
-<p>
-	<html:link page="/manageCardGeneration.do?method=uploadCardInfo">
-		<bean:message key="link.manage.card.generation.upload.card.info" />
-	</html:link>
-</p>
+<ul>
+	<li>
+		<html:link page="/manageCardGeneration.do?method=showCategoryCodes">
+			<bean:message key="link.manage.card.generation.consult.category.codes" />
+		</html:link>
+	</li>
+	<logic:present role="MANAGER">
+		<li>
+			<html:link page="/manageCardGeneration.do?method=prepareCrossReferenceNewBatch">
+				<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.croosRefNewBatch" />
+			</html:link>
+		</li>
+		<li>
+			<html:link page="/manageCardGeneration.do?method=uploadCardInfo">
+				<bean:message key="link.manage.card.generation.upload.card.info" />
+			</html:link>
+		</li>
+	</logic:present>
+</ul>
 
 <logic:equal name="categoryCondesProblem" value="true">
 	<font color="red">

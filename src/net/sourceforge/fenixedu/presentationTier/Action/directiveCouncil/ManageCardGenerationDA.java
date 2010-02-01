@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationProblem;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationRegister;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationServices;
 import net.sourceforge.fenixedu.domain.cardGeneration.Category;
+import net.sourceforge.fenixedu.domain.cardGeneration.ImportIdentificationCardDataFromFile;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch.CardGenerationBatchCreator;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch.CardGenerationBatchDeleter;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry.CardGenerationEntryDeleter;
@@ -73,6 +74,20 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 	public void setFilename(String filename) {
 	    this.filename = StringNormalizer.normalize(filename);
 	}
+    }
+
+    static public class CrossReferenceBean extends UploadBean {
+
+	private String description;
+
+	public String getDescription() {
+	    return description;
+	}
+
+	public void setDescription(String description) {
+	    this.description = description;
+	}
+
     }
 
     public ActionForward firstPage(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
@@ -565,4 +580,25 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 	    }
 	}
     }
+
+    public ActionForward prepareCrossReferenceNewBatch(final ActionMapping mapping, final ActionForm actionForm,
+	    final HttpServletRequest request, final HttpServletResponse response) {
+	request.setAttribute("crossReferenceBean", new CrossReferenceBean());
+	return mapping.findForward("CrossReferenceBean");
+    }
+
+    public ActionForward crossReferenceNewBatch(final ActionMapping mapping, final ActionForm actionForm,
+	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+	final CrossReferenceBean crossReferenceBean = (CrossReferenceBean) getRenderedObject();	
+
+	final String description = crossReferenceBean.getDescription();
+	final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+	final String contents = FileUtils.readFile(crossReferenceBean.getInputStream());
+
+	final String result = ImportIdentificationCardDataFromFile.crossReferenceFile(description, executionYear, contents);
+	request.setAttribute("crossReferenceResult", result);
+
+	return firstPage(mapping, actionForm, request, response);
+    }
+
 }
