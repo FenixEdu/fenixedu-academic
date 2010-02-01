@@ -341,4 +341,8 @@ public class AccountingTransaction extends AccountingTransaction_Base {
     public boolean isInstallment() {
 	return false;
     }
+
+    public PaymentMode getPaymentMode() {
+	return getTransactionDetail().getPaymentMode();
+    }
 }
