@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.serviceRequests;
 
+import java.util.Comparator;
+
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.RegistrationAcademicServiceRequestCreateBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Employee;
@@ -15,6 +17,15 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 abstract public class RegistrationAcademicServiceRequest extends RegistrationAcademicServiceRequest_Base {
+
+    public static Comparator<RegistrationAcademicServiceRequest> COMPARATOR_BY_SERVICE_REQUEST_NUMBER_THEN_ID = new Comparator<RegistrationAcademicServiceRequest>() {
+	public int compare(RegistrationAcademicServiceRequest o1, RegistrationAcademicServiceRequest o2) {
+	    if (o1.getServiceRequestNumber().compareTo(o2.getServiceRequestNumber()) != 0) {
+		return o1.getServiceRequestNumber().compareTo(o2.getServiceRequestNumber());
+	    }
+	    return COMPARATOR_BY_ID.compare(o1, o2);
+	}
+    };
 
     protected RegistrationAcademicServiceRequest() {
 	super();

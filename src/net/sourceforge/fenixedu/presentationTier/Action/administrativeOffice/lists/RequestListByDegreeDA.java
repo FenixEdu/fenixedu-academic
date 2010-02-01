@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.li
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -22,6 +21,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
@@ -87,7 +87,7 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 	final DegreeByExecutionYearBean degreeSearchBean = getOrCreateDegreeSearchBean();
 	final DocumentRequestSearchBean requestSearchBean = getOrCreateRequestSearchBean();
 
-	final List<RegistrationAcademicServiceRequest> requestList = search(degreeSearchBean, requestSearchBean);
+	final Set<RegistrationAcademicServiceRequest> requestList = search(degreeSearchBean, requestSearchBean);
 
 	request.setAttribute("degreeByExecutionYearBean", degreeSearchBean);
 	request.setAttribute("documentRequestSearchBean", requestSearchBean);
@@ -96,9 +96,21 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 	return mapping.findForward("searchRequests");
     }
 
-    public List<RegistrationAcademicServiceRequest> search(DegreeByExecutionYearBean degreeSearchBean,
+    private Set<RegistrationAcademicServiceRequest> search(DegreeByExecutionYearBean degreeSearchBean,
 	    DocumentRequestSearchBean requestSearchBean) {
-	List<RegistrationAcademicServiceRequest> resultList = new ArrayList<RegistrationAcademicServiceRequest>();
+	final ExecutionYear chosenExecutionYear = degreeSearchBean.getExecutionYear();
+	Set<RegistrationAcademicServiceRequest> resultList = new TreeSet<RegistrationAcademicServiceRequest>(
+		RegistrationAcademicServiceRequest.COMPARATOR_BY_SERVICE_REQUEST_NUMBER_THEN_ID);
+
+	ArrayList<AcademicServiceRequest> requestList = getRequestsByYear(chosenExecutionYear.getBeginCivilYear());
+	requestList.addAll(getRequestsByYear(chosenExecutionYear.getEndCivilYear()));
+
+	return filterResults(degreeSearchBean, requestSearchBean, resultList, requestList);
+    }
+
+    private Set<RegistrationAcademicServiceRequest> filterResults(final DegreeByExecutionYearBean degreeSearchBean,
+	    final DocumentRequestSearchBean requestSearchBean, Set<RegistrationAcademicServiceRequest> resultList,
+	    final ArrayList<AcademicServiceRequest> requestList) {
 
 	final Degree chosenDegree = degreeSearchBean.getDegree();
 	final DegreeType chosenDegreeType = degreeSearchBean.getDegreeType();
@@ -109,8 +121,6 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 	final AcademicServiceRequestSituationType chosenRequestSituation = requestSearchBean
 		.getAcademicServiceRequestSituationType();
 
-	ArrayList<AcademicServiceRequest> requestList = getRequestsByYear(chosenExecutionYear.getBeginCivilYear());
-	requestList.addAll(getRequestsByYear(chosenExecutionYear.getEndCivilYear()));
 	for (final AcademicServiceRequest academicServiceRequest : requestList) {
 	    if (!academicServiceRequest.isRequestForRegistration()) {
 		continue;
@@ -134,10 +144,16 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 	    if (chosenServiceRequestType != null && chosenServiceRequestType != request.getAcademicServiceRequestType()) {
 		continue;
 	    }
-	    if (request.getAcademicServiceRequestType() == AcademicServiceRequestType.DOCUMENT
-		    && chosenDocumentRequestType != null
-		    && chosenDocumentRequestType != (((DocumentRequest) request).getDocumentRequestType())) {
-		continue;
+	    if (request.getAcademicServiceRequestType() == AcademicServiceRequestType.DOCUMENT) {
+		DocumentRequestType documentType = ((DocumentRequest) request).getDocumentRequestType();
+		if ((chosenDocumentRequestType != null) && (chosenDocumentRequestType != documentType)) {
+		    continue;
+		}
+		AdministrativeOfficeType administrativeOfficeType = AccessControl.getPerson().getEmployee()
+			.getAdministrativeOffice().getAdministrativeOfficeType();
+		if (!documentType.getAdministrativeOfficeTypes().contains(administrativeOfficeType)) {
+		    continue;
+		}
 	    }
 	    if (chosenRequestSituation != null
 		    && chosenRequestSituation != request.getActiveSituation().getAcademicServiceRequestSituationType()) {
@@ -148,7 +164,7 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 	    }
 	    resultList.add(request);
 	}
-
+	
 	return resultList;
     }
 
@@ -191,7 +207,7 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 	if ((degreeSearchBean == null) || (requestSearchBean == null)) {
 	    return null;
 	}
-	final List<RegistrationAcademicServiceRequest> requestList = search(degreeSearchBean, requestSearchBean);
+	final Set<RegistrationAcademicServiceRequest> requestList = search(degreeSearchBean, requestSearchBean);
 
 	try {
 	    String filename = getResourceMessage("label.requests");
@@ -220,7 +236,7 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 	}
     }
 
-    private void exportToXls(List<RegistrationAcademicServiceRequest> requestList, OutputStream outputStream,
+    private void exportToXls(Set<RegistrationAcademicServiceRequest> requestList, OutputStream outputStream,
 	    DegreeByExecutionYearBean degreeSearchBean, DocumentRequestSearchBean requestSearchBean) throws IOException {
 
 	final StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet(
@@ -255,7 +271,7 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 	}
     }
 
-    private void fillSpreadSheetResults(List<RegistrationAcademicServiceRequest> requestList,
+    private void fillSpreadSheetResults(Set<RegistrationAcademicServiceRequest> requestList,
 	    final StyledExcelSpreadsheet spreadsheet) {
 	spreadsheet.newRow();
 	spreadsheet.newRow();
