@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.accounting.events.candidacy.DegreeTransfe
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.DfaGratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
+import net.sourceforge.fenixedu.domain.accounting.events.gratuity.StandaloneEnrolmentGratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.GratuitySituationPaymentCode;
@@ -67,6 +68,8 @@ public class SibsPaymentFileProcessReportDTO {
 
     private Money totalCost;
 
+    private Money standaloneEnrolmentGratuityEventAmount;
+
     public SibsPaymentFileProcessReportDTO() {
 	super();
 	this.degreeGratuityTotalAmount = Money.ZERO;
@@ -88,6 +91,7 @@ public class SibsPaymentFileProcessReportDTO {
 	this.degreeTransferIndividualCandidacyAmount = Money.ZERO;
 	this.secondCycleIndividualCandidacyAmount = Money.ZERO;
 	this.degreeCandidacyForGraduatedPersonAmount = Money.ZERO;
+	this.standaloneEnrolmentGratuityEventAmount = Money.ZERO;
     }
 
     public SibsPaymentFileProcessReportDTO(final SibsIncommingPaymentFile sibsIncomingPaymentFile) {
@@ -275,6 +279,8 @@ public class SibsPaymentFileProcessReportDTO {
 	    addDegreeCandidacyForGraduatedPersonAmount(detailLine.getAmount());
 	} else if (event instanceof DegreeTransferIndividualCandidacyEvent) {
 	    addDegreeTransferIndividualCandidacyAmount(detailLine.getAmount());
+	} else if (event instanceof StandaloneEnrolmentGratuityEvent) {
+	    addStandaloneEnrolmentGratuityEventAmount(detailLine.getAmount());
 	} else {
 	    throw new IllegalArgumentException("Unknown accounting event " + event.getClass().getName());
 	}
@@ -360,5 +366,13 @@ public class SibsPaymentFileProcessReportDTO {
 
     public void addDegreeCandidacyForGraduatedPersonAmount(Money money) {
 	this.degreeCandidacyForGraduatedPersonAmount = this.degreeCandidacyForGraduatedPersonAmount.add(money);
+    }
+
+    public Money getStandaloneEnrolmentGratuityEventAmount() {
+	return this.standaloneEnrolmentGratuityEventAmount;
+    }
+
+    public void addStandaloneEnrolmentGratuityEventAmount(Money amount) {
+	this.standaloneEnrolmentGratuityEventAmount = this.standaloneEnrolmentGratuityEventAmount.add(amount);
     }
 }
