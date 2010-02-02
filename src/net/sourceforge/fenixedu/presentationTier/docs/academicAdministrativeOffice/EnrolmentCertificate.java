@@ -6,6 +6,8 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EnrolmentCertificateRequestPR;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -64,8 +66,15 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
     @Override
     protected String getDegreeDescription() {
 	final Registration registration = getRegistration();
-	return registration.getDegreeType().isComposite() && hasMoreThanOneCycle(registration) ? registration
-		.getDegreeDescription(null) : super.getDegreeDescription();
+
+	if (registration.getDegreeType().isComposite() && hasMoreThanOneCycle(registration)) {
+	    return registration.getDegreeDescription(getDocumentRequest().getExecutionYear(), null);
+	} else {
+	    final DegreeType degreeType = registration.getDegreeType();
+	    final CycleType cycleType = degreeType.hasExactlyOneCycleType() ? degreeType.getCycleType() : registration
+		    .getCycleType(getExecutionYear());
+	    return registration.getDegreeDescription(getExecutionYear(), cycleType, getLocale());
+	}
     }
 
     private boolean hasMoreThanOneCycle(final Registration registration) {

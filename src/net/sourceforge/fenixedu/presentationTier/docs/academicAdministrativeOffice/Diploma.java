@@ -52,7 +52,7 @@ public class Diploma extends AdministrativeOfficeDocument {
 	    addParameter("dissertationTitle", registration.getDissertationThesisTitle());
 	}
 
-	ExecutionYear executionYear = registrationConclusionBean.getStartExecutionYear();
+	ExecutionYear executionYear = registrationConclusionBean.getConclusionYear();
 
 	addParameter("conclusionStatus", getConclusionStatusAndDegreeType(diplomaRequest, registration));
 	addParameter("degreeFilteredName", registration.getDegree().getFilteredName(executionYear));

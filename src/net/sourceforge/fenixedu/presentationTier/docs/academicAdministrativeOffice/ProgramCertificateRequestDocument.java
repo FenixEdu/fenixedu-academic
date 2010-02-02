@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -76,9 +77,13 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
     protected String getDegreeDescription() {
 	final CycleType requestedCycle = getDocumentRequest().getRequestedCycle();
 	if (requestedCycle == null) {
-	    return super.getDegreeDescription();
+	    final Registration registration = getRegistration();
+	    final DegreeType degreeType = registration.getDegreeType();
+	    final CycleType cycleType = degreeType.hasExactlyOneCycleType() ? degreeType.getCycleType() : registration
+		    .getCycleType(getExecutionYear());
+	    return registration.getDegreeDescription(getExecutionYear(), cycleType, getLocale());
 	}
-	return getRegistration().getDegreeDescription(requestedCycle, getLocale());
+	return getRegistration().getDegreeDescription(getExecutionYear(), requestedCycle, getLocale());
     }
 
     public boolean isBolonha() {

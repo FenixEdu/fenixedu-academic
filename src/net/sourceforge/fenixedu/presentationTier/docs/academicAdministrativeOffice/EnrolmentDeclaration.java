@@ -4,6 +4,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentPurposeType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentDeclarationRequest;
@@ -32,8 +34,15 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
     @Override
     protected String getDegreeDescription() {
 	final Registration registration = getRegistration();
-	return registration.getDegreeType().isComposite() ? registration.getDegreeDescription(null) : super
-		.getDegreeDescription();
+
+	if (registration.getDegreeType().isComposite()) {
+	    return registration.getDegreeDescription(getDocumentRequest().getExecutionYear(), null);
+	} else {
+	    final DegreeType degreeType = registration.getDegreeType();
+	    final CycleType cycleType = degreeType.hasExactlyOneCycleType() ? degreeType.getCycleType() : registration
+		    .getCycleType(getExecutionYear());
+	    return registration.getDegreeDescription(getExecutionYear(), cycleType, getLocale());
+	}
     }
 
     final private String getCurricularYear() {

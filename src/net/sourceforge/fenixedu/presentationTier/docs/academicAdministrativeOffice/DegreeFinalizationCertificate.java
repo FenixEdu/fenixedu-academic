@@ -8,6 +8,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -65,7 +66,17 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
     @Override
     protected String getDegreeDescription() {
 	final DegreeFinalizationCertificateRequest request = getDocumentRequest();
-	return getRegistration().getDegreeDescription(request.getWhatShouldBeRequestedCycle(), getLocale());
+
+	CycleType cycleType = request.getWhatShouldBeRequestedCycle();
+
+	ExecutionYear conclusionYear = null;
+	if (cycleType == null) {
+	    conclusionYear = getRegistration().getConclusionYear();
+	} else {
+	    conclusionYear = getRegistration().getLastStudentCurricularPlan().getCycle(cycleType).getConclusionYear();
+	}
+
+	return getRegistration().getDegreeDescription(conclusionYear, request.getWhatShouldBeRequestedCycle(), getLocale());
     }
 
     private String getDegreeFinalizationDate(final DegreeFinalizationCertificateRequest request) {

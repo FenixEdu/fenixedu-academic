@@ -38,7 +38,7 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 
     @Override
     protected String getDegreeDescription() {
-	return getRegistration().getDegreeDescription(null, getLocale());
+	return getRegistration().getDegreeDescription(getDocumentRequest().getExecutionYear(), null, getLocale());
     }
 
     final private String getApprovementsInfo() {

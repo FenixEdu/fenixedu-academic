@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CourseLoadRequest;
@@ -56,9 +57,13 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
     protected String getDegreeDescription() {
 	final CycleType requestedCycle = getDocumentRequest().getRequestedCycle();
 	if (requestedCycle == null) {
-	    return super.getDegreeDescription();
+	    final Registration registration = getRegistration();
+	    final DegreeType degreeType = registration.getDegreeType();
+	    final CycleType cycleType = degreeType.hasExactlyOneCycleType() ? degreeType.getCycleType() : registration
+		    .getCycleType(getExecutionYear());
+	    return registration.getDegreeDescription(getExecutionYear(), cycleType, getLocale());
 	}
-	return getRegistration().getDegreeDescription(requestedCycle, getLocale());
+	return getRegistration().getDegreeDescription(getExecutionYear(), requestedCycle, getLocale());
     }
 
     private String getStudentNumber() {

@@ -2012,7 +2012,15 @@ public class Registration extends Registration_Base {
 	return getDegreeDescription(cycleType, Language.getLocale());
     }
 
+    final public String getDegreeDescription(ExecutionYear executionYear, final CycleType cycleType) {
+	return getDegreeDescription(executionYear, cycleType, Language.getLocale());
+    }
+
     final public String getDegreeDescription(final CycleType cycleType, final Locale locale) {
+	return getDegreeDescription(this.getStartExecutionYear(), cycleType, locale);
+    }
+
+    final public String getDegreeDescription(ExecutionYear executionYear, final CycleType cycleType, final Locale locale) {
 	final StringBuilder res = new StringBuilder();
 
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", locale);
@@ -2034,7 +2042,7 @@ public class Registration extends Registration_Base {
 	    res.append(StringUtils.SINGLE_SPACE).append(bundle.getString("label.in")).append(StringUtils.SINGLE_SPACE);
 	}
 
-	res.append(degree.getFilteredName(this.getStartExecutionYear(), locale).toUpperCase());
+	res.append(degree.getFilteredName(executionYear, locale).toUpperCase());
 
 	return res.toString();
     }
@@ -2616,14 +2624,15 @@ public class Registration extends Registration_Base {
     final public String getGraduateTitle(final CycleType cycleType, final Locale locale) {
 	if (cycleType == null) {
 	    if (isRegistrationConclusionProcessed()) {
-		return getLastDegreeCurricularPlan().getGraduateTitle(getStartExecutionYear(), locale);
+		return getLastDegreeCurricularPlan().getGraduateTitle(getConclusionYear(), locale);
 	    }
 
 	    throw new DomainException("Registration.is.not.concluded");
 	}
 
 	if (hasConcludedCycle(cycleType)) {
-	    return getLastDegreeCurricularPlan().getGraduateTitle(getStartExecutionYear(), cycleType, locale);
+	    return getLastDegreeCurricularPlan().getGraduateTitle(
+		    getLastStudentCurricularPlan().getCycle(cycleType).getConclusionYear(), cycleType, locale);
 	}
 
 	throw new DomainException("Registration.hasnt.concluded.requested.cycle");
