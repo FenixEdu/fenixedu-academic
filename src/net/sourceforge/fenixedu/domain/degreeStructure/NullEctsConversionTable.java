@@ -44,6 +44,11 @@ public class NullEctsConversionTable implements IEctsConversionTable, Serializab
 	return new NullEctsComparabilityTable();
     }
 
+    @Override
+    public EctsComparabilityPercentages getPercentages() {
+	return new NullEctsComparabilityPercentages();
+    }
+
     public CurricularYear getCurricularYear() {
 	return curricularYear;
     }

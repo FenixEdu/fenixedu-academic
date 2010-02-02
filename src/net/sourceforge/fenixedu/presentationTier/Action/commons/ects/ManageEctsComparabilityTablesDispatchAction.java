@@ -17,10 +17,14 @@ import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
+import net.sourceforge.fenixedu.domain.degreeStructure.EctsComparabilityPercentages;
+import net.sourceforge.fenixedu.domain.degreeStructure.EctsComparabilityTable;
 import net.sourceforge.fenixedu.domain.degreeStructure.EctsCompetenceCourseConversionTable;
 import net.sourceforge.fenixedu.domain.degreeStructure.EctsCycleGraduationGradeConversionTable;
 import net.sourceforge.fenixedu.domain.degreeStructure.EctsDegreeByCurricularYearConversionTable;
@@ -41,6 +45,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -103,6 +108,8 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 	try {
 	    importTables(filter.getExecutionInterval(), filter.getType(), filter.getLevel(), FileUtils.readFile(filter
 		    .getInputStream()));
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getKey(), e.getArgs());
 	} catch (IOException e) {
 	    addActionMessage(request, "error.ects.table.unableToReadTablesFile");
 	}
@@ -259,6 +266,7 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 
     private SheetData<IEctsConversionTable> exportEnrolmentByCompetenceCourseTemplate(EctsTableFilter filter) {
 	final ExecutionYear year = (ExecutionYear) ExecutionYear.getExecutionInterval(filter.getExecutionInterval());
+	final ExecutionSemester querySemester = year.getFirstExecutionPeriod();
 	SheetData<IEctsConversionTable> builder = new SheetData<IEctsConversionTable>(
 		processEnrolmentByCompetenceCourseStatus(filter)) {
 	    @Override
@@ -267,8 +275,8 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 		CompetenceCourse competence = (CompetenceCourse) table.getTargetEntity();
 		addCell(bundle.getString("label.externalId"), competence.getExternalId());
 		addCell(bundle.getString("label.departmentUnit.name"), competence.getDepartmentUnit().getName());
-		addCell(bundle.getString("label.competenceCourse.name"), competence.getName());
-		addCell(bundle.getString("label.acronym"), competence.getAcronym());
+		addCell(bundle.getString("label.competenceCourse.name"), competence.getName(querySemester));
+		addCell(bundle.getString("label.acronym"), competence.getAcronym(querySemester));
 		addCell(bundle.getString("label.idInternal"), competence.getIdInternal());
 		Set<String> ids = new HashSet<String>();
 		for (CurricularCourse course : competence.getAssociatedCurricularCoursesSet()) {
@@ -280,30 +288,25 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 		    }
 		}
 		addCell(bundle.getString("label.competenceCourse.executionCodes"), StringUtils.join(ids, ", "));
-		addCell("10", null);
-		addCell("11", null);
-		addCell("12", null);
-		addCell("13", null);
-		addCell("14", null);
-		addCell("15", null);
-		addCell("16", null);
-		addCell("17", null);
-		addCell("18", null);
-		addCell("19", null);
-		addCell("20", null);
+		EctsComparabilityTable ects = table.getEctsTable();
+		for (int i = 10; i <= 20; i++) {
+		    addCell(i + "", !ects.convert(i).equals(GradeScale.NA) ? ects.convert(i) : null);
+		}
 	    }
 	};
 	return builder;
     }
 
+    @Service
     private void importEnrolmentByCompetenceCourseTables(AcademicInterval executionInterval, String file) {
+	ExecutionSemester querySemester = ExecutionYear.readByAcademicInterval(executionInterval).getFirstExecutionPeriod();
 	for (String line : file.split("\n")) {
 	    String[] parts = line.split("\\s*;\\s*");
 	    CompetenceCourse competence = DomainObject.fromExternalId(parts[0]);
 	    if (!competence.getDepartmentUnit().getName().equals(parts[1])) {
 		throw new DomainException("error.ectsComparabilityTable.invalidLine.nonMatchingCourse", parts[0], parts[1]);
 	    }
-	    if (!competence.getName().equals(parts[2])) {
+	    if (!competence.getName(querySemester).equals(parts[2])) {
 		throw new DomainException("error.ectsComparabilityTable.invalidLine.nonMatchingCourse", parts[0], parts[2]);
 	    }
 	    try {
@@ -346,22 +349,16 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 		addCell(bundle.getString("label.degreeType"), degree.getDegreeType().getLocalizedName());
 		addCell(bundle.getString("label.name"), degree.getName());
 		addCell(bundle.getString("label.curricularYear"), table.getCurricularYear().getYear());
-		addCell("10", null);
-		addCell("11", null);
-		addCell("12", null);
-		addCell("13", null);
-		addCell("14", null);
-		addCell("15", null);
-		addCell("16", null);
-		addCell("17", null);
-		addCell("18", null);
-		addCell("19", null);
-		addCell("20", null);
+		EctsComparabilityTable ects = table.getEctsTable();
+		for (int i = 10; i <= 20; i++) {
+		    addCell(i + "", !ects.convert(i).equals(GradeScale.NA) ? ects.convert(i) : null);
+		}
 	    }
 	};
 	return builder;
     }
 
+    @Service
     private void importEnrolmentByDegreeTables(AcademicInterval executionInterval, String file) {
 	for (String line : file.split("\n")) {
 	    String[] parts = line.split("\\s*;\\s*");
@@ -420,22 +417,16 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 		// or something.
 		addCell(bundle.getString("label.cycle"), table.getCycle().ordinal() + 1);
 		addCell(bundle.getString("label.curricularYear"), table.getCurricularYear().getYear());
-		addCell("10", null);
-		addCell("11", null);
-		addCell("12", null);
-		addCell("13", null);
-		addCell("14", null);
-		addCell("15", null);
-		addCell("16", null);
-		addCell("17", null);
-		addCell("18", null);
-		addCell("19", null);
-		addCell("20", null);
+		EctsComparabilityTable ects = table.getEctsTable();
+		for (int i = 10; i <= 20; i++) {
+		    addCell(i + "", !ects.convert(i).equals(GradeScale.NA) ? ects.convert(i) : null);
+		}
 	    }
 	};
 	return builder;
     }
 
+    @Service
     private void importEnrolmentByCurricularYearTables(AcademicInterval executionInterval, String file) {
 	for (String line : file.split("\n")) {
 	    String[] parts = line.split("\\s*;\\s*");
@@ -469,7 +460,11 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 		    if (table != null) {
 			tables.add(table);
 		    } else {
-			tables.add(new NullEctsConversionTable(degree, cycle));
+			if (degree.getDegreeType().isComposite()) {
+			    tables.add(new NullEctsConversionTable(degree, cycle));
+			} else {
+			    tables.add(new NullEctsConversionTable(degree));
+			}
 		    }
 		}
 	    }
@@ -487,33 +482,20 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 		addCell(bundle.getString("label.degreeType"), degree.getDegreeType().getLocalizedName());
 		addCell(bundle.getString("label.name"), degree.getName());
 		addCell(bundle.getString("label.cycle"), table.getCycle() != null ? table.getCycle().ordinal() + 1 : null);
-		addCell("10", null);
-		addCell("11", null);
-		addCell("12", null);
-		addCell("13", null);
-		addCell("14", null);
-		addCell("15", null);
-		addCell("16", null);
-		addCell("17", null);
-		addCell("18", null);
-		addCell("19", null);
-		addCell("20", null);
-		addCell("10", null);
-		addCell("11", null);
-		addCell("12", null);
-		addCell("13", null);
-		addCell("14", null);
-		addCell("15", null);
-		addCell("16", null);
-		addCell("17", null);
-		addCell("18", null);
-		addCell("19", null);
-		addCell("20", null);
+		EctsComparabilityTable ects = table.getEctsTable();
+		for (int i = 10; i <= 20; i++) {
+		    addCell(i + "", !ects.convert(i).equals(GradeScale.NA) ? ects.convert(i) : null);
+		}
+		EctsComparabilityPercentages percentages = table.getPercentages();
+		for (int i = 10; i <= 20; i++) {
+		    addCell(i + "", percentages.getPercentage(i) != -1 ? percentages.getPercentage(i) : null);
+		}
 	    }
 	};
 	return builder;
     }
 
+    @Service
     private void importGraduationByDegreeTables(AcademicInterval executionInterval, String file) {
 	for (String line : file.split("\n")) {
 	    String[] parts = line.split("\\s*;\\s*");
@@ -562,33 +544,20 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 		// FIXME: should not depend on ordinal(), use a resource bundle
 		// or something.
 		addCell(bundle.getString("label.cycle"), table.getCycle().ordinal() + 1);
-		addCell("10", null);
-		addCell("11", null);
-		addCell("12", null);
-		addCell("13", null);
-		addCell("14", null);
-		addCell("15", null);
-		addCell("16", null);
-		addCell("17", null);
-		addCell("18", null);
-		addCell("19", null);
-		addCell("20", null);
-		addCell("10", null);
-		addCell("11", null);
-		addCell("12", null);
-		addCell("13", null);
-		addCell("14", null);
-		addCell("15", null);
-		addCell("16", null);
-		addCell("17", null);
-		addCell("18", null);
-		addCell("19", null);
-		addCell("20", null);
+		EctsComparabilityTable ects = table.getEctsTable();
+		for (int i = 10; i <= 20; i++) {
+		    addCell(i + "", !ects.convert(i).equals(GradeScale.NA) ? ects.convert(i) : null);
+		}
+		EctsComparabilityPercentages percentages = table.getPercentages();
+		for (int i = 10; i <= 20; i++) {
+		    addCell(i + "", percentages.getPercentage(i) != -1 ? percentages.getPercentage(i) : null);
+		}
 	    }
 	};
 	return builder;
     }
 
+    @Service
     private void importGraduationByCycleTables(AcademicInterval executionInterval, String file) {
 	for (String line : file.split("\n")) {
 	    String[] parts = line.split("\\s*;\\s*");

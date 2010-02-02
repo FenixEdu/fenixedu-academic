@@ -35,6 +35,10 @@ public class EctsComparabilityPercentages implements Serializable {
 	return percentages[grade - 10];
     }
 
+    public String getPrintableFormat() {
+	return toString();
+    }
+
     @Override
     public String toString() {
 	List<String> percents = new ArrayList<String>();

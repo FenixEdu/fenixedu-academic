@@ -47,4 +47,9 @@ public class EctsCompetenceCourseConversionTable extends EctsCompetenceCourseCon
     public CycleType getCycle() {
 	throw new UnsupportedOperationException();
     }
+
+    @Override
+    public EctsComparabilityPercentages getPercentages() {
+	return new NullEctsComparabilityPercentages();
+    }
 }

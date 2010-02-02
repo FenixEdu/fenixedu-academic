@@ -299,7 +299,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     public EctsDegreeGraduationGradeConversionTable getEctsGraduationGradeConversionTable(AcademicInterval year, CycleType cycle) {
 	for (EctsDegreeGraduationGradeConversionTable table : getEctsGraduationGradeConversionTables()) {
-	    if (table.getYear().equals(year) && table.getCycle().equals(cycle)) {
+	    if (table.getYear().equals(year) && (!getDegreeType().isComposite() || table.getCycle().equals(cycle))) {
 		return table;
 	    }
 	}

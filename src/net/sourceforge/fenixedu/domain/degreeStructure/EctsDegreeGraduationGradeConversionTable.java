@@ -4,7 +4,6 @@ import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -41,7 +40,7 @@ public class EctsDegreeGraduationGradeConversionTable extends EctsDegreeGraduati
     @Service
     public static EctsDegreeGraduationGradeConversionTable createConversionTable(Degree degree,
 	    AcademicInterval executionInterval, CycleType cycle, String[] table, String[] percentages) {
-	if (degree.getDegreeType().equals(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE)) {
+	if (degree.getDegreeType().isComposite()) {
 	    if (cycle == null)
 		throw new ConversionTableCycleIsRequiredInIntegratedMasterDegree();
 	    for (EctsDegreeGraduationGradeConversionTable conversion : degree.getEctsGraduationGradeConversionTables()) {

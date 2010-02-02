@@ -8,6 +8,10 @@
 
 <h2><bean:message bundle="GEP_RESOURCES" key="title.ects.tablesManagement" /></h2>
 
+<html:messages id="message" message="true" bundle="GEP_RESOURCES">
+    <p><span class="error"><!-- Error messages go here --><bean:write name="message" /></span></p>
+</html:messages>
+
 <fr:form action="/manageEctsComparabilityTables.do">
     <html:hidden property="method" value="filterPostback" />
     <fr:edit id="filter" name="filter">

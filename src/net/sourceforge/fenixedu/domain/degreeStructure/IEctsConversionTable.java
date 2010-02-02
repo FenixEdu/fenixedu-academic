@@ -8,6 +8,8 @@ public interface IEctsConversionTable {
 
     public EctsComparabilityTable getEctsTable();
 
+    public EctsComparabilityPercentages getPercentages();
+
     public CurricularYear getCurricularYear();
 
     public CycleType getCycle();
