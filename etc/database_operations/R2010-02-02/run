@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add new field to sibs payment file process report" addFieldsToSibsPaymentFileProcessReport.sql
