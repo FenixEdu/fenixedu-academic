@@ -1,9 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd.externalAccess;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,9 +10,9 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.access.PhdExternalOperationBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess.JuryDocumentsDownload;
+import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdDocumentsZip;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
 
 import org.apache.struts.action.ActionForm;
@@ -102,7 +99,7 @@ public class PhdExternalAccessDA extends PhdProcessDA {
 
 	    final PhdIndividualProgramProcess process = getProcess(request);
 	    ExecuteProcessActivity.run(process.getThesisProcess(), JuryDocumentsDownload.class, getOperationBean());
-	    writeFile(response, getZipFilename(process), "application/zip", createZip(process));
+	    writeFile(response, getZipDocumentsFilename(process), PhdDocumentsZip.ZIP_MIME_TYPE, createZip(process));
 
 	    return null;
 
@@ -112,28 +109,18 @@ public class PhdExternalAccessDA extends PhdProcessDA {
 	}
     }
 
-    private String getZipFilename(PhdIndividualProgramProcess process) {
+    private String getZipDocumentsFilename(PhdIndividualProgramProcess process) {
 	return process.getProcessNumber().replace("/", "-") + "-Documents.zip";
     }
 
-    private byte[] createZip(final PhdIndividualProgramProcess process) throws IOException {
-	final ByteArrayOutputStream result = new ByteArrayOutputStream();
-	final ZipOutputStream zipFile = new ZipOutputStream(result);
+    protected byte[] createZip(final PhdIndividualProgramProcess process) throws IOException {
+	final PhdDocumentsZip zip = new PhdDocumentsZip();
 
-	zipEntry(zipFile, process.getCandidacyProcess().getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.CV));
-	zipEntry(zipFile, process.getThesisProcess().getLastestDocumentVersionFor(
-		PhdIndividualProgramDocumentType.PROVISIONAL_THESIS));
+	zip.add(process.getCandidacyProcess().getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.CV));
+	zip.add(process.getThesisProcess().getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.PROVISIONAL_THESIS));
 
 	// TODO: add remaining documents here (Abstract /resume)
-
-	zipFile.close();
-	return result.toByteArray();
-    }
-
-    private void zipEntry(final ZipOutputStream zipFile, final PhdProgramProcessDocument document) throws IOException {
-	zipFile.putNextEntry(new ZipEntry(document.getFilename()));
-	zipFile.write(document.getContents());
-	zipFile.closeEntry();
+	return zip.create();
     }
 
     // end jury document download

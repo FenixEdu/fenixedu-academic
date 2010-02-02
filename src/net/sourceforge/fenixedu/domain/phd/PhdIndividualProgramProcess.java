@@ -740,18 +740,20 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	@Override
 	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
 
-	    if (process.hasSeminarProcess() && !process.getSeminarProcess().isExempted()
-		    && !process.getSeminarProcess().isConcluded()) {
-		throw new PreConditionNotValidException();
-	    }
-
-	    if (process.hasThesisProcess() || process.getActiveState() != PhdIndividualProgramProcessState.WORK_DEVELOPMENT) {
-		throw new PreConditionNotValidException();
-	    }
-
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
+	    // if (process.hasSeminarProcess() &&
+	    // !process.getSeminarProcess().isExempted()
+	    // && !process.getSeminarProcess().isConcluded()) {
+	    // throw new PreConditionNotValidException();
+	    // }
+	    //
+	    // if (process.hasThesisProcess() || process.getActiveState() !=
+	    // PhdIndividualProgramProcessState.WORK_DEVELOPMENT) {
+	    // throw new PreConditionNotValidException();
+	    // }
+	    //
+	    // if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	    // throw new PreConditionNotValidException();
+	    // }
 	}
 
 	@Override
@@ -768,7 +770,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
 	    /*
 	     * 
-	     * TODO: SEND ALERTS ALERTS
+	     * TODO: SEND ALERTS ALERTS: alert to detect if process must be
+	     * concluded, etc etc
 	     */
 
 	    return individualProcess;

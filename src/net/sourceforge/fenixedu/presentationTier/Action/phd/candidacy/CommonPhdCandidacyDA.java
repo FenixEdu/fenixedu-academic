@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy;
 
+import java.io.IOException;
 import java.util.Collections;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
@@ -17,6 +19,7 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RejectCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RequestRatifyCandidacy;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.UploadCandidacyReview;
+import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdDocumentsZip;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
 
 import org.apache.struts.action.ActionForm;
@@ -146,6 +149,22 @@ abstract public class CommonPhdCandidacyDA extends PhdProcessDA {
 
     protected PhdProgramProcessDocument getDocument(HttpServletRequest request) {
 	return getDomainObject(request, "documentId");
+    }
+
+    public ActionForward downloadCandidacyDocuments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws IOException {
+	writeFile(response, getCandidacyDocumentsFilename(request), PhdDocumentsZip.ZIP_MIME_TYPE, createZip(request));
+	return null;
+    }
+
+    private String getCandidacyDocumentsFilename(HttpServletRequest request) {
+	final PhdIndividualProgramProcess process = getProcess(request).getIndividualProgramProcess();
+	return String.format("%s-%s.zip", process.getProcessNumber().replace("/", "-"), getMessageFromResource(
+		"label.phd.manageCandidacyDocuments").replace(" ", "_"));
+    }
+
+    private byte[] createZip(HttpServletRequest request) throws IOException {
+	return new PhdDocumentsZip().addAll(getProcess(request).getLatestDocumentVersions()).create();
     }
 
 }

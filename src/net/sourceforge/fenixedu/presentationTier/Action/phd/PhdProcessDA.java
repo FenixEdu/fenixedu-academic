@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd;
 
+import java.text.MessageFormat;
+import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
@@ -22,11 +24,13 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.plugin.ConfigurationReader;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 abstract public class PhdProcessDA extends FenixDispatchAction {
 
-    protected static final Pattern AREA_CODE_REGEX = Pattern.compile("\\d{4}-\\d{3}");
-
+    static protected final Pattern AREA_CODE_REGEX = Pattern.compile("\\d{4}-\\d{3}");
+    static protected final String PHD_RESOURCES = "resources.PhdResources";
+    
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
@@ -132,6 +136,10 @@ abstract public class PhdProcessDA extends FenixDispatchAction {
 	} else {
 	    request.setAttribute("isEmployee", false);
 	}
+    }
+
+    protected String getMessageFromResource(final String key, Object ... args) {
+	return MessageFormat.format(ResourceBundle.getBundle(PHD_RESOURCES, Language.getLocale()).getString(key), args);
     }
 
 }
