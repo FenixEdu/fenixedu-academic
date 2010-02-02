@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.se
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.zip.ZipEntry;
@@ -32,8 +31,10 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.utl.ist.fenix.tools.excel.SimplifiedSpreadsheetBuilder;
-import pt.utl.ist.fenix.tools.excel.WorkbookExportFormat;
+import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
+import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
+import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Mapping(path = "/rectorateDocumentSubmission", module = "academicAdminOffice")
 @Forwards( { @Forward(name = "index", path = "/academicAdminOffice/rectorateDocumentSubmission/batchIndex.jsp"),
@@ -135,33 +136,31 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 
     private ActionForward generateMetadata(Set<DocumentRequest> documents, RectorateSubmissionBatch batch, String prefix,
 	    HttpServletRequest request, HttpServletResponse response) {
-	SimplifiedSpreadsheetBuilder<DocumentRequest> builder = new SimplifiedSpreadsheetBuilder<DocumentRequest>(documents) {
-	    private final ResourceBundle enumeration = ResourceBundle.getBundle("resources/EnumerationResources", new Locale(
-		    "pt", "PT"));
-
+	SheetData<DocumentRequest> data = new SheetData<DocumentRequest>(documents) {
 	    @Override
 	    protected void makeLine(DocumentRequest document) {
-		addColumn("Código", document.getRegistryCode().getCode());
-		addColumn("Tipo de Documento", enumeration.getString(document.getDocumentRequestType().name()));
+		ResourceBundle enumeration = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+		addCell("Código", document.getRegistryCode().getCode());
+		addCell("Tipo de Documento", enumeration.getString(document.getDocumentRequestType().name()));
 		switch (document.getDocumentRequestType()) {
 		case REGISTRY_DIPLOMA_REQUEST:
-		    addColumn("Ciclo", enumeration.getString(((RegistryDiplomaRequest) document).getRequestedCycle().name()));
+		    addCell("Ciclo", enumeration.getString(((RegistryDiplomaRequest) document).getRequestedCycle().name()));
 		    break;
 		case DIPLOMA_REQUEST:
 		    CycleType cycle = ((DiplomaRequest) document).getWhatShouldBeRequestedCycle();
-		    addColumn("Ciclo", cycle != null ? enumeration.getString(cycle.name()) : null);
+		    addCell("Ciclo", cycle != null ? enumeration.getString(cycle.name()) : null);
 		    break;
 		case DIPLOMA_SUPPLEMENT_REQUEST:
-		    addColumn("Ciclo", enumeration.getString(((DiplomaSupplementRequest) document).getRequestedCycle().name()));
+		    addCell("Ciclo", enumeration.getString(((DiplomaSupplementRequest) document).getRequestedCycle().name()));
 		    break;
 		default:
-		    addColumn("Ciclo", null);
+		    addCell("Ciclo", null);
 		}
-		addColumn("Tipo de Curso", enumeration.getString(document.getDegreeType().name()));
-		addColumn("Nº de Aluno", document.getRegistration().getNumber());
-		addColumn("Nome", document.getPerson().getName());
+		addCell("Tipo de Curso", enumeration.getString(document.getDegreeType().name()));
+		addCell("Nº de Aluno", document.getRegistration().getNumber());
+		addCell("Nome", document.getPerson().getName());
 		if (!(document instanceof DiplomaRequest)) {
-		    addColumn("Ficheiro", document.getLastGeneratedDocument().getFilename());
+		    addCell("Ficheiro", document.getLastGeneratedDocument().getFilename());
 		}
 	    }
 	};
@@ -169,7 +168,7 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 	    response.setContentType("application/vnd.ms-excel");
 	    response.setHeader("Content-disposition", "attachment; filename=" + prefix + batch.getRange() + ".xls");
 	    final ServletOutputStream writer = response.getOutputStream();
-	    builder.build(WorkbookExportFormat.EXCEL, writer);
+	    new SpreadsheetBuilder().addSheet("lote", data).build(WorkbookExportFormat.EXCEL, writer);
 	    writer.flush();
 	    response.flushBuffer();
 	} catch (IOException e) {

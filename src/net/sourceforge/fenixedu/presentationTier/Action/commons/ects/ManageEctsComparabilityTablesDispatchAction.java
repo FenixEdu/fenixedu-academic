@@ -44,8 +44,9 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.utl.ist.fenix.tools.excel.SimplifiedSpreadsheetBuilder;
-import pt.utl.ist.fenix.tools.excel.WorkbookExportFormat;
+import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
+import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
+import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
 @Mapping(path = "/manageEctsComparabilityTables", module = "gep")
@@ -79,10 +80,11 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 	EctsTableFilter filter = readFilter(request);
 	try {
 	    try {
-		SimplifiedSpreadsheetBuilder<?> builder = exportTemplate(request, filter);
+		SheetData<?> builder = exportTemplate(request, filter);
 		response.setContentType("application/vnd.ms-excel");
 		response.setHeader("Content-disposition", "attachment; filename=template.xls");
-		builder.build(WorkbookExportFormat.EXCEL, response.getOutputStream());
+		new SpreadsheetBuilder().addSheet("template", builder).build(WorkbookExportFormat.EXCEL,
+			response.getOutputStream());
 		return null;
 	    } finally {
 		response.flushBuffer();
@@ -139,7 +141,7 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 	}
     }
 
-    private SimplifiedSpreadsheetBuilder<?> exportTemplate(HttpServletRequest request, EctsTableFilter filter) {
+    private SheetData<?> exportTemplate(HttpServletRequest request, EctsTableFilter filter) {
 	switch (filter.getType()) {
 	case ENROLMENT:
 	    return exportEnrolmentTemplate(filter);
@@ -178,7 +180,7 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 	}
     }
 
-    private SimplifiedSpreadsheetBuilder<?> exportEnrolmentTemplate(EctsTableFilter filter) {
+    private SheetData<?> exportEnrolmentTemplate(EctsTableFilter filter) {
 	switch (filter.getLevel()) {
 	case COMPETENCE_COURSE:
 	    return exportEnrolmentByCompetenceCourseTemplate(filter);
@@ -216,7 +218,7 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 	}
     }
 
-    private SimplifiedSpreadsheetBuilder<IEctsConversionTable> exportGraduationTemplate(EctsTableFilter filter) {
+    private SheetData<IEctsConversionTable> exportGraduationTemplate(EctsTableFilter filter) {
 	switch (filter.getLevel()) {
 	case DEGREE:
 	    return exportGraduationByDegreeTemplate(filter);
@@ -255,20 +257,19 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 	return tables;
     }
 
-    private SimplifiedSpreadsheetBuilder<IEctsConversionTable> exportEnrolmentByCompetenceCourseTemplate(EctsTableFilter filter) {
+    private SheetData<IEctsConversionTable> exportEnrolmentByCompetenceCourseTemplate(EctsTableFilter filter) {
 	final ExecutionYear year = (ExecutionYear) ExecutionYear.getExecutionInterval(filter.getExecutionInterval());
-	SimplifiedSpreadsheetBuilder<IEctsConversionTable> builder = new SimplifiedSpreadsheetBuilder<IEctsConversionTable>(
+	SheetData<IEctsConversionTable> builder = new SheetData<IEctsConversionTable>(
 		processEnrolmentByCompetenceCourseStatus(filter)) {
-	    private final ResourceBundle bundle = ResourceBundle.getBundle("resources.GEPResources");
-
 	    @Override
 	    protected void makeLine(IEctsConversionTable table) {
+		final ResourceBundle bundle = ResourceBundle.getBundle("resources.GEPResources");
 		CompetenceCourse competence = (CompetenceCourse) table.getTargetEntity();
-		addColumn(bundle.getString("label.externalId"), competence.getExternalId());
-		addColumn(bundle.getString("label.departmentUnit.name"), competence.getDepartmentUnit().getName());
-		addColumn(bundle.getString("label.competenceCourse.name"), competence.getName());
-		addColumn(bundle.getString("label.acronym"), competence.getAcronym());
-		addColumn(bundle.getString("label.idInternal"), competence.getIdInternal());
+		addCell(bundle.getString("label.externalId"), competence.getExternalId());
+		addCell(bundle.getString("label.departmentUnit.name"), competence.getDepartmentUnit().getName());
+		addCell(bundle.getString("label.competenceCourse.name"), competence.getName());
+		addCell(bundle.getString("label.acronym"), competence.getAcronym());
+		addCell(bundle.getString("label.idInternal"), competence.getIdInternal());
 		Set<String> ids = new HashSet<String>();
 		for (CurricularCourse course : competence.getAssociatedCurricularCoursesSet()) {
 		    List<ExecutionCourse> executions = course.getExecutionCoursesByExecutionYear(year);
@@ -278,18 +279,18 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 			}
 		    }
 		}
-		addColumn(bundle.getString("label.competenceCourse.executionCodes"), StringUtils.join(ids, ", "));
-		addColumn("10", null);
-		addColumn("11", null);
-		addColumn("12", null);
-		addColumn("13", null);
-		addColumn("14", null);
-		addColumn("15", null);
-		addColumn("16", null);
-		addColumn("17", null);
-		addColumn("18", null);
-		addColumn("19", null);
-		addColumn("20", null);
+		addCell(bundle.getString("label.competenceCourse.executionCodes"), StringUtils.join(ids, ", "));
+		addCell("10", null);
+		addCell("11", null);
+		addCell("12", null);
+		addCell("13", null);
+		addCell("14", null);
+		addCell("15", null);
+		addCell("16", null);
+		addCell("17", null);
+		addCell("18", null);
+		addCell("19", null);
+		addCell("20", null);
 	    }
 	};
 	return builder;
@@ -335,29 +336,27 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 	return tables;
     }
 
-    private SimplifiedSpreadsheetBuilder<IEctsConversionTable> exportEnrolmentByDegreeTemplate(EctsTableFilter filter) {
-	SimplifiedSpreadsheetBuilder<IEctsConversionTable> builder = new SimplifiedSpreadsheetBuilder<IEctsConversionTable>(
-		processEnrolmentByDegreeStatus(filter)) {
-	    private final ResourceBundle bundle = ResourceBundle.getBundle("resources.GEPResources");
-
+    private SheetData<IEctsConversionTable> exportEnrolmentByDegreeTemplate(EctsTableFilter filter) {
+	SheetData<IEctsConversionTable> builder = new SheetData<IEctsConversionTable>(processEnrolmentByDegreeStatus(filter)) {
 	    @Override
 	    protected void makeLine(IEctsConversionTable table) {
+		final ResourceBundle bundle = ResourceBundle.getBundle("resources.GEPResources");
 		Degree degree = (Degree) table.getTargetEntity();
-		addColumn(bundle.getString("label.externalId"), degree.getExternalId());
-		addColumn(bundle.getString("label.degreeType"), degree.getDegreeType().getLocalizedName());
-		addColumn(bundle.getString("label.name"), degree.getName());
-		addColumn(bundle.getString("label.curricularYear"), table.getCurricularYear().getYear());
-		addColumn("10", null);
-		addColumn("11", null);
-		addColumn("12", null);
-		addColumn("13", null);
-		addColumn("14", null);
-		addColumn("15", null);
-		addColumn("16", null);
-		addColumn("17", null);
-		addColumn("18", null);
-		addColumn("19", null);
-		addColumn("20", null);
+		addCell(bundle.getString("label.externalId"), degree.getExternalId());
+		addCell(bundle.getString("label.degreeType"), degree.getDegreeType().getLocalizedName());
+		addCell(bundle.getString("label.name"), degree.getName());
+		addCell(bundle.getString("label.curricularYear"), table.getCurricularYear().getYear());
+		addCell("10", null);
+		addCell("11", null);
+		addCell("12", null);
+		addCell("13", null);
+		addCell("14", null);
+		addCell("15", null);
+		addCell("16", null);
+		addCell("17", null);
+		addCell("18", null);
+		addCell("19", null);
+		addCell("20", null);
 	    }
 	};
 	return builder;
@@ -411,28 +410,27 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 	return tables;
     }
 
-    private SimplifiedSpreadsheetBuilder<IEctsConversionTable> exportEnrolmentByCurricularYearTemplate(EctsTableFilter filter) {
-	SimplifiedSpreadsheetBuilder<IEctsConversionTable> builder = new SimplifiedSpreadsheetBuilder<IEctsConversionTable>(
+    private SheetData<IEctsConversionTable> exportEnrolmentByCurricularYearTemplate(EctsTableFilter filter) {
+	SheetData<IEctsConversionTable> builder = new SheetData<IEctsConversionTable>(
 		processEnrolmentByCurricularYearStatus(filter)) {
-	    private final ResourceBundle bundle = ResourceBundle.getBundle("resources.GEPResources");
-
 	    @Override
 	    protected void makeLine(IEctsConversionTable table) {
+		final ResourceBundle bundle = ResourceBundle.getBundle("resources.GEPResources");
 		// FIXME: should not depend on ordinal(), use a resource bundle
 		// or something.
-		addColumn(bundle.getString("label.cycle"), table.getCycle().ordinal() + 1);
-		addColumn(bundle.getString("label.curricularYear"), table.getCurricularYear().getYear());
-		addColumn("10", null);
-		addColumn("11", null);
-		addColumn("12", null);
-		addColumn("13", null);
-		addColumn("14", null);
-		addColumn("15", null);
-		addColumn("16", null);
-		addColumn("17", null);
-		addColumn("18", null);
-		addColumn("19", null);
-		addColumn("20", null);
+		addCell(bundle.getString("label.cycle"), table.getCycle().ordinal() + 1);
+		addCell(bundle.getString("label.curricularYear"), table.getCurricularYear().getYear());
+		addCell("10", null);
+		addCell("11", null);
+		addCell("12", null);
+		addCell("13", null);
+		addCell("14", null);
+		addCell("15", null);
+		addCell("16", null);
+		addCell("17", null);
+		addCell("18", null);
+		addCell("19", null);
+		addCell("20", null);
 	    }
 	};
 	return builder;
@@ -479,40 +477,38 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 	return tables;
     }
 
-    private SimplifiedSpreadsheetBuilder<IEctsConversionTable> exportGraduationByDegreeTemplate(EctsTableFilter filter) {
-	SimplifiedSpreadsheetBuilder<IEctsConversionTable> builder = new SimplifiedSpreadsheetBuilder<IEctsConversionTable>(
-		processGraduationByDegreeStatus(filter)) {
-	    private final ResourceBundle bundle = ResourceBundle.getBundle("resources.GEPResources");
-
+    private SheetData<IEctsConversionTable> exportGraduationByDegreeTemplate(EctsTableFilter filter) {
+	SheetData<IEctsConversionTable> builder = new SheetData<IEctsConversionTable>(processGraduationByDegreeStatus(filter)) {
 	    @Override
 	    protected void makeLine(IEctsConversionTable table) {
+		final ResourceBundle bundle = ResourceBundle.getBundle("resources.GEPResources");
 		Degree degree = (Degree) table.getTargetEntity();
-		addColumn(bundle.getString("label.externalId"), degree.getExternalId());
-		addColumn(bundle.getString("label.degreeType"), degree.getDegreeType().getLocalizedName());
-		addColumn(bundle.getString("label.name"), degree.getName());
-		addColumn(bundle.getString("label.cycle"), table.getCycle() != null ? table.getCycle().ordinal() + 1 : null);
-		addColumn("10", null);
-		addColumn("11", null);
-		addColumn("12", null);
-		addColumn("13", null);
-		addColumn("14", null);
-		addColumn("15", null);
-		addColumn("16", null);
-		addColumn("17", null);
-		addColumn("18", null);
-		addColumn("19", null);
-		addColumn("20", null);
-		addColumn("10", null);
-		addColumn("11", null);
-		addColumn("12", null);
-		addColumn("13", null);
-		addColumn("14", null);
-		addColumn("15", null);
-		addColumn("16", null);
-		addColumn("17", null);
-		addColumn("18", null);
-		addColumn("19", null);
-		addColumn("20", null);
+		addCell(bundle.getString("label.externalId"), degree.getExternalId());
+		addCell(bundle.getString("label.degreeType"), degree.getDegreeType().getLocalizedName());
+		addCell(bundle.getString("label.name"), degree.getName());
+		addCell(bundle.getString("label.cycle"), table.getCycle() != null ? table.getCycle().ordinal() + 1 : null);
+		addCell("10", null);
+		addCell("11", null);
+		addCell("12", null);
+		addCell("13", null);
+		addCell("14", null);
+		addCell("15", null);
+		addCell("16", null);
+		addCell("17", null);
+		addCell("18", null);
+		addCell("19", null);
+		addCell("20", null);
+		addCell("10", null);
+		addCell("11", null);
+		addCell("12", null);
+		addCell("13", null);
+		addCell("14", null);
+		addCell("15", null);
+		addCell("16", null);
+		addCell("17", null);
+		addCell("18", null);
+		addCell("19", null);
+		addCell("20", null);
 	    }
 	};
 	return builder;
@@ -557,38 +553,37 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 	return tables;
     }
 
-    private SimplifiedSpreadsheetBuilder<IEctsConversionTable> exportGraduationByCycleTemplate(EctsTableFilter filter) {
-	SimplifiedSpreadsheetBuilder<IEctsConversionTable> builder = new SimplifiedSpreadsheetBuilder<IEctsConversionTable>(
+    private SheetData<IEctsConversionTable> exportGraduationByCycleTemplate(EctsTableFilter filter) {
+	SheetData<IEctsConversionTable> builder = new SheetData<IEctsConversionTable>(
 		processEnrolmentByCurricularYearStatus(filter)) {
-	    private final ResourceBundle bundle = ResourceBundle.getBundle("resources.GEPResources");
-
 	    @Override
 	    protected void makeLine(IEctsConversionTable table) {
+		final ResourceBundle bundle = ResourceBundle.getBundle("resources.GEPResources");
 		// FIXME: should not depend on ordinal(), use a resource bundle
 		// or something.
-		addColumn(bundle.getString("label.cycle"), table.getCycle().ordinal() + 1);
-		addColumn("10", null);
-		addColumn("11", null);
-		addColumn("12", null);
-		addColumn("13", null);
-		addColumn("14", null);
-		addColumn("15", null);
-		addColumn("16", null);
-		addColumn("17", null);
-		addColumn("18", null);
-		addColumn("19", null);
-		addColumn("20", null);
-		addColumn("10", null);
-		addColumn("11", null);
-		addColumn("12", null);
-		addColumn("13", null);
-		addColumn("14", null);
-		addColumn("15", null);
-		addColumn("16", null);
-		addColumn("17", null);
-		addColumn("18", null);
-		addColumn("19", null);
-		addColumn("20", null);
+		addCell(bundle.getString("label.cycle"), table.getCycle().ordinal() + 1);
+		addCell("10", null);
+		addCell("11", null);
+		addCell("12", null);
+		addCell("13", null);
+		addCell("14", null);
+		addCell("15", null);
+		addCell("16", null);
+		addCell("17", null);
+		addCell("18", null);
+		addCell("19", null);
+		addCell("20", null);
+		addCell("10", null);
+		addCell("11", null);
+		addCell("12", null);
+		addCell("13", null);
+		addCell("14", null);
+		addCell("15", null);
+		addCell("16", null);
+		addCell("17", null);
+		addCell("18", null);
+		addCell("19", null);
+		addCell("20", null);
 	    }
 	};
 	return builder;
