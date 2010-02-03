@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
+import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.BolonhaStudentEnrollmentBean;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
@@ -25,9 +26,12 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.EnrollmentDomainException;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.RootCurriculumGroup;
+import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
+import net.sourceforge.fenixedu.predicates.RegistrationPredicates;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 
@@ -47,7 +51,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "show-degree-modules-to-enrol", path = "/academicAdminOffice/student/curriculumValidation/showDegreeModulesToEnrol.jsp"),
 	@Forward(name = "show-set-evaluations-form", path = "/academicAdminOffice/student/curriculumValidation/setEvaluationsForm.jsp"),
 	@Forward(name = "show-edit-evaluation-form", path = "/academicAdminOffice/student/curriculumValidation/editEvaluationForm.jsp"),
-	@Forward(name = "show-set-end-stage-date-form", path = "/academicAdminOffice/student/curriculumValidation/setStageDate.jsp")
+	@Forward(name = "show-set-end-stage-date-form", path = "/academicAdminOffice/student/curriculumValidation/setStageDate.jsp"),
+	@Forward(name = "registrationConclusion", path = "/academicAdminOffice/student/curriculumValidation/registrationConclusion.jsp")
 
 })
 public class AcademicAdminOfficeCurriculumValidationDA extends FenixDispatchAction {
@@ -276,6 +281,50 @@ public class AcademicAdminOfficeCurriculumValidationDA extends FenixDispatchActi
 	}
 
 	return prepareSetEvaluations(mapping, actionForm, request, response);
+    }
+
+    private Registration readRegistration(HttpServletRequest request) {
+	return readStudentCurricularPlan(request).getRegistration();
+    }
+
+    public ActionForward prepareRegistrationConclusionProcess(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	RenderUtils.invalidateViewState();
+
+	final Registration registration = readRegistration(request);
+
+	request.setAttribute("registrationConclusionBean", buildRegistrationConclusionBean(registration));
+	return mapping.findForward("registrationConclusion");
+    }
+
+    private RegistrationConclusionBean getRegistrationConclusionBeanFromViewState() {
+	return (RegistrationConclusionBean) getObjectFromViewState("registrationConclusionBean");
+    }
+
+    public ActionForward doRegistrationConclusion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+	final RegistrationConclusionBean registrationConclusionBean = getRegistrationConclusionBeanFromViewState();
+
+	try {
+	    new CurriculumValidationServicesHelper().concludeRegistration(registrationConclusionBean);
+	    return prepareCurriculumValidation(mapping, form, request, response);
+	} catch (final IllegalDataAccessException e) {
+	    addActionMessage("illegal.access", request, "error.not.authorized.to.registration.conclusion.process");
+	    request.setAttribute("registrationConclusionBean", registrationConclusionBean);
+	    return mapping.findForward("registrationConclusion");
+
+	} catch (final DomainException e) {
+	    addActionMessage(request, e.getKey(), e.getArgs());
+	    request.setAttribute("registrationConclusionBean", registrationConclusionBean);
+	    return mapping.findForward("registrationConclusion");
+	}
+    }
+
+    private RegistrationConclusionBean buildRegistrationConclusionBean(final Registration registration) {
+	final RegistrationConclusionBean bean = new RegistrationConclusionBean(registration);
+	bean.setHasAccessToRegistrationConclusionProcess(RegistrationPredicates.MANAGE_CONCLUSION_PROCESS.evaluate(registration));
+	return bean;
     }
 
     private Enrolment readEnrolment(HttpServletRequest request) {

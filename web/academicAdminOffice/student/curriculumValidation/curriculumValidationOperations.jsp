@@ -43,11 +43,17 @@
 			<bean:message key="label.curriculum.validation.set.end.stage.date" bundle="ACADEMIC_OFFICE_RESOURCES" />
 		</html:link>
 	</li>
-	
-	
+		
 	<li>
 		<html:link page="<%= f("/curriculumValidationDocumentRequestsManagement.do?method=listDocuments&amp;studentCurricularPlanId=%s", studentCurricularPlanId) %>">
-			<bean:message key="label.curriculum.validation.print.documents" />
+			<bean:message key="label.curriculum.validation.print.documents" bundle="ACADEMIC_OFFICE_RESOURCES" />
 		</html:link>
 	</li>
+		
+	<li>
+		<html:link page="<%= f("/curriculumValidation.do?method=prepareRegistrationConclusionProcess&amp;studentCurricularPlanId=%s", studentCurricularPlanId) %>">
+			<bean:message key="student.registrationConclusionProcess" bundle="ACADEMIC_OFFICE_RESOURCES" />
+		</html:link>
+	</li>
+	
 </ul>

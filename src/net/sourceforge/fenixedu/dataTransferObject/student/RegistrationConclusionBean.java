@@ -33,6 +33,8 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
 
     private LocalDate enteredConclusionDate;
 
+    private Integer enteredFinalAverageGrade;
+
     public RegistrationConclusionBean(final Registration registration) {
 	setRegistration(registration);
     }
@@ -303,4 +305,15 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
 	this.enteredConclusionDate = enteredConclusionDate;
     }
 
+    public Integer getEnteredFinalAverageGrade() {
+	return this.enteredFinalAverageGrade;
+    }
+
+    public void setEnteredFinalAverageGrade(final Integer value) {
+	this.enteredFinalAverageGrade = value;
+    }
+
+    public boolean hasEnteredFinalAverageGrade() {
+	return this.enteredFinalAverageGrade != null;
+    }
 }
