@@ -519,9 +519,7 @@
 
 	  <action path="/manageSchedules" forward="/manageSchedules.jsp"/>
 
-      <action path="/principalSalas" 
-              type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction" 
-              parameter="/resourceAllocationManager/principalSalas.jsp"/>
+      <action path="/principalSalas" forward="/dumpRoomAllocation.do?method=firstPage" />
     
 	  <!-- CONTEXTO -->	   	
 		
@@ -1495,4 +1493,6 @@
 		<set-property property="moduleAware" value="true" />
 		<set-property property="definitions-parser-validate" value="true" />
 	</plug-in>
+
+	<plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn" />
 </struts-config>
