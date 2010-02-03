@@ -280,8 +280,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 		setEndDate(((Leave) justification).getEndLocalDate());
 		setEndTime(((Leave) justification).getEndLocalTime());
 
-		if (justification.getJustificationMotive().getJustificationType().equals(JustificationType.HALF_OCCURRENCE_TIME)
-			|| getJustificationMotive().getJustificationType().equals(JustificationType.HALF_MULTIPLE_MONTH_BALANCE)) {
+		if (justification.getJustificationMotive().getJustificationType().equals(JustificationType.HALF_OCCURRENCE_TIME)) {
 		    setJustificationDayType(JustificationDayType.HALF_DAY);
 		    Schedule schedule = getEmployee().getAssiduousness().getSchedule(getBeginDate());
 		    WorkSchedule workSchedule = schedule.workScheduleWithDate(getBeginDate());
@@ -389,9 +388,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			    ((Leave) getJustification()).modify(getBeginDate().toDateTime(LocalTime.MIDNIGHT), numberOfHours,
 				    getJustificationMotive(), null, getNotes(), getModifiedBy());
 			}
-		    } else if (getJustificationMotive().getJustificationType().equals(JustificationType.HALF_OCCURRENCE_TIME)
-			    || getJustificationMotive().getJustificationType().equals(
-				    JustificationType.HALF_MULTIPLE_MONTH_BALANCE)) {
+		    } else if (getJustificationMotive().getJustificationType().equals(JustificationType.HALF_OCCURRENCE_TIME)) {
 			if (getBeginDate() == null) {
 			    return new ActionMessage("errors.required", bundle.getString("label.date"));
 			}
@@ -423,7 +420,9 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			    ((Leave) getJustification()).modify(beginDateTime, halfWorkScheduleDuration,
 				    getJustificationMotive(), null, getNotes(), getModifiedBy());
 			}
-		    } else if (getJustificationMotive().getJustificationType().equals(JustificationType.HALF_OCCURRENCE)) {
+		    } else if (getJustificationMotive().getJustificationType().equals(JustificationType.HALF_OCCURRENCE)
+			    || getJustificationMotive().getJustificationType().equals(
+				    JustificationType.HALF_MULTIPLE_MONTH_BALANCE)) {
 			if (getBeginDate() == null) {
 			    return new ActionMessage("errors.required", bundle.getString("label.date"));
 			}

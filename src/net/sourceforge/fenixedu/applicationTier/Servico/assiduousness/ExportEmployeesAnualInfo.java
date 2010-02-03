@@ -87,6 +87,8 @@ public class ExportEmployeesAnualInfo extends FenixService {
 		employeeMonthInfo.setLeaveWithoutPayment(countLeaveNumberOfDays(leaves, beginDate, endDate, "LS/V"));
 		List<JustificationMotive> justificationMotives = JustificationMotive
 			.getJustificationMotivesByGroup(JustificationGroup.TOLERANCES);
+		justificationMotives.addAll(JustificationMotive
+			.getJustificationMotivesByGroup(JustificationGroup.GOVERNMENT_TOLERANCES));
 		employeeMonthInfo
 			.setPointTolerance(getJustificationWorkingDays(leaves, beginDate, endDate, justificationMotives));
 		employeeMonthInfo.setArticle17(getJustificationDays(leaves, beginDate, endDate, "A17", "A1306"));

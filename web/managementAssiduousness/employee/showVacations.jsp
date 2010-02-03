@@ -50,13 +50,6 @@
 			</fr:layout>
 		</fr:view>
 		<br/>
-		<fr:view name="vacations" schema="show.a17AndA18Calcule">
-			<fr:layout name="nice-details-table">
-				<fr:property name="classes" value="tstyle2 thlight thleft printborder" />
-				<fr:property name="columnClasses" value="aleft,aright" />
-				<fr:property name="labelTerminator" value=":" />
-			</fr:layout>
-		</fr:view>
 	</logic:notEmpty>
 </logic:present>
 <logic:notPresent name="vacations">
@@ -64,3 +57,13 @@
 		<em><bean:message key="message.employee.noVacationsResume" /></em>
 	</p>
 </logic:notPresent>
+
+<logic:present name="employeeAssiduousnessExemption">
+	<fr:view name="employeeAssiduousnessExemption" schema="show.a17AndA18Calcule">
+		<fr:layout name="nice-details-table">
+			<fr:property name="classes" value="tstyle2 thlight thleft printborder" />
+			<fr:property name="columnClasses" value="aleft,aright" />
+			<fr:property name="labelTerminator" value=":" />
+		</fr:layout>
+	</fr:view>
+</logic:present>

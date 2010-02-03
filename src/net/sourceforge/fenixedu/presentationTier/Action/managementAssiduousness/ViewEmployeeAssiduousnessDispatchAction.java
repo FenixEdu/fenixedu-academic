@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ReadAssiduousnessWorkSheet;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.ClockingsDaySheet;
+import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeAssiduousnessExemption;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeBalanceResume;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeMonthyBalanceResume;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeScheduleFactory;
@@ -222,6 +223,8 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 	if (employee.getAssiduousness() != null) {
 	    request.setAttribute("vacations", employee.getAssiduousness().getAssiduousnessVacationsByYear(yearMonth.getYear()));
 	    setEmployeeStatus(request, employee, yearMonth);
+	    request.setAttribute("employeeAssiduousnessExemption", new EmployeeAssiduousnessExemption(employee, yearMonth
+		    .getYear()));
 	}
 	request.setAttribute("yearMonth", yearMonth);
 	request.setAttribute("employee", employee);

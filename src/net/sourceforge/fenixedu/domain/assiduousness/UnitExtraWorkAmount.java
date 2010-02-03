@@ -32,9 +32,10 @@ public class UnitExtraWorkAmount extends UnitExtraWorkAmount_Base {
 	setSpent(0.0);
     }
 
-    private boolean isUniqueYearUnit(Integer year, Unit unit) {
+    private boolean isUniqueYearUnit(int year, Unit unit) {
 	for (UnitExtraWorkAmount unitExtraWorkAmount : RootDomainObject.getInstance().getUnitsExtraWorkAmounts()) {
-	    if (unitExtraWorkAmount != this && unitExtraWorkAmount.getYear() == year && unitExtraWorkAmount.getUnit() == unit) {
+	    if (unitExtraWorkAmount != this && unitExtraWorkAmount.getYear().intValue() == year
+		    && unitExtraWorkAmount.getUnit() == unit) {
 		return false;
 	    }
 	}
@@ -211,5 +212,15 @@ public class UnitExtraWorkAmount extends UnitExtraWorkAmount_Base {
 	    }
 	}
 	return extraWorkAuthorizationList;
+    }
+
+    public void delete() {
+	List<UnitExtraWorkMovement> unitExtraWorkMovements = new ArrayList<UnitExtraWorkMovement>(getUnitExtraWorkMovements());
+	for (UnitExtraWorkMovement unitExtraWorkMovement : unitExtraWorkMovements) {
+	    unitExtraWorkMovement.delete();
+	}
+	removeRootDomainObject();
+	removeUnit();
+	deleteDomainObject();
     }
 }

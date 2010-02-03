@@ -227,12 +227,12 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 </schema>
 
 <schema name="show.a17AndA18Calcule"
-	type="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessVacations">
-	<slot name="efectiveWorkDays" key="label.lastYearEfectiveWorkDays" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="art17And18MaximumLimitDays" key="label.art17And18MaximumLimitDays" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="art17And18LimitDays" key="label.art17And18LimitDays" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="numberOfArt17" key="label.art17Days" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeAssiduousnessExemption">
 	<slot name="numberOfArt18" key="label.art18Days" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="usedArt18" key="label.usedArt18Days" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="numberOfArt17" key="label.art17Days" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="usedArt17" key="label.usedArt17Days" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="art17Vacations" key="label.nextYearArticle17Vacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
 
 <schema name="choose.date" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth">

@@ -224,15 +224,6 @@
     </service>
 
     <service>
-        <name>CalculateArticles17And18</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.CalculateArticles17And18</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="AssiduousnessManagementAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
         <name>CancelAcademicServiceRequest</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.CancelAcademicServiceRequest</implementationClass>
         <isTransactional>true</isTransactional>

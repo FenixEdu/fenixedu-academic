@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Drop columns from AssiduousnessVacations table" dropColumnsFromAssiduousnessVacations.sql

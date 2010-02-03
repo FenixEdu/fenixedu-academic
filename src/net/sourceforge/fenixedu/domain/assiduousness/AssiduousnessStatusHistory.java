@@ -104,15 +104,17 @@ public class AssiduousnessStatusHistory extends AssiduousnessStatusHistory_Base 
 	if (getEndDate() != null && endDate.isAfter(getEndDate())) {
 	    endDate = getEndDate();
 	}
-	for (int month = beginDate.getMonthOfYear(); month <= endDate.getMonthOfYear(); month++) {
+	for (LocalDate currentMonth = beginDate; currentMonth.isBefore(endDate); currentMonth = currentMonth.plusMonths(1)) {
 	    Duration thisMonthWorkPeriodAverage = Duration.ZERO;
-	    LocalDate beginMonth = new LocalDate(beginDate.getYear(), month, 1);
-	    LocalDate endMonth = new LocalDate(endDate.getYear(), month, beginMonth.dayOfMonth().getMaximumValue());
-	    List<Schedule> schedules = getAssiduousness().getSchedules(beginMonth, endMonth);
-	    for (Schedule schedule : schedules) {
-		thisMonthWorkPeriodAverage = thisMonthWorkPeriodAverage.plus(schedule.getAverageWorkPeriodDuration());
+	    LocalDate currentMonthLastDay = new LocalDate(currentMonth.getYear(), currentMonth.getMonthOfYear(), currentMonth
+		    .dayOfMonth().getMaximumValue());
+	    List<Schedule> schedules = getAssiduousness().getSchedules(currentMonth, currentMonthLastDay);
+	    if (schedules.size() != 0) {
+		for (Schedule schedule : schedules) {
+		    thisMonthWorkPeriodAverage = thisMonthWorkPeriodAverage.plus(schedule.getAverageWorkPeriodDuration());
+		}
+		thisMonthWorkPeriodAverage = new Duration(thisMonthWorkPeriodAverage.getMillis() / schedules.size());
 	    }
-	    thisMonthWorkPeriodAverage = new Duration(thisMonthWorkPeriodAverage.getMillis() / schedules.size());
 	    averageWorkPeriodDuration = averageWorkPeriodDuration.plus(thisMonthWorkPeriodAverage);
 	}
 	averageWorkPeriodDuration = new Duration(averageWorkPeriodDuration.getMillis()

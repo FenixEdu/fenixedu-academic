@@ -1,8 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.math.BigDecimal;
 import java.util.ResourceBundle;
 
 import javax.servlet.ServletOutputStream;
@@ -10,20 +8,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.AssiduousnessExportChoices;
+import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeAssiduousnessExemption;
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
-import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
-import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory;
-import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessVacations;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.util.Month;
 
-import org.apache.commons.beanutils.BeanComparator;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.joda.time.DateTimeFieldType;
-import org.joda.time.LocalDate;
 
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -53,70 +48,80 @@ public class VacationsManagementDispatchAction extends FenixDispatchAction {
 	fileName.append(".xls");
 	response.setHeader("Content-disposition", "attachment; filename=" + fileName.toString());
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
+
 	StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("A17A18");
+
+	HSSFFont font = spreadsheet.getWorkbook().createFont();
+	font.setColor(HSSFColor.BLACK.index);
+	font.setFontHeightInPoints((short) 8);
+
+	HSSFCellStyle redStyle = spreadsheet.getWorkbook().createCellStyle();
+	redStyle.setFont(font);
+	redStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+	redStyle.setDataFormat(spreadsheet.getWorkbook().createDataFormat().getFormat("0"));
+	redStyle.setFillForegroundColor(HSSFColor.RED.index);
+	redStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+
+	HSSFCellStyle newRowStyle = spreadsheet.getWorkbook().createCellStyle();
+	newRowStyle.setFont(font);
+	newRowStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+	newRowStyle.setDataFormat(spreadsheet.getWorkbook().createDataFormat().getFormat("0"));
+	newRowStyle.setFillForegroundColor(HSSFColor.YELLOW.index);
+	newRowStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+
+	HSSFCellStyle normalStyle = spreadsheet.getExcelStyle().getValueStyle();
+
 	spreadsheet.newHeaderRow();
 	spreadsheet.addHeader(bundle.getString("label.employeeNumber"));
 	spreadsheet.addHeader(bundle.getString("label.employee.name"));
-	spreadsheet.addHeader(bundle.getString("label.lastYearEfectiveWorkDays"));
+	spreadsheet.addHeader(bundle.getString("label.efectiveWorkYear"));
+	spreadsheet.addHeader(bundle.getString("label.efectiveWorkDays"));
 	spreadsheet.addHeader(bundle.getString("label.art17And18MaximumLimitDays"));
 	spreadsheet.addHeader(bundle.getString("label.art17And18LimitDays"));
-	spreadsheet.addHeader(bundle.getString("label.art17Days"));
 	spreadsheet.addHeader(bundle.getString("label.art18Days"));
-
-	final ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
-	for (Month month : Month.values()) {
-	    spreadsheet.addHeader(bundleEnumeration.getString(month.getName()));
-	}
-
-	spreadsheet.addHeader("Média de horas");
-	spreadsheet.addHeader("Ano das horas");
-
-	ServiceUtils.executeService("CalculateArticles17And18", new Object[] { assiduousnessExportChoices.getYearMonth()
-		.getYear() });
+	spreadsheet.addHeader(bundle.getString("label.usedArt18Days"));
+	spreadsheet.addHeader(bundle.getString("label.art17Days"));
+	spreadsheet.addHeader(bundle.getString("label.usedArt17Days"));
+	spreadsheet.addHeader("Férias por A17 a passar para " + (assiduousnessExportChoices.getYearMonth().getYear() + 1));
 
 	for (Assiduousness assiduousness : assiduousnessExportChoices.getAssiduousnesses()) {
-	    AssiduousnessVacations assiduousnessVacations = assiduousness
-		    .getAssiduousnessVacationsByYear(assiduousnessExportChoices.getYearMonth().getYear());
-	    if (assiduousnessVacations != null
-		    && assiduousnessVacations.getYear().equals(assiduousnessExportChoices.getYearMonth().getYear())) {
 
-		spreadsheet.newRow();
-		spreadsheet.addCell(assiduousnessVacations.getAssiduousness().getEmployee().getEmployeeNumber().toString());
-		spreadsheet.addCell(assiduousnessVacations.getAssiduousness().getEmployee().getPerson().getName());
+	    Employee employee = assiduousness.getEmployee();
+	    EmployeeAssiduousnessExemption employeeAssiduousnessExemption = new EmployeeAssiduousnessExemption(employee,
+		    assiduousnessExportChoices.getYearMonth().getYear());
 
-		int efectiveWorkDays = assiduousnessVacations.getEfectiveWorkDays().intValue();
-		spreadsheet.addCell(efectiveWorkDays);
-		spreadsheet.addCell(assiduousnessVacations.getArt17And18MaximumLimitDays());
-		spreadsheet.addCell(assiduousnessVacations.getArt17And18LimitDays());
-		spreadsheet.addCell(assiduousnessVacations.getNumberOfArt17());
-		spreadsheet.addCell(assiduousnessVacations.getNumberOfArt18());
-
-		LocalDate beginDate = new LocalDate(assiduousnessVacations.getEfectiveWorkYear(), 1, 1);
-		LocalDate endDate = new LocalDate(assiduousnessVacations.getEfectiveWorkYear(), 12, 31);
-		List<AssiduousnessStatusHistory> assiduousnessStatusHistories = assiduousnessVacations.getAssiduousness()
-			.getStatusBetween(beginDate, endDate);
-
-		if (assiduousnessStatusHistories != null) {
-		    for (AssiduousnessStatusHistory assiduousnessStatusHistory : assiduousnessStatusHistories) {
-
-			List<AssiduousnessClosedMonth> assiduousnessClosedMonths = new ArrayList<AssiduousnessClosedMonth>(
-				assiduousnessStatusHistory.getAssiduousnessClosedMonths());
-			Collections.sort(assiduousnessClosedMonths, new BeanComparator("beginDate"));
-
-			for (AssiduousnessClosedMonth assiduousnessClosedMonth : assiduousnessClosedMonths) {
-			    if (assiduousnessClosedMonth.getBeginDate().get(DateTimeFieldType.year()) == assiduousnessVacations
-				    .getEfectiveWorkYear()) {
-				spreadsheet.addDuration(assiduousnessClosedMonth.getTotalWorkedTime(), assiduousnessClosedMonth
-					.getBeginDate().get(DateTimeFieldType.monthOfYear()) + 6);
-			    }
-			}
-		    }
-		}
-
-		spreadsheet.addDuration(assiduousness.getAverageWorkTimeDuration(beginDate, endDate), 19);
-		spreadsheet.addCell(assiduousnessVacations.getEfectiveWorkYear(), 20);
+	    HSSFCellStyle styleToUse = normalStyle;
+	    if (employeeAssiduousnessExemption.getYear().intValue() == employeeAssiduousnessExemption.getEfectiveWorkYear()
+		    .intValue()) {
+		styleToUse = newRowStyle;
 	    }
 
+	    spreadsheet.newRow();
+	    spreadsheet.addCell(employee.getEmployeeNumber().toString(), styleToUse);
+	    spreadsheet.addCell(employee.getPerson().getName(), styleToUse);
+	    spreadsheet.addCell(employeeAssiduousnessExemption.getEfectiveWorkYear(), styleToUse);
+
+	    int efectiveWorkDays = employeeAssiduousnessExemption.getEfectiveWorkDays().intValue();
+	    spreadsheet.addCell(efectiveWorkDays, styleToUse);
+
+	    spreadsheet.addCell(employeeAssiduousnessExemption.getArt17And18MaximumLimitDays(), styleToUse);
+	    spreadsheet.addCell(employeeAssiduousnessExemption.getArt17And18LimitDays(), styleToUse);
+	    spreadsheet.addCell(employeeAssiduousnessExemption.getNumberOfArt18(), styleToUse);
+
+	    if (BigDecimal.valueOf(employeeAssiduousnessExemption.getNumberOfArt18()).compareTo(
+		    employeeAssiduousnessExemption.getUsedArt18()) < 0) {
+		spreadsheet.addCell(employeeAssiduousnessExemption.getUsedArt18(), redStyle);
+	    } else {
+		spreadsheet.addCell(employeeAssiduousnessExemption.getUsedArt18(), styleToUse);
+	    }
+
+	    spreadsheet.addCell(employeeAssiduousnessExemption.getNumberOfArt17(), styleToUse);
+	    if (employeeAssiduousnessExemption.getNumberOfArt17() < employeeAssiduousnessExemption.getUsedArt17()) {
+		spreadsheet.addCell(employeeAssiduousnessExemption.getUsedArt17(), redStyle);
+	    } else {
+		spreadsheet.addCell(employeeAssiduousnessExemption.getUsedArt17(), styleToUse);
+	    }
+	    spreadsheet.addCell(employeeAssiduousnessExemption.getArt17Vacations(), styleToUse);
 	}
 	final ServletOutputStream writer = response.getOutputStream();
 	spreadsheet.getWorkbook().write(writer);
@@ -124,4 +129,5 @@ public class VacationsManagementDispatchAction extends FenixDispatchAction {
 	response.flushBuffer();
 	return null;
     }
+
 }

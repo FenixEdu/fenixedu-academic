@@ -13,4 +13,10 @@ public class UnitExtraWorkMovement extends UnitExtraWorkMovement_Base {
 	setAmount(amount);
 	setDate(new DateTime());
     }
+
+    public void delete() {
+	removeRootDomainObject();
+	removeUnitExtraWorkAmount();
+	deleteDomainObject();
+    }
 }
