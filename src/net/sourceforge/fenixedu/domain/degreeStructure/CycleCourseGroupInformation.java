@@ -61,8 +61,11 @@ public class CycleCourseGroupInformation extends CycleCourseGroupInformation_Bas
     @Service
     public void edit(ExecutionYear editExecutionYear, String editGraduatedTitle, String editGraduatedTitleEn) {
 	this.setExecutionYear(editExecutionYear);
-	this.getGraduatedTitle().setContent(Language.pt, editGraduatedTitle);
-	this.getGraduatedTitle().setContent(Language.en, editGraduatedTitleEn);
+	MultiLanguageString mls = this.getGraduatedTitle();
+	mls.setContent(Language.pt, editGraduatedTitle);
+	mls.setContent(Language.en, editGraduatedTitleEn);
+
+	this.setGraduatedTitle(mls);
 
 	checkParameters();
     }
