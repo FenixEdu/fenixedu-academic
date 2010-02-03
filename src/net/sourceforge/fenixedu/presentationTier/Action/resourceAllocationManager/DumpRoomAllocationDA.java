@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManag
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -14,6 +13,7 @@ import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.LessonInstance;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.interfaces.HasExecutionSemester;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.domain.space.Building;
 import net.sourceforge.fenixedu.domain.space.LessonSpaceOccupation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
-import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.apache.jcs.access.exception.InvalidArgumentException;
 import org.apache.struts.action.ActionForm;
@@ -90,12 +89,28 @@ public class DumpRoomAllocationDA extends FenixDispatchAction {
 		    for (int i = startOffSet; i < endOffSet; slots[i++] = true);
 		}
 	    }
-	    // TODO : maybe also process lesson instances.
+	    for (final LessonInstance lessonInstance : lesson.getLessonInstancesSet()) {
+		final AllocatableSpace allocatableSpace = lessonInstance.getRoom();
+		if (allocatableSpace != null) {
+		    final boolean[] slots = get(allocatableSpace);
+		    final int weekDayOffSet = (lessonInstance.getBeginDateTime().getDayOfWeek() - 1) * 34;
+		    final int startOffSet = weekDayOffSet + getHourOffSet(lessonInstance.getBeginDateTime());
+		    final int endOffSet = weekDayOffSet + getHourOffSet(lessonInstance.getEndDateTime());
+		    for (int i = startOffSet; i < endOffSet; slots[i++] = true);
+		}
+	    }
 	}
 
 	private int getHourOffSet(final HourMinuteSecond hourMinuteSecond) {
 	    final int hour = hourMinuteSecond.getHour();
 	    final int minutes = hourMinuteSecond.getMinuteOfHour();
+	    final int minutesOffSet = minutes < 30 ? 0 : 1;
+	    return hour - 8 + minutesOffSet;
+	}
+
+	private int getHourOffSet(final DateTime dateTime) {
+	    final int hour = dateTime.getHourOfDay();
+	    final int minutes = dateTime.getMinuteOfHour();
 	    final int minutesOffSet = minutes < 30 ? 0 : 1;
 	    return hour - 8 + minutesOffSet;
 	}
