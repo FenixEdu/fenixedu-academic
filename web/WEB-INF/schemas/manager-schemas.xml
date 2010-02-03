@@ -831,45 +831,6 @@
 	</slot>
 </schema>
 
-<schema name="ECTSComparabilityTableInput"
-	type="net.sourceforge.fenixedu.presentationTier.Action.manager.ectsComparabilityTables.ECTSTableInputBean"
-	bundle="MANAGER_RESOURCES">
-	<slot name="executionInterval" layout="menu-select"
-		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="format" value="${pathName}" />
-		<property name="providerClass"
-			value="net.sourceforge.fenixedu.presentationTier.Action.manager.ectsComparabilityTables.ECTSTableInputBean$ExecutionIntervalProvider" />
-	</slot>
-	<slot name="type" layout="menu-select"
-		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="choiceType"
-			value="net.sourceforge.fenixedu.presentationTier.Action.manager.ectsComparabilityTables.ECTSTableInputBean$ECTSTableType" />
-	</slot>
-	<slot name="inputStream" key="label.file">
-		<validator
-			class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
-			<property name="required" value="true" />
-			<property name="acceptedExtensions" value="csv" />
-		</validator>
-		<property name="fileNameSlot" value="filename" />
-	</slot>
-</schema>
-
-<schema name="ECTSTableImportStatusLine"
-	type="net.sourceforge.fenixedu.presentationTier.Action.manager.ectsComparabilityTables.ECTSTableImportStatusLine"
-	bundle="MANAGER_RESOURCES">
-	<slot name="table.year.pathName" />
-	<slot name="table.targetEntity" />
-	<slot name="table.ectsTable.printableFormat" />
-	<slot name="status" />
-</schema>
-
-<schema name="ECTSComparabilityTableStatistics"
-	type="net.sourceforge.fenixedu.presentationTier.Action.manager.ectsComparabilityTables.ManageECTSComparabilityTablesDA$ECTSComparabilityTableStatistics">
-	<slot name="competenceCoursesWithTable" />
-	<slot name="competenceCoursesWithoutTable" />
-</schema>
-
 <schema name="extraCurricularActivityType.view"
 	type="net.sourceforge.fenixedu.domain.student.curriculum.ExtraCurricularActivityType">
 	<slot name="name" />
