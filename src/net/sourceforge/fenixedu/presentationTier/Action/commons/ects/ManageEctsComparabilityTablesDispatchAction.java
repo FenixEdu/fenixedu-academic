@@ -536,8 +536,7 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
     }
 
     private SheetData<IEctsConversionTable> exportGraduationByCycleTemplate(EctsTableFilter filter) {
-	SheetData<IEctsConversionTable> builder = new SheetData<IEctsConversionTable>(
-		processEnrolmentByCurricularYearStatus(filter)) {
+	SheetData<IEctsConversionTable> builder = new SheetData<IEctsConversionTable>(processGraduationByCycleStatus(filter)) {
 	    @Override
 	    protected void makeLine(IEctsConversionTable table) {
 		final ResourceBundle bundle = ResourceBundle.getBundle("resources.GEPResources");
@@ -564,8 +563,8 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 	    CycleType cycle = CycleType.getSortedValues().toArray(new CycleType[0])[Integer.parseInt(parts[0]) - 1];
 	    final Unit ist = UnitUtils.readInstitutionUnit();
 	    try {
-		EctsCycleGraduationGradeConversionTable table = EctsCycleGraduationGradeConversionTable.createConversionTable(
-			ist, executionInterval, cycle, Arrays.copyOfRange(parts, 1, 12), Arrays.copyOfRange(parts, 12, 23));
+		EctsCycleGraduationGradeConversionTable.createConversionTable(ist, executionInterval, cycle, Arrays.copyOfRange(
+			parts, 1, 12), Arrays.copyOfRange(parts, 12, 23));
 	    } catch (DuplicateEctsConversionTable e) {
 	    }
 	}
