@@ -369,7 +369,7 @@ public class ImportIdentificationCardDataFromFile {
 	return numbers;
     }
 
-    private String createNewLine(final Person person, final CardGenerationBatch cardGenerationBatch) {
+    public static String createNewLine(final Person person, final CardGenerationBatch cardGenerationBatch) {
 	final Student student = person.getStudent();
 	if (student != null && !student.getActiveRegistrations().isEmpty()) {
 	    final StudentCurricularPlan studentCurricularPlan = findStudentCurricularPlan(cardGenerationBatch, student);
@@ -381,7 +381,7 @@ public class ImportIdentificationCardDataFromFile {
 	return null;
     }
 
-    private StudentCurricularPlan findStudentCurricularPlan(final CardGenerationBatch cardGenerationBatch,
+    private static StudentCurricularPlan findStudentCurricularPlan(final CardGenerationBatch cardGenerationBatch,
 	    final Student student) {
 	final ExecutionYear executionYear = cardGenerationBatch.getExecutionYear();
 	final DateTime begin = executionYear.getBeginDateYearMonthDay().toDateTimeAtMidnight();
@@ -397,7 +397,7 @@ public class ImportIdentificationCardDataFromFile {
 	return null;
     }
 
-    private StudentCurricularPlan findMaxStudentCurricularPlan(final Set<StudentCurricularPlan> studentCurricularPlans) {
+    private static StudentCurricularPlan findMaxStudentCurricularPlan(final Set<StudentCurricularPlan> studentCurricularPlans) {
 	return Collections.max(studentCurricularPlans, new Comparator<StudentCurricularPlan>() {
 
 	    @Override
@@ -417,7 +417,7 @@ public class ImportIdentificationCardDataFromFile {
 	});
     }
 
-    private String merge(final String line1, final Category category1, final String line2, final Category category2) {
+    public static String merge(final String line1, final Category category1, final String line2, final Category category2) {
 	if (category1 == Category.CODE_71 && category2 == Category.CODE_94) {
 	    return mergeStudent(line1, line2, Category.CODE_73);
 	} else if (category2 == Category.CODE_71 && category1 == Category.CODE_94) {
@@ -507,7 +507,7 @@ public class ImportIdentificationCardDataFromFile {
 	}
     }
 
-    private String mergeStudent(final String lineEmployee, final String lineStudent, final Category destinationCategory) {
+    private static String mergeStudent(final String lineEmployee, final String lineStudent, final Category destinationCategory) {
 	final StringBuilder newLine = new StringBuilder();
 	newLine.append(lineStudent.substring(0, 11));
 	newLine.append(destinationCategory.getCode());
@@ -525,7 +525,7 @@ public class ImportIdentificationCardDataFromFile {
 	return newLine.toString();
     }
 
-    private String mergeInMergedFormat(final String lineEmployee, final String lineStudent, final Category destinationCategory) {
+    private static String mergeInMergedFormat(final String lineEmployee, final String lineStudent, final Category destinationCategory) {
 
 	final StringBuilder newLine = new StringBuilder();
 	newLine.append(lineStudent.substring(0, 11));

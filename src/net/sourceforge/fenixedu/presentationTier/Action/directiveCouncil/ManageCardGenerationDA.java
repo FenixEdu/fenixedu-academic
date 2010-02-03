@@ -34,6 +34,7 @@ import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch.CardGe
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry.CardGenerationEntryDeleter;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationProblem.CardGenerationProblemDeleter;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -86,6 +87,43 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 
 	public void setDescription(String description) {
 	    this.description = description;
+	}
+
+    }
+
+    static public class SetPersonForCardGenerationEntryBean implements Serializable {
+
+	private CardGenerationProblem cardGenerationProblem;
+	private CardGenerationEntry cardGenerationEntry;
+	private PersonName personName;
+	private String name;
+
+	public String getName() {
+	    return name;
+	}
+	public void setName(String name) {
+	    this.name = name;
+	}
+	public CardGenerationEntry getCardGenerationEntry() {
+	    return cardGenerationEntry;
+	}
+	public void setCardGenerationEntry(CardGenerationEntry cardGenerationEntry) {
+	    this.cardGenerationEntry = cardGenerationEntry;
+	}
+	public Person getPerson() {
+	    return personName == null ? null : personName.getPerson();
+	}
+	public PersonName getPersonName() {
+	    return personName;
+	}
+	public void setPersonName(PersonName personName) {
+	    this.personName = personName;
+	}
+	public CardGenerationProblem getCardGenerationProblem() {
+	    return cardGenerationProblem;
+	}
+	public void setCardGenerationProblem(CardGenerationProblem cardGenerationProblem) {
+	    this.cardGenerationProblem = cardGenerationProblem;
 	}
 
     }
@@ -181,8 +219,25 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 	    request.setAttribute("cardGenerationProblems", person.getCardGenerationProblems(cardGenerationBatch));
 	} else {
 	    request.setAttribute("cardGenerationProblems", null);
+	    final SetPersonForCardGenerationEntryBean bean = new SetPersonForCardGenerationEntryBean();
+	    bean.setCardGenerationProblem(cardGenerationProblem);
+	    request.setAttribute("setPersonForCardGenerationEntryBean", bean);
 	}
 	return mapping.findForward("showCardGenerationProblem");
+    }
+
+    public ActionForward setPersonForCardGenerationEntry(final ActionMapping mapping, final ActionForm actionForm,
+	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+	final SetPersonForCardGenerationEntryBean bean = (SetPersonForCardGenerationEntryBean) getRenderedObject();
+	final CardGenerationProblem cardGenerationProblem = bean.getCardGenerationProblem();
+	final CardGenerationEntry cardGenerationEntry = getDomainObject(request, "cardGenerationEntryID");
+	final CardGenerationBatch cardGenerationBatch = cardGenerationEntry.getCardGenerationBatch();
+	final Person person = bean.getPerson();
+	if (person != null) {
+	    cardGenerationProblem.setPersonForCardGenerationEntry(cardGenerationEntry, person);
+	}
+	request.setAttribute("cardGenerationBatch", cardGenerationBatch);
+	return mapping.findForward("manageCardGenerationBatch");
     }
 
     public ActionForward deleteCardGenerationEntry(final ActionMapping mapping, final ActionForm actionForm,

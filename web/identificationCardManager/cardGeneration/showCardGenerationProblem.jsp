@@ -83,6 +83,28 @@
 				<html:link page="<%= urlDeleteEntry %>" onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>
 					<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.entry.delete"/>
 				</html:link>
+
+					<bean:define id="url" type="java.lang.String">/manageCardGeneration.do?method=setPersonForCardGenerationEntry&amp;cardGenerationEntryID=<bean:write name="cardGenerationEntryX" property="externalId"/></bean:define>
+					<fr:edit id="setPersonForCardGenerationEntryBean" name="setPersonForCardGenerationEntryBean" action="<%= url %>">
+						<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.ManageCardGenerationDA$SetPersonForCardGenerationEntryBean" bundle="CARD_GENERATION_RESOURCES">
+							<fr:slot name="personName" layout="autoComplete" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator" key="label.person">
+								<fr:property name="size" value="30"/>
+								<fr:property name="rawSlotName" value="name"/>
+								<fr:property name="indicatorShown" value="true"/>
+								<fr:property name="serviceName" value="SearchInternalPersons"/>
+								<fr:property name="serviceArgs" value="slot=name,size=30"/>
+								<fr:property name="className" value="net.sourceforge.fenixedu.domain.person.PersonName"/>				
+								<fr:property name="minChars" value="4"/>
+								<fr:property name="labelField" value="person.name"/>
+								<fr:property name="format" value="${text}"/>
+							</fr:slot>
+						</fr:schema>
+						<fr:layout name="tabular">
+							<fr:property name="classes" value="form listInsideClear" />
+							<fr:property name="columnClasses" value="width100px,,tderror" />
+						</fr:layout>
+					</fr:edit>
+
 			</logic:present>
 
 		</logic:equal>
