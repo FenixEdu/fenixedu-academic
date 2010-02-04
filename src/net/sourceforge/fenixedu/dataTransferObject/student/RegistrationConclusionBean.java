@@ -35,6 +35,8 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
 
     private Integer enteredFinalAverageGrade;
 
+    private Double enteredAverageGrade;
+
     public RegistrationConclusionBean(final Registration registration) {
 	setRegistration(registration);
     }
@@ -315,5 +317,17 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
 
     public boolean hasEnteredFinalAverageGrade() {
 	return this.enteredFinalAverageGrade != null;
+    }
+
+    public Double getEnteredAverageGrade() {
+	return this.enteredAverageGrade;
+    }
+
+    public void setEnteredAverageGrade(final Double averageGrade) {
+	this.enteredAverageGrade = averageGrade;
+    }
+
+    public boolean hasEnteredAverageGrade() {
+	return this.enteredAverageGrade != null;
     }
 }

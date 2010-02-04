@@ -29,7 +29,8 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
 
     static final public Comparator<CurriculumLine> COMPARATOR_BY_APPROVEMENT_DATE_AND_ID = new Comparator<CurriculumLine>() {
 	public int compare(CurriculumLine o1, CurriculumLine o2) {
-	    int result = o1.getApprovementDate().compareTo(o2.getApprovementDate());
+	    int result = (o1.getApprovementDate() != null && o2.getApprovementDate() != null) ? o1.getApprovementDate()
+		    .compareTo(o2.getApprovementDate()) : 0;
 	    return result == 0 ? COMPARATOR_BY_ID.compare(o1, o2) : result;
 	}
     };

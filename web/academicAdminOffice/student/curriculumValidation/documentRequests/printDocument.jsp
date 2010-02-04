@@ -39,5 +39,7 @@
 					<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 				</fr:layout>		
 		</fr:edit>
+		
+		<html:submit><bean:message key="button.payments.print" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>
 	</fr:form>
 </logic:equal>

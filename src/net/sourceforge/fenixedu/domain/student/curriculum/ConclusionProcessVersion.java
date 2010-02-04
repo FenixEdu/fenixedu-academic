@@ -73,6 +73,12 @@ public class ConclusionProcessVersion extends ConclusionProcessVersion_Base {
 	super.setNotes(StringUtils.isEmpty(notes) ? null : notes);
     }
 
+    protected void update(final Person responsible, final Integer finalAverage, BigDecimal average,
+	    final LocalDate conclusionDate, final String notes) {
+	update(responsible, finalAverage, conclusionDate, notes);
+	super.setAverage(average);
+    }
+
     @Override
     public void setDissertationEnrolment(final Enrolment dissertationEnrolment) {
 	if (getConclusionProcess().isCycleConclusionProcess()) {

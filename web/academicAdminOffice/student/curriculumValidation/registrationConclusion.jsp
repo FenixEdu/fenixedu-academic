@@ -288,11 +288,27 @@
 							<fr:property name="comment" value="label.registrationConclusionProcess.enteredConclusionDate.comment"/>
 							<fr:property name="commentLocation" value="right" />
 						</fr:slot>
-						<fr:slot name="calculatedFinalAverage" readOnly="true">
+						<fr:slot 	name="calculatedAverage" 
+									readOnly="true"
+									key="label.curriculum.validation.calculatedAverage"  
+									bundle="ACADEMIC_OFFICE_RESOURCES">
 							<fr:property name="classes" value="bold" />
 						</fr:slot>
-						<fr:slot name="enteredFinalAverageGrade" layout="input-with-comment">
-					        <fr:property name="bundle" value="APPLICATION_RESOURCES"/>
+						<fr:slot 	name="enteredAverageGrade" 
+									layout="input-with-comment" 
+									key="label.curriculum.validation.enteredAverageGrade" 
+									bundle="ACADEMIC_OFFICE_RESOURCES">
+						</fr:slot>
+						<fr:slot 	name="calculatedFinalAverage" 
+									readOnly="true"
+									key="label.curriculum.validation.calculatedFinalAverage"  
+									bundle="ACADEMIC_OFFICE_RESOURCES">
+							<fr:property name="classes" value="bold" />
+						</fr:slot>
+						<fr:slot 	name="enteredFinalAverageGrade" 
+									layout="input-with-comment"
+									key="label.curriculum.validation.enteredFinalAverageGrade"  
+									bundle="ACADEMIC_OFFICE_RESOURCES">
 						</fr:slot>
 					</fr:schema>
 					<fr:layout name="tabular-editable">

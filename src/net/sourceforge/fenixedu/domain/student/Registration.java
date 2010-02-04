@@ -2804,6 +2804,21 @@ public class Registration extends Registration_Base {
 	getConclusionProcess().update(editor, finalAverage, conclusion.toLocalDate(), notes);
     }
 
+    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    public void editConclusionInformation(final Person editor, final Integer finalAverage, final BigDecimal average,
+	    final YearMonthDay conclusion, final String notes) {
+
+	if (!isRegistrationConclusionProcessed()) {
+	    throw new DomainException("error.Registration.its.only.possible.to.edit.after.conclusion.process.has.been.performed");
+	}
+
+	check(finalAverage, "error.Registration.argument.must.not.be.null");
+	check(conclusion, "error.Registration.argument.must.not.be.null");
+	check(average, "error.Registration.argument.must.not.be.null");
+
+	getConclusionProcess().update(editor, finalAverage, average, conclusion.toLocalDate(), notes);
+    }
+
     @Checked("RegistrationPredicates.MANAGE_CONCLUSION_PROCESS")
     public void conclude(final CycleCurriculumGroup cycleCurriculumGroup) {
 	if (!isBolonha()) {

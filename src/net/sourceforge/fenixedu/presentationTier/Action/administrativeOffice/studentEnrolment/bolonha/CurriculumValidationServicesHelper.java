@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment.bolonha;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -16,7 +19,8 @@ public class CurriculumValidationServicesHelper {
 
 	registration.conclude();
 
-	if (conclusionBean.hasEnteredConclusionDate() || conclusionBean.hasEnteredFinalAverageGrade()) {
+	if (conclusionBean.hasEnteredConclusionDate() || conclusionBean.hasEnteredFinalAverageGrade()
+		|| conclusionBean.hasEnteredAverageGrade()) {
 
 	    checkEnteredConclusionDate(conclusionBean);
 
@@ -28,7 +32,10 @@ public class CurriculumValidationServicesHelper {
 	    Integer finalAverage = conclusionBean.hasEnteredFinalAverageGrade() ? conclusionBean.getEnteredFinalAverageGrade()
 		    : registration.getFinalAverage();
 
-	    registration.editConclusionInformation(null, finalAverage, conclusionDate, null);
+	    BigDecimal averageGrade = conclusionBean.hasEnteredAverageGrade() ? new BigDecimal(conclusionBean
+		    .getEnteredAverageGrade()).setScale(2, RoundingMode.FLOOR) : registration.getAverage();
+
+	    registration.editConclusionInformation(null, finalAverage, averageGrade, conclusionDate, null);
 	}
     }
 

@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.student.curriculum;
 
+import java.math.BigDecimal;
+
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -75,6 +77,12 @@ public class RegistrationConclusionProcess extends RegistrationConclusionProcess
 	    final String notes) {
 	addVersions(new RegistrationConclusionBean(getRegistration()));
 	getLastVersion().update(responsible, finalAverage, conclusionDate, notes);
+    }
+
+    final public void update(final Person responsible, final Integer finalAverage, BigDecimal average,
+	    final LocalDate conclusionDate, final String notes) {
+	addVersions(new RegistrationConclusionBean(getRegistration()));
+	getLastVersion().update(responsible, finalAverage, average, conclusionDate, notes);
     }
 
     @Override

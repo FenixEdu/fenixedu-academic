@@ -7073,6 +7073,13 @@ class candidacy.MeasurementTestRoom extends DomainObject {
 }
 
 
+class administrativeOffice.curriculumValidation.DocumentPrintRequest extends DomainObject {
+	String newConclusionDateValue;
+	String newGraduatedTitleValue;
+	String newDegreeDescriptionValue;
+	DateTime whenRequested;
+}
+
 /*
  * Relations definitions
  * 
@@ -17362,4 +17369,25 @@ relation CycleCourseGroupCycleCourseGroupInformation {
 	degreeStructure.CycleCourseGroupInformation playsRole cycleCourseGroupInformation {
 		multiplicity *;
 	}	
+}
+
+relation DocumentPrintRequestRootDmainObject {
+	RootDomainObject playsRole rootDomainObject;
+	administrativeOffice.curriculumValidation.DocumentPrintRequest playsRole request {
+		multiplicity *;
+	}
+}
+
+relation DocumentPrintRequestPerson {
+	Person playsRole whoRequested;
+	administrativeOffice.curriculumValidation.DocumentPrintRequest playsRole request {
+		multiplicity *;
+	}	
+}
+
+relation DocumentPrintRequestDocumentRequest {
+	serviceRequests.documentRequests.DocumentRequest playsRole documentRequest;
+	administrativeOffice.curriculumValidation.DocumentPrintRequest playsRole request {
+		multiplicity *;
+	}		
 }

@@ -11,6 +11,7 @@ import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.administrativeOffice.curriculumValidation.DocumentPrintRequest;
 import net.sourceforge.fenixedu.domain.documents.DocumentRequestGeneratedDocument;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
@@ -68,16 +69,27 @@ public class CurriculumValidationDocumentRequestsManagementDispatchAction extend
 	}
 
 	String conlusionDate = "";
+	String degreeDescription = "";
+	String graduatedTitle = "";
 	if (DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE.equals(documentRequest.getDocumentRequestType())) {
-	    conlusionDate = (String) ((List<AdministrativeOfficeDocument>) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
-		    .create(documentRequest)).get(0).getParameters().get("degreeFinalizationDate");
+	    AdministrativeOfficeDocument document = ((List<AdministrativeOfficeDocument>) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
+		    .create(documentRequest)).get(0);
+	    conlusionDate = (String) document.getParameters().get("degreeFinalizationDate");
+	    degreeDescription = (String) document.getParameters().get("degreeDescription");
+	    graduatedTitle = (String) document.getParameters().get("graduateTitle");
 	} else if (DocumentRequestType.DIPLOMA_REQUEST.equals(documentRequest.getDocumentRequestType())) {
+	    AdministrativeOfficeDocument document = ((List<AdministrativeOfficeDocument>) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
+		    .create(documentRequest)).get(0);
 	    conlusionDate = (String) ((List<AdministrativeOfficeDocument>) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
 		    .create(documentRequest)).get(0).getParameters().get("conclusionDate");
+	    degreeDescription = (String) document.getParameters().get("degreeFilteredName");
+	    graduatedTitle = (String) document.getParameters().get("graduateTitle");
 	}
 
 	DocumentFieldsCustomization customization = new DocumentFieldsCustomization();
 	customization.setConclusionDate(conlusionDate);
+	customization.setDegreeDescription(degreeDescription);
+	customization.setGraduatedTitle(graduatedTitle);
 
 	request.setAttribute("documentFieldsCustomization", customization);
 	request.setAttribute("documentRequest", documentRequest);
@@ -94,10 +106,17 @@ public class CurriculumValidationDocumentRequestsManagementDispatchAction extend
 
 	    DocumentFieldsCustomization customization = (DocumentFieldsCustomization) getRenderedObject("document.fields.customization");
 
+	    DocumentPrintRequest.logRequest(customization.getConclusionDate(), customization.getDegreeDescription(),
+		    customization.getGraduatedTitle(), documentRequest);
+
 	    if (DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE.equals(documentRequest.getDocumentRequestType())) {
 		documents.iterator().next().getParameters().put("degreeFinalizationDate", customization.getConclusionDate());
+		documents.iterator().next().getParameters().put("degreeDescription", customization.getDegreeDescription());
+		documents.iterator().next().getParameters().put("graduateTitle", customization.getGraduatedTitle());
 	    } else if (DocumentRequestType.DIPLOMA_REQUEST.equals(documentRequest.getDocumentRequestType())) {
 		documents.iterator().next().getParameters().put("conclusionDate", customization.getConclusionDate());
+		documents.iterator().next().getParameters().put("degreeFilteredName", customization.getDegreeDescription());
+		documents.iterator().next().getParameters().put("graduateTitle", customization.getGraduatedTitle());
 	    }
 
 	    final AdministrativeOfficeDocument[] array = {};
@@ -134,7 +153,14 @@ public class CurriculumValidationDocumentRequestsManagementDispatchAction extend
     }
 
     public static class DocumentFieldsCustomization implements java.io.Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private String conclusionDate;
+	private String degreeDescription;
+	private String graduatedTitle;
 
 	public DocumentFieldsCustomization() {
 
@@ -146,6 +172,22 @@ public class CurriculumValidationDocumentRequestsManagementDispatchAction extend
 
 	public void setConclusionDate(final String value) {
 	    this.conclusionDate = value;
+	}
+
+	public String getDegreeDescription() {
+	    return degreeDescription;
+	}
+
+	public void setDegreeDescription(String degreeDescription) {
+	    this.degreeDescription = degreeDescription;
+	}
+
+	public String getGraduatedTitle() {
+	    return graduatedTitle;
+	}
+
+	public void setGraduatedTitle(String graduatedTitle) {
+	    this.graduatedTitle = graduatedTitle;
 	}
     }
 }
