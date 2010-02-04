@@ -16,7 +16,8 @@ public class EventConferenceArticlesAssociation extends EventConferenceArticlesA
 			super.afterRemove(association, eventEdition);
 
 			if (eventEdition != null && association != null
-				&& !eventEdition.hasAnyEventConferenceArticlesAssociations()) {
+				&& !eventEdition.hasAnyEventConferenceArticlesAssociations()
+				&& !eventEdition.hasAnyParticipations() && !eventEdition.hasAnyAssociatedProjects()) {
 			    eventEdition.delete();
 			}
 		    }
