@@ -44,7 +44,7 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 	academicServiceRequest.sendToExternalEntity(sendDate, justification);
 
 	if (academicServiceRequest instanceof EquivalencePlanRequest) {
-	    sendRequestDataToExternal(academicServiceRequest);
+	    // sendRequestDataToExternal(academicServiceRequest);
 	}
 
     }
