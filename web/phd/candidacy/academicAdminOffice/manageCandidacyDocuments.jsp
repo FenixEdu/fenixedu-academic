@@ -62,13 +62,24 @@
 <br/>
 
 <%--  ### Documents  ### --%>
-<strong><bean:message  key="label.phd.documents" bundle="PHD_RESOURCES"/></strong>
 <logic:empty name="process" property="latestDocumentVersions">
+	<strong><bean:message  key="label.phd.documents" bundle="PHD_RESOURCES"/></strong>
 	<br/>
 	<bean:message  key="label.phd.noDocuments" bundle="PHD_RESOURCES"/>
 </logic:empty>
 
 <logic:notEmpty name="process" property="latestDocumentVersions">	
+	
+	<strong><bean:message  key="label.phd.documents" bundle="PHD_RESOURCES"/></strong>
+	<p>
+	<span class="compress">
+	<html:link action="/phdProgramCandidacyProcess.do?method=downloadCandidacyDocuments" paramId="processId" paramName="processId">
+		<bean:message key="label.phd.documents.download.all" bundle="PHD_RESOURCES" />
+	</html:link>
+	</span>
+	</p>
+	
+
 	<fr:view schema="PhdProgramProcessDocument.view" name="process" property="latestDocumentVersions">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight mtop15" />

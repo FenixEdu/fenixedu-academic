@@ -2703,3 +2703,11 @@ img.mbottom-fix, .mbottom-fix img { /* fixes unwanted bottom margin in images */
 display: block;
 margin: 0 auto;
 }
+
+
+
+.compress {
+background: url(../images/icon-compress.png) left top no-repeat;
+padding-left: 20px;
+}
+
