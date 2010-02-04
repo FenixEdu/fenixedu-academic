@@ -312,7 +312,7 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	// Estabelecimento de proveniência: Instituição onde esteve
 	// inscrito mas
 	// não obteve grau, (e.g: transferencias, mudanças de curso...)
-	PrecedentDegreeInformation precedence = sourceRegistration.getPrecedentDegreeInformation();
+	PrecedentDegreeInformation precedence = sourceRegistration.getStudentCandidacy().getPrecedentDegreeInformation();
 	row.setCell(precedence != null && precedence.getInstitutionName() != null ? precedence.getInstitutionName() : "");
 
 	// Curso de proveniência
