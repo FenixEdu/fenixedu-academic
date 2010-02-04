@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create Document Print Request table" createDocumentPrintRequestTable.sql
