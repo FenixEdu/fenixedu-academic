@@ -3814,7 +3814,7 @@ public class Registration extends Registration_Base {
 	    getIndividualCandidacy().editCandidacyInformation(bean);
 	} else {
 	    final StudentCandidacy studentCandidacy = StudentCandidacy.createStudentCandidacy(getLastDegreeCurricularPlan()
-		    .getExecutionDegreeByYear(getStartExecutionYear()), AccessControl.getPerson());
+		    .getExecutionDegreeByYear(getStartExecutionYear()), getStudent().getPerson());
 	    studentCandidacy.setRegistration(this);
 	    studentCandidacy.editCandidacyInformation(bean);
 	}
