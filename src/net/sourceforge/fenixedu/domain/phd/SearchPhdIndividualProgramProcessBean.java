@@ -17,10 +17,7 @@ import pt.utl.ist.fenix.tools.predicates.Predicate;
 
 public class SearchPhdIndividualProgramProcessBean implements Serializable {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = -5653277152319382139L;
+    static private final long serialVersionUID = -5653277152319382139L;
 
     private ExecutionYear executionYear;
 
