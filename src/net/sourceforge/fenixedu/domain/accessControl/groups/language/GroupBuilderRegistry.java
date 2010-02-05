@@ -68,6 +68,7 @@ import net.sourceforge.fenixedu.domain.accessControl.UnitEmployeesGroup;
 import net.sourceforge.fenixedu.domain.accessControl.UnitMembersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.VigilancyGroup;
 import net.sourceforge.fenixedu.domain.accessControl.WebSiteManagersGroup;
+import net.sourceforge.fenixedu.domain.accessControl.groups.ActiveStudentsFromDegreeTypeGroup;
 import net.sourceforge.fenixedu.domain.accessControl.groups.InternalOrExternalTeacherGroup;
 import net.sourceforge.fenixedu.domain.accessControl.groups.StudentsByDegreeAndCurricularYear;
 import net.sourceforge.fenixedu.domain.accessControl.groups.StudentsFromDegreeTypeGroup;
@@ -242,7 +243,7 @@ public class GroupBuilderRegistry {
 	register("vigilancyGroup", VigilancyGroup.class, new VigilancyGroup.Builder());
 	register("masterDegreeAdministrativeOfficeGroup", MasterDegreeAdministrativeOfficeGroup.class,
 		new MasterDegreeAdministrativeOfficeGroup.Builder());
-
+	register("activeStudentsFromDegreeTypeGroup", ActiveStudentsFromDegreeTypeGroup.class, new ActiveStudentsFromDegreeTypeGroup.Builder());
 	registerGroupsWithNoArguments();
     }
 
