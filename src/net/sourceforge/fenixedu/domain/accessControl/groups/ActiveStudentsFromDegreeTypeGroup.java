@@ -15,10 +15,12 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
-public class ActiveStudentsFromDegreeTypeGroup extends StudentsFromDegreeTypeGroup {
+public class ActiveStudentsFromDegreeTypeGroup extends Group {
 
+    private final DegreeType degreeType;
+    
     public ActiveStudentsFromDegreeTypeGroup(DegreeType degreeType) {
-	super(degreeType);
+	this.degreeType = degreeType;
     }
 
     @Override
