@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.commons.AbstractManageThesisDA;
 import net.sourceforge.fenixedu.presentationTier.docs.thesis.StudentThesisIdentificationDocument;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
@@ -36,8 +36,9 @@ import pt.utl.ist.fenix.tools.util.FileUtils;
 	@Forward(name = "thesis-declaration-view", path = "/student/thesis/viewDeclaration.jsp"),
 	@Forward(name = "thesis-upload-dissertation", path = "/student/thesis/uploadDissertation.jsp"),
 	@Forward(name = "thesis-upload-abstract", path = "/student/thesis/uploadAbstract.jsp"),
-	@Forward(name = "thesis-list-enrolments", path = "/student/thesis/listEnrolments.jsp") })
-public class ThesisSubmissionDA extends FenixDispatchAction {
+	@Forward(name = "thesis-list-enrolments", path = "/student/thesis/listEnrolments.jsp"),
+	@Forward(name = "viewOperationsThesis", path = "/student/thesis/viewOperationsThesis.jsp") })
+public class ThesisSubmissionDA extends AbstractManageThesisDA {
 
     public Student getStudent(HttpServletRequest request) {
 	return getUserView(request).getPerson().getStudent();
@@ -51,6 +52,7 @@ public class ThesisSubmissionDA extends FenixDispatchAction {
 	return super.execute(mapping, actionForm, request, response);
     }
 
+    @Override
     public Thesis getThesis(HttpServletRequest request) {
 	Thesis thesis = null;
 
@@ -105,7 +107,6 @@ public class ThesisSubmissionDA extends FenixDispatchAction {
 	    request.setAttribute("noThesis", true);
 	    return mapping.findForward("thesis-notFound");
 	}
-
 	request.setAttribute("thesis", thesis);
 	if (thesis.isWaitingConfirmation()) {
 	    setupStudentTodo(request, thesis);

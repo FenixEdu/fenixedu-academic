@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.commons.AbstractManageThesisDA;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisPresentationState;
 
 import org.apache.jcs.access.exception.InvalidArgumentException;
@@ -23,7 +24,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-public class ThesisDocumentConfirmationDA extends FenixDispatchAction {
+public class ThesisDocumentConfirmationDA extends AbstractManageThesisDA {
 
     public static class ThesisPresentationWrapper {
 

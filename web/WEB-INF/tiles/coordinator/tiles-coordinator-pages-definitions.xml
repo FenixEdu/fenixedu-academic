@@ -157,7 +157,7 @@
 		<put name="body" value="/coordinator/enrollment/help.jsp" />
 	</definition>
 
-	<!-- ************************************** LEEC Enrollment **************************** -->
+	<!-- ************************************** LEEC Enrollment ****************************-->
 	<definition name="df.page.prepareViewStudentCurriculumChooseStudent" extends="definition.coordinator.two-column">
 		<put name="body" value="/teacher/curriculum/prepareViewStudentCurriculumChooseStudent.jsp"/>
 	</definition>
@@ -240,7 +240,7 @@
 	
 	
 
-	<!--  ================================= EVALUATIONS ========================= -->
+	<!--  ================================= EVALUATIONS =========================-->
 	
 	<definition name="df.coordinator.evaluation-management" extends="definition.coordinator.two-column">
 	</definition>
@@ -344,6 +344,10 @@
         <put name="body" value="/coordinator/thesis/editParticipant.jsp"/>
     </definition>
     
+      <definition name="thesis-view-operations" extends="definition.coordinator.two-column">
+        <put name="body" value="/student/thesis/viewOperationsThesis.jsp"/>
+    </definition>
+     
     <!-- ========== Scientific Commission -->
     <definition name="scientificCommission-view" extends="definition.coordinator.two-column">
         <put name="body" value="/coordinator/scientificCommission/manageScientificCommission.jsp"/>

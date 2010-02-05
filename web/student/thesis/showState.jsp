@@ -7,6 +7,7 @@
 
 <em><bean:message key="title.student.portalTitle"/></em>
 <h2><bean:message key="title.student.thesis.submission"/></h2>
+<bean:define id="thesisId" name="thesis" property="idInternal"/>
 
 <ul>
     <li>
@@ -14,6 +15,11 @@
             <bean:message key="link.student.thesis.identification.download"/>
         </html:link>
     </li>
+ 	 <li>
+     	<html:link page="<%= String.format("/thesisSubmission.do?method=viewOperationsThesis&thesisID=%s",thesisId)%>">
+            <bean:message key="link.thesis.operation" bundle="STUDENT_RESOURCES"/>
+      	</html:link>
+     </li> 	
 </ul>
 
 <div class="infoop2">

@@ -30,7 +30,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.commons.AbstractManageThesisDA;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 import net.sourceforge.fenixedu.presentationTier.docs.thesis.ApproveJuryDocument;
 import net.sourceforge.fenixedu.presentationTier.docs.thesis.StudentThesisIdentificationDocument;
@@ -43,7 +43,7 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
-public class ManageThesisDA extends FenixDispatchAction {
+public class ManageThesisDA extends AbstractManageThesisDA {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -74,7 +74,8 @@ public class ManageThesisDA extends FenixDispatchAction {
 	return DegreeCurricularPlan.fromExternalId(request.getParameter("degreeCurricularPlanID"));
     }
 
-    private Thesis getThesis(HttpServletRequest request) {
+    @Override
+    protected Thesis getThesis(HttpServletRequest request) {
 	Thesis thesis = (Thesis) request.getAttribute("thesis");
 
 	if (thesis != null) {
@@ -137,7 +138,8 @@ public class ManageThesisDA extends FenixDispatchAction {
 	}
     }
 
-    private Integer getId(String id) {
+    @Override
+    protected Integer getId(String id) {
 	if (id == null) {
 	    return null;
 	}

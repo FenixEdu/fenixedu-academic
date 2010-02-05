@@ -36,7 +36,7 @@ import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
 import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.commons.AbstractManageThesisDA;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisPresentationState;
 import net.sourceforge.fenixedu.presentationTier.Action.student.thesis.ThesisFileBean;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionDegreesWithDissertationByExecutionYearProvider;
@@ -61,10 +61,9 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 	@Forward(name = "review-thesis", path = "/scientificCouncil/thesis/reviewThesis.jsp"),
 	@Forward(name = "view-thesis", path = "/scientificCouncil/thesis/viewThesis.jsp"),
 	@Forward(name = "list-scientific-comission", path = "/scientificCouncil/thesis/listScientificComission.jsp"),
-	@Forward(name = "list-thesis-creation-periods", path = "/scientificCouncil/thesis/listThesisCreationPeriods.jsp")
-
-})
-public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
+	@Forward(name = "list-thesis-creation-periods", path = "/scientificCouncil/thesis/listThesisCreationPeriods.jsp"),
+	@Forward(name = "viewOperationsThesis", path = "/student/thesis/viewOperationsThesis.jsp") })
+public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -94,15 +93,6 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 	request.setAttribute("executionYearId", executionYear == null ? "" : executionYear.getIdInternal());
     }
 
-    private Thesis getThesis(HttpServletRequest request) {
-	Integer id = getId(request.getParameter("thesisID"));
-	if (id == null) {
-	    return null;
-	} else {
-	    return RootDomainObject.getInstance().readThesisByOID(id);
-	}
-    }
-
     private Degree getDegree(HttpServletRequest request) {
 	final Integer id = getIntegerFromRequest(request, "degreeID");
 	if (id == null) {
@@ -118,19 +108,6 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 	    return null;
 	} else {
 	    return RootDomainObject.getInstance().readExecutionYearByOID(id);
-	}
-    }
-
-    private Integer getId(String id) {
-	if (id == null || id.equals("")) {
-	    return null;
-	}
-
-	try {
-	    return new Integer(id);
-	} catch (NumberFormatException e) {
-	    e.printStackTrace();
-	    return null;
 	}
     }
 
@@ -643,5 +620,4 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 	    row.setCell(odsb.toString());
 	}
     }
-
 }

@@ -63,6 +63,12 @@
 	    	</html:link>
    		</li>
     </logic:present>
+    <li>
+     	<html:link page="<%= String.format("/scientificCouncilManageThesis.do?method=viewOperationsThesis&thesisID=%s",thesisId)%>">
+            <bean:message key="link.thesis.operation" bundle="STUDENT_RESOURCES" />
+      	</html:link>
+     </li> 	
+    
 </ul>
 
 <%-- Approve proposal --%>

@@ -582,7 +582,8 @@
 	<message-resources parameter="resources.GroupNameResources" key="GROUP_NAME_RESOURCES" null="false"/>
 	<message-resources parameter="resources.BolonhaManagerResources" key="BOLONHA_MANAGER_RESOURCES" null="false"/>
     <message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
-
+    <message-resources parameter="resources.StudentResources" key="STUDENT_RESOURCES" null="false"/>
+	
 	<!-- ========== Plug Ins Configuration ================================= -->
 	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">
       <set-property property="pathnames" 

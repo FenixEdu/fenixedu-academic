@@ -1743,6 +1743,8 @@
 		  <forward name="editFile" path="teacher-announcement-editFile"/>
       </action>
         
+        
+        
         <!-- ===== Project Submissions Management === -->
         <action path="/projectSubmissionsManagement"
         	type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ProjectSubmissionsManagementDispatchAction"
@@ -1790,7 +1792,8 @@
         	parameter="method"
         	scope="request">        	  
         	<forward name="showThesisList" path="df.page.showThesisList"/>
-        	<forward name="viewThesis" path="df.page.viewThesis"/>        	
+        	<forward name="viewThesis" path="df.page.viewThesis"/>
+        	<forward name="viewOperationsThesis" path="df.page.viewOperationsThesis"/>          	
         </action>
 
 		<!-- Action mappings for tests -->
@@ -1879,6 +1882,7 @@
    	<message-resources parameter="resources.ContentResources" key="CONTENT_RESOURCES" null="false"/>
    	<message-resources parameter="resources.ScientificCouncilResources" key="SCIENTIFIC_COUNCIL_RESOURCES" null="false"/>
    	<message-resources parameter="resources.GroupNameResources" key="GROUP_NAME_RESOURCES" null="false"/>
+   	<message-resources parameter="resources.StudentResources" key="STUNDENT_RESOURCES" null="false"/>
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
         <set-property property="pathnames" 
