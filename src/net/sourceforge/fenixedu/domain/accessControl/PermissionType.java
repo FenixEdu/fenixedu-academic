@@ -111,6 +111,15 @@ public enum PermissionType {
 	public Set<AdministrativeOfficeType> administrativeOfficeTypeContexts() {
 	    return Collections.singleton(AdministrativeOfficeType.DEGREE);
 	}
+    },
+
+    REGISTRATION_CONCLUSION_CURRICULUM_VALIDATION() {
+
+	@Override
+	public Set<AdministrativeOfficeType> administrativeOfficeTypeContexts() {
+	    return Collections.singleton(AdministrativeOfficeType.DEGREE);
+	}
+
     };
 
     abstract public Set<AdministrativeOfficeType> administrativeOfficeTypeContexts();

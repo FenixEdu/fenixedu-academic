@@ -307,6 +307,10 @@ public class AcademicAdminOfficeCurriculumValidationDA extends FenixDispatchActi
 	final RegistrationConclusionBean registrationConclusionBean = getRegistrationConclusionBeanFromViewState();
 
 	try {
+	    if (!RegistrationPredicates.REGISTRATION_CONCLUSION_CURRICULUM_VALIDATION.evaluate(readRegistration(request))) {
+		throw new DomainException("error.not.authorized.to.registration.conclusion.process");
+	    }
+
 	    new CurriculumValidationServicesHelper().concludeRegistration(registrationConclusionBean);
 	    return prepareCurriculumValidation(mapping, form, request, response);
 	} catch (final IllegalDataAccessException e) {
@@ -323,7 +327,8 @@ public class AcademicAdminOfficeCurriculumValidationDA extends FenixDispatchActi
 
     private RegistrationConclusionBean buildRegistrationConclusionBean(final Registration registration) {
 	final RegistrationConclusionBean bean = new RegistrationConclusionBean(registration);
-	bean.setHasAccessToRegistrationConclusionProcess(RegistrationPredicates.MANAGE_CONCLUSION_PROCESS.evaluate(registration));
+	bean.setHasAccessToRegistrationConclusionProcess(RegistrationPredicates.REGISTRATION_CONCLUSION_CURRICULUM_VALIDATION
+		.evaluate(registration));
 	return bean;
     }
 

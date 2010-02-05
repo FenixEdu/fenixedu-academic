@@ -52,6 +52,25 @@ public class RegistrationPredicates {
 	};
     };
 
+    public static final AccessControlPredicate<Registration> REGISTRATION_CONCLUSION_CURRICULUM_VALIDATION = new AccessControlPredicate<Registration>() {
+
+	@Override
+	public boolean evaluate(Registration registration) {
+	    if (AccessControl.getPerson().hasRole(RoleType.MANAGER)) {
+		return true;
+	    }
+
+	    if (!AccessControl.getPerson().isAdministrativeOfficeEmployee()) {
+		return false;
+	    }
+
+	    final AdministrativeOfficePermission permission = getPermissionByType(PermissionType.REGISTRATION_CONCLUSION_CURRICULUM_VALIDATION);
+	    return permission.isMember(AccessControl.getPerson());
+
+	}
+
+    };
+
     public static final AccessControlPredicate<Registration> EDIT_CANDIDACY_INFORMATION = new AccessControlPredicate<Registration>() {
 	public boolean evaluate(final Registration registration) {
 	    return AccessControl.getPerson().hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);
