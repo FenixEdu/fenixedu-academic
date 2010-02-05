@@ -985,7 +985,11 @@ public class Lesson extends Lesson_Base {
     public List<EventBean> getAllLessonsEvents(String scheme, String serverName, int serverPort) {
 	HashMap<DateTime, LessonInstance> hashmap = new HashMap<DateTime, LessonInstance>();
 	ArrayList<EventBean> result = new ArrayList<EventBean>();
-	for (LessonInstance lessonInstance : getAllLessonInstancesUntil(getLessonEndDay().toLocalDate())) {
+	LocalDate lessonEndDay = null;
+	if(getLessonEndDay() != null) {
+	    getLessonEndDay().toLocalDate();
+	}
+	for (LessonInstance lessonInstance : getAllLessonInstancesUntil(lessonEndDay)) {
 	    hashmap.put(lessonInstance.getBeginDateTime(), lessonInstance);
 	}
 

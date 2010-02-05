@@ -815,8 +815,8 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 	String courseName = "";
 	ExecutionCourse executionCourse = null;
 	if (this.getAttendingExecutionCoursesFor(registration).size() > 1) {
-	    for (Iterator<ExecutionCourse> it = this.getAttendingExecutionCoursesFor(registration).iterator(); it.hasNext(); executionCourse = it
-		    .next()) {
+	    Iterator<ExecutionCourse> it = this.getAttendingExecutionCoursesFor(registration).iterator();	    
+	    for (executionCourse = it.next(); it.hasNext(); executionCourse = it.next()) {
 		if (it.hasNext()) {
 		    courseName += executionCourse.getSigla() + "; ";
 		} else {
