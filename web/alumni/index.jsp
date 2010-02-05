@@ -19,16 +19,16 @@ margin: 0;
 ul.material li {
 padding: 0.25em 0;
 }
-ul.material li.alerts { background: url(http://www.ist.utl.pt/img/alumni/icon_alerts.png) no-repeat 10px 50%; padding-left: 35px; }
-ul.material li.briefcase { background: url(http://www.ist.utl.pt/img/alumni/icon_briefcase.png) no-repeat 13px 50%; padding-left: 35px; }
-ul.material li.homepage { background: url(http://www.ist.utl.pt/img/alumni/icon_homepage.png) no-repeat 13px 50%; padding-left: 35px; }
-ul.material li.mailfwd { background: url(http://www.ist.utl.pt/img/alumni/icon_mailfwd.png) no-repeat 13px 50%; padding-left: 35px; }
-ul.material li.newsletter { background: url(http://www.ist.utl.pt/img/alumni/icon_newsletter.png) no-repeat 13px 50%; padding-left: 35px; }
-ul.material li.p_search { background: url(http://www.ist.utl.pt/img/alumni/icon_peoplesearch.png) no-repeat 13px 50%; padding-left: 35px; }
-ul.material li.storage { background: url(http://www.ist.utl.pt/img/alumni/icon_storage.png) no-repeat 13px 50%; padding-left: 35px; }
-ul.material li.m-list { background: url(http://www.ist.utl.pt/img/alumni/icon_mlist.gif) no-repeat 13px 50%; padding-left: 35px; }
-ul.material li.library { background: url(http://www.ist.utl.pt/img/alumni/icon_library.gif) no-repeat 13px 50%; padding-left: 35px; }
-ul.material li.feedback { background: url(http://www.ist.utl.pt/img/alumni/icon_feedback.png) no-repeat 13px 50%; padding-left: 35px; }
+ul.material li.alerts { background: url(https://www.ist.utl.pt/img/alumni/icon_alerts.png) no-repeat 10px 50%; padding-left: 35px; }
+ul.material li.briefcase { background: url(https://www.ist.utl.pt/img/alumni/icon_briefcase.png) no-repeat 13px 50%; padding-left: 35px; }
+ul.material li.homepage { background: url(https://www.ist.utl.pt/img/alumni/icon_homepage.png) no-repeat 13px 50%; padding-left: 35px; }
+ul.material li.mailfwd { background: url(https://www.ist.utl.pt/img/alumni/icon_mailfwd.png) no-repeat 13px 50%; padding-left: 35px; }
+ul.material li.newsletter { background: url(https://www.ist.utl.pt/img/alumni/icon_newsletter.png) no-repeat 13px 50%; padding-left: 35px; }
+ul.material li.p_search { background: url(https://www.ist.utl.pt/img/alumni/icon_peoplesearch.png) no-repeat 13px 50%; padding-left: 35px; }
+ul.material li.storage { background: url(https://www.ist.utl.pt/img/alumni/icon_storage.png) no-repeat 13px 50%; padding-left: 35px; }
+ul.material li.m-list { background: url(https://www.ist.utl.pt/img/alumni/icon_mlist.gif) no-repeat 13px 50%; padding-left: 35px; }
+ul.material li.library { background: url(https://www.ist.utl.pt/img/alumni/icon_library.gif) no-repeat 13px 50%; padding-left: 35px; }
+ul.material li.feedback { background: url(https://www.ist.utl.pt/img/alumni/icon_feedback.png) no-repeat 13px 50%; padding-left: 35px; }
 </style>
 
 
