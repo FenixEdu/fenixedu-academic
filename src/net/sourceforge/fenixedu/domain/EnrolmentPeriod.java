@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Comparator;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -14,6 +15,18 @@ import org.joda.time.DateTime;
  * @author jpvl
  */
 public abstract class EnrolmentPeriod extends EnrolmentPeriod_Base {
+
+    public static final Comparator<EnrolmentPeriod> COMPARATOR_BY_DEGREE_NAME = new Comparator<EnrolmentPeriod>() {
+
+	@Override
+	public int compare(EnrolmentPeriod o1, EnrolmentPeriod o2) {
+	    final DegreeCurricularPlan dcp1 = o1.getDegreeCurricularPlan();
+	    final DegreeCurricularPlan dcp2 = o2.getDegreeCurricularPlan();
+	    final int dcp = DegreeCurricularPlan.COMPARATOR_BY_PRESENTATION_NAME.compare(dcp1, dcp2);
+	    return dcp == 0 ? o2.hashCode() - o1.hashCode() : dcp;
+	}
+	
+    };
 
     public EnrolmentPeriod() {
 	super();

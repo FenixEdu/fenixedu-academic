@@ -1492,6 +1492,8 @@
 					  value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/resourceAllocationManager/tiles-resourceAllocationManager-definitions.xml,/WEB-INF/tiles/resourceAllocationManager/tiles-resourceAllocationManager-pages-definitions.xml" />
 		<set-property property="moduleAware" value="true" />
 		<set-property property="definitions-parser-validate" value="true" />
+        <set-property property="factoryClassname" value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" />
+        <set-property property="defaultTileDefinition" value="definition.sop.periods" />
 	</plug-in>
 
 	<plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn" />

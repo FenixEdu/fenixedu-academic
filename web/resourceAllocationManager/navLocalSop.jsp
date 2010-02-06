@@ -4,12 +4,16 @@
 <%@page import="net.sourceforge.fenixedu.domain.Person"%>
 <%@page import="net.sourceforge.fenixedu.domain.ResourceAllocationRole"%>
 <html:xhtml/>
-
 <ul>	
 
 	<%
 		Person loggedPerson = AccessControl.getPerson();	
 	%>
+
+	<li class="navheader"><bean:message key="link.periods" bundle="SOP_RESOURCES"/></li>
+	<li><html:link page="/periods.do?method=firstPage"><bean:message key="link.periods" bundle="SOP_RESOURCES"/></html:link></li>
+
+	<br/>
 	
 	<%			
 		if(ResourceAllocationRole.personHasPermissionToManageSchedulesAllocation(loggedPerson)) { 
