@@ -300,6 +300,12 @@ public class GiafInterface {
 	return 0;
     }
 
+    /*
+     * PROCEDURE IST_INSERE_PONTO( ANO In NUMBER, MES In NUMBER, NUMERO In
+     * VARCHAR2, TIPO In VARCHAR2, CODIGO In VARCHAR2, DATA_INI In DATE,
+     * DATA_FIM In DATE, QT_DC In NUMBER, QT_DU In NUMBER, DT_FACTO In DATE,
+     * UTILIZADOR_CRIACAO In VARCHAR2, DATA_CRIACAO In DATE, ERRO Out VARCHAR )
+     */
     public void exportToGIAF(String file) throws SQLException, ExcepcaoPersistencia {
 	PersistentSuportGiaf persistentSuportOracle = PersistentSuportGiaf.getInstance();
 	persistentSuportOracle.startTransaction();
@@ -308,60 +314,68 @@ public class GiafInterface {
 	for (int line = 0; line < lineTokens.length; line++) {
 	    try {
 		String[] fieldTokens = lineTokens[line].split("\t");
-		cs = persistentSuportOracle.prepareCall("BEGIN ist_insere_ponto(?, ?, ? ,? ,? ,? ,? ,? , ?, ?, ?,?); END;");
-		cs.setInt(1, new Integer(fieldTokens[0].trim()).intValue());
-		cs.setInt(2, new Integer(fieldTokens[1].trim()).intValue());
-		cs.setString(3, fieldTokens[2].trim());
-		cs.setString(4, fieldTokens[3].trim());
+		cs = persistentSuportOracle.prepareCall("BEGIN ist_insere_ponto(?, ?, ? ,? ,? ,? ,? ,? , ?, ?, ?,?,?); END;");
+		cs.setInt(1, new Integer(fieldTokens[0].trim()).intValue());// ANO
+		cs.setInt(2, new Integer(fieldTokens[1].trim()).intValue());// MES
+		cs.setString(3, fieldTokens[2].trim());// NUMERO
+		cs.setString(4, fieldTokens[3].trim());// TIPO
 
-		String code = new String(fieldTokens[4].trim());
+		String code = new String(fieldTokens[4].trim());// CODIGO
 		cs.setString(5, code);
 
-		String beginDateString = new Integer(fieldTokens[5].trim()).toString();
+		String beginDateString = new Integer(fieldTokens[5].trim()).toString();// DATA_INI
 		Calendar beginDate = Calendar.getInstance();
 		beginDate.set(Calendar.DAY_OF_MONTH, new Integer(beginDateString.substring(6, 8)).intValue());
 		beginDate.set(Calendar.MONTH, new Integer(beginDateString.substring(4, 6)).intValue() - 1);
 		beginDate.set(Calendar.YEAR, new Integer(beginDateString.substring(0, 4)).intValue());
 		cs.setDate(6, new Date(beginDate.getTimeInMillis()));
 
-		String endDateString = new Integer(fieldTokens[6].trim()).toString();
+		String endDateString = new Integer(fieldTokens[6].trim()).toString();// DATA_FIM
 		Calendar endDate = Calendar.getInstance();
 		endDate.set(Calendar.DAY_OF_MONTH, new Integer(endDateString.substring(6, 8)).intValue());
 		endDate.set(Calendar.MONTH, new Integer(endDateString.substring(4, 6)).intValue() - 1);
 		endDate.set(Calendar.YEAR, new Integer(endDateString.substring(0, 4)).intValue());
-
 		cs.setDate(7, new Date(endDate.getTimeInMillis()));
 
-		Integer value = new Integer(fieldTokens[7].trim());
 		DecimalFormat df = new DecimalFormat("0,00");
 
+		Integer value = new Integer(fieldTokens[7].trim());// QT_DC
 		cs.setDouble(8, new Double(df.format(value)).doubleValue());
-		value = new Integer(fieldTokens[8].trim());
+
+		value = new Integer(fieldTokens[8].trim());// QT_DU
 		cs.setDouble(9, new Double(df.format(value)).doubleValue());
-		if (fieldTokens.length >= 10) {
+
+		if (fieldTokens.length >= 10) {// DT_FACTO
 		    cs.setString(10, fieldTokens[9].trim());
 		} else {
 		    cs.setString(10, null);
 		}
-		if (fieldTokens.length >= 11) {
-		    String dateString = new Integer(fieldTokens[10].trim()).toString();
+
+		if (fieldTokens.length >= 11) {// UTILIZADOR_CRIACAO
+		    cs.setString(11, fieldTokens[10].trim());
+		} else {
+		    cs.setString(11, null);
+		}
+
+		if (fieldTokens.length >= 12) {// DATA_CRIACAO
+		    String dateString = new Integer(fieldTokens[11].trim()).toString();
 		    Calendar c = Calendar.getInstance();
 		    c.set(Calendar.DAY_OF_MONTH, new Integer(dateString.substring(6, 8)).intValue());
 		    c.set(Calendar.MONTH, new Integer(dateString.substring(4, 6)).intValue() - 1);
 		    c.set(Calendar.YEAR, new Integer(dateString.substring(0, 4)).intValue());
-		    cs.setDate(11, new Date(c.getTimeInMillis()));
+		    cs.setDate(12, new Date(c.getTimeInMillis()));
 		} else {
-		    cs.setDate(11, null);
+		    cs.setDate(12, null);
 		}
-		cs.registerOutParameter(12, OracleTypes.VARCHAR);
+		cs.registerOutParameter(13, OracleTypes.VARCHAR);
 		cs.execute();
-		if (cs.getString(12) != null) {
-		    System.out.println("ERRO exportToGIAF na linha - " + (line + 1) + " : " + cs.getString(12) + " DADOS: "
+		if (cs.getString(13) != null) {
+		    System.out.println("ERRO exportToGIAF na linha - " + (line + 1) + " : " + cs.getString(13) + " DADOS: "
 			    + lineTokens[line].trim());
 		    cs.close();
 		    persistentSuportOracle.cancelTransaction();
 		    throw new InvalidGiafCodeException("errors.exportToGiafException", new Integer(line + 1).toString(), cs
-			    .getString(12), lineTokens[line].trim());
+			    .getString(13), lineTokens[line].trim());
 		}
 	    } finally {
 		if (cs != null) {

@@ -462,7 +462,8 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 		int days = Days.daysBetween(start, end).getDays() + 1;
 		line.append(days).append("00").append(fieldSeparator);
 		interval = new Interval(start.toDateTimeAtStartOfDay().getMillis(), end.toDateTimeAtStartOfDay().getMillis());
-		line.append(leaveBean.getLeave().getUtilDaysBetween(interval)).append("00\r\n");
+		line.append(leaveBean.getLeave().getUtilDaysBetween(interval)).append("00").append(fieldSeparator);
+		line.append(dateFormat.print(leaveBean.getDate().toLocalDate())).append("\r\n");
 	    }
 	}
 	return line;
