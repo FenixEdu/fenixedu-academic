@@ -45,6 +45,17 @@
     <slot name="proposedPlace" key="label.scientificCouncil.thesis.place" layout="null-as-label"/>
 </schema>
 
+<schema name="scientificCouncil.thesis.for.execution.year.bean" type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis.ScientificCouncilManageThesisDA$DissertationsContextBean">
+	<slot name="executionYear" key="label.execution.year" layout="menu-select-postback">
+    	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider"/>
+    	<property name="format" value="${nextYearsYearString}"/>
+    </slot>
+    <slot name="executionDegree" key="label.degree" layout="menu-select-postback">
+    	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionDegreesWithDissertationByExecutionYearProvider"/>
+    	<property name="format" value="${degreeCurricularPlan.name}"/>	
+    </slot>
+</schema>
+
 <schema name="executionDegree.coordinator.view-name-role" type="net.sourceforge.fenixedu.domain.Coordinator">
 	<slot name="person.name"/>
 	<slot name="responsible">

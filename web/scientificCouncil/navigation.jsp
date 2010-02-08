@@ -55,6 +55,11 @@
                 <bean:message key="navigation.list.thesis.creation.periods"/>
             </html:link>  
         </li>
+        <li>
+            <html:link page="/scientificCouncilManageThesis.do?method=dissertations">
+                <bean:message key="navigation.thesis.info"/>
+            </html:link>  
+        </li>
 
 		<li class="navheader">
 			<bean:message key="label.credits.navigation.header"/>

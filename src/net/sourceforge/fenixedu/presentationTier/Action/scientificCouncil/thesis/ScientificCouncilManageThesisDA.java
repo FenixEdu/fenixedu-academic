@@ -2,18 +2,27 @@ package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesi
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionDegreesByExecutionYearAndType;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.MakeThesisDocumentsAvailable;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.MakeThesisDocumentsUnavailable;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
+import net.sourceforge.fenixedu.dataTransferObject.commons.DegreeByExecutionYearBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Employee;
@@ -31,6 +40,8 @@ import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.ThesisFileReadersGroup;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
+import net.sourceforge.fenixedu.domain.interfaces.HasExecutionYear;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
@@ -41,9 +52,11 @@ import net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.Thesi
 import net.sourceforge.fenixedu.presentationTier.Action.student.thesis.ThesisFileBean;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionDegreesWithDissertationByExecutionYearProvider;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -62,7 +75,8 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 	@Forward(name = "view-thesis", path = "/scientificCouncil/thesis/viewThesis.jsp"),
 	@Forward(name = "list-scientific-comission", path = "/scientificCouncil/thesis/listScientificComission.jsp"),
 	@Forward(name = "list-thesis-creation-periods", path = "/scientificCouncil/thesis/listThesisCreationPeriods.jsp"),
-	@Forward(name = "viewOperationsThesis", path = "/student/thesis/viewOperationsThesis.jsp") })
+	@Forward(name = "viewOperationsThesis", path = "/student/thesis/viewOperationsThesis.jsp"),
+	@Forward(name = "showDissertationsInfo", path = "/scientificCouncil/thesis/showDissertationsInfo.jsp")})
 public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 
     @Override
@@ -85,6 +99,48 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 
 	return super.execute(mapping, actionForm, request, response);
     }
+    
+    public static class DissertationsContextBean implements Serializable, HasExecutionYear {
+
+	ExecutionDegree executionDegree;
+	
+	ExecutionYear executionYear;
+	
+	public DissertationsContextBean(ExecutionDegree executionDegree, ExecutionYear executionYear) {
+	    this.executionDegree = executionDegree;
+	    this.executionYear = executionYear;
+	}
+
+	public ExecutionDegree getExecutionDegree() {
+	    return executionDegree;
+	}
+
+	public void setExecutionDegree(ExecutionDegree executionDegree) {
+	    this.executionDegree = executionDegree;
+	}
+
+	public ExecutionYear getExecutionYear() {
+	    return executionYear;
+	}
+
+	public void setExecutionYear(ExecutionYear executionYear) {
+	    this.executionYear = executionYear;
+	}
+    }
+    public ActionForward dissertations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	DissertationsContextBean dissertationsContextBean = getDissertationsContextBean(request);
+
+	if(dissertationsContextBean.getExecutionDegree() != null) {
+	    request.setAttribute("executionDegree", dissertationsContextBean.getExecutionDegree());
+	    request.setAttribute("scheduling", dissertationsContextBean.getExecutionDegree().getScheduling());
+	}
+
+	request.setAttribute("dissertationsContextBean", dissertationsContextBean);
+
+	return mapping.findForward("showDissertationsInfo");
+    }
 
     private void setFilterContext(HttpServletRequest request, Degree degree, ExecutionYear executionYear) {
 	request.setAttribute("degree", degree);
@@ -99,6 +155,16 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 	    return null;
 	} else {
 	    return RootDomainObject.getInstance().readDegreeByOID(id);
+	}
+    }
+    
+    private ExecutionDegree getExecutionDegree(HttpServletRequest request) {
+	final Integer executionDegreeOID = getIntegerFromRequest(request, "executionDegreeOID");
+	if (executionDegreeOID == null) {
+	    return null;
+	} else {
+	    return RootDomainObject.getInstance().readExecutionDegreeByOID(
+		    Integer.valueOf(executionDegreeOID));
 	}
     }
 
@@ -216,6 +282,24 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 	    }
 
 	    return new ThesisContextBean(degree, executionYear);
+	}
+    }
+    
+    private DissertationsContextBean getDissertationsContextBean(HttpServletRequest request) {
+	DissertationsContextBean bean = (DissertationsContextBean) getRenderedObject("dissertationsContextBean");
+	RenderUtils.invalidateViewState("dissertationsContextBean");
+
+	if (bean != null) {
+	    return bean;
+	} else {
+	    ExecutionDegree degree = getExecutionDegree(request);
+	    ExecutionYear executionYear = getExecutionYear(request);
+
+	    if (executionYear == null) {
+		executionYear = ExecutionYear.readCurrentExecutionYear();
+	    }
+
+	    return new DissertationsContextBean(degree, executionYear);
 	}
     }
 
