@@ -40,7 +40,8 @@ public class GiafInterface {
 	    callableStatement.registerOutParameter(5, Types.VARCHAR);
 	    callableStatement.executeQuery();
 	    if (callableStatement.getString(5) == null) {
-		return new BigDecimal(callableStatement.getDouble(4));
+		BigDecimal result = callableStatement.getBigDecimal(4);
+		return result.equals(BigDecimal.ZERO) ? getEmployeeHourValue(employee, new LocalDate()) : result;
 	    }
 	    callableStatement.close();
 	} catch (SQLException e) {
