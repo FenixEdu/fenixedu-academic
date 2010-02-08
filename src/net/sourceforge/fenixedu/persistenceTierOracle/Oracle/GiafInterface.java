@@ -325,18 +325,10 @@ public class GiafInterface {
 		cs.setString(5, code);
 
 		String beginDateString = new Integer(fieldTokens[5].trim()).toString();// DATA_INI
-		Calendar beginDate = Calendar.getInstance();
-		beginDate.set(Calendar.DAY_OF_MONTH, new Integer(beginDateString.substring(6, 8)).intValue());
-		beginDate.set(Calendar.MONTH, new Integer(beginDateString.substring(4, 6)).intValue() - 1);
-		beginDate.set(Calendar.YEAR, new Integer(beginDateString.substring(0, 4)).intValue());
-		cs.setDate(6, new Date(beginDate.getTimeInMillis()));
+		cs.setDate(6, getDate(beginDateString));
 
 		String endDateString = new Integer(fieldTokens[6].trim()).toString();// DATA_FIM
-		Calendar endDate = Calendar.getInstance();
-		endDate.set(Calendar.DAY_OF_MONTH, new Integer(endDateString.substring(6, 8)).intValue());
-		endDate.set(Calendar.MONTH, new Integer(endDateString.substring(4, 6)).intValue() - 1);
-		endDate.set(Calendar.YEAR, new Integer(endDateString.substring(0, 4)).intValue());
-		cs.setDate(7, new Date(endDate.getTimeInMillis()));
+		cs.setDate(7, getDate(endDateString));
 
 		DecimalFormat df = new DecimalFormat("0,00");
 
@@ -347,9 +339,10 @@ public class GiafInterface {
 		cs.setDouble(9, new Double(df.format(value)).doubleValue());
 
 		if (fieldTokens.length >= 10) {// DT_FACTO
-		    cs.setString(10, fieldTokens[9].trim());
+		    String factoDateString = new Integer(fieldTokens[9].trim()).toString();
+		    cs.setDate(10, getDate(factoDateString));
 		} else {
-		    cs.setString(10, null);
+		    cs.setDate(10, null);
 		}
 
 		if (fieldTokens.length >= 11) {// UTILIZADOR_CRIACAO
@@ -359,12 +352,8 @@ public class GiafInterface {
 		}
 
 		if (fieldTokens.length >= 12) {// DATA_CRIACAO
-		    String dateString = new Integer(fieldTokens[11].trim()).toString();
-		    Calendar c = Calendar.getInstance();
-		    c.set(Calendar.DAY_OF_MONTH, new Integer(dateString.substring(6, 8)).intValue());
-		    c.set(Calendar.MONTH, new Integer(dateString.substring(4, 6)).intValue() - 1);
-		    c.set(Calendar.YEAR, new Integer(dateString.substring(0, 4)).intValue());
-		    cs.setDate(12, new Date(c.getTimeInMillis()));
+		    String creationDateString = new Integer(fieldTokens[11].trim()).toString();
+		    cs.setDate(12, getDate(creationDateString));
 		} else {
 		    cs.setDate(12, null);
 		}
@@ -385,6 +374,14 @@ public class GiafInterface {
 	    }
 	}
 	persistentSuportOracle.commitTransaction();
+    }
+
+    private Date getDate(String dateString) {
+	Calendar date = Calendar.getInstance();
+	date.set(Calendar.DAY_OF_MONTH, new Integer(dateString.substring(6, 8)).intValue());
+	date.set(Calendar.MONTH, new Integer(dateString.substring(4, 6)).intValue() - 1);
+	date.set(Calendar.YEAR, new Integer(dateString.substring(0, 4)).intValue());
+	return new Date(date.getTimeInMillis());
     }
 
 }
