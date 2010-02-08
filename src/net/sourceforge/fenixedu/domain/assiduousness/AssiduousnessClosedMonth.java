@@ -354,4 +354,23 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	}
 	return oldAssiduousnessClosedMonth;
     }
+
+    public boolean hasAnyCorrection() {
+	for (AssiduousnessExtraWork assiduousnessExtraWork : getAssiduousnessExtraWorks()) {
+	    if (assiduousnessExtraWork.getIsCorrection()) {
+		return true;
+	    }
+	}
+	for (ClosedMonthJustification closedMonthJustification : getClosedMonthJustifications()) {
+	    if (closedMonthJustification.getIsCorrection()) {
+		return true;
+	    }
+	}
+	for (AssiduousnessClosedDay assiduousnessClosedDay : getAssiduousnessClosedDays()) {
+	    if (assiduousnessClosedDay.getIsCorrection()) {
+		return true;
+	    }
+	}
+	return false;
+    }
 }

@@ -113,8 +113,12 @@ public class ClosedMonth extends ClosedMonth_Base {
     }
 
     public boolean hasAnyCorrection() {
-	return (hasAnyAssiduousnessExtraWorksCorrections() || hasAnyAssiduousnessClosedDaysCorrections()
-		|| hasAnyAssiduousnessClosedMonthsCorrections() || hasAnyClosedMonthJustificationCorrections());
+	for (AssiduousnessClosedMonth assiduousnessClosedMonth : getAssiduousnessClosedMonths()) {
+	    if (assiduousnessClosedMonth.getIsCorrection() || assiduousnessClosedMonth.hasAnyCorrection()) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     public static boolean hasAnyMonthClosed() {
