@@ -403,6 +403,12 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 	return viewThesis(mapping, actionForm, request, response);
     }
 
+    public ActionForward editThesisAbstract(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	request.setAttribute("editThesisAbstract", Boolean.TRUE);
+	return viewThesis(mapping, actionForm, request, response);
+    }
+
     public ActionForward showSubstituteDocumentsPage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	final Thesis thesis = getThesis(request);

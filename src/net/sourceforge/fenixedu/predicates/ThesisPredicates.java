@@ -15,7 +15,7 @@ public class ThesisPredicates {
     public static final AccessControlPredicate<Thesis> waitingConfirmation = new AccessControlPredicate<Thesis>() {
 
 	public boolean evaluate(Thesis thesis) {
-	    return thesis.isWaitingConfirmation();
+	    return thesis.isWaitingConfirmation() || isScientificCouncil.evaluate(thesis);
 	}
 
     };

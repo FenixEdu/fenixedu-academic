@@ -186,24 +186,82 @@
 </logic:notEqual>
 
 <logic:equal name="thesis" property="thesisAbstractInBothLanguages" value="true">
-    <div style="border: 1px solid #ddd; background: #fafafa; padding: 0.5em; margin-bottom: 1em;">
-        <fr:view name="thesis" property="thesisAbstract">
-            <fr:layout>
-                <fr:property name="language" value="pt"/>
-                <fr:property name="showLanguageForced" value="true"/>
-            </fr:layout>
-        </fr:view>
-    </div>
+	<logic:notPresent name="editThesisAbstract">
+	    <div style="border: 1px solid #ddd; background: #fafafa; padding: 0.5em; margin-bottom: 1em;">
+    	    <fr:view name="thesis" property="thesisAbstract">
+        	    <fr:layout>
+            	    <fr:property name="language" value="pt"/>
+                	<fr:property name="showLanguageForced" value="true"/>
+            	</fr:layout>
+        	</fr:view>
+    	</div>
 
-    <div style="border: 1px solid #ddd; background: #fafafa; padding: 0.5em; margin-bottom: 1em;">
-		<fr:view name="thesis" property="thesisAbstract">
-			<fr:layout>
-				<fr:property name="language" value="en"/>
-				<fr:property name="showLanguageForced" value="true"/>
-			</fr:layout>
-		</fr:view>
-	</div>
+	    <div style="border: 1px solid #ddd; background: #fafafa; padding: 0.5em; margin-bottom: 1em;">
+			<fr:view name="thesis" property="thesisAbstract">
+				<fr:layout>
+					<fr:property name="language" value="en"/>
+					<fr:property name="showLanguageForced" value="true"/>
+				</fr:layout>
+			</fr:view>
+		</div>
+
+		<logic:notPresent name="containsThesisFileReadersGroup">
+			<bean:define id="url">/scientificCouncilManageThesis.do?method=editThesisAbstract&amp;degreeId=<bean:write name="degreeId"/>&amp;executionYearId=<bean:write name="executionYearId"/>&amp;thesisID=<bean:write name="thesisId"/></bean:define>
+			<html:link page="<%= url %>">
+				<bean:message key="link.edit"/>
+			</html:link>
+   		</logic:notPresent>
+	</logic:notPresent>
+	<logic:present name="editThesisAbstract">
+		<bean:define id="url">/scientificCouncilManageThesis.do?method=viewThesis&amp;degreeId=<bean:write name="degreeId"/>&amp;executionYearId=<bean:write name="executionYearId"/>&amp;thesisID=<bean:write name="thesisId"/></bean:define>
+   	    <fr:edit id="editThesisAbstract" name="thesis" action="<%= url %>">
+			<fr:schema type="net.sourceforge.fenixedu.domain.thesis.Thesis" bundle="STUDENT_RESOURCES">
+    			<fr:slot name="thesisAbstractPt" layout="longText" key="label.thesis.abstract.pt">
+        			<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+            			<fr:property name="type" value="word"/>
+            			<fr:property name="length" value="250"/>
+        			</fr:validator>
+         			<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+        			<fr:property name="columns" value="65"/>
+        			<fr:property name="rows" value="12"/>
+    			</fr:slot>
+    			<fr:slot name="thesisAbstractEn" layout="longText" key="label.thesis.abstract.en">
+        			<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+            			<fr:property name="type" value="word"/>
+            			<fr:property name="length" value="250"/>
+        			</fr:validator>
+        			<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+        			<fr:property name="columns" value="65"/>
+        			<fr:property name="rows" value="12"/>
+    			</fr:slot>
+			</fr:schema>
+		    <fr:layout name="tabular">
+        		<fr:property name="classes" value="tstyle5 thlight thright mtop05 tdtop"/>
+        		<fr:property name="columnClasses" value=",,tdclear tderror1 "/>
+    		</fr:layout>
+       	</fr:edit>
+	</logic:present>
 </logic:equal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <h3 class="mtop15 mbottom05"><bean:message key="label.thesis.keywords"/></h3>
 
