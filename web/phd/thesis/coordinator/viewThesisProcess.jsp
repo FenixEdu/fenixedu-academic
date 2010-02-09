@@ -54,8 +54,8 @@
 				<li>
 				<bean:define id="url2" name="thesisProcess" property="juryPresidentDocument.downloadUrl" />
 				<a href="<%= url2.toString() %>">
-					<bean:write name="process" property="juryPresidentDocument.documentType.localizedName"/> 
-					(<bean:message  key="label.version" bundle="PHD_RESOURCES" /> <bean:write name="process" property="juryPresidentDocument.documentVersion"/>)
+					<bean:write name="thesisProcess" property="juryPresidentDocument.documentType.localizedName"/> 
+					(<bean:message  key="label.version" bundle="PHD_RESOURCES" /> <bean:write name="thesisProcess" property="juryPresidentDocument.documentVersion"/>)
 				</a>
 				</li>
 			</logic:notEmpty>
