@@ -77,7 +77,26 @@
 						<tr>
 							<th><bean:message key="label.frequency" bundle="SOP_RESOURCES"/>:</th>				
 							<td><bean:message name="genericEvent" property="frequency.name" bundle="ENUMERATION_RESOURCES"/></td>
-						</tr>																				
+						</tr>
+						<tr>
+							<th>
+							</th>
+							<td>
+								<logic:equal name="genericEvent" property="dailyFrequencyMarkSunday" value="true">
+									<bean:message key="label.include.saturdays" bundle="SOP_RESOURCES"/>
+								</logic:equal>
+								<logic:notEqual name="genericEvent" property="dailyFrequencyMarkSunday" value="true">
+									<bean:message key="label.not.include.saturdays" bundle="SOP_RESOURCES"/>
+								</logic:notEqual>
+								<br/>
+								<logic:equal name="genericEvent" property="dailyFrequencyMarkSaturday" value="true">
+									<bean:message key="label.include.sundays" bundle="SOP_RESOURCES"/>
+								</logic:equal>
+								<logic:notEqual name="genericEvent" property="dailyFrequencyMarkSaturday" value="true">
+									<bean:message key="label.not.include.sundays" bundle="SOP_RESOURCES"/>
+								</logic:notEqual>
+							</td>
+						</tr>
 					</table>				
 				</logic:notEmpty>					
 			</logic:notEmpty>
