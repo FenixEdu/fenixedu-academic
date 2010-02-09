@@ -740,20 +740,18 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	@Override
 	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
 
-	    // if (process.hasSeminarProcess() &&
-	    // !process.getSeminarProcess().isExempted()
-	    // && !process.getSeminarProcess().isConcluded()) {
-	    // throw new PreConditionNotValidException();
-	    // }
-	    //
-	    // if (process.hasThesisProcess() || process.getActiveState() !=
-	    // PhdIndividualProgramProcessState.WORK_DEVELOPMENT) {
-	    // throw new PreConditionNotValidException();
-	    // }
-	    //
-	    // if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-	    // throw new PreConditionNotValidException();
-	    // }
+	    if (process.hasSeminarProcess() && !process.getSeminarProcess().isExempted()
+		    && !process.getSeminarProcess().isConcluded()) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (process.hasThesisProcess() || process.getActiveState() != PhdIndividualProgramProcessState.WORK_DEVELOPMENT) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
 	}
 
 	@Override
@@ -761,11 +759,9 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		Object object) {
 
 	    final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
-
 	    final PhdThesisProcess thesisProcess = Process.createNewProcess(userView, PhdThesisProcess.class, bean);
 
 	    thesisProcess.setIndividualProgramProcess(individualProcess);
-
 	    thesisProcess.addDocuments(bean.getDocuments(), userView.getPerson());
 
 	    /*
@@ -773,6 +769,9 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	     * TODO: SEND ALERTS ALERTS: alert to detect if process must be
 	     * concluded, etc etc
 	     */
+
+	    // TODO: create state in this step?
+	    individualProcess.createState(PhdIndividualProgramProcessState.THESIS_DISCUSSION, userView.getPerson());
 
 	    return individualProcess;
 	}
