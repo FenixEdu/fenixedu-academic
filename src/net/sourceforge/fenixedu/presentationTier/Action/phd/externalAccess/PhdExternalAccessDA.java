@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdThesisReportFeedbackDocument;
 import net.sourceforge.fenixedu.domain.phd.access.PhdExternalOperationBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryDocumentsDownload;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryReporterFeedbackUpload;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryReporterFeedbackExternalUpload;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdDocumentsZip;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
 
@@ -173,7 +173,7 @@ public class PhdExternalAccessDA extends PhdProcessDA {
 		return prepareJuryReporterFeedbackUploadInvalid(mapping, actionForm, request, response);
 	    }
 
-	    ExecuteProcessActivity.run(getProcess(request).getThesisProcess(), JuryReporterFeedbackUpload.class,
+	    ExecuteProcessActivity.run(getProcess(request).getThesisProcess(), JuryReporterFeedbackExternalUpload.class,
 		    getOperationBean());
 
 	    addSuccessMessage(request, "message.jury.report.feedback.upload.with.success");

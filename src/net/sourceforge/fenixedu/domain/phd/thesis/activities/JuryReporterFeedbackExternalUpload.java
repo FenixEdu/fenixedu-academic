@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdThesisReportFeedbackDocument;
 import net.sourceforge.fenixedu.domain.phd.access.PhdExternalOperationBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 
-public class JuryReporterFeedbackUpload extends ExternalAccessPhdActivity {
+public class JuryReporterFeedbackExternalUpload extends ExternalAccessPhdActivity {
 
     @Override
     protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
