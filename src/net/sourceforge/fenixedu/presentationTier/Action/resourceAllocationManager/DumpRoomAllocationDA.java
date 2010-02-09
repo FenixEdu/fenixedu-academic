@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonInstance;
 import net.sourceforge.fenixedu.domain.Shift;
@@ -63,15 +64,16 @@ public class DumpRoomAllocationDA extends FenixDispatchAction {
 	return mapping.findForward("firstPage");
     }
 
-    private static final int SLOT_COUNT = 16 * 2 * 6;
+    private static final int WEEKDAY_COUNT = 6;
+    private static final int HOUR_COUNT = (24 - 8) * 2;
 
-    private static class RoomMap extends HashMap<AllocatableSpace, boolean[]> {
+    private static class RoomMap extends HashMap<AllocatableSpace, boolean[][]> {
 
 	@Override
-	public boolean[] get(final Object key) {
-	    boolean[] value = super.get(key);
+	public boolean[][] get(final Object key) {
+	    boolean[][] value = super.get(key);
 	    if (value == null) {
-		value = new boolean[SLOT_COUNT];
+		value = new boolean[WEEKDAY_COUNT][HOUR_COUNT];
 		put((AllocatableSpace) key, value);
 	    }
 	    return value;
@@ -82,21 +84,21 @@ public class DumpRoomAllocationDA extends FenixDispatchAction {
 	    if (lessonSpaceOccupation != null) {
 		final AllocatableSpace allocatableSpace = lessonSpaceOccupation.getRoom();
 		if (allocatableSpace != null) {
-		    final boolean[] slots = get(allocatableSpace);
-		    final int weekDayOffSet = (lesson.getDiaSemana().getDiaSemana().intValue() - 2) * 34;
-		    final int startOffSet = weekDayOffSet + getHourOffSet(lesson.getBeginHourMinuteSecond());
-		    final int endOffSet = weekDayOffSet + getHourOffSet(lesson.getEndHourMinuteSecond());
-		    for (int i = startOffSet; i < endOffSet; slots[i++] = true);
+		    final boolean[][] slots = get(allocatableSpace);
+		    final int weekDayOffSet = lesson.getDiaSemana().getDiaSemana().intValue() - 2;
+		    final int startOffSet = getHourOffSet(lesson.getBeginHourMinuteSecond());
+		    final int endOffSet = getHourOffSet(lesson.getEndHourMinuteSecond());
+		    for (int i = startOffSet; i < endOffSet; slots[weekDayOffSet][i++] = true);
 		}
 	    }
 	    for (final LessonInstance lessonInstance : lesson.getLessonInstancesSet()) {
 		final AllocatableSpace allocatableSpace = lessonInstance.getRoom();
 		if (allocatableSpace != null) {
-		    final boolean[] slots = get(allocatableSpace);
-		    final int weekDayOffSet = (lessonInstance.getBeginDateTime().getDayOfWeek() - 1) * 34;
-		    final int startOffSet = weekDayOffSet + getHourOffSet(lessonInstance.getBeginDateTime());
-		    final int endOffSet = weekDayOffSet + getHourOffSet(lessonInstance.getEndDateTime());
-		    for (int i = startOffSet; i < endOffSet; slots[i++] = true);
+		    final boolean[][] slots = get(allocatableSpace);
+		    final int weekDayOffSet = lessonInstance.getBeginDateTime().getDayOfWeek() - 1;
+		    final int startOffSet = getHourOffSet(lessonInstance.getBeginDateTime());
+		    final int endOffSet = getHourOffSet(lessonInstance.getEndDateTime());
+		    for (int i = startOffSet; i < endOffSet; slots[weekDayOffSet][i++] = true);
 		}
 	    }
 	}
@@ -105,23 +107,25 @@ public class DumpRoomAllocationDA extends FenixDispatchAction {
 	    final int hour = hourMinuteSecond.getHour();
 	    final int minutes = hourMinuteSecond.getMinuteOfHour();
 	    final int minutesOffSet = minutes < 30 ? 0 : 1;
-	    return hour - 8 + minutesOffSet;
+	    return ((hour - 8) * 2) + minutesOffSet;
 	}
 
 	private int getHourOffSet(final DateTime dateTime) {
 	    final int hour = dateTime.getHourOfDay();
 	    final int minutes = dateTime.getMinuteOfHour();
 	    final int minutesOffSet = minutes < 30 ? 0 : 1;
-	    return hour - 8 + minutesOffSet;
+	    return ((hour - 8) * 2) + minutesOffSet;
 	}
 
     }
 
     public ActionForward downloadRoomLessonOccupationInfo(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws IOException {
 	final ExecutionSemester executionSemester = getDomainObject(request, "executionPeriodId");
+	final ExecutionYear executionYear = executionSemester.getExecutionYear();
 
 	response.setContentType("application/vnd.ms-excel");
-	response.setHeader("Content-disposition", "attachment; filename=xpto" + "" + ".xls");
+	response.setHeader("Content-disposition", "attachment; filename=occupationMap"
+		+ executionYear.getYear().replace('/', '_') + "_" + executionSemester.getSemester() + ".xls");
 
 	final RoomMap occupationMap = new RoomMap();
 	for (final ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCoursesSet()) {
@@ -134,7 +138,7 @@ public class DumpRoomAllocationDA extends FenixDispatchAction {
 	    }
 	}
 
-	final Spreadsheet spreadsheet = new Spreadsheet("xpto");
+	final Spreadsheet spreadsheet = new Spreadsheet("OccupationMap");
 	spreadsheet.setHeader("Building");
 	spreadsheet.setHeader("Room");
 	final DateTime now = new DateTime();
@@ -146,17 +150,19 @@ public class DumpRoomAllocationDA extends FenixDispatchAction {
 		spreadsheet.setHeader(weekDayString + " " + (hour + 8) + ":30");
 	    }
 	}
-	for (final Entry<AllocatableSpace, boolean[]> entry : occupationMap.entrySet()) {
+	for (final Entry<AllocatableSpace, boolean[][]> entry : occupationMap.entrySet()) {
 	    final AllocatableSpace allocatableSpace = entry.getKey();
 	    final String identification = allocatableSpace.getIdentification();
 	    final Building building = allocatableSpace.getBuilding();
 	    final String buildingName = building == null ? "" : building.getNameWithCampus();
-	    final boolean[] slots = entry.getValue();
+	    final boolean[][] slots = entry.getValue();
 	    final Row row = spreadsheet.addRow();
 	    row.setCell(buildingName);
 	    row.setCell(identification);
-	    for (int i = 0; i < SLOT_COUNT; i++) {
-		row.setCell(Boolean.toString(slots[i]));
+	    for (int i = 0; i < WEEKDAY_COUNT; i++) {
+		for (int j = 0; j < HOUR_COUNT; j++) {
+		    row.setCell(Boolean.toString(slots[i][j]));
+		}
 	    }
 	}
 
