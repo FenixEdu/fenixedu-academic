@@ -48,8 +48,7 @@
 						<fr:property name="size" value="50"/>
 						<fr:property name="labelField" value="nameWithTitle"/>
 						<fr:property name="indicatorShown" value="true"/>		
-						<fr:property name="serviceName" value="SearchInternalPersons"/>
-						<fr:property name="serviceName" value="SearchPhdParticipantsByProcess"/>
+						<fr:property name="serviceName" value="SearchTeachersByName"/>
 				        <fr:property name="serviceArgs" value="phdProcessOID=${individualProgramProcess.externalId}"/>
 						<fr:property name="className" value="net.sourceforge.fenixedu.domain.phd.PhdParticipant"/>
 						<fr:property name="minChars" value="3"/>				
