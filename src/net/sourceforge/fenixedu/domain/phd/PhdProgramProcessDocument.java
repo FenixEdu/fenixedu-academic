@@ -43,13 +43,8 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
 	    String filename, Person uploader) {
 
 	checkParameters(process, documentType, content, filename, uploader);
-
-	if (documentType.isVersioned()) {
-	    final Set<PhdProgramProcessDocument> documentsByType = process.getDocumentsByType(documentType);
-	    super.setDocumentVersion(documentsByType.isEmpty() ? 1 : documentsByType.size() + 1);
-	} else {
-	    super.setDocumentVersion(1);
-	}
+	
+	setDocumentVersion(process, documentType);
 
 	super.setPhdProgramProcess(process);
 	super.setDocumentType(documentType);
@@ -58,6 +53,15 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
 	super.init(getVirtualPath(), filename, filename, Collections.EMPTY_SET, content, new RoleGroup(
 		RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE));
 	storeToContentManager();
+    }
+
+    protected void setDocumentVersion(PhdProgramProcess process, PhdIndividualProgramDocumentType documentType) {
+	if (documentType.isVersioned()) {
+	    final Set<PhdProgramProcessDocument> documentsByType = process.getDocumentsByType(documentType);
+	    super.setDocumentVersion(documentsByType.isEmpty() ? 1 : documentsByType.size() + 1);
+	} else {
+	    super.setDocumentVersion(1);
+	}
     }
 
     protected void checkParameters(PhdProgramProcess process, PhdIndividualProgramDocumentType documentType, byte[] content,
@@ -84,7 +88,6 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
 	filePath.addNode(new VirtualPathNode("PhdIndividualProgram", "PhdIndividualProgram"));
 	filePath.addNode(new VirtualPathNode(getPhdProgramProcess().getIndividualProgramProcess().getIdInternal().toString(),
 		getPhdProgramProcess().getIndividualProgramProcess().getIdInternal().toString()));
-
 	return filePath;
     }
 

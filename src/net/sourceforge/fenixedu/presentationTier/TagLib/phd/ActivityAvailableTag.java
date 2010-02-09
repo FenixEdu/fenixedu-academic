@@ -32,8 +32,8 @@ public class ActivityAvailableTag extends ConditionalTagBase {
 	return activity;
     }
 
-    public void setActivity(Class<? extends Activity> activity) {
-	this.activity = activity;
+    public void setActivity(Class<?> activity) {
+	this.activity = (Class<? extends Activity>) activity;
     }
 
     @Override

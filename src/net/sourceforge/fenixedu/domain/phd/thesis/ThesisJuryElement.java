@@ -6,6 +6,8 @@ import java.util.Comparator;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
+import net.sourceforge.fenixedu.domain.phd.PhdThesisReportFeedbackDocument;
 
 import org.joda.time.DateTime;
 
@@ -43,9 +45,7 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
 	check(participant, "error.ThesisJuryElement.participant.cannot.be.null");
 
 	/*
-	 * Actually participant belongs to one process, so he can not
-	 * participate in more than one process. But this test remain here
-	 * assuring future modifications correctness
+	 * Can not have more than one jury element for the same process
 	 */
 	for (final ThesisJuryElement element : participant.getThesisJuryElements()) {
 	    if (element.hasProcess() && element.getProcess().equals(process)) {
@@ -63,7 +63,7 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
     }
 
     @Service
-    void delete() {
+    public void delete() {
 	disconnect();
 	deleteDomainObject();
     }
@@ -143,6 +143,15 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
 	return getParticipant().isGuidingOrAssistantGuiding();
     }
 
+    public boolean isFor(final PhdThesisProcess process) {
+	return getProcess().equals(process);
+    }
+
+    public PhdThesisReportFeedbackDocument getLastFeedbackDocument() {
+	return hasAnyFeedbackDocuments() ? Collections.max(getFeedbackDocumentsSet(),
+		PhdProgramProcessDocument.COMPARATOR_BY_UPLOAD_TIME) : null;
+    }
+
     static public ThesisJuryElement createPresident(final PhdThesisProcess process, final PhdThesisJuryElementBean bean) {
 
 	if (process.hasPresidentJuryElement()) {
@@ -160,4 +169,5 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
 
 	return element;
     }
+
 }

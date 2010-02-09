@@ -4,8 +4,12 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/phd.tld" prefix="phd" %>
 
-
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.DownloadProvisionalThesisDocument"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.DownloadFinalThesisDocument"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.DownloadThesisRequirement"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryElements"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryReviews"%>
+<%@page import="net.sourceforge.fenixedu.applicationTier.Servico.thesis.SubmitThesis"%>
 
 <logic:notEmpty name="process" property="thesisProcess">
 <logic:equal name="process" property="activeState.active" value="true">
@@ -25,7 +29,7 @@
 	</td>
 	<td>
 		<ul class="operations" >
-			<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= PhdThesisProcess.DownloadProvisionalThesisDocument.class %>">
+			<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= DownloadProvisionalThesisDocument.class %>">
 			<li>
 				<bean:define id="provisionalThesisDownloadUrl" name="thesisProcess" property="provisionalThesisDocument.downloadUrl" />
 				<a href="<%= provisionalThesisDownloadUrl.toString() %>">
@@ -34,7 +38,7 @@
 				</a>
 			</li>
 			</phd:activityAvailable>
-			<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= PhdThesisProcess.DownloadFinalThesisDocument.class %>">
+			<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= DownloadFinalThesisDocument.class %>">
 			<li>
 				<bean:define id="finalThesisDownloadUrl" name="thesisProcess" property="finalThesisDocument.downloadUrl" />
 				<a href="<%= finalThesisDownloadUrl.toString() %>">
@@ -43,7 +47,7 @@
 				</a>
 			</li>
 			</phd:activityAvailable>
-			<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= PhdThesisProcess.DownloadThesisRequirement.class %>">
+			<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= DownloadThesisRequirement.class %>">
 			<li>
 				<bean:define id="thesisRequirementDownloadUrl" name="thesisProcess" property="thesisRequirementDocument.downloadUrl" />
 				<a href="<%= thesisRequirementDownloadUrl.toString() %>"><bean:write name="thesisProcess" property="thesisRequirementDocument.documentType.localizedName"/> </a>
@@ -55,7 +59,7 @@
  </table>
 
 <ul class="operations">
-	<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= PhdThesisProcess.RequestJuryElements.class %>">
+	<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= RequestJuryElements.class %>">
 	<li style="display: inline;">
 			<html:link action="/phdThesisProcess.do?method=prepareRequestJuryElements" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
 				<bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.request.jury.elements"/>
@@ -74,14 +78,14 @@
 			</html:link>
 		</li>
 	</logic:notEqual>
-	<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= PhdThesisProcess.RequestJuryReviews.class %>">
+	<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= RequestJuryReviews.class %>">
 	<li style="display: inline;">
 		<html:link action="/phdThesisProcess.do?method=prepareRequestJuryReviews" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
 			<bean:message bundle="PHD_RESOURCES" key="label.phd.request.jury.reviews"/>
 		</html:link>
 	</li>
 	</phd:activityAvailable>
-	<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= PhdThesisProcess.SubmitThesis.class %>">
+	<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= SubmitThesis.class %>">
 	<li style="display: inline;">
 		<html:link action="/phdThesisProcess.do?method=prepareSubmitThesis" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
 			<bean:message bundle="PHD_RESOURCES" key="label.phd.submit.thesis"/>

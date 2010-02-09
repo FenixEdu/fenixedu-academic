@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.phd.thesis;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.TreeSet;
@@ -9,47 +8,33 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
-import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
-import net.sourceforge.fenixedu.domain.phd.access.PhdExternalOperationBean;
-import net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessType;
-import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
-import net.sourceforge.fenixedu.domain.phd.alert.AlertService.AlertMessage;
-import net.sourceforge.fenixedu.domain.util.email.Message;
-import net.sourceforge.fenixedu.domain.util.email.Recipient;
-import net.sourceforge.fenixedu.util.phd.PhdProperties;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.AddJuryElement;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.AddPresidentJuryElement;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.DeleteJuryElement;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.DownloadFinalThesisDocument;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.DownloadProvisionalThesisDocument;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.DownloadThesisRequirement;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryDocumentsDownload;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryReporterFeedbackUpload;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.PhdThesisActivity;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.PrintJuryElementsDocument;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.RejectJuryElements;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryElements;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryReviews;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitJuryElementsDocuments;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitThesis;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.SwapJuryElementsOrder;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.ValidateJury;
 
 import org.joda.time.DateTime;
 
-import pt.utl.ist.fenix.tools.util.Pair;
-
 public class PhdThesisProcess extends PhdThesisProcess_Base {
 
-    static abstract private class PhdActivity extends Activity<PhdThesisProcess> {
-
-	@Override
-	final public void checkPreConditions(final PhdThesisProcess process, final IUserView userView) {
-	    processPreConditions(process, userView);
-	    activityPreConditions(process, userView);
-	}
-
-	protected void processPreConditions(final PhdThesisProcess process, final IUserView userView) {
-	}
-
-	abstract protected void activityPreConditions(final PhdThesisProcess process, final IUserView userView);
-    }
-
     @StartActivity
-    static public class RequestThesis extends PhdActivity {
+    static public class RequestThesis extends PhdThesisActivity {
 
 	@Override
 	public void activityPreConditions(PhdThesisProcess process, IUserView userView) {
@@ -63,512 +48,6 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	    result.createState(PhdThesisProcessStateType.NEW, userView.getPerson(), phdThesisProcessBean.getRemarks());
 	    return result;
 	}
-    }
-
-    static public class RequestJuryElements extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
-	    if (!process.getActiveState().equals(PhdThesisProcessStateType.NEW)) {
-		throw new PreConditionNotValidException();
-	    }
-
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-	}
-
-	@Override
-	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
-	    final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
-	    process.createState(PhdThesisProcessStateType.WAITING_FOR_JURY_CONSTITUTION, userView.getPerson(), bean.getRemarks());
-
-	    AlertService.alertCoordinator(process.getIndividualProgramProcess(),
-		    "message.phd.alert.request.jury.elements.subject", "message.phd.alert.request.jury.elements.body");
-
-	    return process;
-	}
-    }
-
-    static public class SubmitJuryElementsDocuments extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
-
-	    if (!process.isJuryValidated()) {
-		return;
-	    }
-
-	    if (isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		return;
-	    }
-
-	    if (userView.getPerson() != null
-		    && process.getIndividualProgramProcess().isCoordinatorForPhdProgram(userView.getPerson())) {
-		return;
-	    }
-
-	    throw new PreConditionNotValidException();
-	}
-
-	@Override
-	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
-	    final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
-
-	    boolean anyDocumentSubmitted = false;
-
-	    for (final PhdProgramDocumentUploadBean each : bean.getDocuments()) {
-		if (each.hasAnyInformation()) {
-
-		    process.addDocument(each, userView.getPerson());
-		    alertIfNecessary(process, each, userView.getPerson());
-
-		    anyDocumentSubmitted = true;
-		}
-	    }
-
-	    if (anyDocumentSubmitted) {
-		if (!process.hasState(PhdThesisProcessStateType.JURY_WAITING_FOR_VALIDATION)) {
-		    process.createState(PhdThesisProcessStateType.JURY_WAITING_FOR_VALIDATION, userView.getPerson(), bean
-			    .getRemarks());
-		}
-	    }
-
-	    return process;
-	}
-
-	private void alertIfNecessary(PhdThesisProcess process, PhdProgramDocumentUploadBean each, Person person) {
-
-	    switch (each.getType()) {
-	    case JURY_PRESIDENT_ELEMENT:
-		AlertService.alertCoordinator(process.getIndividualProgramProcess(),
-			"message.phd.alert.request.jury.president.subject", "message.phd.alert.request.jury.president.body");
-		break;
-
-	    case JURY_ELEMENTS:
-		if (process.getIndividualProgramProcess().isCoordinatorForPhdProgram(person)) {
-		    AlertService
-			    .alertAcademicOffice(process.getIndividualProgramProcess(),
-				    "message.phd.alert.jury.elements.submitted.subject",
-				    "message.phd.alert.jury.elements.submitted.body");
-		}
-		break;
-	    }
-	}
-    }
-
-    static public class RejectJuryElements extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
-	    if (!process.getActiveState().equals(PhdThesisProcessStateType.JURY_WAITING_FOR_VALIDATION)
-		    || !isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-	}
-
-	@Override
-	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
-	    process.createState(PhdThesisProcessStateType.WAITING_FOR_JURY_CONSTITUTION, userView.getPerson(),
-		    ((PhdThesisProcessBean) object).getRemarks());
-
-	    AlertService.alertCoordinator(process.getIndividualProgramProcess(),
-		    "message.phd.alert.jury.elements.rejected.subject", "message.phd.alert.jury.elements.rejected.body");
-
-	    return process;
-	}
-    }
-
-    static public class SubmitThesis extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
-
-	    if (!process.isJuryValidated()) {
-		throw new PreConditionNotValidException();
-	    }
-
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-
-	}
-
-	@Override
-	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
-	    final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
-
-	    for (final PhdProgramDocumentUploadBean each : bean.getDocuments()) {
-		if (each.hasAnyInformation()) {
-		    process.addDocument(each, userView.getPerson());
-		}
-	    }
-
-	    return process;
-
-	}
-    }
-
-    static public class AddJuryElement extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
-	    if (process.isJuryValidated()) {
-		throw new PreConditionNotValidException();
-	    }
-
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-	}
-
-	@Override
-	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
-	    ThesisJuryElement.create(process, (PhdThesisJuryElementBean) object);
-	    return process;
-	}
-    }
-
-    static public class DeleteJuryElement extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
-
-	    if (process.isJuryValidated()) {
-		throw new PreConditionNotValidException();
-	    }
-
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-	}
-
-	@Override
-	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
-	    final ThesisJuryElement element = (ThesisJuryElement) object;
-	    process.deleteJuryElement(element);
-	    return process;
-	}
-    }
-
-    static public class SwapJuryElementsOrder extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
-
-	    if (process.isJuryValidated()) {
-		throw new PreConditionNotValidException();
-	    }
-
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-	}
-
-	@Override
-	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
-	    final Pair<ThesisJuryElement, ThesisJuryElement> elements = (Pair<ThesisJuryElement, ThesisJuryElement>) object;
-	    process.swapJuryElementsOrder(elements.getKey(), elements.getValue());
-	    return process;
-	}
-
-    }
-
-    static public class AddPresidentJuryElement extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
-
-	    if (process.isJuryValidated()) {
-		throw new PreConditionNotValidException();
-	    }
-
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-	}
-
-	@Override
-	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
-	    if (process.hasPresidentJuryElement()) {
-		process.getPresidentJuryElement().delete();
-	    }
-
-	    ThesisJuryElement.createPresident(process, (PhdThesisJuryElementBean) object);
-	    return process;
-	}
-    }
-
-    static public class ValidateJury extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
-
-	    if (process.isJuryValidated()) {
-		throw new PreConditionNotValidException();
-	    }
-
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-	}
-
-	@Override
-	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
-	    final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
-	    process.setWhenJuryValidated(bean.getWhenJuryValidated());
-	    process.setWhenJuryDesignated(bean.getWhenJuryDesignated());
-
-	    /*
-	     * TODO: SEND ALERT after create!!!!!!!!!!!!
-	     */
-
-	    return process;
-	}
-    }
-
-    static public class PrintJuryElementsDocument extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
-	    if (!process.isJuryValidated()) {
-		throw new PreConditionNotValidException();
-	    }
-	}
-
-	@Override
-	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
-	    // nothing to be done
-	    return process;
-	}
-
-    }
-
-    // TODO: find clean solution to return documents
-    // grouped?
-    static public class DownloadProvisionalThesisDocument extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
-
-	    if (process.hasProvisionalThesisDocument() && isParticipant(process, userView)) {
-		return;
-	    }
-
-	    throw new PreConditionNotValidException();
-	}
-
-	@Override
-	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
-	    // nothing to be done
-	    return null;
-	}
-    }
-
-    static public class DownloadFinalThesisDocument extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
-
-	    if (process.hasFinalThesisDocument() && isParticipant(process, userView)) {
-		return;
-	    }
-
-	    throw new PreConditionNotValidException();
-
-	}
-
-	@Override
-	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
-	    // nothing to be done
-	    return null;
-	}
-    }
-
-    static public class DownloadThesisRequirement extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
-
-	    if (process.hasThesisRequirementDocument() && isParticipant(process, userView)) {
-		return;
-	    }
-
-	    throw new PreConditionNotValidException();
-
-	}
-
-	@Override
-	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
-	    // nothing to be done
-	    return null;
-	}
-
-    }
-
-    static public class RequestJuryReviews extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
-
-	    if (!process.isJuryValidated()) {
-		throw new PreConditionNotValidException();
-	    }
-
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-
-	}
-
-	@Override
-	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
-
-	    notifyJuryElements(process);
-	    sendEmailToJuryElement(process.getIndividualProgramProcess(), process.getPresidentJuryElement().getParticipant(),
-		    "message.phd.request.jury.reviews.external.access.jury.president.body");
-
-	    if (process.getActiveState() != PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK) {
-		process.createState(PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK, userView.getPerson(), null);
-	    }
-
-	    return process;
-	}
-
-	private void notifyJuryElements(PhdThesisProcess process) {
-
-	    for (final ThesisJuryElement juryElement : process.getThesisJuryElements()) {
-
-		if (!isCoordinatorOrGuider(process, juryElement)) {
-		    createExternalAccess(juryElement);
-		}
-
-		final PhdParticipant participant = juryElement.getParticipant();
-
-		if (juryElement.getReporter().booleanValue()) {
-		    sendEmailToReporter(process.getIndividualProgramProcess(), participant);
-
-		    // TODO:
-		    // TODO: create alert to submit review
-		    // TODO:
-
-		} else {
-		    sendEmailToJuryElement(process.getIndividualProgramProcess(), participant,
-			    "message.phd.request.jury.reviews.external.access.jury.body");
-		}
-	    }
-	}
-
-	private String getAccessInformation(PhdIndividualProgramProcess process, PhdParticipant participant) {
-
-	    if (!participant.isInternal()) {
-		return AlertMessage.get("message.phd.request.jury.reviews.external.access", PhdProperties
-			.getPhdExternalAccessLink(), participant.getAccessHashCode(), participant.getPassword());
-
-	    } else {
-		final Person person = ((InternalPhdParticipant) participant).getPerson();
-
-		if (process.isCoordinatorForPhdProgram(person)) {
-		    return AlertMessage.get("message.phd.request.jury.reviews.coordinator.access");
-
-		} else if (process.isGuiderOrAssistentGuider(person) && person.hasRole(RoleType.TEACHER)) {
-		    return AlertMessage.get("message.phd.request.jury.reviews.teacher.access");
-		}
-	    }
-
-	    throw new DomainException("error.PhdThesisProcess.unexpected.participant.type");
-	}
-
-	private void sendEmailToReporter(PhdIndividualProgramProcess process, PhdParticipant participant) {
-
-	    final String subject = AlertMessage.get("message.phd.request.jury.reviews.external.access.subject", process
-		    .getPhdProgram().getName());
-
-	    final String body = AlertMessage.get("message.phd.request.jury.reviews.external.access.jury.body", process
-		    .getPerson().getName(), process.getProcessNumber())
-		    + "\n\n"
-		    + AlertMessage.get("message.phd.request.jury.reviews.reporter.body")
-		    + "\n\n"
-		    + getAccessInformation(process, participant);
-
-	    email(participant.getEmail(), subject, body);
-	}
-
-	private void sendEmailToJuryElement(PhdIndividualProgramProcess process, PhdParticipant participant, String bodyMessage) {
-	    final String subject = AlertMessage.get("message.phd.request.jury.reviews.external.access.subject", process
-		    .getPhdProgram().getName());
-
-	    final String body = AlertMessage.get(bodyMessage, process.getPerson().getName(), process.getProcessNumber()) + "\n\n"
-		    + getAccessInformation(process, participant) + "\n\n"
-		    + AlertMessage.get("message.phd.request.jury.external.access.reviews.body");
-
-	    email(participant.getEmail(), subject, body);
-	}
-
-	private void createExternalAccess(final ThesisJuryElement juryElement) {
-
-	    final PhdParticipant participant = juryElement.getParticipant();
-	    participant.addAccessType(PhdProcessAccessType.JURY_DOCUMENTS_DOWNLOAD);
-
-	    if (juryElement.getReporter().booleanValue()) {
-		participant.addAccessType(PhdProcessAccessType.JURY_REPORTER_FEEDBACK_UPLOAD);
-	    }
-	}
-
-	private void email(String email, String subject, String body) {
-	    new Message(RootDomainObject.getInstance().getSystemSender(), buildRecipient(email), subject, body);
-	}
-
-	private Recipient buildRecipient(String email) {
-	    final Recipient recipient = new Recipient();
-	    recipient.addDestinationEmailAddresses(Collections.singleton(email));
-	    return recipient;
-	}
-
-	private boolean isCoordinatorOrGuider(PhdThesisProcess process, ThesisJuryElement juryElement) {
-
-	    if (!juryElement.isInternal()) {
-		return false;
-	    }
-
-	    final Person person = ((InternalPhdParticipant) juryElement.getParticipant()).getPerson();
-	    return process.getIndividualProgramProcess().isCoordinatorForPhdProgram(person)
-		    || (process.getIndividualProgramProcess().isGuiderOrAssistentGuider(person) && person
-			    .hasRole(RoleType.TEACHER));
-	}
-
-    }
-
-    static abstract protected class ExternalAccessPhdActivity extends PhdActivity {
-
-	@Override
-	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
-	    final PhdExternalOperationBean bean = (PhdExternalOperationBean) object;
-	    bean.getParticipant().checkAccessCredentials(bean.getEmail(), bean.getPassword());
-
-	    return internalExecuteActivity(process, userView, bean);
-	}
-
-	abstract protected PhdThesisProcess internalExecuteActivity(PhdThesisProcess process, IUserView userView,
-		PhdExternalOperationBean bean);
-
-    }
-
-    static public class JuryDocumentsDownload extends ExternalAccessPhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
-	    // TODO Auto-generated method stub
-
-	}
-
-	@Override
-	protected PhdThesisProcess internalExecuteActivity(PhdThesisProcess process, IUserView userView,
-		PhdExternalOperationBean bean) {
-
-	    return process;
-	}
-
     }
 
     static private List<Activity> activities = new ArrayList<Activity>();
@@ -588,6 +67,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	activities.add(new DownloadThesisRequirement());
 	activities.add(new RequestJuryReviews());
 	activities.add(new JuryDocumentsDownload());
+	activities.add(new JuryReporterFeedbackUpload());
     }
 
     private PhdThesisProcess() {
@@ -598,7 +78,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	return getWhenJuryValidated() != null;
     }
 
-    private void swapJuryElementsOrder(ThesisJuryElement e1, ThesisJuryElement e2) {
+    public void swapJuryElementsOrder(ThesisJuryElement e1, ThesisJuryElement e2) {
 	if (hasThesisJuryElements(e1) && hasThesisJuryElements(e2)) {
 	    final Integer order1 = e1.getElementOrder();
 	    final Integer order2 = e2.getElementOrder();
@@ -607,7 +87,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	}
     }
 
-    private void deleteJuryElement(ThesisJuryElement element) {
+    public void deleteJuryElement(ThesisJuryElement element) {
 	if (hasThesisJuryElements(element)) {
 	    final Integer elementOrder = element.getElementOrder();
 	    element.delete();

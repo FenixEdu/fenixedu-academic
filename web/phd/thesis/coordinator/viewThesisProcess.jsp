@@ -4,8 +4,9 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/phd.tld" prefix="phd" %>
 
-
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.DownloadProvisionalThesisDocument"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.DownloadFinalThesisDocument"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.DownloadThesisRequirement"%>
 
 <logic:notEmpty name="process" property="thesisProcess">
 <logic:equal name="process" property="activeState.active" value="true">
@@ -25,7 +26,7 @@
 	</td>
 	<td>
 		<ul class="operations" >
-			<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= PhdThesisProcess.DownloadProvisionalThesisDocument.class %>">
+			<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= DownloadProvisionalThesisDocument.class %>">
 			<li>
 				<bean:define id="provisionalThesisDownloadUrl" name="thesisProcess" property="provisionalThesisDocument.downloadUrl" />
 				<a href="<%= provisionalThesisDownloadUrl.toString() %>">
@@ -34,7 +35,7 @@
 				</a>
 			</li>
 			</phd:activityAvailable>
-			<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= PhdThesisProcess.DownloadFinalThesisDocument.class %>">
+			<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= DownloadFinalThesisDocument.class %>">
 			<li>
 				<bean:define id="finalThesisDownloadUrl" name="thesisProcess" property="finalThesisDocument.downloadUrl" />
 				<a href="<%= finalThesisDownloadUrl.toString() %>">
@@ -43,7 +44,7 @@
 				</a>
 			</li>
 			</phd:activityAvailable>
-			<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= PhdThesisProcess.DownloadThesisRequirement.class %>">
+			<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= DownloadThesisRequirement.class %>">
 			<li>
 				<bean:define id="thesisRequirementDownloadUrl" name="thesisProcess" property="thesisRequirementDocument.downloadUrl" />
 				<a href="<%= thesisRequirementDownloadUrl.toString() %>"><bean:write name="thesisProcess" property="thesisRequirementDocument.documentType.localizedName"/> </a>

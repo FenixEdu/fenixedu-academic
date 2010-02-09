@@ -12,6 +12,13 @@
 	<bean:message key="label.phds" bundle="PHD_RESOURCES"/>
 </div>
 
+<br/>
+<h2><bean:message key="label.phd.process" bundle="PHD_RESOURCES" /></h2>
+
+<%--  ### Error Messages  ### --%>
+<jsp:include page="/phd/errorsAndMessages.jsp" />
+<%--  ### End of Error Messages  ### --%>
+
 <logic:notEmpty name="participant">
 	<jsp:include page="processDetails.jsp" />
 	<br/>

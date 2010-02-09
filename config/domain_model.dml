@@ -6857,6 +6857,9 @@ class phd.PhdProgramProcessDocument extends File {
     Integer documentVersion;
 }
 
+class phd.PhdThesisReportFeedbackDocument extends phd.PhdProgramProcessDocument {
+}
+
 class phd.seminar.PublicPresentationSeminarProcess extends phd.PhdProgramProcess {
     LocalDate presentationDate;
 }
@@ -7290,6 +7293,13 @@ relation PhdProgramProcessDocumentPhdProgramProcess {
     phd.PhdProgramProcessDocument playsRole documents {
         multiplicity *;
     }
+}
+
+relation ThesisJuryElementReportFeedbackDocuments {
+	phd.thesis.ThesisJuryElement playsRole juryElement;
+	phd.PhdThesisReportFeedbackDocument playsRole feedbackDocuments {
+		multiplicity *;
+	}
 }
 
 relation PhdProgramProcessDocumentPerson {

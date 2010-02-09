@@ -16,6 +16,10 @@
 	<a href="http://www.ist.utl.pt">IST</a> &gt;
 	<bean:message key="label.phds" bundle="PHD_RESOURCES"/>
 </div>
+<br/>
+
+<bean:define id="accessTypeName"><%= PhdProcessAccessType.JURY_DOCUMENTS_DOWNLOAD.getLocalizedName() %></bean:define>
+<h2><bean:write name="accessTypeName" /></h2>
 
 <br/>
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>

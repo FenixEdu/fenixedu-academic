@@ -8,8 +8,10 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessType;
 import net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessTypeList;
+import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
+import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
+import net.sourceforge.fenixedu.util.StringUtils;
 
-import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
 abstract public class PhdParticipant extends PhdParticipant_Base {
@@ -103,6 +105,19 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
 	return hasProcessForGuiding() || hasProcessForAssistantGuiding();
     }
 
+    public ThesisJuryElement getThesisJuryElement(final PhdThesisProcess process) {
+	for (final ThesisJuryElement element : getThesisJuryElementsSet()) {
+	    if (element.isFor(process)) {
+		return element;
+	    }
+	}
+	return null;
+    }
+
+    private boolean hasAccessHashCode(final String hash) {
+	return !StringUtils.isEmpty(getAccessHashCode()) && getAccessHashCode().equals(hash);
+    }
+
     static public PhdParticipant create(final PhdIndividualProgramProcess process, final PhdParticipantBean bean) {
 	if (bean.isInternal()) {
 	    return new InternalPhdParticipant(process, bean);
@@ -111,9 +126,9 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
 	}
     }
 
-    static public PhdParticipant readByAccessHashCode(String hash) {
+    static public PhdParticipant readByAccessHashCode(final String hash) {
 	for (final PhdParticipant participant : RootDomainObject.getInstance().getPhdParticipants()) {
-	    if (participant.getAccessHashCode().equals(hash)) {
+	    if (participant.hasAccessHashCode(hash)) {
 		return participant;
 	    }
 	}

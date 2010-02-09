@@ -75,7 +75,9 @@
 	
 	<fr:edit id="thesisProcessBean.edit.documents" name="thesisProcessBean" property="documents">
 		<fr:schema bundle="PHD_RESOURCES" type="<%= PhdThesisProcessBean.class.getName() %>">
-			<fr:slot name="type" readOnly="true" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean.type"/>
+			<fr:slot name="type" readOnly="true" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean.type">
+				<fr:property name="bundle" value="PHD_RESOURCES"/>
+			</fr:slot>
 			<fr:slot name="file" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean.file">
 				<fr:validator name="<%= FileValidator.class.getName() %>" />
 				<fr:property name="fileNameSlot" value="filename"/>
@@ -87,7 +89,7 @@
 			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 			<fr:property name="columnClasses" value=",,tdclear tderror1" />
 		</fr:layout>
-		
+
 	</fr:edit>
 
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='submitJuryElementsDocument';"><bean:message bundle="PHD_RESOURCES" key="label.submit"/></html:submit>

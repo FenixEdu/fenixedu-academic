@@ -7,18 +7,14 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 
 public class PhdExternalOperationBean implements Serializable {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 1L;
+    static private final long serialVersionUID = 1L;
 
     private PhdParticipant participant;
+    private PhdProgramDocumentUploadBean documentBean;
 
     private String email;
-
     private String password;
 
-    private PhdProgramDocumentUploadBean documentBean;
 
     public PhdExternalOperationBean(PhdParticipant participant) {
 	setParticipant(participant);

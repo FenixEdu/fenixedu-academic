@@ -6,8 +6,11 @@
 
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess"%>
-<html:xhtml/>
+
+
+<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.RejectJuryElements"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.ValidateJury"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.PrintJuryElementsDocument"%><html:xhtml/>
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 <bean:define id="individualProcessId" name="process" property="individualProgramProcess.externalId" />
@@ -70,7 +73,7 @@
 	</a>
 	<br/>
 	<logic:empty name="process" property="thesisJuryElements">
-	<phd:activityAvailable process="<%= process %>" activity="<%= PhdThesisProcess.RejectJuryElements.class %>">
+	<phd:activityAvailable process="<%= process %>" activity="<%= RejectJuryElements.class %>">
 		(<html:link action="/phdThesisProcess.do?method=prepareRejectJuryElements" paramId="processId" paramName="process" paramProperty="externalId">
 			<bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.reject.jury.elements"/>
 		</html:link>)
@@ -161,14 +164,14 @@
 			<bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.add.president.jury.element"/>
 		</html:link>
 	</li>
-	<phd:activityAvailable process="<%= process %>" activity="<%= PhdThesisProcess.ValidateJury.class %>">
+	<phd:activityAvailable process="<%= process %>" activity="<%= ValidateJury.class %>">
 		<li style="display: inline;">
 			<html:link action="/phdThesisProcess.do?method=prepareValidateJury" paramId="processId" paramName="process" paramProperty="externalId"> 
 				<bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.validate.jury"/>
 			</html:link>
 		</li>
 	</phd:activityAvailable>
-	<phd:activityAvailable process="<%= process %>" activity="<%= PhdThesisProcess.PrintJuryElementsDocument.class %>">
+	<phd:activityAvailable process="<%= process %>" activity="<%= PrintJuryElementsDocument.class %>">
 	<li style="display: inline;">
 		<html:link action="/phdThesisProcess.do?method=printJuryElementsDocument" paramId="processId" paramName="process" paramProperty="externalId"> 
 			<bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.print.jury.elements"/>

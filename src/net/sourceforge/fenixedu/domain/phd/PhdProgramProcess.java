@@ -20,7 +20,7 @@ abstract public class PhdProgramProcess extends PhdProgramProcess_Base {
 	super();
     }
 
-    protected void addDocument(PhdProgramDocumentUploadBean each, Person responsible) {
+    public void addDocument(PhdProgramDocumentUploadBean each, Person responsible) {
 	new PhdProgramProcessDocument(this, each.getType(), each.getRemarks(), each.getFileContent(), each.getFilename(),
 		responsible);
     }
@@ -85,12 +85,12 @@ abstract public class PhdProgramProcess extends PhdProgramProcess_Base {
 	return documents.isEmpty() ? null : documents.iterator().next();
     }
 
-    static protected boolean isMasterDegreeAdministrativeOfficeEmployee(IUserView userView) {
+    static public boolean isMasterDegreeAdministrativeOfficeEmployee(IUserView userView) {
 	return userView != null && userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
 		&& userView.getPerson().getEmployeeAdministrativeOffice().isMasterDegree();
     }
 
-    static protected boolean isParticipant(PhdProgramProcess process, IUserView userView) {
+    static public boolean isParticipant(PhdProgramProcess process, IUserView userView) {
 	return isMasterDegreeAdministrativeOfficeEmployee(userView)
 		|| process.getIndividualProgramProcess().isCoordinatorForPhdProgram(userView.getPerson())
 		|| process.getIndividualProgramProcess().isGuiderOrAssistentGuider(userView.getPerson())
