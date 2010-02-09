@@ -3610,19 +3610,36 @@ public class Registration extends Registration_Base {
     public void editStartDates(final YearMonthDay startDate, final YearMonthDay homologationDate,
 	    final YearMonthDay studiesStartDate) {
 
-	if (startDate == null) {
-	    throw new DomainException("error.Registration.null.startDate");
-	}
 	setStartDate(startDate);
+
+	// edit RegistrationState start date
 	final RegistrationState firstRegistrationState = getFirstRegistrationState();
 	firstRegistrationState.setStateDate(startDate);
 	if (firstRegistrationState != getFirstRegistrationState()) {
 	    throw new DomainException("error.Registration.startDate.changes.first.registration.state");
 	}
-	getLastStudentCurricularPlan().setStartDate(startDate);
+
+	// edit Scp start date
+	final StudentCurricularPlan first = getFirstStudentCurricularPlan();
+	first.setStartDate(startDate);
+	if (first != getFirstStudentCurricularPlan()) {
+	    throw new DomainException("error.Registration.startDate.changes.first.scp");
+	}
 
 	setHomologationDate(homologationDate);
 	setStudiesStartDate(studiesStartDate);
+    }
+
+    @Override
+    public void setStartDate(YearMonthDay startDate) {
+
+	check(startDate, "error.Registration.null.startDate");
+	super.setStartDate(startDate);
+
+	final ExecutionYear year = ExecutionYear.readByDateTime(startDate.toLocalDate());
+	check(year, "error.Registration.invalid.execution.year");
+	setRegistrationYear(year);
+
     }
 
     public void setHomologationDate(final LocalDate homologationDate) {
