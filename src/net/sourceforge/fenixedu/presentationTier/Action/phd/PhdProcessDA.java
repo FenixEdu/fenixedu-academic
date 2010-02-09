@@ -30,7 +30,7 @@ abstract public class PhdProcessDA extends FenixDispatchAction {
 
     static protected final Pattern AREA_CODE_REGEX = Pattern.compile("\\d{4}-\\d{3}");
     static protected final String PHD_RESOURCES = "resources.PhdResources";
-    
+
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
@@ -58,9 +58,6 @@ abstract public class PhdProcessDA extends FenixDispatchAction {
     /**
      * First read value from request attribute to allow overriding of processId
      * value
-     * 
-     * @param request
-     * @return
      */
     protected Process getProcess(HttpServletRequest request) {
 	final String processIdAttribute = (String) request.getAttribute("processId");
