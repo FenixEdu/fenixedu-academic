@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 
 import org.joda.time.LocalDate;
@@ -13,14 +14,13 @@ public class PhdThesisProcessBean implements Serializable {
     static private final long serialVersionUID = 1L;
 
     private String remarks;
-
     private Boolean finalThesis;
+    private LocalDate whenJuryValidated;
+    private LocalDate whenJuryDesignated;
 
     private List<PhdProgramDocumentUploadBean> documents;
 
-    private LocalDate whenJuryValidated;
-
-    private LocalDate whenJuryDesignated;
+    private ThesisJuryElement juryElement;
 
     public PhdThesisProcessBean() {
 	this.documents = new ArrayList<PhdProgramDocumentUploadBean>();
@@ -68,6 +68,14 @@ public class PhdThesisProcessBean implements Serializable {
 
     public void setWhenJuryDesignated(LocalDate whenJuryDesignated) {
 	this.whenJuryDesignated = whenJuryDesignated;
+    }
+
+    public ThesisJuryElement getJuryElement() {
+	return juryElement;
+    }
+
+    public void setJuryElement(ThesisJuryElement juryElement) {
+	this.juryElement = juryElement;
     }
 
 }

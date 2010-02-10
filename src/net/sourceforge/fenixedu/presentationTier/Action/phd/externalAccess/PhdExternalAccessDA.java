@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.PhdThesisReportFeedbackDocument;
 import net.sourceforge.fenixedu.domain.phd.access.PhdExternalOperationBean;
+import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryDocumentsDownload;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryReporterFeedbackExternalUpload;
@@ -104,7 +105,8 @@ public class PhdExternalAccessDA extends PhdProcessDA {
 
 	    final PhdIndividualProgramProcess process = getProcess(request);
 	    ExecuteProcessActivity.run(process.getThesisProcess(), JuryDocumentsDownload.class, getOperationBean());
-	    writeFile(response, getZipDocumentsFilename(process), PhdDocumentsZip.ZIP_MIME_TYPE, createZip(process));
+	    writeFile(response, getZipDocumentsFilename(process), PhdDocumentsZip.ZIP_MIME_TYPE, createZip(process
+		    .getThesisProcess()));
 
 	    return null;
 
@@ -118,14 +120,8 @@ public class PhdExternalAccessDA extends PhdProcessDA {
 	return process.getProcessNumber().replace("/", "-") + "-Documents.zip";
     }
 
-    protected byte[] createZip(final PhdIndividualProgramProcess process) throws IOException {
-	final PhdDocumentsZip zip = new PhdDocumentsZip();
-
-	zip.add(process.getCandidacyProcess().getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.CV));
-	zip.add(process.getThesisProcess().getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.PROVISIONAL_THESIS));
-
-	// TODO: add remaining documents here (Abstract /resume)
-	return zip.create();
+    protected byte[] createZip(final PhdThesisProcess process) throws IOException {
+	return PhdDocumentsZip.zip(process.getThesisDocumentsToFeedback());
     }
 
     // end jury document download

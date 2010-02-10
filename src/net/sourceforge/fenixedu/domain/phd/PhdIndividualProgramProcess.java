@@ -1146,4 +1146,17 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return false;
     }
 
+    public PhdParticipant getParticipant(final Person person) {
+	for (final PhdParticipant participant : getParticipants()) {
+	    if (participant.isFor(person)) {
+		return participant;
+	    }
+	}
+	return null;
+    }
+
+    public boolean isParticipant(final Person person) {
+	return getParticipant(person) != null;
+    }
+
 }

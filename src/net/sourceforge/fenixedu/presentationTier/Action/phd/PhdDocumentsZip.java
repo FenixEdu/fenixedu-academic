@@ -52,7 +52,7 @@ public class PhdDocumentsZip implements Serializable {
 	final ZipOutputStream zipFile = new ZipOutputStream(result);
 
 	int prefixName = 0;
-	
+
 	for (final PhdProgramProcessDocument document : this.documents) {
 	    zipEntry(++prefixName, zipFile, document);
 	}
@@ -61,10 +61,14 @@ public class PhdDocumentsZip implements Serializable {
 	return result.toByteArray();
     }
 
-    private void zipEntry(final int prefixName, final ZipOutputStream zipFile, final PhdProgramProcessDocument document) throws IOException {
+    private void zipEntry(final int prefixName, final ZipOutputStream zipFile, final PhdProgramProcessDocument document)
+	    throws IOException {
 	zipFile.putNextEntry(new ZipEntry(String.format("%s-%s", prefixName, document.getFilename())));
 	zipFile.write(document.getContents());
 	zipFile.closeEntry();
     }
 
+    static public byte[] zip(final Collection<PhdProgramProcessDocument> documents) throws IOException {
+	return new PhdDocumentsZip().addAll(documents).create();
+    }
 }

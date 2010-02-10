@@ -105,6 +105,11 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
 	return hasProcessForGuiding() || hasProcessForAssistantGuiding();
     }
 
+    /*
+     * Actually each participant belongs to one process, so it will have only
+     * thesis jury element, but assuming that we can share participants we have
+     * several thesis jury elements
+     */
     public ThesisJuryElement getThesisJuryElement(final PhdThesisProcess process) {
 	for (final ThesisJuryElement element : getThesisJuryElementsSet()) {
 	    if (element.isFor(process)) {

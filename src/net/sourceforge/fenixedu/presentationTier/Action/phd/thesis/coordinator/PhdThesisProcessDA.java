@@ -27,7 +27,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Forward(name = "submitJuryElementsDocument", path = "/phd/thesis/coordinator/submitJuryElementsDocument.jsp"),
 
-@Forward(name = "manageThesisJuryElements", path = "/phd/thesis/coordinator/manageThesisJuryElements.jsp")
+@Forward(name = "manageThesisJuryElements", path = "/phd/thesis/coordinator/manageThesisJuryElements.jsp"),
+
+@Forward(name = "juryReporterFeedbackUpload", path = "/phd/thesis/coordinator/juryReporterFeedbackUpload.jsp")
 
 })
 public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
@@ -46,7 +48,7 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
     public ActionForward submitJuryElementsDocumentInvalid(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
-	request.setAttribute("thesisProcessBean", getRenderedObject("thesisProcessBean"));
+	request.setAttribute("thesisProcessBean", getThesisProcessBean());
 	return mapping.findForward("submitJuryElementsDocument");
     }
 
@@ -58,8 +60,7 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 	    if (!viewState.isValid()) {
 		return submitJuryElementsDocumentInvalid(mapping, actionForm, request, response);
 	    }
-	    ExecuteProcessActivity.run(getProcess(request), SubmitJuryElementsDocuments.class,
-		    getRenderedObject("thesisProcessBean"));
+	    ExecuteProcessActivity.run(getProcess(request), SubmitJuryElementsDocuments.class, getThesisProcessBean());
 	    addSuccessMessage(request, "message.thesis.jury.elements.added.with.success");
 
 	} catch (final DomainException e) {
@@ -76,4 +77,5 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
     }
 
     // end of thesis jury elements management
+
 }

@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.phd.thesis;
 import java.util.Collections;
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
@@ -21,6 +22,24 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
 	    return o1.getElementOrder().compareTo(o2.getElementOrder());
 	}
     };
+
+    static public ThesisJuryElement createPresident(final PhdThesisProcess process, final PhdThesisJuryElementBean bean) {
+
+	if (process.hasPresidentJuryElement()) {
+	    throw new DomainException("error.ThesisJuryElement.president.already.exists");
+	}
+
+	final PhdParticipant participant = getOrCreateParticipant(process, bean);
+	final ThesisJuryElement element = new ThesisJuryElement();
+
+	element.checkParticipant(process, participant);
+	element.setElementOrder(0);
+	element.setProcessForPresidentJuryElement(process);
+	element.setParticipant(participant);
+	element.setReporter(false);
+
+	return element;
+    }
 
     protected ThesisJuryElement() {
 	super();
@@ -152,22 +171,13 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
 		PhdProgramProcessDocument.COMPARATOR_BY_UPLOAD_TIME) : null;
     }
 
-    static public ThesisJuryElement createPresident(final PhdThesisProcess process, final PhdThesisJuryElementBean bean) {
+    public boolean isFor(final Person person) {
+	return getParticipant().isFor(person);
+    }
 
-	if (process.hasPresidentJuryElement()) {
-	    throw new DomainException("error.ThesisJuryElement.president.already.exists");
-	}
-
-	final PhdParticipant participant = getOrCreateParticipant(process, bean);
-	final ThesisJuryElement element = new ThesisJuryElement();
-
-	element.checkParticipant(process, participant);
-	element.setElementOrder(0);
-	element.setProcessForPresidentJuryElement(process);
-	element.setParticipant(participant);
-	element.setReporter(false);
-
-	return element;
+    public boolean isDocumentValidated() {
+	final PhdThesisReportFeedbackDocument document = getLastFeedbackDocument();
+	return document != null && document.isAssignedToProcess();
     }
 
 }

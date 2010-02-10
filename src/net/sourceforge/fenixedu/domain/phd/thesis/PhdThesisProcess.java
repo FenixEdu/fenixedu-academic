@@ -10,6 +10,8 @@ import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
+import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.AddJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.AddPresidentJuryElement;
@@ -19,6 +21,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.DownloadProvisional
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.DownloadThesisRequirement;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryDocumentsDownload;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryReporterFeedbackExternalUpload;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryReporterFeedbackUpload;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.PhdThesisActivity;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.PrintJuryElementsDocument;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RejectJuryElements;
@@ -67,6 +70,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	activities.add(new DownloadThesisRequirement());
 	activities.add(new RequestJuryReviews());
 	activities.add(new JuryDocumentsDownload());
+	activities.add(new JuryReporterFeedbackUpload());
 	activities.add(new JuryReporterFeedbackExternalUpload());
     }
 
@@ -191,6 +195,41 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 
     public DateTime getWhenRequestedJuryReviews() {
 	return getLastExecutionDateOf(RequestJuryReviews.class);
+    }
+
+    public PhdParticipant getParticipant(final Person person) {
+	return getIndividualProgramProcess().getParticipant(person);
+    }
+
+    public boolean isParticipant(final Person person) {
+	return getIndividualProgramProcess().isParticipant(person);
+    }
+
+    public ThesisJuryElement getThesisJuryElement(Person person) {
+	for (final ThesisJuryElement element : getThesisJuryElements()) {
+	    if (element.isFor(person)) {
+		return element;
+	    }
+	}
+	return null;
+    }
+
+    public List<PhdProgramProcessDocument> getThesisDocumentsToFeedback() {
+	final List<PhdProgramProcessDocument> documents = new ArrayList<PhdProgramProcessDocument>(3);
+	documents.add(getCandidacyProcess().getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.CV));
+	documents.add(getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.PROVISIONAL_THESIS));
+
+	// TODO: add remaining documents here (Abstract /resume)
+
+	return documents;
+    }
+
+    private PhdProgramProcess getCandidacyProcess() {
+	return getIndividualProgramProcess().getCandidacyProcess();
+    }
+
+    public String getProcessNumber() {
+	return getIndividualProgramProcess().getProcessNumber();
     }
 
 }

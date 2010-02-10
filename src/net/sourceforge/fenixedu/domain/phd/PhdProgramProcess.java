@@ -94,7 +94,8 @@ abstract public class PhdProgramProcess extends PhdProgramProcess_Base {
 	return isMasterDegreeAdministrativeOfficeEmployee(userView)
 		|| process.getIndividualProgramProcess().isCoordinatorForPhdProgram(userView.getPerson())
 		|| process.getIndividualProgramProcess().isGuiderOrAssistentGuider(userView.getPerson())
-		|| process.getIndividualProgramProcess().getPerson() == userView.getPerson();
+		|| process.getIndividualProgramProcess().getPerson() == userView.getPerson()
+		|| process.getIndividualProgramProcess().isParticipant(userView.getPerson());
     }
 
     public PhdProcessState getMostRecentState() {

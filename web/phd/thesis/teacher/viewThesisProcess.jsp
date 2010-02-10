@@ -50,19 +50,9 @@
   </tr>
  </table>
 
+<%-- ### Operations ### --%>
+
 <ul class="operations">
-	<li style="display: inline;">
-		<html:link action="/phdThesisProcess.do?method=prepareSubmitJuryElementsDocument" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
-			<bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.jury.elements.document"/>
-		</html:link>
-	</li>
-	<%-- 
-	<li style="display: inline;">
-		<html:link action="/phdThesisProcess.do?method=manageThesisJuryElements" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
-			<bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.jury.elements"/>
-		</html:link>
-	</li>
-	--%>
 	<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= JuryReporterFeedbackUpload.class %>">
 		<li style="display: inline;">
 			<html:link action="/phdThesisProcess.do?method=prepareJuryReportFeedbackUpload" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">

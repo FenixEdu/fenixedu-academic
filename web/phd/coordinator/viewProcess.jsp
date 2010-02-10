@@ -8,7 +8,9 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RequestCandidacyReview"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess.SubmitComission"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess.SchedulePresentationDate"%><html:xhtml/>
+<%@page import="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess.SchedulePresentationDate"%>
+
+<html:xhtml/>
 
 <logic:present role="COORDINATOR">
 

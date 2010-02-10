@@ -74,6 +74,9 @@
   </tr>
 </table>
 
+<%--Thesis --%>
+<jsp:include page="/phd/thesis/teacher/viewThesisProcess.jsp" />
+
 <%-- CAT --%>
 <br/>
 <logic:notEmpty name="process" property="seminarProcess">
