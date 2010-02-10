@@ -355,19 +355,22 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	return oldAssiduousnessClosedMonth;
     }
 
-    public boolean hasAnyCorrection() {
+    public boolean hasAnyCorrectionOnAClosedMonth() {
 	for (AssiduousnessExtraWork assiduousnessExtraWork : getAssiduousnessExtraWorks()) {
-	    if (assiduousnessExtraWork.getIsCorrection()) {
+	    if (assiduousnessExtraWork.getIsCorrection()
+		    && assiduousnessExtraWork.getCorrectedOnClosedMonth().getClosedForBalance()) {
 		return true;
 	    }
 	}
 	for (ClosedMonthJustification closedMonthJustification : getClosedMonthJustifications()) {
-	    if (closedMonthJustification.getIsCorrection()) {
+	    if (closedMonthJustification.getIsCorrection()
+		    && closedMonthJustification.getCorrectedOnClosedMonth().getClosedForBalance()) {
 		return true;
 	    }
 	}
 	for (AssiduousnessClosedDay assiduousnessClosedDay : getAssiduousnessClosedDays()) {
-	    if (assiduousnessClosedDay.getIsCorrection()) {
+	    if (assiduousnessClosedDay.getIsCorrection()
+		    && assiduousnessClosedDay.getCorrectedOnClosedMonth().getClosedForBalance()) {
 		return true;
 	    }
 	}

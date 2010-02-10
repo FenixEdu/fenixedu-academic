@@ -105,16 +105,18 @@ public class ClosedMonth extends ClosedMonth_Base {
 		today.getMonthOfYear());
 	for (ClosedMonth closedMonth : RootDomainObject.getInstance().getClosedMonths()) {
 	    if (closedMonth.getClosedYearMonth().equals(yearMonth) && closedMonth.getClosedForBalance()
-		    && monthBefore.isEqual(yearMonth) && !closedMonth.hasAnyCorrection()) {
+		    && monthBefore.isEqual(yearMonth) && !closedMonth.hasAnyCorrectionOnAClosedMonth()) {
 		return true;
 	    }
 	}
 	return false;
     }
 
-    public boolean hasAnyCorrection() {
+    public boolean hasAnyCorrectionOnAClosedMonth() {
 	for (AssiduousnessClosedMonth assiduousnessClosedMonth : getAssiduousnessClosedMonths()) {
-	    if (assiduousnessClosedMonth.getIsCorrection() || assiduousnessClosedMonth.hasAnyCorrection()) {
+	    if ((assiduousnessClosedMonth.getIsCorrection() && assiduousnessClosedMonth.getCorrectedOnClosedMonth()
+		    .getClosedForBalance())
+		    || assiduousnessClosedMonth.hasAnyCorrectionOnAClosedMonth()) {
 		return true;
 	    }
 	}
