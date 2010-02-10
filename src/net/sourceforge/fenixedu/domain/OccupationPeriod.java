@@ -217,6 +217,34 @@ public class OccupationPeriod extends OccupationPeriod_Base {
 	return null;
     }
 
+    public static OccupationPeriod readOccupationPeriod(final ExecutionCourse executionCourse, final YearMonthDay start, final YearMonthDay end) {
+	OccupationPeriod result = null;
+	boolean ok = true;
+	for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
+	    final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
+	    for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
+		if (executionCourse.getExecutionYear() == executionDegree.getExecutionYear()) {
+		    final OccupationPeriod occupationPeriod = executionDegree.getPeriodLessons(executionCourse.getExecutionPeriod());
+		    if (result == null) {
+			result = occupationPeriod;
+		    } else if (result != occupationPeriod) {
+			ok = false;
+		    }
+		}
+	    }
+	}
+	if (ok && result != null) {
+	    return result;
+	}
+	for (final OccupationPeriod occupationPeriod : RootDomainObject.getInstance().getOccupationPeriodsSet()) {
+	    if (occupationPeriod.getNextPeriod() == null && occupationPeriod.getPreviousPeriod() == null
+		    && occupationPeriod.getStartYearMonthDay().equals(start) && occupationPeriod.getEndYearMonthDay().equals(end)) {
+		return occupationPeriod;
+	    }
+	}
+	return null;
+    }
+
     public boolean nestedOccupationPeriodsIntersectDates(Calendar start, Calendar end) {
 	OccupationPeriod firstOccupationPeriod = this;
 	while (firstOccupationPeriod != null) {

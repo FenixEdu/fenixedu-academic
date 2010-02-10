@@ -98,14 +98,15 @@ public class Lesson extends Lesson_Base {
 
 	OccupationPeriod period = null;
 	if (shift != null) {
-	    GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod = shift.getExecutionCourse().getMaxLessonsPeriod();
+	    final ExecutionCourse executionCourse = shift.getExecutionCourse();
+	    GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod = executionCourse.getMaxLessonsPeriod();
 	    if (beginDate == null || beginDate.isBefore(maxLessonsPeriod.getLeft())) {
 		throw new DomainException("error.Lesson.invalid.begin.date");
 	    }
 	    if (endDate == null || endDate.isAfter(maxLessonsPeriod.getRight())) {
 		throw new DomainException("error.invalid.new.date");
 	    }
-	    period = OccupationPeriod.readOccupationPeriod(beginDate, endDate);
+	    period = OccupationPeriod.readOccupationPeriod(executionCourse, beginDate, endDate);
 	    if (period == null) {
 		period = new OccupationPeriod(beginDate, endDate);
 	    }
