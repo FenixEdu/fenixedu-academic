@@ -18,6 +18,11 @@
 	<script type="text/javascript"
 		src="<%=request.getContextPath()%>/CSS/scripts/checkall.js"></script>
 
+	<logic:notEmpty name="person" property="employee">
+	   	<html:link page="<%= "/professionalInformation.do?method=showSituations&personId="+ personID%>" titleKey="link.title.professionalInformation"  bundle="CONTRACTS_RESOURCES">
+	   		<bean:message key="link.title.professionalInformation" bundle="CONTRACTS_RESOURCES"/>
+	   	</html:link>
+   	</logic:notEmpty>
 
 	<logic:messagesPresent message="true" property="contacts">
 		<ul class="nobullet list6">
@@ -542,7 +547,7 @@
 			<bean:message key="label.remove" />
 		</html:link>
 	</logic:iterate>
-
+	
 </logic:present>
 
 <script type="text/javascript" language="javascript">
