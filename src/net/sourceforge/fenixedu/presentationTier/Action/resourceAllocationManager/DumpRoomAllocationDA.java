@@ -58,8 +58,11 @@ public class DumpRoomAllocationDA extends FenixDispatchAction {
 
     public ActionForward firstPage(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws InvalidArgumentException {
-	final DumpContextBean dumpContextBean = new DumpContextBean();
-	dumpContextBean.setExecutionPeriod(ExecutionSemester.readActualExecutionSemester());
+	DumpContextBean dumpContextBean = (DumpContextBean) getRenderedObject();
+	if (dumpContextBean == null) {
+	    dumpContextBean = new DumpContextBean();
+	    dumpContextBean.setExecutionPeriod(ExecutionSemester.readActualExecutionSemester());
+	}
 	request.setAttribute("dumpContextBean", dumpContextBean);
 	return mapping.findForward("firstPage");
     }
