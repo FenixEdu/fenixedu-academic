@@ -164,6 +164,10 @@ public class Thesis extends Thesis_Base {
 	throw new DomainException("error.researcher.Thesis.call", "setNote");
     }
 
+    public void replaceAbstract(MultiLanguageString note) {
+	super.setNote(note);
+    }
+
     @Override
     public void setNumberPages(Integer numberPages) {
 	throw new DomainException("error.researcher.Thesis.call", "setNumberPages");

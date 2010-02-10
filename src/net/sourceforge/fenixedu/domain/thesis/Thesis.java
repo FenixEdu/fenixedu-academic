@@ -1387,7 +1387,7 @@ public class Thesis extends Thesis_Base {
 	}
 
 	if (hasPublication()) {
-	    getPublication().setNote(thesisAbstract);
+	    getPublication().replaceAbstract(thesisAbstract);
 	}
     }
 
