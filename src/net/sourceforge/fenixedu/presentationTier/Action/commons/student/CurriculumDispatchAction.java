@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -41,6 +42,7 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -151,6 +153,12 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 	// }
 	// return null;
 	return student;
+    }
+    
+    protected ActionForward getStudentCPForSupervisor(final Registration registration, final ActionMapping mapping, DynaActionForm actionForm,
+	    final HttpServletRequest request) {
+	
+	return getStudentCP(registration, mapping, actionForm, request);
     }
 
     private ActionForward getStudentCP(final Registration registration, final ActionMapping mapping, DynaActionForm actionForm,

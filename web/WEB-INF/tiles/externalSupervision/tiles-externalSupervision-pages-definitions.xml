@@ -1,0 +1,11 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!-- Tiles definitions -->
+<tiles-definitions>
+	<definition name="df.page.choose-curriculum" extends="definition.externalSupervision.master" >
+		<put name="body" value="/academicAdminOffice/student/registration/chooseCycleForViewRegistrationCurriculum.jsp" />
+	</definition>
+	<definition name="df.page.view-curriculum" extends="definition.externalSupervision.master" >
+		<put name="body" value="/academicAdminOffice/student/registration/viewRegistrationCurriculum.jsp" />
+	</definition>
+</tiles-definitions>

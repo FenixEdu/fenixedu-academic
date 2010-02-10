@@ -104,6 +104,7 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.teacher.Career;
 import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
@@ -2896,6 +2897,15 @@ public class Person extends Person_Base {
 	    if (requester.hasRole(RoleType.MANAGER) || requester.hasRole(RoleType.DIRECTIVE_COUNCIL)) {
 		return true;
 	    }
+	    if(requester.hasRole(RoleType.EXTERNAL_SUPERVISOR)) {
+		for(RegistrationProtocol registrationProtocol : requester.getRegistrationProtocolsSet()) {
+		    for(Registration registration : this.getStudent().getRegistrationsSet()) {
+			if(registration.getRegistrationProtocol() == registrationProtocol) {
+			    return true;
+			}
+		    }
+		}
+	    }
 	    if (this.hasRole(RoleType.STUDENT)
 		    && (requester.hasRole(RoleType.TEACHER) || requester.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE))) {
 		return true;
@@ -3386,6 +3396,13 @@ public class Person extends Person_Base {
 
     public boolean isPhdStudent() {
 	return hasAnyPhdIndividualProgramProcesses();
+    }
+    
+    public RegistrationProtocol getOnlyRegistrationProtocol(){
+	if(getRegistrationProtocolsCount() == 1){
+	    return getRegistrationProtocols().get(0);
+	}
+	return null;
     }
 
 }

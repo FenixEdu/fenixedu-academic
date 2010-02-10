@@ -42,9 +42,4 @@ public class RegisteredState extends RegisteredState_Base {
 	return states;
     }
 
-    @Override
-    public boolean isActive() {
-	return true;
-    }
-
 }

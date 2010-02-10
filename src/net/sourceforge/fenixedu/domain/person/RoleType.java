@@ -99,7 +99,9 @@ public enum RoleType {
 
     IDENTIFICATION_CARD_MANAGER("Gestão de Cartões"),
 
-    TUTORSHIP("Tutorship");
+    TUTORSHIP("Tutorship"),
+    
+    EXTERNAL_SUPERVISOR("External Supervisor");
 
     public String getName() {
 	return name();

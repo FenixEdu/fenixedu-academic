@@ -5008,7 +5008,6 @@ class DomainObject {
         Character entryGradeClassification;
         YearMonthDay homologationDate;
         Integer number;
-        RegistrationAgreement registrationAgreement;
         String agreementInformation;
         Boolean requestedChangeBranch;
         Boolean requestedChangeDegree;
@@ -5024,6 +5023,10 @@ class DomainObject {
 
     class student.RegistrationNumber extends DomainObject {
         Integer number;
+    }
+    
+    class student.RegistrationProtocol extends DomainObject {
+    	RegistrationAgreement registrationAgreement;
     }
     
     class student.RegistrationRegime extends DomainObject {
@@ -11715,6 +11718,29 @@ relation RegistrationStudent {
 relation RegistrationStudentCandidacy {
     student.Registration playsRole registration;
     candidacy.StudentCandidacy playsRole studentCandidacy;
+}
+
+relation RegistrationRegistrationProtocol {
+	student.Registration playsRole registrations {
+		multiplicity *;
+	}
+	student.RegistrationProtocol playsRole registrationProtocol;
+}
+
+relation RegistrationProtocolPerson {
+	student.RegistrationProtocol playsRole registrationProtocols {
+		multiplicity *;
+	}
+	Person playsRole supervisors {
+		multiplicity *;
+	}
+}
+
+relation RegistrationProtocolRootDomainObject {
+	student.RegistrationProtocol playsRole registrationProtocols {
+		multiplicity *;
+	}
+	RootDomainObject playsRole rootDomainObject;
 }
 
 relation ReimbursementGuideEntryGuideEntry {

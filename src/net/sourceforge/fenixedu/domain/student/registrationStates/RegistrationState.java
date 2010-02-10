@@ -296,7 +296,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
     }
 
     public boolean isActive() {
-	return false;
+	return getStateType().isActive();
     }
 
     public boolean includes(final ExternalEnrolment externalEnrolment) {

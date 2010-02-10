@@ -44,6 +44,12 @@ public class ViewStudentTimeTable extends FenixDispatchAction {
 
 	return forwardToShowTimeTable(getRegistration(actionForm, request), mapping, request);
     }
+    
+    protected ActionForward forwardToShowTimeTableForSupervisor(Registration registration, ActionMapping mapping, HttpServletRequest request)
+    		throws FenixActionException, FenixFilterException, FenixServiceException {
+	
+	return forwardToShowTimeTable(registration, mapping, request);
+    }
 
     private ActionForward forwardToShowTimeTable(Registration registration, ActionMapping mapping, HttpServletRequest request)
 	    throws FenixActionException, FenixFilterException, FenixServiceException {

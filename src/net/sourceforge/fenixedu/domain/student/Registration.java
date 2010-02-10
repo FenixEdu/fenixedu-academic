@@ -103,6 +103,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.domain.studentCurriculum.StandaloneCurriculumGroup;
+import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
 import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
@@ -157,6 +158,7 @@ public class Registration extends Registration_Base {
     private Registration() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
+	setRegistrationAgreement(RegistrationAgreement.NORMAL);
     }
 
     private Registration(final DateTime start) {
@@ -3347,9 +3349,12 @@ public class Registration extends Registration_Base {
 	return null;
     }
 
-    @Override
     final public void setRegistrationAgreement(RegistrationAgreement registrationAgreement) {
-	super.setRegistrationAgreement(registrationAgreement == null ? RegistrationAgreement.NORMAL : registrationAgreement);
+	if(registrationAgreement == null){
+	    registrationAgreement = RegistrationAgreement.NORMAL;
+	}
+	super.setRegistrationProtocol(RegistrationProtocol.serveRegistrationProtocol(registrationAgreement));
+	
 	if (registrationAgreement != null && !registrationAgreement.isNormal() && !hasExternalRegistrationData()) {
 	    new ExternalRegistrationData(this);
 	}
@@ -3512,9 +3517,8 @@ public class Registration extends Registration_Base {
 	return result;
     }
 
-    @Override
     public RegistrationAgreement getRegistrationAgreement() {
-	return super.getRegistrationAgreement() == null ? RegistrationAgreement.NORMAL : super.getRegistrationAgreement();
+	return super.getRegistrationProtocol().getRegistrationAgreement();
     }
 
     public Registration getSourceRegistrationForTransition() {

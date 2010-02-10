@@ -157,6 +157,12 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    return (comparationResult == 0) ? leftState.getIdInternal().compareTo(rightState.getIdInternal()) : comparationResult;
 	}
     };
+    
+    static final public Comparator<StudentCurricularPlan> COMPARATOR_BY_STUDENT_IST_ID = new Comparator<StudentCurricularPlan>() {
+	public int compare(final StudentCurricularPlan redSCP, final StudentCurricularPlan blueSCP) {
+	    return redSCP.getPerson().getUsername() == null ? -1 : (blueSCP.getPerson().getUsername() == null ? 1 : redSCP.getPerson().getUsername().compareTo(blueSCP.getPerson().getUsername()));
+	}
+    };
 
     private StudentCurricularPlan() {
 	super();

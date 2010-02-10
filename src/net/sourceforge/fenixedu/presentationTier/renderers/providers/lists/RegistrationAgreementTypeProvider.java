@@ -1,9 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.providers.lists;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
+import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
@@ -16,16 +15,7 @@ public class RegistrationAgreementTypeProvider implements DataProvider {
     }
 
     public Converter getConverter() {
-	return new Converter() {
-	    @Override
-	    public Object convert(Class type, Object value) {
-		final List<RegistrationAgreement> registrationAgreements = new ArrayList<RegistrationAgreement>();
-		for (final String o : (String[]) value) {
-		    registrationAgreements.add(RegistrationAgreement.valueOf(o));
-		}
-		return registrationAgreements;
-	    }
-	};
+	return new EnumConverter();
     }
 
 }

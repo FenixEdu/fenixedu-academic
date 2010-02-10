@@ -134,6 +134,7 @@
     <message-resources parameter="resources.CardGenerationResources" key="CARD_GENERATION_RESOURCES" null="false"/>
     <message-resources parameter="resources.ManagerResources" key="MANAGER_RESOURCES" null="false"/>
     <message-resources parameter="resources.MessagingResources" key="MESSAGING_RESOURCES" null="false"/>
+    <message-resources parameter="resources.DirectiveCouncilResources" key="DIRECTIVE_COUNCIL_RESOURCES" null="false"/>
     <message-resources parameter="resources.PedagogicalCouncilResources" key="PEDAGOGICAL_COUNCIL" null="false"/>
 
 	<!-- ========== Plug Ins Configuration ================================= -->

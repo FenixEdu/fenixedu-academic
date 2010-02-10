@@ -40,9 +40,4 @@ public class MobilityState extends MobilityState_Base {
 	return states;
     }
 
-    @Override
-    public boolean isActive() {
-	return true;
-    }
-
 }
