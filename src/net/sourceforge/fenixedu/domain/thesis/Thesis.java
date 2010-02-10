@@ -1385,6 +1385,10 @@ public class Thesis extends Thesis_Base {
 	    thesisAbstract.setContent(realLanguage, text);
 	    setThesisAbstract(thesisAbstract);
 	}
+
+	if (hasPublication()) {
+	    getPublication().setNote(thesisAbstract);
+	}
     }
 
     public String getKeywordsPt() {
