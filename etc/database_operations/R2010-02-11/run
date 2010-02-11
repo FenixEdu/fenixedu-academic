@@ -38,8 +38,9 @@ function execute() {
 function executeWithTempFile() {
 	echo ---------------------------------------- $1
 	mysql -u$USER -f -h$DB_HOST --default-character-set=latin1 $DB < $2 > tmp.sql
-	mysql -u$USER -f -h$DB_HOST --default-character-set=latin1 $DB < tmp.sql	
-	rm tmp.sql
+	grep -v -i "total" tmp.sql > tmp2.sql
+	mysql -u$USER -f -h$DB_HOST --default-character-set=latin1 $DB < tmp2.sql	
+	rm tmp.sql tmp2.sql
 	echo
 }
 
