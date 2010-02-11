@@ -97,7 +97,7 @@ public class ExternalSupervisorViewYearDA extends FenixDispatchAction{
     private String getFilename(ExternalSupervisorViewsBean bean) {
 	StringBuilder strBuilder = new StringBuilder();
 	strBuilder.append(ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale()).getString(
-		"label.students.lowercase"));
+		"label.students"));
 	strBuilder.append("_");
 	strBuilder.append(bean.getProtocol().getRegistrationAgreement().getName());
 	strBuilder.append("_");
@@ -120,7 +120,7 @@ public class ExternalSupervisorViewYearDA extends FenixDispatchAction{
 	    row.setCell(studentCurricularPlan.getName());
 	    row.setCell(studentCurricularPlan.getStartDateYearMonthDay().toString());
 	    row.setCell(studentCurricularPlan.getEndDate() == null ? "" : studentCurricularPlan.getEndDate().toString());
-	    row.setCell(studentCurricularPlan.getCurrentState().getLocalizedName());
+	    row.setCell(studentCurricularPlan.getRegistration().getActiveStateType().getDescription());
 	    row.setCell(studentCurricularPlan.getRegistration().getNumberOfCurriculumEntries());
 	    row.setCell(studentCurricularPlan.getRegistration().getEctsCredits());
 	    row.setCell(getAverageInformation(studentCurricularPlan));
