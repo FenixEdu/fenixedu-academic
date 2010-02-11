@@ -114,6 +114,12 @@ public class ExternalSupervisorViewYearDA extends FenixDispatchAction{
 	    row.setCell(studentCurricularPlan.getRegistration().getNumber());
 	    row.setCell(studentCurricularPlan.getPerson().getName());
 	    row.setCell(studentCurricularPlan.getPerson().getInstitutionalOrDefaultEmailAddressValue());
+	    row.setCell(studentCurricularPlan.getPerson().getIdDocumentType().getLocalizedName());
+	    row.setCell(studentCurricularPlan.getPerson().getDocumentIdNumber());
+	    row.setCell(studentCurricularPlan.getDegree().getSigla());
+	    row.setCell(studentCurricularPlan.getName());
+	    row.setCell(studentCurricularPlan.getStartDateYearMonthDay().toString());
+	    row.setCell(studentCurricularPlan.getEndDate() == null ? "" : studentCurricularPlan.getEndDate().toString());
 	    row.setCell(studentCurricularPlan.getCurrentState().getLocalizedName());
 	    row.setCell(studentCurricularPlan.getRegistration().getNumberOfCurriculumEntries());
 	    row.setCell(studentCurricularPlan.getRegistration().getEctsCredits());
@@ -153,6 +159,18 @@ public class ExternalSupervisorViewYearDA extends FenixDispatchAction{
 	bundle.getString("label.name"),
 
 	bundle.getString("label.email"),
+	
+	bundle.getString("label.identificationDocumentType"),
+	
+	bundle.getString("label.identificationDocumentNumber"),
+	
+	bundle.getString("label.Degree"),
+	
+	bundle.getString("label.curricularPlan"),
+	
+	bundle.getString("label.net.sourceforge.fenixedu.domain.student.Registration.startDate"),
+	
+	bundle.getString("label.net.sourceforge.fenixedu.domain.student.Registration.conclusionDate"),
 
 	bundle.getString("label.student.curricular.plan.state"),
 

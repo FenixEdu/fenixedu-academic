@@ -52,6 +52,16 @@
 	
 		<bean:define id="executionYearId" name="sessionBean" property="executionYear.externalId"/>
 		<bean:define id="executionDegreeId" name="sessionBean" property="executionDegree.externalId"/>
+		
+		<fr:form id="beanForm" action="/viewDegree.do?method=exportXLS">
+			<fr:edit id="sessionBean" name="sessionBean" visible="false"/>
+		</fr:form>
+		<p class="mtop15 mbottom1">
+			<a href="javascript:var form = document.getElementById('beanForm');form.method.value='exportXLS';form.submit()">
+				<html:image border="0" src="<%= request.getContextPath() + "/images/excel.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES"></html:image>
+				<bean:message key="link.lists.xlsFileToDownload" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+			</a>
+		</p>
 	
 		<fr:view name="sessionBean" property="students">
 		
