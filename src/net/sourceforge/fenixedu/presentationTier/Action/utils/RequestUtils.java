@@ -42,6 +42,7 @@ import pt.ist.fenixWebFramework.services.Service;
 public class RequestUtils {
 
     public static final int APP_CONTEXT_LENGTH = PropertiesManager.getProperty("app.context").length() + 1;
+    private static final boolean STORE_PENDING_REQUEST = PropertiesManager.getBooleanProperty("store.pending.request");
 
     public static String getAndSetStringToRequest(HttpServletRequest request, String name) {
 	String parameter = request.getParameter(name);
@@ -119,8 +120,10 @@ public class RequestUtils {
      *             when it's not possible to send the redirect to the client
      */
     public static void sendLoginRedirect(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
 	request.getSession(true);
-	PendingRequest pendingRequest = storeRequest(request);
+
+	final PendingRequest pendingRequest = STORE_PENDING_REQUEST ? storeRequest(request) : null;
 	response.sendRedirect(generateRedirectLink(HostRedirector.getRedirectPageLogin(request.getRequestURL().toString()),
 		pendingRequest));
     }

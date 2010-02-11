@@ -499,6 +499,14 @@ phd.public.candidacy.submission.link=https://fenix.ist.utl.pt/candidacies/phd-pr
 phd.public.candidacy.referee.form.link=https://fenix.ist.utl.pt/candidacies/phd-program/referee-form
 phd.public.external.access.link=https://fenix.ist.utl.pt/phd-program/access
 
+#---------------------------------------------------------------
+# Pending requests
+# 
+# -> indicates if pending request should be stored in database to 
+# recover current session after new login
+#--------------------------------------------------------------
+store.pending.request=true
+
 #
 #
 #
