@@ -12,6 +12,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 /**
  * @author Nuno Nunes & Joana Mota
  */
+@Deprecated
 public enum StudentCurricularPlanState {
 
     ACTIVE,
