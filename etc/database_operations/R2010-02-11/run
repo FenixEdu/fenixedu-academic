@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create Table Registration Protocol" externalSupervisionRelatedUpdates.sql
