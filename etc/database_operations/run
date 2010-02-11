@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Complete something for god sake." shezadIncomplete.sql
