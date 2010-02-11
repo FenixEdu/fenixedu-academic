@@ -57,12 +57,6 @@
     	</action>
 
 		<action path="/sendEmail" forward="df.page.send.email.redirect"/>
-		
-		<action path="/registration" parameter="method"
-				scope="request" type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.RegistrationDA">
-			<forward name="chooseCycleForViewRegistrationCurriculum" path="df.page.choose-curriculum"/>
-			<forward name="view-registration-curriculum" path="df.page.view-curriculum"/>
-		</action>
       
     </action-mappings>
 

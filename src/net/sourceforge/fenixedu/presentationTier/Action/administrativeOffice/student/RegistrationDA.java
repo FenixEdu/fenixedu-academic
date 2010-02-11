@@ -94,38 +94,6 @@ public class RegistrationDA extends StudentRegistrationDA {
 
 	return mapping.findForward("chooseCycleForViewRegistrationCurriculum");
     }
-    
-    public ActionForward prepareViewRegistrationCurriculumForSupervisor(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
-	
-	final String personId = request.getParameter("personId");
-	final Person studentPerson = AbstractDomainObject.fromExternalId(personId);
-	Student student = studentPerson.getStudent();
-	
-	RenderUtils.invalidateViewState();
-
-	request.setAttribute("studentPerson", studentPerson);
-	//Se LastActive estiver vazio passar Last
-	final Registration registration = student.getLastActiveRegistration();
-	request.setAttribute("registration", registration);
-	final RegistrationCurriculumBean registrationCurriculumBean = new RegistrationCurriculumBean(registration);
-	request.setAttribute("registrationCurriculumBean", registrationCurriculumBean);
-
-	final Integer degreeCurricularPlanID = getIntegerFromRequest(request, "degreeCurricularPlanID");
-	if (degreeCurricularPlanID != null) {
-	    request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
-	}
-
-	if (!registrationCurriculumBean.hasCycleCurriculumGroup()) {
-	    final List<CycleCurriculumGroup> internalCycleCurriculumGroups = registration.getLastStudentCurricularPlan()
-		    .getInternalCycleCurriculumGrops();
-	    if (internalCycleCurriculumGroups.size() > 1) {
-		return mapping.findForward("chooseCycleForViewRegistrationCurriculum");
-	    }
-	}
-
-	return mapping.findForward("view-registration-curriculum");
-    }
 
     private RegistrationCurriculumBean getRegistrationCurriculumBeanFromViewState() {
 	return (RegistrationCurriculumBean) getObjectFromViewState("registrationCurriculumBean");
