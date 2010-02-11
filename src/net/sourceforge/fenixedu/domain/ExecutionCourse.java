@@ -2189,4 +2189,13 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	 */
     }
 
+    public Professorship getProfessorship(final Person person) {
+	for (final Professorship professorship : getProfessorshipsSet()) {
+	    if (professorship.getPerson() == person) {
+		return professorship;
+	    }
+	}
+	return null;
+    }
+
 }

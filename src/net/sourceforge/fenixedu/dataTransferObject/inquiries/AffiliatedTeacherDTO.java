@@ -4,7 +4,6 @@
 package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Teacher;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -19,8 +18,8 @@ public class AffiliatedTeacherDTO extends TeacherDTO {
     }
 
     @Override
-    public Teacher getTeacher() {
-	return person.getTeacher();
+    public Person getTeacher() {
+	return person;
     }
 
     @Override

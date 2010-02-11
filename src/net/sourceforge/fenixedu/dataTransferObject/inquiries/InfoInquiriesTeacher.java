@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoNonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher;
@@ -24,7 +24,7 @@ public class InfoInquiriesTeacher extends InfoObject implements Comparable {
     private Integer keyInquiriesCourse;
     private InfoInquiriesCourse inquiriesCourse;
 
-    private Integer keyTeacher;
+    private Integer keyPerson;
     private InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes teacherOrNonAffiliatedTeacher;
 
     final private List<ShiftType> classTypes = new ArrayList<ShiftType>();
@@ -97,16 +97,16 @@ public class InfoInquiriesTeacher extends InfoObject implements Comparable {
     /**
      * @return Returns the keyTeacher.
      */
-    public Integer getKeyTeacher() {
-	return keyTeacher;
+    public Integer getKeyPerson() {
+	return keyPerson;
     }
 
     /**
      * @param keyTeacher
      *            The keyTeacher to set.
      */
-    public void setKeyTeacher(Integer keyTeacher) {
-	this.keyTeacher = keyTeacher;
+    public void setKeyPerson(Integer keyPerson) {
+	this.keyPerson = keyPerson;
     }
 
     /**
@@ -301,7 +301,7 @@ public class InfoInquiriesTeacher extends InfoObject implements Comparable {
 	    this.getClassTypes().add(inquiriesTeacher.getShiftType());
 
 	    InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes teacher = new InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes();
-	    teacher.setTeacher(InfoTeacher.newInfoFromDomain(inquiriesTeacher.getTeacher()));
+	    teacher.setPerson(InfoPerson.newInfoFromDomain(inquiriesTeacher.getProfessorship().getPerson()));
 	    InfoNonAffiliatedTeacher infoNonAffiliatedTeacher = new InfoNonAffiliatedTeacher();
 	    infoNonAffiliatedTeacher.copyFromDomain(inquiriesTeacher.getNonAffiliatedTeacher());
 	    teacher.setNonAffiliatedTeacher(infoNonAffiliatedTeacher);

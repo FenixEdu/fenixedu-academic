@@ -14,6 +14,8 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -86,10 +88,10 @@ public class WriteInquiry extends FenixService {
 
 	    InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes infoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes = iit
 		    .getTeacherOrNonAffiliatedTeacher();
-	    if (infoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes.getTeacher() != null) {
-		Teacher teacher = rootDomainObject.readTeacherByOID(infoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes
-			.getIdInternal());
-		inquiriesCourse.createInquiriesTeacher(teacher, shiftType, iit);
+	    if (infoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes.getPerson() != null) {
+		final Person person = infoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes.getPerson().getPerson();
+		final Professorship professorship = inquiriesCourse.getExecutionCourse().getProfessorship(person);
+		inquiriesCourse.createInquiriesTeacher(professorship, shiftType, iit);
 	    } else if (infoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes.getNonAffiliatedTeacher() != null) {
 		NonAffiliatedTeacher nonAffiliatedTeacher = rootDomainObject
 			.readNonAffiliatedTeacherByOID(infoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes.getIdInternal());

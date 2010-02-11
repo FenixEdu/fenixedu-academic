@@ -12,9 +12,10 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiriesQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.NonAffiliatedTeacherDTO;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherInquiryDTO;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 /**
@@ -28,14 +29,14 @@ public class InquiriesTeacher extends InquiriesTeacher_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    protected InquiriesTeacher(InquiriesCourse inquiriesCourse, Teacher teacher, ShiftType shiftType,
+    protected InquiriesTeacher(InquiriesCourse inquiriesCourse, Professorship professorship, ShiftType shiftType,
 	    InfoInquiriesTeacher infoInquiriesTeacher) {
 	this();
-	if ((inquiriesCourse == null) || (teacher == null) || (shiftType == null))
+	if ((inquiriesCourse == null) || (professorship == null) || (shiftType == null))
 	    throw new DomainException("The inquiriesCourse, teacher and shiftType should not be null!");
 
 	this.setInquiriesCourse(inquiriesCourse);
-	this.setTeacher(teacher);
+	this.setProfessorship(professorship);
 	this.setBasicProperties(shiftType, infoInquiriesTeacher);
     }
 
@@ -71,7 +72,12 @@ public class InquiriesTeacher extends InquiriesTeacher_Base {
 	setAnswers(inquiryDTO, inquiriesTeacher);
 
 	if (inquiryDTO.getTeacherDTO() instanceof AffiliatedTeacherDTO) {
-	    inquiriesTeacher.setTeacher((Teacher) inquiryDTO.getTeacherDTO().getTeacher());
+	    final Professorship professorship = inquiryDTO.getExecutionCourse().getProfessorship((Person) inquiryDTO.getTeacherDTO().getTeacher());
+	    if (professorship == null) {
+		throw new Error("This should never be possible.");
+	    }
+	    inquiriesTeacher.setProfessorship(professorship);
+//	    inquiriesTeacher.setTeacher((Teacher) inquiryDTO.getTeacherDTO().getTeacher());
 	} else if (inquiryDTO.getTeacherDTO() instanceof NonAffiliatedTeacherDTO) {
 	    inquiriesTeacher.setNonAffiliatedTeacher((NonAffiliatedTeacher) inquiryDTO.getTeacherDTO().getTeacher());
 	}

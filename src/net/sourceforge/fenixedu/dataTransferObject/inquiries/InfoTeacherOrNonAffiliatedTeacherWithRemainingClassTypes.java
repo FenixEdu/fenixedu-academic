@@ -11,7 +11,7 @@ import java.util.Map;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoNonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.DomainObject;
@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.domain.ShiftType;
  */
 public class InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes extends InfoObject {
 
-    private InfoTeacher teacher;
+    private InfoPerson person;
     private InfoNonAffiliatedTeacher nonAffiliatedTeacher;
     private String teacherName;
 
@@ -33,15 +33,15 @@ public class InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes extends In
     public InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes(InfoObject infoTeacherOrNonAffiliatedTeacher,
 	    InfoExecutionCourse infoExecutionCourse) {
 
-	if (infoTeacherOrNonAffiliatedTeacher instanceof InfoTeacher) {
-	    this.teacher = (InfoTeacher) infoTeacherOrNonAffiliatedTeacher;
+	if (infoTeacherOrNonAffiliatedTeacher instanceof InfoPerson) {
+	    this.person = (InfoPerson) infoTeacherOrNonAffiliatedTeacher;
 	    this.nonAffiliatedTeacher = null;
-	    this.setIdInternal(this.teacher.getIdInternal());
-	    this.teacherName = this.teacher.getInfoPerson().getNome();
+	    this.setIdInternal(this.person.getIdInternal());
+	    this.teacherName = this.person.getNome();
 
 	} else if (infoTeacherOrNonAffiliatedTeacher instanceof InfoNonAffiliatedTeacher) {
 
-	    this.teacher = null;
+	    this.person = null;
 	    this.nonAffiliatedTeacher = (InfoNonAffiliatedTeacher) infoTeacherOrNonAffiliatedTeacher;
 	    this.setIdInternal(this.nonAffiliatedTeacher.getIdInternal());
 	    this.teacherName = this.nonAffiliatedTeacher.getName();
@@ -108,16 +108,16 @@ public class InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes extends In
     /**
      * @return Returns the teacher.
      */
-    public InfoTeacher getTeacher() {
-	return teacher;
+    public InfoPerson getPerson() {
+	return person;
     }
 
     /**
      * @param teacher
      *            The teacher to set.
      */
-    public void setTeacher(InfoTeacher teacher) {
-	this.teacher = teacher;
+    public void setPerson(InfoPerson person) {
+	this.person = person;
     }
 
     /**
@@ -153,8 +153,8 @@ public class InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes extends In
     public String toString() {
 	String result = "[INFOTEACHERORNONAFFILIATEDTEACHERWITHREMAININGCLASSTYPES";
 
-	if (this.teacher != null) {
-	    result += ", " + this.teacher.toString();
+	if (this.person != null) {
+	    result += ", " + this.person.toString();
 
 	} else if (this.nonAffiliatedTeacher != null) {
 	    result += ", " + this.nonAffiliatedTeacher.toString();

@@ -280,7 +280,7 @@ public class FillInquiryAction extends FenixDispatchAction {
 		    .get("newAttendingCourseNonAffiliatedTeacherId");
 	    if ((newAttendingCourseTeacherId != null) && (newAttendingCourseTeacherId > 0)) {
 		for (InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes teacher : attendingCourseTeachers) {
-		    if ((teacher.getTeacher() != null) && (teacher.getIdInternal().equals(newAttendingCourseTeacherId))) {
+		    if ((teacher.getPerson() != null) && (teacher.getIdInternal().equals(newAttendingCourseTeacherId))) {
 			attendingCourseTeacher = teacher;
 			break;
 		    }
@@ -305,7 +305,7 @@ public class FillInquiryAction extends FenixDispatchAction {
 		request.setAttribute(InquiriesUtil.CURRENT_ATTENDING_COURSE_TEACHER_FORM_POSITION,
 			currentAttendingCourseTeacherFormPosition);
 		request.setAttribute(InquiriesUtil.CURRENT_ATTENDING_COURSE_TEACHER, currentAttendingCourseTeacher);
-		if (attendingCourseTeacher.getTeacher() != null) {
+		if (attendingCourseTeacher.getPerson() != null) {
 		    request.setAttribute(InquiriesUtil.COMPLETE_ATTENDING_COURSE_TEACHER_ID, newAttendingCourseTeacherId);
 
 		} else if (attendingCourseTeacher.getNonAffiliatedTeacher() != null) {
@@ -1309,7 +1309,7 @@ public class FillInquiryAction extends FenixDispatchAction {
 	for (Integer teacherId : selectedAttendingCourseTeachersId) {
 	    // Finding the selected teachers
 	    for (InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes teacher : attendingCourseTeachers) {
-		if ((selectedAttendingCourseTeacherIsAffiliated[position] && teacher.getTeacher() != null && teacher
+		if ((selectedAttendingCourseTeacherIsAffiliated[position] && teacher.getPerson() != null && teacher
 			.getIdInternal().equals(teacherId))
 			|| (!selectedAttendingCourseTeacherIsAffiliated[position] && teacher.getNonAffiliatedTeacher() != null && teacher
 				.getIdInternal().equals(teacherId))) {

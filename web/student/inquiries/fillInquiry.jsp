@@ -818,7 +818,7 @@
 						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersQuestion310" property="selectedAttendingCourseTeachersQuestion310" value='<%= "" + selectedAttendingCourseTeacher.getTeacherReasoningStimulation() %>' />
 						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersQuestion311" property="selectedAttendingCourseTeachersQuestion311" value='<%= "" + selectedAttendingCourseTeacher.getGlobalAppreciation() %>' />
 						
-						<logic:present name="selectedAttendingCourseTeacher" property="teacherOrNonAffiliatedTeacher.teacher">
+						<logic:present name="selectedAttendingCourseTeacher" property="teacherOrNonAffiliatedTeacher.person">
 							<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeacherIsAffiliated" property="selectedAttendingCourseTeacherIsAffiliated" value="true"/>
 						</logic:present>
 						<logic:present name="selectedAttendingCourseTeacher" property="teacherOrNonAffiliatedTeacher.nonAffiliatedTeacher">
@@ -828,9 +828,9 @@
 						<table id='<%= InquiriesUtil.CURRENT_ATTENDING_COURSE_TEACHER_FORM_ANCHOR  %>'>
 							<tr>
 								<td class="left" colspan="2">
-									<logic:present name="selectedAttendingCourseTeacher" property="teacherOrNonAffiliatedTeacher.teacher">
+									<logic:present name="selectedAttendingCourseTeacher" property="teacherOrNonAffiliatedTeacher.person">
 										<strong>
-											<bean:write name="selectedAttendingCourseTeacher" property="teacherOrNonAffiliatedTeacher.teacher.infoPerson.nome" />
+											<bean:write name="selectedAttendingCourseTeacher" property="teacherOrNonAffiliatedTeacher.person.nome" />
 										</strong>
 									</logic:present>
 									<logic:present name="selectedAttendingCourseTeacher" property="teacherOrNonAffiliatedTeacher.nonAffiliatedTeacher">
@@ -883,8 +883,8 @@
 									3.2 <bean:message key="table.rowname.inquiries.teacher.form.teacher.name" bundle="INQUIRIES_RESOURCES"/>
 								</td>
 								<td class="left">
-									<logic:present name="selectedAttendingCourseTeacher" property="teacherOrNonAffiliatedTeacher.teacher">
-										<bean:write name="selectedAttendingCourseTeacher" property="teacherOrNonAffiliatedTeacher.teacher.infoPerson.nome" />
+									<logic:present name="selectedAttendingCourseTeacher" property="teacherOrNonAffiliatedTeacher.person">
+										<bean:write name="selectedAttendingCourseTeacher" property="teacherOrNonAffiliatedTeacher.person.nome" />
 									</logic:present>
 									<logic:present name="selectedAttendingCourseTeacher" property="teacherOrNonAffiliatedTeacher.nonAffiliatedTeacher">
 										<bean:write name="selectedAttendingCourseTeacher" property="teacherOrNonAffiliatedTeacher.nonAffiliatedTeacher.name" />

@@ -10316,11 +10316,11 @@ relation InquiriesStudentExecutionPeriodStudent {
     student.Student playsRole student;
 }
 
-relation InquiriesTeacherDomainTeacher {
+relation InquiriesTeacherDomainProfessorship {
     inquiries.InquiriesTeacher playsRole associatedInquiriesTeacher {
         multiplicity *;
     }
-    Teacher playsRole teacher;
+    Professorship playsRole professorship;
 }
 
 relation InquiriesTeacherInquiriesCourse {

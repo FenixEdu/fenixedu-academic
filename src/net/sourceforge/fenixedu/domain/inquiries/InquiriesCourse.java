@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
+import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.ShiftType;
@@ -91,8 +92,8 @@ public class InquiriesCourse extends InquiriesCourse_Base {
 		.getCurricularCourse().getDegreeCurricularPlan(), inquiriesRegistry.getExecutionPeriod().getExecutionYear()));
     }
 
-    public void createInquiriesTeacher(Teacher teacher, ShiftType shiftType, InfoInquiriesTeacher infoInquiriesTeacher) {
-	new InquiriesTeacher(this, teacher, shiftType, infoInquiriesTeacher);
+    public void createInquiriesTeacher(Professorship professorship, ShiftType shiftType, InfoInquiriesTeacher infoInquiriesTeacher) {
+	new InquiriesTeacher(this, professorship, shiftType, infoInquiriesTeacher);
     }
 
     public void createInquiriesTeacher(NonAffiliatedTeacher nonAffiliatedTeacher, ShiftType shiftType,
