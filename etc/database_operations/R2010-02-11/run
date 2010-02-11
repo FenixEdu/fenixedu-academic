@@ -44,3 +44,8 @@ function executeWithTempFile() {
 }
 
 execute "Create Table Registration Protocol" externalSupervisionRelatedUpdates.sql
+
+xecute "Complete something for god sake." shezadIncomplete.sql
+executeWithTempFile "It was grant owner fault" shezadCompleteLost.sql
+
+
