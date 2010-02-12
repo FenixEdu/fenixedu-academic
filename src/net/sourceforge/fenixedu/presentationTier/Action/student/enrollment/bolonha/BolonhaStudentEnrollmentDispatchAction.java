@@ -56,12 +56,25 @@ public class BolonhaStudentEnrollmentDispatchAction extends AbstractBolonhaStude
 	    return mapping.findForward("enrollmentCannotProceed");
 	}
 
-	if (studentCurricularPlan.getRegistration().getStudent().isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt()) {
-	    addActionMessage(request, "error.message.debts.from.past.years.not.payed");
+	if (hasAnyDebts(request, studentCurricularPlan)) {
 	    return mapping.findForward("enrollmentCannotProceed");
 	}
 
 	return super.prepareShowDegreeModulesToEnrol(mapping, form, request, response, studentCurricularPlan, executionSemester);
+    }
+
+    private boolean hasAnyDebts(HttpServletRequest request, StudentCurricularPlan studentCurricularPlan) {
+	if (studentCurricularPlan.getRegistration().getStudent().isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt()) {
+	    addActionMessage(request, "error.message.debts.from.past.years.not.payed");
+	    return true;
+	}
+	
+	if (studentCurricularPlan.getPerson().hasAnyResidencePaymentsInDebt()) {
+	    addActionMessage(request, "error.StudentCurricularPlan.cannot.enrol.with.residence.debts");
+	    return true;
+	}
+	
+	return false;
     }
 
     private boolean hasSpecialSeason(final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester) {

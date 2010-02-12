@@ -2897,10 +2897,10 @@ public class Person extends Person_Base {
 	    if (requester.hasRole(RoleType.MANAGER) || requester.hasRole(RoleType.DIRECTIVE_COUNCIL)) {
 		return true;
 	    }
-	    if(requester.hasRole(RoleType.EXTERNAL_SUPERVISOR)) {
-		for(RegistrationProtocol registrationProtocol : requester.getRegistrationProtocolsSet()) {
-		    for(Registration registration : this.getStudent().getRegistrationsSet()) {
-			if(registration.getRegistrationProtocol() == registrationProtocol) {
+	    if (requester.hasRole(RoleType.EXTERNAL_SUPERVISOR)) {
+		for (RegistrationProtocol registrationProtocol : requester.getRegistrationProtocolsSet()) {
+		    for (Registration registration : this.getStudent().getRegistrationsSet()) {
+			if (registration.getRegistrationProtocol() == registrationProtocol) {
 			    return true;
 			}
 		    }
@@ -3284,6 +3284,16 @@ public class Person extends Person_Base {
 	return false;
     }
 
+    public boolean hasAnyResidencePaymentsInDebt() {
+	for (final Event event : getStudent().getPerson().getResidencePaymentEvents()) {
+	    final ResidenceEvent residenceEvent = (ResidenceEvent) event;
+	    if (!residenceEvent.isPayed()) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
     public boolean hasCoordinationExecutionDegreeReportsToAnswer() {
 	return !getCoordinationExecutionDegreeReportsToAnswer().isEmpty();
     }
@@ -3318,11 +3328,11 @@ public class Person extends Person_Base {
 	    }
 	});
     }
-    
+
     public List<Professorship> getProfessorshipsByExecutionSemester(final ExecutionSemester executionSemester) {
 	List<Professorship> professorships = new ArrayList<Professorship>();
 	for (Professorship professorship : getProfessorships()) {
-	    if(professorship.getExecutionCourse().getExecutionPeriod() == executionSemester) {
+	    if (professorship.getExecutionCourse().getExecutionPeriod() == executionSemester) {
 		professorships.add(professorship);
 	    }
 	}
@@ -3397,9 +3407,9 @@ public class Person extends Person_Base {
     public boolean isPhdStudent() {
 	return hasAnyPhdIndividualProgramProcesses();
     }
-    
-    public RegistrationProtocol getOnlyRegistrationProtocol(){
-	if(getRegistrationProtocolsCount() == 1){
+
+    public RegistrationProtocol getOnlyRegistrationProtocol() {
+	if (getRegistrationProtocolsCount() == 1) {
 	    return getRegistrationProtocols().get(0);
 	}
 	return null;

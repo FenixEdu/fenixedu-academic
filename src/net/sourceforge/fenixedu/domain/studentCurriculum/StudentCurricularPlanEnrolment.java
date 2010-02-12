@@ -15,6 +15,8 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accessControl.PermissionType;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdminOffice.AdministrativeOfficePermission;
+import net.sourceforge.fenixedu.domain.accounting.Event;
+import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
@@ -89,6 +91,14 @@ abstract public class StudentCurricularPlanEnrolment {
 	if (getStudent().isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt()) {
 	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.debts.for.previous.execution.years");
 	}
+	
+	if (getPerson().hasAnyResidencePaymentsInDebt()) {
+	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.residence.debts");
+	}
+    }
+
+    protected Person getPerson() {
+	return getStudent().getPerson();
     }
 
     protected void assertAcademicAdminOfficePreConditions() {
