@@ -12,17 +12,17 @@
 <table>
 	<tr class="listClasses-header">
 		<th><bean:message key="table.rowname.inquiries.teacher.form.teacher.name" bundle="INQUIRIES_RESOURCES" /></th>
-		<th><bean:message key="table.header.inquiries.teacherNumber" bundle="INQUIRIES_RESOURCES" /></th>
+		<th><bean:message key="table.header.inquiries.username" bundle="INQUIRIES_RESOURCES" /></th>
 		<th/>
 	</tr>
 	
 	<logic:iterate id="professorship" name="professorships" >
 		<tr class="listClasses">
 			<td>
-				<bean:write name="professorship" property="teacher.person.name"/>
+				<bean:write name="professorship" property="person.name"/>
 			</td>
 			<td>
-				<bean:write name="professorship" property="teacher.teacherNumber"/>
+				<bean:write name="professorship" property="person.username"/>
 			</td>		
 			<td>
 				<logic:equal name="professorship" property="responsibleFor" value="true">
