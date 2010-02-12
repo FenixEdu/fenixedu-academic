@@ -33,7 +33,7 @@ public class EtiReportFile extends EtiReportFile_Base {
 
     @Override
     public void renderReport(Spreadsheet spreadsheet) throws Exception {
-	spreadsheet.setHeader("nï¿½mero Aluno");
+	spreadsheet.setHeader("número aluno");
 	setDegreeHeaders(spreadsheet, "aluno");
 	spreadsheet.setHeader("semestre");
 	spreadsheet.setHeader("ano lectivo");
@@ -41,15 +41,15 @@ public class EtiReportFile extends EtiReportFile_Base {
 	setDegreeHeaders(spreadsheet, "disciplina");
 	spreadsheet.setHeader("creditos");
 	spreadsheet.setHeader("estado");
-	spreadsheet.setHeader("ï¿½poca");
+	spreadsheet.setHeader("época");
 	spreadsheet.setHeader("nota");
-	spreadsheet.setHeader("ï¿½poca normal");
-	spreadsheet.setHeader("ï¿½poca especial");
+	spreadsheet.setHeader("época normal");
+	spreadsheet.setHeader("época especial");
 	spreadsheet.setHeader("melhoria");
 	spreadsheet.setHeader("tipo Aluno");
-	spreadsheet.setHeader("nï¿½mero inscricoes anteriores");
+	spreadsheet.setHeader("número inscricoes anteriores");
 	spreadsheet.setHeader("executionCourseId");
-	spreadsheet.setHeader("disponï¿½vel para inquï¿½rito");
+	spreadsheet.setHeader("disponível para inquérito");
 	spreadsheet.setHeader("OID execucao disciplina");
 
 	for (final Degree degree : Degree.readNotEmptyDegrees()) {
@@ -65,17 +65,17 @@ public class EtiReportFile extends EtiReportFile_Base {
 					if (enrolment.getExecutionYear() == getExecutionYear()) {
 					    final ExecutionSemester executionSemester = enrolment.getExecutionPeriod();
 					    if (curricularCourse.isAnual()) {
-						addEtiRow(spreadsheet, enrolment.getStudentCurricularPlan().getDegree(),
-							curricularCourse, enrolment, executionSemester, executionSemester);
+						addEtiRow(spreadsheet, curricularCourse.getDegree(), curricularCourse, enrolment,
+							executionSemester, executionSemester);
 						if (executionSemester.getSemester().intValue() == 1) {
 						    final ExecutionSemester nextSemester = executionSemester
 							    .getNextExecutionPeriod();
-						    addEtiRow(spreadsheet, enrolment.getStudentCurricularPlan().getDegree(),
-							    curricularCourse, enrolment, nextSemester, executionSemester);
+						    addEtiRow(spreadsheet, curricularCourse.getDegree(), curricularCourse,
+							    enrolment, nextSemester, executionSemester);
 						}
 					    } else {
-						addEtiRow(spreadsheet, enrolment.getStudentCurricularPlan().getDegree(),
-							curricularCourse, enrolment, executionSemester, executionSemester);
+						addEtiRow(spreadsheet, curricularCourse.getDegree(), curricularCourse, enrolment,
+							executionSemester, executionSemester);
 					    }
 
 					}
@@ -133,7 +133,7 @@ public class EtiReportFile extends EtiReportFile_Base {
 	    if (executionCourse.getAvailableForInquiries() != null && executionCourse.getAvailableForInquiries().booleanValue()) {
 		row.setCell("sim");
 	    } else {
-		row.setCell("nï¿½o");
+		row.setCell("não");
 	    }
 	    row.setCell(String.valueOf(executionCourse.getOid()));
 	}
