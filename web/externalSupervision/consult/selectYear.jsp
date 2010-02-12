@@ -40,6 +40,8 @@
 	<logic:equal name="hasChosenYear" value="true">
 	
 		<bean:define id="executionYearId" name="sessionBean" property="executionYear.externalId"/>
+		<bean:define id="registrationProtocolId" name="sessionBean" property="protocol.externalId"/>
+		<bean:define id="megavisor" name="sessionBean" property="megavisor"/>
 		
 		<fr:form id="beanForm" action="/viewYear.do?method=exportXLS">
 			<fr:edit id="sessionBean" name="sessionBean" visible="false"/>
@@ -61,7 +63,7 @@
 				
 				<fr:property name="sortParameter" value="sortBy"/>
 				<fr:property name="sortableSlots" value="istUsername,name, student.number"/>
-            	<fr:property name="sortUrl" value="<%= "/viewYear.do?method=showStudents&executionYearId=" + executionYearId.toString()%>"/>
+            	<fr:property name="sortUrl" value="<%= "/viewYear.do?method=showStudents&executionYearId=" + executionYearId.toString() + "&registrationProtocolId=" + registrationProtocolId.toString() + "&megavisor=" + megavisor.toString()%>"/>
             	<fr:property name="sortBy" value="<%= request.getParameter("sortBy") == null ? "student.number=desc" : request.getParameter("sortBy") %>"/>
             	
 				<fr:property name="classes" value="tstyle1 thleft" />

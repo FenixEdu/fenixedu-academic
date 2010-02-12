@@ -21,6 +21,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -44,6 +45,7 @@ public class ExternalSupervisorViewYearDA extends FenixDispatchAction{
 	
 	if(protocol == null){
 	    bean = new ExternalSupervisorViewsBean();
+	    bean.setMegavisor(true);
 	    boolean selectProtocol = true;
 	    request.setAttribute("selectProtocol", selectProtocol);
 	    
@@ -57,16 +59,24 @@ public class ExternalSupervisorViewYearDA extends FenixDispatchAction{
     
     public ActionForward showStudents(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response){
 	ExternalSupervisorViewsBean bean = (ExternalSupervisorViewsBean) getRenderedObject("sessionBean");
+	RenderUtils.invalidateViewState();
 	
 	if(bean == null){
-	    final IUserView userView = UserView.getUser();
-	    final Person supervisor = userView.getPerson();
-	    RegistrationProtocol protocol = supervisor.getRegistrationProtocols().get(0);
+	    final String registrationProtocolId = request.getParameter("registrationProtocolId");
+	    RegistrationProtocol registrationProtocol = AbstractDomainObject.fromExternalId(registrationProtocolId);
 	    
 	    final String executionYearId = request.getParameter("executionYearId");
 	    ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearId);
+
+	    Boolean megavisor =  Boolean.valueOf(request.getParameter("megavisor"));
 	    
-	    bean = new ExternalSupervisorViewsBean(executionYear, protocol);
+	    bean = new ExternalSupervisorViewsBean(executionYear, registrationProtocol);
+	    bean.setMegavisor(megavisor);
+	}
+	
+	if(bean.getMegavisor()){
+	    boolean selectProtocol = true;
+	    request.setAttribute("selectProtocol", selectProtocol);
 	}
 	
 	bean.generateStudentsFromYear();
@@ -78,10 +88,7 @@ public class ExternalSupervisorViewYearDA extends FenixDispatchAction{
 	return mapping.findForward("selectYear");
     }
     
-    /**
-     * XLS builder taken from JSF implementation (Coordinator)
-     * and ported to be Struts-compliant
-     */
+
     public ActionForward exportXLS(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws IOException{
 	ExternalSupervisorViewsBean bean = (ExternalSupervisorViewsBean) getRenderedObject("sessionBean");
 	final Spreadsheet spreadsheet = generateSpreadsheet(bean);

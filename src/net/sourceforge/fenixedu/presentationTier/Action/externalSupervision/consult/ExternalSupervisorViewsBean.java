@@ -35,6 +35,7 @@ public class ExternalSupervisorViewsBean implements Serializable, HasExecutionYe
     private List<Person> students;
     
     private RegistrationProtocol protocol;
+    private Boolean megavisor;
     
 
     public ExternalSupervisorViewsBean(){
@@ -114,6 +115,14 @@ public class ExternalSupervisorViewsBean implements Serializable, HasExecutionYe
 
     public void setProtocol(RegistrationProtocol protocol) {
         this.protocol = protocol;
+    }
+    
+    public Boolean getMegavisor() {
+        return megavisor;
+    }
+
+    public void setMegavisor(Boolean megavisor) {
+        this.megavisor = megavisor;
     }
 
     

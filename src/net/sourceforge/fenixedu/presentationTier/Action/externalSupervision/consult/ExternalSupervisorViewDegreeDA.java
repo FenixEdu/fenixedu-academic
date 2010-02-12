@@ -44,6 +44,7 @@ public class ExternalSupervisorViewDegreeDA extends FenixDispatchAction{
 	
 	if(protocol == null){
 	    bean = new ExternalSupervisorViewsBean(ExecutionYear.readCurrentExecutionYear());
+	    bean.setMegavisor(true);
 	    boolean selectProtocol = true;
 	    request.setAttribute("selectProtocol", selectProtocol);
 	    
@@ -56,15 +57,13 @@ public class ExternalSupervisorViewDegreeDA extends FenixDispatchAction{
     }
     
     public ActionForward degreePostback(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response){
-	final IUserView userView = UserView.getUser();
-	final Person supervisor = userView.getPerson();
+	ExternalSupervisorViewsBean bean = (ExternalSupervisorViewsBean) getRenderedObject("sessionBean");
 	
-	if(supervisor.getRegistrationProtocolsCount() > 1){
+	if(bean.getMegavisor()){
 	    boolean selectProtocol = true;
 	    request.setAttribute("selectProtocol", selectProtocol);
 	}
 	
-	ExternalSupervisorViewsBean bean = (ExternalSupervisorViewsBean) getRenderedObject("sessionBean");
 	RenderUtils.invalidateViewState();
 	request.setAttribute("sessionBean", bean);
 	
@@ -73,19 +72,29 @@ public class ExternalSupervisorViewDegreeDA extends FenixDispatchAction{
     
     public ActionForward showStudents(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response){
 	ExternalSupervisorViewsBean bean = (ExternalSupervisorViewsBean) getRenderedObject("sessionBean");
+	RenderUtils.invalidateViewState();
 	
 	if(bean == null){
-	    final IUserView userView = UserView.getUser();
-	    final Person supervisor = userView.getPerson();
-	    RegistrationProtocol protocol = supervisor.getRegistrationProtocols().get(0);
+	    final String registrationProtocolId = request.getParameter("registrationProtocolId");
+	    RegistrationProtocol registrationProtocol = AbstractDomainObject.fromExternalId(registrationProtocolId);
 	    
 	    final String executionYearId = request.getParameter("executionYearId");
 	    ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearId);
+	    
 	    final String executionDegreeId = request.getParameter("executionDegreeId");
 	    ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
 	    
-	    bean = new ExternalSupervisorViewsBean(executionYear, protocol);
+	    Boolean megavisor =  Boolean.valueOf(request.getParameter("megavisor"));
+	    
+	    bean = new ExternalSupervisorViewsBean(executionYear, registrationProtocol);
 	    bean.setExecutionDegree(executionDegree);
+	    bean.setDegreeType(executionDegree.getDegreeType());
+	    bean.setMegavisor(megavisor);
+	}
+	
+	if(bean.getMegavisor()){
+	    boolean selectProtocol = true;
+	    request.setAttribute("selectProtocol", selectProtocol);
 	}
 	
 	bean.generateStudentsFromDegree();
@@ -97,10 +106,7 @@ public class ExternalSupervisorViewDegreeDA extends FenixDispatchAction{
 	return mapping.findForward("selectDegree");
     }
     
-    /**
-     * XLS builder taken from JSF implementation (Coordinator)
-     * and ported to be Struts-compliant
-     */
+
     public ActionForward exportXLS(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws IOException{
 	ExternalSupervisorViewsBean bean = (ExternalSupervisorViewsBean) getRenderedObject("sessionBean");
 	final Spreadsheet spreadsheet = generateSpreadsheet(bean);
