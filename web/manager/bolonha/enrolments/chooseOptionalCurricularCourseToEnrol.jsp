@@ -35,7 +35,18 @@
 			</ul>
 			</div>
 		</logic:messagesPresent>
-	
+
+		<logic:present name="curricularRuleLabels">
+			<logic:notEmpty name="curricularRuleLabels">
+				<div class="smalltxt noborder">
+					<ul class="mvert05">
+						<logic:iterate id="curricularRuleLabel" name="curricularRuleLabels">
+							<li><span style="color: #888"><bean:write name="curricularRuleLabel" /></span></li>
+						</logic:iterate>
+					</ul>
+				</div>
+			</logic:notEmpty>
+		</logic:present>
 	
 		<logic:present name="optionalEnrolmentBean" property="degreeCurricularPlan">
 			<fr:edit id="degreeCurricularPlan" name="optionalEnrolmentBean">
@@ -51,7 +62,6 @@
 </html:form>
 
 <bean:define id="studentCurricularPlanId" name="optionalEnrolmentBean" property="studentCurricularPlan.idInternal" />
-
 
 <html:form action="<%= "/bolonhaStudentEnrolment.do?method=cancelChooseOptionalCurricularCourseToEnrol" %>">
 <fr:context>

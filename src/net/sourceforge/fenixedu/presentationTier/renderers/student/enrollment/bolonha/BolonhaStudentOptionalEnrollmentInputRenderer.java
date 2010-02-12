@@ -19,6 +19,8 @@ import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
+import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -270,7 +272,7 @@ public class BolonhaStudentOptionalEnrollmentInputRenderer extends InputRenderer
 		    final HtmlTableRow htmlTableRow = table.createRow();
 		    HtmlTableCell cellName = htmlTableRow.createCell();
 		    cellName.setClasses(getCurricularCourseNameClasses());
-		    cellName.setBody(new HtmlText(curricularCourse.getName()));
+		    cellName.setBody(new HtmlText(getCurricularCoursePresentationName(curricularCourse)));
 
 		    // Year
 		    final HtmlTableCell yearCell = htmlTableRow.createCell();
@@ -298,6 +300,18 @@ public class BolonhaStudentOptionalEnrollmentInputRenderer extends InputRenderer
 		    linkTableCell.setBody(actionLink);
 		}
 	    }
+	}
+
+	private String getCurricularCoursePresentationName(final CurricularCourse curricularCourse) {
+	    String departmentName = null;
+	    if (curricularCourse.hasCompetenceCourse()) {
+		final DepartmentUnit unit = curricularCourse.getCompetenceCourse().getDepartmentUnit();
+		if (unit != null) {
+		    departmentName = unit.getName();
+		}
+	    }
+
+	    return (StringUtils.isEmpty(departmentName) ? "" : departmentName + " - ") + curricularCourse.getName();
 	}
     }
 
