@@ -463,12 +463,11 @@
     </slot>
     <slot name="contact" key="label.scientificCommission.contact"/>
     <slot name="person.email" key="email"/> 
-    <slot name="hasCoordinator" key="label.coordinator"  bundle="APPLICATION_RESOURCES" /> 
-	<slot name="coordinator" key="label.responsible" layout="null-as-label"  bundle="APPLICATION_RESOURCES" >
+    <slot name="hasCoordinator" key="label.coordinator" read-only="true" bundle="APPLICATION_RESOURCES" /> 
+	<slot name="coordinator" key="label.responsible.coordinator" layout="null-as-label" read-only="true" bundle="APPLICATION_RESOURCES" >
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="coordinator.responsible"/> 
 	</slot>
-	
 </schema>
 
 <schema name="coordinator.responsible" type="net.sourceforge.fenixedu.domain.Coordinator">
