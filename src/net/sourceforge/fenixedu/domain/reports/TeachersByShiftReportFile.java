@@ -28,12 +28,13 @@ public class TeachersByShiftReportFile extends TeachersByShiftReportFile_Base {
     public void renderReport(Spreadsheet spreadsheet) {
 
 	spreadsheet.setHeader("semestre");
-	spreadsheet.setHeader("n� docente");
+	spreadsheet.setHeader("num docente");
 	spreadsheet.setHeader("id turno");
 	spreadsheet.setHeader("nome turno");
 	spreadsheet.setHeader("id execution course");
 	spreadsheet.setHeader("% assegurada pelo docente");
 	spreadsheet.setHeader("OID execucao disciplina");
+	spreadsheet.setHeader("OID professorship");
 
 	for (ExecutionSemester executionSemester : getExecutionYear().getExecutionPeriods()) {
 	    for (TeacherService teacherService : executionSemester.getTeacherServices()) {
@@ -54,7 +55,7 @@ public class TeachersByShiftReportFile extends TeachersByShiftReportFile_Base {
 		    row.setCell(degreeTeachingService.getPercentage() != null ? degreeTeachingService.getPercentage().toString()
 			    .replace('.', ',') : StringUtils.EMPTY);
 		    row.setCell(String.valueOf(shift.getExecutionCourse().getOid()));
-
+		    row.setCell(String.valueOf(degreeTeachingService.getProfessorship().getOid()));
 		}
 	    }
 	}
