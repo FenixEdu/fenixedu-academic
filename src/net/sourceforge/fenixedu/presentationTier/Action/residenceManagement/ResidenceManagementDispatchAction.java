@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.presentationTier.Action.residenceManagement;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +18,8 @@ import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.Residence
 import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ResidentListsHolderBean;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.accounting.Event;
+import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResidenceManagementUnit;
 import net.sourceforge.fenixedu.domain.residence.ResidenceMonth;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -41,9 +45,31 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "yearConfiguration", path = "residenceManagement-yearConfiguration"),
 	@Forward(name = "editPaymentLimitDay", path = "/residenceManagement/editPaymentLimitDay.jsp"),
 	@Forward(name = "importCurrentDebt", path = "/residenceManagement/importCurrentDebts.jsp"),
-	@Forward(name = "editRoomValues", path = "/residenceManagement/editRoomValues.jsp") })
+	@Forward(name = "editRoomValues", path = "/residenceManagement/editRoomValues.jsp"),
+	@Forward(name = "missingPayments", path = "/residenceManagement/missingPayment.jsp")
+})
 public class ResidenceManagementDispatchAction extends FenixDispatchAction {
-
+    
+    public ActionForward missingPayments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	List<ResidenceEvent> results = new ArrayList<ResidenceEvent>();
+	for (ResidenceMonth month : rootDomainObject.getResidenceMonths0()){
+	    for (ResidenceEvent residenceEvent : month.getEvents()){
+		if (residenceEvent.isInDebt()){
+		    results.add(residenceEvent);
+		}
+	    }
+	}
+	Collections.sort(results,new Comparator<ResidenceEvent>() {
+	    @Override
+	    public int compare(ResidenceEvent o1, ResidenceEvent o2) {
+		return o1.getEventStateDate().compareTo(o2.getEventStateDate());
+	    }
+	});
+	request.setAttribute("list", results);
+	return mapping.findForward("missingPayments");
+    }
+    
     public ActionForward importCurrentDebts(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	ImportResidenceEventBean bean = (ImportResidenceEventBean) getRenderedObject("importFile");

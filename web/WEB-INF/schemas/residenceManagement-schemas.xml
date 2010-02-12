@@ -62,6 +62,13 @@
 	</slot>
 </schema>
 
+<schema  name="show.residenceEvent.with.open.date" type="net.sourceforge.fenixedu.domain.accounting.ResidenceEvent" bundle="RESIDENCE_MANAGEMENT_RESOURCES" extends="show.residenceEvent">
+	<slot name="eventStateDate" layout="null-as-label" key="label.openingDate">
+		<property name="subLayout" value="default"/>
+		<property name="label" value="-"/>
+	</slot>
+</schema>
+
 <schema name="show.residenceEventBean" type="net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ResidenceEventBean" bundle="RESIDENCE_MANAGEMENT_RESOURCES">
 	<slot name="userName" key="label.studentNumber"/>
 	<slot name="name" key="label.name"/>

@@ -95,10 +95,10 @@ public class ResidenceEventBean implements Serializable {
 
 	ResidenceYear year = ResidenceYear.getCurrentYear();
 	ResidenceManagementUnit unit = year.getUnit();
-	if (!roomValue.equals(unit.getCurrentSingleRoomValue()) && !roomValue.equals(unit.getCurrentDoubleRoomValue())) {
+/*	if (!roomValue.equals(unit.getCurrentSingleRoomValue()) && !roomValue.equals(unit.getCurrentDoubleRoomValue())) {
 	    statusMessage = "label.error.invalid.payment.amount";
 	    return false;
-	}
+	}*/
 
 	String socialSecurityNumber = student.getPerson().getSocialSecurityNumber();
 	if (socialSecurityNumber != null && !socialSecurityNumber.equalsIgnoreCase(fiscalNumber.trim())) {
