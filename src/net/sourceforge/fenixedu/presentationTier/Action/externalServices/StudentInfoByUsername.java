@@ -76,7 +76,7 @@ public class StudentInfoByUsername extends FenixAction {
 	    result = this.transformResult(result, state);
 	    if (result.equals(""))
 		result = "-1";
-	} catch (Exception e) {
+	} catch (Throwable e) {
 	    e.printStackTrace();
 	    StringBuilder buffer = new StringBuilder();
 	    buffer.append("<error><cause>");
