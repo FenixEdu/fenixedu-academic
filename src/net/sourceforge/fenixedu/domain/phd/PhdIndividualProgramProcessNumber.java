@@ -14,7 +14,6 @@ public class PhdIndividualProgramProcessNumber extends PhdIndividualProgramProce
     public static Comparator<PhdIndividualProgramProcessNumber> COMPARATOR_BY_NUMBER = new Comparator<PhdIndividualProgramProcessNumber>() {
 	public int compare(PhdIndividualProgramProcessNumber left, PhdIndividualProgramProcessNumber right) {
 	    int comparationResult = left.getNumber().compareTo(right.getNumber());
-
 	    return (comparationResult == 0) ? left.getIdInternal().compareTo(right.getIdInternal()) : comparationResult;
 	}
     };
@@ -84,7 +83,7 @@ public class PhdIndividualProgramProcessNumber extends PhdIndividualProgramProce
 
     @Override
     public int compareTo(PhdIndividualProgramProcessNumber other) {
-	int result = getYear().compareTo(other.getYear());
-	return (result != 0) ? result : getNumber().compareTo(other.getNumber());
+	int res = -1 * getYear().compareTo(other.getYear());
+	return (res != 0) ? res : -1 * getNumber().compareTo(other.getNumber());
     }
 }

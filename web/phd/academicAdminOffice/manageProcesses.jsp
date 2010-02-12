@@ -77,7 +77,7 @@
 			<fr:property name="sortFormId" value="search"/>
 			<fr:property name="sortActionLink" value="true"/>
 			<fr:property name="sortParameter" value="sortBy"/>
-            <fr:property name="sortBy" value="<%= request.getParameter("sortBy") != null ? request.getParameter("sortBy"): "processNumber=desc"  %>"/>
+            <fr:property name="sortBy" value="<%= request.getParameter("sortBy") != null ? request.getParameter("sortBy"): "phdIndividualProcessNumber=asc"  %>"/>
 			<fr:property name="ascendingImage" value="/images/upArrow.gif"/>
         	<fr:property name="descendingImage" value="/images/downArrow.gif"/>
 			<fr:property name="sortableSlots" value="phdIndividualProcessNumber,phdProgram.name,state,person.name" />
