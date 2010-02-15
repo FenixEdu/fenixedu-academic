@@ -12,14 +12,19 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.period.SecondCycleCandidacyPeriod;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 
@@ -78,10 +83,34 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 	return super.execute(mapping, actionForm, request, response);
     }
 
+    List<ExecutionInterval> readExecutionIntervalFilteredByCoordinatorTeam(final HttpServletRequest request) {
+	final List<ExecutionInterval> returnExecutionIntervals = new ArrayList<ExecutionInterval>();
+
+	final List<ExecutionInterval> executionIntervals = ExecutionInterval
+		.readExecutionIntervalsWithCandidacyPeriod(getCandidacyPeriodType());
+
+	DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
+	for (ExecutionInterval interval : executionIntervals) {
+	    final ExecutionYear executionYear = (interval instanceof ExecutionYear) ? (ExecutionYear) interval
+		    : ((ExecutionSemester) interval).getExecutionYear();
+	    final ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionYear);
+
+	    for (Coordinator coordinator : executionDegree.getCoordinatorsList()) {
+		if (coordinator.getPerson() == AccessControl.getPerson()) {
+		    returnExecutionIntervals.add(interval);
+		    break;
+		}
+	    }
+	}
+
+	return returnExecutionIntervals;
+    }
+
     @Override
     protected void setStartInformation(ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
 	if (!hasExecutionInterval(request)) {
-	    final List<ExecutionInterval> executionIntervals = getExecutionIntervalsWithCandidacyPeriod();
+	    final List<ExecutionInterval> executionIntervals = readExecutionIntervalFilteredByCoordinatorTeam(request);
+	    request.setAttribute("executionIntervals", executionIntervals);
 
 	    if (executionIntervals.size() == 1) {
 		final ExecutionInterval executionInterval = executionIntervals.get(0);
@@ -116,7 +145,7 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 		}
 
 		request.setAttribute("canCreateProcess", canCreateProcess(getProcessType().getName()));
-		request.setAttribute("executionIntervals", getExecutionIntervalsWithCandidacyPeriod());
+		request.setAttribute("executionIntervals", readExecutionIntervalFilteredByCoordinatorTeam(request));
 	    }
 	    request.setAttribute("candidacyProcesses", getCandidacyProcesses(executionInterval));
 	}
@@ -295,4 +324,11 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 	// TODO Auto-generated method stub
 	return null;
     }
+
+    @Override
+    protected void setCandidacyProcessInformation(final HttpServletRequest request, final CandidacyProcess process) {
+	super.setCandidacyProcessInformation(request, process);
+	request.setAttribute("executionIntervals", readExecutionIntervalFilteredByCoordinatorTeam(request));
+    }
+
 }

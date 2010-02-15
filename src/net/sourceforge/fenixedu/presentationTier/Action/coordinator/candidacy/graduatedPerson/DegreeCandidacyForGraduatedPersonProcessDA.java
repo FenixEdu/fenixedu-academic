@@ -12,14 +12,19 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonIndividualProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonProcess;
 import net.sourceforge.fenixedu.domain.period.DegreeCandidacyForGraduatedPersonCandidacyPeriod;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.graduatedPerson.DegreeCandidacyForGraduatedPersonProcessDA.DegreeCandidacyForGraduatedPersonDegreeBean;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
@@ -79,11 +84,33 @@ public class DegreeCandidacyForGraduatedPersonProcessDA extends CandidacyProcess
 	return mapping.findForward("intro");
     }
 
+    List<ExecutionInterval> readExecutionIntervalFilteredByCoordinatorTeam(final HttpServletRequest request) {
+	final List<ExecutionInterval> returnExecutionIntervals = new ArrayList<ExecutionInterval>();
+
+	final List<ExecutionInterval> executionIntervals = ExecutionInterval
+		.readExecutionIntervalsWithCandidacyPeriod(getCandidacyPeriodType());
+
+	DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
+	for (ExecutionInterval interval : executionIntervals) {
+	    final ExecutionYear executionYear = (interval instanceof ExecutionYear) ? (ExecutionYear) interval
+		    : ((ExecutionSemester) interval).getExecutionYear();
+	    final ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionYear);
+
+	    for (Coordinator coordinator : executionDegree.getCoordinatorsList()) {
+		if (coordinator.getPerson() == AccessControl.getPerson()) {
+		    returnExecutionIntervals.add(interval);
+		    break;
+		}
+	    }
+	}
+
+	return returnExecutionIntervals;
+    }
+
     @Override
     protected void setStartInformation(ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
 	if (!hasExecutionInterval(request)) {
-	    final List<ExecutionInterval> executionIntervals = ExecutionInterval
-		    .readExecutionIntervalsWithCandidacyPeriod(getCandidacyPeriodType());
+	    final List<ExecutionInterval> executionIntervals = readExecutionIntervalFilteredByCoordinatorTeam(request);
 	    if (executionIntervals.size() == 1) {
 		setCandidacyProcessInformation(request, getCandidacyProcess(request, executionIntervals.get(0)));
 	    } else {
