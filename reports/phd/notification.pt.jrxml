@@ -68,7 +68,7 @@
 			</band>
 		</background>
 		<title>
-			<band height="269"  isSplitAllowed="true" >
+			<band height="217"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="320"
