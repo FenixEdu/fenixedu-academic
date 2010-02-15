@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -17,6 +19,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionBatch;
 import net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionState;
+import net.sourceforge.fenixedu.domain.serviceRequests.RegistryCode;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaSupplementRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
@@ -119,7 +122,7 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 		docs.add(document);
 	    }
 	}
-	return generateMetadata(docs, batch, "registos-", request, response);
+	return generateMetadata(docs, "registos-", request, response);
     }
 
     public ActionForward generateMetadataForDiplomas(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -131,12 +134,29 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 		docs.add(document);
 	    }
 	}
-	return generateMetadata(docs, batch, "cartas-", request, response);
+	return generateMetadata(docs, "cartas-", request, response);
     }
 
-    private ActionForward generateMetadata(Set<DocumentRequest> documents, RectorateSubmissionBatch batch, String prefix,
-	    HttpServletRequest request, HttpServletResponse response) {
-	SheetData<DocumentRequest> data = new SheetData<DocumentRequest>(documents) {
+    private ActionForward generateMetadata(Set<DocumentRequest> documents, String prefix, HttpServletRequest request,
+	    HttpServletResponse response) {
+	SortedSet<DocumentRequest> sorted = new TreeSet<DocumentRequest>(DocumentRequest.COMPARATOR_BY_REGISTRY_NUMBER);
+	sorted.addAll(documents);
+	Set<RegistryCode> codes = new HashSet<RegistryCode>();
+	for (DocumentRequest document : documents) {
+	    codes.add(document.getRegistryCode());
+	}
+	Integer min = null;
+	Integer max = null;
+	for (RegistryCode code : codes) {
+	    Integer codeNumber = code.getCodeNumber();
+	    if (min == null || codeNumber.intValue() < min.intValue()) {
+		min = codeNumber;
+	    }
+	    if (max == null || codeNumber.intValue() > max.intValue()) {
+		max = codeNumber;
+	    }
+	}
+	SheetData<DocumentRequest> data = new SheetData<DocumentRequest>(sorted) {
 	    @Override
 	    protected void makeLine(DocumentRequest document) {
 		ResourceBundle enumeration = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
@@ -166,7 +186,8 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 	};
 	try {
 	    response.setContentType("application/vnd.ms-excel");
-	    response.setHeader("Content-disposition", "attachment; filename=" + prefix + batch.getRange() + ".xls");
+	    response.setHeader("Content-disposition", "attachment; filename=" + prefix + min + "-" + max + "(" + codes.size()
+		    + ")" + ".xls");
 	    final ServletOutputStream writer = response.getOutputStream();
 	    new SpreadsheetBuilder().addSheet("lote", data).build(WorkbookExportFormat.EXCEL, writer);
 	    writer.flush();

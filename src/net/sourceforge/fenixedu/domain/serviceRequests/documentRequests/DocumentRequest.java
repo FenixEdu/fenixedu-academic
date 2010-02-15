@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
@@ -11,12 +12,18 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.documents.DocumentRequestGeneratedDocument;
 import net.sourceforge.fenixedu.domain.documents.GeneratedDocument;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.serviceRequests.RegistryCode;
 import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice.AdministrativeOfficeDocument;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
 import org.joda.time.DateTime;
 
 public abstract class DocumentRequest extends DocumentRequest_Base {
+    public static Comparator<DocumentRequest> COMPARATOR_BY_REGISTRY_NUMBER = new Comparator<DocumentRequest>() {
+	public int compare(DocumentRequest o1, DocumentRequest o2) {
+	    return RegistryCode.COMPARATOR_BY_CODE.compare(o1.getRegistryCode(), o2.getRegistryCode());
+	}
+    };
 
     protected DocumentRequest() {
 	super();

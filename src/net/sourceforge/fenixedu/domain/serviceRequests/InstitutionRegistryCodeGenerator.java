@@ -28,36 +28,6 @@ public class InstitutionRegistryCodeGenerator extends InstitutionRegistryCodeGen
 	}
     }
 
-    @Override
-    public Integer getCurrentFirstCycle() {
-	throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Integer getCurrentSecondCycle() {
-	throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Integer getCurrentThirdCycle() {
-	throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void setCurrentFirstCycle(Integer currentFirstCycle) {
-	throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void setCurrentSecondCycle(Integer currentSecondCycle) {
-	throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void setCurrentThirdCycle(Integer currentThirdCycle) {
-	throw new UnsupportedOperationException();
-    }
-
     public RegistryCode createRegistryFor(RegistryDiplomaRequest request) {
 	return new RegistryCode(this, request);
     }

@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.serviceRequests;
 
+import java.util.Comparator;
+
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -10,6 +12,15 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Registry
 import org.joda.time.LocalDate;
 
 public class RegistryCode extends RegistryCode_Base {
+    public static Comparator<RegistryCode> COMPARATOR_BY_CODE = new Comparator<RegistryCode>() {
+	public int compare(RegistryCode o1, RegistryCode o2) {
+	    if (o1.getCode().compareTo(o2.getCode()) != 0) {
+		return o1.getCode().compareTo(o2.getCode());
+	    }
+	    return COMPARATOR_BY_ID.compare(o1, o2);
+	}
+    };
+
     private RegistryCode(InstitutionRegistryCodeGenerator generator, DocumentRequest request, CycleType cycle) {
 	setRegistryCodeGenerator(generator);
 	addDocumentRequest(request);
@@ -48,6 +59,10 @@ public class RegistryCode extends RegistryCode_Base {
 	default:
 	    throw new DomainException("error.registryCode.unableToGuessCycleTypeToGenerateCode");
 	}
+    }
+
+    public Integer getCodeNumber() {
+	return Integer.parseInt(getCode().substring(0, getCode().indexOf('/')));
     }
 
     @Override
