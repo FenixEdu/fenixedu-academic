@@ -73,7 +73,7 @@ public class BolonhaStudentEnrollmentDispatchAction extends AbstractBolonhaStude
 	    return true;
 	}
 
-	if (studentCurricularPlan.getPerson().hasAnyResidencePaymentsInDebt()) {
+	if (studentCurricularPlan.getPerson().hasAnyResidencePaymentsInDebtForPreviousYear()) {
 	    addActionMessage(request, "error.StudentCurricularPlan.cannot.enrol.with.residence.debts");
 	    return true;
 	}

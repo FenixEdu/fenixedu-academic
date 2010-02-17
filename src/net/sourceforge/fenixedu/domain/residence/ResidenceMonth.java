@@ -75,4 +75,8 @@ public class ResidenceMonth extends ResidenceMonth_Base {
 	}
 	return eventsWithoutCodes;
     }
+
+    public boolean isFor(int year) {
+	return getYear().isFor(year);
+    }
 }

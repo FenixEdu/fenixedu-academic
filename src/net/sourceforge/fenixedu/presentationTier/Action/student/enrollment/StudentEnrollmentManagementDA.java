@@ -187,11 +187,6 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 	return mapping.findForward("showAffinityToEnrol");
     }
 
-    /*
-     * Refactor this (similar code already exists in
-     * StudentCurricularPlanEnrolment) ?
-     */
-
     private boolean canContinueToEnrolment(final HttpServletRequest request, final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionSemester executionSemester) {
 
@@ -221,7 +216,7 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 	    return false;
 	}
 
-	if (studentCurricularPlan.getPerson().hasAnyResidencePaymentsInDebt()) {
+	if (studentCurricularPlan.getPerson().hasAnyResidencePaymentsInDebtForPreviousYear()) {
 	    addActionMessage(request, "error.StudentCurricularPlan.cannot.enrol.with.residence.debts");
 	    return false;
 	}

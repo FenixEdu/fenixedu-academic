@@ -143,7 +143,7 @@ public class EnrolInAffinityCycle extends FenixService {
 	    throw new FenixServiceException("error.message.debts.from.past.years.not.payed");
 	}
 
-	if (studentCurricularPlan.getPerson().hasAnyResidencePaymentsInDebt()) {
+	if (studentCurricularPlan.getPerson().hasAnyResidencePaymentsInDebtForPreviousYear()) {
 	    throw new FenixServiceException("error.StudentCurricularPlan.cannot.enrol.with.residence.debts");
 	}
     }

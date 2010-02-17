@@ -92,7 +92,7 @@ abstract public class StudentCurricularPlanEnrolment {
 	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.debts.for.previous.execution.years");
 	}
 	
-	if (getPerson().hasAnyResidencePaymentsInDebt()) {
+	if (getPerson().hasAnyResidencePaymentsInDebtForPreviousYear()) {
 	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.residence.debts");
 	}
     }
@@ -221,7 +221,7 @@ abstract public class StudentCurricularPlanEnrolment {
 	    }
 	} else if (getExecutionSemester().isFirstOfYear() && getRegistration().hasFlunkedState(getExecutionYear())
 		&& getRegistration().hasRegisteredActiveState()) {
-	    // TODO: create EnrolmentPeriod!!!!!!!!!!!!!!
+	    // TODO: create EnrolmentPeriod (Prescrito period) !!!!!!!!!!!!!!
 	    if (!getDegreeCurricularPlan().hasOpenEnrolmentPeriodInCurricularCoursesSpecialSeason(getExecutionSemester())) {
 		throw new DomainException(
 			"error.StudentCurricularPlan.students.can.only.perform.curricular.course.enrollment.inside.established.periods");

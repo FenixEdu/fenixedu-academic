@@ -58,4 +58,8 @@ public class ResidenceYear extends ResidenceYear_Base {
 	return getCurrentYear() != null;
     }
 
+    public boolean isFor(int year) {
+	return getYear().intValue() == year;
+    }
+
 }

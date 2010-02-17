@@ -128,4 +128,8 @@ public class ResidenceEvent extends ResidenceEvent_Base {
 	return internalProcess(responsibleUser, Collections
 		.singletonList(new EntryDTO(EntryType.RESIDENCE_FEE, this, amountToPay)), transactionDetail);
     }
+
+    public boolean isFor(int year) {
+	return getResidenceMonth().isFor(year);
+    }
 }

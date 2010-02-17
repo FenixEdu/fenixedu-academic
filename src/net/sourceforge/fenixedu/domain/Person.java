@@ -132,6 +132,7 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -3284,10 +3285,12 @@ public class Person extends Person_Base {
 	return false;
     }
 
-    public boolean hasAnyResidencePaymentsInDebt() {
+    public boolean hasAnyResidencePaymentsInDebtForPreviousYear() {
+	int previousYear = new LocalDate().minusYears(1).getYear();
+
 	for (final Event event : getResidencePaymentEvents()) {
 	    final ResidenceEvent residenceEvent = (ResidenceEvent) event;
-	    if (!residenceEvent.isPayed()) {
+	    if (residenceEvent.isFor(previousYear) && !residenceEvent.isPayed()) {
 		return true;
 	    }
 	}
