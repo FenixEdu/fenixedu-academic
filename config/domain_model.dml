@@ -904,6 +904,10 @@ class DomainObject {
         GradeScale gradeScale;
     }
 
+    class EnrolmentInstructions extends DomainObject {
+    	String instructions;
+    }
+
     class EnrolmentPeriod extends DomainObject {
         DateTime endDateDateTime;
         DateTime startDateDateTime;
@@ -17426,4 +17430,16 @@ relation DocumentPrintRequestDocumentRequest {
 	administrativeOffice.curriculumValidation.DocumentPrintRequest playsRole request {
 		multiplicity *;
 	}		
+}
+
+relation RootDomainObjectEnrolmentInstructions {
+	RootDomainObject playsRole rootDomainObject;
+	EnrolmentInstructions playsRole enrolmentInstructions {
+		multiplicity *;
+	}
+}
+
+relation ExecutionSemesterEnrolmentInstructions {
+	ExecutionSemester playsRole executionSemester;
+	EnrolmentInstructions playsRole enrolmentInstructions;
 }

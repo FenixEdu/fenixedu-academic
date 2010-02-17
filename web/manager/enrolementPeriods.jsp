@@ -33,6 +33,15 @@
 	</table>
 </html:form>
 
+<logic:present name="executionSemester">
+	<br />
+	<br />
+
+	<html:link action="/manageEnrolementPeriods.do?method=prepareEditEnrolmentInstructions" paramId="executionSemesterOID" paramName="executionSemester" paramProperty="externalId">
+		<bean:message bundle="APPLICATION_RESOURCES" key="label.define.instructions"/>
+	</html:link>
+</logic:present>
+
 <br />
 <br />
 

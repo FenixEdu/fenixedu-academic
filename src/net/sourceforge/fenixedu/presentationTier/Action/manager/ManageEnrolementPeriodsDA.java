@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.ChangeEnrolmentPeriodValues;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateEnrolmentPeriods;
+import net.sourceforge.fenixedu.domain.EnrolmentInstructions;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriod;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses;
@@ -53,10 +54,23 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
 
 	final String executionPeriodIDString = ((DynaActionForm) form).getString("executionPeriodID");
 	if (isValidObjectID(executionPeriodIDString)) {
+	    final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(new Integer(executionPeriodIDString));
+	    request.setAttribute("executionSemester", executionSemester);
 	    setEnrolmentPeriods(request, getExecutionSemester(executionPeriodIDString));
 	}
 
 	return mapping.findForward("showEnrolementPeriods");
+    }
+
+    
+    public ActionForward prepareEditEnrolmentInstructions(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+    	throws Exception {
+
+	final ExecutionSemester executionSemester = getDomainObject(request, "executionSemesterOID");
+	EnrolmentInstructions.createIfNecessary(executionSemester);
+	request.setAttribute("executionSemester", executionSemester);
+
+	return mapping.findForward("editEnrolmentInstructions");
     }
 
     public ActionForward changePeriodValues(ActionMapping mapping, ActionForm form, HttpServletRequest request,

@@ -1988,6 +1988,7 @@
 				type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageEnrolementPeriodsDA"
 				scope="request">
 			<forward name="showEnrolementPeriods" path="show-enrolement-periods"/>
+			<forward name="editEnrolmentInstructions" path="edit-enrolment-instructions"/>
 		</action>
 		
 	<!-- Kerberos Test -->
