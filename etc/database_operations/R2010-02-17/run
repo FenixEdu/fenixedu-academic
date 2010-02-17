@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create enrolment instruction stuff." enrolmentInstructions.sql
