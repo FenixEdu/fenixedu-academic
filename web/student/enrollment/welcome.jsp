@@ -13,7 +13,7 @@
 <div class="infoop6">
 
 <p class="mtop05">
-As inscrições em unidades curriculares e a reserva de turnos para o 1º semestre de 2009/2010 decorrerão online através do sistema Fénix a partir do dia <span class="error0"><strong>3 de Setembro de 2009 pelas 17:00</strong> e <strong>até</strong> ao dia <strong>8 de Setembro de 2009</strong></span>. 
+As inscrições em unidades curriculares e a reserva de turnos para o 2º semestre de 2009/2010 decorrerão online através do sistema Fénix a partir do dia <span class="error0"><strong>17 de Fevereiro de 2010 pelas 19:00</strong> e <strong>até</strong> ao dia <strong>23 de Fevereiro de 2010</strong></span>. 
 </p>
 
 <p class="mtop05">
@@ -101,7 +101,7 @@ Por indicação do Conselho de Gestão os seguintes cursos não vão ter inscrições o
 </p>
 
 <p class="indent1">
-<strong>- </strong>Licenciatura Bolonha em Química
+<strong>- </strong>Mestrado Bolonha em Matemática e Aplicações 
 </p>
 
 <p class="indent1">
@@ -112,9 +112,6 @@ Por indicação do Conselho de Gestão os seguintes cursos não vão ter inscrições o
 <strong>- </strong>Mestrado Bolonha em Engenharia do Território
 </p>
 
-<p class="indent1">
-<strong>- </strong>Mestrado Bolonha em Matemática e Aplicações 
-</p>
 <p class="indent1">
 <strong>- </strong>Mestrado Bolonha em Urbanismo e Ordenamento do Território 
 </p>
