@@ -3285,7 +3285,7 @@ public class Person extends Person_Base {
     }
 
     public boolean hasAnyResidencePaymentsInDebt() {
-	for (final Event event : getStudent().getPerson().getResidencePaymentEvents()) {
+	for (final Event event : getResidencePaymentEvents()) {
 	    final ResidenceEvent residenceEvent = (ResidenceEvent) event;
 	    if (!residenceEvent.isPayed()) {
 		return true;
