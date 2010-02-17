@@ -15,12 +15,9 @@
 
 <em>Portal do Estudante</em>
 
-<div class="infoop6">
-
 <logic:present name="executionSemester" property="enrolmentInstructions">
 	<bean:write name="executionSemester" property="enrolmentInstructions.instructions" filter="false"/>
 </logic:present>
-</div>
 
 <html:form action="/studentEnrollmentManagement.do?method=prepare">
 	<p class="mtop15">
@@ -30,4 +27,3 @@
 
 
 </logic:present>
-
