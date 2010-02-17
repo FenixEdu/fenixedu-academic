@@ -27,6 +27,10 @@ public class BolonhaStudentEnrollmentDispatchAction extends AbstractBolonhaStude
 		ExecutionSemester.readActualExecutionSemester());
     }
 
+    /*
+     * Refactor this (similar code already exists in
+     * StudentCurricularPlanEnrolment) ?
+     */
     @Override
     protected ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response, StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester) {
@@ -68,12 +72,12 @@ public class BolonhaStudentEnrollmentDispatchAction extends AbstractBolonhaStude
 	    addActionMessage(request, "error.message.debts.from.past.years.not.payed");
 	    return true;
 	}
-	
+
 	if (studentCurricularPlan.getPerson().hasAnyResidencePaymentsInDebt()) {
 	    addActionMessage(request, "error.StudentCurricularPlan.cannot.enrol.with.residence.debts");
 	    return true;
 	}
-	
+
 	return false;
     }
 

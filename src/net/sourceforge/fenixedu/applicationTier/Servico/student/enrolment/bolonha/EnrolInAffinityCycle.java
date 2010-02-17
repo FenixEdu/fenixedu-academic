@@ -116,6 +116,10 @@ public class EnrolInAffinityCycle extends FenixService {
 		.getExecutionDegreeByYear(executionSemester.getExecutionYear()));
     }
 
+    /*
+     * Refactor this (similar code already exists in
+     * StudentCurricularPlanEnrolment) ?
+     */
     private static void checkConditionsToEnrol(final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionSemester executionSemester) throws FenixServiceException {
 
@@ -137,6 +141,10 @@ public class EnrolInAffinityCycle extends FenixService {
 
 	if (studentCurricularPlan.getRegistration().getStudent().isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt()) {
 	    throw new FenixServiceException("error.message.debts.from.past.years.not.payed");
+	}
+
+	if (studentCurricularPlan.getPerson().hasAnyResidencePaymentsInDebt()) {
+	    throw new FenixServiceException("error.StudentCurricularPlan.cannot.enrol.with.residence.debts");
 	}
     }
 
