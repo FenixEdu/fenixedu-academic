@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses;
@@ -24,11 +25,34 @@ public class CreateEnrolmentPeriods {
 	    final Date startDate, final Date endDate) throws FenixServiceException {
 
 	final ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodID);
+
+	/*
+	 * Allow pre-bolonha degrees to create reingression periods
+	 */
+	if (!degreeType.isBolonhaType() && isReingressionPeriod(enrolmentPeriodClassName)) {
+	    createReingressionPeriodsForPreBolonhaDegrees(executionSemester, degreeType, startDate, endDate);
+	} else {
+	    createEnrolmentPeriodsForBolonhaDegrees(executionSemester, degreeType, enrolmentPeriodClassName, startDate, endDate);
+	}
+    }
+
+    private static void createReingressionPeriodsForPreBolonhaDegrees(final ExecutionSemester executionSemester,
+	    final DegreeType degreeType, final Date startDate, final Date endDate) {
+	for (final Degree degree : Degree.readAllByDegreeType(degreeType)) {
+	    for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlans()) {
+		new ReingressionPeriod(degreeCurricularPlan, executionSemester, startDate, endDate);
+	    }
+	}
+    }
+
+    private static void createEnrolmentPeriodsForBolonhaDegrees(final ExecutionSemester executionSemester,
+	    final DegreeType degreeType, final String enrolmentPeriodClassName, final Date startDate, final Date endDate)
+	    throws FenixServiceException {
+
 	for (final ExecutionDegree executionDegree : executionSemester.getExecutionYear().getExecutionDegrees()) {
-
 	    final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-	    if (degreeType == null || degreeType == degreeCurricularPlan.getDegree().getDegreeType()) {
 
+	    if (degreeType == null || degreeType == degreeCurricularPlan.getDegree().getDegreeType()) {
 		createPeriod(enrolmentPeriodClassName, startDate, endDate, executionSemester, degreeCurricularPlan);
 	    }
 	}
@@ -54,13 +78,17 @@ public class CreateEnrolmentPeriods {
 
 	    new EnrolmentPeriodInImprovementOfApprovedEnrolment(degreeCurricularPlan, executionSemester, startDate, endDate);
 
-	} else if (ReingressionPeriod.class.getName().equals(enrolmentPeriodClassName)) {
+	} else if (isReingressionPeriod(enrolmentPeriodClassName)) {
 
 	    new ReingressionPeriod(degreeCurricularPlan, executionSemester, startDate, endDate);
 
 	} else {
 	    throw new FenixServiceException("error.invalid.enrolment.period.class.name");
 	}
+    }
+
+    private static boolean isReingressionPeriod(final String enrolmentPeriodClassName) {
+	return ReingressionPeriod.class.getName().equals(enrolmentPeriodClassName);
     }
 
 }
