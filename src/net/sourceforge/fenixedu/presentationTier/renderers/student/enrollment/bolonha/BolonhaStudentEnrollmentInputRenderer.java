@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.renderers.controllers.CopyCheckBoxValuesController;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyArrayConverter;
@@ -69,6 +70,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 
     private String tablesClasses = "showinfo3 mvert0";
     private String groupRowClasses = "bgcolor2";
+    private String concludedGroupRowClasses = "cc_groups";
     private String enrolmentClasses = "smalltxt, smalltxt aright, smalltxt aright, smalltxt aright, aright";
     private String temporaryEnrolmentClasses = "smalltxt, smalltxt aright, smalltxt aright, smalltxt aright, aright";
     private String impossibleEnrolmentClasses = "smalltxt, smalltxt aright, smalltxt aright, smalltxt aright, aright";
@@ -107,6 +109,14 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 
     public void setGroupRowClasses(String groupRowClasses) {
 	this.groupRowClasses = groupRowClasses;
+    }
+
+    public String getConcludedGroupRowClasses() {
+	return concludedGroupRowClasses;
+    }
+
+    public void setConcludedGroupRowClasses(String concludedGroupRowClasses) {
+	this.concludedGroupRowClasses = concludedGroupRowClasses;
     }
 
     private String[] getEnrolmentClasses() {
@@ -286,19 +296,26 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	    final HtmlTable groupTable = createGroupTable(blockContainer, depth);
 	    addGroupHeaderRow(groupTable, studentCurriculumGroupBean, executionSemester);
 
-	    if (isEncodeGroupRules()) {
-		encodeCurricularRules(groupTable, studentCurriculumGroupBean.getCurriculumModule());
+	    if (isAcademicAdminOfficeEmployee() || !groupIsConcluded(studentCurriculumGroupBean)) {
+		
+		if (isEncodeGroupRules()) {
+		    encodeCurricularRules(groupTable, studentCurriculumGroupBean.getCurriculumModule());
+		}
+
+		final HtmlTable coursesTable = createCoursesTable(blockContainer, depth);
+		generateEnrolments(studentCurriculumGroupBean, coursesTable);
+		generateCurricularCoursesToEnrol(coursesTable, studentCurriculumGroupBean);
+
+		generateGroups(blockContainer, studentCurriculumGroupBean, studentCurricularPlan, executionSemester, depth);
 	    }
-
-	    final HtmlTable coursesTable = createCoursesTable(blockContainer, depth);
-	    generateEnrolments(studentCurriculumGroupBean, coursesTable);
-	    generateCurricularCoursesToEnrol(coursesTable, studentCurriculumGroupBean);
-
-	    generateGroups(blockContainer, studentCurriculumGroupBean, studentCurricularPlan, executionSemester, depth);
 
 	    if (studentCurriculumGroupBean.isRoot()) {
 		generateCycleCourseGroupsToEnrol(blockContainer, executionSemester, studentCurricularPlan, depth);
 	    }
+	}
+
+	private boolean groupIsConcluded(final StudentCurriculumGroupBean bean) {
+	    return bean.getCurriculumModule().isCycleCurriculumGroup() && bean.getCurriculumModule().isConcluded();
 	}
 
 	private void encodeCurricularRules(final HtmlTable groupTable, final CurriculumGroup curriculumGroup) {
@@ -341,6 +358,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 
 	private void addGroupHeaderRow(final HtmlTable groupTable, final StudentCurriculumGroupBean studentCurriculumGroupBean,
 		final ExecutionSemester executionSemester) {
+
 	    final HtmlTableRow groupHeaderRow = groupTable.createRow();
 	    groupHeaderRow.setClasses(getGroupRowClasses());
 
@@ -351,6 +369,9 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 		} else {
 		    titleCell.setBody(createDegreeCurricularPlanLink(studentCurriculumGroupBean));
 		}
+	    } else if (studentCurriculumGroupBean.getCurriculumModule().isCycleCurriculumGroup()) {
+		setTitleCellInformation(groupHeaderRow, titleCell, studentCurriculumGroupBean, executionSemester);
+
 	    } else {
 		titleCell.setBody(new HtmlText(buildCurriculumGroupLabel(studentCurriculumGroupBean.getCurriculumModule(),
 			executionSemester), false));
@@ -381,7 +402,30 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	    } else {
 		enrollmentsController.addCheckBox(checkBox);
 	    }
+	}
 
+	private void setTitleCellInformation(final HtmlTableRow groupHeaderRow, final HtmlTableCell titleCell,
+		final StudentCurriculumGroupBean studentCurriculumGroupBean, final ExecutionSemester executionSemester) {
+
+	    final CycleCurriculumGroup group = (CycleCurriculumGroup) studentCurriculumGroupBean.getCurriculumModule();
+	    final boolean concluded = group.isConcluded();
+
+	    titleCell.setBody(new HtmlText(buildCycleCurriculumGroupLabel(group, concluded, executionSemester), false));
+
+	    if (concluded) {
+		groupHeaderRow.setClasses(getConcludedGroupRowClasses());
+	    }
+	}
+
+	private String buildCycleCurriculumGroupLabel(final CycleCurriculumGroup curriculumGroup, boolean concluded,
+		final ExecutionSemester executionSemester) {
+
+	    String label = buildCurriculumGroupLabel(curriculumGroup, executionSemester);
+	    if (concluded) {
+		label = label.concat(" - ").concat(applicationResources.getString("label.curriculum.cycle.concluded"));
+	    }
+	    
+	    return label;
 	}
 
 	private String buildCurriculumGroupLabel(final CurriculumGroup curriculumGroup, final ExecutionSemester executionSemester) {
@@ -408,6 +452,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 		    result.append(creditsLimit.getMinimumCredits());
 		    result.append(")</span>,");
 		}
+
 		result.append(" <span title=\"");
 		result.append(applicationResources.getString("label.curriculum.credits.legend.creditsConcluded"));
 		result.append(" \"> c(");
