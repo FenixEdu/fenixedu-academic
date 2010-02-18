@@ -60,7 +60,7 @@
 	<%-- show person information --%>
 	<br />
 	<strong><bean:message key="label.candidacy.personalData" bundle="APPLICATION_RESOURCES" />:</strong>
-	<fr:view name="process" property="personalDetails" schema="CandidacyProcess.personalData">
+	<fr:view name="process" property="personalDetails" schema="ErasmusCandidacyProcess.personalData">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>

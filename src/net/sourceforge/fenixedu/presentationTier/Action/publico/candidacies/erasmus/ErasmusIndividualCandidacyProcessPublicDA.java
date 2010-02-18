@@ -59,8 +59,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "edit-candidacy-information", path = "erasmus.edit.candidacy.information"),
 	@Forward(name = "edit-candidacy-degree-and-courses", path = "erasmus.edit.candidacy.degree.and.courses"),
 	@Forward(name = "edit-candidacy-documents", path = "erasmus.edit.candidacy.documents"),
+	@Forward(name = "edit-candidacy-degree-and-courses", path = "erasmus.edit.candidacy.degree.and.courses"),
 	@Forward(name = "redirect-to-peps", path = "erasmus.redirect.to.peps"),
-	@Forward(name = "show-application-submission-conditions-for-stork", path = "erasmus.show.application.submission.conditions.for.stork") })
+	@Forward(name = "show-application-submission-conditions-for-stork", path = "erasmus.show.application.submission.conditions.for.stork"),
+	@Forward(name = "show-stork-error-page", path = "erasmus.show.stork.error.page") })
 public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndividualCandidacyProcessPublicDA {
 
     @Override
@@ -177,15 +179,16 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
     public ActionForward chooseDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
+
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 	request.setAttribute("degreeCourseInformationBean", readDegreeCourseInformationBean(request));
 
+	if ("editCandidacy".equals(request.getParameter("userAction"))) {
+	    return mapping.findForward("edit-candidacy-degree-and-courses");
+	}
+
 	RenderUtils.invalidateViewState("degree.course.information.bean");
 	RenderUtils.invalidateViewState("individualCandidacyProcessBean");
-
-	if ("editCandidacy".equals(request.getAttribute("userAction"))) {
-	    return mapping.findForward("edit-degree-courses-information");
-	}
 
 	return mapping.findForward("fill-degree-and-courses-information");
     }
@@ -206,8 +209,8 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	RenderUtils.invalidateViewState("degree.course.information.bean");
 	RenderUtils.invalidateViewState("individualCandidacyProcessBean");
 
-	if ("editCandidacy".equals(request.getAttribute("userAction"))) {
-	    return mapping.findForward("edit-degree-courses-information");
+	if ("editCandidacy".equals(request.getParameter("userAction"))) {
+	    return mapping.findForward("edit-candidacy-degree-and-courses");
 	}
 
 	return mapping.findForward("fill-degree-and-courses-information");
@@ -228,8 +231,8 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	RenderUtils.invalidateViewState("degree.course.information.bean");
 	RenderUtils.invalidateViewState("individualCandidacyProcessBean");
 
-	if ("editCandidacy".equals(request.getAttribute("userAction"))) {
-	    return mapping.findForward("edit-degree-courses-information");
+	if ("editCandidacy".equals(request.getParameter("userAction"))) {
+	    return mapping.findForward("edit-candidacy-degree-and-courses");
 	}
 
 	return mapping.findForward("fill-degree-and-courses-information");
@@ -321,9 +324,15 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
     public ActionForward returnFromPeps(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
+	String errorCode = (String) request.getParameter("errorCode");
+	String errorMessage = (String) request.getParameter("errorMessage");
 	String attrList = request.getParameter("attrList");
 
-	Map<String, Attribute> attributes = new HashMap<String, Attribute>();// buildStorkAttributes(attrList);
+	if (!(errorCode == null || errorMessage == null || errorCode.length() <= 0 || errorMessage.length() <= 0)) {
+	    return mapping.findForward("show-stork-error-page");
+	}
+
+	Map<String, Attribute> attributes = buildStorkAttributes(attrList);
 
 	String name = getStorkName(attributes);
 	YearMonthDay birthDate = getBirthDate(attributes);
@@ -406,22 +415,17 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	Attribute attr = attributes.get(STORK_BIRTHDATE);
 	String birthDateText = attr != null ? attr.getSemanticValue() : null;
 
-	if (birthDateText == null || !birthDateText.matches("\\d{2}/\\d/{2}\\d{4}")) {
+	if (birthDateText == null || !birthDateText.matches("\\d{2}\\.\\d{2}\\.\\d{4}")) {
 	    return null;
 	}
 
-	String[] compounds = birthDateText.split("/");
-	// return new YearMonthDay(Integer.valueOf(compounds[2]),
-	// Integer.valueOf(compounds[1]), Integer.valueOf(compounds[0]));
-
-	return new YearMonthDay(2001, 01, 01);
+	String[] compounds = birthDateText.split("\\.");
+	return new YearMonthDay(Integer.valueOf(compounds[2]), Integer.valueOf(compounds[1]), Integer.valueOf(compounds[0]));
     }
 
     private String getStorkName(Map<String, Attribute> attributes) {
 	Attribute attr = attributes.get(STORK_NAME);
-	// return attr != null ? attr.getSemanticValue() : null;
-
-	return "Anil Mamede";
+	return attr != null ? attr.getSemanticValue() : null;
     }
 
     private Country getNationality(Map<String, Attribute> attributes) {
@@ -432,11 +436,8 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	    return null;
 	}
 
-	// return nationalityCode.length() == 2 ?
-	// Country.readByTwoLetterCode(nationalityCode) : Country
-	// .readByThreeLetterCode(nationalityCode);
-
-	return Country.readByTwoLetterCode("AF");
+	return nationalityCode.length() == 2 ? Country.readByTwoLetterCode(nationalityCode) : Country
+		.readByThreeLetterCode(nationalityCode);
     }
 
     public ActionForward prepareCandidacyCreationForStork(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -450,6 +451,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
     public ActionForward prepareEditCandidacyInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+
 	return mapping.findForward("edit-candidacy-information");
     }
 
@@ -481,6 +483,49 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	    addActionMessage(request, e.getMessage(), e.getArgs());
 	    request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 	    return mapping.findForward("edit-candidacy-information");
+	}
+
+	request.setAttribute("individualCandidacyProcess", bean.getIndividualCandidacyProcess());
+	return backToViewCandidacyInternal(mapping, form, request, response);
+    }
+
+    public ActionForward prepareEditDegreeAndCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	request.setAttribute("degreeCourseInformationBean", new DegreeCourseInformationBean(
+		(ExecutionYear) getCurrentOpenParentProcess().getCandidacyExecutionInterval()));
+
+	return mapping.findForward("edit-candidacy-degree-and-courses");
+    }
+
+    public ActionForward prepareEditDegreeAndCoursesInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	return mapping.findForward("edit-candidacy-degree-and-courses");
+    }
+
+    public ActionForward editDegreeAndCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+	ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	try {
+	    ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
+	    if (actionForwardError != null)
+		return actionForwardError;
+
+	    if (!isApplicationSubmissionPeriodValid()) {
+		return beginCandidacyProcessIntro(mapping, form, request, response);
+	    }
+
+	    executeActivity(bean.getIndividualCandidacyProcess(), "EditPublicDegreeAndCoursesInformation",
+		    getIndividualCandidacyProcessBean());
+	} catch (final DomainException e) {
+	    if (e.getMessage().equals("error.IndividualCandidacyEvent.invalid.payment.code")) {
+		throw e;
+	    }
+
+	    addActionMessage(request, e.getMessage(), e.getArgs());
+	    request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	    return mapping.findForward("edit-candidacy-degree-and-courses");
 	}
 
 	request.setAttribute("individualCandidacyProcess", bean.getIndividualCandidacyProcess());

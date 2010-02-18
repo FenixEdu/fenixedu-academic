@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean.UnableToProcessTheImage;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
+import net.sourceforge.fenixedu.domain.Alert;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.JobBean;
@@ -593,7 +594,7 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 
     }
 
-    private PhdAlert getAlert(HttpServletRequest request) {
+    private Alert getAlert(HttpServletRequest request) {
 	return getDomainObject(request, "alertId");
     }
 

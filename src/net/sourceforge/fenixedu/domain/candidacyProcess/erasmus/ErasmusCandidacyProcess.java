@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -26,6 +27,8 @@ import net.sourceforge.fenixedu.domain.period.ErasmusCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.joda.time.DateTime;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 
@@ -138,6 +141,12 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
     private void edit(final DateTime start, final DateTime end) {
 	checkParameters(getCandidacyPeriod().getExecutionInterval(), start, end);
 	getCandidacyPeriod().edit(start, end);
+    }
+
+    @Override
+    public String getDisplayName() {
+	return ResourceBundle.getBundle("resources/CaseHandlingResources", Language.getLocale()).getString(
+		getClass().getSimpleName());
     }
 
     @StartActivity

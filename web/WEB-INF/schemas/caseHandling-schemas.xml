@@ -1899,8 +1899,8 @@
 	<slot name="candidacyDate" key="label.candidacy.date" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 </schema>
 
-<schema name="ErasmusIndividualCandidacyProcessBean.selectDegree.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
-   	<slot name="selectedDegree" layout="menu-select" key="label.degree.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+<schema name="ErasmusIndividualCandidacyProcessBean.selectDegree.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+   	<slot name="selectedDegree" layout="menu-select" key="label.erasmus.degree" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.ErasmusIndividualCandidacyDegreesProvider" />
         <property name="format" value="${presentationName}" />
         <property name="sortBy" value="degreeType, name"/>
@@ -1932,7 +1932,7 @@
 <schema name="ErasmusIndividualCandidacyProcess.home.institution.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="candidacy.erasmusStudentData.homeInstitutionName" key="label.erasmus.home.institution.name" />
 	<slot name="candidacy.erasmusStudentData.homeInstitutionAddress" key="label.erasmus.home.institution.address" />
-	<slot name="candidacy.erasmusStudentData.homeInstitutionExchangeCoordinatorName" key="label.erasmus.home.institution.coordinator.name" />
+	<slot name="candidacy.erasmusStudentData.homeInstitutionCoordinatorName" key="label.erasmus.home.institution.coordinator.name" />
 	<slot name="candidacy.erasmusStudentData.homeInstitutionPhone" key="label.erasmus.home.institution.phone" />
 	<slot name="candidacy.erasmusStudentData.homeInstitutionFax" key="label.erasmus.home.institution.fax" />
 	<slot name="candidacy.erasmusStudentData.homeInstitutionEmail" key="label.erasmus.home.institution.email" />
@@ -2033,7 +2033,9 @@
 <schema name="ErasmusIndividualCandidacyProcess.period.of.study.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="candidacy.erasmusStudentData.dateOfArrival" key="label.erasmus.period.of.study.date.of.arrival" />
 	<slot name="candidacy.erasmusStudentData.dateOfDeparture" key="label.erasmus.period.of.study.date.of.departure" />
-	<slot name="candidacy.erasmusStudentData.typesOfProgramme" key="label.erasmus.period.of.study.typesOfProgramme" />
+	<slot name="candidacy.erasmusStudentData.typesOfProgramme.types" key="label.erasmus.period.of.study.typesOfProgramme" layout="separator-list" >
+		<property name="separator" value=", " />
+	</slot>
 	<slot name="candidacy.erasmusStudentData.mainSubjectThesis" key="label.erasmus.period.of.study.main.subject.thesis" />
 	<slot name="candidacy.erasmusStudentData.hasContactedOtherStaff" key="label.erasmus.period.of.study.has.contacted.other.staff" />
 	<slot name="candidacy.erasmusStudentData.nameOfContact" key="label.erasmus.period.of.study.name.of.contact" />
@@ -2054,7 +2056,9 @@
 		<property name="maxLength" value="10"/>
 	</slot>
 	
-	<slot name="erasmusStudentDataBean.typesOfProgramme" key="label.erasmus.period.of.study.typesOfProgramme" >
+	<slot name="erasmusStudentDataBean.typesOfProgramme" key="label.erasmus.period.of.study.typesOfProgramme" layout="option-select">
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.TypeOfProgramme" />
+		<property name="format" value="${description}" />
 	</slot>
 	
 	<slot name="erasmusStudentDataBean.mainSubjectThesis" key="label.erasmus.period.of.study.main.subject.thesis" >
@@ -2190,11 +2194,78 @@
 	</slot>
 	
 	<slot name="chosenCourse" key="label.erasmus.course" layout="menu-select">
-		<property name="format" value="${name}" />
+		<property name="format" value="${nameI18N}" />
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.DegreeCourseInformationBean" />
 	</slot>	
 </schema>
 
 <schema name="ErasmusIndividualCandidacyPublicProcess.personalDataBean" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="APPLICATION_RESOURCES" extends="ErasmusIndividualCandidacyProcess.personalDataBean">
 	<slot name="email" key="label.email" read-only="true" />
+</schema>
+
+<schema name="ErasmusIndividualCandidacyProcess.setCoordinatorValidation" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean" bundle="ACADEMIC_OFFICE_RESOURCES" > 
+	<slot name="validatedByErasmusCoordinator" key="label.erasmus.validated" layout="menu" />
+</schema>
+
+<schema name="ErasmusIndividualCandidacyProcess.setGriValidation" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean" bundle="ACADEMIC_OFFICE_RESOURCES" > 
+	<slot name="validatedByGri" key="label.erasmus.validated" layout="menu" />
+</schema>
+
+<schema name="ErasmusIndividualCandidacyProcess.alertContents" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="createAlert" key="label.erasmus.create.alert" />
+	<slot name="sendEmail" key="label.erasmus.send.email" />
+	
+	<slot name="alertSubject" key="label.erasmus.alert.subject" >
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+			<property name="type" value="character"/>
+			<property name="length" value="255"/>
+		</validator>
+	</slot>
+	
+	<slot name="alertBody" key="label.erasmus.alert.body" layout="longText">
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+			<property name="type" value="character"/>
+			<property name="length" value="3000"/>
+		</validator>
+		
+		<property name="rows" value="3" />
+		<property name="columns" value="70" />
+	</slot>
+</schema>
+
+<schema name="ErasmusAlert.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusAlert" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="whenCreated" key="label.erasmus.alert.whenCreated" />
+	<slot name="whoCreated.name" key="label.erasmus.alert.whoCreated" />
+	<slot name="entity.description" key="label.erasmus.alert.entity" />
+	<slot name="sendEmail" key="label.erasmus.alert.sendEmail" />
+	<slot name="formattedSubject" key="label.erasmus.alert.subject" />
+	<slot name="formattedBody" key="label.erasmus.alert.body" />
+</schema>
+
+<schema name="ErasmusIndividualCandidacyProcess.list.processes" type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess" bundle="APPLICATION_RESOURCES">
+	<slot name="candidacyDate" key="label.candidacy.date" />
+	<slot name="personalDetails.name" key="label.name" />
+	<slot name="processCode" key="label.process.id" bundle="CANDIDATE_RESOURCES"/>
+	<slot name="personalDetails.documentIdNumber" key="label.identificationNumber" />
+	<slot name="candidacyState" key="label.candidacy.process.state" />
+	<slot name="processChecked" key="label.candidacy.process.checked" />
+</schema>
+
+<schema name="ErasmusCandidacyProcess.personalData"
+	type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyPersonalDetails"
+	bundle="APPLICATION_RESOURCES">
+	<slot name="name" key="label.name">
+		<property name="classes" value="bold" />
+	</slot>
+	<slot name="documentIdNumber" key="label.identificationNumber" />
+	<slot name="idDocumentType" key="label.idDocumentType" />
+	<slot name="expirationDateOfDocumentIdYearMonthDay" key="label.documentIdExpirationDate" />
+	<slot name="dateOfBirthYearMonthDay" key="label.dateOfBirth" />
+	<slot name="gender" key="label.gender" />
+	<slot name="country.name" key="label.nationality" />
+	<slot name="countryOfResidence.name" key="label.countryOfResidence" />
+	<slot name="address" key="label.address" />
+	<slot name="areaCode" key="label.areaCode" />
+	<slot name="areaOfAreaCode" key="label.areaOfAreaCode" />
+	<slot name="area" key="label.area" />	
 </schema>

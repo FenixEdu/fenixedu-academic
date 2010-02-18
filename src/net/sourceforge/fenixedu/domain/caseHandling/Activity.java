@@ -17,6 +17,14 @@ public abstract class Activity<P extends Process> {
 	return Boolean.TRUE;
     }
 
+    public Boolean isVisibleForGriOffice() {
+	return Boolean.TRUE;
+    }
+
+    public Boolean isVisibleForCoordinator() {
+	return Boolean.FALSE;
+    }
+
     final public P execute(P process, IUserView userView, Object object) {
 	checkPreConditions(process, userView);
 	P modifiedProcess = executeActivity(process, userView, object);

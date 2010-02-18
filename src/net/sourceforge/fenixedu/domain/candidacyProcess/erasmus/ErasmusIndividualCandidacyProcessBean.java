@@ -29,6 +29,18 @@ public class ErasmusIndividualCandidacyProcessBean extends IndividualCandidacyPr
 
     private boolean toAccessFenix;
 
+    private Boolean validatedByGri;
+
+    private Boolean validatedByErasmusCoordinator;
+
+    private String alertSubject;
+
+    private String alertBody;
+
+    private Boolean createAlert;
+
+    private Boolean sendEmail;
+
     public ErasmusIndividualCandidacyProcessBean() {
 	setCandidacyDate(new LocalDate());
 	initializeDocumentUploadBeans();
@@ -44,6 +56,9 @@ public class ErasmusIndividualCandidacyProcessBean extends IndividualCandidacyPr
 	setSelectedCurricularCourses(new HashSet<CurricularCourse>(process.getCandidacy().getCurricularCoursesSet()));
 	setErasmusStudentDataBean(new ErasmusStudentDataBean(process.getCandidacy().getErasmusStudentData()));
 	setCandidacyDate(process.getCandidacyDate());
+
+	setValidatedByErasmusCoordinator(process.getValidatedByErasmusCoordinator());
+	setValidatedByGri(process.getValidatedByGri());
     }
 
     @Override
@@ -101,4 +116,53 @@ public class ErasmusIndividualCandidacyProcessBean extends IndividualCandidacyPr
     public void willAccessFenix() {
 	this.toAccessFenix = true;
     }
+
+    public Boolean getValidatedByGri() {
+	return validatedByGri;
+    }
+
+    public void setValidatedByGri(Boolean validatedByGri) {
+	this.validatedByGri = validatedByGri;
+    }
+
+    public Boolean getValidatedByErasmusCoordinator() {
+	return validatedByErasmusCoordinator;
+    }
+
+    public void setValidatedByErasmusCoordinator(Boolean validatedByErasmusCoordinator) {
+	this.validatedByErasmusCoordinator = validatedByErasmusCoordinator;
+    }
+
+    public String getAlertSubject() {
+	return alertSubject;
+    }
+
+    public void setAlertSubject(String alertSubject) {
+	this.alertSubject = alertSubject;
+    }
+
+    public String getAlertBody() {
+	return alertBody;
+    }
+
+    public void setAlertBody(String alertBody) {
+	this.alertBody = alertBody;
+    }
+
+    public Boolean getCreateAlert() {
+	return createAlert;
+    }
+
+    public void setCreateAlert(Boolean createAlert) {
+	this.createAlert = createAlert;
+    }
+
+    public Boolean getSendEmail() {
+	return sendEmail;
+    }
+
+    public void setSendEmail(Boolean sendEmail) {
+	this.sendEmail = sendEmail;
+    }
+
 }

@@ -5,12 +5,7 @@
 <html:xhtml/>
 
 <em><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></em>
-<h2><bean:message key="label.candidacy.create" bundle="APPLICATION_RESOURCES"/></h2>
-
-<p class="breadcumbs">
-	<span><strong><bean:message key="label.step" bundle="APPLICATION_RESOURCES" /> 1</strong>: <bean:message key="label.candidacy.personalData" bundle="APPLICATION_RESOURCES" /> </span> &gt;
-	<span class="actual"><strong><bean:message key="label.step" bundle="APPLICATION_RESOURCES" /> 2</strong>: <bean:message key="label.candidacy.candidacyInformation" bundle="APPLICATION_RESOURCES" /> </span>
-</p>
+<h2><bean:message key="label.candidacy.edit" bundle="APPLICATION_RESOURCES"/></h2>
 
 <html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
 	<span class="error0"> <bean:write name="message" /> </span>

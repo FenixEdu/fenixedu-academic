@@ -28,7 +28,7 @@ public class TypeOfProgrammeList implements Serializable {
 	}
     }
 
-    private static final Set<TypeOfProgramme> types = new HashSet<TypeOfProgramme>();
+    private final Set<TypeOfProgramme> types = new HashSet<TypeOfProgramme>();
 
     private TypeOfProgrammeList() {
 

@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewPr
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
+import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -33,6 +34,7 @@ import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.casehandling.CaseHandlingDispatchAction;
@@ -137,7 +139,7 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 		.getCandidacyPeriod().getClass()));
     }
 
-    private List<Activity> getAllowedActivities(final IndividualCandidacyProcess process) {
+    protected List<Activity> getAllowedActivities(final IndividualCandidacyProcess process) {
 	List<Activity> activities = process.getAllowedActivities(AccessControl.getUserView());
 	ArrayList<Activity> resultActivities = new ArrayList<Activity>();
 
@@ -215,10 +217,40 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 	    }
 	    bean.setPersonBean(new PersonBean(choosePersonBean.getName(), choosePersonBean.getIdentificationNumber(),
 		    choosePersonBean.getDocumentType(), choosePersonBean.getDateOfBirth()));
+
+	    //bean.getPersonBean().setAddress("Some address");
+	    //bean.getPersonBean().setArea("Some area");
+	    //bean.getPersonBean().setAreaOfAreaCode("2345-2341");
+	    ////bean.getPersonBean().setCountryOfBirth(Country.readByTwoLetterCode("AF"));
+	    //bean.getPersonBean().setCountryOfResidence(Country.readByTwoLetterCode("PT"));
+	    //bean.getPersonBean().setDistrictOfBirth("Some district of birth");
+	    //bean.getPersonBean().setDistrictOfResidence("Some district of residence");
+	    //bean.getPersonBean().setDistrictSubdivisionOfBirth("district subdivision of birth");
+	    //bean.getPersonBean().setDistrictSubdivisionOfResidence("district subdivision of residence");
+	    //bean.getPersonBean().setGender(Gender.MALE);
+	    //bean.getPersonBean().setPhone("12313234132");
+	    //bean.getPersonBean().setNationality(Country.readByTwoLetterCode("AF"));
+	    //bean.getPersonBean().setAreaCode("1223-123");
+
 	    return mapping.findForward("fill-personal-information");
 
 	} else {
 	    bean.setPersonBean(new PersonBean(bean.getChoosePersonBean().getPerson()));
+
+	    //bean.getPersonBean().setAddress("Some address");
+	    //bean.getPersonBean().setArea("Some area");
+	    //bean.getPersonBean().setAreaOfAreaCode("2345-2341");
+	    //bean.getPersonBean().setCountryOfBirth(Country.readByTwoLetterCode("AF"));
+	    //bean.getPersonBean().setCountryOfResidence(Country.readByTwoLetterCode("PT"));
+	    //bean.getPersonBean().setDistrictOfBirth("Some district of birth");
+	    //bean.getPersonBean().setDistrictOfResidence("Some district of residence");
+	    //bean.getPersonBean().setDistrictSubdivisionOfBirth("district subdivision of birth");
+	    //bean.getPersonBean().setDistrictSubdivisionOfResidence("district subdivision of residence");
+	    //bean.getPersonBean().setGender(Gender.MALE);
+	    //bean.getPersonBean().setPhone("12313234132");
+	    //bean.getPersonBean().setNationality(Country.readByTwoLetterCode("AF"));
+	    //bean.getPersonBean().setAreaCode("1223-123");
+
 	    return mapping.findForward("fill-personal-information");
 	}
     }
@@ -271,6 +303,21 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 	bean.setPersonBean(new PersonBean(choosePersonBean.getName(), choosePersonBean.getIdentificationNumber(),
 		choosePersonBean.getDocumentType(), choosePersonBean.getDateOfBirth()));
+
+	//bean.getPersonBean().setAddress("Some address");
+	//bean.getPersonBean().setArea("Some area");
+	//bean.getPersonBean().setAreaOfAreaCode("2345-2341");
+	//bean.getPersonBean().setCountryOfBirth(Country.readByTwoLetterCode("AF"));
+	//bean.getPersonBean().setCountryOfResidence(Country.readByTwoLetterCode("PT"));
+	//bean.getPersonBean().setDistrictOfBirth("Some district of birth");
+	//bean.getPersonBean().setDistrictOfResidence("Some district of residence");
+	//bean.getPersonBean().setDistrictSubdivisionOfBirth("district subdivision of birth");
+	//bean.getPersonBean().setDistrictSubdivisionOfResidence("district subdivision of residence");
+	//bean.getPersonBean().setGender(Gender.MALE);
+	//bean.getPersonBean().setPhone("12313234132");
+	//bean.getPersonBean().setNationality(Country.readByTwoLetterCode("AF"));
+	//bean.getPersonBean().setAreaCode("1223-123");
+
 	bean.removeChoosePersonBean();
 	return mapping.findForward("fill-personal-information");
     }

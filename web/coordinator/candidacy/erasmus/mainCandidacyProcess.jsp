@@ -69,12 +69,6 @@
 	<bean:define id="childProcessName" name="childProcessName" />
 	<bean:size id="candidacyProcessesSize" name="candidacyProcesses" />
 
-	<logic:equal name="canCreateProcess" value="true">
-		<html:link action='<%= "/caseHandling" + processName.toString() + ".do?method=prepareCreateNewProcess"%>'>
-			<bean:message key='<%= "link.create.new.process." + processName.toString()%>' bundle="APPLICATION_RESOURCES"/>	
-		</html:link>
-	</logic:equal>
-
 	<br/>
 	<br/>
 
@@ -124,7 +118,6 @@
 	</html:form>
 	<br/>
 
-
 	<%-- show main process information --%>
 	<fr:view name="process" schema="CandidacyProcess.view">
 		<fr:layout name="tabular">
@@ -155,20 +148,12 @@
 		</logic:iterate>
 		</ul>
 	</logic:notEmpty>
-	
-	<%-- create child process --%>
-	<logic:equal name="canCreateChildProcess" value="true">
-		<br/>
-		<html:link action='<%= "/caseHandling" + childProcessName.toString() + ".do?method=prepareCreateNewProcess&amp;parentProcessId=" + processId.toString() %>'>
-			+ <bean:message key='<%= "link.create.new.process." + childProcessName.toString()%>' bundle="APPLICATION_RESOURCES"/>	
-		</html:link>
-	</logic:equal>
-	
+		
 	<%-- show child processes --%>
 	<logic:notEmpty name="childProcesses">
 		<br/>
 		
-		<fr:view name="childProcesses" schema="ErasmusIndividualCandidacyProcess.list.processes">
+		<fr:view name="childProcesses" schema="IndividualCandidacyProcess.list.processes">
 			<fr:layout name="tabular-sortable">
 				<fr:property name="classes" value="tstyle4 thcenter thcenter thcenter"/>
 				<fr:property name="columnClasses" value="tdcenter, tdcenter, tdcenter, "/>

@@ -2,12 +2,14 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
@@ -15,6 +17,11 @@ import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+
+import org.joda.time.LocalDate;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidacyProcess_Base {
 
@@ -28,6 +35,10 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	activities.add(new EditPublicCandidacyPersonalInformation());
 	activities.add(new EditPublicCandidacyInformation());
 	activities.add(new EditPublicDegreeAndCoursesInformation());
+	activities.add(new SetGriValidation());
+	activities.add(new SetCoordinatorValidation());
+	activities.add(new VisualizeAlerts());
+	activities.add(new EditDocuments());
     }
 
     public ErasmusIndividualCandidacyProcess() {
@@ -48,6 +59,8 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	 */
 	setSpecificIndividualCandidacyDocumentFiles(bean);
 
+	setValidatedByErasmusCoordinator(false);
+	setValidatedByGri(false);
     }
 
     @Override
@@ -109,8 +122,12 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 		&& userView.getPerson().getEmployeeAdministrativeOffice().isDegree();
     }
 
+    static private boolean isGriOfficeEmployee(IUserView userView) {
+	return userView.hasRoleType(RoleType.INTERNATIONAL_RELATION_OFFICE);
+    }
+
     @Override
-    public ErasmusIndividualCandidacy getCandidacy() {
+    public final ErasmusIndividualCandidacy getCandidacy() {
 	return (ErasmusIndividualCandidacy) super.getCandidacy();
     }
 
@@ -155,6 +172,12 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	return this;
     }
 
+    @Override
+    public String getDisplayName() {
+	return ResourceBundle.getBundle("resources/CaseHandlingResources", Language.getLocale()).getString(
+		getClass().getSimpleName());
+    }
+
     @StartActivity
     static public class IndividualCandidacyInformation extends Activity<ErasmusIndividualCandidacyProcess> {
 
@@ -180,7 +203,7 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 
 	@Override
 	public void checkPreConditions(ErasmusIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView) && !isGriOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	    if (process.isCandidacyCancelled() || !process.isCandidacyInStandBy() || process.hasAnyPaymentForCandidacy()) {
@@ -200,7 +223,7 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 
 	@Override
 	public void checkPreConditions(ErasmusIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView) && !isGriOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	    if (process.isCandidacyCancelled()) {
@@ -221,7 +244,7 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 
 	@Override
 	public void checkPreConditions(ErasmusIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView) && !isGriOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	    if (process.isCandidacyCancelled() || process.isCandidacyAccepted() || process.hasRegistrationForCandidacy()) {
@@ -240,7 +263,7 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 
 	@Override
 	public void checkPreConditions(ErasmusIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView) && !isGriOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	    if (process.isCandidacyCancelled() || process.isCandidacyAccepted() || process.hasRegistrationForCandidacy()) {
@@ -274,6 +297,10 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	    return Boolean.FALSE;
 	}
 
+	@Override
+	public Boolean isVisibleForGriOffice() {
+	    return Boolean.FALSE;
+	}
     }
 
     static private class EditPublicCandidacyPersonalInformation extends Activity<ErasmusIndividualCandidacyProcess> {
@@ -297,6 +324,10 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	    return Boolean.FALSE;
 	}
 
+	@Override
+	public Boolean isVisibleForGriOffice() {
+	    return Boolean.FALSE;
+	}
     }
 
     static private class EditPublicCandidacyInformation extends Activity<ErasmusIndividualCandidacyProcess> {
@@ -318,6 +349,12 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	public Boolean isVisibleForAdminOffice() {
 	    return Boolean.FALSE;
 	}
+
+	@Override
+	public Boolean isVisibleForGriOffice() {
+	    return Boolean.FALSE;
+	}
+
     }
 
     static private class EditPublicDegreeAndCoursesInformation extends Activity<ErasmusIndividualCandidacyProcess> {
@@ -334,6 +371,122 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	    return process.editDegreeAndCoursesInformation((ErasmusIndividualCandidacyProcessBean) object);
 	}
 
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return Boolean.FALSE;
+	}
+
+	@Override
+	public Boolean isVisibleForGriOffice() {
+	    return Boolean.FALSE;
+	}
+
+    }
+
+    static private class SetGriValidation extends Activity<ErasmusIndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(ErasmusIndividualCandidacyProcess process, IUserView userView) {
+	    if (!isGriOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected ErasmusIndividualCandidacyProcess executeActivity(ErasmusIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) object;
+	    process.setValidatedByGri(bean.getValidatedByGri());
+
+	    if (bean.getCreateAlert()) {
+		new ErasmusAlert(process, bean.getSendEmail(), new LocalDate(), new MultiLanguageString(bean.getAlertSubject()),
+			new MultiLanguageString(bean.getAlertBody()), ErasmusAlertEntityType.GRI);
+	    }
+
+	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return Boolean.FALSE;
+	}
+
+    }
+
+    static private class SetCoordinatorValidation extends Activity<ErasmusIndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(ErasmusIndividualCandidacyProcess process, IUserView userView) {
+	    // TODO Check Permissions
+	}
+
+	@Override
+	protected ErasmusIndividualCandidacyProcess executeActivity(ErasmusIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) object;
+
+	    process.setValidatedByErasmusCoordinator(bean.getValidatedByErasmusCoordinator());
+
+	    if (bean.getCreateAlert()) {
+		new ErasmusAlert(process, bean.getSendEmail(), new LocalDate(), new MultiLanguageString(bean.getAlertSubject()),
+			new MultiLanguageString(bean.getAlertBody()), ErasmusAlertEntityType.COORDINATOR);
+	    }
+
+	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return Boolean.FALSE;
+	}
+
+	@Override
+	public Boolean isVisibleForGriOffice() {
+	    return Boolean.FALSE;
+	}
+
+	@Override
+	public Boolean isVisibleForCoordinator() {
+	    return Boolean.TRUE;
+	}
+    }
+
+    static private class VisualizeAlerts extends Activity<ErasmusIndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(ErasmusIndividualCandidacyProcess process, IUserView userView) {
+
+	}
+
+	@Override
+	protected ErasmusIndividualCandidacyProcess executeActivity(ErasmusIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForCoordinator() {
+	    return Boolean.TRUE;
+	}
+
+    }
+
+    static private class EditDocuments extends Activity<ErasmusIndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(ErasmusIndividualCandidacyProcess process, IUserView userView) {
+	    if (process.isCandidacyCancelled()) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected ErasmusIndividualCandidacyProcess executeActivity(ErasmusIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    CandidacyProcessDocumentUploadBean bean = (CandidacyProcessDocumentUploadBean) object;
+	    process.bindIndividualCandidacyDocumentFile(bean);
+	    return process;
+	}
     }
 
 }

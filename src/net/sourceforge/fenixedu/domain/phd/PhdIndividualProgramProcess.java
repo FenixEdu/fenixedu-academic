@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
+import net.sourceforge.fenixedu.domain.Alert;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -1012,7 +1013,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     private boolean hasAnyActiveAlertFor(Class<? extends PhdAlert> type) {
-	for (final PhdAlert alert : getActiveAlerts()) {
+	for (final Alert alert : getActiveAlerts()) {
 	    if (alert.getClass().equals(type)) {
 		return true;
 	    }
@@ -1138,7 +1139,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     protected boolean hasPhdAlert(final Class<? extends PhdAlert> clazz) {
-	for (final PhdAlert alert : getAlerts()) {
+	for (final Alert alert : getAlerts()) {
 	    if (clazz.isAssignableFrom(alert.getClass())) {
 		return true;
 	    }

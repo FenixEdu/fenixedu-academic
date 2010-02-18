@@ -1,4 +1,7 @@
-package net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus;
+package net.sourceforge.fenixedu.presentationTier.Action.internationalRelatOffice.candidacy.erasmus;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,10 +16,14 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProce
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean;
+import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.IndividualCandidacyProcessDA;
+import net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.DegreeCourseInformationBean;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
+import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -27,7 +34,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/caseHandlingErasmusIndividualCandidacyProcess", module = "academicAdminOffice", formBeanClass = FenixActionForm.class)
+@Mapping(path = "/caseHandlingErasmusIndividualCandidacyProcess", module = "internationalRelatOffice", formBeanClass = FenixActionForm.class)
 @Forwards( { @Forward(name = "intro", path = "/caseHandlingErasmusCandidacyProcess.do?method=listProcessAllowedActivities"),
 	@Forward(name = "list-allowed-activities", path = "/candidacy/erasmus/listIndividualCandidacyActivities.jsp"),
 	@Forward(name = "prepare-create-new-process", path = "/candidacy/erasmus/selectPersonForCandidacy.jsp"),
@@ -38,8 +45,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "edit-candidacy-personal-information", path = "/candidacy/erasmus/editPersonalInformation.jsp"),
 	@Forward(name = "edit-candidacy-information", path = "/candidacy/erasmus/editCandidacyInformation.jsp"),
 	@Forward(name = "edit-degree-courses-information", path = "/candidacy/erasmus/editDegreeAndCoursesInformation.jsp"),
-	@Forward(name = "visualize-alerts", path = "/candidacy/erasmus/visualizeAlerts.jsp"),
-	@Forward(name = "prepare-edit-candidacy-documents", path = "/candidacy/editCandidacyDocuments.jsp") })
+	@Forward(name = "set-gri-validation", path = "/internationalRelatOffice/candidacy/erasmus/setGriValidation.jsp"),
+	@Forward(name = "visualize-alerts", path = "/candidacy/erasmus/visualizeAlerts.jsp") })
 public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProcessDA {
 
     @Override
@@ -122,6 +129,7 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
 
     public ActionForward chooseDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
+
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 	request.setAttribute("degreeCourseInformationBean", readDegreeCourseInformationBean(request));
 
@@ -259,6 +267,58 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
 	    HttpServletRequest request, HttpServletResponse response) {
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 	return mapping.findForward("edit-degree-courses-information");
+    }
+
+    @Override
+    protected List<Activity> getAllowedActivities(final IndividualCandidacyProcess process) {
+	List<Activity> activities = process.getAllowedActivities(AccessControl.getUserView());
+	ArrayList<Activity> resultActivities = new ArrayList<Activity>();
+
+	for (Activity activity : activities) {
+	    if (activity.isVisibleForGriOffice()) {
+		resultActivities.add(activity);
+	    }
+	}
+
+	return resultActivities;
+    }
+
+    public ActionForward prepareExecuteSetGriValidation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final ErasmusIndividualCandidacyProcessBean bean = new ErasmusIndividualCandidacyProcessBean(getProcess(request));
+
+	bean.setCreateAlert(true);
+	bean.setSendEmail(true);
+
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
+	return mapping.findForward("set-gri-validation");
+
+    }
+
+    public ActionForward executeSetGriValidation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	try {
+	    ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+
+	    if (bean.getCreateAlert()
+		    && (StringUtils.isEmpty(bean.getAlertSubject()) || StringUtils.isEmpty(bean.getAlertBody()))) {
+		addActionMessage(request, "error.erasmus.alert.subject.and.body.must.not.be.empty");
+	    } else {
+		executeActivity(getProcess(request), "SetGriValidation", getIndividualCandidacyProcessBean());
+		return listProcessAllowedActivities(mapping, actionForm, request, response);
+	    }
+	} catch (final DomainException e) {
+	    addActionMessage(request, e.getMessage(), e.getArgs());
+	}
+
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	return mapping.findForward("set-gri-validation");
+    }
+
+    public ActionForward executeSetGriValidationInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	return mapping.findForward("set-gri-validation");
     }
 
     public ActionForward prepareExecuteVisualizeAlerts(ActionMapping mapping, ActionForm form, HttpServletRequest request,

@@ -1138,22 +1138,36 @@
 	
 	<definition name="erasmus.edit.candidacy.information" extends="definition.candidacy.process">
 		<put name="body" value="/publico/candidacy/erasmus/editCandidacyInformation.jsp"/>
+		<put name="hideLanguage" value="true" />
+	</definition>
+	
+	<definition name="erasmus.edit.candidacy.degree.and.courses" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/erasmus/editCandidacyDegreeAndCourses.jsp" />
+		<put name="hideLanguage" value="true" />
 	</definition>
 
 	<definition name="erasmus.edit.candidacy.documents" extends="definition.candidacy.process">
 		<put name="body" value="/publico/candidacy/erasmus/editCandidacyDocuments.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
-		
+			
+	<definition name="erasmus.edit.candidacy.degree.and.courses" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/erasmus/editCandidacyDegreeAndCourses.jsp"/>
+		<put name="hideLanguage" value="true" />
+	</definition>
+	
 	<definition name="erasmus.redirect.to.peps" extends="definition.candidacy.process">
 		<put name="body" value="/publico/candidacy/erasmus/peps.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
-	
 	<definition name="erasmus.show.application.submission.conditions.for.stork" extends="definition.candidacy.process">
 		<put name="body" value="/publico/candidacy/erasmus/applicationSubmissionConditionsForStork.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
-	
+
+	<definition name="erasmus.show.stork.error.page" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/erasmus/showStorkErrorPage.jsp" />
+		<put name="hideLanguage" value="true" />
+	</definition>	
 </tiles-definitions>

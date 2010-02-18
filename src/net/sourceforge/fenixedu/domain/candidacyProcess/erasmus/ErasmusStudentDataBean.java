@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.joda.time.LocalDate;
@@ -25,7 +26,7 @@ public class ErasmusStudentDataBean implements Serializable {
 
     private LocalDate dateOfArrival;
     private LocalDate dateOfDeparture;
-    List<String> typesOfProgramme;
+    List<TypeOfProgramme> typesOfProgramme;
     private String mainSubjectThesis;
     private Boolean hasContactedOtherStaff;
     private String nameOfContact;
@@ -50,7 +51,11 @@ public class ErasmusStudentDataBean implements Serializable {
 	this.setHomeInstitutionPhone(erasmusStudentData.getHomeInstitutionPhone());
 	this.setMainSubjectThesis(erasmusStudentData.getMainSubjectThesis());
 	this.setNameOfContact(erasmusStudentData.getNameOfContact());
-	// this.setTypesOfProgramme(erasmusStudentData.getTypeOfProgrammeList());
+	this.setTypesOfProgramme(erasmusStudentData.getTypesOfProgramme());
+    }
+
+    private void setTypesOfProgramme(TypeOfProgrammeList typesOfProgramme) {
+	this.typesOfProgramme = new ArrayList<TypeOfProgramme>(typesOfProgramme.getTypes());
     }
 
     public String getHomeInstitutionName() {
@@ -149,16 +154,16 @@ public class ErasmusStudentDataBean implements Serializable {
 	this.dateOfDeparture = dateOfDeparture;
     }
 
-    public List<String> getTypesOfProgramme() {
+    public List<TypeOfProgramme> getTypesOfProgramme() {
 	return typesOfProgramme;
     }
 
-    public void setTypesOfProgramme(List<String> typesOfProgramme) {
+    public void setTypesOfProgramme(List<TypeOfProgramme> typesOfProgramme) {
 	this.typesOfProgramme = typesOfProgramme;
     }
 
     public TypeOfProgrammeList getTypeOfProgrammeList() {
-	return TypeOfProgrammeList.importFromString("");
+	return new TypeOfProgrammeList(this.typesOfProgramme);
     }
 
     public String getMainSubjectThesis() {

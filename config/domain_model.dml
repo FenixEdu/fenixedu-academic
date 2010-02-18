@@ -194,6 +194,8 @@ enum net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationContext      
 enum net.sourceforge.fenixedu.domain.curriculum.CurriculumValidationEvaluationPhase                                       as CurriculumValidationEvaluationPhase;
 enum net.sourceforge.fenixedu.domain.phd.debts.PhdEventExemptionJustificationType                                         as PhdEventExemptionJustificationType;
 enum net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionState                                             as RectorateSubmissionState;
+enum net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusAlertEntityType                                      as ErasmusAlertEntityType;
+
 
 /*
  * Value types that need special externalization
@@ -3934,6 +3936,14 @@ class DomainObject {
         SalaryType salaryType;
     }
     
+    class Alert extends DomainObject {
+	    DateTime whenCreated;
+	    MultiLanguageString subject;
+	    MultiLanguageString body;
+	    Boolean active;
+	    DateTime fireDate;    	
+    }
+    
     class log.CurriculumLineLog extends DomainObject {
         EnrolmentAction action;
         DateTime dateDateTime;
@@ -6458,6 +6468,8 @@ class candidacyProcess.CandidacyProcess extends caseHandling.Process {
     }
     
     class candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess extends candidacyProcess.IndividualCandidacyProcess {
+    	Boolean validatedByGri;
+    	Boolean validatedByErasmusCoordinator;
     }
         
 class candidacyProcess.IndividualCandidacy extends DomainObject {
@@ -6595,7 +6607,12 @@ class candidacyProcess.erasmus.ErasmusStudentData extends DomainObject {
 	Boolean hasContactedOtherStaff;
 	String nameOfContact;
 }
-    
+
+class candidacyProcess.erasmus.ErasmusAlert extends Alert {
+	Boolean sendEmail;
+	LocalDate whenToFire;
+	ErasmusAlertEntityType entity;
+}
 
 class candidacyProcess.CandidacyPrecedentDegreeInformation extends DomainObject {
     SchoolLevelType schoolLevel;
@@ -6942,12 +6959,7 @@ class phd.candidacy.PhdCandidacyRefereeLetter extends DomainObject {
 class phd.candidacy.PhdCandidacyRefereeLetterFile extends phd.PhdProgramProcessDocument {
 }
 
-class phd.alert.PhdAlert extends DomainObject {
-    DateTime whenCreated;
-    MultiLanguageString subject;
-    MultiLanguageString body;
-    Boolean active;
-    DateTime fireDate;
+class phd.alert.PhdAlert extends Alert {
 }
 
     class phd.alert.PhdCustomAlert extends phd.alert.PhdAlert {
@@ -7431,14 +7443,14 @@ relation PhdCandidacyRefereeLetterCountry {
 
 relation RootDomainObjectPhdAlert {
     RootDomainObject playsRole rootDomainObject;
-    phd.alert.PhdAlert playsRole phdAlerts {
+    Alert playsRole alerts {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectPhdAlertActive {
-    RootDomainObject playsRole rootDomainObjectForActivePhdAlerts;
-    phd.alert.PhdAlert playsRole activePhdAlerts {
+    RootDomainObject playsRole rootDomainObjectForActiveAlerts;
+    Alert playsRole activeAlerts {
         multiplicity *;
     }
 }
@@ -17442,4 +17454,19 @@ relation RootDomainObjectEnrolmentInstructions {
 relation ExecutionSemesterEnrolmentInstructions {
 	ExecutionSemester playsRole executionSemester;
 	EnrolmentInstructions playsRole enrolmentInstructions;
+}
+
+
+relation ErasmusIndividualCandidacyProcessErasmusAlert {
+	candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess playsRole process;
+	candidacyProcess.erasmus.ErasmusAlert playsRole alert {
+		multiplicity *;
+	}
+}
+
+relation ErasmusAlertPerson {
+	Person playsRole whoCreated;
+	candidacyProcess.erasmus.ErasmusAlert playsRole erasmusAlert {
+		multiplicity*;
+	} 
 }
