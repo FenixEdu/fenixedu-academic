@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Refactor PhdAlert and add columns to process" refactorPhdAlertAndAlterProcess.sql
