@@ -15,8 +15,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accessControl.PermissionType;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdminOffice.AdministrativeOfficePermission;
-import net.sourceforge.fenixedu.domain.accounting.Event;
-import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
@@ -28,6 +26,7 @@ import net.sourceforge.fenixedu.domain.exceptions.EnrollmentDomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolmentPreConditions.EnrolmentPreConditionResult;
 import net.sourceforge.fenixedu.predicates.StudentCurricularPlanPredicates;
 
 abstract public class StudentCurricularPlanEnrolment {
@@ -88,12 +87,12 @@ abstract public class StudentCurricularPlanEnrolment {
     }
 
     protected void checkDebts() {
-	if (getStudent().isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt()) {
-	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.debts.for.previous.execution.years");
-	}
-	
-	if (getPerson().hasAnyResidencePaymentsInDebtForPreviousYear()) {
-	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.residence.debts");
+
+	final EnrolmentPreConditionResult result = StudentCurricularPlanEnrolmentPreConditions
+		.checkDebts(getStudentCurricularPlan());
+
+	if (!result.isValid()) {
+	    throw new DomainException(result.message(), result.args());
 	}
     }
 
@@ -214,32 +213,12 @@ abstract public class StudentCurricularPlanEnrolment {
 	    throw new DomainException("error.StudentCurricularPlan.invalid.curricular.rule.level");
 	}
 
-	if (getExecutionSemester().isFirstOfYear() && hasSpecialSeason()) {
-	    if (!getDegreeCurricularPlan().hasOpenEnrolmentPeriodInCurricularCoursesSpecialSeason(getExecutionSemester())) {
-		throw new DomainException(
-			"error.StudentCurricularPlan.students.can.only.perform.curricular.course.enrollment.inside.established.periods");
-	    }
-	} else if (getExecutionSemester().isFirstOfYear() && getRegistration().hasFlunkedState(getExecutionYear())
-		&& getRegistration().hasRegisteredActiveState()) {
-	    // TODO: create EnrolmentPeriod (Prescrito period) !!!!!!!!!!!!!!
-	    if (!getDegreeCurricularPlan().hasOpenEnrolmentPeriodInCurricularCoursesSpecialSeason(getExecutionSemester())) {
-		throw new DomainException(
-			"error.StudentCurricularPlan.students.can.only.perform.curricular.course.enrollment.inside.established.periods");
-	    }
-	} else if (!getDegreeCurricularPlan().hasOpenEnrolmentPeriodInCurricularCoursesFor(getExecutionSemester())) {
-	    throw new DomainException(
-		    "error.StudentCurricularPlan.students.can.only.perform.curricular.course.enrollment.inside.established.periods");
-	}
-    }
+	final EnrolmentPreConditionResult result = StudentCurricularPlanEnrolmentPreConditions.checkEnrolmentPeriods(
+		getStudentCurricularPlan(), getExecutionSemester());
 
-    private boolean hasSpecialSeason() {
-	if (getStudentCurricularPlan().hasSpecialSeasonFor(getExecutionSemester())) {
-	    return true;
+	if (!result.isValid()) {
+	    throw new DomainException(result.message(), result.args());
 	}
-
-	return getRegistration().hasSourceRegistration()
-		&& getRegistration().getSourceRegistration().getLastStudentCurricularPlan().hasSpecialSeasonFor(
-			getExecutionSemester());
     }
 
     private RuleResult evaluateDegreeModules(final Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> degreeModulesEnrolMap) {

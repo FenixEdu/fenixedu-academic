@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student.enrolment.bolonha;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.CycleEnrolmentBean;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -17,12 +16,14 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolmentPreConditions;
+import net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolmentPreConditions.EnrolmentPreConditionResult;
 
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.services.Service;
 
-public class EnrolInAffinityCycle extends FenixService {
+public class EnrolInAffinityCycle {
 
     /**
      * This method is used when student is enroling second cycle without
@@ -94,6 +95,7 @@ public class EnrolInAffinityCycle extends FenixService {
     }
 
     private static void markOldRegistrationWithConcludedState(final StudentCurricularPlan studentCurricularPlan) {
+	
 	if (studentCurricularPlan.getRegistration().hasState(RegistrationStateType.CONCLUDED)) {
 	    return;
 	}
@@ -113,51 +115,18 @@ public class EnrolInAffinityCycle extends FenixService {
     private static MDCandidacy createMDCandidacy(final Student student, final CycleCourseGroup cycleCourseGroupToEnrol,
 	    final ExecutionSemester executionSemester) {
 	return new MDCandidacy(student.getPerson(), cycleCourseGroupToEnrol.getParentDegreeCurricularPlan()
-		.getExecutionDegreeByYear(executionSemester.getExecutionYear()));
+		.getExecutionDegreeByAcademicInterval(executionSemester.getExecutionYear().getAcademicInterval()));
     }
 
-    /*
-     * Refactor this (similar code already exists in
-     * StudentCurricularPlanEnrolment) ?
-     */
     private static void checkConditionsToEnrol(final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionSemester executionSemester) throws FenixServiceException {
 
-	if (executionSemester.isFirstOfYear() && hasSpecialSeason(studentCurricularPlan, executionSemester)) {
-	    if (studentCurricularPlan.getDegreeCurricularPlan().getActualEnrolmentPeriodInCurricularCoursesSpecialSeason() == null) {
-		throw new FenixServiceException("error.out.of.enrolment.period");
-	    }
-	} else if (executionSemester.isFirstOfYear()
-		&& studentCurricularPlan.getRegistration().hasFlunkedState(executionSemester.getExecutionYear())
-		&& studentCurricularPlan.getRegistration().hasRegisteredActiveState()) {
-	    if (studentCurricularPlan.getDegreeCurricularPlan().getActualEnrolmentPeriodInCurricularCoursesSpecialSeason() == null) {
-		throw new FenixServiceException("error.out.of.enrolment.period");
-	    }
-	} else {
-	    if (!studentCurricularPlan.getDegreeCurricularPlan().hasActualEnrolmentPeriodInCurricularCourses()) {
-		throw new FenixServiceException("error.out.of.enrolment.period");
-	    }
+	final EnrolmentPreConditionResult result = StudentCurricularPlanEnrolmentPreConditions.checkPreConditionsToEnrol(
+		studentCurricularPlan, executionSemester);
+
+	if (!result.isValid()) {
+	    throw new FenixServiceException(result.message(), result.args());
 	}
-
-	if (studentCurricularPlan.getRegistration().getStudent().isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt()) {
-	    throw new FenixServiceException("error.message.debts.from.past.years.not.payed");
-	}
-
-	if (studentCurricularPlan.getPerson().hasAnyResidencePaymentsInDebtForPreviousYear()) {
-	    throw new FenixServiceException("error.StudentCurricularPlan.cannot.enrol.with.residence.debts");
-	}
-    }
-
-    private static boolean hasSpecialSeason(final StudentCurricularPlan studentCurricularPlan,
-	    final ExecutionSemester executionSemester) {
-	if (studentCurricularPlan.hasSpecialSeasonFor(executionSemester)) {
-	    return true;
-	}
-
-	final Registration registration = studentCurricularPlan.getRegistration();
-
-	return registration.hasSourceRegistration()
-		&& registration.getSourceRegistration().getLastStudentCurricularPlan().hasSpecialSeasonFor(executionSemester);
     }
 
 }

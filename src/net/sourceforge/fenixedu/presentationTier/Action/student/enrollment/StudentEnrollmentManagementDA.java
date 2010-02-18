@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.enrolment.bolonha.EnrolInAffinityCycle;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.CycleEnrolmentBean;
-import net.sourceforge.fenixedu.domain.EnrolmentPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -20,14 +19,14 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolmentPreConditions;
+import net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolmentPreConditions.EnrolmentPreConditionResult;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 
@@ -190,58 +189,16 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
     private boolean canContinueToEnrolment(final HttpServletRequest request, final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionSemester executionSemester) {
 
-	if (executionSemester.isFirstOfYear() && hasSpecialSeason(studentCurricularPlan, executionSemester)) {
-	    if (studentCurricularPlan.getDegreeCurricularPlan().getActualEnrolmentPeriodInCurricularCoursesSpecialSeason() == null) {
-		addOutOfPeriodMessage(request, studentCurricularPlan.getDegreeCurricularPlan()
-			.getNextEnrolmentPeriodInCurricularCoursesSpecialSeason());
-		return false;
-	    }
-	} else if (executionSemester.isFirstOfYear()
-		&& studentCurricularPlan.getRegistration().hasFlunkedState(executionSemester.getExecutionYear())
-		&& studentCurricularPlan.getRegistration().hasRegisteredActiveState()) {
+	final EnrolmentPreConditionResult result = StudentCurricularPlanEnrolmentPreConditions.checkPreConditionsToEnrol(
+		studentCurricularPlan, executionSemester);
 
-	    if (studentCurricularPlan.getDegreeCurricularPlan().getActualEnrolmentPeriodInCurricularCoursesSpecialSeason() == null) {
-		addOutOfPeriodMessage(request, studentCurricularPlan.getDegreeCurricularPlan()
-			.getNextEnrolmentPeriodInCurricularCoursesSpecialSeason());
-		return false;
-	    }
+	if (!result.isValid()) {
 
-	} else if (!studentCurricularPlan.getDegreeCurricularPlan().hasActualEnrolmentPeriodInCurricularCourses()) {
-	    addOutOfPeriodMessage(request, studentCurricularPlan.getDegreeCurricularPlan().getNextEnrolmentPeriod());
+	    addActionMessage(request, result.message(), result.args());
 	    return false;
-	}
 
-	if (studentCurricularPlan.getRegistration().getStudent().isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt()) {
-	    addActionMessage(request, "error.message.debts.from.past.years.not.payed");
-	    return false;
-	}
-
-	if (studentCurricularPlan.getPerson().hasAnyResidencePaymentsInDebtForPreviousYear()) {
-	    addActionMessage(request, "error.StudentCurricularPlan.cannot.enrol.with.residence.debts");
-	    return false;
-	}
-
-	return true;
-    }
-
-    private boolean hasSpecialSeason(final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester) {
-	if (studentCurricularPlan.hasSpecialSeasonFor(executionSemester)) {
-	    return true;
-	}
-
-	final Registration registration = studentCurricularPlan.getRegistration();
-
-	return registration.hasSourceRegistration()
-		&& registration.getSourceRegistration().getLastStudentCurricularPlan().hasSpecialSeasonFor(executionSemester);
-    }
-
-    private void addOutOfPeriodMessage(HttpServletRequest request, final EnrolmentPeriod nextEnrollmentPeriod) {
-	if (nextEnrollmentPeriod != null) {
-	    addActionMessage(request, "message.out.curricular.course.enrolment.period", nextEnrollmentPeriod
-		    .getStartDateDateTime().toString("dd/MM/yyyy HH:mm"), nextEnrollmentPeriod.getEndDateDateTime().toString(
-		    DateFormatUtil.DEFAULT_DATE_FORMAT));
 	} else {
-	    addActionMessage(request, "message.out.curricular.course.enrolment.period.default");
+	    return true;
 	}
     }
 
