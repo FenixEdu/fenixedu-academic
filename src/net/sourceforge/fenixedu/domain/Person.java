@@ -3290,7 +3290,7 @@ public class Person extends Person_Base {
 
 	for (final Event event : getResidencePaymentEvents()) {
 	    final ResidenceEvent residenceEvent = (ResidenceEvent) event;
-	    if (residenceEvent.isFor(previousYear) && !residenceEvent.isPayed()) {
+	    if (residenceEvent.isFor(previousYear) && !residenceEvent.isCancelled() && !residenceEvent.isPayed()) {
 		return true;
 	    }
 	}
