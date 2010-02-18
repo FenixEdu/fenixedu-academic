@@ -1523,7 +1523,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	    } else {
 		final StringBuilder res = new StringBuilder(getDegreeType().getGraduateTitle(locale));
 		res.append(" ").append(ResourceBundle.getBundle("resources/ApplicationResources", locale).getString("label.in"));
-		res.append(" ").append(getDegree().getFilteredName(executionYear));
+		res.append(" ").append(getDegree().getFilteredName(executionYear, locale));
 
 		return res.toString();
 	    }
