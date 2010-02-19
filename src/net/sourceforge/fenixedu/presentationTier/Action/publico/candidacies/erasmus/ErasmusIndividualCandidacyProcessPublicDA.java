@@ -187,8 +187,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	    return mapping.findForward("edit-candidacy-degree-and-courses");
 	}
 
-	RenderUtils.invalidateViewState("degree.course.information.bean");
-	RenderUtils.invalidateViewState("individualCandidacyProcessBean");
+	RenderUtils.invalidateViewState();
 
 	return mapping.findForward("fill-degree-and-courses-information");
     }
@@ -206,8 +205,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
 	request.setAttribute("degreeCourseInformationBean", readDegreeCourseInformationBean(request));
 
-	RenderUtils.invalidateViewState("degree.course.information.bean");
-	RenderUtils.invalidateViewState("individualCandidacyProcessBean");
+	RenderUtils.invalidateViewState();
 
 	if ("editCandidacy".equals(request.getParameter("userAction"))) {
 	    return mapping.findForward("edit-candidacy-degree-and-courses");
@@ -228,8 +226,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
 	request.setAttribute("degreeCourseInformationBean", readDegreeCourseInformationBean(request));
 
-	RenderUtils.invalidateViewState("degree.course.information.bean");
-	RenderUtils.invalidateViewState("individualCandidacyProcessBean");
+	RenderUtils.invalidateViewState();
 
 	if ("editCandidacy".equals(request.getParameter("userAction"))) {
 	    return mapping.findForward("edit-candidacy-degree-and-courses");
