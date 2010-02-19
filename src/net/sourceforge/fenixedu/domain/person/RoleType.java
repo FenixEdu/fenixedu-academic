@@ -101,7 +101,9 @@ public enum RoleType {
 
     TUTORSHIP("Tutorship"),
     
-    EXTERNAL_SUPERVISOR("External Supervisor");
+    EXTERNAL_SUPERVISOR("External Supervisor"),
+    
+    PUBLIC_RELATIONS_OFFICE("Public Relations Office");
 
     public String getName() {
 	return name();

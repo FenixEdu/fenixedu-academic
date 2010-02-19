@@ -54,6 +54,7 @@
     </fr:view>
 </logic:notEmpty>
 
+
 <div class="mtop2">
 	<p class="mbottom05">
 	    <strong><bean:message key="title.unitSite.managers.add" bundle="SITE_RESOURCES"/></strong>

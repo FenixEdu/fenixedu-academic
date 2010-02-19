@@ -136,6 +136,7 @@ import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.smtp.EmailSender;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
@@ -636,7 +637,12 @@ public class Person extends Person_Base {
 	    super.addPersonRoles(personRoles);
 	}
     }
-
+    
+    @Service
+    public void addPersonRoleByRoleTypeService(RoleType roleType) {
+	this.addPersonRoleByRoleType(roleType);
+    }
+    
     public void addPersonRoleByRoleType(RoleType roleType) {
 	this.addPersonRoles(Role.getRoleByRoleType(roleType));
     }
@@ -985,6 +991,11 @@ public class Person extends Person_Base {
 	return "/candidateDocuments/person/P" + getIdInternal();
     }
 
+    @Service
+    public void removeRoleByTypeService(final RoleType roleType) {
+	removeRoleByType(roleType);
+    }
+    
     public void removeRoleByType(final RoleType roleType) {
 	final Role role = getPersonRole(roleType);
 	if (role != null) {

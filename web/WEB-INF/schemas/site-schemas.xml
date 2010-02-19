@@ -489,8 +489,6 @@
 		<property name="subSchema" value="showPhone"/>
 	</slot>
 </schema>
-
-
 <schema name="showPhone" type="net.sourceforge.fenixedu.domain.contacts.Phone" bundle="RESEARCHER_RESOURCES">
 	<slot name="number" layout="prefixed">
 		<property name="prefixKey" value="label.person.telephone"/>
