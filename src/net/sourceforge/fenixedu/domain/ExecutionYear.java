@@ -410,9 +410,9 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 	result.add(startYear);
 
 	ExecutionYear year = startYear.getNextExecutionYear();
-	while (year.isBeforeOrEquals(endYear)) {
+	while (year != null && year.isBeforeOrEquals(endYear)) {
 	    result.add(year);
-	    year = startYear.getNextExecutionYear();
+	    year = year.getNextExecutionYear();
 	}
 	return result;
     }
