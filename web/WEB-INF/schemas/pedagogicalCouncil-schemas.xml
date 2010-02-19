@@ -699,6 +699,30 @@
 	</slot>
 </schema>
 
+<schema name="tutorship.tutorate.student.lowPerformance" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.studentLowPerformance.StudentLowPerformanceBean">
+	<slot name="student.name" key="label.tutorship.lowPerformance.name" bundle="PEDAGOGICAL_COUNCIL" />
+	<slot name="student.number" key="label.tutorship.lowPerformance.number" bundle="PEDAGOGICAL_COUNCIL" />
+	<slot name="degree.name" key="label.tutorship.lowPerformance.degreeName" bundle="PEDAGOGICAL_COUNCIL" />
+	<slot name="degree.degreeType" key="label.tutorship.lowPerformance.degreeType"  bundle="PEDAGOGICAL_COUNCIL" />
+	<slot name="sumEcts" key="label.tutorship.lowPerformance.sumEcts" bundle="PEDAGOGICAL_COUNCIL" />
+	<slot name="email" key="label.tutorship.lowPerformance.email"  bundle="PEDAGOGICAL_COUNCIL" />
+	<slot name="regime" key="label.tutorship.lowPerformance.regime"  bundle="PEDAGOGICAL_COUNCIL" />
+	<slot name="numberOfEntriesStudentInSecretary" key="label.tutorship.lowPerformance.numberOfEntriesStudentInSecretary"  bundle="PEDAGOGICAL_COUNCIL" />
+	<slot name="registrationStart" key="label.tutorship.lowPerformance.registrationStart"  bundle="PEDAGOGICAL_COUNCIL" />
+	
+	
+</schema>
+
+<schema name="tutorship.tutorate.student.lowPerformance.prescriptionBean" type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.studentLowPerformance.PrescriptionBean">
+    <slot name="selectedPrescriptionEnum" key="label.tutorship.lowPerformance.moment" layout="menu-select-postback" bundle="PEDAGOGICAL_COUNCIL">       
+    	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.pedagogicalCouncil.StudentsLowPerformanceMomentProvider"/>
+    	<property name="destination" value="viewStudentsState"/>
+    	<property name="eachLayout" value=""/>
+    </slot>
+</schema>
+
+
+
 <!-- SUMMARIES -->
 
 <schema name="summary.control.allDepartments" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.DepartmentSummaryElement">

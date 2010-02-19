@@ -401,6 +401,15 @@ public class Student extends Student_Base {
 	return null;
     }
 
+    public boolean isWorkingStudent() {
+	for (StudentStatute statute : getStudentStatutes()) {
+	    if (statute.getStatuteType() == StudentStatuteType.WORKING_STUDENT) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
     private boolean isStudentOfDegreeType(DegreeType degreeType) {
 	for (Registration registration : getRegistrationsByDegreeType(degreeType)) {
 	    if (registration.isActive()) {

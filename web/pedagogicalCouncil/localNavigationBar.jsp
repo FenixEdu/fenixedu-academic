@@ -129,6 +129,9 @@
 		<li>
 			<html:link page="/studentTutorship.do?method=prepareStudentCurriculum"><bean:message key="link.teacher.tutorship.students.viewCurriculum" bundle="APPLICATION_RESOURCES"/></html:link>
 		</li>
+		<li>
+            <html:link page="/studentLowPerformance.do?method=viewStudentsState"><bean:message key="link.tutorship.students.ListLowPerformance" bundle="APPLICATION_RESOURCES"/></html:link>
+        </li>
 
 	</ul>
 </logic:present>
@@ -150,6 +153,9 @@
         </li>
         <li>
             <html:link page="/studentTutorship.do?method=prepareStudentCurriculum"><bean:message key="link.teacher.tutorship.students.viewCurriculum" bundle="APPLICATION_RESOURCES"/></html:link>
+        </li>
+        	<li>
+            <html:link page="/studentLowPerformance.do?method=viewStudentsState"><bean:message key="link.tutorship.students.ListLowPerformance" bundle="APPLICATION_RESOURCES"/></html:link>
         </li>
     </ul>
 
