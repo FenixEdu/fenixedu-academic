@@ -1,7 +1,9 @@
 package net.sourceforge.fenixedu.domain.contacts;
 
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Person;
@@ -213,5 +215,15 @@ public abstract class PartyContact extends PartyContact_Base {
 		contacts.get(0).setDefaultContact(Boolean.TRUE);
 	    }
 	}
+    }
+
+    public static Set<PartyContact> readPartyContactsOfType(Class<? extends PartyContact>... contactClasses) {
+	Set<PartyContact> contacts = new HashSet<PartyContact>();
+
+	for (Class<? extends PartyContact> clazz : contactClasses) {
+	    contacts.addAll(RootDomainObject.readAllDomainObjects(clazz));
+	}
+
+	return contacts;
     }
 }

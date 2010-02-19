@@ -22,6 +22,9 @@ public class AlumniSearchBean implements Serializable {
     private DegreeType degreeType;
     private Degree degree;
     private List<Registration> alumni;
+    private String email;
+    private String mobileNumber;
+    private String telephoneNumber;
 
     public AlumniSearchBean() {
 	this("", ExecutionYear.readFirstExecutionYear(), ExecutionYear.readLastExecutionYear());
@@ -149,4 +152,27 @@ public class AlumniSearchBean implements Serializable {
 	this.documentIdNumber = documentIdNumber;
     }
 
+    public String getEmail() {
+	return email;
+    }
+
+    public void setEmail(String email) {
+	this.email = email;
+    }
+
+    public String getMobileNumber() {
+	return mobileNumber;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+	this.mobileNumber = mobileNumber;
+    }
+
+    public String getTelephoneNumber() {
+	return telephoneNumber;
+    }
+
+    public void setTelephoneNumber(String telephoneNumber) {
+	this.telephoneNumber = telephoneNumber;
+    }
 }

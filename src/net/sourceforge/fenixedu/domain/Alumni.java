@@ -3,7 +3,9 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.UUID;
@@ -16,6 +18,7 @@ import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
 import net.sourceforge.fenixedu.domain.contacts.Phone;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -244,7 +247,10 @@ public class Alumni extends Alumni_Base {
 	return resultRegistrations;
     }
 
-    public static List<Registration> readRegistrations(String personName, Integer studentNumber, String documentIdNumber) {
+    public static List<Registration> readRegistrations(AlumniSearchBean bean) {
+	String personName = bean.getName();
+	Integer studentNumber = bean.getStudentNumber();
+	String documentIdNumber = bean.getDocumentIdNumber();
 
 	List<Registration> resultRegistrations = new ArrayList<Registration>();
 	if (!StringUtils.isEmpty(personName)) {
@@ -283,7 +289,91 @@ public class Alumni extends Alumni_Base {
 	    }
 	}
 
-	return resultRegistrations;
+	String telephoneNumber = bean.getTelephoneNumber();
+	String mobileNumber = bean.getMobileNumber();
+	String email = bean.getEmail();
+
+	List<Registration> filteredResultRegistrations = new ArrayList<Registration>();
+	if (!StringUtils.isEmpty(personName) || studentNumber != null || !StringUtils.isEmpty(documentIdNumber)) {
+	    // Filter the result list
+	    for (Registration registration : resultRegistrations) {
+		for (PartyContact contact : registration.getPerson().getPartyContacts()) {
+		    if (!StringUtils.isEmpty(mobileNumber)
+			    && !(contact.isMobile() && mobileNumber.equals(contact.getPresentationValue()))) {
+			continue;
+		    }
+
+		    if (!StringUtils.isEmpty(telephoneNumber)
+			    && !(contact.isPhone() && telephoneNumber.equals(contact.getPresentationValue()))) {
+			continue;
+		    }
+
+		    if (!StringUtils.isEmpty(email)
+			    || !(contact.isEmailAddress() && email.equals(contact.getPresentationValue()))) {
+			continue;
+		    }
+
+		    filteredResultRegistrations.add(registration);
+		    break;
+		}
+	    }
+	} else if (!StringUtils.isEmpty(telephoneNumber) || !StringUtils.isEmpty(email) || !StringUtils.isEmpty(mobileNumber)) {
+	    List<Class<? extends PartyContact>> clazzList = new ArrayList<Class<? extends PartyContact>>();
+
+	    if (!StringUtils.isEmpty(telephoneNumber)) {
+		clazzList.add(Phone.class);
+	    }
+
+	    if (!StringUtils.isEmpty(email)) {
+		clazzList.add(EmailAddress.class);
+	    }
+
+	    if (!StringUtils.isEmpty(mobileNumber)) {
+		clazzList.add(MobilePhone.class);
+	    }
+
+	    Set<Party> partyRead = new HashSet<Party>();
+	    for (PartyContact contact : PartyContact.readPartyContactsOfType(clazzList.toArray(new Class[0]))) {
+		if (!StringUtils.isEmpty(mobileNumber)
+			&& !(contact.isMobile() && mobileNumber.equals(contact.getPresentationValue()))) {
+		    continue;
+		}
+
+		if (!StringUtils.isEmpty(telephoneNumber)
+			&& !(contact.isPhone() && telephoneNumber.equals(contact.getPresentationValue()))) {
+		    continue;
+		}
+
+		if (!StringUtils.isEmpty(email) && !(contact.isEmailAddress() && email.equals(contact.getPresentationValue()))) {
+		    continue;
+		}
+
+		if (!contact.getParty().isPerson()) {
+		    continue;
+		}
+
+		if (partyRead.contains(contact.getParty())) {
+		    continue;
+		}
+
+		Person person = (Person) contact.getParty();
+		partyRead.add(person);
+
+		if (!person.hasRole(RoleType.ALUMNI) || !person.hasStudent()) {
+		    continue;
+		}
+
+		for (Registration registration : person.getStudent().getRegistrations()) {
+		    if (!registration.isConcluded()) {
+			continue;
+		    }
+
+		    filteredResultRegistrations.add(registration);
+		}
+	    }
+	}
+
+	return filteredResultRegistrations;
     }
 
     private static boolean matchDocumentIdNumber(Person person, String documentIdNumber) {

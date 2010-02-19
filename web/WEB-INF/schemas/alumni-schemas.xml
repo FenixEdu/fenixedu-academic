@@ -97,6 +97,15 @@
 		</slot>
 		<slot name="studentNumber" key="label.studentNumber" validator="pt.ist.fenixWebFramework.renderers.validators.NumberValidator" />
 		<slot name="documentIdNumber" key="label.documentIdNumber" />
+		<slot name="email" key="label.email">
+			<property name="size" value="40"/>
+		</slot>		
+		<slot name="telephoneNumber" key="label.phone">
+			<property name="size" value="40"/>
+		</slot>
+		<slot name="mobileNumber" key="label.mobile">
+			<property name="size" value="40"/>
+		</slot>		
 	</schema>
 
 	<schema name="alumni.gep.search.result" type="net.sourceforge.fenixedu.domain.student.Registration" bundle="ALUMNI_RESOURCES">

@@ -263,11 +263,7 @@ public class AlumniInformationAction extends FenixDispatchAction {
 	    searchBean = new AlumniSearchBean();
 	}
 
-	Integer studentNumber = searchBean.getStudentNumber();
-	String documentIdNumber = searchBean.getDocumentIdNumber();
-	String studentName = searchBean.getName();
-
-	List<Registration> registrations = Alumni.readRegistrations(studentName, studentNumber, documentIdNumber);
+	List<Registration> registrations = Alumni.readRegistrations(searchBean);
 	searchBean.setAlumni(new ArrayList<Registration>(registrations));
 
 	RenderUtils.invalidateViewState();
