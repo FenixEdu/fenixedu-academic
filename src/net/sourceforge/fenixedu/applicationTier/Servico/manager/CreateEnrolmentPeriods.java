@@ -31,6 +31,8 @@ public class CreateEnrolmentPeriods {
 	 */
 	if (!degreeType.isBolonhaType() && isReingressionPeriod(enrolmentPeriodClassName)) {
 	    createReingressionPeriodsForPreBolonhaDegrees(executionSemester, degreeType, startDate, endDate);
+	} else if (degreeType.isEmpty()) {
+	    createEnrolmentPeriodsForEmptyDegree(executionSemester, enrolmentPeriodClassName, startDate, endDate);
 	} else {
 	    createEnrolmentPeriodsForBolonhaDegrees(executionSemester, degreeType, enrolmentPeriodClassName, startDate, endDate);
 	}
@@ -43,6 +45,12 @@ public class CreateEnrolmentPeriods {
 		new ReingressionPeriod(degreeCurricularPlan, executionSemester, startDate, endDate);
 	    }
 	}
+    }
+
+    private static void createEnrolmentPeriodsForEmptyDegree(ExecutionSemester executionSemester,
+	    String enrolmentPeriodClassName, Date startDate, Date endDate) throws FenixServiceException {
+	createPeriod(enrolmentPeriodClassName, startDate, endDate, executionSemester, DegreeCurricularPlan
+		.readEmptyDegreeCurricularPlan());
     }
 
     private static void createEnrolmentPeriodsForBolonhaDegrees(final ExecutionSemester executionSemester,
