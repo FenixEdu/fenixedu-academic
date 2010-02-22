@@ -23,11 +23,15 @@
     </h2>
 
     <bean:define id="sectionId" name="section" property="idInternal"/>
-
     <p>
        <em><bean:message key="message.section.view.mustLogin" bundle="SITE_RESOURCES"/></em>
        <html:link page="<%= String.format("%s?method=sectionWithLogin&amp;%s&amp;sectionID=%s", actionName, context, sectionId) %>">
             <bean:message key="link.section.view.login" bundle="SITE_RESOURCES"/>
        </html:link>.
     </p>
+    <bean:message key="label.item.file.availableFor" bundle="SITE_RESOURCES"/>
+
+	<fr:view name="section" property="availabilityPolicy.targetGroup.name">
+	</fr:view>
+    
 </logic:present>
