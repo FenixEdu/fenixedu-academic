@@ -31,7 +31,10 @@ public class SearchSimilarNamesPersonsProvider implements DataProvider {
 
 	if (choosePersonBean.getStudentNumber() != null) {
 	    Student student = Student.readStudentByNumber(choosePersonBean.getStudentNumber());
-	    result.add(student.getPerson());
+
+	    if (student != null) {
+		result.add(student.getPerson());
+	    }
 	}
 
 	return result;

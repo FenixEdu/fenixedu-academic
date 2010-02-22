@@ -217,11 +217,13 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 	if (person != null) {
 	    personBean = new PersonBean(person);
 
+	    personBean.setStudentNumber(person.hasStudent() ? person.getStudent().getNumber() : choosePersonBean
+		    .getStudentNumber());
+
 	    if (isEmployeeAndHasCurrentWorkingContract(person)) {
 		request.setAttribute("personBean", personBean);
 		return mapping.findForward("fillNewPersonDataForEmployee");
 	    }
-
 	} else {
 	    personBean = new PersonBean(choosePersonBean.getName(), identificationNumber, choosePersonBean.getDocumentType(),
 		    dateOfBirth, choosePersonBean.getStudentNumber());
