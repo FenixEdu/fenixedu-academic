@@ -19,11 +19,4 @@ class PrescriptionRuleFiveBolonhaEntries extends PrescriptionRuleGeneric {
 	super(registrationStart, minimumEcts, numberOfEntriesStudentInSecretary);
 
     }
-
-    // MinEcts >=
-    @Override
-    public boolean isPrescript(BigDecimal ects, int numberOfEntriesStudentInSecretary) {
-	return ects.compareTo(getMinimumEcts()) < 0
-		&& numberOfEntriesStudentInSecretary >= getNumberOfEntriesStudentInSecretary();
-    }
 }

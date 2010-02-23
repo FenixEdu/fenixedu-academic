@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.stud
 import java.math.BigDecimal;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.studentLowPerformance.PrescriptionBean.PrescriptionEnum;
+import net.sourceforge.fenixedu.domain.PrescriptionEnum;
 
 class PrescriptionRuleMomentTwo extends AbstractPrescriptionRule {
 

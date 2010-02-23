@@ -5,20 +5,20 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.studentLowPerformance.PrescriptionBean.PrescriptionEnum;
+import net.sourceforge.fenixedu.domain.PrescriptionEnum;
 
 public abstract class AbstractPrescriptionRule {
 
     private ExecutionYear registrationStart;
     private BigDecimal minimumEcts;
     private int numberOfEntriesStudentInSecretary;
-    private PrescriptionBean.PrescriptionEnum prescriptionEnum;
+    private PrescriptionEnum prescriptionEnum;
 
-    public PrescriptionBean.PrescriptionEnum getPrescriptionEnum() {
+    public PrescriptionEnum getPrescriptionEnum() {
 	return prescriptionEnum;
     }
 
-    public void setPrescriptionEnum(PrescriptionBean.PrescriptionEnum prescriptionEnum) {
+    public void setPrescriptionEnum(PrescriptionEnum prescriptionEnum) {
 	this.prescriptionEnum = prescriptionEnum;
     }
 
@@ -60,7 +60,7 @@ public abstract class AbstractPrescriptionRule {
 	return true;
     }
 
-    public boolean isContains(PrescriptionEnum p) {
+    public boolean contains(PrescriptionEnum p) {
 	return p.equals(getPrescriptionEnum());
     }
 
@@ -69,10 +69,10 @@ public abstract class AbstractPrescriptionRule {
 		&& numberOfEntriesStudentInSecretary == getNumberOfEntriesStudentInSecretary();
     }
 
-    public static List<AbstractPrescriptionRule> readPrescriptionRules(PrescriptionBean prescriptionBean) {
+    public static List<AbstractPrescriptionRule> readPrescriptionRules(PrescriptionEnum prescriptionEnum) {
 	List<AbstractPrescriptionRule> abstractPrescriptionRules = new LinkedList<AbstractPrescriptionRule>();
 	for (AbstractPrescriptionRule abstractPrescriptionRule : getPrescriptionRules()) {
-	    if (abstractPrescriptionRule.isContains(prescriptionBean.getSelectedPrescriptionEnum())) {
+	    if (abstractPrescriptionRule.contains(prescriptionEnum)) {
 		abstractPrescriptionRules.add(abstractPrescriptionRule);
 	    }
 	}
@@ -83,6 +83,23 @@ public abstract class AbstractPrescriptionRule {
 	return new AbstractPrescriptionRule[] { new PrescriptionRuleMomentOne(), new PrescriptionRuleMomentTwo(),
 		new PrescriptionRuleMomentTree(), new PrescriptionRuleTreeEntries(), new PrescriptionRuleFourEntries(),
 		new PrescriptionRuleFiveEntries() };
+    }
+
+    // valid until 2009_2010
+    public static List<AbstractPrescriptionRule> readPrescriptionRulesUntil2009_2010(PrescriptionEnum prescriptionEnum) {
+	List<AbstractPrescriptionRule> abstractPrescriptionRules = new LinkedList<AbstractPrescriptionRule>();
+	for (AbstractPrescriptionRule abstractPrescriptionRule : getPrescriptionRulesUntil2009_2010()) {
+	    if (abstractPrescriptionRule.contains(prescriptionEnum)) {
+		abstractPrescriptionRules.add(abstractPrescriptionRule);
+	    }
+	}
+	return abstractPrescriptionRules;
+    }
+
+    // valid until 2009_2010
+    private static AbstractPrescriptionRule[] getPrescriptionRulesUntil2009_2010() {
+	return new AbstractPrescriptionRule[] { new PrescriptionRuleMomentOne(), new PrescriptionRuleMomentTwo(),
+		new PrescriptionRuleMomentTree(), new PrescriptionRuleTreeEntries(), new PrescriptionRuleFourEntries() };
     }
 
     public static List<AbstractPrescriptionRule> readProviderPrescriptionRules() {

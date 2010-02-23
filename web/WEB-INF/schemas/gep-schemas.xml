@@ -17,6 +17,8 @@
 	<slot name="person.name" key="label.get.person"/>
 </schema>
 
+
+
 <schema name="select.degree.type"
 		type="net.sourceforge.fenixedu.presentationTier.Action.gep.ReportsByDegreeTypeDA$ReportBean"
 		bundle="ACADEMIC_OFFICE_RESOURCES">

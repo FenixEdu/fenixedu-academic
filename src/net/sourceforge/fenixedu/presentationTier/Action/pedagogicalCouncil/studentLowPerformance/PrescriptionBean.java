@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.stud
 
 import java.io.Serializable;
 
+import net.sourceforge.fenixedu.domain.PrescriptionEnum;
+
 public class PrescriptionBean implements Serializable {
     private static final long serialVersionUID = 1L;
     private PrescriptionEnum prescriptionEnum = PrescriptionEnum.MOMENT1;
@@ -17,9 +19,5 @@ public class PrescriptionBean implements Serializable {
 
     public PrescriptionEnum getSelectedPrescriptionEnum() {
 	return prescriptionEnum;
-    }
-
-    public enum PrescriptionEnum {
-	MOMENT1, MOMENT2, MOMENT3, ALLPRESCRIPTION
     }
 }

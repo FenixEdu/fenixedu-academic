@@ -53,6 +53,7 @@ enum net.sourceforge.fenixedu.domain.RequestState                               
 enum net.sourceforge.fenixedu.domain.SalaryType                                                                           as SalaryType;
 enum net.sourceforge.fenixedu.domain.SchoolLevelType                                                                      as SchoolLevelType;
 enum net.sourceforge.fenixedu.domain.ShiftType                                                                            as ShiftType;
+enum net.sourceforge.fenixedu.domain.PrescriptionEnum                                                                         as PrescriptionEnum;
 enum net.sourceforge.fenixedu.domain.UnitBoardPermittedGroupType                                                          as UnitBoardPermittedGroupType;
 enum net.sourceforge.fenixedu.domain.UnitSiteBannerRepeatType                                                             as UnitSiteBannerRepeatType;
 enum net.sourceforge.fenixedu.domain.UnitSiteLayoutType                                                                   as UnitSiteLayoutType;
@@ -6744,6 +6745,10 @@ class PublicRelationsStudentListQueueJob extends QueueJobWithFile{
     Boolean active;
     Boolean concluded;
     DegreeType degreeType;
+}
+
+class TutorshipStudentLowPerformanceQueueJob extends QueueJobWithFile {
+	PrescriptionEnum prescriptionEnum;
 }
 
 class student.Delegate extends DomainObject {
@@ -17464,9 +17469,12 @@ relation ErasmusIndividualCandidacyProcessErasmusAlert {
 	}
 }
 
+
 relation ErasmusAlertPerson {
 	Person playsRole whoCreated;
 	candidacyProcess.erasmus.ErasmusAlert playsRole erasmusAlert {
-		multiplicity*;
+		multiplicity *;
 	} 
 }
+
+
