@@ -3443,6 +3443,17 @@ public class Registration extends Registration_Base {
 	return null;
     }
 
+    public Set<Enrolment> getDissertationEnrolments(DegreeCurricularPlan degreeCurricularPlan) {
+	final Set<Enrolment> enrolments = new HashSet<Enrolment>();
+	for (StudentCurricularPlan scp : getStudentCurricularPlans()) {
+	    if (degreeCurricularPlan != null && scp.getDegreeCurricularPlan() != degreeCurricularPlan) {
+		continue;
+	    }
+	    enrolments.addAll(scp.getDissertationEnrolments());
+	}
+	return enrolments;
+    }
+
     final public Proposal getDissertationProposal(final ExecutionYear executionYear) {
 	for (final GroupStudent groupStudent : getAssociatedGroupStudents()) {
 	    final FinalDegreeWorkGroup group = groupStudent.getFinalDegreeDegreeWorkGroup();

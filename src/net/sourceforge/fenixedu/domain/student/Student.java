@@ -826,10 +826,7 @@ public class Student extends Student_Base {
     final public TreeSet<Enrolment> getDissertationEnrolments(DegreeCurricularPlan degreeCurricularPlan) {
 	final TreeSet<Enrolment> enrolments = new TreeSet<Enrolment>(Enrolment.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME_AND_ID);
 	for (final Registration registration : getRegistrations()) {
-	    final Enrolment dissertationEnrolment = registration.getDissertationEnrolment(degreeCurricularPlan);
-	    if (dissertationEnrolment != null) {
-		enrolments.add(dissertationEnrolment);
-	    }
+	    enrolments.addAll(registration.getDissertationEnrolments(degreeCurricularPlan));
 	}
 	return enrolments;
     }
