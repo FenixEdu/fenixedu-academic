@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
@@ -143,35 +144,38 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends FenixService {
 	    throw new NumberOfNecessaryCompletedCreditsInSecondCycleNotSpecifiedException();
 	}
 
-	CycleCurriculumGroup firstCycleCurriculumGroup = studentCurricularPlan.getFirstCycle();
-	if (firstCycleCurriculumGroup != null) {
-	    final Double completedCreditsFirstCycle = firstCycleCurriculumGroup.getAprovedEctsCredits();
-	    if (minimumCompletedCreditsFirstCycle > completedCreditsFirstCycle) {
-		final String[] args = { completedCreditsFirstCycle.toString(), minimumCompletedCreditsFirstCycle.toString() };
-		throw new InsufficientCompletedCreditsInFirstCycleException(null, args);
-	    }
-	} else {
-	    final Registration sourceRegistration = registration.getSourceRegistration();
-	    if (sourceRegistration != null) {
-		final StudentCurricularPlan sourceStudentCurricularPlan = registration.getLastStudentCurricularPlan();
-		if (sourceStudentCurricularPlan != null) {
-		    firstCycleCurriculumGroup = sourceStudentCurricularPlan.getFirstCycle();
-		    if (firstCycleCurriculumGroup != null) {
-			final Double completedCreditsFirstCycle = firstCycleCurriculumGroup.getAprovedEctsCredits();
-			if (minimumCompletedCreditsFirstCycle > completedCreditsFirstCycle) {
-			    final String[] args = { completedCreditsFirstCycle.toString(),
-				    minimumCompletedCreditsFirstCycle.toString() };
-			    throw new InsufficientCompletedCreditsInFirstCycleException(null, args);
+	if (registration.getRegistrationAgreement() != RegistrationAgreement.ERASMUS) {
+
+	    CycleCurriculumGroup firstCycleCurriculumGroup = studentCurricularPlan.getFirstCycle();
+	    if (firstCycleCurriculumGroup != null) {
+		final Double completedCreditsFirstCycle = firstCycleCurriculumGroup.getAprovedEctsCredits();
+		if (minimumCompletedCreditsFirstCycle > completedCreditsFirstCycle) {
+		    final String[] args = { completedCreditsFirstCycle.toString(), minimumCompletedCreditsFirstCycle.toString() };
+		    throw new InsufficientCompletedCreditsInFirstCycleException(null, args);
+		}
+	    } else {
+		final Registration sourceRegistration = registration.getSourceRegistration();
+		if (sourceRegistration != null) {
+		    final StudentCurricularPlan sourceStudentCurricularPlan = registration.getLastStudentCurricularPlan();
+		    if (sourceStudentCurricularPlan != null) {
+			firstCycleCurriculumGroup = sourceStudentCurricularPlan.getFirstCycle();
+			if (firstCycleCurriculumGroup != null) {
+			    final Double completedCreditsFirstCycle = firstCycleCurriculumGroup.getAprovedEctsCredits();
+			    if (minimumCompletedCreditsFirstCycle > completedCreditsFirstCycle) {
+				final String[] args = { completedCreditsFirstCycle.toString(),
+					minimumCompletedCreditsFirstCycle.toString() };
+				throw new InsufficientCompletedCreditsInFirstCycleException(null, args);
+			    }
 			}
 		    }
 		}
 	    }
-	}
 
-	final Double completedCreditsSecondCycle = studentCurricularPlan.getSecondCycle().getAprovedEctsCredits();
-	if (minimumCompletedCreditsSecondCycle > completedCreditsSecondCycle) {
-	    final String[] args = { completedCreditsSecondCycle.toString(), minimumCompletedCreditsSecondCycle.toString() };
-	    throw new InsufficientCompletedCreditsInSecondCycleException(null, args);
+	    final Double completedCreditsSecondCycle = studentCurricularPlan.getSecondCycle().getAprovedEctsCredits();
+	    if (minimumCompletedCreditsSecondCycle > completedCreditsSecondCycle) {
+		final String[] args = { completedCreditsSecondCycle.toString(), minimumCompletedCreditsSecondCycle.toString() };
+		throw new InsufficientCompletedCreditsInSecondCycleException(null, args);
+	    }
 	}
 	return true;
     }

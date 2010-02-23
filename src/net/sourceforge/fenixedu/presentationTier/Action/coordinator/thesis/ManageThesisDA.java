@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
@@ -294,10 +295,36 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 	if (proposal == null && thesis == null) {
 	    ThesisBean bean = new ThesisBean();
 	    bean.setStudent(student);
+	    fillLastThesisInfo(bean, student, enrolment);
 	    request.setAttribute("bean", bean);
 	    return mapping.findForward("collect-basic-information");
 	} else
 	    return createProposalWithAssignment(mapping, actionForm, request, response, thesis);
+    }
+
+    private void fillLastThesisInfo(final ThesisBean bean, final Student student, final Enrolment enrolment) {
+	final SortedSet<Enrolment> dissertationEnrolments = student.getDissertationEnrolments(null);
+	dissertationEnrolments.remove(enrolment);
+	if (!dissertationEnrolments.isEmpty()) {
+	    final Thesis previous = findPreviousThesis(dissertationEnrolments);
+	    if (previous != null) {
+		bean.setTitle(previous.getTitle());
+		return;
+	    }	    
+	}
+    }
+
+    private Thesis findPreviousThesis(final SortedSet<Enrolment> dissertationEnrolments) {
+	final Enrolment previous = dissertationEnrolments.last();
+	if (previous != null) {
+	    if (previous.hasAnyTheses()) {
+		return previous.getThesis();
+	    } else {
+		dissertationEnrolments.remove(previous);
+		return findPreviousThesis(dissertationEnrolments);
+	    }
+	}
+	return null;
     }
 
     public ActionForward createProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
