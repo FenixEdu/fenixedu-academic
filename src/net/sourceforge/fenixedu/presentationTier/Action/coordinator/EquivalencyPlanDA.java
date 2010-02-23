@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.EquivalencePlanEntry.EquivalencePlanEntry
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -27,6 +28,8 @@ public class EquivalencyPlanDA extends FenixDispatchAction {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
+	CoordinatedDegreeInfo.setCoordinatorContext(request);
+
 	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
 	if (degreeCurricularPlan == null) {
 	    final Set<DegreeType> degreeTypes = new HashSet<DegreeType>();
