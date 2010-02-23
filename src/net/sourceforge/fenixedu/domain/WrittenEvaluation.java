@@ -872,4 +872,17 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     public abstract List<EventBean> getAllEvents(Registration registration, String scheme, String serverName, int serverPort);
 
+    public String getAssociatedRoomsAsStringList() {
+	StringBuilder builder = new StringBuilder("(");
+	Iterator<AllocatableSpace> iterator = getAssociatedRooms().iterator();
+	while (iterator.hasNext()) {
+	    builder.append(iterator.next().getIdentification());
+	    if (iterator.hasNext()) {
+		builder.append(", ");
+	    }
+	}
+	builder.append(")");
+	return builder.toString();
+    }
+
 }

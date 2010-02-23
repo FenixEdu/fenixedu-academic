@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
@@ -234,19 +233,6 @@ public class WrittenTest extends WrittenTest_Base {
 	    }
 	}
 	return false;
-    }
-
-    public String getAssociatedRoomsAsStringList() {
-	StringBuilder builder = new StringBuilder("(");
-	Iterator<AllocatableSpace> iterator = getAssociatedRooms().iterator();
-	while (iterator.hasNext()) {
-	    builder.append(iterator.next().getIdentification());
-	    if (iterator.hasNext()) {
-		builder.append(", ");
-	    }
-	}
-	builder.append(")");
-	return builder.toString();
     }
 
     public List<EventBean> getAllEvents(Registration registration, String scheme, String serverName, int serverPort) {

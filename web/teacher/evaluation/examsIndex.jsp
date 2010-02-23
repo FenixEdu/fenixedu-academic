@@ -37,6 +37,9 @@
 						<h:outputFormat value="{0, date, HH:mm}">
 							<f:param value="#{exam.beginningDate}"/>
 						</h:outputFormat>
+						<h:panelGroup rendered="#{!empty exam.associatedRooms}">
+							<h:outputText value=" #{exam.associatedRoomsAsStringList}" escape="false"/>
+						</h:panelGroup>
 		
 						<h:outputText value="<p class='indent1 mvert05'>#{bundle['label.teacher.evaluation.enrolment.management']}: " escape="false"/>
 						<h:commandLink action="enterEditEnrolmentPeriod">
