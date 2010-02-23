@@ -131,13 +131,13 @@ public class Section extends Section_Base {
 	}
     }
 
-    public void insertItem(MultiLanguageString itemName, MultiLanguageString itemInformation, Integer insertItemOrder) {
-	new Item(this, itemName, itemInformation, insertItemOrder);
+    public void insertItem(MultiLanguageString itemName, MultiLanguageString itemInformation, Integer insertItemOrder, Boolean showName) {
+	new Item(this, itemName, itemInformation, insertItemOrder, showName);
     }
 
     public void copyItemsFrom(Section sectionFrom) {
 	for (final Item item : sectionFrom.getAssociatedItems()) {
-	    this.insertItem(item.getName(), item.getBody(), item.getItemOrder());
+	    this.insertItem(item.getName(), item.getBody(), item.getItemOrder(), item.getShowName());
 	}
     }
 

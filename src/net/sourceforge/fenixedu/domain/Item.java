@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.AuthenticateKerberos.SetIsPassKerberos;
 import net.sourceforge.fenixedu.domain.contents.Attachment;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode;
@@ -53,10 +54,10 @@ public class Item extends Item_Base {
 	setName(name);
     }
 
-    public Item(Section section, MultiLanguageString name, MultiLanguageString information, Integer itemOrder) {
+    public Item(Section section, MultiLanguageString name, MultiLanguageString information, Integer itemOrder, Boolean showName) {
 	this(section, name);
-
 	setBody(information);
+	setShowName(showName);
     }
 
     public void setName(MultiLanguageString name) {
