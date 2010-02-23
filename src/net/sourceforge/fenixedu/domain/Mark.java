@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.domain;
 
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.InvalidMarkDomainException;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
 public class Mark extends Mark_Base {
@@ -39,13 +41,20 @@ public class Mark extends Mark_Base {
 	    gradeScale = ((AdHocEvaluation) getEvaluation()).getGradeScale();
 	} else {
 	    if (getAttend().getEnrolment() == null) {
-		gradeScale = getAttend().getRegistration().getStudentCurricularPlan(getAttend().getExecutionPeriod())
-			.getDegreeCurricularPlan().getGradeScaleChain();
+		final Registration registration = getAttend().getRegistration();
+		final StudentCurricularPlan studentCurricularPlan = registration.getStudentCurricularPlan(getAttend().getExecutionPeriod());
+		final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
+		final DegreeType degreeType = degreeCurricularPlan.getDegreeType();
+		if (degreeType == DegreeType.EMPTY) {
+		    gradeScale = GradeScale.TYPE20;
+		} else {
+		    gradeScale = degreeCurricularPlan.getGradeScaleChain();
+		}
 	    } else {
 		gradeScale = getAttend().getEnrolment().getCurricularCourse().getGradeScaleChain();
 	    }
 	    if (gradeScale == null && getEvaluation().getEvaluationType().getType() == EvaluationType.ONLINE_TEST) {
-		return GradeScale.TYPE20.isValid(mark, getEvaluation().getEvaluationType());
+		gradeScale = GradeScale.TYPE20;
 	    }
 	}
 	return gradeScale.isValid(mark, getEvaluation().getEvaluationType());
