@@ -1026,7 +1026,81 @@
          Makes the editor invisible. This attribute can be used with an hidden tag to pass an hidden value.
       </description>
     </attribute>
+  </tag>
 
+  <tag>
+    <name>link</name>
+    <tag-class>net.sourceforge.fenixedu.presentationTier.TagLib.renderers.LinkFormatTag</tag-class>
+    <body-content>empty</body-content>
+	<description>
+		Used to create links inside layout tag 
+	</description>
+
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>false</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+        Specifies the name of the link.
+      </description>
+    </attribute>
+    
+    <attribute>
+      <name>link</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+        Specifies the url to be used in link. Example:
+        	 '/myAction.do?method=myMethod&amp;oid=${oid}' -> oid will be replaced by invoking getOid in current object
+        	 '/myAction.do?method=myMethod&amp;valueA=value'
+      </description>
+    </attribute>
+    
+    <attribute>
+      <name>key</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+        Specifies the key as the link label.
+      </description>
+    </attribute>
+    
+    <attribute>
+      <name>bundle</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+        Specifies the name of the bundle to search for given key.
+      </description>
+    </attribute>
+    
+    <attribute>
+      <name>condition</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+        Specifies the condition used to check if link can be rendered or not. Condition must be any method of object being rendered.
+        For now, you can use condition like this:
+        	1 - 'objectMethod' : link is visible if objectMethod returns true
+        	2 - '!objectMethod' : link is visible if !objectMethod returns true
+      </description>
+    </attribute>
+    
+    <attribute>
+      <name>order</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+        Specifies the order of link.
+      </description>
+    </attribute>
+    
   </tag>
 
 </taglib>
