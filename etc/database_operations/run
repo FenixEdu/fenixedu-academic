@@ -44,4 +44,3 @@ function executeWithTempFile() {
 }
 
 
-execute "insert new role" tutorshipStudentsLowPerformance.sql
