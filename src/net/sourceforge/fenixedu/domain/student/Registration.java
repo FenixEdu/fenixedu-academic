@@ -143,10 +143,10 @@ public class Registration extends Registration_Base {
 	}
     };
 
-    static public final ComparatorChain COMPARATOR_BY_NUMBER_THEN_ID = new ComparatorChain();
+    static public final ComparatorChain COMPARATOR_BY_NUMBER_AND_ID = new ComparatorChain();
     static {
-	COMPARATOR_BY_NUMBER_THEN_ID.addComparator(NUMBER_COMPARATOR);
-	COMPARATOR_BY_NUMBER_THEN_ID.addComparator(COMPARATOR_BY_ID);
+	COMPARATOR_BY_NUMBER_AND_ID.addComparator(NUMBER_COMPARATOR);
+	COMPARATOR_BY_NUMBER_AND_ID.addComparator(COMPARATOR_BY_ID);
     }
 
     private transient Double approvationRatio;

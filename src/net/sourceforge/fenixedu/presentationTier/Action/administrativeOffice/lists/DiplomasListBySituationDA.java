@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -187,6 +188,6 @@ public class DiplomasListBySituationDA extends FenixDispatchAction {
     }
 
     static private String getResourceMessage(String key) {
-	return getResourceMessageFromModuleOrApplication(MODULE, key);
+	return BundleUtil.getMessageFromModuleOrApplication(MODULE, key);
     }
 }

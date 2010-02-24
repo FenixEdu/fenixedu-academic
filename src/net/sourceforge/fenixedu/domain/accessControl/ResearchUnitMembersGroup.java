@@ -27,7 +27,7 @@ public class ResearchUnitMembersGroup extends DomainBackedGroup<ResearchUnit> {
 
     @Override
     public String getName() {
-	return BundleUtil.getResourceString("resources.MessagingResources", "label." + classType.getSimpleName());
+	return BundleUtil.getMessageFromModuleOrApplication("Messaging", "label." + classType.getSimpleName());
     }
 
     @Override

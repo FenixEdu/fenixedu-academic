@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -30,6 +29,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer.EnrolmentStateFilterType;
 import net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer.OrganizationType;
 import net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer.ViewType;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.StringUtils;
 import net.sourceforge.fenixedu.util.StudentCurricularPlanIDDomainType;
 
@@ -42,7 +42,6 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -154,10 +153,10 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 	// return null;
 	return student;
     }
-    
-    protected ActionForward getStudentCPForSupervisor(final Registration registration, final ActionMapping mapping, DynaActionForm actionForm,
-	    final HttpServletRequest request) {
-	
+
+    protected ActionForward getStudentCPForSupervisor(final Registration registration, final ActionMapping mapping,
+	    DynaActionForm actionForm, final HttpServletRequest request) {
+
 	return getStudentCP(registration, mapping, actionForm, request);
     }
 
@@ -269,7 +268,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 	    label.append(", ").append(studentCurricularPlan.getDegreeCurricularPlan().getName());
 
 	    if (studentCurricularPlan.getSpecialization() != null) {
-		label.append(" - ").append(enumerationResources.getString(studentCurricularPlan.getSpecialization().name()));
+		label.append(" - ").append(BundleUtil.getEnumName(studentCurricularPlan.getSpecialization()));
 	    }
 
 	    label.append(" - ").append(studentCurricularPlan.getStartDateYearMonthDay());

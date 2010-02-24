@@ -32,6 +32,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -199,7 +200,8 @@ public abstract class StudentsListByCurricularCourseDA extends FenixDispatchActi
 	    Degree degree = registration.getDegree();
 	    spreadsheet.addCell(!(StringUtils.isEmpty(degree.getSigla())) ? degree.getSigla() : degree.getNameFor(executionYear)
 		    .toString());
-	    spreadsheet.addCell(getEnumNameFromResources(registrationWithStateForExecutionYearBean.getEnrollmentState()));
+	    spreadsheet.addCell(BundleUtil.getEnumName(registrationWithStateForExecutionYearBean
+		    .getEnrollmentState()));
 	    spreadsheet.addCell(registrationWithStateForExecutionYearBean.getEnrolmentEvaluationType().getDescription());
 	}
     }
@@ -289,7 +291,7 @@ public abstract class StudentsListByCurricularCourseDA extends FenixDispatchActi
     }
 
     static private String getResourceMessage(String key) {
-	return getResourceMessageFromModuleOrApplication(RESOURCE_MODULE, key);
+	return BundleUtil.getMessageFromModuleOrApplication(RESOURCE_MODULE, key);
     }
 
     protected abstract Set<Degree> getAdministratedDegrees();

@@ -24,7 +24,7 @@ public class ResearchUnitElementGroup extends DomainBackedGroup<ResearchUnit> {
 
     @Override
     public String getName() {
-	return BundleUtil.getResourceString("resources.ResearcherResources", "label.researchUnitElement");
+	return BundleUtil.getMessageFromModuleOrApplication("Researcher", "label.researchUnitElement");
     }
 
     @Override

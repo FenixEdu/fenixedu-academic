@@ -34,6 +34,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -334,7 +335,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
 		    ExecutionCourse executionCourse = executionCourseMap.getFirst().getKey();
 		    final Row row = spreadsheet.addRow();
 		    row.setCell(masterDegreeCreditsDTO.getCurricularCourse().getName());
-		    row.setCell(enumerationResources.getString(masterDegreeCreditsDTO.getCurricularCourse().getType().getName()));
+		    row.setCell(BundleUtil.getEnumName(masterDegreeCreditsDTO.getCurricularCourse().getType()));
 		    row.setCell(masterDegreeCreditsDTO.getCurricularCourse().getCredits().toString());
 		    row.setCell(String.valueOf(executionCourseMap.getSecond()));
 		    row.setCell(String.valueOf(executionCourseMap.getThird()));

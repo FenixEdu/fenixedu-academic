@@ -32,6 +32,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -100,7 +101,7 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 	    DocumentRequestSearchBean requestSearchBean) {
 	final ExecutionYear chosenExecutionYear = degreeSearchBean.getExecutionYear();
 	Set<RegistrationAcademicServiceRequest> resultList = new TreeSet<RegistrationAcademicServiceRequest>(
-		RegistrationAcademicServiceRequest.COMPARATOR_BY_SERVICE_REQUEST_NUMBER_THEN_ID);
+		RegistrationAcademicServiceRequest.COMPARATOR_BY_SERVICE_REQUEST_NUMBER_AND_ID);
 
 	ArrayList<AcademicServiceRequest> requestList = getRequestsByYear(chosenExecutionYear.getBeginCivilYear());
 	requestList.addAll(getRequestsByYear(chosenExecutionYear.getEndCivilYear()));
@@ -218,7 +219,7 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 	    if (degree != null) {
 		filename += "_" + degree.getNameFor(executionYear).getContent().replace(' ', '_');
 	    } else if (degreeType != null) {
-		filename += "_" + getEnumNameFromResources(degreeType).replace(' ', '_');
+		filename += "_" + BundleUtil.getEnumName(degreeType).replace(' ', '_');
 	    }
 	    filename += "_" + executionYear.getYear();
 
@@ -254,16 +255,16 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 	AcademicServiceRequestSituationType situationType = requestSearchBean.getAcademicServiceRequestSituationType();
 	spreadsheet.newHeaderRow();
 	if (requestType != null) {
-	    spreadsheet.addHeader(getResourceMessage("label.type") + ": " + getEnumNameFromResources(requestType));
+	    spreadsheet.addHeader(getResourceMessage("label.type") + ": " + BundleUtil.getEnumName(requestType));
 	}
 	if (documentType != null) {
 	    spreadsheet
 		    .addHeader(getResourceMessage("label.documentRequestsManagement.searchDocumentRequests.documentRequestType")
-			    + ": " + getEnumNameFromResources(documentType));
+			    + ": " + BundleUtil.getEnumName(documentType));
 	}
 	spreadsheet.newHeaderRow();
 	if (situationType != null) {
-	    spreadsheet.addHeader(getResourceMessage("label.state") + ": " + getEnumNameFromResources(situationType));
+	    spreadsheet.addHeader(getResourceMessage("label.state") + ": " + BundleUtil.getEnumName(situationType));
 	}
 	spreadsheet.newHeaderRow();
 	if (requestSearchBean.isUrgentRequest()) {
@@ -301,6 +302,6 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
     }
 
     static private String getResourceMessage(String key) {
-	return getResourceMessageFromModuleOrApplication(MODULE, key);
+	return BundleUtil.getMessageFromModuleOrApplication(MODULE, key);
     }
 }

@@ -14,7 +14,7 @@ public enum CandidacyAttributionType {
     }
 
     public String getDescription() {
-	return BundleUtil.getResourceString("resources.ApplicationResources", this.getClass().getSimpleName() + "." + this + "."
+	return BundleUtil.getMessageFromModuleOrApplication("Application", this.getClass().getSimpleName() + "." + this + "."
 		+ "description");
     }
 
@@ -23,6 +23,6 @@ public enum CandidacyAttributionType {
     }
 
     public String getSimpleLabel() {
-	return BundleUtil.getResourceString("resources.EnumerationResources", this.getClass().getSimpleName() + "." + this);
+	return BundleUtil.getEnumName(this);
     }
 }

@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 import org.apache.commons.collections.Predicate;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ProposalsFilterBean implements Serializable {
 
@@ -150,8 +149,7 @@ public class ProposalsFilterBean implements Serializable {
     public String toString() {
 	StringBuffer label = new StringBuffer();
 	List<String> filters = new ArrayList<String>();
-	final String string = BundleUtil.getString("resources.EnumerationResources", Language.getLocale(),
-		ProposalStatusType.class.getSimpleName() + "." + getStatus().getStatus().name());
+	final String string = BundleUtil.getEnumName(getStatus().getStatus());
 	filters.add(string);
 	if (getAttribution() != AttributionFilter.ALL) {
 	    filters.add(RenderUtils.getEnumString(getAttribution()));

@@ -6,8 +6,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
 import java.util.Map.Entry;
 
 import javax.servlet.ServletOutputStream;
@@ -52,20 +50,12 @@ import pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessorImpl;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public abstract class FenixDispatchAction extends DispatchAction implements ExceptionHandler {
 
     protected static final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
 
-    protected static final ResourceBundle enumerationResources = getResourceBundleByName("resources.EnumerationResources");
-
-    protected static final ResourceBundle domainExceptionResources = getResourceBundleByName("resources.DomainExceptionResources");
-
     private static final String ACTION_MESSAGES_REQUEST_KEY = "FENIX_ACTION_MESSAGES";
-
-    private static final String RESOURCES_PREFIX = "resources.";
-    private static final String RESOURCES_SUFFIX = "Resources";
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -81,49 +71,6 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	return actionForward;
     }
 
-    protected static String getResourceMessageFromModuleOrApplication(String moduleName, String key) {
-	try {
-	    return getResourceBundleByModuleName(moduleName).getString(key);
-	} catch (MissingResourceException e) {
-	    try {
-		return getResourceBundleByModuleName("Application").getString(key);
-	    } catch (MissingResourceException ex) {
-		return key;
-	    }
-	}
-    }
-
-    protected static String getEnumNameFromResources(Enum<?> enumeration) {
-	String className = enumeration.getClass().getSimpleName();
-	if (className.isEmpty()) {
-	    className = enumeration.getClass().getName();
-	    className = className.substring(className.lastIndexOf('.') + 1, className.indexOf("$"));
-	}
-	return getResourceMessageFromModule("Enumeration", className + "." + enumeration.name());
-    }
-
-    protected static String getResourceMessageFromModule(String moduleName, String key) {
-	try {
-	    return getResourceBundleByModuleName(moduleName).getString(key);
-	} catch (MissingResourceException ex) {
-	    return key;
-	}
-    }
-
-    protected static ResourceBundle getResourceBundleByModuleName(String moduleName) {
-	moduleName = StringUtils.capitalize(moduleName);
-	try {
-	    return getResourceBundleByName(RESOURCES_PREFIX + moduleName + RESOURCES_SUFFIX);
-	} catch (MissingResourceException ex) {
-	    return getResourceBundleByName(RESOURCES_PREFIX + moduleName);
-	}
-    }
-
-    protected static ResourceBundle getResourceBundleByName(String bundleName) {
-	return ResourceBundle.getBundle(bundleName, Language.getLocale());
-    }
-
-    @SuppressWarnings("unused")
     protected static IUserView getUserView(HttpServletRequest request) {
 	return UserView.getUser();
     }
@@ -133,12 +80,12 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	return ServiceUtils.executeService(serviceName, serviceArgs);
     }
 
-    @SuppressWarnings( { "static-access", "unchecked", "unused" })
+    @SuppressWarnings( { "static-access", "unchecked" })
     protected DomainObject readDomainObject(final HttpServletRequest request, final Class clazz, final Integer idInternal) {
 	return rootDomainObject.readDomainObjectByOID(clazz, idInternal);
     }
 
-    @SuppressWarnings( { "static-access", "unchecked", "unused" })
+    @SuppressWarnings( { "static-access", "unchecked" })
     protected Collection readAllDomainObjects(final HttpServletRequest request, final Class clazz) {
 	return rootDomainObject.readAllDomainObjects(clazz);
     }

@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 abstract public class RegistrationAcademicServiceRequest extends RegistrationAcademicServiceRequest_Base {
 
-    public static Comparator<RegistrationAcademicServiceRequest> COMPARATOR_BY_SERVICE_REQUEST_NUMBER_THEN_ID = new Comparator<RegistrationAcademicServiceRequest>() {
+    public static Comparator<RegistrationAcademicServiceRequest> COMPARATOR_BY_SERVICE_REQUEST_NUMBER_AND_ID = new Comparator<RegistrationAcademicServiceRequest>() {
 	public int compare(RegistrationAcademicServiceRequest o1, RegistrationAcademicServiceRequest o2) {
 	    if (o1.getServiceRequestNumber().compareTo(o2.getServiceRequestNumber()) != 0) {
 		return o1.getServiceRequestNumber().compareTo(o2.getServiceRequestNumber());

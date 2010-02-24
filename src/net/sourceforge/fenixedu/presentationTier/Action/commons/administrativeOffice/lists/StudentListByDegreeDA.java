@@ -34,6 +34,7 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.struts.action.ActionForm;
@@ -95,7 +96,7 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 
     private static List<RegistrationWithStateForExecutionYearBean> search(final SearchStudentsByDegreeParametersBean searchbean) {
 
-	final Set<Registration> registrations = new TreeSet<Registration>(Registration.COMPARATOR_BY_NUMBER_THEN_ID);
+	final Set<Registration> registrations = new TreeSet<Registration>(Registration.COMPARATOR_BY_NUMBER_AND_ID);
 
 	final Degree chosenDegree = searchbean.getDegree();
 	final DegreeType chosenDegreeType = searchbean.getDegreeType();
@@ -195,7 +196,7 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 	    if (degree != null) {
 		filename += "_" + degree.getNameFor(executionYear).getContent().replace(' ', '_');
 	    } else if (degreeType != null) {
-		filename += "_" + getEnumNameFromResources(degreeType).replace(' ', '_');
+		filename += "_" + BundleUtil.getEnumName(degreeType).replace(' ', '_');
 	    }
 	    filename += "_" + executionYear.getYear();
 
@@ -238,7 +239,7 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 	spreadsheet.newHeaderRow();
 	if (searchBean.getRegime() != null) {
 	    spreadsheet.addHeader(getResourceMessage("registration.regime") + ": "
-		    + getEnumNameFromResources(searchBean.getRegime()));
+		    + BundleUtil.getEnumName(searchBean.getRegime()));
 	}
 	spreadsheet.newHeaderRow();
 	if (searchBean.getNationality() != null) {
@@ -247,31 +248,31 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 	spreadsheet.newHeaderRow();
 	if (searchBean.getIngression() != null) {
 	    spreadsheet.addHeader(getResourceMessage("label.ingression.short") + ": "
-		    + getEnumNameFromResources(searchBean.getIngression()));
+		    + BundleUtil.getEnumName(searchBean.getIngression()));
 	}
 	spreadsheet.newHeaderRow();
 	spreadsheet.addHeader(getResourceMessage("lists.participationType") + ": "
-		+ getEnumNameFromResources(searchBean.getParticipationType()));
+		+ BundleUtil.getEnumName(searchBean.getParticipationType()));
 
 	spreadsheet.newHeaderRow();
 	if (searchBean.hasAnyRegistrationAgreements()) {
 	    spreadsheet.addHeader(getResourceMessage("label.registrationAgreement") + ":");
 	    for (RegistrationAgreement agreement : searchBean.getRegistrationAgreements()) {
-		spreadsheet.addHeader(getEnumNameFromResources(agreement));
+		spreadsheet.addHeader(BundleUtil.getEnumName(agreement));
 	    }
 	}
 	spreadsheet.newHeaderRow();
 	if (searchBean.hasAnyRegistrationStateTypes()) {
 	    spreadsheet.addHeader(getResourceMessage("label.registrationState") + ":");
 	    for (RegistrationStateType state : searchBean.getRegistrationStateTypes()) {
-		spreadsheet.addHeader(getEnumNameFromResources(state));
+		spreadsheet.addHeader(BundleUtil.getEnumName(state));
 	    }
 	}
 	spreadsheet.newHeaderRow();
 	if (searchBean.hasAnyStudentStatuteType()) {
 	    spreadsheet.addHeader(getResourceMessage("label.statutes") + ":");
 	    for (StudentStatuteType statute : searchBean.getStudentStatuteTypes()) {
-		spreadsheet.addHeader(getEnumNameFromResources(statute));
+		spreadsheet.addHeader(BundleUtil.getEnumName(statute));
 	    }
 	}
     }
@@ -306,7 +307,7 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 		spreadsheet.addCell(registration.getEnrolmentsExecutionYears().size());
 		spreadsheet.addCell(registration.getCurricularYear(executionYear));
 		spreadsheet.addCell(registration.getEnrolments(executionYear).size());
-		spreadsheet.addCell(getEnumNameFromResources(registration.getRegimeType(executionYear)));
+		spreadsheet.addCell(BundleUtil.getEnumName(registration.getRegimeType(executionYear)));
 
 		fillSpreadSheetPreBolonhaInfo(spreadsheet, registration);
 		if (getAdministratedCycleTypes().contains(CycleType.FIRST_CYCLE)) {
@@ -395,7 +396,7 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
     }
 
     protected static String getResourceMessage(String key) {
-	return getResourceMessageFromModuleOrApplication(RESOURCE_MODULE, key);
+	return BundleUtil.getMessageFromModuleOrApplication(RESOURCE_MODULE, key);
     }
 
     protected abstract Set<CycleType> getAdministratedCycleTypes();
