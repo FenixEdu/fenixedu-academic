@@ -17,8 +17,6 @@ import net.sourceforge.fenixedu.domain.exceptions.EnrolmentNotPayedException;
 import net.sourceforge.fenixedu.domain.log.EnrolmentEvaluationLog;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.FenixDigestUtils;
@@ -349,21 +347,16 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 	}
 
 	if (examDate != null) {
+
 	    if (!grade.isNotEvaluated()) {
-		final RegistrationState state = getRegistration().getLastRegistrationState(
-			getExecutionPeriod().getExecutionYear());
-		if (state == null
-			|| !(getRegistration().hasAnyActiveState(getExecutionPeriod().getExecutionYear()) || state.getStateType() == RegistrationStateType.TRANSITED)) {
-		    final Enrolment enrolment = getEnrolment();
-		    final StudentCurricularPlan studentCurricularPlan = enrolment.getStudentCurricularPlan();
-		    final Registration registration = studentCurricularPlan.getRegistration();
-		    throw new DomainException("error.enrolmentEvaluation.examDateNotInRegistrationActiveState", registration
-			    .getNumber().toString());
-		}
+		checkRegistrationState();
 	    }
+
 	    setExamDateYearMonthDay(YearMonthDay.fromDateFields(examDate));
+
 	} else if (grade.isEmpty()) {
 	    setExamDateYearMonthDay(null);
+
 	} else {
 	    setExamDateYearMonthDay(YearMonthDay.fromDateFields(availableDate));
 	}
@@ -373,6 +366,22 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 	setPersonResponsibleForGrade(responsibleFor);
 
 	generateCheckSum();
+    }
+
+    private void checkRegistrationState() {
+
+	if (getRegistration().hasAnyActiveState(getExecutionYear()) || getRegistration().isTransited(getExecutionYear())
+		|| (getRegistration().isConcluded() && isImprovment())) {
+
+	    return;
+	}
+
+	throw new DomainException("error.EnrolmentEvaluation.registration.with.invalid.state", getRegistration().getNumber()
+		.toString());
+    }
+
+    private ExecutionYear getExecutionYear() {
+	return getExecutionPeriod().getExecutionYear();
     }
 
     public void confirmSubmission(Employee employee, String observation) {
