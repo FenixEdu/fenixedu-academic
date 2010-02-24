@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.AffinityCyclesManagement;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.student.enrollment.bolonha.AbstractBolonhaStudentEnrollmentDA;
@@ -182,6 +183,21 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
 	    return prepareTransit(mapping, actionForm, request, response);
 	}
 
+	return showAllStudentCurricularPlans(mapping, actionForm, request, response);
+    }
+
+    public ActionForward separateCycles(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final StudentCurricularPlan scp = getDomainObject(request, "scpOid");
+
+	try {
+	    new AffinityCyclesManagement(scp).createCycleOrRepeateSeparate();
+	} catch (final DomainException e) {
+	    addActionMessage(request, e.getMessage(), e.getArgs());
+	}
+
+	request.setAttribute("studentId", scp.getRegistration().getStudent().getIdInternal());
 	return showAllStudentCurricularPlans(mapping, actionForm, request, response);
     }
 }
