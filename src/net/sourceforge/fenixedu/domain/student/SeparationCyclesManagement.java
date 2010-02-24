@@ -579,7 +579,6 @@ public class SeparationCyclesManagement {
 
     private void movePayments(final GratuityEventWithPaymentPlan firstEvent, final GratuityEventWithPaymentPlan secondEvent) {
 
-	// TODO: move this line to after following 'if' statement
 	secondEvent.configurateDefaultPaymentPlan();
 
 	if (firstEvent.hasCustomGratuityPaymentPlan()) {
