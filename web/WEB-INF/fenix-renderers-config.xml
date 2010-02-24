@@ -261,12 +261,14 @@ Documentation:
 	<renderer type="java.lang.Boolean" layout="boolean-icon" class="pt.ist.fenixWebFramework.renderers.BooleanImageRenderer">
 		<property name="trueIconPath" value="/images/accept.gif"/>
 		<property name="falseIconPath" value="/images/empty.gif"/>
+		<property name="contextRelative" value="true"/>
 	</renderer>
 	<!-- @ Boolean renderer aimed to allow a graphical view of a boolean value through the presentation of an icon
     	 	By default: True=GreenCheck /  / False=EmptyDash -->
 	<renderer type="boolean" layout="boolean-icon" class="pt.ist.fenixWebFramework.renderers.BooleanImageRenderer">
 		<property name="trueIconPath" value="/images/accept.gif"/>
 		<property name="falseIconPath" value="/images/empty.gif"/>
+		<property name="contextRelative" value="true"/>
 	</renderer>
 	
     <!--@ The default presentation for an enum searches the bundle ENUMERATION_RESOURCES for a description
