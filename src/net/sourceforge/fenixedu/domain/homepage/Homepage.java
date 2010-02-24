@@ -16,7 +16,7 @@ public class Homepage extends Homepage_Base {
     public static final long MB = 1024 * 1024;
 
     public static final long REGULAR_QUOTA = 10 * MB;
-    public static final long TEACHER_QUOTA = 50 * MB;
+    public static final long TEACHER_QUOTA = 200 * MB;
 
     public static final Comparator<Homepage> HOMEPAGE_COMPARATOR_BY_NAME = new Comparator<Homepage>() {
 
