@@ -297,24 +297,48 @@ public class Alumni extends Alumni_Base {
 	if (!StringUtils.isEmpty(personName) || studentNumber != null || !StringUtils.isEmpty(documentIdNumber)) {
 	    // Filter the result list
 	    for (Registration registration : resultRegistrations) {
-		for (PartyContact contact : registration.getPerson().getPartyContacts()) {
-		    if (!StringUtils.isEmpty(mobileNumber)
-			    && !(contact.isMobile() && mobileNumber.equals(contact.getPresentationValue()))) {
+		boolean match = true;
+
+		if (!StringUtils.isEmpty(telephoneNumber) || !StringUtils.isEmpty(email) || !StringUtils.isEmpty(mobileNumber)) {
+		    if (registration.getPerson().getPartyContacts().isEmpty()) {
 			continue;
 		    }
 
-		    if (!StringUtils.isEmpty(telephoneNumber)
-			    && !(contact.isPhone() && telephoneNumber.equals(contact.getPresentationValue()))) {
+		    if (!StringUtils.isEmpty(mobileNumber) && !registration.getPerson().hasAnyPartyContact(MobilePhone.class)) {
 			continue;
 		    }
 
-		    if (!StringUtils.isEmpty(email)
-			    || !(contact.isEmailAddress() && email.equals(contact.getPresentationValue()))) {
+		    if (!StringUtils.isEmpty(telephoneNumber) && !registration.getPerson().hasAnyPartyContact(Phone.class)) {
 			continue;
 		    }
 
+		    if (!StringUtils.isEmpty(email) && !registration.getPerson().hasAnyPartyContact(EmailAddress.class)) {
+			continue;
+		    }
+
+		    for (PartyContact contact : registration.getPerson().getPartyContacts()) {
+			if (!StringUtils.isEmpty(mobileNumber) && contact.isMobile()
+				&& !mobileNumber.equals(contact.getPresentationValue())) {
+			    match = false;
+			    break;
+			}
+
+			if (!StringUtils.isEmpty(telephoneNumber) && contact.isPhone()
+				&& !telephoneNumber.equals(contact.getPresentationValue())) {
+			    match = false;
+			    break;
+			}
+
+			if (!StringUtils.isEmpty(email) && contact.isEmailAddress()
+				&& !email.equals(contact.getPresentationValue())) {
+			    match = false;
+			    break;
+			}
+		    }
+		}
+
+		if (match) {
 		    filteredResultRegistrations.add(registration);
-		    break;
 		}
 	    }
 	} else if (!StringUtils.isEmpty(telephoneNumber) || !StringUtils.isEmpty(email) || !StringUtils.isEmpty(mobileNumber)) {
