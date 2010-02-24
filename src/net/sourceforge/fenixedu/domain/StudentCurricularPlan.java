@@ -2970,6 +2970,11 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     private List<MarkSheetEnrolmentEvaluationBean> setIndividualEvaluationsForCurriculumValidation(
 	    List<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationsBeanList) {
 
+	if (enrolmentEvaluationsBeanList.size() > 0) {
+	    Enrolment enrolmentForWeightSet = enrolmentEvaluationsBeanList.get(0).getEnrolment();
+	    enrolmentForWeightSet.setWeigth(enrolmentEvaluationsBeanList.get(0).getWeight());
+	}
+
 	for (MarkSheetEnrolmentEvaluationBean enrolmentEvaluationBean : enrolmentEvaluationsBeanList) {
 	    Enrolment enrolment = enrolmentEvaluationBean.getEnrolment();
 

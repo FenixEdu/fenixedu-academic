@@ -97,7 +97,7 @@
 			<tr>
 				<th style="width: 150px;"><bean:message key="label.set.evaluation.curricular.course.name" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
 				<th style="width: 70px;"><bean:message key="label.set.evaluation.enrolment.state" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
-				<th style="width: 80px; text-align: center;"><bean:message key="label.set.evaluation.enrolment.condition" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
+				<th style="width: 80px; text-align: center;"><bean:message key="label.set.evaluation.enrolment.weight" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
 				<th></th>
 			</tr>
 		</thead>
@@ -105,6 +105,11 @@
 		<tbody>
 			<% int i = 0; %>
 			<logic:iterate id="entries" name="entriesList">
+				<%
+					request.setAttribute("markSheetBeanForWeight", ((java.util.List<MarkSheetEnrolmentEvaluationBean>) entries).get(0));
+				%>
+			
+				<bean:define id="markSheetBeanForWeight" name="markSheetBeanForWeight" />
 			
 				<tr>
 					<td>
@@ -116,7 +121,13 @@
 						<%= ((java.util.List<MarkSheetEnrolmentEvaluationBean>) entries).get(0).getEnrolmentState() %>
 					</td>
 					<td>
-						<%= ((java.util.List<MarkSheetEnrolmentEvaluationBean>) entries).get(0).getEnrolmentCondition() %>
+						<fr:edit id="<%= "set.evaluation.form.weight" + i %>"
+								name="markSheetBeanForWeight"
+								slot="weight">
+							<fr:property name="flow">
+								<fr:property name="size" value="4" />
+							</fr:property>
+						</fr:edit>
 					</td>
 					
 					<td class="evaluations separator" colspan="7">

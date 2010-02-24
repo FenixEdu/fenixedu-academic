@@ -98,7 +98,7 @@
 		<tr>
 			<th style="width: 150px;"><bean:message key="label.set.evaluation.curricular.course.name" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
 			<th style="width: 70px;"><bean:message key="label.set.evaluation.enrolment.state" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
-			<th style="width: 80px;"><bean:message key="label.set.evaluation.enrolment.condition" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
+			<th style="width: 80px;"><bean:message key="label.set.evaluation.enrolment.weight" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
 			<th class="evaluations"></th>
 		</tr>
 	</thead>
@@ -115,7 +115,7 @@
 					<%= ((java.util.List<MarkSheetEnrolmentEvaluationBean>) finalEntries).get(0).getEnrolmentState() %>
 				</td>
 				<td>
-					<%= ((java.util.List<MarkSheetEnrolmentEvaluationBean>) finalEntries).get(0).getEnrolmentCondition() %>
+					<%= ((java.util.List<MarkSheetEnrolmentEvaluationBean>) finalEntries).get(0).getWeight() %>
 				</td>
 				
 				<td class="evaluations separator">
@@ -172,7 +172,7 @@
 			<tr>
 				<th style="width: 150px;"><bean:message key="label.set.evaluation.curricular.course.name" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
 				<th style="width: 70px;"><bean:message key="label.set.evaluation.enrolment.state" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
-				<th style="width: 80px;"><bean:message key="label.set.evaluation.enrolment.condition" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
+				<th style="width: 80px;"><bean:message key="label.set.evaluation.enrolment.weight" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
 				<th></th>
 			</tr>
 		</thead>
@@ -180,7 +180,12 @@
 		<tbody>
 			<% int i = 0; %>
 			<logic:iterate id="entries" name="entriesList">
+				<%
+					request.setAttribute("markSheetBeanForWeight", ((java.util.List<MarkSheetEnrolmentEvaluationBean>) entries).get(0));
+				%>
 			
+				<bean:define id="markSheetBeanForWeight" name="markSheetBeanForWeight" />
+				
 				<tr>
 					<td>
 						<%= ((java.util.List<MarkSheetEnrolmentEvaluationBean>) entries).get(0).getName() %>
@@ -206,7 +211,13 @@
 						<% } %>
 					</td>
 					<td>
-						<%= ((java.util.List<MarkSheetEnrolmentEvaluationBean>) entries).get(0).getEnrolmentCondition() %>
+						<fr:edit id="<%= "set.evaluation.form.weight" + i %>"
+								name="markSheetBeanForWeight"
+								slot="weight">
+							<fr:property name="flow">
+								<fr:property name="size" value="4" />
+							</fr:property>
+						</fr:edit>
 					</td>
 					
 					<td class="evaluations separator">

@@ -339,6 +339,9 @@
 							<fr:property name="comment" value="label.registrationConclusionProcess.enteredConclusionDate.comment"/>
 							<fr:property name="commentLocation" value="right" />
 						</fr:slot>
+						<fr:slot name="observations" key="label.anotation" bundle="ACADEMIC_OFFICE_RESOURCES">
+						</fr:slot>
+
 					</fr:schema>
 					<fr:layout name="tabular-editable">
 						<fr:property name="classes" value="tstyle4 thright thlight mvert05"/>

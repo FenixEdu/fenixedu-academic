@@ -24,7 +24,7 @@ public class RegistrationConclusionProcess extends FenixService {
 		checkEnteredConclusionDate(conclusionBean);
 
 		cycleCurriculumGroup.editConclusionInformation(AccessControl.getPerson(), cycleCurriculumGroup.getFinalAverage(),
-			new YearMonthDay(conclusionBean.getEnteredConclusionDate()), null);
+			new YearMonthDay(conclusionBean.getEnteredConclusionDate()), conclusionBean.getObservations());
 	    }
 
 	} else {
@@ -35,7 +35,7 @@ public class RegistrationConclusionProcess extends FenixService {
 		checkEnteredConclusionDate(conclusionBean);
 
 		registration.editConclusionInformation(AccessControl.getPerson(), registration.getFinalAverage(),
-			new YearMonthDay(conclusionBean.getEnteredConclusionDate()), null);
+			new YearMonthDay(conclusionBean.getEnteredConclusionDate()), conclusionBean.getObservations());
 	    }
 	}
     }

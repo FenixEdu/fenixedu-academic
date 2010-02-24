@@ -42,6 +42,8 @@ public class MarkSheetEnrolmentEvaluationBean implements Serializable {
 
     private GradeScale gradeScale;
 
+    private Double weight;
+
     public MarkSheetEnrolmentEvaluationBean() {
     }
 
@@ -49,6 +51,7 @@ public class MarkSheetEnrolmentEvaluationBean implements Serializable {
 	setEnrolment(enrolment);
 	setEvaluationDate(evaluationDate);
 	setGradeValue(grade.getValue());
+	setWeight(enrolment.getWeigth());
     }
 
     public MarkSheetEnrolmentEvaluationBean(Enrolment enrolment, ExecutionSemester executionSemester,
@@ -57,6 +60,7 @@ public class MarkSheetEnrolmentEvaluationBean implements Serializable {
 	this.setEnrolment(enrolment);
 	this.setEnrolmentEvaluationType(evaluationType);
 	this.setCurriculumValidationEvaluationPhase(evaluationPhase);
+	setWeight(enrolment.getWeigth());
 
 	if (this.getHasGrade()) {
 	    EnrolmentEvaluation enrolmentEvaluation = getLatestEnrolmentEvaluation();
@@ -235,4 +239,13 @@ public class MarkSheetEnrolmentEvaluationBean implements Serializable {
 	return !this.getEnrolment().hasAnyEvaluations()
 		&& this.getEnrolment().getEnrollmentState().equals(EnrollmentState.ENROLLED);
     }
+
+    public Double getWeight() {
+	return weight;
+    }
+
+    public void setWeight(Double weight) {
+	this.weight = weight;
+    }
+
 }
