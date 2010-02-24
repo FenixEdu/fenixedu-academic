@@ -2261,6 +2261,10 @@ public class Registration extends Registration_Base {
 	final RegistrationState stateInDate = getStateInDate(when);
 	return stateInDate != null && stateInDate.getStateType() == RegistrationStateType.TRANSITED;
     }
+    
+    final public boolean isTransited(final ExecutionYear executionYear) {
+	return hasStateType(executionYear, RegistrationStateType.TRANSITED);
+    }
 
     final public boolean isTransition() {
 	return getActiveStateType() == RegistrationStateType.TRANSITION;

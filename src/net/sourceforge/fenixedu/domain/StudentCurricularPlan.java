@@ -205,6 +205,18 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return result;
     }
 
+    static public StudentCurricularPlan createWithEmptyStructure(final Registration registration,
+	    final DegreeCurricularPlan degreeCurricularPlan, final CycleType cycleType, final YearMonthDay startDate) {
+
+	final StudentCurricularPlan result = new StudentCurricularPlan(registration, degreeCurricularPlan, startDate);
+
+	if (degreeCurricularPlan.isBoxStructure()) {
+	    new RootCurriculumGroup(result, degreeCurricularPlan.getRoot(), cycleType);
+	}
+
+	return result;
+    }
+
     static public StudentCurricularPlan createBolonhaStudentCurricularPlan(Registration registration,
 	    DegreeCurricularPlan degreeCurricularPlan, YearMonthDay startDate, ExecutionSemester executionSemester) {
 	return createBolonhaStudentCurricularPlan(registration, degreeCurricularPlan, startDate, executionSemester,

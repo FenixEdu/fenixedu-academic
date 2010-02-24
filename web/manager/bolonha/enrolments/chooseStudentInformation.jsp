@@ -17,7 +17,14 @@
 			</fr:messages>
 		</ul>
 	</fr:hasMessages>
-
+	
+	<logic:messagesPresent message="true" property="success">
+		<div class="success5 mbottom05" style="width: 700px;">
+			<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES" property="success">
+				<p class="mvert025"><bean:write name="messages" /></p>
+			</html:messages>
+		</div>
+	</logic:messagesPresent>
 
 	<fr:form action="/bolonhaStudentEnrolment.do?method=prepareSearchStudent">
 

@@ -193,6 +193,8 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
 
 	try {
 	    new AffinityCyclesManagement(scp).createCycleOrRepeateSeparate();
+	    addActionMessage("success", request, "message.cycles.separated.with.success");
+	    
 	} catch (final DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
 	}

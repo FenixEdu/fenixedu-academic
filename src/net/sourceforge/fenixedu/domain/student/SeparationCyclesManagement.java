@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithInvocationResult;
@@ -122,7 +123,8 @@ public class SeparationCyclesManagement {
 	final DegreeCurricularPlan degreeCurricularPlan = oldSecondCycle.getDegreeCurricularPlanOfDegreeModule();
 
 	final Registration newRegistration = createRegistration(student, oldStudentCurricularPlan);
-	final StudentCurricularPlan newStudentCurricularPlan = createStudentCurricularPlan(newRegistration, degreeCurricularPlan);
+	final StudentCurricularPlan newStudentCurricularPlan = createStudentCurricularPlan(newRegistration, degreeCurricularPlan,
+		oldSecondCycle.getCycleType());
 	final CycleCurriculumGroup newSecondCycle = newStudentCurricularPlan.getSecondCycle();
 
 	copyCycleCurriculumGroupsInformation(oldSecondCycle, newSecondCycle);
@@ -231,14 +233,16 @@ public class SeparationCyclesManagement {
     }
 
     private StudentCurricularPlan createStudentCurricularPlan(final Registration registration,
-	    final DegreeCurricularPlan degreeCurricularPlan) {
+	    final DegreeCurricularPlan degreeCurricularPlan, CycleType cycleType) {
 
 	StudentCurricularPlan result = registration.getStudentCurricularPlan(degreeCurricularPlan);
 	if (result != null) {
 	    return result;
 	}
 
-	result = StudentCurricularPlan.createWithEmptyStructure(registration, degreeCurricularPlan, registration.getStartDate());
+	result = StudentCurricularPlan.createWithEmptyStructure(registration, degreeCurricularPlan, cycleType, registration
+		.getStartDate());
+
 	// set ingression after create studentcurricularPlan
 	registration.setIngression(Ingression.DA1C);
 
