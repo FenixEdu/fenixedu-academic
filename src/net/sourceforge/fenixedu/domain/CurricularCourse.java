@@ -1642,7 +1642,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 	    if (curriculumModule.isEnrolment()) {
 		final Enrolment enrolment = (Enrolment) curriculumModule;
 
-		if (isInSamePeriod(enrolment, executionSemester)
+		if (enrolment.isValid(executionSemester)
 			&& markSheetType.getEnrolmentEvaluationType() == enrolment.getEnrolmentEvaluationType()) {
 		    if (markSheetType == MarkSheetType.SPECIAL_AUTHORIZATION
 			    || !enrolment.hasAssociatedMarkSheetOrFinalGrade(markSheetType)) {
@@ -1655,7 +1655,43 @@ public class CurricularCourse extends CurricularCourse_Base {
 		}
 	    }
 	}
+
+	if (markSheetType == MarkSheetType.IMPROVEMENT) {
+	    addImprovementEnrolmentsFromEquivalentCourses(result, executionSemester, markSheetType);
+	}
+
 	return result;
+    }
+
+    private void addImprovementEnrolmentsFromEquivalentCourses(Set<Enrolment> result, ExecutionSemester executionSemester,
+	    MarkSheetType markSheetType) {
+
+	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
+
+	for (final CurricularCourseEquivalence equivalence : getCurricularCourseEquivalences()) {
+	    if (equivalence.isFrom(degreeCurricularPlan)) {
+		addImprovementEnrolments(equivalence, result, executionSemester, markSheetType);
+	    }
+	}
+    }
+
+    private void addImprovementEnrolments(CurricularCourseEquivalence equivalence, Set<Enrolment> result,
+	    ExecutionSemester executionSemester, MarkSheetType markSheetType) {
+
+	for (final CurricularCourse curricularCourse : equivalence.getOldCurricularCourses()) {
+	    if (curricularCourse.getDegreeCurricularPlan() == equivalence.getDegreeCurricularPlan()) {
+
+		for (final CurriculumModule module : curricularCourse.getCurriculumModules()) {
+		    if (module.isEnrolment()) {
+			final Enrolment enrolment = (Enrolment) module;
+
+			if (enrolment.hasImprovementFor(executionSemester) && !enrolment.hasAssociatedMarkSheet(markSheetType)) {
+			    result.add(enrolment);
+			}
+		    }
+		}
+	    }
+	}
     }
 
     public Set<Enrolment> getEnrolmentsNotInAnyMarkSheetForOldMarkSheets(MarkSheetType markSheetType,
@@ -1667,7 +1703,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 	    if (curriculumModule.isEnrolment()) {
 		final Enrolment enrolment = (Enrolment) curriculumModule;
 
-		if (isInSamePeriod(enrolment, executionSemester)
+		if (enrolment.isValid(executionSemester)
 			&& markSheetType.getEnrolmentEvaluationType() == enrolment.getEnrolmentEvaluationType()) {
 		    if (markSheetType == MarkSheetType.SPECIAL_AUTHORIZATION
 			    || enrolment.canBeSubmittedForOldMarkSheet(markSheetType.getEnrolmentEvaluationType())) {
@@ -1684,21 +1720,13 @@ public class CurricularCourse extends CurricularCourse_Base {
 	return result;
     }
 
-    private boolean isInSamePeriod(Enrolment enrolment, ExecutionSemester executionSemester) {
-	if (isAnual()) {
-	    return enrolment.getExecutionYear() == executionSemester.getExecutionYear();
-	} else {
-	    return enrolment.getExecutionPeriod() == executionSemester;
-	}
-    }
-
     private boolean hasEnrolmentsNotInAnyMarkSheet(ExecutionSemester executionSemester) {
 	for (final CurriculumModule curriculumModule : this.getCurriculumModulesSet()) {
 
 	    if (curriculumModule.isEnrolment()) {
 		final Enrolment enrolment = (Enrolment) curriculumModule;
 
-		if (isInSamePeriod(enrolment, executionSemester)
+		if (enrolment.isValid(executionSemester)
 			&& enrolment.getEnrolmentEvaluationType() == EnrolmentEvaluationType.NORMAL) {
 		    if (!enrolment.hasAssociatedMarkSheetOrFinalGrade(MarkSheetType.NORMAL)) {
 			return true;
