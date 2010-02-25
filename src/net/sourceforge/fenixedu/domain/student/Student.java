@@ -75,6 +75,7 @@ import org.apache.commons.collections.Predicate;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.Transaction;
 
 public class Student extends Student_Base {
@@ -1684,5 +1685,11 @@ public class Student extends Student_Base {
 	} else if (number != null) {
 	    new StudentNumber(this);
 	}
+    }
+
+    @Service
+    public void acceptRegistrationsFromOtherStudent(java.util.List<Registration> otherRegistrations) {
+	List<Registration> registrations = super.getRegistrations();
+	registrations.addAll(otherRegistrations);
     }
 }

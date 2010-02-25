@@ -841,3 +841,10 @@
 	constructor="name">
 	<slot name="name" />
 </schema>
+
+<schema name="personManagement.merge.chooseObjects"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.MergePersonsDA$MergePersonsBean"
+		bundle="MANAGER_RESOURCES">
+	<slot name="leftOid" key="label.personManagement.merge.destiny.oid"/>
+	<slot name="rightOid" key="label.personManagement.merge.remove.oid"/> 
+</schema>

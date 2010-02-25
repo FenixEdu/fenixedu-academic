@@ -74,7 +74,7 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
 	bean.setChoosePersonBean(new ChoosePersonBean());
 	bean.setPersonBean(new PersonBean());
 
-	bean.getChoosePersonBean().setName("Oh really fun");
+	bean.getChoosePersonBean().setName("");
 	bean.getChoosePersonBean().setDocumentType(IDDocumentType.FOREIGNER_IDENTITY_CARD);
 
 	/*
