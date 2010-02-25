@@ -29,10 +29,10 @@
 		<logic:notEqual name="parkingParty"	property="hasAllNecessaryPersonalInfo" value="false">
 			<p>
 				<bean:message key="label.read.parkingRegulation" bundle="PARKING_RESOURCES" />: 
-				<html:link page="/parking.do?method=downloadParkingRegulamentation">
+				<a href="http://www.ist.utl.pt/files/viver-IST/gestao-estacionamento/reg_estac.pdf" target="_blank">
 					<bean:message key="label.parkingRegulation" bundle="PARKING_RESOURCES" />
 					<bean:message key="label.parkingRegulation.pdf" bundle="PARKING_RESOURCES" />
-				</html:link>
+				</a>
 			</p>
 
 
@@ -71,10 +71,10 @@
 	<logic:notEmpty name="parkingParty" property="parkingRequests">
 		<p>
 			<bean:message key="label.read.parkingRegulation" bundle="PARKING_RESOURCES" />: 
-			<html:link page="/parking.do?method=downloadParkingRegulamentation">
+			<a href="http://www.ist.utl.pt/files/viver-IST/gestao-estacionamento/reg_estac.pdf" target="_blank">
 				<bean:message key="label.parkingRegulation" bundle="PARKING_RESOURCES" />
 				<bean:message key="label.parkingRegulation.pdf" bundle="PARKING_RESOURCES" />
-			</html:link>
+			</a>
 		</p>
 			
 		
