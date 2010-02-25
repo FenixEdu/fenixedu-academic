@@ -1511,6 +1511,7 @@
    	<message-resources parameter="resources.DomainResources" key="DOMAIN_RESOURCES" null="false"/>
     <message-resources parameter="resources.CommonResources" key="COMMON_RESOURCES" null="false"/>
     <message-resources parameter="resources.InternRelationOfficeResources" key="INTERNATIONAL_RELATIONS_OFFICE" null="false"/>
+    <message-resources parameter="resources.GroupNameResources" key="GROUP_NAME_RESOURCES" null="false"/>
 
     <!-- ========== Plug Ins Configuration ================================= -->
 	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">
