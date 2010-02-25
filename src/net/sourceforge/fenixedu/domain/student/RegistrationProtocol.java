@@ -59,7 +59,7 @@ public class RegistrationProtocol extends RegistrationProtocol_Base {
     public static RegistrationProtocol serveRegistrationProtocol(RegistrationAgreement registrationAgreement){
 	Set<RegistrationProtocol> dataset = RootDomainObject.getInstance().getRegistrationProtocolsSet();
 	for(RegistrationProtocol iter : dataset){
-	    if(iter.getRegistrationAgreement() == registrationAgreement){
+	    if(iter.getRegistrationAgreement().name().equals(registrationAgreement.name())){
 		return iter;
 	    }
 	}
