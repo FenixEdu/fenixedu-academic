@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.phd;
 
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -44,5 +45,14 @@ public class PhdProgramFocusArea extends PhdProgramFocusArea_Base {
 	getPhdPrograms().clear();
 	removeRootDomainObject();
 	super.deleteDomainObject();
+    }
+
+    public boolean hasPhdProgramFor(final Degree degree) {
+	for (final PhdProgram program : getPhdProgramsSet()) {
+	    if (program.hasDegree() && program.getDegree().equals(degree)) {
+		return true;
+	    }
+	}
+	return false;
     }
 }
