@@ -144,6 +144,38 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
     }
 
     public Predicate<PhdIndividualProgramProcess> getPredicates() {
+
+	if (getStudentNumber() != null) {
+	    return new InlinePredicate<PhdIndividualProgramProcess, Integer>(getStudentNumber()) {
+		@Override
+		public boolean eval(PhdIndividualProgramProcess toEval) {
+		    return toEval.getStudent() != null && toEval.getStudent().getNumber().compareTo(getValue()) == 0;
+		}
+	    };
+	}
+
+	if (!StringUtils.isEmpty(getProcessNumber())) {
+	    return new InlinePredicate<PhdIndividualProgramProcess, String>(getProcessNumber()) {
+		@Override
+		public boolean eval(PhdIndividualProgramProcess toEval) {
+		    return toEval.getProcessNumber().equals(getValue());
+		}
+	    };
+	}
+
+	if (!StringUtils.isEmpty(getName())) {
+	    return new InlinePredicate<PhdIndividualProgramProcess, String>(getName()) {
+		@Override
+		public boolean eval(PhdIndividualProgramProcess toEval) {
+		    return Person.findPerson(getValue()).contains(toEval.getPerson());
+		}
+	    };
+	}
+
+	return getAndPredicate();
+    }
+
+    private AndPredicate<PhdIndividualProgramProcess> getAndPredicate() {
 	final AndPredicate<PhdIndividualProgramProcess> result = new AndPredicate<PhdIndividualProgramProcess>();
 
 	if (getExecutionYear() != null) {
@@ -164,24 +196,6 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
 	    });
 	}
 
-	if (!StringUtils.isEmpty(getProcessNumber())) {
-	    result.add(new InlinePredicate<PhdIndividualProgramProcess, String>(getProcessNumber()) {
-		@Override
-		public boolean eval(PhdIndividualProgramProcess toEval) {
-		    return toEval.getProcessNumber().equals(getValue());
-		}
-	    });
-	}
-
-	if (getStudentNumber() != null) {
-	    result.add(new InlinePredicate<PhdIndividualProgramProcess, Integer>(getStudentNumber()) {
-		@Override
-		public boolean eval(PhdIndividualProgramProcess toEval) {
-		    return toEval.getStudent() != null && toEval.getStudent().getNumber().compareTo(getValue()) == 0;
-		}
-	    });
-	}
-
 	if (getFilterPhdPrograms() != null && getFilterPhdPrograms().booleanValue()) {
 	    result.add(new InlinePredicate<PhdIndividualProgramProcess, List<PhdProgram>>(getPhdPrograms()) {
 
@@ -195,9 +209,7 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
 		    } else {
 			return false;
 		    }
-
 		}
-
 	    });
 	}
 
@@ -207,16 +219,6 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
 		@Override
 		public boolean eval(PhdIndividualProgramProcess toEval) {
 		    return getValue().contains(toEval);
-		}
-
-	    });
-	}
-
-	if (!StringUtils.isEmpty(getName())) {
-	    result.add(new InlinePredicate<PhdIndividualProgramProcess, String>(getName()) {
-		@Override
-		public boolean eval(PhdIndividualProgramProcess toEval) {
-		    return Person.findPerson(getValue()).contains(toEval.getPerson());
 		}
 	    });
 	}
