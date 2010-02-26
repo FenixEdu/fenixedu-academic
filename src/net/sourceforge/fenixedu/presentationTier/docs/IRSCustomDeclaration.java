@@ -2,6 +2,10 @@ package net.sourceforge.fenixedu.presentationTier.docs;
 
 import java.text.MessageFormat;
 
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accounting.Event;
+import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
+import net.sourceforge.fenixedu.domain.accounting.events.gratuity.StandaloneEnrolmentGratuityEvent;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.util.Money;
 
@@ -36,6 +40,16 @@ public class IRSCustomDeclaration extends FenixReport {
 	    this.civilYear = civilYear;
 	    this.gratuityAmount = Money.ZERO;
 	    this.otherAmount = Money.ZERO;
+	}
+
+	public IRSDeclarationDTO(int year, Person person) {
+	    this(year);
+	    setPersonAddress(person.getAddress());
+	    setPersonAddressArea(person.getArea());
+	    setPersonAddressPostalCode(person.getPostalCode());
+	    setDocumentIdNumber(person.getDocumentIdNumber());
+	    setPersonName(person.getName());
+	    setIdDocumentType(person.getIdDocumentType());
 	}
 
 	public void addGratuityAmount(final Money amount) {
@@ -138,12 +152,17 @@ public class IRSCustomDeclaration extends FenixReport {
 	public Money getTotalAmount() {
 	    return this.gratuityAmount.add(this.otherAmount);
 	}
+
+	public void addAmount(final Event event, final int civilYear) {
+	    if (event instanceof GratuityEventWithPaymentPlan || event instanceof StandaloneEnrolmentGratuityEvent) {
+		addGratuityAmount(event.getMaxDeductableAmountForLegalTaxes(civilYear));
+	    } else {
+		addOtherAmount(event.getMaxDeductableAmountForLegalTaxes(civilYear));
+	    }
+	}
     }
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 1L;
+    static private final long serialVersionUID = 1L;
 
     private IRSDeclarationDTO declaration;
 

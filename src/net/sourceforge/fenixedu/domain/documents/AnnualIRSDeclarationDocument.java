@@ -3,6 +3,10 @@ package net.sourceforge.fenixedu.domain.documents;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
+import org.joda.time.LocalDate;
+
+import pt.ist.fenixWebFramework.services.Service;
+
 public class AnnualIRSDeclarationDocument extends AnnualIRSDeclarationDocument_Base {
 
     public AnnualIRSDeclarationDocument(Person addressee, Person operator, String filename, byte[] content, Integer year) {
@@ -11,6 +15,11 @@ public class AnnualIRSDeclarationDocument extends AnnualIRSDeclarationDocument_B
 	checkRulesToCreate(addressee, year);
 	setYear(year);
 	super.init(GeneratedDocumentType.ANNUAL_IRS_DECLARATION, addressee, operator, filename, content);
+    }
+
+    @Override
+    public Person getAddressee() {
+	return (Person) super.getAddressee();
     }
 
     private void checkRulesToCreate(Person addressee, Integer year) {
@@ -23,5 +32,20 @@ public class AnnualIRSDeclarationDocument extends AnnualIRSDeclarationDocument_B
 	if (year == null) {
 	    throw new DomainException("error.documents.AnnualIRSDeclarationDocument.year.cannot.be.null");
 	}
+    }
+
+    @Service
+    public AnnualIRSDeclarationDocument generateAnotherDeclaration(Person operator, byte[] content) {
+
+	final Person addressee = getAddressee();
+	final Integer year = getYear();
+
+	delete();
+
+	return new AnnualIRSDeclarationDocument(addressee, operator, buildFilename(addressee, year), content, year);
+    }
+
+    private String buildFilename(Person person, Integer year) {
+	return String.format("IRS-%s-%s-%s.pdf", year, person.getDocumentIdNumber(), new LocalDate().toString("yyyyMMdd"));
     }
 }

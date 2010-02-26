@@ -69,6 +69,15 @@
 				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.extract" />
 			</html:link></li>
 		</ul>
+		
+		
+		<br/>
+		<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documents"/></strong>
+		<ul>
+			<li><html:link action="<%="/generatedDocuments.do?method=showAnnualIRSDocumentsInPayments&amp;personId=" + personId%>">
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.new.irs.annual.document" />
+			</html:link></li>
+		</ul>
 
 
 	</fr:form>
