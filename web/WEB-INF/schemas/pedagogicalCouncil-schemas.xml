@@ -635,6 +635,21 @@
 	</slot>
 </schema>
 
+<schema name="tutorship.summary.search" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorSummaryBean">
+	<slot name="teacher" layout="menu-select" key="label.teacher">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorSearchBean$DepartmentTeachersProvider" />
+		<property name="format" value="${teacherNumber} - ${employee.person.name}" />
+		<property name="sortBy" value="teacherNumber" />
+		<property name="destination" value="teacherSelection" />
+	</slot>
+	<slot name="executionSemester" bundle="APPLICATION_RESOURCES" layout="menu-select" key="label.semestre">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionSemestersProvider" />
+		<property name="format" value="${semester} - ${executionYear.year}" />
+	</slot>
+</schema>
+
 <schema name="tutorship.student.number" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.TutorateBean">
 	<slot name="personNumber" key="label.student.number">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
@@ -699,6 +714,98 @@
 	</slot>
 </schema>
 
+<schema name="tutorship.tutorate.createSummary" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.CreateSummaryBean">
+	<slot name="tutorshipRelationsSize" key="label.tutorshipSummary.form.relationsSize" read-only="true" />
+	<slot name="howManyReunionsGroup" key="label.tutorshipSummary.form.howManyReunionsGroup">
+    	<property name="size" value="4"/>
+		<property name="maxLength" value="4"/>
+    </slot>
+	<slot name="howManyReunionsIndividual" key="label.tutorshipSummary.form.howManyReunionsIndividual">
+    	<property name="size" value="4"/>
+		<property name="maxLength" value="4"/>
+    </slot>
+	<slot name="howManyContactsPhone" key="label.tutorshipSummary.form.howManyContactsPhone">
+    	<property name="size" value="4"/>
+		<property name="maxLength" value="4"/>
+    </slot>
+   	<slot name="howManyContactsEmail" key="label.tutorshipSummary.form.howManyContactsEmail">
+    	<property name="size" value="4"/>
+		<property name="maxLength" value="4"/>
+    </slot>
+</schema>
+
+<schema name="tutorship.tutorate.viewSummary" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.TutorshipSummary">
+	<slot name="tutorshipSummaryRelationsCount" key="label.tutorshipSummary.form.relationsSize" />
+	<slot name="howManyReunionsGroup" key="label.tutorshipSummary.form.howManyReunionsGroup">
+    	<property name="size" value="4"/>
+		<property name="maxLength" value="4"/>
+    </slot>
+	<slot name="howManyReunionsIndividual" key="label.tutorshipSummary.form.howManyReunionsIndividual">
+    	<property name="size" value="4"/>
+		<property name="maxLength" value="4"/>
+    </slot>
+	<slot name="howManyContactsPhone" key="label.tutorshipSummary.form.howManyContactsPhone">
+    	<property name="size" value="4"/>
+		<property name="maxLength" value="4"/>
+    </slot>
+   	<slot name="howManyContactsEmail" key="label.tutorshipSummary.form.howManyContactsEmail">
+    	<property name="size" value="4"/>
+		<property name="maxLength" value="4"/>
+    </slot>
+</schema>
+
+<schema name="tutorship.tutorate.createSummaryRelation" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorshipSummaryRelationBean">
+	<slot name="studentPlan.person.name" key="label.name" read-only="true" />
+	<slot name="studentPlan.registration.number" key="label.studentNumber" read-only="true" />
+	<slot name="participationType" key="label.tutorshipSummary.form.participationType" />
+	<slot name="participationRegularly" layout="boolean-icon" key="label.tutorshipSummary.form.participationRegularly" />
+	<slot name="participationNone" layout="boolean-icon" key="label.tutorshipSummary.form.participationNone" />
+	<slot name="outOfTouch" layout="boolean-icon" key="label.tutorshipSummary.form.outOfTouch" />
+	<slot name="highPerformance" layout="boolean-icon" key="label.tutorshipSummary.form.highPerformance" />
+	<slot name="lowPerformance" layout="boolean-icon" key="label.tutorshipSummary.form.lowPerformance" />
+</schema>
+
+<schema name="tutorship.tutorate.viewSummaryRelation" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.TutorshipSummaryRelation">
+	<slot name="studentPlan.person.name" key="label.name" read-only="true" />
+	<slot name="studentPlan.registration.number" key="label.studentNumber" read-only="true" />
+	<slot name="participationType" key="label.tutorshipSummary.form.participationType" />
+	<slot name="participationRegularly" layout="boolean-icon" key="label.tutorshipSummary.form.participationRegularly" />
+	<slot name="participationNone" layout="boolean-icon" key="label.tutorshipSummary.form.participationNone" />
+	<slot name="outOfTouch" layout="boolean-icon" key="label.tutorshipSummary.form.outOfTouch" />
+	<slot name="highPerformance" layout="boolean-icon" key="label.tutorshipSummary.form.highPerformance" />
+	<slot name="lowPerformance" layout="boolean-icon" key="label.tutorshipSummary.form.lowPerformance" />
+</schema>
+
+<schema name="tutorship.summary.period" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorshipSummaryPeriodBean">
+	<slot name="executionSemester" bundle="APPLICATION_RESOURCES" layout="menu-select" key="label.semestre">
+		<property name="destination" value="updateExecutionSemesterPostback" />
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionSemestersProvider" />
+		<property name="format" value="${semester} - ${executionYear.year}" />
+		<property name="saveOptions" value="true" />
+	</slot>
+</schema>
+
+<schema name="tutorship.summary.period-full" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorshipSummaryPeriodBean">
+	<slot name="executionSemester" bundle="APPLICATION_RESOURCES" layout="menu-select" key="label.semestre" read-only="true">
+		<property name="format" value="${semester} - ${executionYear.year}" />
+		<property name="saveOptions" value="true" />
+	</slot>
+	<slot name="beginDate" key="label.beginDate" layout="picker" >
+        <validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+        <validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
+		<property name="size" value="12"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	<slot name="endDate" key="label.endDate" layout="picker" >
+        <validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+        <validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
+		<property name="size" value="12"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+</schema>
+
+
 <schema name="tutorship.tutorate.student.lowPerformance" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.studentLowPerformance.StudentLowPerformanceBean">
 	<slot name="student.name" key="label.tutorship.lowPerformance.name" bundle="PEDAGOGICAL_COUNCIL" />
 	<slot name="student.number" key="label.tutorship.lowPerformance.number" bundle="PEDAGOGICAL_COUNCIL" />
@@ -726,8 +833,6 @@
 	<slot name="requestDate" key="label.tutorship.lowPerformance.request.requestDate"/>
 	<slot name="person.name" key="label.tutorship.lowPerformance.request.personName"/>
 </schema>
-
-
 
 <!-- SUMMARIES -->
 

@@ -101,30 +101,6 @@
 			</ul>
 		</logic:notEmpty>
 	</logic:present>
-	
-	<p class="mtop2 mbottom1 separator2">
-		<b><bean:message key="label.tutorshipSummary.past" bundle="APPLICATION_RESOURCES"/></b>
-	</p>
-	
-	<logic:empty name="pastSummaries">
-		<bean:message key="message.tutorshipSummary.empty" bundle="APPLICATION_RESOURCES" />
-	</logic:empty>
-	<logic:notEmpty name="pastSummaries">
-		<ul>
-		<logic:iterate id="summary" name="pastSummaries">
-			<li>
-				<bean:define id="summaryId" name="summary" property="externalId" />
-				<html:link page="<%= "/tutorshipSummary.do?method=viewSummary&summaryId=" + summaryId %>">
-					<bean:message key="label.curricular.course.semester" bundle="APPLICATION_RESOURCES" /> 
-					<strong><bean:write name="summary" property="semester.semester"/> - <bean:write name="summary" property="semester.executionYear.year"/></strong>,
-					<bean:message key="label.degree.name" bundle="APPLICATION_RESOURCES" />:
-					<strong><bean:write name="summary" property="degree.sigla" /></strong>
-				</html:link>
-			</li>
-		</logic:iterate>
-		</ul>
-	</logic:notEmpty>
-
 
 </logic:present>
 

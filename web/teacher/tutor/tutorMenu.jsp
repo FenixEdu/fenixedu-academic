@@ -18,6 +18,10 @@
 		    <bean:message key="link.teacher.tutorship.students.viewCurriculum" /></html:link>
 	</li>
 	<li>
+		<html:link page="<%= "/tutorshipSummary.do?method=searchTeacher"%>">
+		    <bean:message key="link.teacher.tutorship.sendMailToTutoredStudents" /></html:link>
+	</li>
+	<li>
 		<html:link page="<%= "/sendMailToTutoredStudents.do?method=prepare"%>">
 		    <bean:message key="link.teacher.tutorship.sendMailToTutoredStudents" /></html:link>
 	</li>

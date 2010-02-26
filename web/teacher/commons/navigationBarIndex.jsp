@@ -31,7 +31,10 @@
 				page="<%= "/viewStudentsPerformanceGrid.do?method=prepare"%>">
 				<bean:message key="link.teacher.tutorship.students.performanceGrid" />
 			</html:link></li>
-
+			<li><html:link
+				page="<%= "/tutorshipSummary.do?method=searchTeacher"%>">
+				<bean:message key="link.teacher.tutorship.summary" />
+			</html:link></li>
 			<li><html:link
 				page="<%= "/sendMailToTutoredStudents.do?method=prepare"%>">
 				<bean:message key="link.teacher.tutorship.sendMailToTutoredStudents" />

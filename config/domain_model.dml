@@ -45,6 +45,7 @@ enum net.sourceforge.fenixedu.domain.PartyClassification                        
 enum net.sourceforge.fenixedu.domain.PhotoState                                                                           as PhotoState;
 enum net.sourceforge.fenixedu.domain.PhotoType                                                                            as PhotoType;
 enum net.sourceforge.fenixedu.domain.PhotographContentSize                                                                as PhotographContentSize;
+enum net.sourceforge.fenixedu.domain.PrescriptionEnum                                                                         as PrescriptionEnum;
 enum net.sourceforge.fenixedu.domain.ProfessionType                                                                       as ProfessionType;
 enum net.sourceforge.fenixedu.domain.ProfessionalSituationConditionType                                                   as ProfessionalSituationConditionType;
 enum net.sourceforge.fenixedu.domain.ProfessionalSituationType                                                            as ProfessionalSituationType;
@@ -53,7 +54,9 @@ enum net.sourceforge.fenixedu.domain.RequestState                               
 enum net.sourceforge.fenixedu.domain.SalaryType                                                                           as SalaryType;
 enum net.sourceforge.fenixedu.domain.SchoolLevelType                                                                      as SchoolLevelType;
 enum net.sourceforge.fenixedu.domain.ShiftType                                                                            as ShiftType;
-enum net.sourceforge.fenixedu.domain.PrescriptionEnum                                                                         as PrescriptionEnum;
+enum net.sourceforge.fenixedu.domain.TutorshipParticipationType	  														  as TutorshipParticipationType;
+enum net.sourceforge.fenixedu.domain.TutorshipSummarySatisfaction	  													  as TutorshipSummarySatisfaction;
+enum net.sourceforge.fenixedu.domain.TutorshipSummaryProgramAssessment	  												  as TutorshipSummaryProgramAssessment;
 enum net.sourceforge.fenixedu.domain.UnitBoardPermittedGroupType                                                          as UnitBoardPermittedGroupType;
 enum net.sourceforge.fenixedu.domain.UnitSiteBannerRepeatType                                                             as UnitSiteBannerRepeatType;
 enum net.sourceforge.fenixedu.domain.UnitSiteLayoutType                                                                   as UnitSiteLayoutType;
@@ -1644,6 +1647,57 @@ class DomainObject {
         Partial startDate;
         Partial endDate;
     }
+    
+    class TutorshipSummary extends DomainObject {
+    	Integer howManyReunionsGroup;
+    	Integer howManyReunionsIndividual;
+    	Integer howManyContactsPhone;
+    	Integer howManyContactsEmail;
+
+		TutorshipSummarySatisfaction tutorshipSummarySatisfaction;
+    	TutorshipSummaryProgramAssessment tutorshipSummaryProgramAssessment;
+    	String difficulties;
+    	String gains;
+    	String suggestions;
+    	
+    	Boolean problemsR1;
+    	Boolean problemsR2;
+    	Boolean problemsR3;
+    	Boolean problemsR4;
+    	Boolean problemsR5;
+    	Boolean problemsR6;
+    	Boolean problemsR7;
+    	Boolean problemsR8;
+    	Boolean problemsR9;
+    	Boolean problemsR10;
+    	String  problemsOther;
+    	
+		Boolean gainsR1;
+		Boolean gainsR2;
+		Boolean gainsR3;
+		Boolean gainsR4;
+		Boolean gainsR5;
+		Boolean gainsR6;
+		Boolean gainsR7;
+		Boolean gainsR8;
+		Boolean gainsR9;
+		Boolean gainsR10;
+		String gainsOther;
+    }
+    
+    class TutorshipSummaryPeriod extends DomainObject {
+		LocalDate beginDate;
+		LocalDate endDate;
+    }
+    
+    class TutorshipSummaryRelation extends DomainObject {
+    	TutorshipParticipationType participationType;
+    	Boolean participationRegularly;
+    	Boolean participationNone;
+    	Boolean outOfTouch;
+    	Boolean highPerformance;
+    	Boolean lowPerformance;
+	}
     
     class TutorshipLog extends DomainObject {
         Level motivation;
@@ -14092,11 +14146,72 @@ relation RootDomainObjectTutorship {
     }
 }
 
+relation RootDomainObjectTutorshipSummary {
+    RootDomainObject playsRole rootDomainObject;
+    TutorshipSummary playsRole tutorshipSummaries {
+        multiplicity *;
+    }
+}
+
+relation RootDomainObjectTutorshipSummaryPeriod {
+    RootDomainObject playsRole rootDomainObject;
+    TutorshipSummaryPeriod playsRole tutorshipSummaryPeriods {
+        multiplicity *;
+    }
+}
+
+relation RootDomainObjectTutorshipSummaryRelation {
+    RootDomainObject playsRole rootDomainObject;
+    TutorshipSummaryRelation playsRole tutorshipSummaryRelations {
+        multiplicity *;
+    }
+}
+
 relation RootDomainObjectTutorshipLog {
     RootDomainObject playsRole rootDomainObject;
     TutorshipLog playsRole tutorshipLogs {
         multiplicity *;
     }
+}
+
+relation TutorshipSummaryTutorships {
+    Tutorship playsRole tutorship;
+    TutorshipSummaryRelation playsRole tutorshipSummaryRelations {
+    	multiplicity *;
+    }
+}
+
+relation TutorshipTutorshipSummaries {
+    TutorshipSummary playsRole tutorshipSummary;
+    TutorshipSummaryRelation playsRole tutorshipSummaryRelations {
+    	multiplicity *;
+    }
+}
+
+relation TutorshipSummaryPeriodExecutionSemester {
+	TutorshipSummaryPeriod playsRole tutorshipSummaryPeriod;
+	ExecutionSemester playsRole executionSemester;
+}
+
+relation TutorshipSummarySemester {
+	TutorshipSummary playsRole tutorshipSummaries {
+		multiplicity *;
+	}
+	ExecutionSemester playsRole semester;
+}
+
+relation TutorshipSummaryDegree {
+	TutorshipSummary playsRole tutorshipSummaries {
+		multiplicity *;
+	}
+	Degree playsRole degree;
+}
+
+relation TutorshipSummaryTeacher {
+	TutorshipSummary playsRole tutorshipSummaries {
+		multiplicity *;
+	}
+	Teacher playsRole teacher;
 }
 
 relation TutorshipTutorshipLogs {

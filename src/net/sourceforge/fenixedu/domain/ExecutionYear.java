@@ -28,8 +28,10 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeFieldType;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
+import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
 
 import dml.runtime.RelationAdapter;
@@ -452,6 +454,25 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 	    return null;
 	}
 
+	public ExecutionYear findByPartial(final Partial partial) {
+	    final Integer year = Integer.valueOf(partial.get(DateTimeFieldType.year()));
+	    Set<ExecutionYear> executionYears = map.get(year);
+	    if (executionYears == null || executionYears.isEmpty()) {
+		for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
+		    add(executionYear);
+		}
+		executionYears = map.get(year);
+	    }
+	    if (executionYears != null) {
+		for (final ExecutionYear executionYear : executionYears) {
+		    if (executionYear.getBeginDateYearMonthDay().getYear() == year) {
+			return executionYear;
+		    }
+		}
+	    }
+	    return null;
+	}
+
 	private void add(final ExecutionYear executionYear) {
 	    final Integer year1 = executionYear.getBeginDateYearMonthDay().getYear();
 	    final Integer year2 = executionYear.getEndDateYearMonthDay().getYear();
@@ -477,6 +498,10 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 
     static public ExecutionYear readByDateTime(final LocalDate localDate) {
 	return executionYearSearchCache.findByDateTime(localDate.toDateTimeAtCurrentTime());
+    }
+
+    static public ExecutionYear readByPartial(final Partial partial) {
+	return executionYearSearchCache.findByPartial(partial);
     }
 
     public static ExecutionYear readBy(final YearMonthDay begin, YearMonthDay end) {

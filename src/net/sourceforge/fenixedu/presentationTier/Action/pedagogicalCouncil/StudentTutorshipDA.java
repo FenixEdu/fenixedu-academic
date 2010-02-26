@@ -11,6 +11,8 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.PerformanceGrid
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
+import net.sourceforge.fenixedu.domain.TutorshipSummary;
+import net.sourceforge.fenixedu.domain.TutorshipSummaryRelation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.tutorship.StudentsPerformanceGridDispatchAction;
@@ -70,6 +72,18 @@ public class StudentTutorshipDA extends StudentsPerformanceGridDispatchAction {
 	    }
 	    request.setAttribute("tutors", tutors);
 	    request.setAttribute("student", student.getPerson());
+
+	    List<TutorshipSummary> pastSummaries = new ArrayList<TutorshipSummary>();
+	    for (Tutorship t : student.getTutorships()) {
+		for (TutorshipSummaryRelation tsr : t.getTutorshipSummaryRelations()) {
+		    if (!tsr.getTutorshipSummary().isActive()) {
+			pastSummaries.add(tsr.getTutorshipSummary());
+		    }
+		}
+	    }
+
+	    request.setAttribute("pastSummaries", pastSummaries);
+
 	} else {
 	    studentErrorMessage(request, bean.getPersonNumber());
 	}
