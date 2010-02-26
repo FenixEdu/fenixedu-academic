@@ -60,7 +60,7 @@ public class TutorshipStudentLowPerformanceQueueJob extends TutorshipStudentLowP
     private List<StudentLowPerformanceBean> calcstudentsLowPerformanceBean(List<AbstractPrescriptionRule> prescriptionRules) {
 	LinkedList<StudentLowPerformanceBean> studentLowPerformanceBeans = new LinkedList<StudentLowPerformanceBean>();
 
-	List<AbstractPrescriptionRule> abstractPrescriptionRules = AbstractPrescriptionRule
+	final List<AbstractPrescriptionRule> abstractPrescriptionRules = AbstractPrescriptionRule
 		.readPrescriptionRules(getPrescriptionEnum());
 	for (AbstractPrescriptionRule abstractPrescriptionRule : prescriptionRules) {
 
@@ -92,7 +92,7 @@ public class TutorshipStudentLowPerformanceQueueJob extends TutorshipStudentLowP
 
 	BigDecimal sumEcts = registration.getCurriculum().getSumEctsCredits();
 
-	if (isLowPerformanceStudent(sumEcts, numberOfEntriesStudentInSecretary, prescriptionRules)) {
+	if (isLowPerformanceStudent(registration, sumEcts, numberOfEntriesStudentInSecretary, prescriptionRules)) {
 	    Student student = registration.getStudent();
 	    String studentState = workingStudent(student);
 	    studentState += parcialStudent(registration);
@@ -111,17 +111,16 @@ public class TutorshipStudentLowPerformanceQueueJob extends TutorshipStudentLowP
 	    RegistrationState registrationState = registration.getLastRegistrationState(execYear);
 	    if (registrationState != null && registrationState.isActive()) {
 		numberOfEntriesStudentInSecretary += 1;
-
 	    }
 	}
 	return numberOfEntriesStudentInSecretary;
 
     }
 
-    private boolean isLowPerformanceStudent(BigDecimal ects, int numberOfEntriesStudentInSecretary,
+    private boolean isLowPerformanceStudent(Registration registration, BigDecimal ects, int numberOfEntriesStudentInSecretary,
 	    List<AbstractPrescriptionRule> prescriptionRules) {
 	for (AbstractPrescriptionRule prescriptionRule : prescriptionRules) {
-	    if ((prescriptionRule.isPrescript(ects, numberOfEntriesStudentInSecretary))) {
+	    if ((prescriptionRule.isPrescript(registration, ects, numberOfEntriesStudentInSecretary))) {
 		return true;
 	    }
 	}
@@ -151,7 +150,7 @@ public class TutorshipStudentLowPerformanceQueueJob extends TutorshipStudentLowP
 
 	spreadsheet.setHeader("Nome");
 	spreadsheet.setHeader("Número");
-	spreadsheet.setHeader("Nome Curso");
+	spreadsheet.setHeader("Nome do Curso");
 	spreadsheet.setHeader("Ciclo");
 	spreadsheet.setHeader("Créditos Alcançados");
 	spreadsheet.setHeader("Email");

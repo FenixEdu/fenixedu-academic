@@ -6,6 +6,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.PrescriptionEnum;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 public abstract class AbstractPrescriptionRule {
 
@@ -56,15 +57,15 @@ public abstract class AbstractPrescriptionRule {
 	this.numberOfEntriesStudentInSecretary = numberOfEntriesStudentInSecretary;
     }
 
-    public boolean isOcursInMonth() {
+    public boolean isOccurs() {
 	return true;
     }
 
-    public boolean contains(PrescriptionEnum p) {
-	return p.equals(getPrescriptionEnum());
+    public boolean contains(PrescriptionEnum prescriptionEnum) {
+	return prescriptionEnum.equals(getPrescriptionEnum());
     }
 
-    public boolean isPrescript(BigDecimal ects, int numberOfEntriesStudentInSecretary) {
+    public boolean isPrescript(Registration registration, BigDecimal ects, int numberOfEntriesStudentInSecretary) {
 	return ects.compareTo(getMinimumEcts()) < 0
 		&& numberOfEntriesStudentInSecretary == getNumberOfEntriesStudentInSecretary();
     }
