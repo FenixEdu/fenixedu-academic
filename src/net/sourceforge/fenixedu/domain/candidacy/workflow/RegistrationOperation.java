@@ -25,10 +25,7 @@ import org.joda.time.YearMonthDay;
 
 public class RegistrationOperation extends CandidacyOperation {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 1L;
+    static private final long serialVersionUID = 1L;
 
     public RegistrationOperation(Set<RoleType> roleTypes, Candidacy candidacy) {
 	super(roleTypes, candidacy);
