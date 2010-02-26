@@ -170,7 +170,6 @@ public class EmployeeAssiduousnessExemption implements Serializable {
 	    if (assiduousnessClosedMonth.getClosedMonth() != null
 		    && (!assiduousnessClosedMonth.getClosedMonth().getClosedYearMonth().isBefore(yearBeginPartial))
 		    && (!assiduousnessClosedMonth.getClosedMonth().getClosedYearMonth().isAfter(yearEndPartial))) {
-		System.out.println(assiduousnessClosedMonth.getClosedMonth().getClosedYearMonth());
 		if (assiduousnessClosedMonth.getUnjustifiedDays() != 0) {
 		    monthsWithUnjustifiedLeaves++;
 		}
