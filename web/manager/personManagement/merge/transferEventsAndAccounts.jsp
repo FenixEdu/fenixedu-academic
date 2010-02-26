@@ -11,9 +11,9 @@
 <p class="breadcumbs">
 	<span><strong><bean:message key="label.step" bundle="MANAGER_RESOURCES" /> 1</strong>: <bean:message key="label.personManagement.merge.choose.persons" bundle="MANAGER_RESOURCES" /> </span> &gt;
 	<span><strong><bean:message key="label.step" bundle="MANAGER_RESOURCES" /> 2</strong>: <bean:message key="label.personManagement.merge.transfer.personal.data" bundle="MANAGER_RESOURCES" /> </span> &gt;
-	<span><strong><bean:message key="label.step" bundle="MANAGER_RESOURCES" /> 3</strong>: <bean:message key="label.personManagement.merge.transfer.events.and.accounts" bundle="MANAGER_RESOURCES" /> </span> &gt;
+	<span class="actual"><strong><bean:message key="label.step" bundle="MANAGER_RESOURCES" /> 3</strong>: <bean:message key="label.personManagement.merge.transfer.events.and.accounts" bundle="MANAGER_RESOURCES" /> </span> &gt;
 	<span><strong><bean:message key="label.step" bundle="MANAGER_RESOURCES" /> 4</strong>: <bean:message key="label.personManagement.merge.transfer.student.data" bundle="MANAGER_RESOURCES" /> </span> &gt;
-	<span class="actual"><strong><bean:message key="label.step" bundle="MANAGER_RESOURCES" /> 5</strong>: <bean:message key="label.personManagement.merge.transfer.registrations" bundle="MANAGER_RESOURCES" /> </span> &gt;
+	<span><strong><bean:message key="label.step" bundle="MANAGER_RESOURCES" /> 5</strong>: <bean:message key="label.personManagement.merge.transfer.registrations" bundle="MANAGER_RESOURCES" /> </span> &gt;
 	<span><strong><bean:message key="label.step" bundle="MANAGER_RESOURCES" /> 6</strong>: <bean:message key="label.personManagement.merge.delete.student" bundle="MANAGER_RESOURCES" /> </span> &gt;
 	<span><strong><bean:message key="label.step" bundle="MANAGER_RESOURCES" /> 7</strong>: <bean:message key="label.personManagement.merge.delete.person" bundle="MANAGER_RESOURCES" /> </span>
 </p>
@@ -61,40 +61,21 @@
 			</td>					
 		</tr>
 	</logic:iterate>
-
-<%-- 	
-	<bean:define id="linkDeleteLeft">
-		/mergePersons.do?method=delete&classToMerge=<bean:write name="classToMerge" />&object2IdInternal=<bean:write name="object2IdInternal" />&object1IdInternal=<bean:write name="object1IdInternal" />&objectIdInternal=<bean:write name="object1IdInternal" />
-	</bean:define>
-	<bean:define id="linkDeleteRight">
-		/mergePersons.do?method=delete&classToMerge=<bean:write name="classToMerge" />&object2IdInternal=<bean:write name="object2IdInternal" />&object1IdInternal=<bean:write name="object1IdInternal" />&objectIdInternal=<bean:write name="object2IdInternal" />
-	</bean:define>		
-	<tr>
-		<td></td>
-		<td></td>
-		<td><html:link module="/manager" page="<%= linkDeleteLeft %>" ><strong><bean:message bundle="MANAGER_RESOURCES" key="message.manager.delete" /></strong></html:link></td>
-		<td></td>
-		<td><html:link module="/manager" page="<%= linkDeleteRight %>" ><strong><bean:message bundle="MANAGER_RESOURCES" key="message.manager.delete" /></strong></html:link></td>
-	</tr>
---%>	
 </table>
 
 <p>&nbsp;</p>
 
-<fr:form action="/mergePersons.do?method=transferRegistrations">
+<fr:form action="/mergePersons.do?method=transferEventsAndAccounts">
 
 	<fr:edit id="mergePersonsBean" name="mergePersonsBean" visible="false"/>
 	
-	<html:submit><bean:message key="label.transfer.registrations" bundle="MANAGER_RESOURCES" /></html:submit>
+	<html:submit><bean:message key="label.transfer.events.and.accounts" bundle="MANAGER_RESOURCES" /></html:submit>
 
 </fr:form>
 
-
-
-<fr:form action="/mergePersons.do?method=prepareDeleteStudent">
+<fr:form action="/mergePersons.do?method=mergeStudents">
 
 	<fr:edit id="mergePersonsBean" name="mergePersonsBean" visible="false"/>
 	
 	<html:submit><bean:message key="label.continue" bundle="MANAGER_RESOURCES" /></html:submit>
 </fr:form>
-

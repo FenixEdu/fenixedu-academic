@@ -637,12 +637,12 @@ public class Person extends Person_Base {
 	    super.addPersonRoles(personRoles);
 	}
     }
-    
+
     @Service
     public void addPersonRoleByRoleTypeService(RoleType roleType) {
 	this.addPersonRoleByRoleType(roleType);
     }
-    
+
     public void addPersonRoleByRoleType(RoleType roleType) {
 	this.addPersonRoles(Role.getRoleByRoleType(roleType));
     }
@@ -995,7 +995,7 @@ public class Person extends Person_Base {
     public void removeRoleByTypeService(final RoleType roleType) {
 	removeRoleByType(roleType);
     }
-    
+
     public void removeRoleByType(final RoleType roleType) {
 	final Role role = getPersonRole(roleType);
 	if (role != null) {
@@ -3429,4 +3429,21 @@ public class Person extends Person_Base {
 	return null;
     }
 
+    @Service
+    public void transferEventsAndAccounts(Person sourcePerson) {
+	if (sourcePerson.getInternalAccount() != null) {
+	    for (final Entry entry : sourcePerson.getInternalAccount().getEntries()) {
+		this.getInternalAccount().addEntries(entry);
+		this.getEvents().add(entry.getAccountingTransaction().getEvent());
+	    }
+
+	}
+
+	if (sourcePerson.getExternalAccount() != null) {
+	    for (final Entry entry : sourcePerson.getExternalAccount().getEntries()) {
+		this.getExternalAccount().addEntries(entry);
+		this.getEvents().add(entry.getAccountingTransaction().getEvent());
+	    }
+	}
+    }
 }

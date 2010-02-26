@@ -43,7 +43,8 @@ import dml.Slot;
 	@Forward(name = "remove-student", path = "/manager/personManagement/merge/removeStudent.jsp"),
 	@Forward(name = "remove-person", path = "/manager/personManagement/merge/removePerson.jsp"),
 	@Forward(name = "person-removed", path = "/manager/personManagement/merge/personRemoved.jsp"),
-	@Forward(name = "transfer-registrations", path = "/manager/personManagement/merge/transferRegistrations.jsp") })
+	@Forward(name = "transfer-registrations", path = "/manager/personManagement/merge/transferRegistrations.jsp"),
+	@Forward(name = "transfer-events-and-accounts", path = "/manager/personManagement/merge/transferEventsAndAccounts.jsp") })
 public class MergePersonsDA extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	request.setAttribute("mergePersonsBean", new MergePersonsBean(Person.class.getName()));
@@ -341,6 +342,32 @@ public class MergePersonsDA extends FenixDispatchAction {
 
 	return prepareTransferRegistrations(mapping, form, request, response);
 
+    }
+
+    public ActionForward prepareTransferEventsAndAccounts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException, IllegalAccessException,
+	    NoSuchMethodException, ClassNotFoundException {
+	MergePersonsBean mergePersonsBean = getMergePersonsBean(request);
+	request.setAttribute("mergePersonsBean", mergePersonsBean);
+	Person domainObject1 = RootDomainObject.fromExternalId(mergePersonsBean.getLeftOid());
+	Person domainObject2 = RootDomainObject.fromExternalId(mergePersonsBean.getRightOid());
+
+	chooseObjects(mapping, form, request, response);
+
+	return mapping.findForward("transfer-events-and-accounts");
+    }
+
+    public ActionForward transferEventsAndAccounts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException, IllegalAccessException,
+	    NoSuchMethodException, ClassNotFoundException {
+	MergePersonsBean mergePersonsBean = getMergePersonsBean(request);
+	request.setAttribute("mergePersonsBean", mergePersonsBean);
+	Person destinyPerson = RootDomainObject.fromExternalId(mergePersonsBean.getLeftOid());
+	Person sourcePerson = RootDomainObject.fromExternalId(mergePersonsBean.getRightOid());
+
+	destinyPerson.transferEventsAndAccounts(sourcePerson);
+
+	return prepareTransferEventsAndAccounts(mapping, form, request, response);
     }
 
     public static class MergePersonsBean implements java.io.Serializable {
