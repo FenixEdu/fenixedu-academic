@@ -64,7 +64,10 @@ public class PhdPermissionsManagementDA extends FenixDispatchAction {
 	    HttpServletResponse response) {
 
 	try {
-	    getPermission(request).saveMembers(getElementsToSave());
+	    
+	    if (AccessControl.getPerson().getEmployee().isUnitCoordinator()) {
+		getPermission(request).saveMembers(getElementsToSave());
+	    }
 
 	} catch (final DomainException e) {
 	    addActionMessage("error", request, e.getMessage(), e.getArgs());
