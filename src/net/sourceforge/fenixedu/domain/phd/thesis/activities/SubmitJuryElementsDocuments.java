@@ -69,7 +69,7 @@ public class SubmitJuryElementsDocuments extends PhdThesisActivity {
 
 	case JURY_ELEMENTS:
 	    if (process.getIndividualProgramProcess().isCoordinatorForPhdProgram(person)) {
-		AlertService.alertAcademicOffice(process.getIndividualProgramProcess(),
+		AlertService.alertAcademicOffice(process.getIndividualProgramProcess(), getThesisProcessPermission(),
 			"message.phd.alert.jury.elements.submitted.subject", "message.phd.alert.jury.elements.submitted.body");
 	    }
 	    break;

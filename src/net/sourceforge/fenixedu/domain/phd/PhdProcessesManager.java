@@ -5,9 +5,11 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.permissions.PhdPermission;
+import net.sourceforge.fenixedu.domain.phd.permissions.PhdPermissionType;
 
 import org.joda.time.DateTime;
 
@@ -46,4 +48,23 @@ public class PhdProcessesManager extends PhdProcessesManager_Base {
 	Collections.sort(result, PhdPermission.COMPARATOR_BY_TYPE);
 	return result;
     }
+
+    public PhdPermission getPermission(final PhdPermissionType permissionType) {
+	for (final PhdPermission permission : getPermissionsSet()) {
+	    if (permission.hasType(permissionType)) {
+		return permission;
+	    }
+	}
+	return null;
+    }
+
+    public boolean hasPermission(PhdPermissionType type) {
+	return getPermission(type) != null;
+    }
+
+    public Group getPermissionGroup(PhdPermissionType permissionType) {
+	final PhdPermission permission = getPermission(permissionType);
+	return permission != null ? permission.getMembers() : null;
+    }
+
 }

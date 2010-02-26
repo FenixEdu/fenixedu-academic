@@ -38,6 +38,7 @@ import net.sourceforge.fenixedu.domain.phd.alert.AlertService.AlertMessage;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdRegistrationFee;
 import net.sourceforge.fenixedu.domain.phd.notification.PhdNotification;
 import net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationBean;
+import net.sourceforge.fenixedu.domain.phd.permissions.PhdPermissionType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -47,6 +48,10 @@ import org.joda.time.LocalDate;
 public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base {
 
     static abstract private class PhdActivity extends Activity<PhdProgramCandidacyProcess> {
+
+	protected PhdPermissionType getCandidacyProcessManagementPermission() {
+	    return PhdPermissionType.CANDIDACY_PROCESS_MANAGEMENT;
+	}
 
 	@Override
 	final public void checkPreConditions(final PhdProgramCandidacyProcess process, final IUserView userView) {
@@ -195,7 +200,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	    process.createState(PhdProgramCandidacyProcessState.WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION,
 		    userView.getPerson(), bean.getRemarks());
 
-	    AlertService.alertAcademicOffice(process.getIndividualProgramProcess(),
+	    AlertService.alertAcademicOffice(process.getIndividualProgramProcess(), getCandidacyProcessManagementPermission(),
 		    "message.phd.alert.candidacy.request.ratify.subject", "message.phd.alert.candidacy.request.ratify.body");
 
 	    return process;
@@ -231,8 +236,8 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	    final PhdProgramCandidacyProcessStateBean bean = (PhdProgramCandidacyProcessStateBean) object;
 	    process.createState(PhdProgramCandidacyProcessState.REJECTED, userView.getPerson(), bean.getRemarks());
 
-	    AlertService.alertAcademicOffice(process.getIndividualProgramProcess(), "message.phd.alert.candidacy.reject.subject",
-		    "message.phd.alert.candidacy.reject.body");
+	    AlertService.alertAcademicOffice(process.getIndividualProgramProcess(), getCandidacyProcessManagementPermission(),
+		    "message.phd.alert.candidacy.reject.subject", "message.phd.alert.candidacy.reject.body");
 
 	    return process;
 	}

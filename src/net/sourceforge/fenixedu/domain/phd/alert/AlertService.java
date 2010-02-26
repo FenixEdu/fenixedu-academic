@@ -10,10 +10,15 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.MasterDegreeAdministrativeOfficeGroup;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
+import net.sourceforge.fenixedu.domain.phd.PhdProcessesManager;
+import net.sourceforge.fenixedu.domain.phd.permissions.PhdPermissionType;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 
 import org.joda.time.LocalDate;
@@ -115,6 +120,30 @@ public class AlertService {
 	alertBean.setTargetGroup(new MasterDegreeAdministrativeOfficeGroup());
 
 	new PhdCustomAlert(alertBean);
+    }
+
+    static public void alertAcademicOffice(PhdIndividualProgramProcess process, PhdPermissionType permissionType,
+	    String subjectKey, String bodyKey) {
+	final PhdCustomAlertBean alertBean = new PhdCustomAlertBean(process, true, false, true);
+	alertBean.setSubject(getSubjectPrefixed(process, subjectKey));
+	alertBean.setBody(getBodyText(process, bodyKey));
+	alertBean.setFireDate(new LocalDate());
+	alertBean.setTargetGroup(getTargetGroup(permissionType));
+
+	new PhdCustomAlert(alertBean);
+    }
+
+    static protected AdministrativeOffice getAdministrativeOffice() {
+	return AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE);
+    }
+
+    static protected PhdProcessesManager getProcessesManager() {
+	return getAdministrativeOffice().getPhdProcessesManager();
+    }
+
+    static private Group getTargetGroup(PhdPermissionType permissionType) {
+	final Group group = getProcessesManager().getPermissionGroup(permissionType);
+	return group != null ? group : new MasterDegreeAdministrativeOfficeGroup();
     }
 
     static public void alertCoordinator(PhdIndividualProgramProcess process, String subjectKey, String bodyKey) {

@@ -12,10 +12,15 @@ import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidExceptio
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
+import net.sourceforge.fenixedu.domain.phd.permissions.PhdPermissionType;
 
 public class PublicPresentationSeminarProcess extends PublicPresentationSeminarProcess_Base {
 
     static abstract private class PhdActivity extends Activity<PublicPresentationSeminarProcess> {
+
+	protected PhdPermissionType getPublicPresentationSeminarPermission() {
+	    return PhdPermissionType.PUBLIC_PRESENTATION_SEMINAR_PROCESS_MANAGEMENT;
+	}
 
 	@Override
 	public void checkPreConditions(PublicPresentationSeminarProcess process, IUserView userView) {
@@ -72,7 +77,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 	    process.createState(PublicPresentationSeminarProcessStateType.COMMISSION_WAITING_FOR_VALIDATION,
 		    userView.getPerson(), bean.getRemarks());
 
-	    AlertService.alertAcademicOffice(process.getIndividualProgramProcess(),
+	    AlertService.alertAcademicOffice(process.getIndividualProgramProcess(), getPublicPresentationSeminarPermission(),
 		    "message.phd.alert.public.presentation.seminar.comission.validation.subject",
 		    "message.phd.alert.public.presentation.seminar.comission.validation.body");
 
@@ -175,7 +180,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 	    process.createState(PublicPresentationSeminarProcessStateType.PUBLIC_PRESENTATION_DATE_SCHEDULED, userView
 		    .getPerson(), bean.getRemarks());
 
-	    AlertService.alertAcademicOffice(process.getIndividualProgramProcess(),
+	    AlertService.alertAcademicOffice(process.getIndividualProgramProcess(), getPublicPresentationSeminarPermission(),
 		    "message.phd.alert.public.presentation.seminar.scheduled.presentation.date.subject",
 		    "message.phd.alert.public.presentation.seminar.scheduled.presentation.date.body");
 
@@ -214,7 +219,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 	    process.createState(PublicPresentationSeminarProcessStateType.REPORT_WAITING_FOR_VALIDATION, userView.getPerson(),
 		    bean.getRemarks());
 
-	    AlertService.alertAcademicOffice(process.getIndividualProgramProcess(),
+	    AlertService.alertAcademicOffice(process.getIndividualProgramProcess(), getPublicPresentationSeminarPermission(),
 		    "message.phd.alert.public.presentation.seminar.report.uploaded.subject",
 		    "message.phd.alert.public.presentation.seminar.report.uploaded.body");
 
