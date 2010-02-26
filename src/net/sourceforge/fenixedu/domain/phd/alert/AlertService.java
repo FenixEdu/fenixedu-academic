@@ -30,7 +30,7 @@ public class AlertService {
     static private final String PREFIX_PHD_LABEL = "label.phds";
     static private final String PHD_RESOURCES = "resources.PhdResources";
 
-    private static String getSubjectPrefixed(PhdIndividualProgramProcess process, String subjectKey) {
+    public static String getSubjectPrefixed(PhdIndividualProgramProcess process, String subjectKey) {
 	return getProcessNumberPrefix(process) + getMessageFromResource(subjectKey);
     }
 
@@ -70,7 +70,7 @@ public class AlertService {
 	return builder.toString();
     }
 
-    static private String getBodyText(PhdIndividualProgramProcess process, String bodyText) {
+    static public String getBodyText(PhdIndividualProgramProcess process, String bodyText) {
 	return getBodyCommonText(process) + getMessageFromResource(bodyText);
     }
 
