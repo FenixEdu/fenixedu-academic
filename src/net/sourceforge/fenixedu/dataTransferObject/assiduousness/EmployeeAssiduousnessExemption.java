@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Duration;
 import org.joda.time.LocalDate;
+import org.joda.time.Partial;
 
 public class EmployeeAssiduousnessExemption implements Serializable {
 
@@ -36,6 +37,8 @@ public class EmployeeAssiduousnessExemption implements Serializable {
     private Integer usedArt17;
     private BigDecimal usedArt18;
 
+    private Integer monthsWithUnjustifiedLeaves;
+
     public EmployeeAssiduousnessExemption(Employee employee, Integer year) {
 	setEmployee(employee);
 	setYear(year);
@@ -50,6 +53,7 @@ public class EmployeeAssiduousnessExemption implements Serializable {
 	if (assiduousness.isStatusActive(beginDate, endDate)) {
 
 	    Integer efectiveWorkDays = 0;
+	    monthsWithUnjustifiedLeaves = 0;
 
 	    List<AssiduousnessStatusHistory> assiduousnessStatusHistories = assiduousness.getStatusBetween(pastYearBeginDate,
 		    pastYearEndDate);
@@ -60,6 +64,8 @@ public class EmployeeAssiduousnessExemption implements Serializable {
 		for (AssiduousnessStatusHistory assiduousnessStatusHistory : assiduousnessStatusHistories) {
 		    efectiveWorkDays = efectiveWorkDays
 			    + calculateEfectiveWorkDays(pastYearBeginDate, pastYearEndDate, assiduousnessStatusHistory);
+		    monthsWithUnjustifiedLeaves = monthsWithUnjustifiedLeaves
+			    + getMonthsWithUnjustifiedLeaves(assiduousnessStatusHistory, year);
 		}
 		if (efectiveWorkDays != 0) {
 		    int exemptionDaysQuantity = AssiduousnessExemption.getAssiduousnessExemptionDaysQuantity(year);
@@ -80,6 +86,8 @@ public class EmployeeAssiduousnessExemption implements Serializable {
 		    }
 		    efectiveWorkDays = efectiveWorkDays
 			    + calculateEfectiveWorkDays(beginDate, endDate, assiduousnessStatusHistory);
+		    monthsWithUnjustifiedLeaves = monthsWithUnjustifiedLeaves
+			    + getMonthsWithUnjustifiedLeaves(assiduousnessStatusHistory, year);
 		}
 		if (efectiveWorkDays != 0) {
 		    int exemptionDaysQuantity = AssiduousnessExemption.getAssiduousnessExemptionDaysQuantityByDate(begin);
@@ -150,6 +158,25 @@ public class EmployeeAssiduousnessExemption implements Serializable {
 	    }
 	}
 	return totalWorkedTime;
+    }
+
+    private Integer getMonthsWithUnjustifiedLeaves(AssiduousnessStatusHistory assiduousnessStatusHistory, int year) {
+	Integer monthsWithUnjustifiedLeaves = 0;
+	Partial yearBeginPartial = new Partial().with(DateTimeFieldType.year(), year - 1).with(DateTimeFieldType.monthOfYear(),
+		12);
+	Partial yearEndPartial = new Partial().with(DateTimeFieldType.year(), year).with(DateTimeFieldType.monthOfYear(), 11);
+
+	for (AssiduousnessClosedMonth assiduousnessClosedMonth : assiduousnessStatusHistory.getAssiduousnessClosedMonths()) {
+	    if (assiduousnessClosedMonth.getClosedMonth() != null
+		    && (!assiduousnessClosedMonth.getClosedMonth().getClosedYearMonth().isBefore(yearBeginPartial))
+		    && (!assiduousnessClosedMonth.getClosedMonth().getClosedYearMonth().isAfter(yearEndPartial))) {
+		System.out.println(assiduousnessClosedMonth.getClosedMonth().getClosedYearMonth());
+		if (assiduousnessClosedMonth.getUnjustifiedDays() != 0) {
+		    monthsWithUnjustifiedLeaves++;
+		}
+	    }
+	}
+	return monthsWithUnjustifiedLeaves;
     }
 
     private boolean hasAnyAssiduousnessStatusHistoryBefore(List<AssiduousnessStatusHistory> assiduousnessStatusHistories,
@@ -228,7 +255,7 @@ public class EmployeeAssiduousnessExemption implements Serializable {
     }
 
     public Integer getArt17Vacations() {
-	return Math.min(5, Math.max((getNumberOfArt17() - getUsedArt17()), 0));
+	return Math.min(5, Math.max((getNumberOfArt17() - getMonthsWithUnjustifiedLeaves() - getUsedArt17()), 0));
     }
 
     public Integer getYear() {
@@ -237,6 +264,14 @@ public class EmployeeAssiduousnessExemption implements Serializable {
 
     public void setYear(Integer year) {
 	this.year = year;
+    }
+
+    public Integer getMonthsWithUnjustifiedLeaves() {
+	return monthsWithUnjustifiedLeaves;
+    }
+
+    public void setMonthsWithUnjustifiedLeaves(Integer monthsWithUnjustifiedLeaves) {
+	this.monthsWithUnjustifiedLeaves = monthsWithUnjustifiedLeaves;
     }
 
 }

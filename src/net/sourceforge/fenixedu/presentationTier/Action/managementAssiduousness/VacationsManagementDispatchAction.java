@@ -81,6 +81,7 @@ public class VacationsManagementDispatchAction extends FenixDispatchAction {
 	spreadsheet.addHeader(bundle.getString("label.art18Days"));
 	spreadsheet.addHeader(bundle.getString("label.usedArt18Days"));
 	spreadsheet.addHeader(bundle.getString("label.art17Days"));
+	spreadsheet.addHeader(bundle.getString("label.monthsWithUnjustifiedDays"));
 	spreadsheet.addHeader(bundle.getString("label.usedArt17Days"));
 	spreadsheet.addHeader("Férias por A17 a passar para " + (assiduousnessExportChoices.getYearMonth().getYear() + 1));
 
@@ -116,6 +117,13 @@ public class VacationsManagementDispatchAction extends FenixDispatchAction {
 	    }
 
 	    spreadsheet.addCell(employeeAssiduousnessExemption.getNumberOfArt17(), styleToUse);
+
+	    if (employeeAssiduousnessExemption.getMonthsWithUnjustifiedLeaves() > 0) {
+		spreadsheet.addCell(employeeAssiduousnessExemption.getMonthsWithUnjustifiedLeaves(), redStyle);
+	    } else {
+		spreadsheet.addCell(employeeAssiduousnessExemption.getMonthsWithUnjustifiedLeaves(), styleToUse);
+	    }
+
 	    if (employeeAssiduousnessExemption.getNumberOfArt17() < employeeAssiduousnessExemption.getUsedArt17()) {
 		spreadsheet.addCell(employeeAssiduousnessExemption.getUsedArt17(), redStyle);
 	    } else {
