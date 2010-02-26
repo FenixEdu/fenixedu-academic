@@ -57,10 +57,12 @@
 	<slot name="executionYear" layout="format">
 		<property name="format" value="${year}" />
 	</slot>
+	<!--
 	<slot name="studyPlan" layout="null-as-label">
 		<property name="subLayout" value="values" />
 		<property name="subSchema" value="PhdStudyPlan.description" />
 	</slot>
+	-->
 	<slot name="whenFormalizedRegistration" />
 	<slot name="whenStartedStudies" />
 	<slot name="whenCreated" />
@@ -397,7 +399,9 @@
 
 
 <schema name="PhdProgramProcessDocument.view" type="net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument" bundle="PHD_RESOURCES">
-	<slot name="documentType"/>
+	<slot name="documentType">
+		<property name="bundle" value="PHD_RESOURCES" />
+	</slot>
 	<slot name="uploadTime" />
 	<slot name="uploader" layout="null-as-label">
 		<property name="subLayout" value="values" />
@@ -777,6 +781,7 @@
 <schema name="Public.PhdCandidacyDocumentUploadBean.edit.with.type" type="net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean" bundle="PHD_RESOURCES">
 	<slot name="type" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="includedValues" value="CV,ID_DOCUMENT,MOTIVATION_LETTER,SOCIAL_SECURITY,RESEARCH_PLAN,HABILITATION_CERTIFICATE_DOCUMENT,GUIDER_ACCEPTANCE_LETTER" />
+		<property name="bundle" value="PHD_RESOURCES" />
 	</slot>
 	<slot name="file" key="label.phd.public.document">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
@@ -941,7 +946,9 @@
 </schema>
 
 <schema name="Public.PhdProgramProcessDocument.view" type="net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument" bundle="PHD_RESOURCES">
-	<slot name="documentType" />
+	<slot name="documentType">
+		<property name="bundle" value="PHD_RESOURCES" />
+	</slot>
 	<slot name="uploadTime" />
 	<slot name="filename" />
 </schema>
@@ -1278,16 +1285,17 @@
 	<slot name="person.istUsername" />
 </schema>
 
-<schema name="AcademicAdminOffice.PhdIndividualProgramProcess.view.registration.conclusion.bean" type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean" bundle="PHD_RESOURCES">
-	<slot name="registration.activeStateType">
+<schema name="AcademicAdminOffice.PhdIndividualProgramProcess.view.registration.conclusion.bean" type="net.sourceforge.fenixedu.presentationTier.Action.phd.academicAdminOffice.PhdRegistrationConclusionBean" bundle="PHD_RESOURCES">
+	<slot name="degreeNameWithDescription" />
+	<slot name="activeStateType">
 		<property name="classes" value="bold" />
 	</slot>
-	<slot name="registration.startDate" layout="null-as-label">
+	<slot name="startDate" layout="null-as-label">
         <property name="label" value="-"/>	
 	</slot>
-	<slot name="conclusionDate" />
-	<slot name="registration.degreeNameWithDescription" />
-	<slot name="finalAverage" />
+	<slot name="conclusionProcessed" />
+	<slot name="conclusionDate" layout="null-as-label" />
+	<slot name="finalAverage" layout="null-as-label" />
 </schema>
 
 <schema name="PublicPresentationSeminarProcess.view" type="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess" bundle="PHD_RESOURCES">
