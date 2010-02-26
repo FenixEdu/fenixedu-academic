@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.domain.phd.alert;
 
-import java.util.ResourceBundle;
-
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.MasterDegreeAdministrativeOfficeGroup;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
@@ -22,19 +20,18 @@ public class PhdRegistrationFormalizationAlert extends PhdRegistrationFormalizat
 	setMaxDays(maxDays);
     }
 
-    private void init(PhdIndividualProgramProcess process) {
-	super.init(process, buildSubject(), buildBody());
+    private void init(final PhdIndividualProgramProcess process) {
+	super.init(process, buildSubject(process), buildBody(process));
     }
 
-    private MultiLanguageString buildBody() {
-	final ResourceBundle bundle = getResourceBundle();
-	return new MultiLanguageString(Language.getDefaultLanguage(), bundle
-		.getString("message.phd.alert.registration.formalization.body"));
-    }
-
-    private MultiLanguageString buildSubject() {
-	return new MultiLanguageString(Language.getDefaultLanguage(), getResourceBundle().getString(
+    private MultiLanguageString buildSubject(final PhdIndividualProgramProcess process) {
+	return new MultiLanguageString(Language.getDefaultLanguage(), AlertService.getSubjectPrefixed(process,
 		"message.phd.alert.registration.formalization.subject"));
+    }
+
+    private MultiLanguageString buildBody(final PhdIndividualProgramProcess process) {
+	return new MultiLanguageString(Language.getDefaultLanguage(), AlertService.getBodyText(process,
+		"message.phd.alert.registration.formalization.body"));
     }
 
     @Override

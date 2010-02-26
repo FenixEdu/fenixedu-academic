@@ -30,16 +30,16 @@ public class PhdPublicPresentationSeminarAlert extends PhdPublicPresentationSemi
 
     public PhdPublicPresentationSeminarAlert(final PhdIndividualProgramProcess process) {
 	this();
-	super.init(process, buildSubject(), buildBody());
+	super.init(process, buildSubject(process), buildBody(process));
     }
 
-    private MultiLanguageString buildSubject() {
-	return new MultiLanguageString(Language.getDefaultLanguage(), getResourceBundle().getString(
+    private MultiLanguageString buildSubject(final PhdIndividualProgramProcess process) {
+	return new MultiLanguageString(Language.getDefaultLanguage(), AlertService.getSubjectPrefixed(process,
 		"message.phd.alert.public.presentation.seminar.subject"));
     }
 
-    private MultiLanguageString buildBody() {
-	return new MultiLanguageString(Language.getDefaultLanguage(), getResourceBundle().getString(
+    private MultiLanguageString buildBody(final PhdIndividualProgramProcess process) {
+	return new MultiLanguageString(Language.getDefaultLanguage(), AlertService.getBodyText(process,
 		"message.phd.alert.public.presentation.seminar.body"));
     }
 
