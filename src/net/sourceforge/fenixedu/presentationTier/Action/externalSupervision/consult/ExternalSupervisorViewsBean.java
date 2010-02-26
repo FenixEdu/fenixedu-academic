@@ -40,6 +40,7 @@ public class ExternalSupervisorViewsBean implements Serializable, HasExecutionYe
 
     public ExternalSupervisorViewsBean(){
 	super();
+	this.megavisor = false;
     }
     
     public ExternalSupervisorViewsBean(RegistrationProtocol protocol){
