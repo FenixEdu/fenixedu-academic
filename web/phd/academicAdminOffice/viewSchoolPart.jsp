@@ -17,10 +17,13 @@
 </logic:present>
 
 <logic:notPresent name="registrationConclusionBean">
-	<fr:view schema="PhdStudyPlan.description" name="process">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle2 thlight mtop10" />
-		</fr:layout>
-	</fr:view>
+	<logic:notEmpty name="process" property="studyPlan">
+		<fr:view schema="PhdStudyPlan.description" name="process" property="studyPlan">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle2 thlight mtop10" />
+			</fr:layout>
+		</fr:view>
+		<br />
+	</logic:notEmpty>
 </logic:notPresent>
 
