@@ -9,6 +9,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -18,7 +19,11 @@ import net.sourceforge.fenixedu.dataTransferObject.MergeSlotDTO;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.beanutils.PropertyUtils;
@@ -47,14 +52,37 @@ import dml.Slot;
 	@Forward(name = "transfer-events-and-accounts", path = "/manager/personManagement/merge/transferEventsAndAccounts.jsp") })
 public class MergePersonsDA extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	request.setAttribute("mergePersonsBean", new MergePersonsBean(Person.class.getName()));
+	Person person = checkUser();
+
+	MergePersonsBean bean = new MergePersonsBean(Person.class.getName());
+	generateIdIndexesToAnswer(bean, person);
+
+	request.setAttribute("mergePersonsBean", bean);
 	return mapping.findForward("chooseObjectsToMerge");
     }
 
     public ActionForward chooseObjects(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException, IllegalAccessException,
 	    NoSuchMethodException, ClassNotFoundException {
+	Person person = checkUser();
+
 	MergePersonsBean mergePersonsBean = getMergePersonsBean(request);
+
+	String documentIdNumber = person.getDocumentIdNumber();
+
+	Integer idPos1Index = mergePersonsBean.getIdPosOneIndex();
+	Integer idPos2Index = mergePersonsBean.getIdPosTwoIndex();
+	Integer idPos3Index = mergePersonsBean.getIdPosThreeIndex();
+	String idPos1Value = mergePersonsBean.getIdPosOneValue();
+	String idPos2Value = mergePersonsBean.getIdPosTwoValue();
+	String idPos3Value = mergePersonsBean.getIdPosThreeValue();
+
+	if (documentIdNumber.charAt(idPos1Index - 1) != idPos1Value.charAt(0)
+		|| documentIdNumber.charAt(idPos2Index - 1) != idPos2Value.charAt(0)
+		|| documentIdNumber.charAt(idPos3Index - 1) != idPos3Value.charAt(0)) {
+	    throw new RuntimeException("Who the hell are you????");
+	}
+
 	request.setAttribute("mergePersonsBean", mergePersonsBean);
 	Person domainObject1 = RootDomainObject.fromExternalId(mergePersonsBean.getLeftOid());
 	Person domainObject2 = RootDomainObject.fromExternalId(mergePersonsBean.getRightOid());
@@ -370,6 +398,39 @@ public class MergePersonsDA extends FenixDispatchAction {
 	return prepareTransferEventsAndAccounts(mapping, form, request, response);
     }
 
+    private Person checkUser() {
+	Person person = AccessControl.getPerson();
+	String ciistCostCenterCode = PropertiesManager.getProperty("ciistCostCenterCode");
+	Unit ciistUnit = Unit.readByCostCenterCode(Integer.valueOf(ciistCostCenterCode));
+	Unit currentWorkingPlace = person.getEmployee().getCurrentWorkingPlace();
+	if ((currentWorkingPlace != null && ciistUnit != null && !currentWorkingPlace.equals(ciistUnit))
+		|| person.getPersonRole(RoleType.MANAGER) == null) {
+	    throw new DomainException("What you want do do hein?!?!");
+	}
+	return person;
+    }
+
+    private void generateIdIndexesToAnswer(MergePersonsBean bean, Person person) {
+	int documentIdLength = person.getDocumentIdNumber().length();
+	Integer pos1 = null;
+	Integer pos2 = null;
+	Integer pos3 = null;
+
+	pos1 = (int) Math.round(Math.random() * (documentIdLength - 1)) + 1;
+
+	do {
+	    pos2 = (int) Math.round(Math.random() * (documentIdLength - 1)) + 1;
+	} while (pos1 == pos2);
+
+	do {
+	    pos3 = (int) Math.round(Math.random() * (documentIdLength - 1)) + 1;
+	} while (pos3 == pos2 && pos3 == pos1);
+
+	bean.setIdPosOneIndex(pos1);
+	bean.setIdPosTwoIndex(pos2);
+	bean.setIdPosThreeIndex(pos3);
+    }
+
     public static class MergePersonsBean implements java.io.Serializable {
 	/**
 	 * 
@@ -379,6 +440,14 @@ public class MergePersonsDA extends FenixDispatchAction {
 	private String leftOid;
 	private String rightOid;
 	private String currentClass;
+
+	private String idPosOneValue;
+	private String idPosTwoValue;
+	private String idPosThreeValue;
+
+	private Integer idPosOneIndex;
+	private Integer idPosTwoIndex;
+	private Integer idPosThreeIndex;
 
 	public MergePersonsBean() {
 
@@ -411,6 +480,55 @@ public class MergePersonsDA extends FenixDispatchAction {
 	public void setCurrentClass(String value) {
 	    this.currentClass = value;
 	}
+
+	public String getIdPosOneValue() {
+	    return idPosOneValue;
+	}
+
+	public void setIdPosOneValue(String idPosOneValue) {
+	    this.idPosOneValue = idPosOneValue;
+	}
+
+	public String getIdPosTwoValue() {
+	    return idPosTwoValue;
+	}
+
+	public void setIdPosTwoValue(String idPosTwoValue) {
+	    this.idPosTwoValue = idPosTwoValue;
+	}
+
+	public String getIdPosThreeValue() {
+	    return idPosThreeValue;
+	}
+
+	public void setIdPosThreeValue(String idPosThreeValue) {
+	    this.idPosThreeValue = idPosThreeValue;
+	}
+
+	public Integer getIdPosOneIndex() {
+	    return idPosOneIndex;
+	}
+
+	public void setIdPosOneIndex(Integer idPosOneIndex) {
+	    this.idPosOneIndex = idPosOneIndex;
+	}
+
+	public Integer getIdPosTwoIndex() {
+	    return idPosTwoIndex;
+	}
+
+	public void setIdPosTwoIndex(Integer idPosTwoIndex) {
+	    this.idPosTwoIndex = idPosTwoIndex;
+	}
+
+	public Integer getIdPosThreeIndex() {
+	    return idPosThreeIndex;
+	}
+
+	public void setIdPosThreeIndex(Integer idPosThreeIndex) {
+	    this.idPosThreeIndex = idPosThreeIndex;
+	}
+
     }
 
 }

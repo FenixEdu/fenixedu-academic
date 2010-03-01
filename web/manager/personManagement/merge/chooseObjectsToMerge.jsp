@@ -23,6 +23,37 @@
 
 
 <fr:form action="/mergePersons.do?method=chooseObjects">
+	
+	<bean:message key="documentIdNumber" bundle="MANAGER_RESOURCES"/>:&nbsp;	
+	<b><bean:write name="mergePersonsBean" property="idPosOneIndex" />�</b>
+	<fr:edit 	id="mergePersonBean.idPosOneValue"
+				name="mergePersonsBean"
+				slot="idPosOneValue">
+		<fr:layout>
+			<fr:property name="size" value="1" />
+			<fr:property name="maxLength" value="1" />
+		</fr:layout>
+	</fr:edit> 
+
+	<b><bean:write name="mergePersonsBean" property="idPosTwoIndex" />�</b>
+	<fr:edit 	id="mergePersonBean.idPosTwoValue"
+			name="mergePersonsBean"
+			slot="idPosTwoValue" >
+		<fr:layout>
+			<fr:property name="size" value="1" />
+			<fr:property name="maxLength" value="1" />
+		</fr:layout>
+	</fr:edit> 
+ 
+	<b><bean:write name="mergePersonsBean" property="idPosThreeIndex" />�</b>
+	<fr:edit 	id="mergePersonBean.idPosThreeValue"
+			name="mergePersonsBean"
+			slot="idPosThreeValue" >
+		<fr:layout>
+			<fr:property name="size" value="1" />
+			<fr:property name="maxLength" value="1" />
+		</fr:layout>
+	</fr:edit> 
 
 	<fr:edit id="mergePersonsBean" name="mergePersonsBean" visible="false"/>
 	
