@@ -122,11 +122,13 @@
 
 <bean:define id="dcpId" name="coordsBean" property="executionDegree.degreeCurricularPlan.idInternal"/>
 <bean:define id="edId" name="coordsBean" property="executionDegree.idInternal"/>
+<bean:define id="path" name="coordsBean" property="backPath"/>
 
 <em><bean:message key="scientificCouncil" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em>
 <h2><bean:message key="label.edit.coordinationTeam" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h2>
 
-<p><html:link action="<%= "/curricularPlans/editExecutionDegreeCoordination.do?method=prepareEditCoordination&degreeCurricularPlanId=" +  dcpId.toString() %>">
+
+<p><html:link action="<%= path.toString() %>">
 	<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="button.back"/>
 </html:link></p>
 
