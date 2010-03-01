@@ -58,7 +58,7 @@
 					<fr:property name="bundle(editCoordinationTeam)" value="SCIENTIFIC_COUNCIL_RESOURCES" />
 					
 					<fr:property name="classes" value="tstyle1 thleft" />
-					<fr:property name="columnClasses" value="width350px,,acenter width80px,acenter width80px,,tdclear tderror1"/>
+					<fr:property name="columnClasses" value="width350px,width125px,acenter width80px,acenter width80px,,tdclear tderror1"/>
 				</fr:layout>
 			</fr:view>
 		</logic:notEmpty>
@@ -92,7 +92,7 @@
 					<fr:property name="bundle(editCoordinationTeam)" value="SCIENTIFIC_COUNCIL_RESOURCES" />
 					
 					<fr:property name="classes" value="tstyle1 thleft" />
-					<fr:property name="columnClasses" value="width350px,,acenter width80px,acenter width80px,,tdclear tderror1"/>
+					<fr:property name="columnClasses" value="width350px,width125px,acenter width80px,acenter width80px,,tdclear tderror1"/>
 				</fr:layout>
 			</fr:view>
 		</logic:notEmpty>
@@ -126,7 +126,7 @@
 					<fr:property name="bundle(editCoordinationTeam)" value="SCIENTIFIC_COUNCIL_RESOURCES" />
 					
 					<fr:property name="classes" value="tstyle1 thleft" />
-					<fr:property name="columnClasses" value="width350px,,acenter width80px,acenter width80px,,tdclear tderror1"/>
+					<fr:property name="columnClasses" value="width350px,width125px,acenter width80px,acenter width80px,,tdclear tderror1"/>
 				</fr:layout>
 			</fr:view>
 		</logic:notEmpty>
@@ -160,7 +160,7 @@
 					<fr:property name="bundle(editCoordinationTeam)" value="SCIENTIFIC_COUNCIL_RESOURCES" />
 					
 					<fr:property name="classes" value="tstyle1 thleft" />
-					<fr:property name="columnClasses" value="width350px,,acenter width80px,acenter width80px,,tdclear tderror1"/>
+					<fr:property name="columnClasses" value="width350px,width125px,acenter width80px,acenter width80px,,tdclear tderror1"/>
 				</fr:layout>
 			</fr:view>
 		</logic:notEmpty>
