@@ -91,6 +91,9 @@
 						<bean:message bundle="PHD_RESOURCES" key="label.phd.editPhdIndividualProgramProcessInformation"/>
 					</html:link>
 				</li>
+				
+				<br/>
+				
 				<li>
 					<html:link action="/phdIndividualProgramProcess.do?method=prepareManageGuidingInformation" paramId="processId" paramName="process" paramProperty="externalId">
 						<bean:message bundle="PHD_RESOURCES" key="label.phd.manageGuidingInformation"/>
@@ -107,16 +110,21 @@
 					</html:link>
 				</li>
 			</logic:equal>
+			<%--
 			<li>
-				<html:link action="/phdIndividualProgramProcess.do?method=managePhdIndividualProgramProcessState" paramId="processId" paramName="process" paramProperty="externalId">
-					<bean:message bundle="PHD_RESOURCES" key="label.phd.manage.states"/>
+				<html:link action="/phdAccountingEventsManagement.do?method=prepare" paramId="processId" paramName="process" paramProperty="externalId">
+					<bean:message bundle="PHD_RESOURCES" key="label.phd.accounting.events.create"/>
 				</html:link>
 			</li>
+			--%>
 			<li>
 				<html:link action="/payments.do?method=showOperations" target="_blank" paramId="personId" paramName="process" paramProperty="person.idInternal">
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.payments"/>
 				</html:link>
 			</li>
+			
+			<br/>
+			
 			<phd:activityAvailable process="<%= process %>" activity="<%= PhdIndividualProgramProcess.RequestPublicPresentationSeminarComission.class %>">
 				<li>
 					<html:link action="/phdIndividualProgramProcess.do?method=prepareRequestPublicPresentationSeminarComission" paramId="processId" paramName="process" paramProperty="externalId">
@@ -148,6 +156,7 @@
 			<fr:property name="classes" value="tstyle2 thlight mtop10" />
 		</fr:layout>
 	</fr:view>
+	<br/>
 </logic:equal>
 
 <%--Thesis --%>
