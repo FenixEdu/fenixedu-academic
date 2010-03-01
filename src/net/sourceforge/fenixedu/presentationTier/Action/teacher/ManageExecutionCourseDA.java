@@ -894,7 +894,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
 	request.setAttribute("shift", shift);
 	request.setAttribute("executionCourseID", executionCourseID);
-
+	
 	return mapping.findForward("removeAttendsFromShift");
     }
 
@@ -914,7 +914,8 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 	request.setAttribute("shift", shift);
 	request.setAttribute("executionCourseID", executionCourseID);
 	request.setAttribute("registrations", shift.getStudents());
-
+	request.setAttribute("personBean", new PersonBean());
+	
 	return mapping.findForward("editShift");
     }
 }
