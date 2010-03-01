@@ -709,7 +709,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
     private void assertPhdRegistrationFee() {
 	if (!getIndividualProgramProcess().hasRegistrationFee()) {
-	    new PhdRegistrationFee(getPerson(), getIndividualProgramProcess());
+	    new PhdRegistrationFee(getIndividualProgramProcess());
 	}
     }
 

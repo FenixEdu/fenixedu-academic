@@ -6,8 +6,10 @@ import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class PhdRegistrationFee extends PhdRegistrationFee_Base {
@@ -16,15 +18,24 @@ public class PhdRegistrationFee extends PhdRegistrationFee_Base {
 	super();
     }
 
-    public PhdRegistrationFee(final Person person, final PhdIndividualProgramProcess process) {
+    public PhdRegistrationFee(final PhdIndividualProgramProcess process) {
 	this();
-	init(AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE), person, process);
+	init(AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE), process.getPerson(),
+		process);
     }
 
     private void init(AdministrativeOffice administrativeOffice, Person person, PhdIndividualProgramProcess process) {
 	super.init(administrativeOffice, EventType.PHD_REGISTRATION_FEE, person);
-	check(process, "error.PhdRegistrationFee.process.cannot.be.null");
+	checkProcess(process);
 	super.setProcess(process);
+    }
+
+    private void checkProcess(PhdIndividualProgramProcess process) {
+	check(process, "error.PhdRegistrationFee.process.cannot.be.null");
+	
+	if (process.hasRegistrationFee()) {
+	    throw new DomainException("error.PhdRegistrationFee.process.already.has.registration.fee");
+	}
     }
 
     @Override
@@ -63,4 +74,8 @@ public class PhdRegistrationFee extends PhdRegistrationFee_Base {
 	return null;
     }
 
+    @Service
+    static public PhdRegistrationFee create(final PhdIndividualProgramProcess process) {
+	return new PhdRegistrationFee(process);
+    }
 }

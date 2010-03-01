@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -1246,7 +1245,4 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	return new MockUserView(null, Collections.EMPTY_LIST, candidacyBean.getCandidacyHashCode().getPerson());
     }
 
-    @Override
-    protected void reloadRenderers() throws ServletException {
-    }
 }

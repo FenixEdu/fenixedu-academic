@@ -35,8 +35,6 @@ abstract public class PhdProcessDA extends FenixDispatchAction {
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	// reloadRenderers();
-
 	final Process process = getProcess(request);
 	if (process != null) {
 	    request.setAttribute("processId", process.getExternalId());
@@ -49,10 +47,6 @@ abstract public class PhdProcessDA extends FenixDispatchAction {
 	}
 
 	return super.execute(mapping, actionForm, request, response);
-    }
-
-    protected void reloadRenderers() throws ServletException {
-	new ConfigurationReader().readAll(getServlet().getServletContext());
     }
 
     /**

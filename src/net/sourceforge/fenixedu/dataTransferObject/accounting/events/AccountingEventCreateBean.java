@@ -8,10 +8,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 
 public class AccountingEventCreateBean implements Serializable {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 5068902775407522276L;
+    static private final long serialVersionUID = 5068902775407522276L;
 
     private StudentCurricularPlan studentCurricularPlan;
 
@@ -19,6 +16,9 @@ public class AccountingEventCreateBean implements Serializable {
 
     private ExecutionSemester executionSemester;
 
+    public AccountingEventCreateBean() {
+    }
+    
     public AccountingEventCreateBean(final StudentCurricularPlan studentCurricularPlan) {
 	setStudentCurricularPlan(studentCurricularPlan);
     }

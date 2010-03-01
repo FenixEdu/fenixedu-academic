@@ -35,10 +35,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 })
 public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProcessDA {
 
-    @Override
-    protected void reloadRenderers() throws ServletException {
-    }
-
     public ActionForward listProcesses(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 

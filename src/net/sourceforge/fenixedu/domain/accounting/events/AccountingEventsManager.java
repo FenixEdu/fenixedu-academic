@@ -16,6 +16,8 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.InvocationResult;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class AccountingEventsManager {
@@ -323,6 +325,8 @@ public class AccountingEventsManager {
 
     }
 
+    @Service
+    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     public InvocationResult createInsuranceEvent(final Person person, final ExecutionYear executionYear) {
 
 	final InvocationResult result = InvocationResult.createSuccess();
