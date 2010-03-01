@@ -707,6 +707,18 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	}
 	return result;
     }
+    
+    public boolean hasAnyResponsibleCoordinators() {
+	return (! getResponsibleCoordinators().isEmpty());
+    }
+    
+    public boolean isCoordinationTeamFormed() {
+	return hasAnyCoordinatorsList();
+    }
+    
+    public boolean isCoordinationResponsibleChosen() {
+	return hasAnyResponsibleCoordinators();
+    }
 
     public boolean isDateInFirstSemesterNormalSeasonOfGradeSubmission(YearMonthDay date) {
 	return (getPeriodGradeSubmissionNormalSeasonFirstSemester() != null && getPeriodGradeSubmissionNormalSeasonFirstSemester()

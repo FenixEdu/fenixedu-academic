@@ -41,6 +41,12 @@
 			    <bean:message key="link.equivalency.plan" bundle="APPLICATION_RESOURCES"/>
 			</html:link>
 		</li>
+		
+		<li>
+			<html:link page="/curricularPlans/editExecutionDegreeCoordination.do?method=editByYears">
+				<bean:message key="navigation.manageCoordinationTeams"/>
+			</html:link>
+		</li>
 
         <li class="navheader">
             <bean:message key="scientificCouncil.thesis.process"/>
