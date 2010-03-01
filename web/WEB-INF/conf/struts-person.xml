@@ -326,6 +326,12 @@
 			<forward name="editPortal" path="edit.portal.using.bean"/>			
 			<forward name="addToPool" path="add.to.pool"/>
 		</action>		
+
+		<action path="/irsDeclaration"
+				type="net.sourceforge.fenixedu.presentationTier.Action.person.IRSDeclarationAction"
+				parameter="method" scope="request">
+			<forward name="edit.IRSDeclaration.link" path="edit.IRSDeclaration.link"/>
+		</action>		
 	</action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->

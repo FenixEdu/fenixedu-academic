@@ -214,6 +214,9 @@
 
   <definition name="case.handling.prepare.create.new.process" extends="definition.person.masterPage">
   	<put name="body" value="/caseHandling/createTestProcess.jsp"/>
-  </definition>  
+  </definition>
   
+  <definition name="edit.IRSDeclaration.link" extends="definition.person.masterPage">
+  	<put name="body" value="/person/editIRSDeclarationLink.jsp"/>
+  </definition>
 </tiles-definitions>

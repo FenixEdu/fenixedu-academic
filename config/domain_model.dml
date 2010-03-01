@@ -1260,6 +1260,12 @@ class DomainObject {
         YearMonthDay endDateYearMonthDay;
     }
 
+    class IrsDeclarationLink extends DomainObject {
+    	MultiLanguageString title;
+    	Boolean available;
+    	String irsLink;
+    }
+
     class Lesson extends DomainObject {
         HourMinuteSecond beginHourMinuteSecond;
         DiaSemana diaSemana;
@@ -17592,4 +17598,8 @@ relation ErasmusAlertPerson {
 	} 
 }
 
+relation RootDomainObjectIrsDeclarationLink {
+	RootDomainObject playsRole rootDomainObject;
+	IrsDeclarationLink playsRole irsDeclarationLink;
+}
 

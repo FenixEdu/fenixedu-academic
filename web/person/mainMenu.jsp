@@ -2,7 +2,9 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
-<html:xhtml/>
+
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%><html:xhtml/>
 
 <ul>
 	<li class="navheader"><bean:message key="label.navheader.person"  /></li>
@@ -10,6 +12,20 @@
 	<li><html:link page="/changePasswordForward.do" titleKey="link.title.person.changePassword" ><bean:message key="label.person.changePassword"  /></html:link></li>
 	<li><html:link page="/parking.do?method=prepareParking"><bean:message key="label.parking"  bundle="PARKING_RESOURCES"/></html:link></li>
 	<li><html:link page="/validateEmail.do?method=prepare"><bean:message key="label.validate.email"/></html:link></li>
+    <%
+    	net.sourceforge.fenixedu.domain.RootDomainObject rootDomainObject = net.sourceforge.fenixedu.domain.RootDomainObject.getInstance();
+    	if (rootDomainObject.getIrsDeclarationLink() != null
+    			&& rootDomainObject.getIrsDeclarationLink().getAvailable() != null
+    			&& rootDomainObject.getIrsDeclarationLink().getAvailable().booleanValue()) {
+    	    %>
+			    <li>
+    				<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= rootDomainObject.getIrsDeclarationLink().getIrsLink() %>">
+    					<%= rootDomainObject.getIrsDeclarationLink().getTitle().getContent() %>
+    				</a>
+    			</li>
+    	    <%
+    	}
+    %>
 
     <li class="navheader"><bean:message key="label.homepage"  /></li>
     <li><html:link page="/manageHomepage.do?method=options" titleKey="link.homepage.options"><bean:message key="link.homepage.options"  /></html:link></li>
@@ -22,25 +38,32 @@
 	 		<li class="navheader"><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.vigilant"/></li>
 			<li><html:link  page="/vigilancy/vigilantManagement.do?method=prepareMap"><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.vigilant"/></html:link></li>
 		</logic:notPresent>
-
 	</logic:notEmpty>
 
 	<logic:present role="MANAGER">
+		<li class="navheader"><bean:message key="label.person.system.configuration"/></li>
 		<logic:notEqual name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.user.userUId" value="ist24518"> 
 			<logic:notEqual name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.user.userUId" value="ist24421">
 				<li>
 					<html:link page="/contentManagement.do?method=viewContainer">
-					Root Portal
+						<bean:message key="label.person.system.configuration.root.portal"/>
 					</html:link>
 					<html:link page="/portalManagement.do?method=prepare">
-					Meta Domain Objects
+						<bean:message key="label.person.system.configuration.meta.domain.objects"/>
 					</html:link>
 				</li>
-			
-			<!-- Functionalities -->
-				<li><html:link page="/functionalities/module/viewRoot.do">Funcionalidades</html:link></li>
+				<!-- Functionalities -->
+				<li>
+					<html:link page="/functionalities/module/viewRoot.do">
+						<bean:message key="label.person.system.configuration.functionalities"/>
+					</html:link>
+				</li>
 			</logic:notEqual>
 		</logic:notEqual>
+		<li>
+			<html:link page="/irsDeclaration.do?method=edit" titleKey="link.title.irsDeclaration">
+				<bean:message key="label.person.edit.irs.declaration.link"  />
+			</html:link>
+		</li>
 	</logic:present>
-	
 </ul>
