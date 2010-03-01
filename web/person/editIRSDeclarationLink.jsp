@@ -4,7 +4,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
-<html:html xhtml="true"/>
+
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%><html:html xhtml="true"/>
 
 <h2>
 	<bean:message key="label.person.edit.irs.declaration.link"  />
