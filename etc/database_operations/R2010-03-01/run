@@ -43,3 +43,6 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Tutorship Summary Domain.." tutorshipSummaryDomain.sql
+
+execute "Create new table for irs declaration links." updates.sql
