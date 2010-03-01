@@ -9,8 +9,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
+import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.domain.contents.InvalidContentPathException;
+import net.sourceforge.fenixedu.domain.contents.Portal;
 
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
@@ -237,8 +239,17 @@ public class SafeHtmlConverter extends TidyConverter {
 	    path = path.substring(contextPath.length());
 	}
 
-	for (Role role : RootDomainObject.getInstance().getRoles()) {
-	    if (path.startsWith(role.getPortalSubApplication())) {
+	final String trailingPath = getTrailingPath(path);
+	List<Content> contents = new ArrayList<Content>();
+	try {
+	    Portal.getRootPortal().addPathContentsForTrailingPath(contents, trailingPath);
+	} catch (InvalidContentPathException e) {
+	    // Actually here we ignore, since this isn't a path in the system.
+	    contents.clear();
+	}
+	for (Content content : contents) {
+	    if (content.getAvailabilityPolicy() != null
+		    && content.getAvailabilityPolicy().getTargetGroup().getClass() != EveryoneGroup.class) {
 		return true;
 	    }
 	}
@@ -252,6 +263,10 @@ public class SafeHtmlConverter extends TidyConverter {
 	}
 
 	return false;
+    }
+
+    private String getTrailingPath(final String path) {
+	return path.length() > 0 && path.charAt(0) == '/' ? path.substring(1) : path;
     }
 
 }
