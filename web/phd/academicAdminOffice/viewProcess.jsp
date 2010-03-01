@@ -172,18 +172,6 @@
 <jsp:include page="viewCandidacyProcess.jsp" />
 
 
-<%--  ### End Of Context Information  ### --%>
-
-
-<%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
-
-<%--  ### End of Operation Area  ### --%>
-
-
-
-<%--  ### Buttons (e.g. Submit)  ### --%>
-
-<%--  ### End of Buttons (e.g. Submit)  ### --%>
 
 
 </logic:present>
