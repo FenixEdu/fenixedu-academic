@@ -21,3 +21,14 @@
 		<fr:property name="columnClasses" value="width100px,,tderror" />
 	</fr:layout>
 </fr:edit>
+
+    <%
+    	net.sourceforge.fenixedu.domain.RootDomainObject rootDomainObject = net.sourceforge.fenixedu.domain.RootDomainObject.getInstance();
+    	if (rootDomainObject.getIrsDeclarationLink() != null) {
+    	    %>
+    				<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= rootDomainObject.getIrsDeclarationLink().getIrsLink() %>">
+    					<%= rootDomainObject.getIrsDeclarationLink().getTitle().getContent() %>
+    				</a>
+<%
+    	}
+%>
