@@ -15,7 +15,7 @@ public class PartyContactsManagementDispatchAction extends
 
     @Override
     protected Party getParty(final HttpServletRequest request) {
-	return rootDomainObject.readPartyByOID(getIntegerFromRequest(request, "personID"));
+	return rootDomainObject.fromExternalId(request.getParameter("personID"));
 
     }
 

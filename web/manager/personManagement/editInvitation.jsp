@@ -26,7 +26,7 @@
 			<b><bean:message key="label.person.username" bundle="MANAGER_RESOURCES"/></b> <bean:write name="invitation" property="invitedPerson.username"/>
 		</p>
 		
-		<bean:define id="invitedPersonID" name="invitation" property="invitedPerson.idInternal" />
+		<bean:define id="invitedPersonID" name="invitation" property="invitedPerson.externalId" />
 		<ul class="mvert15 list5">
 			<li>	
 				<html:link page="/invitationsManagement.do?method=managePersonInvitations" paramId="personID" paramName="invitedPersonID">

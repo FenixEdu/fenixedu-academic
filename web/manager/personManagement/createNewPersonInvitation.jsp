@@ -39,7 +39,7 @@
 		
 	<logic:empty name="invitedPersonBean" property="unit">				
 		<p class="breadcumbs"><span class="actual"><bean:message key="label.create.new.invited.person.first.step" bundle="MANAGER_RESOURCES"/></span> > <span><bean:message key="label.create.new.invited.person.second.step" bundle="MANAGER_RESOURCES"/> > <span><bean:message key="label.create.new.invited.person.four.step" bundle="MANAGER_RESOURCES"/></span></p>
-		<bean:define id="goToPrepareCreateNewPersonInvitationURL1" type="java.lang.String">/manager/invitationsManagement.do?method=prepareCreateNewPersonInvitation&personID=<bean:write name="invitedPersonBean" property="invitedPerson.idInternal"/></bean:define>
+		<bean:define id="goToPrepareCreateNewPersonInvitationURL1" type="java.lang.String">/manager/invitationsManagement.do?method=prepareCreateNewPersonInvitation&personID=<bean:write name="invitedPersonBean" property="invitedPerson.externalId"/></bean:define>
 		<un:tree initialUnit="initialUnit" unitParamName="unitID" path="<%= goToPrepareCreateNewPersonInvitationURL1 %>" state="true"/>										
 	</logic:empty>
 
@@ -54,7 +54,7 @@
 			
 			<br/>				
 			&nbsp;&nbsp;<em><bean:message key="label.choose.responsibility.unit" bundle="MANAGER_RESOURCES"/></em>
-			<bean:define id="goToPrepareCreateNewPersonInvitationURL2" type="java.lang.String">/manager/invitationsManagement.do?method=prepareCreateNewPersonInvitation&unitID=<bean:write name="invitedPersonBean" property="unit.idInternal"/>&personID=<bean:write name="invitedPersonBean" property="invitedPerson.idInternal"/></bean:define>
+			<bean:define id="goToPrepareCreateNewPersonInvitationURL2" type="java.lang.String">/manager/invitationsManagement.do?method=prepareCreateNewPersonInvitation&unitID=<bean:write name="invitedPersonBean" property="unit.idInternal"/>&personID=<bean:write name="invitedPersonBean" property="invitedPerson.externalId"/></bean:define>
 			<un:tree initialUnit="initialUnit" unitParamName="responsibilityUnitID" path="<%= goToPrepareCreateNewPersonInvitationURL2 %>" state="true"/>								
 						
 			<br/>			

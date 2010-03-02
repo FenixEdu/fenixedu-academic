@@ -57,8 +57,8 @@ public class PersonManagementAction extends FenixDispatchAction {
 
     public ActionForward viewPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	Integer idInternal = getIdInternal(request, "personID");
-	Person person = (Person) rootDomainObject.readPartyByOID(idInternal);
+	String externalId = request.getParameter("personID");
+	Person person = (Person) rootDomainObject.fromExternalId(externalId);
 	request.setAttribute("person", person);
 	return mapping.findForward("viewPerson");
     }
@@ -441,8 +441,7 @@ public class PersonManagementAction extends FenixDispatchAction {
 
     private Person getPersonFromParameter(HttpServletRequest request) {
 	String personIDString = request.getParameter("personID");
-	return (Person) ((StringUtils.isEmpty(personIDString)) ? null : rootDomainObject.readPartyByOID(Integer
-		.valueOf(personIDString)));
+	return (Person) ((StringUtils.isEmpty(personIDString)) ? null : rootDomainObject.fromExternalId(personIDString));
     }
 
     private Invitation getInvitationFromParameter(HttpServletRequest request) {

@@ -74,7 +74,7 @@ function check(e,v){
 	<br /><br />
 		
 	<logic:iterate id="personalInfo" name="personListFinded" indexId="personIndex">	   
-		<bean:define id="personID" name="personalInfo" property="idInternal"/>
+		<bean:define id="personID" name="personalInfo" property="externalId"/>
 	
 		<div class="pp">
 			<table class="ppid" cellpadding="0" cellspacing="0">
@@ -106,7 +106,7 @@ function check(e,v){
 			</table>
 
 			<logic:equal name="viewPhoto" value="true">
-		  		<bean:define id="personID" name="personalInfo" property="idInternal"/>	  	    		  	  	
+		  		<bean:define id="personID" name="personalInfo" property="externalId"/>	  	    		  	  	
 	  			<html:img src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
 		   	</logic:equal>
 

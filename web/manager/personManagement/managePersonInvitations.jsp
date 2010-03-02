@@ -24,10 +24,10 @@
 		<b><bean:message key="label.person.username" bundle="MANAGER_RESOURCES"/></b> <bean:write name="person" property="username"/>
 	</p>
 
-	<bean:define id="prepareCreateNewInvitationURL" type="java.lang.String">/invitationsManagement.do?method=prepareCreateNewPersonInvitation&personID=<bean:write name="person" property="idInternal"/></bean:define> 		
+	<bean:define id="prepareCreateNewInvitationURL" type="java.lang.String">/invitationsManagement.do?method=prepareCreateNewPersonInvitation&personID=<bean:write name="person" property="externalId"/></bean:define> 		
 	<p><html:link page="<%= prepareCreateNewInvitationURL %>"><bean:message key="label.create.new.invitation" bundle="MANAGER_RESOURCES"/></html:link></p>		
 	
-	<bean:define id="personID" name="person" property="idInternal" />
+	<bean:define id="personID" name="person" property="externalId" />
 	<logic:notEmpty name="person" property="invitationsOrderByDate">
 		<fr:view name="person" property="invitationsOrderByDate" schema="ViewPersonInvitations" >
 			<fr:layout name="tabular">

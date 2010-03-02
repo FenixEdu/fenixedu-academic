@@ -3431,9 +3431,13 @@ public class Person extends Person_Base {
 
     @Service
     public void transferEventsAndAccounts(Person sourcePerson) {
+	if (!AccessControl.getPerson().hasRole(RoleType.MANAGER)) {
+	    throw new DomainException("permission.denied");
+	}
+
 	if (sourcePerson.getInternalAccount() != null) {
 	    for (final Entry entry : sourcePerson.getInternalAccount().getEntries()) {
-		this.getInternalAccount().addEntries(entry);
+		this.getInternalAccount().transferEntry(entry);
 		this.getEvents().add(entry.getAccountingTransaction().getEvent());
 	    }
 
@@ -3441,7 +3445,7 @@ public class Person extends Person_Base {
 
 	if (sourcePerson.getExternalAccount() != null) {
 	    for (final Entry entry : sourcePerson.getExternalAccount().getEntries()) {
-		this.getExternalAccount().addEntries(entry);
+		this.getExternalAccount().transferEntry(entry);
 		this.getEvents().add(entry.getAccountingTransaction().getEvent());
 	    }
 	}

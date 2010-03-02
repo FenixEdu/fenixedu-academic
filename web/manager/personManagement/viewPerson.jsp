@@ -11,7 +11,7 @@
 
 	
 	<h2><bean:message key="label.person.title.personalConsult" /></h2>
-	<bean:define id="personID" name="person" property="idInternal" />
+	<bean:define id="personID" name="person" property="externalId" />
 	<p><span class="error0"><!-- Error messages go here --><html:errors /></span>
 	</p>
 

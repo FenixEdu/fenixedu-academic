@@ -37,7 +37,7 @@
 					<fr:property name="rowClasses" value="listClasses"/>					
 																
 		   			<fr:property name="link(edit)" value="/invitationsManagement.do?method=managePersonInvitations"/>
-		            <fr:property name="param(edit)" value="idInternal/personID"/>
+		            <fr:property name="param(edit)" value="externalId/personID"/>
 			        <fr:property name="key(edit)" value="link.manage.invitations"/>
 		            <fr:property name="bundle(edit)" value="MANAGER_RESOURCES"/>
 		            <fr:property name="order(edit)" value="0"/>		         					

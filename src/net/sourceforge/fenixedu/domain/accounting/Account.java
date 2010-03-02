@@ -8,6 +8,8 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
 
@@ -90,5 +92,13 @@ public class Account extends Account_Base {
 
     private boolean canBeDeleted() {
 	return getEntriesCount() == 0;
+    }
+
+    public void transferEntry(Entry entry) {
+	if (!AccessControl.getPerson().hasRole(RoleType.MANAGER)) {
+	    throw new DomainException("permission.denied");
+	}
+
+	super.addEntries(entry);
     }
 }

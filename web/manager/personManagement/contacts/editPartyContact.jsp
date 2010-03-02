@@ -13,7 +13,7 @@
     <p><span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>
     </p>
 </html:messages>
-<bean:define id="personID" name="partyContact" property="party.idInternal" />
+<bean:define id="personID" name="partyContact" property="party.externalId" />
 <fr:edit id="edit-contact" name="partyContact" action="<%="/partyContacts.do?method=editPartyContact&personID=" + personID %>"
     schema="<%= "contacts." + (contactType.equals("INSTITUTIONAL") ? "Institutional." : "") + partyContactClass + ".manage" %>">
     <fr:layout name="tabular-editable">
