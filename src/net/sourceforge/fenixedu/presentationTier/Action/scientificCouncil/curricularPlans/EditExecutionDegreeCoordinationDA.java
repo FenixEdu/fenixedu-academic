@@ -91,6 +91,8 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
 
 	final Integer executionDegreeId = Integer.valueOf(request.getParameter("executionDegreeId"));
 	ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
+	
+	String backPath = request.getParameter("backPath");
 
 	if (coordinator.isResponsible()) {
 	    coordinator.setAsNotResponsible();
@@ -99,6 +101,7 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
 	}
 
 	ExecutionDegreeCoordinatorsBean coordsBean = new ExecutionDegreeCoordinatorsBean(executionDegree);
+	coordsBean.setEscapedBackPath(backPath);
 	request.setAttribute("coordsBean", coordsBean);
 	RenderUtils.invalidateViewState("coordsBean");
 
@@ -113,10 +116,13 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
 
 	final Integer executionDegreeId = Integer.valueOf(request.getParameter("executionDegreeId"));
 	ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
+	
+	String backPath = request.getParameter("backPath");
 
 	coordinator.removeCoordinator();
 
 	ExecutionDegreeCoordinatorsBean coordsBean = new ExecutionDegreeCoordinatorsBean(executionDegree);
+	coordsBean.setEscapedBackPath(backPath);
 	request.setAttribute("coordsBean", coordsBean);
 	RenderUtils.invalidateViewState("coordsBean");
 

@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.curri
 import java.io.Serializable;
 import java.util.Set;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -53,6 +55,14 @@ public class ExecutionDegreeCoordinatorsBean implements Serializable {
     
     public void setBackPath(String backPath) {
 	this.backPath = backPath;
+    }
+    
+    public String getEscapedBackPath() {
+	return new String(this.backPath.replace('&', '§'));
+    }
+    
+    public void setEscapedBackPath(String escapedBackPath) {
+	this.backPath = escapedBackPath.replace('§', '&');
     }
 
     public ExecutionDegreeCoordinatorsBean() {

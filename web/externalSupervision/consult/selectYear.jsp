@@ -27,7 +27,7 @@
 			</logic:present>
 		</fr:schema>
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle5 thright thlight"/>
+			<fr:property name="classes" value="tstyle5 thmiddle thright thlight"/>
 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>
 	</fr:edit>

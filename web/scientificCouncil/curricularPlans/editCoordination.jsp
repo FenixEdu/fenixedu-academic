@@ -123,6 +123,7 @@
 <bean:define id="dcpId" name="coordsBean" property="executionDegree.degreeCurricularPlan.idInternal"/>
 <bean:define id="edId" name="coordsBean" property="executionDegree.idInternal"/>
 <bean:define id="path" name="coordsBean" property="backPath"/>
+<bean:define id="escapedPath" name="coordsBean" property="escapedBackPath"/>
 
 <em><bean:message key="scientificCouncil" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em>
 <h2><bean:message key="label.edit.coordinationTeam" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h2>
@@ -149,14 +150,14 @@
 		<fr:property name="linkGroupSeparator" value="&nbsp&nbsp|&nbsp&nbsp" />
 		
 		<fr:property name="linkFormat(roleSwitcher)"
-			value="<%="/curricularPlans/editExecutionDegreeCoordination.do?method=switchResponsability&coordinatorId=${idInternal}&executionDegreeId=" + edId.toString() %>"/>
+			value="<%="/curricularPlans/editExecutionDegreeCoordination.do?method=switchResponsability&coordinatorId=${idInternal}&executionDegreeId=" + edId.toString() + "&backPath=" + escapedPath.toString() %>"/>
 		<fr:property name="order(roleSwitcher)" value="1" />
 		<fr:property name="key(roleSwitcher)"
 			value="link.switch.role" />
 		<fr:property name="bundle(roleSwitcher)" value="SCIENTIFIC_COUNCIL_RESOURCES" />
 		
 		<fr:property name="linkFormat(delete)"
-			value="<%="/curricularPlans/editExecutionDegreeCoordination.do?method=deleteCoordinator&coordinatorId=${idInternal}&executionDegreeId=" + edId.toString() %>" />
+			value="<%="/curricularPlans/editExecutionDegreeCoordination.do?method=deleteCoordinator&coordinatorId=${idInternal}&executionDegreeId=" + edId.toString() + "&backPath=" + escapedPath.toString() %>" />
 		<fr:property name="order(delete)" value="2" />
 		<fr:property name="key(delete)"
 			value="link.delete.coordinator" />
