@@ -744,15 +744,12 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
 	for (String row : values.split("\n")) {
 	    String[] columns = row.split("\t");
 
-	    ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(
-		    Integer.valueOf(columns[executionCourseHeaderIndex]));
+	    ExecutionCourse executionCourse = DomainObject.fromExternalId(columns[executionCourseHeaderIndex]);
 	    if (executionCourse == null) {
 		throw new DomainException("error.StudentInquiriesCourseResult.executionCourseNotFound",
 			columns[executionCourseHeaderIndex]);
 	    }
-
-	    ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(
-		    Integer.valueOf(columns[executionDegreeHeaderIndex]));
+	    ExecutionDegree executionDegree = DomainObject.fromExternalId(columns[executionDegreeHeaderIndex]);
 	    if (executionDegree == null) {
 		throw new DomainException("error.StudentInquiriesCourseResult.executionDegreeNotFound",
 			columns[executionDegreeHeaderIndex]);

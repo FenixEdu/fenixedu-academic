@@ -7,12 +7,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.UploadStudentInquiriesTeachingResultsBean;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.lang.StringUtils;
@@ -595,7 +595,7 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
 
 	int executionCourseHeaderIndex = getHeaderIndex(resultsBean.getKeyExecutionCourseHeader(), headersSplitted);
 	int executionDegreeHeaderIndex = getHeaderIndex(resultsBean.getKeyExecutionDegreeHeader(), headersSplitted);
-	int teacherHeaderIndex = getHeaderIndex(resultsBean.getKeyTeacherHeader(), headersSplitted);
+	int professorshipHeaderIndex = getHeaderIndex(resultsBean.getKeyTeacherHeader(), headersSplitted);
 	int shiftTypeHeaderIndex = getHeaderIndex(resultsBean.getShiftTypeHeader(), headersSplitted);
 
 	int unsatisfactoryResultsAssiduityIndex = getHeaderIndex(resultsBean.getUnsatisfactoryResultsAssiduityHeader(),
@@ -611,15 +611,13 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
 	for (String row : values.split("\n")) {
 	    String[] columns = row.split("\t");
 
-	    ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(
-		    Integer.valueOf(columns[executionCourseHeaderIndex]));
+	    ExecutionCourse executionCourse = DomainObject.fromExternalId(columns[executionCourseHeaderIndex]);
 	    if (executionCourse == null) {
 		throw new DomainException("error.StudentInquiriesCourseResult.executionCourseNotFound",
 			columns[executionCourseHeaderIndex]);
 	    }
 
-	    ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(
-		    Integer.valueOf(columns[executionDegreeHeaderIndex]));
+	    ExecutionDegree executionDegree = DomainObject.fromExternalId(columns[executionDegreeHeaderIndex]);
 	    if (executionDegree == null) {
 		throw new DomainException("error.StudentInquiriesCourseResult.executionDegreeNotFound",
 			columns[executionDegreeHeaderIndex]);
@@ -631,15 +629,10 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
 				.getExecutionYear().getName(), executionCourse.getNome());
 	    }
 
-	    Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(Integer.valueOf(columns[teacherHeaderIndex]));
-	    if (teacher == null) {
-		throw new DomainException("error.StudentInquiriesCourseResult.teacherNotFound", columns[teacherHeaderIndex]);
-	    }
-
-	    Professorship professorship = teacher.getProfessorshipByExecutionCourse(executionCourse);
+	    Professorship professorship = DomainObject.fromExternalId(columns[professorshipHeaderIndex]);
 	    if (professorship == null) {
 		throw new DomainException("error.StudentInquiriesCourseResult.professorshipNotFound",
-			columns[teacherHeaderIndex], columns[executionCourseHeaderIndex]);
+			columns[professorshipHeaderIndex], columns[executionCourseHeaderIndex]);
 	    }
 
 	    final ShiftType shiftType = ShiftType.valueOf(columns[shiftTypeHeaderIndex]);
