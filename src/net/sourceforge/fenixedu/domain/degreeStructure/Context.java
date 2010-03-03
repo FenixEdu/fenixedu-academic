@@ -48,14 +48,24 @@ public class Context extends Context_Base implements Comparable<Context> {
 	    public void beforeAdd(Context context, CourseGroup courseGroup) {
 		if (context != null && courseGroup != null) {
 		    if (context.getChildDegreeModule() != null && context.getChildDegreeModule().isCycleCourseGroup()) {
-			CycleCourseGroup cycleCourseGroup = (CycleCourseGroup) context.getChildDegreeModule();
-			if (cycleCourseGroup.getParentContexts().size() > 1) {
-			    throw new DomainException("error.degreeStructure.CycleCourseGroup.can.only.have.one.parent");
-			}
-			if (!courseGroup.isRoot()) {
-			    throw new DomainException("error.degreeStructure.CycleCourseGroup.parent.must.be.RootCourseGroup");
-			}
+			validateCycleCourseGroupParent(context, courseGroup);
 		    }
+
+		    if (context.getChildDegreeModule() != null && context.getParentCourseGroup() != null
+			    && context.getParentCourseGroup().isBranchCourseGroup()
+			    && context.getChildDegreeModule().isBranchCourseGroup()) {
+			throw new DomainException("error.degreeStructure.BranchCourseGroup.cant.have.branch.parent");
+		    }
+		}
+	    }
+
+	    private void validateCycleCourseGroupParent(Context context, CourseGroup courseGroup) {
+		CycleCourseGroup cycleCourseGroup = (CycleCourseGroup) context.getChildDegreeModule();
+		if (cycleCourseGroup.getParentContexts().size() > 1) {
+		    throw new DomainException("error.degreeStructure.CycleCourseGroup.can.only.have.one.parent");
+		}
+		if (!courseGroup.isRoot()) {
+		    throw new DomainException("error.degreeStructure.CycleCourseGroup.parent.must.be.RootCourseGroup");
 		}
 	    }
 

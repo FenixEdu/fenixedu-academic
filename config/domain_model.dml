@@ -84,7 +84,7 @@ enum net.sourceforge.fenixedu.domain.assiduousness.util.DayType                 
 enum net.sourceforge.fenixedu.domain.assiduousness.util.JustificationGroup                                                as JustificationGroup;
 enum net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType                                                 as JustificationType;
 enum net.sourceforge.fenixedu.domain.assiduousness.util.ScheduleClockingType                                              as ScheduleClockingType;
-enum net.sourceforge.fenixedu.domain.branch.BranchType                                                                    as BranchType;
+enum net.sourceforge.fenixedu.domain.branch.BranchType                                                                    as OldBranchType;
 enum net.sourceforge.fenixedu.domain.candidacy.Ingression                                                                 as Ingression;
 enum net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessState                                               as CandidacyProcessState;
 enum net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState                                            as IndividualCandidacyState;
@@ -97,6 +97,7 @@ enum net.sourceforge.fenixedu.domain.curriculum.EnrollmentState                 
 enum net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType                                                   as EnrolmentEvaluationType;
 enum net.sourceforge.fenixedu.domain.degree.DegreeType                                                                    as DegreeType;
 enum net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState                                as DegreeCurricularPlanState;
+enum net.sourceforge.fenixedu.domain.degreeStructure.BranchType                                                           as BranchType;
 enum net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel                                                as CompetenceCourseLevel;
 enum net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage                                                      as CurricularStage;
 enum net.sourceforge.fenixedu.domain.degreeStructure.CycleType                                                            as CycleType;
@@ -631,7 +632,7 @@ class DomainObject {
 
     class Branch extends DomainObject {
         String acronym;
-        BranchType branchType;
+        OldBranchType branchType;
         String code;
         String name;
         String nameEn;
@@ -3080,6 +3081,10 @@ class DomainObject {
 
         class degreeStructure.CourseGroup extends degreeStructure.DegreeModule {
         }
+        
+        	class degreeStructure.BranchCourseGroup extends degreeStructure.CourseGroup {
+        		BranchType branchType;
+        	}
 
             class degreeStructure.CycleCourseGroup extends degreeStructure.CourseGroup {
                 CycleType cycleType;

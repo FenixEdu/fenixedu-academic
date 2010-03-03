@@ -22,7 +22,7 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
     protected CycleCourseGroup() {
 	super();
     }
-
+    
     public CycleCourseGroup(final RootCourseGroup parentCourseGroup, final String name, final String nameEn,
 	    final CycleType cycleType, final ExecutionSemester begin, final ExecutionSemester end) {
 	if (cycleType == null) {

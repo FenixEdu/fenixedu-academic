@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "A adicionar BRANCH_TYPE na tabela DEGREE_MODULE." alterTableDegreeModule.sql
+
