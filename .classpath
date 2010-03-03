@@ -129,8 +129,8 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/xml-apis.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/XmlSchema-1.1.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/xstream-1.1.1.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-tools.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-tools.jar" sourcepath="/fenix-tools"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-r45974.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-r46143.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-r46370.jar" sourcepath="/fenix-web-framework"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
