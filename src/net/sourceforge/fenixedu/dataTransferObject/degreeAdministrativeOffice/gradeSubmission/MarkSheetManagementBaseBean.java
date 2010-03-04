@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
 
 public class MarkSheetManagementBaseBean implements Serializable {
@@ -95,5 +96,9 @@ public class MarkSheetManagementBaseBean implements Serializable {
 
     public String getCurricularCourseNameAndCode() {
 	return getCurricularCourse().getName(getExecutionPeriod()) + " " + getCurricularCourse().getAcronym(getExecutionPeriod());
+    }
+
+    public ExecutionYear getExecutionYear() {
+	return getExecutionPeriod().getExecutionYear();
     }
 }
