@@ -64,7 +64,7 @@
 	<tr>
 		<td>
 			<fr:view 	name="course"
-						property="name">
+						property="nameI18N">
 <%-- 				<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>--%>
 			</fr:view>
 		</td>

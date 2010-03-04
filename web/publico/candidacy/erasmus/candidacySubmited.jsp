@@ -65,7 +65,6 @@
 
 
 
-
 <div class="mtop15" id="contacts">
 	<bean:message key="erasmus.contacts.text" bundle="CANDIDATE_RESOURCES" />
 </div>

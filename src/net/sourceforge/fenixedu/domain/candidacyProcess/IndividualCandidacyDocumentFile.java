@@ -22,7 +22,7 @@ public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocument
 	init(getVirtualPath(), filename, filename, null, contents, null);
 
 	if (type.equals(IndividualCandidacyDocumentFileType.PHOTO)) {
-	    storeToContentManager();
+	    // storeToContentManager();
 	}
     }
 
@@ -33,7 +33,7 @@ public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocument
 	init(path, filename, filename, null, contents, null);
 
 	if (type.equals(IndividualCandidacyDocumentFileType.PHOTO)) {
-	    storeToContentManager();
+	    // storeToContentManager();
 	}
     }
 

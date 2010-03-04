@@ -63,6 +63,7 @@
 	<a href="#" onclick="$('#methodForm').attr('value', 'prepareEditCandidacyProcess'); $('#editCandidacyForm').submit();"><bean:message key="button.edit" bundle="APPLICATION_RESOURCES" /> <bean:message key="label.application.lowercase" bundle="CANDIDATE_RESOURCES"/></a> | 
 	<a href="#" onclick="$('#methodForm').attr('value', 'prepareEditCandidacyInformation'); $('#editCandidacyForm').submit();"><bean:message key="label.edit.application.educational.background" bundle="CANDIDATE_RESOURCES"/></a> |
 	<a href="#" onclick="$('#methodForm').attr('value', 'prepareEditDegreeAndCourses'); $('#editCandidacyForm').submit();"><bean:message key="erasmus.label.edit.degree.and.courses" bundle="CANDIDATE_RESOURCES" /></a>
+	<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditCandidacyDocuments';document.getElementById('editCandidacyForm').submit();"> <bean:message key="label.edit.candidacy.documents" bundle="CANDIDATE_RESOURCES" /></a>
 </fr:form>
 </logic:equal>
 
@@ -136,6 +137,25 @@
 		</fr:layout>
 	</fr:view>
 
+
+<h2 style="margin-top: 1em;"><bean:message key="label.erasmus.courses" bundle="CANDIDATE_RESOURCES"/></h2>
+
+	<table class="tstyle2 thlight thcenter">
+	<tr>
+		<th><bean:message key="label.erasmus.course" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
+	</tr>
+	<logic:iterate id="course" name="individualCandidacyProcess" property="sortedSelectedCurricularCourses" indexId="index">
+		<bean:define id="curricularCourseId" name="course" property="externalId" />
+	<tr>
+		<td>
+			<fr:view 	name="course"
+						property="nameI18N">
+<%-- 				<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>--%>
+			</fr:view>
+		</td>
+	</tr>
+	</logic:iterate>
+	</table>	
 
 
 <h2 style="margin-top: 1em;"><bean:message key="label.documentation" bundle="CANDIDATE_RESOURCES"/></h2> 

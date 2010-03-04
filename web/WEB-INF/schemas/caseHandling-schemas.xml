@@ -1887,7 +1887,7 @@
 		extends="IndividualCandidacyProcess.view">
 	<slot name="processCode" layout="null-as-label" key="label.process.id" bundle="CANDIDATE_RESOURCES"/>
 	<slot name="candidacySelectedDegree" key="label.eramsus.candidacy.choosed.degree">
-		<property name="format" value="${name} - ${sigla}" />
+		<property name="format" value="${presentationName} - ${sigla}" />
 	</slot>
 	<slot name="candidacy.erasmusStudentData.homeInstitutionName" key="label.erasmus.home.institution.name.detailed" read-only="true" />
 	<slot name="candidacy.erasmusStudentData.homeInstitutionAddress" key="label.erasmus.home.institution.address.detailed" read-only="true" />
@@ -2160,8 +2160,8 @@
 
 	<slot name="countryOfResidence" key="label.countryOfResidence" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-		<property name="format" value="${localizedName.content}"/>
-		<property name="sortBy" value="name=asc" />
+		<property name="format" value="${localizedName}"/>
+		<property name="sortBy" value="localizedName=asc" />
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
 	</slot>		
 		
@@ -2213,7 +2213,6 @@
 
 <schema name="ErasmusIndividualCandidacyProcess.alertContents" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="createAlert" key="label.erasmus.create.alert" />
-	<slot name="sendEmail" key="label.erasmus.send.email" />
 	
 	<slot name="alertSubject" key="label.erasmus.alert.subject" >
 		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
@@ -2237,7 +2236,6 @@
 	<slot name="whenCreated" key="label.erasmus.alert.whenCreated" />
 	<slot name="whoCreated.name" key="label.erasmus.alert.whoCreated" />
 	<slot name="entity.description" key="label.erasmus.alert.entity" />
-	<slot name="sendEmail" key="label.erasmus.alert.sendEmail" />
 	<slot name="formattedSubject" key="label.erasmus.alert.subject" />
 	<slot name="formattedBody" key="label.erasmus.alert.body" />
 </schema>
@@ -2248,7 +2246,6 @@
 	<slot name="processCode" key="label.process.id" bundle="CANDIDATE_RESOURCES"/>
 	<slot name="personalDetails.documentIdNumber" key="label.identificationNumber" />
 	<slot name="candidacyState" key="label.candidacy.process.state" />
-	<slot name="processChecked" key="label.candidacy.process.checked" />
 </schema>
 
 <schema name="ErasmusCandidacyProcess.personalData"
@@ -2262,10 +2259,32 @@
 	<slot name="expirationDateOfDocumentIdYearMonthDay" key="label.documentIdExpirationDate" />
 	<slot name="dateOfBirthYearMonthDay" key="label.dateOfBirth" />
 	<slot name="gender" key="label.gender" />
-	<slot name="country.name" key="label.nationality" />
+	<slot name="country.countryNationality" key="label.nationality" />
 	<slot name="countryOfResidence.name" key="label.countryOfResidence" />
 	<slot name="address" key="label.address" />
 	<slot name="areaCode" key="label.areaCode" />
 	<slot name="areaOfAreaCode" key="label.areaOfAreaCode" />
 	<slot name="area" key="label.area" />	
+</schema>
+
+<schema name="ErasmusIndividualCandidacyProcessBean.documentUpload.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean" bundle="CANDIDATE_RESOURCES">
+	<slot name="type" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.candidacy.document.type">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.IndividualCandidacyDocumentFileTypeEditProvider$ErasmusIndividualCandidacyDocumentFileTypeEditProvider"/>
+		<property name="format" value="${localizedName}"/>
+	</slot>
+  <slot name="stream" key="label.candidacy.document.file">
+    <property name="fileNameSlot" value="fileName"/>
+    <property name="fileSizeSlot" value="fileSize"/>
+  </slot>
+</schema>
+
+<schema name="PublicCandidacyProcessBean.erasmus.documentUpload.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean" bundle="CANDIDATE_RESOURCES">
+	<slot name="type" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.candidacy.document.type">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.IndividualCandidacyDocumentFileTypeEditProvider$ErasmusIndividualCandidacyDocumentFileTypeEditProvider"/>
+		<property name="format" value="${localizedName}"/>
+	</slot>
+  <slot name="stream" key="label.candidacy.document.file">
+    <property name="fileNameSlot" value="fileName"/>
+    <property name="fileSizeSlot" value="fileSize"/>
+  </slot>
 </schema>

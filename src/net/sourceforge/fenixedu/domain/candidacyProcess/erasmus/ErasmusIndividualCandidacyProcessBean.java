@@ -46,6 +46,7 @@ public class ErasmusIndividualCandidacyProcessBean extends IndividualCandidacyPr
 	initializeDocumentUploadBeans();
 	setErasmusStudentDataBean(new ErasmusStudentDataBean());
 	setSelectedCurricularCourses(new HashSet<CurricularCourse>());
+	setSendEmail(false);
 
 	this.toAccessFenix = false;
     }

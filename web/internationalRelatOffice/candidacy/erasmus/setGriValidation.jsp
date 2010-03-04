@@ -70,6 +70,6 @@
 		</fr:layout>		
 	</fr:edit>
 	
-	<html:submit><bean:message key="button.submit" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:submit>
-	<html:cancel><bean:message key="button.cancel" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:cancel>
+	<html:submit><bean:message key="button.submit" bundle="APPLICATION_RESOURCES" /></html:submit>
+	<html:cancel><bean:message key="button.cancel" bundle="APPLICATION_RESOURCES" /></html:cancel>
 </fr:form>

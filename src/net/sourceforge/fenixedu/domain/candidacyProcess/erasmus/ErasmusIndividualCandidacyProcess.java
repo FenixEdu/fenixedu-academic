@@ -1,11 +1,13 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
@@ -39,6 +41,7 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	activities.add(new SetCoordinatorValidation());
 	activities.add(new VisualizeAlerts());
 	activities.add(new EditDocuments());
+	activities.add(new EditPublicCandidacyDocumentFile());
     }
 
     public ErasmusIndividualCandidacyProcess() {
@@ -176,6 +179,12 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
     public String getDisplayName() {
 	return ResourceBundle.getBundle("resources/CaseHandlingResources", Language.getLocale()).getString(
 		getClass().getSimpleName());
+    }
+
+    public List<CurricularCourse> getSortedSelectedCurricularCourses() {
+	List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>(getCandidacy().getCurricularCoursesSet());
+	Collections.sort(curricularCourses, CurricularCourse.COMPARATOR_BY_NAME);
+	return curricularCourses;
     }
 
     @StartActivity
@@ -486,6 +495,45 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	    CandidacyProcessDocumentUploadBean bean = (CandidacyProcessDocumentUploadBean) object;
 	    process.bindIndividualCandidacyDocumentFile(bean);
 	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForCoordinator() {
+	    return Boolean.FALSE;
+	}
+
+    }
+
+    static private class EditPublicCandidacyDocumentFile extends Activity<ErasmusIndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(ErasmusIndividualCandidacyProcess process, IUserView userView) {
+	    if (process.isCandidacyCancelled()) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected ErasmusIndividualCandidacyProcess executeActivity(ErasmusIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    CandidacyProcessDocumentUploadBean bean = (CandidacyProcessDocumentUploadBean) object;
+	    process.bindIndividualCandidacyDocumentFile(bean);
+	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return Boolean.FALSE;
+	}
+
+	@Override
+	public Boolean isVisibleForCoordinator() {
+	    return Boolean.FALSE;
+	}
+
+	@Override
+	public Boolean isVisibleForGriOffice() {
+	    return Boolean.FALSE;
 	}
     }
 

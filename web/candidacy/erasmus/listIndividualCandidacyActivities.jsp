@@ -100,6 +100,27 @@
 		</fr:layout>
 	</fr:view>
 	
+	
+	<%-- Choosen courses --%>
+	<strong><bean:message key="label.erasmus.courses" bundle="ACADEMIC_OFFICE_RESOURCES"/>:</strong>
+	<table class="tstyle2 thlight thcenter">
+	<tr>
+		<th><bean:message key="label.erasmus.course" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
+	</tr>
+	<logic:iterate id="course" name="process" property="sortedSelectedCurricularCourses" indexId="index">
+		<bean:define id="curricularCourseId" name="course" property="externalId" />
+	<tr>
+		<td>
+			<fr:view 	name="course"
+						property="nameI18N">
+<%-- 				<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>--%>
+			</fr:view>
+		</td>
+	</tr>
+	</logic:iterate>
+	</table>	
+	
+	
 	<%-- show documents--%>
 	<br/>
 	<h2 style="margin-top: 1em;"><bean:message key="label.documentation" bundle="CANDIDATE_RESOURCES"/></h2> 

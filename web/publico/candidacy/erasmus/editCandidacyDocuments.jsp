@@ -51,7 +51,7 @@
 <fr:form action='<%= mappingPath + ".do?method=editCandidacyDocuments" %>' encoding="multipart/form-data">
 	<fr:edit id="individualCandidacyProcessBean.document.file"
 		name="candidacyDocumentUploadBean" 
-		schema="PublicCandidacyProcessBean.secondcycle.documentUpload.edit">
+		schema="PublicCandidacyProcessBean.erasmus.documentUpload.edit">
 		<fr:layout>
 			<fr:property name="classes" value="tstyle5 thlight thleft"/>
 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>

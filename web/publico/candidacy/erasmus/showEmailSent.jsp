@@ -55,3 +55,7 @@
 <p><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= link %>">Link</a></p>
 --%>
 
+<p>
+	<a href="<%= request.getAttribute("link") %>" >Link</a>
+</p>
+

@@ -208,6 +208,14 @@ public class IndividualCandidacyDocumentFileTypeEditProvider {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.LEARNING_AGREEMENT);
 	    }
 
+	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.CV_DOCUMENT) == null) {
+		fileTypesList.add(IndividualCandidacyDocumentFileType.CV_DOCUMENT);
+	    }
+
+	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT) == null) {
+		fileTypesList.add(IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT);
+	    }
+
 	    return fileTypesList;
 	}
 

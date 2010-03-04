@@ -135,8 +135,15 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 
 	try {
 	    String email = (String) getObjectFromViewState("PublicAccessCandidacy.preCreationForm");
-	    DegreeOfficePublicCandidacyHashCode.getUnusedOrCreateNewHashCodeAndSendEmailForApplicationSubmissionToCandidate(
-		    getProcessType(), getCurrentOpenParentProcess(), email);
+	    DegreeOfficePublicCandidacyHashCode hash = DegreeOfficePublicCandidacyHashCode
+		    .getUnusedOrCreateNewHashCodeAndSendEmailForApplicationSubmissionToCandidate(getProcessType(),
+			    getCurrentOpenParentProcess(), email);
+
+	    ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
+	    String link = String.format(bundle.getString(getProcessType().getSimpleName()
+		    + ".const.public.application.access.link"), hash.getValue(), Language.getLocale().getLanguage());
+
+	    request.setAttribute("link", link);
 
 	    return mapping.findForward("show-email-message-sent");
 	} catch (HashCodeForEmailAndProcessAlreadyBounded e) {
