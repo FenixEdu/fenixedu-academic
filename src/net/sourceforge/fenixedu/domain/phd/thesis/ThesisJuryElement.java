@@ -83,8 +83,15 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
 
     @Service
     public void delete() {
+	checkIfCanBeDeleted();
 	disconnect();
 	deleteDomainObject();
+    }
+
+    private void checkIfCanBeDeleted() {
+	if (hasAnyFeedbackDocuments()) {
+	    throw new DomainException("error.ThesisJuryElement.has.feedback.documents");
+	}
     }
 
     protected void disconnect() {

@@ -190,6 +190,7 @@ enum net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationType       
 enum net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationState                                                as PhdNotificationState;
 enum net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessType                                              		  as PhdProcessAccessType;
 enum net.sourceforge.fenixedu.domain.phd.permissions.PhdPermissionType													  as PhdPermissionType;
+enum net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackStateType						  as PhdCandidacyFeedbackStateType; 
 enum net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType                                 as IndividualCandidacyDocumentFileType;
 enum net.sourceforge.fenixedu.domain.accounting.events.DegreeFinalizationCertificateRequestJustificationType              as DegreeFinalizationCertificateRequestJustificationType;
 enum net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestJustificationType            as AcademicServiceRequestJustificationType;
@@ -564,6 +565,14 @@ valueType pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString as MultiLanguageS
     internalizeWith importFromString();
 }
 
+valueType net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.TypeOfProgrammeList as erasmus.TypeOfProgrammeList {
+	externalizeWith {
+		String toString();
+	}
+	
+	internalizeWith importFromString();
+}
+
 /* Phd Module */
 valueType net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessTypeList as PhdProcessAccessTypeList {
     externalizeWith {
@@ -572,16 +581,13 @@ valueType net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessTypeList as
     
     internalizeWith importFromString();
 }
-/* End of Phd Module */
 
-
-valueType net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.TypeOfProgrammeList as erasmus.TypeOfProgrammeList {
-	externalizeWith {
-		String toString();
-	}
-	
-	internalizeWith importFromString();
+valueType net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacySharedDocumentsList as PhdCandidacySharedDocumentsList {
+    externalizeWith { String toString(); }
+    internalizeWith importFromString();
 }
+
+/* End of Phd Module */
 
 
 /*
@@ -6920,8 +6926,11 @@ class phd.PhdProcessState extends DomainObject {
         PhdThesisProcessStateType type;
     }
     
-class phd.PhdProgramProcess extends caseHandling.Process {
+    class phd.candidacy.feedbackRequest.PhdCandidacyFeedbackState extends phd.PhdProcessState {
+		PhdCandidacyFeedbackStateType type;
+    }
 
+class phd.PhdProgramProcess extends caseHandling.Process {
 }
 
 class phd.PhdIndividualProgramProcess extends phd.PhdProgramProcess {
@@ -6945,6 +6954,15 @@ class phd.candidacy.PhdProgramCandidacyProcess extends phd.PhdProgramProcess {
     LocalDate whenRatified;
 }
 
+class phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess extends phd.PhdProgramProcess {
+	PhdCandidacySharedDocumentsList sharedDocuments;
+}
+
+class phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestElement extends DomainObject {
+	String mailSubject;
+	String mailBody;
+}
+
 class phd.PhdProgramProcessDocument extends File {
     PhdIndividualProgramDocumentType documentType;  
     String remarks;
@@ -6952,6 +6970,9 @@ class phd.PhdProgramProcessDocument extends File {
 }
 
 class phd.PhdThesisReportFeedbackDocument extends phd.PhdProgramProcessDocument {
+}
+
+class phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestDocument extends phd.PhdProgramProcessDocument {
 }
 
 class phd.seminar.PublicPresentationSeminarProcess extends phd.PhdProgramProcess {
@@ -7349,6 +7370,11 @@ relation PhdIndividualProgramProcessPhdProgramCandidacyProcess {
     phd.candidacy.PhdProgramCandidacyProcess playsRole candidacyProcess;
 }
 
+relation PhdCandidacyFeedbackRequestProcessPhdProgramCandidacyProcess {
+    phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess playsRole feedbackRequest;
+    phd.candidacy.PhdProgramCandidacyProcess playsRole candidacyProcess;
+}
+
 relation PhdProgramCandidacyProcessPhdProgramCandidacyEvent {
     phd.candidacy.PhdProgramCandidacyProcess playsRole candidacyProcess;
     phd.candidacy.PhdProgramCandidacyEvent playsRole event;
@@ -7387,6 +7413,13 @@ relation PhdProgramProcessDocumentPhdProgramProcess {
 relation ThesisJuryElementReportFeedbackDocuments {
 	phd.thesis.ThesisJuryElement playsRole juryElement;
 	phd.PhdThesisReportFeedbackDocument playsRole feedbackDocuments {
+		multiplicity *;
+	}
+}
+
+relation PhdCandidacyFeedbackRequestElementDocuments {
+	phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestElement playsRole element;
+	phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestDocument playsRole feedbackDocuments {
 		multiplicity *;
 	}
 }
@@ -7476,6 +7509,13 @@ relation PublicPresentationSeminarPhdProcessState {
 relation PhdThesisPhdProcessState {
     phd.thesis.PhdThesisProcess playsRole process;
     phd.thesis.PhdThesisProcessState playsRole states {
+        multiplicity *;
+    }
+}
+
+relation PhdCandidacyFeedbackRequestProcessStates {
+	phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess playsRole process;
+	phd.candidacy.feedbackRequest.PhdCandidacyFeedbackState playsRole states {
         multiplicity *;
     }
 }
@@ -7668,6 +7708,26 @@ relation PhdParticipantThesisJuryElement {
     }
 }
 
+relation RootDomainObjectPhdCandidacyFeedbackRequestElement {
+    RootDomainObject playsRole rootDomainObject;
+    phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestElement playsRole phdCandidacyFeedbackElements {
+        multiplicity *;
+    }
+}
+
+relation PhdCandidacyFeedbackRequestProcessElements {
+    phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess playsRole process;
+    phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestElement playsRole elements {
+        multiplicity *;
+    }
+}
+
+relation PhdParticipantPhdCandidacyFeedbackRequestElements {
+    phd.PhdParticipant playsRole participant;
+    phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestElement playsRole candidacyFeedbackRequestElements {
+        multiplicity *;
+    }
+}
 
 /* End of Phd Module */
 

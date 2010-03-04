@@ -79,7 +79,7 @@ public class RequestJuryReviews extends PhdThesisActivity {
     private String getAccessInformation(PhdIndividualProgramProcess process, PhdParticipant participant) {
 
 	if (!participant.isInternal()) {
-	    return AlertMessage.get("message.phd.request.jury.reviews.external.access", PhdProperties.getPhdExternalAccessLink(),
+	    return AlertMessage.get("message.phd.external.access", PhdProperties.getPhdExternalAccessLink(),
 		    participant.getAccessHashCode(), participant.getPassword());
 
 	} else {

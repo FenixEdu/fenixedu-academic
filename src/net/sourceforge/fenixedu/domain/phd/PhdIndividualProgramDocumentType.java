@@ -56,6 +56,8 @@ public enum PhdIndividualProgramDocumentType {
     JURY_PRESIDENT_ELEMENT,
     
     JURY_REPORT_FEEDBACK,
+    
+    CANDIDACY_FEEDBACK_DOCUMENT,
 
     OTHER(false);
 

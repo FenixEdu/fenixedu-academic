@@ -36,8 +36,8 @@ public class JuryReporterFeedbackUpload extends PhdThesisActivity {
 
 	for (final PhdProgramDocumentUploadBean documentBean : bean.getDocuments()) {
 	    if (documentBean.hasAnyInformation()) {
-		new PhdThesisReportFeedbackDocument(bean.getJuryElement(), documentBean.getType(), documentBean.getRemarks(),
-			documentBean.getFileContent(), documentBean.getFilename(), null);
+		new PhdThesisReportFeedbackDocument(bean.getJuryElement(), documentBean.getRemarks(), documentBean
+			.getFileContent(), documentBean.getFilename(), null);
 	    }
 	}
 

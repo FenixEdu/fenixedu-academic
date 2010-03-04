@@ -1,33 +1,33 @@
-package net.sourceforge.fenixedu.domain.phd;
+package net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest;
 
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
-import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 
 import org.apache.commons.lang.StringUtils;
 
-import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
-public class PhdThesisReportFeedbackDocument extends PhdThesisReportFeedbackDocument_Base {
+public class PhdCandidacyFeedbackRequestDocument extends PhdCandidacyFeedbackRequestDocument_Base {
 
-    private PhdThesisReportFeedbackDocument() {
+    private PhdCandidacyFeedbackRequestDocument() {
 	super();
     }
 
-    public PhdThesisReportFeedbackDocument(ThesisJuryElement element, String remarks, byte[] content, String filename,
-	    Person uploader) {
+    public PhdCandidacyFeedbackRequestDocument(PhdCandidacyFeedbackRequestElement element, String remarks, byte[] content,
+	    String filename, Person uploader) {
 	this();
 
 	// first set jury element and then init document
-	check(element, "error.PhdThesisReportFeedbackDocument.invalid.element");
-	setJuryElement(element);
+	check(element, "error.PhdCandidacyFeedbackRequestDocument.invalid.element");
+	setElement(element);
 
-	init(null, PhdIndividualProgramDocumentType.JURY_REPORT_FEEDBACK, remarks, content, filename, uploader);
+	init(null, PhdIndividualProgramDocumentType.CANDIDACY_FEEDBACK_DOCUMENT, remarks, content, filename, uploader);
     }
 
     @Override
@@ -37,7 +37,6 @@ public class PhdThesisReportFeedbackDocument extends PhdThesisReportFeedbackDocu
 	if (documentType == null || content == null || content.length == 0 || StringUtils.isEmpty(filename)) {
 	    throw new DomainException("error.phd.PhdProgramProcessDocument.documentType.and.file.cannot.be.null");
 	}
-
     }
 
     @Override
@@ -48,7 +47,7 @@ public class PhdThesisReportFeedbackDocument extends PhdThesisReportFeedbackDocu
 		super.setDocumentVersion(documentsByType.isEmpty() ? 1 : documentsByType.size() + 1);
 
 	    } else {
-		super.setDocumentVersion(getJuryElement().getFeedbackDocumentsCount() + 1);
+		super.setDocumentVersion(getElement().getFeedbackDocumentsCount() + 1);
 	    }
 	} else {
 	    super.setDocumentVersion(1);
@@ -65,25 +64,8 @@ public class PhdThesisReportFeedbackDocument extends PhdThesisReportFeedbackDocu
     protected VirtualPath getVirtualPath() {
 	final VirtualPath filePath = new VirtualPath();
 	filePath.addNode(new VirtualPathNode("PhdIndividualProgram", "PhdIndividualProgram"));
-	filePath.addNode(new VirtualPathNode(getJuryElement().getProcess().getIndividualProgramProcess().getIdInternal()
-		.toString(), getJuryElement().getProcess().getIndividualProgramProcess().getIdInternal().toString()));
+	filePath.addNode(new VirtualPathNode(getElement().getProcess().getIndividualProgramProcess().getIdInternal().toString(),
+		getElement().getProcess().getIndividualProgramProcess().getIdInternal().toString()));
 	return filePath;
     }
-
-    @Service
-    public void associateToProcess(final PhdThesisProcess process) {
-	check(process, "error.phd.PhdProgramProcessDocument.process.cannot.be.null");
-	setPhdProgramProcess(process);
-    }
-
-    @Override
-    protected void disconnect() {
-	super.disconnect();
-	removeJuryElement();
-    }
-
-    public boolean isAssignedToProcess() {
-	return hasPhdProgramProcess();
-    }
-
 }

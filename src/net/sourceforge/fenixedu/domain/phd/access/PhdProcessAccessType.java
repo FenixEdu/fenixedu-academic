@@ -7,7 +7,13 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public enum PhdProcessAccessType {
 
-    JURY_DOCUMENTS_DOWNLOAD("JuryDocumentsDownload"), JURY_REPORTER_FEEDBACK_UPLOAD("JuryReporterFeedbackUpload");
+    CANDIDACY_FEEDBACK_DOCUMENTS_DOWNLOAD("CandidacyFeedbackDocumentsDownload"),
+
+    CANDIDACY_FEEDBACK_UPLOAD("CandidacyFeedbackUpload"),
+
+    JURY_DOCUMENTS_DOWNLOAD("JuryDocumentsDownload"),
+
+    JURY_REPORTER_FEEDBACK_UPLOAD("JuryReporterFeedbackUpload");
 
     private String descriptor;
 

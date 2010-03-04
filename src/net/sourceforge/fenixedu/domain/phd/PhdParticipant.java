@@ -98,7 +98,7 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
     }
 
     protected boolean canBeDeleted() {
-	return !(hasAnyThesisJuryElements() || hasProcessForGuiding() || hasProcessForAssistantGuiding());
+	return !(hasAnyThesisJuryElements() || hasProcessForGuiding() || hasProcessForAssistantGuiding() || hasAnyCandidacyFeedbackRequestElements());
     }
 
     public boolean isGuidingOrAssistantGuiding() {
