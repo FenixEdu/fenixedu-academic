@@ -315,6 +315,9 @@ public class ManageThesisDA extends AbstractManageThesisDA {
     }
 
     private Thesis findPreviousThesis(final SortedSet<Enrolment> dissertationEnrolments) {
+	if(dissertationEnrolments.isEmpty()) {
+	    return null;
+	}
 	final Enrolment previous = dissertationEnrolments.last();
 	if (previous != null) {
 	    if (previous.hasAnyTheses()) {
