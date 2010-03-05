@@ -19,10 +19,17 @@
 		src="<%=request.getContextPath()%>/CSS/scripts/checkall.js"></script>
 
 	<logic:notEmpty name="person" property="employee">
+	   <p> 
 	   	<html:link page="<%= "/professionalInformation.do?method=showSituations&personId="+ personID%>" titleKey="link.title.professionalInformation"  bundle="CONTRACTS_RESOURCES">
 	   		<bean:message key="link.title.professionalInformation" bundle="CONTRACTS_RESOURCES"/>
 	   	</html:link>
+	   	</p>
    	</logic:notEmpty>
+   	  <p> 
+	   	<html:link page="<%= "/qualification.do?method=showQualifications&personID="+ personID%>" >
+	   		<bean:message key="link.title.qualification" bundle="MANAGER_RESOURCES"/>
+	   	</html:link>
+	   </p>
 
 	<logic:messagesPresent message="true" property="contacts">
 		<ul class="nobullet list6">
@@ -59,6 +66,7 @@
 			</tr>
 		</tbody>
 	</table>
+	
 		<p class="mvert05">
 			<logic:notEmpty name="person" property="personalPhotoEvenIfRejected">
 			<logic:equal name="person" property="personalPhotoEvenIfRejected.state" value="PENDING">

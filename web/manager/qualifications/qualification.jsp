@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 
-<bean:define id="personId" name="person" property="idInternal" />
+<bean:define id="personId" name="person" property="externalId" />
 
 <html:messages id="message" message="true" bundle="MANAGER_RESOURCES">
     <p><span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>

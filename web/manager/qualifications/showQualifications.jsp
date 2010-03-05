@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 	
 
-<bean:define id="personID" name="person" property="idInternal"></bean:define>
+<bean:define id="personID" name="person" property="externalId"></bean:define>
 <h2><bean:message key="title.manager.qualification.showQualifications" bundle="MANAGER_RESOURCES" /></h2>
 <logic:notPresent name="person" property="associatedQualifications">
 	<bean:write name="link.manager.qualification.notExitsQualifications"/>

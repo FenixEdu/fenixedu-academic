@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -66,8 +65,7 @@ public class QualificationDA extends FenixDispatchAction {
 
     protected Person getPersonSelectedFromParameter(HttpServletRequest request) {
 	String personIDString = request.getParameter("personID");
-	return (Person) ((StringUtils.isEmpty(personIDString)) ? null : rootDomainObject.readPartyByOID(Integer
-		.valueOf(personIDString)));
+	return AbstractDomainObject.fromExternalId(personIDString);
 
     }
 
