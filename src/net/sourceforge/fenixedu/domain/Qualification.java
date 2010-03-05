@@ -6,7 +6,10 @@ import java.util.Comparator;
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
 
@@ -51,6 +54,13 @@ public class Qualification extends Qualification_Base {
     public Qualification() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
+	Person personLogin = AccessControl.getPerson();
+	if (personLogin != null) {
+	    setCreator(personLogin);
+	    setModifiedBy(personLogin);
+	}
+	setLastModificationDateDateTime(new DateTime());
+	setWhenCreated(new LocalDate());
     }
 
     public Qualification(Person person, Country country, InfoQualification infoQualification) {
@@ -124,6 +134,35 @@ public class Qualification extends Qualification_Base {
 	} else {
 	    setCountry(country);
 	}
+    }
+
+    public void edit(Person person, Country country, String branch, YearMonthDay dateYearMonthDay, String degree,
+	    String degreeRecognition, YearMonthDay equivalenceDateYearMonthDay, String equivalenceSchool, String mark,
+	    String school, String specializationArea, String title, QualificationType type, String year, String designation,
+	    Partial attendedBegin, Partial attendedEnd) {
+	Person personLogin = AccessControl.getPerson();
+	if (personLogin != null) {
+	    setModifiedBy(personLogin);
+	}
+	setBranch(branch);
+	setDateYearMonthDay(dateYearMonthDay);
+	setDegree(degree);
+	setDegreeRecognition(degreeRecognition);
+	setEquivalenceDateYearMonthDay(equivalenceDateYearMonthDay);
+	setEquivalenceSchool(equivalenceSchool);
+	setLastModificationDateDateTime(new DateTime());
+	setMark(mark);
+	setSchool(school);
+	setSpecializationArea(specializationArea);
+	setTitle(title);
+	setType(type);
+	setYear(year);
+	setDesignation(designation);
+	setAttendedBegin(attendedBegin);
+	setAttendedEnd(attendedEnd);
+	setPerson(person);
+	setCountry(country);
+
     }
 
     private void setBasicProperties(InfoQualification infoQualification) {

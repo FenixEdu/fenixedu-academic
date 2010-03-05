@@ -43,5 +43,6 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "create new slots Qualification" createNewSlotsQualification.sql
 execute "A adicionar BRANCH_TYPE na tabela DEGREE_MODULE." alterTableDegreeModule.sql
 execute "Added new sql instructions to create phd candidacy feedback request" addPhdCandidacyFeedbackRequestTables.sql

@@ -1488,6 +1488,7 @@ class DomainObject {
         String designation;
         Partial attendedBegin;
         Partial attendedEnd;
+        LocalDate whenCreated;
     }
 
     class Formation extends Qualification {
@@ -11662,6 +11663,12 @@ relation QualificationCreatorPerson {
         multiplicity *;
     }
     Person playsRole creator;
+}
+relation QualificationModifiedByPerson {
+    Qualification playsRole updatedQualifications {
+        multiplicity *;
+    }
+    Person playsRole modifiedBy;
 }
 
 relation QuestionBankParty {
