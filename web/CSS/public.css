@@ -1018,6 +1018,9 @@ right: 5px;
 .notarget:target { background: none; }
 #logoist:target { background: none; }
 
+div#logoist img.usitelogo {
+padding-left: 10px;
+}
 
 /* -------------------------
 ---- Deploy Warning ----
