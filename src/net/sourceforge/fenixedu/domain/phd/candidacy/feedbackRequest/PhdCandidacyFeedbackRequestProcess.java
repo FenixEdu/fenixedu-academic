@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
@@ -14,6 +15,7 @@ import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidExceptio
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
@@ -73,6 +75,10 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
 	    }
 	}
 	return null;
+    }
+
+    public Set<PhdIndividualProgramDocumentType> getSortedSharedDocumentTypes() {
+	return getSharedDocuments().getSortedTypes();
     }
 
     static abstract private class PhdActivity extends Activity<PhdCandidacyFeedbackRequestProcess> {
@@ -251,5 +257,4 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
 
 	activities.add(new DownloadCandidacyFeedbackDocuments());
     }
-
 }

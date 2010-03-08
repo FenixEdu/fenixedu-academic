@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
@@ -13,6 +14,20 @@ public class PhdCandidacyFeedbackRequestProcessBean implements Serializable {
     private PhdProgramCandidacyProcess candidacyProcess;
 
     private List<PhdIndividualProgramDocumentType> sharedDocuments;
+
+    public PhdCandidacyFeedbackRequestProcessBean() {
+	super();
+    }
+
+    public PhdCandidacyFeedbackRequestProcessBean(PhdProgramCandidacyProcess process) {
+	
+	setCandidacyProcess(process);
+	
+	if (process.hasFeedbackRequest()) {
+	    setSharedDocuments(new ArrayList<PhdIndividualProgramDocumentType>(process.getFeedbackRequest()
+		    .getSortedSharedDocumentTypes()));
+	}
+    }
 
     public PhdProgramCandidacyProcess getCandidacyProcess() {
 	return candidacyProcess;

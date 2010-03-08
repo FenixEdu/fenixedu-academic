@@ -118,8 +118,10 @@
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 				<fr:property name="columnClasses" value=",,tdclear tderror1" />
-				<fr:destination name="invalid" path="/phdProgramCandidacyProcess.do?method=uploadCandidacyReviewInvalid" />
 			</fr:layout>
+
+			<fr:destination name="invalid" path="/phdProgramCandidacyProcess.do?method=uploadCandidacyReviewInvalid" />
+
 		</fr:edit>
 		
 		<fr:edit id="stateBean" name="stateBean" visible="false" />
@@ -146,8 +148,8 @@
 				<fr:property name="columnClasses" value=",,tdclear tderror1" />
 			</fr:layout>
 		</fr:edit>
+
 		<p>
-	
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.phd.request.ratify.candidacy"/></html:submit>
 			
 			<phd:activityAvailable process="<%= request.getAttribute("process") %>" activity="<%= PhdProgramCandidacyProcess.RejectCandidacyProcess.class %>">

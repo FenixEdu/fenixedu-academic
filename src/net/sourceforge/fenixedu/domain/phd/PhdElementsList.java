@@ -63,6 +63,10 @@ abstract public class PhdElementsList<T> implements Serializable {
     public Set<T> getTypes() {
 	return Collections.unmodifiableSet(types);
     }
+    
+    public Set<T> getSortedTypes() {
+	return Collections.unmodifiableSet(new TreeSet<T>(types));
+    }
 
     @Override
     public String toString() {
