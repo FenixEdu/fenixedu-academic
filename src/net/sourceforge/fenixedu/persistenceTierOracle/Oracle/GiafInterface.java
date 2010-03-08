@@ -28,13 +28,14 @@ import org.joda.time.format.DateTimeFormatter;
 
 public class GiafInterface {
 
+    private static DecimalFormat employeeNumberFormat = new DecimalFormat("000000");
+
     public BigDecimal getEmployeeHourValue(Employee employee, LocalDate day) throws ExcepcaoPersistencia {
 	PersistentSuportGiaf persistentSuportOracle = PersistentSuportGiaf.getInstance();
 	try {
 	    CallableStatement callableStatement = persistentSuportOracle.prepareCall("BEGIN ?:=ist_valor_hora(?, ?, ? ,?); END;");
 	    callableStatement.registerOutParameter(1, Types.DOUBLE);
-	    DecimalFormat f = new DecimalFormat("000000");
-	    callableStatement.setString(2, f.format(employee.getEmployeeNumber()));
+	    callableStatement.setString(2, employeeNumberFormat.format(employee.getEmployeeNumber()));
 	    callableStatement.setDate(3, new Date(day.toDateTimeAtStartOfDay().getMillis()));
 	    callableStatement.registerOutParameter(4, Types.DOUBLE);
 	    callableStatement.registerOutParameter(5, Types.VARCHAR);
@@ -78,8 +79,10 @@ public class GiafInterface {
 	    stringBuilder
 		    .append("group by a.emp_num, a.emp_venc, a.emp_venc_dt union SELECT c.emp_num, c.emp_venc, c.emp_venc_dt, sysdate FROM sldemp04 c )where to_date('");
 	    stringBuilder.append(fmt.print(day));
-	    stringBuilder.append("', 'DD-MM-YYYY') between emp_venc_dt and emp_venc_dt_fim and emp_num=");
-	    stringBuilder.append(employee.getEmployeeNumber());
+	    stringBuilder.append("', 'DD-MM-YYYY') between emp_venc_dt and emp_venc_dt_fim and emp_num='");
+	    stringBuilder.append(employeeNumberFormat.format(employee.getEmployeeNumber()));
+	    stringBuilder.append("'");
+
 	    stmt = persistentSuportOracle.prepareStatement(stringBuilder.toString());
 	    rs = stmt.executeQuery();
 	    if (rs.next()) {
