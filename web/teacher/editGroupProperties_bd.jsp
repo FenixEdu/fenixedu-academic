@@ -93,9 +93,8 @@
 		<tr>
 			<th><bean:message key="message.groupPropertiesShiftType"/>:</th>
 			<td>
-				<html:select bundle="HTMLALT_RESOURCES" altKey="select.shiftType" property="shiftType" >
-					<html:option value="<%= shiftTypeValue.toString() %>"><bean:write name="shiftTypeValue"/></html:option>
-				<html:options collection="shiftTypeValues" property="value" labelProperty="label"/>
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.shiftType" property="shiftType" value="<%= shiftTypeValue.toString() %>">
+					<html:options collection="shiftTypeValues" property="value" labelProperty="label"/>
 				</html:select>
 			</td>		
 		</tr>

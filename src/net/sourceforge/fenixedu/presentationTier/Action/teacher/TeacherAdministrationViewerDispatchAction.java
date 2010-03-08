@@ -62,6 +62,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTeachers;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.ImportContentBean;
+import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
@@ -982,19 +983,17 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	return mapping.findForward("viewDeletedStudentGroupInformation");
     }
 
-    public List getShiftTypeLabelValues() {
-	List shiftTypeValues = new ArrayList();
+    public List<LabelValueBean> getShiftTypeLabelValues(HttpServletRequest request) {
+	Integer executionCourseCode = getObjectCode(request);
+	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
 
-	shiftTypeValues.add(new LabelValueBean("TEORICA", ShiftType.TEORICA.name()));
-	shiftTypeValues.add(new LabelValueBean("PRATICA", ShiftType.PRATICA.name()));
-	shiftTypeValues.add(new LabelValueBean("TEORICO_PRATICA", ShiftType.TEORICO_PRATICA.name()));
-	shiftTypeValues.add(new LabelValueBean("LABORATORIAL", ShiftType.LABORATORIAL.name()));
+	List<LabelValueBean> shiftTypeValues = new ArrayList<LabelValueBean>();
 
-	shiftTypeValues.add(new LabelValueBean("PROBLEMS", ShiftType.PROBLEMS.name()));
-	shiftTypeValues.add(new LabelValueBean("FIELD_WORK", ShiftType.FIELD_WORK.name()));
-	shiftTypeValues.add(new LabelValueBean("SEMINARY", ShiftType.SEMINARY.name()));
-	shiftTypeValues.add(new LabelValueBean("TRAINING_PERIOD", ShiftType.TRAINING_PERIOD.name()));
-	shiftTypeValues.add(new LabelValueBean("TUTORIAL_ORIENTATION", ShiftType.TUTORIAL_ORIENTATION.name()));
+	if (executionCourse != null) {
+	    for (CourseLoad cl : executionCourse.getCourseLoads()) {
+		shiftTypeValues.add(new LabelValueBean(RenderUtils.getEnumString(cl.getType()), cl.getType().name()));
+	    }
+	}
 
 	shiftTypeValues.add(new LabelValueBean("SEM TURNO", "SEM TURNO"));
 
@@ -1004,7 +1003,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward prepareCreateGroupProperties(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 	readSiteView(request, null, null, null, null);
-	List shiftTypeValues = getShiftTypeLabelValues();
+	List<LabelValueBean> shiftTypeValues = getShiftTypeLabelValues(request);
 	request.setAttribute("shiftTypeValues", shiftTypeValues);
 	return mapping.findForward("insertGroupProperties");
     }
@@ -1163,7 +1162,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	    saveErrors(request, actionErrors);
 	    return prepareViewExecutionCourseProjects(mapping, form, request, response);
 	}
-	List shiftTypeValues = getShiftTypeLabelValues();
+	List<LabelValueBean> shiftTypeValues = getShiftTypeLabelValues(request);
 	request.setAttribute("shiftTypeValues", shiftTypeValues);
 
 	List enrolmentPolicyValues = new ArrayList();
@@ -1171,7 +1170,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	enrolmentPolicyValues.add(new Integer(2));
 
 	List enrolmentPolicyNames = new ArrayList();
-	enrolmentPolicyNames.add("Atï¿½mica");
+	enrolmentPolicyNames.add("Atómica");
 	enrolmentPolicyNames.add("Individual");
 
 	InfoGrouping infoGroupProperties = ((InfoSiteGrouping) siteView.getComponent()).getInfoGrouping();
