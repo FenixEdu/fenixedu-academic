@@ -9,6 +9,8 @@
 <h2><bean:message bundle="EXTERNAL_SUPERVISION_RESOURCES" key="title.MA"/></h2>
 
 <table>
-<td><p class="width400px"><br/><bean:message bundle="EXTERNAL_SUPERVISION_RESOURCES" key="greetings.MA"/></p></td>
-<td><img src="/ciapl/images/academia_militar1.gif" class="width50pc"/></td>
+	<tr>
+		<td><p class="width400px"><br/><bean:message bundle="EXTERNAL_SUPERVISION_RESOURCES" key="greetings.MA"/></p></td>
+		<td><img src="<%= request.getContextPath() + "/images/academia_militar1.gif" %>" class="width50pc"/></td>
+	</tr>
 </table>

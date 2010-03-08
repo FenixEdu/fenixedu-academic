@@ -1,5 +1,10 @@
 package net.sourceforge.fenixedu.domain.student;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+
 public enum RegistrationAgreement {
 
     NORMAL(true, true),
@@ -95,6 +100,14 @@ public enum RegistrationAgreement {
 
     public String getQualifiedName() {
 	return getClass().getSimpleName() + "." + name();
+    }
+    
+    public String getDescription() {
+	return getDescription(Language.getLocale());
+    }
+
+    public String getDescription(final Locale locale) {
+	return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getQualifiedName());
     }
 
 }

@@ -14,7 +14,7 @@
 	<fr:edit id="sessionBean" name="sessionBean">
 		<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.manageExternalSupervision.ManageExternalSupervisionBean" bundle="DIRECTIVE_COUNCIL_RESOURCES">
 			<fr:slot name="registrationAgreement" layout="menu-select" key="label.selectRegistrationAgreement.registrationAgreement" required="true">
-				<fr:property name="format" value="${name}"/>
+				<fr:property name="format" value="${description}"/>
 				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.lists.RegistrationAgreementTypeProvider"/>
 				<fr:property name="saveOptions" value="true"/>
 			</fr:slot>
