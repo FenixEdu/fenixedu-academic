@@ -4,10 +4,10 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/phd.tld" prefix="phd" %>
 
-<strong><bean:message  key="label.phd.studyPlan" bundle="PHD_RESOURCES"/></strong>
-<br/>
 
 <logic:present name="registrationConclusionBean">
+	<strong><bean:message  key="label.phd.studyPlan" bundle="PHD_RESOURCES"/></strong>
+	<br/>
 	<fr:view schema="AcademicAdminOffice.PhdIndividualProgramProcess.view.registration.conclusion.bean" name="registrationConclusionBean">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight mtop10" />
@@ -18,6 +18,8 @@
 
 <logic:notPresent name="registrationConclusionBean">
 	<logic:notEmpty name="process" property="studyPlan">
+		<strong><bean:message  key="label.phd.studyPlan" bundle="PHD_RESOURCES"/></strong>
+		<br/>
 		<fr:view schema="PhdStudyPlan.description" name="process" property="studyPlan">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle2 thlight mtop10" />
