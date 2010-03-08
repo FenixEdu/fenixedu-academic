@@ -169,7 +169,7 @@ public class AlertService {
 	return getProcessNumberPrefix(process) + message.getMessage();
     }
 
-    private static String getBodyText(PhdIndividualProgramProcess process, AlertMessage body) {
+    static public String getBodyText(PhdIndividualProgramProcess process, AlertMessage body) {
 	return getBodyCommonText(process) + body.getMessage();
     }
 
@@ -195,6 +195,10 @@ public class AlertService {
 
 	public String getMessage() {
 	    return isKey ? MessageFormat.format(getMessageFromResource(label), args) : label;
+	}
+
+	static public AlertMessage create(String label, Object... args) {
+	    return new AlertMessage().label(label).args(args);
 	}
 
 	static public String get(String label, Object... args) {
