@@ -48,8 +48,8 @@
 
 				<input 
 						type="image" src="<%= request.getContextPath() %>/images/flags/en.gif"
-						alt="<bean:message key="language.pt" bundle="IMAGE_RESOURCES" />"
-						title="<bean:message key="language.pt" bundle="IMAGE_RESOURCES" />"
+						alt="<bean:message key="language.en" bundle="IMAGE_RESOURCES" />"
+						title="<bean:message key="language.en" bundle="IMAGE_RESOURCES" />"
 						value="EN"
 						onclick="this.form.submit();"/>
 			</form>
