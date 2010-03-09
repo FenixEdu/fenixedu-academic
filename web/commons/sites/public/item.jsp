@@ -46,22 +46,34 @@
   		<span class="permalink1">(<%= ContentInjectionRewriter.HAS_CONTEXT_PREFIX%><a href="<%= request.getContextPath()  + url %>"><bean:message key="label.link" bundle="SITE_RESOURCES"/></a>)</span>
     </h3>
 
-    <logic:notEmpty name="item" property="body">
-        	<fr:view name="item" property="body">
-        		<fr:layout>
-        			<fr:property name="escaped" value="false" />
-        			<fr:property name="newlineAware" value="false" />
-        		</fr:layout>
-        	</fr:view>
-	</logic:notEmpty>
-    
-	<logic:notEmpty name="item" property="sortedVisibleFileItems">
-        <fr:view name="item" property="sortedVisibleFileItems">
-            <fr:layout name="list">
-                <fr:property name="eachSchema" value="site.item.file.basic"/>
-                <fr:property name="eachLayout" value="values"/>
-                <fr:property name="style" value="<%= "list-style-image: url(" + request.getContextPath() + "/images/icon_file.gif);" %>"/>
-            </fr:layout>
-        </fr:view>
-	</logic:notEmpty>
+	<logic:equal name="itemAvailable" value="true">
+	    <logic:notEmpty name="item" property="body">
+	        	<fr:view name="item" property="body">
+	        		<fr:layout>
+	        			<fr:property name="escaped" value="false" />
+	        			<fr:property name="newlineAware" value="false" />
+	        		</fr:layout>
+	        	</fr:view>
+		</logic:notEmpty>
+	    
+		<logic:notEmpty name="item" property="sortedVisibleFileItems">
+	        <fr:view name="item" property="sortedVisibleFileItems">
+	            <fr:layout name="list">
+	                <fr:property name="eachSchema" value="site.item.file.basic"/>
+	                <fr:property name="eachLayout" value="values"/>
+	                <fr:property name="style" value="<%= "list-style-image: url(" + request.getContextPath() + "/images/icon_file.gif);" %>"/>
+	            </fr:layout>
+	        </fr:view>
+		</logic:notEmpty>
+	</logic:equal>
+	<logic:equal name="itemAvailable" value="false">
+		<bean:define id="itemId" name="item" property="idInternal"/>
+		<p>
+		<em><bean:message key="message.section.view.mustLogin" bundle="SITE_RESOURCES"/></em>
+	       <html:link page="<%= String.format("%s?method=itemWithLogin&amp;%s&amp;itemID=%s", actionName, context, itemId) %>">
+	            <bean:message key="link.section.view.login" bundle="SITE_RESOURCES"/>
+	       </html:link>.
+	    </p>
+	    <bean:message key="label.permittedGroup" bundle="SITE_RESOURCES"/> <fr:view name="item" property="availabilityPolicy.targetGroup.name"/>
+	</logic:equal>
 </logic:present>

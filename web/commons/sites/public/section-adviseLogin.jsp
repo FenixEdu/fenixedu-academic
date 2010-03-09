@@ -29,7 +29,7 @@
             <bean:message key="link.section.view.login" bundle="SITE_RESOURCES"/>
        </html:link>.
     </p>
-    <bean:message key="label.item.file.availableFor" bundle="SITE_RESOURCES"/>
+    <bean:message key="label.permittedGroup" bundle="SITE_RESOURCES"/>
 
 	<fr:view name="section" property="availabilityPolicy.targetGroup.name">
 	</fr:view>

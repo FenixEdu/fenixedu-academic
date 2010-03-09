@@ -9,9 +9,12 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.sourceforge.fenixedu.domain.Item;
+import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.InvalidContentPathException;
+import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
 import net.sourceforge.fenixedu.domain.contents.Portal;
 
 import org.w3c.dom.Attr;
@@ -247,6 +250,20 @@ public class SafeHtmlConverter extends TidyConverter {
 	    // Actually here we ignore, since this isn't a path in the system.
 	    contents.clear();
 	}
+
+	int size = contents.size();
+	if (size > 0) {
+	    Content lastContent = contents.get(size - 1);
+	    if (contents.get(0) instanceof MetaDomainObjectPortal
+		    && (lastContent instanceof Section || lastContent instanceof Item)) {
+		// if it's a public section or item they can deal with their own
+		// availability policy hence we'll let create the link.
+		return false;
+
+	    }
+
+	}
+
 	for (Content content : contents) {
 	    if (content.getAvailabilityPolicy() != null
 		    && content.getAvailabilityPolicy().getTargetGroup().getClass() != EveryoneGroup.class) {

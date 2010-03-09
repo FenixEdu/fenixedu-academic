@@ -62,6 +62,10 @@ public class ViewGenericContents extends FenixDispatchAction {
 	Item item = getItem(request);
 	request.setAttribute("item", item);
 
+	FilterFunctionalityContext context = getContext(request);
+
+	request.setAttribute("itemAvailable", item.isAvailable(context));
+
 	String type = getType(request);
 
 	return mapping.findForward("viewItem-" + type.substring(type.lastIndexOf(".") + 1, type.length()));
