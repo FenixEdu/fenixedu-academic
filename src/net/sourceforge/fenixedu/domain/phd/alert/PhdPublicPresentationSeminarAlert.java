@@ -26,12 +26,7 @@ public class PhdPublicPresentationSeminarAlert extends PhdPublicPresentationSemi
 
     static private int MAX_DAYS = 30 * 24; // days * months
 
-    static private int MAX_DAYS_AFTER_LIMIT_REACHED = 30;
-
-    static private int MAX_DAYS_FOR_PARTICIPANTS_AFTER_LIMIT_REACHED = 4 * 30; // days
-
-    // *
-    // months
+    static private int MAX_DAYS_AFTER_LIMIT_REACHED = 30 * 3;
 
     private PhdPublicPresentationSeminarAlert() {
 	super();
@@ -79,7 +74,7 @@ public class PhdPublicPresentationSeminarAlert extends PhdPublicPresentationSemi
 
     @Override
     protected boolean isToDiscard() {
-	return getProcess().hasSeminarProcess();
+	return !getProcess().getActiveState().isActive() || getProcess().hasSeminarProcess();
     }
 
     @Override
@@ -91,7 +86,7 @@ public class PhdPublicPresentationSeminarAlert extends PhdPublicPresentationSemi
 		return true;
 	    }
 
-	    if (Days.daysBetween(getFireDate().toLocalDate(), new LocalDate()).getDays() > MAX_DAYS_AFTER_LIMIT_REACHED) {
+	    if (getDaysUntilNow(getFireDate().toLocalDate()) > MAX_DAYS_AFTER_LIMIT_REACHED) {
 		return true;
 	    }
 	}
@@ -126,17 +121,10 @@ public class PhdPublicPresentationSeminarAlert extends PhdPublicPresentationSemi
 
 	generateMessageForStudent();
 
-	if (getFireDate() == null || mustWarnAgain()) {
-	    generateMessageForCoodinator();
-	    generateMessageForAcademicOffice();
-	    generateMessageForGuiders();
-	}
+	generateMessageForCoodinator();
+	generateMessageForAcademicOffice();
+	generateMessageForGuiders();
 
-    }
-
-    private boolean mustWarnAgain() {
-	int days = Days.daysBetween(getLimitDate(), getFireDate().toLocalDate()).getDays();
-	return hasExceedLimitDate() && days >= MAX_DAYS_FOR_PARTICIPANTS_AFTER_LIMIT_REACHED;
     }
 
     private void generateMessageForCoodinator() {

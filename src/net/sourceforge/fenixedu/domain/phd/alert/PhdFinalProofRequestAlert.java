@@ -53,7 +53,10 @@ public class PhdFinalProofRequestAlert extends PhdFinalProofRequestAlert_Base {
 
     @Override
     protected void generateMessage() {
-	// TODO: add missing elements
+	// initialize subject and body again with correct values
+	super.init(buildSubject(getProcess()), buildBody(getProcess()));
+	
+	// TODO: add missing elements (Coordinator, AcademicOffice?)
 	new PhdAlertMessage(getProcess(), getProcess().getPerson(), getFormattedSubject(), getFormattedBody());
 	new Message(getRootDomainObject().getSystemSender(), new Recipient(Collections.singletonList(getProcess().getPerson())),
 		buildMailSubject(), buildMailBody());
