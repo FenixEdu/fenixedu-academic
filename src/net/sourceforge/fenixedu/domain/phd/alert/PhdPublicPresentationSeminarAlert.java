@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.phd.alert;
 
 import java.util.Collections;
+import java.util.Iterator;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
@@ -9,6 +10,7 @@ import net.sourceforge.fenixedu.domain.accessControl.MasterDegreeAdministrativeO
 import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
+import net.sourceforge.fenixedu.domain.phd.alert.AlertService.AlertMessage;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 
@@ -20,9 +22,16 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PhdPublicPresentationSeminarAlert extends PhdPublicPresentationSeminarAlert_Base {
 
-    private static final int FIRST_WARNING_DAYS = 30;
+    static private final int FIRST_WARNING_DAYS = 30;
 
-    private static int MAX_DAYS = 24 * 30; // months * days
+    static private int MAX_DAYS = 30 * 24; // days * months
+
+    static private int MAX_DAYS_AFTER_LIMIT_REACHED = 30;
+
+    static private int MAX_DAYS_FOR_PARTICIPANTS_AFTER_LIMIT_REACHED = 4 * 30; // days
+
+    // *
+    // months
 
     private PhdPublicPresentationSeminarAlert() {
 	super();
@@ -34,13 +43,33 @@ public class PhdPublicPresentationSeminarAlert extends PhdPublicPresentationSemi
     }
 
     private MultiLanguageString buildSubject(final PhdIndividualProgramProcess process) {
-	return new MultiLanguageString(Language.getDefaultLanguage(), AlertService.getSubjectPrefixed(process,
-		"message.phd.alert.public.presentation.seminar.subject"));
+	return new MultiLanguageString(Language.getDefaultLanguage(), AlertService.getSubjectPrefixed(process, AlertMessage
+		.create("message.phd.alert.public.presentation.seminar.subject")));
     }
 
     private MultiLanguageString buildBody(final PhdIndividualProgramProcess process) {
-	return new MultiLanguageString(Language.getDefaultLanguage(), AlertService.getBodyText(process,
-		"message.phd.alert.public.presentation.seminar.body"));
+	int days = getDaysUntilNow(process.getWhenStartedStudies());
+	return new MultiLanguageString(Language.getDefaultLanguage(), AlertService.getBodyText(process, AlertMessage.create(
+		"message.phd.alert.public.presentation.seminar.body", process.getWhenStartedStudies().toString("dd/MM/yyyy"),
+		String.valueOf(days < 1 ? 1 : days), getGuidersNames())));
+    }
+
+    private int getDaysUntilNow(final LocalDate begin) {
+	return Days.daysBetween(begin, new LocalDate()).getDays();
+    }
+
+    private String getGuidersNames() {
+	final StringBuilder builder = new StringBuilder();
+	final Iterator<PhdParticipant> values = getProcess().getGuidings().iterator();
+	while (values.hasNext()) {
+	    builder.append(values.next().getName()).append(values.hasNext() ? ", " : "");
+	}
+
+	if (getProcess().hasAnyGuidings()) {
+	    builder.insert(0, "(").insert(builder.length(), ")");
+	}
+
+	return builder.toString();
     }
 
     @Override
@@ -55,31 +84,59 @@ public class PhdPublicPresentationSeminarAlert extends PhdPublicPresentationSemi
 
     @Override
     public boolean isToFire() {
-	if (!new LocalDate().isBefore(getProcess().getWhenStartedStudies().plusDays(MAX_DAYS))) {
+
+	if (hasExceedLimitDate()) {
+
 	    if (getFireDate() == null) {
 		return true;
 	    }
 
-	    if (Days.daysBetween(getFireDate().toLocalDate(), new LocalDate()).getDays() > 0) {
+	    if (Days.daysBetween(getFireDate().toLocalDate(), new LocalDate()).getDays() > MAX_DAYS_AFTER_LIMIT_REACHED) {
 		return true;
 	    }
 	}
 
-	if (!new LocalDate().isBefore(getProcess().getWhenStartedStudies().plusDays(MAX_DAYS).minusDays(FIRST_WARNING_DAYS))
-		&& getFireDate() == null) {
+	if (hasExceedFirstAlertDate() && getFireDate() == null) {
 	    return true;
 	}
 
 	return false;
+    }
 
+    private boolean hasExceedFirstAlertDate() {
+	return !new LocalDate().isBefore(getFirstAlertDate());
+    }
+
+    private LocalDate getFirstAlertDate() {
+	return getLimitDate().minusDays(FIRST_WARNING_DAYS);
+    }
+
+    private boolean hasExceedLimitDate() {
+	return !new LocalDate().isBefore(getLimitDate());
+    }
+
+    private LocalDate getLimitDate() {
+	return getProcess().getWhenStartedStudies().plusDays(MAX_DAYS);
     }
 
     @Override
     protected void generateMessage() {
-	generateMessageForCoodinator();
-	generateMessageForAcademicOffice();
+	// initialize subject and body again with correct values
+	super.init(buildSubject(getProcess()), buildBody(getProcess()));
+
 	generateMessageForStudent();
-	generateMessageForGuiders();
+
+	if (getFireDate() == null || mustWarnAgain()) {
+	    generateMessageForCoodinator();
+	    generateMessageForAcademicOffice();
+	    generateMessageForGuiders();
+	}
+
+    }
+
+    private boolean mustWarnAgain() {
+	int days = Days.daysBetween(getLimitDate(), getFireDate().toLocalDate()).getDays();
+	return hasExceedLimitDate() && days >= MAX_DAYS_FOR_PARTICIPANTS_AFTER_LIMIT_REACHED;
     }
 
     private void generateMessageForCoodinator() {
