@@ -727,6 +727,16 @@
 	bundle="DOMAIN_RESOURCES">
 	<slot name="state" key="label.Photograph.state" />
 	<slot name="type" key="label.Photograph.type" />
+    <slot name="startDate" key="label.Photograph.startDateModified" layout="picker" >
+        <validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
+		<property name="size" value="12"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	<slot name="endDate" key="label.Photograph.endDateModified" layout="picker" >
+        <validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
+		<property name="size" value="12"/>
+		<property name="maxLength" value="10"/>
+	</slot>
 </schema>
 
 <schema name="photographs.filter.person" type="net.sourceforge.fenixedu.dataTransferObject.photographs.PhotographFilterBean"
