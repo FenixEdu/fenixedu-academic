@@ -16575,13 +16575,6 @@ relation StandaloneIndividualCandidacyCurricularCourses {
     }
 }
 
-relation EramusIndividualCandidacySelectedDegree {
-	Degree playsRole selectedDegree;
-	candidacyProcess.erasmus.ErasmusIndividualCandidacy playsRole selectedErasmusIndividualCandidacy {
-		multiplicity *;
-	}
-}
-
 relation EramusIndividualCandidacyErasmusStudentData {
 	candidacyProcess.erasmus.ErasmusIndividualCandidacy playsRole erasmusIndividualCandidacy;
 	candidacyProcess.erasmus.ErasmusStudentData playsRole erasmusStudentData;

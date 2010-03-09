@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -20,14 +21,14 @@ import net.sourceforge.fenixedu.domain.period.ErasmusCandidacyPeriod;
 
 import org.joda.time.LocalDate;
 
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+
 public class ErasmusIndividualCandidacyProcessBean extends IndividualCandidacyProcessBean {
 
     /**
      * 
      */
     private static final long serialVersionUID = 1L;
-
-    private Degree selectedDegree;
 
     private Set<CurricularCourse> selectedCurricularCourses;
 
@@ -64,7 +65,7 @@ public class ErasmusIndividualCandidacyProcessBean extends IndividualCandidacyPr
 
     public ErasmusIndividualCandidacyProcessBean(final ErasmusIndividualCandidacyProcess process) {
 	setIndividualCandidacyProcess(process);
-	setSelectedDegree(process.getCandidacySelectedDegree());
+	setCandidacyProcess(process.getCandidacyProcess());
 	setSelectedCurricularCourses(new HashSet<CurricularCourse>(process.getCandidacy().getCurricularCoursesSet()));
 	setErasmusStudentDataBean(new ErasmusStudentDataBean(process.getCandidacy().getErasmusStudentData()));
 	setCandidacyDate(process.getCandidacyDate());
@@ -76,14 +77,6 @@ public class ErasmusIndividualCandidacyProcessBean extends IndividualCandidacyPr
     @Override
     protected void initializeDocumentUploadBeans() {
 	setPhotoDocument(new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.PHOTO));
-    }
-
-    public Degree getSelectedDegree() {
-	return selectedDegree;
-    }
-
-    public void setSelectedDegree(Degree selectedDegree) {
-	this.selectedDegree = selectedDegree;
     }
 
     public Set<CurricularCourse> getSelectedCurricularCourses() {
@@ -183,7 +176,13 @@ public class ErasmusIndividualCandidacyProcessBean extends IndividualCandidacyPr
 
 	Degree selectedDegree = getMostDominantDegreeFromCourses();
 
-	return period.getAssociatedVacancyToDegreeAndUniversity(selectedDegree, selectedUniversity);
+	ErasmusVacancy vacancy = period.getAssociatedVacancyToDegreeAndUniversity(selectedDegree, selectedUniversity);
+
+	if (vacancy == null) {
+	    throw new DomainException("error.erasmus.candidacy.process.no.courses.from.one.degree.selected");
+	}
+
+	return vacancy;
     }
 
     private Degree getMostDominantDegreeFromCourses() {
@@ -221,4 +220,23 @@ public class ErasmusIndividualCandidacyProcessBean extends IndividualCandidacyPr
 	return candidateDegrees.get(0);
     }
 
+    public List<Degree> getPossibleDegreesFromSelectedUniversity() {
+	if(this.getErasmusStudentDataBean().getSelectedUniversity() == null) {
+	    return new ArrayList<Degree>();
+	}
+	
+	ErasmusCandidacyPeriod period = (ErasmusCandidacyPeriod) this.getCandidacyProcess().getCandidacyPeriod();
+	
+	return period.getPossibleDegreesAssociatedToUniversity(this.getErasmusStudentDataBean().getSelectedUniversity());
+    }
+
+    public String getSelectedCourseNameForView() {
+	ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale());
+	try {
+	    ErasmusVacancy vacancy = calculateErasmusVacancy();
+	    return vacancy.getDegree().getNameI18N().getContent(Language.getLanguage());
+	} catch (DomainException e) {
+	    return bundle.getString(e.getMessage());
+	}
+    }
 }

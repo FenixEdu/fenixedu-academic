@@ -165,7 +165,7 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
     }
 
     private ErasmusIndividualCandidacyProcess editCandidacyInformation(final ErasmusIndividualCandidacyProcessBean bean) {
-	getCandidacy().getErasmusStudentData().edit(bean.getErasmusStudentDataBean(), bean.calculateErasmusVacancy());
+	getCandidacy().getErasmusStudentData().edit(bean.getErasmusStudentDataBean());
 	return this;
     }
 

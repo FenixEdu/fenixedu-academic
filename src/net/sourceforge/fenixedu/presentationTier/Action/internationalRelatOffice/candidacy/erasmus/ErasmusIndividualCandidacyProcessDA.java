@@ -64,8 +64,7 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
 
     @Override
     protected void setStartInformation(ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	final ErasmusIndividualCandidacyProcessBean bean = new ErasmusIndividualCandidacyProcessBean();
-	bean.setCandidacyProcess(getParentProcess(request));
+	final ErasmusIndividualCandidacyProcessBean bean = new ErasmusIndividualCandidacyProcessBean(getParentProcess(request));
 
 	/*
 	 * 06/05/2009 - Due to Public Candidacies, a candidacy created in admin
@@ -193,7 +192,7 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
     public ActionForward prepareExecuteEditCandidacyPersonalInformation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	final ErasmusIndividualCandidacyProcessBean bean = new ErasmusIndividualCandidacyProcessBean();
+	final ErasmusIndividualCandidacyProcessBean bean = new ErasmusIndividualCandidacyProcessBean(getProcess(request));
 	bean.setPersonBean(new PersonBean(getProcess(request).getPersonalDetails()));
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 	return mapping.findForward("edit-candidacy-personal-information");

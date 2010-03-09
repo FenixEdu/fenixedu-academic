@@ -30,7 +30,7 @@ public class ErasmusStudentData extends ErasmusStudentData_Base {
 	this.setSelectedVacancy(erasmusVacancy);
     }
 
-    public void edit(ErasmusStudentDataBean erasmusStudentDataBean, ErasmusVacancy erasmusVacancy) {
+    public void edit(ErasmusStudentDataBean erasmusStudentDataBean) {
 	this.setDateOfArrival(erasmusStudentDataBean.getDateOfArrival());
 	this.setDateOfDeparture(erasmusStudentDataBean.getDateOfDeparture());
 	this.setDiplomaConclusionYear(erasmusStudentDataBean.getDiplomaConclusionYear());
@@ -47,6 +47,5 @@ public class ErasmusStudentData extends ErasmusStudentData_Base {
 	this.setMainSubjectThesis(erasmusStudentDataBean.getMainSubjectThesis());
 	this.setNameOfContact(erasmusStudentDataBean.getNameOfContact());
 	this.setTypesOfProgramme(erasmusStudentDataBean.getTypeOfProgrammeList());
-	this.setSelectedVacancy(erasmusVacancy);
     }
 }

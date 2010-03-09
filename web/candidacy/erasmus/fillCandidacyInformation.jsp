@@ -18,13 +18,21 @@
 	<span class="error0"> <bean:write name="message" /> </span>
 	<br />
 </html:messages>
-<fr:hasMessages for="individualCandidacyProcessBean.precedentDegreeInformation" type="conversion">
+<fr:hasMessages for="individualCandidacyProcessBean.candidacyDate" type="global">
 	<ul class="nobullet list6">
 		<fr:messages>
 			<li><span class="error0"><fr:message/></span></li>
 		</fr:messages>
 	</ul>
 </fr:hasMessages>
+<fr:hasMessages for="erasmusIndividualCandidacyProcessBean.home.institution" type="global">
+	<ul class="nobullet list6">
+		<fr:messages>
+			<li><span class="error0"><fr:message/></span></li>
+		</fr:messages>
+	</ul>
+</fr:hasMessages>
+
 
 <bean:define id="parentProcessId" name="parentProcess" property="idInternal" />
 
@@ -43,6 +51,7 @@
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+		        <fr:property name="requiredMarkShown" value="true" />
 			</fr:layout>
 			<fr:destination name="invalid" path='<%= "/caseHandlingErasmusIndividualCandidacyProcess.do?method=fillCandidacyInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>'  />
 		</fr:edit>
@@ -55,8 +64,10 @@
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+		        <fr:property name="requiredMarkShown" value="true" />
 		        <fr:destination name="chooseCountryPostback" path="<%= "/caseHandlingErasmusIndividualCandidacyProcess.do?method=chooseCountry&amp;parentProcessId=" + parentProcessId.toString() %>"/>
 			</fr:layout>
+			<fr:destination name="invalid" path='<%= "/caseHandlingErasmusIndividualCandidacyProcess.do?method=fillCandidacyInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>'  />
 		</fr:edit>
 		
 		<h2 class="mtop1"><bean:message key="label.erasmus.current.study" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
@@ -66,7 +77,9 @@
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+		        <fr:property name="requiredMarkShown" value="true" />
 			</fr:layout>
+			<fr:destination name="invalid" path='<%= "/caseHandlingErasmusIndividualCandidacyProcess.do?method=fillCandidacyInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>'  />
 		</fr:edit>
 		
 		<h2 class="mtop1"><bean:message key="label.erasmus.period.of.study" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
@@ -76,7 +89,9 @@
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+		        <fr:property name="requiredMarkShown" value="true" />
 			</fr:layout>
+			<fr:destination name="invalid" path='<%= "/caseHandlingErasmusIndividualCandidacyProcess.do?method=fillCandidacyInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>'  />
 		</fr:edit>
 		
 	</logic:notEmpty>
@@ -87,3 +102,6 @@
 	<html:cancel onclick="this.form.method.value='listProcesses'; return true;"><bean:message key="label.cancel" bundle="APPLICATION_RESOURCES" /></html:cancel>
 
 </fr:form>
+
+<br/>
+<em><bean:message key="renderers.validator.required.mark.explanation" bundle="RENDERER_RESOURCES" /></em>

@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.util.UsernameUtils;
 
@@ -37,8 +36,6 @@ public class ErasmusIndividualCandidacy extends ErasmusIndividualCandidacy_Base 
 	bean.getPersonBean().setCreateLoginIdentificationAndUserIfNecessary(false);
 
 	Person person = init(bean, process);
-
-	setSelectedDegree(bean.getSelectedDegree());
 
 	createEramusStudentData(bean);
 
@@ -113,16 +110,15 @@ public class ErasmusIndividualCandidacy extends ErasmusIndividualCandidacy_Base 
     @Override
     protected void checkParameters(final Person person, final IndividualCandidacyProcess process,
 	    final IndividualCandidacyProcessBean bean) {
-	ErasmusIndividualCandidacyProcess secondCycleIndividualCandidacyProcess = (ErasmusIndividualCandidacyProcess) process;
+	ErasmusIndividualCandidacyProcess erasmusIndividualCandidacyProcess = (ErasmusIndividualCandidacyProcess) process;
 	ErasmusIndividualCandidacyProcessBean secondCandidacyProcessBean = (ErasmusIndividualCandidacyProcessBean) bean;
 	LocalDate candidacyDate = bean.getCandidacyDate();
-	Degree selectedDegree = secondCandidacyProcessBean.getSelectedDegree();
 
-	checkParameters(person, secondCycleIndividualCandidacyProcess, candidacyDate, selectedDegree);
+	checkParameters(person, erasmusIndividualCandidacyProcess, candidacyDate, null);
     }
 
     private void checkParameters(final Person person, final ErasmusIndividualCandidacyProcess process,
-	    final LocalDate candidacyDate, final Degree degree) {
+	    final LocalDate candidacyDate, Object dummy) {
 
 	checkParameters(person, process, candidacyDate);
 
@@ -136,19 +132,15 @@ public class ErasmusIndividualCandidacy extends ErasmusIndividualCandidacy_Base 
 	 * "error.SecondCycleIndividualCandidacy.person.already.has.candidacy",
 	 * process .getCandidacyExecutionInterval().getName()); }
 	 */
-
-	if (degree == null) {
-	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.degree");
-	}
     }
 
     void editDegreeAndCoursesInformation(ErasmusIndividualCandidacyProcessBean bean) {
-	this.setSelectedDegree(bean.getSelectedDegree());
-
 	Set<CurricularCourse> setOne = new HashSet<CurricularCourse>(this.getCurricularCourses());
 	setOne.addAll(bean.getSelectedCurricularCourses());
 
-	for (CurricularCourse curricularCourse : this.getCurricularCourses()) {
+	getErasmusStudentData().setSelectedVacancy(bean.calculateErasmusVacancy());
+
+	for (CurricularCourse curricularCourse : setOne) {
 	    if (hasCurricularCourses(curricularCourse) && !bean.getSelectedCurricularCourses().contains(curricularCourse)) {
 		removeCurricularCourses(curricularCourse);
 	    } else if (!hasCurricularCourses(curricularCourse) && bean.getSelectedCurricularCourses().contains(curricularCourse)) {
@@ -157,4 +149,7 @@ public class ErasmusIndividualCandidacy extends ErasmusIndividualCandidacy_Base 
 	}
     }
 
+    public Degree getSelectedDegree() {
+	return getErasmusStudentData().getSelectedVacancy().getDegree();
+    }
 }

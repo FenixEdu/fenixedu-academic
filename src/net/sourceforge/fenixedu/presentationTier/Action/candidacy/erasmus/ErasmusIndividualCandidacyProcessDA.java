@@ -126,7 +126,7 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
 
 	RenderUtils.invalidateViewState();
 
-	if ("editCandidacy".equals(request.getAttribute("userAction"))) {
+	if ("editCandidacy".equals(request.getParameter("userAction"))) {
 	    return mapping.findForward("edit-degree-courses-information");
 	}
 
@@ -152,7 +152,7 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
 
 	RenderUtils.invalidateViewState();
 
-	if ("editCandidacy".equals(request.getAttribute("userAction"))) {
+	if ("editCandidacy".equals(request.getParameter("userAction"))) {
 	    return mapping.findForward("edit-degree-courses-information");
 	}
 
@@ -173,7 +173,7 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
 
 	RenderUtils.invalidateViewState();
 
-	if ("editCandidacy".equals(request.getAttribute("userAction"))) {
+	if ("editCandidacy".equals(request.getParameter("userAction"))) {
 	    return mapping.findForward("edit-degree-courses-information");
 	}
 
@@ -183,7 +183,7 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
     public ActionForward prepareExecuteEditCandidacyPersonalInformation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	final ErasmusIndividualCandidacyProcessBean bean = new ErasmusIndividualCandidacyProcessBean();
+	final ErasmusIndividualCandidacyProcessBean bean = new ErasmusIndividualCandidacyProcessBean(getProcess(request));
 	bean.setPersonBean(new PersonBean(getProcess(request).getPersonalDetails()));
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 	return mapping.findForward("edit-candidacy-personal-information");
@@ -270,16 +270,28 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
 
     public ActionForward chooseCountry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	ErasmusIndividualCandidacyProcessBean bean = getIndividualCandidacyProcessBean();
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 	request.setAttribute("degreeCourseInformationBean", readDegreeCourseInformationBean(request));
 
 	RenderUtils.invalidateViewState();
 
-	if ("editCandidacy".equals(request.getAttribute("userAction"))) {
-	    return mapping.findForward("edit-candidacy-information");
+	if ("editCandidacy".equals(request.getParameter("userAction"))) {
+	    bean.getErasmusStudentDataBean().setSelectedUniversity(null);
+
+	    return mapping.findForward("edit-degree-courses-information");
 	}
 
 	return mapping.findForward("fill-candidacy-information");
     }
 
+    public ActionForward chooseUniversity(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	request.setAttribute("degreeCourseInformationBean", readDegreeCourseInformationBean(request));
+	request.setAttribute("degreeCourseInformationBean", readDegreeCourseInformationBean(request));
+
+	RenderUtils.invalidateViewState();
+	return mapping.findForward("edit-degree-courses-information");
+    }
 }

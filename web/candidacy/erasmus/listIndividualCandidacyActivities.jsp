@@ -106,6 +106,7 @@
 	<table class="tstyle2 thlight thcenter">
 	<tr>
 		<th><bean:message key="label.erasmus.course" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
+		<th><bean:message key="label.erasmus.degree" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
 	</tr>
 	<logic:iterate id="course" name="process" property="sortedSelectedCurricularCourses" indexId="index">
 		<bean:define id="curricularCourseId" name="course" property="externalId" />
@@ -113,8 +114,13 @@
 		<td>
 			<fr:view 	name="course"
 						property="nameI18N">
-<%-- 				<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>--%>
-			</fr:view>
+			</fr:view>			
+		</td>
+		<td>
+			<fr:view	name="course"
+						property="degree.nameI18N" /> - 
+			<fr:view	name="course"
+						property="degree.sigla" />
 		</td>
 	</tr>
 	</logic:iterate>

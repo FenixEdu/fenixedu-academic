@@ -61,8 +61,10 @@ public class ErasmusStudentDataBean implements Serializable {
 	this.setMainSubjectThesis(erasmusStudentData.getMainSubjectThesis());
 	this.setNameOfContact(erasmusStudentData.getNameOfContact());
 	this.setTypesOfProgramme(erasmusStudentData.getTypesOfProgramme());
-	this.setSelectedUniversity(erasmusStudentData.getSelectedVacancy().getUniversityUnit());
-	this.setSelectedCountry(erasmusStudentData.getSelectedVacancy().getUniversityUnit().getCountry());
+	this.setSelectedUniversity(erasmusStudentData.getSelectedVacancy() != null ? erasmusStudentData.getSelectedVacancy()
+		.getUniversityUnit() : null);
+	this.setSelectedCountry(erasmusStudentData.getSelectedVacancy() != null ? erasmusStudentData.getSelectedVacancy()
+		.getUniversityUnit().getCountry() : null);
 	setParentProcess(erasmusStudentData.getErasmusIndividualCandidacy().getCandidacyProcess().getCandidacyProcess());
     }
 

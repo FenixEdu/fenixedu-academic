@@ -130,4 +130,16 @@ public class ErasmusCandidacyPeriod extends ErasmusCandidacyPeriod_Base {
 	
 	return null;
     }
+
+    public List<Degree> getPossibleDegreesAssociatedToUniversity(UniversityUnit university) {
+	Set<Degree> degreeSet = new HashSet<Degree>();
+
+	for (ErasmusVacancy vacancy : getErasmusVacancy()) {
+	    if (vacancy.getUniversityUnit() == university) {
+		degreeSet.add(vacancy.getDegree());
+	    }
+	}
+
+	return new ArrayList<Degree>(degreeSet);
+    }
 }
