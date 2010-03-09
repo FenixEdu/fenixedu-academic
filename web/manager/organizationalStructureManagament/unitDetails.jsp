@@ -368,6 +368,14 @@
 		</h:dataTable>			
 		
 		<h:outputText value="<em>#{bundle['unit.withoutInherentFunctions']}</em><br/>" rendered="#{empty organizationalStructureBackingBean.allInherentFunctions}" escape="false"/>		
+
+		<h:panelGroup rendered="#{organizationalStructureBackingBean.unit.countryUnit}">
+		<h:outputText value="<br/><h3>#{bundle['title.associatedCountry']}</h3>" escape="false" />
+		<h:selectOneMenu value="#{organizationalStructureBackingBean.selectedCountry}">
+			<f:selectItems value="#{organizationalStructureBackingBean.countries}"/>
+		</h:selectOneMenu>
+		<h:commandButton alt="#{htmlAltBundle['commandButton.bindCountry']}" action="#{organizationalStructureBackingBean.associateCountry}" styleClass="inputbutton" value="#{bundle['commandButton.bindCountry']}" />
+		</h:panelGroup>
 		
 		<h:outputText value="<br/><br/>" escape="false" />
 		<h:commandButton alt="#{htmlAltBundle['commandButton.return']}" action="#{organizationalStructureBackingBean.prepareListAllUnits}" immediate="true" value="#{bundle['label.return']}" styleClass="inputbutton"/>								

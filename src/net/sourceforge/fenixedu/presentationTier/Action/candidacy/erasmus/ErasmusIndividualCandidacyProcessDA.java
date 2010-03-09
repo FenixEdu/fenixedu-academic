@@ -56,8 +56,7 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
 
     @Override
     protected void setStartInformation(ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	final ErasmusIndividualCandidacyProcessBean bean = new ErasmusIndividualCandidacyProcessBean();
-	bean.setCandidacyProcess(getParentProcess(request));
+	final ErasmusIndividualCandidacyProcessBean bean = new ErasmusIndividualCandidacyProcessBean(getParentProcess(request));
 
 	/*
 	 * 06/05/2009 - Due to Public Candidacies, a candidacy created in admin
@@ -267,6 +266,20 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
 
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 	return mapping.findForward("visualize-alerts");
+    }
+
+    public ActionForward chooseCountry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	request.setAttribute("degreeCourseInformationBean", readDegreeCourseInformationBean(request));
+
+	RenderUtils.invalidateViewState();
+
+	if ("editCandidacy".equals(request.getAttribute("userAction"))) {
+	    return mapping.findForward("edit-candidacy-information");
+	}
+
+	return mapping.findForward("fill-candidacy-information");
     }
 
 }

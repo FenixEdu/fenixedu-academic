@@ -1,9 +1,18 @@
 package net.sourceforge.fenixedu.domain.period;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusVacancy;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 
 import org.joda.time.DateTime;
 
@@ -72,4 +81,53 @@ public class ErasmusCandidacyPeriod extends ErasmusCandidacyPeriod_Base {
 	}
     }
 
+    public List<Country> getAssociatedVacancyCountries() {
+	Set<Country> countries = new HashSet<Country>();
+
+	for (ErasmusVacancy vacancy : this.getErasmusVacancy()) {
+	    countries.add(vacancy.getUniversityUnit().getCountry());
+	}
+
+	return new ArrayList<Country>(countries);
+    }
+
+    public List<ErasmusVacancy> getVancaciesOfCountry(Country country) {
+	List<ErasmusVacancy> erasmusVacancyList = new ArrayList<ErasmusVacancy>();
+
+	for (ErasmusVacancy vacancy : getErasmusVacancy()) {
+	    if (vacancy.getUniversityUnit().getCountry() == country) {
+		erasmusVacancyList.add(vacancy);
+	    }
+	}
+
+	return erasmusVacancyList;
+    }
+
+    public List<UniversityUnit> getUniversityUnitsAssociatedToCountry(Country country) {
+	Set<UniversityUnit> universityUnits = new HashSet<UniversityUnit>();
+
+	for (ErasmusVacancy vacancy : getVancaciesOfCountry(country)) {
+	    universityUnits.add(vacancy.getUniversityUnit());
+	}
+
+	return new ArrayList<UniversityUnit>(universityUnits);
+    }
+
+    public ErasmusVacancy getAssociatedVacancyToDegreeAndUniversity(Degree selectedDegree, UniversityUnit selectedUniversity) {
+	if (selectedDegree == null) {
+	    return null;
+	}
+
+	if (selectedUniversity == null) {
+	    return null;
+	}
+
+	for (ErasmusVacancy vacancy : getVancaciesOfCountry(selectedUniversity.getCountry())) {
+	    if (vacancy.getDegree() == selectedDegree && vacancy.getUniversityUnit() == selectedUniversity) {
+		return vacancy;
+	    }
+	}
+	
+	return null;
+    }
 }

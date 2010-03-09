@@ -31,6 +31,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalSt
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.EditUnit;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.RemoveParentInherentFunction;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.SetRootUnit;
+import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
@@ -39,6 +40,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
+import net.sourceforge.fenixedu.domain.organizationalStructure.CountryUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
@@ -86,6 +88,12 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	    canBeResponsibleOfSpaces;
 
     private Boolean viewUnitsWithoutParents;
+
+    private String selectedCountry;
+
+    private String NOT_SELECTED_VALUE = "-1";
+
+    private String NOT_SELECTED_DESCRIPTION = "Seleccione um item";
 
     public OrganizationalStructureBackingBean() {
 	if (!StringUtils.isEmpty(getRequestParameter("unitID"))) {
@@ -1471,4 +1479,50 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	}
 	return false;
     }
+
+    public List<SelectItem> getCountries() {
+	List<SelectItem> selectedCountriesItems = new ArrayList<SelectItem>();
+	
+	List<Country> countryList = new ArrayList<Country>(Country.readDistinctCountries());
+	Collections.sort(countryList, new BeanComparator("localizedName.content"));
+	
+	selectedCountriesItems.add(new SelectItem(NOT_SELECTED_VALUE, NOT_SELECTED_DESCRIPTION));
+	for (Country country : countryList) {
+	    selectedCountriesItems.add(new SelectItem(country.getCode(), country.getLocalizedName().getContent()));
+	}
+	
+	return selectedCountriesItems;
+    }
+
+    public String getSelectedCountry() throws FenixFilterException, FenixServiceException {
+	if (this.selectedCountry != null) {
+	    return this.selectedCountry;
+	}
+
+	if (getUnit() == null) {
+	    return null;
+	}
+
+	if (getUnit().getCountry() == null) {
+	    return null;
+	}
+
+	return getUnit().getCountry().getCode();
+    }
+
+    public void setSelectedCountry(String code) {
+	this.selectedCountry = code;
+    }
+
+    public String associateCountry() throws FenixFilterException, FenixServiceException {
+	try {
+	    ((CountryUnit) this.getUnit()).associateCountry(Country.readByTwoLetterCode(getSelectedCountry()));
+	} catch (DomainException e) {
+	    setErrorMessage(e.getMessage());
+	    return "";
+	}
+
+	return "backToUnitDetails";
+    }
+
 }

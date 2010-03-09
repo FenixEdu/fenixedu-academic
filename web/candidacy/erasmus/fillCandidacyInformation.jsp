@@ -50,10 +50,12 @@
 		<h2 class="mtop1"><bean:message key="label.erasmus.home.institution" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
 		<fr:edit 	id="erasmusIndividualCandidacyProcessBean.home.institution" 
 					name="individualCandidacyProcessBean" 
-					schema="ErasmusIndividualCandidacyProcess.home.institution.edit" >
+					schema="ErasmusIndividualCandidacyProcess.home.institution.edit" 
+					property="erasmusStudentDataBean">
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+		        <fr:destination name="chooseCountryPostback" path="<%= "/caseHandlingErasmusIndividualCandidacyProcess.do?method=chooseCountry&amp;parentProcessId=" + parentProcessId.toString() %>"/>
 			</fr:layout>
 		</fr:edit>
 		

@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
+
 import org.joda.time.LocalDate;
 
 public class ErasmusStudentDataBean implements Serializable {
@@ -31,8 +35,13 @@ public class ErasmusStudentDataBean implements Serializable {
     private Boolean hasContactedOtherStaff;
     private String nameOfContact;
 
-    public ErasmusStudentDataBean() {
+    private UniversityUnit selectedUniversity;
+    private Country selectedCountry;
 
+    private CandidacyProcess parentProcess;
+
+    public ErasmusStudentDataBean(CandidacyProcess process) {
+	setParentProcess(process);
     }
 
     public ErasmusStudentDataBean(final ErasmusStudentData erasmusStudentData) {
@@ -52,6 +61,9 @@ public class ErasmusStudentDataBean implements Serializable {
 	this.setMainSubjectThesis(erasmusStudentData.getMainSubjectThesis());
 	this.setNameOfContact(erasmusStudentData.getNameOfContact());
 	this.setTypesOfProgramme(erasmusStudentData.getTypesOfProgramme());
+	this.setSelectedUniversity(erasmusStudentData.getSelectedVacancy().getUniversityUnit());
+	this.setSelectedCountry(erasmusStudentData.getSelectedVacancy().getUniversityUnit().getCountry());
+	setParentProcess(erasmusStudentData.getErasmusIndividualCandidacy().getCandidacyProcess().getCandidacyProcess());
     }
 
     private void setTypesOfProgramme(TypeOfProgrammeList typesOfProgramme) {
@@ -188,6 +200,30 @@ public class ErasmusStudentDataBean implements Serializable {
 
     public void setNameOfContact(String nameOfContact) {
 	this.nameOfContact = nameOfContact;
+    }
+
+    public UniversityUnit getSelectedUniversity() {
+	return selectedUniversity;
+    }
+
+    public void setSelectedUniversity(UniversityUnit unit) {
+	this.selectedUniversity = unit;
+    }
+
+    public Country getSelectedCountry() {
+	return selectedCountry;
+    }
+
+    public void setSelectedCountry(Country selectedCountry) {
+	this.selectedCountry = selectedCountry;
+    }
+
+    public CandidacyProcess getParentProcess() {
+	return parentProcess;
+    }
+
+    public void setParentProcess(CandidacyProcess parentProcess) {
+	this.parentProcess = parentProcess;
     }
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
@@ -16,6 +17,7 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -125,6 +127,15 @@ public class CountryUnit extends CountryUnit_Base {
     public static Set<CountryUnit> readAllCountryUnits() {
 	final PartyType partyType = PartyType.readPartyTypeByType(PartyTypeEnum.COUNTRY);
 	return (Set) partyType.getPartiesSet();
+    }
+
+    @Service
+    public void associateCountry(Country country) {
+	if (country == null) {
+	    throw new DomainException("error.country.unit.country.is.empty");
+	}
+
+	setCountry(country);
     }
 
 }

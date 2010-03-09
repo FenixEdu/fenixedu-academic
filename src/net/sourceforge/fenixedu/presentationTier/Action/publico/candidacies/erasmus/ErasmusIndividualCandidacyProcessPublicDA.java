@@ -145,10 +145,9 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	    return mapping.findForward("open-candidacy-processes-not-found");
 	}
 
-	ErasmusIndividualCandidacyProcessBean bean = new ErasmusIndividualCandidacyProcessBean();
+	ErasmusIndividualCandidacyProcessBean bean = new ErasmusIndividualCandidacyProcessBean(candidacyProcess);
 	bean.setPersonBean(new PersonBean());
 	bean.getPersonBean().setIdDocumentType(IDDocumentType.FOREIGNER_IDENTITY_CARD);
-	bean.setCandidacyProcess(candidacyProcess);
 	bean.setPublicCandidacyHashCode(candidacyHashCode);
 
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
@@ -365,10 +364,9 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	    return mapping.findForward("open-candidacy-processes-not-found");
 	}
 
-	ErasmusIndividualCandidacyProcessBean bean = new ErasmusIndividualCandidacyProcessBean();
+	ErasmusIndividualCandidacyProcessBean bean = new ErasmusIndividualCandidacyProcessBean(candidacyProcess);
 	bean.setPersonBean(new PersonBean());
 	bean.getPersonBean().setIdDocumentType(IDDocumentType.FOREIGNER_IDENTITY_CARD);
-	bean.setCandidacyProcess(candidacyProcess);
 	bean.setPublicCandidacyHashCode(candidacyHashCode);
 
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);

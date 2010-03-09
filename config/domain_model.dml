@@ -6515,6 +6515,10 @@ class candidacyProcess.CandidacyProcess extends caseHandling.Process {
     class candidacyProcess.erasmus.ErasmusCandidacyProcess extends candidacyProcess.CandidacyProcess {
     }
     
+    class candidacyProcess.erasmus.ErasmusVacancy extends DomainObject {
+    	Integer numberOfVacancies;
+    }
+    
     class candidacyProcess.IndividualCandidacyProcess extends caseHandling.Process {
         String accessHash;
         String processCode;
@@ -17675,3 +17679,41 @@ relation RootDomainObjectIrsDeclarationLink {
 	IrsDeclarationLink playsRole irsDeclarationLink;
 }
 
+
+relation RootDomainObjectErasmusVacancy {
+	RootDomainObject playsRole rootDomainObject;
+	candidacyProcess.erasmus.ErasmusVacancy playsRole erasmusVacancy {
+		multiplicity *;
+	}
+}
+
+relation ErasmusVacancyErasmusCandidacyPeriod {
+	period.ErasmusCandidacyPeriod playsRole candidacyPeriod;
+	
+	candidacyProcess.erasmus.ErasmusVacancy playsRole erasmusVacancy {
+		multiplicity *;
+	}
+}
+
+relation ErasmusVacancyUniversityUnit {
+	organizationalStructure.UniversityUnit playsRole universityUnit;
+	
+	candidacyProcess.erasmus.ErasmusVacancy playsRole erasmusVacancy {
+		multiplicity *;
+	}
+}
+
+relation ErasmusVacancyDegree {
+	Degree playsRole degree; 
+	
+	candidacyProcess.erasmus.ErasmusVacancy playsRole erasmusVacancy {
+		multiplicity *;
+	}
+}
+
+relation ErasmusStudentDataErasmusVacancy {
+	candidacyProcess.erasmus.ErasmusVacancy playsRole selectedVacancy;
+	candidacyProcess.erasmus.ErasmusStudentData playsRole candidacies {
+		multiplicity *;
+	}
+}

@@ -102,8 +102,7 @@ public class ErasmusIndividualCandidacy extends ErasmusIndividualCandidacy_Base 
     }
 
     private void createEramusStudentData(ErasmusIndividualCandidacyProcessBean bean) {
-	setErasmusStudentData(new ErasmusStudentData(this, bean.getErasmusStudentDataBean()));
-
+	setErasmusStudentData(new ErasmusStudentData(this, bean.getErasmusStudentDataBean(), bean.calculateErasmusVacancy()));
     }
 
     @Override
