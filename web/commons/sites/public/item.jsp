@@ -69,7 +69,7 @@
 	<logic:equal name="itemAvailable" value="false">
 		<bean:define id="itemId" name="item" property="idInternal"/>
 		<p>
-		<em><bean:message key="message.section.view.mustLogin" bundle="SITE_RESOURCES"/></em>
+		<em><bean:message key="message.item.view.mustLogin" bundle="SITE_RESOURCES"/></em>
 	       <html:link page="<%= String.format("%s?method=itemWithLogin&amp;%s&amp;itemID=%s", actionName, context, itemId) %>">
 	            <bean:message key="link.section.view.login" bundle="SITE_RESOURCES"/>
 	       </html:link>.
