@@ -1079,6 +1079,17 @@ public class Registration extends Registration_Base {
 	return false;
     }
 
+    public boolean hasAnyEnroledEnrolments(final ExecutionYear year) {
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
+		if (enrolment.isEnroled() && enrolment.isValid(year)) {
+		    return true;
+		}
+	    }
+	}
+	return false;
+    }
+
     final public boolean hasAnyEnrolmentsIn(final ExecutionYear executionYear) {
 	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
 	    for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
@@ -2261,7 +2272,7 @@ public class Registration extends Registration_Base {
 	final RegistrationState stateInDate = getStateInDate(when);
 	return stateInDate != null && stateInDate.getStateType() == RegistrationStateType.TRANSITED;
     }
-    
+
     final public boolean isTransited(final ExecutionYear executionYear) {
 	return hasStateType(executionYear, RegistrationStateType.TRANSITED);
     }
@@ -3354,11 +3365,11 @@ public class Registration extends Registration_Base {
     }
 
     final public void setRegistrationAgreement(RegistrationAgreement registrationAgreement) {
-	if(registrationAgreement == null){
+	if (registrationAgreement == null) {
 	    registrationAgreement = RegistrationAgreement.NORMAL;
 	}
 	super.setRegistrationProtocol(RegistrationProtocol.serveRegistrationProtocol(registrationAgreement));
-	
+
 	if (registrationAgreement != null && !registrationAgreement.isNormal() && !hasExternalRegistrationData()) {
 	    new ExternalRegistrationData(this);
 	}

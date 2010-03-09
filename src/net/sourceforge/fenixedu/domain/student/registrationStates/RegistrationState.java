@@ -10,6 +10,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationStateBean;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -163,8 +164,13 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 	final ExecutionYear year = ExecutionYear.readByDateTime(bean.getStateDateTime());
 	final RegistrationStateType nextStateType = RegistrationStateType.valueOf(bean.getNextState());
 
-	if (!nextStateType.canHaveCurriculumLinesOnCreation() && getRegistration().hasAnyEnrolmentsIn(year)) {
-	    throw new DomainException("RegisteredState.error.registration.has.enrolments.for.execution.year", year.getName());
+	if (nextStateType.canHaveCurriculumLinesOnCreation()) {
+	    return;
+	}
+
+	if (getRegistration().hasAnyEnroledEnrolments(year)) {
+	    throw new DomainException("RegisteredState.error.registration.has.enroled.enrolments.for.execution.year", year
+		    .getName());
 	}
     }
 
