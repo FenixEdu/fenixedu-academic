@@ -95,25 +95,6 @@
 			<fr:destination name="cancel" path='<%= mappingPath + ".do?method=beginCandidacyProcessIntro" %>' />
 		</fr:edit>
 
-
-		<table>
-			<tr>
-				<td class="width175px">
-					<bean:message key="label.photo" bundle="CANDIDATE_RESOURCES"/>:
-				</td>
-				<td>
-					<fr:edit id="individualCandidacyProcessBean.document.file.photo"
-						name="individualCandidacyProcessBean" 
-						schema="PublicCandidacyProcessBean.documentUploadBean.photo"
-						property="photoDocument" >
-						<fr:layout name="flow">
-							<fr:property name="labelExcluded" value="true"/>
-						</fr:layout>
-					</fr:edit>
-				</td>
-			</tr>
-		</table>
-
 		<p class="mtop15">
 			<html:submit><bean:message key="button.continue" bundle="APPLICATION_RESOURCES" /> <bean:message key="label.application" bundle="CANDIDATE_RESOURCES"/></html:submit>
 			<html:cancel><bean:message key="button.cancel" bundle="APPLICATION_RESOURCES" /></html:cancel>

@@ -272,6 +272,14 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 	return mapping.findForward("candidacy-continue-creation");
     }
 
+    public ActionForward continueCandidacyCreationInvalid(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	invalidateDocumentFileRelatedViewStates();
+
+	return mapping.findForward("candidacy-continue-creation");
+    }
+
     private boolean isPersonStudentOrEmployeeAndNumberIsCorrect(Person person, String personNumber) {
 	return (person.hasStudent() && person.getStudent().getNumber().toString().equals(personNumber))
 		|| (person.hasEmployee() && person.getEmployee().getEmployeeNumber().toString().equals(personNumber))

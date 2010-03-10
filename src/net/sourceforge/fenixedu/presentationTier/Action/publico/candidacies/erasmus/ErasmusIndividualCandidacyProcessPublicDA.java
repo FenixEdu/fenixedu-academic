@@ -550,4 +550,33 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
     private static final String f(String format, Object... args) {
 	return String.format(format, args);
     }
+
+    public ActionForward chooseCountry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
+	request.setAttribute("degreeCourseInformationBean", readDegreeCourseInformationBean(request));
+
+	RenderUtils.invalidateViewState();
+
+	if ("editCandidacy".equals(request.getParameter("userAction"))) {
+	    bean.getErasmusStudentDataBean().setSelectedUniversity(null);
+
+	    return mapping.findForward("edit-candidacy-degree-and-courses");
+	}
+
+	return mapping.findForward("candidacy-continue-creation");
+    }
+
+    public ActionForward chooseUniversity(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
+	request.setAttribute("degreeCourseInformationBean", readDegreeCourseInformationBean(request));
+
+	RenderUtils.invalidateViewState();
+
+	return mapping.findForward("edit-candidacy-degree-and-courses");
+    }
+
 }

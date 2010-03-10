@@ -70,11 +70,15 @@
 		<h2 class="mtop1"><bean:message key="label.erasmus.home.institution" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
 		<fr:edit 	id="erasmusIndividualCandidacyProcessBean.home.institution" 
 					name="individualCandidacyProcessBean" 
-					schema="ErasmusIndividualCandidacyProcess.home.institution.edit" >
+					schema="ErasmusIndividualCandidacyProcess.home.institution.edit" 
+					property="erasmusStudentDataBean">
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+		        <fr:property name="requiredMarkShown" value="true" />
+		        <fr:destination name="chooseCountryPostback" path="<%= "/candidacies/caseHandlingErasmusCandidacyIndividualProcess.do?method=chooseCountry" %>"/>
 			</fr:layout>
+			<fr:destination name="invalid" path='<%= "/candidacies/caseHandlingErasmusCandidacyIndividualProcess.do?method=continueCandidacyCreationInvalid" %>'  />
 		</fr:edit>
 		
 		<h2 class="mtop1"><bean:message key="label.erasmus.current.study" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
@@ -84,7 +88,9 @@
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+		        <fr:property name="requiredMarkShown" value="true" />
 			</fr:layout>
+			<fr:destination name="invalid" path='<%= "/candidacies/caseHandlingErasmusCandidacyIndividualProcess.do?method=continueCandidacyCreationInvalid" %>'  />
 		</fr:edit>
 		
 		<h2 class="mtop1"><bean:message key="label.erasmus.period.of.study" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
@@ -94,7 +100,9 @@
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+		        <fr:property name="requiredMarkShown" value="true" />
 			</fr:layout>
+			<fr:destination name="invalid" path='<%= "/candidacies/caseHandlingErasmusCandidacyIndividualProcess.do?method=continueCandidacyCreationInvalid" %>'  />
 		</fr:edit>
 		
 	</logic:notEmpty>

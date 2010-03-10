@@ -60,10 +60,12 @@
 		<h2 class="mtop1"><bean:message key="label.erasmus.home.institution" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
 		<fr:edit 	id="erasmusIndividualCandidacyProcessBean.home.institution" 
 					name="individualCandidacyProcessBean" 
-					schema="ErasmusIndividualCandidacyProcess.home.institution.edit" >
+					schema="ErasmusIndividualCandidacyProcess.exchange.coordinator.edit" 
+					property="erasmusStudentDataBean">
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+		        <fr:property name="requiredMarkShown" value="true" />
 			</fr:layout>
 			<fr:destination name="invalid" path='<%= f("%s.do?method=editCandidacyInformationInvalid", mappingPath) %>'  />
 		</fr:edit>
@@ -75,6 +77,7 @@
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+		        <fr:property name="requiredMarkShown" value="true" />
 			</fr:layout>
 			<fr:destination name="invalid" path='<%= f("%s.do?method=editCandidacyInformationInvalid", mappingPath) %>'  />
 		</fr:edit>
@@ -86,6 +89,7 @@
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+		        <fr:property name="requiredMarkShown" value="true" />
 			</fr:layout>
 			<fr:destination name="invalid" path='<%= f("%s.do?method=editCandidacyInformationInvalid", mappingPath) %>'  />
 		</fr:edit>
