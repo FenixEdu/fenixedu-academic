@@ -154,6 +154,10 @@ public class PhdParticipantBean implements Serializable {
 	return getPersonName().getPerson();
     }
 
+    public boolean isExistingElement() {
+	return getParticipantSelectType() == PhdParticipantSelectType.EXISTING;
+    }
+
     static public enum PhdParticipantSelectType {
 	NEW, EXISTING;
 
