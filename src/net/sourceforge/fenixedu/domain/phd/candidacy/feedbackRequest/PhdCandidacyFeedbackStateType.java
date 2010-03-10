@@ -19,10 +19,12 @@ public enum PhdCandidacyFeedbackStateType implements PhdProcessStateType {
 	return name();
     }
 
+    @Override
     public String getLocalizedName() {
 	return getLocalizedName(Language.getLocale());
     }
 
+    @Override
     public String getLocalizedName(final Locale locale) {
 	return ResourceBundle.getBundle("resources.PhdResources", locale).getString(getQualifiedName());
     }
