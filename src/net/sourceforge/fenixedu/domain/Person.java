@@ -3450,4 +3450,53 @@ public class Person extends Person_Base {
 	    }
 	}
     }
+
+    public Professorship isResponsibleFor(final ExecutionCourse executionCourse) {
+	for (final Professorship professorship : getProfessorshipsSet()) {
+	    if (professorship.getResponsibleFor() && professorship.getExecutionCourse() == executionCourse) {
+		return professorship;
+	    }
+	}
+	return null;
+    }
+
+    public boolean hasTeachingInquiriesToAnswer() {
+	return !getExecutionCoursesWithTeachingInquiriesToAnswer().isEmpty();
+    }
+
+    public Collection<ExecutionCourse> getExecutionCoursesWithTeachingInquiriesToAnswer() {
+	Collection<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
+	InquiryResponsePeriod responsePeriod = InquiryResponsePeriod.readOpenPeriod(InquiryResponsePeriodType.TEACHING);
+	if (responsePeriod != null) {
+	    for (final Professorship professorship : getProfessorships(responsePeriod.getExecutionPeriod())) {
+		if (!professorship.hasTeachingInquiry() && professorship.getExecutionCourse().getAvailableForInquiries()
+			&& !professorship.getExecutionCourse().getStudentInquiriesCourseResults().isEmpty()
+			&& (professorship.hasAssociatedLessonsInTeachingServices() || professorship.isResponsibleFor())) {
+		    result.add(professorship.getExecutionCourse());
+		}
+	    }
+	}
+	return result;
+    }
+
+    public List<Professorship> getProfessorships(ExecutionSemester executionSemester) {
+	List<Professorship> professorships = new ArrayList<Professorship>();
+	for (Professorship professorship : getProfessorshipsSet()) {
+	    if (professorship.getExecutionCourse().getExecutionPeriod().equals(executionSemester)) {
+		professorships.add(professorship);
+	    }
+	}
+	return professorships;
+    }
+
+    public List<Professorship> getProfessorships(ExecutionYear executionYear) {
+	List<Professorship> professorships = new ArrayList<Professorship>();
+	for (Professorship professorship : getProfessorshipsSet()) {
+	    if (professorship.getExecutionCourse().getExecutionPeriod().getExecutionYear().equals(executionYear)) {
+		professorships.add(professorship);
+	    }
+	}
+	return professorships;
+    }
+
 }

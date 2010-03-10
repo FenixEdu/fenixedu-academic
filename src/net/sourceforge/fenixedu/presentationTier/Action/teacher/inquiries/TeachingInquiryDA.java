@@ -104,7 +104,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	if (teachingInquiry == null) {
 	    Professorship professorship = getProfessorship(readAndSaveExecutionCourse(request));
 
-	    if (AccessControl.getPerson().getTeacher() != professorship.getTeacher()) {
+	    if (AccessControl.getPerson() != professorship.getPerson()) {
 		return null;
 	    }
 
@@ -233,8 +233,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	final TeachingInquiryDTO teachingInquiryDTO = (TeachingInquiryDTO) getRenderedObject("teachingInquiry");
 	TeachingInquiryServices.saveAnswers(teachingInquiryDTO);
 	request.setAttribute("executionCourse", teachingInquiryDTO.getProfessorship().getExecutionCourse());
-	request.setAttribute("executionCoursesToAnswer", AccessControl.getPerson().getTeacher()
-		.getExecutionCoursesWithTeachingInquiriesToAnswer());
+	request.setAttribute("executionCoursesToAnswer", AccessControl.getPerson().getExecutionCoursesWithTeachingInquiriesToAnswer());
 	return actionMapping.findForward("inquiryAnswered");
     }
 
@@ -257,9 +256,10 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	final StudentInquiriesCourseResult courseResult = RootDomainObject.getInstance().readStudentInquiriesCourseResultByOID(
 		Integer.valueOf(getFromRequest(request, "resultId").toString()));
 	final Person loggedPerson = AccessControl.getPerson();
-	if (!loggedPerson.isPedagogicalCouncilMember() && loggedPerson.getPersonRole(RoleType.GEP) == null
+	if (!loggedPerson.isPedagogicalCouncilMember()
+		&& loggedPerson.getPersonRole(RoleType.GEP) == null
 		&& loggedPerson.getPersonRole(RoleType.DEPARTMENT_MEMBER) == null
-		&& !loggedPerson.getTeacher().hasProfessorshipForExecutionCourse(courseResult.getExecutionCourse())
+		&& !loggedPerson.hasProfessorshipForExecutionCourse(courseResult.getExecutionCourse())
 		&& courseResult.getExecutionDegree().getCoordinatorByTeacher(loggedPerson) == null) {
 	    return null;
 	}
@@ -282,8 +282,8 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	final Person loggedPerson = AccessControl.getPerson();
 	if (!loggedPerson.isPedagogicalCouncilMember() && loggedPerson.getPersonRole(RoleType.GEP) == null
 		&& loggedPerson.getPersonRole(RoleType.DEPARTMENT_MEMBER) == null
-		&& teachingResult.getProfessorship().getTeacher() != loggedPerson.getTeacher()
-		&& loggedPerson.getTeacher().isResponsibleFor(teachingResult.getProfessorship().getExecutionCourse()) == null
+		&& teachingResult.getProfessorship().getPerson() != loggedPerson
+		&& loggedPerson.isResponsibleFor(teachingResult.getProfessorship().getExecutionCourse()) == null
 		&& teachingResult.getExecutionDegree().getCoordinatorByTeacher(loggedPerson) == null) {
 	    return null;
 	}

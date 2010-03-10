@@ -19,8 +19,7 @@ public class RespondToTeachingInquiriesQuestion extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	final InquiryResponsePeriod lastPeriod = InquiryResponsePeriod.readOpenPeriod(InquiryResponsePeriodType.TEACHING);
 	request.setAttribute("executionPeriod", lastPeriod == null ? null : lastPeriod.getExecutionPeriod());
-	request.setAttribute("executionCourses", AccessControl.getPerson().getTeacher()
-		.getExecutionCoursesWithTeachingInquiriesToAnswer());
+	request.setAttribute("executionCourses", AccessControl.getPerson().getExecutionCoursesWithTeachingInquiriesToAnswer());
 	return mapping.findForward("respondToInquiriesQuestion");
     }
 
