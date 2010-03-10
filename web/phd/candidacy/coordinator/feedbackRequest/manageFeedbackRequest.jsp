@@ -52,18 +52,34 @@
 </table>
 
 <br/>
-
 <%--  ### End Of Context Information  ### --%>
 
 
 <%--  ################################### --%>
 <%--  ###      Shared documents       ### --%>
-
 <jsp:include page="/phd/candidacy/coordinator/feedbackRequest/editSharedDocumentTypes.jsp" />
-
 <%--  ###    End Shared documents     ### --%>
 <%--  ################################### --%>
 
 
+<logic:notEmpty name="process" property="feedbackRequest">
+
+<%--  ################################### --%>
+<%--  ###    add users to request     ### --%>
+	<br/>
+	<br/>
+	+ <html:link action="/phdCandidacyFeedbackRequest.do?method=prepareAddCandidacyFeedbackRequestElement" paramId="processId" paramName="process" paramProperty="externalId">
+		<bean:message bundle="PHD_RESOURCES" key="label.phd.candidacy.feedback.add.element"/>
+	</html:link>
+	
+	<jsp:include page="/phd/candidacy/coordinator/feedbackRequest/addCandidacyFeedbackRequestElement.jsp" />
+<%--  ###   End add users to request  ### --%>
+<%--  ################################### --%>
+
+	<logic:empty name="elementBean">
+		<%-- SHOW ELEMENTS HERE --%>
+	</logic:empty>	
+
+</logic:notEmpty>
 
 </logic:present>

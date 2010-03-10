@@ -139,7 +139,7 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
 	}
     }
 
-    static public class AddPhdCandidacyFeedbackRequestElement extends PhdActivity {
+    static public class AddPhdCandidacyFeedbackRequestElements extends PhdActivity {
 
 	@Override
 	protected void activityPreConditions(PhdCandidacyFeedbackRequestProcess process, IUserView userView) {
@@ -253,8 +253,9 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
     static private List<Activity> activities = new ArrayList<Activity>();
     static {
 	activities.add(new EditSharedDocumentTypes());
-	activities.add(new AddPhdCandidacyFeedbackRequestElement());
+	activities.add(new AddPhdCandidacyFeedbackRequestElements());
 
 	activities.add(new DownloadCandidacyFeedbackDocuments());
+	activities.add(new UploadCandidacyFeedback());
     }
 }

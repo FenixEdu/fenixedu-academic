@@ -3698,6 +3698,13 @@
     </service>
 
     <service>
+        <name>SearchInternalPersonsByNameHavingTeacher</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchInternalPersonsByNameHavingTeacher</implementationClass>
+        <isTransactional>true</isTransactional>
+        <filterChains />
+    </service>
+
+    <service>
         <name>SearchInternalUnits</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchInternalUnits</implementationClass>
         <isTransactional>true</isTransactional>

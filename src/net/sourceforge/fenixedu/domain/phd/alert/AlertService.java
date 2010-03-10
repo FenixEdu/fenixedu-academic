@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdProcessesManager;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.permissions.PhdPermissionType;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 
@@ -36,11 +35,11 @@ public class AlertService {
 	return getProcessNumberPrefix(process) + getMessageFromResource(subjectKey);
     }
 
-    private static String getProcessNumberPrefix(PhdIndividualProgramProcess process) {
+    static public String getProcessNumberPrefix(PhdIndividualProgramProcess process) {
 	return "[" + getMessageFromResource(PREFIX_PHD_LABEL) + " - " + process.getProcessNumber() + "] ";
     }
 
-    static private String getMessageFromResource(String key) {
+    static public String getMessageFromResource(String key) {
 	return ResourceBundle.getBundle(PHD_RESOURCES, Language.getLocale()).getString(key);
     }
 
@@ -52,6 +51,9 @@ public class AlertService {
 	builder.append(getSlotLabel(PhdIndividualProgramProcess.class, "processNumber"));
 	builder.append(": ").append(process.getPhdIndividualProcessNumber().getFullProcessNumber()).append("\n");
 
+	builder.append(getSlotLabel(PhdIndividualProgramProcess.class, "person.name"));
+	builder.append(": ").append(process.getPerson().getName()).append("\n");
+	
 	builder.append(getSlotLabel(PhdIndividualProgramProcess.class, "phdProgram"));
 	if (process.hasPhdProgram()) {
 	    builder.append(": ").append(process.getPhdProgram().getName());
@@ -60,17 +62,17 @@ public class AlertService {
 
 	builder.append(getSlotLabel(PhdIndividualProgramProcess.class, "activeState"));
 	builder.append(": ").append(process.getActiveState().getLocalizedName()).append("\n");
-	
+
 	if (process.hasCandidacyProcess()) {
 	    builder.append(getMessageFromResource("label.phd.candidacy")).append(": ");
 	    builder.append(process.getCandidacyProcess().getActiveState().getLocalizedName()).append("\n");
 	}
-	
+
 	if (process.hasSeminarProcess()) {
 	    builder.append(getMessageFromResource("label.phd.publicPresentationSeminar")).append(": ");
 	    builder.append(process.getSeminarProcess().getActiveState().getLocalizedName()).append("\n");
 	}
-	
+
 	if (process.hasThesisProcess()) {
 	    builder.append(getMessageFromResource("label.phd.thesis")).append(": ");
 	    builder.append(process.getThesisProcess().getActiveState().getLocalizedName()).append("\n");
@@ -78,9 +80,6 @@ public class AlertService {
 
 	builder.append(getSlotLabel(PhdIndividualProgramProcess.class, "executionYear"));
 	builder.append(": ").append(process.getExecutionYear().getQualifiedName()).append("\n");
-
-	builder.append(getSlotLabel(PhdIndividualProgramProcess.class, "person.name"));
-	builder.append(": ").append(process.getPerson().getName()).append("\n");
 
 	builder.append("------------------------------------------------------\n\n");
 

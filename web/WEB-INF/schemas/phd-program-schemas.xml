@@ -6,7 +6,7 @@
 		<property name="subLayout" value="values" />
 		<property name="subSchema" value="PhdProgram.name" />
 	</slot>
-	<slot name="activeState"/>
+	<slot name="activeState" layout="phd-enum-renderer" />
 	<slot name="executionYear" layout="format">
 		<property name="format" value="${year}" />
 	</slot>
@@ -27,7 +27,7 @@
 		<property name="subSchema" value="PhdProgram.name" />
 	</slot>
 	<slot name="collaborationTypeName" />
-	<slot name="activeState"/>
+	<slot name="activeState" layout="phd-enum-renderer" />
 	<slot name="executionYear" layout="format">
 		<property name="format" value="${year}" />
 	</slot>
@@ -38,7 +38,7 @@
 	<slot name="person.name">
 		<property name="classes" value="bold nowrap"/>
 	</slot>
-	<slot name="activeState"/>
+	<slot name="activeState" layout="phd-enum-renderer" />
 </schema>
 
 <schema name="AcademicAdminOffice.PhdIndividualProgramProcess.view" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
@@ -51,7 +51,7 @@
 		<property name="subSchema" value="PhdProgram.name" />
 	</slot>
 	<slot name="collaborationTypeName" />
-	<slot name="activeState">
+	<slot name="activeState" layout="phd-enum-renderer">
 		<property name="classes" value="italic"/>
 	</slot>
 	<slot name="executionYear" layout="format">
@@ -76,7 +76,7 @@
 </schema>
 
 <schema name="PhdProgramCandidacyProcess.view" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess" bundle="PHD_RESOURCES">
-	<slot name="activeState">
+	<slot name="activeState" layout="phd-enum-renderer">
 		<property name="classes" value="bold"/>
 	</slot>
 	<slot name="whenCreated" />
@@ -88,7 +88,7 @@
 </schema>
 
 <schema name="PhdProgramCandidacyProcess.view.simple" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess" bundle="PHD_RESOURCES">
-	<slot name="activeState">
+	<slot name="activeState" layout="phd-enum-renderer">
 		<property name="classes" value="bold"/>
 	</slot>
 	<slot name="activeStateRemarks"/>
@@ -542,6 +542,12 @@
 	<slot name="address" />
 	<slot name="email" />
 	<slot name="phone" />
+</schema>
+
+<schema name="PhdCandidacyFeedbackRequestElement.PhdProgramGuiding.view" type="net.sourceforge.fenixedu.domain.phd.PhdParticipant" bundle="PHD_RESOURCES">
+	<slot name="nameWithTitle" />
+	<slot name="qualification" />
+	<slot name="email" />
 </schema>
 
 <schema name="PhdProgramGuiding.view.simple" type="net.sourceforge.fenixedu.domain.phd.PhdParticipant" bundle="PHD_RESOURCES">
@@ -1299,7 +1305,7 @@
 </schema>
 
 <schema name="PublicPresentationSeminarProcess.view" type="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess" bundle="PHD_RESOURCES">
-	<slot name="activeState">
+	<slot name="activeState" layout="phd-enum-renderer">
 		<property name="classes" value="bold"/>
 	</slot>
 	<slot name="whenCreated" />
@@ -1311,7 +1317,7 @@
 </schema>
 
 <schema name="PublicPresentationSeminarProcess.view.simple" type="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess" bundle="PHD_RESOURCES">
-	<slot name="activeState">
+	<slot name="activeState" layout="phd-enum-renderer">
 		<property name="classes" value="bold"/>
 	</slot>
 	<slot name="activeStateRemarks"/>
@@ -1352,12 +1358,12 @@
 		<property name="subLayout" value="values" />
 		<property name="subSchema" value="PhdProgram.name" />
 	</slot>
-	<slot name="activeState"/>
+	<slot name="activeState" layout="phd-enum-renderer"/>
 </schema>
 
 
 <schema name="PhdThesisProcess.view" type="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess" bundle="PHD_RESOURCES">
-	<slot name="activeState">
+	<slot name="activeState" layout="phd-enum-renderer">
 		<property name="classes" value="bold"/>
 	</slot>
 	<slot name="whenCreated" />
