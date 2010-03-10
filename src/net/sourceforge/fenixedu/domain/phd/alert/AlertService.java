@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -18,6 +19,7 @@ import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdProcessesManager;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.permissions.PhdPermissionType;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 
@@ -47,22 +49,37 @@ public class AlertService {
 
 	builder.append("------------------------------------------------------\n");
 
-	builder.append(getSlotLabel(PhdIndividualProgramProcess.class.getName(), "processNumber"));
+	builder.append(getSlotLabel(PhdIndividualProgramProcess.class, "processNumber"));
 	builder.append(": ").append(process.getPhdIndividualProcessNumber().getFullProcessNumber()).append("\n");
 
-	builder.append(getSlotLabel(PhdIndividualProgramProcess.class.getName(), "phdProgram"));
+	builder.append(getSlotLabel(PhdIndividualProgramProcess.class, "phdProgram"));
 	if (process.hasPhdProgram()) {
 	    builder.append(": ").append(process.getPhdProgram().getName());
 	}
 	builder.append("\n");
 
-	builder.append(getSlotLabel(PhdIndividualProgramProcess.class.getName(), "activeState"));
+	builder.append(getSlotLabel(PhdIndividualProgramProcess.class, "activeState"));
 	builder.append(": ").append(process.getActiveState().getLocalizedName()).append("\n");
+	
+	if (process.hasCandidacyProcess()) {
+	    builder.append(getMessageFromResource("label.phd.candidacy")).append(": ");
+	    builder.append(process.getCandidacyProcess().getActiveState().getLocalizedName()).append("\n");
+	}
+	
+	if (process.hasSeminarProcess()) {
+	    builder.append(getMessageFromResource("label.phd.publicPresentationSeminar")).append(": ");
+	    builder.append(process.getSeminarProcess().getActiveState().getLocalizedName()).append("\n");
+	}
+	
+	if (process.hasThesisProcess()) {
+	    builder.append(getMessageFromResource("label.phd.thesis")).append(": ");
+	    builder.append(process.getThesisProcess().getActiveState().getLocalizedName()).append("\n");
+	}
 
-	builder.append(getSlotLabel(PhdIndividualProgramProcess.class.getName(), "executionYear"));
+	builder.append(getSlotLabel(PhdIndividualProgramProcess.class, "executionYear"));
 	builder.append(": ").append(process.getExecutionYear().getQualifiedName()).append("\n");
 
-	builder.append(getSlotLabel(PhdIndividualProgramProcess.class.getName(), "person.name"));
+	builder.append(getSlotLabel(PhdIndividualProgramProcess.class, "person.name"));
 	builder.append(": ").append(process.getPerson().getName()).append("\n");
 
 	builder.append("------------------------------------------------------\n\n");
@@ -74,8 +91,8 @@ public class AlertService {
 	return getBodyCommonText(process) + getMessageFromResource(bodyText);
     }
 
-    static private String getSlotLabel(String className, String slotName) {
-	return getMessageFromResource("label." + className + "." + slotName);
+    static private String getSlotLabel(Class<? extends DomainObject> clazz, String slotName) {
+	return getMessageFromResource("label." + clazz.getName() + "." + slotName);
     }
 
     static public void alertStudent(PhdIndividualProgramProcess process, String subjectKey, String bodyKey) {
