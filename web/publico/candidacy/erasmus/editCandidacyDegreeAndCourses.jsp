@@ -111,7 +111,7 @@
 			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 		</fr:layout>
-		<fr:destination name="chooseDegreePostback" path="/candidacies/caseHandlingErasmusCandidacyIndividualProcess.do?method=chooseDegree&userAction=editCandidacy" />
+		<fr:destination name="chooseDegreePostback" path="<%= mappingPath + ".do?method=chooseDegree&userAction=editCandidacy" %>"  />
 	</fr:edit>
 		
 	<html:submit onclick="$('#methodId').attr('value', 'addCourse'); $('#skipValidationId').attr('value', 'true'); $('#thisForm').submit(); return true;"><bean:message key="label.add" bundle="APPLICATION_RESOURCES" /></html:submit>

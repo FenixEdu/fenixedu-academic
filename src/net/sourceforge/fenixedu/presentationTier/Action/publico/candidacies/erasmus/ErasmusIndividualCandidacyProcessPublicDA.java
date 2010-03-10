@@ -182,11 +182,11 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 	request.setAttribute("degreeCourseInformationBean", readDegreeCourseInformationBean(request));
 
+	RenderUtils.invalidateViewState();
+
 	if ("editCandidacy".equals(request.getParameter("userAction"))) {
 	    return mapping.findForward("edit-candidacy-degree-and-courses");
 	}
-
-	RenderUtils.invalidateViewState();
 
 	return mapping.findForward("fill-degree-and-courses-information");
     }

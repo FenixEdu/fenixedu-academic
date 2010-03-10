@@ -161,6 +161,26 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
     public List<IndividualCandidacyDocumentFileType> getMissingRequiredDocumentFiles() {
 	List<IndividualCandidacyDocumentFileType> missingDocumentFiles = new ArrayList<IndividualCandidacyDocumentFileType>();
 
+	if (getFileForType(IndividualCandidacyDocumentFileType.PHOTO) == null) {
+	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.PHOTO);
+	}
+
+	if (getFileForType(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION) == null) {
+	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION);
+	}
+
+	if (getFileForType(IndividualCandidacyDocumentFileType.LEARNING_AGREEMENT) == null) {
+	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.LEARNING_AGREEMENT);
+	}
+
+	if (getFileForType(IndividualCandidacyDocumentFileType.CV_DOCUMENT) == null) {
+	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.CV_DOCUMENT);
+	}
+
+	if (getFileForType(IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT) == null) {
+	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT);
+	}
+
 	return missingDocumentFiles;
     }
 
@@ -186,6 +206,7 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	Collections.sort(curricularCourses, CurricularCourse.COMPARATOR_BY_NAME);
 	return curricularCourses;
     }
+
 
     @StartActivity
     static public class IndividualCandidacyInformation extends Activity<ErasmusIndividualCandidacyProcess> {
