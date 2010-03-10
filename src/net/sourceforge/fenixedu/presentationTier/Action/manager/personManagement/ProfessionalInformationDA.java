@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.EmployeeContractSituation;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.EmployeeFunctionsAccumulation;
@@ -33,7 +34,7 @@ public class ProfessionalInformationDA extends FenixDispatchAction {
 
     public ActionForward showSituations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	Person person = (Person) rootDomainObject.readPartyByOID(getIntegerFromRequest(request, "personId"));
+	Person person = DomainObject.fromExternalId((String) getFromRequest(request, "personId"));
 
 	List<EmployeeContractSituation> situations = new ArrayList<EmployeeContractSituation>();
 	if (person.getEmployee() != null) {

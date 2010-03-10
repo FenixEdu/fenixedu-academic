@@ -15,8 +15,9 @@
 	</div>
 	<logic:notEmpty name="person" property="employee">
 		<bean:define id="personID" name="person" property="idInternal"/>
+		<bean:define id="personExternalId" name="person" property="externalId"/>
 		<p class="invisible">
-			<html:link page="<%= "/professionalInformation.do?method=showSituations&personId="+ personID%>"><bean:message key="label.situations" bundle="CONTRACTS_RESOURCES"/></html:link>,
+			<html:link page="<%= "/professionalInformation.do?method=showSituations&personId="+ personExternalId%>"><bean:message key="label.situations" bundle="CONTRACTS_RESOURCES"/></html:link>,
 			<html:link page="<%= "/professionalInformation.do?method=showCategories&personId="+ personID%>"><bean:message key="label.categories" bundle="CONTRACTS_RESOURCES"/></html:link>, 
 			<html:link page="<%= "/professionalInformation.do?method=showRegimes&personId="+ personID%>"><bean:message key="label.regimes" bundle="CONTRACTS_RESOURCES"/></html:link>,
 			<html:link page="<%= "/professionalInformation.do?method=showRelations&personId="+ personID%>"><bean:message key="label.relations" bundle="CONTRACTS_RESOURCES"/></html:link>,
