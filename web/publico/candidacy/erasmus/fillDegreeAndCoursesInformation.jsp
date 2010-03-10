@@ -78,6 +78,11 @@
 		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 			</fr:layout>
 	</fr:view>
+
+	<p>
+		<strong><bean:message key="label.eramsus.candidacy.choosed.degree" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong>:
+		<fr:view	name="individualCandidacyProcessBean" property="selectedCourseNameForView"/>
+	</p>
 	
 	<p><em><bean:message key="message.erasmus.select.courses.of.associated.degrees" bundle="ACADEMIC_OFFICE_RESOURCES" /></em></p>
 	
@@ -123,10 +128,6 @@
 		</table>
 	</logic:notEmpty>
 
-	<p>
-		<strong><bean:message key="label.eramsus.candidacy.choosed.degree" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong>:
-		<fr:view	name="individualCandidacyProcessBean" property="selectedCourseNameForView"/>
-	</p>
 	
 	<html:submit onclick="this.form.method.value='acceptHonourDeclaration'; return true;"><bean:message key="label.continue" bundle="APPLICATION_RESOURCES" /></html:submit>
 	<html:cancel onclick="this.form.method.value='listProcesses'; return true;"><bean:message key="label.cancel" bundle="APPLICATION_RESOURCES" /></html:cancel>

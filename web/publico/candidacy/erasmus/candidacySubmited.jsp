@@ -34,7 +34,7 @@
 </div>
 
 <h1><bean:write name="application.name"/></h1>
-<p><span class="success0"><bean:message key="message.application.submited.success" bundle="CANDIDATE_RESOURCES"/>.</span></p>
+<p><span class="success0"><bean:message key="message.application.submited.success" bundle="CANDIDATE_RESOURCES"/></span></p>
 
 <bean:define id="endSubmissionDate" name="endSubmissionDate"/>
 <bean:message key="erasmus.message.application.submited.detail" bundle="CANDIDATE_RESOURCES" arg0="<%= endSubmissionDate.toString() %>"/>
