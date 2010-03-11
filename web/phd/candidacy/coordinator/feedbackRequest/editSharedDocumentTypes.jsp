@@ -25,6 +25,7 @@
 <logic:present name="feedbackRequestBean">
 	<bean:define id="processId" name="process" property="externalId" />
 
+	<strong><bean:message key="label.phd.candidacy.feedback.shared.documents" bundle="PHD_RESOURCES" />:</strong>
 	<fr:edit id="feedbackRequestBean" name="feedbackRequestBean" 
 		action="<%= "/phdCandidacyFeedbackRequest.do?method=editSharedDocuments&processId=" + processId %>">
 

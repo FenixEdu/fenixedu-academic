@@ -3,6 +3,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
+<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestElement"%>
+
 <html:xhtml/>
 
 <logic:present role="COORDINATOR">
@@ -57,7 +59,11 @@
 
 <%--  ################################### --%>
 <%--  ###      Shared documents       ### --%>
-<jsp:include page="/phd/candidacy/coordinator/feedbackRequest/editSharedDocumentTypes.jsp" />
+
+<logic:empty name="elementBean">
+	<jsp:include page="/phd/candidacy/coordinator/feedbackRequest/editSharedDocumentTypes.jsp" />
+</logic:empty>
+
 <%--  ###    End Shared documents     ### --%>
 <%--  ################################### --%>
 
@@ -66,19 +72,47 @@
 
 <%--  ################################### --%>
 <%--  ###    add users to request     ### --%>
-	<br/>
-	<br/>
-	+ <html:link action="/phdCandidacyFeedbackRequest.do?method=prepareAddCandidacyFeedbackRequestElement" paramId="processId" paramName="process" paramProperty="externalId">
-		<bean:message bundle="PHD_RESOURCES" key="label.phd.candidacy.feedback.add.element"/>
-	</html:link>
-	
+
+	<logic:empty name="elementBean">
+		<br/><br/>
+		<br/>
+		+ <html:link action="/phdCandidacyFeedbackRequest.do?method=prepareAddCandidacyFeedbackRequestElement" paramId="processId" paramName="process" paramProperty="externalId">
+			<bean:message bundle="PHD_RESOURCES" key="label.phd.candidacy.feedback.add.element"/>
+		</html:link>
+	</logic:empty>
+
 	<jsp:include page="/phd/candidacy/coordinator/feedbackRequest/addCandidacyFeedbackRequestElement.jsp" />
+
 <%--  ###   End add users to request  ### --%>
 <%--  ################################### --%>
 
+
+<%--  ################################### --%>
+<%--  ###      display elements       ### --%>
+
 	<logic:empty name="elementBean">
-		<%-- SHOW ELEMENTS HERE --%>
-	</logic:empty>	
+	
+		<fr:view name="process" property="feedbackRequest.elements">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle2 thlight mtop15" />
+				<fr:property name="columnClasses" value=",,acenter,"/>
+
+				<fr:link name="delete" label="label.delete,PHD_RESOURCES" condition="!feedbackSubmitted"
+					confirmation="message.phd.candidacy.feedback.remove.element.confirmation,PHD_RESOURCES"
+					link="/phdCandidacyFeedbackRequest.do?method=deleteCandidacyFeedbackRequestElement&elementOid=${externalId}&processId=${candidacyProcess.externalId}" />
+			</fr:layout>
+			
+			<fr:schema bundle="PHD_RESOURCES" type="<%= PhdCandidacyFeedbackRequestElement.class.getName() %>">
+				<fr:slot name="nameWithTitle" />
+				<fr:slot name="email" />
+				<fr:slot name="feedbackSubmitted" layout="boolean-icon" />
+			</fr:schema>
+			
+		</fr:view>
+		
+	</logic:empty>
+<%--  ###   End of display elements   ### --%>
+<%--  ################################### --%>
 
 </logic:notEmpty>
 
