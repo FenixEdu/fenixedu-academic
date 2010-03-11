@@ -17,11 +17,14 @@ public class ExternalPhdParticipant extends ExternalPhdParticipant_Base {
     void edit(final String name, final String title, final String qualification, final String workLocation,
 	    final String institution, final String email) {
 
-	check(name, "error.ExternalGuiding.invalid.name");
-	// check(qualification, "error.ExternalGuiding.invalid.qualification");
-	check(workLocation, "error.ExternalGuiding.invalid.workLocation");
-	check(institution, "error.ExternalGuiding.invalid.institution");
-	// check(email, "error.ExternalGuiding.invalid.email");
+	check(name, "error.ExternalPhdParticipant.invalid.name");
+	// check(qualification,
+	// "error.ExternalPhdParticipant.invalid.qualification");
+	// check(workLocation,
+	// "error.ExternalPhdParticipant.invalid.workLocation");
+	// check(institution,
+	// "error.ExternalPhdParticipant.invalid.institution");
+	// check(email, "error.ExternalPhdParticipant.invalid.email");
 
 	setName(name);
 	setTitle(title);
