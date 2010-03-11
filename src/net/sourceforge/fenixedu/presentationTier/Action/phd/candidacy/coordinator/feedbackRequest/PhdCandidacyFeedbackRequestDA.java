@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidac
 import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcessBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess.AddPhdCandidacyFeedbackRequestElements;
+import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess.DeleteCandidacyFeedbackRequestElement;
 import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess.EditSharedDocumentTypes;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.CommonPhdCandidacyDA;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyArrayConverter;
@@ -176,7 +177,7 @@ public class PhdCandidacyFeedbackRequestDA extends CommonPhdCandidacyDA {
     public ActionForward addCandidacyFeedbackRequestElementPostBack(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 	addCandidacyFeedbackRequestElementInvalid(mapping, actionForm, request, response);
-	RenderUtils.invalidateViewState("elementBean");
+	RenderUtils.invalidateViewState();
 	return manageFeedbackRequest(mapping, actionForm, request, response);
     }
 
@@ -202,6 +203,23 @@ public class PhdCandidacyFeedbackRequestDA extends CommonPhdCandidacyDA {
 
 	return manageFeedbackRequest(mapping, actionForm, request, response);
     }
+
+    public ActionForward deleteCandidacyFeedbackRequestElement(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	try {
+
+	    ExecuteProcessActivity.run(getProcess(request).getFeedbackRequest(), DeleteCandidacyFeedbackRequestElement.class,
+		    getDomainObject(request, "elementOid"));
+	    addSuccessMessage(request, "message.phd.candidacy.feedback.element.removed.with.success");
+	    
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getMessage(), e.getArgs());
+	}
+
+	return manageFeedbackRequest(mapping, actionForm, request, response);
+    }
+
     /*
      * End of Add Candidacy Feedback Request Element
      */
