@@ -46,21 +46,21 @@ public class PhdPublicPresentationSeminarAlert extends PhdPublicPresentationSemi
 	int days = getDaysUntilNow(process.getWhenStartedStudies());
 	return new MultiLanguageString(Language.getDefaultLanguage(), AlertService.getBodyText(process, AlertMessage.create(
 		"message.phd.alert.public.presentation.seminar.body", process.getWhenStartedStudies().toString("dd/MM/yyyy"),
-		String.valueOf(days < 1 ? 1 : days), getGuidersNames())));
+		String.valueOf(days < 1 ? 1 : days), getGuidersNames(process))));
     }
 
     private int getDaysUntilNow(final LocalDate begin) {
 	return Days.daysBetween(begin, new LocalDate()).getDays();
     }
 
-    private String getGuidersNames() {
+    private String getGuidersNames(final PhdIndividualProgramProcess process) {
 	final StringBuilder builder = new StringBuilder();
-	final Iterator<PhdParticipant> values = getProcess().getGuidings().iterator();
+	final Iterator<PhdParticipant> values = process.getGuidings().iterator();
 	while (values.hasNext()) {
 	    builder.append(values.next().getName()).append(values.hasNext() ? ", " : "");
 	}
 
-	if (getProcess().hasAnyGuidings()) {
+	if (process.hasAnyGuidings()) {
 	    builder.insert(0, "(").insert(builder.length(), ")");
 	}
 
