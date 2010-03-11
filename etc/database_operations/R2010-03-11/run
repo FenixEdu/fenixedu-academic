@@ -44,3 +44,6 @@ function executeWithTempFile() {
 }
 
 execute "Create Erasmus Vacancy Table" createErasmusVacancyTable.sql
+
+execute "ALTER PARTY TABLE - AUGMENT CODE COLUMN" alterPartyTable.sql
+

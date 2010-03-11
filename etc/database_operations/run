@@ -43,4 +43,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "ALTER PARTY TABLE - AUGMENT CODE COLUMN" alterPartyTable.sql
