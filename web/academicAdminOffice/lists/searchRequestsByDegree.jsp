@@ -20,8 +20,8 @@
 	<fr:destination name="postBack" path="/requestListByDegree.do?method=postBack"/>
 	<fr:destination name="invalid" path="/requestListByDegree.do?method=prepareSearch"/>
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle5 thlight thright mtop025 thmiddle"/>
-        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+		<fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop025 mbottom0"/>
+        <fr:property name="columnClasses" value="width110px,width600px,tdclear tderror1"/>
         <fr:property name="requiredMarkShown" value="true" />
         <fr:property name="requiredMessageShown" value="false" />
 	</fr:layout>
@@ -32,9 +32,8 @@
 	<fr:destination name="postBack" path="/requestListByDegree.do?method=postBack"/>
 	<fr:destination name="invalid" path="/requestListByDegree.do?method=prepareSearch"/>
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle5 thlight thright mtop025 thmiddle"/>
-        <fr:property name="columnClasses" value=",,tdclear"/>
-        <fr:property name="requiredMarkShown" value="true" />
+		<fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop0 tgluetop"/>
+        <fr:property name="columnClasses" value="width110px,width600px,tdclear"/>
 	</fr:layout>
 </fr:edit>
 
@@ -46,22 +45,25 @@
 
 <logic:present name="registrationAcademicServiceRequestList">
 	<bean:size id="requestListSize" name="registrationAcademicServiceRequestList" />
-	<p class="mtop2">
+	<p class="mtop2 mbottom05">
 		 <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.requestList.total" arg0="<%= requestListSize.toString() %>"/>
 	</p>
-	<fr:view name="registrationAcademicServiceRequestList" schema="RegistrationAcademicServiceRequestList.view">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle2 thright thlight thcenter tdcenter"/>
-		</fr:layout>	
-	</fr:view>
+
 	<logic:greaterThan name="requestListSize" value="0">
-		<p class="mtop15 mbottom15">
+		<p class="mvert05">
 			<a href="javascript:var form = document.getElementById('searchForm');form.method.value='exportInfoToExcel';form.submit();form.method.value='runSearchAndShowResults'">
-				<html:image border="0" src="<%= request.getContextPath() + "/images/excel.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES"></html:image>
-				<bean:message key="link.lists.xlsFileToDownload" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+				 <img src="<%= request.getContextPath() + "/images/excel.gif"%>"/>
+				 <bean:message key="link.lists.xlsFileToDownload" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 			</a>
 		</p>
 	</logic:greaterThan>
+
+
+	<fr:view name="registrationAcademicServiceRequestList" schema="RegistrationAcademicServiceRequestList.view">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle2 thright thlight thcenter tdcenter mtop05"/>
+		</fr:layout>	
+	</fr:view>
 </logic:present>
 
 </fr:form>

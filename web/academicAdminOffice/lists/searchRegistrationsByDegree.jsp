@@ -24,6 +24,7 @@
 			<fr:property name="classes" value="tstyle5 thlight thright mtop025 thmiddle"/>
 	        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 			<fr:property name="requiredMarkShown" value="true" />
+			<fr:property name="requiredMessageShown" value="false" />
 		</fr:layout>
 	</fr:edit>
 
@@ -43,11 +44,6 @@
 	<p class="mtop2">
 		 <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.studentCurricularPlan.lists.total" arg0="<%= studentCurricularPlanListSize.toString() %>"/> 
 	</p>
-	<fr:view schema="academicAdminOffice.studentCurricularPlanList.view" name="studentCurricularPlanList">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle2 thright thlight thcenter tdcenter"/>
-		</fr:layout>	
-	</fr:view>
 	<logic:greaterThan name="studentCurricularPlanListSize" value="0">
 		<p class="mtop15 mbottom15">
 		<a href="javascript:var form = document.getElementById('searchForm');form.extendedInfo.value='false';form.method.value='exportInfoToExcel';form.submit();form.method.value='searchByDegree'">
@@ -62,6 +58,11 @@
 			</a>
 		</p>
 	</logic:greaterThan>
+	<fr:view schema="academicAdminOffice.studentCurricularPlanList.view" name="studentCurricularPlanList">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle2 thright thlight thcenter tdcenter"/>
+		</fr:layout>	
+	</fr:view>
 </logic:present>
 
 </fr:form>

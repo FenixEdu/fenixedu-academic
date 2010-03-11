@@ -43,12 +43,6 @@
 	<p class="mtop2">
 		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.studentCurricularPlan.lists.total" arg0="<%= enrolmentListSize.toString() %>"/>
 	</p>
-
-	<fr:view schema="internationalRelatOffice.enrolmentStudentsList.view" name="enrolmentList">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle2 thright thlight thcenter"/>
-		</fr:layout>	
-	</fr:view>
 	
 	<logic:greaterThan name="enrolmentListSize" value="0">
 		<p class="mtop15 mbottom15">
@@ -58,6 +52,12 @@
 			</a>
 		</p>
 	</logic:greaterThan>
+
+	<fr:view schema="internationalRelatOffice.enrolmentStudentsList.view" name="enrolmentList">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle2 thright thlight thcenter"/>
+		</fr:layout>	
+	</fr:view>
 	
 </logic:present>
 </fr:form>
