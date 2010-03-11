@@ -31,6 +31,7 @@ institution.acronym=IST
 language=pt
 location=PT
 variant=
+fenix.framework.codeGenerator=pt.ist.fenixframework.pstm.dml.FenixCodeGeneratorOneBoxPerObject
 #
 #
 #------------------------------------------------------------------------------
