@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class PhdCandidacyFeedbackRequestElement extends PhdCandidacyFeedbackRequestElement_Base {
@@ -13,13 +14,6 @@ public class PhdCandidacyFeedbackRequestElement extends PhdCandidacyFeedbackRequ
     protected PhdCandidacyFeedbackRequestElement() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
-    }
-
-    @Service
-    public void delete() {
-	checkIfCanBeDeleted();
-	disconnect();
-	deleteDomainObject();
     }
 
     protected PhdCandidacyFeedbackRequestElement init(final PhdCandidacyFeedbackRequestProcess process,
@@ -50,6 +44,17 @@ public class PhdCandidacyFeedbackRequestElement extends PhdCandidacyFeedbackRequ
 	    }
 	}
     }
+    
+    public PhdProgramCandidacyProcess getCandidacyProcess() {
+	return getProcess().getCandidacyProcess();
+    }
+
+    @Service
+    public void delete() {
+	checkIfCanBeDeleted();
+	disconnect();
+	deleteDomainObject();
+    }
 
     private void checkIfCanBeDeleted() {
 	if (hasAnyFeedbackDocuments()) {
@@ -72,13 +77,26 @@ public class PhdCandidacyFeedbackRequestElement extends PhdCandidacyFeedbackRequ
 		PhdProgramProcessDocument.COMPARATOR_BY_UPLOAD_TIME) : null;
     }
 
+    public String getNameWithTitle() {
+	return getParticipant().getNameWithTitle();
+    }
+
     public String getEmail() {
 	return getParticipant().getEmail();
+    }
+
+    public boolean isFeedbackSubmitted() {
+	return hasAnyFeedbackDocuments();
     }
 
     static public PhdCandidacyFeedbackRequestElement create(final PhdCandidacyFeedbackRequestProcess process,
 	    final PhdCandidacyFeedbackRequestElementBean bean) {
 	return new PhdCandidacyFeedbackRequestElement().init(process, getOrCreateParticipant(process, bean), bean);
+    }
+
+    static public PhdCandidacyFeedbackRequestElement create(final PhdCandidacyFeedbackRequestProcess process,
+	    final PhdParticipant participant, final PhdCandidacyFeedbackRequestElementBean bean) {
+	return new PhdCandidacyFeedbackRequestElement().init(process, participant, bean);
     }
 
     static private PhdParticipant getOrCreateParticipant(final PhdCandidacyFeedbackRequestProcess process,
