@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
+import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class PhdProgramCandidacyEvent extends PhdProgramCandidacyEvent_Base {
@@ -50,8 +51,8 @@ public class PhdProgramCandidacyEvent extends PhdProgramCandidacyEvent_Base {
 
     @Override
     public LabelFormatter getDescription() {
-	return new LabelFormatter().appendLabel(" ").appendLabel(getPhdProgram().getPresentationName()).appendLabel(" - ")
-		.appendLabel(getExecutionYear().getYear());
+	return new LabelFormatter().appendLabel(AlertService.getMessageFromResource("label.phd.candidacy")).appendLabel(": ")
+		.appendLabel(getPhdProgram().getPresentationName()).appendLabel(" - ").appendLabel(getExecutionYear().getYear());
     }
 
     private ExecutionYear getExecutionYear() {
