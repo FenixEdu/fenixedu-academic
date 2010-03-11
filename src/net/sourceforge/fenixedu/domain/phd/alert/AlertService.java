@@ -48,6 +48,11 @@ public class AlertService {
 
 	builder.append("------------------------------------------------------\n");
 
+	if (process.getPerson().hasStudent()) {
+	    builder.append(getSlotLabel(PhdIndividualProgramProcess.class, "student.number"));
+	    builder.append(": ").append(process.getPerson().getStudent().getNumber());
+	}
+	
 	builder.append(getSlotLabel(PhdIndividualProgramProcess.class, "processNumber"));
 	builder.append(": ").append(process.getPhdIndividualProcessNumber().getFullProcessNumber()).append("\n");
 
