@@ -81,11 +81,9 @@
 			<li><html:link page="/caseHandlingDegreeTransferCandidacyProcess.do?method=intro"><bean:message key="label.candidacy.degreeTransfer" bundle="APPLICATION_RESOURCES"/></html:link></li>
 		</logic:equal>
  		<li><html:link page="/caseHandlingStandaloneCandidacyProcess.do?method=intro"><bean:message key="label.candidacy.standalone" bundle="APPLICATION_RESOURCES"/></html:link></li>
-<%--
  		<logic:equal name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee.administrativeOffice.administrativeOfficeType" value="DEGREE">
  			<li><html:link page="/caseHandlingErasmusCandidacyProcess.do?method=intro"><bean:message key="label.candidacy.eramus" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>
  		</logic:equal>
---%>
 	</ul>
 
 	<ul>
