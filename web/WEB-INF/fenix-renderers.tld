@@ -1059,12 +1059,16 @@
     </attribute>
     
     <attribute>
-      <name>key</name>
+      <name>label</name>
       <required>true</required>
       <rtexprvalue>true</rtexprvalue>
       <type>java.lang.String</type>
       <description>
-        Specifies the key as the link label.
+        Specifies the key as the link label and the name of the bundle where to search key. Examples:
+             1 - label='my.key'
+             2 - label='my.key,MY_BUNDLE'
+        
+        if label is empty then jsp will not compile. If bundle is empty then no bundle is set and renderers will try to find label
       </description>
     </attribute>
     
@@ -1098,6 +1102,20 @@
       <type>java.lang.String</type>
       <description>
         Specifies the order of link.
+      </description>
+    </attribute>
+    
+     <attribute>
+      <name>confirmation</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+        Specifies the key and the name of the bundle used in the confirmation message. Examples:
+             1 - confirmation='my.key'
+             2 - confirmation='my.key,MY_BUNDLE'
+        
+        if confirmation is empty then is ignored. If bundle is empty then no bundle is set and renderers will try to find the key
       </description>
     </attribute>
     

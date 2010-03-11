@@ -11,29 +11,17 @@ import org.apache.log4j.Logger;
 
 import pt.ist.fenixWebFramework.renderers.taglib.PropertyContainerTag;
 
-/**
- * 
- * Add missing options from CollectionRenderer->TableLink
- * 
- * ex:
- * 
- * confirmation="label" confirmation="label,bundle,args",
- * confirmation="label,,args" confirmation="<%="label,bundle," + args %>"
- * 
- * ?
- * 
- */
-
 public class LinkFormatTag extends TagSupport {
 
     static private final long serialVersionUID = 1L;
     static private final Logger logger = Logger.getLogger(LinkFormatTag.class);
+    static private final String ELEMENTS_SEPARATOR = ",";
 
     private String name;
     private String link;
-    private String key;
-    private String bundle;
+    private String label;
     private String condition;
+    private String confirmation;
     private String order;
 
     public LinkFormatTag() {
@@ -45,8 +33,7 @@ public class LinkFormatTag extends TagSupport {
 
 	this.name = null;
 	this.link = null;
-	this.key = null;
-	this.bundle = null;
+	this.label = null;
 	this.condition = null;
 	this.order = null;
     }
@@ -67,20 +54,12 @@ public class LinkFormatTag extends TagSupport {
 	this.link = link;
     }
 
-    public String getKey() {
-	return key;
+    public String getLabel() {
+	return label;
     }
 
-    public void setKey(String key) {
-	this.key = key;
-    }
-
-    public String getBundle() {
-	return bundle;
-    }
-
-    public void setBundle(String bundle) {
-	this.bundle = bundle;
+    public void setLabel(String label) {
+	this.label = label;
     }
 
     public String getCondition() {
@@ -89,6 +68,14 @@ public class LinkFormatTag extends TagSupport {
 
     public void setCondition(String condition) {
 	this.condition = condition;
+    }
+
+    public String getConfirmation() {
+	return confirmation;
+    }
+
+    public void setConfirmation(String confirmation) {
+	this.confirmation = confirmation;
     }
 
     public String getOrder() {
@@ -116,44 +103,105 @@ public class LinkFormatTag extends TagSupport {
 	return super.doEndTag();
     }
 
-    private void setProperties(final PropertyContainerTag parent) {
-	setLink(parent);
-	setKey(parent);
-	setBundle(parent);
-	setCondition(parent);
-	setOrder(parent);
+    private void setProperties(final PropertyContainerTag parent) throws JspException {
+	setLink(parent).setLabel(parent).setCondition(parent).setConfirmation(parent).setOrder(parent);
     }
 
-    private void setLink(final PropertyContainerTag parent) {
+    private LinkFormatTag setLink(final PropertyContainerTag parent) {
 	parent.addProperty(format("%s(%s)", getLinkType(), getName()), getLink());
+	return this;
     }
 
-    private void setKey(final PropertyContainerTag parent) {
-	parent.addProperty(format("key(%s)", getName()), getKey());
-    }
+    /*
+     * Add missing args to confirmation?
+     * confirmation="label,,args" confirmation="<%="label,bundle," + args %>"
+     * 
+     */
+    private LinkFormatTag setConfirmation(PropertyContainerTag parent) throws JspException {
 
-    private void setBundle(final PropertyContainerTag parent) {
-	if (!empty(getBundle())) {
-	    parent.addProperty(format("bundle(%s)", getName()), getBundle());
+	final String[] values = getConfirmation().split(ELEMENTS_SEPARATOR);
+	
+	if (values.length == 0) {
+	    return this;
 	}
+
+	final String key = values[0].trim();
+	if (empty(key)) {
+	    throw new JspException("confirmation is specified but no value found");
+	}
+	
+	setConfirmationKey(parent, key);
+
+	if (values.length > 1) {
+	    final String bundle = values[1].trim();
+
+	    if (!empty(bundle)) {
+		setConfirmationBundle(parent, bundle);
+	    }
+	}
+	
+	return this;
+    }
+    
+    private void setConfirmationKey(final PropertyContainerTag parent, final String key) {
+	parent.addProperty(format("confirmationKey(%s)", getName()), key);
+    }
+    
+    private void setConfirmationBundle(final PropertyContainerTag parent, final String bundle) {
+	parent.addProperty(format("confirmationBundle(%s)", getName()), bundle);
     }
 
-    private void setCondition(final PropertyContainerTag parent) {
+    private LinkFormatTag setLabel(final PropertyContainerTag parent) throws JspException {
+
+	final String[] values = getLabel().split(ELEMENTS_SEPARATOR);
+
+	if (values.length < 1) {
+	    throw new JspException("must define label value");
+	}
+
+	final String key = values[0].trim();
+	if (empty(key)) {
+	    throw new JspException("must define label value");
+	}
+
+	setKey(parent, key);
+
+	if (values.length > 1) {
+	    final String bundle = values[1].trim();
+
+	    if (!empty(bundle)) {
+		setBundle(parent, bundle);
+	    }
+	}
+
+	return this;
+    }
+
+    private void setKey(final PropertyContainerTag parent, final String key) {
+	parent.addProperty(format("key(%s)", getName()), key);
+    }
+
+    private void setBundle(final PropertyContainerTag parent, final String bundle) {
+	parent.addProperty(format("bundle(%s)", getName()), bundle);
+    }
+
+    private LinkFormatTag setCondition(final PropertyContainerTag parent) {
 	if (!empty(getCondition())) {
 	    parent.addProperty(format("%s(%s)", getConditionName(), getName()), getConditionValue());
 	}
+	return this;
     }
 
-    private void setOrder(final PropertyContainerTag parent) {
+    private LinkFormatTag setOrder(final PropertyContainerTag parent) {
 	if (!empty(getOrder())) {
 	    parent.addProperty(format("order(%s)", getName()), getOrder());
 	}
+	return this;
     }
 
     /*
      * must improve this solution
      */
-
     private String getLinkType() {
 	return getLink().matches(".*=\\$\\{.*\\}.*") ? "linkFormat" : "link";
     }
@@ -161,7 +209,6 @@ public class LinkFormatTag extends TagSupport {
     /*
      * must improve this solution
      */
-
     private String getConditionName() {
 	return getCondition().startsWith("!") ? "visibleIfNot" : "visibleIf";
     }

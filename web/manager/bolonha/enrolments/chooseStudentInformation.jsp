@@ -80,21 +80,21 @@
 						<fr:layout name="tabular">
 							<fr:property name="classes" value="tstyle4" />
 					
-							<fr:link name="view" key="link.student.viewCurriculum" bundle="ACADEMIC_OFFICE_RESOURCES" order="1"
+							<fr:link name="view" label="link.student.viewCurriculum,ACADEMIC_OFFICE_RESOURCES" order="1"
 							 	link="/bolonhaStudentEnrolment.do?method=viewStudentCurriculum&scpId=${idInternal}" />
 					
-							<fr:link name="enrol" key="link.student.enrolInCourses" bundle="ACADEMIC_OFFICE_RESOURCES" order="2"
+							<fr:link name="enrol" label="link.student.enrolInCourses,ACADEMIC_OFFICE_RESOURCES" order="2"
 							 	link="/bolonhaStudentEnrolment.do?method=prepareChooseExecutionPeriod&scpId=${idInternal}"
 							 	condition="!transition" />
 							 	
-							<fr:link name="move" key="label.course.moveEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES" order="3"
+							<fr:link name="move" label="label.course.moveEnrolments,ACADEMIC_OFFICE_RESOURCES" order="3"
 							 	link="/curriculumLinesLocationManagement.do?method=prepareWithoutRules&scpID=${idInternal}"
 							 	condition="!transition" />
 
-							<fr:link name="dismissals" key="link.student.dismissal.management" bundle="ACADEMIC_OFFICE_RESOURCES" order="4"
+							<fr:link name="dismissals" label="link.student.dismissal.management,ACADEMIC_OFFICE_RESOURCES" order="4"
 							 	link="/studentDismissals.do?method=manage&scpID=${idInternal}" />
 
-							<fr:link name="transit" key="link.student.transitToBolonha" bundle="ACADEMIC_OFFICE_RESOURCES" order="5"
+							<fr:link name="transit" label="link.student.transitToBolonha,ACADEMIC_OFFICE_RESOURCES" order="5"
 							 	link="/bolonhaStudentEnrolment.do?method=prepareTransit&scpId=${idInternal}"
 							 	condition="transition" />
 							 	

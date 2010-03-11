@@ -49,7 +49,7 @@
 				<fr:property name="classes" value="tstyle1 thlight mtop05 ulnomargin tdcenter" />
 				<fr:property name="columnClasses" value=",,nowrap,nowrap," />
 			
-				<fr:link name="generate" key="label.new.irs.annual.document.generate" bundle="ACADEMIC_OFFICE_RESOURCES" 
+				<fr:link name="generate" label="label.new.irs.annual.document.generate,ACADEMIC_OFFICE_RESOURCES" 
 					link="/generatedDocuments.do?method=generateNewAnnualIRSDeclarationDocument&amp;annualIRSDocumentOid=${externalId}"  />
 
 				<fr:property name="sortBy" value="year=desc" />
