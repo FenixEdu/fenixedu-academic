@@ -153,17 +153,30 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
 		IUserView userView, Object object) {
 
 	    final PhdCandidacyFeedbackRequestElementBean bean = (PhdCandidacyFeedbackRequestElementBean) object;
-	    final PhdCandidacyFeedbackRequestElement element = PhdCandidacyFeedbackRequestElement.create(process, bean);
 
-	    addAccessPermissionsIfNecessary(process, element);
-	    notifyElement(process, element, bean);
+	    if (bean.isExistingElement()) {
+
+		if (!bean.hasAnyParticipants()) {
+		    throw new DomainException("error.PhdCandidacyFeedbackRequestProcess.must.add.participants");
+		}
+
+		for (final PhdParticipant participant : bean.getParticipants()) {
+		    final PhdCandidacyFeedbackRequestElement element = PhdCandidacyFeedbackRequestElement.create(process,
+			    participant, bean);
+		    addAccessPermissionsIfNecessary(element);
+		    notifyElement(process, element, bean);
+		}
+
+	    } else {
+		final PhdCandidacyFeedbackRequestElement element = PhdCandidacyFeedbackRequestElement.create(process, bean);
+		addAccessPermissionsIfNecessary(element);
+		notifyElement(process, element, bean);
+	    }
 
 	    return process;
 	}
 
-	private void addAccessPermissionsIfNecessary(final PhdCandidacyFeedbackRequestProcess process,
-		final PhdCandidacyFeedbackRequestElement element) {
-
+	private void addAccessPermissionsIfNecessary(final PhdCandidacyFeedbackRequestElement element) {
 	    if (!element.getParticipant().isInternal()) {
 		element.getParticipant().addAccessType(PhdProcessAccessType.CANDIDACY_FEEDBACK_DOCUMENTS_DOWNLOAD,
 			PhdProcessAccessType.CANDIDACY_FEEDBACK_UPLOAD);
@@ -203,6 +216,25 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
 	    final SystemSender sender = RootDomainObject.getInstance().getSystemSender();
 	    new Message(sender, sender.getConcreteReplyTos(), null, null, null, subject, body, Collections.singleton(email));
 	}
+    }
+
+    static public class DeleteCandidacyFeedbackRequestElement extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdCandidacyFeedbackRequestProcess process, IUserView userView) {
+	    if (!process.getIndividualProgramProcess().isCoordinatorForPhdProgram(userView.getPerson())) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdCandidacyFeedbackRequestProcess executeActivity(PhdCandidacyFeedbackRequestProcess process,
+		IUserView userView, Object object) {
+
+	    ((PhdCandidacyFeedbackRequestElement) object).delete();
+	    return process;
+	}
+
     }
 
     static public class DownloadCandidacyFeedbackDocuments extends ExternalAccessPhdActivity<PhdCandidacyFeedbackRequestProcess> {
@@ -254,6 +286,7 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
     static {
 	activities.add(new EditSharedDocumentTypes());
 	activities.add(new AddPhdCandidacyFeedbackRequestElements());
+	activities.add(new DeleteCandidacyFeedbackRequestElement());
 
 	activities.add(new DownloadCandidacyFeedbackDocuments());
 	activities.add(new UploadCandidacyFeedback());
