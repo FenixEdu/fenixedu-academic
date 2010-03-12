@@ -52,7 +52,7 @@ public class Context extends Context_Base implements Comparable<Context> {
 		    }
 
 		    if (context.getChildDegreeModule() != null && context.getParentCourseGroup() != null
-			    && context.getParentCourseGroup().isBranchCourseGroup()
+			    && context.getParentCourseGroup().hasAnyParentBranchCourseGroup()
 			    && context.getChildDegreeModule().isBranchCourseGroup()) {
 			throw new DomainException("error.degreeStructure.BranchCourseGroup.cant.have.branch.parent");
 		    }

@@ -787,4 +787,16 @@ public class CourseGroup extends CourseGroup_Base {
 	}
     }
 
+    public boolean hasAnyParentBranchCourseGroup() {
+	
+	if(isBranchCourseGroup()){
+	    return true;
+	} else {
+	    for(Context context : getParentContexts()) {
+		return context.getParentCourseGroup().hasAnyParentBranchCourseGroup();
+	    }
+	}
+	return false;
+    }
+
 }
