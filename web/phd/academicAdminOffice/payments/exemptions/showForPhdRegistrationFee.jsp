@@ -34,6 +34,43 @@
 
 	<bean:define id="personId" name="person" property="idInternal" />
 	<bean:define id="eventId" name="event" property="idInternal" />
+	
+	<logic:notEmpty name="event" property="phdEventExemption">
+		<bean:define id="phdEventExemption" name="event" property="phdEventExemption" />
+
+		<fr:view name="phdEventExemption">
+
+			<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.debts.PhdEventExemption">
+				<fr:slot name="description" />
+				<fr:slot name="value" />
+				<fr:slot name="dispatchDate" />
+				<fr:slot name="reason" />
+			</fr:schema>
+		
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle4 mtop05" />
+			</fr:layout>
+		</fr:view>
+
+		<bean:define id="phdEventExemptionId" name="phdEventExemption" property="idInternal" />
+		<html:link action="<%="/exemptionsManagement.do?method=deleteExemption&amp;exemptionId=" + phdEventExemptionId %>">
+			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.delete"/>
+		</html:link>
+		
+	</logic:notEmpty>
+	<logic:empty name="event" property="phdEventExemption">
+		<p>
+			<em>
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.exemptions.noExemptions" />
+			</em>
+		</p>
+		<p>
+			<html:link action="<%="/exemptionsManagement.do?method=prepareCreatePhdEventExemption&amp;personId=" + personId + "&amp;eventId=" + eventId %>">
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.create"/>
+			</html:link>
+		</p>
+	</logic:empty>
+	
 	<p class="mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.penaltyExemptions"/></strong></p>
 	<logic:notEmpty name="event" property="phdRegistrationFeePenaltyExemption">
 		<bean:define id="penaltyExemption" name="event" property="phdRegistrationFeePenaltyExemption" />

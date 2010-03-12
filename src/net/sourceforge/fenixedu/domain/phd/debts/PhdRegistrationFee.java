@@ -64,7 +64,7 @@ public class PhdRegistrationFee extends PhdRegistrationFee_Base {
 	return getPhdRegistrationFeePenaltyExemption() != null;
     }
 
-    private PhdRegistrationFeePenaltyExemption getPhdRegistrationFeePenaltyExemption() {
+    public PhdRegistrationFeePenaltyExemption getPhdRegistrationFeePenaltyExemption() {
 	for (final Exemption exemption : getExemptionsSet()) {
 	    if (exemption instanceof PhdRegistrationFeePenaltyExemption) {
 		return (PhdRegistrationFeePenaltyExemption) exemption;
