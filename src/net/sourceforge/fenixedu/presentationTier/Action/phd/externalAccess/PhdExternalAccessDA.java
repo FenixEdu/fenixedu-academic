@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd.externalAccess;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,9 +13,12 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.PhdThesisReportFeedbackDocument;
 import net.sourceforge.fenixedu.domain.phd.access.PhdExternalOperationBean;
-import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
+import net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessType;
+import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess;
+import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess.DownloadCandidacyFeedbackDocuments;
 import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryDocumentsDownload;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryReporterFeedbackExternalUpload;
@@ -33,8 +38,15 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 /**
  * Serves as entry point to external phd programs access. To add new operations
  * define new types in PhdProcessAccessType enum and define methods here in the
- * following format: prepare<Descriptor> . Each new method will handle an
- * operation in this page
+ * following format:
+ * 
+ * <pre>
+ * - method1: 'prepare<Descriptor>'
+ * - method2: '<descriptor>'
+ * - method3: 'prepare<Descriptor>Invalid'
+ * </pre>
+ * 
+ * Each new method will handle an operation in this page
  */
 
 @Mapping(path = "/phdExternalAccess", module = "publico")
@@ -42,12 +54,22 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Forward(name = "showOperations", path = "/phd/externalAccess/showOperations.jsp"),
 
-@Forward(name = "juryDocumentsDownload", path = "/phd/externalAccess/juryDocumentsDownload.jsp"),
+@Forward(name = "juryDocumentsDownload", path = "/phd/externalAccess/downloadDocuments.jsp"),
 
-@Forward(name = "juryReporterFeedbackUpload", path = "/phd/externalAccess/juryReporterFeedbackUpload.jsp")
+@Forward(name = "juryReporterFeedbackUpload", path = "/phd/externalAccess/thesis/juryReporterFeedbackUpload.jsp"),
+
+@Forward(name = "candidacyFeedbackDocumentsDownload", path = "/phd/externalAccess/downloadDocuments.jsp")
 
 })
 public class PhdExternalAccessDA extends PhdProcessDA {
+
+    protected String getZipDocumentsFilename(PhdIndividualProgramProcess process) {
+	return process.getProcessNumber().replace("/", "-") + "-Documents.zip";
+    }
+
+    protected byte[] createZip(final Collection<PhdProgramProcessDocument> documents) throws IOException {
+	return PhdDocumentsZip.zip(documents);
+    }
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -80,7 +102,8 @@ public class PhdExternalAccessDA extends PhdProcessDA {
 
     public ActionForward prepareJuryDocumentsDownload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	request.setAttribute("operationBean", new PhdExternalOperationBean(getPhdParticipant(request)));
+	request.setAttribute("operationBean", new PhdExternalOperationBean(getPhdParticipant(request),
+		PhdProcessAccessType.JURY_DOCUMENTS_DOWNLOAD));
 
 	return mapping.findForward("juryDocumentsDownload");
     }
@@ -106,7 +129,7 @@ public class PhdExternalAccessDA extends PhdProcessDA {
 	    final PhdIndividualProgramProcess process = getProcess(request);
 	    ExecuteProcessActivity.run(process.getThesisProcess(), JuryDocumentsDownload.class, getOperationBean());
 	    writeFile(response, getZipDocumentsFilename(process), PhdDocumentsZip.ZIP_MIME_TYPE, createZip(process
-		    .getThesisProcess()));
+		    .getThesisProcess().getThesisDocumentsToFeedback()));
 
 	    return null;
 
@@ -116,14 +139,6 @@ public class PhdExternalAccessDA extends PhdProcessDA {
 	}
     }
 
-    private String getZipDocumentsFilename(PhdIndividualProgramProcess process) {
-	return process.getProcessNumber().replace("/", "-") + "-Documents.zip";
-    }
-
-    protected byte[] createZip(final PhdThesisProcess process) throws IOException {
-	return PhdDocumentsZip.zip(process.getThesisDocumentsToFeedback());
-    }
-
     // end jury document download
 
     // jury report feedback operations
@@ -131,7 +146,9 @@ public class PhdExternalAccessDA extends PhdProcessDA {
     public ActionForward prepareJuryReporterFeedbackUpload(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	final PhdExternalOperationBean bean = new PhdExternalOperationBean(getPhdParticipant(request));
+	final PhdExternalOperationBean bean = new PhdExternalOperationBean(getPhdParticipant(request),
+		PhdProcessAccessType.JURY_REPORTER_FEEDBACK_UPLOAD);
+
 	bean.setDocumentBean(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.JURY_REPORT_FEEDBACK));
 
 	request.setAttribute("operationBean", bean);
@@ -183,4 +200,50 @@ public class PhdExternalAccessDA extends PhdProcessDA {
     }
 
     // end of jury report feedback operations
+
+    // Download candidacy feedback documents
+
+    public ActionForward prepareCandidacyFeedbackDocumentsDownload(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	request.setAttribute("operationBean", new PhdExternalOperationBean(getPhdParticipant(request),
+		PhdProcessAccessType.CANDIDACY_FEEDBACK_DOCUMENTS_DOWNLOAD));
+	return mapping.findForward("candidacyFeedbackDocumentsDownload");
+    }
+
+    public ActionForward prepareCandidacyFeedbackDocumentsDownloadInvalid(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	request.setAttribute("operationBean", getOperationBean());
+	return mapping.findForward("candidacyFeedbackDocumentsDownload");
+    }
+
+    public ActionForward candidacyFeedbackDocumentsDownload(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+	try {
+
+	    final PhdCandidacyFeedbackRequestProcess process = getProcess(request).getCandidacyProcess().getFeedbackRequest();
+	    ExecuteProcessActivity.run(process, DownloadCandidacyFeedbackDocuments.class, getOperationBean());
+
+	    final Set<PhdProgramProcessDocument> documents = process.getSharedDocumentsContent();
+
+	    if (!documents.isEmpty()) {
+		writeFile(response, getZipDocumentsFilename(process.getCandidacyProcess().getIndividualProgramProcess()),
+			PhdDocumentsZip.ZIP_MIME_TYPE, createZip(documents));
+
+		return null;
+
+	    } else {
+		addErrorMessage(request, "error.phd.candidacy.feedback.request.no.documents.to.download");
+	    }
+
+	} catch (DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	}
+
+	return prepareJuryDocumentsDownloadInvalid(mapping, actionForm, request, response);
+    }
+
+    // end of Download candidacy feedback documents
 }

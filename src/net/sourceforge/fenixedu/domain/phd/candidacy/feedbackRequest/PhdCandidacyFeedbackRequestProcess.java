@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -20,6 +21,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.access.ExternalAccessPhdActivity;
 import net.sourceforge.fenixedu.domain.phd.access.PhdExternalOperationBean;
 import net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessType;
@@ -79,6 +81,18 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
 
     public Set<PhdIndividualProgramDocumentType> getSortedSharedDocumentTypes() {
 	return getSharedDocuments().getSortedTypes();
+    }
+
+    public Set<PhdProgramProcessDocument> getSharedDocumentsContent() {
+	final Set<PhdProgramProcessDocument> result = new HashSet<PhdProgramProcessDocument>();
+
+	for (final PhdIndividualProgramDocumentType type : getSortedSharedDocumentTypes()) {
+	    final PhdProgramProcessDocument document = getCandidacyProcess().getLastestDocumentVersionFor(type);
+	    if (document != null) {
+		result.add(document);
+	    }
+	}
+	return result;
     }
 
     static abstract private class PhdActivity extends Activity<PhdCandidacyFeedbackRequestProcess> {

@@ -15,9 +15,11 @@ public class PhdExternalOperationBean implements Serializable {
     private String email;
     private String password;
 
+    private PhdProcessAccessType accessType;
 
-    public PhdExternalOperationBean(PhdParticipant participant) {
+    public PhdExternalOperationBean(PhdParticipant participant, PhdProcessAccessType accessType) {
 	setParticipant(participant);
+	setAccessType(accessType);
     }
 
     public PhdParticipant getParticipant() {
@@ -50,6 +52,15 @@ public class PhdExternalOperationBean implements Serializable {
 
     public void setDocumentBean(PhdProgramDocumentUploadBean documentBean) {
 	this.documentBean = documentBean;
+    }
+
+    public PhdProcessAccessType getAccessType() {
+	return accessType;
+    }
+
+    public PhdExternalOperationBean setAccessType(final PhdProcessAccessType accessType) {
+	this.accessType = accessType;
+	return this;
     }
 
 }

@@ -1,4 +1,5 @@
 <%@ page language="java"%>
+
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
@@ -18,25 +19,36 @@
 </div>
 <br/>
 
-<bean:define id="accessTypeName"><%= PhdProcessAccessType.JURY_DOCUMENTS_DOWNLOAD.getLocalizedName() %></bean:define>
-<h2><bean:write name="accessTypeName" /></h2>
+<logic:notEmpty name="operationBean" >
 
-<br/>
-<%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
-<html:link action="/phdExternalAccess.do?method=prepare" paramId="hash" paramName="participant" paramProperty="accessHashCode">
-	<bean:message bundle="PHD_RESOURCES" key="label.back"/>
-</html:link>
-<br/><br/>
-<%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
+	<%-- Print access type name --%>
+	<h2><bean:write name="operationBean" property="accessType.localizedName" /></h2>
 
-<%--  ### Error Messages  ### --%>
-<jsp:include page="/phd/errorsAndMessages.jsp?viewStateId=operationBean" />
-<%--  ### End of Error Messages  ### --%>
+	<br/>
+	<%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
+	<html:link action="/phdExternalAccess.do?method=prepare" paramId="hash" paramName="participant" paramProperty="accessHashCode">
+		<bean:message bundle="PHD_RESOURCES" key="label.back"/>
+	</html:link>
+	<br/><br/>
+	<%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
+
+
+	<%--  ### Error Messages  ### --%>
+	<jsp:include page="/phd/errorsAndMessages.jsp?viewStateId=operationBean" />
+	<%--  ### End of Error Messages  ### --%>
+
 
 <logic:notEmpty name="participant">
+	
+	<%-- Process Details --%>
 	<jsp:include page="processDetails.jsp" />
 	
-	<fr:form action="/phdExternalAccess.do?method=juryDocumentsDownload">
+	<bean:define id="accessTypeDescriptor" name="operationBean" property="accessType.descriptor" type="java.lang.String"/>
+	<% request.setAttribute("actionMethodName", accessTypeDescriptor.substring(0,1).toLowerCase() + accessTypeDescriptor.substring(1)); %>
+	
+	<bean:define id="actionMethodName" name="actionMethodName" />
+	
+	<fr:form action="<%= "/phdExternalAccess.do?method=" + actionMethodName %>">
 	
 		<fr:edit id="operationBean" name="operationBean">
 		
@@ -50,8 +62,7 @@
 				<fr:property name="columnClasses" value=",,tdclear tderror1" />
 			</fr:layout>
 			
-			<fr:destination name="invalid" path="/phdExternalAccess.do?method=prepareJuryDocumentsDownloadInvalid"/>
-			
+			<fr:destination name="invalid" path="<%= String.format("/phdExternalAccess.do?method=prepare%sInvalid", accessTypeDescriptor) %>"/>
 		</fr:edit>
 		
 		<html:submit><bean:message key="label.submit" /></html:submit>
@@ -60,4 +71,4 @@
 	
 </logic:notEmpty>
 
-
+</logic:notEmpty>
