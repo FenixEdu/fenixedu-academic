@@ -80,7 +80,7 @@
             <fr:property name="sortBy" value="<%= request.getParameter("sortBy") != null ? request.getParameter("sortBy"): "phdIndividualProcessNumber"  %>"/>
 			<fr:property name="ascendingImage" value="/images/upArrow.gif"/>
         	<fr:property name="descendingImage" value="/images/downArrow.gif"/>
-			<fr:property name="sortableSlots" value="phdIndividualProcessNumber,phdProgram.name,state,person.name" />
+			<fr:property name="sortableSlots" value="phdIndividualProcessNumber,activeState,person.name" />
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>

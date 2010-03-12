@@ -37,10 +37,11 @@
 
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 
-<%--  ### Search Criteria  ### --%>
 <fr:form id="search" action="/phdIndividualProgramProcess.do?method=manageProcesses">
 	<input type="hidden" name="sortBy" value="" />
-
+	
+	<%--  ### Search Criteria  ### --%>
+	
 	<fr:edit id="searchProcessBean"
 		name="searchProcessBean"
 		schema="SearchPhdIndividualProgramProcessBean.edit">
@@ -53,39 +54,41 @@
 
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.search"/></html:submit>
 
-<%--  ### End of Search Criteria  ### --%>
+	<%--  ### End of Search Criteria  ### --%>
 
-<br/>
-<br/>
-
-<%--  ### Results  ### --%>
-<bean:size id="processesCount" name="processes"/>
-<bean:message  key="label.phd.process.count" bundle="PHD_RESOURCES" arg0="<%= processesCount.toString() %>"/>
-<logic:notEmpty name="processes">
-	<fr:view schema="PhdIndividualProgramProcess.view.resume" name="processes">
-		<fr:layout name="tabular-sortable">
-			<fr:property name="classes" value="tstyle2 thlight mtop15" />
-			<fr:property name="linkFormat(view)" value="/phdIndividualProgramProcess.do?method=viewProcess&processId=${externalId}"/>
-			<fr:property name="key(view)" value="label.view"/>
-			<fr:property name="bundle(view)" value="PHD_RESOURCES"/>
-
-			<fr:property name="sortFormId" value="search"/>
-			<fr:property name="sortActionLink" value="true"/>
-			<fr:property name="sortParameter" value="sortBy"/>
-            <fr:property name="sortBy" value="<%= request.getParameter("sortBy") != null ? request.getParameter("sortBy"): "processNumber=desc"  %>"/>
-			<fr:property name="ascendingImage" value="/images/upArrow.gif"/>
-        	<fr:property name="descendingImage" value="/images/downArrow.gif"/>
-			<fr:property name="sortableSlots" value="phdIndividualProcessNumber,phdProgram.name,state,person.name" />
-		</fr:layout>
-	</fr:view>
-</logic:notEmpty>
-<logic:empty name="processes">
 	<br/>
-	<em><bean:message key="label.phd.no.processes" bundle="PHD_RESOURCES" /></em>
 	<br/>
-</logic:empty>
 
-<%--  ### End of Results  ### --%>
+	<%--  ### Results  ### --%>
+	<bean:size id="processesCount" name="processes"/>
+	<bean:message  key="label.phd.process.count" bundle="PHD_RESOURCES" arg0="<%= processesCount.toString() %>"/>
+	<logic:notEmpty name="processes">
+		<fr:view schema="PhdIndividualProgramProcess.view.resume" name="processes">
+			<fr:layout name="tabular-sortable">
+				<fr:property name="classes" value="tstyle2 thlight mtop15" />
+				<fr:property name="linkFormat(view)" value="/phdIndividualProgramProcess.do?method=viewProcess&processId=${externalId}"/>
+				<fr:property name="key(view)" value="label.view"/>
+				<fr:property name="bundle(view)" value="PHD_RESOURCES"/>
+
+				<fr:property name="sortFormId" value="search"/>
+				<fr:property name="sortActionLink" value="true"/>
+				<fr:property name="sortParameter" value="sortBy"/>
+            	<fr:property name="sortBy" value="<%= request.getParameter("sortBy") != null ? request.getParameter("sortBy"): "processNumber=desc"  %>"/>
+				<fr:property name="ascendingImage" value="/images/upArrow.gif"/>
+        		<fr:property name="descendingImage" value="/images/downArrow.gif"/>
+				<fr:property name="sortableSlots" value="phdIndividualProcessNumber,activeState,person.name" />
+			</fr:layout>
+		</fr:view>
+	</logic:notEmpty>
+	<logic:empty name="processes">
+		<br/>
+		<em><bean:message key="label.phd.no.processes" bundle="PHD_RESOURCES" /></em>
+		<br/>
+	</logic:empty>
+
+	<%--  ### End of Results  ### --%>
+
+</fr:form>
 
 <%--  ### End of Operation Area  ### --%>
 
@@ -93,8 +96,6 @@
 <%--  ### Buttons (e.g. Submit)  ### --%>
 
 <%--  ### End of Buttons (e.g. Submit)  ### --%>
-
-</fr:form>
 
 </logic:present>
 
