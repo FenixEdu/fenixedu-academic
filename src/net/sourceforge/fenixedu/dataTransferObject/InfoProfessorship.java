@@ -1,10 +1,11 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 
 public class InfoProfessorship extends InfoObject {
 
-    private Professorship professorship;
+    private final Professorship professorship;
 
     private InfoProfessorship(final Professorship professorship) {
 	this.professorship = professorship;
@@ -42,5 +43,9 @@ public class InfoProfessorship extends InfoObject {
 
     private Professorship getProfessorship() {
 	return professorship;
+    }
+
+    public Person getPerson() {
+	return this.getProfessorship().getPerson();
     }
 }

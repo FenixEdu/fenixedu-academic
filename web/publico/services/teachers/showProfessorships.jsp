@@ -62,10 +62,10 @@
 		</logic:iterate> 
 		<td>
 			<logic:iterate id="detailedProfessorship" name="detailedProfessorShipsList">
-				<bean:write name="detailedProfessorship" property="infoProfessorship.infoTeacher.infoPerson.nome"/> &nbsp;
-				<logic:equal name="detailedProfessorship" property="responsibleFor" value="true">
-					(respons&aacute;vel)
-				</logic:equal>
+					<bean:write name="detailedProfessorship" property="infoProfessorship.person.name"/> &nbsp;
+					<logic:equal name="detailedProfessorship" property="responsibleFor" value="true">
+						 (respons&aacute;vel)
+					</logic:equal>
 				<br/>
 			</logic:iterate>
 		</td>
