@@ -21,4 +21,10 @@ public class CardGenerationRegister extends CardGenerationRegister_Base {
 	setLinePrefix(linePrefix);
     }
 
+    public void delete() {
+	removePerson();
+	removeRootDomainObject();
+	deleteDomainObject();
+    }
+
 }
