@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.erasmus;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -29,6 +30,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.Degree
 import net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.RefactoredIndividualCandidacyProcessPublicDA;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 import net.sourceforge.fenixedu.util.stork.Attribute;
+import net.sourceforge.fenixedu.util.stork.SPUtil;
+import net.spy.memcached.MemcachedClient;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -319,15 +322,12 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
     }
 
     public ActionForward returnFromPeps(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	String errorCode = (String) request.getParameter("errorCode");
-	String errorMessage = (String) request.getParameter("errorMessage");
-	String attrList = request.getParameter("attrList");
+	    HttpServletResponse response) throws IOException {
+	String memcachedCode = request.getParameter("key");
+	MemcachedClient c = new MemcachedClient(new InetSocketAddress(SPUtil.getInstance().getMemcachedHostname(), SPUtil
+		.getInstance().getMemcachedPort()));
 
-	if (!(errorCode == null || errorMessage == null || errorCode.length() <= 0 || errorMessage.length() <= 0)) {
-	    return mapping.findForward("show-stork-error-page");
-	}
-
+	String attrList = (String) c.get(memcachedCode);
 	Map<String, Attribute> attributes = buildStorkAttributes(attrList);
 
 	String name = getStorkName(attributes);
@@ -410,11 +410,11 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	Attribute attr = attributes.get(STORK_BIRTHDATE);
 	String birthDateText = attr != null ? attr.getSemanticValue() : null;
 
-	if (birthDateText == null || !birthDateText.matches("\\d{2}\\.\\d{2}\\.\\d{4}")) {
+	if (birthDateText == null || !birthDateText.matches("\\d{2}-\\d{2}-\\d{4}")) {
 	    return null;
 	}
 
-	String[] compounds = birthDateText.split("\\.");
+	String[] compounds = birthDateText.split("-");
 	return new YearMonthDay(Integer.valueOf(compounds[2]), Integer.valueOf(compounds[1]), Integer.valueOf(compounds[0]));
     }
 
@@ -533,9 +533,9 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
 	int i = 1;
 	while (st.hasMoreTokens()) {
-	    String[] params = st.nextToken().split(":");
+	    String[] params = st.nextToken().split("=");
 	    String attrName = params[0];
-	    String value = params[2].equals("null") ? null : params[2].substring(1, params[2].length() - 2);
+	    String value = params[1].equals("null") ? null : params[1].substring(1, params[1].length() - 1);
 
 	    attributes.put(attrName, new Attribute(i++, attrName, false, value));
 	}
@@ -543,9 +543,9 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	return attributes;
     }
 
-    private static final String STORK_NAME = "nombre";
-    private static final String STORK_BIRTHDATE = "fechadenacimiento";
-    private static final String STORK_NATIONALITY = "nacionalidad";
+    private static final String STORK_NAME = "givenName";
+    private static final String STORK_BIRTHDATE = "dateOfBirth";
+    private static final String STORK_NATIONALITY = "nationalityCode";
 
     private static final String f(String format, Object... args) {
 	return String.format(format, args);

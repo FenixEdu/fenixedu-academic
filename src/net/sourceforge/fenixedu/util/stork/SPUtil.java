@@ -67,6 +67,10 @@ public class SPUtil {
 	return Integer.valueOf(this.properties.getProperty("attribute.number"));
     }
 
+    public String getSpInvokeUrl() {
+	return this.properties.getProperty("sp.invoke.url");
+    }
+
     public List<Attribute> getAttributes() {
 	return this.attributes;
     }
@@ -105,5 +109,13 @@ public class SPUtil {
 	}
 
 	return sb.toString();
+    }
+
+    public String getMemcachedHostname() {
+	return this.properties.getProperty("memcached.hostname");
+    }
+
+    public Integer getMemcachedPort() {
+	return new Integer(this.properties.getProperty("memcached.port"));
     }
 }

@@ -18,20 +18,9 @@
 <h1><bean:message key="title.application.name.erasmus" bundle="CANDIDATE_RESOURCES"/></h1>
 
 <%
-String spId = SPUtil.getInstance().getId();
-String spUrl= "http://cidhcp059:8080/ciapl/candidaturas/erasmus/returnFromPeps";
-String spQAALevel = SPUtil.getInstance().getQaLevel();
-String pepsCountryForm = SPUtil.getInstance().getSpepsCountryUrl();
-String pepsAuth = SPUtil.getInstance().getSpepsAuthUrl();
-String attrList = SPUtil.getInstance().getAttributesList();
-
+	String applicationUrl = SPUtil.getInstance().getSpInvokeUrl();
  %>
-
-<h1><%=spId%>-SP</h1>
-<div>Select country: </div>
-<iframe src="<%=pepsCountryForm%>?spId=<%=spId%>&spUrl=<%=spUrl%>&SPQAALevel=<%=spQAALevel%>&pepsAuth=<%=pepsAuth%>&attrList=<%=attrList%>" width="100%" height="800px" style="border:0px;"></iframe>
-
-<div id="attributes"></div>
+<iframe src="<%= applicationUrl %>" width="100%" height="300px" style="border:0px;"></iframe>
 
 </body>	
 </html>
