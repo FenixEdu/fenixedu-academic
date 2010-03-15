@@ -476,9 +476,9 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 	try {
 	    process(request, FileUtils.copyToTemporaryFile(bean.getInputStream()));
 	} catch (FileNotFoundException e) {
-	    e.printStackTrace();
+	    throw new Error(e);
 	} catch (IOException e) {
-	    e.printStackTrace();
+	    throw new Error(e);
 	}
 	request.setAttribute("readingComplete", true);
 	return mapping.findForward("uploadCardInfo");
