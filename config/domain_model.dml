@@ -5239,6 +5239,9 @@ class DomainObject {
 
                 class studentCurriculum.ExternalCurriculumGroup extends studentCurriculum.CycleCurriculumGroup {
                 }
+                
+            class studentCurriculum.BranchCurriculumGroup extends studentCurriculum.CurriculumGroup {
+            }
 
             class studentCurriculum.NoCourseGroupCurriculumGroup extends studentCurriculum.CurriculumGroup {
             }
