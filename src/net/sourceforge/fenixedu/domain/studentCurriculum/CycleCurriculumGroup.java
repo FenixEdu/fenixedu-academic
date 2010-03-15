@@ -7,6 +7,8 @@ import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusio
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.degreeStructure.BranchCourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.BranchType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -119,6 +121,46 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 
     public CycleType getCycleType() {
 	return getCycleCourseGroup().getCycleType();
+    }
+    
+    public BranchCurriculumGroup getBranchCurriculumGroup(BranchType branchType) {
+	for(CurriculumGroup curriculumGroup : getCurriculumGroups()) {
+	    if(curriculumGroup.isBranchCurriculumGroup()) {
+		BranchCourseGroup branchCourseGroup = (BranchCourseGroup) curriculumGroup.getDegreeModule();
+		if(branchCourseGroup.getBranchType() == branchType) {
+		    return (BranchCurriculumGroup) curriculumGroup;
+		}
+	    }
+	}
+	return null;
+    }
+    
+    public BranchCurriculumGroup getMajorBranchCurriculumGroup() {
+	return getBranchCurriculumGroup(BranchType.MAJOR);
+    }
+    
+    public BranchCurriculumGroup getMinorBranchCurriculumGroup() {
+	return getBranchCurriculumGroup(BranchType.MINOR);
+    }
+    
+    public BranchCourseGroup getBranchCourseGroup(BranchType branchType) {
+	for(CurriculumGroup curriculumGroup : getCurriculumGroups()) {
+	    if(curriculumGroup.isBranchCurriculumGroup()) {
+		BranchCourseGroup branchCourseGroup = (BranchCourseGroup) curriculumGroup.getDegreeModule();
+		if(branchCourseGroup.getBranchType() == branchType) {
+		    return branchCourseGroup;
+		}
+	    }
+	}
+	return null;
+    }
+    
+    public BranchCourseGroup getMajorBranchCourseGroup() {
+	return getBranchCourseGroup(BranchType.MAJOR);
+    }
+    
+    public BranchCourseGroup getMinorBranchCourseGroup() {
+	return getBranchCourseGroup(BranchType.MINOR);
     }
 
     @Override

@@ -83,6 +83,10 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
     public boolean isCycleCurriculumGroup() {
 	return false;
     }
+    
+    public boolean isBranchCurriculumGroup() {
+	return false;
+    }
 
     public boolean isNoCourseGroupCurriculumGroup() {
 	return false;
