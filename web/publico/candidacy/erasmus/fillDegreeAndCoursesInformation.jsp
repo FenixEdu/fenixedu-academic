@@ -36,7 +36,9 @@
 	<span><bean:message key="erasmus.label.step.four.honour.declaration" bundle="CANDIDATE_RESOURCES" /></span>	 
 </p>
 
+<%--
 <p class="mtop15"><span><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></span></p>
+--%>
 
 <html:messages id="message" message="true" bundle="APPLICATION_RESOURCES" property="captcha.error">
 	<p><span class="error0"><bean:write name="message"/></span></p>
@@ -69,67 +71,76 @@
 	<h2 class="mtop1"><bean:message key="label.erasmus.chooseCourses" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
 	
 	<bean:define id="universityName" name="individualCandidacyProcessBean" property="erasmusStudentDataBean.selectedUniversity.nameI18n.content" type="String"/> 
-	<p><em><bean:message key="message.erasmus.for.chosen.university.must.select.majority.of.courses" bundle="ACADEMIC_OFFICE_RESOURCES" arg0="<%= universityName %>"/></em></p>
+	
+	<p class="mbottom05"><bean:message key="message.erasmus.for.chosen.university.must.select.majority.of.courses" bundle="ACADEMIC_OFFICE_RESOURCES" arg0="<%= universityName %>"/></p>
 
 	<fr:view	name="individualCandidacyProcessBean"
 				schema="ErasmusCandidacyProcess.view.possible.degrees">
 			<fr:layout>
-				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
+				<fr:property name="classes" value="tstyle1 thlight thright mtop05"/>
 		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 			</fr:layout>
 	</fr:view>
 
 	<p>
-		<strong><bean:message key="label.eramsus.candidacy.choosed.degree" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong>:
-		<fr:view	name="individualCandidacyProcessBean" property="selectedCourseNameForView"/>
+		<strong><bean:message key="label.eramsus.candidacy.choosed.degree" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong>
 	</p>
 	
-	<p><em><bean:message key="message.erasmus.select.courses.of.associated.degrees" bundle="ACADEMIC_OFFICE_RESOURCES" /></em></p>
+	<p>
+		<fr:view name="individualCandidacyProcessBean" property="selectedCourseNameForView"/>
+	</p>
+	
+	<p class="mbottom05"><em><bean:message key="message.erasmus.select.courses.of.associated.degrees" bundle="ACADEMIC_OFFICE_RESOURCES" /></em></p>
 	
 	<fr:edit id="degree.course.information.bean" name="degreeCourseInformationBean" schema="ErasmusCandidacyProcess.degreeCourseInformationBean">
 		<fr:layout name="tabular-editable">
-			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
+			<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
 	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 	        <fr:destination name="chooseDegreePostback" path="/candidacies/caseHandlingErasmusCandidacyIndividualProcess.do?method=chooseDegree" />
 		</fr:layout>
 	</fr:edit>
 		
-	<html:submit onclick="$('#methodId').attr('value', 'addCourse'); $('#skipValidationId').attr('value', 'true'); $('#thisForm').submit(); return true;"><bean:message key="label.add" bundle="APPLICATION_RESOURCES" /></html:submit>
+	<html:submit onclick="$('#methodId').attr('value', 'addCourse'); $('#skipValidationId').attr('value', 'true'); $('#thisForm').submit(); return true;">+ Add</html:submit>
 	
 	<logic:empty name="individualCandidacyProcessBean" property="sortedSelectedCurricularCourses">
-		<p><em><bean:message key="erasmus.message.empty.courses" bundle="CANDIDATE_RESOURCES" /></em></p>
+		<p class="mvert15"><em><bean:message key="erasmus.message.empty.courses" bundle="CANDIDATE_RESOURCES" />.</em></p>
 	</logic:empty>
 	
-	<logic:notEmpty name="individualCandidacyProcessBean" property="sortedSelectedCurricularCourses">	
-		<table class="tstyle2 thlight thcenter">
-		<tr>
-			<th><bean:message key="label.erasmus.course" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
-			<th><bean:message key="label.erasmus.degree" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
-			<th><!-- just in case --></th>
-		</tr>
-		<logic:iterate id="course" name="individualCandidacyProcessBean" property="sortedSelectedCurricularCourses" indexId="index">
-			<bean:define id="curricularCourseId" name="course" property="externalId" />
-		<tr>
-			<td>
-				<fr:view 	name="course"
-							property="nameI18N"/>
-			</td>
-			<td>
-				<fr:view	name="course"
-							property="degree.nameI18N" /> - 
-				<fr:view	name="course"
-							property="degree.sigla" />
-			</td>			
-			<td>
-				<a onclick="<%= f("$('#methodId').attr('value', 'removeCourse'); $('#skipValidationId').attr('value', 'true'); $('#removeId').attr('value', %s); $('#thisForm').submit()", curricularCourseId) %>"><bean:message key="label.erasmus.remove" bundle="ACADEMIC_OFFICE_RESOURCES" /></a>
-			</td>
-		</tr>
-		</logic:iterate>
+	<logic:notEmpty name="individualCandidacyProcessBean" property="sortedSelectedCurricularCourses">
+	
+		<p class="mtop2 mbottom05"><b>Selected subjects</b></p>
+	
+		<table class="tstyle1 thlight thcenter mtop05">
+			<tr>
+				<th><bean:message key="label.erasmus.course" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
+				<th><bean:message key="label.erasmus.degree" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
+				<th><!-- just in case --></th>
+			</tr>
+			<logic:iterate id="course" name="individualCandidacyProcessBean" property="sortedSelectedCurricularCourses" indexId="index">
+				<bean:define id="curricularCourseId" name="course" property="externalId" />
+			<tr>
+				<td>
+					<fr:view 	name="course"
+								property="nameI18N"/>
+				</td>
+				<td>
+					<fr:view	name="course"
+								property="degree.nameI18N" /> - 
+					<fr:view	name="course"
+								property="degree.sigla" />
+				</td>			
+				<td>
+					<a href="#" onclick="<%= f("$('#methodId').attr('value', 'removeCourse'); $('#skipValidationId').attr('value', 'true'); $('#removeId').attr('value', %s); $('#thisForm').submit()", curricularCourseId) %>"><bean:message key="label.erasmus.remove" bundle="ACADEMIC_OFFICE_RESOURCES" /></a>
+				</td>
+			</tr>
+			</logic:iterate>
 		</table>
 	</logic:notEmpty>
 
 	
-	<html:submit onclick="this.form.method.value='acceptHonourDeclaration'; return true;"><bean:message key="label.continue" bundle="APPLICATION_RESOURCES" /></html:submit>
-	<html:cancel onclick="this.form.method.value='listProcesses'; return true;"><bean:message key="label.cancel" bundle="APPLICATION_RESOURCES" /></html:cancel>
+	<p class="mtop2">
+		<html:submit onclick="this.form.method.value='acceptHonourDeclaration'; return true;"><bean:message key="label.continue" bundle="APPLICATION_RESOURCES" /></html:submit>
+		<html:cancel onclick="this.form.method.value='listProcesses'; return true;"><bean:message key="label.cancel" bundle="APPLICATION_RESOURCES" /></html:cancel>
+	</p>
 
 </fr:form>

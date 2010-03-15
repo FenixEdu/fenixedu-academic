@@ -23,16 +23,27 @@
 	<bean:message key="title.application.name.erasmus" bundle="CANDIDATE_RESOURCES"/>
 </div>
 
+
+
 <h1><bean:message key="title.application.name.erasmus" bundle="CANDIDATE_RESOURCES"/></h1>
 
-<p>
-If you have submitted your application with your national citizen card follow this <a href="">link</a> to access your application.
-</p>
+<p><b>Welcome to the application submission proccess.</b></p>
 
-<p>
-Alternatively you may access with the link in the submission confirmation message sent to your mailbox. To recover the access link click <a href="">here</a>
-</p>
 
-<p>
-To submit your application click <%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= f("%s/candidacies/erasmus/submission-type", request.getContextPath()) %>">here</a>
-</p>
+<h2>Application Form</h2>
+
+<div class="h_box">
+	<p class="mvert05">
+		To submit your Erasmus Programme application click the following link:
+		<b><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= f("%s/candidacies/erasmus/submission-type", request.getContextPath()) %>">Fill the application form »</a></b>
+	</p>
+</div>
+
+<h3>Recover Email Link</h3>
+
+<p>Alternatively you may access with the link in the submission confirmation message sent to your mailbox: <a href="">Recover access link</a></p>
+
+
+<h3>Access Submitted Application</h3>
+
+<p>If you have already submitted your application with your national citizen card you can access the application using the following link: <a href="">View application</a></p>

@@ -38,8 +38,8 @@
 </html:messages>
 
 <fr:form action='<%= mappingPath + ".do?method=bindEmailWithHashCodeAndSendMailWithLink" %>'>
-	<p><bean:message key="message.email.required.begin.process" bundle="CANDIDATE_RESOURCES" /></p>
 
+	<p><bean:message key="message.email.required.begin.process" bundle="CANDIDATE_RESOURCES" /></p>
 	
 	<bean:message key="label.email" bundle="CANDIDATE_RESOURCES" />:
 	

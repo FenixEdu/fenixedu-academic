@@ -56,10 +56,10 @@
 	<span><bean:message key="erasmus.label.step.four.honour.declaration" bundle="CANDIDATE_RESOURCES" /></span>	 
 </p>
 
+<%--
 <p class="mtop15"><span><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></span></p>
-
-
 <p><em><bean:message key="message.max.file.size" bundle="CANDIDATE_RESOURCES"/></em></p>
+--%>
 
 <html:messages id="message" message="true" bundle="APPLICATION_RESOURCES" property="<%= ActionMessages.GLOBAL_MESSAGE %>">
 	<p><span class="error0"><bean:write name="message"/></span></p>
@@ -80,14 +80,14 @@
 <fr:form id="over23CandidacyForm" action='<%= mappingPath + ".do?method=continueCandidacyCreation" %>' encoding="multipart/form-data">
 		<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
 		
- 		<h2><bean:message key="title.personal.data" bundle="CANDIDATE_RESOURCES"/></h2>
+ 		<h2 class="mtop15"><bean:message key="title.personal.data" bundle="CANDIDATE_RESOURCES"/></h2>
 
 		<fr:edit id="candidacyProcess.personalDataBean"
 			name="individualCandidacyProcessBean"
 			property="personBean" 
 			schema="ErasmusIndividualCandidacyPublicProcess.personalDataBean">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="thlight thleft"/>
+				<fr:property name="classes" value="tstyle5 thlight thleft mtop05"/>
 		        <fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
 		        <fr:property name="requiredMarkShown" value="true" />
 			</fr:layout>
@@ -95,7 +95,7 @@
 			<fr:destination name="cancel" path='<%= mappingPath + ".do?method=beginCandidacyProcessIntro" %>' />
 		</fr:edit>
 
-		<p class="mtop15">
+		<p class="mtop2">
 			<html:submit><bean:message key="button.continue" bundle="APPLICATION_RESOURCES" /> <bean:message key="label.application" bundle="CANDIDATE_RESOURCES"/></html:submit>
 			<html:cancel><bean:message key="button.cancel" bundle="APPLICATION_RESOURCES" /></html:cancel>
 		</p>

@@ -36,7 +36,9 @@
 	<span class="actual"><bean:message key="erasmus.label.step.four.honour.declaration" bundle="CANDIDATE_RESOURCES" /></span>	 
 </p>
 
+<%--
 <p class="mtop15"><span><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></span></p>
+--%>
 
 <html:messages id="message" message="true" bundle="APPLICATION_RESOURCES" property="captcha.error">
 	<p><span class="error0"><bean:write name="message"/></span></p>
@@ -60,19 +62,23 @@
 	<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
 
 	<h2 style="margin-top: 1em;"><bean:message key="title.degree.change.honor.declaration" bundle="CANDIDATE_RESOURCES"/></h2>
+
 	<p><bean:message key="message.degree.change.honor.declaration.detail" bundle="CANDIDATE_RESOURCES"/></p>
+
 	<p>
 		<fr:edit 	id="individualCandidacyProcessBean.honor.declaration"
 					name="individualCandidacyProcessBean"
 					schema="PublicCandidacyProcessBean.honor.agreement">
 			<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>
 		</fr:edit>
-		<bean:message key="label.degree.change.honor.declaration" bundle="CANDIDATE_RESOURCES"/> <span class="red">*</span>
+		<b><bean:message key="label.degree.change.honor.declaration" bundle="CANDIDATE_RESOURCES"/></b>
 	</p>
 
 	<p><em><bean:message key="message.ist.conditions.note" bundle="CANDIDATE_RESOURCES"/></em></p>
 	
-	<html:submit onclick="this.form.method.value='submitCandidacy'; return true;"><bean:message key="label.continue" bundle="APPLICATION_RESOURCES" /></html:submit>
-	<html:cancel onclick="this.form.method.value='listProcesses'; return true;"><bean:message key="label.cancel" bundle="APPLICATION_RESOURCES" /></html:cancel>
+	<p>
+		<html:submit onclick="this.form.method.value='submitCandidacy'; return true;"><bean:message key="label.continue" bundle="APPLICATION_RESOURCES" /></html:submit>
+		<html:cancel onclick="this.form.method.value='listProcesses'; return true;"><bean:message key="label.cancel" bundle="APPLICATION_RESOURCES" /></html:cancel>
+	</p>
 		
 </fr:form>

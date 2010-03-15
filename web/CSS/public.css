@@ -1174,3 +1174,8 @@ font-weight: normal !important;
 *:first-child+html .toplegendfix[class] { top: -0.5em; /* IE7 */ }
 @media screen and (min-width: 0px) { .toplegendfix{ top: -0.75em !important; }  /* Opera */ }
 @media screen and (-webkit-min-device-pixel-ratio:0) { body:first-of-type .toplegendfix { top: -0.75em !important; } /* Safari */ }
+
+
+
+
+.width225px { width: 225px; }
