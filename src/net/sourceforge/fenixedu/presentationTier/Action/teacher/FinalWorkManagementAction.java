@@ -403,11 +403,18 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 	if (number.substring(0, 3).equals("ist")) {
 	    person = Person.readPersonByIstUsername(number);
 	} else {
-	    final Employee employee = Employee.readByNumber(Integer.valueOf(number));
-	    if (employee == null) {
-		person = null;
+	    if (StringUtils.isNumeric(number)) {
+		final Employee employee = Employee.readByNumber(Integer.valueOf(number));
+		if (employee == null) {
+		    person = null;
+		} else {
+		    person = employee.getPerson();
+		}
 	    } else {
-		person = employee.getPerson();
+		ActionErrors actionErrors = new ActionErrors();
+		actionErrors.add("finalWorkInformationForm.unsuportedFormat", new ActionError("finalWorkInformationForm.unsuportedFormat"));
+		saveErrors(request, actionErrors);
+		return mapping.getInputForward();
 	    }
 	}
 
