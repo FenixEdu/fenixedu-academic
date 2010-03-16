@@ -2,11 +2,13 @@ package net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
@@ -19,6 +21,8 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RejectCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RequestRatifyCandidacy;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.UploadCandidacyReview;
+import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess;
+import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess.UploadCandidacyFeedback;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdDocumentsZip;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
 
@@ -167,4 +171,78 @@ abstract public class CommonPhdCandidacyDA extends PhdProcessDA {
 	return new PhdDocumentsZip().addAll(getProcess(request).getLatestDocumentVersions()).create();
     }
 
+    /*
+     * Upload candidacy feedback
+     */
+    public ActionForward prepareUploadCandidacyFeedback(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final Person person = getLoggedPerson(request);
+	final PhdCandidacyFeedbackRequestProcess feedbackRequest = getProcess(request).getFeedbackRequest();
+
+	final PhdProgramDocumentUploadBean bean = new PhdProgramDocumentUploadBean();
+	bean.setType(PhdIndividualProgramDocumentType.CANDIDACY_FEEDBACK_DOCUMENT);
+
+	request.setAttribute("documentBean", bean);
+	request.setAttribute("canUploadDocuments", feedbackRequest.canUploadDocuments());
+	request.setAttribute("sharedDocuments", feedbackRequest.getSharedDocumentsContent());
+	request.setAttribute("lastFeedbackDocument", feedbackRequest.getElement(person).getLastFeedbackDocument());
+
+	return mapping.findForward("uploadCandidacyFeedback");
+    }
+
+    public ActionForward prepareUploadCandidacyFeedbackInvalid(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	final Person person = getLoggedPerson(request);
+	final PhdCandidacyFeedbackRequestProcess feedbackRequest = getProcess(request).getFeedbackRequest();
+
+	request.setAttribute("documentBean", getRenderedObject("documentBean"));
+	request.setAttribute("canUploadDocuments", feedbackRequest.canUploadDocuments());
+	request.setAttribute("sharedDocuments", feedbackRequest.getSharedDocumentsContent());
+	request.setAttribute("lastFeedbackDocument", feedbackRequest.getElement(person).getLastFeedbackDocument());
+
+	return mapping.findForward("uploadCandidacyFeedback");
+    }
+
+    public ActionForward uploadCandidacyFeedback(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	try {
+
+	    ExecuteProcessActivity.run(getProcess(request).getFeedbackRequest(), UploadCandidacyFeedback.class,
+		    getRenderedObject("documentBean"));
+
+	    addSuccessMessage(request, "message.phd.candidacy.feedback.document.uploaded.with.success");
+
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getMessage(), e.getArgs());
+	    return prepareUploadCandidacyFeedbackInvalid(mapping, actionForm, request, response);
+	}
+
+	return viewIndividualProgramProcess(request, getProcess(request));
+    }
+
+    /*
+     * End of upload candidacy feedback
+     */
+
+    /*
+     * Download candidacy feedback request shared documents
+     */
+
+    public ActionForward candidacyFeedbackDocumentsDownload(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+	final PhdProgramCandidacyProcess process = getProcess(request);
+	final Set<PhdProgramProcessDocument> documents = process.getFeedbackRequest().getSharedDocumentsContent();
+
+	if (!documents.isEmpty()) {
+	    writeFile(response, getZipDocumentsFilename(process.getIndividualProgramProcess()), PhdDocumentsZip.ZIP_MIME_TYPE,
+		    createZip(documents));
+	    return null;
+	}
+
+	return prepareUploadCandidacyFeedbackInvalid(mapping, actionForm, request, response);
+    }
 }

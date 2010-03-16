@@ -41,7 +41,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 @Mapping(path = "/phdCandidacyFeedbackRequest", module = "coordinator")
 @Forwards(tileProperties = @Tile(navLocal = "/coordinator/localNavigationBar.jsp"), value = {
 
-@Forward(name = "manageFeedbackRequest", path = "/phd/candidacy/coordinator/feedbackRequest/manageFeedbackRequest.jsp")
+@Forward(name = "manageFeedbackRequest", path = "/phd/candidacy/coordinator/feedbackRequest/manageFeedbackRequest.jsp"),
+
+@Forward(name = "uploadCandidacyFeedback", path = "/phd/candidacy/coordinator/feedbackRequest/uploadCandidacyFeedback.jsp")
 
 })
 public class PhdCandidacyFeedbackRequestDA extends CommonPhdCandidacyDA {
