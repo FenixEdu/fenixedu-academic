@@ -29,7 +29,7 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
 	    throw new DomainException("error.ThesisJuryElement.president.already.exists");
 	}
 
-	final PhdParticipant participant = getOrCreateParticipant(process, bean);
+	final PhdParticipant participant = PhdParticipant.getUpdatedOrCreate(process.getIndividualProgramProcess(), bean);
 	final ThesisJuryElement element = new ThesisJuryElement();
 
 	element.checkParticipant(process, participant);
@@ -157,12 +157,8 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
     }
 
     static public ThesisJuryElement create(final PhdThesisProcess process, final PhdThesisJuryElementBean bean) {
-	return new ThesisJuryElement().init(process, getOrCreateParticipant(process, bean), bean);
-    }
-
-    private static PhdParticipant getOrCreateParticipant(final PhdThesisProcess process, final PhdThesisJuryElementBean bean) {
-	return !bean.hasParticipant() ? PhdParticipant.create(process.getIndividualProgramProcess(), bean) : bean
-		.getParticipant();
+	return new ThesisJuryElement().init(process, PhdParticipant.getUpdatedOrCreate(process.getIndividualProgramProcess(),
+		bean), bean);
     }
 
     public boolean isGuidingOrAssistantGuiding() {

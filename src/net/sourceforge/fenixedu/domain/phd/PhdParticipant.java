@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.phd;
 
+import static net.sourceforge.fenixedu.util.StringUtils.isEmpty;
+
 import java.util.UUID;
 
 import net.sourceforge.fenixedu.applicationTier.utils.GeneratePasswordBase;
@@ -8,9 +10,10 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessType;
 import net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessTypeList;
+import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestElement;
+import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
-import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.joda.time.DateTime;
 
@@ -53,7 +56,7 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
     abstract public String getPhone();
 
     public String getNameWithTitle() {
-	return StringUtils.isEmpty(getTitle()) ? getName() : getTitle() + " " + getName();
+	return isEmpty(getTitle()) ? getName() : getTitle() + " " + getName();
     }
 
     public boolean isFor(Person person) {
@@ -64,20 +67,24 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
 	return false;
     }
 
+    public boolean isFor(PhdIndividualProgramProcess process) {
+	return getIndividualProcess().equals(process);
+    }
+
     public void addAccessType(PhdProcessAccessType... types) {
 	ensureExternalAccess();
 	setAccessTypes(getAccessTypes().addAccessTypes(types));
     }
 
     private void ensureExternalAccess() {
-	if (StringUtils.isEmpty(getAccessHashCode())) {
+	if (isEmpty(getAccessHashCode())) {
 	    super.setAccessHashCode(UUID.randomUUID().toString());
 	    super.setPassword(new GeneratePasswordBase().generatePassword(null));
 	}
     }
 
     public void checkAccessCredentials(String email, String password) {
-	if (StringUtils.isEmpty(email) || StringUtils.isEmpty(password) || !hasAccessHashCode()) {
+	if (isEmpty(email) || isEmpty(password) || !hasAccessHashCode()) {
 	    throw new DomainException("error.PhdParticipant.credential.not.valid");
 	}
 
@@ -88,7 +95,7 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
     }
 
     private boolean hasAccessHashCode() {
-	return !StringUtils.isEmpty(getAccessHashCode());
+	return !isEmpty(getAccessHashCode());
     }
 
     public void tryDelete() {
@@ -119,15 +126,37 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
 	return null;
     }
 
-    private boolean hasAccessHashCode(final String hash) {
-	return !StringUtils.isEmpty(getAccessHashCode()) && getAccessHashCode().equals(hash);
+    public PhdCandidacyFeedbackRequestElement getPhdCandidacyFeedbackRequestElement(
+	    final PhdCandidacyFeedbackRequestProcess process) {
+	for (final PhdCandidacyFeedbackRequestElement element : getCandidacyFeedbackRequestElements()) {
+	    if (element.isFor(process)) {
+		return element;
+	    }
+	}
+	return null;
     }
 
-    static public PhdParticipant create(final PhdIndividualProgramProcess process, final PhdParticipantBean bean) {
+    private boolean hasAccessHashCode(final String hash) {
+	return !isEmpty(getAccessHashCode()) && getAccessHashCode().equals(hash);
+    }
+
+    static public PhdParticipant getUpdatedOrCreate(final PhdIndividualProgramProcess process, final PhdParticipantBean bean) {
+
+	if (bean.hasParticipant()) {
+	    bean.getParticipant().updateInformationIfNecessary(bean);
+	    return bean.getParticipant();
+	}
+
 	if (bean.isInternal()) {
 	    return new InternalPhdParticipant(process, bean);
 	} else {
 	    return new ExternalPhdParticipant(process, bean);
+	}
+    }
+
+    private void updateInformationIfNecessary(final PhdParticipantBean bean) {
+	if (isEmpty(getTitle())) {
+	    setTitle(bean.getTitle());
 	}
     }
 

@@ -794,6 +794,22 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	setThesisTitle(bean.getThesisTitle());
 
 	setPhdIndividualProcessNumber(PhdIndividualProgramProcessNumber.generateNextForYear(bean.getCandidacyDate().getYear()));
+
+	updatePhdParticipantsWithCoordinators();
+    }
+
+    /*
+     * 
+     * TODO: Refactor -> Participants should be shared at PhdProcessesManager
+     * level, and each PhdProgram should also have phdparticipants as
+     * coordinators
+     */
+    private void updatePhdParticipantsWithCoordinators() {
+	for (final Person person : getCoordinatorsFor(getExecutionYear())) {
+	    if (getParticipant(person) == null) {
+		PhdParticipant.getUpdatedOrCreate(this, new PhdParticipantBean().setInternalParticipant(person));
+	    }
+	}
     }
 
     public void createState(final PhdIndividualProgramProcessState state, final Person person) {
@@ -873,7 +889,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     private PhdParticipant createPhdParticipant(final PhdParticipantBean bean) {
-	return PhdParticipant.create(this, bean);
+	return PhdParticipant.getUpdatedOrCreate(this, bean);
     }
 
     public PhdIndividualProgramProcess deleteAssistantGuiding(final PhdParticipant assistant) {

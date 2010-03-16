@@ -26,6 +26,9 @@ public class PhdParticipantBean implements Serializable {
     private String email;
     private String phone;
 
+    public PhdParticipantBean() {
+    }
+
     public PhdParticipantBean(final PhdIndividualProgramProcess individualProgramProcess) {
 	setIndividualProgramProcess(individualProgramProcess);
     }
@@ -158,6 +161,12 @@ public class PhdParticipantBean implements Serializable {
 	return getParticipantSelectType() == PhdParticipantSelectType.EXISTING;
     }
 
+    public PhdParticipantBean setInternalParticipant(final Person person) {
+	setParticipantType(PhdParticipantType.INTERNAL);
+	setPersonName(person.getPersonName());
+	return this;
+    }
+
     static public enum PhdParticipantSelectType {
 	NEW, EXISTING;
 
@@ -173,4 +182,5 @@ public class PhdParticipantBean implements Serializable {
 	    return name();
 	}
     }
+
 }

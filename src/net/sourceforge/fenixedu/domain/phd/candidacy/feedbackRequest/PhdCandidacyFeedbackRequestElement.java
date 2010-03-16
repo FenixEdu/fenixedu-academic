@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest;
 
 import java.util.Collections;
 
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
@@ -44,7 +45,7 @@ public class PhdCandidacyFeedbackRequestElement extends PhdCandidacyFeedbackRequ
 	    }
 	}
     }
-    
+
     public PhdProgramCandidacyProcess getCandidacyProcess() {
 	return getProcess().getCandidacyProcess();
     }
@@ -89,20 +90,24 @@ public class PhdCandidacyFeedbackRequestElement extends PhdCandidacyFeedbackRequ
 	return hasAnyFeedbackDocuments();
     }
 
+    public boolean isFor(PhdCandidacyFeedbackRequestProcess process) {
+	return getProcess().equals(process);
+    }
+
+    public boolean isFor(Person person) {
+	return getParticipant().isFor(person);
+    }
+
     static public PhdCandidacyFeedbackRequestElement create(final PhdCandidacyFeedbackRequestProcess process,
 	    final PhdCandidacyFeedbackRequestElementBean bean) {
-	return new PhdCandidacyFeedbackRequestElement().init(process, getOrCreateParticipant(process, bean), bean);
+
+	return new PhdCandidacyFeedbackRequestElement().init(process, PhdParticipant.getUpdatedOrCreate(process
+		.getIndividualProgramProcess(), bean), bean);
     }
 
     static public PhdCandidacyFeedbackRequestElement create(final PhdCandidacyFeedbackRequestProcess process,
 	    final PhdParticipant participant, final PhdCandidacyFeedbackRequestElementBean bean) {
 	return new PhdCandidacyFeedbackRequestElement().init(process, participant, bean);
-    }
-
-    static private PhdParticipant getOrCreateParticipant(final PhdCandidacyFeedbackRequestProcess process,
-	    final PhdCandidacyFeedbackRequestElementBean bean) {
-	return !bean.hasParticipant() ? PhdParticipant.create(process.getIndividualProgramProcess(), bean) : bean
-		.getParticipant();
     }
 
 }

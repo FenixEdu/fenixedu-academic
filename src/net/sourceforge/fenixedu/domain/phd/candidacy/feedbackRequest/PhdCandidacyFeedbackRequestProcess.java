@@ -9,6 +9,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
@@ -19,12 +20,14 @@ import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
+import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.access.ExternalAccessPhdActivity;
 import net.sourceforge.fenixedu.domain.phd.access.PhdExternalOperationBean;
 import net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessType;
+import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService.AlertMessage;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
@@ -83,6 +86,9 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
 	return getSharedDocuments().getSortedTypes();
     }
 
+    /*
+     * Documents used by elements to analize candidacy and upload candidacy
+     */
     public Set<PhdProgramProcessDocument> getSharedDocumentsContent() {
 	final Set<PhdProgramProcessDocument> result = new HashSet<PhdProgramProcessDocument>();
 
@@ -95,6 +101,83 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
 	return result;
     }
 
+    public Set<PhdProgramProcessDocument> getSubmittedCandidacyFeedbackDocuments() {
+	final Set<PhdProgramProcessDocument> result = new HashSet<PhdProgramProcessDocument>();
+	for (final PhdCandidacyFeedbackRequestElement element : getElements()) {
+	    final PhdCandidacyFeedbackRequestDocument document = element.getLastFeedbackDocument();
+	    if (document != null) {
+		result.add(document);
+	    }
+	}
+	return result;
+    }
+
+    public boolean canUploadDocuments() {
+	/*
+	 * CORRECT THIS METHOD
+	 */
+	// return
+	// getCandidacyProcess().isInState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION);
+	return true;
+    }
+
+    private void notifyCoordinationOfCandidacyFeedback(final PhdCandidacyFeedbackRequestElement element) {
+
+	AlertService.alertParticipants(getIndividualProgramProcess(), AlertMessage
+		.create("message.phd.candidacy.feedback.coordinator.notification.subject"), AlertMessage.create(
+		"message.phd.candidacy.feedback.coordinator.notification.body", element.getNameWithTitle(),
+		getIndividualProgramProcess().getPerson().getName()), getOrCreateParticipantsToNofify());
+
+    }
+
+    private PhdParticipant[] getOrCreateParticipantsToNofify() {
+
+	final PhdIndividualProgramProcess mainProcess = getIndividualProgramProcess();
+	final List<PhdParticipant> result = new ArrayList<PhdParticipant>();
+
+	for (final Person person : mainProcess.getCoordinatorsFor(ExecutionYear.readCurrentExecutionYear())) {
+
+	    final PhdParticipant participant = mainProcess.getParticipant(person);
+
+	    if (participant == null) {
+		result.add(PhdParticipant
+			.getUpdatedOrCreate(mainProcess, new PhdParticipantBean().setInternalParticipant(person)));
+
+	    } else if (!participant.hasAnyCandidacyFeedbackRequestElements()) {
+		result.add(participant);
+	    }
+	}
+
+	// if (result.isEmpty()) {
+	// throw new
+	// DomainException("error.PhdCandidacyFeedbackRequestProcess.could.not.find.participants.to.notify");
+	// }
+
+	return result.toArray(new PhdParticipant[result.size()]);
+    }
+
+    public boolean hasElement(final Person person) {
+	for (final PhdCandidacyFeedbackRequestElement element : getElements()) {
+	    if (element.isFor(person)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    public PhdCandidacyFeedbackRequestElement getElement(final Person person) {
+	for (final PhdCandidacyFeedbackRequestElement element : getElements()) {
+	    if (element.isFor(person)) {
+		return element;
+	    }
+	}
+	return null;
+    }
+
+    /*
+     * ACTIVITIES
+     */
+
     static abstract private class PhdActivity extends Activity<PhdCandidacyFeedbackRequestProcess> {
 
 	@Override
@@ -104,6 +187,9 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
 	}
 
 	protected void processPreConditions(final PhdCandidacyFeedbackRequestProcess process, final IUserView userView) {
+	    if (!process.getCandidacyProcess().isInState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION)) {
+		throw new PreConditionNotValidException();
+	    }
 	}
 
 	abstract protected void activityPreConditions(final PhdCandidacyFeedbackRequestProcess process, final IUserView userView);
@@ -248,7 +334,34 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
 	    ((PhdCandidacyFeedbackRequestElement) object).delete();
 	    return process;
 	}
+    }
 
+    static public class UploadCandidacyFeedback extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdCandidacyFeedbackRequestProcess process, IUserView userView) {
+	    if (!process.hasElement(userView.getPerson())) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdCandidacyFeedbackRequestProcess executeActivity(PhdCandidacyFeedbackRequestProcess process,
+		IUserView userView, Object object) {
+
+	    final PhdProgramDocumentUploadBean bean = (PhdProgramDocumentUploadBean) object;
+
+	    if (bean.hasAnyInformation()) {
+		final PhdCandidacyFeedbackRequestElement element = process.getElement(userView.getPerson());
+
+		new PhdCandidacyFeedbackRequestDocument(element, bean.getRemarks(), bean.getFileContent(), bean.getFilename(),
+			null);
+
+		process.notifyCoordinationOfCandidacyFeedback(element);
+	    }
+
+	    return process;
+	}
     }
 
     static public class DownloadCandidacyFeedbackDocuments extends ExternalAccessPhdActivity<PhdCandidacyFeedbackRequestProcess> {
@@ -261,20 +374,16 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
 	@Override
 	protected PhdCandidacyFeedbackRequestProcess internalExecuteActivity(PhdCandidacyFeedbackRequestProcess process,
 		IUserView userView, PhdExternalOperationBean bean) {
-	    // TODO Auto-generated method stub
+	    // Auto-generated method stub
 	    return process;
 	}
     }
 
-    static public class UploadCandidacyFeedback extends ExternalAccessPhdActivity<PhdCandidacyFeedbackRequestProcess> {
+    static public class ExternalUploadCandidacyFeedback extends ExternalAccessPhdActivity<PhdCandidacyFeedbackRequestProcess> {
 
 	@Override
 	public void checkPreConditions(PhdCandidacyFeedbackRequestProcess process, IUserView userView) {
-
-	    if (!process.getCandidacyProcess().isInState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION)) {
-		throw new PreConditionNotValidException();
-	    }
-
+	    // Auto-generated method stub
 	}
 
 	@Override
@@ -287,13 +396,15 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
 			.getParticipant());
 
 		final PhdProgramDocumentUploadBean documentBean = bean.getDocumentBean();
-
 		new PhdCandidacyFeedbackRequestDocument(element, documentBean.getRemarks(), documentBean.getFileContent(),
 			documentBean.getFilename(), null);
+
+		process.notifyCoordinationOfCandidacyFeedback(element);
 	    }
 
 	    return process;
 	}
+
     }
 
     static private List<Activity> activities = new ArrayList<Activity>();
@@ -301,8 +412,9 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
 	activities.add(new EditSharedDocumentTypes());
 	activities.add(new AddPhdCandidacyFeedbackRequestElements());
 	activities.add(new DeleteCandidacyFeedbackRequestElement());
+	activities.add(new UploadCandidacyFeedback());
 
 	activities.add(new DownloadCandidacyFeedbackDocuments());
-	activities.add(new UploadCandidacyFeedback());
+	activities.add(new ExternalUploadCandidacyFeedback());
     }
 }
