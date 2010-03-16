@@ -4,6 +4,7 @@
 	<slot name="minimumCompletedCreditsFirstCycle" key="finalDegreeWorkCandidacy.requirements.minimumCompletedCreditsFirstCycle"/>
 	<slot name="minimumCompletedCreditsSecondCycle" key="finalDegreeWorkCandidacy.requirements.minimumCompletedCreditsSecondCycle"/>
 	<slot name="maximumNumberOfProposalCandidaciesPerGroup" key="finalDegreeWorkCandidacy.requirements.maximumNumberOfProposalCandidaciesPerGroup"/>
+	<slot name="maximumNumberOfProposalsPerPerson" key="finalDegreeWorkCandidacy.requirements.maximumNumberOfProposalsPerPerson"/>
 	<slot name="attributionByTeachers" key="finalDegreeWorkCandidacy.requirements.attributionByTeachers"/>
 	<slot name="allowSimultaneousCoorientationAndCompanion" key="finalDegreeWorkCandidacy.requirements.allowSimultaneousCoorientationAndCompanion"/>
 </schema>
@@ -127,6 +128,7 @@
 	<slot name="minimumCompletedCreditsFirstCycle" key="finalDegreeWorkCandidacy.requirements.minimumCompletedCreditsFirstCycle"/>
 	<slot name="minimumCompletedCreditsSecondCycle" key="finalDegreeWorkCandidacy.requirements.minimumCompletedCreditsSecondCycle"/>
 	<slot name="maximumNumberOfProposalCandidaciesPerGroup" key="finalDegreeWorkCandidacy.requirements.maximumNumberOfProposalCandidaciesPerGroup"/>
+	<slot name="maximumNumberOfProposalsPerPerson" key="finalDegreeWorkCandidacy.requirements.maximumNumberOfProposalsPerPerson"/>
 	<slot name="attributionByTeachers" key="finalDegreeWorkCandidacy.requirements.attributionByTeachers"/>
 	<slot name="allowSimultaneousCoorientationAndCompanion" key="finalDegreeWorkCandidacy.requirements.allowSimultaneousCoorientationAndCompanion"/>
 </schema>

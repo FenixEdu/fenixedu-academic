@@ -55,6 +55,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.CandidacyAttributionType;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
@@ -901,6 +902,11 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 			"finalWorkInformationForm.scheduling.invalidInterval"));
 		saveErrors(request, actionErrors);
 		return mapping.getInputForward();
+	    } else if (e instanceof DomainException) {
+		ActionErrors actionErrors = new ActionErrors();
+		actionErrors.add(e.getMessage(), new ActionError(e.getMessage()));
+		saveErrors(request, actionErrors);
+		return mapping.getInputForward();
 	    }
 	    throw new FenixActionException(e);
 	}
@@ -997,7 +1003,8 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	final ExecutionDegree executionDegree = (ExecutionDegree) readDomainObject(request, ExecutionDegree.class,
 		infoExecutionDegree.getIdInternal());
 	request.setAttribute("executionDegree", executionDegree);
-	//request.setAttribute("executionDegreeOID", executionDegree.getIdInternal());
+	// request.setAttribute("executionDegreeOID",
+	// executionDegree.getIdInternal());
 	request.setAttribute("executionDegreeOID", executionDegree.getExternalId());
 	final Scheduleing scheduleing = executionDegree.getScheduling();
 	final List branches = new ArrayList();

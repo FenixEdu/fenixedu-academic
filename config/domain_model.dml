@@ -1,4 +1,4 @@
-/* DOMAIN_MODEL.DML
+ /* DOMAIN_MODEL.DML
  * The Fenix Project Domain Model
  * 
  */
@@ -3148,6 +3148,7 @@ class DomainObject {
         HourMinuteSecond endOfCandidacyPeriodTimeHourMinuteSecond;
         YearMonthDay endOfProposalPeriodDateYearMonthDay;
         HourMinuteSecond endOfProposalPeriodTimeHourMinuteSecond;
+        Integer maximumNumberOfProposalsPerPerson;
         Integer maximumCurricularYearToCountCompletedCourses;
         Integer maximumNumberOfProposalCandidaciesPerGroup;
         Integer maximumNumberOfStudents;

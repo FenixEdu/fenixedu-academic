@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
@@ -314,5 +315,43 @@ public class Proposal extends Proposal_Base {
 	    candidacies.add(groupProposal.getFinalDegreeDegreeWorkGroup());
 	}
 	return candidacies;
+    }
+
+    @Override
+    public void setCoorientator(Person coorientator) {
+	checkPersonProposals(coorientator);
+	super.setCoorientator(coorientator);
+    }
+
+    @Override
+    public void setOrientator(Person orientator) {
+	checkPersonProposals(orientator);
+	super.setOrientator(orientator);
+    }
+
+    protected void checkPersonProposals(Person person) {
+	if (person != null && getScheduleing() != null) {
+	    int count = 0;
+
+	    for (Proposal p : person.getAssociatedProposalsByOrientator()) {
+		if (p.getScheduleing().equals(getScheduleing())) {
+		    count++;
+		}
+	    }
+
+	    for (Proposal p : person.getAssociatedProposalsByCoorientator()) {
+		if (p.getScheduleing().equals(getScheduleing())) {
+		    count++;
+		}
+	    }
+
+	    Integer maximumNumberOfProposalsPerPerson = getScheduleing().getMaximumNumberOfProposalsPerPerson();
+
+	    if (maximumNumberOfProposalsPerPerson != null && maximumNumberOfProposalsPerPerson > 0) {
+		if (count >= maximumNumberOfProposalsPerPerson) {
+		    throw new DomainException("error.Scheduleing.maximumNumberOfProposalsPerPerson");
+		}
+	    }
+	}
     }
 }

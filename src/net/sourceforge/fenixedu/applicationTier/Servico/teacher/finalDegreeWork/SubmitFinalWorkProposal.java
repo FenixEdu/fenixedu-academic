@@ -38,8 +38,10 @@ public class SubmitFinalWorkProposal extends FenixService {
 	    proposal = new Proposal();
 	    int proposalNumber = scheduleing.getCurrentProposalNumber().intValue();
 	    proposal.setProposalNumber(proposalNumber);
-	    scheduleing.setCurrentProposalNumber(proposalNumber + 1);
+	    // scheduleing.setCurrentProposalNumber(proposalNumber + 1);
 	}
+
+	proposal.setScheduleing(scheduleing);
 
 	infoProposal.setProposalOID(proposal.getExternalId());
 	proposal.setCompanionName(infoProposal.getCompanionName());
@@ -60,7 +62,6 @@ public class SubmitFinalWorkProposal extends FenixService {
 	proposal.setDeliverable(infoProposal.getDeliverable());
 	proposal.setDescription(infoProposal.getDescription());
 
-	proposal.setScheduleing(executionDegree.getScheduling());
 	proposal.setFraming(infoProposal.getFraming());
 	proposal.setLocation(infoProposal.getLocation());
 
