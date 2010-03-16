@@ -285,11 +285,11 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	}
 
 	private AlertMessage subject() {
-	    return new AlertMessage().label("message.phd.alert.candidacy.review.subject");
+	    return AlertMessage.create("message.phd.alert.candidacy.review.subject");
 	}
 
 	private AlertMessage body(final PhdIndividualProgramProcess process) {
-	    return new AlertMessage().label("message.phd.alert.candidacy.review.body").args(process.getProcessNumber(),
+	    return AlertMessage.create("message.phd.alert.candidacy.review.body").args(process.getProcessNumber(),
 		    process.getPerson().getName());
 	}
     }
