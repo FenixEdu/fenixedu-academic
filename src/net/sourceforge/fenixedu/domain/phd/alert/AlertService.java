@@ -52,13 +52,13 @@ public class AlertService {
 	    builder.append(getSlotLabel(PhdIndividualProgramProcess.class, "student.number"));
 	    builder.append(": ").append(process.getPerson().getStudent().getNumber());
 	}
-	
+
 	builder.append(getSlotLabel(PhdIndividualProgramProcess.class, "processNumber"));
 	builder.append(": ").append(process.getPhdIndividualProcessNumber().getFullProcessNumber()).append("\n");
 
 	builder.append(getSlotLabel(PhdIndividualProgramProcess.class, "person.name"));
 	builder.append(": ").append(process.getPerson().getName()).append("\n");
-	
+
 	builder.append(getSlotLabel(PhdIndividualProgramProcess.class, "phdProgram"));
 	if (process.hasPhdProgram()) {
 	    builder.append(": ").append(process.getPhdProgram().getName());
@@ -119,7 +119,8 @@ public class AlertService {
 		toNotify.add(((InternalPhdParticipant) guiding).getPerson());
 	    } else {
 		new Message(RootDomainObject.getInstance().getSystemSender(), Collections.EMPTY_LIST, Collections.EMPTY_LIST,
-			subjectKey, bodyKey, Collections.singleton(guiding.getEmail()));
+			getSubjectPrefixed(process, subjectKey), getBodyText(process, bodyKey), Collections.singleton(guiding
+				.getEmail()));
 	    }
 	}
 
@@ -192,6 +193,28 @@ public class AlertService {
 
     static public String getBodyText(PhdIndividualProgramProcess process, AlertMessage body) {
 	return getBodyCommonText(process) + body.getMessage();
+    }
+
+    static public void alertParticipants(PhdIndividualProgramProcess process, AlertMessage subject, AlertMessage body,
+	    PhdParticipant... participants) {
+
+	final Set<Person> toNotify = new HashSet<Person>();
+	for (final PhdParticipant participant : participants) {
+	    if (participant.isInternal()) {
+		toNotify.add(((InternalPhdParticipant) participant).getPerson());
+	    } else {
+		new Message(RootDomainObject.getInstance().getSystemSender(), Collections.EMPTY_LIST, Collections.EMPTY_LIST,
+			getSubjectPrefixed(process, subject), getBodyText(process, body), Collections.singleton(participant
+				.getEmail()));
+	    }
+	}
+
+	final PhdCustomAlertBean alertBean = new PhdCustomAlertBean(process, true, false, false);
+	alertBean.setSubject(getSubjectPrefixed(process, subject));
+	alertBean.setBody(getBodyText(process, body));
+	alertBean.setTargetGroup(new FixedSetGroup(toNotify));
+	alertBean.setFireDate(new LocalDate());
+	new PhdCustomAlert(alertBean);
     }
 
     static public class AlertMessage {
