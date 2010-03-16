@@ -43,7 +43,7 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
 	    String filename, Person uploader) {
 
 	checkParameters(process, documentType, content, filename, uploader);
-	
+
 	setDocumentVersion(process, documentType);
 
 	super.setPhdProgramProcess(process);
