@@ -97,6 +97,7 @@
 							<fr:property name="className" value="<%= PersonName.class.getName() %>"/>
 							<fr:property name="minChars" value="4"/>				
 						</fr:slot>
+						<fr:slot name="title" />
 					</logic:equal>
 					
 				</logic:notEmpty>

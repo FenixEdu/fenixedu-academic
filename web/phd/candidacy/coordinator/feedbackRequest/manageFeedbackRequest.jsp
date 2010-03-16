@@ -2,8 +2,11 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+<%@ taglib uri="/WEB-INF/phd.tld" prefix="phd" %>
 
 <%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestElement"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess.EditSharedDocumentTypes"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess.AddPhdCandidacyFeedbackRequestElements"%>
 
 <html:xhtml/>
 
@@ -56,14 +59,16 @@
 <br/>
 <%--  ### End Of Context Information  ### --%>
 
+<bean:define id="feedbackRequest" name="process" property="feedbackRequest" />
 
 <%--  ################################### --%>
 <%--  ###      Shared documents       ### --%>
 
-<logic:empty name="elementBean">
-	<jsp:include page="/phd/candidacy/coordinator/feedbackRequest/editSharedDocumentTypes.jsp" />
-</logic:empty>
-
+<phd:activityAvailable process="<%= feedbackRequest %>" activity="<%= EditSharedDocumentTypes.class %>" >
+	<logic:empty name="elementBean">
+		<jsp:include page="/phd/candidacy/coordinator/feedbackRequest/editSharedDocumentTypes.jsp" />
+	</logic:empty>
+</phd:activityAvailable>
 <%--  ###    End Shared documents     ### --%>
 <%--  ################################### --%>
 
@@ -73,16 +78,18 @@
 <%--  ################################### --%>
 <%--  ###    add users to request     ### --%>
 
-	<logic:empty name="elementBean">
-		<br/><br/>
-		<br/>
-		+ <html:link action="/phdCandidacyFeedbackRequest.do?method=prepareAddCandidacyFeedbackRequestElement" paramId="processId" paramName="process" paramProperty="externalId">
-			<bean:message bundle="PHD_RESOURCES" key="label.phd.candidacy.feedback.add.element"/>
-		</html:link>
-	</logic:empty>
-
-	<jsp:include page="/phd/candidacy/coordinator/feedbackRequest/addCandidacyFeedbackRequestElement.jsp" />
-
+	<phd:activityAvailable process="<%= feedbackRequest %>" activity="<%= AddPhdCandidacyFeedbackRequestElements.class %>" >
+		<logic:empty name="elementBean">
+			<br/>
+			<br/>
+			+ <html:link action="/phdCandidacyFeedbackRequest.do?method=prepareAddCandidacyFeedbackRequestElement" paramId="processId" paramName="process" paramProperty="externalId">
+				<bean:message bundle="PHD_RESOURCES" key="label.phd.candidacy.feedback.add.element"/>
+			</html:link>
+		</logic:empty>
+		
+		<jsp:include page="/phd/candidacy/coordinator/feedbackRequest/addCandidacyFeedbackRequestElement.jsp" />
+	</phd:activityAvailable>
+	
 <%--  ###   End add users to request  ### --%>
 <%--  ################################### --%>
 
@@ -109,6 +116,17 @@
 			</fr:schema>
 			
 		</fr:view>
+		
+		<logic:greaterEqual name="process" property="feedbackRequest.submittedCandidacyFeedbackDocuments" value="2">
+			<p>
+			<span class="compress">
+			<html:link action="/phdCandidacyFeedbackRequest.do?method=downloadSubmittedCandidacyFeedbackDocuments" paramId="processId" paramName="processId">
+				<bean:message key="label.phd.documents.download.all" bundle="PHD_RESOURCES" />
+			</html:link>
+			</span>
+			</p>
+		</logic:greaterEqual>
+		
 		
 	</logic:empty>
 <%--  ###   End of display elements   ### --%>
