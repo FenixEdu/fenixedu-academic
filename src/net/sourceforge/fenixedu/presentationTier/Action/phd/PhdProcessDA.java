@@ -1,10 +1,11 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd;
 
+import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.Collection;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,6 +17,8 @@ import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.lang.StringUtils;
@@ -23,7 +26,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixWebFramework.renderers.plugin.ConfigurationReader;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 abstract public class PhdProcessDA extends FenixDispatchAction {
@@ -129,8 +131,16 @@ abstract public class PhdProcessDA extends FenixDispatchAction {
 	}
     }
 
-    protected String getMessageFromResource(final String key, Object ... args) {
+    protected String getMessageFromResource(final String key, Object... args) {
 	return MessageFormat.format(ResourceBundle.getBundle(PHD_RESOURCES, Language.getLocale()).getString(key), args);
+    }
+
+    protected String getZipDocumentsFilename(PhdIndividualProgramProcess process) {
+	return process.getProcessNumber().replace("/", "-") + "-Documents.zip";
+    }
+
+    protected byte[] createZip(final Collection<PhdProgramProcessDocument> documents) throws IOException {
+	return PhdDocumentsZip.zip(documents);
     }
 
 }
