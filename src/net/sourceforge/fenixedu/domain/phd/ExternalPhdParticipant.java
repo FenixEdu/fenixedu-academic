@@ -18,13 +18,6 @@ public class ExternalPhdParticipant extends ExternalPhdParticipant_Base {
 	    final String institution, final String email) {
 
 	check(name, "error.ExternalPhdParticipant.invalid.name");
-	// check(qualification,
-	// "error.ExternalPhdParticipant.invalid.qualification");
-	// check(workLocation,
-	// "error.ExternalPhdParticipant.invalid.workLocation");
-	// check(institution,
-	// "error.ExternalPhdParticipant.invalid.institution");
-	// check(email, "error.ExternalPhdParticipant.invalid.email");
 
 	setName(name);
 	setTitle(title);
