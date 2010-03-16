@@ -37,7 +37,7 @@
 		</li>
 		<li style="display: inline;">
 			<html:link action="/phdProgramCandidacyProcess.do?method=manageCandidacyReview" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
-				<bean:message bundle="PHD_RESOURCES" key="label.phd.candidacy.manageCandidacyReview"/>
+				<bean:message bundle="PHD_RESOURCES" key="label.phd.candidacy.academicAdminOffice.manageCandidacyReview"/>
 			</html:link>
 		</li>
 		<phd:activityAvailable process="<%= candidacyProcess %>" activity="<%= PhdProgramCandidacyProcess.RequestCandidacyReview.class %>">
