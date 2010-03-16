@@ -1,9 +1,12 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/phd.tld" prefix="phd" %>
 
 <%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.UploadCandidacyReview"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess.UploadCandidacyFeedback"%>
+
 <bean:define id="candidacyProcess" name="process" property="candidacyProcess" />
 
 <br/>
@@ -34,14 +37,21 @@
 				</html:link>
 			</li>
 			</phd:activityAvailable>
-			
-			<%-- ADD CONDITION HERE OR USE THE PREVIOUS --%>
-			
 			<li style="display: inline;">
 				<html:link action="/phdCandidacyFeedbackRequest.do?method=manageFeedbackRequest" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.candidacy.feedback.request"/>
 				</html:link>
 			</li>
+			<logic:notEmpty name="candidacyProcess" property="feedbackRequest">
+				<bean:define id="feedbackRequest" name="candidacyProcess" property="feedbackRequest" />
+				<phd:activityAvailable process="<%= feedbackRequest %>" activity="<%= UploadCandidacyFeedback.class %>">
+					<li style="display: inline;">
+						<html:link action="/phdCandidacyFeedbackRequest.do?method=prepareUploadCandidacyFeedback" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
+							<bean:message bundle="PHD_RESOURCES" key="label.phd.candidacy.feedback.teacher"/>
+						</html:link>
+					</li>
+				</phd:activityAvailable>
+			</logic:notEmpty>
 		</ul>
     </td>
   </tr>
