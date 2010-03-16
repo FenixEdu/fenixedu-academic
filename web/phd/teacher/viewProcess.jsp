@@ -11,7 +11,10 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess.DownloadComissionDocument"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess.DownloadReportDocument"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RequestPublicPresentationSeminarComission"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess"%><html:xhtml/>
+<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess.UploadCandidacyFeedback"%>
+
+<html:xhtml/>
 
 <logic:present role="TEACHER">
 
@@ -139,6 +142,16 @@
 					</html:link>
 				</li>
 			</phd:activityAvailable>
+			<logic:notEmpty name="candidacyProcess" property="feedbackRequest">
+				<bean:define id="feedbackRequest" name="candidacyProcess" property="feedbackRequest" />
+				<phd:activityAvailable process="<%= feedbackRequest %>" activity="<%= UploadCandidacyFeedback.class %>">
+					<li style="display: inline;">
+						<html:link action="/phdCandidacyFeedbackRequest.do?method=prepareUploadCandidacyFeedback" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
+							<bean:message bundle="PHD_RESOURCES" key="label.phd.candidacy.feedback.teacher"/>
+						</html:link>
+					</li>
+				</phd:activityAvailable>
+			</logic:notEmpty>
 		</ul>
     </td>
   </tr>
