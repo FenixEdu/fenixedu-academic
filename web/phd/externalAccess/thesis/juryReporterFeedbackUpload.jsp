@@ -64,8 +64,12 @@
 			<fr:edit id="operationBean" name="operationBean">
 				<fr:schema bundle="PHD_RESOURCES" type="<%= PhdExternalOperationBean.class.getName() %>">
 				
-					<fr:slot name="email" required="true" validator="<%= EmailValidator.class.getName() %>"/>
-					<fr:slot name="password" required="true" layout="password" />
+					<fr:slot name="email" required="true" validator="<%= EmailValidator.class.getName() %>">
+						<fr:property name="size" value="40" />
+					</fr:slot>
+					<fr:slot name="password" required="true" layout="password">
+						<fr:property name="size" value="40" />
+					</fr:slot>
 					
 					<fr:slot name="documentBean.file" required="true">
 						<fr:validator name="<%= FileValidator.class.getName() %>">
