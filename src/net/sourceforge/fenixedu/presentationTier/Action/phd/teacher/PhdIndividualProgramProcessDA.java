@@ -18,15 +18,15 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 @Mapping(path = "/phdIndividualProgramProcess", module = "teacher")
 @Forwards(tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp"), value = {
 
-    @Forward(name = "manageProcesses", path = "/phd/teacher/manageProcesses.jsp"),
+@Forward(name = "manageProcesses", path = "/phd/teacher/manageProcesses.jsp"),
 
-    @Forward(name = "viewProcess", path = "/phd/teacher/viewProcess.jsp"),
+@Forward(name = "viewProcess", path = "/phd/teacher/viewProcess.jsp"),
 
-    @Forward(name = "viewAlertMessages", path = "/phd/teacher/viewAlertMessages.jsp"),
+@Forward(name = "viewAlertMessages", path = "/phd/teacher/viewAlertMessages.jsp"),
 
-    @Forward(name = "viewProcessAlertMessages", path = "/phd/teacher/viewProcessAlertMessages.jsp"),
+@Forward(name = "viewProcessAlertMessages", path = "/phd/teacher/viewProcessAlertMessages.jsp"),
 
-    @Forward(name = "requestPublicPresentationSeminarComission", path = "/phd/teacher/requestPublicPresentationSeminarComission.jsp")
+@Forward(name = "requestPublicPresentationSeminarComission", path = "/phd/teacher/requestPublicPresentationSeminarComission.jsp")
 
 })
 public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramProcessDA {
@@ -39,8 +39,8 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 	searchBean.setFilterPhdPrograms(false);
 
 	final List<PhdIndividualProgramProcess> processes = new ArrayList<PhdIndividualProgramProcess>();
-	for (final InternalPhdParticipant eachGuiding : getLoggedPerson(request).getInternalParticipants()) {
-	    processes.add(eachGuiding.getIndividualProcess());
+	for (final InternalPhdParticipant participant : getLoggedPerson(request).getInternalParticipants()) {
+	    processes.add(participant.getIndividualProcess());
 	}
 
 	searchBean.setProcesses(processes);
