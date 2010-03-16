@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.coordinator.feedbackRequest;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -21,6 +22,7 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidac
 import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess.AddPhdCandidacyFeedbackRequestElements;
 import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess.DeleteCandidacyFeedbackRequestElement;
 import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess.EditSharedDocumentTypes;
+import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdDocumentsZip;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.CommonPhdCandidacyDA;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyArrayConverter;
 
@@ -65,6 +67,17 @@ public class PhdCandidacyFeedbackRequestDA extends CommonPhdCandidacyDA {
 
 	    request.setAttribute("sharedDocumentTypes", builder.toString());
 	}
+    }
+
+    public ActionForward downloadSubmittedCandidacyFeedbackDocuments(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+	final PhdProgramCandidacyProcess process = getProcess(request);
+
+	writeFile(response, getZipDocumentsFilename(process.getIndividualProgramProcess()), PhdDocumentsZip.ZIP_MIME_TYPE,
+		createZip(process.getFeedbackRequest().getSubmittedCandidacyFeedbackDocuments()));
+
+	return null;
     }
 
     /*
@@ -212,7 +225,7 @@ public class PhdCandidacyFeedbackRequestDA extends CommonPhdCandidacyDA {
 	    ExecuteProcessActivity.run(getProcess(request).getFeedbackRequest(), DeleteCandidacyFeedbackRequestElement.class,
 		    getDomainObject(request, "elementOid"));
 	    addSuccessMessage(request, "message.phd.candidacy.feedback.element.removed.with.success");
-	    
+
 	} catch (final DomainException e) {
 	    addErrorMessage(request, e.getMessage(), e.getArgs());
 	}

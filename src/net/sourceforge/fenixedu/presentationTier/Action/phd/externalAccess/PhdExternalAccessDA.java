@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd.externalAccess;
 
 import java.io.IOException;
-import java.util.Collection;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,8 +16,10 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.PhdThesisReportFeedbackDocument;
 import net.sourceforge.fenixedu.domain.phd.access.PhdExternalOperationBean;
 import net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessType;
+import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestElement;
 import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess.DownloadCandidacyFeedbackDocuments;
+import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess.ExternalUploadCandidacyFeedback;
 import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryDocumentsDownload;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryReporterFeedbackExternalUpload;
@@ -58,18 +59,12 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Forward(name = "juryReporterFeedbackUpload", path = "/phd/externalAccess/thesis/juryReporterFeedbackUpload.jsp"),
 
-@Forward(name = "candidacyFeedbackDocumentsDownload", path = "/phd/externalAccess/downloadDocuments.jsp")
+@Forward(name = "candidacyFeedbackDocumentsDownload", path = "/phd/externalAccess/downloadDocuments.jsp"),
+
+@Forward(name = "candidacyFeedbackUpload", path = "/phd/externalAccess/candidacy/candidacyFeedbackUpload.jsp")
 
 })
 public class PhdExternalAccessDA extends PhdProcessDA {
-
-    protected String getZipDocumentsFilename(PhdIndividualProgramProcess process) {
-	return process.getProcessNumber().replace("/", "-") + "-Documents.zip";
-    }
-
-    protected byte[] createZip(final Collection<PhdProgramProcessDocument> documents) throws IOException {
-	return PhdDocumentsZip.zip(documents);
-    }
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -163,7 +158,7 @@ public class PhdExternalAccessDA extends PhdProcessDA {
     public ActionForward prepareJuryReporterFeedbackUploadInvalid(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	final PhdExternalOperationBean bean = (PhdExternalOperationBean) getRenderedObject("operationBean");
+	final PhdExternalOperationBean bean = getOperationBean();
 	request.setAttribute("operationBean", bean);
 
 	final PhdThesisReportFeedbackDocument document = getThesisJuryElement(request, bean).getLastFeedbackDocument();
@@ -223,7 +218,7 @@ public class PhdExternalAccessDA extends PhdProcessDA {
 
 	try {
 
-	    final PhdCandidacyFeedbackRequestProcess process = getProcess(request).getCandidacyProcess().getFeedbackRequest();
+	    final PhdCandidacyFeedbackRequestProcess process = getFeedBackRequest(request);
 	    ExecuteProcessActivity.run(process, DownloadCandidacyFeedbackDocuments.class, getOperationBean());
 
 	    final Set<PhdProgramProcessDocument> documents = process.getSharedDocumentsContent();
@@ -243,6 +238,62 @@ public class PhdExternalAccessDA extends PhdProcessDA {
 	}
 
 	return prepareJuryDocumentsDownloadInvalid(mapping, actionForm, request, response);
+    }
+
+    private PhdCandidacyFeedbackRequestProcess getFeedBackRequest(HttpServletRequest request) {
+	return getProcess(request).getCandidacyProcess().getFeedbackRequest();
+    }
+
+    public ActionForward prepareCandidacyFeedbackUpload(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final PhdExternalOperationBean bean = new PhdExternalOperationBean(getPhdParticipant(request),
+		PhdProcessAccessType.CANDIDACY_FEEDBACK_UPLOAD);
+
+	bean.setDocumentBean(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.CANDIDACY_FEEDBACK_DOCUMENT));
+
+	request.setAttribute("operationBean", bean);
+	request.setAttribute("canUploadDocuments", getFeedBackRequest(request).canUploadDocuments());
+	request.setAttribute("lastFeedbackDocument", getCandidacyFeedbackRequestElement(request, bean).getLastFeedbackDocument());
+
+	return mapping.findForward("candidacyFeedbackUpload");
+    }
+
+    private PhdCandidacyFeedbackRequestElement getCandidacyFeedbackRequestElement(HttpServletRequest request,
+	    PhdExternalOperationBean bean) {
+	return bean.getParticipant().getPhdCandidacyFeedbackRequestElement(getFeedBackRequest(request));
+    }
+
+    public ActionForward prepareCandidacyFeedbackUploadInvalid(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	final PhdExternalOperationBean bean = getOperationBean();
+	request.setAttribute("operationBean", bean);
+	request.setAttribute("canUploadDocuments", getFeedBackRequest(request).canUploadDocuments());
+	request.setAttribute("lastFeedbackDocument", getCandidacyFeedbackRequestElement(request, bean).getLastFeedbackDocument());
+
+	return mapping.findForward("candidacyFeedbackUpload");
+    }
+
+    public ActionForward candidacyFeedbackUpload(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	try {
+
+	    if (!RenderUtils.getViewState("operationBean").isValid()) {
+		return prepareCandidacyFeedbackUploadInvalid(mapping, actionForm, request, response);
+	    }
+
+	    ExecuteProcessActivity.run(getFeedBackRequest(request), ExternalUploadCandidacyFeedback.class, getOperationBean());
+
+	    addSuccessMessage(request, "message.phd.candidacy.feedback.document.uploaded.with.success");
+
+	} catch (DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	    return prepareCandidacyFeedbackUploadInvalid(mapping, actionForm, request, response);
+	}
+
+	return prepare(mapping, actionForm, request, response);
     }
 
     // end of Download candidacy feedback documents
