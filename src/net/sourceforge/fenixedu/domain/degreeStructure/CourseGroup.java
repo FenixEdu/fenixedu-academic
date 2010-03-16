@@ -793,7 +793,9 @@ public class CourseGroup extends CourseGroup_Base {
 	    return true;
 	} else {
 	    for(Context context : getParentContexts()) {
-		return context.getParentCourseGroup().hasAnyParentBranchCourseGroup();
+		if (context.getParentCourseGroup().hasAnyParentBranchCourseGroup()) {
+		    return true;
+		}
 	    }
 	}
 	return false;
