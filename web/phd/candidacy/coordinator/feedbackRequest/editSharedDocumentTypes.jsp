@@ -10,7 +10,7 @@
 	<logic:notEmpty name="sharedDocumentTypes">
 		<strong><bean:message key="label.phd.candidacy.feedback.shared.documents" bundle="PHD_RESOURCES" />:</strong> <bean:write name="sharedDocumentTypes"/>
 		&nbsp;(<html:link action="/phdCandidacyFeedbackRequest.do?method=prepareEditSharedDocuments" paramId="processId" paramName="process" paramProperty="externalId">
-			<bean:message bundle="PHD_RESOURCES" key="label.phd.candidacy.feedback.request.edit.shared.documents"/>
+			<bean:message bundle="PHD_RESOURCES" key="label.phd.manage.candidacy.feedback.request.edit.shared.documents"/>
 		</html:link>)
 	</logic:notEmpty>
 </logic:notPresent>
@@ -18,7 +18,7 @@
 <logic:empty name="sharedDocumentTypes">
 	<br/>
 	<html:link action="/phdCandidacyFeedbackRequest.do?method=prepareEditSharedDocuments" paramId="processId" paramName="process" paramProperty="externalId">
-		<bean:message bundle="PHD_RESOURCES" key="label.phd.candidacy.feedback.request.set.shared.documents"/>
+		<bean:message bundle="PHD_RESOURCES" key="label.phd.manage.candidacy.feedback.request.set.shared.documents"/>
 	</html:link>
 </logic:empty>
 
