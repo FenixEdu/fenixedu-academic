@@ -148,11 +148,6 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
 	    }
 	}
 
-	// if (result.isEmpty()) {
-	// throw new
-	// DomainException("error.PhdCandidacyFeedbackRequestProcess.could.not.find.participants.to.notify");
-	// }
-
 	return result.toArray(new PhdParticipant[result.size()]);
     }
 
@@ -188,7 +183,8 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
 
 	protected void processPreConditions(final PhdCandidacyFeedbackRequestProcess process, final IUserView userView) {
 	    if (!process.getCandidacyProcess().isInState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION)) {
-		throw new PreConditionNotValidException();
+		throw new PreConditionNotValidException(
+			"error.PhdCandidacyFeedbackRequestProcess.candidacy.process.is.not.pending.for.coordinator.opinion");
 	    }
 	}
 
@@ -197,6 +193,11 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
 
     @StartActivity
     static public class CreateCandidacy extends PhdActivity {
+
+	@Override
+	protected void processPreConditions(PhdCandidacyFeedbackRequestProcess process, IUserView userView) {
+	    // Auto-generated method stub
+	}
 
 	@Override
 	protected void activityPreConditions(PhdCandidacyFeedbackRequestProcess noProcess, IUserView userView) {
@@ -368,7 +369,10 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
 
 	@Override
 	public void checkPreConditions(PhdCandidacyFeedbackRequestProcess process, IUserView userView) {
-	    // TODO Auto-generated method stub
+	    if (!process.getCandidacyProcess().isInState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION)) {
+		throw new PreConditionNotValidException(
+			"error.PhdCandidacyFeedbackRequestProcess.candidacy.process.is.not.pending.for.coordinator.opinion");
+	    }
 	}
 
 	@Override
@@ -383,7 +387,10 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
 
 	@Override
 	public void checkPreConditions(PhdCandidacyFeedbackRequestProcess process, IUserView userView) {
-	    // Auto-generated method stub
+	    if (!process.getCandidacyProcess().isInState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION)) {
+		throw new PreConditionNotValidException(
+			"error.PhdCandidacyFeedbackRequestProcess.candidacy.process.is.not.pending.for.coordinator.opinion");
+	    }
 	}
 
 	@Override
