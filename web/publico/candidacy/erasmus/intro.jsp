@@ -27,7 +27,38 @@
 
 <h1><bean:message key="title.application.name.erasmus" bundle="CANDIDATE_RESOURCES"/></h1>
 
+
+
 <p><b>Welcome to the application submission proccess.</b></p>
+
+<h2>Requirements</h2>
+
+<h3>ERASMUS Bilateral Agreement</h3>
+
+<div class="h_box">	
+	<p class="mvert05">
+		<img src="<%= request.getContextPath() %>/images/stork/icon_exclamation.gif" />
+		Before you proceed to application form submission please check the conditions and if your university holds and ERASMUS bilateral agreement with IST.
+		You can consult by following this link <%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><b><a href="http://gri.ist.utl.pt/en/ist"/>GRI</a></b>
+	</p>
+</div>
+
+<h3>Required Documents</h3>
+
+<div class="h_box">	
+	<p class="mvert05">
+		After you submit your application form, you are required to upload five documents:
+	</p>
+	<p class="mvert05">
+		<ul>
+			<li>Passport photo - The photo will be used to generate IST student card. Please send a passport photo</li>
+			<li>Photocopy of your passport or identity card</li>
+			<li>Learning Agreement - The learning agreement will be generated and available in your application process after the submission. You're required to download, sign and stamp ....</li>
+			<li>Curriculum Vitae</li>
+			<li>Transcript of records</li>
+		</ul>
+	</p>
+</div>
 
 
 <h2>Application Form</h2>
@@ -39,13 +70,13 @@ The application submission may be acomplished in two ways:
 <p><img src="<%= request.getContextPath() %>/images/stork/stork.jpg" alt="<bean:message key="stork.logo" bundle="IMAGE_RESOURCES" />" width="83px" height="51px" /></p>
 <p class="mtop1.5"> 
 The STORK project is an effort to establish a European Identification Platform that will allow citizens to establish new electronic relations in European Union, 
-just by presenting their national citizen card. So in this context you can identify yourself securely and easily. 
+just by presenting their national citizen card. So in this context you can identify yourself securely and easily.
 </p>
 
 <div class="h_box">	
 	<p class="mvert05">
 		<img src="<%= request.getContextPath() %>/images/stork/icon_info.gif" />
-		To fill your application with national citizen card you need "the machine" to authenticate yourself in the Identification Plataform.
+		To fill your application with national citizen card you need the card reader to authenticate yourself in the Identification Plataform.
 	</p>
 	<p class="mvert05 ">
 		<img src="<%= request.getContextPath() %>/images/stork/icon_info.gif" />

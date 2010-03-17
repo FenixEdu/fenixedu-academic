@@ -81,6 +81,7 @@
 		<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
 		
  		<h2 class="mtop15"><bean:message key="title.personal.data" bundle="CANDIDATE_RESOURCES"/></h2>
+ 		<p><em>Fill the form with your personal data. All fields are required.</em></p>
 
 		<fr:edit id="candidacyProcess.personalDataBean"
 			name="individualCandidacyProcessBean"

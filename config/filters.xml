@@ -651,6 +651,13 @@
     </filter>
 
     <filter>
+        <name>AlumniAuthorization</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.AlumniAuthorizationFilter</implementationClass>
+        <description></description>
+        <isTransactional>false</isTransactional>
+    </filter>
+
+    <filter>
         <name>StudentListByCurricularCourseAuthorization</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.StudentListByCurricularCourseAuthorizationFilter</implementationClass>
         <description></description>

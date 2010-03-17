@@ -228,7 +228,7 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.CancelAcademicServiceRequest</implementationClass>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="StudentOrAcademicAdministrativeOfficeAuthorization"/>
+            <chain name="AlumniOrStudentOrAcademicAdministrativeOfficeAuthorization"/>
         </filterChains>
     </service>
 

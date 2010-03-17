@@ -141,7 +141,7 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 
 	    ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
 	    String link = String.format(bundle.getString(getProcessType().getSimpleName()
-		    + ".const.public.application.access.link"), hash.getValue(), Language.getLocale().getLanguage());
+		    + ".const.public.application.submission.link"), hash.getValue(), Language.getLocale().getLanguage());
 
 	    request.setAttribute("link", link);
 
