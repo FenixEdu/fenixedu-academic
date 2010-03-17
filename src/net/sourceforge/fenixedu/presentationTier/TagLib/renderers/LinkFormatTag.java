@@ -77,6 +77,10 @@ public class LinkFormatTag extends TagSupport {
     public void setConfirmation(String confirmation) {
 	this.confirmation = confirmation;
     }
+    
+    public boolean hasConfirmation() {
+	return !empty(this.confirmation);
+    }
 
     public String getOrder() {
 	return order;
@@ -119,6 +123,10 @@ public class LinkFormatTag extends TagSupport {
      */
     private LinkFormatTag setConfirmation(PropertyContainerTag parent) throws JspException {
 
+	if (!hasConfirmation()) {
+	    return this;
+	}
+	
 	final String[] values = getConfirmation().split(ELEMENTS_SEPARATOR);
 	
 	if (values.length == 0) {
@@ -153,6 +161,7 @@ public class LinkFormatTag extends TagSupport {
 
     private LinkFormatTag setLabel(final PropertyContainerTag parent) throws JspException {
 
+	// label is required
 	final String[] values = getLabel().split(ELEMENTS_SEPARATOR);
 
 	if (values.length < 1) {
