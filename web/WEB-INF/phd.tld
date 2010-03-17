@@ -35,5 +35,27 @@
 	</attribute>
 
   </tag>
+  
+  <tag>
+	<name>accessTypeAvailable</name>
+	<tag-class>net.sourceforge.fenixedu.presentationTier.TagLib.phd.AccessTypeAvailableTag</tag-class>
+	<body-content>JSP</body-content>
+ 	<description>
+      Check if given activity can be executed by logged person. Activity list must be present in request 
+    </description>
+	
+	<attribute>
+    	<name>mainProcess</name>
+    	<required>true</required>
+    	<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	
+	<attribute>
+    	<name>accessType</name>
+    	<required>true</required>
+    	<rtexprvalue>true</rtexprvalue>
+	</attribute>
+
+  </tag>
 
 </taglib>
