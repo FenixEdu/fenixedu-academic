@@ -81,6 +81,10 @@ public class PhdCandidacyFeedbackRequestElement extends PhdCandidacyFeedbackRequ
     public String getNameWithTitle() {
 	return getParticipant().getNameWithTitle();
     }
+    
+    public String getName() {
+	return getParticipant().getName();
+    }
 
     public String getEmail() {
 	return getParticipant().getEmail();
