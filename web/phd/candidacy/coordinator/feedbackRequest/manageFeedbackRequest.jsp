@@ -14,7 +14,7 @@
 
 <%-- ### Title #### --%>
 <em><bean:message  key="label.phd.coordinator.breadcrumb" bundle="PHD_RESOURCES"/></em>
-<h2><bean:message key="label.phd.candidacy.feedback.request" bundle="PHD_RESOURCES" /></h2>
+<h2><bean:message key="label.phd.manage.candidacy.feedback.request" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 
 
@@ -56,27 +56,28 @@
   </tr>
 </table>
 
-<br/>
+
 <%--  ### End Of Context Information  ### --%>
 
-<bean:define id="feedbackRequest" name="process" property="feedbackRequest" />
-
-<%--  ################################### --%>
-<%--  ###      Shared documents       ### --%>
-
-<phd:activityAvailable process="<%= feedbackRequest %>" activity="<%= EditSharedDocumentTypes.class %>" >
+<logic:empty name="process" property="feedbackRequest">
 	<logic:empty name="elementBean">
+		<br/>
 		<jsp:include page="/phd/candidacy/coordinator/feedbackRequest/editSharedDocumentTypes.jsp" />
 	</logic:empty>
-</phd:activityAvailable>
-<%--  ###    End Shared documents     ### --%>
-<%--  ################################### --%>
-
+</logic:empty>
 
 <logic:notEmpty name="process" property="feedbackRequest">
 
 <%--  ################################### --%>
 <%--  ###    add users to request     ### --%>
+
+	<bean:define id="feedbackRequest" name="process" property="feedbackRequest" />
+	
+	<phd:activityAvailable process="<%= feedbackRequest %>" activity="<%= EditSharedDocumentTypes.class %>" >
+		<logic:empty name="elementBean">
+			<jsp:include page="/phd/candidacy/coordinator/feedbackRequest/editSharedDocumentTypes.jsp" />
+		</logic:empty>
+	</phd:activityAvailable>
 
 	<phd:activityAvailable process="<%= feedbackRequest %>" activity="<%= AddPhdCandidacyFeedbackRequestElements.class %>" >
 		<logic:empty name="elementBean">
@@ -112,12 +113,18 @@
 			<fr:schema bundle="PHD_RESOURCES" type="<%= PhdCandidacyFeedbackRequestElement.class.getName() %>">
 				<fr:slot name="nameWithTitle" />
 				<fr:slot name="email" />
-				<fr:slot name="feedbackSubmitted" layout="boolean-icon" />
+				<fr:slot name="feedbackSubmitted" layout="boolean-icon">
+					<fr:property name="falseIconPath" value="/images/icon_exclamation.gif" />
+				</fr:slot>
+				<fr:slot name="lastFeedbackDocument" layout="null-as-label">
+					<fr:property name="subLayout" value="link" />
+				</fr:slot>
 			</fr:schema>
 			
 		</fr:view>
 		
-		<logic:greaterEqual name="process" property="feedbackRequest.submittedCandidacyFeedbackDocuments" value="2">
+		<bean:size id="feedbackDocuments" name="process" property="feedbackRequest.submittedCandidacyFeedbackDocuments" />
+		<logic:greaterEqual name="feedbackDocuments" value="1">
 			<p>
 			<span class="compress">
 			<html:link action="/phdCandidacyFeedbackRequest.do?method=downloadSubmittedCandidacyFeedbackDocuments" paramId="processId" paramName="processId">
@@ -126,7 +133,6 @@
 			</span>
 			</p>
 		</logic:greaterEqual>
-		
 		
 	</logic:empty>
 <%--  ###   End of display elements   ### --%>
