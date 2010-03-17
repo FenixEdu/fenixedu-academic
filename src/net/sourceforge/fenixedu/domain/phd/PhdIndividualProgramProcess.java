@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.phd;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -1174,6 +1175,29 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     public boolean isParticipant(final Person person) {
 	return getParticipant(person) != null;
+    }
+
+    public Collection<PhdProcessStateType> getAllPhdProcessStateTypes() {
+	final Collection<PhdProcessStateType> result = new HashSet<PhdProcessStateType>();
+
+	if (hasCandidacyProcess()) {
+
+	    result.add(getCandidacyProcess().getActiveState());
+
+	    if (getCandidacyProcess().hasFeedbackRequest()) {
+		result.add(getCandidacyProcess().getFeedbackRequest().getActiveState());
+	    }
+	}
+
+	if (hasSeminarProcess()) {
+	    result.add(getSeminarProcess().getActiveState());
+	}
+
+	if (hasThesisProcess()) {
+	    result.add(getThesisProcess().getActiveState());
+	}
+
+	return result;
     }
 
 }
