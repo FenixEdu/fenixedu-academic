@@ -59,7 +59,8 @@ public class PhdCandidacyFeedbackRequestElementBean extends PhdParticipantBean {
     }
 
     public void updateWithExistingPhdParticipants() {
-
+	setParticipants(new ArrayList<PhdParticipant>());
+	
 	if (!getExistingParticipants().isEmpty()) {
 	    setParticipantSelectType(PhdParticipantSelectType.EXISTING);
 	} else {
