@@ -1,6 +1,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%><html:xhtml/>
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestDocument"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
@@ -89,6 +90,26 @@
 			<fr:property name="sortBy" value="documentType=asc" />
 		</fr:layout>
 	</fr:view>
+</logic:notEmpty>
+
+<logic:notEmpty name="process" property="feedbackRequest">
+	
+	<br/>
+	<strong><bean:message  key="label.phd.candidacy.feedback.request.documents" bundle="PHD_RESOURCES"/></strong>
+	<fr:view name="process" property="feedbackRequest.submittedCandidacyFeedbackDocuments">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle2 thlight mtop15" />
+			<fr:property name="columnClasses" value=",,acenter,"/>
+		</fr:layout>
+		
+		<fr:schema bundle="PHD_RESOURCES" type="<%= PhdCandidacyFeedbackRequestDocument.class.getName() %>">
+			<fr:slot name="documentType" layout="phd-enum-renderer" />
+			<fr:slot name="element.name" />
+			<fr:slot name="documentVersion"/>
+			<fr:slot name="this" layout="link"/>
+		</fr:schema>
+	</fr:view>
+
 </logic:notEmpty>
 
 <%--  ### End Of Documents  ### --%>

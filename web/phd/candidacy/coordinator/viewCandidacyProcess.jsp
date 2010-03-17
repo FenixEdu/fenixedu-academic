@@ -39,7 +39,7 @@
 			</phd:activityAvailable>
 			<li style="display: inline;">
 				<html:link action="/phdCandidacyFeedbackRequest.do?method=manageFeedbackRequest" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
-					<bean:message bundle="PHD_RESOURCES" key="label.phd.candidacy.feedback.request"/>
+					<bean:message bundle="PHD_RESOURCES" key="label.phd.manage.candidacy.feedback.request"/>
 				</html:link>
 			</li>
 			<logic:notEmpty name="candidacyProcess" property="feedbackRequest">
