@@ -53,6 +53,7 @@ import net.sourceforge.fenixedu.domain.space.Space.SpaceAccessGroupType;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.spaceBlueprints.SpaceBlueprintsDWGProcessor;
 
 import org.apache.struts.action.ActionForm;
@@ -567,12 +568,22 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	    final BlueprintFile blueprintFile = mostRecentBlueprint.getBlueprintFile();
 	    final byte[] blueprintBytes = blueprintFile.getContent().getBytes();
 	    final InputStream inputStream = new ByteArrayInputStream(blueprintBytes);
-	    BlueprintTextRectangles blueprintTextRectangles = SpaceBlueprintsDWGProcessor.getBlueprintTextRectangles(inputStream,
-		    mostRecentBlueprint.getSpace(), viewBlueprintNumbers, viewOriginalSpaceBlueprint, viewSpaceIdentifications,
-		    viewDoorNumbers, scalePercentage);
+	    try {
+		BlueprintTextRectangles blueprintTextRectangles = SpaceBlueprintsDWGProcessor.getBlueprintTextRectangles(inputStream,
+			mostRecentBlueprint.getSpace(), viewBlueprintNumbers, viewOriginalSpaceBlueprint, viewSpaceIdentifications,
+			viewDoorNumbers, scalePercentage);
+		request.setAttribute("blueprintTextRectangles", blueprintTextRectangles);
+	    } catch (final Error e) {
+		if (e.getMessage().equals("Dwg version not supported")) {
+		    ActionMessages actionMessages = new ActionMessages();
+		    actionMessages.add("", new ActionMessage(e.getMessage()));
+		    saveMessages(request, actionMessages);
+		} else {
+		    throw e;
+		}
+	    }
 
 	    request.setAttribute("mostRecentBlueprint", mostRecentBlueprint);
-	    request.setAttribute("blueprintTextRectangles", blueprintTextRectangles);
 	    request.setAttribute("suroundingSpaceBlueprint", suroundingSpaceBlueprint);
 	}
 
