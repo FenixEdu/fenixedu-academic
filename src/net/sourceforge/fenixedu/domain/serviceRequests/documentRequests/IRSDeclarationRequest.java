@@ -29,10 +29,6 @@ public class IRSDeclarationRequest extends IRSDeclarationRequest_Base {
 		    "error.serviceRequests.documentRequests.SchoolRegistrationDeclarationRequest.year.cannot.be.null");
 	}
 
-	if (!bean.getRegistration().isActive()) {
-	    throw new DomainException("IRSDeclarationRequest.registration.is.not.active");
-	}
-
 	if (new YearMonthDay(bean.getYear(), 1, 1).isBefore(new YearMonthDay(FIRST_VALID_YEAR, 1, 1))) {
 	    throw new DomainException("IRSDeclarationRequest.only.available.after.first.valid.year");
 	}
