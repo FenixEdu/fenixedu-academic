@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationRegime;
-import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.predicates.RegistrationPredicates;
@@ -42,7 +41,6 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/registration", module = "academicAdminOffice")
 @Forwards( {
@@ -84,13 +82,10 @@ public class RegistrationDA extends StudentRegistrationDA {
     public ActionForward prepareViewRegistrationCurriculumInvalid(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	getAndSetRegistration(request);
-	request.setAttribute("registrationCurriculumBean", getRegistrationCurriculumBeanFromViewState());
+	final Registration registration = getAndSetRegistration(request);
 
-	final Integer degreeCurricularPlanID = getIntegerFromRequest(request, "degreeCurricularPlanID");
-	if (degreeCurricularPlanID != null) {
-	    request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
-	}
+	request.setAttribute("registrationCurriculumBean", getRegistrationCurriculumBeanFromViewState());
+	request.setAttribute("degreeCurricularPlanID", registration.getLastDegreeCurricularPlan().getIdInternal());
 
 	return mapping.findForward("chooseCycleForViewRegistrationCurriculum");
     }
@@ -105,10 +100,9 @@ public class RegistrationDA extends StudentRegistrationDA {
 	final RegistrationCurriculumBean registrationCurriculumBean = getRegistrationCurriculumBeanFromViewState();
 	request.setAttribute("registrationCurriculumBean", registrationCurriculumBean);
 	request.setAttribute("registration", registrationCurriculumBean.getRegistration());
-	
+
 	final Person studentPerson = registrationCurriculumBean.getStudent().getPerson();
 	request.setAttribute("studentPerson", studentPerson);
-	
 
 	return mapping.findForward("view-registration-curriculum");
     }
