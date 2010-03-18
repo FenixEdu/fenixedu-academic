@@ -786,6 +786,7 @@
 <schema name="RegistrationAcademicServiceRequestCreateBean.EQUIVALENCE_PLAN"
 	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.RegistrationAcademicServiceRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES"
 	extends="RegistrationAcademicServiceRequestCreateBean.choose.type">
+	<slot name="freeProcessed" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.freeProcessed" />
 	<slot name="numberOfEquivalences">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">

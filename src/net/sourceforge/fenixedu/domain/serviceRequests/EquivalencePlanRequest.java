@@ -80,7 +80,7 @@ public class EquivalencePlanRequest extends EquivalencePlanRequest_Base {
 
     @Override
     public boolean isAvailableForTransitedRegistrations() {
-	return false;
+	return true;
     }
 
     @Override
