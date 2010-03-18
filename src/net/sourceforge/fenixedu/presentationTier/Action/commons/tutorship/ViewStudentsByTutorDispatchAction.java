@@ -40,18 +40,20 @@ public abstract class ViewStudentsByTutorDispatchAction extends FenixDispatchAct
 	for (final Tutorship tutorship : tutorships) {
 	    ExecutionYear entryYear = ExecutionYear.getExecutionYearByDate(tutorship.getStudentCurricularPlan().getRegistration()
 		    .getStartDate());
-	    if (tutorshipsMapByEntryYear.containsKey(entryYear)) {
-		List<Tutorship> studentsByEntryYearList = tutorshipsMapByEntryYear.get(entryYear).getStudentsList();
-		studentsByEntryYearList.add(tutorship);
-		Collections.sort(studentsByEntryYearList, Tutorship.TUTORSHIP_COMPARATOR_BY_STUDENT_NUMBER);
-		tutorshipsMapByEntryYear.get(entryYear).setStudentsList(studentsByEntryYearList);
-	    } else {
-		List<Tutorship> studentsByEntryYearList = new ArrayList<Tutorship>();
-		studentsByEntryYearList.add(tutorship);
-		Collections.sort(studentsByEntryYearList, Tutorship.TUTORSHIP_COMPARATOR_BY_STUDENT_NUMBER);
-		StudentsByTutorBean studentsByTutorBean = new StudentsByTutorBean(tutorship.getTeacher(), entryYear,
-			studentsByEntryYearList);
-		tutorshipsMapByEntryYear.put(entryYear, studentsByTutorBean);
+	    if (!tutorship.getStudentCurricularPlan().getRegistration().isCanceled()) {
+		if (tutorshipsMapByEntryYear.containsKey(entryYear)) {
+		    List<Tutorship> studentsByEntryYearList = tutorshipsMapByEntryYear.get(entryYear).getStudentsList();
+		    studentsByEntryYearList.add(tutorship);
+		    Collections.sort(studentsByEntryYearList, Tutorship.TUTORSHIP_COMPARATOR_BY_STUDENT_NUMBER);
+		    tutorshipsMapByEntryYear.get(entryYear).setStudentsList(studentsByEntryYearList);
+		} else {
+		    List<Tutorship> studentsByEntryYearList = new ArrayList<Tutorship>();
+		    studentsByEntryYearList.add(tutorship);
+		    Collections.sort(studentsByEntryYearList, Tutorship.TUTORSHIP_COMPARATOR_BY_STUDENT_NUMBER);
+		    StudentsByTutorBean studentsByTutorBean = new StudentsByTutorBean(tutorship.getTeacher(), entryYear,
+			    studentsByEntryYearList);
+		    tutorshipsMapByEntryYear.put(entryYear, studentsByTutorBean);
+		}
 	    }
 	}
 

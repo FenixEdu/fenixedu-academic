@@ -1158,7 +1158,8 @@ public class Teacher extends Teacher_Base {
 	    StudentCurricularPlan studentCurricularPlan = tutorship.getStudentCurricularPlan();
 	    ExecutionYear studentEntryYear = ExecutionYear.getExecutionYearByDate(studentCurricularPlan.getRegistration()
 		    .getStartDate());
-	    if (studentEntryYear.equals(entryYear) && studentCurricularPlan.getDegree().equals(degree)) {
+	    if (studentEntryYear.equals(entryYear) && studentCurricularPlan.getDegree().equals(degree)
+		    && !studentCurricularPlan.getRegistration().isCanceled()) {
 		tutorships.add(tutorship);
 	    }
 	}
