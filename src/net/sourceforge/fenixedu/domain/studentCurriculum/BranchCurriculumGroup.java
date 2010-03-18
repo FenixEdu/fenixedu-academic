@@ -39,9 +39,4 @@ public class BranchCurriculumGroup extends BranchCurriculumGroup_Base {
 	return this.getDegreeModule().getBranchType() == branchType ? this : null;
     }
     
-    @Override
-    public BranchCourseGroup getBranchCourseGroup(BranchType branchType) {
-	return this.getDegreeModule().getBranchType() == branchType ? this.getDegreeModule() : null;
-    }
-    
 }

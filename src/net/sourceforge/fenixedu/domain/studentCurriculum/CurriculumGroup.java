@@ -503,41 +503,37 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 
 	return result;
     }
-    
-    public BranchCurriculumGroup getBranchCurriculumGroup(BranchType branchType) {
-	for(CurriculumModule curriculumModule : getCurriculumModules()) {
-	    if(curriculumModule instanceof CurriculumGroup) {
-		CurriculumGroup curriculumGroup = (CurriculumGroup) curriculumModule;
-		BranchCurriculumGroup branchCurriculumGroup = curriculumGroup.getBranchCurriculumGroup(branchType);
-		return branchCurriculumGroup == null ? null : branchCurriculumGroup;
+
+    public BranchCurriculumGroup getBranchCurriculumGroup(final BranchType branchType) {
+	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
+	    if (curriculumModule instanceof CurriculumGroup) {
+		final CurriculumGroup curriculumGroup = (CurriculumGroup) curriculumModule;
+		final BranchCurriculumGroup branchCurriculumGroup = curriculumGroup.getBranchCurriculumGroup(branchType);
+		if (branchCurriculumGroup != null) {
+		    return branchCurriculumGroup;
+		}
 	    }
 	}
 	return null;
     }
-    
+
     public BranchCurriculumGroup getMajorBranchCurriculumGroup() {
 	return getBranchCurriculumGroup(BranchType.MAJOR);
     }
-    
+
     public BranchCurriculumGroup getMinorBranchCurriculumGroup() {
 	return getBranchCurriculumGroup(BranchType.MINOR);
     }
-    
+
     public BranchCourseGroup getBranchCourseGroup(BranchType branchType) {
-	for(CurriculumModule curriculumModule : getCurriculumModules()) {
-	    if(curriculumModule instanceof CurriculumGroup) {
-		CurriculumGroup curriculumGroup = (CurriculumGroup) curriculumModule;
-		BranchCourseGroup branchCourseGroup = curriculumGroup.getBranchCourseGroup(branchType);
-		return branchCourseGroup == null ? null : branchCourseGroup;
-	    }
-	}
-	return null;
+	final BranchCurriculumGroup group = getBranchCurriculumGroup(branchType);
+	return group != null ? group.getDegreeModule() : null;
     }
-    
+
     public BranchCourseGroup getMajorBranchCourseGroup() {
 	return getBranchCourseGroup(BranchType.MAJOR);
     }
-    
+
     public BranchCourseGroup getMinorBranchCourseGroup() {
 	return getBranchCourseGroup(BranchType.MINOR);
     }
