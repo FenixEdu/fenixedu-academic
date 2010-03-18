@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
+import net.sourceforge.fenixedu.domain.degreeStructure.BranchCourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularCourseFunctor;
@@ -1637,6 +1638,20 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	    getRoot().getAllDegreeModules(courseGroups);
 	}
 	return (Set) courseGroups;
+    }
+    
+    public Set<BranchCourseGroup> getAllBranches() {
+	final Set<DegreeModule> branches = new TreeSet<DegreeModule>(DegreeModule.COMPARATOR_BY_NAME) {
+	    @Override
+	    public boolean add(DegreeModule degreeModule) {
+		return degreeModule instanceof BranchCourseGroup && super.add(degreeModule);
+	    }
+	};
+	if(hasRoot()) {
+	    branches.add(getRoot());
+	    getRoot().getAllDegreeModules(branches);
+	}
+	return (Set)branches;
     }
 
     public Set<DegreeModule> getAllDegreeModules() {

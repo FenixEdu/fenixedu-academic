@@ -122,46 +122,6 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
     public CycleType getCycleType() {
 	return getCycleCourseGroup().getCycleType();
     }
-    
-    public BranchCurriculumGroup getBranchCurriculumGroup(BranchType branchType) {
-	for(CurriculumGroup curriculumGroup : getCurriculumGroups()) {
-	    if(curriculumGroup.isBranchCurriculumGroup()) {
-		BranchCourseGroup branchCourseGroup = (BranchCourseGroup) curriculumGroup.getDegreeModule();
-		if(branchCourseGroup.getBranchType() == branchType) {
-		    return (BranchCurriculumGroup) curriculumGroup;
-		}
-	    }
-	}
-	return null;
-    }
-    
-    public BranchCurriculumGroup getMajorBranchCurriculumGroup() {
-	return getBranchCurriculumGroup(BranchType.MAJOR);
-    }
-    
-    public BranchCurriculumGroup getMinorBranchCurriculumGroup() {
-	return getBranchCurriculumGroup(BranchType.MINOR);
-    }
-    
-    public BranchCourseGroup getBranchCourseGroup(BranchType branchType) {
-	for(CurriculumGroup curriculumGroup : getCurriculumGroups()) {
-	    if(curriculumGroup.isBranchCurriculumGroup()) {
-		BranchCourseGroup branchCourseGroup = (BranchCourseGroup) curriculumGroup.getDegreeModule();
-		if(branchCourseGroup.getBranchType() == branchType) {
-		    return branchCourseGroup;
-		}
-	    }
-	}
-	return null;
-    }
-    
-    public BranchCourseGroup getMajorBranchCourseGroup() {
-	return getBranchCourseGroup(BranchType.MAJOR);
-    }
-    
-    public BranchCourseGroup getMinorBranchCourseGroup() {
-	return getBranchCourseGroup(BranchType.MINOR);
-    }
 
     @Override
     public RootCurriculumGroup getCurriculumGroup() {
