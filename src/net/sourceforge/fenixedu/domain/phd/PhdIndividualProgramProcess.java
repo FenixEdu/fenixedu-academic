@@ -50,6 +50,8 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
+import pt.utl.ist.fenix.tools.predicates.Predicate;
+
 public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Base {
 
     static abstract private class PhdActivity extends Activity<PhdIndividualProgramProcess> {
@@ -969,7 +971,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return getCandidacyProcess().getCandidacyHashCode();
     }
 
-    static public List<PhdIndividualProgramProcess> search(SearchPhdIndividualProgramProcessBean searchBean) {
+    static public List<PhdIndividualProgramProcess> search(Predicate<PhdIndividualProgramProcess> searchPredicate) {
 
 	final Set<PhdIndividualProgramProcess> processesToSearch = new HashSet<PhdIndividualProgramProcess>();
 	for (final PhdIndividualProgramProcessNumber phdIndividualProgramProcessNumber : RootDomainObject.getInstance()
@@ -977,7 +979,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	    processesToSearch.add(phdIndividualProgramProcessNumber.getProcess());
 	}
 
-	return CollectionUtils.filter(processesToSearch, searchBean.getPredicates());
+	return CollectionUtils.filter(processesToSearch, searchPredicate);
 
     }
 

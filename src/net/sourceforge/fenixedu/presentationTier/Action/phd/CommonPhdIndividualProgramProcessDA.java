@@ -42,7 +42,7 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
 
 	request.setAttribute("searchProcessBean", searchBean);
 
-	request.setAttribute("processes", PhdIndividualProgramProcess.search(searchBean));
+	request.setAttribute("processes", PhdIndividualProgramProcess.search(searchBean.getPredicates()));
 
 	return mapping.findForward("manageProcesses");
     }
