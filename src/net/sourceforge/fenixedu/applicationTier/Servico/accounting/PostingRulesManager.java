@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityByAmountPerEctsPR;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityByNumberOfEnrolmentsPR;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR;
+import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.PastDegreeGratuityPR;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR;
 
 import org.joda.time.DateTime;
@@ -24,11 +25,26 @@ public class PostingRulesManager {
     static public void createGraduationGratuityPostingRule(final CreateGratuityPostingRuleBean bean) {
 
 	if (bean.getRule() == GratuityWithPaymentPlanPR.class) {
-	    for (final DegreeCurricularPlan degreeCurricularPlan : bean.getDegreeCurricularPlans()) {
-		final ServiceAgreementTemplate serviceAgreementTemplate = degreeCurricularPlan.getServiceAgreementTemplate();
-		deactivateExistingPostingRule(EventType.GRATUITY, bean.getStartDate(), serviceAgreementTemplate);
-		new GratuityWithPaymentPlanPR(bean.getStartDate(), null, serviceAgreementTemplate);
+
+	    for (final DegreeCurricularPlan dcp : bean.getDegreeCurricularPlans()) {
+		if (dcp.isPast()) {
+		    continue;
+		}
+		deactivateExistingPostingRule(EventType.GRATUITY, bean.getStartDate(), dcp.getServiceAgreementTemplate());
+		new GratuityWithPaymentPlanPR(bean.getStartDate(), null, dcp.getServiceAgreementTemplate());
 	    }
+
+	}
+	if (bean.getRule() == PastDegreeGratuityPR.class) {
+
+	    for (final DegreeCurricularPlan dcp : bean.getDegreeCurricularPlans()) {
+		if (!dcp.isPast()) {
+		    continue;
+		}
+		deactivateExistingPostingRule(EventType.GRATUITY, bean.getStartDate(), dcp.getServiceAgreementTemplate());
+		new PastDegreeGratuityPR(bean.getStartDate(), null, dcp.getServiceAgreementTemplate());
+	    }
+
 	} else {
 	    throw new RuntimeException("Unexpected rule type for gratuity posting rule");
 	}

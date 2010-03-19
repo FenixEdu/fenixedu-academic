@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.renderers.providers.accounting
 import java.util.Arrays;
 
 import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR;
+import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.PastDegreeGratuityPR;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.BiDirectionalConverter;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
@@ -10,15 +11,13 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 public class GraduationGratuityPRTypeProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-	return Arrays.asList(GratuityWithPaymentPlanPR.class);
+	return Arrays.asList(GratuityWithPaymentPlanPR.class, PastDegreeGratuityPR.class);
     }
 
     public Converter getConverter() {
 	return new BiDirectionalConverter() {
-	    /**
-	     * 
-	     */
-	    private static final long serialVersionUID = 1L;
+
+	    static private final long serialVersionUID = 1L;
 
 	    @Override
 	    public Object convert(Class arg0, Object value) {

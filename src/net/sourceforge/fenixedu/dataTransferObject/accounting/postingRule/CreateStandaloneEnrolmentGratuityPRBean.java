@@ -6,10 +6,7 @@ import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.Standalo
 
 public class CreateStandaloneEnrolmentGratuityPRBean extends CreateGratuityPostingRuleBean {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 1L;
+    static private final long serialVersionUID = 1L;
 
     private BigDecimal ectsForYear;
 

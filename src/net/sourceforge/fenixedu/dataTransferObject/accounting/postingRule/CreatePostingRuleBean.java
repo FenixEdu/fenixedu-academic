@@ -2,17 +2,18 @@ package net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule;
 
 import java.io.Serializable;
 
+import net.sourceforge.fenixedu.dataTransferObject.accounting.PaymentsBean;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 
 import org.joda.time.DateTime;
 
-abstract public class CreatePostingRuleBean implements Serializable {
+abstract public class CreatePostingRuleBean implements Serializable, PaymentsBean {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = -7035156267101347173L;
+    static private final long serialVersionUID = -7035156267101347173L;
+
+    private ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
 
     private DateTime startDate;
 
@@ -28,6 +29,14 @@ abstract public class CreatePostingRuleBean implements Serializable {
 	this();
 	setStartDate(startDate);
 	setServiceAgreementTemplate(serviceAgreementTemplate);
+    }
+
+    public ExecutionYear getExecutionYear() {
+	return executionYear;
+    }
+
+    public void setExecutionYear(ExecutionYear executionYear) {
+	this.executionYear = executionYear;
     }
 
     protected CreatePostingRuleBean() {

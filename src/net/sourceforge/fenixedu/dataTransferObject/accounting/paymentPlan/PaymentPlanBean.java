@@ -5,15 +5,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.fenixedu.dataTransferObject.accounting.PaymentsBean;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 
-public class PaymentPlanBean implements Serializable {
+public class PaymentPlanBean implements Serializable, PaymentsBean {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = -103744109361724129L;
+    static private final long serialVersionUID = -103744109361724129L;
 
     private List<InstallmentBean> installments;
 

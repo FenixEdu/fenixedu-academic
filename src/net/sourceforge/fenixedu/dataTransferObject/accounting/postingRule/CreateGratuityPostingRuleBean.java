@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 
 public class CreateGratuityPostingRuleBean extends CreatePostingRuleBean {
-    /**
-     * 
-     */
+
     private static final long serialVersionUID = 1L;
 
     private List<DegreeCurricularPlan> degreeCurricularPlans;

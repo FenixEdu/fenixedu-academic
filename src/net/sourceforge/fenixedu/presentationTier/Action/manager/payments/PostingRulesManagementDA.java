@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.payments;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -68,10 +69,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
 
     public static class PostingRulesManagementForm extends ActionForm {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	static private final long serialVersionUID = 1L;
 
 	private Integer executionYearId;
 
@@ -233,7 +231,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
 	    HttpServletResponse response) {
 
 	final List<DegreeCurricularPlan> degreeCurricularPlans = DegreeCurricularPlan.readByDegreeTypesAndState(DegreeType
-		.getDegreeTypesFor(AdministrativeOfficeType.DEGREE), DegreeCurricularPlanState.ACTIVE);
+		.getDegreeTypesFor(AdministrativeOfficeType.DEGREE), null);
 	degreeCurricularPlans.add(DegreeCurricularPlan.readEmptyDegreeCurricularPlan());
 
 	request.setAttribute("degreeCurricularPlans", degreeCurricularPlans);
@@ -267,7 +265,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
 
 	final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(form.getExecutionYearId());
 
-	request.setAttribute("executionYears", ExecutionYear.readNotClosedExecutionYears());
+	request.setAttribute("executionYears", new ArrayList<ExecutionYear>(rootDomainObject.getExecutionYears()));
 	request.setAttribute("paymentPlans", getDegreeCurricularPlan(request).getServiceAgreementTemplate()
 		.getGratuityPaymentPlansFor(executionYear));
 	request.setAttribute("degreeCurricularPlan", getDegreeCurricularPlan(request));
@@ -409,6 +407,16 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
 	return mapping.findForward("createGraduationGratuityPR");
     }
 
+    public ActionForward prepareCreateGraduationGratuityPRPostback(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	final Object object = getRenderedObject("createPostingRuleBean");
+	RenderUtils.invalidateViewState();
+
+	request.setAttribute("createPostingRuleBean", object);
+	return mapping.findForward("createGraduationGratuityPR");
+    }
+
     public ActionForward createGraduationGratuityPR(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
@@ -468,6 +476,15 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) {
 
 	request.setAttribute("createPostingRuleBean", getRenderedObject("createPostingRuleBean"));
+	return mapping.findForward("createGraduationStandaloneEnrolmentGratuityPR");
+    }
+
+    public ActionForward prepareCreateGraduationStandaloneEnrolmentGratuityPRPostback(ActionMapping mapping,
+	    ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+
+	final Object object = getRenderedObject("createPostingRuleBean");
+	RenderUtils.invalidateViewState();
+	request.setAttribute("createPostingRuleBean", object);
 
 	return mapping.findForward("createGraduationStandaloneEnrolmentGratuityPR");
     }

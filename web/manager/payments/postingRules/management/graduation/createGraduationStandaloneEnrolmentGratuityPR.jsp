@@ -31,8 +31,8 @@
 		action="/postingRules.do?method=createGraduationStandaloneEnrolmentGratuityPR">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thlight thcenter mtop05" />
-			<fr:destination name="invalid"
-				path="/postingRules.do?method=prepareCreateGraduationStandaloneEnrolmentGratuityPRInvalid" />
+			<fr:destination name="invalid" path="/postingRules.do?method=prepareCreateGraduationStandaloneEnrolmentGratuityPRInvalid" />
+			<fr:destination name="changeExecutionYearPostback" path="/postingRules.do?method=prepareCreateGraduationStandaloneEnrolmentGratuityPRPostback"/>
 			<fr:destination name="cancel" path="/postingRules.do?method=manageGraduationRules"/>
 		</fr:layout>
 	</fr:edit>
