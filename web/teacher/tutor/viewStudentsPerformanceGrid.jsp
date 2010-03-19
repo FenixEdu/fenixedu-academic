@@ -36,6 +36,7 @@
 				</fr:layout>
 				<fr:destination name="invalid" path="/viewStudentsPerformanceGrid.do?method=prepare&gridSet=" />
 				<fr:destination name="post-back" path="/viewStudentsPerformanceGrid.do?method=prepare&gridSet=" />
+				<fr:destination name="changeDegreePostBack" path="/viewStudentsPerformanceGrid.do?method=changeDegree&gridSet=" />
 			</fr:edit>
 		</fr:form>
 	</logic:present>

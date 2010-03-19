@@ -33,7 +33,7 @@
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.teacher.TeacherDepartmentDegreesProvider"/> 
 		<property name="format" value="${sigla} - ${nome}"/>
 		<property name="sortBy" value="nome"/>
-		<property name="destination" value="post-back"/>
+		<property name="destination" value="changeDegreePostBack"/>
 		<property name="nullOptionHidden" value="true"/>
 	</slot>
 	<slot name="studentsEntryYear" key="label.entryYear" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">

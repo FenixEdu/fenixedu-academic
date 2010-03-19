@@ -55,6 +55,17 @@ public class ViewStudentsPerformanceGridDispatchAction extends StudentsPerforman
 	request.setAttribute("performanceGridFiltersBean", bean);
     }
 
+    public ActionForward changeDegree(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	StudentsPerformanceInfoBean bean = (StudentsPerformanceInfoBean) getRenderedObject("performanceGridFiltersBean");
+	if (bean != null && bean.getDegree() != null) {
+	    bean.setStudentsEntryYear(TutorshipEntryExecutionYearProvider.getExecutionYears(bean).get(0));
+	    bean.setCurrentMonitoringYear(TutorshipMonitoringExecutionYearProvider.getExecutionYears(bean).get(0));
+	    request.setAttribute("performanceGridFiltersBean", bean);
+	}
+	return prepare(mapping, actionForm, request, response);
+    }
+
     protected StudentsPerformanceInfoBean generateStudentsPerformanceBeanFromRequest(HttpServletRequest request, Person person) {
 	StudentsPerformanceInfoBean bean = StudentsPerformanceInfoBean.create(person);
 	bean.setDegree(rootDomainObject.readDegreeByOID(getIntegerFromRequest(request, "degreeOID")));
