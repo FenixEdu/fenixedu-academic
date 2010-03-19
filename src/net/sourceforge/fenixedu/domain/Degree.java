@@ -534,7 +534,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 		for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCourses()) {
 		    if (executionSemester == executionCourse.getExecutionPeriod()) {
 			for (final DegreeModuleScope scope : course.getDegreeModuleScopes()) {
-			    if (scope.getCurricularYear() == curricularYear.getYear()
+			    if (scope.isActiveForExecutionPeriod(executionSemester)
+				    && scope.getCurricularYear() == curricularYear.getYear()
 				    && scope.getCurricularSemester() == executionSemester.getSemester()) {
 				result.add(executionCourse);
 			    }
