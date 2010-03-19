@@ -1232,22 +1232,31 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	return result;
     }
 
+    /**
+     * If state is null then just degree type is checked
+     */
     public static List<DegreeCurricularPlan> readByDegreeTypeAndState(DegreeType degreeType, DegreeCurricularPlanState state) {
 	List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
 	for (DegreeCurricularPlan degreeCurricularPlan : readNotEmptyDegreeCurricularPlans()) {
-	    if (degreeCurricularPlan.getDegree().getDegreeType() == degreeType && degreeCurricularPlan.getState() == state) {
+	    if (degreeCurricularPlan.getDegree().getDegreeType() == degreeType
+		    && (state == null || degreeCurricularPlan.getState() == state)) {
+
 		result.add(degreeCurricularPlan);
 	    }
 	}
 	return result;
     }
 
+    /**
+     * If state is null then just degree type is checked
+     */
     public static List<DegreeCurricularPlan> readByDegreeTypesAndState(Set<DegreeType> degreeTypes,
 	    DegreeCurricularPlanState state) {
 	List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
 	for (DegreeCurricularPlan degreeCurricularPlan : readNotEmptyDegreeCurricularPlans()) {
 	    if (degreeTypes.contains(degreeCurricularPlan.getDegree().getDegreeType())
-		    && degreeCurricularPlan.getState() == state) {
+		    && (state == null || degreeCurricularPlan.getState() == state)) {
+
 		result.add(degreeCurricularPlan);
 	    }
 	}
@@ -1639,7 +1648,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	}
 	return (Set) courseGroups;
     }
-    
+
     public Set<BranchCourseGroup> getAllBranches() {
 	final Set<DegreeModule> branches = new TreeSet<DegreeModule>(DegreeModule.COMPARATOR_BY_NAME) {
 	    @Override
@@ -1647,11 +1656,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 		return degreeModule instanceof BranchCourseGroup && super.add(degreeModule);
 	    }
 	};
-	if(hasRoot()) {
+	if (hasRoot()) {
 	    branches.add(getRoot());
 	    getRoot().getAllDegreeModules(branches);
 	}
-	return (Set)branches;
+	return (Set) branches;
     }
 
     public Set<DegreeModule> getAllDegreeModules() {
