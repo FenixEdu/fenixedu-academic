@@ -13,40 +13,38 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
  */
 public enum RegistrationStateType {
 
-    REGISTERED(true, false, true),
+    REGISTERED(true, true),
 
-    MOBILITY(true, false, true),
+    MOBILITY(true, true),
 
-    CANCELED(false, true, false),
+    CANCELED(false, false),
 
-    CONCLUDED(false, false, true),
+    CONCLUDED(false, true),
 
-    FLUNKED(false, true, false),
+    FLUNKED(false, false),
 
-    INTERRUPTED(false, true, false),
+    INTERRUPTED(false, false),
 
-    SCHOOLPARTCONCLUDED(true, false, true),
+    SCHOOLPARTCONCLUDED(true, true),
 
-    INTERNAL_ABANDON(false, true, false),
+    INTERNAL_ABANDON(false, false),
 
-    EXTERNAL_ABANDON(false, true, false),
+    EXTERNAL_ABANDON(false, false),
 
-    TRANSITION(false, false, true),
+    TRANSITION(false, true),
 
-    TRANSITED(false, false, true),
+    TRANSITED(false, true),
 
-    STUDYPLANCONCLUDED(false, false, true);
+    STUDYPLANCONCLUDED(false, true),
+    
+    INACTIVE(false, false); //Closed state for the registrations regarding the AFA & MA protocols
 
-    private RegistrationStateType(final boolean active, final boolean deleteActualPeriodInfo,
-	    final boolean canHaveCurriculumLinesOnCreation) {
+    private RegistrationStateType(final boolean active, final boolean canHaveCurriculumLinesOnCreation) {
 	this.active = active;
-	this.deleteActualPeriodInfo = deleteActualPeriodInfo;
 	this.canHaveCurriculumLinesOnCreation = canHaveCurriculumLinesOnCreation;
     }
 
     private boolean active;
-
-    private boolean deleteActualPeriodInfo;
 
     private boolean canHaveCurriculumLinesOnCreation;
 
@@ -60,10 +58,6 @@ public enum RegistrationStateType {
 
     public boolean isInactive() {
 	return !active;
-    }
-
-    public boolean deleteActualPeriodInfo() {
-	return deleteActualPeriodInfo;
     }
 
     public boolean canHaveCurriculumLinesOnCreation() {
@@ -83,7 +77,7 @@ public enum RegistrationStateType {
     }
 
     public boolean canReingress() {
-	return this == FLUNKED || this == INTERRUPTED || this == INTERNAL_ABANDON || this == EXTERNAL_ABANDON || this == CANCELED;
+	return this == FLUNKED || this == INTERRUPTED || this == INTERNAL_ABANDON || this == EXTERNAL_ABANDON || this == CANCELED || this==INACTIVE;
     }
 
 }

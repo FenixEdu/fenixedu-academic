@@ -39,6 +39,7 @@ public class RegisteredState extends RegisteredState_Base {
 	states.add(RegistrationStateType.MOBILITY.name());
 	states.add(RegistrationStateType.TRANSITION.name());
 	states.add(RegistrationStateType.TRANSITED.name());
+	states.add(RegistrationStateType.INACTIVE.name());
 	return states;
     }
 

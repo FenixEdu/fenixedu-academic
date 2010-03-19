@@ -113,6 +113,8 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 	    return new TransitionalState(registration, person, dateTime);
 	case TRANSITED:
 	    return new TransitedState(registration, person, dateTime);
+	case INACTIVE:
+	    return new InactiveState(registration, person, dateTime);
 	}
 
 	return null;
@@ -312,10 +314,6 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 	}
 
 	throw new DomainException("RegistrationState.external.enrolments.only.included.in.mobility.states");
-    }
-
-    public boolean getCanDeleteActualInfo() {
-	return getStateType().deleteActualPeriodInfo();
     }
 
     static public boolean hasAnyState(final Collection<RegistrationState> states, final Collection<RegistrationStateType> types) {
