@@ -45,9 +45,12 @@ public class SendMailMarkSheetDispatchAction extends MarkSheetDispatchAction {
     public ActionForward prepareSearchSendMailPostBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	Object object = RenderUtils.getViewState().getMetaObject().getObject();
+	final MarkSheetSendMailBean bean = (MarkSheetSendMailBean) getRenderedObject();
+	bean.setMarkSheetToConfirmSendMailBean(null);
+	bean.setGradesToSubmitExecutionCourseSendMailBean(null);
+	
 	RenderUtils.invalidateViewState();
-	request.setAttribute("bean", object);
+	request.setAttribute("bean", bean);
 
 	return mapping.getInputForward();
     }
@@ -77,7 +80,7 @@ public class SendMailMarkSheetDispatchAction extends MarkSheetDispatchAction {
 	if (!executionCourses.isEmpty()) {
 	    Collection<GradesToSubmitExecutionCourseSendMailBean> executionCoursesBean = new ArrayList<GradesToSubmitExecutionCourseSendMailBean>();
 	    for (ExecutionCourse course : executionCourses) {
-		executionCoursesBean.add(new GradesToSubmitExecutionCourseSendMailBean(course, true));
+		executionCoursesBean.add(new GradesToSubmitExecutionCourseSendMailBean(bean.getDegreeCurricularPlan(), course, true));
 	    }
 	    bean.setGradesToSubmitExecutionCourseSendMailBean(executionCoursesBean);
 	}

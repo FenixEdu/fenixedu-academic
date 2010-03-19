@@ -296,7 +296,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	final List<Professorship> res = new ArrayList<Professorship>();
 	for (final Professorship professorship : this.getProfessorships()) {
 	    Boolean responsibleFor = professorship.getResponsibleFor();
-	    if (professorship != null && responsibleFor != null && responsibleFor) {
+	    if (responsibleFor != null && responsibleFor.booleanValue()) {
 		res.add(professorship);
 	    }
 	}
@@ -1541,6 +1541,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    }
 	}
 	return super.getNome();
+    }
+    
+    public String getName() {
+	return getNome();
     }
 
     public String getDegreePresentationString() {

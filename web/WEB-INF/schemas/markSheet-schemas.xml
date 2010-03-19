@@ -413,6 +413,9 @@
 		type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.GradesToSubmitExecutionCourseSendMailBean">
 	<slot name="toSubmit" key="label.submit" />		
 	<slot name="executionCourse.nome" key="label.executionCourse" read-only="true"/>
+	<slot name="numberOfEnroledStudents" key="label.degree.numberOfEnrolments" read-only="true" />
+	<slot name="numberOfStudentsWithoutGrade" key="label.numberOfStudentsWithoutGrade" read-only="true" />
+	<slot name="responsibleTeacherNames" key="label.responsibleTeacherNames" read-only="true" />
 </schema>
 
 <schema name="markSheet.teacher.gradeSubmission.view.submited.marks" bundle="APPLICATION_RESOURCES"
