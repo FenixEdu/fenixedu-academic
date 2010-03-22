@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -303,7 +304,7 @@ public class Shift extends Shift_Base {
 		availablePercentage -= degreeTeachingService.getPercentage();
 	    }
 	}
-	return availablePercentage;
+	return new BigDecimal(availablePercentage).divide(new BigDecimal(1), 2, RoundingMode.HALF_EVEN).doubleValue();
     }
 
     public SortedSet<Lesson> getLessonsOrderedByWeekDayAndStartTime() {
