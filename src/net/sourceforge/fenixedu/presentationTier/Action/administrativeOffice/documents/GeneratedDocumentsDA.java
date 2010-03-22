@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.documents.AnnualIRSDeclarationDocument;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.docs.IRSCustomDeclaration;
 import net.sourceforge.fenixedu.presentationTier.docs.IRSCustomDeclaration.IRSDeclarationDTO;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
@@ -27,6 +28,7 @@ import net.sourceforge.fenixedu.util.report.ReportsUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -92,7 +94,6 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
 	    HttpServletResponse response) {
 
 	request.setAttribute("person", getPerson(request));
-
 	request.setAttribute("annualIRSDocuments", getPerson(request).getAnnualIRSDocuments());
 
 	return mapping.findForward("showAnnualIRSDocuments");
@@ -108,39 +109,89 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
 	return mapping.findForward("payments.manageIRSDocuments");
     }
 
-    public ActionForward generateNewAnnualIRSDeclarationDocument(ActionMapping mapping, ActionForm actionForm,
+    public ActionForward prepareGenerateNewIRSDeclaration(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("declarationDTO", new IRSDeclarationDTO(null, getPerson(request)));
+	return showAnnualIRSDocumentsInPayments(mapping, actionForm, request, response);
+    }
+
+    public ActionForward generateNewIRSDeclarationInvalid(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("declarationDTO", getRenderedObject("declarationDTO"));
+	return showAnnualIRSDocumentsInPayments(mapping, actionForm, request, response);
+    }
+
+    public ActionForward generateNewIRSDeclaration(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws JRException {
+
+	final Person person = getPerson(request);
+	final IRSDeclarationDTO declarationDTO = (IRSDeclarationDTO) getRenderedObject("declarationDTO");
+
+	try {
+
+	    if (declarationDTO.getCivilYear().intValue() >= new LocalDate().getYear()) {
+		addActionMessage("error", request, "error.annual.irs.declaration.year.must.be.previous.to.current");
+
+	    } else {
+		byte[] declaration = buildIRSCustomDeclaration(declarationDTO, person);
+		AnnualIRSDeclarationDocument.create(person, getLoggedPerson(request), declaration, declarationDTO.getCivilYear());
+		addActionMessage("success", request, "message.new.irs.annual.document.generated.with.success");
+	    }
+
+	} catch (final DomainException e) {
+	    addActionMessage("error", request, e.getMessage(), e.getArgs());
+
+	} catch (final FenixActionException e) {
+	    addActionMessage("error", request, e.getMessage());
+	}
+
+	return showAnnualIRSDocumentsInPayments(mapping, actionForm, request, response);
+    }
+
+    public ActionForward generateAgainAnnualIRSDeclarationDocument(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws JRException {
 
 	try {
 	    final AnnualIRSDeclarationDocument document = getDomainObject(request, "annualIRSDocumentOid");
 	    request.setAttribute("personId", document.getAddressee().getIdInternal());
 
-	    byte[] declaration = buildIRSCustomDeclaration(document.getAddressee(), document.getYear().intValue());
+	    final IRSDeclarationDTO declarationDTO = new IRSDeclarationDTO(document.getYear().intValue(), document.getAddressee());
+	    byte[] declaration = buildIRSCustomDeclaration(declarationDTO, document.getAddressee());
+
 	    document.generateAnotherDeclaration(AccessControl.getPerson(), declaration);
 	    addActionMessage("success", request, "message.new.irs.annual.document.generated.with.success");
 
 	} catch (final DomainException e) {
 	    addActionMessage("error", request, e.getMessage(), e.getArgs());
+
+	} catch (final FenixActionException e) {
+	    addActionMessage("error", request, e.getMessage());
 	}
 
 	return showAnnualIRSDocumentsInPayments(mapping, actionForm, request, response);
     }
 
-    private byte[] buildIRSCustomDeclaration(Person person, int civilYear) throws JRException {
-	final IRSDeclarationDTO declarationDTO = new IRSDeclarationDTO(civilYear, person);
+    private byte[] buildIRSCustomDeclaration(final IRSDeclarationDTO declarationDTO, final Person person) throws JRException,
+	    FenixActionException {
 
-	for (final Event event : person.getEvents()) {
-	    if (event.hasPaymentsByPersonForCivilYear(civilYear)
-		    && event.getMaxDeductableAmountForLegalTaxes(civilYear).isPositive()) {
-
-		declarationDTO.addAmount(event, civilYear);
-	    }
-	}
-
+	addPayedAmount(person, declarationDTO.getCivilYear(), declarationDTO);
 	final IRSCustomDeclaration customDeclaration = new IRSCustomDeclaration(declarationDTO);
 
 	return ReportsUtils.exportToPdfFileAsByteArray(customDeclaration.getReportTemplateKey(), customDeclaration
 		.getParameters(), ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale()),
 		customDeclaration.getDataSource());
+    }
+
+    private void addPayedAmount(Person person, int civilYear, final IRSDeclarationDTO declarationDTO) throws FenixActionException {
+	for (final Event event : person.getEvents()) {
+	    if (event.hasPaymentsByPersonForCivilYear(civilYear)
+		    && event.getMaxDeductableAmountForLegalTaxes(civilYear).isPositive()) {
+		declarationDTO.addAmount(event, civilYear);
+	    }
+	}
+
+	if (!declarationDTO.getTotalAmount().isPositive()) {
+	    throw new FenixActionException("error.annual.irs.declaration.no.payments.for.civil.year", civilYear);
+	}
     }
 }

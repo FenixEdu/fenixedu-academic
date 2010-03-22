@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.docs;
 
+import java.io.Serializable;
 import java.text.MessageFormat;
 
 import net.sourceforge.fenixedu.domain.Person;
@@ -14,9 +15,11 @@ import org.joda.time.LocalDate;
 
 public class IRSCustomDeclaration extends FenixReport {
 
-    public static class IRSDeclarationDTO {
+    public static class IRSDeclarationDTO implements Serializable {
 
-	private int civilYear;
+	static private final long serialVersionUID = 1L;
+
+	private Integer civilYear;
 
 	private Money gratuityAmount;
 
@@ -36,13 +39,17 @@ public class IRSCustomDeclaration extends FenixReport {
 
 	private String documentIdNumber;
 
-	public IRSDeclarationDTO(final int civilYear) {
-	    this.civilYear = civilYear;
+	public IRSDeclarationDTO() {
 	    this.gratuityAmount = Money.ZERO;
 	    this.otherAmount = Money.ZERO;
 	}
+	
+	public IRSDeclarationDTO(Integer civilYear) {
+	    this();
+	    this.civilYear = civilYear;
+	}
 
-	public IRSDeclarationDTO(int year, Person person) {
+	public IRSDeclarationDTO(Integer year, Person person) {
 	    this(year);
 	    setPersonAddress(person.getAddress());
 	    setPersonAddressArea(person.getArea());
@@ -60,13 +67,12 @@ public class IRSCustomDeclaration extends FenixReport {
 	    this.otherAmount = this.otherAmount.add(amount);
 	}
 
-	public int getCivilYear() {
+	public Integer getCivilYear() {
 	    return civilYear;
 	}
 
-	public IRSDeclarationDTO setCivilYear(int civilYear) {
+	public void setCivilYear(Integer civilYear) {
 	    this.civilYear = civilYear;
-	    return this;
 	}
 
 	public Money getGratuityAmount() {

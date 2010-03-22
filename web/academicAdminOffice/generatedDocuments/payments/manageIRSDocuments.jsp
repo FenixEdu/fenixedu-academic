@@ -2,6 +2,9 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+
+<%@page import="net.sourceforge.fenixedu.presentationTier.docs.IRSCustomDeclaration.IRSDeclarationDTO"%>
+
 <html:xhtml/>
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
@@ -39,25 +42,54 @@
 	
 	<br/>
 	
-	<p class="mtop15 mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documents" /></strong></p>
-	<logic:empty name="annualIRSDocuments">
-		<bean:message  key="label.documents.noDocumentFound" bundle="ACADEMIC_OFFICE_RESOURCES" />
-	</logic:empty>
-	<logic:notEmpty name="annualIRSDocuments">	
-		<fr:view name="annualIRSDocuments" schema="AnnualIRSDeclarationDocument.view">
-			<fr:layout name="tabular" >
-				<fr:property name="classes" value="tstyle1 thlight mtop05 ulnomargin tdcenter" />
-				<fr:property name="columnClasses" value=",,nowrap,nowrap," />
-			
-				<fr:link name="generate" label="label.new.irs.annual.document.generate,ACADEMIC_OFFICE_RESOURCES" 
-					link="/generatedDocuments.do?method=generateNewAnnualIRSDeclarationDocument&amp;annualIRSDocumentOid=${externalId}"  />
+	<logic:empty name="declarationDTO">
+		<p class="mtop15 mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documents" /></strong></p>
+		<ul>
+			<li>
+				<html:link action="/generatedDocuments.do?method=prepareGenerateNewIRSDeclaration" paramId="personId" paramName="person" paramProperty="idInternal">
+					<bean:message key="label.new.irs.annual.document.create" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+				</html:link>
+			</li>
+		</ul>
 
-				<fr:property name="sortBy" value="year=desc" />
+		<logic:empty name="annualIRSDocuments">
+			<bean:message  key="label.documents.noDocumentFound" bundle="ACADEMIC_OFFICE_RESOURCES" />
+		</logic:empty>
+		<logic:notEmpty name="annualIRSDocuments">	
+			<fr:view name="annualIRSDocuments" schema="AnnualIRSDeclarationDocument.view">
+				<fr:layout name="tabular" >
+					<fr:property name="classes" value="tstyle1 thlight mtop05 ulnomargin tdcenter" />
+					<fr:property name="columnClasses" value=",,nowrap,nowrap," />
+				
+					<fr:link name="generate" label="label.new.irs.annual.document.generate,ACADEMIC_OFFICE_RESOURCES" 
+						link="/generatedDocuments.do?method=generateAgainAnnualIRSDeclarationDocument&amp;annualIRSDocumentOid=${externalId}"  />
+	
+					<fr:property name="sortBy" value="year=desc" />
+				</fr:layout>
+				
+			</fr:view>
+		</logic:notEmpty>
+	</logic:empty>
+
+	<logic:notEmpty name="declarationDTO">
+
+		<bean:define id="personId" name="person" property="idInternal" />
+
+		<fr:edit id="declarationDTO" name="declarationDTO"
+			action="<%= "/generatedDocuments.do?method=generateNewIRSDeclaration&personId=" + personId %>">
+			
+			<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="<%= IRSDeclarationDTO.class.getName()  %>">
+				<fr:slot name="civilYear" key="label.new.irs.annual.civil.year" required="true" />
+			</fr:schema>
+						
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle4 thright thlight mtop05"/>
 			</fr:layout>
 			
-		</fr:view>
+			<fr:destination name="invalid" path="<%= "/generatedDocuments.do?method=generateNewIRSDeclarationInvalid&personId=" + personId %>"/>
+			<fr:destination name="cancel" path="<%= "/generatedDocuments.do?method=showAnnualIRSDocumentsInPayments&personId=" + personId %>"/>
+		</fr:edit>
 	</logic:notEmpty>
-	
 	
 </logic:present>
 

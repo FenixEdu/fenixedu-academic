@@ -45,7 +45,12 @@ public class AnnualIRSDeclarationDocument extends AnnualIRSDeclarationDocument_B
 	return new AnnualIRSDeclarationDocument(addressee, operator, buildFilename(addressee, year), content, year);
     }
 
-    private String buildFilename(Person person, Integer year) {
+    static private String buildFilename(Person person, Integer year) {
 	return String.format("IRS-%s-%s-%s.pdf", year, person.getDocumentIdNumber(), new LocalDate().toString("yyyyMMdd"));
+    }
+
+    @Service
+    static public AnnualIRSDeclarationDocument create(Person addressee, Person operator, byte[] content, Integer year) {
+	return new AnnualIRSDeclarationDocument(addressee, operator, buildFilename(addressee, year), content, year);
     }
 }
