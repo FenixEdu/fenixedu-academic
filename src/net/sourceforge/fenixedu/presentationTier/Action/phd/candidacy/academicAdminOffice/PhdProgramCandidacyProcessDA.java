@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +18,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
@@ -62,6 +64,8 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 @Forward(name = "createCandidacy", path = "/phd/candidacy/academicAdminOffice/createCandidacy.jsp"),
 
 @Forward(name = "manageProcesses", path = "/phdIndividualProgramProcess.do?method=manageProcesses"),
+
+@Forward(name = "editCandidacyInformation", path = "/phd/candidacy/academicAdminOffice/editCandidacyInformation.jsp"),
 
 @Forward(name = "manageCandidacyDocuments", path = "/phd/candidacy/academicAdminOffice/manageCandidacyDocuments.jsp"),
 
@@ -193,13 +197,58 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 	return (PhdProgramCandidacyProcessBean) getRenderedObject("createCandidacyBean");
     }
 
-    // End of Create Candidacy Steps
-
     public ActionForward cancelCreateCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-
 	return mapping.findForward("manageProcesses");
     }
+
+    // End of Create Candidacy Steps
+
+    // Edit candidacy information
+
+    public ActionForward prepareEditCandidacyInformation(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	request.setAttribute("candidacyInformationBean", getProcess(request).getCandidacyInformationBean());
+	return mapping.findForward("editCandidacyInformation");
+    }
+
+    public ActionForward prepareEditCandidacyInformationInvalid(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	request.setAttribute("candidacyInformationBean", getRenderedObject("candidacyInformationBean"));
+	return mapping.findForward("editCandidacyInformation");
+    }
+
+    public ActionForward editCandidacyInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final CandidacyInformationBean candidacyInformationBean = (CandidacyInformationBean) getRenderedObject("candidacyInformationBean");
+
+	final Set<String> messages = candidacyInformationBean.validate();
+	if (!messages.isEmpty()) {
+	    for (final String each : messages) {
+		addActionMessage(request, each);
+	    }
+
+	    request.setAttribute("candidacyInformationBean", candidacyInformationBean);
+	    return mapping.findForward("editCandidacyInformation");
+	}
+
+	try {
+	    candidacyInformationBean.updateCandidacyInformation();
+	    addSuccessMessage(request, "message.phd.candidacy.information.edit.with.success");
+	    
+	    
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getKey(), e.getArgs());
+	    return prepareEditCandidacyInformationInvalid(mapping, form, request, response);
+	}
+
+	return viewIndividualProgramProcess(request, getProcess(request));
+    }
+
+    // End of edit candidacy information
 
     @Override
     public ActionForward manageCandidacyDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,

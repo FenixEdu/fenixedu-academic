@@ -28,8 +28,16 @@
 	</td>
   </tr>
 </table>
+
+<ul class="operations">
+
+<li style="display: inline;">
+	<html:link action="/phdProgramCandidacyProcess.do?method=prepareEditCandidacyInformation" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
+		<bean:message bundle="PHD_RESOURCES" key="label.phd.edit.candidacy.information"/>
+	</html:link>
+</li>
+
 <logic:equal name="process" property="activeState.active" value="true">
-	<ul class="operations">
 		<li style="display: inline;">
 			<html:link action="/phdProgramCandidacyProcess.do?method=manageCandidacyDocuments" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
 				<bean:message bundle="PHD_RESOURCES" key="label.phd.manageCandidacyDocuments"/>
@@ -92,6 +100,6 @@
 				</html:link>
 			</li>
 		</phd:activityAvailable>
-	</ul>	
 </logic:equal>
+</ul>	
 
