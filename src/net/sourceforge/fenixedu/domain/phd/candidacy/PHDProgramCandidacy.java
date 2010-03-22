@@ -27,12 +27,17 @@ public class PHDProgramCandidacy extends PHDProgramCandidacy_Base {
 
     @Override
     public String getDescription() {
-	return ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale()).getString(
-		"label.phdProgramCandidacy")
-		+ " - "
-		+ getExecutionDegree().getDegreeCurricularPlan().getName()
-		+ " - "
-		+ getExecutionDegree().getExecutionYear().getYear();
+	return ResourceBundle.getBundle("resources.PhdResources", Language.getLocale()).getString("label.phd") + " - "
+		+ getDegreeInformation();
+    }
+
+    private String getDegreeInformation() {
+	if (hasExecutionDegree()) {
+	    return getExecutionDegree().getDegreeCurricularPlan().getName() + " - "
+		    + getExecutionDegree().getExecutionYear().getYear();
+	}
+
+	return getCandidacyProcess().getPhdProgram().getName().getContent();
     }
 
     @Override

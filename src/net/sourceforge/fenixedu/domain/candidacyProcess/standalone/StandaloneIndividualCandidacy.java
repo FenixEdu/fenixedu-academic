@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.standalone;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.EntryPhase;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
@@ -188,4 +189,10 @@ public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy
     protected ExecutionSemester getCandidacyExecutionInterval() {
 	return (ExecutionSemester) super.getCandidacyExecutionInterval();
     }
+
+    @Override
+    public String getDescription() {
+	return getCandidacyProcess().getDisplayName() + ": " + Degree.readEmptyDegree().getNameI18N();
+    }
+
 }

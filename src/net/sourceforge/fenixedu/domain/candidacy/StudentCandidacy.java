@@ -250,6 +250,7 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 	final CandidacyInformationBean bean = new CandidacyInformationBean();
 
 	bean.setRegistration(getRegistration());
+	bean.setCandidacy(this);
 
 	bean.setCountryOfResidence(getCountryOfResidence());
 	bean.setDistrictSubdivisionOfResidence(getDistrictSubdivisionOfResidence());

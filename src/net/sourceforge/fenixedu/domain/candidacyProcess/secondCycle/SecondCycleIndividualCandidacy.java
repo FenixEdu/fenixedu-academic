@@ -265,4 +265,10 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 		getSeriesCandidacyGrade() != null ? getSeriesCandidacyGrade() : BigDecimal.ZERO);
 
     }
+
+    @Override
+    public String getDescription() {
+	return getCandidacyProcess().getDisplayName() + (hasSelectedDegree() ? ": " + getSelectedDegree().getNameI18N() : "");
+    }
+
 }

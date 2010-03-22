@@ -26,13 +26,14 @@ hideButtons();
 
 <br/>
 
-<strong><bean:message  key="label.registraitons.with.missing.candidacy.information" bundle="STUDENT_RESOURCES"/></strong><br/>
-<logic:iterate id="eachRegistration" name="registrationsWithMissingCandidacyInformation">
-	<bean:define id="eachRegistrationId" name="eachRegistration" property="idInternal" />
-	<bean:write name="eachRegistration" property="degree.presentationName"/> 
-	<logic:equal name="candidacyInformationBean" property="registration.idInternal" value="<%= eachRegistrationId.toString() %>">
+<bean:define id="candidacyInformationBean" name="candidacyInformationBean" />
+
+<strong><bean:message  key="label.candidacies.with.missing.information" bundle="STUDENT_RESOURCES"/></strong><br/>
+<logic:iterate id="eachCandidacy" name="candidaciesWithMissingInformation">
+	<bean:write name="eachCandidacy" property="description"/> 
+	<% if (eachCandidacy.equals(candidacyInformationBean)) {%>
 		<i><bean:message  key="label.editing" bundle="STUDENT_RESOURCES"/></i>
-	</logic:equal>
+	<%} %>
 	<br/>
 </logic:iterate>
 

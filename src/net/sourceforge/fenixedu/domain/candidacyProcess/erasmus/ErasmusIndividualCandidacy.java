@@ -152,4 +152,14 @@ public class ErasmusIndividualCandidacy extends ErasmusIndividualCandidacy_Base 
     public Degree getSelectedDegree() {
 	return getErasmusStudentData().getSelectedVacancy().getDegree();
     }
+
+    protected boolean hasSelectedDegree() {
+	return getSelectedDegree() != null;
+    }
+
+    @Override
+    public String getDescription() {
+	return getCandidacyProcess().getDisplayName() + (hasSelectedDegree() ? ": " + getSelectedDegree().getNameI18N() : "");
+    }
+
 }

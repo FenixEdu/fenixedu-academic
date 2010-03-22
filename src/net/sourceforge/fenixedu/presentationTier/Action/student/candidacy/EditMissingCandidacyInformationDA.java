@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.student.candidacy;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -7,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -27,25 +27,25 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 })
 public class EditMissingCandidacyInformationDA extends FenixDispatchAction {
 
+    static protected List<CandidacyInformationBean> getCandidacyInformationsWithMissingInfo() {
+	return AccessControl.getPerson().getStudent().getCandidacyInformationsWithMissingInformation();
+    }
+
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	request.setAttribute("registrationsWithMissingCandidacyInformation", AccessControl.getPerson().getStudent()
-		.getRegistrationsWithMissingCandidacyInformation());
-	request.setAttribute("candidacyInformationBean", getRegistration().getCandidacyInformationBean());
+	final List<CandidacyInformationBean> list = getCandidacyInformationsWithMissingInfo();
+
+	request.setAttribute("candidaciesWithMissingInformation", list);
+	request.setAttribute("candidacyInformationBean", list.get(0));
 
 	return mapping.findForward("editMissingCandidacyInformation");
     }
 
-    private Registration getRegistration() {
-	return AccessControl.getPerson().getStudent().getRegistrationsWithMissingCandidacyInformation().first();
-    }
-
     public ActionForward prepareEditInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	request.setAttribute("registrationsWithMissingCandidacyInformation", AccessControl.getPerson().getStudent()
-		.getRegistrationsWithMissingCandidacyInformation());
 
+	request.setAttribute("candidaciesWithMissingInformation", getCandidacyInformationsWithMissingInfo());
 	request.setAttribute("candidacyInformationBean", getRenderedObject("candidacyInformationBean"));
 
 	return mapping.findForward("editMissingCandidacyInformation");
@@ -56,30 +56,19 @@ public class EditMissingCandidacyInformationDA extends FenixDispatchAction {
 	final CandidacyInformationBean candidacyInformationBean = (CandidacyInformationBean) getRenderedObject("candidacyInformationBean");
 
 	final Set<String> messages = candidacyInformationBean.validate();
+
 	if (!messages.isEmpty()) {
 	    for (final String each : messages) {
 		addActionMessage(request, each);
 	    }
-
-	    request.setAttribute("registrationsWithMissingCandidacyInformation", AccessControl.getPerson().getStudent()
-		    .getRegistrationsWithMissingCandidacyInformation());
-
-	    request.setAttribute("candidacyInformationBean", getRenderedObject("candidacyInformationBean"));
-
-	    return mapping.findForward("editMissingCandidacyInformation");
+	    return prepareEditInvalid(mapping, form, request, response);
 	}
 
 	try {
-	    candidacyInformationBean.updateRegistrationWithMissingInformation();
+	    candidacyInformationBean.updateCandidacyWithMissingInformation();
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
-
-	    request.setAttribute("registrationsWithMissingCandidacyInformation", AccessControl.getPerson().getStudent()
-		    .getRegistrationsWithMissingCandidacyInformation());
-
-	    request.setAttribute("candidacyInformationBean", getRenderedObject("candidacyInformationBean"));
-
-	    return mapping.findForward("editMissingCandidacyInformation");
+	    return prepareEditInvalid(mapping, form, request, response);
 	}
 
 	final ActionForward forward = new ActionForward();
@@ -90,5 +79,4 @@ public class EditMissingCandidacyInformationDA extends FenixDispatchAction {
 	return forward;
 
     }
-
 }

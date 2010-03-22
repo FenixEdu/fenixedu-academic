@@ -3,9 +3,12 @@ package net.sourceforge.fenixedu.domain.candidacy;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Formatter;
 import java.util.HashSet;
 import java.util.Set;
+
+import pt.ist.fenixWebFramework.services.Service;
 
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DistrictSubdivision;
@@ -26,12 +29,19 @@ import net.sourceforge.fenixedu.util.StringUtils;
 
 public class CandidacyInformationBean implements Serializable {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 1144682974757187722L;
+    static public Comparator<CandidacyInformationBean> COMPARATOR_BY_DESCRIPTION = new Comparator<CandidacyInformationBean>() {
+
+	@Override
+	public int compare(CandidacyInformationBean o1, CandidacyInformationBean o2) {
+	    return o1.getDescription().compareTo(o2.getDescription());
+	}
+    };
+
+    static private final long serialVersionUID = 1144682974757187722L;
 
     private Registration registration;
+    private StudentCandidacy candidacy;
+    private IndividualCandidacy individualCandidacy;
 
     private Country countryOfResidence;
 
@@ -144,6 +154,30 @@ public class CandidacyInformationBean implements Serializable {
 
     public boolean hasRegistration() {
 	return getRegistration() != null;
+    }
+
+    public StudentCandidacy getCandidacy() {
+	return candidacy;
+    }
+
+    public void setCandidacy(StudentCandidacy candidacy) {
+	this.candidacy = candidacy;
+    }
+
+    public boolean hasCandidacy() {
+	return getCandidacy() != null;
+    }
+
+    public IndividualCandidacy getIndividualCandidacy() {
+	return individualCandidacy;
+    }
+
+    public void setIndividualCandidacy(IndividualCandidacy individualCandidacy) {
+	this.individualCandidacy = individualCandidacy;
+    }
+
+    public boolean hasIndividualCandidacy() {
+	return getIndividualCandidacy() != null;
     }
 
     public Country getCountryOfResidence() {
@@ -475,12 +509,26 @@ public class CandidacyInformationBean implements Serializable {
 	return validate().isEmpty();
     }
 
-    public void updateRegistrationWithMissingInformation() {
-	getRegistration().editMissingCandidacyInformation(this);
+    @Service
+    public void updateCandidacyWithMissingInformation() {
+	if (hasCandidacy()) {
+	    getCandidacy().editMissingCandidacyInformation(this);
+	} else if (hasIndividualCandidacy()) {
+	    getIndividualCandidacy().editMissingCandidacyInformation(this);
+	} else {
+	    getRegistration().editMissingCandidacyInformation(this);
+	}
     }
 
-    public void updateRegistrationInformation() {
-	getRegistration().editCandidacyInformation(this);
+    @Service
+    public void updateCandidacyInformation() {
+	if (hasCandidacy()) {
+	    getCandidacy().editCandidacyInformation(this);
+	} else if (hasIndividualCandidacy()) {
+	    getIndividualCandidacy().editCandidacyInformation(this);
+	} else {
+	    getRegistration().editCandidacyInformation(this);
+	}
     }
 
     public void addDocumentFile(final File file) {
@@ -506,4 +554,57 @@ public class CandidacyInformationBean implements Serializable {
 	return result.toString();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+	if (this == obj) {
+	    return true;
+	}
+
+	if (!(obj instanceof CandidacyInformationBean)) {
+	    return false;
+	}
+
+	final CandidacyInformationBean other = (CandidacyInformationBean) obj;
+
+	if (hasCandidacy() && other.hasCandidacy()) {
+	    return getCandidacy().equals(other.getCandidacy());
+	} else if (hasIndividualCandidacy() && other.hasIndividualCandidacy()) {
+	    return getIndividualCandidacy().equals(other.getIndividualCandidacy());
+	} else if (hasRegistration() && other.hasRegistration()) {
+	    return getRegistration().equals(other.getRegistration());
+	} else {
+	    return false;
+	}
+    }
+
+    @Override
+    public int hashCode() {
+	int result = 17;
+
+	if (hasCandidacy()) {
+	    result = 37 * result + getCandidacy().hashCode();
+	}
+
+	if (hasIndividualCandidacy()) {
+	    result = 37 * result + getIndividualCandidacy().hashCode();
+	}
+
+	if (hasRegistration()) {
+	    result = 37 * result + getRegistration().hashCode();
+	}
+
+	return result;
+    }
+
+    public String getDescription() {
+	if (hasRegistration()) {
+	    return getRegistration().getDegreeDescription();
+
+	} else if (hasCandidacy()) {
+	    return getCandidacy().getDescription();
+
+	} else {
+	    return getIndividualCandidacy().getDescription();
+	}
+    }
 }

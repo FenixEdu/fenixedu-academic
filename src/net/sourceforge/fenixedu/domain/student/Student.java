@@ -41,6 +41,7 @@ import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFee
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.MasterDegreeInsurancePaymentCode;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
+import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
@@ -59,6 +60,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
@@ -1643,9 +1645,15 @@ public class Student extends Student_Base {
 	return false;
     }
 
-    public boolean hasAnyRegistrationWithMissingCandidacyInformation() {
+    public boolean hasAnyCandidacyWithMissingInformation() {
 	for (final Registration registration : getRegistrations()) {
 	    if (registration.hasMissingCandidacyInformation(ExecutionYear.readCurrentExecutionYear())) {
+		return true;
+	    }
+	}
+
+	for (final PhdIndividualProgramProcess process : getPerson().getPhdIndividualProgramProcesses()) {
+	    if (process.hasCandidacyWithMissingInformation(ExecutionYear.readCurrentExecutionYear())) {
 		return true;
 	    }
 	}
@@ -1653,13 +1661,22 @@ public class Student extends Student_Base {
 	return false;
     }
 
-    public SortedSet<Registration> getRegistrationsWithMissingCandidacyInformation() {
-	final SortedSet<Registration> result = new TreeSet<Registration>(Registration.COMPARATOR_BY_START_DATE);
+    public List<CandidacyInformationBean> getCandidacyInformationsWithMissingInformation() {
+	final List<CandidacyInformationBean> result = new ArrayList<CandidacyInformationBean>();
+
 	for (final Registration registration : getRegistrations()) {
 	    if (registration.hasMissingCandidacyInformation(ExecutionYear.readCurrentExecutionYear())) {
-		result.add(registration);
+		result.add(registration.getCandidacyInformationBean());
 	    }
 	}
+
+	for (final PhdIndividualProgramProcess process : getPerson().getPhdIndividualProgramProcesses()) {
+	    if (process.hasCandidacyWithMissingInformation(ExecutionYear.readCurrentExecutionYear())) {
+		result.add(process.getCandidacyInformationBean());
+	    }
+	}
+
+	Collections.sort(result, CandidacyInformationBean.COMPARATOR_BY_DESCRIPTION);
 
 	return result;
     }

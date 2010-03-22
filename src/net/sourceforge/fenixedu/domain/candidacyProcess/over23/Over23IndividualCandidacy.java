@@ -230,4 +230,10 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 	formatter.format("%s: %s\n", candidateBundle.getString("label.over23.languages.speak"), StringUtils
 		.isEmpty(getLanguagesSpeak()) ? StringUtils.EMPTY : getLanguagesSpeak());
     }
+
+    @Override
+    public String getDescription() {
+	return getCandidacyProcess().getDisplayName() + (hasAcceptedDegree() ? ": " + getAcceptedDegree().getNameI18N() : "");
+    }
+
 }

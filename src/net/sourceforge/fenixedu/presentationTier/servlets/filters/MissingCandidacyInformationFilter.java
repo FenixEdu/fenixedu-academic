@@ -50,7 +50,7 @@ public class MissingCandidacyInformationFilter implements Filter {
 		filterChain.doFilter(servletRequest, servletResponse);
 		return;
 	    } else {
-		if (!AccessControl.getPerson().getStudent().hasAnyRegistrationWithMissingCandidacyInformation()) {
+		if (!AccessControl.getPerson().getStudent().hasAnyCandidacyWithMissingInformation()) {
 		    request.getSession().setAttribute(CANDIDACY_INFORMATION_VALID_KEY, Boolean.TRUE);
 		    filterChain.doFilter(servletRequest, servletResponse);
 		    return;

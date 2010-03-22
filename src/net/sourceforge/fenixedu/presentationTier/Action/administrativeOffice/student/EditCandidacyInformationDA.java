@@ -63,7 +63,7 @@ public class EditCandidacyInformationDA extends FenixDispatchAction {
 	}
 
 	try {
-	    candidacyInformationBean.updateRegistrationInformation();
+	    candidacyInformationBean.updateCandidacyInformation();
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
 

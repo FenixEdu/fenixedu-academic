@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PhotoState;
 import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
+import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
@@ -737,7 +738,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	return hasPhdProgram() ? getPhdProgram().getDegree().getLastActiveDegreeCurricularPlan() : null;
     }
 
-    private PhdProgram getPhdProgram() {
+    PhdProgram getPhdProgram() {
 	return getIndividualProgramProcess().getPhdProgram();
     }
 
@@ -763,5 +764,17 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
     public LocalDate getWhenStartedStudies() {
 	return getIndividualProgramProcess().getWhenStartedStudies();
+    }
+
+    /*
+     * !getCandidacy().hasRegistration() -> because if is connected to
+     * registration then it wiil be corrected by existing code
+     */
+    public boolean hasCandidacyWithMissingInformation(final ExecutionYear executionYear) {
+	return hasCandidacy() && !getCandidacy().hasRegistration() && !getCandidacy().getCandidacyInformationBean().isValid();
+    }
+
+    public CandidacyInformationBean getCandidacyInformationBean() {
+	return hasCandidacy() && !getCandidacy().hasRegistration() ? getCandidacy().getCandidacyInformationBean() : null;
     }
 }

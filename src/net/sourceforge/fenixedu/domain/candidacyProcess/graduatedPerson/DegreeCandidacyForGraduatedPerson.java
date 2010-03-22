@@ -186,4 +186,10 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
 	formatter.format("%s: %f\n", bundle.getString("label.SecondCycleIndividualCandidacy.candidacyGrade"),
 		getCandidacyGrade() != null ? getCandidacyGrade() : BigDecimal.ZERO);
     }
+
+    @Override
+    public String getDescription() {
+	return getCandidacyProcess().getDisplayName() + (hasSelectedDegree() ? ": " + getSelectedDegree().getNameI18N() : "");
+    }
+    
 }

@@ -294,6 +294,8 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	final CandidacyInformationBean bean = new CandidacyInformationBean();
 
 	bean.setRegistration(getRegistration());
+	bean.setIndividualCandidacy(this);
+	
 	bean.setCountryOfResidence(getCountryOfResidence());
 	bean.setDistrictSubdivisionOfResidence(getDistrictSubdivisionOfResidence());
 	bean.setSchoolTimeDistrictSubdivisionOfResidence(getSchoolTimeDistrictSubDivisionOfResidence());
@@ -503,7 +505,6 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 
     public void exportValues(final StringBuilder result) {
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice");
-	final ResourceBundle enumBundle = ResourceBundle.getBundle("resources.EnumerationResources");
 
 	Formatter formatter = new Formatter(result);
 
@@ -517,30 +518,7 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 		.isEmpty(getResponsible()) ? StringUtils.EMPTY : getResponsible());
 	formatter.format("%s: %s\n", bundle.getString("label.IndividualCandidacy.notes"),
 		StringUtils.isEmpty(getNotes()) ? StringUtils.EMPTY : getNotes());
-	// formatter.format("%s: %d\n",
-	// bundle.getString("label.IndividualCandidacy.numberOfCandidaciesToHigherSchool"),
-	// getNumberOfCandidaciesToHigherSchool() != null ?
-	// getNumberOfCandidaciesToHigherSchool() : 0);
-	// formatter.format("%s: %d\n",
-	// bundle.getString("label.IndividualCandidacy.numberOfFlunksOnHighSchool"),
-	// getNumberOfFlunksOnHighSchool() != null ?
-	// getNumberOfFlunksOnHighSchool() : 0);
-	// formatter.format("%s: %s\n",
-	// bundle.getString("label.IndividualCandidacy.highSchoolType"),
-	// getHighSchoolType() != null ?
-	// enumBundle.getString("AcademicalInstitutionType." +
-	// getHighSchoolType().getName())
-	// : StringUtils.EMPTY);
-	// formatter.format("%s: %s\n",
-	// bundle.getString("label.IndividualCandidacy.professionType"),
-	// getProfessionType() != null ? enumBundle.getString("ProfessionType."
-	// + getProfessionType().getName())
-	// : StringUtils.EMPTY);
-	// formatter.format("%s: %s\n",
-	// bundle.getString("label.IndividualCandidacy.professionalCondition"),
-	// getProfessionalCondition() != null ?
-	// enumBundle.getString("ProfessionalSituationConditionType."
-	// + getProfessionalCondition().getName()) : StringUtils.EMPTY);
+
 	formatter.format("%s: %s\n", bundle.getString("label.IndividualCandidacy.observations"), StringUtils
 		.isEmpty(getObservations()) ? StringUtils.EMPTY : getObservations());
 
@@ -549,4 +527,6 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	}
 
     }
+
+    abstract public String getDescription();
 }
