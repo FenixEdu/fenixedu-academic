@@ -5205,6 +5205,9 @@ class DomainObject {
         
         class student.registrationStates.TransitedState extends student.registrationStates.RegistrationState {
         }
+        
+        class student.registrationStates.InactiveState extends student.registrationStates.RegistrationState {
+        }
 
     class student.registrationStates.RegistrationStateLog extends DomainObject {
         DateTime whenCreated;
