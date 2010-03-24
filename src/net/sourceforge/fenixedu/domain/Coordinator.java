@@ -1,8 +1,34 @@
 package net.sourceforge.fenixedu.domain;
 
+import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
+import dml.runtime.RelationAdapter;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class Coordinator extends Coordinator_Base {
+    
+    static {
+	Person.CoordinatorTeacher.addListener(new RelationAdapter<Person, Coordinator>() {
+	
+	    @Override
+	    public void afterAdd(Person o1, Coordinator o2) {
+		if(o1 != null && o2 != null){
+		    if(!o1.hasRole(RoleType.COORDINATOR)){
+			o1.addPersonRoleByRoleType(RoleType.COORDINATOR);
+		    }
+		}
+	    }
+	    
+	    @Override
+	    public void afterRemove(Person o1, Coordinator o2) {
+		if(o1 != null && o2 != null){
+		    if(o1.getCoordinatorsCount() == 0){
+			o1.removeRoleByType(RoleType.COORDINATOR);
+		    }
+		}
+	    }
+	});
+    }
 
     public Coordinator() {
 	super();
