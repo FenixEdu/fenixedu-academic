@@ -38,7 +38,7 @@ public class SubmitFinalWorkProposal extends FenixService {
 	    proposal = new Proposal();
 	    int proposalNumber = scheduleing.getCurrentProposalNumber().intValue();
 	    proposal.setProposalNumber(proposalNumber);
-	    // scheduleing.setCurrentProposalNumber(proposalNumber + 1);
+	    scheduleing.setCurrentProposalNumber(proposalNumber + 1);
 	}
 
 	proposal.setScheduleing(scheduleing);
