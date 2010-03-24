@@ -353,4 +353,9 @@ public class Authenticate extends FenixService implements Serializable {
 	}
 	return false;
     }
+
+    public IUserView mock(final Person person, final String requestURL) {
+	return getUserView(person, requestURL);
+    }
+
 }
