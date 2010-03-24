@@ -39,7 +39,7 @@ public abstract class Node extends Node_Base implements MenuEntry, Comparable<No
     protected Node() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
-	setOjbConcreteClass(getClass().getName());
+	// setOjbConcreteClass(getClass().getName());
     }
 
     protected void init(Container parent, Content child, Boolean isAscending) {

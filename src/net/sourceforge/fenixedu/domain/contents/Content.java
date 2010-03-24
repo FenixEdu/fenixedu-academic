@@ -41,7 +41,7 @@ public abstract class Content extends Content_Base {
 	super();
 
 	setRootDomainObject(RootDomainObject.getInstance());
-	setOjbConcreteClass(getClass().getName());
+	// setOjbConcreteClass(getClass().getName());
 	setCreationDate(new DateTime());
 	setContentId(UUID.randomUUID().toString());
     }
@@ -416,6 +416,7 @@ public abstract class Content extends Content_Base {
 	return true;
     }
 
+    @Override
     public MultiLanguageString getNormalizedName() {
 	final MultiLanguageString normalizedName = super.getNormalizedName();
 	return normalizedName == null ? normalize(getName()) : normalizedName;
