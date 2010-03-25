@@ -37,14 +37,14 @@
 		</fr:view>
 	</logic:notEmpty>
 	
-    <logic:empty name="registrationsToChooseSecondCycle">
-	    <h3 class="mtop15 mbottom05"><strong><bean:message key="label.enrollment.courses.chooseRegistration.registrationsToChooseSecondCycle" bundle="STUDENT_RESOURCES"/></strong></h3>
-    	<p class="indent1">
-	    	<em>
-		    	<bean:message bundle="STUDENT_RESOURCES"  key="label.enrollment.courses.chooseRegistration.noRegistrationsToChooseSecondCycle"/>
-	    	</em>	    	
-    	</p>
-    </logic:empty>
+<!--    <logic:empty name="registrationsToChooseSecondCycle">-->
+<!--	    <h3 class="mtop15 mbottom05"><strong><bean:message key="label.enrollment.courses.chooseRegistration.registrationsToChooseSecondCycle" bundle="STUDENT_RESOURCES"/></strong></h3>-->
+<!--    	<p class="indent1">-->
+<!--	    	<em>-->
+<!--		    	<bean:message bundle="STUDENT_RESOURCES"  key="label.enrollment.courses.chooseRegistration.noRegistrationsToChooseSecondCycle"/>-->
+<!--	    	</em>	    	-->
+<!--    	</p>-->
+<!--    </logic:empty>-->
 	<logic:notEmpty name="registrationsToChooseSecondCycle">
 		<h3 class="mtop15 mbottom05"><strong><bean:message key="label.enrollment.courses.chooseRegistration.registrationsToChooseSecondCycle" bundle="STUDENT_RESOURCES"/></strong></h3>
 		<fr:view name="registrationsToChooseSecondCycle" schema="student.registrationDetail.short" >

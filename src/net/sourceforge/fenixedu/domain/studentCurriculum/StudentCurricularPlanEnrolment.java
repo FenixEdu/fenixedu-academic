@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.EnrollmentDomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.phd.enrolments.PhdStudentCurricularPlanEnrolmentManager;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolmentPreConditions.EnrolmentPreConditionResult;
@@ -340,7 +341,10 @@ abstract public class StudentCurricularPlanEnrolment {
 
     static public StudentCurricularPlanEnrolment createManager(final EnrolmentContext enrolmentContext) {
 
-	if (enrolmentContext.getCurricularRuleLevel().managesEnrolments()) {
+	if (enrolmentContext.isPhdDegree()) {
+	    return new PhdStudentCurricularPlanEnrolmentManager(enrolmentContext);
+
+	} else if (enrolmentContext.isNormal()) {
 	    return new StudentCurricularPlanEnrolmentManager(enrolmentContext);
 
 	} else if (enrolmentContext.isImprovement()) {

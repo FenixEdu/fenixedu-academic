@@ -18,7 +18,7 @@ public class StudentCurriculumGroupBean extends StudentCurriculumModuleBean {
 
     private static final long serialVersionUID = 1L;
 
-    private static class ComparatorByCurriculumGroupOrder implements Comparator<StudentCurriculumGroupBean> {
+    static protected class ComparatorByCurriculumGroupOrder implements Comparator<StudentCurriculumGroupBean> {
 
 	private ExecutionSemester executionSemester;
 
@@ -64,10 +64,15 @@ public class StudentCurriculumGroupBean extends StudentCurriculumModuleBean {
 	    ExecutionSemester executionSemester, int[] curricularYears) {
 	final List<StudentCurriculumGroupBean> result = new ArrayList<StudentCurriculumGroupBean>();
 	for (final CurriculumGroup curriculumGroup : parentGroup.getCurriculumGroupsToEnrolmentProcess()) {
-	    result.add(new StudentCurriculumGroupBean(curriculumGroup, executionSemester, curricularYears));
+	    result.add(createEnroledCurriculumGroupBean(executionSemester, curricularYears, curriculumGroup));
 	}
 
 	return result;
+    }
+
+    protected StudentCurriculumGroupBean createEnroledCurriculumGroupBean(ExecutionSemester executionSemester,
+	    int[] curricularYears, final CurriculumGroup curriculumGroup) {
+	return new StudentCurriculumGroupBean(curriculumGroup, executionSemester, curricularYears);
     }
 
     protected List<IDegreeModuleToEvaluate> buildCourseGroupsToEnrol(CurriculumGroup group, ExecutionSemester executionSemester) {

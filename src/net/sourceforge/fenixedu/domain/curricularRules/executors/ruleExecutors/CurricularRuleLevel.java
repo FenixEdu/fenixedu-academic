@@ -34,10 +34,6 @@ public enum CurricularRuleLevel {
 	return ENROLMENT_WITH_RULES_AND_TEMPORARY_ENROLMENT;
     }
 
-    public boolean managesEnrolments() {
-	return isNormal();
-    }
-
     public boolean isNormal() {
 	return isNormal;
     }

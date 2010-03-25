@@ -15,12 +15,36 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+
+@Forwards( { @Forward(name = "showEnrollmentInstructions", path = "/student/enrollment/bolonha/showEnrollmentInstructions.jsp"),
+
+@Forward(name = "enrollmentCannotProceed", path = "/student/enrollment/bolonha/enrollmentCannotProceed.jsp")
+
+})
 public class BolonhaStudentEnrollmentDispatchAction extends AbstractBolonhaStudentEnrollmentDA {
+
+    public ActionForward showWelcome(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final Registration registration = (Registration) request.getAttribute("registration");
+	request.setAttribute("registration", registration);
+	return findForwardForRegistration(mapping, registration);
+    }
+
+    private ActionForward findForwardForRegistration(ActionMapping mapping, Registration registration) {
+	if (registration.getDegree().isDEA()) {
+	    return mapping.findForward("welcome-dea-degree");
+	} else {
+	    return mapping.findForward("welcome");
+	}
+    }
 
     @Override
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
-	final Registration registration = (Registration) request.getAttribute("registration");
+	final Registration registration = getDomainObject(request, "registrationOid");
 	return prepareShowDegreeModulesToEnrol(mapping, form, request, response, registration.getLastStudentCurricularPlan(),
 		ExecutionSemester.readActualExecutionSemester());
     }

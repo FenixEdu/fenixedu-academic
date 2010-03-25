@@ -988,12 +988,11 @@
 				name="studentEnrollmentManagmentForm"
 				scope="request">
 		
-			<forward name="welcome" path="enrolment.welcome"/>
 			<forward name="chooseRegistration" path="enrolment.chooseRegistration" />
 			<forward name="choosePersonalDataAuthorizationChoice" path="enrolment.choosePersonalDataAuthorizationChoice"/>
 			<forward name="selectAffinityToEnrol" path="enrolment.selectAffinityToEnrol" />
 			<forward name="showAffinityToEnrol" path="enrolment.showAffinityToEnrol" />
-			<forward name="proceedToEnrolment" path="/bolonhaStudentEnrollment.do?method=prepare" />
+			<forward name="proceedToEnrolment" path="/bolonhaStudentEnrollment.do?method=showWelcome" />
 			<forward name="enrollmentCannotProceed" path="enrolment.bolonha.enrollmentCannotProceed" />
 			<forward name="notAuthorized" path="df.page.notAuthorized"/>
 		</action>
@@ -1008,6 +1007,8 @@
 				name="bolonhaEnrollmentForm"
 				scope="request">
 		
+			<forward name="welcome" path="enrolment.welcome"/>
+			<forward name="welcome-dea-degree" path="/phdStudentEnrolment.do?method=showWelcome"/>
 			<forward name="showDegreeModulesToEnrol" path="enrolment.bolonha.showDegreeModulesToEnrol" />
 			<forward name="chooseOptionalCurricularCourseToEnrol" path="enrolment.bolonha.chooseOptionalCurricularCourseEnrol" />
 			<forward name="showEnrollmentInstructions" path="enrolment.bolonha.showEnrollmentInstructions"/>

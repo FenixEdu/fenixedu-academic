@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Alert;
+import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -1211,4 +1212,18 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return hasCandidacyProcess() ? getCandidacyProcess().getCandidacyInformationBean() : null;
     }
 
+    public Collection<CompetenceCourse> getCompetenceCoursesAvailableToEnrol() {
+
+	if (!hasStudyPlan()) {
+	    return Collections.emptySet();
+	}
+
+	final Collection<CompetenceCourse> result = new HashSet<CompetenceCourse>();
+	for (PhdStudyPlanEntry entry : getStudyPlan().getEntries()) {
+	    if (entry.isInternalEntry()) {
+		result.add(((InternalPhdStudyPlanEntry) entry).getCompetenceCourse());
+	    }
+	}
+	return result;
+    }
 }

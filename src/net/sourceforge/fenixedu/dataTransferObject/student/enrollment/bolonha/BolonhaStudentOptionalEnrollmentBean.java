@@ -13,10 +13,7 @@ import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 
 public class BolonhaStudentOptionalEnrollmentBean implements Serializable {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = -4707696936211804716L;
+    static private final long serialVersionUID = -4707696936211804716L;
 
     private DegreeType degreeType;
 

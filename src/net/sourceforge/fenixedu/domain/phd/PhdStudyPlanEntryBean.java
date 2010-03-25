@@ -9,9 +9,6 @@ import net.sourceforge.fenixedu.domain.Degree;
 
 public class PhdStudyPlanEntryBean implements Serializable {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
 
     private Degree degree;

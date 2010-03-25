@@ -19,7 +19,9 @@
 	<bean:write name="executionSemester" property="enrolmentInstructions.instructions" filter="false"/>
 </logic:present>
 
-<html:form action="/studentEnrollmentManagement.do?method=prepare">
+<bean:define id="registrationOid" name="registration" property="externalId" />
+
+<html:form action="<%= "/bolonhaStudentEnrollment.do?method=prepare&registrationOid=" + registrationOid.toString() %>">
 	<p class="mtop15">
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message  key="label.continue" bundle="APPLICATION_RESOURCES"/></html:submit>
 	</p>

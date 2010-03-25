@@ -12,6 +12,7 @@ public class AssertUniqueApprovalInCurricularCourseContextsExecutor extends Curr
     @Override
     protected RuleResult executeEnrolmentVerificationWithRules(ICurricularRule curricularRule,
 	    IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
+	
 	final CurricularCourse curricularCourse = (CurricularCourse) curricularRule.getDegreeModuleToApplyRule();
 	final ExecutionSemester executionSemester = enrolmentContext.getExecutionPeriod();
 

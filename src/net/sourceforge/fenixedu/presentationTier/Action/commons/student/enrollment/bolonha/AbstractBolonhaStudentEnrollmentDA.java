@@ -37,20 +37,33 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 
 @Forwards( {
+
 	@Forward(name = "showDegreeModulesToEnrol", path = "/academicAdminOffice/student/enrollment/bolonha/showDegreeModulesToEnrol.jsp"),
+
 	@Forward(name = "chooseOptionalCurricularCourseToEnrol", path = "/academicAdminOffice/student/enrollment/bolonha/chooseOptionalCurricularCourseToEnrol.jsp"),
-	@Forward(name = "chooseCycleCourseGroupToEnrol", path = "/academicAdminOffice/student/enrollment/bolonha/chooseCycleCourseGroupToEnrol.jsp") })
+
+	@Forward(name = "chooseCycleCourseGroupToEnrol", path = "/academicAdminOffice/student/enrollment/bolonha/chooseCycleCourseGroupToEnrol.jsp"),
+
+	@Forward(name = "notAuthorized", path = "/student/notAuthorized_bd.jsp")
+
+})
 public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAction {
 
     protected ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response, final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionSemester executionSemester) {
 
-	request.setAttribute("bolonhaStudentEnrollmentBean", new BolonhaStudentEnrollmentBean(studentCurricularPlan,
-		executionSemester, getCurricularYearForCurricularCourses(), getCurricularRuleLevel(form)));
+	request.setAttribute("bolonhaStudentEnrollmentBean", createStudentEnrolmentBean(form, studentCurricularPlan,
+		executionSemester));
 
 	return mapping.findForward("showDegreeModulesToEnrol");
+    }
 
+    protected BolonhaStudentEnrollmentBean createStudentEnrolmentBean(ActionForm form,
+	    final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester) {
+
+	return new BolonhaStudentEnrollmentBean(studentCurricularPlan, executionSemester,
+		getCurricularYearForCurricularCourses(), getCurricularRuleLevel(form));
     }
 
     protected ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -185,8 +198,6 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
     public ActionForward updateParametersToSearchOptionalCurricularCourses(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	request.setAttribute("bolonhaStudentEnrollmentBean", getBolonhaStudentEnrollmentBeanFromViewState());
-
 	final BolonhaStudentOptionalEnrollmentBean optionalBean = getBolonhaStudentOptionalEnrollmentBeanFromViewState();
 	request.setAttribute("optionalEnrolmentBean", optionalBean);
 	RenderUtils.invalidateViewState("optionalEnrolment");
@@ -244,7 +255,6 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 
 	return prepareShowDegreeModulesToEnrol(mapping, form, request, response, cycleEnrolmentBean.getStudentCurricularPlan(),
 		cycleEnrolmentBean.getExecutionPeriod());
-
     }
 
     public ActionForward enrolInCycleCourseGroupInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,

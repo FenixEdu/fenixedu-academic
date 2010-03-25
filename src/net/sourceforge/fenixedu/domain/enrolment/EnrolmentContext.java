@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -121,6 +122,10 @@ public class EnrolmentContext {
 	return getResponsiblePerson() != null;
     }
 
+    public boolean isNormal() {
+	return getCurricularRuleLevel().isNormal();
+    }
+
     public boolean isImprovement() {
 	return getCurricularRuleLevel() == CurricularRuleLevel.IMPROVEMENT_ENROLMENT;
     }
@@ -143,6 +148,10 @@ public class EnrolmentContext {
 
     public boolean isEnrolmentWithoutRules() {
 	return getCurricularRuleLevel() == CurricularRuleLevel.ENROLMENT_NO_RULES;
+    }
+
+    public boolean isPhdDegree() {
+	return studentCurricularPlan.getDegreeType() == DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA;
     }
 
     @SuppressWarnings("unchecked")

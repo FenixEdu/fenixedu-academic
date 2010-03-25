@@ -23,6 +23,8 @@ import net.sourceforge.fenixedu.domain.curricularRules.RestrictionBetweenDegreeM
 import net.sourceforge.fenixedu.domain.curricularRules.RestrictionDoneDegreeModule;
 import net.sourceforge.fenixedu.domain.curricularRules.RestrictionEnroledDegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.phd.enrolments.PhdValidCurricularCoursesExecutor;
+import net.sourceforge.fenixedu.domain.phd.enrolments.PhdValidCurricularCoursesRule;
 
 public class CurricularRuleExecutorFactory {
 
@@ -50,6 +52,7 @@ public class CurricularRuleExecutorFactory {
 	executors.put(EvenOddRule.class, new EvenOddExecuter());
 	executors.put(MaximumNumberOfEctsInStandaloneCurriculumGroup.class,
 		new MaximumNumberOfEctsInStandaloneCurriculumGroupExecutor());
+	executors.put(PhdValidCurricularCoursesRule.class, new PhdValidCurricularCoursesExecutor());
     }
 
     public static CurricularRuleExecutor findExecutor(final ICurricularRule curricularRule) {

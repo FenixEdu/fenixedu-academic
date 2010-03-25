@@ -88,13 +88,6 @@
 		<form-property name="page" type="java.lang.Integer" initial="0"/>
 	</form-bean>
 	
-	
- 	<!-- bolonhaStudentEnrollmentForm -->
-	<form-bean name="bolonhaStudentEnrollmentForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-		<form-property name="method" type="java.lang.String" />
-		<form-property name="withRules" type="java.lang.Boolean" />
-    </form-bean>
-    
      <!-- Bean for Student Dismissal -->
       <form-bean name="studentExternalEnrolmentsForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 	     <form-property name="method" type="java.lang.String" />
