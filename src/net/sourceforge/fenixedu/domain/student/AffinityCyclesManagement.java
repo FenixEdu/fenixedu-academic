@@ -34,7 +34,7 @@ public class AffinityCyclesManagement {
 		new SeparationCyclesManagement().createNewSecondCycle(studentCurricularPlan);
 	    } else {
 		// Separating student
-		new SeparationCyclesManagement().separateSecondCycle(getStudentCurricularPlan());
+		new SeparationCyclesManagement().separateSecondCycle(studentCurricularPlan);
 	    }
 
 	} else if (studentCurricularPlan.hasRegistration() && getRegistration().isConcluded() && canRepeateSeparate()) {
