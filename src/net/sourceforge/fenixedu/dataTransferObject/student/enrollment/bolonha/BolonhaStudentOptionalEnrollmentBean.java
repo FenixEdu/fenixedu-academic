@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class BolonhaStudentOptionalEnrollmentBean implements Serializable {
 
@@ -105,6 +106,10 @@ public class BolonhaStudentOptionalEnrollmentBean implements Serializable {
 
     public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
 	this.studentCurricularPlan = studentCurricularPlan;
+    }
+
+    public Registration getRegistration() {
+	return getStudentCurricularPlan().getRegistration();
     }
 
 }

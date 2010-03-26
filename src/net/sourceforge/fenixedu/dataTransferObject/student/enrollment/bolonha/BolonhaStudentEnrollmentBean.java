@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DegreeModuleToEnrolKeyConverter;
 
@@ -167,4 +168,9 @@ public class BolonhaStudentEnrollmentBean implements Serializable, IStudentCurri
     public void setEndStageDate(LocalDate date) {
 	this.endStageDate = date;
     }
+
+    public Registration getRegistration() {
+	return getStudentCurricularPlan().getRegistration();
+    }
+
 }
