@@ -12,7 +12,7 @@ public class ExecutionCourseSender extends ExecutionCourseSender_Base {
     public ExecutionCourseSender(ExecutionCourse executionCourse) {
 	super();
 	setCourse(executionCourse);
-	setFromName(executionCourse.getNome());
+	setFromName(getFromName(executionCourse));
 	setFromAddress("noreply@ist.utl.pt");
 	addReplyTos(new ExecutionCourseReplyTo());
 	addReplyTos(new CurrentUserReplyTo());
@@ -30,6 +30,11 @@ public class ExecutionCourseSender extends ExecutionCourseSender_Base {
 	addRecipients(new Recipient(labelECTeachers, new ExecutionCourseTeachersGroup(executionCourse)));
 	addRecipients(new Recipient(labelECStudents, new ExecutionCourseStudentsGroup(executionCourse)));
 	addRecipients(new Recipient(labelECResponsibleTeachers, new ExecutionCourseResponsibleTeachersGroup(executionCourse)));
+    }
+
+    private String getFromName(ExecutionCourse executionCourse) {
+	return String.format("%s - %s - %s", executionCourse.getNome(), executionCourse.getDegreePresentationString(),
+		executionCourse.getExecutionPeriod().getQualifiedName());
     }
 
     @Service
