@@ -84,9 +84,9 @@ public class AcceptNewProjectProposal extends FenixService {
 		Iterator iterProfessorship = professorships.iterator();
 		while (iterProfessorship.hasNext()) {
 		    Professorship professorship = (Professorship) iterProfessorship.next();
-		    Teacher teacher = professorship.getTeacher();
-		    if (!(teacher.getPerson()).equals(receiverPerson) && !groupTeachers.contains(teacher.getPerson())) {
-			groupTeachers.add(teacher.getPerson());
+		    final Person person = professorship.getPerson();
+		    if (!person.equals(receiverPerson) && !groupTeachers.contains(person)) {
+			groupTeachers.add(person);
 		    }
 		}
 	    }

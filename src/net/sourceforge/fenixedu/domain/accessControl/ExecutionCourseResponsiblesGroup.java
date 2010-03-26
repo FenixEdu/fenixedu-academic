@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 
 /**
@@ -36,8 +35,7 @@ public class ExecutionCourseResponsiblesGroup extends Group {
 		    for (final ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCourses()) {
 			for (final Professorship professorship : executionCourse.getProfessorships()) {
 			    if (professorship.getResponsibleFor().booleanValue()) {
-				final Teacher teacher = professorship.getTeacher();
-				final Person person = teacher.getPerson();
+				final Person person = professorship.getPerson();
 				elements.add(person);
 			    }
 			}

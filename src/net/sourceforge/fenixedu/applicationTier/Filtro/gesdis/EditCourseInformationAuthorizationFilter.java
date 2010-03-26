@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseReport;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
@@ -46,7 +45,6 @@ public class EditCourseInformationAuthorizationFilter extends AuthorizationByRol
 
     private boolean isResponsibleFor(IUserView id, InfoCourseReport infoCourseReport) {
 	final Person person = id.getPerson();
-	final Teacher teacher = person == null ? null : person.getTeacher();
 
 	InfoExecutionCourse infoExecutionCourse = infoCourseReport.getInfoExecutionCourse();
 	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
@@ -54,7 +52,7 @@ public class EditCourseInformationAuthorizationFilter extends AuthorizationByRol
 	List<Professorship> responsiblesFor = executionCourse.responsibleFors();
 
 	for (Professorship professorship : responsiblesFor) {
-	    if (professorship.getTeacher().equals(teacher))
+	    if (professorship.getPerson() == person)
 		return true;
 	}
 	return false;

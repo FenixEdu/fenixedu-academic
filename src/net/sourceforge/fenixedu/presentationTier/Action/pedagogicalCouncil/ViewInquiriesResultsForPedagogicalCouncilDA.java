@@ -77,7 +77,7 @@ public class ViewInquiriesResultsForPedagogicalCouncilDA extends ViewInquiriesRe
 	Professorship professorship = DomainObject.fromOID(getLongFromRequest(request, "professorshipID"));
 	Set<ExecutionCourse> executionCourses = new HashSet<ExecutionCourse>();
 	ExecutionSemester executionSemester = professorship.getExecutionCourse().getExecutionPeriod();
-	for (Professorship anotherProfessorship : professorship.getTeacher().getProfessorships(executionSemester)) {
+	for (Professorship anotherProfessorship : professorship.getPerson().getProfessorships(executionSemester)) {
 	    executionCourses.add(anotherProfessorship.getExecutionCourse());
 	}
 	request.setAttribute("professorship", professorship);

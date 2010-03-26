@@ -10,8 +10,8 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
@@ -49,13 +49,12 @@ public class ExecutionCourseLecturingTeacherAuthorizationFilter extends Authoriz
 	    return false;
 	}
 
-	if (id.getPerson() == null) {
+	final Person person = id.getPerson();
+	if (person == null) {
 	    return false;
 	}
-	final Teacher teacher = id.getPerson().getTeacher();
-
 	for (final Professorship professorship : executionCourse.getProfessorships()) {
-	    if (professorship.getTeacher() == teacher || professorship.getPerson() == id.getPerson()) {
+	    if (professorship.getPerson() == id.getPerson()) {
 		return true;
 	    }
 	}

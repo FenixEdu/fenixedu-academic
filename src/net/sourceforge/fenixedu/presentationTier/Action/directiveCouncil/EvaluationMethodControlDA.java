@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseWithNoEvaluationMethodSearchBean;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -103,8 +102,7 @@ public class EvaluationMethodControlDA extends FenixDispatchAction {
 		final StringBuilder responsibleTeachers = new StringBuilder();
 		final StringBuilder otherTeachers = new StringBuilder();
 		for (final Professorship professorship : executionCourse.getProfessorshipsSet()) {
-		    final Teacher teacher = professorship.getTeacher();
-		    final Person person = teacher.getPerson();
+		    final Person person = professorship.getPerson();
 		    if (professorship.isResponsibleFor()) {
 			if (responsibleTeachers.length() > 0) {
 			    responsibleTeachers.append(", ");

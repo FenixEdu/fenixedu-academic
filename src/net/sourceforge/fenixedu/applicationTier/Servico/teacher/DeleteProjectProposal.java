@@ -62,11 +62,11 @@ public class DeleteProjectProposal extends FenixService {
 
 		Iterator iterProfessorship = professorships.iterator();
 		while (iterProfessorship.hasNext()) {
-		    Professorship professorship = (Professorship) iterProfessorship.next();
-		    Teacher teacher = professorship.getTeacher();
+		    final Professorship professorship = (Professorship) iterProfessorship.next();
+		    final Person person = professorship.getPerson();
 
-		    if (!(teacher.getPerson()).equals(withdrawalPerson) && !group.contains(teacher.getPerson())) {
-			group.add(teacher.getPerson());
+		    if (!person.equals(withdrawalPerson) && !group.contains(person)) {
+			group.add(person);
 		    }
 		}
 	    }

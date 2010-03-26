@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -34,7 +35,7 @@ public class SummaryManagementToTeacherAuthorizationFilter extends Authorization
 	    IUserView userViewLogged = getRemoteUser(request);
 
 	    Object[] arguments = getServiceCallArguments(request);
-	    Teacher teacherLogged = getTeacherLogged(arguments);
+	    Person teacherLogged = getTeacherLogged(arguments);
 	    Summary summary = getSummary(arguments);
 	    ExecutionCourse executionCourse = getExecutionCourse(arguments);
 
@@ -68,11 +69,11 @@ public class SummaryManagementToTeacherAuthorizationFilter extends Authorization
 	return null;
     }
 
-    private Teacher getTeacherLogged(Object[] arguments) {
+    private Person getTeacherLogged(Object[] arguments) {
 	if (arguments[0] instanceof SummariesManagementBean) {
-	    return ((SummariesManagementBean) arguments[0]).getProfessorshipLogged().getTeacher();
+	    return ((SummariesManagementBean) arguments[0]).getProfessorshipLogged().getPerson();
 	} else if (arguments[2] instanceof Teacher) {
-	    return (Teacher) arguments[2];
+	    return ((Teacher) arguments[2]).getPerson();
 	}
 	return null;
     }

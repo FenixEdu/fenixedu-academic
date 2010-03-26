@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
@@ -32,7 +32,7 @@ public class ExecutionCourseLecturingDepartmentAdmOfficeAuthorizationFilter exte
 
     private boolean lecturesExecutionCourse(IUserView id, Object[] arguments) {
 	final ExecutionCourse executionCourse = ((SummariesManagementBean) arguments[0]).getExecutionCourse();
-	final Teacher teacher = ((SummariesManagementBean) arguments[0]).getProfessorshipLogged().getTeacher();
-	return teacher.getProfessorshipByExecutionCourse(executionCourse) != null;
+	final Person person = ((SummariesManagementBean) arguments[0]).getProfessorshipLogged().getPerson();
+	return person.getProfessorshipByExecutionCourse(executionCourse) != null;
     }
 }

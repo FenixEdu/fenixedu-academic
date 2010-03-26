@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
@@ -43,7 +42,6 @@ public class ReadTeacherInformationCoordinatorAuthorizationFilter extends Author
 
     protected boolean verifyCondition(IUserView id, String user) {
 	final Person person = id.getPerson();
-	final Teacher teacher = Teacher.readTeacherByUsername(user);
 
 	List<ExecutionDegree> executionDegrees = ExecutionDegree.getAllCoordinatedByTeacher(person);
 
@@ -54,7 +52,7 @@ public class ReadTeacherInformationCoordinatorAuthorizationFilter extends Author
 	List<Professorship> professorships = Professorship.readByDegreeCurricularPlansAndExecutionYear(degreeCurricularPlans,
 		executionDegressExecutionYearID);
 	for (final Professorship professorship : professorships) {
-	    if (professorship.getTeacher() == teacher) {
+	    if (professorship.getPerson() == person) {
 		return true;
 	    }
 	}

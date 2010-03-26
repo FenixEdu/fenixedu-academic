@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Summary;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
@@ -407,7 +406,7 @@ public class MergeExecutionCourses extends FenixService {
     private void copyProfessorships(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
 	for (; !executionCourseFrom.getProfessorships().isEmpty();) {
 	    final Professorship professorship = executionCourseFrom.getProfessorships().get(0);
-	    final Professorship otherProfessorship = findProfessorShip(executionCourseTo, professorship.getTeacher());
+	    final Professorship otherProfessorship = findProfessorShip(executionCourseTo, professorship.getPerson());
 	    if (otherProfessorship == null) {
 		professorship.setExecutionCourse(executionCourseTo);
 	    } else {
@@ -431,9 +430,9 @@ public class MergeExecutionCourses extends FenixService {
 	}
     }
 
-    private Professorship findProfessorShip(final ExecutionCourse executionCourseTo, final Teacher teacher) {
+    private Professorship findProfessorShip(final ExecutionCourse executionCourseTo, final Person person) {
 	for (final Professorship professorship : executionCourseTo.getProfessorships()) {
-	    if (professorship.getTeacher() == teacher) {
+	    if (professorship.getPerson() == person) {
 		return professorship;
 	    }
 	}
