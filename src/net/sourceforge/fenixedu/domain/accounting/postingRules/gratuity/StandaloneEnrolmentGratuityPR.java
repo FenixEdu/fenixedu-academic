@@ -22,6 +22,8 @@ import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
+import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
@@ -102,15 +104,36 @@ public class StandaloneEnrolmentGratuityPR extends StandaloneEnrolmentGratuityPR
 		EventType.GRATUITY, gratuityEvent.getStartDate(), gratuityEvent.getEndDate());
 
 	final Money degreeGratuityAmount = gratuityPR.getDefaultGratuityAmount(gratuityEvent.getExecutionYear());
-
 	final BigDecimal creditsProporcion = enroledEcts.divide(getEctsForYear());
 
-	if (gratuityEvent.getDegree().isEmpty() || gratuityEvent.getDegree().isDEA()) {
+	if (hasAnyActiveDegreeRegistration(gratuityEvent)) {
+	    return degreeGratuityAmount.multiply(creditsProporcion);
+
+	} else if (gratuityEvent.getDegree().isEmpty() || gratuityEvent.getDegree().isDEA()) {
 	    return degreeGratuityAmount.multiply(getGratuityFactor()).multiply(getEctsFactor().add(creditsProporcion));
+
 	} else {
 	    return degreeGratuityAmount.multiply(creditsProporcion);
 	}
+    }
 
+    private boolean hasAnyActiveDegreeRegistration(final GratuityEvent gratuityEvent) {
+
+	final Student student = gratuityEvent.getStudentCurricularPlan().getRegistration().getStudent();
+
+	for (final Registration registration : student.getRegistrations()) {
+	   
+	    if (registration.getDegree().isEmpty()) {
+		continue;
+	    }
+
+	    if (registration.isActive() && registration.isDegreeAdministrativeOffice()
+		    && registration.hasAnyEnrolmentsIn(gratuityEvent.getExecutionYear())) {
+		return true;
+	    }
+	}
+
+	return false;
     }
 
     private Map<DegreeCurricularPlan, BigDecimal> groupEctsByDegreeCurricularPlan(GratuityEvent gratuityEvent) {
@@ -169,9 +192,7 @@ public class StandaloneEnrolmentGratuityPR extends StandaloneEnrolmentGratuityPR
 	    throw new DomainExceptionWithLabelFormatter(
 		    "error.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR.amount.being.payed.must.be.equal.to.amount.in.debt",
 		    event.getDescriptionForEntryType(getEntryType()));
-
 	}
-
     }
 
     @Override
