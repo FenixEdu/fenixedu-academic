@@ -66,10 +66,6 @@ public class PhdValidCurricularCoursesExecutor extends CurricularRuleExecutor {
 	}
     }
 
-    /*
-     * TODO: Process could be null because of existing ones ... may be i need to
-     * migrate all or protect to prevent enrolment if no process is available
-     */
     private Collection<CompetenceCourse> getCompetenceCoursesAvailableToEnrol(final EnrolmentContext context) {
 	return context.getRegistration().getPhdIndividualProgramProcess().getCompetenceCoursesAvailableToEnrol();
     }

@@ -45,10 +45,6 @@ public class PhdStudentCurriculumGroupBean extends StudentCurriculumGroupBean {
 		|| (course.hasCompetenceCourse() && collection.contains(course.getCompetenceCourse()));
     }
 
-    /*
-     * TODO: Process could be null because of existing ones ... may be i need to
-     * migrate all or protect to prevent enrolment if no process is available
-     */
     private Collection<CompetenceCourse> getCompetenceCoursesAvailableToEnrol() {
 	return getRegistration().getPhdIndividualProgramProcess().getCompetenceCoursesAvailableToEnrol();
     }
