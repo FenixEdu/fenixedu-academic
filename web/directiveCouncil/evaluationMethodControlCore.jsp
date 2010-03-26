@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
+<%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <html:xhtml/>
 
 <%-- 
@@ -36,7 +37,14 @@
 		<bean:define id="executionPeriod" name="executionCourseWithNoEvaluationMethodSearchBean" property="executionPeriod"/>
 		<bean:define id="degreeTypes" name="executionCourseWithNoEvaluationMethodSearchBean" property="degreeTypes"/>
 
-	<table class="mtop15">
+
+		<p class="mtop15 mbottom05"><bean:message key="label.total.execution.courses"/>: <strong><bean:write name="executionCourseWithNoEvaluationMethodSearchBean" property="total"/></strong></p>
+		<p class="mvert05"><bean:message key="label.execution.courses.with.evaluation.method"/>: <strong><bean:write name="executionCourseWithNoEvaluationMethodSearchBean" property="withEvaluationMethod"/></strong></p>
+		<p class="mtop05 mbottom05"><bean:message key="label.execution.courses.without.evaluation.method"/>: <strong><bean:write name="executionCourseWithNoEvaluationMethodSearchBean" property="withoutEvaluationMethod"/></strong></p>
+
+<h3><bean:message key="label.execution.courses.without.evaluation.method"/></h3>
+
+	<table>
 		<tr>
 			<td>
 				<fr:form action="/evaluationMethodControl.do?method=exportToCSV">
@@ -61,11 +69,6 @@
 		</tr>
 	</table>
 
-
-		<p class="mtop15 mbottom05"><bean:message key="label.total.execution.courses"/>: <strong><bean:write name="executionCourseWithNoEvaluationMethodSearchBean" property="total"/></strong></p>
-		<p class="mvert05"><bean:message key="label.execution.courses.with.evaluation.method"/>: <strong><bean:write name="executionCourseWithNoEvaluationMethodSearchBean" property="withEvaluationMethod"/></strong></p>
-		<p class="mtop05 mbottom05"><bean:message key="label.execution.courses.without.evaluation.method"/>: <strong><bean:write name="executionCourseWithNoEvaluationMethodSearchBean" property="withoutEvaluationMethod"/></strong></p>
-
 		<table class="tstyle4">
 			<tr>
 				<th>
@@ -87,6 +90,17 @@
 			<logic:iterate id="executionCourse" name="executionCourses">
 				<tr>
 					<td>
+					<%-- 
+						<logic:present name="executionCourse" property="site">
+							<bean:define id="executionCourse" name="executionCourse" toScope="request"/>
+							<app:contentLink name="executionCourse" property="site" target="_blank">
+								<bean:write name="executionCourse" property="nome"/>
+							</app:contentLink>
+						</logic:present>
+						<logic:notPresent name="executionCourse" property="site">
+							<bean:write name="executionCourse" property="nome"/>
+						</logic:notPresent>
+ 					--%>
 						<bean:write name="executionCourse" property="nome"/>
 					</td>
 					<td>
