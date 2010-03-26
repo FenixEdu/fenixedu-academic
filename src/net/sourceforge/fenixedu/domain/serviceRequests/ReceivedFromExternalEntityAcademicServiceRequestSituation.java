@@ -49,4 +49,9 @@ public class ReceivedFromExternalEntityAcademicServiceRequestSituation extends
 		    "error.serviceRequests.ReceivedFromUnitAcademicServiceRequestSituation.invalid.situation.date");
 	}
     }
+    
+    @Override
+    public DateTime getFinalSituationDate() {
+        return getReceivedDate();
+    }
 }

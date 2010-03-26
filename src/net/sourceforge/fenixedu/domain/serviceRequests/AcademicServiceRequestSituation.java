@@ -155,6 +155,10 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
 	}
     }
 
+    public DateTime getFinalSituationDate() {
+	return getSituationDate();
+    }
+
     static AcademicServiceRequestSituation create(final AcademicServiceRequest academicServiceRequest,
 	    final AcademicServiceRequestBean academicServiceRequestBean) {
 

@@ -1,10 +1,13 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.serviceRequests;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -25,6 +28,7 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
@@ -158,12 +162,24 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
     public ActionForward viewAcademicServiceRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final AcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
+	final AcademicServiceRequest serviceRequest = getAndSetAcademicServiceRequest(request);
 	getAndSetUrl(form, request);
-	request.setAttribute("canRevertToProcessingState", AcademicServiceRequestPredicates.REVERT_TO_PROCESSING_STATE
-		.evaluate(academicServiceRequest));
+
+	request.setAttribute("canRevertToProcessingState", canRevertToProcessingState(serviceRequest));
+	request.setAttribute("serviceRequestSituations", getAcademicServiceRequestSituations(serviceRequest));
 
 	return mapping.findForward("viewAcademicServiceRequest");
+    }
+
+    private boolean canRevertToProcessingState(final AcademicServiceRequest academicServiceRequest) {
+	return AcademicServiceRequestPredicates.REVERT_TO_PROCESSING_STATE.evaluate(academicServiceRequest);
+    }
+
+    private List<AcademicServiceRequestSituation> getAcademicServiceRequestSituations(AcademicServiceRequest serviceRequest) {
+	final List<AcademicServiceRequestSituation> result = new ArrayList<AcademicServiceRequestSituation>(serviceRequest
+		.getAcademicServiceRequestSituations());
+	Collections.sort(result, AcademicServiceRequestSituation.COMPARATOR_BY_MOST_RECENT_CREATION_DATE_AND_ID);
+	return result;
     }
 
     @Service
@@ -171,8 +187,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	    HttpServletResponse response) {
 	final AcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
 	getAndSetUrl(form, request);
-	request.setAttribute("canRevertToProcessingState", AcademicServiceRequestPredicates.REVERT_TO_PROCESSING_STATE
-		.evaluate(academicServiceRequest));
+	request.setAttribute("canRevertToProcessingState", canRevertToProcessingState(academicServiceRequest));
 
 	try {
 	    academicServiceRequest.revertToProcessingState();

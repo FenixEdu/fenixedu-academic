@@ -334,8 +334,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     final public AcademicServiceRequestSituation getActiveSituation() {
-	return (!getAcademicServiceRequestSituations().isEmpty()) ? (AcademicServiceRequestSituation) Collections.min(
-		getAcademicServiceRequestSituations(),
+	return hasAnyAcademicServiceRequestSituations() ? Collections.min(getAcademicServiceRequestSituations(),
 		AcademicServiceRequestSituation.COMPARATOR_BY_MOST_RECENT_CREATION_DATE_AND_ID) : null;
     }
 

@@ -45,4 +45,9 @@ public class SentToExternalEntityAcademicServiceRequestSituation extends SentToE
 	    throw new DomainException("error.serviceRequests.SentToUnitAcademicServiceRequestSituation.invalid.situation.date");
 	}
     }
+    
+    @Override
+    public DateTime getFinalSituationDate() {
+        return getSentDate();
+    }
 }

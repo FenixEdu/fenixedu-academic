@@ -2,6 +2,9 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+
+<%@page import="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation"%>
+
 <html:xhtml/>
 
 <bean:define id="academicServiceRequest" name="academicServiceRequest" type="net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest"/>
@@ -22,18 +25,40 @@
 	</fr:layout>
 </fr:view>
 
+<!--<logic:present name="academicServiceRequest" property="activeSituation">-->
+<!--	<p class="mbottom025"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="request.situation"/></strong></p>-->
+<!--	<bean:define id="schema" name="academicServiceRequest" property="activeSituation.class.simpleName" />-->
+<!--	<fr:view name="academicServiceRequest" property="activeSituation" schema="<%= schema.toString() + ".view" %>">-->
+<!--		<fr:layout name="tabular">-->
+<!--			<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>-->
+<!--		<fr:property name="rowClasses" value="tdhl1,,,"/>-->
+<!--		</fr:layout>-->
+<!--	</fr:view>-->
+<!--</logic:present>-->
 
-<logic:present name="academicServiceRequest" property="activeSituation">
+<logic:notEmpty name="serviceRequestSituations">
 	<p class="mbottom025"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="request.situation"/></strong></p>
-	<bean:define id="schema" name="academicServiceRequest" property="activeSituation.class.simpleName" />
-	<fr:view name="academicServiceRequest" property="activeSituation" schema="<%= schema.toString() + ".view" %>">
+	<fr:view name="serviceRequestSituations">
+
+		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="<%= AcademicServiceRequestSituation.class.getName() %>">
+			<fr:slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType">
+			</fr:slot>
+			<fr:slot name="finalSituationDate" key="label.date"/>
+			<fr:slot name="employee" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.employee.person.name" layout="null-as-label">
+				<fr:property name="label" value=" - "/>
+				<fr:property name="subLayout" value="values"/>
+				<fr:property name="subSchema" value="responsibleEmployee.name"/>
+			</fr:slot>
+			<fr:slot name="justification" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.justification" />
+		</fr:schema>
+
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>
-		<fr:property name="rowClasses" value="tdhl1,,,"/>
+			<fr:property name="classes" value="tstyle2 thlight" />
 		</fr:layout>
 	</fr:view>
-</logic:present>
+</schema>
 
+</logic:notEmpty>
 
 <logic:equal name="canRevertToProcessingState" value="true">
 	<fr:form action="/academicServiceRequestsManagement.do?method=revertRequestToProcessingState">
