@@ -36,6 +36,7 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/crossdb.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/db-ojb-1.0.0.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/dbunit1.5.1.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/dml-20091101.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/dom4j-1.6.1.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/dspace-integration.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/dtdparser.jar"/>
@@ -131,7 +132,7 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-tools.jar" sourcepath="/fenix-tools"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-r46762.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-remote-plugin.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-r46574.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-r46816.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/spymemcached-1.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
