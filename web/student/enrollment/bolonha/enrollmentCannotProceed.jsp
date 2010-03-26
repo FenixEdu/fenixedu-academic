@@ -7,6 +7,7 @@
 
 
 <logic:present role="STUDENT">
+
     <h2><bean:message key="label.enrollment.courses" bundle="STUDENT_RESOURCES"/></h2>
     
 	<logic:messagesPresent message="true">

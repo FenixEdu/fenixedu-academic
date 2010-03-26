@@ -34,6 +34,44 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 })
 public class PhdStudentEnrolmentDA extends BolonhaStudentEnrollmentDispatchAction {
 
+    private Registration getRegistration(HttpServletRequest request) {
+	Registration registration = (Registration) request.getAttribute("registration");
+	if (registration != null) {
+	    return registration;
+	}
+	
+	registration = getDomainObject(request, "registrationOid");
+	if (registration != null) {
+	    return registration;
+	}
+	
+	final BolonhaStudentEnrollmentBean bean = getBolonhaStudentEnrollmentBeanFromViewState();
+	if (bean != null && bean.getRegistration() != null) {
+	    return bean.getRegistration();
+	}
+	
+	final BolonhaStudentOptionalEnrollmentBean optionalBean = getBolonhaStudentOptionalEnrollmentBeanFromViewState();
+	if (optionalBean != null && optionalBean.getRegistration() != null) {
+	    return optionalBean.getRegistration();
+	}
+	
+	return null;
+    }
+    
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+    
+	final Registration registration = getRegistration(request);
+	
+	if (registration != null && !registration.hasPhdIndividualProgramProcess()) {
+	    addActionMessage(request, "label.phd.registration.without.phd.program.process");
+	    return mapping.findForward("enrollmentCannotProceed");
+	}
+	
+	return super.execute(mapping, actionForm, request, response);
+    }
+    
     @Override
     protected BolonhaStudentEnrollmentBean createStudentEnrolmentBean(ActionForm form,
 	    StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester) {
@@ -45,7 +83,6 @@ public class PhdStudentEnrolmentDA extends BolonhaStudentEnrollmentDispatchActio
     public ActionForward showWelcome(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	super.showWelcome(mapping, form, request, response);
 
 	final Registration registration = (Registration) request.getAttribute("registration");
 	final ExecutionSemester semester = ExecutionSemester.readActualExecutionSemester();
@@ -56,6 +93,7 @@ public class PhdStudentEnrolmentDA extends BolonhaStudentEnrollmentDispatchActio
 	    request.setAttribute("enrolmentPeriod", period);
 	}
 
+	super.showWelcome(mapping, form, request, response);
 	return mapping.findForward("showWelcome");
     }
 
