@@ -1679,7 +1679,11 @@ public class CurricularCourse extends CurricularCourse_Base {
 	    ExecutionSemester executionSemester, MarkSheetType markSheetType) {
 
 	for (final CurricularCourse curricularCourse : equivalence.getOldCurricularCourses()) {
-	    if (curricularCourse.getDegreeCurricularPlan() == equivalence.getDegreeCurricularPlan()) {
+	    if (curricularCourse.getDegreeCurricularPlan().isBolonhaDegree()) {
+		
+		if (curricularCourse.hasAnyActiveContext(executionSemester)) {
+		    continue;
+		}
 
 		for (final CurriculumModule module : curricularCourse.getCurriculumModules()) {
 		    if (module.isEnrolment()) {
