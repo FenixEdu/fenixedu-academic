@@ -90,7 +90,6 @@
 			<logic:iterate id="executionCourse" name="executionCourses">
 				<tr>
 					<td>
-					<%-- 
 						<logic:present name="executionCourse" property="site">
 							<bean:define id="executionCourse" name="executionCourse" toScope="request"/>
 							<app:contentLink name="executionCourse" property="site" target="_blank">
@@ -100,8 +99,6 @@
 						<logic:notPresent name="executionCourse" property="site">
 							<bean:write name="executionCourse" property="nome"/>
 						</logic:notPresent>
- 					--%>
-						<bean:write name="executionCourse" property="nome"/>
 					</td>
 					<td>
 						<logic:iterate id="professorship" name="executionCourse" property="professorships">
