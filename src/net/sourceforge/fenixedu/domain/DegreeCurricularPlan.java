@@ -1917,5 +1917,13 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	final Person person = AccessControl.getPerson();
 	return person != null && getDegree().isMemberOfCurrentScientificCommission(person, executionYear);
     }
+    
+    public ExecutionYear getInauguralExecutionYear() {
+	return Collections.min(getExecutionDegreesSet(), ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR).getExecutionYear();
+    }
+    
+    public ExecutionYear getLastExecutionYear() {
+	return Collections.max(getExecutionDegreesSet(), ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR).getExecutionYear();
+    }
 
 }

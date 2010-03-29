@@ -147,6 +147,14 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     public boolean isBeforeOrEquals(final ExecutionYear executionYear) {
 	return this.compareTo(executionYear) <= 0;
     }
+    
+    public boolean isInclusivelyBetween(final ExecutionYear y1, final ExecutionYear y2) {
+	return (isAfterOrEquals(y1) && isBeforeOrEquals(y2));
+    }
+    
+    public boolean isExclusivelyBetween(final ExecutionYear y1, final ExecutionYear y2) {
+	return (isAfter(y1) && isBefore(y2));
+    }
 
     public Collection<ExecutionDegree> getExecutionDegreesSortedByDegreeName() {
 	final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>(getExecutionDegrees());
