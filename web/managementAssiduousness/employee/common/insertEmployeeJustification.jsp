@@ -55,14 +55,37 @@
 						</fr:edit>
 					</logic:equal>
 					<logic:equal name="employeeJustificationFactory" property="justificationType" value="<%= net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType.OCCURRENCE.toString()%>">
-						<fr:edit id="editEmployeeJustificationMotive" name="employeeJustificationFactory"
+						<fr:edit id="chooseEmployeeJustificationMotive" name="employeeJustificationFactory"
 							type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory"
-							schema="edit.employeeOccurrenceJustificationMotive">
+							schema="edit.chooseOccurrenceJustificationMotive">
+							<fr:destination name="justificationMotivePostBack" path="/employeeAssiduousness.do?method=chooseJustificationMotivePostBack" />
 							<fr:layout>
 								<fr:property name="classes" value="tstyle5 thlight mvert0 thright thmiddle"/>
 								<fr:property name="columnClasses" value="width8em,width40em,tdclear"/>
 							</fr:layout>
 						</fr:edit>
+						<logic:notEmpty name="employeeJustificationFactory" property="justificationMotive">
+							<logic:equal name="employeeJustificationFactory" property="justificationMotive.hasReferenceDate" value="true">
+								<fr:edit id="editEmployeeJustificationMotive" name="employeeJustificationFactory"
+									type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory"
+									schema="edit.employeeOccurrenceJustificationMotiveWithReferenceDate">
+									<fr:layout>
+										<fr:property name="classes" value="tstyle5 thlight mvert0 thright thmiddle"/>
+										<fr:property name="columnClasses" value="width8em,width40em,tdclear"/>
+									</fr:layout>
+								</fr:edit>
+							</logic:equal>
+							<logic:notEqual name="employeeJustificationFactory" property="justificationMotive.hasReferenceDate" value="true">
+								<fr:edit id="editEmployeeJustificationMotive" name="employeeJustificationFactory"
+									type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory"
+									schema="edit.employeeOccurrenceJustificationMotive">
+									<fr:layout>
+										<fr:property name="classes" value="tstyle5 thlight mvert0 thright thmiddle"/>
+										<fr:property name="columnClasses" value="width8em,width40em,tdclear"/>
+									</fr:layout>
+								</fr:edit>
+							</logic:notEqual>
+						</logic:notEmpty>
 					</logic:equal>
 					<logic:equal name="employeeJustificationFactory" property="justificationType" value="<%= net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType.BALANCE.toString()%>">
 						<fr:edit id="editEmployeeJustificationMotive" name="employeeJustificationFactory"

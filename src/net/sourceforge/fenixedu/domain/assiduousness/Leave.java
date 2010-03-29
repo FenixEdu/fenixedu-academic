@@ -49,7 +49,7 @@ public class Leave extends Leave_Base {
     }
 
     public Leave(Assiduousness assiduousness, DateTime date, Duration dateDuration, JustificationMotive justificationMotive,
-	    WorkWeek aplicableWeekDays, String notes, DateTime lastModificationDate, Employee modifiedBy) {
+	    WorkWeek aplicableWeekDays, String notes, LocalDate referenceDate, DateTime lastModificationDate, Employee modifiedBy) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setJustificationMotive(justificationMotive);
@@ -62,18 +62,24 @@ public class Leave extends Leave_Base {
 	setModifiedBy(modifiedBy);
 	setOracleSequence(0);
 	correctAssiduousnessClosedMonth(null);
+	if (justificationMotive.getHasReferenceDate() && referenceDate == null) {
+	    referenceDate = date.toLocalDate();
+	}
+	setReferenceDate(referenceDate);
     }
 
     public void modify(DateTime date, Duration dateDuration, JustificationMotive justificationMotive, WorkWeek aplicableWeekDays,
-	    String notes, Employee modifiedBy) {
+	    String notes, LocalDate referenceDate, Employee modifiedBy) {
 	ClosedMonth closedMonth = ClosedMonth.getClosedMonthForBalance(date.toLocalDate());
 	Interval oldInterval = getTotalInterval();
-
+	if (justificationMotive.getHasReferenceDate() && referenceDate == null) {
+	    referenceDate = date.toLocalDate();
+	}
 	if (closedMonth != null && closedMonth.getClosedForBalance()
 		&& (getLastModifiedDate() == null || getLastModifiedDate().isBefore(closedMonth.getClosedForBalanceDate()))) {
 	    anulate(modifiedBy);
 	    Leave leave = new Leave(getAssiduousness(), date, dateDuration, justificationMotive, aplicableWeekDays, notes,
-		    new DateTime(), modifiedBy);
+		    referenceDate, new DateTime(), modifiedBy);
 	    leave.correctAssiduousnessClosedMonth(oldInterval);
 	} else {
 	    setDate(date);
@@ -84,6 +90,7 @@ public class Leave extends Leave_Base {
 	    setLastModifiedDate(new DateTime());
 	    setModifiedBy(modifiedBy);
 	    setOracleSequence(0);
+	    setReferenceDate(referenceDate);
 	    correctAssiduousnessClosedMonth(oldInterval);
 	}
     }
@@ -369,12 +376,21 @@ public class Leave extends Leave_Base {
     }
 
     public boolean isEqual(DateTime dateTime, Duration duration, JustificationMotive justificationMotive, String notes,
+	    LocalDate referenceDate, boolean isAnulated) {
+	return isEqual(dateTime, justificationMotive, isAnulated) && getDuration().equals(duration) && equals(getNotes(), notes)
+		&& equals(getReferenceDate(), referenceDate);
+    }
+
+    public boolean isEqual(DateTime dateTime, JustificationMotive justificationMotive, String notes, LocalDate referenceDate,
 	    boolean isAnulated) {
-	return isEqual(dateTime, justificationMotive, isAnulated) && getDuration().equals(duration) && getNotes().equals(notes);
+	return isEqual(dateTime, justificationMotive, isAnulated) && equals(getNotes(), notes)
+		&& equals(getReferenceDate(), referenceDate);
     }
 
-    public boolean isEqual(DateTime dateTime, JustificationMotive justificationMotive, String notes, boolean isAnulated) {
-	return isEqual(dateTime, justificationMotive, isAnulated) && getNotes().equals(notes);
+    private boolean equals(Object o1, Object o2) {
+	if (o1 == null) {
+	    return o2 == null;
+	}
+	return o1.equals(o2);
     }
-
 }

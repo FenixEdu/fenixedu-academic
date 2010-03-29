@@ -2492,6 +2492,7 @@ class DomainObject {
             class assiduousness.Leave extends assiduousness.Justification {
                 WorkWeek aplicableWeekDays;
                 Duration duration;
+                LocalDate referenceDate;
             }
 
             class assiduousness.MissingClocking extends assiduousness.Justification {
@@ -2637,6 +2638,7 @@ class DomainObject {
         Boolean isJustificationForUnjustifiedDays;
         Boolean isJustificationForArticle66Days;
         Boolean processingInCurrentMonth;
+        Boolean hasReferenceDate;
     }
 
     class assiduousness.Meal extends DomainObject {

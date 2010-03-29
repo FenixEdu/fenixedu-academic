@@ -199,6 +199,7 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	<slot name="partialEndDate" key="label.endDateOrDuration" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="justificationMotive.description" key="label.justification" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="notes" key="label.notes" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="referenceDate" key="label.referenceDate" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="modifiedByNumber" key="label.employee" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="lastModifiedDate" key="label.lastModifiedDate" bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
@@ -360,7 +361,7 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 </schema>
 
 <schema name="create.justificationMotives" type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive"
-	constructor="acronym, description, actualWorkTime, justificationType, dayType, justificationGroup, giafCodeOtherStatus, giafCodeContractedStatus, giafCodeAdistStatus, discountBonus, discountA17Vacations, accumulate, inExercise,isJustificationForUnjustifiedDays,isJustificationForArticle66Days,processingInCurrentMonth,modifiedBy">
+	constructor="acronym, description, actualWorkTime, justificationType, dayType, justificationGroup, giafCodeOtherStatus, giafCodeContractedStatus, giafCodeAdistStatus, discountBonus, discountA17Vacations, accumulate, inExercise,isJustificationForUnjustifiedDays,isJustificationForArticle66Days,processingInCurrentMonth,hasReferenceDate,modifiedBy">
 	<slot name="acronym" key="label.acronym" bundle="ASSIDUOUSNESS_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="description" key="label.description" bundle="ASSIDUOUSNESS_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
@@ -389,6 +390,7 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	<slot name="isJustificationForUnjustifiedDays" key="label.accumulatedUnjustifiedDays" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="isJustificationForArticle66Days" key="label.accumulatedArticle66Days" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="processingInCurrentMonth" key="label.processingInCurrentMonth" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="hasReferenceDate" key="label.hasReferenceDate" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="modifiedBy" hidden="true"/>
 </schema>
 
@@ -422,8 +424,9 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	<slot name="isJustificationForUnjustifiedDays" key="label.accumulatedUnjustifiedDays" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="isJustificationForArticle66Days" key="label.accumulatedArticle66Days" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="processingInCurrentMonth" key="label.processingInCurrentMonth" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="hasReferenceDate" key="label.hasReferenceDate" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="modifiedBy" hidden="true"/>
-	<setter signature="editJustificationMotive(acronym,description,actualWorkTime,justificationType,dayType,justificationGroup,active,giafCodeOtherStatus,giafCodeContractedStatus,giafCodeAdistStatus,discountBonus,discountA17Vacations,accumulate, inExercise,isJustificationForUnjustifiedDays,isJustificationForArticle66Days,processingInCurrentMonth,modifiedBy)"/>
+	<setter signature="editJustificationMotive(acronym,description,actualWorkTime,justificationType,dayType,justificationGroup,active,giafCodeOtherStatus,giafCodeContractedStatus,giafCodeAdistStatus,discountBonus,discountA17Vacations,accumulate, inExercise,isJustificationForUnjustifiedDays,isJustificationForArticle66Days,processingInCurrentMonth,hasReferenceDate,modifiedBy)"/>
 </schema>
 
 <schema name="edit.usedJustificationMotives" type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive">
@@ -446,8 +449,9 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	<slot name="isJustificationForUnjustifiedDays" key="label.accumulatedUnjustifiedDays" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="isJustificationForArticle66Days" key="label.accumulatedArticle66Days" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="processingInCurrentMonth" key="label.processingInCurrentMonth" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="hasReferenceDate" key="label.hasReferenceDate" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="modifiedBy" hidden="true"/>
-	<setter signature="editJustificationMotive(acronym,description,active,giafCodeOtherStatus,giafCodeContractedStatus,giafCodeAdistStatus,discountBonus,discountA17Vacations,isJustificationForUnjustifiedDays,isJustificationForArticle66Days,processingInCurrentMonth,modifiedBy)"/>
+	<setter signature="editJustificationMotive(acronym,description,active,giafCodeOtherStatus,giafCodeContractedStatus,giafCodeAdistStatus,discountBonus,discountA17Vacations,isJustificationForUnjustifiedDays,isJustificationForArticle66Days,processingInCurrentMonth,hasReferenceDate,modifiedBy)"/>
 </schema>
 
 <schema name="show.regularizationMotives" type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive" 
@@ -686,12 +690,16 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	</slot>
 </schema>
 
-<schema name="edit.employeeOccurrenceJustificationMotive" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory">
-	<slot name="justificationMotive" key="label.justification" bundle="ASSIDUOUSNESS_RESOURCES" layout="menu-select">
+<schema name="edit.chooseOccurrenceJustificationMotive" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory">
+	<slot name="justificationMotive" key="label.justification" bundle="ASSIDUOUSNESS_RESOURCES" layout="menu-select-postback">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.assiduousness.JustificationMotiveAsProvider" />
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive" />
 		<property name="format" value="${acronym} - ${description}"/>
+		<property name="destination" value="justificationMotivePostBack"/>
 	</slot>
+</schema>
+
+<schema name="edit.employeeOccurrenceJustificationMotive" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory">
 	<slot name="beginDate" >
 		<property name="format" value="dd/MM/yyyy"/>
 	</slot>
@@ -701,6 +709,13 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	<slot name="notes" key="label.notes" bundle="ASSIDUOUSNESS_RESOURCES" layout="longText">
 		<property name="columns" value="60" />
 		<property name="rows" value="3" />
+	</slot>
+</schema>
+
+<schema name="edit.employeeOccurrenceJustificationMotiveWithReferenceDate" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory" 
+	extends="edit.employeeOccurrenceJustificationMotive">
+	<slot name="referenceDate" >
+		<property name="format" value="dd/MM/yyyy"/>
 	</slot>
 </schema>
 
