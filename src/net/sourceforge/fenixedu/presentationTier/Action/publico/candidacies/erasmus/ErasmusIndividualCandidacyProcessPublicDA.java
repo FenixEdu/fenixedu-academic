@@ -2,12 +2,14 @@ package net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.era
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Random;
 import java.util.StringTokenizer;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,18 +19,25 @@ import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusVacancy;
 import net.sourceforge.fenixedu.domain.candidacyProcess.exceptions.HashCodeForEmailAndProcessAlreadyBounded;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.DegreeCourseInformationBean;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.RefactoredIndividualCandidacyProcessPublicDA;
+import net.sourceforge.fenixedu.presentationTier.docs.candidacy.erasmus.LearningAgreementDocument;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
+import net.sourceforge.fenixedu.util.StringUtils;
+import net.sourceforge.fenixedu.util.report.ReportsUtils;
 import net.sourceforge.fenixedu.util.stork.Attribute;
 import net.sourceforge.fenixedu.util.stork.SPUtil;
 import net.spy.memcached.MemcachedClient;
@@ -168,7 +177,14 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
     public ActionForward fillDegreeInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
+	ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+
+	if (bean.getErasmusStudentDataBean().getDateOfDeparture().isBefore(bean.getErasmusStudentDataBean().getDateOfArrival())) {
+	    addActionMessage("error", request, "erasmus.error.date.of.departure.before.date.of.arrival");
+	    return mapping.findForward("candidacy-continue-creation");
+	}
+
 	request.setAttribute("degreeCourseInformationBean", new DegreeCourseInformationBean(
 		(ExecutionYear) getCurrentOpenParentProcess().getCandidacyExecutionInterval()));
 
@@ -239,7 +255,18 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
     public ActionForward acceptHonourDeclaration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
+
+	try {
+	    ErasmusVacancy vacancy = bean.calculateErasmusVacancy();
+	} catch (DomainException e) {
+	    addActionMessage("error", request, e.getMessage());
+	    request.setAttribute("degreeCourseInformationBean", readDegreeCourseInformationBean(request));
+	    RenderUtils.invalidateViewState();
+
+	    return mapping.findForward("fill-degree-and-courses-information");
+	}
 
 	return mapping.findForward("accept-honour-declaration");
     }
@@ -334,12 +361,17 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	YearMonthDay birthDate = getBirthDate(attributes);
 	String email = getEmail(attributes);
 	Country nationality = getNationality(attributes);
+	String eIdentifier = getEIdentifier(attributes);
+	Gender gender = getGender(attributes);
+	String address = getTextAddress(attributes);
 
 	DegreeOfficePublicCandidacyHashCode candidacyHashCode = null;
 	try {
-	    candidacyHashCode = DegreeOfficePublicCandidacyHashCode
+	    if (!StringUtils.isEmpty(email)) {
+		candidacyHashCode = DegreeOfficePublicCandidacyHashCode
 		    .getUnusedOrCreateNewHashCodeAndSendEmailForApplicationSubmissionToCandidate(getProcessType(),
-			    getCurrentOpenParentProcess(), email);
+				getCurrentOpenParentProcess(), email);
+	    }
 	} catch (HashCodeForEmailAndProcessAlreadyBounded e) {
 	    addActionMessage(request, "error.candidacy.hash.code.already.bounded");
 	    return mapping.findForward("show-pre-creation-candidacy-form");
@@ -374,36 +406,85 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	bean.getPersonBean().setName(name);
 	bean.getPersonBean().setDateOfBirth(birthDate);
 	bean.getPersonBean().setNationality(nationality);
+	bean.getPersonBean().setAddress(address);
+	bean.getPersonBean().setGender(gender);
+	bean.setEIdentifier(eIdentifier);
 
 	bean.willAccessFenix();
 
 	return mapping.findForward("show-application-submission-conditions-for-stork");
     }
 
-    private String getEmail(Map<String, Attribute> attributes) {
-	// FIXME For now just generate an random email
+    public ActionForward accessApplicationWithNationalCitizenCard(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+	return mapping.findForward("redirect-to-peps");
+    }
 
-	String[] names = { "raul", "gonzalez", "pedro", "joao", "mata", "peter", "michael", "jose", "miguel", "mamede",
-		"cristina", "martins" };
+    public ActionForward returnFromPepsToAccessApplication(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	String memcachedCode = request.getParameter("key");
+	MemcachedClient c = new MemcachedClient(new InetSocketAddress(SPUtil.getInstance().getMemcachedHostname(), SPUtil
+		.getInstance().getMemcachedPort()));
 
-	String[] domains = { "teste.ist.utl.pt", "ist.utl.pt", "mail.pt", "hotmail.com", "kmail.com", "zenix.com" };
+	String attrList = (String) c.get(memcachedCode);
+	Map<String, Attribute> attributes = buildStorkAttributes(attrList);
 
-	Random random = new Random();
-	while (true) {
-	    try {
-		String name = f("%s.%s", names[random.nextInt(names.length)], names[random.nextInt(names.length)]);
-		String domain = domains[random.nextInt(domains.length)];
-		String email = f("%s@%s", name, domain);
+	String eIdentifier = getEIdentifier(attributes);
+	ErasmusIndividualCandidacyProcess process = ((ErasmusCandidacyProcess) getParentProcess(request))
+		.getProcessByEIdentifier(eIdentifier);
+	
+	request.setAttribute("individualCandidacyProcess", process);
+	return viewCandidacy(mapping, form, request, response);
+    }
 
-		DegreeOfficePublicCandidacyHashCode.getUnusedOrCreateNewHashCodeAndSendEmailForApplicationSubmissionToCandidate(
-			getProcessType(), getCurrentOpenParentProcess(), email);
+    private String getTextAddress(Map<String, Attribute> attributes) {
+	Attribute attribute = attributes.get(STORK_TEXT_RESIDENCE_ADDRESS);
 
-		return email;
-	    } catch (HashCodeForEmailAndProcessAlreadyBounded e) {
-		continue;
-	    }
+	if (attribute == null) {
+	    return null;
 	}
 
+	return attribute.getSemanticValue();
+    }
+
+    private Gender getGender(Map<String, Attribute> attributes) {
+	Attribute attribute = attributes.get(STORK_GENDER);
+
+	if (attribute == null) {
+	    return null;
+	}
+
+	if (attribute.getSemanticValue() == null) {
+	    return null;
+	}
+	
+	if("M".equals(attribute.getSemanticValue())) {
+	    return Gender.MALE;
+	} else if ("F".equals(attribute.getSemanticValue())) {
+	    return Gender.FEMALE;
+	}
+	
+	return  null;
+    }
+
+    private String getEIdentifier(Map<String, Attribute> attributes) {
+	Attribute attribute = attributes.get(STORK_EIDENTIFIER);
+	
+	if(attribute == null) {
+	    return null;
+	}
+	
+	return attribute.getSemanticValue();
+    }
+
+    private String getEmail(Map<String, Attribute> attributes) {
+	Attribute attribute = attributes.get(STORK_EMAIL);
+
+	if (attribute == null) {
+	    return null;
+	}
+
+	return attribute.getSemanticValue();
     }
 
     private YearMonthDay getBirthDate(Map<String, Attribute> attributes) {
@@ -546,6 +627,12 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
     private static final String STORK_NAME = "givenName";
     private static final String STORK_BIRTHDATE = "dateOfBirth";
     private static final String STORK_NATIONALITY = "nationalityCode";
+    private static final String STORK_EIDENTIFIER = "eIdentifier";
+    private static final String STORK_SURNAME = "surname";
+    private static final String STORK_GENDER = "gender";
+    private static final String STORK_TEXT_RESIDENCE_ADDRESS = "textResidenceAddress";
+    private static final String STORK_CANONICAL_RESIDENCE_ADDRESS = "canonicalResidenceAddress";
+    private static final String STORK_EMAIL = "eMail";
 
     private static final String f(String format, Object... args) {
 	return String.format(format, args);
@@ -577,6 +664,58 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	RenderUtils.invalidateViewState();
 
 	return mapping.findForward("edit-candidacy-degree-and-courses");
+    }
+
+    public ActionForward retrieveLearningAgreement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	ErasmusIndividualCandidacyProcess process = (ErasmusIndividualCandidacyProcess) getProcess(request);
+
+	final LearningAgreementDocument document = new LearningAgreementDocument((ErasmusIndividualCandidacyProcess) process);
+	byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(document);
+
+	response.setContentLength(data.length);
+	response.setContentType("application/pdf");
+	response.addHeader("Content-Disposition", "attachment; filename=" + document.getReportFileName() + ".pdf");
+
+	final ServletOutputStream writer = response.getOutputStream();
+	writer.write(data);
+	writer.flush();
+	writer.close();
+
+	response.flushBuffer();
+	return mapping.findForward("");
+    }
+
+    public ActionForward continueCandidacyCreation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws IOException {
+	ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+
+	final PersonBean personBean = bean.getPersonBean();
+
+	if (existsIndividualCandidacyProcessForDocumentId(request, personBean.getIdDocumentType(), personBean
+		.getDocumentIdNumber())) {
+	    addActionMessage("individualCandidacyMessages", request, "erasmus.error.candidacy.for.person.already.exists");
+	    return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
+	}
+
+	final List<Person> persons = new ArrayList<Person>(Person.readByDocumentIdNumber(personBean.getDocumentIdNumber()));
+
+	if (persons.size() > 0) {
+	    addActionMessage("individualCandidacyMessages", request, "erasmus.error.person.with.same.identifier.exists");
+	    return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
+	}
+
+	IndividualCandidacyDocumentFile photoDocumentFile = createIndividualCandidacyDocumentFile(bean.getPhotoDocument(), bean
+		.getPersonBean().getDocumentIdNumber());
+	bean.getPhotoDocument().setDocumentFile(photoDocumentFile);
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+
+	if (bean.isToAccessFenix() && !(personBean.getEmail().equals(personBean.getEmailConfirmation()))) {
+	    addActionMessage("individualCandidacyMessages", request, "erasmus.error.emails.are.not.equals");
+	    return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
+	}
+
+	return mapping.findForward("candidacy-continue-creation");
     }
 
 }

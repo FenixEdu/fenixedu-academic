@@ -149,6 +149,11 @@
 	</logic:iterate>
 	</table>
 
+	<p>
+		<strong><bean:message key="label.eramsus.candidacy.choosed.degree" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong>:
+		<fr:view	name="individualCandidacyProcessBean" property="selectedCourseNameForView"/>
+	</p>
+
 	<p class="mtop15">	
 		<html:submit onclick="this.form.method.value='editDegreeAndCourses'; return true;"><bean:message key="label.submit" bundle="APPLICATION_RESOURCES" /></html:submit>
 	</p>

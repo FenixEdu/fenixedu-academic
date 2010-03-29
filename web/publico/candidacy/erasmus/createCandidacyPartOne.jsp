@@ -83,6 +83,7 @@
  		<h2 class="mtop15"><bean:message key="title.personal.data" bundle="CANDIDATE_RESOURCES"/></h2>
  		<p><em>Fill the form with your personal data. All fields are required.</em></p>
 
+		<logic:equal value="false" name="individualCandidacyProcessBean" property="toAccessFenix">
 		<fr:edit id="candidacyProcess.personalDataBean"
 			name="individualCandidacyProcessBean"
 			property="personBean" 
@@ -95,6 +96,23 @@
 			<fr:destination name="invalid" path='<%= mappingPath + ".do?method=executeCreateCandidacyPersonalInformationInvalid" %>' />
 			<fr:destination name="cancel" path='<%= mappingPath + ".do?method=beginCandidacyProcessIntro" %>' />
 		</fr:edit>
+		</logic:equal>
+
+		<logic:equal value="true" name="individualCandidacyProcessBean" property="toAccessFenix">
+		<fr:edit id="candidacyProcess.personalDataBean"
+			name="individualCandidacyProcessBean"
+			property="personBean" 
+			schema="ErasmusIndividualCandidacyPublicProcess.personalDataBean.with.email.confirmation">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle5 thlight thleft mtop05"/>
+		        <fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
+		        <fr:property name="requiredMarkShown" value="true" />
+			</fr:layout>
+			<fr:destination name="invalid" path='<%= mappingPath + ".do?method=executeCreateCandidacyPersonalInformationInvalid" %>' />
+			<fr:destination name="cancel" path='<%= mappingPath + ".do?method=beginCandidacyProcessIntro" %>' />
+		</fr:edit>
+		</logic:equal>
+		
 
 		<p class="mtop2">
 			<html:submit><bean:message key="button.continue" bundle="APPLICATION_RESOURCES" /> <bean:message key="label.application" bundle="CANDIDATE_RESOURCES"/></html:submit>

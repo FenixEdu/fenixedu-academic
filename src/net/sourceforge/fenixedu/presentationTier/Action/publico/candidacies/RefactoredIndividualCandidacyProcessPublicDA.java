@@ -219,8 +219,15 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 	    return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
 	}
 
-	final Person person = Person.readByDocumentIdNumberAndIdDocumentType(personBean.getDocumentIdNumber(), personBean
-		.getIdDocumentType());
+	final List<Person> persons = new ArrayList<Person>(Person.readByDocumentIdNumber(personBean.getDocumentIdNumber()));
+
+	if (persons.size() > 1) {
+	    addActionMessage("individualCandidacyMessages", request,
+		    "error.public.candidacies.fill.personal.information.and.institution.id");
+	    return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
+	}
+
+	final Person person = persons.size() == 1 ? persons.get(0) : null;
 
 	// check if person already exists
 	if (person != null) {

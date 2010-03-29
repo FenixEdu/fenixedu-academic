@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="learningAgreement"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="595"
+		 pageHeight="842"
+		 columnWidth="535"
+		 columnSpacing="0"
+		 leftMargin="30"
+		 rightMargin="30"
+		 topMargin="20"
+		 bottomMargin="20"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="academicYear" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="studentName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="sendingInstitution" isForPrompting="false" class="java.lang.String"/>
+
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="34"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="0"
+						y="0"
+						width="535"
+						height="18"
+						key="staticText-1"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica" size="14"/>
+					</textElement>
+				<text><![CDATA[ERASMUS PROGRAMME]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="0"
+						y="18"
+						width="535"
+						height="16"
+						key="staticText-2"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[Learning Agreement]]></text>
+				</staticText>
+			</band>
+		</title>
+		<pageHeader>
+			<band height="2"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="2"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="528"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="0"
+						y="0"
+						width="128"
+						height="17"
+						key="staticText-9"/>
+					<box></box>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Academic Year:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="128"
+						y="0"
+						width="119"
+						height="17"
+						key="textField-1"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{academicYear}
+]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="0"
+						y="17"
+						width="128"
+						height="17"
+						key="staticText-10"/>
+					<box></box>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Name of student:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="0"
+						y="34"
+						width="128"
+						height="17"
+						key="staticText-11"/>
+					<box></box>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Sending Institution:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="128"
+						y="17"
+						width="233"
+						height="17"
+						key="textField-2"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{studentName}
+]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="128"
+						y="34"
+						width="233"
+						height="17"
+						key="textField-3"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{sendingInstitution}
+]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement
+						x="0"
+						y="60"
+						width="541"
+						height="20"
+						backcolor="#000000"
+						key="rectangle-1"/>
+					<graphicElement stretchType="NoStretch"/>
+				</rectangle>
+				<staticText>
+					<reportElement
+						x="0"
+						y="60"
+						width="535"
+						height="20"
+						forecolor="#FFFFFF"
+						key="staticText-12"/>
+					<box></box>
+					<textElement verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<text><![CDATA[PROPOSED STUDY PROGRAMME / LEARNING AGREEMENT]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="0"
+						y="80"
+						width="161"
+						height="16"
+						key="staticText-13"/>
+					<box></box>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Courses you wish to enroll in:]]></text>
+				</staticText>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="13"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="9"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<lastPageFooter>
+			<band height="7"  isSplitAllowed="true" >
+			</band>
+		</lastPageFooter>
+		<summary>
+			<band height="24"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="50"
+						y="0"
+						width="485"
+						height="23"
+						key="staticText-8"/>
+					<box></box>
+					<textElement>
+						<font pdfFontName="Helvetica" isBold="false"/>
+					</textElement>
+				<text><![CDATA[ GRI - IST, Av. Rovisco Pais,  1049-001 Lisboa, Phone 351218417362, Fax 351218419280]]></text>
+				</staticText>
+			</band>
+		</summary>
+</jasperReport>

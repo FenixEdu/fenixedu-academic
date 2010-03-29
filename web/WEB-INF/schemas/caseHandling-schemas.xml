@@ -2003,7 +2003,7 @@
 
 
 <schema name="ErasmusIndividualCandidacyProcess.current.study.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="erasmusStudentDataBean.hasDiplomaOrDegree" key="label.erasmus.current.study.obtained.diploma.or.degree" >
+	<slot name="erasmusStudentDataBean.hasDiplomaOrDegree" key="label.erasmus.current.study.obtained.diploma.or.degree" layout="radio">
 	</slot>
 	
 	<slot name="erasmusStudentDataBean.diplomaName" key="label.erasmus.current.study.name.of.diploma.or.degree" >
@@ -2024,7 +2024,7 @@
 		<property name="size" value="4" />
 		<property name="maxLength" value="4" />	
 	</slot>
-	<slot name="erasmusStudentDataBean.experienceCarryingOutProject" key="label.erasmus.current.study.has.experience.carrying.out.research.project" >
+	<slot name="erasmusStudentDataBean.experienceCarryingOutProject" key="label.erasmus.current.study.has.experience.carrying.out.research.project" layout="radio">
 	</slot> 
 </schema>
 
@@ -2042,14 +2042,16 @@
 <schema name="ErasmusIndividualCandidacyProcess.period.of.study.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="erasmusStudentDataBean.dateOfArrival" key="label.erasmus.period.of.study.date.of.arrival" >
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
-		</validator>	
+		</validator>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<property name="size" value="10"/>
 		<property name="maxLength" value="10"/>
 	</slot>
 	
 	<slot name="erasmusStudentDataBean.dateOfDeparture" key="label.erasmus.period.of.study.date.of.departure" >
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
-		</validator>	
+		</validator>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<property name="size" value="10"/>
 		<property name="maxLength" value="10"/>
 	</slot>
@@ -2068,7 +2070,7 @@
 		<property name="maxLength" value="50" />	
 	</slot>
 	
-	<slot name="erasmusStudentDataBean.hasContactedOtherStaff" key="label.erasmus.period.of.study.has.contacted.other.staff" >
+	<slot name="erasmusStudentDataBean.hasContactedOtherStaff" key="label.erasmus.period.of.study.has.contacted.other.staff" layout="radio">
 	</slot>
 	
 	<slot name="erasmusStudentDataBean.nameOfContact" key="label.erasmus.period.of.study.name.of.contact" >
@@ -2121,13 +2123,6 @@
 		<property name="sortBy" value="countryNationality"/>
 	</slot>
 
-	<slot name="documentIdExpirationDate" key="label.documentIdExpirationDate" >
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-		<property name="size" value="12"/>
-		<property name="maxLength" value="10"/>
-	</slot>
-	
 	<slot name="address" key="label.address">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
@@ -2254,7 +2249,6 @@
 	</slot>
 	<slot name="documentIdNumber" key="label.identificationNumber" />
 	<slot name="idDocumentType" key="label.idDocumentType" />
-	<slot name="expirationDateOfDocumentIdYearMonthDay" key="label.documentIdExpirationDate" />
 	<slot name="dateOfBirthYearMonthDay" key="label.dateOfBirth" />
 	<slot name="gender" key="label.gender" />
 	<slot name="country.countryNationality" key="label.nationality" />
@@ -2296,5 +2290,17 @@
 	<slot name="possibleDegreesFromSelectedUniversity" key="label.erasmus.degrees" layout="tabular-list" bundle="ACADEMIC_OFFICE_RESOURCES">
 		<property name="subSchema" value="Degree.namei18N.and.sigla"/>
 		<property name="subLayout" value="values"/>
+	</slot>
+</schema>
+
+<schema name="ErasmusIndividualCandidacyPublicProcess.personalDataBean.with.email.confirmation" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="APPLICATION_RESOURCES" extends="ErasmusIndividualCandidacyProcess.personalDataBean">
+	<slot name="emailConfirmation" key="erasmus.label.email.confirmation">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.EmailValidator"/>
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+			<property name="type" value="character"/>
+			<property name="length" value="40"/>
+		</validator>
+		<property name="size" value="40"/>
 	</slot>
 </schema>

@@ -137,6 +137,11 @@
 		</table>
 	</logic:notEmpty>
 
+	<p>
+		<strong><bean:message key="label.eramsus.candidacy.choosed.degree" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong>:
+		<fr:view	name="individualCandidacyProcessBean" property="selectedCourseNameForView"/>
+	</p>
+
 	
 	<p class="mtop2">
 		<html:submit onclick="this.form.method.value='acceptHonourDeclaration'; return true;"><bean:message key="label.continue" bundle="APPLICATION_RESOURCES" /></html:submit>

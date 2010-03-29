@@ -212,8 +212,8 @@ public class IndividualCandidacyDocumentFileTypeEditProvider {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.CV_DOCUMENT);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT) == null) {
-		fileTypesList.add(IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT);
+	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.TRANSCRIPT_OF_RECORDS) == null) {
+		fileTypesList.add(IndividualCandidacyDocumentFileType.TRANSCRIPT_OF_RECORDS);
 	    }
 
 	    return fileTypesList;

@@ -22,6 +22,7 @@
 <bean:define id="applicationInformationLinkEnglish" name="application.information.link.english"/>
 
 <bean:define id="individualCandidacyProcess" name="individualCandidacyProcessBean" property="individualCandidacyProcess"/>
+<bean:define id="processId" name="individualCandidacyProcess" property="idInternal"/>
 
 <div class="breadcumbs">
 	<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://gri.ist.utl.pt/en">GRI</a> &gt;
@@ -46,6 +47,14 @@
 	</div>
 </div>
 </logic:equal>
+
+<div class="h_box_alt">
+	<div class="lightbulb">
+		<p>Please download the learning agreement document. Click in 'Download Learning Agreement' below.</p>
+		<p>Print the document, stamp with in your university and download the document.</p>
+		<p><html:link page="<%= mappingPath + ".do?method=retrieveLearningAgreement&processId=" + processId %>">Download learning agreement</html:link></p>
+	</div>
+</div>
 
 <script src="<%= request.getContextPath() + "/javaScript/jquery/jquery.js" %>" type="text/javascript" >
 </script>

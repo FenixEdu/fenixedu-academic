@@ -149,6 +149,19 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 		getClass().getSimpleName());
     }
 
+    public ErasmusIndividualCandidacyProcess getProcessByEIdentifier(String eIdentifier) {
+	List<ErasmusIndividualCandidacyProcess> childProcesses = new java.util.ArrayList<ErasmusIndividualCandidacyProcess>(
+		(List) this.getChildProcesses());
+
+	for (ErasmusIndividualCandidacyProcess process : childProcesses) {
+	    if (eIdentifier.equals(process.getEIdentifier())) {
+		return process;
+	    }
+	}
+
+	return null;
+    }
+
     @StartActivity
     static public class CreateCandidacyPeriod extends Activity<ErasmusCandidacyProcess> {
 

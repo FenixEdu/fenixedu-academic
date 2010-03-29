@@ -58,11 +58,9 @@
 </p>
 
 
-
-
-
-
-
+<html:messages id="message" message="true" bundle="CANDIDATE_RESOURCES" property="error">
+	<p><span class="error0"><bean:write name="message"/></span></p>
+</html:messages>
 
 
 <fr:form action='<%= mappingPath + ".do?userAction=createCandidacy" %>' id="erasmusCandidacyForm">
@@ -75,6 +73,9 @@
 	<logic:notEmpty name="individualCandidacyProcessBean" property="candidacyProcess">
 	
 		<h2 class="mtop15 mbottom05"><bean:message key="label.erasmus.home.institution" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
+		<p><em>Choose your country and university. If your university is not present please check the bilateral agreements with IST at 
+			Internacional Relations Office website.
+		</em></p>
 		<fr:edit 	id="erasmusIndividualCandidacyProcessBean.home.institution" 
 					name="individualCandidacyProcessBean" 
 					schema="ErasmusIndividualCandidacyProcess.home.institution.edit" 
@@ -101,6 +102,7 @@
 		</fr:edit>
 		
 		<h2 class="mtop15 mbottom05"><bean:message key="label.erasmus.period.of.study" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
+		<p><em>Specify the date of arrival and departure. Also specify the types of study you're going to do at IST.</em></p>
 		<fr:edit	id="erasmusIndividualCandidacyProcessBean.period.of.study"
 					name="individualCandidacyProcessBean"
 					schema="ErasmusIndividualCandidacyProcess.period.of.study.edit" >

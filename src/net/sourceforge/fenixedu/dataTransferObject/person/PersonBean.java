@@ -115,6 +115,8 @@ public class PersonBean implements Serializable {
 
     private Integer studentNumber;
 
+    private String emailConfirmation;
+
     public PersonBean() {
 	super();
     }
@@ -649,4 +651,11 @@ public class PersonBean implements Serializable {
 	this.studentNumber = studentNumber;
     }
 
+    public String getEmailConfirmation() {
+	return this.emailConfirmation;
+    }
+
+    public void setEmailConfirmation(final String value) {
+	this.emailConfirmation = value;
+    }
 }

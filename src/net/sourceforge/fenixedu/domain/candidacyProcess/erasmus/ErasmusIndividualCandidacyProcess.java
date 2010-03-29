@@ -64,6 +64,7 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 
 	setValidatedByErasmusCoordinator(false);
 	setValidatedByGri(false);
+	setEIdentifier(bean.getEIdentifier());
     }
 
     @Override
