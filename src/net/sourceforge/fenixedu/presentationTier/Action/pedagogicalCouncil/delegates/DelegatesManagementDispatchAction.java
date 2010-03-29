@@ -187,8 +187,11 @@ public class DelegatesManagementDispatchAction extends FenixDispatchAction {
 
 	final Degree degree = bean.getDegree();
 	final FunctionType functionType = bean.getDelegateType();
-
-	AddNewDelegate.run(student, degree, functionType);
+	try {
+	    AddNewDelegate.run(student, degree, functionType);
+	} catch (FenixServiceException ex) {
+	    addActionMessage(request, ex.getMessage(), ex.getArgs());
+	}
 	RenderUtils.invalidateViewState("delegateBean");
 	request.setAttribute("delegateBean", bean);
 	return mapping.findForward("prepareViewDelegates");
