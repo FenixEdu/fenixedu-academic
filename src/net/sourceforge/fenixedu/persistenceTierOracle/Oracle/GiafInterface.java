@@ -379,6 +379,51 @@ public class GiafInterface {
 	persistentSuportOracle.commitTransaction();
     }
 
+    public void exportVacationsToGIAF(String file) throws SQLException, ExcepcaoPersistencia {
+	PersistentSuportGiaf persistentSuportOracle = PersistentSuportGiaf.getInstance();
+	persistentSuportOracle.startTransaction();
+	String[] lineTokens = file.split("\n");
+	CallableStatement cs = null;
+	for (int line = 0; line < lineTokens.length; line++) {
+	    try {
+		String[] fieldTokens = lineTokens[line].split("\t");
+		cs = persistentSuportOracle.prepareCall("BEGIN ist_insere_artigo_17(?, ?, ? ,? ,? ,? ); END;");
+
+		cs.setInt(1, new Integer(fieldTokens[0].trim()).intValue());
+		cs.setString(2, fieldTokens[1].trim());
+		cs.setInt(3, new Integer(fieldTokens[2].trim()).intValue());
+		if (fieldTokens.length >= 4) {
+		    cs.setString(4, fieldTokens[3].trim());
+		} else {
+		    cs.setString(4, null);
+		}
+		if (fieldTokens.length >= 5) {
+		    String endDateString = new Integer(fieldTokens[4].trim()).toString();// DATA_FIM
+		    cs.setDate(5, getDate(endDateString));
+		} else {
+		    cs.setDate(5, null);
+
+		}
+		cs.registerOutParameter(6, OracleTypes.VARCHAR);
+		cs.execute();
+
+		if (cs.getString(6) != null) {
+		    System.out.println("ERRO exportToGIAF na linha - " + (line + 1) + " : " + cs.getString(6) + " DADOS: "
+			    + lineTokens[line].trim());
+		    cs.close();
+		    persistentSuportOracle.cancelTransaction();
+		    throw new InvalidGiafCodeException("errors.exportToGiafException", new Integer(line + 1).toString(), cs
+			    .getString(6), lineTokens[line].trim());
+		}
+	    } finally {
+		if (cs != null) {
+		    cs.close();
+		}
+	    }
+	}
+	persistentSuportOracle.commitTransaction();
+    }
+
     private Date getDate(String dateString) {
 	Calendar date = Calendar.getInstance();
 	date.set(Calendar.DAY_OF_MONTH, new Integer(dateString.substring(6, 8)).intValue());

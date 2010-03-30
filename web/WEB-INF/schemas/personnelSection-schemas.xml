@@ -1496,3 +1496,14 @@ constructor="description, state, modifiedBy">
 <schema name="show.closedMonth" type="net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth">
 	<slot name="closedYearMonth"/>
 </schema>	
+
+<schema name="edit.giafInterfaceBean.date" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.GiafInterfaceBean">
+	<slot name="employeeNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="localDate" key="label.date" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+</schema>	
+
+<schema name="edit.giafInterfaceBean.file" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.GiafInterfaceBean">
+	<slot name="fileInputStream" key="label.file" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="fileNameSlot" value="filename"/>
+	</slot>
+</schema>	

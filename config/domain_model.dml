@@ -2550,6 +2550,13 @@ class DomainObject {
         ClosedMonthDocumentType closedMonthDocumentType;
         DateTime createdWhen;
     }
+
+    class assiduousness.GiafInterfaceDocument extends DomainObject {
+        DateTime createdWhen;
+    }
+    
+    class assiduousness.GiafInterfaceFile extends File {
+    }
     
     class assiduousness.ClosedMonthFile extends File {
     }
@@ -8594,6 +8601,18 @@ relation ClosedMonthJustificationJustificationMotive {
     }
 }
 
+relation EmployeeGiafInterfaceDocument {
+    Employee playsRole modifiedBy;
+    assiduousness.GiafInterfaceDocument playsRole giafInterfaceDocuments {
+        multiplicity *;
+    }
+}
+
+relation GiafInterfaceFileGiafInterfaceDocument {
+    assiduousness.GiafInterfaceFile playsRole giafInterfaceFile;
+    assiduousness.GiafInterfaceDocument playsRole giafInterfaceDocument;
+}
+
 relation ClosedMonthClosedMonthDocument {
     assiduousness.ClosedMonth playsRole closedMonth;
     assiduousness.ClosedMonthDocument playsRole closedMonthDocuments {
@@ -12408,6 +12427,13 @@ relation RootDomainObjectClosedMonth {
 relation RootDomainObjectClosedMonthDocument {
     RootDomainObject playsRole rootDomainObject;
     assiduousness.ClosedMonthDocument playsRole closedMonthDocuments {
+        multiplicity *;
+    }
+}
+
+relation RootDomainObjectGiafInterfaceDocument {
+    RootDomainObject playsRole rootDomainObject;
+    assiduousness.GiafInterfaceDocument playsRole giafInterfaceDocuments {
         multiplicity *;
     }
 }
