@@ -3,19 +3,12 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.Login;
-import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.util.UsernameUtils;
 
-import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
 
 public class ErasmusIndividualCandidacy extends ErasmusIndividualCandidacy_Base {
@@ -40,56 +33,6 @@ public class ErasmusIndividualCandidacy extends ErasmusIndividualCandidacy_Base 
 	createEramusStudentData(bean);
 
 	associateCurricularCourses(bean.getSelectedCurricularCourses());
-
-	if (bean.isToAccessFenix()) {
-	    if ("Raul Gonzalez".equals(person.getName())) {
-		Login login = person.getLoginIdentification();
-		if (login == null) {
-		    User user = person.getUser();
-		    if (user == null) {
-			user = new User(person);
-		    }
-		    login = new Login(person.getUser());
-		    final LoginAlias loginAlias = login.getInstitutionalLoginAlias();
-		    if (loginAlias == null) {
-			String userUId = "ist90427";
-			if (Person.readPersonByUsername("ist90427") != null) {
-			    userUId = UsernameUtils.updateIstUsername(person.getUser().getPerson());
-			}
-
-			if (!StringUtils.isEmpty(userUId)) {
-			    LoginAlias.createNewInstitutionalLoginAlias(login, userUId);
-			    person.getUser().setUserUId(userUId);
-			}
-		    }
-		}
-	    } else if ("Javier Garcia".equals(person.getName())) {
-		Login login = person.getLoginIdentification();
-		if (login == null) {
-		    User user = person.getUser();
-		    if (user == null) {
-			user = new User(person);
-		    }
-		    login = new Login(person.getUser());
-		    final LoginAlias loginAlias = login.getInstitutionalLoginAlias();
-		    if (loginAlias == null) {
-			String userUId = "ist90428";
-			if (Person.readPersonByUsername("ist90428") != null) {
-			    userUId = UsernameUtils.updateIstUsername(person.getUser().getPerson());
-			}
-
-			if (!StringUtils.isEmpty(userUId)) {
-			    LoginAlias.createNewInstitutionalLoginAlias(login, userUId);
-			    person.getUser().setUserUId(userUId);
-			}
-		    }
-		}
-	    }
-
-	    person.addPersonRoleByRoleType(RoleType.PERSON);
-	    person.addPersonRoleByRoleType(RoleType.CANDIDATE);
-	    person.getLoginIdentification().setPassword(PasswordEncryptor.encryptPassword("pass"));
-	}
     }
 
     private void associateCurricularCourses(Set<CurricularCourse> selectedCurricularCourses) {

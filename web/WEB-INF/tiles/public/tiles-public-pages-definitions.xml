@@ -1169,5 +1169,21 @@
 	<definition name="erasmus.show.stork.error.page" extends="definition.candidacy.process">
 		<put name="body" value="/publico/candidacy/erasmus/showStorkErrorPage.jsp" />
 		<put name="hideLanguage" value="true" />
-	</definition>	
+	</definition>
+	
+	<definition name="erasmus.stork.candidacy.already.bounded" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/erasmus/candidacyAlreadyBounded.jsp" />
+		<put name="hideLanguage" value="true" />
+	</definition>
+	
+	<definition name="erasmus.redirect.to.peps.to.access.application" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/erasmus/pepsAccessAplication.jsp" />
+		<put name="hideLanguage" value="true" />
+	</definition>
+	
+	<definition name="erasmus.stork.authentication.failed" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/erasmus/storkAuthenticationFailed.jsp" />
+		<put name="hideLanguage" value="true" />
+	</definition>
+	
 </tiles-definitions>

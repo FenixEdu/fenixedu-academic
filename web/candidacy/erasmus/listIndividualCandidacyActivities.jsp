@@ -93,7 +93,7 @@
 	<%-- show period of study --%>
 	<br/>
 	<strong><bean:message key="label.erasmus.period.of.study" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong>
-	<fr:view name="process" schema="ErasmusIndividualCandidacyProcess.period.of.study.view">
+	<fr:view name="process" schema="ErasmusIndividualCandidacyProcess.period.of.study.view" property="candidacy.erasmusStudentData">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>

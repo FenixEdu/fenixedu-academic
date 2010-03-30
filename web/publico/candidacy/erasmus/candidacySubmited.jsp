@@ -55,14 +55,6 @@
 </div>
 </logic:equal>
 
-<% if(((IndividualCandidacyProcess) individualCandidacyProcess).getPersonalDetails().getPerson().hasRole(RoleType.CANDIDATE)) { %>
-<p>
-	Your username at IST is <%= ((IndividualCandidacyProcess) individualCandidacyProcess).getPersonalDetails().getPerson().getLoginIdentification().getUsername() %>.
-	<br>
-	If you want to generate a password for legacy systems (e.g. wifi) click <%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="https://ciist.ist.utl.pt/~cabeca/ciistadmin/password/recover_stork.php">here</a>.	
-</p>
-<% } %>
-
 
 
 <div class="mtop15" id="contacts">

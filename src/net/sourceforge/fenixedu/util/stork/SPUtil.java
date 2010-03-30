@@ -71,6 +71,10 @@ public class SPUtil {
 	return this.properties.getProperty("sp.invoke.url");
     }
 
+    public String getSpInvokeUrlToAccessApplication() {
+	return this.properties.getProperty("sp.invoke.url.to.access.aplication");
+    }
+
     public List<Attribute> getAttributes() {
 	return this.attributes;
     }

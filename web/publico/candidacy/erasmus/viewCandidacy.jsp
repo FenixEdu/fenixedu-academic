@@ -139,7 +139,7 @@
 	</fr:view>
 	
 	<h2 style="margin-top: 1em;"><bean:message key="label.erasmus.period.of.study" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
-	<fr:view name="individualCandidacyProcess" schema="ErasmusIndividualCandidacyProcess.period.of.study.view">
+	<fr:view name="individualCandidacyProcess" schema="ErasmusIndividualCandidacyProcess.period.of.study.view" property="candidacy.erasmusStudentData">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
