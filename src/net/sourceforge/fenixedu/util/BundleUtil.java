@@ -33,20 +33,27 @@ public class BundleUtil {
     }
 
     public static String getEnumName(final Enum<?> enumeration, final String moduleName) {
-	String className = enumeration.getClass().getSimpleName();
-	if (className.isEmpty()) {
-	    className = enumeration.getClass().getName();
-	    className = className.substring(className.lastIndexOf('.') + 1, className.indexOf("$"));
+	String enumFullName = enumeration.getClass().getName();
+	enumFullName = enumFullName.substring(0, enumFullName.indexOf('$'));
+
+	String enumSimpleName = enumeration.getClass().getSimpleName();
+	if (enumSimpleName.isEmpty()) {
+	    enumSimpleName = enumFullName.substring(enumFullName.lastIndexOf('.') + 1);
 	}
 
-	String enumFullName = className + "." + enumeration.name();
+	enumFullName = enumFullName + "." + enumeration.name();
+	enumSimpleName = enumSimpleName + "." + enumeration.name();
 	try {
 	    return getResourceBundleByModuleName(moduleName).getString(enumFullName);
 	} catch (MissingResourceException e) {
 	    try {
-		return getResourceBundleByModuleName(moduleName).getString(enumeration.name());
+		return getResourceBundleByModuleName(moduleName).getString(enumSimpleName);
 	    } catch (MissingResourceException ex) {
-		return enumFullName;
+		try {
+		    return getResourceBundleByModuleName(moduleName).getString(enumeration.name());
+		} catch (MissingResourceException exc) {
+		    return enumFullName;
+		}
 	    }
 	}
     }
