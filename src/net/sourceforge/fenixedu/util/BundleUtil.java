@@ -29,6 +29,10 @@ public class BundleUtil {
     }
 
     public static String getEnumName(final Enum<?> enumeration) {
+	return getEnumName(enumeration, ENUMERATION_MODULE);
+    }
+
+    public static String getEnumName(final Enum<?> enumeration, final String moduleName) {
 	String className = enumeration.getClass().getSimpleName();
 	if (className.isEmpty()) {
 	    className = enumeration.getClass().getName();
@@ -37,10 +41,10 @@ public class BundleUtil {
 
 	String enumFullName = className + "." + enumeration.name();
 	try {
-	    return getResourceBundleByModuleName(ENUMERATION_MODULE).getString(enumFullName);
+	    return getResourceBundleByModuleName(moduleName).getString(enumFullName);
 	} catch (MissingResourceException e) {
 	    try {
-		return getResourceBundleByModuleName(ENUMERATION_MODULE).getString(enumeration.name());
+		return getResourceBundleByModuleName(moduleName).getString(enumeration.name());
 	    } catch (MissingResourceException ex) {
 		return enumFullName;
 	    }
