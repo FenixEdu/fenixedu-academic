@@ -2,6 +2,9 @@ package net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.GiafInterface;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -71,6 +75,11 @@ public class GIAFInterfaceDispatchAction extends FenixDispatchAction {
 		addErrorMessage(request, "message", e.getMessage());
 	    }
 	}
+	List<GiafInterfaceDocument> giafInterfaceDocuments = new ArrayList<GiafInterfaceDocument>(rootDomainObject
+		.getGiafInterfaceDocuments());
+	Collections.sort(giafInterfaceDocuments, new BeanComparator("createdWhen"));
+	Collections.reverse(giafInterfaceDocuments);
+	request.setAttribute("giafInterfaceDocuments", giafInterfaceDocuments);
 	request.setAttribute("giafInterfaceBean", giafInterfaceBean);
 	return mapping.findForward("insert-A17-vacations");
     }
