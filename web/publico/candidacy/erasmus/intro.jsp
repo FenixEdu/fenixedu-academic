@@ -18,9 +18,10 @@
 <bean:define id="fullPath"><%= request.getContextPath() + "/publico" + mappingPath + ".do" %></bean:define>
 
 <div class="breadcumbs">
-	<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://gri.ist.utl.pt/en">GRI</a> &gt;
+	<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://gri.ist.utl.pt/en">NMCI</a> &gt;
 	<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://gri.ist.utl.pt/en/ist/">Study at IST</a> &gt;
-	<bean:message key="title.application.name.erasmus" bundle="CANDIDATE_RESOURCES"/>
+	<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href='<%= f("%s/candidacies/erasmus", request.getContextPath()) %>'><bean:message key="title.application.name.erasmus" bundle="CANDIDATE_RESOURCES"/></a> &gt;
+	<bean:message key="erasmus.title.application.submission" bundle="CANDIDATE_RESOURCES" />
 </div>
 
 
@@ -39,7 +40,7 @@
 	<p class="mvert05">
 		<img src="<%= request.getContextPath() %>/images/stork/icon_exclamation.gif" />
 		Before you proceed to application form submission please check the conditions and if your university holds and ERASMUS bilateral agreement with IST.
-		You can consult by following this link <%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><b><a href="http://gri.ist.utl.pt/en/ist"/>GRI</a></b>
+		You can consult by following this link <%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><b><a href="http://gri.ist.utl.pt/en/ist"/>NMCI</a></b>
 	</p>
 </div>
 

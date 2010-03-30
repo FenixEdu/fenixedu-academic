@@ -1947,7 +1947,7 @@
 	</slot>
 	
 	<slot name="selectedUniversity" key="label.erasmus.university" layout="menu-select">
-		<property name="format" value="${nameI18n}" />
+		<property name="format" value="${oid} - ${nameI18n}" />
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusUniversityProvider" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>	
