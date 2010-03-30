@@ -43,3 +43,6 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter justifications tables" AlterAssiduounessJustificationsTables.sql 
+execute "Add stork identifier to Process table" addStorkIdentifierToProcess.sql
+execute "Giaf stuff" giafStuff.sql
