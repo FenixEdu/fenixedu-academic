@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.dataTransferObject.assiduousness.GiafInterfaceBe
 import net.sourceforge.fenixedu.domain.ManagementGroups;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
@@ -27,6 +28,7 @@ public class GiafInterfaceFile extends GiafInterfaceFile_Base {
 
     private Group createPermittedGroup() {
 	List<ManagementGroups> managementGroups = RootDomainObject.getInstance().getManagementGroups();
-	return managementGroups.iterator().next().getAssiduousnessManagers();
+	return new GroupUnion(managementGroups.iterator().next().getAssiduousnessManagers(), managementGroups.iterator().next()
+		.getAssiduousnessSectionStaff());
     }
 }
