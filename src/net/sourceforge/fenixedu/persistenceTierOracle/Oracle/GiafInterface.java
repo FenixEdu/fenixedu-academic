@@ -389,15 +389,16 @@ public class GiafInterface {
 		String[] fieldTokens = lineTokens[line].split("\t");
 		cs = persistentSuportOracle.prepareCall("BEGIN ist_insere_artigo_17(?, ?, ? ,? ,? ,? ); END;");
 
-		cs.setInt(1, new Integer(fieldTokens[0].trim()).intValue());
-		cs.setString(2, fieldTokens[1].trim());
-		cs.setInt(3, new Integer(fieldTokens[2].trim()).intValue());
-		if (fieldTokens.length >= 4) {
+		cs.setInt(1, new Integer(fieldTokens[0].trim()).intValue());// ANO
+		cs.setString(2, fieldTokens[1].trim());// NUMERO
+		cs.setInt(3, new Integer(fieldTokens[2].trim()).intValue());// QUANTIDADE
+		// DIAS
+		if (fieldTokens.length >= 4) {// UTILIZADOR_CRIACAO
 		    cs.setString(4, fieldTokens[3].trim());
 		} else {
 		    cs.setString(4, null);
 		}
-		if (fieldTokens.length >= 5) {
+		if (fieldTokens.length >= 5) {// DATA_CRIACAO
 		    String endDateString = new Integer(fieldTokens[4].trim()).toString();// DATA_FIM
 		    cs.setDate(5, getDate(endDateString));
 		} else {

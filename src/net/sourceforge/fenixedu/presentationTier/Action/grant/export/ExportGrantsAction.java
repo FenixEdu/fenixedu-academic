@@ -67,9 +67,9 @@ public class ExportGrantsAction extends FenixDispatchAction {
 	response.setContentType("text/plain");
 	response.setHeader("Content-disposition", "attachment; filename=bolsas.xls");
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.FacultyAdmOfficeResources", Language.getLocale());
-	final ResourceBundle enumerationBundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
 	StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("bolsas", false);
-	boolean betweenDates = grantSearch.getBeginDate() != null && grantSearch.getEndDate() != null;
+	boolean betweenDates = grantSearch.getDatesTypeChoice() == GrantSearch.DatesTypeChoice.DATE_INTERVAL
+		&& grantSearch.getEndDate() != null;
 
 	getExcelHeader(spreadsheet, bundle, betweenDates, grantSearch);
 	List<GrantContractRegime> grantContractRegimeList = grantSearch.getSearch();

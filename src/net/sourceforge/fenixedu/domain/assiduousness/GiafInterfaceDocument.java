@@ -27,7 +27,7 @@ public class GiafInterfaceDocument extends GiafInterfaceDocument_Base {
     @Service
     public static GiafInterfaceDocument createGiafInterfaceDocument(GiafInterfaceBean giafInterfaceBean) throws SQLException,
 	    ExcepcaoPersistencia {
-	new GiafInterface().exportVacationsToGIAF(giafInterfaceBean.getFileByteArray().toString());
+	new GiafInterface().exportVacationsToGIAF(new String(giafInterfaceBean.getFileByteArray()));
 	return new GiafInterfaceDocument(giafInterfaceBean);
     }
 }
