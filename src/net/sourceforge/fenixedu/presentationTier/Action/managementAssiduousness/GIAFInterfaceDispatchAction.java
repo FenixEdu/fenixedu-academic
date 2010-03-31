@@ -65,6 +65,7 @@ public class GIAFInterfaceDispatchAction extends FenixDispatchAction {
 	    giafInterfaceBean.consume();
 	    try {
 		GiafInterfaceDocument.createGiafInterfaceDocument(giafInterfaceBean);
+		new GiafInterface().exportVacationsToGIAF(new String(giafInterfaceBean.getFileByteArray()));
 	    } catch (ExcepcaoPersistencia e) {
 		e.printStackTrace();
 		addErrorMessage(request, "message", "error.connectionError");

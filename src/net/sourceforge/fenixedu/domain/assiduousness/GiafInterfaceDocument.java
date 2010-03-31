@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.GiafInterface;
 
 import org.joda.time.DateTime;
 
@@ -27,7 +26,7 @@ public class GiafInterfaceDocument extends GiafInterfaceDocument_Base {
     @Service
     public static GiafInterfaceDocument createGiafInterfaceDocument(GiafInterfaceBean giafInterfaceBean) throws SQLException,
 	    ExcepcaoPersistencia {
-	new GiafInterface().exportVacationsToGIAF(new String(giafInterfaceBean.getFileByteArray()));
-	return new GiafInterfaceDocument(giafInterfaceBean);
+	GiafInterfaceDocument giafInterfaceDocument = new GiafInterfaceDocument(giafInterfaceBean);
+	return giafInterfaceDocument;
     }
 }
