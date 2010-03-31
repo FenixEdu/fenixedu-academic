@@ -343,6 +343,18 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 		return beginCandidacyProcessIntro(mapping, form, request, response);
 	    }
 
+	    PersonBean personBean = bean.getPersonBean();
+	    final List<Person> persons = new ArrayList<Person>(Person.readByDocumentIdNumber(personBean.getDocumentIdNumber()));
+
+	    if (persons.size() > 1) {
+		addActionMessage("individualCandidacyMessages", request, "erasmus.error.person.with.same.identifier.exists");
+		return prepareEditCandidacyProcess(mapping, form, request, response);
+	    } else if (persons.size() == 1
+		    && persons.get(0) != bean.getIndividualCandidacyProcess().getPersonalDetails().getPerson()) {
+		addActionMessage("individualCandidacyMessages", request, "erasmus.error.person.with.same.identifier.exists");
+		return prepareEditCandidacyProcess(mapping, form, request, response);
+	    }
+
 	    executeActivity(bean.getIndividualCandidacyProcess(), "EditPublicCandidacyPersonalInformation",
 		    getIndividualCandidacyProcessBean());
 	} catch (final DomainException e) {
@@ -571,6 +583,13 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 		return beginCandidacyProcessIntro(mapping, form, request, response);
 	    }
 
+	    if (bean.getErasmusStudentDataBean().getDateOfDeparture().isBefore(
+		    bean.getErasmusStudentDataBean().getDateOfArrival())) {
+		addActionMessage("error", request, "erasmus.error.date.of.departure.before.date.of.arrival");
+		request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+		return mapping.findForward("edit-candidacy-information");
+	    }
+
 	    executeActivity(bean.getIndividualCandidacyProcess(), "EditPublicCandidacyInformation",
 		    getIndividualCandidacyProcessBean());
 	} catch (final DomainException e) {
@@ -614,15 +633,14 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 		return beginCandidacyProcessIntro(mapping, form, request, response);
 	    }
 
+	    ErasmusVacancy vacancy = bean.calculateErasmusVacancy();
 	    executeActivity(bean.getIndividualCandidacyProcess(), "EditPublicDegreeAndCoursesInformation",
 		    getIndividualCandidacyProcessBean());
 	} catch (final DomainException e) {
-	    if (e.getMessage().equals("error.IndividualCandidacyEvent.invalid.payment.code")) {
-		throw e;
-	    }
-
-	    addActionMessage(request, e.getMessage(), e.getArgs());
-	    request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	    request.setAttribute("degreeCourseInformationBean", readDegreeCourseInformationBean(request));
+	    request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
+	    addActionMessage("error", request, e.getMessage());
+	    RenderUtils.invalidateViewState();
 	    return mapping.findForward("edit-candidacy-degree-and-courses");
 	}
 

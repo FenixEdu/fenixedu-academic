@@ -2249,14 +2249,15 @@
 	</slot>
 	<slot name="documentIdNumber" key="label.identificationNumber" />
 	<slot name="idDocumentType" key="label.idDocumentType" />
-	<slot name="dateOfBirthYearMonthDay" key="label.dateOfBirth" />
 	<slot name="gender" key="label.gender" />
+	<slot name="dateOfBirthYearMonthDay" key="label.dateOfBirth" />
 	<slot name="country.countryNationality" key="label.nationality" />
-	<slot name="countryOfResidence.name" key="label.countryOfResidence" />
 	<slot name="address" key="label.address" />
 	<slot name="areaCode" key="label.areaCode" />
-	<slot name="areaOfAreaCode" key="label.areaOfAreaCode" />
-	<slot name="area" key="label.area" />	
+	<slot name="area" key="label.area" />
+	<slot name="countryOfResidence.nameI18N" key="label.countryOfResidence" />
+	<slot name="phone" key="label.phone" />
+	<slot name="email" key="label.email" />	
 </schema>
 
 <schema name="ErasmusIndividualCandidacyProcessBean.documentUpload.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean" bundle="CANDIDATE_RESOURCES">
@@ -2278,6 +2279,12 @@
   <slot name="stream" key="label.candidacy.document.file">
     <property name="fileNameSlot" value="fileName"/>
     <property name="fileSizeSlot" value="fileSize"/>
+	<validator
+		class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
+		<property name="maxSize" value="3698688"/>
+		<property name="acceptedExtensions" value="gif,jpg,png,pdf" />
+		<property name="acceptedTypes" value="image/gif,image/jpg,image/png,application/pdf" />
+	</validator>		    
   </slot>
 </schema>
 

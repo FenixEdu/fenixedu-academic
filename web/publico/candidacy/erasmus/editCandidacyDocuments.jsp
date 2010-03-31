@@ -7,6 +7,11 @@
 <%@ page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
 <%@ page import="java.util.Locale"%>
 
+<%!
+	static String f(String value, Object ... args) {
+    	return String.format(value, args);
+	}
+%>
 
 <html:xhtml/>
 
@@ -30,7 +35,7 @@
 <h2 style="margin-top: 1em;"><bean:message key="label.documentation" bundle="CANDIDATE_RESOURCES"/></h2>
 
 <p><em><bean:message key="message.max.file.size" bundle="CANDIDATE_RESOURCES"/></em></p>
-<p><em><bean:message key="message.candidacy.upload.pdf.documents" bundle="CANDIDATE_RESOURCES"/></em></p>
+<p><em><bean:message key="erasmus.message.candidacy.upload.pdf.documents" bundle="CANDIDATE_RESOURCES"/></em></p>
 
 <bean:define id="individualCandidacyProcess" name="candidacyDocumentUploadBean" property="individualCandidacyProcess"/>
 <bean:define id="individualCandidacyProcessOID" name="individualCandidacyProcess" property="OID"/>

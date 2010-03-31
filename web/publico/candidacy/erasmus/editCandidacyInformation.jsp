@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%>
 <%@ page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
+<%@page import="org.apache.struts.action.ActionMessages" %>
 <%@ page import="java.util.Locale"%>
 
 
@@ -41,7 +42,7 @@
 
 <p><span><bean:message key="message.all.fields.are.required" bundle="CANDIDATE_RESOURCES"/></span></p>
 
-<html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
+<html:messages id="message" message="true" bundle="APPLICATION_RESOURCES" property="<%= ActionMessages.GLOBAL_MESSAGE %>">
 	<span class="error0"> <bean:write name="message" /> </span>
 	<br />
 </html:messages>
@@ -52,6 +53,10 @@
 		</fr:messages>
 	</ul>
 </fr:hasMessages>
+
+<html:messages id="message" message="true" bundle="CANDIDATE_RESOURCES" property="error">
+	<p><span class="error0"><bean:write name="message"/></span></p>
+</html:messages>
 
 
 <fr:form action='<%= mappingPath + ".do?method=editCandidacyInformation" %>' >

@@ -93,30 +93,14 @@
 </logic:equal>
 
 <logic:equal name="individualCandidacyProcessBean" property="individualCandidacyProcess.isCandidateWithRoles" value="false">
-<fr:view name="individualCandidacyProcessBean" 
-	schema="PublicCandidacyProcess.candidacyDataBean">
+<fr:view name="individualCandidacyProcess" property="personalDetails" 
+	schema="ErasmusCandidacyProcess.personalData">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="thlight thleft"/>
         <fr:property name="columnClasses" value="width175px,,,,"/>
 	</fr:layout>
 </fr:view>
 </logic:equal>
-
-<table>
-	<tr>
-		<td class="width175px"><bean:message key="label.photo" bundle="CANDIDATE_RESOURCES"/>:</td>
-		<td>
-			<logic:present name="individualCandidacyProcess" property="photo">
-			<bean:define id="photo" name="individualCandidacyProcess" property="photo"/>
-			<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><img src="<%= request.getContextPath() + ((IndividualCandidacyDocumentFile) photo).getDownloadUrl() %>" />
-			</logic:present>
-			
-			<logic:notPresent name="individualCandidacyProcess" property="photo">
-				<em><bean:message key="message.does.not.have.photo" bundle="CANDIDATE_RESOURCES"/></em>
-			</logic:notPresent>
-		</td>
-	</tr>
-</table>
 
 
 <h2 style="margin-top: 1em;"><bean:message key="label.erasmus.home.institution" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
@@ -195,18 +179,7 @@
 
 
 <div class="mtop15" id="contacts">
-	<h2>Contacts</h2>
-	<p><b><a href="http://gri.ist.utl.pt/">Mobility and Internacional Cooperation Office (NMCI)</a></b></p>
-	<p>
-		<strong>IST - Alameda </strong>
-		<br>Phone: 218 417 251 / 218 419 155 
-		<br>Fax: 218 419 344
-	</p>
-	<p>
-		<strong>IST - Taguspark</strong>
-		<br>Phone: 214 233 545
-	</p>
-	<p><a href="mailto:webmaster@ist.utl.pt">Cristina Sousa</a></p>
+	<bean:message key="erasmus.contacts.text" bundle="CANDIDATE_RESOURCES" />
 </div>
 
 
