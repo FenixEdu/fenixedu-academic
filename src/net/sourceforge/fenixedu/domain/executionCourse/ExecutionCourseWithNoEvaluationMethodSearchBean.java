@@ -43,22 +43,22 @@ public class ExecutionCourseWithNoEvaluationMethodSearchBean implements Serializ
 	for (final ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCoursesSet()) {
 	    if (isLecturedIn(executionCourse, degreeTypes)) {
 		total++;
-		if (hasNoEvaluationMethod(executionCourse)) {
+		if (hasEvaluationMethod(executionCourse)) {
+		    withEvaluationMethod++;
+		} else {
 		    withoutEvaluationMethod++;
 		    executionCourses.add(executionCourse);
-		} else {
-		    withEvaluationMethod++;
 		}
 	    }
 	}
 	return executionCourses;
     }
 
-    private boolean hasNoEvaluationMethod(final ExecutionCourse executionCourse) {
-	final EvaluationMethod evaluationMethod = executionCourse.getEvaluationMethod();
-	return evaluationMethod == null || evaluationMethod.getEvaluationElements() == null
-		|| evaluationMethod.getEvaluationElements().getContent() == null
-		|| evaluationMethod.getEvaluationElements().getContent().length() == 0;
+    private boolean hasEvaluationMethod(final ExecutionCourse executionCourse) {
+	final String evaluationMethodText = executionCourse.getEvaluationMethodText();
+	final String evaluationMethodTextEn = executionCourse.getEvaluationMethodTextEn();
+	return (evaluationMethodText != null && evaluationMethodText.length() > 0)
+		|| (evaluationMethodTextEn != null && evaluationMethodTextEn.length() > 0);
     }
 
     private boolean isLecturedIn(final ExecutionCourse executionCourse, final List<DegreeType> degreeTypes) {
