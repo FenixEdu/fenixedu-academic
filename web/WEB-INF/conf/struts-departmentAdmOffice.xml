@@ -1198,6 +1198,7 @@
 	<message-resources parameter="resources.AcademicAdminOffice" key="ACADEMIC_OFFICE_RESOURCES" null="false"/>    
 	<message-resources parameter="resources.GroupNameResources" key="GROUP_NAME_RESOURCES" null="false"/>
 	<message-resources parameter="resources.ResearcherResources" key="RESEARCHER_RESOURCES" null="false"/>
+	<message-resources parameter="resources.PedagogicalCouncilResources" key="PEDAGOGICAL_COUNCIL" null="false"/>
 	
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

@@ -12,7 +12,7 @@
 		 	<bean:define id="professorshipId" name="summariesManagementBean" property="professorship.idInternal" />
 			<tr>
 		 		<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.teacher" name="summariesManagementForm" property="teacher" value="<%= professorshipId.toString()%>"/></td>				
-		 		<td><bean:write name="professorship" property="teacher.person.name"/></td>
+		 		<td><bean:write name="professorship" property="person.name"/></td>
 	 		</tr>
 		</logic:notEmpty>
 		<logic:empty name="summariesManagementBean" property="professorship">
@@ -20,7 +20,7 @@
 		 	<bean:define id="professorshipId" name="summariesManagementBean" property="professorshipLogged.idInternal" />
 			<tr>
 		 		<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.teacher" name="summariesManagementForm" property="teacher" value="<%= professorshipId.toString()%>"/></td>				
-		 		<td><bean:write name="professorship" property="teacher.person.name"/></td>
+		 		<td><bean:write name="professorship" property="person.name"/></td>
 	 		</tr>
 		</logic:empty>											
 		<tr>
