@@ -542,6 +542,15 @@
 					</textElement>
 				<text><![CDATA[Nr. of ECTS credits]]></text>
 				</staticText>
+				<line direction="TopDown">
+					<reportElement
+						x="262"
+						y="570"
+						width="195"
+						height="0"
+						key="line-10"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
 			</band>
 		</detail>
 		<columnFooter>
