@@ -30,113 +30,129 @@
 
 
 
-<p><b>Welcome to the application submission proccess.</b></p>
+<p>Welcome to the application submission process!</p>
 
-<h2>Requirements</h2>
+<h2>Required Documents</h2>
 
-<h3>ERASMUS Bilateral Agreement</h3>
-
-<div class="h_box">	
-	<p class="mvert05">
-		<img src="<%= request.getContextPath() %>/images/stork/icon_exclamation.gif" />
-		Before you proceed to application form submission please check the conditions and if your university holds and ERASMUS bilateral agreement with IST.
-		You can consult by following this link <%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><b><a href="http://gri.ist.utl.pt/en/ist"/>NMCI</a></b>
-	</p>
-</div>
-
-<h3>Required Documents</h3>
-
-<div class="h_box">	
-	<p class="mvert05">
-		After you submit your application form, you are required to upload five documents:
-	</p>
-	<p class="mvert05">
-		<ul>
-			<li>Passport photo - The photo will be used to generate IST student card. Please send a passport photo</li>
-			<li>Photocopy of your passport or identity card</li>
-			<li>Learning Agreement - The learning agreement will be generated and available in your application process after the submission. You're required to download, sign and stamp ....</li>
-			<li>Curriculum Vitae</li>
-			<li>Transcript of records</li>
-		</ul>
-	</p>
-</div>
+<p class="mvert05">After you fill and submit your application form, you are required to upload the following documents:</p>
+<p class="mvert05">
+	<ul>
+		<li><b>Photo</b> (passport-like) - The photo will be used to generate IST student card. Please upload a passport-like photo.</li>
+		<li><b>Passport or identity card</b> (image scan)</li>
+		<li><b>Curriculum vitae</b></li>
+		<li><b>Transcript of records</b></li>
+		<li><b>Learning agreement</b> - The learning agreement will be generated and available in your application process after the submission. You're required to download, sign and stamp.</li>
+	</ul>
+</p>
 
 
 <h2>Application Form</h2>
 
-The application submission may be acomplished in two ways:
-
-<h3>National Citizen Card</h3>
-
-<p><img src="<%= request.getContextPath() %>/images/stork/stork.jpg" alt="<bean:message key="stork.logo" bundle="IMAGE_RESOURCES" />" width="83px" height="51px" /></p>
-<p class="mtop1.5"> 
-The STORK project is an effort to establish a European Identification Platform that will allow citizens to establish new electronic relations in European Union, 
-just by presenting their national citizen card. So in this context you can identify yourself securely and easily.
-</p>
-
-<div class="h_box">	
-	<p class="mvert05">
-		<img src="<%= request.getContextPath() %>/images/stork/icon_info.gif" />
-		To fill your application with national citizen card you need the card reader to authenticate yourself in the Identification Plataform.
-	</p>
-	<p class="mvert05 ">
-		<img src="<%= request.getContextPath() %>/images/stork/icon_info.gif" />
-		Only citizens of Spain  are able to authenticate in the European Identification Plataform <img src="<%= request.getContextPath() %>/images/stork/spain_flag.gif" width="" height="" />
-	</p>
-</div>
-
-<div class="h_box">
-	<p  class="mvert05">
-		To submit your Erasmus Programme application with your national citizen card click the following link:
-		<b><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= f("%s/candidacies/erasmus/nationalCardSubmission", request.getContextPath()) %>">Fill the application form »</a></b>
-	</p>
-</div>
-
-<h3>Email registration</h3>
-
-<p><img src="<%= request.getContextPath() %>/images/stork/email.jpg" alt="Email" width="83px" height="51px" /></p>
-<p class="mtop1.5"> 
-Alternatively you can submit the application via email registration. By registering in the system with the email you receive in your inbox a link that will give access to the application form.
-</p>
+<p>You can start the filling the application form in two ways: by email or using your National Citizen Card with a smart card reader.</p>
 
 
 <div class="h_box">
-	<p  class="mvert05">
-		To submit your Erasmus Programme application with your national citizen card click the following link:
-		<b><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= f("%s/candidacies/erasmus/preregistration", request.getContextPath()) %>">Fill the application form »</a></b>
+
+	<h3 class="mtop05">Authentication with National Citizen Card</h3>
+	
+	<%--
+	<p><img src="<%= request.getContextPath() %>/images/stork/stork.jpg" alt="<bean:message key="stork.logo" bundle="IMAGE_RESOURCES" />"/></p>
+	--%>
+	
+	<p>The STORK project is an effort to establish an European Identification Platform that will allow citizens to establish new electronic relations in the European Union, just by presenting their national citizen card. So, in this context you can identify yourself securely and easily.</p>
+
+	
+	<p class="mvert05">
+		<img src="<%= request.getContextPath() %>/images/stork/icon_info.gif" />
+		To fill your application with national citizen card you need a smart card reader to authenticate in the Identification Platform.
 	</p>
+	<p class="mtop05">
+		<img src="<%= request.getContextPath() %>/images/stork/icon_info.gif" />
+		At this moment only citizens of Spain and Belgium are able to authenticate in the European Identification Platform <%-- <img src="<%= request.getContextPath() %>/images/stork/spain_flag.gif"/> --%>
+	</p>
+
+	<p  class="mtop05">
+		To submit your Erasmus Programme application with your national citizen card click the following link:
+	</p>
+
+	<%--
+	<b>
+		<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %>
+		<a href="<%= f("%s/candidacies/erasmus/nationalCardSubmission", request.getContextPath()) %>">Fill the application form »</a>
+	</b>
+	--%>
+
+
+	<h3 class="mtop05">Authentication with Email</h3>
+	
+	<%--
+	<p><img src="<%= request.getContextPath() %>/images/stork/email.jpg" alt="Email"/></p>
+	--%>
+	
+	<p> 
+		If you don't have a "smart card reader "you may submit the application using email authentication. By registering in the system with the email you receive in your inbox a link that will give access to the application form.
+	</p>
+
+	
+	
+	<h3>Fill the application form</h3>
+
+	<p>Choose the authentication method to start filling the application form:</p>	
+
+	<p class="mtop1 mbottom05">
+		<input type="button" value="Email authentication"/> or
+		<input type="button" value="Citizen card authentication"/>
+	</p>
+	
+
 </div>
 
-<p class="mtop3"></p>
 
-<h2>Access application form</h2>
 
-<p class="mtop1.5"> 
-After the submission you made view you alter your application form. The access depends in the way you submitted you application process. 
+
+<h2 class="mtop15">After submission</h2>
+
+<p> 
+	After you have submitted the application you can view and edit it. There are two ways to access the submitted application, depending on the authentication method you used.
 </p>
+
+<p>
+	If you submitted the application authenticating your national citizen card you can 
+	<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= f("%s/candidacies/erasmus/recoveraccess", request.getContextPath()) %>"><b>access it by authenticating using the identification platform</b></a>.
+</p>
+
+<p>
+	If you submitted the application authenticating with your email you received an email message with a link which gives you access to your application form.
+</p>
+<p>	
+	If you lost the email message you can recover the application link here: <%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= f("%s/candidacies/erasmus/recoveraccess", request.getContextPath()) %>"><b>recover access link</b></a> 
+</p>
+
+
+
+<%--
 
 <h3>National Citizen Card</h3>
 
-<p class="mtop1.5">
-	If you submitted the application form with your national citizen card you can access it by authenticating in the Identification Plataform.
+<p>
+	If you submitted the application form using your national citizen card you can access it by authenticating in the Identification Plataform.
 </p>
 
-<div class="h_box">	
-	<p class="mvert05">
-		To access your application form please authenticate by following this link <b><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= f("%s/candidacies/erasmus/nationalCardApplicationAccess", request.getContextPath()) %>">Access to application form »</a></b>
-	</p>
-</div>
+<p>
+	To access your application form please follow this link: <%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= f("%s/candidacies/erasmus/nationalCardApplicationAccess", request.getContextPath()) %>"><b>Access to application form</b></a>
+</p>
+
 
 
 <h3>Email registration</h3>
 
-<p class="mtop1.5">
-	With your application submission an email was sent to your mailbox with a link which gives you access to your application form. 
+<p>
+	If you submitted the application form using your email you received an email message with a link which gives you access to your application form. 
 </p>
 
-<div class="h_box">	
-	<p class="mvert05">
-		<img src="<%= request.getContextPath() %>/images/stork/icon_info.gif" />
-		If you lost you can recover by following the link <b><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= f("%s/candidacies/erasmus/recoverLinkAccess", request.getContextPath()) %>">Recover access link »</a></b>
-	</p>
-</div>
+<p>
+	<img src="<%= request.getContextPath() %>/images/stork/icon_info.gif" />
+	If you lost you can recover by following the link: <%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= f("%s/candidacies/erasmus/recoverLinkAccess", request.getContextPath()) %>"><b>Recover access link</b></a>
+</p>
+
+--%>
