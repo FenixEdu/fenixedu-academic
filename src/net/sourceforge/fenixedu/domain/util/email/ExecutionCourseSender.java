@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.util.email;
 
+import java.util.Comparator;
+
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseResponsibleTeachersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseStudentsGroup;
@@ -8,6 +10,14 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class ExecutionCourseSender extends ExecutionCourseSender_Base {
+
+    public static Comparator<ExecutionCourseSender> COMPARATOR_BY_EXECUTION_COURSE_SENDER = new Comparator<ExecutionCourseSender>() {
+
+	@Override
+	public int compare(ExecutionCourseSender arg0, ExecutionCourseSender arg1) {
+	    return arg1.getCourse().getExecutionPeriod().compareTo(arg0.getCourse().getExecutionPeriod());
+	}
+    };
 
     public ExecutionCourseSender(ExecutionCourse executionCourse) {
 	super();

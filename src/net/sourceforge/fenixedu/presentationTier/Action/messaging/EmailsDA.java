@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.util.email.EmailBean;
+import net.sourceforge.fenixedu.domain.util.email.ExecutionCourseSender;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.MessageDeleteService;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
@@ -89,18 +90,29 @@ public class EmailsDA extends FenixDispatchAction {
 	}
 
 	final IUserView userView = UserView.getUser();
-	final Set<Sender> senders = new TreeSet<Sender>(Sender.COMPARATOR_BY_FROM_NAME);
+	final Set<Sender> sendersGroups = new TreeSet<Sender>(Sender.COMPARATOR_BY_FROM_NAME);
+	final TreeSet<ExecutionCourseSender> sendersGroupsCourses = new TreeSet<ExecutionCourseSender>(
+		ExecutionCourseSender.COMPARATOR_BY_EXECUTION_COURSE_SENDER);
 	for (final Sender sender : RootDomainObject.getInstance().getUtilEmailSendersSet()) {
-	    if (sender.getMembers().allows(userView)) {
-		senders.add(sender);
+	    boolean allow = sender.getMembers().allows(userView);
+	    boolean isExecutionCourseSender = sender instanceof ExecutionCourseSender;
+	    if (allow && !isExecutionCourseSender) {
+		sendersGroups.add(sender);
+	    }
+	    if (allow && isExecutionCourseSender) {
+		sendersGroupsCourses.add((ExecutionCourseSender) sender);
 	    }
 	}
-	if (senders.size() == 1) {
-	    return viewSentEmails(mapping, request, senders.iterator().next().getIdInternal());
-	} else {
-	    request.setAttribute("senders", senders);
-	    return mapping.findForward("view.sent.emails");
+	if (isSenderUnique(sendersGroups, sendersGroupsCourses)) {
+	    if (sendersGroupsCourses.size() == 1) {
+		return viewSentEmails(mapping, request, (sendersGroupsCourses.iterator().next()).getIdInternal());
+	    } else {
+		return viewSentEmails(mapping, request, sendersGroups.iterator().next().getIdInternal());
+	    }
 	}
+	request.setAttribute("sendersGroups", sendersGroups);
+	request.setAttribute("sendersGroupsCourses", sendersGroupsCourses);
+	return mapping.findForward("view.sent.emails");
     }
 
     public ActionForward viewSentEmails(final ActionMapping mapping, final HttpServletRequest request, final Integer senderId) {
@@ -157,6 +169,14 @@ public class EmailsDA extends FenixDispatchAction {
 	    emailBean.setSender(sender);
 	request.setAttribute("emailBean", emailBean);
 	return FORWARD_TO_NEW_EMAIL;
+    }
+
+    private boolean isSenderUnique(Set arg0, Set arg1) {
+	if (arg0 == null)
+	    return arg1.size() == 1;
+	if (arg1 == null)
+	    return arg0.size() == 1;
+	return arg0.size() + arg0.size() == 1;
     }
 
 }

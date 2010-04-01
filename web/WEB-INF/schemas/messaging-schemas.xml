@@ -208,6 +208,9 @@
 <schema name="net.sourceforge.fenixedu.domain.util.email.Sender.list" type="net.sourceforge.fenixedu.domain.util.email.Sender" bundle="MESSAGING_RESOURCES">
 	<slot name="fromName" bundle="MESSAGING_RESOURCES" key="label.email.queue"/>
 </schema>
+<schema name="net.sourceforge.fenixedu.domain.util.email.Sender.list.courses" type="net.sourceforge.fenixedu.domain.util.email.Sender" bundle="MESSAGING_RESOURCES">
+	<slot name="fromName" bundle="MESSAGING_RESOURCES" key="label.email.queue.courses"/>
+</schema>
 
 <schema name="net.sourceforge.fenixedu.domain.util.email.Sender.info" type="net.sourceforge.fenixedu.domain.util.email.Sender" bundle="MESSAGING_RESOURCES">
 	<slot name="fromName" bundle="MESSAGING_RESOURCES" key="label.fromName"/>

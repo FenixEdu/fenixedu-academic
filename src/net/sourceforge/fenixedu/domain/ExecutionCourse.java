@@ -2202,4 +2202,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	return null;
     }
 
+    public boolean isHasSender() {
+	return hasSender();
+    }
+
 }

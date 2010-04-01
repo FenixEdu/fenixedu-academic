@@ -47,9 +47,10 @@
 
 </logic:present>
 
-<logic:present name="senders">
 
-	<fr:view name="senders" schema="net.sourceforge.fenixedu.domain.util.email.Sender.list">
+<logic:present name="sendersGroups">
+
+	<fr:view name="sendersGroups" schema="net.sourceforge.fenixedu.domain.util.email.Sender.list"  >
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight mtop05"/>
 			<fr:property name="columnClasses" value=",,aleft,"/>
@@ -58,8 +59,23 @@
 			<fr:property name="key(view)" value="link.view"/>
 			<fr:property name="param(view)" value="idInternal/senderId"/>
 			<fr:property name="order(view)" value="1"/>
-			<fr:property name="sortBy" value="fromName=asc"/>
 		</fr:layout>
 	</fr:view>
+	
+</logic:present>
 
+<logic:present name="sendersGroupsCourses">
+
+	<fr:view name="sendersGroupsCourses" schema="net.sourceforge.fenixedu.domain.util.email.Sender.list.courses"  >
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle2 thlight mtop05"/>
+			<fr:property name="columnClasses" value=",,aleft,"/>
+			<fr:property name="link(view)" value="/emails.do?method=viewSentEmails"/>
+			<fr:property name="bundle(view)" value="APPLICATION_RESOURCES"/>
+			<fr:property name="key(view)" value="link.view"/>
+			<fr:property name="param(view)" value="idInternal/senderId"/>
+			<fr:property name="order(view)" value="1"/>
+		</fr:layout>
+	</fr:view>
+	
 </logic:present>

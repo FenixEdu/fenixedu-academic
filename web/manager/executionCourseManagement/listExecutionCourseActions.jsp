@@ -116,6 +116,16 @@
 		<fr:property name="confirmationArgs(delete)" value="${idInternal},${nome},${sigla}"/>
 
 
+		<fr:property name="linkFormat(sentEmails)"
+			value="/emails.do?method=viewSentEmails&senderId=${sender.idInternal}" />
+		<fr:property name="order(sentEmails)" value="5" />
+		<fr:property name="key(sentEmails)"
+			value="link.manager.email.sender" />
+		<fr:property name="bundle(sentEmails)" value="MANAGER_RESOURCES" />
+		<fr:property name="visibleIf(sentEmails)" value="hasSender" />
+		<fr:property name="module(sentEmails)" value="/messaging" />
+		
+	
 		<fr:property name="classes" value="tstyle1 thleft" />
 		<fr:property name="columnClasses" value=",,,tdclear tderror1" />
 
