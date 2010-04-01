@@ -1,4 +1,4 @@
- /* DOMAIN_MODEL.DML
+/* DOMAIN_MODEL.DML
  * The Fenix Project Domain Model
  * 
  */
@@ -201,7 +201,6 @@ enum net.sourceforge.fenixedu.domain.curriculum.CurriculumValidationEvaluationPh
 enum net.sourceforge.fenixedu.domain.phd.debts.PhdEventExemptionJustificationType                                         as PhdEventExemptionJustificationType;
 enum net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionState                                             as RectorateSubmissionState;
 enum net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusAlertEntityType                                      as ErasmusAlertEntityType;
-
 
 /*
  * Value types that need special externalization
@@ -566,20 +565,20 @@ valueType pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString as MultiLanguageS
 }
 
 valueType net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.TypeOfProgrammeList as erasmus.TypeOfProgrammeList {
-	externalizeWith {
-		String toString();
-	}
-	
-	internalizeWith importFromString();
-}
-
-/* Phd Module */
-valueType net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessTypeList as PhdProcessAccessTypeList {
     externalizeWith {
         String toString();
     }
     
     internalizeWith importFromString();
+}
+
+/* Phd Module */
+valueType net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessTypeList as PhdProcessAccessTypeList {
+	externalizeWith {
+		String toString();
+	}
+	
+	internalizeWith importFromString();
 }
 
 valueType net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacySharedDocumentsList as PhdCandidacySharedDocumentsList {
@@ -2550,7 +2549,7 @@ class DomainObject {
         ClosedMonthDocumentType closedMonthDocumentType;
         DateTime createdWhen;
     }
-
+    
     class assiduousness.GiafInterfaceDocument extends DomainObject {
         DateTime createdWhen;
     }
@@ -3097,7 +3096,7 @@ class DomainObject {
 
         class degreeStructure.CourseGroup extends degreeStructure.DegreeModule {
         }
-        
+
         	class degreeStructure.BranchCourseGroup extends degreeStructure.CourseGroup {
         		BranchType branchType;
         	}
@@ -5214,7 +5213,7 @@ class DomainObject {
         
         class student.registrationStates.TransitedState extends student.registrationStates.RegistrationState {
         }
-        
+
         class student.registrationStates.InactiveState extends student.registrationStates.RegistrationState {
         }
 
@@ -5252,7 +5251,7 @@ class DomainObject {
 
                 class studentCurriculum.ExternalCurriculumGroup extends studentCurriculum.CycleCurriculumGroup {
                 }
-                
+
             class studentCurriculum.BranchCurriculumGroup extends studentCurriculum.CurriculumGroup {
             }
 
@@ -6701,7 +6700,7 @@ class candidacyProcess.erasmus.ErasmusStudentData extends DomainObject {
 	Boolean hasContactedOtherStaff;
 	String nameOfContact;
 }
-
+    
 class candidacyProcess.erasmus.ErasmusAlert extends Alert {
 	Boolean sendEmail;
 	LocalDate whenToFire;
@@ -6953,6 +6952,7 @@ class phd.PhdProcessState extends DomainObject {
     }
 
 class phd.PhdProgramProcess extends caseHandling.Process {
+
 }
 
 class phd.PhdIndividualProgramProcess extends phd.PhdProgramProcess {
@@ -7750,6 +7750,7 @@ relation PhdParticipantPhdCandidacyFeedbackRequestElements {
         multiplicity *;
     }
 }
+
 
 /* End of Phd Module */
 
@@ -10021,6 +10022,13 @@ relation PhotoRejector {
         multiplicity *;
     }
     Person playsRole rejector;
+}
+
+relation PhotoApprover {
+    Photograph playsRole approvedPhoto {
+        multiplicity *;
+    }
+    Person playsRole approver;
 }
 
 relation PreviousPhotograph {
@@ -17674,7 +17682,6 @@ relation DocumentPrintRequestDocumentRequest {
 		multiplicity *;
 	}		
 }
-
 relation RootDomainObjectEnrolmentInstructions {
 	RootDomainObject playsRole rootDomainObject;
 	EnrolmentInstructions playsRole enrolmentInstructions {
@@ -17718,7 +17725,7 @@ relation RootDomainObjectErasmusVacancy {
 
 relation ErasmusVacancyErasmusCandidacyPeriod {
 	period.ErasmusCandidacyPeriod playsRole candidacyPeriod;
-	
+
 	candidacyProcess.erasmus.ErasmusVacancy playsRole erasmusVacancy {
 		multiplicity *;
 	}

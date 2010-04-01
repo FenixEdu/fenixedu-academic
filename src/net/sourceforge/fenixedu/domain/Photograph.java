@@ -107,6 +107,12 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
 	    new Message(systemSender, systemSender.getConcreteReplyTos(), new Recipient(new PersonGroup(getPerson()))
 		    .asCollection(), bundle.getString(REJECTION_MAIL_SUBJECT_KEY), bundle.getString(REJECTION_MAIL_BODY_KEY), "");
 	}
+	if (state == PhotoState.APPROVED) {
+	    Person person = AccessControl.getPerson();
+	    if (person != null) {
+		setApprover(person);
+	    }
+	}
     }
 
     @Override

@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Photograph changes: add approver person" photographApprover.sql
