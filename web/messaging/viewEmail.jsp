@@ -9,6 +9,15 @@
 
 <logic:present name="message">
 
+
+	<logic:empty name="message" property="messageIds">
+	
+		<p class="mtop15">
+			<html:link page="/emails.do?method=resubmit" paramId="messagesId" paramName="message" paramProperty="idInternal">
+				<bean:message bundle="MESSAGING_RESOURCES" key="link.message.email.resubmit"/>
+		</html:link>
+		</p>
+	</logic:empty>
 	<logic:present name="created">
 		<p class="mtop15">
 			<span class="success0">

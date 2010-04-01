@@ -28,10 +28,11 @@
 			</span>
 		</p>
 	</logic:empty>
+	
 	<cp:collectionPages
 	url="<%="/messaging/emails.do?method=viewSentEmails" + "&amp;senderId=" + request.getAttribute("senderId")%>" 
-	pageNumberAttributeName="pageNumber"
-	numberOfPagesAttributeName="numberOfPages"/>
+	pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages" />
+	
 	<fr:view name="messages" schema="net.sourceforge.fenixedu.domain.util.email.Message.list">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight"/>

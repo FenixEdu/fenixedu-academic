@@ -24,6 +24,7 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -117,15 +118,16 @@ public class EmailsDA extends FenixDispatchAction {
 
     public ActionForward viewSentEmails(final ActionMapping mapping, final HttpServletRequest request, final Integer senderId) {
 	final Sender sender = rootDomainObject.readSenderByOID(senderId);
-	final CollectionPager<Message> pager = new CollectionPager<Message>(sender.getMessagesSet(), 50);
-	request.setAttribute("numberOfPages", 10);
-
+	final int numberOfMessagesByPage = 40;
+	final CollectionPager<Message> pager = new CollectionPager<Message>(sender.getMessagesSet(), numberOfMessagesByPage);
+	request.setAttribute("numberOfPages", getNumberOfPages(sender.getMessagesSet(), numberOfMessagesByPage));
 	final String pageParameter = request.getParameter("pageNumber");
 	final Integer page = StringUtils.isEmpty(pageParameter) ? Integer.valueOf(1) : Integer.valueOf(pageParameter);
 
 	request.setAttribute("messages", pager.getPage(page));
 	request.setAttribute("senderId", senderId);
 	request.setAttribute("pageNumber", page);
+
 	return viewSentEmails(mapping, request, sender);
     }
 
@@ -169,6 +171,28 @@ public class EmailsDA extends FenixDispatchAction {
 	    emailBean.setSender(sender);
 	request.setAttribute("emailBean", emailBean);
 	return FORWARD_TO_NEW_EMAIL;
+    }
+
+    @Service
+    public ActionForward resubmit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	Message message = getMessageFromRequest(request);
+	message.setSent(null);
+	request.setAttribute("message", message);
+	return mapping.findForward("view.email");
+
+    }
+
+    private Message getMessageFromRequest(HttpServletRequest request) {
+	final String messageParam = request.getParameter("messagesId");
+	return rootDomainObject.readMessageByOID(new Integer(messageParam));
+    }
+
+    private int getNumberOfPages(Set<Message> messages, int numberOfMessagesByPage) {
+	if (messages.size() <= numberOfMessagesByPage) {
+	    return 0;
+	}
+	return messages.size() / numberOfMessagesByPage + 1;
     }
 
     private boolean isSenderUnique(Set arg0, Set arg1) {
