@@ -41,10 +41,6 @@
 
 <p><span><bean:message key="message.all.fields.are.required" bundle="CANDIDATE_RESOURCES"/></span></p>
 
-<html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
-	<span class="error0"> <bean:write name="message" /> </span>
-	<br />
-</html:messages>
 <fr:hasMessages for="CandidacyProcess.personalDataBean" type="conversion">
 	<ul class="nobullet list6">
 		<fr:messages>
@@ -52,6 +48,11 @@
 		</fr:messages>
 	</ul>
 </fr:hasMessages>
+
+<html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES" property="error">
+	<p><span class="error0"><bean:write name="message"/></span></p>
+</html:messages>
+
 
 <script src="<%= request.getContextPath() + "/javaScript/jquery/jquery.js" %>" type="text/javascript" >
 </script>
