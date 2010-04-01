@@ -27,7 +27,8 @@
 	<bean:message key="erasmus.title.application.submission" bundle="CANDIDATE_RESOURCES" />
 </div>
 
-<h1><bean:write name="application.name" bundle="CANDIDATE_RESOURCES"/></h1>
+
+<h1><bean:write name="title.erasmus.application.form" bundle="CANDIDATE_RESOURCES"/></h1>
 
 <html:messages id="message" message="true" bundle="APPLICATION_RESOURCES" property="captcha.error" >
 	<p><span class="error0"><bean:write name="message"/></span></p>
