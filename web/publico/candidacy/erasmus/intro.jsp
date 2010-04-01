@@ -137,6 +137,6 @@ After the submission you made view you alter your application form. The access d
 <div class="h_box">	
 	<p class="mvert05">
 		<img src="<%= request.getContextPath() %>/images/stork/icon_info.gif" />
-		If you lost you can recover by following the link <b><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= f("%s/candidacies/erasmus/recoveraccess", request.getContextPath()) %>">Recover access link »</a></b>
+		If you lost you can recover by following the link <b><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= f("%s/candidacies/erasmus/recoverLinkAccess", request.getContextPath()) %>">Recover access link »</a></b>
 	</p>
 </div>

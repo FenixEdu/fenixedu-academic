@@ -1929,13 +1929,10 @@
  -->
 
  
-<schema name="ErasmusIndividualCandidacyProcess.home.institution.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="candidacy.erasmusStudentData.homeInstitutionName" key="label.erasmus.home.institution.name" />
-	<slot name="candidacy.erasmusStudentData.homeInstitutionAddress" key="label.erasmus.home.institution.address" />
-	<slot name="candidacy.erasmusStudentData.homeInstitutionCoordinatorName" key="label.erasmus.home.institution.coordinator.name" />
-	<slot name="candidacy.erasmusStudentData.homeInstitutionPhone" key="label.erasmus.home.institution.phone" />
-	<slot name="candidacy.erasmusStudentData.homeInstitutionFax" key="label.erasmus.home.institution.fax" />
-	<slot name="candidacy.erasmusStudentData.homeInstitutionEmail" key="label.erasmus.home.institution.email" />
+<schema name="ErasmusIndividualCandidacyProcess.home.institution.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusStudentDataBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="selectedVacancy.universityUnit.country.localizedName" key="label.erasmus.country" />
+	<slot name="selectedVacancy.universityUnit.nameI18n" key="label.erasmus.home.institution" />
+	<slot name="homeInstitutionCoordinatorName" key="label.erasmus.home.institution.coordinator.name" />
 </schema> 
  
 <schema name="ErasmusIndividualCandidacyProcess.home.institution.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusStudentDataBean" bundle="ACADEMIC_OFFICE_RESOURCES">
