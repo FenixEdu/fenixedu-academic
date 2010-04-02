@@ -154,6 +154,12 @@
 				path="/publicNotAuthorized.do"/>	
         </action>
 
+        <action path="/respondToAlumniInquiriesQuestion"
+        		parameter="method"
+				type="net.sourceforge.fenixedu.presentationTier.Action.RespondToAlumniInquiriesQuestion">
+            <forward name="respondToInquiriesQuestion" path="/respondToAlumniInquiriesQuestion.jsp"/>
+        </action>
+
         <action path="/respondToInquiriesQuestion"
         		parameter="method"
 				type="net.sourceforge.fenixedu.presentationTier.Action.RespondToInquiriesQuestion">

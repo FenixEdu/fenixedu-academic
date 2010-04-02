@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryPerson;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.util.HostAccessControl;
@@ -52,6 +53,8 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	    if (pendingRequest != null && pendingRequest.length() > 0 && !pendingRequest.equals("null")
 		    && DomainObject.fromExternalId(pendingRequest) != null) {
 		return handleSessionRestoreAndGetForward(request, form, userView, session);
+	    } else if (isAlumniAndHasInquiriesToResponde(userView)) {
+		return handleSessionCreationAndForwardToAlumniInquiriesResponseQuestion(request, userView, session);
 	    } else if (isStudentAndHasInquiriesToRespond(userView)) {
 		return handleSessionCreationAndForwardToInquiriesResponseQuestion(request, userView, session);
 	    } else if (isDelegateAndHasInquiriesToRespond(userView)) {
@@ -68,6 +71,15 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	} catch (ExcepcaoAutenticacao e) {
 	    return getAuthenticationFailedForward(mapping, request, "invalidAuthentication", "errors.invalidAuthentication");
 	}
+    }
+
+    private boolean isAlumniAndHasInquiriesToResponde(final IUserView userView) {
+	for (final CerimonyInquiryPerson cerimonyInquiryPerson : userView.getPerson().getCerimonyInquiryPersonSet()) {
+	    if (cerimonyInquiryPerson.isPendingResponse()) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     private ActionForward handleSessionCreationAndForwardToGratuityPaymentsReminder(HttpServletRequest request,
@@ -123,6 +135,12 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	ActionForward actionForward = mapping.findForward("sucess");
 
 	return checkExpirationDate(mapping, request, userView, actionForward);
+    }
+
+    private ActionForward handleSessionCreationAndForwardToAlumniInquiriesResponseQuestion(HttpServletRequest request,
+	    IUserView userView, HttpSession session) {
+	createNewSession(request, session, userView);
+	return new ActionForward("/respondToAlumniInquiriesQuestion.do?method=showQuestion");
     }
 
     private ActionForward handleSessionCreationAndForwardToInquiriesResponseQuestion(HttpServletRequest request,

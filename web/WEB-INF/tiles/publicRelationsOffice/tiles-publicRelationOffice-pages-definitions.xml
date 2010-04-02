@@ -58,4 +58,32 @@
 	    <put name="body" value="/publicRelations/reports/viewPublicRelationsReports.jsp" />
 	</definition>
 
+	<definition name="publicRelationsOffice-manageAlumniCerimony" extends="definition.publicRelationOffice.master" >
+	    <put name="body" value="/publicRelations/alumni/manageAlumniCerimony.jsp"/>
+	</definition>
+
+	<definition name="publicRelationsOffice-viewAlumniCerimonyInquiry" extends="definition.publicRelationOffice.master" >
+	    <put name="body" value="/publicRelations/alumni/viewAlumniCerimonyInquiry.jsp"/>
+	</definition>
+
+	<definition name="publicRelationsOffice-editAlumniCerimonyInquiry" extends="definition.publicRelationOffice.master" >
+	    <put name="body" value="/publicRelations/alumni/editAlumniCerimonyInquiry.jsp"/>
+	</definition>
+
+	<definition name="publicRelationsOffice-editAlumniCerimonyInquiryAnswer" extends="definition.publicRelationOffice.master" >
+	    <put name="body" value="/publicRelations/alumni/editAlumniCerimonyInquiryAnswer.jsp"/>
+	</definition>
+
+	<definition name="publicRelationsOffice-viewAlumniCerimonyInquiryAnswer" extends="definition.publicRelationOffice.master" >
+	    <put name="body" value="/publicRelations/alumni/viewAlumniCerimonyInquiryAnswer.jsp"/>
+	</definition>
+
+	<definition name="publicRelationsOffice-addPeopleToCerimonyInquiry" extends="definition.publicRelationOffice.master" >
+	    <put name="body" value="/publicRelations/alumni/addPeopleToCerimonyInquiry.jsp"/>
+	</definition>
+
+	<definition name="publicRelationsOffice-viewInquiryPeople" extends="definition.publicRelationOffice.master" >
+	    <put name="body" value="/publicRelations/alumni/viewInquiryPeople.jsp"/>
+	</definition>
+
 </tiles-definitions>

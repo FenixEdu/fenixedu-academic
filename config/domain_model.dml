@@ -623,6 +623,21 @@ class DomainObject {
         UUID requestToken;
     }
 
+	class alumni.CerimonyInquiry extends DomainObject {
+		String description;
+		String text;
+		DateTime begin;
+		DateTime end;
+	}
+
+	class alumni.CerimonyInquiryAnswer extends DomainObject {
+		Integer answerOrder;
+		String text;
+	}
+
+	class alumni.CerimonyInquiryPerson extends DomainObject {
+	}
+
     class Attends extends DomainObject {
     }
 
@@ -17750,6 +17765,55 @@ relation ErasmusVacancyDegree {
 relation ErasmusStudentDataErasmusVacancy {
 	candidacyProcess.erasmus.ErasmusVacancy playsRole selectedVacancy;
 	candidacyProcess.erasmus.ErasmusStudentData playsRole candidacies {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCerimonyInquiry {
+	RootDomainObject playsRole rootDomainObject;
+	alumni.CerimonyInquiry playsRole cerimonyInquiry {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCerimonyInquiryAnswer {
+	RootDomainObject playsRole rootDomainObject;
+	alumni.CerimonyInquiryAnswer playsRole cerimonyInquiryAnswer {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectCerimonyInquiryPerson {
+	RootDomainObject playsRole rootDomainObject;
+	alumni.CerimonyInquiryPerson playsRole cerimonyInquiryPerson {
+		multiplicity *;
+	}
+}
+
+relation CerimonyInquiryCerimonyInquiryAnswer {
+	alumni.CerimonyInquiry playsRole cerimonyInquiry;
+	alumni.CerimonyInquiryAnswer playsRole cerimonyInquiryAnswer {
+		multiplicity *;
+	}
+}
+
+relation CerimonyInquiryCerimonyInquiryPerson {
+	alumni.CerimonyInquiry playsRole cerimonyInquiry;
+	alumni.CerimonyInquiryPerson playsRole cerimonyInquiryPerson {
+		multiplicity *;
+	}
+}
+
+relation PersonCerimonyInquiryPerson {
+	Person playsRole person;
+	alumni.CerimonyInquiryPerson playsRole cerimonyInquiryPerson {
+		multiplicity *;
+	}
+}
+
+relation CerimonyInquiryAnswerCerimonyInquiryPerson {
+	alumni.CerimonyInquiryAnswer playsRole cerimonyInquiryAnswer;
+	alumni.CerimonyInquiryPerson playsRole cerimonyInquiryPerson {
 		multiplicity *;
 	}
 }

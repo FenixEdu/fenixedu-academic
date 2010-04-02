@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+
+execute "Alumni cerimony tables." updates.sql
