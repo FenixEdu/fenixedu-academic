@@ -208,7 +208,6 @@
 	<slot name="emissionLocationOfDocumentId" key="label.person.identificationDocumentIssuePlace"/> 
 	<slot name="emissionDateOfDocumentIdYearMonthDay" key="label.person.identificationDocumentIssueDate">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>	 
 	<slot name="expirationDateOfDocumentIdYearMonthDay" key="label.person.identificationDocumentExpirationDate">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
