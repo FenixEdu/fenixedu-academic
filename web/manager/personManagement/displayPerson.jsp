@@ -81,7 +81,7 @@ function check(e,v){
 				<tr>
 					<td width="70%">
 						<strong>
-						 	<html:link href="<%= request.getContextPath() +"/manager/findPerson.do?method=viewPerson&personID="+personID %>" target="_blank"> <bean:write name="personalInfo" property="name"/> </html:link>					
+						 	<html:link href="<%= request.getContextPath() +"/manager/findPerson.do?method=viewPerson&personID="+personID %>" > <bean:write name="personalInfo" property="name"/> </html:link>					
 						</strong> (<bean:write name="personalInfo" property="username"/>)
 						<bean:size id="mainRolesSize" name="personalInfo" property="mainRoles"></bean:size> 
 						<logic:greaterThan name="mainRolesSize" value="0">
