@@ -43,8 +43,10 @@ public class ExecutionCourseSender extends ExecutionCourseSender_Base {
     }
 
     private String getFromName(ExecutionCourse executionCourse) {
-	return String.format("%s - %s - %s", executionCourse.getNome(), executionCourse.getDegreePresentationString(),
-		executionCourse.getExecutionPeriod().getQualifiedName());
+	return String.format("%s %s %s",
+		executionCourse.getNome(),
+		executionCourse.getDegreePresentationString().replaceAll(", ", " "),
+		executionCourse.getExecutionPeriod().getQualifiedName().replace('/', ' '));
     }
 
     @Service
