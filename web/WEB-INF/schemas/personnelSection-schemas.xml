@@ -199,7 +199,6 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	<slot name="partialEndDate" key="label.endDateOrDuration" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="justificationMotive.description" key="label.justification" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="notes" key="label.notes" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="referenceDate" key="label.referenceDate" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="modifiedByNumber" key="label.employee" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="lastModifiedDate" key="label.lastModifiedDate" bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
