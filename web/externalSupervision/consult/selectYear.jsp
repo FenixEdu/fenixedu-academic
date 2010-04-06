@@ -13,7 +13,7 @@
 		<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.externalSupervision.consult.ExternalSupervisorViewsBean" bundle="EXTERNAL_SUPERVISION_RESOURCES">
 			<fr:slot name="executionYear" layout="menu-select" key="label.selectYear.executionYear" required="true">
 				<fr:property name="format" value="${qualifiedName}"/>
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OpenExecutionYearsProvider"/>
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.BolonhaExecutionYearsProvider"/>
 				<fr:property name="saveOptions" value="true"/>
 			</fr:slot>
 			<logic:present name="selectProtocol">

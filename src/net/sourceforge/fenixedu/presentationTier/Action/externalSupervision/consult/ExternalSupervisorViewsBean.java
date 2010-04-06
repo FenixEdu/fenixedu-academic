@@ -196,7 +196,7 @@ public class ExternalSupervisorViewsBean implements Serializable, HasExecutionYe
 	List<StudentCurricularPlan> curricularPlans = new ArrayList<StudentCurricularPlan>();
 	for(Person person : students){
 	    for(Registration registration : person.getStudent().getRegistrations()){
-		if(registration.getRegistrationAgreement() == protocol.getRegistrationAgreement() && registration.isActive()){
+		if(registration.getRegistrationAgreement() == protocol.getRegistrationAgreement() && registration.hasAnyActiveState(executionYear)){
 		    if(executionDegree != null){
 			if(registration.getDegree() != executionDegree.getDegree()){
 			    continue;

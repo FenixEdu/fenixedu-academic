@@ -147,7 +147,7 @@ public class ExternalSupervisorViewDegreeDA extends FenixDispatchAction{
 	    row.setCell(studentCurricularPlan.getName());
 	    row.setCell(studentCurricularPlan.getStartDateYearMonthDay().toString());
 	    row.setCell(studentCurricularPlan.getEndDate() == null ? "" : studentCurricularPlan.getEndDate().toString());
-	    row.setCell(studentCurricularPlan.getCurrentState().getLocalizedName());
+	    row.setCell(studentCurricularPlan.getRegistration().getActiveStateType().getDescription());
 	    row.setCell(studentCurricularPlan.getRegistration().getNumberOfCurriculumEntries());
 	    row.setCell(studentCurricularPlan.getRegistration().getEctsCredits());
 	    row.setCell(getAverageInformation(studentCurricularPlan));

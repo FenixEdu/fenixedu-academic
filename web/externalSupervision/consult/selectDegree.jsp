@@ -13,7 +13,7 @@
 		<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.externalSupervision.consult.ExternalSupervisorViewsBean" bundle="EXTERNAL_SUPERVISION_RESOURCES">
 			<fr:slot name="degreeType" layout="menu-select-postback" key="label.selectDegree.degreeType" required="true">
 				<fr:property name="format" value="${localizedName}"/>
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DegreeTypeProvider"/>
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.BolonhaDegreeTypesProvider"/>
 				<fr:property name="saveOptions" value="true"/>
 			</fr:slot>
 			<fr:slot name="executionDegree" layout="menu-select" key="label.selectDegree.executionDegree" required="true">
@@ -23,7 +23,7 @@
 			</fr:slot>
 			<fr:slot name="executionYear" layout="menu-select-postback" key="label.selectDegree.executionYear" required="true">
 				<fr:property name="format" value="${qualifiedName}"/>
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OpenExecutionYearsProvider"/>
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.BolonhaExecutionYearsProvider"/>
 				<fr:property name="saveOptions" value="true"/>
 			</fr:slot>
 			<logic:present name="selectProtocol">
