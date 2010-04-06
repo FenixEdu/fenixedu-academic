@@ -178,6 +178,7 @@ public class EmailsDA extends FenixDispatchAction {
 	    HttpServletResponse response) {
 	Message message = getMessageFromRequest(request);
 	message.setSent(null);
+	message.setRootDomainObjectFromPendingRelation(rootDomainObject);
 	request.setAttribute("message", message);
 	return mapping.findForward("view.email");
 
