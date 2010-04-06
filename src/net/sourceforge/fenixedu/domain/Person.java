@@ -3499,4 +3499,13 @@ public class Person extends Person_Base {
 	return professorships;
     }
 
+    public boolean teachesAny(final List<ExecutionCourse> executionCourses) {
+	for (final Professorship professorship : getProfessorshipsSet()) {
+	    if (executionCourses.contains(professorship.getExecutionCourse())) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
 }

@@ -8,7 +8,6 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.vigilancy.UnavailableTypes;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
@@ -37,10 +36,12 @@ public class ConvokeByPoints extends Strategy {
 
 	for (VigilantWrapper vigilant : vigilants) {
 
+	    Person vigilantPerson = vigilant.getPerson();
+
 	    if (vigilant.canBeConvokedForWrittenEvaluation(writtenEvaluation)
-		    && !incompatiblePersons.contains(vigilant.getPerson().getIncompatibleVigilantPerson())) {
-		Teacher teacher = vigilant.getTeacher();
-		if (teacher != null && teacher.teachesAny(executionCourses)) {
+		    && !incompatiblePersons.contains(vigilantPerson.getIncompatibleVigilantPerson())) {
+
+		if (vigilantPerson.teachesAny(executionCourses)) {
 		    teachersSugestion.add(vigilant);
 		    incompatiblePersons.add(vigilant.getPerson());
 		} else {
@@ -90,5 +91,4 @@ public class ConvokeByPoints extends Strategy {
 	}
 	return people;
     }
-
 }
