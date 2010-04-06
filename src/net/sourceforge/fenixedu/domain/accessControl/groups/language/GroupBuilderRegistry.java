@@ -6,6 +6,11 @@ import java.util.Map;
 
 import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.domain.ManagementGroups;
+import net.sourceforge.fenixedu.domain.accessControl.ActiveCoordinatorCycle1Group;
+import net.sourceforge.fenixedu.domain.accessControl.ActiveCoordinatorCycle2Group;
+import net.sourceforge.fenixedu.domain.accessControl.ActiveCoordinatorCycle3Group;
+import net.sourceforge.fenixedu.domain.accessControl.ActiveCoordinatorGroup;
+import net.sourceforge.fenixedu.domain.accessControl.ActiveCoordinatorIntegradedMasterDegreeGroup;
 import net.sourceforge.fenixedu.domain.accessControl.AllDegreesStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.AllEmployeesByCampus;
 import net.sourceforge.fenixedu.domain.accessControl.AllEmployeesGroup;
@@ -254,7 +259,8 @@ public class GroupBuilderRegistry {
 		TeachersAndInstitutionSiteManagersGroup.class, PedagogicalCouncilMembersGroup.class,
 		ScientificCouncilMembersGroup.class, AllTeachersGroup.class, AllEmployeesGroup.class, AllStudentsGroup.class,
 		AllResearchersGroup.class, InternalOrExternalTeacherGroup.class, AllSecondCycleStudentsGroup.class,
-		AllFirstCycleStudentsGroup.class };
+		AllFirstCycleStudentsGroup.class, ActiveCoordinatorGroup.class, ActiveCoordinatorCycle1Group.class,
+		ActiveCoordinatorCycle2Group.class, ActiveCoordinatorCycle3Group.class, ActiveCoordinatorIntegradedMasterDegreeGroup.class };
 
 	for (Class groupClass : groups) {
 	    String className = groupClass.getSimpleName();
