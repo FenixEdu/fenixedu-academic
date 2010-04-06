@@ -7,16 +7,18 @@
 
 <html:xhtml/>
 
-<h2>
-	<bean:message key="label.publicRelationOffice.alumniCerimonyInquiry.answer" bundle="APPLICATION_RESOURCES"/>
-	:
-	<bean:write name="cerimonyInquiryAnswer" property="text"/>
-</h2>
+<h2><bean:message key="label.publicRelationOffice.alumniCerimonyInquiry.viewAnswer" bundle="APPLICATION_RESOURCES"/></h2>
 
-<bean:message key="label.publicRelationOffice.alumniCerimonyInquiry.answer.count" bundle="APPLICATION_RESOURCES"/>
-:
-<bean:size id="answers" name="cerimonyInquiryAnswer" property="cerimonyInquiryPerson"/>
-<%= answers %>
+<p class="mtop15 mbottom05">
+	<bean:message key="label.publicRelationOffice.alumniCerimonyInquiry.answer" bundle="APPLICATION_RESOURCES"/>:
+	<strong><bean:write name="cerimonyInquiryAnswer" property="text"/></strong>
+</p>
+
+<p class="mtop05">
+	<bean:message key="label.publicRelationOffice.alumniCerimonyInquiry.answer.count" bundle="APPLICATION_RESOURCES"/>:
+	<bean:size id="answers" name="cerimonyInquiryAnswer" property="cerimonyInquiryPerson"/>
+	<strong><%= answers %></strong>
+</p>
 
 <fr:view name="cerimonyInquiryAnswer" property="cerimonyInquiryPerson">
 	<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryPerson">
@@ -25,6 +27,7 @@
 		<fr:slot name="person.email" key="label.email"/>
 	</fr:schema>
 	<fr:layout name="tabular">		
-		<fr:property name="classes" value="plist mtop05 width100pc"/>
+		<fr:property name="classes" value="tstyle1 thlight"/>
+		<fr:property name="columnClasses" value="acenter,,"/>
 	</fr:layout>
 </fr:view>
