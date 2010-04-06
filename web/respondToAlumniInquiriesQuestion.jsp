@@ -24,9 +24,15 @@
 					<bean:write name="cerimonyInquiryPerson" property="cerimonyInquiry.text" filter="false"/>
 				</div>
 			</div>
-			<br />
 
-			<div align="center">
+<style>
+.forminline form { display: inline !important; }
+.dinline { display: inline; }
+.thlight th { font-weight: normal; }
+</style>
+
+
+			<div class="dinline forminline" align="center">
 				<fr:form action="/respondToAlumniInquiriesQuestion.do">
 					<html:hidden property="method" value="registerAlumniResponseNow"/>
 					<html:hidden property="contentContextPath_PATH" value="/comunicacao/comunicacao"/>
@@ -38,16 +44,20 @@
 							</fr:slot>
 						</fr:schema>
 						<fr:layout name="tabular">
-							<fr:property name="classes" value="form"/>
-							<fr:property name="columnClasses" value=",,tderror"/>
+							<fr:property name="classes" value="thlight"/>
+							<fr:property name="columnClasses" value=",,"/>
 						</fr:layout>
 					</fr:edit>
 					<fr:destination name="cancel" path="/respondToAlumniInquiriesQuestion.do?method=registerAlumniResponseRespondLater"/>
-					<html:submit bundle="HTMLALT_RESOURCES" altKey="inquiries.respond.now" property="ok">
-						<bean:message key="button.inquiries.respond.now" />
-					</html:submit>
+					<br/>
+					<span style="padding-left: 100px;">
+						<html:submit bundle="HTMLALT_RESOURCES" altKey="inquiries.respond.now" property="ok">
+							<bean:message key="button.inquiries.respond.now" />
+						</html:submit>
+					</span>
 				</fr:form>
-				<br/>
+
+
 				<form method="post" action="<%= request.getContextPath() %>/respondToAlumniInquiriesQuestion.do">
 					<html:hidden property="method" value="registerAlumniResponseRespondLater"/>
 					<html:hidden property="contentContextPath_PATH" value="/comunicacao/comunicacao"/>
@@ -56,6 +66,9 @@
 					</html:submit>
 				</form>
 			</div>
+
+
+
 
 		</div>
 	</body>

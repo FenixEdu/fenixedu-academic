@@ -11,57 +11,51 @@
 	<bean:message key="label.publicRelationOffice.viewAlumniCerimonyInquiry" bundle="APPLICATION_RESOURCES"/>
 </h2>
 
-	<fr:view name="cerimonyInquiry">
-		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.alumni.CerimonyInquiry">
-			<fr:slot name="description" key="label.publicRelationOffice.alumniCerimonyInquiry.description"/>
-			<fr:slot name="begin" key="label.publicRelationOffice.alumniCerimonyInquiry.begin"/>
-			<fr:slot name="end" key="label.publicRelationOffice.alumniCerimonyInquiry.end"/>
-		</fr:schema>
-		<fr:layout name="tabular">		
-			<fr:property name="classes" value="plist mtop05 width100pc"/>
-		</fr:layout>
-	</fr:view>
-	<div>
-		<strong>
-			<bean:message bundle="APPLICATION_RESOURCES" key="label.publicRelationOffice.alumniCerimonyInquiry.text"/>:
-		</strong>
-		<br>
+
+<fr:view name="cerimonyInquiry">
+	<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.alumni.CerimonyInquiry">
+		<fr:slot name="description" key="label.publicRelationOffice.alumniCerimonyInquiry.description"/>
+		<fr:slot name="begin" key="label.publicRelationOffice.alumniCerimonyInquiry.begin"/>
+		<fr:slot name="end" key="label.publicRelationOffice.alumniCerimonyInquiry.end"/>
+	</fr:schema>
+	<fr:layout name="tabular">		
+		<fr:property name="classes" value="tstyle2 thlight thleft"/>
+	</fr:layout>
+</fr:view>
+
+
+<p class="mtop05"><strong><bean:message bundle="APPLICATION_RESOURCES" key="label.publicRelationOffice.alumniCerimonyInquiry.text"/>:</strong></p>
+
+
+<logic:notEmpty name="cerimonyInquiry" property="text">
+	<div style="border: 1px solid #ddd; padding: 0 10px; background: #fafafa;">
 		<bean:write name="cerimonyInquiry" property="text" filter="false"/>
 	</div>
-	<html:link page="/alumniCerimony.do?method=editInquiry" paramId="cerimonyInquiryId" paramName="cerimonyInquiry" paramProperty="externalId"><bean:message bundle="APPLICATION_RESOURCES" key="label.publicRelationOffice.edit.inquiry"/></html:link>
-
-<br/>
-<br/>
-
-<h3>
-	<bean:message key="label.publicRelationOffice.alumniCerimony.inquiry.people" bundle="APPLICATION_RESOURCES"/>
-</h3>
-<logic:empty name="cerimonyInquiry" property="cerimonyInquiryPerson">
-	<blockquote>
-		<bean:message key="label.publicRelationOffice.alumniCerimony.inquiry.people.none" bundle="APPLICATION_RESOURCES"/>
-	</blockquote>
-</logic:empty>
-<logic:notEmpty name="cerimonyInquiry" property="cerimonyInquiryPerson">
-	<blockquote>
-		<bean:size id="personCount" name="cerimonyInquiry" property="cerimonyInquiryPerson"/>
-		<bean:message key="label.publicRelationOffice.alumniCerimony.inquiry.people.count" bundle="APPLICATION_RESOURCES" arg0="<%= personCount.toString() %>"/>
-		<html:link page="/alumniCerimony.do?method=viewInquiryPeople" paramId="cerimonyInquiryId" paramName="cerimonyInquiry" paramProperty="externalId"><bean:message bundle="APPLICATION_RESOURCES" key="label.view"/></html:link>
-	</blockquote>
 </logic:notEmpty>
-<p>
-	<html:link page="/alumniCerimony.do?method=prepareAddPeople" paramId="cerimonyInquiryId" paramName="cerimonyInquiry" paramProperty="externalId"><bean:message bundle="APPLICATION_RESOURCES" key="label.publicRelationOffice.add.inquiry.people"/></html:link>
-</p>
 
-<h3>
+
+<logic:empty name="cerimonyInquiry" property="text">
+	<p class="mvert05"><em><bean:message bundle="APPLICATION_RESOURCES" key="label.publicRelationOffice.alumniCerimonyInquiry.text.notDefined"/></em></p>
+</logic:empty>
+
+
+<p><html:link page="/alumniCerimony.do?method=editInquiry" paramId="cerimonyInquiryId" paramName="cerimonyInquiry" paramProperty="externalId"><bean:message bundle="APPLICATION_RESOURCES" key="label.publicRelationOffice.edit.inquiry"/></html:link></p>
+
+
+
+
+<h3 class="mtop2">
 	<bean:message key="label.publicRelationOffice.viewAlumniCerimonyInquiry.answers" bundle="APPLICATION_RESOURCES"/>
 </h3>
+
 <logic:empty name="cerimonyInquiry" property="cerimonyInquiryAnswer">
-	<blockquote>
-		<bean:message key="label.publicRelationOffice.alumniCerimony.inquiry.answers.none" bundle="APPLICATION_RESOURCES"/>
-	</blockquote>
+	<p>
+		<em><bean:message key="label.publicRelationOffice.alumniCerimony.inquiry.answers.none" bundle="APPLICATION_RESOURCES"/></em>
+	</p>
 </logic:empty>
+
 <logic:notEmpty name="cerimonyInquiry" property="cerimonyInquiryAnswer">
-	<table>
+	<table class="tstyle1 tdcenter thlight mtop0 mbottom05">
 		<tr>
 			<th>
 				<bean:message key="label.publicRelationOffice.alumniCerimonyInquiry.answer" bundle="APPLICATION_RESOURCES"/>
@@ -92,6 +86,30 @@
 		</logic:iterate>
 	</table>
 </logic:notEmpty>
+
 <p>
-	<html:link page="/alumniCerimony.do?method=addInquiryAnswer" paramId="cerimonyInquiryId" paramName="cerimonyInquiry" paramProperty="externalId"><bean:message bundle="APPLICATION_RESOURCES" key="label.publicRelationOffice.add.inquiry.answer"/></html:link>
+	<html:link page="/alumniCerimony.do?method=addInquiryAnswer" paramId="cerimonyInquiryId" paramName="cerimonyInquiry" paramProperty="externalId">+ <bean:message bundle="APPLICATION_RESOURCES" key="label.publicRelationOffice.add.inquiry.answer"/></html:link>
+</p>
+
+
+
+
+<h3 class="mtop2">
+	<bean:message key="label.publicRelationOffice.alumniCerimony.inquiry.people" bundle="APPLICATION_RESOURCES"/>
+</h3>
+
+<logic:empty name="cerimonyInquiry" property="cerimonyInquiryPerson">
+	<p>
+		<em><bean:message key="label.publicRelationOffice.alumniCerimony.inquiry.people.none" bundle="APPLICATION_RESOURCES"/></em>
+	</p>
+</logic:empty>
+<logic:notEmpty name="cerimonyInquiry" property="cerimonyInquiryPerson">
+	<p>
+		<bean:size id="personCount" name="cerimonyInquiry" property="cerimonyInquiryPerson"/>
+		<bean:message key="label.publicRelationOffice.alumniCerimony.inquiry.people.count" bundle="APPLICATION_RESOURCES" arg0="<%= personCount.toString() %>"/>
+		<html:link page="/alumniCerimony.do?method=viewInquiryPeople" paramId="cerimonyInquiryId" paramName="cerimonyInquiry" paramProperty="externalId"><bean:message bundle="APPLICATION_RESOURCES" key="label.view"/></html:link>
+	</p>
+</logic:notEmpty>
+<p>
+	<html:link page="/alumniCerimony.do?method=prepareAddPeople" paramId="cerimonyInquiryId" paramName="cerimonyInquiry" paramProperty="externalId">+ <bean:message bundle="APPLICATION_RESOURCES" key="label.publicRelationOffice.add.inquiry.people"/></html:link>
 </p>

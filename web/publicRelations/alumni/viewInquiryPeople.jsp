@@ -11,30 +11,35 @@
 	<bean:message key="label.publicRelationOffice.viewAlumniCerimonyInquiry" bundle="APPLICATION_RESOURCES"/>
 </h2>
 
-	<fr:view name="cerimonyInquiry">
-		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.alumni.CerimonyInquiry">
-			<fr:slot name="description" key="label.publicRelationOffice.alumniCerimonyInquiry.description"/>
-			<fr:slot name="begin" key="label.publicRelationOffice.alumniCerimonyInquiry.begin"/>
-			<fr:slot name="end" key="label.publicRelationOffice.alumniCerimonyInquiry.end"/>
-		</fr:schema>
-		<fr:layout name="tabular">		
-			<fr:property name="classes" value="plist mtop05 width100pc"/>
-		</fr:layout>
-	</fr:view>
+
+
+<fr:view name="cerimonyInquiry">
+	<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.alumni.CerimonyInquiry">
+		<fr:slot name="description" key="label.publicRelationOffice.alumniCerimonyInquiry.description"/>
+		<fr:slot name="begin" key="label.publicRelationOffice.alumniCerimonyInquiry.begin"/>
+		<fr:slot name="end" key="label.publicRelationOffice.alumniCerimonyInquiry.end"/>
+	</fr:schema>
+	<fr:layout name="tabular">		
+		<fr:property name="classes" value="tstyle2 thlight thleft"/>
+	</fr:layout>
+</fr:view>
+
 
 <h3>
 	<bean:message key="label.publicRelationOffice.alumniCerimony.inquiry.people" bundle="APPLICATION_RESOURCES"/>
 </h3>
+
 <logic:empty name="cerimonyInquiry" property="cerimonyInquiryPerson">
-	<blockquote>
-		<bean:message key="label.publicRelationOffice.alumniCerimony.inquiry.people.none" bundle="APPLICATION_RESOURCES"/>
-	</blockquote>
+	<p>
+		<em><bean:message key="label.publicRelationOffice.alumniCerimony.inquiry.people.none" bundle="APPLICATION_RESOURCES"/></em>
+	</p>
 </logic:empty>
+
 <logic:notEmpty name="cerimonyInquiry" property="cerimonyInquiryPerson">
-	<blockquote>
+	<p class="mvert05">
 		<bean:size id="personCount" name="cerimonyInquiry" property="cerimonyInquiryPerson"/>
 		<bean:message key="label.publicRelationOffice.alumniCerimony.inquiry.people.count" bundle="APPLICATION_RESOURCES" arg0="<%= personCount.toString() %>"/>
-	</blockquote>
+	</p>
 	<fr:view name="cerimonyInquiry" property="cerimonyInquiryPerson">
 		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryPerson">
 			<fr:slot name="person.username" key="label.username"/>
@@ -42,7 +47,7 @@
 			<fr:slot name="person.email" key="label.email"/>
 		</fr:schema>
 		<fr:layout name="tabular">		
-			<fr:property name="classes" value="plist mtop05 width100pc"/>
+			<fr:property name="classes" value="tstyle1 tdcenter thlight"/>
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>

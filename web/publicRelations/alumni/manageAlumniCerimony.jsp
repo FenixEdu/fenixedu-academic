@@ -11,11 +11,14 @@
 	<bean:message key="label.publicRelationOffice.alumniCerimony.inquiries" bundle="APPLICATION_RESOURCES"/>
 </h2>
 
-<html:link page="/alumniCerimony.do?method=createNewInquiry"><bean:message bundle="APPLICATION_RESOURCES" key="label.publicRelationOffice.create.new.inquiry"/></html:link>
+<p>
+	<html:link page="/alumniCerimony.do?method=createNewInquiry">+ <bean:message bundle="APPLICATION_RESOURCES" key="label.publicRelationOffice.create.new.inquiry"/></html:link>
+</p>
 
 <logic:empty name="cerimonyInquirySet">
-	<bean:message key="label.publicRelationOffice.alumniCerimony.inquiries.none" bundle="APPLICATION_RESOURCES"/>
+	<p class="mtop1"><em><bean:message key="label.publicRelationOffice.alumniCerimony.inquiries.none" bundle="APPLICATION_RESOURCES"/></em></p>
 </logic:empty>
+
 <logic:notEmpty name="cerimonyInquirySet">
 	<fr:view name="cerimonyInquirySet">
 		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.alumni.CerimonyInquiry">
@@ -24,7 +27,7 @@
 			<fr:slot name="end" key="label.publicRelationOffice.alumniCerimonyInquiry.end"/>
 		</fr:schema>
 		<fr:layout name="tabular">		
-			<fr:property name="classes" value="plist mtop05 width100pc"/>
+			<fr:property name="classes" value="tstyle1"/>
 
 			<fr:property name="link(view)" value="/alumniCerimony.do?method=viewInquiry"/>
 			<fr:property name="bundle(view)" value="APPLICATION_RESOURCES"/>
