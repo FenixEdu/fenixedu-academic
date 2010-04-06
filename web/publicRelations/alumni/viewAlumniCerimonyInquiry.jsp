@@ -12,6 +12,12 @@
 </h2>
 
 
+<p>
+	<bean:message key="label.publicRelationOffice.alumniCerimony.inquiry.description" bundle="APPLICATION_RESOURCES"/>
+</p> 
+
+
+
 <fr:view name="cerimonyInquiry">
 	<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.alumni.CerimonyInquiry">
 		<fr:slot name="description" key="label.publicRelationOffice.alumniCerimonyInquiry.description"/>
@@ -87,7 +93,7 @@
 	</table>
 </logic:notEmpty>
 
-<p>
+<p class="mtop05">
 	<html:link page="/alumniCerimony.do?method=addInquiryAnswer" paramId="cerimonyInquiryId" paramName="cerimonyInquiry" paramProperty="externalId">+ <bean:message bundle="APPLICATION_RESOURCES" key="label.publicRelationOffice.add.inquiry.answer"/></html:link>
 </p>
 

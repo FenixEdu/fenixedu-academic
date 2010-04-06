@@ -14,7 +14,18 @@
 <bean:define id="url">/alumniCerimony.do?method=addPeople&amp;cerimonyInquiryId=<bean:write name="cerimonyInquiry" property="externalId"/></bean:define>
 <bean:define id="urlCancel">/alumniCerimony.do?method=viewInquiry&amp;cerimonyInquiryId=<bean:write name="cerimonyInquiry" property="externalId"/></bean:define>
 
-<p class="mtop15 mbottom05">Introduza o ficheiro:</p>
+
+<div class="infoop2">
+<p><bean:message bundle="APPLICATION_RESOURCES" key="label.publicRelationOffice.add.inquiry.people.fileDescription"/>:</p>
+<pre style="font-size: 12px; padding-left: 20px;">
+ist2xxxx
+ist2xxxx
+ist2xxxx
+</pre>
+</div>
+
+
+<p class="mtop15 mbottom05"><bean:message bundle="APPLICATION_RESOURCES" key="label.publicRelationOffice.add.inquiry.people.insertFile"/>:</p>
 
 <fr:edit id="usernameFileBean" name="usernameFileBean" action="<%= url %>">
 	<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.publicRelationsOffice.UsernameFileBean">
