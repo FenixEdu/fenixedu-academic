@@ -28,6 +28,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -266,8 +267,15 @@ public class AlumniInformationAction extends FenixDispatchAction {
 	List<Registration> registrations = Alumni.readRegistrations(searchBean);
 	searchBean.setAlumni(new ArrayList<Registration>(registrations));
 
+	java.util.List<AlumniSearchResultItemBean> alumniSearchResultItems = new java.util.ArrayList<AlumniSearchResultItemBean>();
+
+	for (Registration registration : registrations) {
+	    alumniSearchResultItems.add(new AlumniSearchResultItemBean(registration));
+	}
+
 	RenderUtils.invalidateViewState();
 	request.setAttribute("searchAlumniBean", searchBean);
+	request.setAttribute("alumniResultItems", alumniSearchResultItems);
 	return mapping.findForward("alumni.showAlumniDetails");
     }
 
@@ -276,5 +284,53 @@ public class AlumniInformationAction extends FenixDispatchAction {
 
 	request.setAttribute("searchAlumniBean", getFromRequest(request, "searchAlumniBean"));
 	return mapping.findForward("alumni.showAlumniDetails");
+    }
+
+    public static class AlumniSearchResultItemBean implements java.io.Serializable {
+	private Registration registration;
+
+	public AlumniSearchResultItemBean(final Registration registration) {
+	    this.registration = registration;
+	}
+
+	public String getName() {
+	    return this.registration.getPerson().getName();
+	}
+
+	public String getDegree() {
+	    return registration.getDegree().getPresentationName();
+	}
+
+	public String getStartYear() {
+	    return registration.getStartExecutionYear().getYear();
+	}
+
+	public YearMonthDay getConclusionDateForBolonha() {
+	    return this.registration.getConclusionDateForBolonha();
+	}
+
+	public Boolean getActiveAlumni() {
+	    return this.registration.getStudent().getActiveAlumni();
+	}
+
+	public String getEmail() {
+	    if (registration.getPerson().getDefaultEmailAddress() == null) {
+		return "n/a";
+	    } else if (!registration.getPerson().getDefaultEmailAddress().getVisibleToEmployees()) {
+		return "n/a";
+	    }
+
+	    return registration.getPerson().getDefaultEmailAddress().getValue();
+	}
+
+	public String getMobilePhone() {
+	    if (registration.getPerson().getDefaultMobilePhone() == null) {
+		return "n/a";
+	    } else if (!registration.getPerson().getDefaultMobilePhone().getVisibleToEmployees()) {
+		return "n/a";
+	    }
+
+	    return registration.getPerson().getDefaultMobilePhone().getNumber();
+	}
     }
 }

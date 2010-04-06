@@ -108,14 +108,16 @@
 		</slot>		
 	</schema>
 
-	<schema name="alumni.gep.search.result" type="net.sourceforge.fenixedu.domain.student.Registration" bundle="ALUMNI_RESOURCES">
-		<slot name="student.person.name" key="list.column.name" />
-		<slot name="degree.presentationName" key="list.column.degree" />
-		<slot name="startExecutionYear.year" key="list.column.year" />
+	<schema name="alumni.gep.search.result" type="net.sourceforge.fenixedu.presentationTier.Action.gep.AlumniInformationAction$AlumniSearchResultItemBean" bundle="ALUMNI_RESOURCES">
+		<slot name="name" key="list.column.name" />
+		<slot name="degree" key="list.column.degree" />
+		<slot name="startYear" key="list.column.year" />
 		<slot name="conclusionDateForBolonha" key="list.column.conclusionDate" layout="null-as-label">
         	<property name="label" value="n/a"/>
 		</slot>
-		<slot name="student.activeAlumni" layout="boolean" key="list.column.alumni.project" />
+		<slot name="activeAlumni" layout="boolean" key="list.column.alumni.project" />
+		<slot name="email" layout="boolean" key="label.email" />
+		<slot name="mobilePhone" layout="boolean" key="label.mobile" />
 	</schema>
 
 
