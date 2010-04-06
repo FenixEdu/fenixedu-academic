@@ -34,7 +34,9 @@ public class BundleUtil {
 
     public static String getEnumName(final Enum<?> enumeration, final String moduleName) {
 	String enumFullName = enumeration.getClass().getName();
-	enumFullName = enumFullName.substring(0, enumFullName.indexOf('$'));
+	if (enumFullName.indexOf('$') > -1) {
+	    enumFullName = enumFullName.substring(0, enumFullName.indexOf('$'));
+	}
 
 	String enumSimpleName = enumeration.getClass().getSimpleName();
 	if (enumSimpleName.isEmpty()) {
