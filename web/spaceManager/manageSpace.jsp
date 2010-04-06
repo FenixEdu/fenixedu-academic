@@ -373,7 +373,7 @@
    		</fr:layout>
 	</fr:view>
 	<%	
-		if(thisSpace.personHasPermissionsToManageSpace(person)) {		 
+//		if(thisSpace.personHasPermissionsToManageSpace(person)) {		 
 	%>
 		<p>
 		<html:img border="0" src="<%= request.getContextPath() + "/images/excel.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES" />
@@ -382,7 +382,7 @@
 		</html:link>
 		</p>
 	<%
-		}
+//		}
 	%>
 
 	<%-- Responsability --%>	
