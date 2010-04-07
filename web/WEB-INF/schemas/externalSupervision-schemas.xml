@@ -7,12 +7,13 @@
 <schema name="view-student-info" type="net.sourceforge.fenixedu.domain.Person" bundle="EXTERNAL_SUPERVISION_RESOURCES">
 	<slot name="istUsername" key="label.showStats.istUsername" />
 	<slot name="name" key="label.showStats.name"/>
-	<slot name="student.activeRegistrations" key="label.showStats.degreeSigla">
-		<property name="eachSchema" value="registration.view-degree-sigla"/>
-		<property name="eachLayout" value="values-comma"/>
-		<property name="classes" value="nobullet ulindent0 mvert0"/>
+	<slot name="student.lastRegistration.degree" key="label.showStats.degreeSigla" layout="format">
+		<!-- <property name="eachSchema" value="registration.view-degree-sigla"/> -->
+		<!-- <property name="eachLayout" value="values-comma"/> -->
+		<!-- <property name="classes" value="nobullet ulindent0 mvert0"/> -->
+		<property name="format" value="${sigla} (${nome})"/>
 	</slot>
-	<slot name="student.lastActiveRegistration.curricularYear" key="label.showStats.curricularYear" layout="integer-prefixsuffix">
+	<slot name="student.lastRegistration.curricularYear" key="label.showStats.curricularYear" layout="integer-prefixsuffix">
 		<property name="suffix" value="label.showStats.ordinalYear" />
 		<property name="bundle" value="EXTERNAL_SUPERVISION_RESOURCES" />
 	</slot>

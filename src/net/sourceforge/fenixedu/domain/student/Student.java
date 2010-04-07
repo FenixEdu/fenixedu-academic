@@ -270,6 +270,12 @@ public class Student extends Student_Base {
 	return activeRegistrations.isEmpty() ? null : (Registration) Collections.max(activeRegistrations,
 		Registration.COMPARATOR_BY_START_DATE);
     }
+    
+    public Registration getLastRegistration() {
+	List<Registration> activeRegistrations = getRegistrations();
+	return activeRegistrations.isEmpty() ? null : (Registration) Collections.max(activeRegistrations,
+		Registration.COMPARATOR_BY_START_DATE);
+    }
 
     public Registration getLastRegistrationForDegreeType(final DegreeType degreeType) {
 	Collection<Registration> registrations = getRegistrationsByDegreeType(degreeType);
