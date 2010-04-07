@@ -67,7 +67,7 @@ public class AlumniCerimonyDA extends FenixDispatchAction {
     public ActionForward createNewInquiry(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
     		throws Exception {
 	final CerimonyInquiry cerimonyInquiry = CerimonyInquiry.createNew();
-	return forwardToInquiry(mapping, request, "viewAlumniCerimonyInquiry", cerimonyInquiry);
+	return forwardToInquiry(mapping, request, "editAlumniCerimonyInquiry", cerimonyInquiry);
     }
 
     public ActionForward editInquiry(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
@@ -97,9 +97,9 @@ public class AlumniCerimonyDA extends FenixDispatchAction {
     public ActionForward deleteInquiryAnswer(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 	final CerimonyInquiryAnswer cerimonyInquiryAnswer = getDomainObject(request, "cerimonyInquiryAnswerId");
+	final CerimonyInquiry cerimonyInquiry = cerimonyInquiryAnswer.getCerimonyInquiry();
 	cerimonyInquiryAnswer.delete();
 	RenderUtils.invalidateViewState();
-	final CerimonyInquiry cerimonyInquiry = cerimonyInquiryAnswer.getCerimonyInquiry();
 	return forwardToInquiry(mapping, request, "viewAlumniCerimonyInquiry", cerimonyInquiry);
     }
 

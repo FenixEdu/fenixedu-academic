@@ -19,6 +19,7 @@ public class CerimonyInquiry extends CerimonyInquiry_Base implements Comparable<
         super();
         setRootDomainObject(RootDomainObject.getInstance());
         setBegin(new DateTime().plusDays(1));
+        setEnd(getBegin().plusDays(15));
     }
 
     @Override
