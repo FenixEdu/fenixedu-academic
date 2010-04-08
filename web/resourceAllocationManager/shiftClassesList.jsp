@@ -66,7 +66,7 @@
 							+ "="
 							+ pageContext.findAttribute("executionDegreeOID") %>">
 						<div align="center">
-							<jsp:getProperty name="shiftClass" property="nome" />
+							<bean:write name="shiftClass" property="nome" />
 						</div>
 					</html:link>
 				</td>
