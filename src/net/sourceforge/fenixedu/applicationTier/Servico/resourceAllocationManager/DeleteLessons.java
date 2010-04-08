@@ -11,6 +11,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceMultipleException;
+import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
@@ -24,7 +25,10 @@ public class DeleteLessons extends FenixService {
 
 	for (final Integer lessonOID : lessonOIDs) {
 	    try {
-		rootDomainObject.readLessonByOID(lessonOID).delete();
+		Lesson lesson = rootDomainObject.readLessonByOID(lessonOID);
+		if (lesson != null) {
+		    lesson.delete();
+		}
 	    } catch (DomainException e) {
 		exceptionList.add(e);
 	    }
