@@ -22,24 +22,27 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroup;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
+import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadShiftsAndGroups extends FenixService {
 
-    @Checked("RolePredicates.STUDENT_AND_TEACHER_PREDICATE")
     @Service
     public static ISiteComponent run(Integer groupingCode, String username) throws FenixServiceException {
+
 	final Grouping grouping = rootDomainObject.readGroupingByOID(groupingCode);
 	if (grouping == null) {
 	    throw new InvalidSituationServiceException();
 	}
-
+	checkPermissions(grouping);
 	final IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
 	final IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(grouping);
 
@@ -50,9 +53,22 @@ public class ReadShiftsAndGroups extends FenixService {
 	return run(grouping);
     }
 
-    @Checked("RolePredicates.STUDENT_AND_TEACHER_PREDICATE")
+    private static void checkPermissions(Grouping grouping) {
+	Person person = AccessControl.getPerson();
+	if (person.hasRole(RoleType.STUDENT)) {
+	    return;
+	}
+	for (ExecutionCourse executionCourse : grouping.getExecutionCourses()) {
+	    if (person.hasProfessorshipForExecutionCourse(executionCourse)) {
+		return;
+	    }
+	}
+	throw new IllegalDataAccessException("", person);
+    }
+
     @Service
     public static InfoSiteShiftsAndGroups run(Grouping grouping) throws FenixServiceException {
+	checkPermissions(grouping);
 	final InfoSiteShiftsAndGroups infoSiteShiftsAndGroups = new InfoSiteShiftsAndGroups();
 
 	final List<InfoSiteGroupsByShift> infoSiteGroupsByShiftList = new ArrayList<InfoSiteGroupsByShift>();
