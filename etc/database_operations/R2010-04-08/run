@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter tables for stork project" alterTableErasmusStudentData.sql
