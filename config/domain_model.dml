@@ -201,6 +201,7 @@ enum net.sourceforge.fenixedu.domain.curriculum.CurriculumValidationEvaluationPh
 enum net.sourceforge.fenixedu.domain.phd.debts.PhdEventExemptionJustificationType                                         as PhdEventExemptionJustificationType;
 enum net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionState                                             as RectorateSubmissionState;
 enum net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusAlertEntityType                                      as ErasmusAlertEntityType;
+enum net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusApplyForSemesterType								  as ErasmusApplyForSemesterType;
 
 /*
  * Value types that need special externalization
@@ -4239,7 +4240,8 @@ class DomainObject {
             String nameOfMother;
             String nickname;
             String parishOfBirth;
-            String profession;          
+            String profession;
+            String eIdentifier;
         }
 
         class organizationalStructure.Unit extends organizationalStructure.Party {
@@ -6714,6 +6716,17 @@ class candidacyProcess.erasmus.ErasmusStudentData extends DomainObject {
 	String mainSubjectThesis;
 	Boolean hasContactedOtherStaff;
 	String nameOfContact;
+	
+	Boolean ptStudyingLanguage;
+	Boolean ptAbleFollowLecures;
+	Boolean ptAbleToFollowLectureWithExtraPreparation;
+	Boolean enStudyingLanguage;
+	Boolean enAbleFollowLecures;
+	Boolean enAbleToFollowLectureWithExtraPreparation;
+	Boolean intensivePortugueseCourseSeptember;
+	Boolean intensivePortugueseCourseFebruary;
+	
+	ErasmusApplyForSemesterType applyFor;
 }
     
 class candidacyProcess.erasmus.ErasmusAlert extends Alert {

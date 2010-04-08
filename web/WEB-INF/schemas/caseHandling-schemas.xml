@@ -1944,7 +1944,7 @@
 	</slot>
 	
 	<slot name="selectedUniversity" key="label.erasmus.university" layout="menu-select">
-		<property name="format" value="${oid} - ${nameI18n}" />
+		<property name="format" value="${nameI18n}" />
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusUniversityProvider" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>	
@@ -2307,4 +2307,45 @@
 		</validator>
 		<property name="size" value="40"/>
 	</slot>
+</schema>
+
+<schema name="ErasmusStudentData.languageCompetence.skills" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusStudentDataBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="ptStudyingLanguage" key="label.erasmus.language.competence.ptStudyingLanguage" layout="radio"/>
+	<slot name="ptAbleFollowLecures" key="label.erasmus.language.competence.ptAbleFollowLectures" layout="radio"/>
+	<slot name="ptAbleToFollowLectureWithExtraPreparation" key="label.erasmus.language.competence.ptAbleToFollowLectureWithExtraPreparation" layout="radio"/>
+	<slot name="enStudyingLanguage" key="label.erasmus.language.competence.enStudyingLanguage" layout="radio"/>
+	<slot name="enAbleFollowLecures" key="label.erasmus.language.competence.enAbleFollowLectures" layout="radio"/>
+	<slot name="enAbleToFollowLectureWithExtraPreparation" key="label.erasmus.language.competence.enAbleToFollowLectureWithExtraPreparation" layout="radio"/>
+</schema>
+
+<schema name="ErasmusStudentData.languageCompetence.intensive.portuguese.course" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusStudentData" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="intensivePortugueseCourseSeptember" key="label.erasmus.language.competence.intensivePortugueseCourseSeptember" layout="radio"/>
+	<slot name="intensivePortugueseCourseFebruary" key="label.erasmus.language.competence.intensivePortugueseCourseFebruary" layout="radio"/>
+</schema>
+
+<schema name="ErasmusStudentData.languageCompetence.skills.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusStudentDataBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="ptStudyingLanguage" key="label.erasmus.language.competence.ptStudyingLanguage" />
+	<slot name="ptAbleFollowLecures" key="label.erasmus.language.competence.ptAbleFollowLectures" />
+	<slot name="ptAbleToFollowLectureWithExtraPreparation" key="label.erasmus.language.competence.ptAbleToFollowLectureWithExtraPreparation" />
+	<slot name="enStudyingLanguage" key="label.erasmus.language.competence.enStudyingLanguage" />
+	<slot name="enAbleFollowLecures" key="label.erasmus.language.competence.enAbleFollowLectures" />
+	<slot name="enAbleToFollowLectureWithExtraPreparation" key="label.erasmus.language.competence.enAbleToFollowLectureWithExtraPreparation" />
+</schema>
+
+<schema name="ErasmusStudentData.languageCompetence.intensive.portuguese.course.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusStudentData" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="intensivePortugueseCourseSeptember" key="label.erasmus.language.competence.intensivePortugueseCourseSeptember" />
+	<slot name="intensivePortugueseCourseFebruary" key="label.erasmus.language.competence.intensivePortugueseCourseFebruary" />
+</schema>
+
+<schema name="ErasmusStudentDataBean.applyForSemester.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusStudentDataBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="applyFor" key="label.erasmus.applyForSemester" layout="menu-select">
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusApplyForSemesterType"/>
+		<property name="format" value="${localizedName}" />
+		<property name="sortBy" value="localizedName"/>	
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	</slot>
+</schema>
+
+<schema name="ErasmusStudentDataBean.applyForSemester.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusStudentData" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="applyFor.localizedName" key="label.erasmus.appliedSemester" />
 </schema>

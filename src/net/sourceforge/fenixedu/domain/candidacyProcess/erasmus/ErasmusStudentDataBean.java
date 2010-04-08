@@ -40,6 +40,17 @@ public class ErasmusStudentDataBean implements Serializable {
 
     private CandidacyProcess parentProcess;
 
+    private Boolean ptStudyingLanguage;
+    private Boolean ptAbleFollowLecures;
+    private Boolean ptAbleToFollowLectureWithExtraPreparation;
+    private Boolean enStudyingLanguage;
+    private Boolean enAbleFollowLecures;
+    private Boolean enAbleToFollowLectureWithExtraPreparation;
+    private Boolean intensivePortugueseCourseSeptember;
+    private Boolean intensivePortugueseCourseFebruary;
+
+    private ErasmusApplyForSemesterType applyFor;
+
     public ErasmusStudentDataBean(CandidacyProcess process) {
 	setParentProcess(process);
     }
@@ -66,6 +77,16 @@ public class ErasmusStudentDataBean implements Serializable {
 	this.setSelectedCountry(erasmusStudentData.getSelectedVacancy() != null ? erasmusStudentData.getSelectedVacancy()
 		.getUniversityUnit().getCountry() : null);
 	setParentProcess(erasmusStudentData.getErasmusIndividualCandidacy().getCandidacyProcess().getCandidacyProcess());
+
+	this.setPtStudyingLanguage(erasmusStudentData.getPtStudyingLanguage());
+	this.setPtAbleFollowLecures(erasmusStudentData.getPtAbleFollowLecures());
+	this.setPtAbleToFollowLectureWithExtraPreparation(erasmusStudentData.getPtAbleToFollowLectureWithExtraPreparation());
+	this.setEnStudyingLanguage(erasmusStudentData.getEnStudyingLanguage());
+	this.setEnAbleFollowLecures(erasmusStudentData.getEnAbleFollowLecures());
+	this.setEnAbleToFollowLectureWithExtraPreparation(erasmusStudentData.getEnAbleToFollowLectureWithExtraPreparation());
+	this.setIntensivePortugueseCourseSeptember(erasmusStudentData.getIntensivePortugueseCourseSeptember());
+	this.setIntensivePortugueseCourseFebruary(erasmusStudentData.getIntensivePortugueseCourseFebruary());
+	this.setApplyFor(erasmusStudentData.getApplyFor());
     }
 
     private void setTypesOfProgramme(TypeOfProgrammeList typesOfProgramme) {
@@ -226,6 +247,78 @@ public class ErasmusStudentDataBean implements Serializable {
 
     public void setParentProcess(CandidacyProcess parentProcess) {
 	this.parentProcess = parentProcess;
+    }
+
+    public Boolean getPtStudyingLanguage() {
+	return ptStudyingLanguage;
+    }
+
+    public void setPtStudyingLanguage(Boolean ptStudyingLanguage) {
+	this.ptStudyingLanguage = ptStudyingLanguage;
+    }
+
+    public Boolean getPtAbleFollowLecures() {
+	return ptAbleFollowLecures;
+    }
+
+    public void setPtAbleFollowLecures(Boolean ptAbleFollowLecures) {
+	this.ptAbleFollowLecures = ptAbleFollowLecures;
+    }
+
+    public Boolean getPtAbleToFollowLectureWithExtraPreparation() {
+	return ptAbleToFollowLectureWithExtraPreparation;
+    }
+
+    public void setPtAbleToFollowLectureWithExtraPreparation(Boolean ptAbleToFollowLectureWithExtraPreparation) {
+	this.ptAbleToFollowLectureWithExtraPreparation = ptAbleToFollowLectureWithExtraPreparation;
+    }
+
+    public Boolean getEnStudyingLanguage() {
+	return enStudyingLanguage;
+    }
+
+    public void setEnStudyingLanguage(Boolean enStudyingLanguage) {
+	this.enStudyingLanguage = enStudyingLanguage;
+    }
+
+    public Boolean getEnAbleFollowLecures() {
+	return enAbleFollowLecures;
+    }
+
+    public void setEnAbleFollowLecures(Boolean enAbleFollowLecures) {
+	this.enAbleFollowLecures = enAbleFollowLecures;
+    }
+
+    public Boolean getEnAbleToFollowLectureWithExtraPreparation() {
+	return enAbleToFollowLectureWithExtraPreparation;
+    }
+
+    public void setEnAbleToFollowLectureWithExtraPreparation(Boolean enAbleToFollowLectureWithExtraPreparation) {
+	this.enAbleToFollowLectureWithExtraPreparation = enAbleToFollowLectureWithExtraPreparation;
+    }
+
+    public Boolean getIntensivePortugueseCourseSeptember() {
+	return intensivePortugueseCourseSeptember;
+    }
+
+    public void setIntensivePortugueseCourseSeptember(Boolean intensivePortugueseCourseSeptember) {
+	this.intensivePortugueseCourseSeptember = intensivePortugueseCourseSeptember;
+    }
+
+    public Boolean getIntensivePortugueseCourseFebruary() {
+	return intensivePortugueseCourseFebruary;
+    }
+
+    public void setIntensivePortugueseCourseFebruary(Boolean intensivePortugueseCourseFebruary) {
+	this.intensivePortugueseCourseFebruary = intensivePortugueseCourseFebruary;
+    }
+
+    public ErasmusApplyForSemesterType getApplyFor() {
+	return applyFor;
+    }
+
+    public void setApplyFor(ErasmusApplyForSemesterType applyFor) {
+	this.applyFor = applyFor;
     }
 
 }

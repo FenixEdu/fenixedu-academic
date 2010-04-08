@@ -51,7 +51,7 @@
 <div class="h_box_alt">
 	<div class="lightbulb">
 		<p>Please download the learning agreement document. Click in 'Download Learning Agreement' below.</p>
-		<p>Print the document, stamp with in your university and download the document.</p>
+		<p>Please note that the learning agreement must be signed and stamped by your school</p>
 		<p><html:link page="<%= mappingPath + ".do?method=retrieveLearningAgreement&processId=" + processId %>">Download learning agreement</html:link></p>
 	</div>
 </div>
@@ -149,6 +149,30 @@
 	</tr>
 	</logic:iterate>
 	</table>	
+
+	<h2 class="mtop15 mbottom05"><bean:message key="label.erasmus.appliedSemester" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
+	<fr:view	name="individualCandidacyProcess"
+				property="candidacy.erasmusStudentData"
+				schema="ErasmusStudentDataBean.applyForSemester.view">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
+	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+		</fr:layout>
+	</fr:view>
+	
+
+	<h2 class="mtop15 mbottom05"><bean:message key="title.erasmus.language.competence" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
+	
+	<p><strong>Intensive Portuguese Course</strong></p>
+	<fr:view	name="individualCandidacyProcess"
+				property="candidacy.erasmusStudentData"
+				schema="ErasmusStudentData.languageCompetence.intensive.portuguese.course.view">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
+	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+		</fr:layout>
+	</fr:view>
+
 
 
 <h2 style="margin-top: 1em;"><bean:message key="label.documentation" bundle="CANDIDATE_RESOURCES"/></h2> 

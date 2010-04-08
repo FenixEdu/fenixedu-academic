@@ -84,6 +84,8 @@ public class PersonInformationDTO {
 
     private String campus;
 
+    private String eIdentifier;
+
     public PersonInformationDTO(final Person person) {
 	this.name = person.getName();
 	this.displayName = person.getNickname();
@@ -151,6 +153,8 @@ public class PersonInformationDTO {
 	for (LoginAlias loginAlias : person.getLoginAliasOrderByImportance()) {
 	    this.alias.add(loginAlias.getAlias());
 	}
+
+	this.eIdentifier = person.getEIdentifier();
 
     }
 
@@ -377,6 +381,14 @@ public class PersonInformationDTO {
 
     public void setCampus(String campus) {
 	this.campus = campus;
+    }
+
+    public String getEIdentifier() {
+	return eIdentifier;
+    }
+
+    public void setEIdentifier(String eIdentifier) {
+	this.eIdentifier = eIdentifier;
     }
 
 }

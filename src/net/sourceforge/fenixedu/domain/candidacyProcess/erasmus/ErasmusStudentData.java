@@ -28,6 +28,17 @@ public class ErasmusStudentData extends ErasmusStudentData_Base {
 	this.setNameOfContact(erasmusStudentDataBean.getNameOfContact());
 	this.setTypesOfProgramme(erasmusStudentDataBean.getTypeOfProgrammeList());
 	this.setSelectedVacancy(erasmusVacancy);
+
+	this.setPtStudyingLanguage(erasmusStudentDataBean.getPtStudyingLanguage());
+	this.setPtAbleFollowLecures(erasmusStudentDataBean.getPtAbleFollowLecures());
+	this.setPtAbleToFollowLectureWithExtraPreparation(erasmusStudentDataBean.getPtAbleToFollowLectureWithExtraPreparation());
+	this.setEnStudyingLanguage(erasmusStudentDataBean.getEnStudyingLanguage());
+	this.setEnAbleFollowLecures(erasmusStudentDataBean.getEnAbleFollowLecures());
+	this.setEnAbleToFollowLectureWithExtraPreparation(erasmusStudentDataBean.getEnAbleToFollowLectureWithExtraPreparation());
+	this.setIntensivePortugueseCourseSeptember(erasmusStudentDataBean.getIntensivePortugueseCourseSeptember());
+	this.setIntensivePortugueseCourseFebruary(erasmusStudentDataBean.getIntensivePortugueseCourseFebruary());
+	this.setApplyFor(erasmusStudentDataBean.getApplyFor());
+
     }
 
     public void edit(ErasmusStudentDataBean erasmusStudentDataBean) {
@@ -47,5 +58,16 @@ public class ErasmusStudentData extends ErasmusStudentData_Base {
 	this.setMainSubjectThesis(erasmusStudentDataBean.getMainSubjectThesis());
 	this.setNameOfContact(erasmusStudentDataBean.getNameOfContact());
 	this.setTypesOfProgramme(erasmusStudentDataBean.getTypeOfProgrammeList());
+
+	this.setPtStudyingLanguage(erasmusStudentDataBean.getPtStudyingLanguage());
+	this.setPtAbleFollowLecures(erasmusStudentDataBean.getPtAbleFollowLecures());
+	this.setPtAbleToFollowLectureWithExtraPreparation(erasmusStudentDataBean.getPtAbleToFollowLectureWithExtraPreparation());
+	this.setEnStudyingLanguage(erasmusStudentDataBean.getEnStudyingLanguage());
+	this.setEnAbleFollowLecures(erasmusStudentDataBean.getEnAbleFollowLecures());
+	this.setEnAbleToFollowLectureWithExtraPreparation(erasmusStudentDataBean.getEnAbleToFollowLectureWithExtraPreparation());
+	this.setIntensivePortugueseCourseSeptember(erasmusStudentDataBean.getIntensivePortugueseCourseSeptember());
+	this.setIntensivePortugueseCourseFebruary(erasmusStudentDataBean.getIntensivePortugueseCourseFebruary());
+	this.setApplyFor(erasmusStudentDataBean.getApplyFor());
+
     }
 }

@@ -55,7 +55,7 @@
 </div>
 </logic:equal>
 
-
+<p>Please note that the learning agreement must be signed and stamped by your school</p>
 
 <div class="mtop15" id="contacts">
 	<bean:message key="erasmus.contacts.text" bundle="CANDIDATE_RESOURCES" />
