@@ -219,6 +219,25 @@ padding-right: 3px;
 			<fr:view name="executionCourse" property="nome"/>
 		</h3>					
 
+		<bean:define id="year" name="executionCourse" property="executionPeriod.executionYear.year" type="java.lang.String"/>
+		<% year = year.replace('/','-'); %>
+		<bean:define id="semester" name="executionCourse" property="executionPeriod.semester"/>
+		<bean:define id="sigla" name="executionCourse" property="sigla"/>
+		<bean:define id="urlContext" value="<%= request.getContextPath() + "/disciplinas/"+ sigla +"/"+ year + "/" + semester + "-semestre/sumarios" %>"/>		
+		
+		<% 
+		   StringBuilder urlStart = new StringBuilder("http://");
+		   urlStart.append(request.getServerName()); 
+		   int serverPort = request.getServerPort();
+		   if(serverPort != 0 && serverPort != 80) {
+			  urlStart.append(":").append(serverPort); 
+		   }
+		%>
+		
+		<p>
+			<a href="<%= urlStart + urlContext %>"><bean:message key="label.executionCourse.summaries" bundle="PEDAGOGICAL_COUNCIL"/></a>
+		</p>
+
 		<fr:view name="executionCoursesResume" schema="summaries.control.list">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 mtop05"/>

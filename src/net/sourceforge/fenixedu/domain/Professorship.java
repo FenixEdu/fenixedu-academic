@@ -214,6 +214,15 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 	degreeTeachingServices.addAll(getDegreeTeachingServicesSet());
 	return degreeTeachingServices;
     }
+    
+    public DegreeTeachingService getDegreeTeachingServiceByShift(Shift shift) {
+	for (DegreeTeachingService degreeTeachingService : getDegreeTeachingServicesSet()) {
+	    if (degreeTeachingService.getShift() == shift) {
+		return degreeTeachingService;
+	    }
+	}
+	return null;
+    }
 
     public SortedSet<SupportLesson> getSupportLessonsOrderedByStartTimeAndWeekDay() {
 	final SortedSet<SupportLesson> supportLessons = new TreeSet<SupportLesson>(
