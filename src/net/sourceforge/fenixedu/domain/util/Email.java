@@ -166,7 +166,6 @@ public class Email extends Email_Base {
 	@Override
 	protected void updateMessageID() throws MessagingException {
 	    setHeader("Message-ID", getMessageID());
-	    saveChanges();
 	}
 
 	public void send(final Email email) throws MessagingException {
