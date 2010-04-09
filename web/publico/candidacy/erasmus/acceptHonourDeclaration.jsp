@@ -78,7 +78,9 @@
 	
 	<p>
 		<html:submit onclick="this.form.method.value='submitCandidacy'; return true;"><bean:message key="label.continue" bundle="APPLICATION_RESOURCES" /></html:submit>
+		<%--
 		<html:cancel onclick="this.form.method.value='listProcesses'; return true;"><bean:message key="label.cancel" bundle="APPLICATION_RESOURCES" /></html:cancel>
+		--%>
 	</p>
 		
 </fr:form>

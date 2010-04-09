@@ -30,6 +30,7 @@
 
 <h1><bean:write name="application.name" bundle="CANDIDATE_RESOURCES"/></h1>
 
+
 <html:messages id="message" message="true" bundle="APPLICATION_RESOURCES" property="captcha.error" >
 	<p><span class="error0"><bean:write name="message"/></span></p>
 </html:messages>
@@ -37,6 +38,7 @@
 <html:messages id="message" message="true" bundle="CANDIDATE_RESOURCES" property="<%= org.apache.struts.action.ActionMessages.GLOBAL_MESSAGE %>" >
 	<p><span class="error0"><bean:write name="message"/></span></p>
 </html:messages>
+
 
 <fr:form action='<%= mappingPath + ".do?method=bindEmailWithHashCodeAndSendMailWithLink" %>'>
 
@@ -49,7 +51,8 @@
 		 type="net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.IndividualCandidacyProcessPublicDA$CandidacyPreCreationBean"
 		 slot="email">
 		 <fr:layout>
-		 	<fr:property name="size" value="30"/>
+		 	<fr:property name="classes" value="mvert05"/>
+		 	<fr:property name="size" value="35"/>
 		 	<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredEmailValidator"/>
 			<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
 				<fr:property name="type" value="character"/>
@@ -58,19 +61,19 @@
 		 </fr:layout>
 		 <fr:destination name="invalid" path='<%= mappingPath + ".do?method=preparePreCreationOfCandidacyInvalid" %>'/>
 	</fr:edit>
-	<span class="error0"><fr:message for="PublicAccessCandidacy.preCreationForm"/></span>
 	
-	<div class="mtop1 mbottom1">
+	<p><span class="error0"><fr:message for="PublicAccessCandidacy.preCreationForm"/></span></p>
+	
+	<div class="mtop15 mbottom1">
 		<label for="captcha"><bean:message key="label.captcha" bundle="ALUMNI_RESOURCES" />:</label>
 		<div class="mbottom05">
 			<img src="<%= request.getContextPath() + "/publico/jcaptcha.do" %>" style="border: 1px solid #bbb; padding: 5px;"/>
 		</div>
 		<span class="color777"><bean:message key="label.captcha.process" bundle="ALUMNI_RESOURCES" /></span><br/>
 		<input type="text" name="j_captcha_response" size="30" style="margin-bottom: 1em;"/>
-		<br/>
 	</div>
 
-	
 	<p class="mtop1 mbottom0"><html:submit><bean:message key="button.continue" bundle="APPLICATION_RESOURCES" locale="en"/> »</html:submit></p>
+
 </fr:form>
 

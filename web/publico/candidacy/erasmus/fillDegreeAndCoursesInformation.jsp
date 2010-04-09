@@ -56,8 +56,7 @@
 	</ul>
 </fr:hasMessages>
 
-<script src="<%= request.getContextPath() + "/javaScript/jquery/jquery.js" %>" type="text/javascript" >
-</script>
+<script src="<%= request.getContextPath() + "/javaScript/jquery/jquery.js" %>" type="text/javascript" ></script>
 
 <fr:form id="thisForm" action='<%= mappingPath + ".do?userAction=createCandidacy" %>'>
 
@@ -68,29 +67,47 @@
 	<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
 	<fr:edit id="degree.course.information.bean" name="degreeCourseInformationBean" visible="false" />
 
-	<h2 class="mtop1"><bean:message key="label.erasmus.chooseCourses" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
+	<h2 class="mtop1">
+		<%--
+		<bean:message key="label.erasmus.chooseCourses" bundle="ACADEMIC_OFFICE_RESOURCES" />
+		--%>
+		Degree and Subjects
+	</h2>
 	
 	<bean:define id="universityName" name="individualCandidacyProcessBean" property="erasmusStudentDataBean.selectedUniversity.nameI18n.content" type="String"/> 
 	
 	<p class="mbottom05"><bean:message key="message.erasmus.for.chosen.university.must.select.majority.of.courses" bundle="ACADEMIC_OFFICE_RESOURCES" arg0="<%= universityName %>"/></p>
 
+<style>
+table.asd table tr td {
+border: none;
+padding: 0 !important;
+}
+</style>
+
 	<fr:view	name="individualCandidacyProcessBean"
 				schema="ErasmusCandidacyProcess.view.possible.degrees">
 			<fr:layout>
-				<fr:property name="classes" value="tstyle1 thlight thright mtop05"/>
+				<fr:property name="classes" value="tstyle1 thlight thright mtop05 asd"/>
 		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 			</fr:layout>
 	</fr:view>
 
+
 	<p>
-		<strong><bean:message key="label.eramsus.candidacy.choosed.degree" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong>
+		<%--
+		<strong><bean:message key="label.eramsus.candidacy.choosen.subjectsAndDegree" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong>
+		--%>
+		<strong>Choose your degree and subjects</strong>
 	</p>
-	
+
+<%--	
 	<p>
 		<fr:view name="individualCandidacyProcessBean" property="selectedCourseNameForView"/>
 	</p>
-	
-	<p class="mbottom05"><em><bean:message key="message.erasmus.select.courses.of.associated.degrees" bundle="ACADEMIC_OFFICE_RESOURCES" /></em></p>
+--%>	
+
+	<p class="mbottom05"><bean:message key="message.erasmus.select.courses.of.associated.degrees" bundle="ACADEMIC_OFFICE_RESOURCES" /></p>
 	
 	<fr:edit id="degree.course.information.bean" name="degreeCourseInformationBean" schema="ErasmusCandidacyProcess.degreeCourseInformationBean">
 		<fr:layout name="tabular-editable">
@@ -100,7 +117,7 @@
 		</fr:layout>
 	</fr:edit>
 		
-	<html:submit onclick="$('#methodId').attr('value', 'addCourse'); $('#skipValidationId').attr('value', 'true'); $('#thisForm').submit(); return true;">+ Add</html:submit>
+	<html:submit onclick="$('#methodId').attr('value', 'addCourse'); $('#skipValidationId').attr('value', 'true'); $('#thisForm').submit(); return true;">+ Add subject</html:submit>
 	
 	<logic:empty name="individualCandidacyProcessBean" property="sortedSelectedCurricularCourses">
 		<p class="mvert15"><em><bean:message key="erasmus.message.empty.courses" bundle="CANDIDATE_RESOURCES" />.</em></p>
@@ -136,16 +153,25 @@
 			</logic:iterate>
 		</table>
 	</logic:notEmpty>
+	
+	
+	
 
-	<p>
-		<strong><bean:message key="label.eramsus.candidacy.choosed.degree" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong>:
-		<fr:view	name="individualCandidacyProcessBean" property="selectedCourseNameForView"/>
+	<p class="mtop15">
+		<%--
+		<strong><bean:message key="label.eramsus.candidacy.choosed.degree" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong>
+		--%>
+		<strong>Chosen degree</strong>
 	</p>
+
+	<fr:view name="individualCandidacyProcessBean" property="selectedCourseNameForView"/>
 
 	
 	<p class="mtop2">
 		<html:submit onclick="this.form.method.value='acceptHonourDeclaration'; return true;"><bean:message key="label.continue" bundle="APPLICATION_RESOURCES" /></html:submit>
+		<%--
 		<html:cancel onclick="this.form.method.value='listProcesses'; return true;"><bean:message key="label.cancel" bundle="APPLICATION_RESOURCES" /></html:cancel>
+		--%>
 	</p>
 
 </fr:form>

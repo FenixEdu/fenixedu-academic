@@ -31,12 +31,15 @@
 
 <bean:message key="erasmus.application.submission.condition.text" bundle="CANDIDATE_RESOURCES" />
 
-<div class="mtop15" id="contacts">
-	<bean:message key="erasmus.contacts.text" bundle="CANDIDATE_RESOURCES" />
-</div>
 
 <bean:define id="hash" name="hash"/> 
 <fr:form action='<%= mappingPath + ".do?method=prepareCandidacyCreation&hash=" + hash %>'>
-	<p class="mtop2"><html:submit><bean:message key="button.continue" bundle="APPLICATION_RESOURCES"/> »</html:submit></p>
+	<p class="mtop15 mbottom2"><html:submit><bean:message key="erasmus.application.submission.button" bundle="CANDIDATE_RESOURCES" /> »</html:submit></p>
 </fr:form>
+
+
+
+<div class="h_box" id="contacts">
+	<bean:message key="erasmus.contacts.text" bundle="CANDIDATE_RESOURCES" />
+</div>
 

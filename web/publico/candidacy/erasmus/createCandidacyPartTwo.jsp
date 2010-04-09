@@ -73,16 +73,18 @@
 	<logic:notEmpty name="individualCandidacyProcessBean" property="candidacyProcess">
 	
 		<h2 class="mtop15 mbottom05"><bean:message key="label.erasmus.home.institution" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
-		<p><em>Choose your country and university.
-		</em></p>
+		
+		<p><em>Choose your country and university.</em></p>
+		
 		<fr:edit 	id="erasmusIndividualCandidacyProcessBean.home.institution" 
 					name="individualCandidacyProcessBean" 
 					schema="ErasmusIndividualCandidacyProcess.home.institution.edit" 
 					property="erasmusStudentDataBean">
 			<fr:layout name="tabular-editable">
-				<fr:property name="classes" value="tstyle5 thlight thleft mtop05"/>
+				<fr:property name="classes" value="tstyle5 thlight thleft mtop05 ulnomargin inobullet"/>
 		        <fr:property name="columnClasses" value="width225px,,tdclear tderror1"/>
 		        <fr:property name="requiredMarkShown" value="true" />
+		        <fr:property name="requiredMessageShown" value="false" />
 		        <fr:destination name="chooseCountryPostback" path="<%= "/candidacies/caseHandlingErasmusCandidacyIndividualProcess.do?method=chooseCountry" %>"/>
 			</fr:layout>
 			<fr:destination name="invalid" path='<%= "/candidacies/caseHandlingErasmusCandidacyIndividualProcess.do?method=continueCandidacyCreationInvalid" %>'  />
@@ -93,9 +95,10 @@
 					name="individualCandidacyProcessBean" 
 					schema="ErasmusIndividualCandidacyProcess.current.study.edit" >
 			<fr:layout name="tabular-editable">
-				<fr:property name="classes" value="tstyle5 thlight thleft mtop05"/>
+				<fr:property name="classes" value="tstyle5 thlight thleft mtop05 ulnomargin inobullet"/>
 		        <fr:property name="columnClasses" value="width225px,,tdclear tderror1"/>
 		        <fr:property name="requiredMarkShown" value="true" />
+		        <fr:property name="requiredMessageShown" value="false" />
 			</fr:layout>
 			<fr:destination name="invalid" path='<%= "/candidacies/caseHandlingErasmusCandidacyIndividualProcess.do?method=continueCandidacyCreationInvalid" %>'  />
 		</fr:edit>
@@ -106,9 +109,10 @@
 					name="individualCandidacyProcessBean"
 					schema="ErasmusIndividualCandidacyProcess.period.of.study.edit" >
 			<fr:layout name="tabular-editable">
-				<fr:property name="classes" value="tstyle5 thlight thleft mtop05"/>
+				<fr:property name="classes" value="tstyle5 thlight thleft mtop05 ulnomargin inobullet"/>
 		        <fr:property name="columnClasses" value="width225px,,tdclear tderror1"/>
 		        <fr:property name="requiredMarkShown" value="true" />
+		        <fr:property name="requiredMessageShown" value="false" />
 			</fr:layout>
 			<fr:destination name="invalid" path='<%= "/candidacies/caseHandlingErasmusCandidacyIndividualProcess.do?method=continueCandidacyCreationInvalid" %>'  />
 		</fr:edit>
@@ -144,9 +148,11 @@
 	</logic:notEmpty>
 	
 
-	<p class="mtop2">
+	<p class="mtop1">
 		<html:submit onclick="this.form.method.value='fillDegreeInformation'; return true;"><bean:message key="label.continue" bundle="APPLICATION_RESOURCES" /></html:submit>
+		<%--
 		<html:cancel onclick="this.form.method.value='backCandidacyCreation'; return true;"><bean:message key="label.cancel" bundle="APPLICATION_RESOURCES" /></html:cancel>
+		--%>
 	</p>
 
 </fr:form>

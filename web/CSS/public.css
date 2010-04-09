@@ -366,6 +366,13 @@ margin: 0;
 padding: 0;
 }
 
+.inobullet ul { list-style: none; padding-left: 0; }
+.inobullet ul li { list-style: none; }
+.inomargin ul { margin: 0; padding: 0; }
+
+.width225px { width: 225px; }
+
+
 /* ----------------------
 ------- Tables ---------
 ----------------------- */
@@ -1176,6 +1183,3 @@ font-weight: normal !important;
 @media screen and (-webkit-min-device-pixel-ratio:0) { body:first-of-type .toplegendfix { top: -0.75em !important; } /* Safari */ }
 
 
-
-
-.width225px { width: 225px; }

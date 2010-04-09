@@ -44,11 +44,22 @@
 <logic:equal name="individualCandidacyProcess" property="allRequiredFilesUploaded" value="false">
 <div class="infoop1">
 	<p><bean:message key="message.missing.document.files" bundle="CANDIDATE_RESOURCES"/></p>
-	<ul>
-	<logic:iterate id="missingDocumentFileType" name="individualCandidacyProcess" property="missingRequiredDocumentFiles">
-		<li><fr:view name="missingDocumentFileType" property="localizedName"/></li>
-	</logic:iterate>
+	
+	<ul class="mbottom15">
+		<li><b>Passport photo</b> - The photo will be used to generate IST student card.</li>
+		<li><b>Passport or identity card</b></li>
+		<li><b>Learning agreement</b> - The learning agreement will be available in your application process page after the form submission. You're required to download, sign, stamp and reupload the document.</li>
+		<li><b>Curriculum vitae</b></li>
+		<li><b>Transcript of records</b></li>
 	</ul>
+	
+	<%--
+	<ul>
+		<logic:iterate id="missingDocumentFileType" name="individualCandidacyProcess" property="missingRequiredDocumentFiles">
+			<li><fr:view name="missingDocumentFileType" property="localizedName"/></li>
+		</logic:iterate>
+	</ul>
+	--%>
 
 	<bean:define id="individualCandidacyProcess" name="individualCandidacyProcess"/>
 
@@ -57,6 +68,6 @@
 
 <p>Please note that the learning agreement must be signed and stamped by your school</p>
 
-<div class="mtop15" id="contacts">
+<div class="h_box" id="contacts">
 	<bean:message key="erasmus.contacts.text" bundle="CANDIDATE_RESOURCES" />
 </div>

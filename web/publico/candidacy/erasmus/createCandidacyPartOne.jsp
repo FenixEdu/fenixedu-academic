@@ -81,7 +81,10 @@
 		<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
 		
  		<h2 class="mtop15"><bean:message key="title.personal.data" bundle="CANDIDATE_RESOURCES"/></h2>
- 		<p><em>Fill the form with your personal data. All fields are required.</em></p>
+ 		
+ 		<%--
+ 		<p><em>All fields are required.</em></p>
+ 		--%>
 
 		<logic:equal value="false" name="individualCandidacyProcessBean" property="toAccessFenix">
 		<fr:edit id="candidacyProcess.personalDataBean"
@@ -115,7 +118,9 @@
 		
 
 		<p class="mtop2">
-			<html:submit><bean:message key="button.continue" bundle="APPLICATION_RESOURCES" /> <bean:message key="label.application" bundle="CANDIDATE_RESOURCES"/></html:submit>
+			<html:submit><bean:message key="button.continue" bundle="APPLICATION_RESOURCES" /> »</html:submit>
+			<%--
 			<html:cancel><bean:message key="button.cancel" bundle="APPLICATION_RESOURCES" /></html:cancel>
+			--%>
 		</p>
 </fr:form>
