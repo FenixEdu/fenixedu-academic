@@ -43,4 +43,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Changed email send structure." updates.sql
