@@ -298,8 +298,10 @@ public class Email extends Email_Base {
 	if (confirmedAddresses != null && !confirmedAddresses.isEmpty()) {
 	    addresses.addAll(confirmedAddresses.toCollection());
 	}
-	for (final Address address : recipients) {
-	    addresses.add(address.toString());
+	if (recipients != null) {
+	    for (final Address address : recipients) {
+		addresses.add(address.toString());
+	    }
 	}
 	setConfirmedAddresses(new EmailAddressList(addresses));
     }
@@ -310,8 +312,10 @@ public class Email extends Email_Base {
 	if (failedAddresses != null && !failedAddresses.isEmpty()) {
 	    addresses.addAll(failedAddresses.toCollection());
 	}
-	for (final Address address : recipients) {
-	    addresses.add(address.toString());
+	if (recipients != null) {
+	    for (final Address address : recipients) {
+		addresses.add(address.toString());
+	    }
 	}
 	setFailedAddresses(new EmailAddressList(addresses));
     }
@@ -322,8 +326,10 @@ public class Email extends Email_Base {
 	if (bccAddresses != null && !bccAddresses.isEmpty()) {
 	    addresses.addAll(bccAddresses.toCollection());
 	}
-	for (final Address address : recipients) {
-	    addresses.add(address.toString());
+	if (recipients != null) {
+	    for (final Address address : recipients) {
+		addresses.add(address.toString());
+	    }
 	}
 	setBccAddresses(new EmailAddressList(addresses));
     }
