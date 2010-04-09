@@ -121,9 +121,18 @@ public class Email extends Email_Base {
 
     private void abort() {
 	final Collection<String> failed = new HashSet<String>();
-	failed.addAll(getToAddresses().toCollection());
-	failed.addAll(getCcAddresses().toCollection());
-	failed.addAll(getBccAddresses().toCollection());
+	final EmailAddressList toAddresses = getToAddresses();
+	if (toAddresses != null && !toAddresses.isEmpty()) {
+	    failed.addAll(toAddresses.toCollection());
+	}
+	final EmailAddressList ccAddresses = getCcAddresses();
+	if (ccAddresses != null && !ccAddresses.isEmpty()) {
+	    failed.addAll(ccAddresses.toCollection());
+	}
+	final EmailAddressList bccAddresses = getBccAddresses();
+	if (bccAddresses != null && !bccAddresses.isEmpty()) {
+	    failed.addAll(bccAddresses.toCollection());
+	}
 	final EmailAddressList emailAddressList = new EmailAddressList(failed);
 	setFailedAddresses(emailAddressList);
 
