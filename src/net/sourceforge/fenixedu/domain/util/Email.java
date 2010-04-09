@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Properties;
 import java.util.Map.Entry;
 
@@ -20,7 +21,11 @@ import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.util.email.MessageId;
 import net.sourceforge.fenixedu.domain.util.email.MessageTransportResult;
+
+import org.joda.time.DateTime;
+
 import pt.utl.ist.fenix.tools.util.PropertiesManager;
 import pt.utl.ist.fenix.tools.util.StringAppender;
 
@@ -74,6 +79,9 @@ public class Email extends Email_Base {
 
     public void delete() {
 	removeMessage();
+	for (final MessageTransportResult messageTransportResult : getMessageTransportResultSet()) {
+	    messageTransportResult.delete();
+	}
 	removeRootDomainObjectFromEmailQueue();
 	removeRootDomainObject();
 	super.deleteDomainObject();
@@ -112,6 +120,13 @@ public class Email extends Email_Base {
     }
 
     private void abort() {
+	final Collection<String> failed = new HashSet<String>();
+	failed.addAll(getToAddresses().toCollection());
+	failed.addAll(getCcAddresses().toCollection());
+	failed.addAll(getBccAddresses().toCollection());
+	final EmailAddressList emailAddressList = new EmailAddressList(failed);
+	setFailedAddresses(emailAddressList);
+
 	setToAddresses(null);
 	setCcAddresses(null);
 	setBccAddresses(null);
@@ -133,8 +148,25 @@ public class Email extends Email_Base {
 
     private class EmailMimeMessage extends MimeMessage {
 
+	private String fenixMessageId = null;
+
 	public EmailMimeMessage() {
 	    super(SESSION == null ? init() : SESSION);
+	}
+
+	@Override
+	public String getMessageID() throws MessagingException {
+	    if (fenixMessageId == null) {
+		final String externalId = getExternalId();
+		fenixMessageId = externalId + "." + new DateTime().getMillis() + "@fenix";
+	    }
+	    return fenixMessageId;
+	}
+
+	@Override
+	protected void updateMessageID() throws MessagingException {
+	    setHeader("Message-ID", getMessageID());
+	    saveChanges();
 	}
 
 	public void send(final Email email) throws MessagingException {
@@ -173,6 +205,15 @@ public class Email extends Email_Base {
 
 	    addRecipientsAux();
 
+	    new MessageId(getMessage(), getMessageID());
+
+	    final Address[] allRecipients = getAllRecipients();
+	    final Collection<String> addresses = new HashSet<String>();
+	    for (final Address address : allRecipients) {
+		addresses.add(address.toString());
+	    }
+	    setConfirmedAddresses(new EmailAddressList(addresses));
+
 	    Transport.send(this);
 	}
 
@@ -203,9 +244,9 @@ public class Email extends Email_Base {
 			logProblem("invalid.email.address.format: " + emailAddress);
 		    }
 		} catch (final AddressException e) {
-		    logProblem(e.getMessage());
+		    logProblem(e.getMessage() + " " + emailAddress);
 		} catch (final MessagingException e) {
-		    logProblem(e.getMessage());
+		    logProblem(e.getMessage() + " " + emailAddress);
 		}
 		if (i == MAX_MAIL_RECIPIENTS && i + 1 < emailAddresses.length) {
 		    final String all = emailAddressList.toString();

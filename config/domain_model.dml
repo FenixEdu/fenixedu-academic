@@ -5909,6 +5909,8 @@ class DomainObject {
         EmailAddressList replyTos;
         String subject;
         EmailAddressList toAddresses;
+        EmailAddressList confirmedAddresses;
+        EmailAddressList failedAddresses;
     }
 
     class util.email.Message extends DomainObject {
@@ -5926,6 +5928,7 @@ class DomainObject {
 
     class util.email.MessageId extends DomainObject {
         String id;
+        DateTime sendTime;
     }
 
     class util.email.Recipient extends DomainObject {
