@@ -3,7 +3,10 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
-<html:xhtml/>
+
+<%@page import="java.util.Set"%>
+<%@page import="java.util.TreeSet"%>
+<%@page import="net.sourceforge.fenixedu.domain.util.EmailAddressList"%><html:xhtml/>
 
 <h2><bean:message bundle="MESSAGING_RESOURCES" key="title.email.sent.emails"/></h2>
 
@@ -39,7 +42,43 @@
 		</fr:layout>
 	</fr:view>
 
+
+	<% final Set failed = new TreeSet(); %>
+	<logic:iterate id="utilEmail" type="net.sourceforge.fenixedu.domain.util.Email" name="message" property="emails">
+		<%
+			final EmailAddressList failedAddressList = utilEmail.getFailedAddresses();
+			if (failedAddressList != null && !failedAddressList.isEmpty()) {
+			    failed.addAll(failedAddressList.toCollection());
+			}
+		%>
+	</logic:iterate>
+	<%
+		if (!failed.isEmpty()) {
+		    %>
+				<h3>
+					Não foi possível entregar o e-mail aos seguintes destinatários:
+				</h3>
+		    	<ul>
+		    <%
+		    for (final Object addr : failed) {
+			    %>
+		    		<li><font color="red"><%= addr.toString() %></font></li>
+			    <%
+		    }
+		    %>
+		    	</ul>
+		    <%
+		}
+	%>
+
+	
 	<logic:present role="MANAGER">
+		<br>
+		<br>
+		<br>
+		<span>
+			The following information is only visible to users with the role MANAGER
+		</span>
 		<logic:notEmpty name="message" property="messageIds">
 			<h3>
 				<bean:message bundle="MESSAGING_RESOURCES" key="message.email.sent.message.ids"/>
@@ -67,7 +106,7 @@
 					</logic:present>
 				</p>
 				<h5>
-					Possibly sent:
+					Possibly Sent:
 				</h5>
 				<p>
 					<logic:present name="utilEmail" property="confirmedAddresses">
