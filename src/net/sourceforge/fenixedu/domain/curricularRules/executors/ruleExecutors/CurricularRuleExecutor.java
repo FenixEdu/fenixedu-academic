@@ -28,6 +28,7 @@ abstract public class CurricularRuleExecutor {
 	}
 
 	switch (enrolmentContext.getCurricularRuleLevel()) {
+	case PROPAEUDEUTICS_ENROLMENT:
 	case ENROLMENT_WITH_RULES:
 	    return executeEnrolmentWithRules(curricularRule, sourceDegreeModuleToEvaluate, enrolmentContext);
 
