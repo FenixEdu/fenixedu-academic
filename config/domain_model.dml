@@ -5919,6 +5919,11 @@ class DomainObject {
         String bccs;
     }
 
+    class util.email.MessageTransportResult extends DomainObject {
+    	Integer code;
+    	String description;
+    }
+
     class util.email.MessageId extends DomainObject {
         String id;
     }
@@ -17827,6 +17832,27 @@ relation PersonCerimonyInquiryPerson {
 relation CerimonyInquiryAnswerCerimonyInquiryPerson {
 	alumni.CerimonyInquiryAnswer playsRole cerimonyInquiryAnswer;
 	alumni.CerimonyInquiryPerson playsRole cerimonyInquiryPerson {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectMessageTransportResult {
+	RootDomainObject playsRole rootDomainObject;
+	util.email.MessageTransportResult playsRole messageTransportResult {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectEmailQueue {
+	RootDomainObject playsRole rootDomainObjectFromEmailQueue;
+	util.Email playsRole emailQueue {
+		multiplicity *;
+	}
+}
+
+relation EmailMessageTransportResult {
+	util.Email playsRole email;
+	util.email.MessageTransportResult playsRole messageTransportResult {
 		multiplicity *;
 	}
 }

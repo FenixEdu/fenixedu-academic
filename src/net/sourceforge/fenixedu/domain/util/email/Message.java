@@ -161,12 +161,40 @@ public class Message extends Message_Base {
     public void dispatch() {
 	final Sender sender = getSender();
 	final Person person = getPerson();
-	final Email email = new Email(sender.getFromName(person), sender.getFromAddress(), getReplyToAddresses(person),
-		getRecipientAddresses(getTosSet()), getRecipientAddresses(getCcsSet()), getDestinationBccs(), getSubject(),
-		getBody());
-	email.setMessage(this);
+	final Set<String> destinationBccs = getDestinationBccs();
+	for (final Set<String> bccs : split(destinationBccs)) {
+	    if (!bccs.isEmpty()) {
+		final Email email = new Email(sender.getFromName(person), sender.getFromAddress(), getReplyToAddresses(person),
+			Collections.EMPTY_SET, Collections.EMPTY_SET, bccs, getSubject(), getBody());
+		email.setMessage(this);
+	    }
+	}
+	final Set<String> tos = getRecipientAddresses(getTosSet());
+	final Set<String> ccs = getRecipientAddresses(getCcsSet());
+	if (!tos.isEmpty() || !ccs.isEmpty()) {
+	    final Email email = new Email(sender.getFromName(person), sender.getFromAddress(), getReplyToAddresses(person),
+		    tos, ccs, Collections.EMPTY_SET, getSubject(),
+		    getBody());
+	    email.setMessage(this);
+	}
 	removeRootDomainObjectFromPendingRelation();
 	setSent(new DateTime());
+    }
+
+    private Set<Set<String>> split(final Set<String> destinations) {
+	final Set<Set<String>> result = new HashSet<Set<String>>();
+	int i = 0;
+	Set<String> subSet = new HashSet<String>();
+	for (final String destination : destinations) {
+	    if (i++ == 50) {
+		result.add(subSet);
+		subSet = new HashSet<String>();
+		i = 1;
+	    }
+	    subSet.add(destination);
+	}
+	result.add(subSet);
+	return result;
     }
 
 }

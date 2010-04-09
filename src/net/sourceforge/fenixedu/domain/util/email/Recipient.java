@@ -63,10 +63,13 @@ public class Recipient extends Recipient_Base {
 		    final EmailAddress otherEmailAddress = (EmailAddress) partyContact;
 		    final String value = otherEmailAddress.getValue();
 		    if (value != null && !value.isEmpty()) {
+			if (otherEmailAddress.isDefault()) {
+			    emailAddress = otherEmailAddress;
+			    break;			    
+			}
 			if (otherEmailAddress.isInstitutionalType()) {
 			    emailAddress = otherEmailAddress;
-			    break;
-			} else if (emailAddress == null || otherEmailAddress.isDefault()) {
+			} else if (emailAddress == null) {
 			    emailAddress = otherEmailAddress;
 			}
 		    }
