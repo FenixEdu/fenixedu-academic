@@ -229,7 +229,7 @@ padding-right: 3px;
 		   StringBuilder urlStart = new StringBuilder("http://");
 		   urlStart.append(request.getServerName()); 
 		   int serverPort = request.getServerPort();
-		   if(serverPort != 0 && serverPort != 80) {
+		   if(serverPort != 0 && serverPort != 443) {
 			  urlStart.append(":").append(serverPort); 
 		   }
 		%>
