@@ -189,11 +189,11 @@ public class EmailsDA extends FenixDispatchAction {
 	return rootDomainObject.readMessageByOID(new Integer(messageParam));
     }
 
-    private int getNumberOfPages(Set<Message> messages, int numberOfMessagesByPage) {
-	if (messages.size() <= numberOfMessagesByPage) {
+    private int getNumberOfPages(CollectionPager pager) {
+	if (pager.getCollection().size() <= pager.getMaxElementsPerPage()) {
 	    return 0;
 	}
-	return messages.size() / numberOfMessagesByPage + 1;
+	return pager.getNumberOfPages();
     }
 
     private boolean isSenderUnique(Set arg0, Set arg1) {

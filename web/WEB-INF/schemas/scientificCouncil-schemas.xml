@@ -430,6 +430,29 @@
     <slot name="endThesisCreationPeriod" key="label.end"/>
 </schema>
 
+
+<schema name="scientificCouncil.credits.departmentCreditsBean" type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits.DepartmentCreditsBean">
+	<slot name="department" key="label.department"
+		layout="menu-select-postback"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Department" />
+		<property name="format" value="${name}" />
+		<property name="sortBy" value="name"/>
+		<property name="destination" value="postback"/>
+	</slot>
+	<slot name="employeeNumber" key="label.department.credits.employeeNumber" >
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
+	</slot>
+</schema>
+
+<schema name="scientificCouncil.credits.employee" type="net.sourceforge.fenixedu.domain.Employee">
+	<slot name="employeeNumber" key="label.department.credits.employeeNumber">
+	</slot>
+	<slot name="person.name" key="label.department.credits.employeeName" >
+	</slot>
+</schema>
+
 <schema name="scientificCouncil.thesis.creation.period.definition" type="net.sourceforge.fenixedu.domain.ExecutionDegree$ThesisCreationPeriodFactoryExecutor">
 	<slot name="beginThesisCreationPeriod" key="label.begin">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>

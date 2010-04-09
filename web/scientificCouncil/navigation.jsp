@@ -94,6 +94,11 @@
 			<html:link page="/creditsReport.do?method=prepare">
 		  		<bean:message key="link.credits.viewReport"/>
 		  	</html:link>
+		</li>
+		<li>
+			<html:link page="/departmentCredits.do?method=prepareDepartmentCredits">
+		  		<bean:message key="link.department.credits"/>
+		  	</html:link>
 		</li>		
 		<li class="navheader">
 			<bean:message key="label.research.activity.navigation.header"/>
@@ -187,7 +192,7 @@
 			</html:link>
 		</li>
 		--%>
-	
+
 		<li class="navheader">
 			<bean:message key="title.applications" bundle="CANDIDATE_RESOURCES" />
 		</li>
