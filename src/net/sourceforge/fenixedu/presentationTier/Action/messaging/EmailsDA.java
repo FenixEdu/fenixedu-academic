@@ -120,7 +120,7 @@ public class EmailsDA extends FenixDispatchAction {
 	final Sender sender = rootDomainObject.readSenderByOID(senderId);
 	final int numberOfMessagesByPage = 40;
 	final CollectionPager<Message> pager = new CollectionPager<Message>(sender.getMessagesSet(), numberOfMessagesByPage);
-	request.setAttribute("numberOfPages", getNumberOfPages(sender.getMessagesSet(), numberOfMessagesByPage));
+	request.setAttribute("numberOfPages", getNumberOfPages(pager));
 	final String pageParameter = request.getParameter("pageNumber");
 	final Integer page = StringUtils.isEmpty(pageParameter) ? Integer.valueOf(1) : Integer.valueOf(pageParameter);
 
