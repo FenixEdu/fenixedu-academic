@@ -11,6 +11,7 @@ import java.util.Map.Entry;
 import javax.mail.Address;
 import javax.mail.BodyPart;
 import javax.mail.MessagingException;
+import javax.mail.SendFailedException;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.AddressException;
@@ -42,6 +43,7 @@ public class Email extends Email_Base {
 	    properties.put("mail.smtp.name", allProperties.get("mail.smtp.name"));
 	    properties.put("mailSender.max.recipients", allProperties.get("mailSender.max.recipients"));
 	    properties.put("mailingList.host.name", allProperties.get("mailingList.host.name"));
+	    properties.put("mail.debug", "true");
 	    final Session tempSession = Session.getDefaultInstance(properties, null);
 	    for (final Entry<Object, Object> entry : tempSession.getProperties().entrySet()) {
 		System.out.println("key: " + entry.getKey() + "   value: " + entry.getValue());
@@ -121,6 +123,10 @@ public class Email extends Email_Base {
 
     private void abort() {
 	final Collection<String> failed = new HashSet<String>();
+	final EmailAddressList failedAddresses = getFailedAddresses();
+	if (failedAddresses != null && !failedAddresses.isEmpty()) {
+	    failed.addAll(failedAddresses.toCollection());
+	}
 	final EmailAddressList toAddresses = getToAddresses();
 	if (toAddresses != null && !toAddresses.isEmpty()) {
 	    failed.addAll(toAddresses.toCollection());
@@ -215,14 +221,10 @@ public class Email extends Email_Base {
 
 	    new MessageId(getMessage(), getMessageID());
 
-	    final Address[] allRecipients = getAllRecipients();
-	    final Collection<String> addresses = new HashSet<String>();
-	    for (final Address address : allRecipients) {
-		addresses.add(address.toString());
-	    }
-	    setConfirmedAddresses(new EmailAddressList(addresses));
-
 	    Transport.send(this);
+
+	    final Address[] allRecipients = getAllRecipients();
+	    setConfirmedAddresses(allRecipients);
 	}
 
 	private void addRecipientsAux() {
@@ -290,11 +292,56 @@ public class Email extends Email_Base {
 	}
     }
 
+    private void setConfirmedAddresses(final Address[] recipients) {
+	final Collection<String> addresses = new HashSet<String>();
+	final EmailAddressList confirmedAddresses = getConfirmedAddresses();
+	if (confirmedAddresses != null && !confirmedAddresses.isEmpty()) {
+	    addresses.addAll(confirmedAddresses.toCollection());
+	}
+	for (final Address address : recipients) {
+	    addresses.add(address.toString());
+	}
+	setConfirmedAddresses(new EmailAddressList(addresses));
+    }
+
+    private void setFailedAddresses(final Address[] recipients) {
+	final Collection<String> addresses = new HashSet<String>();
+	final EmailAddressList failedAddresses = getFailedAddresses();
+	if (failedAddresses != null && !failedAddresses.isEmpty()) {
+	    addresses.addAll(failedAddresses.toCollection());
+	}
+	for (final Address address : recipients) {
+	    addresses.add(address.toString());
+	}
+	setFailedAddresses(new EmailAddressList(addresses));
+    }
+
+    private void resend(final Address[] recipients) {
+	final Collection<String> addresses = new HashSet<String>();
+	final EmailAddressList bccAddresses = getBccAddresses();
+	if (bccAddresses != null && !bccAddresses.isEmpty()) {
+	    addresses.addAll(bccAddresses.toCollection());
+	}
+	for (final Address address : recipients) {
+	    addresses.add(address.toString());
+	}
+	setBccAddresses(new EmailAddressList(addresses));
+    }
+
     public void deliver() {
 	final EmailMimeMessage emailMimeMessage = new EmailMimeMessage();
 	try {
 	    emailMimeMessage.send(this);
-	} catch (MessagingException e) {
+	} catch (final SendFailedException e) {
+	    logProblem(e);
+	    
+	    final Address[] invalidAddresses = e.getInvalidAddresses();
+	    setFailedAddresses(invalidAddresses);
+	    final Address[] validSentAddresses = e.getValidSentAddresses();
+	    setConfirmedAddresses(validSentAddresses);
+	    final Address[] validUnsentAddresses = e.getValidUnsentAddresses();
+	    resend(validUnsentAddresses);
+	} catch (final MessagingException e) {
 	    logProblem(e);
 	    abort();
 	}
