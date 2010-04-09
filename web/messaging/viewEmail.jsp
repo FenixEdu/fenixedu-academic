@@ -39,16 +39,51 @@
 		</fr:layout>
 	</fr:view>
 
-	<logic:notEmpty name="message" property="messageIds">
-		<h3>
-			<bean:message bundle="MESSAGING_RESOURCES" key="message.email.sent.message.ids"/>
-		</h3>
-		<p>
-			<logic:iterate id="messageId" name="message" property="messageIds">
-				<bean:write name="messageId" property="id"/>
-				<br/>
+	<logic:present role="MANAGER">
+		<logic:notEmpty name="message" property="messageIds">
+			<h3>
+				<bean:message bundle="MESSAGING_RESOURCES" key="message.email.sent.message.ids"/>
+			</h3>
+			<p>
+				<logic:iterate id="messageId" name="message" property="messageIds">
+					<bean:write name="messageId" property="id"/>
+					<logic:present name="messageId" property="sendTime">
+						<bean:write name="messageId" property="sendTime"/>
+					</logic:present>
+					<br/>
+				</logic:iterate>
+			</p>
+		</logic:notEmpty>
+			<logic:iterate id="utilEmail" name="message" property="emails">
+				<h4>
+					<bean:write name="utilEmail" property="externalId"/>
+				</h4>
+				<h5>
+					Failed:
+				</h5>
+				<p>
+					<logic:present name="utilEmail" property="failedAddresses">
+						<bean:write name="utilEmail" property="failedAddresses"/>
+					</logic:present>
+				</p>
+				<h5>
+					Possibly sent:
+				</h5>
+				<p>
+					<logic:present name="utilEmail" property="confirmedAddresses">
+						<bean:write name="utilEmail" property="confirmedAddresses"/>
+					</logic:present>
+				</p>
+				<h5>
+					Report:
+				</h5>
+				<p>
+					<logic:iterate id="messageTransportResult" name="utilEmail" property="messageTransportResult">
+						<bean:write name="messageTransportResult" property="description"/>
+						<br/>
+					</logic:iterate>
+				</p>
 			</logic:iterate>
-		</p>
-	</logic:notEmpty>
+	</logic:present>
 
 </logic:present>
