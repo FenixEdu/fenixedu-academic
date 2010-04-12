@@ -40,7 +40,9 @@
 	<p><bean:message key="message.application.employee.edition.forbidden" bundle="CANDIDATE_RESOURCES"/></p>
 </logic:equal>
 
+<%--
 <p><span><bean:message key="message.all.fields.are.required" bundle="CANDIDATE_RESOURCES"/></span></p>
+--%>
 
 <html:messages id="message" message="true" bundle="APPLICATION_RESOURCES" property="<%= ActionMessages.GLOBAL_MESSAGE %>">
 	<span class="error0"> <bean:write name="message" /> </span>

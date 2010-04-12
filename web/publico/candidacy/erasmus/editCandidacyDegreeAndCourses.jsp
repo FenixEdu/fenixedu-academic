@@ -39,7 +39,9 @@
 	<p><bean:message key="message.application.employee.edition.forbidden" bundle="CANDIDATE_RESOURCES"/></p>
 </logic:equal>
 
+<%--
 <p><span><bean:message key="message.all.fields.are.required" bundle="CANDIDATE_RESOURCES"/></span></p>
+--%>
 
 <fr:hasMessages for="CandidacyProcess.personalDataBean" type="conversion">
 	<ul class="nobullet list6">

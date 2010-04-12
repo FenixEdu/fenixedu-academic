@@ -29,6 +29,8 @@
 
 <h1><bean:write name="application.name" bundle="CANDIDATE_RESOURCES"/></h1>
 
+
+
 <bean:message key="erasmus.application.submission.condition.text" bundle="CANDIDATE_RESOURCES" />
 
 

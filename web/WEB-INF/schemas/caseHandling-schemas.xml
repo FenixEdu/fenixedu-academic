@@ -2330,7 +2330,7 @@
 </schema>
 
 <schema name="ErasmusStudentDataBean.applyForSemester.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusStudentDataBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="applyFor" key="label.erasmus.applyForSemester" layout="menu-select">
+	<slot name="applyFor" key="label.erasmus.semester" layout="menu-select">
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusApplyForSemesterType"/>
 		<property name="format" value="${localizedName}" />
 		<property name="sortBy" value="localizedName"/>	

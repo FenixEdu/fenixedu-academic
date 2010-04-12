@@ -164,7 +164,9 @@ padding: 0 !important;
 		<strong>Chosen degree</strong>
 	</p>
 
-	<fr:view name="individualCandidacyProcessBean" property="selectedCourseNameForView"/>
+	<span class="highlight1">
+		> <fr:view name="individualCandidacyProcessBean" property="selectedCourseNameForView"/>
+	</span>
 
 	
 	<p class="mtop2">

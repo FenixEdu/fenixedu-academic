@@ -46,8 +46,9 @@
 </logic:equal>
 
 <logic:equal name="individualCandidacyProcessBean" property="individualCandidacyProcess.isCandidateWithRoles" value="false">
+<%--
 <p><span><bean:message key="message.all.fields.are.required" bundle="CANDIDATE_RESOURCES"/></span></p>
-
+--%>
 <html:messages id="message" message="true" bundle="APPLICATION_RESOURCES" property="<%= ActionMessages.GLOBAL_MESSAGE %>">
 	<span class="error0"> <bean:write name="message" /> </span>
 	<br />

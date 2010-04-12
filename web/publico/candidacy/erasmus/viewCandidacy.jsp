@@ -33,27 +33,33 @@
 
 <h1><bean:write name="application.name"/></h1>
 
+
+<p>
+	<b class="highlight1"><bean:message key="label.process.id" bundle="CANDIDATE_RESOURCES"/>: <bean:write name="individualCandidacyProcess" property="processCode"/></b>
+</p>
+
+
+
 <logic:equal name="individualCandidacyProcess" property="allRequiredFilesUploaded" value="false">
-<div class="h_box_alt">
-	<div class="lightbulb">
-		<p><bean:message key="message.missing.document.files" bundle="CANDIDATE_RESOURCES"/></p>
-		<ul>
-			<logic:iterate id="missingDocumentFileType" name="individualCandidacyProcess" property="missingRequiredDocumentFiles">
-				<li><fr:view name="missingDocumentFileType" property="localizedName"/></li>
-			</logic:iterate>
-		</ul>
-				
-		<p><bean:message key="message.ist.conditions.note" bundle="CANDIDATE_RESOURCES"/></p>
-	</div>
-</div>
+	<p class="mtop05"><bean:message key="message.missing.document.files" bundle="CANDIDATE_RESOURCES"/></p>
+	
+	<ul>
+		<li><b>Passport photo</b> - The photo will be used to generate IST student card.</li>
+		<li><b>Passport or identity card</b></li>
+		<li><b>Learning agreement</b> - You're required to download, sign, stamp and reupload the document.</li>
+		<li><b>Curriculum vitae</b></li>
+		<li><b>Transcript of records</b></li>
+	</ul>
+			
+	<p class="mbottom05"><em><bean:message key="message.ist.conditions.note" bundle="CANDIDATE_RESOURCES"/></em></p>
 </logic:equal>
 
-<div class="h_box_alt">
-	<div class="lightbulb">
-		<p>Please download the learning agreement document. Click in 'Download Learning Agreement' below.</p>
-		<p>Please note that the learning agreement must be signed and stamped by your school</p>
-		<p><html:link page="<%= mappingPath + ".do?method=retrieveLearningAgreement&processId=" + processId %>">Download learning agreement</html:link></p>
-	</div>
+
+<div class="h_box">
+	<h3 class="mtop05">Learning Agreement</h3>
+	<p>Please download the Learning Agreement document below.</p>
+	<p>Please note that the document must be signed and stamped by your school before you upload.</p>
+	<p class="mbottom05"><html:link page="<%= mappingPath + ".do?method=retrieveLearningAgreement&processId=" + processId %>">Download learning agreement</html:link></p>
 </div>
 
 <script src="<%= request.getContextPath() + "/javaScript/jquery/jquery.js" %>" type="text/javascript" >
@@ -68,25 +74,24 @@
 		<html:submit onclick="this.form.method.value='prepareEditCandidacyDocuments';"><bean:message key="label.edit.candidacy.documents" bundle="CANDIDATE_RESOURCES" /></html:submit>
 		<html:cancel><bean:message key="label.back" bundle="APPLICATION_RESOURCES" /></html:cancel>
 	</noscript>
-	
-	<a href="#" onclick="$('#methodForm').attr('value', 'prepareEditCandidacyProcess'); $('#editCandidacyForm').submit();"><bean:message key="button.edit" bundle="APPLICATION_RESOURCES" /> <bean:message key="label.application.lowercase" bundle="CANDIDATE_RESOURCES"/></a> | 
-	<a href="#" onclick="$('#methodForm').attr('value', 'prepareEditCandidacyInformation'); $('#editCandidacyForm').submit();"><bean:message key="label.edit.application.educational.background" bundle="CANDIDATE_RESOURCES"/></a> |
-	<a href="#" onclick="$('#methodForm').attr('value', 'prepareEditDegreeAndCourses'); $('#editCandidacyForm').submit();"><bean:message key="erasmus.label.edit.degree.and.courses" bundle="CANDIDATE_RESOURCES" /></a> |
-	<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditCandidacyDocuments';document.getElementById('editCandidacyForm').submit();"> <bean:message key="label.edit.candidacy.documents" bundle="CANDIDATE_RESOURCES" /></a>
+	<p class="mtop15">
+		<a href="#" onclick="$('#methodForm').attr('value', 'prepareEditCandidacyProcess'); $('#editCandidacyForm').submit();"><bean:message key="button.edit" bundle="APPLICATION_RESOURCES" /> <bean:message key="label.application.lowercase" bundle="CANDIDATE_RESOURCES"/></a> | 
+		<a href="#" onclick="$('#methodForm').attr('value', 'prepareEditCandidacyInformation'); $('#editCandidacyForm').submit();"><bean:message key="label.edit.application.educational.background" bundle="CANDIDATE_RESOURCES"/></a> |
+		<a href="#" onclick="$('#methodForm').attr('value', 'prepareEditDegreeAndCourses'); $('#editCandidacyForm').submit();"><bean:message key="erasmus.label.edit.degree.and.courses" bundle="CANDIDATE_RESOURCES" /></a> | 
+		<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditCandidacyDocuments';document.getElementById('editCandidacyForm').submit();"> <bean:message key="label.edit.candidacy.documents" bundle="CANDIDATE_RESOURCES" /></a>
+	</p>
 </fr:form>
 </logic:equal>
 
-<p style="margin-bottom: 0.5em;">
-	<b><bean:message key="label.process.id" bundle="CANDIDATE_RESOURCES"/></b>: <bean:write name="individualCandidacyProcess" property="processCode"/>
-</p>
 
-<h2 style="margin-top: 1em;"><bean:message key="title.personal.data" bundle="CANDIDATE_RESOURCES"/></h2>
+
+<h2 class="mtop1 mbottom05"><bean:message key="title.personal.data" bundle="CANDIDATE_RESOURCES"/></h2>
 
 <logic:equal name="individualCandidacyProcessBean" property="individualCandidacyProcess.isCandidateWithRoles" value="true">
 <fr:view name="individualCandidacyProcessBean" 
 	schema="PublicCandidacyProcess.candidacyDataBean.internal.candidate.view">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="thlight thleft"/>
+		<fr:property name="classes" value="tstyle2 thlight thleft"/>
         <fr:property name="columnClasses" value="width175px,,,,"/>
 	</fr:layout>
 </fr:view>
@@ -96,42 +101,42 @@
 <fr:view name="individualCandidacyProcess" property="personalDetails" 
 	schema="ErasmusCandidacyProcess.personalData">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="thlight thleft"/>
+		<fr:property name="classes" value="tstyle2 thlight thleft"/>
         <fr:property name="columnClasses" value="width175px,,,,"/>
 	</fr:layout>
 </fr:view>
 </logic:equal>
 
 
-<h2 style="margin-top: 1em;"><bean:message key="label.erasmus.home.institution" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
+	<h2 class="mtop1 mbottom05"><bean:message key="label.erasmus.home.institution" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
 	<fr:view name="individualCandidacyProcess" property="candidacy.erasmusStudentData" schema="ErasmusIndividualCandidacyProcess.home.institution.view">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
-	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+			<fr:property name="classes" value="tstyle2 thlight thright mtop025"/>
+	        <fr:property name="columnClasses" value="width175px,,,,"/>
 		</fr:layout>
 	</fr:view>
 
 
-	<h2 style="margin-top: 1em;"><bean:message key="label.erasmus.current.study" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
+	<h2 class="mtop1 mbottom05"><bean:message key="label.erasmus.current.study" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
 	<em><bean:message key="label.erasmus.current.study.detailed" bundle="ACADEMIC_OFFICE_RESOURCES" /></em>
 	<fr:view name="individualCandidacyProcess" schema="ErasmusIndividualCandidacyProcess.current.study.view" >
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
-	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+			<fr:property name="classes" value="tstyle2 thlight thright mtop025"/>
+	        <fr:property name="columnClasses" value="width175px,,,,"/>
 		</fr:layout>
 	</fr:view>
 	
-	<h2 style="margin-top: 1em;"><bean:message key="label.erasmus.period.of.study" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
+	<h2 class="mtop1 mbottom05"><bean:message key="label.erasmus.period.of.study" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
 	<fr:view name="individualCandidacyProcess" schema="ErasmusIndividualCandidacyProcess.period.of.study.view" property="candidacy.erasmusStudentData">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
-	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+			<fr:property name="classes" value="tstyle2 thlight thright mtop025"/>
+	        <fr:property name="columnClasses" value="width175px,,,,"/>
 		</fr:layout>
 	</fr:view>
 
 
-<h2 style="margin-top: 1em;"><bean:message key="label.erasmus.courses" bundle="CANDIDATE_RESOURCES"/></h2>
+	<h2 class="mtop1 mbottom05"><bean:message key="label.erasmus.courses" bundle="CANDIDATE_RESOURCES"/></h2>
 
 	<table class="tstyle2 thlight thcenter">
 	<tr>
@@ -150,36 +155,39 @@
 	</logic:iterate>
 	</table>	
 
-	<h2 class="mtop15 mbottom05"><bean:message key="label.erasmus.appliedSemester" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
+	<h2 class="mtop1 mbottom05"><bean:message key="label.erasmus.appliedSemester" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
 	<fr:view	name="individualCandidacyProcess"
 				property="candidacy.erasmusStudentData"
 				schema="ErasmusStudentDataBean.applyForSemester.view">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
-	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+			<fr:property name="classes" value="tstyle2 thlight thright mtop025"/>
+	        <fr:property name="columnClasses" value="width175px,,,,"/>
 		</fr:layout>
 	</fr:view>
 	
 
-	<h2 class="mtop15 mbottom05"><bean:message key="title.erasmus.language.competence" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
+	<h2 class="mtop1 mbottom05"><bean:message key="title.erasmus.language.competence" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
 	
-	<p><strong>Intensive Portuguese Course</strong></p>
+	<p class="mbottom05"><strong>Intensive Portuguese Course</strong></p>
 	<fr:view	name="individualCandidacyProcess"
 				property="candidacy.erasmusStudentData"
 				schema="ErasmusStudentData.languageCompetence.intensive.portuguese.course.view">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
-	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+			<fr:property name="classes" value="tstyle2 thlight thleft mtop025"/>
+	        <fr:property name="columnClasses" value="width175px,,,,"/>
 		</fr:layout>
 	</fr:view>
 
 
 
-<h2 style="margin-top: 1em;"><bean:message key="label.documentation" bundle="CANDIDATE_RESOURCES"/></h2> 
 
+<h2 class="mtop1 mbottom05"><bean:message key="label.documentation" bundle="CANDIDATE_RESOURCES"/></h2> 
 
 <logic:empty name="individualCandidacyProcess" property="candidacy.documents">
-	<p><em><bean:message key="message.documents.empty" bundle="CANDIDATE_RESOURCES"/>.</em></p>
+	<p>
+		<bean:message key="message.documents.empty" bundle="CANDIDATE_RESOURCES"/>.
+		<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditCandidacyDocuments';document.getElementById('editCandidacyForm').submit();"> <bean:message key="label.edit.candidacy.documents" bundle="CANDIDATE_RESOURCES" /></a>
+	</p>
 </logic:empty>
 
 <logic:notEmpty name="individualCandidacyProcess" property="activeDocumentFiles">
@@ -202,7 +210,7 @@
 </logic:notEmpty>
 
 
-<div class="mtop15" id="contacts">
+<div class="mtop2" id="contacts">
 	<bean:message key="erasmus.contacts.text" bundle="CANDIDATE_RESOURCES" />
 </div>
 

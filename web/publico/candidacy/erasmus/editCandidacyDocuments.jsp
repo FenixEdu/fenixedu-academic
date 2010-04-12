@@ -32,13 +32,19 @@
 
 <h1><bean:write name="application.name"/></h1>
 
-<h2 style="margin-top: 1em;"><bean:message key="label.documentation" bundle="CANDIDATE_RESOURCES"/></h2>
-
-<p><em><bean:message key="message.max.file.size" bundle="CANDIDATE_RESOURCES"/></em></p>
-<p><em><bean:message key="erasmus.message.candidacy.upload.pdf.documents" bundle="CANDIDATE_RESOURCES"/></em></p>
 
 <bean:define id="individualCandidacyProcess" name="candidacyDocumentUploadBean" property="individualCandidacyProcess"/>
 <bean:define id="individualCandidacyProcessOID" name="individualCandidacyProcess" property="OID"/>
+
+<p><a href='<%= fullPath + "?method=backToViewCandidacy&individualCandidacyProcess=" + individualCandidacyProcessOID %>'>« <bean:message key="label.back" bundle="CANDIDATE_RESOURCES"/></a></p>
+
+
+<h2 style="margin-top: 1em;"><bean:message key="label.documentation" bundle="CANDIDATE_RESOURCES"/></h2>
+
+<p><em><bean:message key="message.max.file.size" bundle="CANDIDATE_RESOURCES"/>.</em></p>
+<p><em><bean:message key="erasmus.message.candidacy.upload.pdf.documents" bundle="CANDIDATE_RESOURCES"/>.</em></p>
+
+
 <fr:form action='<%= mappingPath + ".do?method=editCandidacyDocuments" %>' encoding="multipart/form-data">
 	<fr:edit id="individualCandidacyProcessBean.document.file"
 		name="candidacyDocumentUploadBean" 
@@ -69,4 +75,4 @@
 </table>
 </logic:notEmpty>
 
-<p><a href='<%= fullPath + "?method=backToViewCandidacy&individualCandidacyProcess=" + individualCandidacyProcessOID %>'>« <bean:message key="label.back" bundle="CANDIDATE_RESOURCES"/></a></p>
+

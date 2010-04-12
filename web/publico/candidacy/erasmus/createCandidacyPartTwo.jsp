@@ -117,8 +117,11 @@
 			<fr:destination name="invalid" path='<%= "/candidacies/caseHandlingErasmusCandidacyIndividualProcess.do?method=continueCandidacyCreationInvalid" %>'  />
 		</fr:edit>
 		
+		<%--
 		<h2 class="mtop15 mbottom05"><bean:message key="label.erasmus.applyForSemester" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
-		<p><em>Mark the semester's you're going to study at IST</em></p>
+		<p><em>Choose the semester(s) you're applying to:</em></p>
+		--%>
+		
 		<fr:edit		id="erasmusStudentDataBean.applyForSemester.edit"
 					name="individualCandidacyProcessBean"
 					property="erasmusStudentDataBean"
@@ -126,22 +129,26 @@
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle5 thlight thleft mtop05"/>
 		        <fr:property name="columnClasses" value="width225px,,tdclear tderror1"/>
-		        <fr:property name="requiredMarkShown" value="true" />
+  		        <fr:property name="requiredMarkShown" value="true" />
+		        <fr:property name="requiredMessageShown" value="false" />
 			</fr:layout>
 		</fr:edit>
 		
+		
+		
 		<h2 class="mtop15 mbottom05"><bean:message key="title.erasmus.language.competence" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
-		<p><em>Note: The master programmes are given in english</em></p>
+		<p><em>Note: All master programmes are lectured in english</em></p>
 
-		<p><strong>Do you intent to participate in the intensive Portuguese Language Course</strong></p>
+		<p><strong>Do you wish to participate in the intensive Portuguese Language Course?</strong></p>
 		<fr:edit	id="erasmusIndividualCandidacyProcessBean.language.intensive.course"
 					name="individualCandidacyProcessBean"
 					property="erasmusStudentDataBean"
 					schema="ErasmusStudentData.languageCompetence.intensive.portuguese.course">
 			<fr:layout name="tabular-editable">
-				<fr:property name="classes" value="tstyle5 thlight thleft mtop05"/>
+				<fr:property name="classes" value="tstyle5 thlight thleft mtop05 ulnomargin inobullet"/>
 		        <fr:property name="columnClasses" value="width225px,,tdclear tderror1"/>
 		        <fr:property name="requiredMarkShown" value="true" />
+		        <fr:property name="requiredMessageShown" value="false" />
 			</fr:layout>
 		</fr:edit>
 		

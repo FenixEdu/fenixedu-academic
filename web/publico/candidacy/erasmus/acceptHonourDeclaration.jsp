@@ -63,7 +63,7 @@
 
 	<h2 style="margin-top: 1em;"><bean:message key="title.degree.change.honor.declaration" bundle="CANDIDATE_RESOURCES"/></h2>
 
-	<p><bean:message key="message.degree.change.honor.declaration.detail" bundle="CANDIDATE_RESOURCES"/></p>
+	<p><bean:message key="message.degree.change.honor.declaration.detail" bundle="CANDIDATE_RESOURCES"/>.</p>
 
 	<p>
 		<fr:edit 	id="individualCandidacyProcessBean.honor.declaration"
