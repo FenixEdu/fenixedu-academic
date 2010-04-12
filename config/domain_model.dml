@@ -4241,7 +4241,7 @@ class DomainObject {
             String nickname;
             String parishOfBirth;
             String profession;
-            String eIdentifier;
+            String eidentifier;
         }
 
         class organizationalStructure.Unit extends organizationalStructure.Party {

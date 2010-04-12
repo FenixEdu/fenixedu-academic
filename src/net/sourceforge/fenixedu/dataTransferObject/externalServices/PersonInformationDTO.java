@@ -154,7 +154,7 @@ public class PersonInformationDTO {
 	    this.alias.add(loginAlias.getAlias());
 	}
 
-	this.eIdentifier = person.getEIdentifier();
+	this.eIdentifier = person.getEidentifier();
 
     }
 

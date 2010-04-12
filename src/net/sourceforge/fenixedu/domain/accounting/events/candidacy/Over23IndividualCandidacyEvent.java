@@ -16,6 +16,8 @@ public class Over23IndividualCandidacyEvent extends Over23IndividualCandidacyEve
     public Over23IndividualCandidacyEvent(final Over23IndividualCandidacy candidacy, final Person person) {
 	this();
 	super.init(candidacy, EventType.OVER23_INDIVIDUAL_CANDIDACY, person);
+
+	attachAvailablePaymentCode(person);
     }
 
     @Override

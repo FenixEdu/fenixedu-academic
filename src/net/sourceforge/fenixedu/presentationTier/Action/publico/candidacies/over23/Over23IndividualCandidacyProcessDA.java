@@ -32,7 +32,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/candidacies/caseHandlingOver23CandidacyIndividualProcess", module = "publico", formBeanClass = FenixActionForm.class)
+@Mapping(path = "/candidacies/caseHandlingAncientOver23CandidacyIndividualProcess", module = "publico", formBeanClass = FenixActionForm.class)
 @Forwards( { @Forward(name = "candidacy-types-information-intro", path = "candidacy.types.information.intro"),
 	@Forward(name = "candidacy-types-information-intro-en", path = "candidacy.types.information.intro.en"),
 	@Forward(name = "candidacy-process-intro", path = "candidacy.process.intro"),

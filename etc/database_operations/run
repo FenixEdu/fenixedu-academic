@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter PARTY table" alterTablePartyChangeColumnEIdentifier.sql

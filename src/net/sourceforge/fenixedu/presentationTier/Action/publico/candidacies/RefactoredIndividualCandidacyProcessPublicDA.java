@@ -287,7 +287,7 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 	return mapping.findForward("candidacy-continue-creation");
     }
 
-    private boolean isPersonStudentOrEmployeeAndNumberIsCorrect(Person person, String personNumber) {
+    protected boolean isPersonStudentOrEmployeeAndNumberIsCorrect(Person person, String personNumber) {
 	return (person.hasStudent() && person.getStudent().getNumber().toString().equals(personNumber))
 		|| (person.hasEmployee() && person.getEmployee().getEmployeeNumber().toString().equals(personNumber))
 		|| (!person.hasStudent() && !person.hasEmployee() && StringUtils.isEmpty(personNumber));
