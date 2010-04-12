@@ -27,10 +27,11 @@ public class TeacherServiceExemption extends TeacherServiceExemption_Base {
     public boolean isLongDuration() {
 	Integer daysBetween = null;
 	if (getEndDateYearMonthDay() != null) {
-	    daysBetween = new Interval(getBeginDateYearMonthDay().toDateMidnight(), getEndDateYearMonthDay().toDateMidnight())
-		    .toPeriod(PeriodType.days()).getDays();
+	    daysBetween = new Interval(getBeginDateYearMonthDay().toLocalDate().toDateTimeAtStartOfDay(),
+		    getEndDateYearMonthDay().toLocalDate().toDateTimeAtStartOfDay().plusDays(1)).toPeriod(PeriodType.days())
+		    .getDays();
 	}
-	return (daysBetween == null || daysBetween > 90);
+	return (daysBetween == null || daysBetween >= 90);
     }
 
     public boolean isForCountInCredits() {
