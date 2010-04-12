@@ -503,6 +503,9 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	// Ano de conclusão da habilitação anterior
 	row.setCell(candidacyInformationBean.getConclusionYear());
 
+	// Ano de conclusão da habilitação anterior
+	row.setCell(candidacyInformationBean.getConclusionGrade() != null ? candidacyInformationBean.getConclusionGrade() : "");
+
 	// Nº de vezes que ficou retido no Ensino Secundário
 	row.setCell(candidacyInformationBean.getNumberOfFlunksOnHighSchool());
 
