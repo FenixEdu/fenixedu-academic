@@ -350,9 +350,12 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 	spreadsheet.addCell(getResourceMessage("label." + (isConcluded ? "yes" : "no") + ".capitalized"));
 	spreadsheet.addCell(isConcluded ? registrationConclusionBean.getConclusionDate().toString(YMD_FORMAT) : EMPTY);
 	spreadsheet.addCell(registrationConclusionBean.getAverage().toString());
+	spreadsheet.addCell(getResourceMessage("label." + (registrationConclusionBean.isConclusionProcessed() ? "yes" : "no")
+		+ ".capitalized"));
     }
 
     private void fillSpreadSheetEmptyCells(StyledExcelSpreadsheet spreadsheet) {
+	spreadsheet.addCell(EMPTY);
 	spreadsheet.addCell(EMPTY);
 	spreadsheet.addCell(EMPTY);
 	spreadsheet.addCell(EMPTY);
@@ -377,20 +380,25 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 	    spreadsheet.addHeader(getResourceMessage("degree.concluded"));
 	    spreadsheet.addHeader(getResourceMessage("label.conclusionDate"));
 	    spreadsheet.addHeader(getResourceMessage("degree.average"));
+	    spreadsheet.addHeader(getResourceMessage("degree.hasConclusionProcess"));
+
 	    if (getAdministratedCycleTypes().contains(CycleType.FIRST_CYCLE)) {
 		spreadsheet.addHeader(getResourceMessage("label.firstCycle.concluded"));
 		spreadsheet.addHeader(getResourceMessage("label.firstCycle.conclusionDate"));
 		spreadsheet.addHeader(getResourceMessage("label.firstCycle.average"));
+		spreadsheet.addHeader(getResourceMessage("label.firstCycle.hasConclusionProcess"));
 	    }
 	    if (getAdministratedCycleTypes().contains(CycleType.SECOND_CYCLE)) {
 		spreadsheet.addHeader(getResourceMessage("label.secondCycle.concluded"));
 		spreadsheet.addHeader(getResourceMessage("label.secondCycle.conclusionDate"));
 		spreadsheet.addHeader(getResourceMessage("label.secondCycle.average"));
+		spreadsheet.addHeader(getResourceMessage("label.secondCycle.hasConclusionProcess"));
 	    }
 	    if (getAdministratedCycleTypes().contains(CycleType.THIRD_CYCLE)) {
 		spreadsheet.addHeader(getResourceMessage("label.thirdCycle.concluded"));
 		spreadsheet.addHeader(getResourceMessage("label.thirdCycle.conclusionDate"));
 		spreadsheet.addHeader(getResourceMessage("label.thirdCycle.average"));
+		spreadsheet.addHeader(getResourceMessage("label.thirdCycle.hasConclusionProcess"));
 	    }
 	}
     }
