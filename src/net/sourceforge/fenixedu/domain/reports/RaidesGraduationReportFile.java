@@ -309,14 +309,18 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	// Regime de Ingresso no Curso Actual (designação)
 	row.setCell(ingression != null ? ingression.getFullDescription() : "");
 
-	// Estabelecimento de proveniência: Instituição onde esteve
-	// inscrito mas
-	// não obteve grau, (e.g: transferencias, mudanças de curso...)
-	PrecedentDegreeInformation precedence = sourceRegistration.getStudentCandidacy().getPrecedentDegreeInformation();
-	row.setCell(precedence != null && precedence.getInstitutionName() != null ? precedence.getInstitutionName() : "");
-
-	// Curso de proveniência
-	row.setCell(precedence != null && precedence.getDegreeDesignation() != null ? precedence.getDegreeDesignation() : "");
+	if (sourceRegistration.getStudentCandidacy() != null) {
+	    // Estabelecimento de proveniência: Instituição onde esteve
+	    // inscrito mas
+	    // não obteve grau, (e.g: transferencias, mudanças de curso...)
+	    PrecedentDegreeInformation precedence = sourceRegistration.getStudentCandidacy().getPrecedentDegreeInformation();
+	    row.setCell(precedence != null && precedence.getInstitutionName() != null ? precedence.getInstitutionName() : "");
+	    // Curso de proveniência
+	    row.setCell(precedence != null && precedence.getDegreeDesignation() != null ? precedence.getDegreeDesignation() : "");
+	} else {
+	    row.setCell("");
+	    row.setCell("");
+	}
 
 	// Estabelecimento do Curso Anterior (se o aluno ingressou por uma via
 	// diferente CNA, e deve
