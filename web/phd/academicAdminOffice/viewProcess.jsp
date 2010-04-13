@@ -108,6 +108,11 @@
 					</html:link>
 				</li>
 			</logic:equal>
+			<li>
+				<html:link action="/phdIndividualProgramProcess.do?method=managePhdIndividualProgramProcessState" paramId="processId" paramName="process" paramProperty="externalId">
+					<bean:message bundle="PHD_RESOURCES" key="label.phd.manage.states"/>
+				</html:link>
+			</li>
 			<%--
 			<li>
 				<html:link action="/phdAccountingEventsManagement.do?method=prepare" paramId="processId" paramName="process" paramProperty="externalId">

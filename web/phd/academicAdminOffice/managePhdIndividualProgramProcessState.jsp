@@ -56,7 +56,7 @@
 			<fr:slot name="processState" required="true">
 		        <fr:property name="includedValues" value="NOT_ADMITTED,CANCELLED,SUSPENDED,FLUNKED" /> 
 				<fr:property name="defaultText" value="dropDown.Default" />
-				<fr:property name="bundle" value="ENUMERATION_RESOURCES" />
+				<fr:property name="bundle" value="PHD_RESOURCES" />
 				<fr:property name="key" value="true" />
 			</fr:slot>
 		</fr:schema>
