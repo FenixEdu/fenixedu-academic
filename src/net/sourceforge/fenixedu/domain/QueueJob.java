@@ -8,6 +8,9 @@ import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
 
 public abstract class QueueJob extends QueueJob_Base {
+    public static enum Priority {
+	HIGH, NORMAL;
+    }
 
     public QueueJob() {
 	super();
@@ -74,6 +77,10 @@ public abstract class QueueJob extends QueueJob_Base {
 		.getInstance().getQueueJob(), predicate);
 
 	return tempList.size() > max ? tempList.subList(0, max) : tempList;
+    }
+
+    public Priority getPriority() {
+	return Priority.NORMAL;
     }
 
 }

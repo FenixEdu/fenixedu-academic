@@ -190,4 +190,9 @@ public class ParkingDataReportFile extends ParkingDataReportFile_Base {
 	}
     }
 
+    @Override
+    public Priority getPriority() {
+	return Priority.HIGH;
+    }
+
 }
