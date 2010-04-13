@@ -341,11 +341,13 @@ abstract public class StudentCurricularPlanEnrolment {
 
     static public StudentCurricularPlanEnrolment createManager(final EnrolmentContext enrolmentContext) {
 
-	if (enrolmentContext.isPhdDegree()) {
-	    return new PhdStudentCurricularPlanEnrolmentManager(enrolmentContext);
+	if (enrolmentContext.isNormal()) {
 
-	} else if (enrolmentContext.isNormal()) {
-	    return new StudentCurricularPlanEnrolmentManager(enrolmentContext);
+	    if (enrolmentContext.isPhdDegree()) {
+		return new PhdStudentCurricularPlanEnrolmentManager(enrolmentContext);
+	    } else {
+		return new StudentCurricularPlanEnrolmentManager(enrolmentContext);
+	    }
 
 	} else if (enrolmentContext.isImprovement()) {
 	    return new StudentCurricularPlanImprovementOfApprovedEnrolmentManager(enrolmentContext);
