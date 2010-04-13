@@ -4,8 +4,6 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/phd.tld" prefix="phd" %>
 
-
-
 <%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddStudyPlan"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RequestPublicPresentationSeminarComission"%>
@@ -148,7 +146,7 @@
   </tr>
 </table>
 
-<logic:equal name="process" property="activeState" value="WORK_DEVELOPMENT">
+<logic:notEmpty name="process" property="student">
 	<br/>
 	<strong><bean:message  key="label.phd.student.information" bundle="PHD_RESOURCES"/></strong>
 	<fr:view schema="AcademicAdminOffice.PhdIndividualProgramProcess.view.student.information" name="process">
@@ -157,7 +155,7 @@
 		</fr:layout>
 	</fr:view>
 	<br/>
-</logic:equal>
+</logic:notEmpty>
 
 <%--Thesis --%>
 <jsp:include page="viewThesisProcess.jsp" />
