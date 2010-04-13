@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%>
+<%@page import="org.apache.struts.action.ActionMessages" %>
 
 <html:xhtml/>
 
@@ -27,7 +28,7 @@
 
 <p class="mtop15"><span><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></span></p>
 
-<html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
+<html:messages id="message" message="true" bundle="APPLICATION_RESOURCES" property="<%= ActionMessages.GLOBAL_MESSAGE %>">
 	<p><span class="error0"><bean:write name="message"/></span></p>
 </html:messages>
 
@@ -38,6 +39,10 @@
 		</fr:messages>
 	</ul>
 </fr:hasMessages>
+
+<html:messages id="message" message="true" bundle="CANDIDATE_RESOURCES" property="individualCandidacyMessages">
+	<p><span class="error0"><bean:write name="message"/></span></p>
+</html:messages>
 
 <fr:form id="over23CandidacyForm" action='<%= mappingPath + ".do?method=continueCandidacyCreation" %>' encoding="multipart/form-data">
 		<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />

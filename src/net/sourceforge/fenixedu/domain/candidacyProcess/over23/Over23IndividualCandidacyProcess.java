@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
@@ -36,6 +37,8 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	activities.add(new EditDocuments());
 	activities.add(new BindPersonToCandidacy());
 	activities.add(new ChangeProcessCheckedState());
+	activities.add(new SendEmailForApplicationSubmission());
+	activities.add(new ChangePaymentCheckedState());
     }
 
     protected Over23IndividualCandidacyProcess() {
@@ -521,7 +524,95 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 
     @Override
     public List<IndividualCandidacyDocumentFileType> getMissingRequiredDocumentFiles() {
-	// TODO Auto-generated method stub
-	return null;
+	List<IndividualCandidacyDocumentFileType> missingDocumentFiles = new ArrayList<IndividualCandidacyDocumentFileType>();
+
+	if (getFileForType(IndividualCandidacyDocumentFileType.PHOTO) == null) {
+	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.PHOTO);
+	}
+
+	if (getFileForType(IndividualCandidacyDocumentFileType.CV_DOCUMENT) == null) {
+	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.CV_DOCUMENT);
+	}
+
+	if (getFileForType(IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT) == null) {
+	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT);
+	}
+
+	if (getFileForType(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION) == null) {
+	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION);
+	}
+
+	if (getFileForType(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT) == null) {
+	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT);
+	}
+
+	if (getFileForType(IndividualCandidacyDocumentFileType.REGISTRATION_CERTIFICATE) == null) {
+	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.REGISTRATION_CERTIFICATE);
+	}
+
+	if (getFileForType(IndividualCandidacyDocumentFileType.NO_PRESCRIPTION_CERTIFICATE) == null) {
+	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.NO_PRESCRIPTION_CERTIFICATE);
+	}
+
+	if (getFileForType(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT) == null) {
+	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT);
+	}
+
+	if (getFileForType(IndividualCandidacyDocumentFileType.FIRST_CYCLE_ACCESS_HABILITATION_CERTIFICATE) == null) {
+	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.FIRST_CYCLE_ACCESS_HABILITATION_CERTIFICATE);
+	}
+
+	if (getFileForType(IndividualCandidacyDocumentFileType.FOREIGN_INSTITUTION_SCALE_CERTIFICATE) == null) {
+	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.FOREIGN_INSTITUTION_SCALE_CERTIFICATE);
+	}
+
+	if (getFileForType(IndividualCandidacyDocumentFileType.GRADES_DOCUMENT) == null) {
+	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.GRADES_DOCUMENT);
+	}
+
+	return missingDocumentFiles;
     }
+
+    static private class SendEmailForApplicationSubmission extends Activity<Over23IndividualCandidacyProcess> {
+	@Override
+	public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
+	}
+
+	@Override
+	protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    DegreeOfficePublicCandidacyHashCode hashCode = (DegreeOfficePublicCandidacyHashCode) object;
+	    hashCode.sendEmailForApplicationSuccessfullySubmited();
+	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return Boolean.FALSE;
+	}
+
+    }
+
+    static private class ChangePaymentCheckedState extends Activity<Over23IndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (process.isCandidacyCancelled()) {
+		throw new PreConditionNotValidException();
+	    }
+
+	}
+
+	@Override
+	protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
+		Object object) {
+	    process.setPaymentChecked(((IndividualCandidacyProcessBean) object).getPaymentChecked());
+	    return process;
+	}
+    }
+
 }

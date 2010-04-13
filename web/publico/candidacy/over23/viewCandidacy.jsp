@@ -48,7 +48,7 @@
 	</noscript>
 	
 	<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditCandidacyProcess';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.edit.application" bundle="CANDIDATE_RESOURCES"/></a> | 
-	<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditCandidacyHabilitations';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.edit.application.qualifications" bundle="CANDIDATE_RESOURCES"/></a> |
+	<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditCandidacyQualifications';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.edit.application.qualifications" bundle="CANDIDATE_RESOURCES"/></a> |
 	<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditCandidacyDocuments';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.edit.documents" bundle="CANDIDATE_RESOURCES"/></a>
 </fr:form>
 </logic:equal>
@@ -67,23 +67,6 @@
 	</fr:layout>
 </fr:view>
 
-<table class="tdtop">
-	<tr>
-		<td class="width175px"><bean:message key="label.photo" bundle="CANDIDATE_RESOURCES"/>:</td>
-		<td>
-			<logic:present name="individualCandidacyProcessBean" property="individualCandidacyProcess.photo">
-			<bean:define id="photo" name="individualCandidacyProcessBean" property="individualCandidacyProcess.photo"/>
-			<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><img src="<%= request.getContextPath() + ((IndividualCandidacyDocumentFile) photo).getDownloadUrl() %>" />
-			</logic:present>
-			
-			<logic:notPresent name="individualCandidacyProcessBean" property="individualCandidacyProcess.photo">
-				<em><bean:message key="message.does.not.have.photo" bundle="CANDIDATE_RESOURCES"/></em>
-			</logic:notPresent>
-		</td>
-	</tr>
-</table>
-
-	
 <h2 style="margin-top: 1em;"><bean:message key="title.over23.qualifications" bundle="CANDIDATE_RESOURCES"/></h2>
 
 
@@ -201,6 +184,24 @@
 			schema="PublicCandidacyProcessBean.over23.disabilities">
 	<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>
 </fr:view>
+</logic:notEmpty>
+
+<logic:notEmpty name="individualCandidacyProcess" property="associatedPaymentCode">
+<p><bean:message key="message.application.sibs.payment.details" bundle="CANDIDATE_RESOURCES"/></p>
+<table>
+	<tr>
+		<td><bean:message key="label.sibs.entity.code" bundle="CANDIDATE_RESOURCES"/></td>
+		<td><bean:write name="sibsEntityCode"/></td>
+	</tr>
+	<tr>
+		<td><bean:message key="label.sibs.payment.code" bundle="CANDIDATE_RESOURCES"/></td>
+		<td><fr:view name="individualCandidacyProcess" property="associatedPaymentCode.formattedCode"/></td>
+	</tr>
+	<tr>
+		<td><bean:message key="label.sibs.amount" bundle="CANDIDATE_RESOURCES"/></td>
+		<td><fr:view name="individualCandidacyProcess" property="associatedPaymentCode.minAmount"/></td>
+	</tr>
+</table>
 </logic:notEmpty>
 
 <h2 style="margin-top: 1em;"><bean:message key="label.documentation" bundle="CANDIDATE_RESOURCES"/></h2> 

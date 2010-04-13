@@ -43,7 +43,6 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	activities.add(new RevokeDocumentFile());
 	activities.add(new ChangePaymentCheckedState());
 	activities.add(new RejectCandidacy());
-
     }
 
     private SecondCycleIndividualCandidacyProcess() {

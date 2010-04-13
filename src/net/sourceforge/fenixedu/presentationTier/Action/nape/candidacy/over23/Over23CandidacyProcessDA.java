@@ -38,15 +38,8 @@ import pt.utl.ist.fenix.tools.util.excel.SpreadsheetXLSExporter;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-@Mapping(path = "/caseHandlingOver23CandidacyProcess", module = "academicAdminOffice", formBeanClass = CandidacyProcessDA.CandidacyProcessForm.class)
-@Forwards( { @Forward(name = "intro", path = "/candidacy/mainCandidacyProcess.jsp"),
-	@Forward(name = "prepare-create-new-process", path = "/candidacy/createCandidacyPeriod.jsp"),
-	@Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp"),
-	@Forward(name = "send-to-jury", path = "/candidacy/over23/sendToJury.jsp"),
-	@Forward(name = "view-candidacy-results", path = "/candidacy/over23/viewCandidacyResults.jsp"),
-	@Forward(name = "insert-candidacy-results", path = "/candidacy/over23/introduceCandidacyResults.jsp"),
-	@Forward(name = "create-registrations", path = "/candidacy/createRegistrations.jsp")
-
+@Mapping(path = "/caseHandlingOver23CandidacyProcess", module = "nape", formBeanClass = CandidacyProcessDA.CandidacyProcessForm.class)
+@Forwards( { @Forward(name = "intro", path = "/candidacy/mainCandidacyProcess.jsp")
 })
 public class Over23CandidacyProcessDA extends CandidacyProcessDA {
 

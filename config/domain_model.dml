@@ -2220,6 +2220,9 @@ class DomainObject {
                 class accounting.postingRules.candidacy.SecondCycleIndividualCandidacyPR extends accounting.postingRules.FixedAmountPR {
                 }
 
+				class accounting.postingRules.candidacy.Over23IndividualCandidacyPR extends accounting.postingRules.FixedAmountPR {
+				}
+
             class accounting.postingRules.ImprovementOfApprovedEnrolmentPR extends accounting.postingRules.GenericSingleEntryTypePR {
                 Money fixedAmount;
                 Money fixedAmountPenalty;
