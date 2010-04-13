@@ -200,7 +200,7 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 
 	final BolonhaStudentOptionalEnrollmentBean optionalBean = getBolonhaStudentOptionalEnrollmentBeanFromViewState();
 	request.setAttribute("optionalEnrolmentBean", optionalBean);
-	RenderUtils.invalidateViewState("optionalEnrolment");
+	RenderUtils.invalidateViewState();
 
 	request.setAttribute("curricularRuleLabels", getLabels(optionalBean.getSelectedDegreeModuleToEnrol().getDegreeModule()
 		.getCurricularRules(optionalBean.getExecutionPeriod())));
