@@ -520,7 +520,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	return result;
     }
 
-    public static List<ExecutionDegree> getAllByExecutionYearAndDegreeType(String year, DegreeType typeOfCourse) {
+    public static List<ExecutionDegree> getAllByExecutionYearAndDegreeType(String year, DegreeType... typeOfCourse) {
 
 	if (year == null || typeOfCourse == null) {
 	    return Collections.EMPTY_LIST;
@@ -530,7 +530,8 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	return getAllByExecutionYearAndDegreeType(executionYear, typeOfCourse);
     }
 
-    public static List<ExecutionDegree> getAllByExecutionYearAndDegreeType(ExecutionYear executionYear, DegreeType typeOfCourse) {
+    public static List<ExecutionDegree> getAllByExecutionYearAndDegreeType(ExecutionYear executionYear,
+	    DegreeType ... typeOfCourse) {
 
 	if (executionYear == null || typeOfCourse == null) {
 	    return Collections.EMPTY_LIST;
@@ -538,7 +539,11 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 
 	final List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
 	for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
-	    if (!typeOfCourse.equals(executionDegree.getDegreeType())) {
+	    boolean match = false;
+	    for (DegreeType type : typeOfCourse) {
+		match |= type.equals(executionDegree.getDegreeType());
+	    }
+	    if (!match) {
 		continue;
 	    }
 
@@ -707,15 +712,15 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	}
 	return result;
     }
-    
+
     public boolean hasAnyResponsibleCoordinators() {
-	return (! getResponsibleCoordinators().isEmpty());
+	return (!getResponsibleCoordinators().isEmpty());
     }
-    
+
     public boolean isCoordinationTeamFormed() {
 	return hasAnyCoordinatorsList();
     }
-    
+
     public boolean isCoordinationResponsibleChosen() {
 	return hasAnyResponsibleCoordinators();
     }

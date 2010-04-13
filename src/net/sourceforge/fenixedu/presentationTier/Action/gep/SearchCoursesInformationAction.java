@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteCourseInformation;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.Action.framework.SearchAction;
 import net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping;
@@ -150,8 +151,9 @@ public class SearchCoursesInformationAction extends SearchAction {
 			teacher.setName(infoTeacher.getInfoPerson().getNome());
 			teacher.setResponsible(infoSiteCourseInformation.getInfoResponsibleTeachers().contains(infoTeacher));
 
-			final InfoDepartment infoDepartment = InfoDepartment.newInfoFromDomain(infoTeacher.getTeacher()
-				.getCurrentWorkingDepartment());
+			final InfoDepartment infoDepartment = InfoDepartment
+				.newInfoFromDomain(infoTeacher.getTeacher() != null ? infoTeacher.getTeacher()
+					.getCurrentWorkingDepartment() : null);
 			if (infoDepartment == null) {
 			    final MessageResources messages = MessageResources
 				    .getMessageResources("resources/ApplicationResources");
@@ -349,9 +351,12 @@ public class SearchCoursesInformationAction extends SearchAction {
     protected Object[] getSearchServiceArgs(HttpServletRequest request, ActionForm form) throws Exception {
 
 	Integer executionDegreeId = null;
+	ExecutionDegree executionDegree = null;
 
-	if (!request.getParameter("executionDegreeId").equals("all"))
+	if (!request.getParameter("executionDegreeId").equals("all")) {
 	    executionDegreeId = Integer.valueOf(request.getParameter("executionDegreeId"));
+	    executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
+	}
 
 	Boolean basic = null;
 	if ((request.getParameter("basic") != null) && request.getParameter("basic").equals("true")) {
@@ -363,7 +368,7 @@ public class SearchCoursesInformationAction extends SearchAction {
 
 	String executionYear = request.getParameter("executionYear");
 
-	return new Object[] { executionDegreeId, basic, executionYear };
+	return new Object[] { executionDegree, basic, executionYear };
     }
 
     @Override
@@ -380,7 +385,8 @@ public class SearchCoursesInformationAction extends SearchAction {
 
 	request.setAttribute("executionYear", infoExecutionYear.getYear());
 
-	List infoExecutionDegrees = ReadExecutionDegreesByExecutionYearAndDegreeType.run(executionYear, DegreeType.DEGREE);
+	List infoExecutionDegrees = ReadExecutionDegreesByExecutionYearAndDegreeType.run(executionYear, DegreeType.DEGREE,
+		DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
 	Collections.sort(infoExecutionDegrees, new Comparator() {
 
 	    public int compare(Object o1, Object o2) {
@@ -397,5 +403,6 @@ public class SearchCoursesInformationAction extends SearchAction {
 	request.setAttribute("infoExecutionDegrees", infoExecutionDegrees);
 	request.setAttribute("showNextSelects", "true");
     }
+
 
 }

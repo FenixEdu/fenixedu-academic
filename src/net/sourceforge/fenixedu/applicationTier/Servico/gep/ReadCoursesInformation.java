@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
  */
 public class ReadCoursesInformation extends FenixService {
 
-    public List<InfoSiteCourseInformation> run(final Integer executionDegreeOID, final Boolean basic,
+    public List<InfoSiteCourseInformation> run(final ExecutionDegree executionDegree, final Boolean basic,
 	    final String executionYearString) {
 	final ExecutionYear executionYear;
 	if (executionYearString == null) {
@@ -33,9 +33,10 @@ public class ReadCoursesInformation extends FenixService {
 	}
 
 	final List<Professorship> professorships;
-	if (executionDegreeOID == null) {
+	if (executionDegree == null) {
 	    final List<ExecutionDegree> executionDegrees = ExecutionDegree.getAllByExecutionYearAndDegreeType(executionYear
-		    .getYear(), DegreeType.DEGREE);
+		    .getYear(), DegreeType.DEGREE, DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE,
+		    DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
 	    final List<DegreeCurricularPlan> degreeCurricularPlans = getDegreeCurricularPlans(executionDegrees);
 	    final ExecutionYear executionDegreesExecutionYear = degreeCurricularPlans.isEmpty() ? null : executionDegrees.get(0)
 		    .getExecutionYear();
@@ -48,8 +49,6 @@ public class ReadCoursesInformation extends FenixService {
 			executionDegreesExecutionYear, basic);
 	    }
 	} else {
-	    final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
-
 	    if (basic == null) {
 		professorships = Professorship.readByDegreeCurricularPlanAndExecutionYear(executionDegree
 			.getDegreeCurricularPlan(), executionDegree.getExecutionYear());

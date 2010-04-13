@@ -93,7 +93,7 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
 	final List<InfoTeacher> result = new ArrayList<InfoTeacher>();
 
 	for (final Professorship professorship : getExecutionCourse().getProfessorships()) {
-	    result.add(InfoTeacher.newInfoFromDomain(professorship.getTeacher()));
+	    result.add(InfoTeacher.newInfoFromDomain(professorship.getPerson()));
 	}
 
 	return result;
@@ -103,7 +103,7 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
 	final List<InfoTeacher> result = new ArrayList<InfoTeacher>();
 
 	for (final Professorship responsibleFor : getExecutionCourse().responsibleFors()) {
-	    result.add(InfoTeacher.newInfoFromDomain(responsibleFor.getTeacher()));
+	    result.add(InfoTeacher.newInfoFromDomain(responsibleFor.getPerson()));
 	}
 
 	return result;

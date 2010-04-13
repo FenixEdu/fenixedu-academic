@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCategory;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -18,19 +19,23 @@ import net.sourceforge.fenixedu.domain.Teacher;
  */
 public class InfoTeacher extends InfoObject {
 
-    private Teacher teacher;
+    private Person person;
 
     // This constructor is needed because of CRUDActionByOID. Do not delete it.
     public InfoTeacher() {
     }
 
+    public InfoTeacher(final Person person) {
+	this.person = person;
+    }
+
     public InfoTeacher(final Teacher teacher) {
-	this.teacher = teacher;
+	this.person = teacher.getPerson();
     }
 
     public List getProfessorShipsExecutionCourses() {
 	final List<InfoProfessorship> infoProfessorships = new ArrayList<InfoProfessorship>();
-	for (final Professorship professorship : getTeacher().getProfessorshipsSet()) {
+	for (final Professorship professorship : getPerson().getProfessorshipsSet()) {
 	    infoProfessorships.add(InfoProfessorship.newInfoFromDomain(professorship));
 	}
 	return infoProfessorships;
@@ -38,7 +43,7 @@ public class InfoTeacher extends InfoObject {
 
     public List getResponsibleForExecutionCourses() {
 	final List<InfoProfessorship> infoProfessorships = new ArrayList<InfoProfessorship>();
-	for (final Professorship professorship : getTeacher().getProfessorshipsSet()) {
+	for (final Professorship professorship : getPerson().getProfessorshipsSet()) {
 	    if (professorship.isResponsibleFor()) {
 		infoProfessorships.add(InfoProfessorship.newInfoFromDomain(professorship));
 	    }
@@ -51,7 +56,7 @@ public class InfoTeacher extends InfoObject {
     }
 
     public InfoPerson getInfoPerson() {
-	return InfoPerson.newInfoFromDomain(getTeacher().getPerson());
+	return InfoPerson.newInfoFromDomain(getPerson());
     }
 
     public InfoCategory getInfoCategory() {
@@ -60,12 +65,16 @@ public class InfoTeacher extends InfoObject {
 
     @Override
     public boolean equals(Object obj) {
-	return obj != null && getTeacher() == ((InfoTeacher) obj).teacher;
+	return obj != null && getPerson() == ((InfoTeacher) obj).getPerson();
     }
 
     @Override
     public String toString() {
 	return getTeacher().toString();
+    }
+
+    public static InfoTeacher newInfoFromDomain(final Person person) {
+	return person == null ? null : new InfoTeacher(person);
     }
 
     public static InfoTeacher newInfoFromDomain(final Teacher teacher) {
@@ -74,18 +83,21 @@ public class InfoTeacher extends InfoObject {
 
     @Override
     public Integer getIdInternal() {
-	return getTeacher().getIdInternal();
+	return getPerson().getIdInternal();
     }
 
     @Override
     public void setIdInternal(Integer integer) {
 	// This attribution is needed because of CRUDActionByOID. Do not delete
 	// it.
-	this.teacher = RootDomainObject.getInstance().readTeacherByOID(integer);
+	this.person = (Person) RootDomainObject.getInstance().readPartyByOID(integer);
     }
 
     public Teacher getTeacher() {
-	return teacher;
+	return person.getTeacher();
     }
 
+    public Person getPerson() {
+	return this.person;
+    }
 }
