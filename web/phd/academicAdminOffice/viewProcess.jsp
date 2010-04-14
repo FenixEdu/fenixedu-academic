@@ -4,10 +4,13 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/phd.tld" prefix="phd" %>
 
+<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
+
 <%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddStudyPlan"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RequestPublicPresentationSeminarComission"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RequestPublicThesisPresentation"%><logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
+<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RequestPublicThesisPresentation"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.ExemptPublicPresentationSeminarComission"%>
+
 
 <%-- ### Title #### --%>
 <em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
@@ -71,7 +74,7 @@
 					</html:link>
 				</li>
 			</logic:equal>
-			<phd:activityAvailable process="<%= process %>" activity="<%= PhdIndividualProgramProcess.AddStudyPlan.class %>">
+			<phd:activityAvailable process="<%= process %>" activity="<%= AddStudyPlan.class %>">
 				<li>
 					<html:link action="/phdIndividualProgramProcess.do?method=manageStudyPlan" paramId="processId" paramName="process" paramProperty="externalId">
 						<bean:message bundle="PHD_RESOURCES" key="label.phd.studyPlanAndQualificationExams"/>
@@ -128,13 +131,21 @@
 			
 			<br/>
 			
-			<phd:activityAvailable process="<%= process %>" activity="<%= PhdIndividualProgramProcess.RequestPublicPresentationSeminarComission.class %>">
+			<phd:activityAvailable process="<%= process %>" activity="<%= RequestPublicPresentationSeminarComission.class %>">
 				<li>
 					<html:link action="/phdIndividualProgramProcess.do?method=prepareRequestPublicPresentationSeminarComission" paramId="processId" paramName="process" paramProperty="externalId">
 						<bean:message bundle="PHD_RESOURCES" key="label.phd.request.public.presentation.seminar.comission"/>
 					</html:link>
 				</li>
 			</phd:activityAvailable>
+			<phd:activityAvailable process="<%= process %>" activity="<%= ExemptPublicPresentationSeminarComission.class %>">
+				<li>
+					<html:link action="/phdIndividualProgramProcess.do?method=prepareExemptPublicPresentationSeminarComission" paramId="processId" paramName="process" paramProperty="externalId">
+						<bean:message bundle="PHD_RESOURCES" key="label.phd.exempt.public.presentation.seminar.comission"/>
+					</html:link>
+				</li>
+			</phd:activityAvailable>
+
 			<%-- 
 			<phd:activityAvailable process="<%= process %>" activity="<%= PhdIndividualProgramProcess.RequestPublicThesisPresentation.class %>">
 			
