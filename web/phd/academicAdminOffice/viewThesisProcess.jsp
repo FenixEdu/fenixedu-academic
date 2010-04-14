@@ -38,6 +38,7 @@
 				</a>
 			</li>
 			</phd:activityAvailable>
+			
 			<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= DownloadFinalThesisDocument.class %>">
 			<li>
 				<bean:define id="finalThesisDownloadUrl" name="thesisProcess" property="finalThesisDocument.downloadUrl" />
@@ -47,6 +48,7 @@
 				</a>
 			</li>
 			</phd:activityAvailable>
+			
 			<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= DownloadThesisRequirement.class %>">
 			<li>
 				<bean:define id="thesisRequirementDownloadUrl" name="thesisProcess" property="thesisRequirementDocument.downloadUrl" />
@@ -66,6 +68,7 @@
 			</html:link>
 	</li>
 	</phd:activityAvailable>
+	
 	<logic:notEqual name="thesisProcess" property="activeState.name" value="NEW">
 		<li style="display: inline;">
 			<html:link action="/phdThesisProcess.do?method=prepareSubmitJuryElementsDocument" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
@@ -78,6 +81,7 @@
 			</html:link>
 		</li>
 	</logic:notEqual>
+	
 	<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= RequestJuryReviews.class %>">
 	<li style="display: inline;">
 		<html:link action="/phdThesisProcess.do?method=prepareRequestJuryReviews" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
@@ -85,6 +89,7 @@
 		</html:link>
 	</li>
 	</phd:activityAvailable>
+	
 	<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= SubmitThesis.class %>">
 	<li style="display: inline;">
 		<html:link action="/phdThesisProcess.do?method=prepareSubmitThesis" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">

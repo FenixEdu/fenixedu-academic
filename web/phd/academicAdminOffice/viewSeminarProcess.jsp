@@ -18,6 +18,7 @@
 	</fr:view>
 	<bean:define id="seminarProcess" name="process" property="seminarProcess" />
 	<ul class="operations">
+		
 		<phd:activityAvailable process="<%= seminarProcess  %>" activity="<%= PublicPresentationSeminarProcess.SubmitComission.class %>">
 		<li style="display: inline;">
 			<html:link action="/publicPresentationSeminarProcess.do?method=prepareSubmitComission" paramId="processId" paramName="process" paramProperty="seminarProcess.externalId">
@@ -25,6 +26,7 @@
 			</html:link>
 		</li>
 		</phd:activityAvailable>
+		
 		<phd:activityAvailable process="<%= seminarProcess  %>" activity="<%= PublicPresentationSeminarProcess.ValidateComission.class %>">
 		<li style="display: inline;">
 			<html:link action="/publicPresentationSeminarProcess.do?method=prepareValidateComission" paramId="processId" paramName="process" paramProperty="seminarProcess.externalId">
@@ -32,6 +34,7 @@
 			</html:link>
 		</li>
 		</phd:activityAvailable>
+		
 		<phd:activityAvailable process="<%= seminarProcess  %>" activity="<%= PublicPresentationSeminarProcess.SchedulePresentationDate.class %>">
 		<li style="display: inline;">
 			<html:link action="/publicPresentationSeminarProcess.do?method=prepareSchedulePresentationDate" paramId="processId" paramName="process" paramProperty="seminarProcess.externalId">
@@ -39,6 +42,7 @@
 			</html:link>
 		</li>
 		</phd:activityAvailable>
+		
 		<phd:activityAvailable process="<%= seminarProcess  %>" activity="<%= PublicPresentationSeminarProcess.UploadReport.class %>">
 		<li style="display: inline;">
 			<html:link action="/publicPresentationSeminarProcess.do?method=prepareUploadReport" paramId="processId" paramName="process" paramProperty="seminarProcess.externalId">
@@ -46,6 +50,7 @@
 			</html:link>
 		</li>
 		</phd:activityAvailable>
+		
 		<phd:activityAvailable process="<%= seminarProcess  %>" activity="<%= PublicPresentationSeminarProcess.ValidateReport.class %>">
 		<li style="display: inline;">
 			<html:link action="/publicPresentationSeminarProcess.do?method=prepareValidateReport" paramId="processId" paramName="process" paramProperty="seminarProcess.externalId">
@@ -53,18 +58,21 @@
 			</html:link>
 		</li>
 		</phd:activityAvailable>
+		
 		<phd:activityAvailable process="<%= seminarProcess  %>" activity="<%= PublicPresentationSeminarProcess.DownloadComissionDocument.class %>">
 		<li style="display: inline;">
 			<bean:define id="comissionDocumentUrl" name="seminarProcess" property="comissionDocument.downloadUrl" />
 			<a href="<%= comissionDocumentUrl.toString() %>"><bean:message  key="label.phd.public.presentation.seminar.comission.document" bundle="PHD_RESOURCES"/></a>
 		</li>
 		</phd:activityAvailable>
+		
 		<phd:activityAvailable process="<%= seminarProcess  %>" activity="<%= PublicPresentationSeminarProcess.DownloadReportDocument.class %>">
 		<li style="display: inline;">
 			<bean:define id="reportDocumentUrl" name="seminarProcess" property="reportDocument.downloadUrl" />
 			<a href="<%= reportDocumentUrl.toString() %>"><bean:message  key="label.phd.public.presentation.seminar.report.document" bundle="PHD_RESOURCES"/></a>
 		</li>
 		</phd:activityAvailable>
+	
 	</ul>
 </logic:equal>
 <br/>
