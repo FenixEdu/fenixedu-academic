@@ -263,9 +263,15 @@ public class CourseStatistics extends FenixBackingBean {
     }
 
     private void reportInfo(Spreadsheet spreadsheet) {
+	final ExecutionYear executionYear = getExecutionYear();
 	final CurricularCourse curricularCourse = getCurricularCourseToExport();
 
-	for (final Enrolment enrolment : curricularCourse.getEnrolmentsByExecutionYear(getExecutionYear())) {
+	for (final Enrolment enrolment : curricularCourse.getEnrolments()) {
+	    
+	    if (!enrolment.isValid(executionYear)) {
+		continue;
+	    }
+	    
 	    final Row row = spreadsheet.addRow();
 
 	    row.setCell(enrolment.getStudent().getNumber());
