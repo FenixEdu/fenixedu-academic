@@ -762,7 +762,17 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	    seminarProcess.setIndividualProgramProcess(process);
 	    seminarProcess.createState(PublicPresentationSeminarProcessStateType.EXEMPTED, userView.getPerson(), null);
 
+	    discardPublicSeminarAlerts(process);
+
 	    return process;
+	}
+
+	private void discardPublicSeminarAlerts(final PhdIndividualProgramProcess process) {
+	    for (final PhdAlert alert : process.getActiveAlerts()) {
+		if (alert instanceof PhdPublicPresentationSeminarAlert) {
+		    alert.discard();
+		}
+	    }
 	}
 
     }
