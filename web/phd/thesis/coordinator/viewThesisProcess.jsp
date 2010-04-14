@@ -8,6 +8,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.DownloadFinalThesisDocument"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.DownloadThesisRequirement"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryReporterFeedbackUpload"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitJuryElementsDocuments"%>
 
 <logic:notEmpty name="process" property="thesisProcess">
 <logic:equal name="process" property="activeState.active" value="true">
@@ -51,12 +52,15 @@
  </table>
 
 <ul class="operations">
-	<li style="display: inline;">
-		<html:link action="/phdThesisProcess.do?method=prepareSubmitJuryElementsDocument" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
-			<bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.jury.elements.document"/>
-		</html:link>
-	</li>
+	<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= SubmitJuryElementsDocuments.class %>">
+		<li style="display: inline;">
+			<html:link action="/phdThesisProcess.do?method=prepareSubmitJuryElementsDocument" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
+				<bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.jury.elements.document"/>
+			</html:link>
+		</li>
+	</phd:activityAvailable>
 	<%-- 
+	TODO: add activity available tag here too
 	<li style="display: inline;">
 		<html:link action="/phdThesisProcess.do?method=manageThesisJuryElements" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
 			<bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.jury.elements"/>
