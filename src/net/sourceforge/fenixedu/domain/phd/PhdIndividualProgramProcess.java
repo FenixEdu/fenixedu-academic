@@ -43,6 +43,7 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess;
+import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessStateType;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -115,6 +116,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	activities.add(new EditQualificationExams());
 
 	activities.add(new RequestPublicPresentationSeminarComission());
+	activities.add(new ExemptPublicPresentationSeminarComission());
 
 	activities.add(new RequestPublicThesisPresentation());
     }
@@ -739,6 +741,30 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
 	    return individualProcess;
 	}
+    }
+
+    static public class ExemptPublicPresentationSeminarComission extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    if (process.hasSeminarProcess() || process.getActiveState() != PhdIndividualProgramProcessState.WORK_DEVELOPMENT) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
+		Object object) {
+
+	    final PublicPresentationSeminarProcess seminarProcess = Process.createNewProcess(userView,
+		    PublicPresentationSeminarProcess.class, object);
+
+	    seminarProcess.setIndividualProgramProcess(process);
+	    seminarProcess.createState(PublicPresentationSeminarProcessStateType.EXEMPTED, userView.getPerson(), null);
+
+	    return process;
+	}
+
     }
 
     static public class RequestPublicThesisPresentation extends PhdActivity {

@@ -44,6 +44,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditIndiv
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditPersonalInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditQualificationExams;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditStudyPlan;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.ExemptPublicPresentationSeminarComission;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.FlunkedPhdProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.NotAdmittedPhdProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RequestPublicPresentationSeminarComission;
@@ -106,6 +107,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "uploadPhoto", path = "/phd/academicAdminOffice/uploadPhoto.jsp"),
 
 	@Forward(name = "requestPublicPresentationSeminarComission", path = "/phd/academicAdminOffice/requestPublicPresentationSeminarComission.jsp"),
+
+	@Forward(name = "exemptPublicPresentationSeminarComission", path = "/phd/academicAdminOffice/exemptPublicPresentationSeminarComission.jsp"),
 
 	@Forward(name = "requestPublicThesisPresentation", path = "/phd/academicAdminOffice/requestPublicThesisPresentation.jsp")
 
@@ -875,6 +878,26 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 
 	return executeActivity(RequestPublicPresentationSeminarComission.class, bean, request, mapping,
 		"requestPublicPresentationSeminarComission", "viewProcess");
+    }
+
+    public ActionForward prepareExemptPublicPresentationSeminarComission(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	return mapping.findForward("exemptPublicPresentationSeminarComission");
+    }
+
+    public ActionForward exemptPublicPresentationSeminarComission(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	try {
+	    ExecuteProcessActivity.run(getProcess(request), ExemptPublicPresentationSeminarComission.class,
+		    new PublicPresentationSeminarProcessBean());
+
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getMessage(), e.getArgs());
+	    return prepareExemptPublicPresentationSeminarComission(mapping, actionForm, request, response);
+	}
+
+	return viewProcess(mapping, actionForm, request, response);
     }
 
     // End of Request Public Presentation Seminar Comission

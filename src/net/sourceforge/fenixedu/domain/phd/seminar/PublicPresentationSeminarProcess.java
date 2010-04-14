@@ -29,6 +29,9 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 	}
 
 	protected void processPreConditions(final PublicPresentationSeminarProcess process, final IUserView userView) {
+	    if (process != null && process.isExempted()) {
+		throw new PreConditionNotValidException();
+	    }
 	}
 
 	abstract protected void activityPreConditions(final PublicPresentationSeminarProcess process, final IUserView userView);
@@ -36,6 +39,11 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 
     @StartActivity
     static public class RequestComission extends PhdActivity {
+
+	@Override
+	protected void processPreConditions(PublicPresentationSeminarProcess process, IUserView userView) {
+	    // overrided to prevent exempted test
+	}
 
 	@Override
 	protected void activityPreConditions(PublicPresentationSeminarProcess process, IUserView userView) {
@@ -423,7 +431,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 	return (PublicPresentationSeminarProcessStateType) super.getActiveState();
     }
 
-    private void createState(final PublicPresentationSeminarProcessStateType type, final Person person, final String remarks) {
+    public void createState(final PublicPresentationSeminarProcessStateType type, final Person person, final String remarks) {
 	new PublicPresentationSeminarState(this, type, person, remarks);
     }
 
@@ -433,14 +441,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
     }
 
     public boolean isExempted() {
-	/*
-	 * TODO: Its possible to have exemption to seminar process, in this case
-	 * we should have a new state and this method must be implemented with
-	 * something like getActiveState() ==
-	 * PhdIndividualProgramProcessState.EXEMPTED
-	 */
-	return false;
-
+	return getActiveState() == PublicPresentationSeminarProcessStateType.EXEMPTED;
     }
 
     public boolean isConcluded() {

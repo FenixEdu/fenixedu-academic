@@ -18,7 +18,9 @@ public enum PublicPresentationSeminarProcessStateType implements PhdProcessState
 
     REPORT_WAITING_FOR_VALIDATION,
 
-    REPORT_VALIDATED;
+    REPORT_VALIDATED, 
+    
+    EXEMPTED;
 
     @Override
     public String getName() {
