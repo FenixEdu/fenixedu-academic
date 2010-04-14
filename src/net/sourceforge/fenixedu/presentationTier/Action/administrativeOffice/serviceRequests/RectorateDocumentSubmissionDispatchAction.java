@@ -83,7 +83,14 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 	    actions.add("zipDocuments");
 	}
 	request.setAttribute("batch", batch);
-	request.setAttribute("requests", batch.getDocumentRequestSet());
+	// Filter out canceled document requests, ticket: #248539
+	Set<DocumentRequest> requests = new HashSet<DocumentRequest>();
+	for (DocumentRequest docRequest : batch.getDocumentRequestSet()) {
+	    if (!docRequest.isCancelled()) {
+		requests.add(docRequest);
+	    }
+	}
+	request.setAttribute("requests", requests);
 	request.setAttribute("actions", actions);
 	request.setAttribute("confirmActions", confirmActions);
 	return mapping.findForward("viewBatch");
