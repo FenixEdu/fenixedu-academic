@@ -44,22 +44,17 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditIndiv
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditPersonalInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditQualificationExams;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditStudyPlan;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.ExemptPublicPresentationSeminarComission;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.FlunkedPhdProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.NotAdmittedPhdProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RequestPublicPresentationSeminarComission;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RequestPublicThesisPresentation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.SuspendPhdProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlert;
-import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlertBean;
-import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
+import net.sourceforge.fenixedu.presentationTier.Action.phd.CommonPhdIndividualProgramProcessDA;
 import net.sourceforge.fenixedu.util.ContentType;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -113,39 +108,19 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "requestPublicThesisPresentation", path = "/phd/academicAdminOffice/requestPublicThesisPresentation.jsp")
 
 })
-public class PhdIndividualProgramProcessDA extends PhdProcessDA {
+public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramProcessDA {
 
     @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+    protected SearchPhdIndividualProgramProcessBean initializeSearchBean(HttpServletRequest request) {
+	final SearchPhdIndividualProgramProcessBean searchBean = new SearchPhdIndividualProgramProcessBean();
+	searchBean.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
+	searchBean.setFilterPhdPrograms(false);
+	searchBean.setFilterPhdProcesses(false);
 
-	final PhdIndividualProgramProcess process = getProcess(request);
-
-	if (process != null) {
-	    request.setAttribute("processAlertMessagesToNotify", process.getUnreadedAlertMessagesFor(getLoggedPerson(request)));
-	}
-
-	return super.execute(mapping, actionForm, request, response);
+	return searchBean;
     }
 
-    public ActionForward manageProcesses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	SearchPhdIndividualProgramProcessBean searchBean = (SearchPhdIndividualProgramProcessBean) getObjectFromViewState("searchProcessBean");
-
-	if (searchBean == null) {
-	    searchBean = new SearchPhdIndividualProgramProcessBean();
-	    searchBean.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
-	    searchBean.setFilterPhdPrograms(false);
-	    searchBean.setFilterPhdProcesses(false);
-	}
-
-	request.setAttribute("searchProcessBean", searchBean);
-	request.setAttribute("processes", PhdIndividualProgramProcess.search(searchBean.getPredicates()));
-
-	return mapping.findForward("manageProcesses");
-    }
-
+    @Override
     public ActionForward viewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
@@ -155,11 +130,6 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 	}
 
 	return mapping.findForward("viewProcess");
-    }
-
-    @Override
-    protected PhdIndividualProgramProcess getProcess(HttpServletRequest request) {
-	return (PhdIndividualProgramProcess) super.getProcess(request);
     }
 
     // Edit Personal Information
@@ -602,40 +572,6 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 	return (PhdCustomAlertBean) getRenderedObject("createCustomAlertBean");
     }
 
-    public ActionForward viewAlertMessages(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	request.setAttribute("alertMessages", getLoggedPerson(request).getPhdAlertMessages());
-
-	return mapping.findForward("viewAlertMessages");
-    }
-
-    public ActionForward markAlertMessageAsReaded(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	getAlertMessage(request).markAsReaded(getLoggedPerson(request));
-
-	boolean globalMessagesView = StringUtils.isEmpty(request.getParameter("global"))
-		|| request.getParameter("global").equals("true") ? true : false;
-
-	return globalMessagesView ? viewAlertMessages(mapping, form, request, response) : viewProcessAlertMessages(mapping, form,
-		request, response);
-    }
-
-    private PhdAlertMessage getAlertMessage(HttpServletRequest request) {
-	return getDomainObject(request, "alertMessageId");
-    }
-
-    public ActionForward viewProcessAlertMessages(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	request.setAttribute("alertMessages", getProcess(request).getAlertMessagesFor(getLoggedPerson(request)));
-
-	return mapping.findForward("viewProcessAlertMessages");
-    }
-
-    // End of Alerts Management
-
     // Study plan management
 
     public ActionForward manageStudyPlan(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -848,59 +784,6 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
     }
 
     // End of Photo Upload
-
-    // Request Public Presentation Seminar Comission
-
-    public ActionForward prepareRequestPublicPresentationSeminarComission(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
-
-	request.setAttribute("requestPublicPresentationSeminarComissionBean", new PublicPresentationSeminarProcessBean());
-
-	return mapping.findForward("requestPublicPresentationSeminarComission");
-
-    }
-
-    public ActionForward prepareRequestPublicPresentationSeminarComissionInvalid(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
-
-	request.setAttribute("requestPublicPresentationSeminarComission",
-		getRenderedObject("requestPublicPresentationComissionBean"));
-
-	return mapping.findForward("requestPublicPresentationSeminarComission");
-    }
-
-    public ActionForward requestPublicPresentationSeminarComission(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
-
-	final PublicPresentationSeminarProcessBean bean = (PublicPresentationSeminarProcessBean) getRenderedObject("requestPublicPresentationSeminarComissionBean");
-
-	request.setAttribute("requestPublicPresentationSeminarComissionBean", bean);
-
-	return executeActivity(RequestPublicPresentationSeminarComission.class, bean, request, mapping,
-		"requestPublicPresentationSeminarComission", "viewProcess");
-    }
-
-    public ActionForward prepareExemptPublicPresentationSeminarComission(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-	return mapping.findForward("exemptPublicPresentationSeminarComission");
-    }
-
-    public ActionForward exemptPublicPresentationSeminarComission(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-
-	try {
-	    ExecuteProcessActivity.run(getProcess(request), ExemptPublicPresentationSeminarComission.class,
-		    new PublicPresentationSeminarProcessBean());
-
-	} catch (final DomainException e) {
-	    addErrorMessage(request, e.getMessage(), e.getArgs());
-	    return prepareExemptPublicPresentationSeminarComission(mapping, actionForm, request, response);
-	}
-
-	return viewProcess(mapping, actionForm, request, response);
-    }
-
-    // End of Request Public Presentation Seminar Comission
 
     // Request Public Thesis Presentation
 

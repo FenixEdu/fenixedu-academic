@@ -3,9 +3,12 @@ package net.sourceforge.fenixedu.presentationTier.Action.phd;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.ExemptPublicPresentationSeminarComission;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RequestPublicPresentationSeminarComission;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean;
@@ -41,7 +44,6 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
 	}
 
 	request.setAttribute("searchProcessBean", searchBean);
-
 	request.setAttribute("processes", PhdIndividualProgramProcess.search(searchBean.getPredicates()));
 
 	return mapping.findForward("manageProcesses");
@@ -78,7 +80,7 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
 	getAlertMessage(request).markAsReaded(getLoggedPerson(request));
 
 	boolean globalMessagesView = StringUtils.isEmpty(request.getParameter("global"))
-		|| request.getParameter("global").equals("true") ? true : false;
+		|| request.getParameter("global").equals("true");
 
 	return globalMessagesView ? viewAlertMessages(mapping, form, request, response) : viewProcessAlertMessages(mapping, form,
 		request, response);
@@ -127,6 +129,26 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
 
 	return executeActivity(RequestPublicPresentationSeminarComission.class, bean, request, mapping,
 		"requestPublicPresentationSeminarComission", "viewProcess");
+    }
+    
+    public ActionForward prepareExemptPublicPresentationSeminarComission(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	return mapping.findForward("exemptPublicPresentationSeminarComission");
+    }
+
+    public ActionForward exemptPublicPresentationSeminarComission(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	try {
+	    ExecuteProcessActivity.run(getProcess(request), ExemptPublicPresentationSeminarComission.class,
+		    new PublicPresentationSeminarProcessBean());
+
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getMessage(), e.getArgs());
+	    return prepareExemptPublicPresentationSeminarComission(mapping, actionForm, request, response);
+	}
+
+	return viewProcess(mapping, actionForm, request, response);
     }
 
     // End of Request Public Presentation Seminar Comission
