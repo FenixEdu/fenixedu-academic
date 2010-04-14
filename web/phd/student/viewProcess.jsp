@@ -60,18 +60,21 @@
 		</fr:view>
 		<bean:define id="seminarProcess" name="process" property="seminarProcess" />
 		<ul class="operations">
+			
 			<phd:activityAvailable process="<%= seminarProcess  %>" activity="<%= DownloadComissionDocument.class %>">
 			<li style="display: inline;">
 				<bean:define id="comissionDocumentUrl" name="seminarProcess" property="comissionDocument.downloadUrl" />
 				<a href="<%= comissionDocumentUrl.toString() %>"><bean:message  key="label.phd.public.presentation.seminar.comission.document" bundle="PHD_RESOURCES"/></a>
 			</li>
 			</phd:activityAvailable>
+			
 			<phd:activityAvailable process="<%= seminarProcess  %>" activity="<%= DownloadReportDocument.class %>">
 			<li style="display: inline;">
 				<bean:define id="reportDocumentUrl" name="seminarProcess" property="reportDocument.downloadUrl" />
 				<a href="<%= reportDocumentUrl.toString() %>"><bean:message  key="label.phd.public.presentation.seminar.report.document" bundle="PHD_RESOURCES"/></a>
 			</li>
 			</phd:activityAvailable>
+		
 		</ul>
 	</logic:notEmpty>
 	
