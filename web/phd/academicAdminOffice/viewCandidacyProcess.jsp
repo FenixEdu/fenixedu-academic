@@ -26,6 +26,27 @@
 			</fr:layout>
 		</fr:view>
 	</td>
+	<td>
+		<ul class="operations">
+			<li>
+				<html:link action="/phdProgramCandidacyProcess.do?method=manageNotifications" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
+					<bean:message bundle="PHD_RESOURCES" key="label.phd.notifications"/>
+				</html:link>
+			</li>
+			<logic:notEmpty name="candidacyProcess" property="individualProgramProcess.phdProgram">
+				<li>
+					<html:link action="/phdProgramCandidacyProcess.do?method=printCandidacyDeclaration&language=pt" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
+						<bean:message bundle="PHD_RESOURCES" key="label.phd.printCandidacyDeclaration.pt"/>
+					</html:link>
+				</li>
+				<li>
+					<html:link action="/phdProgramCandidacyProcess.do?method=printCandidacyDeclaration&language=en" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
+						<bean:message bundle="PHD_RESOURCES" key="label.phd.printCandidacyDeclaration.en"/>
+					</html:link>
+				</li>
+			</logic:notEmpty>
+		</ul>
+	</td>
   </tr>
 </table>
 
@@ -69,11 +90,6 @@
 				</html:link>
 			</li>
 		</phd:activityAvailable>
-		<li style="display: inline;">
-			<html:link action="/phdProgramCandidacyProcess.do?method=manageNotifications" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
-				<bean:message bundle="PHD_RESOURCES" key="label.phd.notifications"/>
-			</html:link>
-		</li>
 		<phd:activityAvailable process="<%= candidacyProcess %>" activity="<%= PhdProgramCandidacyProcess.RegistrationFormalization.class %>" >
 			<li style="display: inline;">
 				<html:link action="/phdProgramCandidacyProcess.do?method=prepareRegistrationFormalization" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
@@ -81,18 +97,6 @@
 				</html:link>
 			</li>
 		</phd:activityAvailable>
-		<logic:notEmpty name="candidacyProcess" property="individualProgramProcess.phdProgram">
-			<li style="display: inline;">
-				<html:link action="/phdProgramCandidacyProcess.do?method=printCandidacyDeclaration&language=pt" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
-					<bean:message bundle="PHD_RESOURCES" key="label.phd.printCandidacyDeclaration.pt"/>
-				</html:link>
-			</li>
-			<li style="display: inline;">
-				<html:link action="/phdProgramCandidacyProcess.do?method=printCandidacyDeclaration&language=en" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
-					<bean:message bundle="PHD_RESOURCES" key="label.phd.printCandidacyDeclaration.en"/>
-				</html:link>
-			</li>
-		</logic:notEmpty>
 		<phd:activityAvailable process="<%= candidacyProcess %>" activity="<%= PhdProgramCandidacyProcess.AssociateRegistration.class %>">
 			<li style="display: inline;">
 				<html:link action="/phdProgramCandidacyProcess.do?method=prepareAssociateRegistration&language=en" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
