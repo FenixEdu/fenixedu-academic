@@ -1,11 +1,15 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.departmentMember;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
+import javax.servlet.ServletOutputStream;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
@@ -17,10 +21,21 @@ import net.sourceforge.fenixedu.dataTransferObject.department.CompetenceCourseSt
 import net.sourceforge.fenixedu.dataTransferObject.department.DegreeCourseStatisticsDTO;
 import net.sourceforge.fenixedu.dataTransferObject.department.ExecutionCourseStatisticsDTO;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.studentCurriculum.BranchCurriculumGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
+
+import org.joda.time.DateTime;
+
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 /**
  * 
@@ -42,25 +57,23 @@ public class CourseStatistics extends FenixBackingBean {
 	return getUserView().getPerson().getTeacher().getLastWorkingDepartment();
     }
 
-    public Integer getCompetenceCourseId() throws FenixFilterException, FenixServiceException {
-	Integer competenceCourseId = (Integer) this.getViewState().getAttribute("competenceCourseId");
-	return competenceCourseId;
+    public Integer getCompetenceCourseId() {
+	return (Integer) this.getViewState().getAttribute("competenceCourseId");
     }
 
     public void setCompetenceCourseId(Integer competenceCourseId) {
 	this.getViewState().setAttribute("competenceCourseId", competenceCourseId);
     }
 
-    public Integer getDegreeId() throws FenixFilterException, FenixServiceException {
-	Integer degreeId = (Integer) this.getViewState().getAttribute("degreeId");
-	return degreeId;
+    public Integer getDegreeId() {
+	return (Integer) this.getViewState().getAttribute("degreeId");
     }
 
     public void setDegreeId(Integer degreeId) {
 	this.getViewState().setAttribute("degreeId", degreeId);
     }
 
-    public Integer getExecutionPeriodId() throws FenixFilterException, FenixServiceException {
+    public Integer getExecutionPeriodId() {
 	Integer executionPeriodId = (Integer) this.getViewState().getAttribute("executionYearPeriod");
 
 	if (executionPeriodId == null) {
@@ -105,7 +118,7 @@ public class CourseStatistics extends FenixBackingBean {
 	loadExecutionCourses();
     }
 
-    public List<SelectItem> getExecutionPeriods() throws FenixFilterException, FenixServiceException {
+    public List<SelectItem> getExecutionPeriods() {
 	if (this.executionPeriods == null) {
 
 	    List<InfoExecutionYear> executionYearsList = (List<InfoExecutionYear>) ReadNotClosedExecutionYears.run();
@@ -175,7 +188,107 @@ public class CourseStatistics extends FenixBackingBean {
 	setDegreeId(degreeId);
     }
 
-    public CompetenceCourse getCompetenceCourse() throws FenixFilterException, FenixServiceException {
+    public CompetenceCourse getCompetenceCourse() {
 	return competenceCourse == null ? rootDomainObject.readCompetenceCourseByOID(getCompetenceCourseId()) : competenceCourse;
     }
+
+    private ResourceBundle getApplicationResources() {
+	return getResourceBundle("resources/ApplicationResources");
+    }
+
+    /*
+     * Export curricular course students
+     */
+    private CurricularCourse getCurricularCourseToExport() {
+
+	final CompetenceCourse cc = getCompetenceCourse();
+	final Degree degree = rootDomainObject.readDegreeByOID(getDegreeId());
+
+	for (final CurricularCourse curricularCourse : cc.getAssociatedCurricularCourses()) {
+	    if (curricularCourse.getDegree().equals(degree)) {
+		return curricularCourse;
+	    }
+	}
+
+	return null;
+    }
+
+    public void exportStudentsToExcel() throws FenixServiceException {
+	try {
+	    exportToXls(getFilename());
+	} catch (IOException e) {
+	    throw new FenixServiceException();
+	}
+    }
+
+    private String getFilename() {
+	final ResourceBundle bundle = getApplicationResources();
+	return String.format("%s_%s_%s.xls", new DateTime().toString("ddMMyyyyHHmm"), bundle.getString("label.students"),
+		getCurricularCourseToExport().getName().replaceAll(" ", "_"));
+    }
+
+    private void exportToXls(String filename) throws IOException {
+	this.getResponse().setContentType("application/vnd.ms-excel");
+	this.getResponse().setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
+	ServletOutputStream outputStream = this.getResponse().getOutputStream();
+
+	final Spreadsheet spreadsheet = createSpreadsheet();
+	reportInfo(spreadsheet);
+
+	spreadsheet.exportToXLSSheet(outputStream);
+	outputStream.flush();
+
+	this.getResponse().flushBuffer();
+	FacesContext.getCurrentInstance().responseComplete();
+    }
+
+    private Spreadsheet createSpreadsheet() {
+	return new Spreadsheet("-", getStudentsEnroledListHeaders());
+    }
+
+    private List<Object> getStudentsEnroledListHeaders() {
+	final ResourceBundle bundle = getApplicationResources();
+
+	final List<Object> headers = new ArrayList<Object>(4);
+	// headers.add(bundle.getString("label.number"));
+	// headers.add(bundle.getString("label.name"));
+	// headers.add(bundle.getString("label.room"));
+	headers.add("Número");
+	headers.add("Curso");
+	headers.add("Disciplina");
+	headers.add("Ano Lectivo");
+	headers.add("Ramo/Perfil principal");
+	headers.add("Ramo/Perfil secundário");
+	return headers;
+    }
+
+    private void reportInfo(Spreadsheet spreadsheet) {
+	final CurricularCourse curricularCourse = getCurricularCourseToExport();
+
+	for (final Enrolment enrolment : curricularCourse.getEnrolmentsByExecutionYear(getExecutionYear())) {
+	    final Row row = spreadsheet.addRow();
+
+	    row.setCell(enrolment.getStudent().getNumber());
+	    row.setCell(enrolment.getDegreeCurricularPlanOfStudent().getDegree().getPresentationName());
+	    row.setCell(enrolment.getName().getContent());
+	    row.setCell(enrolment.getExecutionYear().getName());
+	    
+	    final CycleCurriculumGroup cycle = enrolment.getParentCycleCurriculumGroup();
+	    
+	    final BranchCurriculumGroup major = cycle.getMajorBranchCurriculumGroup();
+	    row.setCell(major != null ? major.getName().getContent() : "");
+	    
+	    final BranchCurriculumGroup minor = cycle.getMinorBranchCurriculumGroup();
+	    row.setCell(minor != null ? minor.getName().getContent() : "");
+	}
+    }
+
+    private ExecutionYear getExecutionYear() {
+	return rootDomainObject.readExecutionSemesterByOID(getExecutionPeriodId()).getExecutionYear();
+    }
+
+    /*
+     * End of export curricular course students
+     */
+
 }

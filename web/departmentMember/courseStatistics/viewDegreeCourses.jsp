@@ -45,7 +45,9 @@
 		<h:outputText value="<th colspan=\"3\">#{bundle['label.courseStatistics.restCount']}</th>" escape="false" />
 		<h:outputText value="<th colspan=\"3\">#{bundle['label.courseStatistics.totalCount']}</th>" escape="false" />
 		<h:outputText value="<th>&nbsp;</th>" escape="false" />
+		<h:outputText value="<th>&nbsp;</th>" escape="false" />
 		<h:outputText value="</tr><tr>" escape="false" />
+		
 		<h:outputText value="<th>#{bundle['label.courseStatistics.degree']}</th>" escape="false" />
 		<h:outputText value="<th>#{bundle['label.courseStatistics.enrolled']}</th>" escape="false" />
 		<h:outputText value="<th>#{bundle['label.courseStatistics.approved']}</th>" escape="false" />
@@ -57,6 +59,7 @@
 		<h:outputText value="<th>#{bundle['label.courseStatistics.approved']}</th>" escape="false" />
 		<h:outputText value="<th>#{bundle['label.courseStatistics.average']}</th>" escape="false" />
 		<h:outputText value="<th>#{bundle['label.courseStatistics.approvedPercentage']}</th>" escape="false" />
+		<h:outputText value="<th>&nbsp;</th>" escape="false" />
 
 		<f:verbatim>
 					</tr>
@@ -65,18 +68,11 @@
 		
 		<fc:dataRepeater value="#{courseStatistics.degreeCourses}" var="degreeCourse">
 			<h:outputText value="<tr><td>" escape="false"/>
-		
 				
 				<fc:commandLink value="#{degreeCourse.name}"	
 					action="viewExecutionCourses"
 					actionListener="#{courseStatistics.onDegreeCourseSelect}">
-
-					<f:param id="competenceCourseId" name="competenceCourseId"
-						value="#{courseStatistics.competenceCourse.idInternal}" />
-					<f:param id="degreeId" name="degreeId"
-						value="#{degreeCourse.idInternal}" />
-					<f:param id="executionPeriodId" name="executionPeriodId"
-						value="#{courseStatistics.executionPeriodId}" />
+					<f:param id="degreeId" name="degreeId" value="#{degreeCourse.idInternal}" />
 				</fc:commandLink>
 
 				<h:outputText value="</td>" escape="false" />
@@ -96,8 +92,18 @@
 				<h:outputText value="#{(degreeCourse.totalEnrolledCount == 0)  ? bundle['label.common.notAvailable'] : (degreeCourse.totalApprovedCount / degreeCourse.totalEnrolledCount)}" escape="false">
 					<f:convertNumber maxFractionDigits="2" type="percent"/>
  		  		</h:outputText>
+ 		  		<h:outputText value="</td><td>" escape="false" />
+ 		  		
+ 		  			<h:graphicImage id="image" alt="Excel" url="/images/excel.gif" />
+					<h:outputText value="&nbsp;" escape="false" />
+					
+					<fc:commandLink value="#{bundle['label.teacherService.exportToExcel']}" 
+									action="#{courseStatistics.exportStudentsToExcel}"
+									actionListener="#{courseStatistics.onDegreeCourseSelect}">
+						<f:param id="degreeToExportId" name="degreeId" value="#{degreeCourse.idInternal}" />
+					</fc:commandLink>
+					
 				<h:outputText value="</td></tr>" escape="false"/>
-		
 		</fc:dataRepeater>
 		<f:verbatim>
 				</tbody>
