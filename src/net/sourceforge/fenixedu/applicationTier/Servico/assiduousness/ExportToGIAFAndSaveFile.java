@@ -40,6 +40,8 @@ public class ExportToGIAFAndSaveFile extends FenixService {
 	    return new ActionMessage(e.getMessage(), e.getArgs());
 	} catch (Exception e) {
 	    closedMonthDocument.delete();
+	    e.printStackTrace();
+	    return new ActionMessage("error.connectionError");
 	}
 	return null;
     }
