@@ -83,14 +83,14 @@ public class InfoTeacher extends InfoObject {
 
     @Override
     public Integer getIdInternal() {
-	return getPerson().getIdInternal();
+	return getTeacher().getIdInternal();
     }
 
     @Override
     public void setIdInternal(Integer integer) {
 	// This attribution is needed because of CRUDActionByOID. Do not delete
 	// it.
-	this.person = (Person) RootDomainObject.getInstance().readPartyByOID(integer);
+	this.person = RootDomainObject.getInstance().readTeacherByOID(integer).getPerson();
     }
 
     public Teacher getTeacher() {
