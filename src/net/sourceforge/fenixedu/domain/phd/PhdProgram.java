@@ -66,7 +66,7 @@ public class PhdProgram extends PhdProgram_Base {
 
     private void checkAcronym(final String acronym) {
 	check(acronym, "error.PhdProgram.invalid.acronym");
-	final PhdProgram program = readBy(acronym);
+	final PhdProgram program = readByAcronym(acronym);
 	if (program != null && program != this) {
 	    throw new DomainException("error.PhdProgram.acronym.already.exists", acronym);
 	}
@@ -117,7 +117,7 @@ public class PhdProgram extends PhdProgram_Base {
 	return new PhdProgram(degree, name, acronym, parent);
     }
 
-    static public PhdProgram readBy(final String acronym) {
+    static public PhdProgram readByAcronym(final String acronym) {
 	for (final PhdProgram program : RootDomainObject.getInstance().getPhdProgramsSet()) {
 	    if (program.hasAcronym(acronym)) {
 		return program;
