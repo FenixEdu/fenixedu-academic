@@ -125,7 +125,8 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 	RectorateSubmissionBatch batch = getDomainObject(request, "batchOid");
 	Set<DocumentRequest> docs = new HashSet<DocumentRequest>();
 	for (DocumentRequest document : batch.getDocumentRequestSet()) {
-	    if (!(document instanceof DiplomaRequest)) {
+	    // Filter out canceled document requests, ticket: #248539
+	    if (!(document instanceof DiplomaRequest) && !document.isCancelled()) {
 		docs.add(document);
 	    }
 	}
@@ -137,7 +138,8 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 	RectorateSubmissionBatch batch = getDomainObject(request, "batchOid");
 	Set<DocumentRequest> docs = new HashSet<DocumentRequest>();
 	for (DocumentRequest document : batch.getDocumentRequestSet()) {
-	    if (document instanceof DiplomaRequest) {
+	    // Filter out canceled document requests, ticket: #248539
+	    if (document instanceof DiplomaRequest && !document.isCancelled()) {
 		docs.add(document);
 	    }
 	}
@@ -213,7 +215,8 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 	    ZipOutputStream zip = new ZipOutputStream(bout);
 	    RectorateSubmissionBatch batch = getDomainObject(request, "batchOid");
 	    for (DocumentRequest document : batch.getDocumentRequestSet()) {
-		if (!(document instanceof DiplomaRequest)) {
+		// Filter out canceled document requests, ticket: #248539
+		if (!(document instanceof DiplomaRequest) && !document.isCancelled()) {
 		    zip.putNextEntry(new ZipEntry(document.getLastGeneratedDocument().getFilename()));
 		    zip.write(document.getLastGeneratedDocument().getContents());
 		    zip.closeEntry();
