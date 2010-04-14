@@ -192,6 +192,7 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	spreadsheet.setHeader("habilitação anterior");
 	spreadsheet.setHeader("país habilitação anterior");
 	spreadsheet.setHeader("ano de conclusão da habilitação anterior");
+	spreadsheet.setHeader("nota da habilitação anterior");
 	spreadsheet.setHeader("nº retenções ensino secundário");
 	spreadsheet.setHeader("tipo estabelecimento ensino secundário");
 	spreadsheet.setHeader("total ECTS concluídos fim ano lectivo anterior");
@@ -503,7 +504,7 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	// Ano de conclusão da habilitação anterior
 	row.setCell(candidacyInformationBean.getConclusionYear());
 
-	// Ano de conclusão da habilitação anterior
+	// Nota de conclusão da habilitação anterior
 	row.setCell(candidacyInformationBean.getConclusionGrade() != null ? candidacyInformationBean.getConclusionGrade() : "");
 
 	// Nº de vezes que ficou retido no Ensino Secundário
