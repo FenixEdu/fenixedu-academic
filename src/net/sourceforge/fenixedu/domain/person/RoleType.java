@@ -103,7 +103,9 @@ public enum RoleType {
     
     EXTERNAL_SUPERVISOR("External Supervisor"),
     
-    PUBLIC_RELATIONS_OFFICE("Public Relations Office");
+    PUBLIC_RELATIONS_OFFICE("Public Relations Office"),
+
+    NAPE("NAPE");
 
     public String getName() {
 	return name();

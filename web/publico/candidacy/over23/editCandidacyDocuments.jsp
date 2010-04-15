@@ -34,6 +34,9 @@
 </html:messages>
 
 <p><em><bean:message key="message.max.file.size" bundle="CANDIDATE_RESOURCES"/></em></p>
+<p><em>Os documentos submetidos deverão ser do formato PDF.</em></emn></p>
+
+
 
 <fr:form action='<%= mappingPath + ".do?method=editCandidacyDocuments" %>' encoding="multipart/form-data">
 	<fr:edit id="individualCandidacyProcessBean.document.file"

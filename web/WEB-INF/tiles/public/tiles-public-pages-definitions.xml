@@ -1186,4 +1186,14 @@
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
+	<definition name="erasmus.show.access.link.form" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/erasmus/recoverAccess.jsp" />
+		<put name="hideLanguage" value="true" />
+	</definition>
+
+	<definition name="erasmus.recovery.email.sent" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/erasmus/recoveryEmailSent.jsp" />
+		<put name="hideLanguage" value="true" />
+	</definition>
+	
 </tiles-definitions>

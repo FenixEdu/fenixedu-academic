@@ -546,28 +546,8 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT);
 	}
 
-	if (getFileForType(IndividualCandidacyDocumentFileType.REGISTRATION_CERTIFICATE) == null) {
-	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.REGISTRATION_CERTIFICATE);
-	}
-
-	if (getFileForType(IndividualCandidacyDocumentFileType.NO_PRESCRIPTION_CERTIFICATE) == null) {
-	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.NO_PRESCRIPTION_CERTIFICATE);
-	}
-
 	if (getFileForType(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT) == null) {
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT);
-	}
-
-	if (getFileForType(IndividualCandidacyDocumentFileType.FIRST_CYCLE_ACCESS_HABILITATION_CERTIFICATE) == null) {
-	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.FIRST_CYCLE_ACCESS_HABILITATION_CERTIFICATE);
-	}
-
-	if (getFileForType(IndividualCandidacyDocumentFileType.FOREIGN_INSTITUTION_SCALE_CERTIFICATE) == null) {
-	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.FOREIGN_INSTITUTION_SCALE_CERTIFICATE);
-	}
-
-	if (getFileForType(IndividualCandidacyDocumentFileType.GRADES_DOCUMENT) == null) {
-	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.GRADES_DOCUMENT);
 	}
 
 	return missingDocumentFiles;

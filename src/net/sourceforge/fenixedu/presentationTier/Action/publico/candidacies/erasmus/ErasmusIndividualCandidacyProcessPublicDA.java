@@ -77,7 +77,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "show-stork-error-page", path = "erasmus.show.stork.error.page"),
 	@Forward(name = "stork-candidacy-already-bounded", path = "erasmus.stork.candidacy.already.bounded"),
 	@Forward(name = "redirect-to-peps-to-access-application", path = "erasmus.redirect.to.peps.to.access.application"),
-	@Forward(name = "stork-error-authentication-failed", path = "erasmus.stork.authentication.failed") })
+	@Forward(name = "stork-error-authentication-failed", path = "erasmus.stork.authentication.failed"),
+	@Forward(name = "show-recover-access-link-form", path = "erasmus.show.access.link.form"),
+	@Forward(name = "show-recovery-email-sent", path = "erasmus.recovery.email.sent") })
 public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndividualCandidacyProcessPublicDA {
 
     @Override
@@ -812,6 +814,34 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	}
 
 	return mapping.findForward("candidacy-continue-creation");
+    }
+
+    public ActionForward prepareRecoverAccessLink(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
+	if (actionForwardError != null)
+	    return actionForwardError;
+
+	request.setAttribute("candidacyPreCreationBean", new CandidacyPreCreationBean());
+	return mapping.findForward("show-recover-access-link-form");
+    }
+
+    public ActionForward prepareRecoverAccessLinkInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("candidacyPreCreationBean", new CandidacyPreCreationBean());
+	return mapping.findForward("show-recover-access-link-form");
+    }
+
+    public ActionForward sendAccessLinkEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	String email = (String) getObjectFromViewState("PublicAccessCandidacy.preCreationForm");
+	DegreeOfficePublicCandidacyHashCode hash = DegreeOfficePublicCandidacyHashCode.getPublicCandidacyHashCodeByEmailAndCandidacyProcessTypeOrNotAssociated(email, getProcessType(), getCurrentOpenParentProcess());
+
+	if (hash != null) {
+	    hash.sendEmailFoAccessLinkRecovery();
+	}
+
+	return mapping.findForward("show-recovery-email-sent");
     }
 
 }

@@ -88,6 +88,23 @@ public class DegreeOfficePublicCandidacyHashCode extends DegreeOfficePublicCandi
 	sendEmail(subject, body);
     }
 
+    private static final String RECOVERY_APPLICATION_SUBJECT = ".message.email.subject.recovery.access";
+    private static final String RECOVERY_APPLICATION_BODY = ".message.email.body.recovery.access";
+
+    public void sendEmailFoAccessLinkRecovery() {
+	ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
+	String subject = bundle.getString(this.getIndividualCandidacyProcess().getClass().getSimpleName()
+		+ RECOVERY_APPLICATION_SUBJECT);
+	String body = bundle.getString(this.getIndividualCandidacyProcess().getClass().getSimpleName()
+		+ RECOVERY_APPLICATION_BODY);
+	String link = String.format(bundle.getString(this.getIndividualCandidacyProcess().getClass().getSimpleName()
+		+ APPLICATION_ACCESS_LINK), this.getValue(), Language.getLocale().getLanguage());
+
+	body = String.format(body, new String[] { link, this.getIndividualCandidacyProcess().getProcessCode() });
+
+	sendEmail(subject, body);
+    }
+
     /**
      * Get an hash code not associated with an individual candidacy process for
      * the email. If the hash

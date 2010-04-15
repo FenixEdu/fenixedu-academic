@@ -207,7 +207,7 @@
 							<fr:property name="labelExcluded" value="true"/>
 						</fr:layout> 
 					</fr:view> | 
-					<a onclick='<%= "document.getElementById('skipValidationId').value=\"true\"; document.getElementById(\"removeIndexId\").value=" + index + "; document.getElementById(\"methodId\").value=\"removeSelectedDegreesEntry\"; document.getElementById(\"over23CandidacyForm\").submit();" %>' href="#" ><bean:message key="label.over23.remove" bundle="CANDIDATE_RESOURCES"/> </a>
+					<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a onclick='<%= "document.getElementById('skipValidationId').value=\"true\"; document.getElementById(\"removeIndexId\").value=" + index + "; document.getElementById(\"methodId\").value=\"removeSelectedDegreesEntry\"; document.getElementById(\"over23CandidacyForm\").submit();" %>' href="#" ><bean:message key="label.over23.remove" bundle="CANDIDATE_RESOURCES"/> </a>
 				</li>
 			</logic:iterate>
 			</ol>

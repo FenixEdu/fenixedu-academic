@@ -352,6 +352,8 @@ public class Over23IndividualCandidacyProcessRefactoredDA extends RefactoredIndi
     public ActionForward editCandidacyProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 	Over23IndividualCandidacyProcessBean bean = (Over23IndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	PersonBean personBean = bean.getPersonBean();
+
 	try {
 	    ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
 	    if (actionForwardError != null)
@@ -362,6 +364,49 @@ public class Over23IndividualCandidacyProcessRefactoredDA extends RefactoredIndi
 	    }
 
 	    copyToInformationBeanOnePrecendentInstitution(bean);
+
+	    final List<Person> persons = new ArrayList<Person>(Person.readByDocumentIdNumber(personBean.getDocumentIdNumber()));
+
+	    if (persons.size() > 1) {
+		addActionMessage("individualCandidacyMessages", request, getProcessType().getSimpleName()
+			+ ".error.public.candidacies.fill.personal.information.and.institution.id");
+		return prepareEditCandidacyProcess(mapping, form, request, response);
+	    }
+
+	    final Person person = persons.size() == 1 ? persons.get(0) : null;
+
+	    // check if person already exists
+	    if (person != null) {
+		if (isPersonStudentOrEmployeeAndNumberIsCorrect(person, bean.getPersonNumber())) {
+		    if (!person.getDateOfBirthYearMonthDay().equals(personBean.getDateOfBirth())) {
+			// found person with diff date
+			addActionMessage("individualCandidacyMessages", request, getProcessType().getSimpleName()
+				+ ".error.public.candidacies.fill.personal.information.and.institution.id");
+			return prepareEditCandidacyProcess(mapping, form, request, response);
+		    } else if (!StringUtils.isEmpty(personBean.getSocialSecurityNumber())
+			    && !StringUtils.isEmpty(person.getSocialSecurityNumber())
+			    && !person.getSocialSecurityNumber().equals(personBean.getSocialSecurityNumber())) {
+			// found person with diff social security number
+			addActionMessage("individualCandidacyMessages", request, getProcessType().getSimpleName()
+				+ ".error.public.candidacies.fill.personal.information.and.institution.id");
+			return prepareEditCandidacyProcess(mapping, form, request, response);
+		    } else {
+			personBean.setPerson(person);
+		    }
+		} else {
+		    // found person with diff ist userid
+		    addActionMessage("individualCandidacyMessages", request, getProcessType().getSimpleName()
+			    + ".error.public.candidacies.fill.personal.information.and.institution.id");
+		    return prepareEditCandidacyProcess(mapping, form, request, response);
+		}
+	    } else {
+		if (Person.readByContributorNumber(personBean.getSocialSecurityNumber()) != null) {
+		    // found person with same contributor number
+		    addActionMessage("individualCandidacyMessages", request, getProcessType().getSimpleName()
+			    + ".error.public.candidacies.fill.personal.information.and.institution.id");
+		    return prepareEditCandidacyProcess(mapping, form, request, response);
+		}
+	    }
 
 	    executeActivity(bean.getIndividualCandidacyProcess(), "EditPublicCandidacyPersonalInformation",
 		    getIndividualCandidacyProcessBean());

@@ -1634,7 +1634,7 @@
 </schema>
 
 <schema name="PublicCandidacyProcessBean.formation.designation" type="net.sourceforge.fenixedu.domain.candidacyProcess.FormationBean" bundle="CANDIDATE_RESOURCES">
-	<slot name="designation">
+	<slot name="designation" >
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<property name="size" value="50"/>
 		<property name="maxlength" value="70"/>

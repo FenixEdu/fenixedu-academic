@@ -38,7 +38,7 @@
 </div>
 
 <h1><bean:write name="application.name"/></h1>
-<p><span class="success0"><bean:message key="message.application.submited.success" bundle="CANDIDATE_RESOURCES"/>.</span></p>
+<p><span class="success0"><bean:message key="message.application.submited.success" bundle="CANDIDATE_RESOURCES"/></span></p>
 
 <bean:define id="endSubmissionDate" name="endSubmissionDate"/>
 <bean:message key="message.application.submited.detail" bundle="CANDIDATE_RESOURCES" arg0="<%= endSubmissionDate.toString() %>"/>
@@ -60,12 +60,6 @@
 	</tr>
 </table>
 </logic:notEmpty>
-
-<p><bean:message key="message.difficulties.payment" bundle="CANDIDATE_RESOURCES"/></p>
-<p><bean:message key="message.payment.details" bundle="CANDIDATE_RESOURCES"/></p>
-<p class="mvert05"><b><bean:message key="label.sibs.amount" bundle="CANDIDATE_RESOURCES"/>:</b> <fr:view name="individualCandidacyProcess" property="associatedPaymentCode.minAmount"/></p>
-
-<p><em><bean:message key="message.bank.transfer.preferred.name.observation.fields" bundle="CANDIDATE_RESOURCES"/></em></p>
 
 <logic:equal name="individualCandidacyProcess" property="allRequiredFilesUploaded" value="false">
 <div class="infoop1">

@@ -336,28 +336,6 @@ public class IndividualCandidacyDocumentFileTypeEditProvider {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.DEGREE_CERTIFICATE);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.REGISTRATION_CERTIFICATE) == null) {
-		fileTypesList.add(IndividualCandidacyDocumentFileType.REGISTRATION_CERTIFICATE);
-	    }
-
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.NO_PRESCRIPTION_CERTIFICATE) == null) {
-		fileTypesList.add(IndividualCandidacyDocumentFileType.NO_PRESCRIPTION_CERTIFICATE);
-	    }
-
-	    if (individualCandidacyProcess
-		    .getFileForType(IndividualCandidacyDocumentFileType.FIRST_CYCLE_ACCESS_HABILITATION_CERTIFICATE) == null) {
-		fileTypesList.add(IndividualCandidacyDocumentFileType.FIRST_CYCLE_ACCESS_HABILITATION_CERTIFICATE);
-	    }
-
-	    if (individualCandidacyProcess
-		    .getFileForType(IndividualCandidacyDocumentFileType.FOREIGN_INSTITUTION_SCALE_CERTIFICATE) == null) {
-		fileTypesList.add(IndividualCandidacyDocumentFileType.FOREIGN_INSTITUTION_SCALE_CERTIFICATE);
-	    }
-
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.GRADES_DOCUMENT) == null) {
-		fileTypesList.add(IndividualCandidacyDocumentFileType.GRADES_DOCUMENT);
-	    }
-
 	    fileTypesList.add(IndividualCandidacyDocumentFileType.REPORT_OR_WORK_DOCUMENT);
 
 	    return fileTypesList;
