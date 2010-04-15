@@ -117,6 +117,8 @@ public class PersonBean implements Serializable {
 
     private String emailConfirmation;
 
+    private String eidentifier;
+
     public PersonBean() {
 	super();
     }
@@ -206,6 +208,7 @@ public class PersonBean implements Serializable {
 	    setEmailAvailable(person.getAvailableEmail());
 	    setHomepageAvailable(person.getAvailableWebSite());
 	    setPhotoAvailable(person.getAvailablePhoto());
+	    setEidentifier(person.getEidentifier());
 	}
     }
 
@@ -657,5 +660,13 @@ public class PersonBean implements Serializable {
 
     public void setEmailConfirmation(final String value) {
 	this.emailConfirmation = value;
+    }
+
+    public String getEidentifier() {
+	return this.eidentifier;
+    }
+
+    public void setEidentifier(final String eidentifier) {
+	this.eidentifier = eidentifier;
     }
 }

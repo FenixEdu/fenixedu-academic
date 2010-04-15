@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -19,8 +20,18 @@ import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.joda.time.LocalDate;
+import org.restlet.Client;
+import org.restlet.data.ChallengeResponse;
+import org.restlet.data.ChallengeScheme;
+import org.restlet.data.Method;
+import org.restlet.data.Protocol;
+import org.restlet.data.Request;
+import org.restlet.data.Response;
+import org.restlet.data.Status;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -42,6 +53,9 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	activities.add(new VisualizeAlerts());
 	activities.add(new EditDocuments());
 	activities.add(new EditPublicCandidacyDocumentFile());
+	activities.add(new CreateStudentData());
+	activities.add(new SetEIdentifierForTesting());
+	activities.add(new ImportToLDAP());
     }
 
     public ErasmusIndividualCandidacyProcess() {
@@ -64,7 +78,6 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 
 	setValidatedByErasmusCoordinator(false);
 	setValidatedByGri(false);
-	setEIdentifier(bean.getEIdentifier());
     }
 
     @Override
@@ -128,6 +141,10 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 
     static private boolean isGriOfficeEmployee(IUserView userView) {
 	return userView.hasRoleType(RoleType.INTERNATIONAL_RELATION_OFFICE);
+    }
+
+    static private boolean isManager(IUserView userView) {
+	return userView.hasRoleType(RoleType.MANAGER);
     }
 
     @Override
@@ -207,7 +224,6 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	Collections.sort(curricularCourses, CurricularCourse.COMPARATOR_BY_NAME);
 	return curricularCourses;
     }
-
 
     @StartActivity
     static public class IndividualCandidacyInformation extends Activity<ErasmusIndividualCandidacyProcess> {
@@ -559,4 +575,146 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	}
     }
 
+    static private class CreateStudentData extends Activity<ErasmusIndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(ErasmusIndividualCandidacyProcess process, IUserView userView) {
+	    if (!isManager(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected ErasmusIndividualCandidacyProcess executeActivity(ErasmusIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    if (!process.getPersonalDetails().getPerson().hasStudent()) {
+		new Student(process.getPersonalDetails().getPerson(), null);
+		process.getPersonalDetails().getPerson().addPersonRoleByRoleType(RoleType.PERSON);
+		process.getPersonalDetails().getPerson().addPersonRoleByRoleType(RoleType.CANDIDATE);
+		process.getPersonalDetails().getPerson().setIstUsername();
+
+		if (StringUtils.isEmpty(process.getPersonalDetails().getPerson().getIstUsername())) {
+		    throw new DomainException("error.erasmus.create.user", new String[] { null, "User not created" });
+		}
+
+	    }
+
+	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return Boolean.FALSE;
+	}
+
+	@Override
+	public Boolean isVisibleForCoordinator() {
+	    return Boolean.FALSE;
+	}
+
+	@Override
+	public Boolean isVisibleForGriOffice() {
+	    return Boolean.TRUE;
+	}
+
+    }
+
+    private static class SetEIdentifierForTesting extends Activity<ErasmusIndividualCandidacyProcess> {
+	@Override
+	public void checkPreConditions(ErasmusIndividualCandidacyProcess process, IUserView userView) {
+	    if (!isManager(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected ErasmusIndividualCandidacyProcess executeActivity(ErasmusIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) object;
+
+	    String eidentifier = bean.getPersonBean().getEidentifier();
+	    process.getPersonalDetails().getPerson().setEidentifier(eidentifier);
+
+	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return Boolean.FALSE;
+	}
+
+	@Override
+	public Boolean isVisibleForCoordinator() {
+	    return Boolean.FALSE;
+	}
+
+	@Override
+	public Boolean isVisibleForGriOffice() {
+	    return Boolean.TRUE;
+	}
+
+    }
+
+    private static class ImportToLDAP extends Activity<ErasmusIndividualCandidacyProcess> {
+	@Override
+	public void checkPreConditions(ErasmusIndividualCandidacyProcess process, IUserView userView) {
+	    if (!isManager(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected ErasmusIndividualCandidacyProcess executeActivity(ErasmusIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    boolean result = importToLDAP(process);
+
+	    if (!result) {
+		throw new DomainException("error.erasmus.candidacy.user.not.imported");
+	    }
+
+	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return Boolean.FALSE;
+	}
+
+	@Override
+	public Boolean isVisibleForCoordinator() {
+	    return Boolean.FALSE;
+	}
+
+	@Override
+	public Boolean isVisibleForGriOffice() {
+	    return Boolean.FALSE;
+	}
+    }
+
+    private static boolean importToLDAP(ErasmusIndividualCandidacyProcess process) {
+	String ldapServiceImportationURL = PropertiesManager.getProperty("ldap.user.importation.service.url");
+
+	Request request = new Request(Method.POST, ldapServiceImportationURL + process.getPersonalDetails().getPerson()
+			.getIstUsername());
+	ChallengeScheme scheme = ChallengeScheme.HTTP_BASIC;
+	
+	String ldapServiceUsername = PropertiesManager.getProperty("ldap.user.importation.service.username");
+	String ldapServicePassword = PropertiesManager.getProperty("ldap.user.importation.service.password");
+	
+	ChallengeResponse authentication = new ChallengeResponse(scheme, ldapServiceUsername, ldapServicePassword);
+	request.setChallengeResponse(authentication);
+
+	// Ask to the HTTP client connector to handle the call
+	Client client = new Client(Protocol.HTTPS);
+	Response response = client.handle(request);
+
+	if (response.getStatus().equals(Status.SUCCESS_OK)) {
+	    System.out.println(String.format("Imported username %s", process.getPersonalDetails().getPerson().getIstUsername()));
+	    return true;
+	} else {
+	    throw new DomainException("error.erasmus.create.user", new String[] {
+		    process.getPersonalDetails().getPerson().getIstUsername(), response.getStatus().getName(),
+		    new Integer(response.getStatus().getCode()).toString() });
+	}
+    }
 }

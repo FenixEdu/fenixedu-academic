@@ -508,6 +508,16 @@ phd.public.external.access.link=https://fenix.ist.utl.pt/phd-program/access
 #--------------------------------------------------------------
 store.pending.request=true
 
+
+
+#---------------------------------------------------------------
+# LDAP USER IMPORTATION REQUEST SERVICE
+#---------------------------------------------------------------
+ldap.user.importation.service.url=https://ciist.ist.utl.pt/~cabeca/ciistadmin/api/index.php?q=/users/
+ldap.user.importation.service.username=xpto
+ldap.user.importation.service.password=password
+
+
 #
 #
 #

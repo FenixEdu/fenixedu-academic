@@ -6590,7 +6590,6 @@ class candidacyProcess.CandidacyProcess extends caseHandling.Process {
     class candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess extends candidacyProcess.IndividualCandidacyProcess {
     	Boolean validatedByGri;
     	Boolean validatedByErasmusCoordinator;
-    	String eIdentifier;
     }
         
 class candidacyProcess.IndividualCandidacy extends DomainObject {

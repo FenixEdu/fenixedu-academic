@@ -377,24 +377,42 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
     }
 
     public ActionForward returnFromPeps(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws IOException {
+	    HttpServletResponse response) {
 
-	if (request.getParameter("returnCode") == null || !STORK_RETURN_CODE_OK.equals(request.getParameter("returnCode"))) {
+	Map<String, Attribute> attributes = null;
+	try {
+	    String memcachedCode = request.getParameter("key");
+	    MemcachedClient c = new MemcachedClient(new InetSocketAddress(SPUtil.getInstance().getMemcachedHostname(), SPUtil
+		    .getInstance().getMemcachedPort()));
+	    String attrList = (String) c.get(memcachedCode);
+	    attributes = buildStorkAttributes(attrList);
+
+	    if (!StringUtils.isEmpty(attrList)) {
+		return mapping.findForward("stork-error-authentication-failed");
+	    }
+
+	    String returnCode = getStorkReturnCode(attributes);
+
+	    if (returnCode == null || !STORK_RETURN_CODE_OK.equals(returnCode)) {
+		String errorCode = getStorkErrorCode(attributes);
+		String errorMessage = getStorkErrorMessage(attributes);
+
+		new Exception(String.format("Error on stork authentication method, Error: %s, Description: %s", errorCode,
+			errorMessage)).printStackTrace();
+		return mapping.findForward("stork-error-authentication-failed");
+	    }
+
+	} catch (IOException e) {
+	    e.printStackTrace();
 	    return mapping.findForward("stork-error-authentication-failed");
 	}
 
-	String memcachedCode = request.getParameter("key");
-	MemcachedClient c = new MemcachedClient(new InetSocketAddress(SPUtil.getInstance().getMemcachedHostname(), SPUtil
-		.getInstance().getMemcachedPort()));
-
-	String attrList = (String) c.get(memcachedCode);
-	Map<String, Attribute> attributes = buildStorkAttributes(attrList);
-
 	String name = getStorkName(attributes);
+	String surname = getStorkSurname(attributes);
 	YearMonthDay birthDate = getBirthDate(attributes);
 	String email = getEmail(attributes);
 	Country nationality = getNationality(attributes);
-	String eIdentifier = getEIdentifier(attributes);
+	String eidentifier = getEIdentifier(attributes);
 	Gender gender = getGender(attributes);
 	String address = getTextAddress(attributes);
 
@@ -422,7 +440,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	    return viewCandidacy(mapping, form, request, response);
 	}
 
-	if (!StringUtils.isEmpty(eIdentifier) && candidacyProcess.getProcessByEIdentifier(eIdentifier) != null) {
+	if (!StringUtils.isEmpty(eidentifier) && candidacyProcess.getProcessByEIdentifier(eidentifier) != null) {
 	    return mapping.findForward("stork-candidacy-already-bounded");
 	}
 
@@ -438,7 +456,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	bean.getPersonBean().setNationality(nationality);
 	bean.getPersonBean().setAddress(address);
 	bean.getPersonBean().setGender(gender);
-	bean.setEIdentifier(eIdentifier);
+	bean.getPersonBean().setEidentifier(eidentifier);
 
 	bean.willAccessFenix();
 
@@ -538,6 +556,11 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	return attr != null ? attr.getSemanticValue() : null;
     }
 
+    private String getStorkSurname(Map<String, Attribute> attributes) {
+	Attribute attr = attributes.get(STORK_SURNAME);
+	return attr != null ? attr.getSemanticValue() : null;
+    }
+
     private Country getNationality(Map<String, Attribute> attributes) {
 	Attribute attr = attributes.get(STORK_NATIONALITY);
 	String nationalityCode = attr != null ? attr.getSemanticValue() : null;
@@ -548,6 +571,21 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
 	return nationalityCode.length() == 2 ? Country.readByTwoLetterCode(nationalityCode) : Country
 		.readByThreeLetterCode(nationalityCode);
+    }
+
+    private String getStorkReturnCode(Map<String, Attribute> attributes) {
+	Attribute attr = attributes.get(STORK_RETURN_CODE);
+	return attr != null ? attr.getSemanticValue() : null;
+    }
+
+    private String getStorkErrorCode(Map<String, Attribute> attributes) {
+	Attribute attr = attributes.get(STORK_ERROR_CODE);
+	return attr != null ? attr.getSemanticValue() : null;
+    }
+
+    private String getStorkErrorMessage(Map<String, Attribute> attributes) {
+	Attribute attr = attributes.get(STORK_ERROR_MESSAGE);
+	return attr != null ? attr.getSemanticValue() : null;
     }
 
     public ActionForward prepareCandidacyCreationForStork(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -673,6 +711,9 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
     private static final String STORK_TEXT_RESIDENCE_ADDRESS = "textResidenceAddress";
     private static final String STORK_CANONICAL_RESIDENCE_ADDRESS = "canonicalResidenceAddress";
     private static final String STORK_EMAIL = "eMail";
+    private static final String STORK_RETURN_CODE = "returnCode";
+    private static final String STORK_ERROR_CODE = "errorCode";
+    private static final String STORK_ERROR_MESSAGE = "errorMessage";
 
     private static final String STORK_RETURN_CODE_ERROR = "ERROR";
     private static final String STORK_RETURN_CODE_OK = "OK";

@@ -48,8 +48,6 @@ public class ErasmusIndividualCandidacyProcessBean extends IndividualCandidacyPr
 
     private Boolean sendEmail;
 
-    private String eIdentifier;
-
     public ErasmusIndividualCandidacyProcessBean() {
 	setCandidacyDate(new LocalDate());
 	initializeDocumentUploadBeans();
@@ -170,14 +168,6 @@ public class ErasmusIndividualCandidacyProcessBean extends IndividualCandidacyPr
 
     public void setSendEmail(Boolean sendEmail) {
 	this.sendEmail = sendEmail;
-    }
-
-    public String getEIdentifier() {
-	return eIdentifier;
-    }
-
-    public void setEIdentifier(String eIdentifier) {
-	this.eIdentifier = eIdentifier;
     }
 
     public ErasmusVacancy calculateErasmusVacancy() {

@@ -977,6 +977,8 @@ public class Person extends Person_Base {
 	setAvailableEmail(personBean.isEmailAvailable());
 	setAvailablePhoto(personBean.isPhotoAvailable());
 	setAvailableWebSite(personBean.isHomepageAvailable());
+
+	setEidentifier(personBean.getEidentifier());
     }
 
     /***************************************************************************

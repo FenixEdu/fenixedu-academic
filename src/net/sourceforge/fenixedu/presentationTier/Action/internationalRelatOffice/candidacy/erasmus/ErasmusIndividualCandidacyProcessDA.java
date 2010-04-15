@@ -47,7 +47,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "edit-degree-courses-information", path = "/candidacy/erasmus/editDegreeAndCoursesInformation.jsp"),
 	@Forward(name = "set-gri-validation", path = "/internationalRelatOffice/candidacy/erasmus/setGriValidation.jsp"),
 	@Forward(name = "visualize-alerts", path = "/candidacy/erasmus/visualizeAlerts.jsp"),
-	@Forward(name = "prepare-edit-candidacy-documents", path = "/candidacy/erasmus/editCandidacyDocuments.jsp") })
+	@Forward(name = "prepare-edit-candidacy-documents", path = "/candidacy/erasmus/editCandidacyDocuments.jsp"),
+	@Forward(name = "create-student-data", path = "/candidacy/erasmus/createStudentData.jsp"),
+	@Forward(name = "view-student-data-username", path = "/candidacy/erasmus/viewStudentDataUsername.jsp"),
+	@Forward(name = "edit-eidentifier", path = "/candidacy/erasmus/editEidentifier.jsp") })
 public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProcessDA {
 
     @Override
@@ -327,6 +330,72 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
 
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 	return mapping.findForward("visualize-alerts");
+    }
+
+    public ActionForward prepareExecuteCreateStudentData(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	final ErasmusIndividualCandidacyProcessBean bean = new ErasmusIndividualCandidacyProcessBean(getProcess(request));
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
+
+	return mapping.findForward("create-student-data");
+    }
+
+    public ActionForward prepareExecuteCreateStudentDataInvalid(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	return mapping.findForward("create-student-data");
+    }
+
+    public ActionForward executeCreateStudentData(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+
+	try {
+	    executeActivity(getProcess(request), "CreateStudentData", getIndividualCandidacyProcessBean());
+	    executeActivity(getProcess(request), "ImportToLDAP", getIndividualCandidacyProcessBean());
+
+	} catch (final DomainException e) {
+	    addActionMessage(request, e.getMessage(), e.getArgs());
+	    request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	    return mapping.findForward("create-student-data");
+	}
+
+	return mapping.findForward("view-student-data-username");
+    }
+
+    public ActionForward prepareExecuteSetEIdentifierForTesting(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	final ErasmusIndividualCandidacyProcessBean bean = new ErasmusIndividualCandidacyProcessBean(getProcess(request));
+	
+	bean.setPersonBean(new PersonBean(getProcess(request).getPersonalDetails()));
+
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
+
+	return mapping.findForward("edit-eidentifier");
+    }
+
+    public ActionForward prepareExecuteSetEIdentifierForTestingInvalid(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	final ErasmusIndividualCandidacyProcessBean bean = new ErasmusIndividualCandidacyProcessBean(getProcess(request));
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
+
+	return mapping.findForward("edit-eidentifier");
+    }
+
+    public ActionForward executeSetEIdentifierForTesting(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	final ErasmusIndividualCandidacyProcessBean bean = new ErasmusIndividualCandidacyProcessBean(getProcess(request));
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
+
+	try {
+	    executeActivity(getProcess(request), "SetEIdentifierForTesting", getIndividualCandidacyProcessBean());
+	} catch (final DomainException e) {
+	    addActionMessage(request, e.getMessage(), e.getArgs());
+	    request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	    return mapping.findForward("edit-eidentifier");
+	}
+
+	return listProcessAllowedActivities(mapping, actionForm, request, response);
     }
 
 }

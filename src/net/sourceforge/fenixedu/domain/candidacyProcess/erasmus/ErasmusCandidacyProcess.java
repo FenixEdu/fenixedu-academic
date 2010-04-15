@@ -154,7 +154,7 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 		(List) this.getChildProcesses());
 
 	for (ErasmusIndividualCandidacyProcess process : childProcesses) {
-	    if (eIdentifier.equals(process.getEIdentifier())) {
+	    if (eIdentifier.equals(process.getPersonalDetails().getPerson().getEidentifier())) {
 		return process;
 	    }
 	}
