@@ -78,7 +78,7 @@
 		<a href="#" onclick="$('#methodForm').attr('value', 'prepareEditCandidacyProcess'); $('#editCandidacyForm').submit();"><bean:message key="button.edit" bundle="APPLICATION_RESOURCES" /> <bean:message key="label.application.lowercase" bundle="CANDIDATE_RESOURCES"/></a> | 
 		<a href="#" onclick="$('#methodForm').attr('value', 'prepareEditCandidacyInformation'); $('#editCandidacyForm').submit();"><bean:message key="label.edit.application.educational.background" bundle="CANDIDATE_RESOURCES"/></a> |
 		<a href="#" onclick="$('#methodForm').attr('value', 'prepareEditDegreeAndCourses'); $('#editCandidacyForm').submit();"><bean:message key="erasmus.label.edit.degree.and.courses" bundle="CANDIDATE_RESOURCES" /></a> | 
-		<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditCandidacyDocuments';document.getElementById('editCandidacyForm').submit();"> <bean:message key="label.edit.candidacy.documents" bundle="CANDIDATE_RESOURCES" /></a>
+		<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditCandidacyDocuments';document.getElementById('editCandidacyForm').submit();"> <b><bean:message key="label.edit.candidacy.documents" bundle="CANDIDATE_RESOURCES" /></b></a>
 	</p>
 </fr:form>
 </logic:equal>
@@ -108,7 +108,43 @@
 </logic:equal>
 
 
-	<h2 class="mtop1 mbottom05"><bean:message key="label.erasmus.home.institution" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
+
+<h2 class="mtop1 mbottom05"><bean:message key="label.documentation" bundle="CANDIDATE_RESOURCES"/></h2> 
+
+<logic:empty name="individualCandidacyProcess" property="candidacy.documents">
+	<p>
+		<em><bean:message key="message.documents.empty" bundle="CANDIDATE_RESOURCES"/>.</em>
+	</p>
+</logic:empty>
+
+<logic:notEmpty name="individualCandidacyProcess" property="activeDocumentFiles">
+<table class="tstyle2 thlight thcenter">
+	<tr>
+		<th><bean:message key="label.candidacy.document.kind" bundle="CANDIDATE_RESOURCES"/></th>
+		<th><bean:message key="label.dateTime.submission" bundle="CANDIDATE_RESOURCES"/></th>
+		<th><bean:message key="label.document.file.name" bundle="CANDIDATE_RESOURCES"/></th>
+	</tr>
+
+	
+	<logic:iterate id="documentFile" name="individualCandidacyProcess" property="activeDocumentFiles">
+	<tr>
+		<td><fr:view name="documentFile" property="candidacyFileType"/></td>
+		<td><fr:view name="documentFile" property="uploadTime"/></td>
+		<td><fr:view name="documentFile" property="filename"/></td>
+	</tr>	
+	</logic:iterate>
+</table>
+</logic:notEmpty>
+
+<p><a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditCandidacyDocuments';document.getElementById('editCandidacyForm').submit();"> <bean:message key="label.edit.candidacy.documents" bundle="CANDIDATE_RESOURCES" /></a></p>
+
+
+
+
+
+
+
+	<h2 class="mtop15 mbottom05"><bean:message key="label.erasmus.home.institution" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
 	<fr:view name="individualCandidacyProcess" property="candidacy.erasmusStudentData" schema="ErasmusIndividualCandidacyProcess.home.institution.view">
 		<fr:layout name="tabular">
@@ -181,33 +217,7 @@
 
 
 
-<h2 class="mtop1 mbottom05"><bean:message key="label.documentation" bundle="CANDIDATE_RESOURCES"/></h2> 
 
-<logic:empty name="individualCandidacyProcess" property="candidacy.documents">
-	<p>
-		<bean:message key="message.documents.empty" bundle="CANDIDATE_RESOURCES"/>.
-		<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditCandidacyDocuments';document.getElementById('editCandidacyForm').submit();"> <bean:message key="label.edit.candidacy.documents" bundle="CANDIDATE_RESOURCES" /></a>
-	</p>
-</logic:empty>
-
-<logic:notEmpty name="individualCandidacyProcess" property="activeDocumentFiles">
-<table class="tstyle2 thlight thcenter">
-	<tr>
-		<th><bean:message key="label.candidacy.document.kind" bundle="CANDIDATE_RESOURCES"/></th>
-		<th><bean:message key="label.dateTime.submission" bundle="CANDIDATE_RESOURCES"/></th>
-		<th><bean:message key="label.document.file.name" bundle="CANDIDATE_RESOURCES"/></th>
-	</tr>
-
-	
-	<logic:iterate id="documentFile" name="individualCandidacyProcess" property="activeDocumentFiles">
-	<tr>
-		<td><fr:view name="documentFile" property="candidacyFileType"/></td>
-		<td><fr:view name="documentFile" property="uploadTime"/></td>
-		<td><fr:view name="documentFile" property="filename"/></td>
-	</tr>	
-	</logic:iterate>
-</table>
-</logic:notEmpty>
 
 
 <div class="mtop2" id="contacts">
