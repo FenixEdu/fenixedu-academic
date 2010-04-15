@@ -121,6 +121,8 @@ public class ReportType extends FenixUtil {
 
     public static final String OVERHEADS_SUMMARY_NOTE = "Nota:\nReceita OG - é a totalidade da receita sobre a qual foram calculados overheads para o Centro de Custo indicado na sua qualidade de Órgãos de Gestão.\nReceita OA - é a totalidade da receita sobre a qual foram calculados overheads para o Centro de Custo indicado na sua qualidade de Unidade Académica.\nReceita OO - é a totalidade da receita sobre a qual foram calculados overheads para o Centro de Custo indicado na sua qualidade de Unidade Operacional.\nReceita OE - é a totalidade da receita sobre a qual foram calculados overheads para o Centro de Custo indicado na sua qualidade de Unidade de Exploração.";
 
+    public static final String PROJECT_BUDGETARY_BALANCE_NOTE = "Nota: Nos casos em que o projecto é constituído por vários membros, o valor orçamentado corresponde ao total orçamentado para todos os membros.";
+
     public static final ReportType REVENUE = new ReportType(REVENUE_TYPE);
 
     public static final ReportType EXPENSES = new ReportType(EXPENSES_TYPE);
@@ -316,20 +318,23 @@ public class ReportType extends FenixUtil {
     }
 
     public String getReportNote() {
-	if (reportType.intValue() == REVENUE_TYPE)
+	if (reportType.intValue() == REVENUE_TYPE) {
 	    return REVENUE_NOTE;
-	else if (reportType.intValue() == EXPENSES_TYPE)
+	} else if (reportType.intValue() == EXPENSES_TYPE) {
 	    return EXPENSES_NOTE;
-	else if (reportType.intValue() == SUMMARY_TYPE)
+	} else if (reportType.intValue() == SUMMARY_TYPE) {
 	    return SUMMARY_NOTE;
-	else if (reportType.intValue() == CABIMENTOS_TYPE)
+	} else if (reportType.intValue() == CABIMENTOS_TYPE) {
 	    return CABIMENTOS_NOTE;
-	else if (reportType.intValue() == ADIANTAMENTOS_TYPE)
+	} else if (reportType.intValue() == ADIANTAMENTOS_TYPE) {
 	    return ADIANTAMENTOS_NOTE;
-	else if (reportType.intValue() == COMPLETE_EXPENSES_TYPE)
+	} else if (reportType.intValue() == COMPLETE_EXPENSES_TYPE) {
 	    return COMPLETE_EXPENSES_NOTE;
-	else if (reportType.intValue() == OVERHEADS_SUMMARY_TYPE)
+	} else if (reportType.intValue() == OVERHEADS_SUMMARY_TYPE) {
 	    return OVERHEADS_SUMMARY_NOTE;
+	} else if (reportType.intValue() == PROJECT_BUDGETARY_BALANCE_TYPE) {
+	    return PROJECT_BUDGETARY_BALANCE_NOTE;
+	}
 	return null;
     }
 
@@ -341,6 +346,7 @@ public class ReportType extends FenixUtil {
 	this.reportType = reportType;
     }
 
+    @Override
     public boolean equals(Object obj) {
 	if (obj instanceof ReportType)
 	    return reportType.equals(((ReportType) obj).getReportType());

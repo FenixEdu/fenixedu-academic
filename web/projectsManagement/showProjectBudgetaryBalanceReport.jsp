@@ -70,6 +70,8 @@
 				<td><report:computeDate /></td>
 			</tr>
 		</table>
+		<br/>
+		<bean:message key="message.budgetaryBalanceReport" />
 		<br />
 		<br />
 		<logic:notEmpty name="infoReport" property="lines">
