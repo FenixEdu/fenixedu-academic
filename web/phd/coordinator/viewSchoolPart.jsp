@@ -11,7 +11,7 @@
 		<tr>
 			<%-- view registration conclusion information --%>
 			<td>
-				<fr:view schema="AcademicAdminOffice.PhdIndividualProgramProcess.view.registration.conclusion.bean" name="registrationConclusionBean">
+				<fr:view schema="PhdIndividualProgramProcess.view.registration.conclusion.bean" name="registrationConclusionBean">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle2 thlight mtop10" />
 					</fr:layout>

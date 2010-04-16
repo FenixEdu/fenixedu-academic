@@ -1291,7 +1291,7 @@
 	<slot name="person.istUsername" />
 </schema>
 
-<schema name="AcademicAdminOffice.PhdIndividualProgramProcess.view.registration.conclusion.bean" type="net.sourceforge.fenixedu.presentationTier.Action.phd.academicAdminOffice.PhdRegistrationConclusionBean" bundle="PHD_RESOURCES">
+<schema name="PhdIndividualProgramProcess.view.registration.conclusion.bean" type="net.sourceforge.fenixedu.presentationTier.Action.phd.academicAdminOffice.PhdRegistrationConclusionBean" bundle="PHD_RESOURCES">
 	<slot name="degreeNameWithDescription" />
 	<slot name="activeStateType">
 		<property name="classes" value="bold" />

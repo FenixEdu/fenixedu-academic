@@ -105,7 +105,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 	@Forward(name = "exemptPublicPresentationSeminarComission", path = "/phd/academicAdminOffice/exemptPublicPresentationSeminarComission.jsp"),
 
-	@Forward(name = "requestPublicThesisPresentation", path = "/phd/academicAdminOffice/requestPublicThesisPresentation.jsp")
+	@Forward(name = "requestPublicThesisPresentation", path = "/phd/academicAdminOffice/requestPublicThesisPresentation.jsp"),
+
+	@Forward(name = "viewCurriculum", path = "/phd/academicAdminOffice/viewCurriculum.jsp")
 
 })
 public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramProcessDA {

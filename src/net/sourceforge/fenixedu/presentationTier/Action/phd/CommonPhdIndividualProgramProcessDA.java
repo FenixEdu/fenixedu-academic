@@ -130,7 +130,7 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
 	return executeActivity(RequestPublicPresentationSeminarComission.class, bean, request, mapping,
 		"requestPublicPresentationSeminarComission", "viewProcess");
     }
-    
+
     public ActionForward prepareExemptPublicPresentationSeminarComission(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 	return mapping.findForward("exemptPublicPresentationSeminarComission");
@@ -152,4 +152,22 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
     }
 
     // End of Request Public Presentation Seminar Comission
+
+    // View curriculum
+
+    public ActionForward viewCurriculum(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("curriculumFilter", new PhdCurriculumFilterOptions(getProcess(request).getRegistration()));
+	return mapping.findForward("viewCurriculum");
+    }
+
+    public ActionForward changeViewCurriculumFilterOptions(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	request.setAttribute("curriculumFilter", getRenderedObject("curriculumFilter"));
+	return mapping.findForward("viewCurriculum");
+    }
+
+    // End of view curriculum
 }

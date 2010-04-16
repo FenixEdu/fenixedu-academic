@@ -78,12 +78,6 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 	return super.viewProcess(mapping, form, request, response);
     }
 
-    public ActionForward viewCurriculum(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	request.setAttribute("studentCurricularPlan", getProcess(request).getRegistration().getLastStudentCurricularPlan());
-	return mapping.findForward("viewCurriculum");
-    }
-
     public ActionForward manageEnrolments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
