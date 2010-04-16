@@ -1681,10 +1681,6 @@ public class CurricularCourse extends CurricularCourse_Base {
 	for (final CurricularCourse curricularCourse : equivalence.getOldCurricularCourses()) {
 	    if (curricularCourse.getDegreeCurricularPlan().isBolonhaDegree()) {
 		
-		if (curricularCourse.hasAnyActiveContext(executionSemester)) {
-		    continue;
-		}
-
 		for (final CurriculumModule module : curricularCourse.getCurriculumModules()) {
 		    if (module.isEnrolment()) {
 			final Enrolment enrolment = (Enrolment) module;
