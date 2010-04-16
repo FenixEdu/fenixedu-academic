@@ -5,6 +5,9 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%>
 <%@page import="net.sourceforge.fenixedu.util.stork.SPUtil" %>
+<%@page import="java.net.URL" %>
+<%@page import="com.lowagie.text.html.HtmlEncoder" %>
+
 
 <%!
 
@@ -26,28 +29,15 @@
 
 <h1><bean:message key="title.application.name.erasmus" bundle="CANDIDATE_RESOURCES"/></h1>
 
-<h2>Choose Country</h2>
-
-<p class="mvert05">
-You will be presented with a list of countries in the context of STORK project.
-</p>
-
-<div class="h_box">
-	<p  class="mvert05">
-		If the country of your nationality is not in the list then proceed to the email registration following this link
-		<b><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= f("%s/candidacies/erasmus/preregistration", request.getContextPath()) %>">Email registration process »</a></b>
-	</p>
-</div>
-
 <%
-	String applicationUrl = SPUtil.getInstance().getSpInvokeUrl();
+	// String applicationUrl = SPUtil.getInstance().getSpInvokeUrl();
+	
+	String applicationUrl = java.net.URLEncoder.encode("http://fenix.ist.utl.pt/applications/erasmus/returnFromPeps");
+	applicationUrl = "http://storker.ist.utl.pt/IST-SP/IndexPage?applicationUrl=" + applicationUrl;
+	
 %>
 
-<p class="mvert05">
-Please choose the country of your nationality and click to proceed:
-</p>
+<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= applicationUrl %>">Click here in order to authentication with your national citizen card</a>
 
-<iframe src="<%= applicationUrl %>" width="100%" height="200px" style="border:0px;"></iframe>
-
-</body>	
+</body>
 </html>

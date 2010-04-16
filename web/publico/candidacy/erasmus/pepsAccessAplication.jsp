@@ -13,7 +13,6 @@
 	}
 %>
 
-
 <bean:define id="mappingPath" name="mappingPath"/>
 <bean:define id="fullPath"><%= request.getContextPath() + "/publico" + mappingPath + ".do" %></bean:define>
 
@@ -26,21 +25,15 @@
 
 <h1><bean:message key="title.application.name.erasmus" bundle="CANDIDATE_RESOURCES"/></h1>
 
-<h2>Choose Country</h2>
-
-<p class="mvert05">
-You will be presented with a list of countries in the context of STORK project.
-</p>
-
 <%
-	String applicationUrl = SPUtil.getInstance().getSpInvokeUrlToAccessApplication();
+	// String applicationUrl = SPUtil.getInstance().getSpInvokeUrl();
+	
+	String applicationUrl = java.net.URLEncoder.encode("http://fenix.ist.utl.pt/applications/erasmus/pepsApplicationAccess");
+	applicationUrl = "http://storker.ist.utl.pt/IST-SP/IndexPage?applicationUrl=" + applicationUrl;
+	
 %>
 
-<p class="mvert05">
-Please choose the country of your nationality and click to proceed:
-</p>
-
-<iframe src="<%= applicationUrl %>" width="100%" height="200px" style="border:0px;"></iframe>
+<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= applicationUrl %>">Click here in order to authentication with your national citizen card</a>
 
 </body>	
 </html>
