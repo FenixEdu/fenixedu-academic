@@ -1,15 +1,14 @@
-<%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
+<html:xhtml/>
 
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message key="label.action.contributors.visualize" /></h2>
+<bean:define id="contributor" name="<%= PresentationConstants.CONTRIBUTOR %>"/>
 
     <table class="tstyle2 thlight thright">
-     <bean:define id="contributor" name="<%= PresentationConstants.CONTRIBUTOR %>"/>
         <logic:present name="contributor">
           <!-- Contributor Number -->
           <tr>
@@ -55,7 +54,7 @@
 	
 	<ul>
 		<li>
-		    <html:link page="/editContributor.do?method=prepareEdit">
+		    <html:link page="/editContributor.do?method=prepareEdit" paramId="contributorId" paramName="contributor" paramProperty="idInternal">
 		    	<bean:message key="label.action.contributors.edit" />
 		    </html:link>
 	    </li>

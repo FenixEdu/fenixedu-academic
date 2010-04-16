@@ -4,13 +4,11 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.contributor;
 
-import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoContributor;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
@@ -56,18 +54,17 @@ public class ListContributorsDispatchAction extends FenixDispatchAction {
 	    final HttpServletResponse response) throws Exception {
 
 	final Integer contributorNumber = getIntegerFromRequestOrForm(request, (DynaActionForm) form, "contributorNumber");
+	final InfoContributor infoContributor = InfoContributor.newInfoFromDomain(Party.readByContributorNumber(contributorNumber
+		.toString()));
 
-	List<InfoContributor> contributors = Collections.singletonList(InfoContributor.newInfoFromDomain(Party
-		.readByContributorNumber(contributorNumber.toString())));
-
-	if (contributors.size() == 1) {
-	    InfoContributor infoContributor = (InfoContributor) contributors.get(0);
-	    request.setAttribute(PresentationConstants.CONTRIBUTOR, infoContributor);
-	    return mapping.findForward("ActionReady");
+	if (infoContributor == null) {
+	    addActionMessage(request, "error.contributor.not.found", contributorNumber.toString());
+	    return prepare(mapping, form, request, response);
 	}
 
-	request.setAttribute(PresentationConstants.CONTRIBUTOR_LIST, contributors);
-	return mapping.findForward("ChooseContributor");
+	request.setAttribute(PresentationConstants.CONTRIBUTOR, infoContributor);
+	return mapping.findForward("ActionReady");
+
     }
 
     public ActionForward chooseContributor(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -89,7 +86,7 @@ public class ListContributorsDispatchAction extends FenixDispatchAction {
 
 	DynaActionForm editContributorForm = (DynaActionForm) form;
 
-	InfoContributor infoContributor = (InfoContributor) request.getAttribute(PresentationConstants.CONTRIBUTOR);
+	InfoContributor infoContributor = getInfoContributor(request, editContributorForm);
 
 	editContributorForm.set("contributorNumber", String.valueOf(infoContributor.getContributorNumber()));
 	editContributorForm.set("contributorName", infoContributor.getContributorName());
@@ -100,9 +97,16 @@ public class ListContributorsDispatchAction extends FenixDispatchAction {
 	editContributorForm.set("parishOfResidence", infoContributor.getParishOfResidence());
 	editContributorForm.set("districtSubdivisionOfResidence", infoContributor.getDistrictSubdivisionOfResidence());
 	editContributorForm.set("districtOfResidence", infoContributor.getDistrictOfResidence());
+	editContributorForm.set("contributorId", infoContributor.getIdInternal());
 
 	return mapping.findForward("EditReady");
 
+    }
+
+    private InfoContributor getInfoContributor(HttpServletRequest request, DynaActionForm form) {
+	final InfoContributor infoContributor = (InfoContributor) request.getAttribute(PresentationConstants.CONTRIBUTOR);
+	return infoContributor != null ? infoContributor : InfoContributor.newInfoFromDomain((Party) readDomainObject(request,
+		Party.class, getIntegerFromRequestOrForm(request, form, "contributorId")));
     }
 
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
@@ -110,8 +114,7 @@ public class ListContributorsDispatchAction extends FenixDispatchAction {
 
 	DynaActionForm editContributorForm = (DynaActionForm) form;
 
-	IUserView userView = getUserView(request);
-	InfoContributor infoContributor = (InfoContributor) request.getAttribute(PresentationConstants.CONTRIBUTOR);
+	InfoContributor infoContributor = getInfoContributor(request, editContributorForm);
 
 	// Get the Information
 	String contributorNumberString = (String) editContributorForm.get("contributorNumber");

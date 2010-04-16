@@ -38,6 +38,7 @@
 			<form-property name="parishOfResidence" type="java.lang.String" />
 			<form-property name="districtSubdivisionOfResidence" type="java.lang.String" />
 			<form-property name="districtOfResidence" type="java.lang.String" />
+			<form-property name="contributorId" type="java.lang.Integer" />
       </form-bean>
 
 
