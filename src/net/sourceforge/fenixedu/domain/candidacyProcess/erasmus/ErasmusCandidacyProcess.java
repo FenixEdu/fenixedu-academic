@@ -41,7 +41,7 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 
     static private List<Activity> activities = new ArrayList<Activity>();
     static {
-
+	activities.add(new ViewErasmusVancacies());
     }
 
     public ErasmusCandidacyProcess() {
@@ -196,4 +196,14 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 	}
     }
 
+    private static class ViewErasmusVancacies extends Activity<ErasmusCandidacyProcess> {
+	@Override
+	public void checkPreConditions(ErasmusCandidacyProcess process, IUserView userView) {
+	}
+
+	@Override
+	protected ErasmusCandidacyProcess executeActivity(ErasmusCandidacyProcess process, IUserView userView, Object object) {
+	    return process;
+	}
+    }
 }

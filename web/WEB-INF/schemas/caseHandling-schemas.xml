@@ -2352,3 +2352,10 @@
 <schema name="ErasmusStudentDataBean.applyForSemester.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusStudentData" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="applyFor.localizedName" key="label.erasmus.appliedSemester" />
 </schema>
+
+<schema name="ErasmusVacancy.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusVacancy" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="universityUnit.country.localizedName" key="label.erasmus.country" />
+	<slot name="universityUnit.nameI18n" key="label.erasmus.university" />
+	<slot name="degree.presentationName" key="label.erasmus.degrees" />
+</schema>
+

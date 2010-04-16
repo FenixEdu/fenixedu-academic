@@ -124,7 +124,6 @@
 	</html:form>
 	<br/>
 
-
 	<%-- show main process information --%>
 	<fr:view name="process" schema="CandidacyProcess.view">
 		<fr:layout name="tabular">
@@ -132,7 +131,6 @@
 	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 		</fr:layout>
 	</fr:view>
-	
 	<logic:notEmpty name="processActivities">
 		<%-- list main process activities --%>
 		<ul>
