@@ -12,7 +12,7 @@
 	<li class="navheader"><bean:message key="consult"/></li>
   	<li><html:link page="/viewCurriculum.do?method=prepare" titleKey="link.title.curriculum"><bean:message key="link.student.curriculum"/></html:link></li>
 	<li><html:link page="/studentTimeTable.do?method=prepare" titleKey="link.title.timetable"><bean:message key="link.my.timetable"/></html:link></li>
-	<li>
+	<li><html:link page="/ShowStudentStatutes.do?method=execute" titleKey="link.title.statutes"><bean:message key="label.student.statutes"/></html:link></li>
 	<ul>
 	<li>
 		<html:link page="/ICalTimeTable.do?method=prepare" bundle="MESSAGING_RESOURCES" titleKey="label.title.sync">
