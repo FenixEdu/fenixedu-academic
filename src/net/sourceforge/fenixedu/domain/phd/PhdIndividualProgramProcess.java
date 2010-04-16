@@ -1262,4 +1262,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	}
 	return result;
     }
+
+    public LocalDate getConclusionDate() {
+	return getThesisProcess().getConclusionDate();
+    }
 }

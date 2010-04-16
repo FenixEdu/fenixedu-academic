@@ -57,5 +57,39 @@
 	</attribute>
 
   </tag>
+  
+  <tag>
+	<name>filterProcesses</name>
+	<tag-class>net.sourceforge.fenixedu.presentationTier.TagLib.phd.FilterProcessesTag</tag-class>
+	<body-content>JSP</body-content>
+ 	<description>
+      Filters all PhdIndividualProgramProcess'es by a given PredicateContainer and a SearchPhdIndividualProgramProcessBean
+    </description>
+	
+	<attribute>
+    	<name>id</name>
+    	<required>true</required>
+    	<rtexprvalue>false</rtexprvalue>
+	</attribute>
+	
+	<attribute>
+    	<name>predicateContainer</name>
+    	<required>true</required>
+    	<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	
+	<attribute>
+    	<name>bean</name>
+    	<required>true</required>
+    	<rtexprvalue>true</rtexprvalue>
+	</attribute>
+		
+	<attribute>
+    	<name>scope</name>
+    	<required>false</required>
+    	<rtexprvalue>true</rtexprvalue>
+	</attribute>
+
+  </tag>
 
 </taglib>

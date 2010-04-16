@@ -33,6 +33,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.SwapJuryElementsOrd
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.ValidateJury;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 public class PhdThesisProcess extends PhdThesisProcess_Base {
 
@@ -222,6 +223,11 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	// TODO: add remaining documents here (Abstract /resume)
 
 	return documents;
+    }
+
+    // TODO: The domain needs explicit information about the conclusion date
+    public LocalDate getConclusionDate() {
+	return new LocalDate();
     }
 
     private PhdProgramProcess getCandidacyProcess() {

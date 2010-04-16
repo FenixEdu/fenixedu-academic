@@ -53,6 +53,7 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
 
     public ActionForward viewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
+	request.setAttribute("backMethod", getFromRequest(request, "backMethod"));
 	return mapping.findForward("viewProcess");
     }
 
