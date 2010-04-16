@@ -414,7 +414,7 @@
 		
 	<!-- ==== Summaries Control === -->
 	<definition name="teacherSummariesControlList" extends="departmentAdmOffice.masterPage">
-		<put name="body" value="/directiveCouncil/summariesControl/listTeacherSummariesControl.jsp"/>
+		<put name="body" value="/departmentAdmOffice/summariesControl/listTeacherSummariesControl.jsp"/>
 	</definition>
     
     <!-- Teacher Auto Evaluation Period -->    

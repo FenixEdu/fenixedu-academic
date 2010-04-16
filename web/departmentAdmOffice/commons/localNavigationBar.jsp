@@ -31,7 +31,7 @@
 		</li>
 		<li>
 			<html:link page="/summariesControl.do?method=prepareSummariesControl">
-				<bean:message key="link.summaries.control" />
+				<bean:message key="link.summaries.control" bundle="APPLICATION_RESOURCES"/>
 			</html:link>
 		</li>		
 	</ul>

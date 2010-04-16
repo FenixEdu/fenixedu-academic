@@ -22,7 +22,7 @@
 	</html:messages>
 
 
-	<logic:present name="executionSemesters"><!-- 111 -->
+	<logic:present name="executionSemesters"><!-- Dropdown box -->					
 		<fr:form action="/summariesControl.do?method=listSummariesControl">			
 			<fr:edit id="executionSemester" name="executionSemesters">
 				<fr:layout name="tabular">
@@ -38,10 +38,18 @@
 				</fr:schema>
 			</fr:edit>											
 		</fr:form>
+		<logic:present name="currentSemester">
+			<p class="mtop0">
+				<em>
+					<bean:message key="message.summary.data.reportsAWeekAgo" bundle="PEDAGOGICAL_COUNCIL"/>
+					<fr:view name="oneWeekBeforeDate"/>.
+				</em>
+			</p>
+		</logic:present> 
 	</logic:present>
 
 
-	<logic:present name="summariesResumeMap"><!-- 222 -->	
+	<logic:present name="summariesResumeMap"><!-- All departments resume -->
 		<fr:view name="summariesResumeMap" schema="summary.control.allDepartments">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4"/>
@@ -51,7 +59,7 @@
 	</logic:present>
 			
 	
-	<logic:present name="departmentResume"><!-- 333 -->
+	<logic:present name="departmentResume"><!-- Department resume -->
 		<bean:define id="executionSemesterID" name="departmentResume" property="executionSemester.externalId"/>
 		<fr:form action="/summariesControl.do?method=listDepartmentSummariesControl">
 
@@ -87,7 +95,7 @@ padding-right: 3px;
 </style>
 
 	
-	<logic:present name="departmentResumeList"><!-- 444 -->
+	<logic:present name="departmentResumeList"><!-- Department mini resume -->
 		<bean:define id="columnClasses" value="acenter,acenter,acenter,acenter,acenter,highlight1 acenter"/>
 		<logic:equal name="departmentResume" property="summaryControlCategoryString" value="BETWEEN_0_20">
 			<bean:define id="columnClasses" value="highlight1 acenter,acenter,acenter,acenter,acenter,acenter"/>
@@ -158,7 +166,7 @@ padding-right: 3px;
 	</logic:present>
 
 
-	<logic:present name="departmentResume"><!-- 555 -->
+	<logic:present name="departmentResume"><!-- Department executuin courses resume -->
 		<bean:define id="departmentID" name="departmentResume" property="department.externalId" type="java.lang.String"/>
 		<bean:define id="executionSemesterID" name="departmentResume" property="executionSemester.externalId" type="java.lang.String"/>
 		<bean:define id="categoryControl" value=""/>		
@@ -211,7 +219,7 @@ padding-right: 3px;
 	</logic:present>	
 
 
-	<logic:present name="executionCoursesResume"><!-- 666 -->
+	<logic:present name="executionCoursesResume"><!-- Execution course resume -->
 		<bean:define id="executionSemesterID" name="executionCourse" property="executionPeriod.externalId"/>		
 		<bean:define id="departmentID" name="departmentID" type="java.lang.String"/>		
 		<bean:define id="categoryControl" name="categoryControl" type="java.lang.String"/>
@@ -249,19 +257,19 @@ padding-right: 3px;
 		<fr:view name="executionCoursesResume" schema="summaries.control.list">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight mvert05"/>
-				<fr:property name="columnClasses" value=",acenter,acenter,,smalltxt,aright,aright,bold aright, aright,bold aright"/>
-				<fr:property name="suffixes" value=",,,,,h,h,%,h,%"/>
+				<fr:property name="columnClasses" value=",acenter,acenter,,smalltxt,aright,aright,bold aright"/>
+				<fr:property name="suffixes" value=",,,,,,,%"/>
 			</fr:layout>
 		</fr:view>				
 
 		<p>
-			<a href="<%= urlStart + urlContext %>"><bean:message key="label.executionCourse.summaries" bundle="PEDAGOGICAL_COUNCIL"/></a>
+			<a href="<%= urlStart + urlContext %>" target="_blank"><bean:message key="label.executionCourse.summaries" bundle="PEDAGOGICAL_COUNCIL"/></a>
 		</p>
 
 	</logic:present>
 
 
-	<logic:present name="last4SemestersSummaryControl"><!-- 777 -->
+	<logic:present name="last4SemestersSummaryControl"><!-- Teacher resume -->
 		<bean:define id="executionSemesterID" name="executionSemesterID"/>		
 		<bean:define id="departmentID" name="departmentID" type="java.lang.String"/>		
 		<bean:define id="categoryControl" name="categoryControl" type="java.lang.String"/>
@@ -290,7 +298,7 @@ padding-right: 3px;
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle4 thlight mvert05"/>
 						<fr:property name="columnClasses" value=",acenter,acenter,,smalltxt,aright,aright,bold aright, aright,bold aright"/>
-						<fr:property name="suffixes" value=",,,,,h,h,%,h,%"/>
+						<fr:property name="suffixes" value=",,,,,,,%"/>
 					</fr:layout>
 				</fr:view>
 			</logic:notEmpty>

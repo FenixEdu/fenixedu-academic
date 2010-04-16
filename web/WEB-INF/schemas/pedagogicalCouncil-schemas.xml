@@ -918,3 +918,16 @@
 		<property name="key" value="false"/>
 	</slot>
 </schema>
+  
+<schema name="summaries.control.list" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.DetailSummaryElement">
+  	<slot name="teacherName" key="label.summary.teacherName"/>
+  	<slot name="teacherNumber" key="label.summary.teacherNumber"/>
+  	<slot name="categoryName" key="label.summary.categoryName"/>
+  	<slot name="executionCourseName" key="label.summary.executionCourseName"/>
+  	<slot name="siglas" key="label.summary.siglas"/>
+  	<slot name="declaredLessons" key="label.summary.declaredLessons"/>
+   	<slot name="givenSummaries" key="label.summary.givenSummaries"/>	
+   	<slot name="givenSummariesPercentage" key="label.summary.givenSummariesPercentage" layout="null-as-label">
+        <property name="label" value="NA"/>
+    </slot>
+</schema>

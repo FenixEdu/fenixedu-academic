@@ -4,32 +4,25 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionPeriods;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.DepartmentSummaryElement;
 import net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.ExecutionCourseSummaryElement;
-import net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.SummariesControlElementDTO;
+import net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.DetailSummaryElement;
 import net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.DepartmentSummaryElement.SummaryControlCategory;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Department;
@@ -51,15 +44,13 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.joda.time.LocalDate;
+import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.Pair;
-import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
-import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 public class SummariesControlAction extends FenixDispatchAction {
 
@@ -142,7 +133,7 @@ public class SummariesControlAction extends FenixDispatchAction {
 	String executionCourseId = (String) getFromRequest(request, "executionCourseID");
 	ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
 
-	List<SummariesControlElementDTO> executionCoursesResume = getExecutionCourseResume(executionCourse.getExecutionPeriod(),
+	List<DetailSummaryElement> executionCoursesResume = getExecutionCourseResume(executionCourse.getExecutionPeriod(),
 		executionCourse.getProfessorships());
 
 	request.setAttribute("departmentID", departmentID);
@@ -162,19 +153,19 @@ public class SummariesControlAction extends FenixDispatchAction {
 	String personId = (String) getFromRequest(request, "personID");
 	Person person = AbstractDomainObject.fromExternalId(personId);
 
-	List<Pair<ExecutionSemester, List<SummariesControlElementDTO>>> last4SemestersSummaryControl = new ArrayList<Pair<ExecutionSemester, List<SummariesControlElementDTO>>>();
+	List<Pair<ExecutionSemester, List<DetailSummaryElement>>> last4SemestersSummaryControl = new ArrayList<Pair<ExecutionSemester, List<DetailSummaryElement>>>();
 	ExecutionSemester executionSemesterToPresent = ExecutionSemester.readActualExecutionSemester();
 
-	List<SummariesControlElementDTO> executionCoursesResume = getExecutionCourseResume(executionSemesterToPresent, person
+	List<DetailSummaryElement> executionCoursesResume = getExecutionCourseResume(executionSemesterToPresent, person
 		.getProfessorshipsByExecutionSemester(executionSemesterToPresent));
-	last4SemestersSummaryControl.add(new Pair<ExecutionSemester, List<SummariesControlElementDTO>>(
-		executionSemesterToPresent, executionCoursesResume));
+	last4SemestersSummaryControl.add(new Pair<ExecutionSemester, List<DetailSummaryElement>>(executionSemesterToPresent,
+		executionCoursesResume));
 	for (int iter = 0; iter < 3; iter++) {
 	    executionSemesterToPresent = executionSemesterToPresent.getPreviousExecutionPeriod();
 	    executionCoursesResume = getExecutionCourseResume(executionSemesterToPresent, person
 		    .getProfessorshipsByExecutionSemester(executionSemesterToPresent));
-	    last4SemestersSummaryControl.add(new Pair<ExecutionSemester, List<SummariesControlElementDTO>>(
-		    executionSemesterToPresent, executionCoursesResume));
+	    last4SemestersSummaryControl.add(new Pair<ExecutionSemester, List<DetailSummaryElement>>(executionSemesterToPresent,
+		    executionCoursesResume));
 	}
 
 	request.setAttribute("last4SemestersSummaryControl", last4SemestersSummaryControl);
@@ -186,105 +177,37 @@ public class SummariesControlAction extends FenixDispatchAction {
 	return mapping.findForward("success");
     }
 
-    private List<SummariesControlElementDTO> getListing(HttpServletRequest request, String departmentID, String executionPeriodID)
-	    throws FenixFilterException, FenixServiceException {
-
-	final Department department = rootDomainObject.readDepartmentByOID(Integer.valueOf(departmentID));
-	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(Integer
-		.valueOf(executionPeriodID));
-
-	List<Teacher> allDepartmentTeachers = (department != null && executionSemester != null) ? department.getAllTeachers(
-		executionSemester.getBeginDateYearMonthDay(), executionSemester.getEndDateYearMonthDay())
-		: new ArrayList<Teacher>();
-
-	List<SummariesControlElementDTO> allListElements = new ArrayList<SummariesControlElementDTO>();
-
-	for (Teacher teacher : allDepartmentTeachers) {
-	    
-	    for (Professorship professorship : teacher.getProfessorships()) {
-
-		BigDecimal lessonHours = EMPTY, shiftHours = EMPTY, courseDifference = EMPTY;
-		BigDecimal shiftDifference = EMPTY, courseHours = EMPTY;
-
-		if (professorship.belongsToExecutionPeriod(executionSemester)
-			&& !professorship.getExecutionCourse().isMasterDegreeDFAOrDEAOnly()) {
-		    for (Shift shift : professorship.getExecutionCourse().getAssociatedShifts()) {
-			DegreeTeachingService degreeTeachingService = professorship.getDegreeTeachingServiceByShift(shift);
-			if (degreeTeachingService != null) {
-			    // GET LESSON HOURS
-			    lessonHours = readDeclaredLessonHours(degreeTeachingService.getPercentage(), shift, lessonHours);
-
-			    // GET SHIFT SUMMARIES HOURS
-			    shiftHours = readSummaryHours(professorship, shift, shiftHours);
-			}
-			// GET COURSE SUMMARY HOURS
-			courseHours = readSummaryHours(professorship, shift, courseHours);
-		    }
-
-		    shiftHours = shiftHours.setScale(2, RoundingMode.HALF_UP);
-		    lessonHours = lessonHours.setScale(2, RoundingMode.HALF_UP);
-		    courseHours = courseHours.setScale(2, RoundingMode.HALF_UP);
-
-		    shiftDifference = getDifference(lessonHours, shiftHours);
-		    courseDifference = getDifference(lessonHours, courseHours);
-
-		    Category category = teacher.getCategory();
-		    String categoryName = (category != null) ? category.getCode() : "";
-		    String siglas = getSiglas(professorship);
-
-		    SummariesControlElementDTO listElementDTO = new SummariesControlElementDTO(teacher.getPerson().getName(),
-			    professorship.getExecutionCourse().getNome(), teacher.getTeacherNumber(), categoryName, lessonHours,
-			    shiftHours, courseHours, shiftDifference, courseDifference, siglas);
-
-		    allListElements.add(listElementDTO);
-		}
-	    }
-	}
-
-	Collections.sort(allListElements, new BeanComparator("teacherNumber"));
-	request.setAttribute("listElements", allListElements);
-
-	return allListElements;
-    }
-
-    private List<SummariesControlElementDTO> getExecutionCourseResume(final ExecutionSemester executionSemester,
+    private List<DetailSummaryElement> getExecutionCourseResume(final ExecutionSemester executionSemester,
 	    List<Professorship> professorships) {
-	List<SummariesControlElementDTO> allListElements = new ArrayList<SummariesControlElementDTO>();
+	List<DetailSummaryElement> allListElements = new ArrayList<DetailSummaryElement>();
+	LocalDate today = new LocalDate();
+	LocalDate oneWeekBeforeToday = today.minusDays(8);
 	for (Professorship professorship : professorships) {
-
-	    BigDecimal lessonHours = EMPTY, shiftHours = EMPTY, courseDifference = EMPTY;
-	    BigDecimal shiftDifference = EMPTY, courseHours = EMPTY;
+	    BigDecimal summariesGiven = EMPTY, lessonsDeclared = EMPTY;
+	    BigDecimal givenSumariesPercentage = EMPTY;
 	    if (professorship.belongsToExecutionPeriod(executionSemester)
 		    && !professorship.getExecutionCourse().isMasterDegreeDFAOrDEAOnly()) {
-
 		for (Shift shift : professorship.getExecutionCourse().getAssociatedShifts()) {
-
 		    DegreeTeachingService degreeTeachingService = professorship.getDegreeTeachingServiceByShift(shift);
 		    if (degreeTeachingService != null) {
-			// GET LESSON HOURS
-			lessonHours = readDeclaredLessonHours(degreeTeachingService.getPercentage(), shift, lessonHours);
-
-			// GET SHIFT SUMMARIES HOURS
-			shiftHours = readSummaryHours(professorship, shift, shiftHours);
+			// Get the number of declared lessons
+			lessonsDeclared = getDeclaredLesson(degreeTeachingService.getPercentage(), shift, lessonsDeclared,
+				oneWeekBeforeToday);
 		    }
-		    // GET COURSE SUMMARY HOURS
-		    courseHours = readSummaryHours(professorship, shift, courseHours);
+		    // Get the number of summaries given
+		    summariesGiven = getSummariesGiven(professorship, shift, summariesGiven, oneWeekBeforeToday);
 		}
-
-		shiftHours = shiftHours.setScale(2, RoundingMode.HALF_UP);
-		lessonHours = lessonHours.setScale(2, RoundingMode.HALF_UP);
-		courseHours = courseHours.setScale(2, RoundingMode.HALF_UP);
-
-		shiftDifference = getDifference(lessonHours, shiftHours);
-		courseDifference = getDifference(lessonHours, courseHours);
+		summariesGiven = summariesGiven.setScale(1, RoundingMode.HALF_UP);
+		lessonsDeclared = lessonsDeclared.setScale(1, RoundingMode.HALF_UP);
+		givenSumariesPercentage = getDifference(lessonsDeclared, summariesGiven);
 
 		Category category = professorship.getTeacher().getCategory();
 		String categoryName = (category != null) ? category.getCode() : "";
 		String siglas = getSiglas(professorship);
 
-		SummariesControlElementDTO listElementDTO = new SummariesControlElementDTO(professorship.getTeacher().getPerson()
-			.getName(), professorship.getExecutionCourse().getNome(), professorship.getTeacher().getTeacherNumber(),
-			categoryName, lessonHours, shiftHours, courseHours, shiftDifference, courseDifference, siglas);
+		DetailSummaryElement listElementDTO = new DetailSummaryElement(professorship.getTeacher().getPerson().getName(),
+			professorship.getExecutionCourse().getNome(), professorship.getTeacher().getTeacherNumber(),
+			categoryName, lessonsDeclared, summariesGiven, givenSumariesPercentage, siglas);
 
 		allListElements.add(listElementDTO);
 	    }
@@ -302,6 +225,11 @@ public class SummariesControlAction extends FenixDispatchAction {
 	    DepartmentSummaryElement departmentSummariesElement = getDepartmentSummaryResume(executionSemester, department);
 	    allDepartmentsSummariesResume.add(departmentSummariesElement);
 	}
+	if (executionSemester.isCurrent()) {
+	    LocalDate oneWeekBeforeDate = new LocalDate();
+	    request.setAttribute("currentSemester", "true");
+	    request.setAttribute("oneWeekBeforeDate", oneWeekBeforeDate.minusDays(8));
+	}
 	Collections.sort(allDepartmentsSummariesResume, new BeanComparator("department.realName"));
 	request.setAttribute("summariesResumeMap", allDepartmentsSummariesResume);
     }
@@ -311,10 +239,12 @@ public class SummariesControlAction extends FenixDispatchAction {
 	DepartmentSummaryElement departmentSummariesElement = new DepartmentSummaryElement(department, executionSemester);
 	Set<ExecutionCourse> allDepartmentExecutionCourses = getDepartmentExecutionCourses(department, executionSemester);
 	if (allDepartmentExecutionCourses != null) {
+	    LocalDate today = new LocalDate();
+	    LocalDate oneWeekBeforeToday = today.minusDays(8);
 	    for (ExecutionCourse executionCourse : allDepartmentExecutionCourses) {
 		int instanceLessonsTotal[] = { 0, 0 };
 		for (Shift shift : executionCourse.getAssociatedShifts()) {
-		    getInstanceLessonsTotalsByShift(shift, instanceLessonsTotal);
+		    getInstanceLessonsTotalsByShift(shift, instanceLessonsTotal, oneWeekBeforeToday);
 		}
 		BigDecimal result = BigDecimal.valueOf(0);
 		BigDecimal numberOfLessonInstances = BigDecimal.valueOf(instanceLessonsTotal[0]);
@@ -391,13 +321,13 @@ public class SummariesControlAction extends FenixDispatchAction {
 	return SummaryControlCategory.BETWEEN_80_100;
     }
 
-    private BigDecimal readDeclaredLessonHours(Double percentage, Shift shift, BigDecimal lessonHours) {
-	BigDecimal shiftLessonHoursSum = EMPTY;
+    private BigDecimal getDeclaredLesson(Double percentage, Shift shift, BigDecimal lessonGiven, LocalDate oneWeekBeforeToday) {
+	BigDecimal shiftLessonSum = EMPTY;
 	for (Lesson lesson : shift.getAssociatedLessons()) {
-	    shiftLessonHoursSum = shiftLessonHoursSum.add(lesson.getUnitHours().multiply(
-		    BigDecimal.valueOf(lesson.getAllLessonDates().size())));
+	    shiftLessonSum = shiftLessonSum.add(BigDecimal.valueOf(lesson.getAllLessonDatesUntil(
+		    new YearMonthDay(oneWeekBeforeToday)).size()));
 	}
-	return lessonHours.add(BigDecimal.valueOf((percentage / 100)).multiply(shiftLessonHoursSum));
+	return lessonGiven.add(BigDecimal.valueOf((percentage / 100)).multiply(shiftLessonSum));
     }
 
     /**
@@ -408,38 +338,34 @@ public class SummariesControlAction extends FenixDispatchAction {
      * 
      * @param shift
      * @param instanceLessonsTotals
+     * @param oneWeekBeforeToday
      */
-    private void getInstanceLessonsTotalsByShift(Shift shift, int[] instanceLessonsTotals) {
-	LocalDate today = new LocalDate();
-	LocalDate oneWeekBeforeToday = today.minusDays(8);
-	int numberOfInstanceLessons = 0;
+    private void getInstanceLessonsTotalsByShift(Shift shift, int[] instanceLessonsTotals, LocalDate oneWeekBeforeToday) {
+	int numberOfPossibleInstanceLessons = 0;
 	int numberOfInstanceLessonsWithSummary = 0;
 	for (Lesson lesson : shift.getAssociatedLessons()) {
-	    List<LessonInstance> allLessonInstanceDatesUntil = lesson.getAllLessonInstancesUntil(oneWeekBeforeToday);
-	    numberOfInstanceLessons += allLessonInstanceDatesUntil.size();
-	    for (LessonInstance lessonInstance : allLessonInstanceDatesUntil) {
+	    List<LessonInstance> allLessonInstanceUntil = lesson.getAllLessonInstancesUntil(oneWeekBeforeToday);
+	    Set<YearMonthDay> allPossibleDates = lesson.getAllLessonDatesUntil(new YearMonthDay(oneWeekBeforeToday));
+	    numberOfPossibleInstanceLessons += allPossibleDates.size();
+	    for (LessonInstance lessonInstance : allLessonInstanceUntil) {
 		if (lessonInstance.getSummary() != null) {
 		    numberOfInstanceLessonsWithSummary++;
 		}
 	    }
 	}
-	instanceLessonsTotals[0] = instanceLessonsTotals[0] + numberOfInstanceLessons;
+	instanceLessonsTotals[0] = instanceLessonsTotals[0] + numberOfPossibleInstanceLessons;
 	instanceLessonsTotals[1] = instanceLessonsTotals[1] + numberOfInstanceLessonsWithSummary;
     }
 
-    private BigDecimal readSummaryHours(Professorship professorship, Shift shift, BigDecimal summaryHours) {
+    private BigDecimal getSummariesGiven(Professorship professorship, Shift shift, BigDecimal summariesGiven,
+	    LocalDate oneWeekBeforeToday) {
 	for (Summary summary : shift.getAssociatedSummaries()) {
-	    if (summary.getProfessorship() != null && summary.getProfessorship().equals(professorship)) {
-		BigDecimal lessonHours = EMPTY;
-		if (summary.getLesson() != null) {
-		    lessonHours = summary.getLesson().getUnitHours();
-		} else if (!shift.getAssociatedLessons().isEmpty()) {
-		    lessonHours = shift.getAssociatedLessons().get(0).getUnitHours();
-		}
-		summaryHours = summaryHours.add(lessonHours);
+	    if (summary.getProfessorship() != null && summary.getProfessorship() == professorship && !summary.getIsExtraLesson()
+		    && !summary.getLessonInstance().getBeginDateTime().toLocalDate().isAfter(oneWeekBeforeToday)) {
+		summariesGiven = summariesGiven.add(BigDecimal.ONE);
 	    }
 	}
-	return summaryHours;
+	return summariesGiven;
     }
 
     private BigDecimal getDifference(BigDecimal lessonHours, BigDecimal summaryHours) {
@@ -472,118 +398,6 @@ public class SummariesControlAction extends FenixDispatchAction {
 	return buffer.toString();
     }
 
-    public ActionForward exportToExcel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
-
-	DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
-	String departmentID = (String) dynaActionForm.get("department");
-	String executionPeriodID = (String) dynaActionForm.get("executionPeriod");
-
-	List<SummariesControlElementDTO> list = getListing(request, departmentID, executionPeriodID);
-	try {
-	    String filename = "ControloSumarios:" + getFileName(Calendar.getInstance().getTime());
-	    response.setContentType("application/vnd.ms-excel");
-	    response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
-
-	    ServletOutputStream writer = response.getOutputStream();
-	    exportToXls(list, writer);
-
-	    writer.flush();
-	    response.flushBuffer();
-
-	} catch (IOException e) {
-	    throw new FenixServiceException();
-	}
-	return null;
-    }
-
-    public ActionForward exportToCSV(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
-
-	DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
-	String departmentID = (String) dynaActionForm.get("department");
-	String executionPeriodID = (String) dynaActionForm.get("executionPeriod");
-
-	List<SummariesControlElementDTO> list = getListing(request, departmentID, executionPeriodID);
-
-	try {
-	    String filename = "ControloSumarios:" + getFileName(Calendar.getInstance().getTime());
-	    response.setContentType("text/plain");
-	    response.setHeader("Content-disposition", "attachment; filename=" + filename + ".csv");
-
-	    ServletOutputStream writer = response.getOutputStream();
-	    exportToCSV(list, writer);
-
-	    writer.flush();
-	    response.flushBuffer();
-
-	} catch (IOException e) {
-	    throw new FenixServiceException();
-	}
-	return null;
-    }
-
-    private void exportToXls(final List<SummariesControlElementDTO> allListElements, OutputStream outputStream)
-	    throws IOException {
-	final List<Object> headers = getHeaders();
-	final Spreadsheet spreadsheet = new Spreadsheet("Controlo de Sumários", headers);
-	fillSpreadSheet(allListElements, spreadsheet);
-	spreadsheet.exportToXLSSheet(outputStream);
-    }
-
-    private void exportToCSV(final List<SummariesControlElementDTO> allListElements, OutputStream outputStream)
-	    throws IOException {
-	final Spreadsheet spreadsheet = new Spreadsheet("Controlo de Sumários");
-	fillSpreadSheet(allListElements, spreadsheet);
-	spreadsheet.exportToCSV(outputStream, ";");
-    }
-
-    private void fillSpreadSheet(final List<SummariesControlElementDTO> allListElements, final Spreadsheet spreadsheet) {
-	for (final SummariesControlElementDTO summariesControlElementDTO : allListElements) {
-	    final Row row = spreadsheet.addRow();
-	    row.setCell(summariesControlElementDTO.getTeacherName());
-	    row.setCell(summariesControlElementDTO.getTeacherNumber().toString());
-	    row.setCell(summariesControlElementDTO.getCategoryName());
-	    row.setCell(summariesControlElementDTO.getExecutionCourseName());
-	    row.setCell(summariesControlElementDTO.getSiglas());
-	    row.setCell(summariesControlElementDTO.getLessonHours().toString());
-	    row.setCell(summariesControlElementDTO.getSummaryHours().toString());
-	    row.setCell(summariesControlElementDTO.getShiftDifference() == null ? "" : summariesControlElementDTO
-		    .getShiftDifference().toString());
-	    row.setCell(summariesControlElementDTO.getCourseSummaryHours().toString());
-	    row.setCell(summariesControlElementDTO.getCourseDifference() == null ? "" : summariesControlElementDTO
-		    .getCourseDifference().toString());
-	}
-    }
-
-    private List<Object> getHeaders() {
-	final List<Object> headers = new ArrayList<Object>();
-	headers.add("Nome");
-	headers.add("Número");
-	headers.add("Categoria");
-	headers.add("Disciplina");
-	headers.add("Licenciatura(s)");
-	headers.add("Horas Declaradas");
-	headers.add("Sumários nos Turnos");
-	headers.add("Percentagem nos Turnos");
-	headers.add("Sumários na Disciplina");
-	headers.add("Percentagem na Disciplina");
-	return headers;
-    }
-
-    private List<LabelValueBean> getNotClosedExecutionPeriods(List<InfoExecutionPeriod> allExecutionPeriods) {
-	List<LabelValueBean> executionPeriods = new ArrayList<LabelValueBean>();
-	for (InfoExecutionPeriod infoExecutionPeriod : allExecutionPeriods) {
-	    LabelValueBean labelValueBean = new LabelValueBean();
-	    labelValueBean.setLabel(infoExecutionPeriod.getInfoExecutionYear().getYear() + " - "
-		    + infoExecutionPeriod.getSemester() + "º Semestre");
-	    labelValueBean.setValue(infoExecutionPeriod.getIdInternal().toString());
-	    executionPeriods.add(labelValueBean);
-	}
-	Collections.sort(executionPeriods, new BeanComparator("label"));
-	return executionPeriods;
-    }
-
     private List<LabelValueBean> getAllDepartments(Collection<Department> allDepartments) {
 	List<LabelValueBean> departments = new ArrayList<LabelValueBean>();
 	for (Department department : allDepartments) {
@@ -601,26 +415,5 @@ public class SummariesControlAction extends FenixDispatchAction {
 	List<LabelValueBean> departments = getAllDepartments(allDepartments);
 	request.setAttribute("allDepartments", allDepartments);
 	request.setAttribute("departments", departments);
-    }
-
-    private void readAndSaveAllExecutionPeriods(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
-
-	List<InfoExecutionPeriod> allExecutionPeriods = new ArrayList<InfoExecutionPeriod>();
-
-	allExecutionPeriods = ReadNotClosedExecutionPeriods.run();
-
-	List<LabelValueBean> executionPeriods = getNotClosedExecutionPeriods(allExecutionPeriods);
-	request.setAttribute("executionPeriods", executionPeriods);
-    }
-
-    private String getFileName(Date date) throws FenixFilterException, FenixServiceException {
-	Calendar calendar = Calendar.getInstance();
-	calendar.setTime(date);
-	int day = calendar.get(Calendar.DAY_OF_MONTH);
-	int month = calendar.get(Calendar.MONTH) + 1;
-	int year = calendar.get(Calendar.YEAR);
-	int hour = calendar.get(Calendar.HOUR_OF_DAY);
-	int minutes = calendar.get(Calendar.MINUTE);
-	return (day + "-" + month + "-" + year + "_" + hour + ":" + minutes);
     }
 }
