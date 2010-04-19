@@ -698,7 +698,7 @@ public class Lesson extends Lesson_Base {
 	return count;
     }
 
-    private SortedSet<YearMonthDay> getAllLessonDatesUntil(YearMonthDay day) {
+    public SortedSet<YearMonthDay> getAllLessonDatesUntil(YearMonthDay day) {
 	SortedSet<YearMonthDay> result = new TreeSet<YearMonthDay>();
 	if (day != null) {
 	    result.addAll(getAllLessonInstanceDatesUntil(day));

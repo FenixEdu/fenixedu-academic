@@ -227,23 +227,6 @@
 	<slot name="companyPositions" />
 	<slot name="professionalActivityMainFocus" />
   </schema>
-  
-  <schema name="summaries.control.list" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.SummariesControlElementDTO">
-  	<slot name="teacherName" />
-  	<slot name="teacherNumber" />
-  	<slot name="categoryName" />
-  	<slot name="executionCourseName" />
-  	<slot name="siglas" />
-  	<slot name="lessonHours" />
-   	<slot name="summaryHours" />	
-   	<slot name="shiftDifference" layout="null-as-label">
-        <property name="label" value="NA"/>
-    </slot>
-   	<slot name="courseSummaryHours" />	   	
-   	<slot name="courseDifference" layout="null-as-label">
-        <property name="label" value="NA"/>
-    </slot>
-  </schema>
 
   <schema name="person.admin.simple" type="net.sourceforge.fenixedu.domain.Person">
     <slot name="username" layout="link"/>
