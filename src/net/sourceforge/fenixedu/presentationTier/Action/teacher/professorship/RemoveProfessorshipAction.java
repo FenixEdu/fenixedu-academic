@@ -10,18 +10,22 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.RemoveProfessorshipWithPerson;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
-import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 
 /**
  * @author jpvl
  */
-public class RemoveProfessorshipAction extends Action {
+public class RemoveProfessorshipAction extends FenixDispatchAction {
 
+    @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 	DynaActionForm teacherExecutionCourseForm = (DynaActionForm) form;
@@ -29,8 +33,14 @@ public class RemoveProfessorshipAction extends Action {
 	String id = (String) teacherExecutionCourseForm.get("teacherNumber");
 	Integer executionCourseId = Integer.valueOf((String) teacherExecutionCourseForm.get("executionCourseId"));
 
-	RemoveProfessorshipWithPerson.run(Person.readPersonByIstUsername(id), RootDomainObject.getInstance()
-		.readExecutionCourseByOID(executionCourseId));
+	ActionMessages actionMessages = getMessages(request);
+	try {
+	    RemoveProfessorshipWithPerson.run(Person.readPersonByIstUsername(id), RootDomainObject.getInstance()
+		    .readExecutionCourseByOID(executionCourseId));
+	} catch (DomainException de) {
+	    actionMessages.add(de.getMessage(), new ActionMessage(de.getMessage()));
+	    saveMessages(request, actionMessages);
+	}
 	return mapping.findForward("successfull-delete");
     }
 }

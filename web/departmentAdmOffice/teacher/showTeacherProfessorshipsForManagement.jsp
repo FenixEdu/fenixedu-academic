@@ -18,7 +18,7 @@
 		</logic:equal>
 	</logic:present>
 </p>
-<span class="error"><!-- Error messages go here --><html:errors /></span>
+
 <html:form action="/showTeacherProfessorshipsForManagement">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal" />	
 	<table width="100%">
@@ -42,6 +42,17 @@
 	</table>	
 </html:form>
 <br />
+
+<logic:messagesPresent message="true">
+	<p>
+		<em><!-- Error messages go here -->
+			<html:messages id="message" message="true">
+				<bean:write name="message"/>
+			</html:messages>
+		</em>
+	</p>
+</logic:messagesPresent>
+
 <logic:notEmpty name="detailedProfessorshipList" >	
 	<html:form action="/updateTeacherExecutionYearExecutionCourseResponsabilities">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal" />
