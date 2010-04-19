@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.util.email;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseResponsibleTeachersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroup;
@@ -14,8 +15,17 @@ public class ExecutionCourseSender extends ExecutionCourseSender_Base {
     public static Comparator<ExecutionCourseSender> COMPARATOR_BY_EXECUTION_COURSE_SENDER = new Comparator<ExecutionCourseSender>() {
 
 	@Override
-	public int compare(ExecutionCourseSender arg0, ExecutionCourseSender arg1) {
-	    return arg1.getCourse().getExecutionPeriod().compareTo(arg0.getCourse().getExecutionPeriod());
+	public int compare(final ExecutionCourseSender executionCourseSender1, final ExecutionCourseSender executionCourseSender2) {
+	    final ExecutionCourse executionCourse1 = executionCourseSender1.getCourse();
+	    final ExecutionCourse executionCourse2 = executionCourseSender2.getCourse();
+	    final ExecutionSemester executionSemester1 = executionCourse1.getExecutionPeriod();
+	    final ExecutionSemester executionSemester2 = executionCourse2.getExecutionPeriod();
+	    final int p = executionSemester1.compareTo(executionSemester2);
+	    if (p == 0) {
+		final int n = executionCourse1.getName().compareTo(executionCourse2.getName());
+		return n == 0 ? executionCourseSender1.hashCode() - executionCourseSender2.hashCode() : n;
+	    }
+	    return p;
 	}
     };
 
