@@ -249,16 +249,14 @@ public class CourseStatistics extends FenixBackingBean {
     private List<Object> getStudentsEnroledListHeaders() {
 	final ResourceBundle bundle = getApplicationResources();
 
-	final List<Object> headers = new ArrayList<Object>(4);
-	// headers.add(bundle.getString("label.number"));
-	// headers.add(bundle.getString("label.name"));
-	// headers.add(bundle.getString("label.room"));
-	headers.add("Número");
-	headers.add("Curso");
-	headers.add("Disciplina");
-	headers.add("Ano Lectivo");
-	headers.add("Ramo/Perfil principal");
-	headers.add("Ramo/Perfil secundário");
+	final List<Object> headers = new ArrayList<Object>(8);
+	headers.add(bundle.getString("label.student.number"));
+	headers.add(bundle.getString("label.student.degree"));
+	headers.add(bundle.getString("label.student.curricularCourse"));
+	headers.add(bundle.getString("label.executionYear"));
+	headers.add(bundle.getString("label.student.main.branch"));
+	headers.add(bundle.getString("label.student.minor.branch"));
+	headers.add(bundle.getString("label.student.number.of.enrolments"));
 	return headers;
     }
 
@@ -267,26 +265,32 @@ public class CourseStatistics extends FenixBackingBean {
 	final CurricularCourse curricularCourse = getCurricularCourseToExport();
 
 	for (final Enrolment enrolment : curricularCourse.getEnrolments()) {
-	    
+
 	    if (!enrolment.isValid(executionYear)) {
 		continue;
 	    }
-	    
+
 	    final Row row = spreadsheet.addRow();
 
 	    row.setCell(enrolment.getStudent().getNumber());
 	    row.setCell(enrolment.getDegreeCurricularPlanOfStudent().getDegree().getPresentationName());
 	    row.setCell(enrolment.getName().getContent());
 	    row.setCell(enrolment.getExecutionYear().getName());
-	    
+
 	    final CycleCurriculumGroup cycle = enrolment.getParentCycleCurriculumGroup();
-	    
+
 	    final BranchCurriculumGroup major = cycle.getMajorBranchCurriculumGroup();
 	    row.setCell(major != null ? major.getName().getContent() : "");
-	    
+
 	    final BranchCurriculumGroup minor = cycle.getMinorBranchCurriculumGroup();
 	    row.setCell(minor != null ? minor.getName().getContent() : "");
+
+	    row.setCell(getNumberOfEnrolments(enrolment));
 	}
+    }
+
+    private String getNumberOfEnrolments(final Enrolment enrolment) {
+	return String.valueOf(enrolment.getStudentCurricularPlan().getEnrolments(enrolment.getCurricularCourse()).size());
     }
 
     private ExecutionYear getExecutionYear() {
