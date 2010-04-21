@@ -753,11 +753,11 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	return attributes;
     }
 
-    private static final String STORK_NAME = "Nome";
+    private static final String STORK_NAME = "NomeProprio";
     private static final String STORK_BIRTHDATE = "DataNascimento";
     private static final String STORK_COUNTRY_OF_BIRTH = "Naturalidade";
     private static final String STORK_NATIONALITY = "Nacionalidade";
-    private static final String STORK_EIDENTIFIER = "NIC";
+    private static final String STORK_EIDENTIFIER = "eIdentificador";
     private static final String STORK_SURNAME = "NomeApelido";
     private static final String STORK_GENDER = "Sexo";
     private static final String STORK_TEXT_RESIDENCE_ADDRESS = "Morada";
