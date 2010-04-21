@@ -549,7 +549,7 @@
 							<printWhenExpression><![CDATA[$P{registryCode} != null]]></printWhenExpression>
 						</reportElement>
 					<box></box>
-					<textElement textAlignment="Right">
+					<textElement textAlignment="Left">
 						<font/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["número de registo: " + $P{registryCode}]]></textFieldExpression>
