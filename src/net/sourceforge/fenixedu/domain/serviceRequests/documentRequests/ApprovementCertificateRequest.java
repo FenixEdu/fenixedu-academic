@@ -114,6 +114,11 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 	    super.setNumberOfUnits(calculateNumberOfUnits());
 	}
     }
+    
+    @Override
+    protected boolean isPayed() {
+        return super.isPayed() || getEvent().isCancelled();
+    }
 
     @Override
     final public DocumentRequestType getDocumentRequestType() {

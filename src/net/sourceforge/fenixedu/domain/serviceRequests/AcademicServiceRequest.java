@@ -168,7 +168,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return getEventType() != null;
     }
 
-    final protected boolean isPayed() {
+    protected boolean isPayed() {
 	return !hasEvent() || getEvent().isPayed();
     }
 
