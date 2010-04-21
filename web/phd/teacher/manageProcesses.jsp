@@ -37,64 +37,13 @@
 
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 
-<%--  ### Search Criteria  ### --%>
-<fr:form id="search" action="/phdIndividualProgramProcess.do?method=manageProcesses">
-	<input type="hidden" name="sortBy" value="" />
+<p>
+	<html:link action="/phdIndividualProgramProcess.do?method=viewInactiveProcesses">
+		<bean:message bundle="PHD_RESOURCES" key="label.viewInactiveProcesses"/> »
+	</html:link>
+</p>
 
-	<fr:edit id="searchProcessBean"
-		name="searchProcessBean"
-		schema="SearchPhdIndividualProgramProcessBean.edit">
-	
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
-			<fr:property name="columnClasses" value=",,tdclear tderror1" />
-		</fr:layout>
-	</fr:edit>
-
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.search"/></html:submit>
-
-<%--  ### End of Search Criteria  ### --%>
-
-<br/>
-<br/>
-
-<%--  ### Results  ### --%>
-<bean:size id="processesCount" name="processes"/>
-<bean:message  key="label.phd.process.count" bundle="PHD_RESOURCES" arg0="<%= processesCount.toString() %>"/>
-<logic:notEmpty name="processes">
-	<fr:view schema="PhdIndividualProgramProcess.view.resume" name="processes">
-		<fr:layout name="tabular-sortable">
-			<fr:property name="classes" value="tstyle2 thlight mtop15" />
-			<fr:property name="linkFormat(view)" value="/phdIndividualProgramProcess.do?method=viewProcess&processId=${externalId}"/>
-			<fr:property name="key(view)" value="label.view"/>
-			<fr:property name="bundle(view)" value="PHD_RESOURCES"/>
-
-			<fr:property name="sortFormId" value="search"/>
-			<fr:property name="sortActionLink" value="true"/>
-			<fr:property name="sortParameter" value="sortBy"/>
-            <fr:property name="sortBy" value="<%= request.getParameter("sortBy") != null ? request.getParameter("sortBy"): "processNumber"  %>"/>
-			<fr:property name="ascendingImage" value="/images/upArrow.gif"/>
-        	<fr:property name="descendingImage" value="/images/downArrow.gif"/>
-			<fr:property name="sortableSlots" value="phdIndividualProcessNumber,activeState,person.name" />
-		</fr:layout>
-	</fr:view>
-</logic:notEmpty>
-<logic:empty name="processes">
-	<br/>
-	<em><bean:message key="label.phd.no.processes" bundle="PHD_RESOURCES" /></em>
-	<br/>
-</logic:empty>
-
-<%--  ### End of Results  ### --%>
-
-<%--  ### End of Operation Area  ### --%>
-
-
-<%--  ### Buttons (e.g. Submit)  ### --%>
-
-<%--  ### End of Buttons (e.g. Submit)  ### --%>
-
-</fr:form>
+<jsp:include page="/phd/common/manageProcesses.jsp"/>
 
 </logic:present>
 

@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd.academicAdminOffice;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -53,6 +54,7 @@ import net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlertBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.CommonPhdIndividualProgramProcessDA;
+import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdInactivePredicateContainer;
 import net.sourceforge.fenixedu.util.ContentType;
 
 import org.apache.struts.action.ActionForm;
@@ -63,6 +65,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
 
 @Mapping(path = "/phdIndividualProgramProcess", module = "academicAdminOffice")
 @Forwards( {
@@ -112,6 +115,28 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 })
 public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramProcessDA {
 
+    // These methods will not be needed while we're using the old interface that
+    // does not require predicate containers
+    @Override
+    protected PhdInactivePredicateContainer getConcludedContainer() {
+	return null;
+    }
+
+    @Override
+    protected List<PredicateContainer<?>> getThesisCategory() {
+	return null;
+    }
+
+    @Override
+    protected List<PredicateContainer<?>> getSeminarCategory() {
+	return null;
+    }
+
+    @Override
+    protected List<PredicateContainer<?>> getCandidacyCategory() {
+	return null;
+    }
+
     @Override
     protected SearchPhdIndividualProgramProcessBean initializeSearchBean(HttpServletRequest request) {
 	final SearchPhdIndividualProgramProcessBean searchBean = new SearchPhdIndividualProgramProcessBean();
@@ -123,15 +148,19 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
     }
 
     @Override
-    public ActionForward viewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward manageProcesses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final PhdIndividualProgramProcess process = getProcess(request);
-	if (process != null && process.hasRegistration()) {
-	    request.setAttribute("registrationConclusionBean", new PhdRegistrationConclusionBean(process.getRegistration()));
+	SearchPhdIndividualProgramProcessBean searchBean = (SearchPhdIndividualProgramProcessBean) getObjectFromViewState("searchProcessBean");
+
+	if (searchBean == null) {
+	    searchBean = initializeSearchBean(request);
 	}
 
-	return mapping.findForward("viewProcess");
+	request.setAttribute("searchProcessBean", searchBean);
+	request.setAttribute("processes", PhdIndividualProgramProcess.search(searchBean.getPredicates()));
+
+	return mapping.findForward("manageProcesses");
     }
 
     // Edit Personal Information

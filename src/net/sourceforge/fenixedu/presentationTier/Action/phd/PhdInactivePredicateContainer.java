@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.phd.coordinator;
+package net.sourceforge.fenixedu.presentationTier.Action.phd;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;

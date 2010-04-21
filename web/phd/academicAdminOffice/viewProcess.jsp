@@ -27,7 +27,7 @@
 --%>
 
 <html:link action="/phdIndividualProgramProcess.do?method=manageProcesses">
-	<bean:message bundle="PHD_RESOURCES" key="label.back"/>
+	« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
 </html:link>
 
 <br/><br/>

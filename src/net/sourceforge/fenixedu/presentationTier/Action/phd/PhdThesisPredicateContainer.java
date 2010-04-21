@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.phd.coordinator;
+package net.sourceforge.fenixedu.presentationTier.Action.phd;
 
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType;

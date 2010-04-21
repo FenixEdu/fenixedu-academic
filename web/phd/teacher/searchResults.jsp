@@ -5,13 +5,15 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 
-<logic:present role="COORDINATOR">
+<logic:present role="TEACHER">
 
 <%-- ### Title #### --%>
-<em><bean:message  key="label.phd.coordinator.breadcrumb" bundle="PHD_RESOURCES"/></em>
-<h2><bean:message key="label.phd.manageInactiveProcesses" bundle="PHD_RESOURCES" /></h2>
+<em><bean:message  key="label.phd.teacher.breadcrumb" bundle="PHD_RESOURCES"/></em>
+<h2><bean:message key="label.phd.manageProcesses" bundle="PHD_RESOURCES" /></h2>
 
 <%-- ### End of Title ### --%>
+
+
 
 <%--  ###  Return Links  ### --%>
 
@@ -23,10 +25,12 @@
 
 <%--  ### Return Links  ### --%>
 
+<%--  ### End Of Context Information  ### --%>
+
+
+
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 
-
-<jsp:include page="/phd/common/viewInactiveProcesses.jsp"/>
-
+<jsp:include page="/phd/common/searchResults.jsp"/>
 
 </logic:present>

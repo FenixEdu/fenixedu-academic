@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,11 +14,15 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.ExemptPub
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RequestPublicPresentationSeminarComission;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean;
+import net.sourceforge.fenixedu.presentationTier.Action.phd.academicAdminOffice.PhdRegistrationConclusionBean;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
 
 abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
 
@@ -37,22 +43,91 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
     public ActionForward manageProcesses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
+	SearchPhdIndividualProgramProcessBean searchBean = getOrCreateSearchBean(request);
+	RenderUtils.invalidateViewState();
+
+	return forwardToManageProcesses(mapping, request, searchBean);
+    }
+
+    private SearchPhdIndividualProgramProcessBean getOrCreateSearchBean(HttpServletRequest request) {
 	SearchPhdIndividualProgramProcessBean searchBean = (SearchPhdIndividualProgramProcessBean) getObjectFromViewState("searchProcessBean");
 
 	if (searchBean == null) {
 	    searchBean = initializeSearchBean(request);
 	}
+	return searchBean;
+    }
 
+    protected ActionForward forwardToManageProcesses(ActionMapping mapping, HttpServletRequest request,
+	    SearchPhdIndividualProgramProcessBean searchBean) {
 	request.setAttribute("searchProcessBean", searchBean);
-	request.setAttribute("processes", PhdIndividualProgramProcess.search(searchBean.getPredicates()));
-
+	request.setAttribute("candidacyCategory", getCandidacyCategory());
+	request.setAttribute("seminarCategory", getSeminarCategory());
+	request.setAttribute("thesisCategory", getThesisCategory());
+	request.setAttribute("concludedThisYearContainer", getConcludedContainer());
 	return mapping.findForward("manageProcesses");
     }
 
+    abstract protected PhdInactivePredicateContainer getConcludedContainer();
+
+    abstract protected List<PredicateContainer<?>> getThesisCategory();
+
+    abstract protected List<PredicateContainer<?>> getSeminarCategory();
+
+    abstract protected List<PredicateContainer<?>> getCandidacyCategory();
+
     abstract protected SearchPhdIndividualProgramProcessBean initializeSearchBean(HttpServletRequest request);
+
+    public ActionForward viewInactiveProcesses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	SearchPhdIndividualProgramProcessBean searchBean = getOrCreateSearchBean(request);
+	RenderUtils.invalidateViewState();
+
+	request.setAttribute("searchProcessBean", searchBean);
+	request.setAttribute("suspendedContainer", PhdInactivePredicateContainer.SUSPENDED);
+	request.setAttribute("concludedContainer", PhdInactivePredicateContainer.CONCLUDED);
+	request.setAttribute("abolishedContainer", PhdInactivePredicateContainer.ABOLISHED);
+	return mapping.findForward("viewInactiveProcesses");
+    }
+
+    public ActionForward searchAllProcesses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	SearchPhdIndividualProgramProcessBean searchBean = getOrCreateSearchBean(request);
+	RenderUtils.invalidateViewState();
+
+	List<PhdIndividualProgramProcess> processes;
+	try {
+	    processes = PhdIndividualProgramProcess.search(searchBean.getPredicates());
+	} catch (NumberFormatException ex) {
+	    addActionMessage("searchError", request, "error.invalidFormat");
+	    return forwardToManageProcesses(mapping, request, searchBean);
+	}
+	if (processes.isEmpty()) {
+	    addActionMessage("searchResults", request, "message.noResults");
+	    return forwardToManageProcesses(mapping, request, searchBean);
+	}
+	if (processes.size() == 1) {
+	    request.setAttribute("process", processes.get(0));
+	    return mapping.findForward("viewProcess");
+	}
+	request.setAttribute("searchProcessBean", searchBean);
+	request.setAttribute("processes", processes);
+	return mapping.findForward("searchResults");
+    }
 
     public ActionForward viewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
+	final PhdIndividualProgramProcess process = getProcess(request);
+	if (process != null && process.hasRegistration()) {
+	    request.setAttribute("registrationConclusionBean", new PhdRegistrationConclusionBean(process.getRegistration()));
+	}
+
+	return forwardToViewProcess(mapping, request);
+    }
+
+    protected ActionForward forwardToViewProcess(ActionMapping mapping, HttpServletRequest request) {
 	request.setAttribute("backMethod", getFromRequest(request, "backMethod"));
 	return mapping.findForward("viewProcess");
     }

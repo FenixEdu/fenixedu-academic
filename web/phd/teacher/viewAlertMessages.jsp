@@ -32,7 +32,7 @@
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight mtop15" />
 				
-				<fr:property name="linkFormat(viewProcess)" value="/phdIndividualProgramProcess.do?method=viewProcess&processId=${process.externalId}"/>
+				<fr:property name="linkFormat(viewProcess)" value="/phdIndividualProgramProcess.do?method=viewProcess&backMethod=viewAlertMessages&processId=${process.externalId}"/>
 				<fr:property name="key(viewProcess)" value="label.viewProcess"/>
 				<fr:property name="bundle(viewProcess)" value="PHD_RESOURCES"/>
 				<fr:property name="order(viewProcess)" value="0"/>
