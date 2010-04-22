@@ -8,6 +8,8 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.util.email.Recipient;
 
 import org.joda.time.DateTime;
 
@@ -81,6 +83,11 @@ public class CerimonyInquiry extends CerimonyInquiry_Base implements Comparable<
 
     public boolean isOpen() {
 	return getBegin() != null && getBegin().isBeforeNow() && (getEnd() == null || getEnd().isAfterNow());
+    }
+
+    public Recipient createRecipient() {
+	final Group group = new CerimonyInquiryGroup(this);
+	return Recipient.newInstance("Inquiridos: " + getDescription(), group);
     }
 
 }

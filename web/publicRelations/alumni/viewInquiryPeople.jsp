@@ -39,6 +39,7 @@
 	<p class="mvert05">
 		<bean:size id="personCount" name="cerimonyInquiry" property="cerimonyInquiryPerson"/>
 		<bean:message key="label.publicRelationOffice.alumniCerimony.inquiry.people.count" bundle="APPLICATION_RESOURCES" arg0="<%= personCount.toString() %>"/>
+		<html:link page="/alumniCerimony.do?method=sendEmail" paramId="cerimonyInquiryId" paramName="cerimonyInquiry" paramProperty="externalId"><bean:message bundle="APPLICATION_RESOURCES" key="title.sendEmail"/></html:link>
 	</p>
 	<fr:view name="cerimonyInquiry" property="cerimonyInquiryPerson">
 		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryPerson">

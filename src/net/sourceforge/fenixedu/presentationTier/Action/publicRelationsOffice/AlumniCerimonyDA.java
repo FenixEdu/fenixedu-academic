@@ -9,7 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.alumni.CerimonyInquiry;
 import net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryAnswer;
+import net.sourceforge.fenixedu.domain.util.email.Recipient;
+import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.messaging.EmailsDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -142,6 +145,23 @@ public class AlumniCerimonyDA extends FenixDispatchAction {
 	final CerimonyInquiry cerimonyInquiry = getDomainObject(request, "cerimonyInquiryId");
 	request.setAttribute("cerimonyInquiry", cerimonyInquiry);
 	return mapping.findForward("viewInquiryPeople");
+    }
+
+    public ActionForward sendEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+		throws Exception {
+	final CerimonyInquiry cerimonyInquiry = getDomainObject(request, "cerimonyInquiryId");
+	final Sender sender = getPublicRelationsSender();
+	final Recipient recipient = cerimonyInquiry.createRecipient();
+	return EmailsDA.sendEmail(request, sender, recipient);
+    }
+
+    private Sender getPublicRelationsSender() {
+	for (final Sender sender : Sender.getAvailableSenders()) {
+	    if (sender.getFromName().equalsIgnoreCase("Gabinete de Comunicação e Relações Públicas")) {
+		return sender;
+	    }
+	}
+	return null;
     }
 
 }

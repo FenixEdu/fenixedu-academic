@@ -79,6 +79,7 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.StudentsByDegreeAndC
 import net.sourceforge.fenixedu.domain.accessControl.groups.StudentsFromDegreeTypeGroup;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupBuilderNameTakenException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.NoSuchGroupBuilderException;
+import net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryGroup;
 
 import org.apache.log4j.Logger;
 
@@ -249,6 +250,7 @@ public class GroupBuilderRegistry {
 	register("masterDegreeAdministrativeOfficeGroup", MasterDegreeAdministrativeOfficeGroup.class,
 		new MasterDegreeAdministrativeOfficeGroup.Builder());
 	register("activeStudentsFromDegreeTypeGroup", ActiveStudentsFromDegreeTypeGroup.class, new ActiveStudentsFromDegreeTypeGroup.Builder());
+	register("cerimonyInquiryGroup", CerimonyInquiryGroup.class, new CerimonyInquiryGroup.Builder());
 	registerGroupsWithNoArguments();
     }
 
