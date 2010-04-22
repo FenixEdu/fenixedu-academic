@@ -56,6 +56,7 @@ import net.sourceforge.fenixedu.domain.student.curriculum.AverageType;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
+import net.sourceforge.fenixedu.domain.studentCurriculum.BranchCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Credits;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
@@ -157,10 +158,11 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    return (comparationResult == 0) ? leftState.getIdInternal().compareTo(rightState.getIdInternal()) : comparationResult;
 	}
     };
-    
+
     static final public Comparator<StudentCurricularPlan> COMPARATOR_BY_STUDENT_IST_ID = new Comparator<StudentCurricularPlan>() {
 	public int compare(final StudentCurricularPlan redSCP, final StudentCurricularPlan blueSCP) {
-	    return redSCP.getPerson().getUsername() == null ? -1 : (blueSCP.getPerson().getUsername() == null ? 1 : redSCP.getPerson().getUsername().compareTo(blueSCP.getPerson().getUsername()));
+	    return redSCP.getPerson().getUsername() == null ? -1 : (blueSCP.getPerson().getUsername() == null ? 1 : redSCP
+		    .getPerson().getUsername().compareTo(blueSCP.getPerson().getUsername()));
 	}
     };
 
@@ -3005,4 +3007,13 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public void editEndStageDate(LocalDate date) {
 	this.setEndStageDate(date);
     }
+
+    public BranchCurriculumGroup getMajorBranchCurriculumGroup() {
+	return hasRoot() ? getRoot().getMajorBranchCurriculumGroup() : null;
+    }
+
+    public BranchCurriculumGroup getMinorBranchCurriculumGroup() {
+	return hasRoot() ? getRoot().getMinorBranchCurriculumGroup() : null;
+    }
+
 }
