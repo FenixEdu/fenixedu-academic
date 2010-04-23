@@ -14,6 +14,7 @@ create table `IMPORT_REGISTER` (
   `OID_PARTY` bigint(20),
   `OID_ROOT_DOMAIN_OBJECT` bigint(20),
   `REMOTE_EXTERNAL_OID` longtext,
+  `OJB_CONCRETE_CLASS` mediumtext,
   primary key (ID_INTERNAL),
   index (OID),
   index (OID_ROOT_DOMAIN_OBJECT)
