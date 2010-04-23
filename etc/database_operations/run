@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+
+execute "Create tables for syncing org structure." updates.sql

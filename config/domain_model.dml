@@ -7253,6 +7253,20 @@ class administrativeOffice.curriculumValidation.DocumentPrintRequest extends Dom
 	DateTime whenRequested;
 }
 
+class ImportRegister extends DomainObject {
+	String remoteExternalOid;
+}
+
+	class PartyImportRegister extends ImportRegister {
+	}
+
+	class AccountabilityImportRegister extends ImportRegister {
+	}
+
+class ImportRegisterLog extends DomainObject {
+	DateTime instant;
+}
+
 /*
  * Relations definitions
  * 
@@ -17860,4 +17874,35 @@ relation EmailMessageTransportResult {
 	util.email.MessageTransportResult playsRole messageTransportResult {
 		multiplicity *;
 	}
+}
+
+relation RootDomainObjectImportRegister {
+	RootDomainObject playsRole rootDomainObject;
+	ImportRegister playsRole importRegister {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectImportRegisterLog {
+	RootDomainObject playsRole rootDomainObject;
+	ImportRegisterLog playsRole importRegisterLog {
+		multiplicity *;
+	}
+}
+
+relation ImportRegisterImportRegisterLog {
+	ImportRegister playsRole importRegister;
+	ImportRegisterLog playsRole importRegisterLogs {
+		multiplicity *;
+	}
+}
+
+relation PartyImportRegisterParty {
+	PartyImportRegister playsRole partyImportRegister;
+	organizationalStructure.Party playsRole party;
+}
+
+relation AccountabilityImportRegister {
+	AccountabilityImportRegister playsRole accountabilityImportRegister;
+	organizationalStructure.Accountability playsRole accountability;
 }
