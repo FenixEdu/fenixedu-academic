@@ -387,12 +387,12 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	    MemcachedClient c = new MemcachedClient(new InetSocketAddress(SPUtil.getInstance().getMemcachedHostname(), SPUtil
 		    .getInstance().getMemcachedPort()));
 	    String attrList = (String) c.get(memcachedCode);
-	    attributes = buildStorkAttributes(attrList);
 
 	    if (StringUtils.isEmpty(attrList)) {
 		return mapping.findForward("stork-error-authentication-failed");
 	    }
 
+	    attributes = buildStorkAttributes(attrList);
 	    String returnCode = getStorkReturnCode(attributes);
 
 	    if (StringUtils.isEmpty(returnCode) || !STORK_RETURN_CODE_OK.equals(returnCode)) {
@@ -487,12 +487,12 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	    MemcachedClient c = new MemcachedClient(new InetSocketAddress(SPUtil.getInstance().getMemcachedHostname(), SPUtil
 		    .getInstance().getMemcachedPort()));
 	    String attrList = (String) c.get(memcachedCode);
-	    attributes = buildStorkAttributes(attrList);
 
 	    if (StringUtils.isEmpty(attrList)) {
 		return mapping.findForward("stork-error-authentication-failed");
 	    }
 
+	    attributes = buildStorkAttributes(attrList);
 	    String returnCode = getStorkReturnCode(attributes);
 
 	    if (StringUtils.isEmpty(returnCode) || !STORK_RETURN_CODE_OK.equals(returnCode)) {
