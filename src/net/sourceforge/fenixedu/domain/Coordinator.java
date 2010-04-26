@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesCourseResult;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 import dml.runtime.RelationAdapter;
@@ -51,12 +52,22 @@ public class Coordinator extends Coordinator_Base {
 	
 	removeExecutionDegree();
 	removePerson();
+	getExecutionDegreeCoursesReports().clear();
+	getStudentInquiriesCourseResults().clear();
+	
 	removeRootDomainObject();
 	super.deleteDomainObject();
     }
     
     private void checkRulesToDelete() {
-	if(hasAnyExecutionDegreeCoursesReports() || hasAnyStudentInquiriesCourseResults()) {
+	if(hasAnyExecutionDegreeCoursesReports()) {
+	    for(CoordinatorExecutionDegreeCoursesReport report : getExecutionDegreeCoursesReports()) {
+		if(!report.isEmpty())
+		    throw new DomainException("error.Coordinator.cannot.delete.because.already.has.written.comments");
+	    }
+	}
+	
+	if(hasAnyStudentInquiriesCourseResults()) {
 	    throw new DomainException("error.Coordinator.cannot.delete.because.already.has.written.comments");
 	}
     }
