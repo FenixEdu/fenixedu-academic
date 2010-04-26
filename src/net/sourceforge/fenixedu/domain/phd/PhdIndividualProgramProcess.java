@@ -1010,11 +1010,18 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     static public List<PhdIndividualProgramProcess> search(Predicate<PhdIndividualProgramProcess> searchPredicate) {
+	return search(null, searchPredicate);
+    }
+
+    static public List<PhdIndividualProgramProcess> search(final ExecutionYear year,
+	    final Predicate<PhdIndividualProgramProcess> searchPredicate) {
 
 	final Set<PhdIndividualProgramProcess> processesToSearch = new HashSet<PhdIndividualProgramProcess>();
 	for (final PhdIndividualProgramProcessNumber phdIndividualProgramProcessNumber : RootDomainObject.getInstance()
 		.getPhdIndividualProcessNumbers()) {
-	    processesToSearch.add(phdIndividualProgramProcessNumber.getProcess());
+	    if (year == null || phdIndividualProgramProcessNumber.belongsTo(year)) {
+		processesToSearch.add(phdIndividualProgramProcessNumber.getProcess());
+	    }
 	}
 
 	return CollectionUtils.filter(processesToSearch, searchPredicate);

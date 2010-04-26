@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -85,5 +86,9 @@ public class PhdIndividualProgramProcessNumber extends PhdIndividualProgramProce
     public int compareTo(PhdIndividualProgramProcessNumber other) {
 	int res = -1 * getYear().compareTo(other.getYear());
 	return (res != 0) ? res : -1 * getNumber().compareTo(other.getNumber());
+    }
+
+    public boolean belongsTo(final ExecutionYear year) {
+	return year.belongsToCivilYear(getYear());
     }
 }
