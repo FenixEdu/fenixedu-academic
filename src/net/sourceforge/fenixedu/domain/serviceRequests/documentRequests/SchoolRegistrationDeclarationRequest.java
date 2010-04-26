@@ -27,7 +27,7 @@ public class SchoolRegistrationDeclarationRequest extends SchoolRegistrationDecl
 		.getExecutionYear().getNextExecutionYear() : bean.getExecutionYear();
     }
 
-    private void checkRulesToCreate(final DocumentRequestCreateBean bean) {
+    protected void checkRulesToCreate(final DocumentRequestCreateBean bean) {
 	final ExecutionYear executionYear = bean.getExecutionYear();
 
 	if (!bean.getRegistration().isRegistered(executionYear)
