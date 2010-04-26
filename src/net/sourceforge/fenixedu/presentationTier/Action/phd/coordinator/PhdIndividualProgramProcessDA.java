@@ -9,11 +9,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.CommonPhdIndividualProgramProcessDA;
+import net.sourceforge.fenixedu.presentationTier.Action.phd.ManageEnrolmentsBean;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdCandidacyPredicateContainer;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdInactivePredicateContainer;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdSeminarPredicateContainer;
@@ -87,9 +90,23 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 	    HttpServletResponse response) {
 
 	final PhdIndividualProgramProcess process = getProcess(request);
-	request.setAttribute("enrolments", process.getRegistration().getLastStudentCurricularPlan().getEnrolments());
+	ManageEnrolmentsBean bean = (ManageEnrolmentsBean) getRenderedObject("manageEnrolmentsBean");
 
+	if (bean == null) {
+	    bean = new ManageEnrolmentsBean();
+	    bean.setProcess(process);
+	    bean.setSemester(ExecutionSemester.readActualExecutionSemester());
+	}
+
+	filter(bean, process);
+
+	request.setAttribute("manageEnrolmentsBean", bean);
 	return mapping.findForward("manageEnrolments");
+    }
+
+    private void filter(ManageEnrolmentsBean bean, PhdIndividualProgramProcess process) {
+	final StudentCurricularPlan scp = process.getRegistration().getLastStudentCurricularPlan();
+	bean.setEnrolments(scp.getEnrolmentsByExecutionPeriod(bean.getSemester()));
     }
 
     @Override
