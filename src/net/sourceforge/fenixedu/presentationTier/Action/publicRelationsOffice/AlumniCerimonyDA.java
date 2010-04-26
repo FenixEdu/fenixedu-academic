@@ -1,28 +1,43 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publicRelationsOffice;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.text.MessageFormat;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.alumni.CerimonyInquiry;
 import net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryAnswer;
+import net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryPerson;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.EmailsDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.FileUtils;
+import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Mapping(path = "/alumniCerimony", module = "publicRelations")
 @Forwards( {
@@ -35,6 +50,8 @@ import pt.utl.ist.fenix.tools.util.FileUtils;
     @Forward(name = "viewInquiryPeople", path = "publicRelationsOffice-viewInquiryPeople")
 })
 public class AlumniCerimonyDA extends FenixDispatchAction {
+    private static final String LOCALDATE_FORMAT = "yyyy-MM-dd";
+    protected static final String MODULE = "alumni";
 
     public ActionForward manage(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
@@ -162,6 +179,70 @@ public class AlumniCerimonyDA extends FenixDispatchAction {
 	    }
 	}
 	return null;
+    }
+
+    public ActionForward exportInfoToExcel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws IOException{
+
+	final CerimonyInquiry cerimonyInquiry = getDomainObject(request, "cerimonyInquiryId");
+	if (cerimonyInquiry != null) {
+	    List<CerimonyInquiryPerson> requests = cerimonyInquiry.getCerimonyInquiryPerson();
+
+	    final ResourceBundle bundle = ResourceBundle.getBundle("resources/AlumniResources", Language.getLocale());
+	    String inquiryName = (cerimonyInquiry.getDescription() != null? cerimonyInquiry.getDescription() : "UnnamedInquiry").replaceAll(" ", "_");
+	    final String filename = bundle.getString("label.publicRelationOffice.alumniCerimony.inquiry.report") + "_" 
+	    					+ inquiryName+ "_"
+	    					+ new DateTime().toString("ddMMyyyyHHmmss");
+	    
+	    response.setContentType("application/vnd.ms-excel");
+	    response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
+	    ServletOutputStream writer = response.getOutputStream();
+
+	    exportToXls(requests, writer);
+	    writer.flush();
+	    response.flushBuffer();
+	}
+	
+	return null;
+    }
+    
+    private void exportToXls(final Collection<CerimonyInquiryPerson> requests, final OutputStream os)
+    throws IOException {
+
+	final StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet(getResourceMessage("label.alumni.main.title"));
+	
+	fillSpreadSheet(requests, spreadsheet);
+	spreadsheet.getWorkbook().write(os);
+    }
+
+    private void fillSpreadSheet(final Collection<CerimonyInquiryPerson> requests, final StyledExcelSpreadsheet sheet) {
+
+	setHeaders(sheet);
+
+	for (CerimonyInquiryPerson inquiryPerson: requests) {
+	    final Person person = inquiryPerson.getPerson();
+	    final CerimonyInquiryAnswer inquiryAnswer = inquiryPerson.getCerimonyInquiryAnswer();
+	    	
+	    sheet.newRow();
+	    sheet.addCell(person.getUsername());
+	    sheet.addCell(person.getName());
+	    sheet.addCell(person.getEmail());
+	    sheet.addCell((inquiryAnswer != null? inquiryAnswer.getText():new String("-")));
+
+	}
+    }
+
+    private void setHeaders(final StyledExcelSpreadsheet spreadsheet) {
+	spreadsheet.newHeaderRow();
+	spreadsheet.addHeader(getResourceMessage("label.username"));
+	spreadsheet.addHeader(getResourceMessage("label.name"));
+	spreadsheet.addHeader(getResourceMessage("label.email"));
+	spreadsheet.addHeader(getResourceMessage("label.publicRelationOffice.alumniCerimony.inquiry.people.answer"));
+
+    }
+
+    static private String getResourceMessage(String key) {
+	return BundleUtil.getMessageFromModuleOrApplication(MODULE, key);
     }
 
 }

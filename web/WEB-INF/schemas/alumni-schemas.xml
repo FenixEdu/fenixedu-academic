@@ -626,3 +626,10 @@
 			<property name="size" value="40" />
 		</slot>
 	</schema>
+	
+	<schema name="alumni.cerimonyInquiryAnswer"
+		type="net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryAnswer" bundle="APPLICATION_RESOURCES">
+		<slot name="text" key="label.publicRelationOffice.alumniCerimony.inquiry.people.answer"
+			read-only="true" />
+	</schema>
+	

@@ -35,20 +35,40 @@
 	</p>
 </logic:empty>
 
+<bean:define id="cerimonyInquiryId" name="cerimonyInquiry" property="externalId"></bean:define>
+
 <logic:notEmpty name="cerimonyInquiry" property="cerimonyInquiryPerson">
 	<p class="mvert05">
-		<bean:size id="personCount" name="cerimonyInquiry" property="cerimonyInquiryPerson"/>
-		<bean:message key="label.publicRelationOffice.alumniCerimony.inquiry.people.count" bundle="APPLICATION_RESOURCES" arg0="<%= personCount.toString() %>"/>
+		<bean:size id="personCount"	name="cerimonyInquiry" property="cerimonyInquiryPerson" />
+		<bean:message key="label.publicRelationOffice.alumniCerimony.inquiry.people.count" bundle="APPLICATION_RESOURCES" arg0="<%= personCount.toString() %>" />
 		<html:link page="/alumniCerimony.do?method=sendEmail" paramId="cerimonyInquiryId" paramName="cerimonyInquiry" paramProperty="externalId"><bean:message bundle="APPLICATION_RESOURCES" key="title.sendEmail"/></html:link>
 	</p>
+
+
 	<fr:view name="cerimonyInquiry" property="cerimonyInquiryPerson">
-		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryPerson">
-			<fr:slot name="person.username" key="label.username"/>
-			<fr:slot name="person.name" key="label.name"/>
-			<fr:slot name="person.email" key="label.email"/>
+		<fr:schema bundle="APPLICATION_RESOURCES"
+			type="net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryPerson">
+			<fr:slot name="person.username" key="label.username" />
+			<fr:slot name="person.name" key="label.name" />
+			<fr:slot name="person.email" key="label.email" />
+			<fr:slot name="cerimonyInquiryAnswer" layout="null-as-label"
+				key="label.publicRelationOffice.alumniCerimony.inquiry.people.answer">
+				<fr:property name="label" value=" - " />
+				<fr:property name="subLayout" value="values" />
+				<fr:property name="subSchema" value="alumni.cerimonyInquiryAnswer" />
+			</fr:slot>
+			</slot>
 		</fr:schema>
-		<fr:layout name="tabular">		
-			<fr:property name="classes" value="tstyle1 tdcenter thlight"/>
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle1 tdcenter thlight" />
 		</fr:layout>
 	</fr:view>
+
+	<html:link
+		page="<%= "/alumniCerimony.do?method=exportInfoToExcel&cerimonyInquiryId=" + cerimonyInquiryId.toString() %>">
+		<html:image border="0"
+			src="<%= request.getContextPath() + "/images/excel.gif"%>"
+			altKey="excel" bundle="IMAGE_RESOURCES"></html:image>
+	</html:link>
+
 </logic:notEmpty>
