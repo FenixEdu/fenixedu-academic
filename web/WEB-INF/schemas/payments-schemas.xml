@@ -1,5 +1,5 @@
 <schema name="entryDTO.edit" type="net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO" bundle="APPLICATION_RESOURCES">
-	<slot name="selected"/>
+	<slot name="selected" key="label.select"/>
 	<slot name="description" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.description"/>
 	<slot name="totalAmount" read-only="true" key="label.net.sourceforge.fenixedu.domain.accounting.Entry.amountWithAdjustment" />
 	<slot name="payedAmount" read-only="true"  />
