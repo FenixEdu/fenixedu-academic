@@ -2454,7 +2454,7 @@ ul.pub-material li.pub-xls { background: url(/img/icon_excel.gif) no-repeat 13px
 ul.pub-material li.pub-document { background: url(/img/icon_generic_doc.gif) no-repeat 13px 50%; padding-left: 35px; }
 ul.pub-material li.pub-link { background: url(/img/icon_link.gif) no-repeat 10px 50%; padding-left: 35px; }
 ul.pub-material li.pub-lightbulb { background: url(/img/icon_lightbulb.gif) no-repeat 10px 50%; padding-left: 35px; }
-ul.pub-material li.pub-cellphone { background: url(http://www.ist.utl.pt/img/icon_cellphone.png) no-repeat 10px 50%; padding-left: 30px; }
+ul.pub-material li.pub-cellphone { background: url(//www.ist.utl.pt/img/icon_cellphone.png) no-repeat 10px 50%; padding-left: 30px; }
 
 .pub-tab_lay { border: 1px solid #e2e2e2; margin-bottom: 1.5em;}
 .pub-tab_lay th { color: #333; background: #ccc; text-align: left; padding: 5px; }
