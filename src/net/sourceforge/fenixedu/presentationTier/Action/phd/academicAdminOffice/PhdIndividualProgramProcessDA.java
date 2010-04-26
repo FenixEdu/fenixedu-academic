@@ -158,7 +158,8 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 	}
 
 	request.setAttribute("searchProcessBean", searchBean);
-	request.setAttribute("processes", PhdIndividualProgramProcess.search(searchBean.getPredicates()));
+	request.setAttribute("processes", PhdIndividualProgramProcess.search(searchBean.getExecutionYear(), searchBean
+		.getPredicates()));
 
 	return mapping.findForward("manageProcesses");
     }
