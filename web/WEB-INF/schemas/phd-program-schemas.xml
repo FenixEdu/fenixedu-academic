@@ -1389,3 +1389,7 @@
 		<property name="classes" value="nowrap" />
 	</slot>
 </schema>
+
+<schema name="DegreeCurricularPlan.presentationName" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" bundle="PHD_RESOURCES">
+	<slot name="presentationName" />
+</schema>

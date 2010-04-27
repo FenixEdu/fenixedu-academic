@@ -11,6 +11,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTime;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 /**
  * @author jpvl
  */
@@ -66,7 +68,12 @@ public abstract class EnrolmentPeriod extends EnrolmentPeriod_Base {
     public boolean isFor(final ExecutionSemester executionSemester) {
 	return getExecutionPeriod() == executionSemester;
     }
+    
+    public Degree getDegree() {
+	return getDegreeCurricularPlan().getDegree();
+    }
 
+    @Service
     public void delete() {
 	removeDegreeCurricularPlan();
 	removeExecutionPeriod();

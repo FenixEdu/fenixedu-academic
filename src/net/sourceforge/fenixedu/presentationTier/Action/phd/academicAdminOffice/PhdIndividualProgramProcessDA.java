@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd.academicAdminOffice;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -9,11 +10,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
 import net.sourceforge.fenixedu.applicationTier.Servico.fileManager.StorePersonalPhoto;
+import net.sourceforge.fenixedu.applicationTier.Servico.phd.CreateEnrolmentPeriods;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean.UnableToProcessTheImage;
 import net.sourceforge.fenixedu.domain.Alert;
 import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.EnrolmentPeriod;
+import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.JobBean;
 import net.sourceforge.fenixedu.domain.Person;
@@ -54,6 +59,7 @@ import net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlertBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.CommonPhdIndividualProgramProcessDA;
+import net.sourceforge.fenixedu.presentationTier.Action.phd.ManageEnrolmentsBean;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdInactivePredicateContainer;
 import net.sourceforge.fenixedu.util.ContentType;
 
@@ -110,7 +116,13 @@ import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
 
 	@Forward(name = "requestPublicThesisPresentation", path = "/phd/academicAdminOffice/requestPublicThesisPresentation.jsp"),
 
-	@Forward(name = "viewCurriculum", path = "/phd/academicAdminOffice/viewCurriculum.jsp")
+	@Forward(name = "viewCurriculum", path = "/phd/academicAdminOffice/viewCurriculum.jsp"),
+
+	@Forward(name = "manageEnrolmentPeriods", path = "/phd/academicAdminOffice/periods/manageEnrolmentPeriods.jsp"),
+
+	@Forward(name = "createEnrolmentPeriod", path = "/phd/academicAdminOffice/periods/createEnrolmentPeriod.jsp"),
+
+	@Forward(name = "editEnrolmentPeriod", path = "/phd/academicAdminOffice/periods/editEnrolmentPeriod.jsp")
 
 })
 public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramProcessDA {
@@ -867,4 +879,90 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 
     // End of Request Public Thesis Presentation
 
+    public ActionForward manageEnrolmentPeriods(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	ManageEnrolmentsBean bean = (ManageEnrolmentsBean) getRenderedObject("manageEnrolmentsBean");
+
+	if (bean == null) {
+	    bean = new ManageEnrolmentsBean();
+	    bean.setSemester(ExecutionSemester.readActualExecutionSemester());
+	}
+
+	filterEnrolmentPeriods(bean);
+
+	request.setAttribute("manageEnrolmentsBean", bean);
+
+	return mapping.findForward("manageEnrolmentPeriods");
+    }
+
+    private void filterEnrolmentPeriods(final ManageEnrolmentsBean bean) {
+	bean.setEnrolmentPeriods(getPhdEnrolmentPeriods(bean));
+    }
+
+    private List<EnrolmentPeriod> getPhdEnrolmentPeriods(ManageEnrolmentsBean bean) {
+	final List<EnrolmentPeriod> result = new ArrayList<EnrolmentPeriod>();
+
+	for (final EnrolmentPeriod period : bean.getSemester().getEnrolmentPeriodSet()) {
+	    if (period.getClass().equals(EnrolmentPeriodInCurricularCourses.class) && period.getDegree().isDEA()) {
+		result.add(period);
+	    }
+	}
+
+	return result;
+    }
+
+    public ActionForward prepareCreateEnrolmentPeriod(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final ManageEnrolmentsBean bean = new ManageEnrolmentsBean();
+	bean.setSemester((ExecutionSemester) getDomainObject(request, "executionIntervalId"));
+
+	request.setAttribute("createBean", bean);
+	return mapping.findForward("createEnrolmentPeriod");
+    }
+
+    public ActionForward createEnrolmentPeriodInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("createBean", getRenderedObject("createBean"));
+	return mapping.findForward("createEnrolmentPeriod");
+    }
+
+    public ActionForward createEnrolmentPeriod(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	try {
+
+	    final ManageEnrolmentsBean bean = (ManageEnrolmentsBean) getRenderedObject("createBean");
+	    CreateEnrolmentPeriods.create(bean.getDegreeCurricularPlans(), bean.getSemester(), bean.getStartDate(), bean
+		    .getEndDate());
+
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getMessage(), e.getArgs());
+	    return createEnrolmentPeriodInvalid(mapping, actionForm, request, response);
+	}
+
+	return redirect("/phdIndividualProgramProcess.do?method=manageEnrolmentPeriods", request);
+    }
+
+    public ActionForward prepareEditEnrolmentPeriod(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("enrolmentPeriod", getDomainObject(request, "periodId"));
+	return mapping.findForward("editEnrolmentPeriod");
+    }
+
+    public ActionForward deleteEnrolmentPeriod(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	try {
+	    ((EnrolmentPeriod) getDomainObject(request, "periodId")).delete();
+	    return redirect("/phdIndividualProgramProcess.do?method=manageEnrolmentPeriods", request);
+	
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getMessage(), e.getArgs());
+	    return manageEnrolmentPeriods(mapping, actionForm, request, response);
+	}
+
+    }
+    // End of edit Phd Enrolment Periods
 }

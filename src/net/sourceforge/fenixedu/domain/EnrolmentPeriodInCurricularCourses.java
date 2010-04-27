@@ -7,6 +7,10 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Comparator;
 import java.util.Date;
 
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.joda.time.DateTime;
+
 /**
  * @author Luis Cruz
  */
@@ -25,6 +29,25 @@ public class EnrolmentPeriodInCurricularCourses extends EnrolmentPeriodInCurricu
 	    final ExecutionSemester executionSemester, final Date startDate, final Date endDate) {
 	super();
 	init(degreeCurricularPlan, executionSemester, startDate, endDate);
+    }
+
+    public EnrolmentPeriodInCurricularCourses(final DegreeCurricularPlan degreeCurricularPlan,
+	    final ExecutionSemester executionSemester, final DateTime startDate, final DateTime endDate) {
+
+	super();
+
+	checkParameters(degreeCurricularPlan, executionSemester);
+	init(degreeCurricularPlan, executionSemester, startDate, endDate);
+    }
+
+    private void checkParameters(DegreeCurricularPlan degreeCurricularPlan, ExecutionSemester executionSemester) {
+	
+	check(degreeCurricularPlan, "error.EnrolmentPeriodInCurricularCourses.invalid.degreeCurricularPlan");
+	check(executionSemester, "error.EnrolmentPeriodInCurricularCourses.invalid.executionSemester");
+
+	if (executionSemester.getEnrolmentPeriod(getClass(), degreeCurricularPlan) != null) {
+	    throw new DomainException("error.EnrolmentPeriodInCurricularCourses.dcp.already.has.enrolment.period.for.semester");
+	}
     }
 
 }
