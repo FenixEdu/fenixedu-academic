@@ -227,8 +227,16 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
 	 * String currentContextPath = getCurrentContextPathFromRequest(); if
 	 * (currentContextPath == null) {
 	 */
+
+	boolean hasContentJump = false;
 	final StringBuilder stringBuilder = new StringBuilder();
 	for (final Content content : contents) {
+	    if (content instanceof ContentJump) {
+		hasContentJump = true;
+	    }
+	    if (content instanceof Site && hasContentJump) {
+		continue;
+	    }
 	    if (content != RootDomainObject.getInstance().getRootPortal()) {
 		final String name = content.getNormalizedName().getContent();
 		if (name.length() > 0 && (stringBuilder.length() > 0 || (stringBuilder.length() == 0 && name.charAt(0) != '/'))) {
