@@ -72,13 +72,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	super.setCurricularStage(curricularStage);
 	setType(type);
 
-	if (!unit.isCompetenceCourseGroupUnit()) {
-	    throw new DomainException("");
-	}
-	super.setCompetenceCourseGroupUnit(unit);
-
 	CompetenceCourseInformation competenceCourseInformation = new CompetenceCourseInformation(name.trim(), nameEn.trim(),
-		basic, regimeType, competenceCourseLevel, ExecutionSemester.readActualExecutionSemester());
+		basic, regimeType, competenceCourseLevel, ExecutionSemester.readActualExecutionSemester(), unit);
 	super.addCompetenceCourseInformations(competenceCourseInformation);
 
 	// unique acronym creation
@@ -99,13 +94,13 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	    Double seminaryHours, Double fieldWorkHours, Double trainingPeriodHours, Double tutorialOrientationHours,
 	    Double autonomousWorkHours, Double ectsCredits, Integer order, AcademicPeriod academicPeriod) {
 	checkIfCanEdit(false);
-	getRecentCompetenceCourseInformation().addCompetenceCourseLoads(
+	getMostRecentCompetenceCourseInformation().addCompetenceCourseLoads(
 		new CompetenceCourseLoad(theoreticalHours, problemsHours, laboratorialHours, seminaryHours, fieldWorkHours,
 			trainingPeriodHours, tutorialOrientationHours, autonomousWorkHours, ectsCredits, order, academicPeriod));
     }
 
     public BibliographicReference getBibliographicReference(Integer oid) {
-	return getRecentCompetenceCourseInformation().getBibliographicReferences().getBibliographicReference(oid);
+	return getMostRecentCompetenceCourseInformation().getBibliographicReferences().getBibliographicReference(oid);
     }
 
     public BibliographicReferences getBibliographicReferences() {
@@ -145,23 +140,23 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	    BibliographicReferenceType type) {
 	checkIfCanEdit(false);
 	getBibliographicReferences().createBibliographicReference(year, title, authors, reference, url, type);
-	getRecentCompetenceCourseInformation().setBibliographicReferences(getBibliographicReferences());
+	getMostRecentCompetenceCourseInformation().setBibliographicReferences(getBibliographicReferences());
     }
 
     public void editBibliographicReference(Integer oid, String year, String title, String authors, String reference, String url,
 	    BibliographicReferenceType type) {
 	getBibliographicReferences().editBibliographicReference(oid, year, title, authors, reference, url, type);
-	getRecentCompetenceCourseInformation().setBibliographicReferences(getBibliographicReferences());
+	getMostRecentCompetenceCourseInformation().setBibliographicReferences(getBibliographicReferences());
     }
 
     public void deleteBibliographicReference(Integer oid) {
 	getBibliographicReferences().deleteBibliographicReference(oid);
-	getRecentCompetenceCourseInformation().setBibliographicReferences(getBibliographicReferences());
+	getMostRecentCompetenceCourseInformation().setBibliographicReferences(getBibliographicReferences());
     }
 
     public void switchBibliographicReferencePosition(Integer oldPosition, Integer newPosition) {
 	getBibliographicReferences().switchBibliographicReferencePosition(oldPosition, newPosition);
-	getRecentCompetenceCourseInformation().setBibliographicReferences(getBibliographicReferences());
+	getMostRecentCompetenceCourseInformation().setBibliographicReferences(getBibliographicReferences());
     }
 
     private void fillFields(String code, String name) {
@@ -194,7 +189,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	changeCurricularStage(curricularStage);
 	setType(type);
 
-	getRecentCompetenceCourseInformation().edit(name.trim(), nameEn.trim(), basic, competenceCourseLevel);
+	getMostRecentCompetenceCourseInformation().edit(name.trim(), nameEn.trim(), basic, competenceCourseLevel);
 
 	// unique acronym creation
 	String acronym = null;
@@ -205,7 +200,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	} catch (Exception e) {
 	    throw new DomainException("competence.course.unable.to.create.acronym");
 	}
-	getRecentCompetenceCourseInformation().setAcronym(acronym);
+	getMostRecentCompetenceCourseInformation().setAcronym(acronym);
     }
 
     public void editAcronym(String acronym) {
@@ -217,7 +212,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	    }
 	}
 
-	getRecentCompetenceCourseInformation().setAcronym(acronym);
+	getMostRecentCompetenceCourseInformation().setAcronym(acronym);
     }
 
     public void changeCurricularStage(CurricularStage curricularStage) {
@@ -235,7 +230,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     public void edit(String objectives, String program, String evaluationMethod, String objectivesEn, String programEn,
 	    String evaluationMethodEn) {
-	getRecentCompetenceCourseInformation().edit(objectives, program, evaluationMethod, objectivesEn, programEn,
+	getMostRecentCompetenceCourseInformation().edit(objectives, program, evaluationMethod, objectivesEn, programEn,
 		evaluationMethodEn);
     }
 
@@ -246,7 +241,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	    throw new DomainException("competenceCourse.approved");
 	}
 	getDepartments().clear();
-	removeCompetenceCourseGroupUnit();
 	for (; !getCompetenceCourseInformations().isEmpty(); getCompetenceCourseInformations().get(0).delete())
 	    ;
 	removeRootDomainObject();
@@ -272,7 +266,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	return informations;
     }
 
-    private CompetenceCourseInformation getRecentCompetenceCourseInformation() {
+    public CompetenceCourseInformation getMostRecentCompetenceCourseInformation() {
 	final Set<CompetenceCourseInformation> competenceCourseInformations = getCompetenceCourseInformationsSet();
 	if (competenceCourseInformations.isEmpty()) {
 	    return null;
@@ -299,7 +293,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	}
 
 	if (executionSemester == null) {
-	    return getRecentCompetenceCourseInformation();
+	    return getMostRecentCompetenceCourseInformation();
 	}
 
 	if (executionSemester.isBefore(getOldestCompetenceCourseInformation().getExecutionPeriod())) {
@@ -324,7 +318,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	}
 
 	if (executionYear == null) {
-	    return getRecentCompetenceCourseInformation();
+	    return getMostRecentCompetenceCourseInformation();
 	}
 
 	if (executionYear.isBefore(getOldestCompetenceCourseInformation().getExecutionYear())) {
@@ -375,7 +369,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public void setAcronym(String acronym) {
-	getRecentCompetenceCourseInformation().setAcronym(acronym);
+	getMostRecentCompetenceCourseInformation().setAcronym(acronym);
     }
 
     public boolean isBasic(final ExecutionSemester period) {
@@ -402,7 +396,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public void setRegime(RegimeType regimeType) {
-	getRecentCompetenceCourseInformation().setRegime(regimeType);
+	getMostRecentCompetenceCourseInformation().setRegime(regimeType);
     }
 
     public CompetenceCourseLevel getCompetenceCourseLevel(final ExecutionSemester period) {
@@ -800,6 +794,10 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	return competenceCourseGroupUnit == null ? null : competenceCourseGroupUnit.getDepartmentUnit();
     }
 
+    public CompetenceCourseGroupUnit getCompetenceCourseGroupUnit() {
+	return getMostRecentCompetenceCourseInformation().getCompetenceCourseGroupUnit();
+    }
+
     public List<CompetenceCourseLoad> getSortedCompetenceCourseLoads(final ExecutionSemester period) {
 	final List<CompetenceCourseLoad> result = new ArrayList<CompetenceCourseLoad>(getCompetenceCourseLoadsCount(period));
 	result.addAll(getCompetenceCourseLoads(period));
@@ -840,12 +838,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     @Override
     @Checked("CompetenceCoursePredicates.writePredicate")
-    public void removeCompetenceCourseGroupUnit() {
-	super.removeCompetenceCourseGroupUnit();
-    }
-
-    @Override
-    @Checked("CompetenceCoursePredicates.writePredicate")
     public void setCode(String code) {
 	super.setCode(code);
     }
@@ -869,12 +861,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     @Checked("CompetenceCoursePredicates.writePredicate")
     public void setName(String name) {
 	super.setName(name);
-    }
-
-    @Override
-    @Checked("CompetenceCoursePredicates.writePredicate")
-    public void setCompetenceCourseGroupUnit(CompetenceCourseGroupUnit competenceCourseGroupUnit) {
-	super.setCompetenceCourseGroupUnit(competenceCourseGroupUnit);
     }
 
     @Override
@@ -911,7 +897,9 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public void transfer(CompetenceCourseGroupUnit competenceCourseGroupUnit) {
-	super.setCompetenceCourseGroupUnit(competenceCourseGroupUnit);
+	for (CompetenceCourseInformation information : getCompetenceCourseInformations()) {
+	    information.setCompetenceCourseGroupUnit(competenceCourseGroupUnit);
+	}
     }
 
     public MultiLanguageString getNameI18N() {

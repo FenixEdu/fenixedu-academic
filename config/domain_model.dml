@@ -8780,12 +8780,12 @@ relation SchoolEctsCycleGraduationGradeConversionTable {
     }
 }
 
-relation CompetenceCourseUnit {
-    CompetenceCourse playsRole competenceCourses {
+relation CompetenceCourseInformationUnit {
+    degreeStructure.CompetenceCourseInformation playsRole competenceCourseInformations {
         multiplicity *;
     }
     organizationalStructure.CompetenceCourseGroupUnit playsRole competenceCourseGroupUnit;
-    }
+}
 
 relation ConclusionProcessConclusionProcessVersion {
     student.curriculum.ConclusionProcess playsRole conclusionProcess;

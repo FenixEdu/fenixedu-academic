@@ -34,7 +34,7 @@ public class ChangeCompetenceCourseInformationChangeRequestStatus extends FenixS
 	    if (course.isCompetenceCourseInformationDefinedAtExecutionPeriod(executionSemester)) {
 		information = course.findCompetenceCourseInformationForExecutionPeriod(executionSemester);
 		information.edit(changeRequest.getName(), changeRequest.getNameEn(), information.getBasic(), changeRequest
-			.getCompetenceCourseLevel());
+			.getCompetenceCourseLevel(), course.getCompetenceCourseGroupUnit());
 		information.setRegime(changeRequest.getRegime());
 		information.edit(changeRequest.getObjectives(), changeRequest.getProgram(), changeRequest.getEvaluationMethod(),
 			changeRequest.getObjectivesEn(), changeRequest.getProgramEn(), changeRequest.getEvaluationMethodEn());
@@ -48,7 +48,7 @@ public class ChangeCompetenceCourseInformationChangeRequestStatus extends FenixS
 	    } else {
 		information = new CompetenceCourseInformation(changeRequest.getName(), changeRequest.getNameEn(), course
 			.isBasic(), changeRequest.getRegime(), changeRequest.getCompetenceCourseLevel(), changeRequest
-			.getExecutionPeriod());
+			.getExecutionPeriod(), course.getCompetenceCourseGroupUnit());
 		information.edit(changeRequest.getObjectives(), changeRequest.getProgram(), changeRequest.getEvaluationMethod(),
 			changeRequest.getObjectivesEn(), changeRequest.getProgramEn(), changeRequest.getEvaluationMethodEn());
 		information.setAcronym(course.getAcronym());

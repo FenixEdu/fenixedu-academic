@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.CompetenceCourseLoadBean;
 import net.sourceforge.fenixedu.util.StringFormatter;
 
@@ -28,10 +29,10 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
     }
 
     public CompetenceCourseInformation(String name, String nameEn, Boolean basic, RegimeType regimeType,
-	    CompetenceCourseLevel competenceCourseLevel, ExecutionSemester period) {
+	    CompetenceCourseLevel competenceCourseLevel, ExecutionSemester period, CompetenceCourseGroupUnit unit) {
 
 	this();
-	checkParameters(name, nameEn, basic, regimeType, competenceCourseLevel);
+	checkParameters(name, nameEn, basic, regimeType, competenceCourseLevel, unit);
 	setName(StringFormatter.prettyPrint(name));
 	setNameEn(StringFormatter.prettyPrint(nameEn));
 	setBasic(basic);
@@ -39,18 +40,31 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
 	setCompetenceCourseLevel(competenceCourseLevel);
 	setBibliographicReferences(new BibliographicReferences());
 	setExecutionPeriod(period);
+	setCompetenceCourseGroupUnit(unit);
     }
 
     private void checkParameters(String name, String nameEn, Boolean basic, RegimeType regimeType,
-	    CompetenceCourseLevel competenceCourseLevel) {
+	    CompetenceCourseLevel competenceCourseLevel, CompetenceCourseGroupUnit unit) {
 
 	if (name == null || nameEn == null || basic == null || regimeType == null || competenceCourseLevel == null) {
 	    throw new DomainException("competence.course.information.invalid.parameters");
 	}
+	if (unit != null && !unit.isCompetenceCourseGroupUnit()) {
+	    throw new DomainException("");
+	}
+    }
+
+    public void edit(String name, String nameEn, Boolean basic, CompetenceCourseLevel competenceCourseLevel,
+	    CompetenceCourseGroupUnit unit) {
+	checkParameters(name, nameEn, basic, getRegime(), competenceCourseLevel, unit);
+	setName(StringFormatter.prettyPrint(name));
+	setNameEn(StringFormatter.prettyPrint(nameEn));
+	setBasic(basic);
+	setCompetenceCourseLevel(competenceCourseLevel);
     }
 
     public void edit(String name, String nameEn, Boolean basic, CompetenceCourseLevel competenceCourseLevel) {
-	checkParameters(name, nameEn, basic, getRegime(), competenceCourseLevel);
+	checkParameters(name, nameEn, basic, getRegime(), competenceCourseLevel, null);
 	setName(StringFormatter.prettyPrint(name));
 	setNameEn(StringFormatter.prettyPrint(nameEn));
 	setBasic(basic);
@@ -70,6 +84,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
     public void delete() {
 	removeExecutionPeriod();
 	removeCompetenceCourse();
+	removeCompetenceCourseGroupUnit();
 	for (; !getCompetenceCourseLoads().isEmpty(); getCompetenceCourseLoads().get(0).delete())
 	    ;
 	removeRootDomainObject();

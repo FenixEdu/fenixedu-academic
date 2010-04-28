@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -11,6 +12,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Campus;
 
@@ -64,11 +66,21 @@ public class CompetenceCourseGroupUnit extends CompetenceCourseGroupUnit_Base {
     }
 
     @Override
-    public List<CompetenceCourse> getCompetenceCourses() {
+    public boolean hasCompetenceCourses(CompetenceCourse competenceCourse) {
+	return hasCompetenceCourseInformations(competenceCourse.getMostRecentCompetenceCourseInformation());
+    }
+
+    public Set<CompetenceCourse> getCompetenceCoursesSet() {
 	final SortedSet<CompetenceCourse> result = new TreeSet<CompetenceCourse>(
 		CompetenceCourse.COMPETENCE_COURSE_COMPARATOR_BY_NAME);
-	result.addAll(super.getCompetenceCourses());
-	return new ArrayList<CompetenceCourse>(result);
+	for (CompetenceCourseInformation competenceInformation : getCompetenceCourseInformations()) {
+	    result.add(competenceInformation.getCompetenceCourse());
+	}
+	return result;
+    }
+
+    public List<CompetenceCourse> getCompetenceCourses() {
+	return new ArrayList<CompetenceCourse>(getCompetenceCoursesSet());
     }
 
     @Override
@@ -101,7 +113,7 @@ public class CompetenceCourseGroupUnit extends CompetenceCourseGroupUnit_Base {
 
     @Override
     public void delete() {
-	if (hasAnyCompetenceCourses()) {
+	if (hasAnyCompetenceCourseInformations()) {
 	    throw new DomainException("error.unit.cannot.be.deleted");
 	}
 	super.delete();

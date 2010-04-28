@@ -44,4 +44,5 @@ function executeWithTempFile() {
 }
 
 execute "Create tables TeacherCredits and TeacherCreditsState" TeacherCredits.sql
+execute "Create and populate relation between CompetenceCourseInformation and CompetenceCourseGroupUnit" relateCompetenceCourseGroupsToInformations.sql
 
