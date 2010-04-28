@@ -44,11 +44,7 @@ create table `TEACHER_CREDITS_STATE` (
 
 -- Inserted at 2010-04-13T11:59:30.437+01:00
 
-alter table `TEACHER_CREDITS_STATE` add column `OID_EXECUTION_SEMESTER` bigint(20);
-alter table `TEACHER_CREDITS_STATE` add column `OID_PERSON` bigint(20);
 alter table `TEACHER_CREDITS_STATE` add index (`OID_PERSON`);
-alter table `TEACHER_CREDITS` add column `OID_PERSON` bigint(20);
-alter table `TEACHER_CREDITS` add column `OID_TEACHER` bigint(20);
 alter table `TEACHER_CREDITS` add index (`OID_PERSON`);
 alter table `TEACHER_CREDITS` add index (`OID_TEACHER`);
 
