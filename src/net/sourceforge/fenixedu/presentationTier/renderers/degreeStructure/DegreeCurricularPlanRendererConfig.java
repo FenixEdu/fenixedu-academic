@@ -15,6 +15,8 @@ import pt.utl.ist.fenix.tools.util.Pair;
 
 public class DegreeCurricularPlanRendererConfig implements Serializable {
 
+    static private final long serialVersionUID = 1L;
+    
     static private final String MAPPING = "${mapping}";
     static private final String METHOD = "${method}";
     static private final String VIEW_CC_URL_TEMPLATE = MAPPING + "?method=" + METHOD;
