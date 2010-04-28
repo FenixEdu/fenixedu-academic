@@ -63,7 +63,9 @@
 <tr class="<%= !vigilancy.isActive() ? "color888" : ""%>">
 <td class="acenter">
 	<logic:present name="vigilancy" property="vigilantWrapper.teacher">
-		<fr:view name="vigilancy" property="vigilantWrapper.teacher.category.code"/>
+		<logic:present name="vigilancy" property="vigilantWrapper.teacher.category">
+			<fr:view name="vigilancy" property="vigilantWrapper.teacher.category.code"/>
+		</logic:present>
 	</logic:present>
 </td>
 <td class="acenter"><fr:view name="vigilancy" property="vigilantWrapper.person.name" /></td>
@@ -98,7 +100,9 @@
 <tr class="<%= !vigilancy.isActive() ? "color888" : ""%>">
 <td class="acenter">
 	<logic:present name="vigilancy" property="vigilantWrapper.teacher">
-		<fr:view name="vigilancy" property="vigilantWrapper.teacher.category.code"/>
+		<logic:present name="vigilancy" property="vigilantWrapper.teacher.category">
+			<fr:view name="vigilancy" property="vigilantWrapper.teacher.category.code"/>
+		</logic:present>
 	</logic:present>
 </td>
 <td class="acenter"><fr:view name="vigilancy" property="vigilantWrapper.person.name" /></td>
