@@ -43,4 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create tables TeacherCredits and TeacherCreditsState" TeacherCredits.sql
 

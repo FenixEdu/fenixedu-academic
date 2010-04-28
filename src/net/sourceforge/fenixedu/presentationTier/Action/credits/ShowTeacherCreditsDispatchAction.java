@@ -12,6 +12,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.credits.ReadAllTeacherCredits;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
 import net.sourceforge.fenixedu.dataTransferObject.credits.CreditLineDTO;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.ProfessorshipDTO;
@@ -44,61 +45,8 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
 
     protected void getAllTeacherCredits(HttpServletRequest request, ExecutionSemester executionSemester, Teacher teacher)
 	    throws ParseException {
-
-	request.setAttribute("teacher", teacher);
-	request.setAttribute("teacherCategory", teacher.getCategoryForCreditsByPeriod(executionSemester));
-	request.setAttribute("executionPeriod", executionSemester);
-
-	setTeachingServicesAndSupportLessons(request, teacher, executionSemester);
-
-	TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
-	if (teacherService != null) {
-	    setMasterDegreeServices(request, teacherService);
-	    setAdviseServices(request, teacherService);
-	    setInstitutionWorkTimes(request, teacherService);
-	    request.setAttribute("otherServices", teacherService.getOtherServices());
-	    request.setAttribute("teacherServiceNotes", teacherService.getTeacherServiceNotes());
-	}
-
-	List<TeacherServiceExemption> serviceExemptions = teacher.getServiceExemptionsWithoutMedicalSituations(executionSemester
-		.getBeginDateYearMonthDay(), executionSemester.getEndDateYearMonthDay());
-
-	if (!serviceExemptions.isEmpty()) {
-	    Iterator<TeacherServiceExemption> orderedServiceExemptions = new OrderedIterator<TeacherServiceExemption>(
-		    serviceExemptions.iterator(), new BeanComparator("start"));
-	    request.setAttribute("serviceExemptions", orderedServiceExemptions);
-	}
-
-	List<PersonFunction> personFuntions = teacher.getPersonFuntions(executionSemester.getBeginDateYearMonthDay(),
-		executionSemester.getEndDateYearMonthDay());
-
-	if (!personFuntions.isEmpty()) {
-	    Iterator<PersonFunction> orderedPersonFuntions = new OrderedIterator<PersonFunction>(personFuntions.iterator(),
-		    new BeanComparator("beginDate"));
-	    request.setAttribute("personFunctions", orderedPersonFuntions);
-	}
-
-	Collection<ThesisEvaluationParticipant> thesisEvaluationParticipants = teacher.getPerson()
-		.getThesisEvaluationParticipants(executionSemester);
-	Collection<ThesisEvaluationParticipant> teacherThesisEvaluationParticipants = new ArrayList<ThesisEvaluationParticipant>();
-	for (ThesisEvaluationParticipant participant : thesisEvaluationParticipants) {
-	    if (participant.getCreditsDistribution() > 0) {
-		teacherThesisEvaluationParticipants.add(participant);
-	    }
-	}
-
-	if (!teacherThesisEvaluationParticipants.isEmpty()) {
-	    request.setAttribute("teacherThesisEvaluationParticipants", teacherThesisEvaluationParticipants);
-	}
-
-	double managementCredits = teacher.getManagementFunctionsCredits(executionSemester);
-	double serviceExemptionCredits = teacher.getServiceExemptionCredits(executionSemester);
-	double thesesCredits = teacher.getThesesCredits(executionSemester);
-	int mandatoryLessonHours = teacher.getMandatoryLessonHours(executionSemester);
-
-	CreditLineDTO creditLineDTO = new CreditLineDTO(executionSemester, teacherService, managementCredits,
-		serviceExemptionCredits, mandatoryLessonHours, teacher, thesesCredits);
-
+	getRequestAllTeacherCredits(request, executionSemester, teacher);
+	CreditLineDTO creditLineDTO = ReadAllTeacherCredits.readCreditLineDTO(executionSemester, teacher);
 	request.setAttribute("creditLineDTO", creditLineDTO);
     }
 
@@ -165,4 +113,67 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
 	}
 	request.setAttribute("showLinks", showLinks);
     }
+
+    protected void getRequestAllTeacherCredits(HttpServletRequest request, ExecutionSemester executionSemester, Teacher teacher)
+	    throws ParseException {
+	request.setAttribute("teacher", teacher);
+	request.setAttribute("teacherCategory", teacher.getCategoryForCreditsByPeriod(executionSemester));
+	request.setAttribute("executionPeriod", executionSemester);
+
+	setTeachingServicesAndSupportLessons(request, teacher, executionSemester);
+
+	TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
+	if (teacherService != null) {
+	    setMasterDegreeServices(request, teacherService);
+	    setAdviseServices(request, teacherService);
+	    setInstitutionWorkTimes(request, teacherService);
+	    request.setAttribute("otherServices", teacherService.getOtherServices());
+	    request.setAttribute("teacherServiceNotes", teacherService.getTeacherServiceNotes());
+	}
+
+	List<TeacherServiceExemption> serviceExemptions = teacher.getServiceExemptionsWithoutMedicalSituations(executionSemester
+		.getBeginDateYearMonthDay(), executionSemester.getEndDateYearMonthDay());
+
+	if (!serviceExemptions.isEmpty()) {
+	    Iterator<TeacherServiceExemption> orderedServiceExemptions = new OrderedIterator<TeacherServiceExemption>(
+		    serviceExemptions.iterator(), new BeanComparator("start"));
+	    request.setAttribute("serviceExemptions", orderedServiceExemptions);
+	}
+
+	List<PersonFunction> personFuntions = teacher.getPersonFuntions(executionSemester.getBeginDateYearMonthDay(),
+		executionSemester.getEndDateYearMonthDay());
+
+	if (!personFuntions.isEmpty()) {
+	    Iterator<PersonFunction> orderedPersonFuntions = new OrderedIterator<PersonFunction>(personFuntions.iterator(),
+		    new BeanComparator("beginDate"));
+	    request.setAttribute("personFunctions", orderedPersonFuntions);
+	}
+
+	Collection<ThesisEvaluationParticipant> thesisEvaluationParticipants = teacher.getPerson()
+		.getThesisEvaluationParticipants(executionSemester);
+	Collection<ThesisEvaluationParticipant> teacherThesisEvaluationParticipants = new ArrayList<ThesisEvaluationParticipant>();
+	for (ThesisEvaluationParticipant participant : thesisEvaluationParticipants) {
+	    if (participant.getCreditsDistribution() > 0) {
+		teacherThesisEvaluationParticipants.add(participant);
+	    }
+	}
+
+	if (!teacherThesisEvaluationParticipants.isEmpty()) {
+	    request.setAttribute("teacherThesisEvaluationParticipants", teacherThesisEvaluationParticipants);
+	}
+
+    }
+
+    protected CreditLineDTO simulateCalcCreditLine(Teacher teacher, ExecutionSemester executionSemester) throws ParseException {
+
+	double managementCredits = teacher.getManagementFunctionsCredits(executionSemester);
+	double serviceExemptionCredits = teacher.getServiceExemptionCredits(executionSemester);
+	double thesesCredits = teacher.getThesesCredits(executionSemester);
+	int mandatoryLessonHours = teacher.getMandatoryLessonHours(executionSemester);
+	TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
+	return new CreditLineDTO(executionSemester, teacherService, managementCredits, serviceExemptionCredits,
+		mandatoryLessonHours, teacher, thesesCredits);
+
+    }
+
 }

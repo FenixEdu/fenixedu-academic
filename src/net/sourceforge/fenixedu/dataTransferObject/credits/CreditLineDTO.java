@@ -7,6 +7,7 @@ import java.text.ParseException;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.TeacherCredits;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 
 /**
@@ -51,15 +52,31 @@ public class CreditLineDTO {
 	    setSupportLessonHours(teacherService.getSupportLessonHours());
 	    setMasterDegreeCredits(teacherService.getMasterDegreeServiceCredits());
 	    setTfcAdviseCredits(teacherService.getTeacherAdviseServiceCredits());
-	    setThesesCredits(thesesCredits);
 	    setOtherCredits(teacherService.getOtherServiceCredits());
 	    setInstitutionWorkingHours(teacherService.getInstitutionWorkingHours());
 	    setPastServiceCredits(teacherService.getPastServiceCredits());
 	}
+	setThesesCredits(thesesCredits);
 	setBalanceOfCredits(teacher.getBalanceOfCreditsUntil(executionSemester.getPreviousExecutionPeriod()));
 	setMandatoryLessonHours(lessonHours);
 	setManagementCredits(managementCredits);
 	setServiceExemptionCredits(exemptionCredits);
+    }
+
+    public CreditLineDTO(ExecutionSemester executionSemester, TeacherCredits teacherCredits) {
+	setExecutionPeriod(executionSemester);
+	setTeachingDegreeCredits(teacherCredits.getTeachingDegreeCredits().doubleValue());
+	setSupportLessonHours(teacherCredits.getSupportLessonHours().doubleValue());
+	setMasterDegreeCredits(teacherCredits.getMasterDegreeCredits().doubleValue());
+	setTfcAdviseCredits(teacherCredits.getTfcAdviseCredits().doubleValue());
+	setOtherCredits(teacherCredits.getOtherCredits().doubleValue());
+	setInstitutionWorkingHours(teacherCredits.getInstitutionWorkingHours().doubleValue());
+	setPastServiceCredits(teacherCredits.getPastServiceCredits().doubleValue());
+	setThesesCredits(teacherCredits.getThesesCredits().doubleValue());
+	setBalanceOfCredits(teacherCredits.getBalanceOfCredits().doubleValue());
+	setMandatoryLessonHours(teacherCredits.getMandatoryLessonHours().intValue());
+	setManagementCredits(teacherCredits.getManagementCredits().doubleValue());
+	setServiceExemptionCredits(teacherCredits.getServiceExemptionCredits().doubleValue());
     }
 
     public double getTotalCredits() {

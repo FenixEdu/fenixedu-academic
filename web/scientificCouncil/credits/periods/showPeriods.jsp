@@ -18,9 +18,9 @@
 			</span>
 		</p>
 	</html:messages>
-
+	
 	<logic:notEmpty name="teacherCreditsBean">
-
+		
 		<fr:form action="/defineCreditsPeriods.do?method=showPeriods">
 			<fr:edit name="teacherCreditsBean" schema="teacher.credits.list.execution.periods" id="teacherCreditsBeanID">
 				<fr:destination name="postBack" path="/defineCreditsPeriods.do?method=showPeriods"/>		
@@ -30,17 +30,33 @@
 				</fr:layout>			
 			</fr:edit>
 		</fr:form>
-	
+		<logic:notPresent name="closePeriodTeacherCredits"> 
+						<bean:message key="link.teacherCredits.closing"/>
+		</logic:notPresent>
+		<logic:present name="closePeriodTeacherCredits">
+			<logic:equal name="closePeriodTeacherCredits"  value="false">	
+				<html:link page="/defineCreditsPeriods.do?method=closeAllPeriodsByExecutionSemester" paramName="teacherCreditsBean" paramProperty="executionPeriod.idInternal" paramId="executionPeriodId">
+						<bean:message key="link.teacherCredits.close"/>
+				</html:link>
+			</logic:equal>
+			<logic:equal name="closePeriodTeacherCredits" value="true">
+				<html:link page="/defineCreditsPeriods.do?method=openAllPeriodsByExecutionSemester" paramName="teacherCreditsBean" paramProperty="executionPeriod.idInternal" paramId="executionPeriodId">
+						<bean:message key="link.teacherCredits.open"/>
+				</html:link>
+			</logic:equal>
+		</logic:present>
 		<h3 class="mtop15 mbottom05"><bean:message key="label.teacher"/></h3>
 		<fr:view name="teacherCreditsBean" schema="teacher.credits.period.view" layout="tabular">	
 			<fr:layout>
 				<fr:property name="classes" value="tstyle2 thleft thlight mtop05"/>
 			</fr:layout>
 		</fr:view>
-		<html:link page="/defineCreditsPeriods.do?method=prepareEditTeacherCreditsPeriod" paramName="teacherCreditsBean" paramProperty="executionPeriod.idInternal" paramId="executionPeriodId">
-			<bean:message key="link.change"/>
-		</html:link>
-	
+
+			<logic:equal name="closePeriodTeacherCredits" value="true">
+				<html:link page="/defineCreditsPeriods.do?method=prepareEditTeacherCreditsPeriod" paramName="teacherCreditsBean" paramProperty="executionPeriod.idInternal" paramId="executionPeriodId">
+					<bean:message key="link.change"/>
+				</html:link>
+			</logic:equal>
 		
 		<h3 class="mtop15 mbottom05"><bean:message key="label.department.adm.office"/></h3>
 		<fr:view name="teacherCreditsBean" schema="departmentAdmOffice.credits.period.view" layout="tabular">
@@ -48,10 +64,11 @@
 				<fr:property name="classes" value="tstyle2 thleft thlight mtop05"/>
 			</fr:layout>
 		</fr:view>
-		<html:link page="/defineCreditsPeriods.do?method=prepareEditDepartmentAdmOfficeCreditsPeriod" paramName="teacherCreditsBean" paramProperty="executionPeriod.idInternal" paramId="executionPeriodId">
-			<bean:message key="link.change"/>
-		</html:link>			
-			
+			<logic:equal name="closePeriodTeacherCredits" value="true">
+				<html:link page="/defineCreditsPeriods.do?method=prepareEditDepartmentAdmOfficeCreditsPeriod" paramName="teacherCreditsBean" paramProperty="executionPeriod.idInternal" paramId="executionPeriodId">
+					<bean:message key="link.change"/>
+				</html:link>			
+			</logic:equal>
 	</logic:notEmpty>
 			
 </logic:present>

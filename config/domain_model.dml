@@ -45,7 +45,7 @@ enum net.sourceforge.fenixedu.domain.PartyClassification                        
 enum net.sourceforge.fenixedu.domain.PhotoState                                                                           as PhotoState;
 enum net.sourceforge.fenixedu.domain.PhotoType                                                                            as PhotoType;
 enum net.sourceforge.fenixedu.domain.PhotographContentSize                                                                as PhotographContentSize;
-enum net.sourceforge.fenixedu.domain.PrescriptionEnum                                                                         as PrescriptionEnum;
+enum net.sourceforge.fenixedu.domain.PrescriptionEnum                                                                     as PrescriptionEnum;
 enum net.sourceforge.fenixedu.domain.ProfessionType                                                                       as ProfessionType;
 enum net.sourceforge.fenixedu.domain.ProfessionalSituationConditionType                                                   as ProfessionalSituationConditionType;
 enum net.sourceforge.fenixedu.domain.ProfessionalSituationType                                                            as ProfessionalSituationType;
@@ -89,6 +89,7 @@ enum net.sourceforge.fenixedu.domain.candidacy.Ingression                       
 enum net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessState                                               as CandidacyProcessState;
 enum net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState                                            as IndividualCandidacyState;
 enum net.sourceforge.fenixedu.domain.contacts.PartyContactType                                                            as PartyContactType;
+enum net.sourceforge.fenixedu.domain.credits.CreditsState                                                            	  as CreditsState;
 enum net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType                                                as CurricularPeriodType;
 enum net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType                                                   as CurricularRuleType;
 enum net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType                                                      as CurricularCourseType;
@@ -737,7 +738,28 @@ class DomainObject {
         Boolean defaultCountry;
         MultiLanguageString localizedName;
     }
-
+    class TeacherCredits extends DomainObject {
+		BigDecimal teachingDegreeCredits;
+		BigDecimal supportLessonHours;
+		BigDecimal masterDegreeCredits;
+		BigDecimal tfcAdviseCredits;
+		BigDecimal thesesCredits;
+		BigDecimal otherCredits;
+		BigDecimal institutionWorkingHours;
+		BigDecimal managementCredits;
+		BigDecimal serviceExemptionCredits;
+		BigDecimal pastServiceCredits;
+		BigDecimal balanceOfCredits;
+		BigDecimal mandatoryLessonHours;
+        DateTime lastModifiedDate;
+    }
+    class TeacherCreditsState extends DomainObject {
+        DateTime lastModifiedDate;
+        CreditsState creditState;
+    }
+    
+  
+    
     class CreditsInAnySecundaryArea extends DomainObject {
         Integer givenCredits;
     }
@@ -7245,6 +7267,8 @@ class candidacy.MeasurementTestRoom extends DomainObject {
     Integer roomOrder;
 }
 
+class TeacherCreditsQueueJob extends QueueJob{
+}
 
 class administrativeOffice.curriculumValidation.DocumentPrintRequest extends DomainObject {
 	String newConclusionDateValue;
@@ -7252,6 +7276,7 @@ class administrativeOffice.curriculumValidation.DocumentPrintRequest extends Dom
 	String newDegreeDescriptionValue;
 	DateTime whenRequested;
 }
+
 
 class ImportRegister extends DomainObject {
 	String remoteExternalOid;
@@ -17855,6 +17880,54 @@ relation CerimonyInquiryAnswerCerimonyInquiryPerson {
 	}
 }
 
+relation TeacherCreditsStateTeacherCredits {
+	TeacherCreditsState playsRole teacherCreditsState;
+	TeacherCredits playsRole teacherCredits {
+		multiplicity *;
+	}
+}
+relation TeacherCreditsStateExecutionSemester {
+	ExecutionSemester playsRole executionSemester; 
+	TeacherCreditsState playsRole teacherCreditsState{
+		multiplicity *;
+	}
+}
+relation TeacherCreditsStatePerson {
+	Person playsRole person;
+	TeacherCreditsState playsRole teacherCredits {
+		multiplicity *;
+	}
+}
+relation TeacherCreditsTeacher {
+	Teacher playsRole teacher;
+	TeacherCredits playsRole teacherCredits {	
+		multiplicity *;
+	}
+}
+relation TeacherCreditsPerson {
+	Person playsRole person;
+	TeacherCredits playsRole teacherCreditsPerson {
+		multiplicity *;
+	}
+}
+relation TeacherCreditsQueueJobExecutionSemester {
+	ExecutionSemester playsRole executionSemester;
+	TeacherCreditsQueueJob playsRole teacherCreditsQueueJob{
+		multiplicity *;
+	}
+}
+relation RootDomainObjectTeacherCreditsState {
+	RootDomainObject playsRole rootDomainObject;
+	TeacherCreditsState playsRole teacherCreditsState {
+		multiplicity *;
+	}
+}
+relation RootDomainObjectTeacherCredits {
+	RootDomainObject playsRole rootDomainObject;
+	TeacherCredits playsRole teacherCredits {
+		multiplicity *;
+	}
+}
 relation RootDomainObjectMessageTransportResult {
 	RootDomainObject playsRole rootDomainObject;
 	util.email.MessageTransportResult playsRole messageTransportResult {

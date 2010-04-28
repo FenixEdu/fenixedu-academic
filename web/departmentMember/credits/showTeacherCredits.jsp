@@ -22,6 +22,14 @@
 	/schedulesPrint.do?method=showSchedulesPrint&amp;teacherId=<bean:write name="teacher" property="idInternal"/>&amp;executionPeriodId=<bean:write name="executionPeriodId"/>
 </bean:define>
 
+<html:messages id="message" message="true">
+	<p>
+		<span class="error"><!-- Error messages go here -->
+			<bean:write name="message"/>
+		</span>
+	</p>
+</html:messages>
+
 <div class="infoop2">
 	<p class="mvert05"><b><bean:message key="label.teacher.name.short"  bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="teacher" property="person.name"/></p>
 	<p class="mvert05"><b><bean:message key="label.teacher.number.short" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="teacher" property="teacherNumber"/></p>

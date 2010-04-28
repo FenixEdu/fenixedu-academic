@@ -22,6 +22,14 @@
 	/schedulesPrint.do?method=showSchedulesPrint&amp;teacherId=<bean:write name="teacher" property="idInternal"/>&amp;executionPeriodId=<bean:write name="executionPeriodId"/>
 </bean:define>
 
+<html:messages id="message" message="true">
+	<p>
+		<span class="error"><!-- Error messages go here -->
+			<bean:write name="message"/>
+		</span>
+	</p>
+</html:messages>
+
 <div class="infoop">
 	<p class="mvert05"><b><bean:message key="label.teacher.name.short"  bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="teacher" property="person.name"/></p>
 	<p class="mvert05"><b><bean:message key="label.teacher.number.short" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="teacher" property="teacherNumber"/></p>
@@ -42,12 +50,29 @@
 			<bean:message key="link.schedules.print"/>
 		</html:link>
 	</li>
+	 
+	<bean:define id="teacherId" name="teacher" property="idInternal"/>
+	<logic:present name="simulateCalc">
+	<li>
+			<logic:equal name="simulateCalc" value="false">
+				<html:link action="<%= "/showFullTeacherCreditsSheet.do?method=editTeacherCredits&executionPeriodId=" + executionPeriodId + "&teacherId="+teacherId%>">
+					<bean:message key="link.teacherCredits.approve"/>
+				</html:link>
+		</logic:equal>
+		<logic:equal name="simulateCalc" value="true">
+			<html:link action="<%= "/showFullTeacherCreditsSheet.do?method=simulateCalcTeacherCredits&executionPeriodId=" + executionPeriodId + "&simulate=false&teacherId="+teacherId%>"> 
+					<bean:message key="link.teacherCredits.simulate"/>
+			</html:link>
+		</logic:equal> 
+	</li>
+	</logic:present>
+	
+	
 </ul>
 
 <tiles:insert definition="creditsResumeWithDescription">
 	<tiles:put name="creditLineDTO" beanName="creditLineDTO"/>
 </tiles:insert>
-
 
 <%-- ========================== PROFESSOR SHIPS ========================================== --%>
 

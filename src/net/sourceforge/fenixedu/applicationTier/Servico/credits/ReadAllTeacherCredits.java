@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.credits.CreditLineDTO;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.TeacherCredits;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -31,15 +32,7 @@ public class ReadAllTeacherCredits extends FenixService {
 
 	while (executionSemester != null) {
 
-	    double managementCredits = teacher.getManagementFunctionsCredits(executionSemester);
-	    double serviceExemptionsCredits = teacher.getServiceExemptionCredits(executionSemester);
-	    double thesesCredits = teacher.getThesesCredits(executionSemester);
-	    int mandatoryLessonHours = teacher.getMandatoryLessonHours(executionSemester);
-	    TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
-
-	    CreditLineDTO creditLineDTO = new CreditLineDTO(executionSemester, teacherService, managementCredits,
-		    serviceExemptionsCredits, mandatoryLessonHours, teacher, thesesCredits);
-	    creditLines.add(creditLineDTO);
+	    creditLines.add(readCreditLineDTO(executionSemester, teacher));
 
 	    if (executionSemester.isCurrent()) {
 		break;
@@ -50,4 +43,35 @@ public class ReadAllTeacherCredits extends FenixService {
 
 	return creditLines;
     }
+
+    public static CreditLineDTO readCreditLineDTO(ExecutionSemester executionSemester, Teacher teacher) throws ParseException {
+	TeacherCredits teacherCredits = TeacherCredits.readTeacherCredits(executionSemester, teacher);
+	if (teacherCredits == null || teacherCredits.getTeacherCreditsState().isOpenState()) {
+	    return calculateCreditLineDTO(executionSemester, teacher);
+	} else {
+	    if (teacherCredits.getTeacherCreditsState().isCloseState()) {
+		return getCreditLineDTOFromTeacherCredits(executionSemester, teacherCredits);
+	    }
+	}
+	return null;
+    }
+
+    public static CreditLineDTO calculateCreditLineDTO(ExecutionSemester executionSemester, Teacher teacher)
+	    throws ParseException {
+	double managementCredits = teacher.getManagementFunctionsCredits(executionSemester);
+	double serviceExemptionsCredits = teacher.getServiceExemptionCredits(executionSemester);
+	double thesesCredits = teacher.getThesesCredits(executionSemester);
+	int mandatoryLessonHours = teacher.getMandatoryLessonHours(executionSemester);
+	TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
+
+	return new CreditLineDTO(executionSemester, teacherService, managementCredits, serviceExemptionsCredits,
+		mandatoryLessonHours, teacher, thesesCredits);
+
+    }
+
+    private static CreditLineDTO getCreditLineDTOFromTeacherCredits(ExecutionSemester executionSemester,
+	    TeacherCredits teacherCredits) throws ParseException {
+	return new CreditLineDTO(executionSemester, teacherCredits);
+    }
+
 }

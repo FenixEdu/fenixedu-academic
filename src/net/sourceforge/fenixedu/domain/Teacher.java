@@ -1296,4 +1296,21 @@ public class Teacher extends Teacher_Base {
 	return getPerson().getProfessorshipsIterator();
     }
 
+    public TeacherCredits getTeacherCredits(ExecutionSemester executionSemester) {
+	for (TeacherCredits teacherCredits : getTeacherCredits()) {
+	    if (teacherCredits.getTeacherCreditsState().getExecutionSemester().equals(executionSemester)) {
+		return teacherCredits;
+	    }
+	}
+	return null;
+    }
+
+    public boolean hasTeacherCredits(ExecutionSemester executionSemester) {
+	for (TeacherCredits teacherCredits : getTeacherCredits()) {
+	    if (teacherCredits.getTeacherCreditsState().getExecutionSemester().equals(executionSemester)) {
+		return true;
+	    }
+	}
+	return false;
+    }
 }
