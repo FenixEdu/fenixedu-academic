@@ -76,6 +76,7 @@ public class ReadTeachersCreditsResumeByPeriodAndUnit extends FenixService {
 	    totalCredits -= teacher.getMandatoryLessonHours(executionSemester);
 	    totalCredits += teacher.getManagementFunctionsCredits(executionSemester);
 	    totalCredits += teacher.getServiceExemptionCredits(executionSemester);
+	    totalCredits += teacher.getThesesCredits(executionSemester);
 	}
 	creditLine.getCreditsByExecutionPeriod().put(executionSemester, totalCredits);
     }
