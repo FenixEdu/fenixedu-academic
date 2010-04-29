@@ -7,6 +7,8 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.student.StudentDataByExecutionYear;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 
 /**
@@ -28,9 +30,10 @@ public class RegistrationWithStateForExecutionYearBean implements Serializable {
 	this.executionYear = executionYear;
     }
 
-    public RegistrationWithStateForExecutionYearBean(Registration registration, RegistrationStateType registrationState) {
+    public RegistrationWithStateForExecutionYearBean(Registration registration, RegistrationStateType registrationState, ExecutionYear executionYear) {
 	this.registration = registration;
 	this.registrationState = registrationState;
+	this.executionYear = executionYear;
     }
 
     public RegistrationStateType getActiveStateType() {
@@ -44,6 +47,16 @@ public class RegistrationWithStateForExecutionYearBean implements Serializable {
 
     public Registration getRegistration() {
 	return registration;
+    }
+
+    public Student getStudent() {
+	return getRegistration().getStudent();
+    }
+
+    public String getPersonalDataAuthorization() {
+	final StudentDataByExecutionYear info = getStudent().getStudentDataByExecutionYear(getExecutionYear());
+	return info != null && info.getPersonalDataAuthorization() != null ? info.getPersonalDataAuthorization().getDescription()
+		: "";
     }
 
 }

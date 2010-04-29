@@ -167,7 +167,8 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 		continue;
 	    }
 
-	    result.add(new RegistrationWithStateForExecutionYearBean(registration, lastRegistrationState.getStateType()));
+	    result.add(new RegistrationWithStateForExecutionYearBean(registration, lastRegistrationState.getStateType(),
+		    executionYear));
 	}
 	return result;
     }
@@ -322,6 +323,8 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 		    fillSpreadSheetBolonhaInfo(spreadsheet, registration, registration.getLastStudentCurricularPlan().getCycle(
 			    CycleType.THIRD_CYCLE));
 		}
+
+		spreadsheet.addCell(registrationWithStateForExecutionYearBean.getPersonalDataAuthorization());
 	    }
 	}
     }
@@ -400,6 +403,8 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 		spreadsheet.addHeader(getResourceMessage("label.thirdCycle.average"));
 		spreadsheet.addHeader(getResourceMessage("label.thirdCycle.hasConclusionProcess"));
 	    }
+
+	    spreadsheet.addHeader(getResourceMessage("label.studentData.personalDataAuthorization"));
 	}
     }
 
