@@ -44,13 +44,19 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
     }
 
     private void checkParameters(String name, String nameEn, Boolean basic, RegimeType regimeType,
-	    CompetenceCourseLevel competenceCourseLevel, CompetenceCourseGroupUnit unit) {
+	    CompetenceCourseLevel competenceCourseLevel) {
 
 	if (name == null || nameEn == null || basic == null || regimeType == null || competenceCourseLevel == null) {
 	    throw new DomainException("competence.course.information.invalid.parameters");
 	}
-	if (unit != null && !unit.isCompetenceCourseGroupUnit()) {
-	    throw new DomainException("");
+    }
+
+    private void checkParameters(String name, String nameEn, Boolean basic, RegimeType regimeType,
+	    CompetenceCourseLevel competenceCourseLevel, CompetenceCourseGroupUnit unit) {
+
+	checkParameters(name, nameEn, basic, regimeType, competenceCourseLevel);
+	if (unit == null || !unit.isCompetenceCourseGroupUnit()) {
+	    throw new DomainException("competence.course.information.invalid.group.unit");
 	}
     }
 
@@ -61,10 +67,11 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
 	setNameEn(StringFormatter.prettyPrint(nameEn));
 	setBasic(basic);
 	setCompetenceCourseLevel(competenceCourseLevel);
+	setCompetenceCourseGroupUnit(unit);
     }
 
     public void edit(String name, String nameEn, Boolean basic, CompetenceCourseLevel competenceCourseLevel) {
-	checkParameters(name, nameEn, basic, getRegime(), competenceCourseLevel, null);
+	checkParameters(name, nameEn, basic, getRegime(), competenceCourseLevel);
 	setName(StringFormatter.prettyPrint(name));
 	setNameEn(StringFormatter.prettyPrint(nameEn));
 	setBasic(basic);

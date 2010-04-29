@@ -67,7 +67,7 @@ public class CompetenceCourseGroupUnit extends CompetenceCourseGroupUnit_Base {
 
     @Override
     public boolean hasCompetenceCourses(CompetenceCourse competenceCourse) {
-	return hasCompetenceCourseInformations(competenceCourse.getMostRecentCompetenceCourseInformation());
+	return competenceCourse.getCompetenceCourseGroupUnit().equals(this);
     }
 
     public Set<CompetenceCourse> getCompetenceCoursesSet() {

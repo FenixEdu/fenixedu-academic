@@ -266,7 +266,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	return informations;
     }
 
-    public CompetenceCourseInformation getMostRecentCompetenceCourseInformation() {
+    private CompetenceCourseInformation getMostRecentCompetenceCourseInformation() {
 	final Set<CompetenceCourseInformation> competenceCourseInformations = getCompetenceCourseInformationsSet();
 	if (competenceCourseInformations.isEmpty()) {
 	    return null;
