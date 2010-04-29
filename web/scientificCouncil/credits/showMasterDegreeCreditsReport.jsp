@@ -56,7 +56,7 @@
 				
 				<%-- Course Name --%>
 				<td rowspan="<%= totalRowSpan %>">
-					<bean:write name="masterDegreeCoursesDTO" property="curricularCourse.name"/>
+					<bean:write name="masterDegreeCoursesDTO" property="curricularCourseName"/>
 				</td>
 				
 				<%-- Curricular Course Type --%>

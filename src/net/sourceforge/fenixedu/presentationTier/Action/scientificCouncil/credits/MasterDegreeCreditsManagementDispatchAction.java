@@ -194,6 +194,8 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
 
 	CurricularCourse curricularCourse;
 
+	ExecutionYear executionYear;
+
 	StringBuilder semesters = new StringBuilder();
 
 	Map<ExecutionCourse, String> dcpNames = new HashMap<ExecutionCourse, String>();
@@ -203,7 +205,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
 	Map<ExecutionSemester, List<GenericTrio<Pair<ExecutionCourse, Boolean>, Integer, Integer>>> executionCoursesMap = new TreeMap<ExecutionSemester, List<GenericTrio<Pair<ExecutionCourse, Boolean>, Integer, Integer>>>();
 
 	public MasterDegreeCreditsDTO(CurricularCourse curricularCourse, ExecutionYear executionYear) {
-
+	    setExecutionYear(executionYear);
 	    setCurricularCourse(curricularCourse);
 
 	    List<DegreeModuleScope> ccsList = curricularCourse.getDegreeModuleScopes();
@@ -273,6 +275,10 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
 	    this.curricularCourse = curricularCourse;
 	}
 
+	public String getCurricularCourseName() {
+	    return curricularCourse.getName(getExecutionYear().getFirstExecutionPeriod());
+	}
+
 	public int getTotalRowSpan() {
 	    return totalRowSpan;
 	}
@@ -299,6 +305,14 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
 
 	public void setDcpNames(Map<ExecutionCourse, String> dcpNames) {
 	    this.dcpNames = dcpNames;
+	}
+
+	public ExecutionYear getExecutionYear() {
+	    return executionYear;
+	}
+
+	public void setExecutionYear(ExecutionYear executionYear) {
+	    this.executionYear = executionYear;
 	}
     }
 
