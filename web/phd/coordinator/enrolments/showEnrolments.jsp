@@ -43,22 +43,34 @@
 </fr:form>
 
 <h3><bean:write name="manageEnrolmentsBean" property="curricularCourse.degreeCurricularPlan.name" />: <bean:write name="manageEnrolmentsBean" property="curricularCourseName" /></h3>
-<fr:view name="manageEnrolmentsBean" property="enrolments">
 
-	<fr:schema bundle="PHD_RESOURCES" type="<%= Enrolment.class.getName() %>">
-		<fr:slot name="person.name" />
-		<fr:slot name="person.institutionalEmailAddressValue" />
-		<fr:slot name="finalGrade" />
-	</fr:schema>
+<logic:notEmpty name="manageEnrolmentsBean" property="enrolments">
+
+	<bean:define id="executionSemesterOid" name="manageEnrolmentsBean" property="semester.externalId" />
+	<bean:define id="degreeModuleOid" name="manageEnrolmentsBean" property="curricularCourse.externalId" />
 	
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle2 thlight mtop10" />
-		<fr:property name="sortBy" value="person.name=asc" />
-		
-		<fr:link name="view" label="label.view,PHD_RESOURCES" target="blank" link="/phdIndividualProgramProcess.do?method=viewProcess&processId=${registration.phdIndividualProgramProcess.externalId}"/>
-	</fr:layout>
+	<html:link action="<%= String.format("/phdEnrolmentsManagement.do?method=exportEnrolmentsToExcel&degreeModuleOid=%s&executionSemesterOid=%s", degreeModuleOid, executionSemesterOid) %>">
+		<img src="<%= request.getContextPath() %>/images/excel.gif" /> <bean:message key="label.phd.export.enrolments" bundle="PHD_RESOURCES" />
+	</html:link>
 
-</fr:view>
+	<fr:view name="manageEnrolmentsBean" property="enrolments">
+	
+		<fr:schema bundle="PHD_RESOURCES" type="<%= Enrolment.class.getName() %>">
+			<fr:slot name="registration.number" />
+			<fr:slot name="person.name" />
+			<fr:slot name="person.institutionalEmailAddressValue" />
+<!--			<fr:slot name="finalGrade" />-->
+		</fr:schema>
+		
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle2 thlight mtop10" />
+			<fr:property name="sortBy" value="person.name=asc" />
+			
+			<fr:link name="view" label="label.view,PHD_RESOURCES" target="blank" link="/phdIndividualProgramProcess.do?method=viewProcess&processId=${registration.phdIndividualProgramProcess.externalId}"/>
+		</fr:layout>
+	
+	</fr:view>
+</logic:notEmpty>
 
 <logic:empty name="manageEnrolmentsBean" property="enrolments">
 	<em><bean:message key="label.phd.no.enrolments.found" bundle="PHD_RESOURCES" /></em>

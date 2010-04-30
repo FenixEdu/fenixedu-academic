@@ -1,6 +1,11 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd.coordinator;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
@@ -23,6 +29,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
+import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
+import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
 
 @Mapping(path = "/phdEnrolmentsManagement", module = "coordinator")
 @Forwards(tileProperties = @Tile(navLocal = "/coordinator/localNavigationBar.jsp"), value = {
@@ -113,4 +122,44 @@ public class PhdEnrolmentsManagementDA extends PhdProcessDA {
 	bean.setEnrolments(bean.getCurricularCourse().getEnrolmentsByAcademicInterval(bean.getSemester().getAcademicInterval()));
     }
 
+    public ActionForward exportEnrolmentsToExcel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws IOException {
+
+	final ExecutionSemester semester = getDomainObject(request, "executionSemesterOid");
+	final CurricularCourse curricularCourse = getDomainObject(request, "degreeModuleOid");
+	
+	byte[] content = buildSpreadsheet(curricularCourse, semester);
+	writeFile(response, getFileName(curricularCourse, semester), "application/vnd.ms-excel", content);
+	
+	return null;
+    }
+
+    private byte[] buildSpreadsheet(CurricularCourse curricularCourse, ExecutionSemester semester) throws IOException {
+	
+	final List<Enrolment> enrolments = curricularCourse.getEnrolmentsByAcademicInterval(semester.getAcademicInterval());
+	
+	Collections.sort(enrolments, new Comparator<Enrolment>() {
+	    @Override
+	    public int compare(Enrolment o1, Enrolment o2) {
+		return o1.getPerson().getName().compareTo(o2.getPerson().getName());
+	    }});
+	
+	final SpreadsheetBuilder builder = new SpreadsheetBuilder();
+	builder.addSheet(semester.getQualifiedName().replace("/", "_"), new SheetData<Enrolment>(enrolments) {
+
+	    @Override
+	    protected void makeLine(final Enrolment enrolment) {
+		addCell("Número", enrolment.getRegistration().getNumber());
+		addCell("Nome", enrolment.getPerson().getName());
+		addCell("Email", enrolment.getPerson().getInstitutionalOrDefaultEmailAddressValue());
+	    }});
+	
+	final ByteArrayOutputStream output = new ByteArrayOutputStream();
+	builder.build(WorkbookExportFormat.EXCEL, output);
+	return output.toByteArray();
+    }
+
+    private String getFileName(final CurricularCourse curricularCourse, final ExecutionSemester semester) {
+	return curricularCourse.getName(semester).replace(" ", "_");
+    }
 }
