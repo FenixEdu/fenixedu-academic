@@ -107,6 +107,20 @@ public class PhdProgram extends PhdProgram_Base {
 	super.deleteDomainObject();
     }
 
+    public Set<Person> getCoordinatorsFor(ExecutionYear executionYear) {
+	final ExecutionDegree executionDegree = getDegree().getLastActiveDegreeCurricularPlan().getExecutionDegreeByYear(
+		executionYear);
+
+	final Set<Person> result = new HashSet<Person>();
+	if (executionDegree != null) {
+	    for (final Coordinator coordinator : executionDegree.getCoordinatorsList()) {
+		result.add(coordinator.getPerson());
+	    }
+	}
+
+	return result;
+    }
+
     @Service
     static public PhdProgram create(final Degree degree, final MultiLanguageString name, final String acronym) {
 	return new PhdProgram(degree, name, acronym);
@@ -124,20 +138,6 @@ public class PhdProgram extends PhdProgram_Base {
 	    }
 	}
 	return null;
-    }
-
-    public Set<Person> getCoordinatorsFor(ExecutionYear executionYear) {
-	final ExecutionDegree executionDegree = getDegree().getLastActiveDegreeCurricularPlan().getExecutionDegreeByYear(
-		executionYear);
-
-	final Set<Person> result = new HashSet<Person>();
-	if (executionDegree != null) {
-	    for (final Coordinator coordinator : executionDegree.getCoordinatorsList()) {
-		result.add(coordinator.getPerson());
-	    }
-	}
-
-	return result;
     }
 
 }
