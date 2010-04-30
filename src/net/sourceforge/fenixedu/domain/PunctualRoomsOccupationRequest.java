@@ -285,7 +285,7 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
 	Set<PunctualRoomsOccupationRequest> requests = requestor.getPunctualRoomsOccupationRequestsSet();
 	for (PunctualRoomsOccupationRequest request : requests) {
 	    PunctualRoomsOccupationComment firstComment = request.getFirstComment();
-	    if (firstComment.getSubject().compareTo(subject) == 0 && firstComment.getDescription().compareTo(description) == 0) {
+	    if (firstComment.getSubject().compareTo(subject) == 0 && firstComment.getDescription() != null && firstComment.getDescription().compareTo(description) == 0) {
 		throw new DomainException("error.PunctualRoomsOccupationRequest.request.already.exists");
 	    }
 	}
