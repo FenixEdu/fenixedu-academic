@@ -115,14 +115,6 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
     static private final List<String> DO_NOT_VALIDATE_CANDIDACY_PERIOD_IN_METHODS = Arrays.asList(
 
-    "prepareCreateCandidacyIdentification",
-
-    "prepareCandidacyIdentificationRecovery",
-
-    "candidacyIdentificationRecoveryInvalid",
-
-    "candidacyIdentificationRecovery",
-
     "showCandidacySuccess",
 
     "viewCandidacy",
