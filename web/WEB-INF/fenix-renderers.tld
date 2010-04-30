@@ -1111,11 +1111,37 @@
       <rtexprvalue>true</rtexprvalue>
       <type>java.lang.String</type>
       <description>
+      	<![CDATA[
+        <pre>
         Specifies the key and the name of the bundle used in the confirmation message. Examples:
+        
              1 - confirmation='my.key'
              2 - confirmation='my.key,MY_BUNDLE'
         
         if confirmation is empty then is ignored. If bundle is empty then no bundle is set and renderers will try to find the key
+        </pre>
+        ]]>
+      </description>
+    </attribute>
+    
+    <attribute>
+      <name>target</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+      	<![CDATA[
+        <pre>
+        Specifies target used in link. Accepted values: 
+        
+        	1 - _blank / blank
+        	2 - _self / self 
+        	3 - _parent / parent 
+        	4 -_top / top
+        
+        if no value specified then is ignored
+        </pre>
+        ]]>
       </description>
     </attribute>
     

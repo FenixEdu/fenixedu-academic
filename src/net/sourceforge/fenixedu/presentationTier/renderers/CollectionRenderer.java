@@ -807,8 +807,27 @@ public class CollectionRenderer extends OutputRenderer {
 	return Boolean.toString(getTableLink(name).getBlankTarget());
     }
 
+    /**
+     * The blankTarget property set blank target for a link.
+     * 
+     * @property
+     */
     public void setBlankTarget(String name, String value) {
 	getTableLink(name).setBlankTarget(Boolean.parseBoolean(value));
+    }
+
+    public String getTarget(String name) {
+	return getTableLink(name).getTarget();
+    }
+
+    /**
+     * The target property indicates the arguments for a link target. Using
+     * setBlankTarget will override this value.
+     * 
+     * @property
+     */
+    public void setTarget(String name, String value) {
+	getTableLink(name).setTarget(value);
     }
 
     protected int getNumberOfLinkColumns() {
@@ -1294,6 +1313,8 @@ public class CollectionRenderer extends OutputRenderer {
 	private String confirmationArgs;
 
 	private Boolean blankTarget = false;
+	
+	private String target;
 
 	public TableLink() {
 	    super();
@@ -1469,6 +1490,14 @@ public class CollectionRenderer extends OutputRenderer {
 	public void setBlankTarget(Boolean blankTarget) {
 	    this.blankTarget = blankTarget;
 	}
+	
+	public String getTarget() {
+	    return target;
+	}
+	
+	public void setTarget(String target) {
+	    this.target = target;
+	}
 
 	public int compareTo(TableLink other) {
 	    if (getOrder() == null) {
@@ -1520,6 +1549,9 @@ public class CollectionRenderer extends OutputRenderer {
 
 		if (getBlankTarget().booleanValue()) {
 		    link.setTarget(Target.BLANK);
+		    
+		} else if (getTarget() != null && !getTarget().isEmpty()) {
+		    link.setTarget(getTarget());
 		}
 
 		link.setText(getLinkText(this));

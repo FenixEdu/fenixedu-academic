@@ -2,6 +2,9 @@ package net.sourceforge.fenixedu.presentationTier.TagLib.renderers;
 
 import static java.lang.String.format;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
@@ -23,6 +26,7 @@ public class LinkFormatTag extends TagSupport {
     private String condition;
     private String confirmation;
     private String order;
+    private String target;
 
     public LinkFormatTag() {
     }
@@ -77,7 +81,7 @@ public class LinkFormatTag extends TagSupport {
     public void setConfirmation(String confirmation) {
 	this.confirmation = confirmation;
     }
-    
+
     public boolean hasConfirmation() {
 	return !empty(this.confirmation);
     }
@@ -88,6 +92,18 @@ public class LinkFormatTag extends TagSupport {
 
     public void setOrder(String order) {
 	this.order = order;
+    }
+
+    public String getTarget() {
+	return target;
+    }
+
+    public void setTarget(String target) {
+	this.target = target;
+    }
+
+    private boolean hasTarget() {
+	return !empty(this.target);
     }
 
     @Override
@@ -108,7 +124,7 @@ public class LinkFormatTag extends TagSupport {
     }
 
     private void setProperties(final PropertyContainerTag parent) throws JspException {
-	setLink(parent).setLabel(parent).setCondition(parent).setConfirmation(parent).setOrder(parent);
+	setLink(parent).setLabel(parent).setCondition(parent).setConfirmation(parent).setOrder(parent).setTarget(parent);
     }
 
     private LinkFormatTag setLink(final PropertyContainerTag parent) {
@@ -117,18 +133,17 @@ public class LinkFormatTag extends TagSupport {
     }
 
     /*
-     * Add missing args to confirmation?
-     * confirmation="label,,args" confirmation="<%="label,bundle," + args %>"
-     * 
+     * Add missing args to confirmation? confirmation="label,,args"
+     * confirmation="<%="label,bundle," + args %>"
      */
     private LinkFormatTag setConfirmation(PropertyContainerTag parent) throws JspException {
 
 	if (!hasConfirmation()) {
 	    return this;
 	}
-	
+
 	final String[] values = getConfirmation().split(ELEMENTS_SEPARATOR);
-	
+
 	if (values.length == 0) {
 	    return this;
 	}
@@ -137,7 +152,7 @@ public class LinkFormatTag extends TagSupport {
 	if (empty(key)) {
 	    throw new JspException("confirmation is specified but no value found");
 	}
-	
+
 	setConfirmationKey(parent, key);
 
 	if (values.length > 1) {
@@ -147,14 +162,14 @@ public class LinkFormatTag extends TagSupport {
 		setConfirmationBundle(parent, bundle);
 	    }
 	}
-	
+
 	return this;
     }
-    
+
     private void setConfirmationKey(final PropertyContainerTag parent, final String key) {
 	parent.addProperty(format("confirmationKey(%s)", getName()), key);
     }
-    
+
     private void setConfirmationBundle(final PropertyContainerTag parent, final String bundle) {
 	parent.addProperty(format("confirmationBundle(%s)", getName()), bundle);
     }
@@ -232,4 +247,32 @@ public class LinkFormatTag extends TagSupport {
     private boolean empty(String value) {
 	return value == null || value.length() == 0;
     }
+
+    private LinkFormatTag setTarget(final PropertyContainerTag parent) throws JspException {
+	
+	if (hasTarget()) {
+
+	    final String target = getFormattedTarget();
+
+	    if (targetIsValid(target)) {
+		throw new JspException("invalid target value. Accepted values: _blank, _self, _parent, _top");
+	    }
+
+	    parent.addProperty(format("target(%s)", getName()), target);
+	}
+	
+	return this;
+    }
+
+    private String getFormattedTarget() {
+	final String target = getTarget();
+	return target.startsWith("_") ? target : "_" + target;
+    }
+
+    static private List<String> ACCEPTED_TARGETS = Arrays.asList("_blank,_self,_parent,_top".split(","));
+
+    private boolean targetIsValid(String value) {
+	return !ACCEPTED_TARGETS.contains(value);
+    }
+
 }
