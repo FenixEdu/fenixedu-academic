@@ -5,16 +5,20 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriod;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyArrayConverter;
+import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDomainObjectProvider;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
@@ -36,6 +40,8 @@ public class ManageEnrolmentsBean implements Serializable {
     private Collection<EnrolmentPeriod> enrolmentPeriods;
 
     private List<DegreeCurricularPlan> degreeCurricularPlans;
+
+    private CurricularCourse curricularCourse;
 
     private DateTime startDate, endDate;
 
@@ -95,6 +101,18 @@ public class ManageEnrolmentsBean implements Serializable {
 	this.endDate = endDate;
     }
 
+    public CurricularCourse getCurricularCourse() {
+	return curricularCourse;
+    }
+
+    public void setCurricularCourse(final CurricularCourse curricularCourse) {
+	this.curricularCourse = curricularCourse;
+    }
+    
+    public String getCurricularCourseName() {
+	return getCurricularCourse().getName(getSemester());
+    }
+
     static public class PhdManageEnrolmentsExecutionSemestersProviders extends AbstractDomainObjectProvider {
 
 	@Override
@@ -143,6 +161,28 @@ public class ManageEnrolmentsBean implements Serializable {
 	private boolean hasEnrolmentPeriod(DegreeCurricularPlan degreeCurricularPlan, ExecutionSemester semester) {
 	    return semester.getEnrolmentPeriod(EnrolmentPeriodInCurricularCourses.class, degreeCurricularPlan) != null;
 	}
+    }
+    
+    static public class CurricularCourseDegreeExecutionSemesterProvider implements DataProvider {
+
+	@Override
+	public Converter getConverter() {
+	    return new DomainObjectKeyConverter();
+	}
+
+	@Override
+	public Object provide(Object source, Object currentValue) {
+	    final ManageEnrolmentsBean bean = (ManageEnrolmentsBean) source;
+	    
+	    final Collection<ExecutionSemester> result = new TreeSet<ExecutionSemester>(new ReverseComparator());
+	    
+	    for (final ExecutionYear executionYear : bean.getCurricularCourse().getDegreeCurricularPlan().getExecutionYears()) {
+		result.addAll(executionYear.getExecutionPeriods());
+	    }
+	
+	    return result;
+	}
+	
     }
 
 }
