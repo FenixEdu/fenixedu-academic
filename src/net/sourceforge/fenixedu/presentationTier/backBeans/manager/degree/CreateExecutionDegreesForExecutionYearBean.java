@@ -63,6 +63,14 @@ public class CreateExecutionDegreesForExecutionYearBean extends FenixBackingBean
 
     private Integer lessonSeason2EndMonth;
 
+    private Integer lessonSeason2BeginDayPart2;
+
+    private Integer lessonSeason2BeginMonthPart2;
+
+    private Integer lessonSeason2EndDayPart2;
+
+    private Integer lessonSeason2EndMonthPart2;
+
     private Integer examsSeason1BeginDay;
 
     private Integer examsSeason1BeginMonth;
@@ -256,6 +264,12 @@ public class CreateExecutionDegreesForExecutionYearBean extends FenixBackingBean
 	Calendar lessonSeason2EndDate = Calendar.getInstance();
 	lessonSeason2EndDate.set(getLessonSeason2EndYear(), getLessonSeason2EndMonth(), getLessonSeason2EndDay());
 
+	Calendar lessonSeason2BeginDatePart2 = Calendar.getInstance();
+	lessonSeason2BeginDatePart2.set(getLessonSeason2BeginYear(), getLessonSeason2BeginMonthPart2(), getLessonSeason2BeginDayPart2());
+
+	Calendar lessonSeason2EndDatePart2 = Calendar.getInstance();
+	lessonSeason2EndDatePart2.set(getLessonSeason2EndYear(), getLessonSeason2EndMonthPart2(), getLessonSeason2EndDayPart2());
+
 	Calendar examsSeason1BeginDate = Calendar.getInstance();
 	examsSeason1BeginDate.set(getExamsSeason1BeginYear(), getExamsSeason1BeginMonth(), getExamsSeason1BeginDay());
 
@@ -292,6 +306,7 @@ public class CreateExecutionDegreesForExecutionYearBean extends FenixBackingBean
 	    createdDegreeCurricularPlans = CreateExecutionDegreesForExecutionYear.run(getChoosenDegreeCurricularPlansIDs(),
 		    getChoosenBolonhaDegreeCurricularPlansIDs(), getChoosenExecutionYearID(), getCampus(), getTemporaryExamMap(),
 		    lessonSeason1BeginDate, lessonSeason1EndDate, lessonSeason2BeginDate, lessonSeason2EndDate,
+		    lessonSeason2BeginDatePart2, lessonSeason2EndDatePart2,
 		    examsSeason1BeginDate, examsSeason1EndDate, examsSeason2BeginDate, examsSeason2EndDate,
 		    examsSpecialSeasonBeginDate, examsSpecialSeasonEndDate, gradeSubmissionNormalSeason1EndDate,
 		    gradeSubmissionNormalSeason2EndDate, gradeSubmissionSpecialSeasonEndDate);
@@ -676,6 +691,39 @@ public class CreateExecutionDegreesForExecutionYearBean extends FenixBackingBean
 
     public void setGradeSubmissionSpecialSeasonEndYear(Integer gradeSubmissionSpecialSeasonEndYear) {
 	this.getViewState().setAttribute("gradeSubmissionSpecialSeasonEndYear", gradeSubmissionSpecialSeasonEndYear);
+    }
+
+
+    public Integer getLessonSeason2BeginDayPart2() {
+	return lessonSeason2BeginDayPart2;
+    }
+
+    public void setLessonSeason2BeginDayPart2(Integer lessonSeason2BeginDayPart2) {
+	this.lessonSeason2BeginDayPart2 = lessonSeason2BeginDayPart2;
+    }
+
+    public Integer getLessonSeason2BeginMonthPart2() {
+	return lessonSeason2BeginMonthPart2;
+    }
+
+    public void setLessonSeason2BeginMonthPart2(Integer lessonSeason2BeginMonthPart2) {
+	this.lessonSeason2BeginMonthPart2 = lessonSeason2BeginMonthPart2;
+    }
+
+    public Integer getLessonSeason2EndDayPart2() {
+	return lessonSeason2EndDayPart2;
+    }
+
+    public void setLessonSeason2EndDayPart2(Integer lessonSeason2EndDayPart2) {
+	this.lessonSeason2EndDayPart2 = lessonSeason2EndDayPart2;
+    }
+
+    public Integer getLessonSeason2EndMonthPart2() {
+	return lessonSeason2EndMonthPart2;
+    }
+
+    public void setLessonSeason2EndMonthPart2(Integer lessonSeason2EndMonthPart2) {
+	this.lessonSeason2EndMonthPart2 = lessonSeason2EndMonthPart2;
     }
 
 }

@@ -128,7 +128,7 @@
 					
 				<h:outputText value="<div class='simpleblock4'>" escape="false"/>
 				<h:outputText value="<p><label><strong>2º Semestre</strong></label></p><br/>" escape="false"/>
-				<h:outputText value="<p><label>Aulas</label>" escape="false"/>
+				<h:outputText value="<p><label>Aulas (parte 1)</label>" escape="false"/>
 					<h:selectOneMenu value="#{createExecutionDegrees.lessonSeason2BeginDay}">
 						<f:selectItems value="#{createExecutionDegrees.days}" />
 					</h:selectOneMenu>
@@ -144,6 +144,27 @@
 					</h:selectOneMenu>
 					<h:outputText value=" / " />
 					<h:selectOneMenu value="#{createExecutionDegrees.lessonSeason2EndMonth}">
+						<f:selectItems value="#{createExecutionDegrees.months}" />
+					</h:selectOneMenu>
+					<h:outputText value=" / " />
+					<h:outputText value="#{createExecutionDegrees.lessonSeason2EndYear}"/>
+				<h:outputText value="</p>" escape="false"/>
+				<h:outputText value="<p><label>Aulas (parte 2)</label>" escape="false"/>
+					<h:selectOneMenu value="#{createExecutionDegrees.lessonSeason2BeginDayPart2}">
+						<f:selectItems value="#{createExecutionDegrees.days}" />
+					</h:selectOneMenu>
+					<h:outputText value=" / " />
+					<h:selectOneMenu value="#{createExecutionDegrees.lessonSeason2BeginMonthPart2}">
+						<f:selectItems value="#{createExecutionDegrees.months}" />
+					</h:selectOneMenu>
+					<h:outputText value=" / " />
+					<h:outputText value="#{createExecutionDegrees.lessonSeason2BeginYear}"/>
+					<h:outputText value=" a " />
+					<h:selectOneMenu value="#{createExecutionDegrees.lessonSeason2EndDayPart2}">
+						<f:selectItems value="#{createExecutionDegrees.days}" />
+					</h:selectOneMenu>
+					<h:outputText value=" / " />
+					<h:selectOneMenu value="#{createExecutionDegrees.lessonSeason2EndMonthPart2}">
 						<f:selectItems value="#{createExecutionDegrees.months}" />
 					</h:selectOneMenu>
 					<h:outputText value=" / " />

@@ -217,6 +217,19 @@ public class OccupationPeriod extends OccupationPeriod_Base {
 	return null;
     }
 
+    public static OccupationPeriod readOccupationPeriod(YearMonthDay start, YearMonthDay end, final YearMonthDay startPart2, final YearMonthDay endPart2) {
+	for (final OccupationPeriod occupationPeriod : RootDomainObject.getInstance().getOccupationPeriodsSet()) {
+	    if (occupationPeriod.getNextPeriod() == null && occupationPeriod.getPreviousPeriod() == null
+		    && occupationPeriod.getStartYearMonthDay().equals(start) && occupationPeriod.getEndYearMonthDay().equals(end)
+		    && ((!occupationPeriod.hasNextPeriod() && startPart2 == null) || (
+			    occupationPeriod.getNextPeriod().getStartYearMonthDay().equals(startPart2)
+			    && occupationPeriod.getNextPeriod().getEndYearMonthDay().equals(endPart2)))) {
+		return occupationPeriod;
+	    }
+	}
+	return null;
+    }
+
     public static OccupationPeriod readOccupationPeriod(final ExecutionCourse executionCourse, final YearMonthDay start, final YearMonthDay end) {
 	OccupationPeriod result = null;
 	boolean ok = true;

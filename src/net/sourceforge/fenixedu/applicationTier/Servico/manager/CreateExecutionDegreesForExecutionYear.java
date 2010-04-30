@@ -26,7 +26,9 @@ public class CreateExecutionDegreesForExecutionYear extends FenixService {
     public static List<DegreeCurricularPlan> run(final Integer[] degreeCurricularPlansIDs,
 	    final Integer[] bolonhaDegreeCurricularPlansIDs, final Integer executionYearID, final String campusName,
 	    final Boolean temporaryExamMap, final Calendar lessonSeason1BeginDate, final Calendar lessonSeason1EndDate,
-	    final Calendar lessonSeason2BeginDate, final Calendar lessonSeason2EndDate, final Calendar examsSeason1BeginDate,
+	    final Calendar lessonSeason2BeginDate, final Calendar lessonSeason2EndDate,
+	    final Calendar lessonSeason2BeginDatePart2, final Calendar lessonSeason2EndDatePart2,
+	    final Calendar examsSeason1BeginDate,
 	    final Calendar examsSeason1EndDate, final Calendar examsSeason2BeginDate, final Calendar examsSeason2EndDate,
 	    final Calendar examsSpecialSeasonBeginDate, final Calendar examsSpecialSeasonEndDate,
 	    final Calendar gradeSubmissionNormalSeason1EndDate, final Calendar gradeSubmissionNormalSeason2EndDate,
@@ -36,7 +38,7 @@ public class CreateExecutionDegreesForExecutionYear extends FenixService {
 	final Campus campus = readCampusByName(campusName);
 
 	final OccupationPeriod lessonSeason1 = getOccupationPeriod(lessonSeason1BeginDate, lessonSeason1EndDate);
-	final OccupationPeriod lessonSeason2 = getOccupationPeriod(lessonSeason2BeginDate, lessonSeason2EndDate);
+	final OccupationPeriod lessonSeason2 = getOccupationPeriod(lessonSeason2BeginDate, lessonSeason2EndDate, lessonSeason2BeginDatePart2, lessonSeason2EndDatePart2);
 	final OccupationPeriod examsSeason1 = getOccupationPeriod(examsSeason1BeginDate, examsSeason1EndDate);
 	final OccupationPeriod examsSeason2 = getOccupationPeriod(examsSeason2BeginDate, examsSeason2EndDate);
 	final OccupationPeriod examsSpecialSeason = getOccupationPeriod(examsSpecialSeasonBeginDate, examsSpecialSeasonEndDate);
@@ -88,6 +90,20 @@ public class CreateExecutionDegreesForExecutionYear extends FenixService {
 	if (occupationPeriod == null) {
 	    occupationPeriod = new OccupationPeriod(startDate.getTime(), endDate.getTime());
 	    occupationPeriod.setNextPeriod(null);
+	}
+	return occupationPeriod;
+    }
+
+    private static OccupationPeriod getOccupationPeriod(final Calendar startDate, final Calendar endDate, final Calendar startDatePart2, final Calendar endDatePart2) {
+	OccupationPeriod occupationPeriod = OccupationPeriod.readOccupationPeriod(
+		YearMonthDay.fromCalendarFields(startDate),
+		YearMonthDay.fromCalendarFields(endDate),
+		YearMonthDay.fromCalendarFields(startDatePart2),
+		YearMonthDay.fromCalendarFields(endDatePart2));
+	if (occupationPeriod == null) {
+	    final OccupationPeriod next = startDatePart2 == null ? null : new OccupationPeriod(startDatePart2.getTime(), endDatePart2.getTime()); 
+	    occupationPeriod = new OccupationPeriod(startDate.getTime(), endDate.getTime());
+	    occupationPeriod.setNextPeriod(next);
 	}
 	return occupationPeriod;
     }
