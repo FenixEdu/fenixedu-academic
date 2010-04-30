@@ -84,6 +84,10 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 	return false;
     }
     
+    public BranchCurriculumGroup getParentBranchCurriculumGroup() {
+	return hasCurriculumGroup() ? getCurriculumGroup().getParentBranchCurriculumGroup() : null;
+    }
+    
     public boolean isBranchCurriculumGroup() {
 	return false;
     }

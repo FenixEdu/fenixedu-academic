@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.BranchCourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.BranchType;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.EnroledCurriculumModuleWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
@@ -509,7 +510,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	    if (curriculumModule instanceof CurriculumGroup) {
 		final CurriculumGroup curriculumGroup = (CurriculumGroup) curriculumModule;
 		final BranchCurriculumGroup branchCurriculumGroup = curriculumGroup.getBranchCurriculumGroup(branchType);
-		if (branchCurriculumGroup != null) {
+		if (branchCurriculumGroup != null && branchCurriculumGroup.getDegreeModule().getBranchType() == branchType) {
 		    return branchCurriculumGroup;
 		}
 	    }

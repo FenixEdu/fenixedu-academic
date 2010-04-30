@@ -1662,6 +1662,34 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	}
 	return (Set) branches;
     }
+    
+    public Set<BranchCourseGroup> getBranchesByType(net.sourceforge.fenixedu.domain.degreeStructure.BranchType branchType) {
+	final Set<BranchCourseGroup> branchesByType = new TreeSet<BranchCourseGroup>(DegreeModule.COMPARATOR_BY_NAME);
+	final Set<BranchCourseGroup> branches = getAllBranches();
+	if(branches == null)
+	    return null;
+	for(BranchCourseGroup branch : branches) {
+	    if(branch.getBranchType() == branchType)
+		branchesByType.add(branch);
+	}
+	return branchesByType;
+    }
+    
+    public Set<BranchCourseGroup> getMajorBranches() {
+	return getBranchesByType(net.sourceforge.fenixedu.domain.degreeStructure.BranchType.MAJOR);
+    }
+    
+    public Set<BranchCourseGroup> getMinorBranches() {
+	return getBranchesByType(net.sourceforge.fenixedu.domain.degreeStructure.BranchType.MINOR);
+    }
+    
+    public boolean hasBranches() {
+	return getAllBranches().isEmpty() ? false : true;
+    }
+    
+    public boolean hasBranchesByType(net.sourceforge.fenixedu.domain.degreeStructure.BranchType branchType) {
+	return getBranchesByType(branchType).isEmpty() ? false : true;
+    }
 
     public Set<DegreeModule> getAllDegreeModules() {
 	final Set<DegreeModule> degreeModules = new TreeSet<DegreeModule>(DegreeModule.COMPARATOR_BY_NAME);
