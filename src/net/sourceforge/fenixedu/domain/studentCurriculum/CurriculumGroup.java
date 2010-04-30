@@ -510,7 +510,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	    if (curriculumModule instanceof CurriculumGroup) {
 		final CurriculumGroup curriculumGroup = (CurriculumGroup) curriculumModule;
 		final BranchCurriculumGroup branchCurriculumGroup = curriculumGroup.getBranchCurriculumGroup(branchType);
-		if (branchCurriculumGroup != null && branchCurriculumGroup.getDegreeModule().getBranchType() == branchType) {
+		if (branchCurriculumGroup != null) {
 		    return branchCurriculumGroup;
 		}
 	    }
