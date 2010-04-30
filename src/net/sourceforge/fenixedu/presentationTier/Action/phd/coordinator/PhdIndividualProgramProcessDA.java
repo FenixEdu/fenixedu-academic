@@ -49,7 +49,7 @@ import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
 
 @Forward(name = "viewCurriculum", path = "/phd/coordinator/viewCurriculum.jsp"),
 
-@Forward(name = "manageEnrolments", path = "/phd/coordinator/manageEnrolments.jsp")
+@Forward(name = "manageEnrolments", path = "/phd/coordinator/enrolments/manageEnrolments.jsp")
 
 })
 public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramProcessDA {
@@ -128,4 +128,5 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
     protected List<PredicateContainer<?>> getCandidacyCategory() {
 	return Arrays.asList(CANDIDACY_CATEGORY);
     }
+
 }
