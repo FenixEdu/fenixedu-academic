@@ -2242,6 +2242,12 @@ border-bottom: 1px solid #ddd;
 padding: 5px;
 }
 
+table.scplan tr.scprules td {
+border: 1px solid #ddd;
+border-bottom: 1px solid #ddd;
+padding: 5px;
+}
+
 table.scplan tr.scplanenrollment td {
 border: 1px solid #ddd;
 border-bottom: 1px solid #ddd;

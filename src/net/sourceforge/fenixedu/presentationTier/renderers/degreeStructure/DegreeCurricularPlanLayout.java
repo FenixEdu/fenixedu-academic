@@ -9,13 +9,15 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
+import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
+import net.sourceforge.fenixedu.domain.degreeStructure.Context;
+import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
+import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlImage;
 import pt.ist.fenixWebFramework.renderers.components.HtmlLink;
-import pt.ist.fenixWebFramework.renderers.components.HtmlLinkWithPreprendedComment;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTable;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableRow;
@@ -138,8 +140,16 @@ abstract class DegreeCurricularPlanLayout extends Layout {
     protected String getLabel(final String key) {
 	return apr.containsKey(key) ? apr.getString(key) : String.format("???%s???", key);
     }
+    
+    protected String getDegreeModuleIdAttributeName() {
+	return degreeCurricularPlanRenderer.getDegreeModuleIdAttributeName();
+    }
 
-    /* draw methods */
+    protected boolean isCurricularCourseLinkable() {
+	return degreeCurricularPlanRenderer.isCurricularCourseLinkable();
+    }
+
+    /* methods to draw information */
 
     @Override
     public HtmlComponent createComponent(Object object, Class type) {
@@ -178,13 +188,13 @@ abstract class DegreeCurricularPlanLayout extends Layout {
 	cell.setColspan(getMaxColSpanForTextOnCurricularCourses() - level);
 
 	if (linkable) {
-	    final HtmlLink result = new HtmlLinkWithPreprendedComment(ContentInjectionRewriter.HAS_CONTEXT_PREFIX);
+	    final HtmlLink result = new HtmlLink();
 
 	    result.setText(course.getNameI18N(getExecutionInterval()).getContent());
 	    result.setModuleRelative(true);
 
 	    result.setUrl(getViewCurricularCourseUrl());
-	    result.setParameter("curricularCourseId", course.getExternalId());
+	    result.setParameter(getDegreeModuleIdAttributeName(), course.getExternalId());
 
 	    for (final Pair<String, String> param : getViewCurricularCourseUrlParameters()) {
 		result.setParameter(param.getKey(), param.getValue());
@@ -247,4 +257,25 @@ abstract class DegreeCurricularPlanLayout extends Layout {
 		.toString());
     }
 
+    protected void drawCurricularRulesRows(final DegreeModule module, final Context previous, final HtmlTable main, int level) {
+	if (showRules()) {
+	    for (final CurricularRule rule : module.getVisibleCurricularRules(getExecutionInterval())) {
+		if (rule.appliesToContext(previous)) {
+		    drawCurricularRuleRow(rule, main, level);
+		}
+	    }
+	}
+    }
+
+    protected void drawCurricularRuleRow(final CurricularRule rule, final HtmlTable main, int level) {
+	final HtmlTableRow groupRow = main.createRow();
+	groupRow.setClasses(getCurricularRuleRowClass());
+	addTabsToRow(groupRow, level);
+
+	final HtmlTableCell cell = groupRow.createCell();
+	cell.setClasses(getLabelCellClass());
+	cell.setColspan(getMaxLineSize() - level);
+	cell.setText(CurricularRuleLabelFormatter.getLabel(rule));
+
+    }
 }

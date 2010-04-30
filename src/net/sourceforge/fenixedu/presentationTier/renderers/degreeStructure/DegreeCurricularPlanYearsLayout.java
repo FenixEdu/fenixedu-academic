@@ -99,10 +99,8 @@ class DegreeCurricularPlanYearsLayout extends DegreeCurricularPlanLayout {
 	row.setClasses(getCurricularCourseRowClass());
 
 	final CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
-	/*
-	 * linkable -> change to true
-	 */
-	drawCurricularCourseName(curricularCourse, row, false, level);
+
+	drawCurricularCourseName(curricularCourse, row, isCurricularCourseLinkable(), level);
 	drawCourseGroupName(context.getParentCourseGroup(), row, level);
 
 	if (curricularCourse.isOptionalCurricularCourse()) {
@@ -113,6 +111,8 @@ class DegreeCurricularPlanYearsLayout extends DegreeCurricularPlanLayout {
 	    drawEctsCredits(curricularCourse, context.getCurricularPeriod(), row);
 	}
 
+	drawCurricularRulesRows(curricularCourse, null, mainTable, level + 1);
+	
 	if (curricularCourse.isAnual(getExecutionInterval()) && context.getCurricularPeriod().getChildOrder() == 1) {
 	    addContextToProcessInNextPeriod(context, context.getCurricularPeriod().getNext());
 	}
@@ -153,6 +153,7 @@ class DegreeCurricularPlanYearsLayout extends DegreeCurricularPlanLayout {
 		drawEctsCredits(curricularCourse, period, row);
 	    }
 
+	    drawCurricularRulesRows(curricularCourse, null, mainTable, level + 1);
 	}
 
     }

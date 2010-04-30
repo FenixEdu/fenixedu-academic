@@ -13,7 +13,7 @@ public class DegreeCurricularPlanRenderer extends OutputRenderer {
     static private final String CELL_CLASSES = "scplancolident, scplancolcurricularcourse, scplancolcurricularcourse, "
 	    + "scplancolenrollmentstate, scplancolenrollmenttype, scplancolgrade, scplancolweight, scplancolects, scplancolects";
 
-    // TODO: change this (create constants)
+    // TODO: change this (create constants and correct css classes)
 
     private String degreeCurricularPlanClass = "scplan";
     private String courseGroupRowClass = "scplangroup";
@@ -122,6 +122,14 @@ public class DegreeCurricularPlanRenderer extends OutputRenderer {
     protected List<Pair<String, String>> getViewCurricularCourseUrlParameters() {
 	return config.getViewCurricularCourseUrlParameters();
     }
+    
+    protected boolean isCurricularCourseLinkable() {
+	return config.isCurricularCourseLinkable();
+    }
+
+    protected String getDegreeModuleIdAttributeName() {
+	return config.getDegreeModuleIdAttributeName();
+    }
 
     @Override
     protected Layout getLayout(Object object, Class type) {
@@ -136,5 +144,6 @@ public class DegreeCurricularPlanRenderer extends OutputRenderer {
 
 	throw new RuntimeException("error.DegreeCurricularPlanRenderer.unexpected.organization");
     }
+
 
 }

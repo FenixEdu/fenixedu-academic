@@ -4,12 +4,9 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
-import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
-import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.util.CurricularPeriodLabelFormatter;
-import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTable;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableRow;
@@ -27,30 +24,9 @@ public class DegreeCurricularPlanGroupsLayout extends DegreeCurricularPlanLayout
 
     private void drawCourseGroupRow(final CourseGroup courseGroup, final Context previous, final HtmlTable main, int level) {
 	drawCourseGroupName(courseGroup, main, level);
-	drawCurricularRulesRows(courseGroup, previous, main, level);
+	drawCurricularRulesRows(courseGroup, previous, main, level + 1);
 	drawCurricularCourseRows(courseGroup, main, level + 1);
 	drawCourseGroupRows(courseGroup, main, level + 1);
-    }
-
-    private void drawCurricularRulesRows(final DegreeModule module, final Context previous, final HtmlTable main, int level) {
-	if (showRules()) {
-	    for (final CurricularRule rule : module.getVisibleCurricularRules(getExecutionInterval())) {
-		if (rule.appliesToContext(previous)) {
-		    drawCurricularRuleRow(rule, main, level);
-		}
-	    }
-	}
-    }
-
-    private void drawCurricularRuleRow(final CurricularRule rule, final HtmlTable main, int level) {
-	final HtmlTableRow groupRow = main.createRow();
-	groupRow.setClasses(getCurricularRuleRowClass());
-	addTabsToRow(groupRow, level);
-
-	final HtmlTableCell cell = groupRow.createCell();
-	cell.setClasses(getCurricularRuleRowClass());
-	cell.setColspan(getMaxLineSize() - level);
-	cell.setText(CurricularRuleLabelFormatter.getLabel(rule));
     }
 
     private void drawCourseGroupRows(final CourseGroup courseGroup, final HtmlTable main, int level) {
@@ -117,7 +93,7 @@ public class DegreeCurricularPlanGroupsLayout extends DegreeCurricularPlanLayout
 	    drawOptionalCellInformation(row);
 
 	} else if (curricularCourse.isSemestrial(getExecutionInterval())) {
-	    drawCurricularCourseName(curricularCourse, row, true, level);
+	    drawCurricularCourseName(curricularCourse, row, isCurricularCourseLinkable(), level);
 	    drawContextInformation(context.getCurricularPeriod(), row);
 	    drawRegime(curricularCourse, row);
 	    drawCourseLoad(curricularCourse, context.getCurricularPeriod(), row);
@@ -136,7 +112,7 @@ public class DegreeCurricularPlanGroupsLayout extends DegreeCurricularPlanLayout
 	if (curricularCourse.hasCompetenceCourse()) {
 
 	    if (curricularCourse.getCompetenceCourse().hasOneCourseLoad(getExecutionInterval())) {
-		drawCurricularCourseName(curricularCourse, row, true, level);
+		drawCurricularCourseName(curricularCourse, row, isCurricularCourseLinkable(), level);
 		drawContextInformation(context.getCurricularPeriod(), row);
 		drawRegime(curricularCourse, row);
 		drawCourseLoad(curricularCourse, context.getCurricularPeriod(), row);
@@ -146,7 +122,7 @@ public class DegreeCurricularPlanGroupsLayout extends DegreeCurricularPlanLayout
 		final CurricularPeriod firstCP = context.getCurricularPeriod();
 		final ExecutionSemester firstES = getExecutionInterval().getExecutionSemesterFor(firstCP.getChildOrder());
 
-		drawCurricularCourseName(curricularCourse, row, true, level);
+		drawCurricularCourseName(curricularCourse, row, isCurricularCourseLinkable(), level);
 		drawContextInformation(firstCP, row);
 		drawRegime(curricularCourse, row);
 		drawCourseLoad(curricularCourse, firstCP, firstES, row);
@@ -163,7 +139,7 @@ public class DegreeCurricularPlanGroupsLayout extends DegreeCurricularPlanLayout
 	    }
 
 	} else {
-	    drawCurricularCourseName(curricularCourse, row, true, level);
+	    drawCurricularCourseName(curricularCourse, row, isCurricularCourseLinkable(), level);
 	    drawContextInformation(context.getCurricularPeriod(), row);
 	    drawRegime(curricularCourse, row);
 	    drawCourseLoad(curricularCourse, context.getCurricularPeriod(), row);

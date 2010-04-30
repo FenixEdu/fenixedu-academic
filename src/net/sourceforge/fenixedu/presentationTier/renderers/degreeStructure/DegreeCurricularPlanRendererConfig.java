@@ -16,10 +16,7 @@ import pt.utl.ist.fenix.tools.util.Pair;
 public class DegreeCurricularPlanRendererConfig implements Serializable {
 
     static private final long serialVersionUID = 1L;
-    
-    static private final String MAPPING = "${mapping}";
-    static private final String METHOD = "${method}";
-    static private final String VIEW_CC_URL_TEMPLATE = MAPPING + "?method=" + METHOD;
+    static private final String DEFAULT_DEGREE_MODULE_ID_ATTRIBUTE_NAME = "degreeModuleOid";
 
     private DegreeCurricularPlan degreeCurricularPlan;
     private ExecutionYear executionInterval;
@@ -28,7 +25,10 @@ public class DegreeCurricularPlanRendererConfig implements Serializable {
     private boolean showRules = false;
     private boolean showCourses = true;
 
-    private String viewCurricularCourseUrl = VIEW_CC_URL_TEMPLATE;
+    private String degreeModuleIdAttributeName = DEFAULT_DEGREE_MODULE_ID_ATTRIBUTE_NAME;
+
+    private boolean curricularCourseLinkable = false;
+    private String viewCurricularCourseUrl = null;
     private List<Pair<String, String>> viewCurricularCourseUrlParameters = new ArrayList<Pair<String, String>>();
 
     public DegreeCurricularPlanRendererConfig() {
@@ -90,32 +90,33 @@ public class DegreeCurricularPlanRendererConfig implements Serializable {
 	return getDegreeCurricularPlan().getExecutionDegrees();
     }
 
-    public List<ExecutionYear> getExecutionYearsFromExecutionDegrees() {
-	final List<ExecutionYear> result = new ArrayList<ExecutionYear>();
-	for (final ExecutionDegree executionDegree : getExecutionDegrees()) {
-	    result.add(executionDegree.getExecutionYear());
-	}
-	return result;
-    }
-
     private ExecutionYear getDegreeMinimumExecutionYear() {
 	return getDegreeCurricularPlan().getRoot().getMinimumExecutionPeriod().getExecutionYear();
     }
 
-    public boolean isValid() {
-	return getDegreeCurricularPlan().isApproved() && hasAnyExecutionDegree();
+    public String getDegreeModuleIdAttributeName() {
+	return degreeModuleIdAttributeName;
+    }
+
+    public void setDegreeModuleIdAttributeName(String degreeModuleIdAttributeName) {
+	this.degreeModuleIdAttributeName = degreeModuleIdAttributeName;
+    }
+
+    public boolean isCurricularCourseLinkable() {
+	return curricularCourseLinkable;
+    }
+
+    private void setCurricularCourseLinkable(boolean value) {
+	this.curricularCourseLinkable = value;
     }
 
     public String getViewCurricularCourseUrl() {
 	return viewCurricularCourseUrl;
     }
 
-    public void setViewCurricularCourseUrlMapping(final String mapping) {
-	viewCurricularCourseUrl = viewCurricularCourseUrl.replace(MAPPING, mapping);
-    }
-
-    public void setViewCurricularCourseUrlMethod(final String method) {
-	viewCurricularCourseUrl = viewCurricularCourseUrl.replace(METHOD, method);
+    public void setViewCurricularCourseUrl(final String url) {
+	viewCurricularCourseUrl = url;
+	setCurricularCourseLinkable(true);
     }
 
     public List<Pair<String, String>> getViewCurricularCourseUrlParameters() {
@@ -124,6 +125,17 @@ public class DegreeCurricularPlanRendererConfig implements Serializable {
 
     public void addViewCurricularCourseUrlParameter(final String key, final String value) {
 	viewCurricularCourseUrlParameters.add(new Pair<String, String>(key, value));
+	setCurricularCourseLinkable(true);
+    }
+
+    private List<ExecutionYear> getSortedExecutionYearsFromExecutionDegrees() {
+	final List<ExecutionYear> result = new ArrayList<ExecutionYear>();
+	for (final ExecutionDegree executionDegree : getExecutionDegrees()) {
+	    result.add(executionDegree.getExecutionYear());
+	}
+
+	Collections.sort(result);
+	return result;
     }
 
     static public enum OrganizeType {
@@ -140,7 +152,7 @@ public class DegreeCurricularPlanRendererConfig implements Serializable {
 	@Override
 	public Object provide(Object source, Object currentValue) {
 	    final DegreeCurricularPlanRendererConfig config = (DegreeCurricularPlanRendererConfig) source;
-	    return (config.hasAnyExecutionDegree()) ? config.getExecutionYearsFromExecutionDegrees() : Collections
+	    return (config.hasAnyExecutionDegree()) ? config.getSortedExecutionYearsFromExecutionDegrees() : Collections
 		    .singletonList(config.getDegreeMinimumExecutionYear());
 
 	}
