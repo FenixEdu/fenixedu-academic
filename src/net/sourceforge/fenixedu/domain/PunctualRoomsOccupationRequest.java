@@ -229,7 +229,8 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
 
     public String getSubject() {
 	PunctualRoomsOccupationComment firstComment = getFirstComment();
-	return firstComment != null ? firstComment.getSubject().getContent() : null;
+	final String content = firstComment != null ? firstComment.getSubject().getContent() : null;
+	return content == null || content.isEmpty() ? getIdentification().toString() : content;
     }
 
     public String getDescription() {
