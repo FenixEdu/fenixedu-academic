@@ -457,6 +457,14 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 	return mapping.findForward("edit-candidacy-documents");
     }
 
+    public ActionForward prepareEditCandidacyDocumentsInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	CandidacyProcessDocumentUploadBean bean = new CandidacyProcessDocumentUploadBean();
+	bean.setIndividualCandidacyProcess(getIndividualCandidacyProcessBean().getIndividualCandidacyProcess());
+	request.setAttribute("candidacyDocumentUploadBean", bean);
+	return mapping.findForward("edit-candidacy-documents");
+    }
+
     public ActionForward editCandidacyDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException, IOException {
 	CandidacyProcessDocumentUploadBean uploadBean = (CandidacyProcessDocumentUploadBean) getObjectFromViewState("individualCandidacyProcessBean.document.file");

@@ -39,6 +39,9 @@
 
 
 <fr:form action='<%= mappingPath + ".do?method=editCandidacyDocuments" %>' encoding="multipart/form-data">
+	
+	<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
+	
 	<fr:edit id="individualCandidacyProcessBean.document.file"
 		name="candidacyDocumentUploadBean" 
 		schema="PublicCandidacyProcessBean.over23.documentUpload.edit">
@@ -46,6 +49,7 @@
 			<fr:property name="classes" value="tstyle5 thlight thleft"/>
 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>
+		<fr:destination name="invalid" path='<%= mappingPath + ".do?method=prepareEditCandidacyDocumentsInvalid" %>' />
 	</fr:edit>
 	<p class="mtop05"><html:submit><bean:message key="button.submit" bundle="APPLICATION_RESOURCES" /></html:submit></p>		
 </fr:form>
