@@ -41,9 +41,9 @@ public abstract class IndividualCandidacyEvent extends IndividualCandidacyEvent_
     protected void attachAvailablePaymentCode(final Person person) {
 	IndividualCandidacyPaymentCode paymentCode = IndividualCandidacyPaymentCode.getAvailablePaymentCodeAndUse(
 		getPaymentCodeType(), new YearMonthDay(), this, person);
-	// if (paymentCode == null)
-	// throw new
-	// DomainException("error.IndividualCandidacyEvent.invalid.payment.code");
+	if (paymentCode == null) {
+	    throw new DomainException("error.IndividualCandidacyEvent.invalid.payment.code");
+	}
     }
 
     protected void checkParameters(final IndividualCandidacy candidacy, final AdministrativeOffice administrativeOffice) {
