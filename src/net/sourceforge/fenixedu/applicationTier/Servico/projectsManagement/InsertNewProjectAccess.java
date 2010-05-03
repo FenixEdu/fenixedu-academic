@@ -5,8 +5,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
@@ -31,7 +29,7 @@ public class InsertNewProjectAccess extends FenixService {
 	if (person == null)
 	    throw new IllegalArgumentException();
 
-	deletePastProjectAccesses(person);
+	// deletePastProjectAccesses(person);
 
 	Integer coordinatorCode = new Integer(userNumber);
 	Boolean isCostCenter = setProjectsRoles(person, costCenter, it);
@@ -84,7 +82,7 @@ public class InsertNewProjectAccess extends FenixService {
 	    projectAccess.setEndDate(endDate);
 	}
 
-	deletePastProjectAccesses(person);
+	// deletePastProjectAccesses(person);
     }
 
     private ProjectAccess getPersonOldProjectAccess(Person person, Integer projectCode, Boolean it) {
@@ -113,20 +111,21 @@ public class InsertNewProjectAccess extends FenixService {
 	return isCostCenter;
     }
 
-    private void deletePastProjectAccesses(Person person) {
-	List<ProjectAccess> projectAccessesToRemove = new ArrayList<ProjectAccess>();
-	Date currentDate = Calendar.getInstance().getTime();
-
-	for (ProjectAccess projectAccess : person.getProjectAccesses()) {
-	    if (projectAccess.getEnd().before(currentDate)) {
-		projectAccessesToRemove.add(projectAccess);
-	    }
-	}
-
-	for (ProjectAccess projectAccess : projectAccessesToRemove) {
-	    projectAccess.delete();
-	}
-    }
+    // private void deletePastProjectAccesses(Person person) {
+    // List<ProjectAccess> projectAccessesToRemove = new
+    // ArrayList<ProjectAccess>();
+    // Date currentDate = Calendar.getInstance().getTime();
+    //
+    // for (ProjectAccess projectAccess : person.getProjectAccesses()) {
+    // if (projectAccess.getEnd().before(currentDate)) {
+    // projectAccessesToRemove.add(projectAccess);
+    // }
+    // }
+    //
+    // for (ProjectAccess projectAccess : projectAccessesToRemove) {
+    // projectAccess.delete();
+    // }
+    // }
 
     private boolean hasProjectsManagerRole(Person person, RoleType roleType) {
 	Iterator iterator = person.getPersonRoles().iterator();

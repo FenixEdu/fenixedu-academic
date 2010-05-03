@@ -4,8 +4,6 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 
-import java.util.List;
-
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
@@ -61,10 +59,12 @@ public class ReviewProjectAccess extends FenixService {
 
     private void cleanProjectsAccess(Person person, Integer number, Role role, boolean isCostCenter, boolean limitDates,
 	    boolean it) throws FenixServiceException {
-	List<ProjectAccess> accessesToDelete = ProjectAccess.getAllByPersonAndCostCenter(person, isCostCenter, limitDates, it);
-	for (ProjectAccess access : accessesToDelete) {
-	    access.delete();
-	}
+	// List<ProjectAccess> accessesToDelete =
+	// ProjectAccess.getAllByPersonAndCostCenter(person, isCostCenter,
+	// limitDates, it);
+	// for (ProjectAccess access : accessesToDelete) {
+	// access.delete();
+	// }
 	person.removePersonRoles(role);
     }
 }

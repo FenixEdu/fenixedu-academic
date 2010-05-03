@@ -47,8 +47,9 @@ public class RemoveProjectAccess extends FenixService {
 	    }
 	}
 
-	ProjectAccess projectAccess = ProjectAccess.getByPersonAndProject(person, projectCode, it);
-	projectAccess.delete();
+	// ProjectAccess projectAccess =
+	// ProjectAccess.getByPersonAndProject(person, projectCode, it);
+	// projectAccess.delete();
     }
 
     private Integer getUserNumber(Person person) {
