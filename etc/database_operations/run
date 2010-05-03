@@ -42,3 +42,5 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Create teacher evaluation process tables." updates.sql

@@ -203,6 +203,8 @@ enum net.sourceforge.fenixedu.domain.phd.debts.PhdEventExemptionJustificationTyp
 enum net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionState                                             as RectorateSubmissionState;
 enum net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusAlertEntityType                                      as ErasmusAlertEntityType;
 enum net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusApplyForSemesterType								  as ErasmusApplyForSemesterType;
+enum net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationFileType                                         as TeacherEvaluationFileType;
+
 
 /*
  * Value types that need special externalization
@@ -1100,6 +1102,31 @@ class DomainObject {
         String name;
     }
 
+	class teacher.evaluation.FacultyEvaluationProcess extends DomainObject {
+		String title;
+		Interval autoEvaluationInterval;
+		Interval evaluationInterval;
+	}
+
+	class teacher.evaluation.TeacherEvaluationProcess extends DomainObject {
+	}
+
+	class teacher.evaluation.TeacherEvaluation extends DomainObject {
+		DateTime autoEvaluationLock;
+		DateTime evaluationLock;
+		String autoEvaluationMark;
+		String evaluationMark;
+	}
+
+		class teacher.evaluation.NoEvaluation extends teacher.evaluation.TeacherEvaluation {
+		}
+
+		class teacher.evaluation.CurricularEvaluation extends teacher.evaluation.TeacherEvaluation {
+		}
+
+		class teacher.evaluation.RadistEvaluation extends teacher.evaluation.TeacherEvaluation {
+		}
+
     class Photograph extends DomainObject {
         ContentType contentType;
         PhotoType photoType;
@@ -1125,6 +1152,10 @@ class DomainObject {
         DateTime uploadTime;
     }
     
+		class teacher.evaluation.TeacherEvaluationFile extends File {
+			TeacherEvaluationFileType teacherEvaluationFileType;
+		}
+
     class FileLocalContent extends DomainObject {
        VirtualPath path;
        ByteArray content;
@@ -17978,4 +18009,54 @@ relation PartyImportRegisterParty {
 relation AccountabilityImportRegister {
 	AccountabilityImportRegister playsRole accountabilityImportRegister;
 	organizationalStructure.Accountability playsRole accountability;
+}
+
+relation RootDomainObjectFacultyEvaluationProcess {
+	RootDomainObject playsRole rootDomainObject;
+	teacher.evaluation.FacultyEvaluationProcess playsRole facultyEvaluationProcess {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectTeacherEvaluationProcess {
+	RootDomainObject playsRole rootDomainObject;
+	teacher.evaluation.TeacherEvaluationProcess playsRole teacherEvaluationProcess {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectTeacherEvaluation {
+	RootDomainObject playsRole rootDomainObject;
+	teacher.evaluation.TeacherEvaluation playsRole teacherEvaluation {
+		multiplicity *;
+	}
+}
+
+relation FacultyEvaluationProcessTeacherEvaluationProcess {
+	teacher.evaluation.FacultyEvaluationProcess playsRole facultyEvaluationProcess;
+	teacher.evaluation.TeacherEvaluationProcess playsRole teacherEvaluationProcess {
+		multiplicity *;
+	}
+}
+
+relation TeacherEvaluationProcessTeacherEvaluation {
+	teacher.evaluation.TeacherEvaluationProcess playsRole teacherEvaluationProcess;
+	teacher.evaluation.TeacherEvaluation playsRole teacherEvaluation;
+}
+
+relation TeacherEvaluationProcessEvaluee {
+	teacher.evaluation.TeacherEvaluationProcess playsRole teacherEvaluationProcessFromEvaluee;
+	Person playsRole evaluee;
+}
+
+relation TeacherEvaluationProcessEvaluator {
+	teacher.evaluation.TeacherEvaluationProcess playsRole teacherEvaluationProcessFromEvaluator;
+	Person playsRole evalutor;
+}
+
+relation TeacherEvaluationTeacherEvaluationFile {
+	teacher.evaluation.TeacherEvaluation playsRole teacherEvaluation;
+	teacher.evaluation.TeacherEvaluationFile playsRole teacherEvaluationFile {
+		multiplicity *;
+	}
 }

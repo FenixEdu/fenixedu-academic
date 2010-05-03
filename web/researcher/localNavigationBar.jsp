@@ -27,7 +27,26 @@
 		<li><html:link page="/projects/projectsManagement.do?method=listProjects"><bean:message bundle="RESEARCHER_RESOURCES" key="link.projectsManagement"/></html:link></li>
 		--%>
 	</ul>
-	
+
+	<ul style="margin-top: 0.75em;">
+		<li class="navheader"><bean:message key="label.teacher.evaluation.title" bundle="RESEARCHER_RESOURCES"/></li>
+		<li>
+			<html:link page="/teacherEvaluation.do?method=viewAutoEvaluation">
+				<bean:message key="label.teacher.evaluation.autoevaluation.title" bundle="RESEARCHER_RESOURCES"/>
+			</html:link>
+		</li>
+		<li>
+			<html:link page="/teacherEvaluation.do?method=viewEvaluation">
+				<bean:message key="label.teacher.evaluation.evaluation.title" bundle="RESEARCHER_RESOURCES"/>
+			</html:link>
+		</li>
+		<li>
+			<html:link page="/teacherEvaluation.do?method=viewManagementInterface">
+				<bean:message key="label.teacher.evaluation.management.title" bundle="RESEARCHER_RESOURCES"/>
+			</html:link>
+		</li>
+	</ul>
+
 	<ul style="margin-top: 0.75em;">
 		<li class="navheader"><bean:message key="researcher.find.an.expert" bundle="RESEARCHER_RESOURCES"/></li>
 		<li><html:link page="/researcherManagement.do?method=prepare"><bean:message key="label.options" bundle="RESEARCHER_RESOURCES"/></html:link></li>
