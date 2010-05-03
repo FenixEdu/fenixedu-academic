@@ -1606,6 +1606,13 @@
   <slot name="stream" key="label.candidacy.document.file">
     <property name="fileNameSlot" value="fileName"/>
     <property name="fileSizeSlot" value="fileSize"/>
+	<validator
+		class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
+		<property name="maxSize" value="3698688"/>
+		<property name="acceptedExtensions" value="pdf" />
+		<property name="acceptedTypes" value="application/pdf" />
+	</validator>		        
+    
   </slot>
 </schema>
 

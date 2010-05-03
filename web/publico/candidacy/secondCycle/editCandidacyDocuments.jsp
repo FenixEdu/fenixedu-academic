@@ -52,10 +52,14 @@
 	<fr:edit id="individualCandidacyProcessBean.document.file"
 		name="candidacyDocumentUploadBean" 
 		schema="PublicCandidacyProcessBean.secondcycle.documentUpload.edit">
+		
+		<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
+		
 		<fr:layout>
 			<fr:property name="classes" value="tstyle5 thlight thleft"/>
 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>
+		<fr:destination name="invalid" path='<%= mappingPath + ".do?method=prepareEditCandidacyDocumentsInvalid" %>' />
 	</fr:edit>
 	<html:submit><bean:message key="button.submit" bundle="APPLICATION_RESOURCES" /></html:submit>		
 </fr:form>
