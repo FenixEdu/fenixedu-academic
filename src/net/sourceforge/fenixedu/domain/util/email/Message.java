@@ -96,14 +96,23 @@ public class Message extends Message_Base {
 	for (final Recipient recipient : getRecipientsSet()) {
 	    removeRecipients(recipient);
 	}
+	for (final Recipient recipient : getTosSet()) {
+	    removeRecipients(recipient);
+	}
+	for (final Recipient recipient : getCcsSet()) {
+	    removeRecipients(recipient);
+	}
 	for (final ReplyTo replyTo : getReplyTosSet()) {
 	    replyTo.safeDelete();
 	}
 	for (final MessageId messageId : getMessageIdsSet()) {
 	    messageId.delete();
 	}
+	for (final Email email : getEmailsSet()) {
+	    email.delete();
+	}
 
-	removeSender();
+        removeSender();
 	removePerson();
 	removeRootDomainObjectFromPendingRelation();
 	removeRootDomainObject();
