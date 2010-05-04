@@ -43,4 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Create and populate relation between CompetenceCourseGroupUnit and CompetenceCourseInformationChangeRequest" relateCompetenceGroupsToChangeRequests.sql
+execute "Create teacher evaluation process tables part2." updates.sql

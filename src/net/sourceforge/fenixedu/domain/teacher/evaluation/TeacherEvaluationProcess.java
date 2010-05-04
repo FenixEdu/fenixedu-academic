@@ -26,7 +26,7 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
 
     public TeacherEvaluationProcess() {
 	super();
-        setRootDomainObject(RootDomainObject.getInstance());
+	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public TeacherEvaluationProcess(final FacultyEvaluationProcess facultyEvaluationProcess, final Person evaluee, final Person evaluator) {
@@ -34,5 +34,29 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
 	setEvaluee(evaluee);
 	setEvaluator(evaluator);
     }
-    
+
+    public TeacherEvaluation getCurrentTeacherEvaluation() {
+	TeacherEvaluation last = null;
+	for (TeacherEvaluation evaluation : getTeacherEvaluationSet()) {
+	    if (last == null || evaluation.getCreatedDate().isAfter(last.getCreatedDate())) {
+		last = evaluation;
+	    }
+	}
+	return last;
+    }
+
+    public TeacherEvaluationState getState() {
+	TeacherEvaluation current = getCurrentTeacherEvaluation();
+	return current != null ? current.getState() : getFacultyEvaluationProcess().getState();
+    }
+
+    public String getMark() {
+	TeacherEvaluation current = getCurrentTeacherEvaluation();
+	return current != null ? current.getEvaluationMark() : null;
+    }
+
+    public TeacherEvaluationType getType() {
+	TeacherEvaluation current = getCurrentTeacherEvaluation();
+	return current != null ? current.getType() : null;
+    }
 }

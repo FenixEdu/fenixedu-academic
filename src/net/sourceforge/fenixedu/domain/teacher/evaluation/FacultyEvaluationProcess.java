@@ -50,7 +50,8 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base {
 	    final Person evalueePerson = findPerson(evaluee);
 	    final Person evaluatorPerson = findPerson(evaluator);
 	    TeacherEvaluationProcess existingTeacherEvaluationProcess = null;
-	    for (final TeacherEvaluationProcess teacherEvaluationProcess : evalueePerson.getTeacherEvaluationProcessFromEvalueeSet()) {
+	    for (final TeacherEvaluationProcess teacherEvaluationProcess : evalueePerson
+		    .getTeacherEvaluationProcessFromEvalueeSet()) {
 		if (teacherEvaluationProcess.getFacultyEvaluationProcess() == this) {
 		    existingTeacherEvaluationProcess = teacherEvaluationProcess;
 		    break;
@@ -77,9 +78,21 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base {
     }
 
     public SortedSet<TeacherEvaluationProcess> getSortedTeacherEvaluationProcess() {
-	final SortedSet<TeacherEvaluationProcess> result = new TreeSet<TeacherEvaluationProcess>(TeacherEvaluationProcess.COMPARATOR_BY_EVALUEE);
+	final SortedSet<TeacherEvaluationProcess> result = new TreeSet<TeacherEvaluationProcess>(
+		TeacherEvaluationProcess.COMPARATOR_BY_EVALUEE);
 	result.addAll(getTeacherEvaluationProcessSet());
 	return result;
+    }
+
+    public TeacherEvaluationState getState() {
+	if (getAutoEvaluationInterval().isAfterNow()) {
+	    return null;
+	} else if (getAutoEvaluationInterval().containsNow()) {
+	    return TeacherEvaluationState.AUTO_EVALUATION;
+	} else if (getEvaluationInterval().containsNow()) {
+	    return TeacherEvaluationState.EVALUATION;
+	}
+	return null;
     }
 
 }

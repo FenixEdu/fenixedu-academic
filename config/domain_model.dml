@@ -1112,6 +1112,7 @@ class DomainObject {
 	}
 
 	class teacher.evaluation.TeacherEvaluation extends DomainObject {
+		DateTime createdDate;
 		DateTime autoEvaluationLock;
 		DateTime evaluationLock;
 		String autoEvaluationMark;
@@ -18048,7 +18049,9 @@ relation FacultyEvaluationProcessTeacherEvaluationProcess {
 
 relation TeacherEvaluationProcessTeacherEvaluation {
 	teacher.evaluation.TeacherEvaluationProcess playsRole teacherEvaluationProcess;
-	teacher.evaluation.TeacherEvaluation playsRole teacherEvaluation;
+	teacher.evaluation.TeacherEvaluation playsRole teacherEvaluation {
+		multiplicity *;
+	}
 }
 
 relation TeacherEvaluationProcessEvaluee {
