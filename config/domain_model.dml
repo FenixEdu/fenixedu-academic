@@ -15917,6 +15917,13 @@ relation CompetenceCourseInformationChangeRequestCompetenceCourse {
     CompetenceCourse playsRole competenceCourse;
 }
 
+relation CompetenceCourseInformationChangeRequestCompetenceCourseGroupUnit {
+    degreeStructure.CompetenceCourseInformationChangeRequest playsRole competenceCourseInformationChangeRequests {
+        multiplicity *;
+    }
+    organizationalStructure.CompetenceCourseGroupUnit playsRole competenceCourseGroupUnit;
+}
+
 relation CompetenceCourseInformationChangeRequestRootDomainObject {
     RootDomainObject playsRole rootDomainObject;
     degreeStructure.CompetenceCourseInformationChangeRequest playsRole competenceCourseInformationChangeRequests {

@@ -900,6 +900,9 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	for (CompetenceCourseInformation information : getCompetenceCourseInformations()) {
 	    information.setCompetenceCourseGroupUnit(competenceCourseGroupUnit);
 	}
+	for (CompetenceCourseInformationChangeRequest changeRequest : getCompetenceCourseInformationChangeRequests()) {
+	    changeRequest.setCompetenceCourseGroupUnit(competenceCourseGroupUnit);
+	}
     }
 
     public MultiLanguageString getNameI18N() {
