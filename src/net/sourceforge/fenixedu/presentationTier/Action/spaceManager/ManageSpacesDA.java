@@ -574,7 +574,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
 			viewDoorNumbers, scalePercentage);
 		request.setAttribute("blueprintTextRectangles", blueprintTextRectangles);
 	    } catch (final Error e) {
-		if (e.getMessage().equals("Dwg version not supported")) {
+		if ("Dwg version not supported".equals(e.getMessage())) {
 		    ActionMessages actionMessages = new ActionMessages();
 		    actionMessages.add("", new ActionMessage(e.getMessage()));
 		    saveMessages(request, actionMessages);
