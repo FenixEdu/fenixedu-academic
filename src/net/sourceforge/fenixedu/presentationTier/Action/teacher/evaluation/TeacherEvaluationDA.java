@@ -34,7 +34,9 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 	for (FacultyEvaluationProcess process : facultyEvaluationProcessSet) {
 	    if (process.getAutoEvaluationInterval().getStart().isBeforeNow()) {
 		for (TeacherEvaluationProcess teacherProcess : process.getTeacherEvaluationProcessSet()) {
-		    openProcesses.add(teacherProcess);
+		    if (teacherProcess.getEvaluee().equals(getLoggedPerson(request))) {
+			openProcesses.add(teacherProcess);
+		    }
 		}
 	    }
 	}
