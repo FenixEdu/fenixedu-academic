@@ -95,6 +95,8 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 		addRuleResultMessagesToActionMessages("warning", request, ruleResults);
 	    }
 
+	    enroledWithSuccess(request, bolonhaStudentEnrollmentBean);
+
 	} catch (EnrollmentDomainException ex) {
 	    addRuleResultMessagesToActionMessages("error", request, ex.getFalseResult());
 
@@ -110,6 +112,10 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 
 	return prepareShowDegreeModulesToEnrol(mapping, form, request, response, bolonhaStudentEnrollmentBean
 		.getStudentCurricularPlan(), bolonhaStudentEnrollmentBean.getExecutionPeriod());
+    }
+
+    protected void enroledWithSuccess(HttpServletRequest request, BolonhaStudentEnrollmentBean bolonhaStudentEnrollmentBean) {
+	// nothing to be done
     }
 
     protected BolonhaStudentEnrollmentBean getBolonhaStudentEnrollmentBeanFromViewState() {
