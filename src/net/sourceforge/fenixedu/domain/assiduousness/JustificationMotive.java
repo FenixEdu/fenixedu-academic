@@ -337,4 +337,9 @@ public class JustificationMotive extends JustificationMotive_Base {
 	return null;
     }
 
+    public void activate(Employee modifiedBy) {
+	setActive(Boolean.TRUE);
+	setLastModifiedDate(new DateTime());
+	setModifiedBy(modifiedBy);
+    }
 }

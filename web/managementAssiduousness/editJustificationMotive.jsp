@@ -53,12 +53,16 @@
 		</logic:notEqual>
 	</logic:equal>
 	<logic:equal name="justificationMotive" property="active" value="false">
-		<fr:view name="justificationMotive" schema="edit.justificationMotives">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle5 thlight thright thmiddle"/>
-				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
-			</fr:layout>
-		</fr:view>
+		<fr:edit id="editJustificationMotive" name="justificationMotive"
+				type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive"
+				schema="activate.justificationMotive"
+				action="assiduousnessParametrization.do?method=showJustificationMotives">
+				<fr:hidden slot="modifiedBy" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee" />
+				<fr:layout>
+					<fr:property name="classes" value="tstyle5 thlight thright thmiddle"/>
+					<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+				</fr:layout>
+			</fr:edit>
 	</logic:equal>
 </logic:present>
 
