@@ -128,6 +128,14 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 		&& userView.getPerson().getEmployeeAdministrativeOffice().isDegree();
     }
 
+    static private boolean isGriOfficeEmployee(IUserView userView) {
+	return userView.hasRoleType(RoleType.INTERNATIONAL_RELATION_OFFICE);
+    }
+
+    static private boolean isManager(IUserView userView) {
+	return userView.hasRoleType(RoleType.MANAGER);
+    }
+
     @Override
     public List<Activity> getActivities() {
 	return activities;
@@ -160,6 +168,10 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 	}
 
 	return null;
+    }
+
+    public ErasmusCandidacyPeriod getCandidacyPeriod() {
+	return (ErasmusCandidacyPeriod) super.getCandidacyPeriod();
     }
 
     @StartActivity
@@ -199,11 +211,35 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
     private static class ViewErasmusVancacies extends Activity<ErasmusCandidacyProcess> {
 	@Override
 	public void checkPreConditions(ErasmusCandidacyProcess process, IUserView userView) {
+	    if (!isGriOfficeEmployee(userView) && !isManager(userView)) {
+		throw new PreConditionNotValidException();
+	    }
 	}
 
 	@Override
 	protected ErasmusCandidacyProcess executeActivity(ErasmusCandidacyProcess process, IUserView userView, Object object) {
 	    return process;
 	}
+    }
+
+    static private class InsertErasmusVacancy extends Activity<ErasmusCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(ErasmusCandidacyProcess process, IUserView userView) {
+	    if (!isGriOfficeEmployee(userView) && !isManager(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+
+	}
+
+	@Override
+	protected ErasmusCandidacyProcess executeActivity(ErasmusCandidacyProcess process, IUserView userView, Object object) {
+	    ErasmusVacancyBean bean = (ErasmusVacancyBean) object;
+
+	    new ErasmusVacancy(process.getCandidacyPeriod(), bean.getDegree(), bean.getUniversity(), bean.getNumberOfVacancies());
+
+	    return process;
+	}
+
     }
 }

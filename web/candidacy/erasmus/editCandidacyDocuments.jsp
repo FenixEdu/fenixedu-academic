@@ -18,8 +18,6 @@
 </html:link>
 <br/>
 
-
-
 <fr:form action='<%="/caseHandling" + processName + ".do?processId=" + processId.toString() %>' encoding="multipart/form-data" id="candidacyFormId">
 	<input type="hidden" name="method" id="methodId" value="uploadDocument"/>
 	<input type="hidden" name="documentFileOid" id="documentFileOidId" />

@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.internationalRelatOffice.candidacy.erasmus;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -13,13 +14,22 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusVacancyBean;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.CountryUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.period.ErasmusCandidacyPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA;
+import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.renderers.DataProvider;
+import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.servlets.filters.I18NFilter;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -30,7 +40,8 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 @Forwards( { @Forward(name = "intro", path = "/candidacy/erasmus/mainCandidacyProcess.jsp"),
 	@Forward(name = "prepare-create-new-process", path = "/candidacy/createCandidacyPeriod.jsp"),
 	@Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp"),
-	@Forward(name = "view-university-agreements", path = "/candidacy/erasmus/viewErasmusVacancies.jsp") })
+	@Forward(name = "view-university-agreements", path = "/candidacy/erasmus/viewErasmusVacancies.jsp"),
+	@Forward(name = "insert-university-agreement", path = "/candidacy/erasmus/insertErasmusVacancy.jsp") })
 public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 
     static public class ErasmusCandidacyProcessForm extends CandidacyProcessForm {
@@ -211,6 +222,89 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 	    HttpServletResponse response) {
 
 	return mapping.findForward("view-university-agreements");
+    }
+
+    public ActionForward prepareExecuteInsertErasmusVacancy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("erasmusVacancyBean", new ErasmusVacancyBean());
+	
+	return mapping.findForward("insert-university-agreement");
+    }
+    
+    public ActionForward prepareExecuteInsertErasmusVacancyInvalid(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+	return prepareExecuteInsertErasmusVacancy(mapping, form, request, response);
+    }
+
+    public ActionForward executeInsertErasmusVacancy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	ErasmusCandidacyProcess process = getProcess(request);
+	ErasmusVacancyBean bean = getErasmusVacancyBean();
+	
+	if(process.getCandidacyPeriod().existsFor(bean.getUniversity(), bean.getDegree())) {
+	    addErrorMessage(request, "error", "error.erasmus.insert.vacancy.already.exists", null);
+	    return mapping.findForward("insert-university-agreement");
+	}
+	
+	return prepareExecuteViewErasmusVancacies(mapping, form, request, response);
+    }
+
+    public ActionForward selectCountryForVacancyInsertion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	ErasmusVacancyBean bean = getErasmusVacancyBean();
+	request.setAttribute("erasmusVacancyBean", bean);
+
+	return mapping.findForward("insert-university-agreement");
+    }
+
+    private ErasmusVacancyBean getErasmusVacancyBean() {
+	return (ErasmusVacancyBean) getRenderedObject("erasmus.vacancy.bean");
+    }
+
+    public static class UniversityUnitsProvider implements DataProvider {
+
+	@Override
+	public Converter getConverter() {
+	    return new DomainObjectKeyConverter();
+	}
+
+	@Override
+	public Object provide(Object source, Object currentValue) {
+	    ErasmusVacancyBean bean = (ErasmusVacancyBean) source;
+
+	    CountryUnit selectedCountryUnit = CountryUnit.getCountryUnitByCountry(bean.getCountry());
+
+	    if (selectedCountryUnit == null) {
+		return new ArrayList<Unit>();
+	    }
+
+	    java.util.ArrayList<Unit> associatedUniversityUnits = new java.util.ArrayList<Unit>(selectedCountryUnit
+		    .getSubUnits(PartyTypeEnum.UNIVERSITY));
+
+	    Collections.sort(associatedUniversityUnits, new BeanComparator("nameI18n"));
+
+	    return associatedUniversityUnits;
+	}
+
+    }
+
+    public static class DegreeProviderForVacancy implements DataProvider {
+
+	@Override
+	public Converter getConverter() {
+	    return new DomainObjectKeyConverter();
+	}
+
+	@Override
+	public Object provide(Object arg0, Object arg1) {
+	    final List<Degree> degrees = new ArrayList<Degree>(Degree.readAllByDegreeType(
+		    DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE));
+
+	    Collections.sort(degrees, Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
+
+	    return degrees;
+	}
+
     }
 
 }

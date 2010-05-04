@@ -138,4 +138,23 @@ public class CountryUnit extends CountryUnit_Base {
 	setCountry(country);
     }
 
+    public static CountryUnit getCountryUnitByCountry(final Country country) {
+	if (country == null) {
+	    return null;
+	}
+
+	for (Unit unit : readAllCountryUnits()) {
+
+	    if (!(unit instanceof CountryUnit)) {
+		System.out.println(String.format("Unit is not country %s", unit.getName()));
+		continue;
+	    }
+
+	    if (((CountryUnit) unit).getCountry() == country) {
+		return (CountryUnit) unit;
+	    }
+	}
+	
+	return null;
+    }
 }

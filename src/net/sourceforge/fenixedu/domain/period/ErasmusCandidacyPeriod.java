@@ -142,4 +142,9 @@ public class ErasmusCandidacyPeriod extends ErasmusCandidacyPeriod_Base {
 
 	return new ArrayList<Degree>(degreeSet);
     }
+
+    public boolean existsFor(UniversityUnit university, Degree degree) {
+	return getAssociatedVacancyToDegreeAndUniversity(degree, university) != null;
+    }
+
 }

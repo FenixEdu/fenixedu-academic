@@ -12,11 +12,21 @@
 <bean:define id="processId" name="process" property="idInternal" />
 <bean:define id="processName" name="processName" />
 
+<ul>
+	<li>
+		<html:link action='<%= "/caseHandling" + processName.toString() + ".do?method=prepareExecuteInsertErasmusVacancy&amp;processId=" + processId.toString() %>'>
+			<bean:message key="label.erasmus.erasmusVacancy.insert" bundle="ACADEMIC_OFFICE_RESOURCES" />
+		</html:link>
+	</li>
+</ul>
+
 
 <html:link action='<%= "/caseHandling" + processName.toString() + ".do?method=listProcessAllowedActivities&amp;processId=" + processId.toString() %>'>
 	<bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
 </html:link>
 <br/>
+
+<p><bean:message key="title.erasmus.erasmusVacancy.list" bundle="ACADEMIC_OFFICE_RESOURCES" /></p>
 
 <fr:view name="process" property="candidacyPeriod.erasmusVacancy" schema="ErasmusVacancy.view">
 		<fr:layout name="tabular">
