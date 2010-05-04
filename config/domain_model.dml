@@ -18045,13 +18045,17 @@ relation TeacherEvaluationProcessTeacherEvaluation {
 }
 
 relation TeacherEvaluationProcessEvaluee {
-	teacher.evaluation.TeacherEvaluationProcess playsRole teacherEvaluationProcessFromEvaluee;
+	teacher.evaluation.TeacherEvaluationProcess playsRole teacherEvaluationProcessFromEvaluee {
+		multiplicity *;
+	}
 	Person playsRole evaluee;
 }
 
 relation TeacherEvaluationProcessEvaluator {
-	teacher.evaluation.TeacherEvaluationProcess playsRole teacherEvaluationProcessFromEvaluator;
-	Person playsRole evalutor;
+	teacher.evaluation.TeacherEvaluationProcess playsRole teacherEvaluationProcessFromEvaluator {
+		multiplicity *;
+	}
+	Person playsRole evaluator;
 }
 
 relation TeacherEvaluationTeacherEvaluationFile {

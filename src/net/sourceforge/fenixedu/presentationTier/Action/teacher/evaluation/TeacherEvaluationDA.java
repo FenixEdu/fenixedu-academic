@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.teacher.evaluation.FacultyEvaluationProcess;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.FacultyEvaluationProcessBean;
+import net.sourceforge.fenixedu.domain.teacher.evaluation.FileUploadBean;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationProcess;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -92,6 +93,24 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
     public ActionForward viewFacultyEvaluationProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	final FacultyEvaluationProcess facultyEvaluationProcess = getDomainObject(request, "facultyEvaluationProcessOID");
+	request.setAttribute("facultyEvaluationProcess", facultyEvaluationProcess);
+	return mapping.findForward("viewManagementInterface");
+    }
+
+    public ActionForward prepareUploadEvaluators(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+		throws Exception {
+	final FacultyEvaluationProcess facultyEvaluationProcess = getDomainObject(request, "facultyEvaluationProcessOID");
+	final FileUploadBean fileUploadBean = new FileUploadBean(facultyEvaluationProcess);
+	request.setAttribute("fileUploadBean", fileUploadBean);
+	return mapping.findForward("viewManagementInterface");
+    }
+
+    public ActionForward uploadEvaluators(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+		throws Exception {
+	final FileUploadBean fileUploadBean = (FileUploadBean) getRenderedObject();
+	fileUploadBean.consumeInputStream();
+	fileUploadBean.upload();
+	final FacultyEvaluationProcess facultyEvaluationProcess = fileUploadBean.getFacultyEvaluationProcess();
 	request.setAttribute("facultyEvaluationProcess", facultyEvaluationProcess);
 	return mapping.findForward("viewManagementInterface");
     }

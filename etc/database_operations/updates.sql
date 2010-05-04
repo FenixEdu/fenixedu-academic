@@ -50,3 +50,13 @@ create table `TEACHER_EVALUATION_PROCESS` (
   index (OID_ROOT_DOMAIN_OBJECT)
 ) type=InnoDB, character set latin1 ;
 
+
+
+
+-- Inserted at 2010-05-04T11:53:38.027+01:00
+
+alter table `TEACHER_EVALUATION_PROCESS` add column `OID_EVALUATOR` bigint(20);
+alter table `TEACHER_EVALUATION_PROCESS` add index (`OID_EVALUATOR`);
+alter table `TEACHER_EVALUATION_PROCESS` add index (`OID_EVALUEE`);
+
+

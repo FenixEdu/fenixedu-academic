@@ -91,6 +91,11 @@
 			<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.edit" bundle="RESEARCHER_RESOURCES"/>
 		</html:link>
 	</p>
+	<p>
+		<html:link page="/teacherEvaluation.do?method=prepareUploadEvaluators" paramId="facultyEvaluationProcessOID" paramName="facultyEvaluationProcess" paramProperty="OID">
+			<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.upload" bundle="RESEARCHER_RESOURCES"/>
+		</html:link>
+	</p>
 </logic:present>
 
 <logic:present name="facultyEvaluationProcessSet">
@@ -143,4 +148,21 @@
 			</logic:iterate>
 		</table>
 	</logic:notEmpty>
+</logic:present>
+
+<logic:present name="fileUploadBean">
+	<bean:define id="urlUploadInvalid">/teacherEvaluation.do?method=viewFacultyEvaluationProcess&amp;facultyEvaluationProcessOID=<bean:write name="fileUploadBean" property="facultyEvaluationProcess.externalId"/></bean:define>
+	<fr:edit id="fileUploadBean" name="fileUploadBean" action="/teacherEvaluation.do?method=uploadEvaluators">
+		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.teacher.evaluation.FileUploadBean">
+			<fr:slot name="inputStream" key="label.file" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+				<fr:property name="fileNameSlot" value="filename"/>
+				<fr:property name="size" value="30"/>
+			</fr:slot>
+		</fr:schema>
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle5 thlight thmiddle mtop05"/>
+			<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
+		</fr:layout>
+		<fr:destination name="cancel" path="<%= urlUploadInvalid %>"/>
+	</fr:edit>
 </logic:present>
