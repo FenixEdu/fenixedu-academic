@@ -1273,4 +1273,9 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     public LocalDate getConclusionDate() {
 	return getThesisProcess().getConclusionDate();
     }
+
+    public boolean hasCurricularCoursesToEnrol() {
+	return hasStudyPlan() && !getStudyPlan().isExempted() && getStudyPlan().isToEnrolInCurricularCourses();
+    }
+
 }

@@ -148,4 +148,9 @@ public class PhdStudentEnrolmentDA extends BolonhaStudentEnrollmentDispatchActio
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	throw new RuntimeException("error.PhdStudentEnrolmentBean.unsupported.operation");
     }
+    
+    @Override
+    protected void enroledWithSuccess(HttpServletRequest request, BolonhaStudentEnrollmentBean bolonhaStudentEnrollmentBean) {
+	addActionMessage("warning", request, "message.phd.enrolments.waiting.for.approval");
+    }
 }
