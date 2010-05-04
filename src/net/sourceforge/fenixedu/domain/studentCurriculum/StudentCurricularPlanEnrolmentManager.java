@@ -101,7 +101,7 @@ public class StudentCurricularPlanEnrolmentManager extends StudentCurricularPlan
 		continue;
 	    }
 
-	    final EnrollmentCondition enrollmentCondition = entry.getKey().getEnrollmentCondition();
+	    final EnrollmentCondition enrollmentCondition = getEnrolmentCondition(entry);
 	    for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : entry.getValue()) {
 
 		if (degreeModuleToEvaluate.isEnroled()) {
@@ -136,6 +136,10 @@ public class StudentCurricularPlanEnrolmentManager extends StudentCurricularPlan
 		}
 	    }
 	}
+    }
+
+    protected EnrollmentCondition getEnrolmentCondition(final Entry<EnrolmentResultType, List<IDegreeModuleToEvaluate>> entry) {
+	return entry.getKey().getEnrollmentCondition();
     }
 
     private void createOptionalEnrolmentFor(final EnrollmentCondition enrollmentCondition,
