@@ -91,7 +91,8 @@ public class Article extends Article_Base {
 	BibtexEntry bibEntry = bibtexFile.makeEntry("article", generateBibtexKey());
 	bibEntry.setField("title", bibtexFile.makeString(getTitle()));
 	bibEntry.setField("journal", bibtexFile.makeString(getScientificJournal().getName()));
-	bibEntry.setField("year", bibtexFile.makeString(getYear().toString()));
+	if (getYear() != null)
+	    bibEntry.setField("year", bibtexFile.makeString(getYear().toString()));
 	if ((getVolume() != null) && (getVolume().length() > 0))
 	    bibEntry.setField("volume", bibtexFile.makeString(getVolume()));
 	if ((getNumber() != null) && (getNumber().length() > 0))
@@ -177,6 +178,7 @@ public class Article extends Article_Base {
 	throw new DomainException("error.researcher.Article.call", "setOrganization");
     }
 
+    @Override
     public String getSchema() {
 	return usedSchema;
     }
