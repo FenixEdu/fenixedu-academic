@@ -141,10 +141,6 @@ public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurr
 	    }
 	}
 
-	if (!isEmptyDegree()) {
-	    result.put(getEnroledCurriculumGroup(), getRoot().getCurricularRules(getExecutionSemester()));
-	}
-
 	return result;
     }
 
