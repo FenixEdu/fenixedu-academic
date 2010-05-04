@@ -44,7 +44,7 @@
 
 <h3><bean:write name="manageEnrolmentsBean" property="curricularCourse.degreeCurricularPlan.name" />: <bean:write name="manageEnrolmentsBean" property="curricularCourseName" /></h3>
 
-<logic:notEmpty name="manageEnrolmentsBean" property="enrolments">
+<logic:notEmpty name="manageEnrolmentsBean" property="remainingEnrolments">
 
 	<bean:define id="executionSemesterOid" name="manageEnrolmentsBean" property="semester.externalId" />
 	<bean:define id="degreeModuleOid" name="manageEnrolmentsBean" property="curricularCourse.externalId" />
@@ -53,7 +53,7 @@
 		<img src="<%= request.getContextPath() %>/images/excel.gif" /> <bean:message key="label.phd.export.enrolments" bundle="PHD_RESOURCES" />
 	</html:link>
 
-	<fr:view name="manageEnrolmentsBean" property="enrolments">
+	<fr:view name="manageEnrolmentsBean" property="remainingEnrolments">
 	
 		<fr:schema bundle="PHD_RESOURCES" type="<%= Enrolment.class.getName() %>">
 			<fr:slot name="registration.number" />
@@ -72,7 +72,7 @@
 	</fr:view>
 </logic:notEmpty>
 
-<logic:empty name="manageEnrolmentsBean" property="enrolments">
+<logic:empty name="manageEnrolmentsBean" property="remainingEnrolments">
 	<em><bean:message key="label.phd.no.enrolments.found" bundle="PHD_RESOURCES" /></em>
 </logic:empty>
 

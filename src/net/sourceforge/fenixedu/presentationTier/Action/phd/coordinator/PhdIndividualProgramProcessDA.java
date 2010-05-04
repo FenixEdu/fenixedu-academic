@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd.coordinator;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -9,9 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
@@ -98,15 +102,34 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 	    bean.setSemester(ExecutionSemester.readActualExecutionSemester());
 	}
 
-	filter(bean, process);
+	filterEnrolments(bean, process);
 
 	request.setAttribute("manageEnrolmentsBean", bean);
 	return mapping.findForward("manageEnrolments");
     }
 
-    private void filter(ManageEnrolmentsBean bean, PhdIndividualProgramProcess process) {
+    private void filterEnrolments(ManageEnrolmentsBean bean, PhdIndividualProgramProcess process) {
 	final StudentCurricularPlan scp = process.getRegistration().getLastStudentCurricularPlan();
-	bean.setEnrolments(scp.getEnrolmentsByExecutionPeriod(bean.getSemester()));
+
+	final Collection<Enrolment> enrolmentsPerformedByStudent = new HashSet<Enrolment>();
+	final Collection<Enrolment> enrolmentsPerformedByAdminOffice = new HashSet<Enrolment>();
+
+	for (final Enrolment enrolment : scp.getEnrolmentsByExecutionPeriod(bean.getSemester())) {
+
+	    if (isPeformedByStudent(enrolment)) {
+		enrolmentsPerformedByStudent.add(enrolment);
+	    } else {
+		enrolmentsPerformedByAdminOffice.add(enrolment);
+	    }
+	}
+
+	bean.setEnrolmentsPerformedByStudent(enrolmentsPerformedByStudent);
+	bean.setRemainingEnrolments(enrolmentsPerformedByAdminOffice);
+    }
+
+    private boolean isPeformedByStudent(Enrolment enrolment) {
+	final Person person = Person.readPersonByUsername(enrolment.getCreatedBy());
+	return person.hasRole(RoleType.STUDENT) && enrolment.getStudent().equals(person.getStudent());
     }
 
     @Override

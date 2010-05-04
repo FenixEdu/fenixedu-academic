@@ -102,6 +102,52 @@ public class PhdEnrolmentsManagementDA extends PhdProcessDA {
 	return mapping.findForward("showPhdProgram");
     }
 
+    public ActionForward exportEnrolmentsToExcel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws IOException {
+
+	final ExecutionSemester semester = getDomainObject(request, "executionSemesterOid");
+	final CurricularCourse curricularCourse = getDomainObject(request, "degreeModuleOid");
+
+	byte[] content = buildSpreadsheet(curricularCourse, semester);
+	writeFile(response, getFileName(curricularCourse, semester), "application/vnd.ms-excel", content);
+
+	return null;
+    }
+
+    private byte[] buildSpreadsheet(CurricularCourse curricularCourse, ExecutionSemester semester) throws IOException {
+
+	final List<Enrolment> enrolments = curricularCourse.getEnrolmentsByAcademicInterval(semester.getAcademicInterval());
+
+	// sort by person name
+	Collections.sort(enrolments, new Comparator<Enrolment>() {
+	    @Override
+	    public int compare(Enrolment o1, Enrolment o2) {
+		return o1.getPerson().getName().compareTo(o2.getPerson().getName());
+	    }
+	});
+
+	final SpreadsheetBuilder builder = new SpreadsheetBuilder();
+	builder.addSheet(semester.getQualifiedName().replace("/", "_"), new SheetData<Enrolment>(enrolments) {
+
+	    @Override
+	    protected void makeLine(final Enrolment enrolment) {
+		// TODO: add to phd resource bundle
+		addCell(getMessageFromResource("label.phd.number"), enrolment.getRegistration().getNumber());
+		addCell(getMessageFromResource("label.phd.name"), enrolment.getPerson().getName());
+		addCell(getMessageFromResource("label.phd.email"), enrolment.getPerson()
+			.getInstitutionalOrDefaultEmailAddressValue());
+	    }
+	});
+
+	final ByteArrayOutputStream output = new ByteArrayOutputStream();
+	builder.build(WorkbookExportFormat.EXCEL, output);
+	return output.toByteArray();
+    }
+
+    private String getFileName(final CurricularCourse curricularCourse, final ExecutionSemester semester) {
+	return curricularCourse.getName(semester).replace(" ", "_");
+    }
+
     public ActionForward manageEnrolments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
@@ -112,54 +158,15 @@ public class PhdEnrolmentsManagementDA extends PhdProcessDA {
 	    bean.setCurricularCourse((CurricularCourse) getDomainObject(request, "degreeModuleOid"));
 	}
 
-	searchEnrolments(bean);
+	filterEnrolments(bean);
 	request.setAttribute("manageEnrolmentsBean", bean);
-	
+
 	return mapping.findForward("showEnrolments");
     }
 
-    private void searchEnrolments(final ManageEnrolmentsBean bean) {
-	bean.setEnrolments(bean.getCurricularCourse().getEnrolmentsByAcademicInterval(bean.getSemester().getAcademicInterval()));
+    private void filterEnrolments(final ManageEnrolmentsBean bean) {
+	bean.setRemainingEnrolments(bean.getCurricularCourse().getEnrolmentsByAcademicInterval(
+		bean.getSemester().getAcademicInterval()));
     }
 
-    public ActionForward exportEnrolmentsToExcel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws IOException {
-
-	final ExecutionSemester semester = getDomainObject(request, "executionSemesterOid");
-	final CurricularCourse curricularCourse = getDomainObject(request, "degreeModuleOid");
-	
-	byte[] content = buildSpreadsheet(curricularCourse, semester);
-	writeFile(response, getFileName(curricularCourse, semester), "application/vnd.ms-excel", content);
-	
-	return null;
-    }
-
-    private byte[] buildSpreadsheet(CurricularCourse curricularCourse, ExecutionSemester semester) throws IOException {
-	
-	final List<Enrolment> enrolments = curricularCourse.getEnrolmentsByAcademicInterval(semester.getAcademicInterval());
-	
-	Collections.sort(enrolments, new Comparator<Enrolment>() {
-	    @Override
-	    public int compare(Enrolment o1, Enrolment o2) {
-		return o1.getPerson().getName().compareTo(o2.getPerson().getName());
-	    }});
-	
-	final SpreadsheetBuilder builder = new SpreadsheetBuilder();
-	builder.addSheet(semester.getQualifiedName().replace("/", "_"), new SheetData<Enrolment>(enrolments) {
-
-	    @Override
-	    protected void makeLine(final Enrolment enrolment) {
-		addCell("Número", enrolment.getRegistration().getNumber());
-		addCell("Nome", enrolment.getPerson().getName());
-		addCell("Email", enrolment.getPerson().getInstitutionalOrDefaultEmailAddressValue());
-	    }});
-	
-	final ByteArrayOutputStream output = new ByteArrayOutputStream();
-	builder.build(WorkbookExportFormat.EXCEL, output);
-	return output.toByteArray();
-    }
-
-    private String getFileName(final CurricularCourse curricularCourse, final ExecutionSemester semester) {
-	return curricularCourse.getName(semester).replace(" ", "_");
-    }
 }

@@ -35,7 +35,9 @@ public class ManageEnrolmentsBean implements Serializable {
 
     private ExecutionSemester semester;
 
-    private Collection<Enrolment> enrolments;
+    private Collection<Enrolment> enrolmentsPerformedByStudent;
+
+    private Collection<Enrolment> remainingEnrolments;
 
     private Collection<EnrolmentPeriod> enrolmentPeriods;
 
@@ -61,12 +63,20 @@ public class ManageEnrolmentsBean implements Serializable {
 	this.semester = semester;
     }
 
-    public Collection<Enrolment> getEnrolments() {
-	return enrolments;
+    public Collection<Enrolment> getEnrolmentsPerformedByStudent() {
+	return enrolmentsPerformedByStudent;
     }
 
-    public void setEnrolments(Collection<Enrolment> enrolments) {
-	this.enrolments = enrolments;
+    public void setEnrolmentsPerformedByStudent(Collection<Enrolment> enrolmentsPerformedByStudent) {
+	this.enrolmentsPerformedByStudent = enrolmentsPerformedByStudent;
+    }
+
+    public Collection<Enrolment> getRemainingEnrolments() {
+	return remainingEnrolments;
+    }
+
+    public void setRemainingEnrolments(Collection<Enrolment> remainingEnrolments) {
+	this.remainingEnrolments = remainingEnrolments;
     }
 
     public Collection<EnrolmentPeriod> getEnrolmentPeriods() {
@@ -108,7 +118,7 @@ public class ManageEnrolmentsBean implements Serializable {
     public void setCurricularCourse(final CurricularCourse curricularCourse) {
 	this.curricularCourse = curricularCourse;
     }
-    
+
     public String getCurricularCourseName() {
 	return getCurricularCourse().getName(getSemester());
     }
@@ -162,7 +172,7 @@ public class ManageEnrolmentsBean implements Serializable {
 	    return semester.getEnrolmentPeriod(EnrolmentPeriodInCurricularCourses.class, degreeCurricularPlan) != null;
 	}
     }
-    
+
     static public class CurricularCourseDegreeExecutionSemesterProvider implements DataProvider {
 
 	@Override
@@ -173,16 +183,16 @@ public class ManageEnrolmentsBean implements Serializable {
 	@Override
 	public Object provide(Object source, Object currentValue) {
 	    final ManageEnrolmentsBean bean = (ManageEnrolmentsBean) source;
-	    
+
 	    final Collection<ExecutionSemester> result = new TreeSet<ExecutionSemester>(new ReverseComparator());
-	    
+
 	    for (final ExecutionYear executionYear : bean.getCurricularCourse().getDegreeCurricularPlan().getExecutionYears()) {
 		result.addAll(executionYear.getExecutionPeriods());
 	    }
-	
+
 	    return result;
 	}
-	
+
     }
 
 }

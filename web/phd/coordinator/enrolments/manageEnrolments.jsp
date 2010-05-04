@@ -43,11 +43,34 @@
 	</fr:edit>
 </fr:form>
 
-<logic:empty name="manageEnrolmentsBean" property="enrolments">
+
+<strong><bean:message key="label.phd.enrolments.performed.by.student.to.approve" bundle="PHD_RESOURCES" /></strong>
+
+<logic:empty name="manageEnrolmentsBean" property="enrolmentsPerformedByStudent">
 	<em><bean:message key="label.phd.no.enrolments.found" bundle="PHD_RESOURCES" /></em>
 </logic:empty>
 
-<fr:view name="manageEnrolmentsBean" property="enrolments">
+<fr:view name="manageEnrolmentsBean" property="enrolmentsPerformedByStudent">
+	<fr:schema bundle="PHD_RESOURCES" type="<%= Enrolment.class.getName() %>">
+		<fr:slot name="name" />
+		<fr:slot name="ectsCredits" />
+		<fr:slot name="executionPeriod.qualifiedName" />
+		<fr:slot name="enrolmentCondition" layout="phd-enum-renderer" />
+	</fr:schema>
+
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle2 thlight mtop10" />
+		<fr:property name="sortBy" value="name=asc" />
+	</fr:layout>
+</fr:view>
+
+<strong><bean:message key="label.phd.remaining.enrolments" bundle="PHD_RESOURCES" /></strong>
+
+<logic:empty name="manageEnrolmentsBean" property="remainingEnrolments">
+	<em><bean:message key="label.phd.no.enrolments.found" bundle="PHD_RESOURCES" /></em>
+</logic:empty>
+
+<fr:view name="manageEnrolmentsBean" property="remainingEnrolments">
 	<fr:schema bundle="PHD_RESOURCES" type="<%= Enrolment.class.getName() %>">
 		<fr:slot name="name" />
 		<fr:slot name="ectsCredits" />
