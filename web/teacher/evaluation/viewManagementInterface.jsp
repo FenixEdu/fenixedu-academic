@@ -96,6 +96,29 @@
 			<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.upload" bundle="RESEARCHER_RESOURCES"/>
 		</html:link>
 	</p>
+		<bean:size id="count" name="facultyEvaluationProcess" property="teacherEvaluationProcess"/>
+		<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.teacherEvaluationProcess.count" bundle="RESEARCHER_RESOURCES"/>:
+		<%= count %>
+	<table class="tstyle2 thlight thleft">
+		<tr>
+			<th>
+				<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.teacherEvaluationProcess.evaluee" bundle="RESEARCHER_RESOURCES"/>
+			</th>
+			<th>
+				<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.teacherEvaluationProcess.evaluator" bundle="RESEARCHER_RESOURCES"/>
+			</th>
+		</tr>
+		<logic:iterate id="teacherEvaluationProcess" name="facultyEvaluationProcess" property="sortedTeacherEvaluationProcess">
+			<tr>
+				<td>
+					<bean:write name="teacherEvaluationProcess" property="evaluee.name"/>
+				</td>
+				<td>
+					<bean:write name="teacherEvaluationProcess" property="evaluator.name"/>
+				</td>
+			</tr>
+		</logic:iterate>
+	</table>
 </logic:present>
 
 <logic:present name="facultyEvaluationProcessSet">

@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.domain.teacher.evaluation;
 
 import java.util.Comparator;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -72,6 +74,12 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base {
 	    return teacher == null ? null : teacher.getPerson();
 	}
 	return null;
+    }
+
+    public SortedSet<TeacherEvaluationProcess> getSortedTeacherEvaluationProcess() {
+	final SortedSet<TeacherEvaluationProcess> result = new TreeSet<TeacherEvaluationProcess>(TeacherEvaluationProcess.COMPARATOR_BY_EVALUEE);
+	result.addAll(getTeacherEvaluationProcessSet());
+	return result;
     }
 
 }
