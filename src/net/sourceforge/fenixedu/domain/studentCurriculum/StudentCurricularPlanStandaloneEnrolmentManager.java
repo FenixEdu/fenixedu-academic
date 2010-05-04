@@ -99,8 +99,17 @@ public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurr
 	changeCurricularRuleLevel();
     }
 
+    /*
+     * Change level accordding to current level
+     */
     private void changeCurricularRuleLevel() {
-	enrolmentContext.setCurricularRuleLevel(CurricularRuleLevel.ENROLMENT_WITH_RULES);
+	final CurricularRuleLevel currentLevel = enrolmentContext.getCurricularRuleLevel();
+
+	if (currentLevel.equals(CurricularRuleLevel.STANDALONE_ENROLMENT_NO_RULES)) {
+	    enrolmentContext.setCurricularRuleLevel(CurricularRuleLevel.ENROLMENT_NO_RULES);
+	} else {
+	    enrolmentContext.setCurricularRuleLevel(CurricularRuleLevel.ENROLMENT_WITH_RULES);
+	}
     }
 
     private void addEnroledFromStudentCurricularPlan() {

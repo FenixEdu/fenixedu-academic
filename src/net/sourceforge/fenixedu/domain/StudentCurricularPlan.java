@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreT
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedBranchChangeException;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
+import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.NoCourseGroupEnrolmentBean;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
 import net.sourceforge.fenixedu.domain.accessControl.PermissionType;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdminOffice.AdministrativeOfficePermission;
@@ -2133,14 +2134,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		.getUserView().getUtilizador(), optionalCurricularCourse);
     }
 
-    final public RuleResult createNoCourseGroupCurriculumGroupEnrolment(final CurricularCourse curricularCourse,
-	    final ExecutionSemester executionSemester, final NoCourseGroupCurriculumGroupType groupType, final Person person) {
-
-	final EnrolmentContext enrolmentContext = EnrolmentContext.createForNoCourseGroupCurriculumGroupEnrolment(person, this,
-		curricularCourse, executionSemester, groupType);
-
-	return net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolment.createManager(enrolmentContext)
-		.manage();
+    final public RuleResult createNoCourseGroupCurriculumGroupEnrolment(final NoCourseGroupEnrolmentBean bean, final Person person) {
+	return net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolment.createManager(
+		EnrolmentContext.createForNoCourseGroupCurriculumGroupEnrolment(person, this, bean)).manage();
     }
 
     @Service

@@ -23,13 +23,15 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import org.apache.commons.beanutils.BeanComparator;
 
 import pt.ist.fenixWebFramework.renderers.InputRenderer;
+import pt.ist.fenixWebFramework.renderers.components.HtmlActionLink;
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
-import pt.ist.fenixWebFramework.renderers.components.HtmlLink;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTable;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableRow;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
+import pt.ist.fenixWebFramework.renderers.components.controllers.HtmlActionLinkController;
+import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
@@ -47,9 +49,7 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
 
     private String curricularCoursesToEnrol = "smalltxt, smalltxt aright, smalltxt aright, aright";
 
-    private String linkFormat;
-
-    private String linkFormatted;
+    private String methodName;
 
     public Integer getInitialWidth() {
 	return initialWidth;
@@ -107,12 +107,12 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
 	return getCurricularCourseClasses()[3];
     }
 
-    public String getLinkFormat() {
-	return linkFormat;
+    public String getMethodName() {
+	return methodName;
     }
 
-    public void setLinkFormat(String linkFormat) {
-	this.linkFormat = linkFormat;
+    public void setMethodName(String methodName) {
+	this.methodName = methodName;
     }
 
     public DegreeCurricularPlanOptionalEnrolmentsRenderer() {
@@ -124,17 +124,12 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
 	return new DegreeCurricularPlanOptionalEnrolmentsLayout();
     }
 
-    private String getLinkFormatted(Object object) {
-	return RenderUtils.getFormattedProperties(getLinkFormat(), object);
-    }
-
     private class DegreeCurricularPlanOptionalEnrolmentsLayout extends Layout {
 
 	private StudentOptionalEnrolmentBean studentOptionalEnrolmentBean = null;
 
 	@Override
 	public HtmlComponent createComponent(Object object, Class type) {
-	    linkFormatted = getLinkFormatted(object);
 
 	    studentOptionalEnrolmentBean = (StudentOptionalEnrolmentBean) object;
 
@@ -143,8 +138,6 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
 	    if (studentOptionalEnrolmentBean == null) {
 		return new HtmlText();
 	    }
-
-	    linkFormatted = RenderUtils.getFormattedProperties(getLinkFormat(), studentOptionalEnrolmentBean);
 
 	    if (studentOptionalEnrolmentBean.getDegreeCurricularPlan().isBoxStructure()) {
 		generateCourseGroup(container, studentOptionalEnrolmentBean.getDegreeCurricularPlan().getRoot(), 0);
@@ -169,8 +162,8 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
 	    final List<Context> childCurricularCourseContexts = courseGroup.getValidChildContexts(CurricularCourse.class,
 		    getExecutionSemester());
 
-	    Collections.sort(childCourseGroupContexts, new BeanComparator("childOrder"));
-	    Collections.sort(childCurricularCourseContexts, new BeanComparator("childOrder"));
+	    Collections.sort(childCourseGroupContexts);
+	    Collections.sort(childCurricularCourseContexts);
 
 	    generateCurricularCourses(blockContainer, childCurricularCourseContexts, depth + getWidthDecreasePerLevel());
 
@@ -214,14 +207,16 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
 			    academicAdminOfficeResources.getString("credits.abbreviation"));
 		    ectsCell.setBody(new HtmlText(ects.toString()));
 
-		    // link inscrição
+		    // enrolment link
 		    final HtmlTableCell linkTableCell = htmlTableRow.createCell();
 		    linkTableCell.setClasses(getCurricularCourseLinkClasses());
-		    final HtmlLink htmlLink = new HtmlLink();
-		    linkTableCell.setBody(htmlLink);
-		    htmlLink.setText(academicAdminOfficeResources.getString("link.option.enrol.curricular.course"));
-		    htmlLink.setUrl(linkFormatted);
-		    htmlLink.setParameter("optionalCCID", context.getChildDegreeModule().getIdInternal());
+
+		    final HtmlActionLink actionLink = new HtmlActionLink();
+		    actionLink.setText(academicAdminOfficeResources.getString("link.option.enrol.curricular.course"));
+		    actionLink.setName("curricularCourseEnrolLink" + curricularCourse.getIdInternal());
+		    actionLink.setOnClick(String.format("document.forms[0].method.value='%s';", getMethodName()));
+		    actionLink.setController(new UpdateSelectedCurricularCourseController(curricularCourse));
+		    linkTableCell.setBody(actionLink);
 		}
 	    }
 	}
@@ -279,14 +274,16 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
 			academicAdminOfficeResources.getString("credits.abbreviation"));
 		ectsCell.setBody(new HtmlText(ects.toString()));
 
-		// link inscrição
+		// enrolment link
 		final HtmlTableCell linkTableCell = htmlTableRow.createCell();
 		linkTableCell.setClasses(getCurricularCourseLinkClasses());
-		final HtmlLink htmlLink = new HtmlLink();
-		linkTableCell.setBody(htmlLink);
-		htmlLink.setText(academicAdminOfficeResources.getString("link.option.enrol.curricular.course"));
-		htmlLink.setUrl(linkFormatted);
-		htmlLink.setParameter("optionalCCID", scope.getCurricularCourse().getIdInternal());
+
+		final HtmlActionLink actionLink = new HtmlActionLink();
+		actionLink.setText(academicAdminOfficeResources.getString("link.option.enrol.curricular.course"));
+		actionLink.setName("curricularCourseEnrolLink" + scope.getCurricularCourse().getIdInternal());
+		actionLink.setOnClick(String.format("document.forms[0].method.value='%s';", getMethodName()));
+		actionLink.setController(new UpdateSelectedCurricularCourseController(scope.getCurricularCourse()));
+		linkTableCell.setBody(actionLink);
 	    }
 	}
 
@@ -313,5 +310,27 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
 	    }
 	    list.add(scope.getDegreeModuleScopeCurricularCourseScope());
 	}
+    }
+
+    static private class UpdateSelectedCurricularCourseController extends HtmlActionLinkController {
+
+	static private final long serialVersionUID = 1L;
+	private CurricularCourse curricularCourse;
+
+	public UpdateSelectedCurricularCourseController(final CurricularCourse curricularCourse) {
+	    this.curricularCourse = curricularCourse;
+	}
+
+	@Override
+	protected boolean isToSkipUpdate() {
+	    return false;
+	}
+
+	@Override
+	public void linkPressed(IViewState viewState, HtmlActionLink link) {
+	    ((StudentOptionalEnrolmentBean) viewState.getMetaObject().getObject())
+		    .setSelectedCurricularCourse(this.curricularCourse);
+	}
+
     }
 }

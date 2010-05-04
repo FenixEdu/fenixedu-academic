@@ -250,6 +250,8 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
 
     abstract public boolean isApproved();
 
+    abstract public boolean isValid(ExecutionSemester executionSemester);
+
     abstract public ExecutionSemester getExecutionPeriod();
 
     @Override
@@ -294,4 +296,7 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
     abstract protected void createCurriculumLineLog(final EnrolmentAction action);
 
     abstract public BigDecimal getEctsCreditsForCurriculum();
+
+    abstract public double getAccumulatedEctsCredits(final ExecutionSemester executionSemester);
+
 }

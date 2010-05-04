@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.standalone;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentStandaloneEnrolmentBean;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -17,11 +18,11 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProce
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
 import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfEctsInStandaloneCurriculumGroup;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.LocalDate;
@@ -177,12 +178,27 @@ public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy
 
     private void enrolInCurricularCourses(final Registration registration) {
 	final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
+	final Person person = AccessControl.getPerson();
+
 	for (final CurricularCourse curricularCourse : getCurricularCoursesSet()) {
 	    if (!studentCurricularPlan.isEnroledInExecutionPeriod(curricularCourse, getCandidacyExecutionInterval())) {
-		studentCurricularPlan.createNoCourseGroupCurriculumGroupEnrolment(curricularCourse,
-			getCandidacyExecutionInterval(), NoCourseGroupCurriculumGroupType.STANDALONE, AccessControl.getPerson());
+
+		studentCurricularPlan.createNoCourseGroupCurriculumGroupEnrolment(createStudentStandaloneEnrolmentBean(
+			studentCurricularPlan, curricularCourse), person);
+
 	    }
 	}
+    }
+
+    private StudentStandaloneEnrolmentBean createStudentStandaloneEnrolmentBean(final StudentCurricularPlan scp,
+	    final CurricularCourse curricularCourse) {
+
+	final StudentStandaloneEnrolmentBean bean = new StudentStandaloneEnrolmentBean(scp, getCandidacyExecutionInterval());
+
+	bean.setSelectedCurricularCourse(curricularCourse);
+	bean.setCurricularRuleLevel(CurricularRuleLevel.STANDALONE_ENROLMENT);
+
+	return bean;
     }
 
     @Override

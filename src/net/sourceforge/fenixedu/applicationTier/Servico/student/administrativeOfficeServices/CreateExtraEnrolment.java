@@ -1,22 +1,19 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student.administrativeOfficeServices;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
-import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.NoCourseGroupEnrolmentBean;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class CreateExtraEnrolment extends FenixService {
+public class CreateExtraEnrolment {
 
     @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
-    public static void run(final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester,
-	    final CurricularCourse curricularCourse, final NoCourseGroupCurriculumGroupType groupType) {
-	studentCurricularPlan.createNoCourseGroupCurriculumGroupEnrolment(curricularCourse, executionSemester, groupType,
-		AccessControl.getPerson());
+    public static RuleResult run(final NoCourseGroupEnrolmentBean bean) {
+	final StudentCurricularPlan studentCurricularPlan = bean.getStudentCurricularPlan();
+	return studentCurricularPlan.createNoCourseGroupCurriculumGroupEnrolment(bean, AccessControl.getPerson());
     }
 
 }

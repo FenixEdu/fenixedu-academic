@@ -2,15 +2,19 @@ package net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.student
 
 import java.io.Serializable;
 
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 
 public class StudentOptionalEnrolmentBean implements Serializable {
+
+    static private final long serialVersionUID = 1L;
 
     private StudentCurricularPlan studentCurricularPlan;
     private ExecutionSemester executionSemester;
@@ -19,9 +23,10 @@ public class StudentOptionalEnrolmentBean implements Serializable {
     private DegreeType degreeType;
     private Degree degree;
     private DegreeCurricularPlan degreeCurricularPlan;
+    private CurricularCourse selectedCurricularCourse;
+    private CurricularRuleLevel curricularRuleLevel;
 
     public StudentOptionalEnrolmentBean() {
-
     }
 
     public StudentOptionalEnrolmentBean(StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester,
@@ -86,6 +91,22 @@ public class StudentOptionalEnrolmentBean implements Serializable {
 
     public void setDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
 	this.degreeCurricularPlan = degreeCurricularPlan;
+    }
+
+    public CurricularCourse getSelectedCurricularCourse() {
+	return selectedCurricularCourse;
+    }
+
+    public void setSelectedCurricularCourse(CurricularCourse selectedCurricularCourse) {
+	this.selectedCurricularCourse = selectedCurricularCourse;
+    }
+
+    public CurricularRuleLevel getCurricularRuleLevel() {
+	return curricularRuleLevel;
+    }
+
+    public void setCurricularRuleLevel(CurricularRuleLevel curricularRuleLevel) {
+	this.curricularRuleLevel = curricularRuleLevel;
     }
 
 }

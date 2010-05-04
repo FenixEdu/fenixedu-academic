@@ -1188,6 +1188,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return isValid(executionSemester) && this.getCurricularCourse().equals(curricularCourse);
     }
 
+    @Override
     public boolean isValid(final ExecutionSemester executionSemester) {
 	return getExecutionPeriod() == executionSemester
 		|| (getCurricularCourse().isAnual() && getExecutionPeriod().getExecutionYear() == executionSemester
@@ -1400,6 +1401,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return getDegreeModule().getParentDegreeCurricularPlan() != getDegreeCurricularPlanOfDegreeModule();
     }
 
+    @Override
     final public double getAccumulatedEctsCredits(final ExecutionSemester executionSemester) {
 	if (!isBolonhaDegree()) {
 	    return accumulatedEctsCredits;

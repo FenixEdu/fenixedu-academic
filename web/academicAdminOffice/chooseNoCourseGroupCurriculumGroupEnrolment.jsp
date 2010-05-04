@@ -13,50 +13,46 @@
 
 
 <fr:form action='<%= "/" + actionName + ".do" %>'>
-	<fr:edit id="enrolmentBean"
-			 name="enrolmentBean"
-			 schema="studentOptionalEnrolment.base">
-		<fr:destination name="postBack" path='<%= "/" + actionName + ".do?method=postBack" %>' />
+
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="back2"/>
+	<fr:edit id="enrolmentBean" name="enrolmentBean" visible="false" />
+	
+	
+	<fr:edit id="enrolmentBean-search" name="enrolmentBean" schema="studentOptionalEnrolment.base">
 		<fr:layout name="tabular" >
-				<fr:property name="classes" value="tstyle4"/>
-		        <fr:property name="columnClasses" value="listClasses,,"/>
+			<fr:property name="classes" value="tstyle4"/>
+		    <fr:property name="columnClasses" value="listClasses,,"/>
 		</fr:layout>
+		<fr:destination name="postBack" path='<%= "/" + actionName + ".do?method=postBack" %>' />
 	</fr:edit>
-</fr:form>
 
-<logic:notPresent name="enrolmentBean" property="degreeCurricularPlan">
-	<fr:form action='<%= "/" + actionName + ".do?method=back2" %>'>
-		<fr:edit id="enrolmentBean" name="enrolmentBean" visible="false" />
-		<html:submit><bean:message key="back" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>
-	</fr:form>
-</logic:notPresent>
+	<html:submit><bean:message key="back" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>
 
-<html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES" property="error">
-	<br/>
-	<span class="error"><!-- Error messages go here --><bean:write name="message" /></span>
-	<br/>
-</html:messages>
-
-<html:messages id="error" message="true" bundle="APPLICATION_RESOURCES" property="enrolmentError" >
-	<br/>
-	<span class="error"><!-- Error messages go here --><bean:write name="error" /></span>
-	<br/>
-</html:messages>
-
-<br />
-<br />
-
-<logic:present name="enrolmentBean" property="degreeCurricularPlan">
-	<fr:form action='<%= "/" + actionName + ".do?method=back2" %>'>
-		<fr:edit id="enrolmentBean" name="enrolmentBean" visible="false" />
-
+	<html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES" property="error">
+		<br/>
+		<span class="error"><!-- Error messages go here --><bean:write name="message" /></span>
+		<br/>
+	</html:messages>
+	
+	<html:messages id="error" message="true" bundle="APPLICATION_RESOURCES" property="enrolmentError" >
+		<br/>
+		<span class="error"><!-- Error messages go here --><bean:write name="error" /></span>
+		<br/>
+	</html:messages>
+	
+	<br />
+	<br />
+	
+	<logic:present name="enrolmentBean" property="degreeCurricularPlan">
 		<fr:edit id="degreeCurricularPlan" name="enrolmentBean">
 			<fr:layout name="student-optional-enrolments">
-				<fr:property name="linkFormat" value='<%= "/" + actionName + ".do?method=enrol&amp;scpID=${studentCurricularPlan.idInternal}&amp;executionPeriodID=${executionPeriod.idInternal}&amp;degreeType=${degreeType}&amp;degreeID=${degree.idInternal}&amp;dcpID=${degreeCurricularPlan.idInternal}&amp;type=${groupType}" %>' />
+				<fr:property name="methodName" value="enrol" />
 			</fr:layout>
 		</fr:edit>
 		<br/>
 		<br/>		
-		<html:submit><bean:message key="back" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>
-	</fr:form>
-</logic:present>
+	</logic:present>
+
+	<html:submit><bean:message key="back" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>
+
+</fr:form>

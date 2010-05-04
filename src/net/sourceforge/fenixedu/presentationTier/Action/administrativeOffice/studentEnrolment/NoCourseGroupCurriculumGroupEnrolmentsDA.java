@@ -10,11 +10,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.student.administrativeOfficeServices.CreateExtraEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.NoCourseGroupEnrolmentBean;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentEnrolmentBean;
-import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.EnrollmentDomainException;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
@@ -22,6 +21,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculum
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
+import net.sourceforge.fenixedu.predicates.StudentCurricularPlanPredicates;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -37,6 +37,10 @@ abstract public class NoCourseGroupCurriculumGroupEnrolmentsDA extends FenixDisp
 	    HttpServletResponse response) throws Exception {
 	request.setAttribute("actionName", getActionName());
 	return super.execute(mapping, actionForm, request, response);
+    }
+
+    private boolean canEnrolWithouRules(final NoCourseGroupEnrolmentBean bean) {
+	return StudentCurricularPlanPredicates.ENROL_WITHOUT_RULES.evaluate(bean.getStudentCurricularPlan());
     }
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -57,8 +61,6 @@ abstract public class NoCourseGroupCurriculumGroupEnrolmentsDA extends FenixDisp
     protected ActionForward showExtraEnrolments(NoCourseGroupEnrolmentBean bean, ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	request.setAttribute("enrolmentBean", bean);
-
 	final NoCourseGroupCurriculumGroup noCourseGroupCurriculumGroup = bean.getNoCourseGroupCurriculumGroup();
 	if (noCourseGroupCurriculumGroup != null) {
 	    bean.setCurriculumGroup(noCourseGroupCurriculumGroup);
@@ -66,6 +68,9 @@ abstract public class NoCourseGroupCurriculumGroupEnrolmentsDA extends FenixDisp
 		request.setAttribute("enrolments", noCourseGroupCurriculumGroup);
 	    }
 	}
+
+	request.setAttribute("enrolmentBean", bean);
+	request.setAttribute("canEnrolWithoutRules", canEnrolWithouRules(bean));
 
 	return mapping.findForward("showExtraEnrolments");
     }
@@ -94,47 +99,30 @@ abstract public class NoCourseGroupCurriculumGroupEnrolmentsDA extends FenixDisp
     public ActionForward enrol(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	final NoCourseGroupCurriculumGroupType groupType = NoCourseGroupCurriculumGroupType.valueOf(request.getParameter("type"));
-	final StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(request);
-	final ExecutionSemester executionPeriod = getExecutionSemester(request);
-	final CurricularCourse curricularCourse = getOptionalCurricularCourse(request);
+	final NoCourseGroupEnrolmentBean bean = getNoCourseGroupEnrolmentBean();
+	request.setAttribute("enrolmentBean", bean);
 
 	try {
-	    CreateExtraEnrolment.run(studentCurricularPlan, executionPeriod, curricularCourse, groupType);
+	    final RuleResult ruleResult = CreateExtraEnrolment.run(bean);
+
+	    if (ruleResult.isWarning()) {
+		addRuleResultMessagesToActionMessages("warning", request, ruleResult);
+	    }
 
 	} catch (final IllegalDataAccessException e) {
 	    addActionMessage("error", request, "error.notAuthorized");
-	    setExtraEnrolmentInformation(request, studentCurricularPlan, executionPeriod);
 	    return mapping.findForward("chooseExtraEnrolment");
 
 	} catch (final EnrollmentDomainException ex) {
 	    addRuleResultMessagesToActionMessages("enrolmentError", request, ex.getFalseResult());
-	    setExtraEnrolmentInformation(request, studentCurricularPlan, executionPeriod);
 	    return mapping.findForward("chooseExtraEnrolment");
 
 	} catch (final DomainException e) {
 	    addActionMessage("error", request, e.getMessage(), e.getArgs());
-	    setExtraEnrolmentInformation(request, studentCurricularPlan, executionPeriod);
 	    return mapping.findForward("chooseExtraEnrolment");
 	}
 
-	final NoCourseGroupEnrolmentBean bean = createNoCourseGroupEnrolmentBean(studentCurricularPlan, executionPeriod);
 	return showExtraEnrolments(bean, mapping, actionForm, request, response);
-    }
-
-    private void setExtraEnrolmentInformation(HttpServletRequest request, final StudentCurricularPlan studentCurricularPlan,
-	    final ExecutionSemester executionPeriod) {
-	final NoCourseGroupEnrolmentBean enrolmentBean = createNoCourseGroupEnrolmentBean(studentCurricularPlan, executionPeriod);
-	enrolmentBean.setDegreeType(DegreeType.valueOf(request.getParameter("degreeType")));
-	enrolmentBean.setDegree(rootDomainObject.readDegreeByOID(Integer.valueOf(request.getParameter("degreeID"))));
-	enrolmentBean.setDegreeCurricularPlan(rootDomainObject.readDegreeCurricularPlanByOID(Integer.valueOf(request
-		.getParameter("dcpID"))));
-
-	request.setAttribute("enrolmentBean", enrolmentBean);
-    }
-
-    private CurricularCourse getOptionalCurricularCourse(HttpServletRequest request) {
-	return (CurricularCourse) rootDomainObject.readDegreeModuleByOID(Integer.valueOf(request.getParameter("optionalCCID")));
     }
 
     public ActionForward delete(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

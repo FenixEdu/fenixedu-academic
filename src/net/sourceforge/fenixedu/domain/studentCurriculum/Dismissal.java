@@ -112,6 +112,11 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
     }
 
     @Override
+    public boolean isValid(final ExecutionSemester executionSemester) {
+	return hasExecutionPeriod() && getExecutionPeriod().equals(executionSemester);
+    }
+
+    @Override
     final public ExecutionYear getIEnrolmentsLastExecutionYear() {
 	ExecutionYear result = null;
 
@@ -150,6 +155,11 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
     @Override
     final public BigDecimal getEctsCreditsForCurriculum() {
 	return BigDecimal.valueOf(getEctsCredits());
+    }
+
+    @Override
+    public double getAccumulatedEctsCredits(final ExecutionSemester executionSemester) {
+	return getEctsCredits().doubleValue();
     }
 
     protected Double getEnrolmentsEcts() {

@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.NoCourseGroupEnrolmentBean;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
@@ -143,7 +144,8 @@ public class EnrolmentContext {
     }
 
     public boolean isStandalone() {
-	return getCurricularRuleLevel() == CurricularRuleLevel.STANDALONE_ENROLMENT;
+	return getCurricularRuleLevel() == CurricularRuleLevel.STANDALONE_ENROLMENT
+		|| getCurricularRuleLevel() == CurricularRuleLevel.STANDALONE_ENROLMENT_NO_RULES;
     }
 
     public boolean isEnrolmentWithoutRules() {
@@ -170,14 +172,14 @@ public class EnrolmentContext {
 
     @SuppressWarnings("unchecked")
     static public EnrolmentContext createForNoCourseGroupCurriculumGroupEnrolment(final Person person,
-	    final StudentCurricularPlan studentCurricularPlan, final CurricularCourse curricularCourse,
-	    final ExecutionSemester executionSemester, final NoCourseGroupCurriculumGroupType groupType) {
+	    final StudentCurricularPlan studentCurricularPlan, final NoCourseGroupEnrolmentBean bean) {
 
 	final IDegreeModuleToEvaluate moduleToEvaluate = new ExternalCurricularCourseToEnrol(
-		readOrCreateNoCourseGroupCurriculumGroup(studentCurricularPlan, groupType), curricularCourse, executionSemester);
+		readOrCreateNoCourseGroupCurriculumGroup(studentCurricularPlan, bean.getGroupType()), bean
+			.getSelectedCurricularCourse(), bean.getExecutionPeriod());
 
-	return new EnrolmentContext(person, studentCurricularPlan, executionSemester, Collections.singleton(moduleToEvaluate),
-		Collections.EMPTY_LIST, groupType.getCurricularRuleLevel());
+	return new EnrolmentContext(person, studentCurricularPlan, bean.getExecutionPeriod(), Collections
+		.singleton(moduleToEvaluate), Collections.EMPTY_LIST, bean.getCurricularRuleLevel());
     }
 
     static private NoCourseGroupCurriculumGroup readOrCreateNoCourseGroupCurriculumGroup(

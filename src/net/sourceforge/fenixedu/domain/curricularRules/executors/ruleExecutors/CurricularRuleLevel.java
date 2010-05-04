@@ -18,7 +18,9 @@ public enum CurricularRuleLevel {
 
     PROPAEUDEUTICS_ENROLMENT(false),
 
-    STANDALONE_ENROLMENT(false);
+    STANDALONE_ENROLMENT(false),
+    
+    STANDALONE_ENROLMENT_NO_RULES(false);
 
     private boolean isNormal;
 

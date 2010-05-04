@@ -20,6 +20,16 @@
 	<span class="error"><!-- Error messages go here --><bean:write name="error" /></span>
 	<br/>
 </html:messages>
+<logic:messagesPresent message="true" property="warning" >
+	<div class="warning0" style="padding: 0.5em;">
+	<p class="mvert0"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.student.enrollment.warnings.in.enrolment" />:</strong></p>
+	<ul class="mvert05">
+		<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES" property="warning">
+			<li><span><bean:write name="messages" /></span></li>
+		</html:messages>
+	</ul>
+	</div>
+</logic:messagesPresent>
 
 <fr:form action='<%= "/" + actionName + ".do" %>'>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="chooseCurricular"/>
@@ -51,7 +61,19 @@
 	</logic:notPresent>
 	
 	<p class="mtop15">
+	
 		<html:submit><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.enrol"/></html:submit>
+		
+		<%-- For now only STANDALONE can enrol without rules 
+			method chooseCurricularWithoutRules only exists in StudentStandaloneEnrolmentsDA. 
+			If necessary can be moved to superclass
+		--%>
+		<logic:equal name="enrolmentBean" property="groupType" value="STANDALONE">
+			<logic:equal name="canEnrolWithoutRules" value="true">
+				<html:submit onclick="this.form.method.value='chooseCurricularWithoutRules'; return true;"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.enrol.without.rules"/></html:submit>
+			</logic:equal>
+		</logic:equal>
+		
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='back'; return true;"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="back"/></html:submit>
 	</p>
 </fr:form>
