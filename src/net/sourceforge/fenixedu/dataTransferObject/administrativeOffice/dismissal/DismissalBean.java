@@ -13,10 +13,13 @@ import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 
 public class DismissalBean implements Serializable, IStudentCurricularPlanBean {
+
+    static private final long serialVersionUID = 1L;
 
     private StudentCurricularPlan studentCurricularPlan;
     private ExecutionSemester executionSemester;
@@ -185,7 +188,13 @@ public class DismissalBean implements Serializable, IStudentCurricularPlanBean {
 	return result;
     }
 
+    public Student getStudent() {
+	return getStudentCurricularPlan().getRegistration().getStudent();
+    }
+
     public static class SelectedCurricularCourse implements Serializable {
+
+	static private final long serialVersionUID = 1L;
 
 	private Boolean selected = Boolean.FALSE;
 
@@ -256,6 +265,8 @@ public class DismissalBean implements Serializable, IStudentCurricularPlanBean {
 
     public static class SelectedOptionalCurricularCourse extends SelectedCurricularCourse {
 
+	static private final long serialVersionUID = 1L;
+
 	private Double credits;
 
 	public SelectedOptionalCurricularCourse(final OptionalCurricularCourse curricularCourse,
@@ -283,6 +294,8 @@ public class DismissalBean implements Serializable, IStudentCurricularPlanBean {
     }
 
     public static class SelectedEnrolment implements Serializable {
+
+	static private final long serialVersionUID = 1L;
 
 	private Boolean selected = Boolean.FALSE;
 
@@ -327,6 +340,8 @@ public class DismissalBean implements Serializable, IStudentCurricularPlanBean {
     }
 
     public static class SelectedExternalEnrolment implements Serializable {
+
+	static private final long serialVersionUID = 1L;
 
 	private Boolean selected = Boolean.FALSE;
 

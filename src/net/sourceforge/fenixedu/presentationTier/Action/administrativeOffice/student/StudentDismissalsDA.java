@@ -80,12 +80,16 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 
     private Collection<SelectedEnrolment> buildStudentEnrolmentsInformation(final DismissalBean dismissalBean) {
 	final Collection<SelectedEnrolment> enrolments = new HashSet<SelectedEnrolment>();
-	for (final StudentCurricularPlan studentCurricularPlan : dismissalBean.getStudentCurricularPlan().getRegistration()
-		.getStudent().getAllStudentCurricularPlans()) {
 
-	    final List<Enrolment> approvedEnrolments = new ArrayList<Enrolment>(studentCurricularPlan
-		    .getDismissalApprovedEnrolments());
+	for (final StudentCurricularPlan scp : dismissalBean.getStudent().getAllStudentCurricularPlans()) {
+
+	    if (scp.equals(dismissalBean.getStudentCurricularPlan())) {
+		continue;
+	    }
+
+	    final List<Enrolment> approvedEnrolments = new ArrayList<Enrolment>(scp.getDismissalApprovedEnrolments());
 	    Collections.sort(approvedEnrolments, Enrolment.COMPARATOR_BY_EXECUTION_YEAR_AND_NAME_AND_ID);
+
 	    for (final Enrolment enrolment : approvedEnrolments) {
 		enrolments.add(new DismissalBean.SelectedEnrolment(enrolment));
 	    }
