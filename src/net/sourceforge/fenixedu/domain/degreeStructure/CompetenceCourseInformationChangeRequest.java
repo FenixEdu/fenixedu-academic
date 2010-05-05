@@ -5,6 +5,9 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class CompetenceCourseInformationChangeRequest extends CompetenceCourseInformationChangeRequest_Base {
 
@@ -91,5 +94,73 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
 
     public enum RequestStatus {
 	APPROVED, REJECTED, ON_HOLD;
+    }
+
+    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
+    @Service
+    public void reject(Person analisedBy) {
+	if (getApproved() != null) {
+	    throw new DomainException("error.request.already.processed");
+	}
+	setApproved(false);
+	setAnalizedBy(analisedBy);
+    }
+
+    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
+    @Service
+    public void approve(Person analisedBy) {
+	if (getApproved() != null) {
+	    throw new DomainException("error.request.already.processed");
+	}
+	setApproved(true);
+	setAnalizedBy(analisedBy);
+
+	CompetenceCourse course = getCompetenceCourse();
+
+	ExecutionSemester executionSemester = getExecutionPeriod();
+	CompetenceCourseInformation information = null;
+	if (course.isCompetenceCourseInformationDefinedAtExecutionPeriod(executionSemester)) {
+	    information = course.findCompetenceCourseInformationForExecutionPeriod(executionSemester);
+	    information.edit(getName(), getNameEn(), information.getBasic(), getCompetenceCourseLevel(), course
+		    .getCompetenceCourseGroupUnit());
+	    information.setRegime(getRegime());
+	    information.edit(getObjectives(), getProgram(), getEvaluationMethod(), getObjectivesEn(), getProgramEn(),
+		    getEvaluationMethodEn());
+
+	    information.setBibliographicReferences(getBibliographicReferences());
+
+	    for (; !information.getCompetenceCourseLoads().isEmpty(); information.getCompetenceCourseLoads().get(0).delete())
+		;
+	    createLoads(information);
+
+	} else {
+	    information = new CompetenceCourseInformation(getName(), getNameEn(), course.isBasic(), getRegime(),
+		    getCompetenceCourseLevel(), getExecutionPeriod(), course.getCompetenceCourseGroupUnit());
+	    information.edit(getObjectives(), getProgram(), getEvaluationMethod(), getObjectivesEn(), getProgramEn(),
+		    getEvaluationMethodEn());
+	    information.setAcronym(course.getAcronym());
+	    information.setBibliographicReferences(getBibliographicReferences());
+	    course.addCompetenceCourseInformations(information);
+
+	    createLoads(information);
+	}
+    }
+
+    private void createLoads(CompetenceCourseInformation information) {
+	CompetenceCourseLoad courseLoad = new CompetenceCourseLoad(getTheoreticalHours(), getProblemsHours(),
+		getLaboratorialHours(), getSeminaryHours(), getFieldWorkHours(), getTrainingPeriodHours(),
+		getTutorialOrientationHours(), getAutonomousWorkHours(), getEctsCredits(), Integer.valueOf(1),
+		(getRegime() == RegimeType.SEMESTRIAL) ? AcademicPeriod.SEMESTER : AcademicPeriod.YEAR);
+
+	information.addCompetenceCourseLoads(courseLoad);
+
+	if (getRegime() == RegimeType.ANUAL) {
+	    CompetenceCourseLoad secondCourseLoad = new CompetenceCourseLoad(getSecondTheoreticalHours(),
+		    getSecondProblemsHours(), getSecondLaboratorialHours(), getSecondSeminaryHours(), getSecondFieldWorkHours(),
+		    getSecondTrainingPeriodHours(), getSecondTutorialOrientationHours(), getSecondAutonomousWorkHours(),
+		    getSecondEctsCredits(), Integer.valueOf(2), AcademicPeriod.YEAR);
+
+	    information.addCompetenceCourseLoads(secondCourseLoad);
+	}
     }
 }

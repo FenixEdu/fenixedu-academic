@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.DeleteCom
 import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.EditCompetenceCourseLoad;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingCompetenceCourseInformationException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.competenceCourses.TransferCompetenceCourse;
 import net.sourceforge.fenixedu.dataTransferObject.bolonhaManager.CourseLoad;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CompetenceCourseType;
@@ -50,6 +49,9 @@ import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     private final ResourceBundle bolonhaResources = getResourceBundle("resources/BolonhaManagerResources");
@@ -997,19 +999,18 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 	return (ScientificAreaUnit) rootDomainObject.readPartyByOID(transferToScientificAreaUnitID);
     }
 
+    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
+    @Service
     public String transferCompetenceCourse() {
 	try {
 	    if (getCompetenceCourse() == null || readCompetenceCourseGroupUnitToTransferTo() == null) {
 		addErrorMessage(scouncilBundle.getString("error.transferingCompetenceCourse"));
 		return "competenceCoursesManagement";
 	    }
+	    getCompetenceCourse().transfer((CompetenceCourseGroupUnit) readCompetenceCourseGroupUnitToTransferTo());
 
-	    TransferCompetenceCourse.run(getCompetenceCourse(),
-		    (CompetenceCourseGroupUnit) readCompetenceCourseGroupUnitToTransferTo());
 	} catch (IllegalDataAccessException e) {
 	    this.addErrorMessage(scouncilBundle.getString("error.notAuthorized"));
-	} catch (FenixServiceException e) {
-	    addErrorMessage(scouncilBundle.getString("error.transferingCompetenceCourse"));
 	} catch (DomainException e) {
 	    addErrorMessage(domainResources.getString(e.getMessage()));
 	}

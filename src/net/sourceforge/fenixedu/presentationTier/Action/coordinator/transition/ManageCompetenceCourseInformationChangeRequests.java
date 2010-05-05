@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.competenceCourses.ChangeCompetenceCourseInformationChangeRequestStatus;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Person;
@@ -57,30 +56,34 @@ public class ManageCompetenceCourseInformationChangeRequests extends FenixDispat
 	return mapping.findForward("viewVersionDetails");
     }
 
-    private ActionForward modifyRequestStatus(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response, Boolean status) throws FenixFilterException, FenixServiceException {
+    public ActionForward approveRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	CompetenceCourseInformationChangeRequest changeRequest = getChangeRequest(request);
 	if (changeRequest != null && isAllowedToViewChangeRequest(getLoggedPerson(request), changeRequest)) {
 	    try {
-		ChangeCompetenceCourseInformationChangeRequestStatus.run(changeRequest, getLoggedPerson(request), status);
+		changeRequest.approve(getLoggedPerson(request));
 	    } catch (DomainException e) {
 		addActionMessage(request, e.getMessage());
 	    }
 	}
+
 	return displayRequest(mapping, form, request, response);
-    }
-
-    public ActionForward approveRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-
-	return modifyRequestStatus(mapping, form, request, response, Boolean.TRUE);
     }
 
     public ActionForward rejectRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	return modifyRequestStatus(mapping, form, request, response, Boolean.FALSE);
+	CompetenceCourseInformationChangeRequest changeRequest = getChangeRequest(request);
+	if (changeRequest != null && isAllowedToViewChangeRequest(getLoggedPerson(request), changeRequest)) {
+	    try {
+		changeRequest.reject(getLoggedPerson(request));
+	    } catch (DomainException e) {
+		addActionMessage(request, e.getMessage());
+	    }
+	}
+
+	return displayRequest(mapping, form, request, response);
     }
 
     private CompetenceCourseInformationChangeRequest getChangeRequest(HttpServletRequest request) {

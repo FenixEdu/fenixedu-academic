@@ -25,7 +25,7 @@
 		<h:outputText escape="false" value="<input alt='input.selectedDepartmentUnitID' id='selectedDepartmentUnitID' name='selectedDepartmentUnitID' type='hidden' value='#{CompetenceCourseManagement.selectedDepartmentUnitID}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.competenceCourseID' id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.idInternal}'/>"/>
 
-		<h:outputText value="<p>" escape="false"/>
+		<h:outputText value="#{scouncilBundle['transfer.to']}:<p>" escape="false"/>
 		<fc:selectOneMenu value="#{CompetenceCourseManagement.transferToDepartmentUnitID}" 
 			onchange="submit()"
 			valueChangeListener="#{CompetenceCourseManagement.onChangeDepartmentUnit}">
@@ -38,7 +38,7 @@
 			valueChangeListener="#{CompetenceCourseManagement.onChangeScientificAreaUnit}">
 			<f:selectItems binding="#{CompetenceCourseManagement.scientificAreaUnitItems}"/>
 		</fc:selectOneMenu>
-		<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
+		<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 		<h:outputText value="<p/><p>" escape="false"/>
 		<fc:selectOneMenu value="#{CompetenceCourseManagement.transferToCompetenceCourseGroupUnitID}">
 			<f:selectItems binding="#{CompetenceCourseManagement.competenceCourseGroupUnitItems}"/>
