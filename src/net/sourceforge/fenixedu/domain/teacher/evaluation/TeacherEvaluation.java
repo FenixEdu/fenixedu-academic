@@ -4,6 +4,8 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.joda.time.DateTime;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public abstract class TeacherEvaluation extends TeacherEvaluation_Base {
 
     public TeacherEvaluation() {
@@ -13,13 +15,11 @@ public abstract class TeacherEvaluation extends TeacherEvaluation_Base {
     }
 
     public TeacherEvaluationState getState() {
-	if (getAutoEvaluationMark() != null) {
-	    if (getTeacherEvaluationProcess().getFacultyEvaluationProcess().getEvaluationInterval().containsNow()) {
-		return TeacherEvaluationState.AUTO_EVALUATION;
-	    } else {
-		return null;
-	    }
-	} else if (getEvaluationMark() != null) {
+	if (getTeacherEvaluationProcess().getFacultyEvaluationProcess().getAutoEvaluationInterval().getStart().isAfterNow()) {
+	    return null;
+	} else if (getAutoEvaluationMark() == null) {
+	    return TeacherEvaluationState.AUTO_EVALUATION;
+	} else if (getEvaluationMark() == null) {
 	    return TeacherEvaluationState.EVALUATION;
 	} else {
 	    return TeacherEvaluationState.EVALUATED;
@@ -27,4 +27,9 @@ public abstract class TeacherEvaluation extends TeacherEvaluation_Base {
     }
 
     public abstract TeacherEvaluationType getType();
+
+    @Service
+    public void lickAutoEvaluationStamp() {
+	setAutoEvaluationLock(new DateTime());
+    }
 }

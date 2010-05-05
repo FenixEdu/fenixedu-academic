@@ -29,7 +29,8 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public TeacherEvaluationProcess(final FacultyEvaluationProcess facultyEvaluationProcess, final Person evaluee, final Person evaluator) {
+    public TeacherEvaluationProcess(final FacultyEvaluationProcess facultyEvaluationProcess, final Person evaluee,
+	    final Person evaluator) {
 	setFacultyEvaluationProcess(facultyEvaluationProcess);
 	setEvaluee(evaluee);
 	setEvaluator(evaluator);
@@ -48,6 +49,11 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
     public TeacherEvaluationState getState() {
 	TeacherEvaluation current = getCurrentTeacherEvaluation();
 	return current != null ? current.getState() : getFacultyEvaluationProcess().getState();
+    }
+
+    public boolean isAutoEvaluationLocked() {
+	TeacherEvaluation current = getCurrentTeacherEvaluation();
+	return current.getAutoEvaluationLock() != null;
     }
 
     public String getMark() {

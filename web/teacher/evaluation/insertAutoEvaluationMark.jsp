@@ -8,19 +8,18 @@
 <html:xhtml />
 
 <h2><bean:message bundle="RESEARCHER_RESOURCES"
-	key="label.teacher.evaluation.autoevaluation.changeEvaluationType.title" /></h2>
+	key="label.teacher.evaluation.autoevaluation.insertAutoEvaluationMark.title" /></h2>
 
-<h3 class="mtop15"><fr:view name="typeSelection" property="process.facultyEvaluationProcess.title" /></h3>
+<h3 class="mtop15"><fr:view name="process" property="facultyEvaluationProcess.title" /></h3>
 
 <p><bean:message bundle="RESEARCHER_RESOURCES"
-	key="label.teacher.evaluation.autoevaluation.changeEvaluationType.topHelpText" /></p>
+	key="label.teacher.evaluation.autoevaluation.insertAutoEvaluationMark.topHelpText" /></p>
 
-<fr:edit id="process-selection" name="typeSelection" action="/teacherEvaluation.do?method=selectEvaluationType">
+<fr:edit id="insert-mark" name="process" property="currentTeacherEvaluation"
+	action="/teacherEvaluation.do?method=setAutoEvaluationMark">
 	<fr:schema bundle="RESEARCHER_RESOURCES"
-		type="net.sourceforge.fenixedu.presentationTier.Action.teacher.evaluation.TeacherEvaluationTypeSelection">
-		<fr:slot name="type" key="label.teacher.evaluation.autoevaluation.type">
-			<fr:property name="defaultOptionHidden" value="true" />
-		</fr:slot>
+		type="net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluation">
+		<fr:slot name="autoEvaluationMark" key="label.teacher.evaluation.autoevaluation.mark" />
 	</fr:schema>
 	<fr:destination name="cancel" path="/teacherEvaluation.do?method=viewAutoEvaluation" />
 	<fr:destination name="invalid" path="/teacherEvaluation.do?method=viewAutoEvaluation" />

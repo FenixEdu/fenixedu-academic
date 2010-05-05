@@ -24,6 +24,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(module = "researcher", path = "/teacherEvaluation")
 @Forwards( { @Forward(name = "viewAutoEvaluation", path = "/teacher/evaluation/viewAutoEvaluation.jsp"),
 	@Forward(name = "changeEvaluationType", path = "/teacher/evaluation/changeEvaluationType.jsp"),
+	@Forward(name = "insertAutoEvaluationMark", path = "/teacher/evaluation/insertAutoEvaluationMark.jsp"),
 	@Forward(name = "viewEvaluation", path = "/teacher/evaluation/viewEvaluation.jsp"),
 	@Forward(name = "viewManagementInterface", path = "/teacher/evaluation/viewManagementInterface.jsp") })
 public class TeacherEvaluationDA extends FenixDispatchAction {
@@ -53,24 +54,29 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 	return mapping.findForward("changeEvaluationType");
     }
 
-    public ActionForward insertAutoEvaluationMark(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward selectEvaluationType(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	TeacherEvaluationTypeSelection selection = (TeacherEvaluationTypeSelection) getRenderedObject("process-selection");
 	selection.createEvaluation();
+	return viewAutoEvaluation(mapping, form, request, response);
+    }
+
+    public ActionForward insertAutoEvaluationMark(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	TeacherEvaluationProcess process = getDomainObject(request, "process");
+	request.setAttribute("process", process);
+	return mapping.findForward("insertAutoEvaluationMark");
+    }
+
+    public ActionForward setAutoEvaluationMark(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	return viewAutoEvaluation(mapping, form, request, response);
     }
 
     public ActionForward lockAutoEvaluation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	TeacherEvaluationTypeSelection selection = (TeacherEvaluationTypeSelection) getRenderedObject("process-selection");
-	selection.createEvaluation();
-	return viewAutoEvaluation(mapping, form, request, response);
-    }
-
-    public ActionForward selectEvaluationType(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	TeacherEvaluationTypeSelection selection = (TeacherEvaluationTypeSelection) getRenderedObject("process-selection");
-	selection.createEvaluation();
+	TeacherEvaluationProcess process = getDomainObject(request, "process");
+	process.getCurrentTeacherEvaluation().lickAutoEvaluationStamp();
 	return viewAutoEvaluation(mapping, form, request, response);
     }
 

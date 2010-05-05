@@ -35,16 +35,37 @@
 		</fr:layout>
 	</fr:view>
 
-	<p><html:link action="/teacherEvaluation.do?method=changeEvaluationType" paramId="process" paramName="process"
-		paramProperty="externalId">
-		<bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.autoevaluation.changeEvaluationType" />
-	</html:link> | <html:link action="/teacherEvaluation.do?method=insertAutoEvaluationMark" paramId="process" paramName="process"
-		paramProperty="externalId">
-		<bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.autoevaluation.insertMark" />
-	</html:link> | <html:link action="/teacherEvaluation.do?method=lockAutoEvaluation" paramId="process" paramName="process"
-		paramProperty="externalId">
-		<bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.autoevaluation.lock" />
-	</html:link></p>
+	<logic:notEqual name="process" property="autoEvaluationLocked" value="true">
+		<p><html:link action="/teacherEvaluation.do?method=changeEvaluationType" paramId="process" paramName="process"
+			paramProperty="externalId">
+			<bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.autoevaluation.changeEvaluationType" />
+		</html:link> | <html:link action="/teacherEvaluation.do?method=insertAutoEvaluationMark" paramId="process" paramName="process"
+			paramProperty="externalId">
+			<bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.autoevaluation.insertMark" />
+		</html:link> | <a href="#" onclick="javascript:f();"> <bean:message bundle="RESEARCHER_RESOURCES"
+			key="label.teacher.evaluation.autoevaluation.lock" /> </a></p>
+	</logic:notEqual>
+
+	<script type="text/javascript">
+	function f() {
+		if (confirm("<bean:message bundle="RESEARCHER_RESOURCES"
+				key="label.teacher.evaluation.autoevaluation.lock.confirm" />")) {
+			document.getElementById("lockMark").submit();
+		}
+	}
+	</script>
+
+	<div style="display: inline"><bean:define id="processId" name="process" property="externalId" />
+	<form method="post" id="lockMark"
+		action="<%=request.getContextPath()
+								+ "/researcher/teacherEvaluation.do?method=lockAutoEvaluation&process="
+								+ processId%>">
+	</form>
+	</div>
+
+	<logic:present name="process" property="currentTeacherEvaluation">
+		I has it.
+	</logic:present>
 
 	<logic:notPresent name="process" property="teacherEvaluation">
 		<fr:create id="process-selection"

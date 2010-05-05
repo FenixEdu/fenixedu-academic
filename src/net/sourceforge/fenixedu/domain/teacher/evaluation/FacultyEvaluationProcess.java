@@ -87,12 +87,9 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base {
     public TeacherEvaluationState getState() {
 	if (getAutoEvaluationInterval().isAfterNow()) {
 	    return null;
-	} else if (getAutoEvaluationInterval().containsNow()) {
+	} else {
 	    return TeacherEvaluationState.AUTO_EVALUATION;
-	} else if (getEvaluationInterval().containsNow()) {
-	    return TeacherEvaluationState.EVALUATION;
 	}
-	return null;
     }
 
 }
