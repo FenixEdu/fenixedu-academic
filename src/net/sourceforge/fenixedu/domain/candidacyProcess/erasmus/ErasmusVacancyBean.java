@@ -16,8 +16,14 @@ public class ErasmusVacancyBean implements java.io.Serializable {
 
     private Integer numberOfVacancies;
 
+    private ErasmusVacancy vacancy;
+
     public ErasmusVacancyBean() {
 
+    }
+
+    public ErasmusVacancyBean(ErasmusVacancy vacancy) {
+	this.vacancy = vacancy;
     }
 
     public UniversityUnit getUniversity() {
@@ -52,4 +58,11 @@ public class ErasmusVacancyBean implements java.io.Serializable {
         this.numberOfVacancies = numberOfVacancies;
     }
 
+    public ErasmusVacancy getVacancy() {
+	return this.vacancy;
+    }
+
+    public void setVacancy(final ErasmusVacancy vacancy) {
+	this.vacancy = vacancy;
+    }
 }

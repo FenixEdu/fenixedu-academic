@@ -12,6 +12,10 @@
 <bean:define id="processId" name="process" property="idInternal" />
 <bean:define id="processName" name="processName" />
 
+<html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<span class="error0"> <bean:write name="message" /> </span>
+</html:messages>
+
 <ul>
 	<li>
 		<html:link action='<%= "/caseHandling" + processName.toString() + ".do?method=prepareExecuteInsertErasmusVacancy&amp;processId=" + processId.toString() %>'>
@@ -33,5 +37,12 @@
 			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 	        <fr:property name="columnClasses" value="width12em,width40em"/>
 	        <fr:property name="sortBy" value="universityUnit.country.localizedName=asc,universityUnit.nameI18n=asc" />
-		</fr:layout>	
+
+			<fr:property name="linkFormat(delete)" value="<%= String.format("/caseHandlingErasmusCandidacyProcess.do?method=executeRemoveVacancy&amp;processId=%s&amp;vacancyExternalId=${externalId}", processId.toString()) %>" />
+			<fr:property name="key(delete)" value="label.erasmus.vacancy.vacancy.removal" />
+			<fr:property name="bundle(delete)" value="ACADEMIC_OFFICE_RESOURCES" />
+			<fr:property name="confirmationKey(delete)" value="message.erasmus.vacancy.confirm.vacancy.removal" />
+			<fr:property name="confirmationBundle(delete)" value="ACADEMIC_OFFICE_RESOURCES" />
+	        
+		</fr:layout>		
 </fr:view>

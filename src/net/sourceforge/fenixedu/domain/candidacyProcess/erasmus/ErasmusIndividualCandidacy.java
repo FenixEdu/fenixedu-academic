@@ -105,4 +105,9 @@ public class ErasmusIndividualCandidacy extends ErasmusIndividualCandidacy_Base 
 	return getCandidacyProcess().getDisplayName() + (hasSelectedDegree() ? ": " + getSelectedDegree().getNameI18N() : "");
     }
 
+    @Override
+    public ErasmusIndividualCandidacyProcess getCandidacyProcess() {
+	return (ErasmusIndividualCandidacyProcess) super.getCandidacyProcess();
+    }
+
 }

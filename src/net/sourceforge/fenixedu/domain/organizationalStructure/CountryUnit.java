@@ -143,7 +143,10 @@ public class CountryUnit extends CountryUnit_Base {
 	    return null;
 	}
 
-	for (Unit unit : readAllCountryUnits()) {
+	final PartyType partyType = PartyType.readPartyTypeByType(PartyTypeEnum.COUNTRY);
+	Set<Unit> units = (Set) partyType.getPartiesSet();
+
+	for (Unit unit : units) {
 
 	    if (!(unit instanceof CountryUnit)) {
 		System.out.println(String.format("Unit is not country %s", unit.getName()));

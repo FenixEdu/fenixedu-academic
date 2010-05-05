@@ -42,6 +42,8 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
     static private List<Activity> activities = new ArrayList<Activity>();
     static {
 	activities.add(new ViewErasmusVancacies());
+	activities.add(new InsertErasmusVacancy());
+	activities.add(new RemoveErasmusVacancy());
     }
 
     public ErasmusCandidacyProcess() {
@@ -239,6 +241,61 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 	    new ErasmusVacancy(process.getCandidacyPeriod(), bean.getDegree(), bean.getUniversity(), bean.getNumberOfVacancies());
 
 	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return false;
+	}
+
+	@Override
+	public Boolean isVisibleForCoordinator() {
+	    return false;
+	}
+
+	@Override
+	public Boolean isVisibleForGriOffice() {
+	    return false;
+	}
+
+    }
+
+    static private class RemoveErasmusVacancy extends Activity<ErasmusCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(ErasmusCandidacyProcess process, IUserView userView) {
+	    if (!isGriOfficeEmployee(userView) && !isManager(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected ErasmusCandidacyProcess executeActivity(ErasmusCandidacyProcess process, IUserView userView, Object object) {
+	    ErasmusVacancyBean bean = (ErasmusVacancyBean) object;
+	    ErasmusVacancy vacancy = bean.getVacancy();
+
+	    if (vacancy.isVacancyAssociatedToAnyCandidacy()) {
+		throw new DomainException("error.erasmus.vacancy.is.associated.to.candidacies");
+	    }
+	    
+	    vacancy.delete();
+
+	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return false;
+	}
+
+	@Override
+	public Boolean isVisibleForCoordinator() {
+	    return false;
+	}
+
+	@Override
+	public Boolean isVisibleForGriOffice() {
+	    return false;
 	}
 
     }

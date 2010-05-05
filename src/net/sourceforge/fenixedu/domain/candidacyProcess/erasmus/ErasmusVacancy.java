@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -48,6 +51,33 @@ public class ErasmusVacancy extends ErasmusVacancy_Base {
     public static ErasmusVacancy createVacancy(final ErasmusCandidacyPeriod period, Degree degree, UniversityUnit unit,
 	    Integer numberOfVacancies) {
 	return new ErasmusVacancy(period, degree, unit, numberOfVacancies);
+    }
+
+    public List<ErasmusIndividualCandidacyProcess> getStudentApplicationProcesses() {
+	List<ErasmusIndividualCandidacyProcess> processList = new ArrayList<ErasmusIndividualCandidacyProcess>();
+
+	for (ErasmusStudentData data : getCandidacies()) {
+	    processList.add(data.getErasmusIndividualCandidacy().getCandidacyProcess());
+	}
+
+	return processList;
+    }
+
+    public boolean isVacancyAssociatedToAnyCandidacy() {
+	return hasAnyCandidacies();
+    }
+
+    public void delete() {
+	if (isVacancyAssociatedToAnyCandidacy()) {
+	    throw new DomainException("error.erasmus.vacancy.is.associated.to.candidacies");
+	}
+
+	removeUniversityUnit();
+	removeDegree();
+	removeCandidacyPeriod();
+	removeRootDomainObject();
+
+	deleteDomainObject();
     }
 
 }

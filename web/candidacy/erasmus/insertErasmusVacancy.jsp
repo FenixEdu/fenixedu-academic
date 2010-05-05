@@ -13,11 +13,21 @@
 <bean:define id="processId" name="process" property="idInternal" />
 <bean:define id="processName" name="processName" />
 
+<p>
+<html:link action='<%= "/caseHandling" + processName.toString() + ".do?method=prepareExecuteViewErasmusVancacies&amp;processId=" + processId.toString() %>'>
+	<bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
+</html:link>
+</p>
+
+<html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<span class="error0"> <bean:write name="message" /> </span><br/>
+</html:messages>
+
 
 <fr:form action='<%="/caseHandling" + processName + ".do?method=executeInsertErasmusVacancy&processId=" + processId.toString() %>' >
 	<fr:edit id="erasmus.vacancy.bean" name="erasmusVacancyBean" visible="false" />
 	
-	<p><strong><bean:message key="label.erasmus.insertVacancy.choose.university" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></p>:
+	<p><strong><bean:message key="label.erasmus.insertVacancy.choose.university" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></p>
 	<fr:edit 	name="erasmusVacancyBean"
 				id="erasmus.vacancies.country.and.university"
 				schema="ErasmusVacancy.insert.choose.country.university">
@@ -39,6 +49,7 @@
 	        <fr:property name="columnClasses" value="width12em,width40em"/>
 		</fr:layout>				
 	</fr:edit>
-
+	
+	<html:submit><bean:message key="label.insert" bundle="APPLICATION_RESOURCES" /></html:submit>
 </fr:form>
 

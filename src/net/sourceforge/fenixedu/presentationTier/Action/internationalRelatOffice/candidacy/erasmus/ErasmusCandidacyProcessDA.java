@@ -8,12 +8,15 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusVacancy;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusVacancyBean;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CountryUnit;
@@ -30,6 +33,7 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.servlets.filters.I18NFilter;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -237,14 +241,16 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
     }
 
     public ActionForward executeInsertErasmusVacancy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	ErasmusCandidacyProcess process = getProcess(request);
 	ErasmusVacancyBean bean = getErasmusVacancyBean();
 	
 	if(process.getCandidacyPeriod().existsFor(bean.getUniversity(), bean.getDegree())) {
-	    addErrorMessage(request, "error", "error.erasmus.insert.vacancy.already.exists", null);
+	    addActionMessage(request, "error.erasmus.insert.vacancy.already.exists");
 	    return mapping.findForward("insert-university-agreement");
 	}
+
+	executeActivity(getProcess(request), "InsertErasmusVacancy", bean);
 	
 	return prepareExecuteViewErasmusVancacies(mapping, form, request, response);
     }
@@ -252,9 +258,26 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
     public ActionForward selectCountryForVacancyInsertion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	ErasmusVacancyBean bean = getErasmusVacancyBean();
+
+	RenderUtils.invalidateViewState();
+
 	request.setAttribute("erasmusVacancyBean", bean);
 
 	return mapping.findForward("insert-university-agreement");
+    }
+
+    public ActionForward executeRemoveVacancy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	ErasmusVacancy vacancy = getDomainObject(request, "vacancyExternalId");
+
+	if (vacancy.hasAnyCandidacies()) {
+	    addActionMessage(request, "error.erasmus.vacancy.has.associated.candidacies");
+	    return prepareExecuteViewErasmusVancacies(mapping, form, request, response);
+	}
+
+	executeActivity(getProcess(request), "RemoveErasmusVacancy", new ErasmusVacancyBean(vacancy));
+
+	return prepareExecuteViewErasmusVancacies(mapping, form, request, response);
     }
 
     private ErasmusVacancyBean getErasmusVacancyBean() {
