@@ -7,6 +7,7 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.FacultyEvaluationProcess;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.FacultyEvaluationProcessBean;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.FileUploadBean;
@@ -16,7 +17,10 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -143,10 +147,15 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
     public ActionForward uploadEvaluators(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	final FileUploadBean fileUploadBean = (FileUploadBean) getRenderedObject();
-	fileUploadBean.consumeInputStream();
-	fileUploadBean.upload();
 	final FacultyEvaluationProcess facultyEvaluationProcess = fileUploadBean.getFacultyEvaluationProcess();
 	request.setAttribute("facultyEvaluationProcess", facultyEvaluationProcess);
+	fileUploadBean.consumeInputStream();
+	try {
+	    fileUploadBean.upload();
+	} catch (final DomainException ex) {
+	    addActionMessage(request, ex.getMessage());
+	    RenderUtils.invalidateViewState();
+	}
 	return mapping.findForward("viewManagementInterface");
     }
 

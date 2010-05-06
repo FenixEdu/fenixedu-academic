@@ -11,6 +11,13 @@
 	<bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.management.title"/>
 </h2>
 
+<span class="error"><!-- Error messages go here --><html:errors /></span>
+<html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
+	<span class="error"> <bean:write name="message" /> </span>
+	<br />
+</html:messages>
+
+
 <logic:present name="facultyEvaluationProcessCreationBean">
 	<fr:form action="/teacherEvaluation.do?method=createFacultyEvaluationProcess">
 		<fr:edit id="facultyEvaluationProcessCreationBean" name="facultyEvaluationProcessCreationBean">

@@ -39,7 +39,7 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base {
 
     public void uploadEvaluators(final byte[] bytes) {
 	if (!getAutoEvaluationInterval().isAfterNow()) {
-	    throw new DomainException("Evaluation process is already under way.");
+	    throw new DomainException("error.evaluation.process.already.under.way");
 	}
 	final String contents = new String(bytes);
 	final String[] lines = contents.split("\n");
