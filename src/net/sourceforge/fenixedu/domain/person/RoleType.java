@@ -100,12 +100,14 @@ public enum RoleType {
     IDENTIFICATION_CARD_MANAGER("Gestão de Cartões"),
 
     TUTORSHIP("Tutorship"),
-    
+
     EXTERNAL_SUPERVISOR("External Supervisor"),
-    
+
     PUBLIC_RELATIONS_OFFICE("Public Relations Office"),
 
-    NAPE("NAPE");
+    NAPE("NAPE"),
+
+    RESIDENCE_MANAGER("Residence Manager");
 
     public String getName() {
 	return name();

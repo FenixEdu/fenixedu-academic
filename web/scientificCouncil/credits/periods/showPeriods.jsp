@@ -38,12 +38,25 @@
 				<html:link page="/defineCreditsPeriods.do?method=closeAllPeriodsByExecutionSemester" paramName="teacherCreditsBean" paramProperty="executionPeriod.idInternal" paramId="executionPeriodId">
 						<bean:message key="link.teacherCredits.close"/>
 				</html:link>
+				<bean:message key="label.teacherCredits.close.message"/>
 			</logic:equal>
 			<logic:equal name="closePeriodTeacherCredits" value="true">
-				<html:link page="/defineCreditsPeriods.do?method=openAllPeriodsByExecutionSemester" paramName="teacherCreditsBean" paramProperty="executionPeriod.idInternal" paramId="executionPeriodId">
-						<bean:message key="link.teacherCredits.open"/>
-				</html:link>
-			</logic:equal>
+				<p class="mvert05">
+				<a href="#" onclick="check(document.getElementById('warning'));return false;"><bean:message key="link.teacherCredits.open"/></a>  
+				<bean:message key="label.teacherCredits.open.message"/>
+				</p>
+				
+				<div id="warning" class="dnone">
+					<div class="warning1">
+						<p class="mvert05"><b><bean:message key="label.teacherCredits.open.attention.message"/></b><bean:message key="label.teacherCredits.open.information.message"/></p>
+						<p class="mvert05"><bean:message key="label.teacherCredits.open.confirmation.message"/> </p>
+						<p class="mtop1 mbottom05">
+							<input type="button" value="Abrir">
+							<input type="button" value="Cancelar" onclick="check(document.getElementById('warning'));return false;"/>
+						</p>
+					</div>
+				</div>
+				</logic:equal>
 		</logic:present>
 		<h3 class="mtop15 mbottom05"><bean:message key="label.teacher"/></h3>
 		<fr:view name="teacherCreditsBean" schema="teacher.credits.period.view" layout="tabular">	
@@ -72,3 +85,17 @@
 	</logic:notEmpty>
 			
 </logic:present>
+
+<script type="text/javascript">
+function check(e,v){
+	if (e.className == "dnone")
+  	{
+	  e.className = "dblock";
+	  v.value = "-";
+	}
+	else {
+	  e.className = "dnone";
+  	  v.value = "+";
+	}
+}
+</script>

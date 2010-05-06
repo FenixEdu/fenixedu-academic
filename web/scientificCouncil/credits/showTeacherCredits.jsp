@@ -58,11 +58,13 @@
 				<html:link action="<%= "/showFullTeacherCreditsSheet.do?method=editTeacherCredits&executionPeriodId=" + executionPeriodId + "&teacherId="+teacherId%>">
 					<bean:message key="link.teacherCredits.approve"/>
 				</html:link>
+				<bean:message key="label.teacherCredits.approve.message"/>
 		</logic:equal>
 		<logic:equal name="simulateCalc" value="true">
 			<html:link action="<%= "/showFullTeacherCreditsSheet.do?method=simulateCalcTeacherCredits&executionPeriodId=" + executionPeriodId + "&simulate=false&teacherId="+teacherId%>"> 
 					<bean:message key="link.teacherCredits.simulate"/>
 			</html:link>
+			<bean:message key="label.teacherCredits.simulate.message"/>
 		</logic:equal> 
 	</li>
 	</logic:present>
