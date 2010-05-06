@@ -38,4 +38,9 @@ public abstract class TeacherEvaluation extends TeacherEvaluation_Base {
     public void lickAutoEvaluationStamp() {
 	setAutoEvaluationLock(new DateTime());
     }
+
+    @Service
+    public void lickEvaluationStamp() {
+	setEvaluationLock(new DateTime());
+    }
 }

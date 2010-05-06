@@ -15,15 +15,16 @@
 <p><bean:message bundle="RESEARCHER_RESOURCES"
 	key="label.teacher.evaluation.autoevaluation.changeEvaluationType.topHelpText" /></p>
 
-<fr:edit id="process-selection" name="typeSelection" action="/teacherEvaluation.do?method=selectEvaluationType">
+<bean:define id="action" name="action"/>
+<fr:edit id="process-selection" name="typeSelection" action="<%= "/teacherEvaluation.do?method=selectEvaluationType&action="+action%>">
 	<fr:schema bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.presentationTier.Action.teacher.evaluation.TeacherEvaluationTypeSelection">
 		<fr:slot name="type" key="label.teacher.evaluation.autoevaluation.type">
 			<fr:property name="defaultOptionHidden" value="true" />
 		</fr:slot>
 	</fr:schema>
-	<fr:destination name="cancel" path="/teacherEvaluation.do?method=viewAutoEvaluation" />
-	<fr:destination name="invalid" path="/teacherEvaluation.do?method=viewAutoEvaluation" />
+	<fr:destination name="cancel" path="<%= "/teacherEvaluation.do?method="+action%>" />
+	<fr:destination name="invalid" path="<%= "/teacherEvaluation.do?method="+action%>" />
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle5 thlight thleft mtop05" />
 	</fr:layout>

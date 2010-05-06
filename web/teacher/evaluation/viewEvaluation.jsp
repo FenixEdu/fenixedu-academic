@@ -37,41 +37,51 @@
 	</fr:view>
 
 	<p>
-	<logic:equal name="process" property="hasTeacherEvaluation" value="false">
-		<html:link action="/teacherEvaluation.do?method=changeEvaluationType" paramId="process" paramName="process" paramProperty="externalId">
-			<bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.autoevaluation.changeEvaluationType" />
-		</html:link> 
-	</logic:equal>
-	<logic:equal name="process" property="hasTeacherEvaluation" value="true">
-		<logic:equal name="process" property="inEvaluationInterval" value="true">
+	<logic:empty name="process" property="teacherEvaluationSet">
+		<logic:equal name="process" property="inEvaluation" value="true">
+			<html:link action="/teacherEvaluation.do?method=changeEvaluationType" paramId="process" paramName="process" paramProperty="externalId">
+				<bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.autoevaluation.changeEvaluationType" />
+			</html:link> 
+		</logic:equal>
+	</logic:empty>
+	<logic:notEmpty name="process" property="teacherEvaluationSet">
+		<logic:equal name="process" property="inEvaluation" value="true">
 			<html:link action="/teacherEvaluation.do?method=insertEvaluationMark" paramId="process" paramName="process" paramProperty="externalId">
 				<bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.autoevaluation.insertMark" />
 			</html:link>
 			<logic:notEmpty name="process" property="evaluationMark">
-				<a href="#" onclick="javascript:f();"> <bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.evaluation.lock" /> </a>			
+				<bean:define id="processId" name="process" property="externalId" />
+				<a href="#" style="cursor: pointer;" onclick="<%="check(document.getElementById('warning"+processId+"'));return false;"%>"> <bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.evaluation.lock" /> </a>
+				
+				<div id="<%="warning"+processId%>" class="dnone">
+					<div class="warning1">
+						<p class="mvert05"><b>Atenção:</b> Sed quis erat orci, sed iaculis arcu. Praesent non metus quam. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+						<p class="mvert05"><bean:message key="label.teacher.evaluation.evaluation.lock.confirm" bundle="RESEARCHER_RESOURCES"/></p>
+						<p class="mtop1 mbottom05">
+						<form method="post" id="lockMark" action="<%=request.getContextPath()+ "/researcher/teacherEvaluation.do?method=lockEvaluation&process="+ processId%>">
+							<html:submit > Lacrar</html:submit>
+							<input value="Cancelar" onclick="check(document.getElementById('<%="warning"+processId%>'));return false;" type="button">
+						</form>
+						</p>
+					</div>
+				</div>
 			</logic:notEmpty>
 		</logic:equal>
-	</logic:equal>
+	</logic:notEmpty>
 	</p>
 	
 	<script type="text/javascript">
-	function f() {
-		if (confirm("<bean:message bundle="RESEARCHER_RESOURCES"
-				key="label.teacher.evaluation.evaluation.lock.confirm" />")) {
-			document.getElementById("lockMark").submit();
+	function check(e,v){
+		if (e.className == "dnone") {
+		  e.className = "dblock";
+		  v.value = "-";
+		} else {
+		  e.className = "dnone";
+	  	  v.value = "+";
 		}
 	}
 	</script>
-
-	<div style="display: inline"><bean:define id="processId" name="process" property="externalId" />
-	<form method="post" id="lockMark"
-		action="<%=request.getContextPath()
-								+ "/researcher/teacherEvaluation.do?method=lockAutoEvaluation&process="
-								+ processId%>">
-	</form>
-	</div>
-	
-	<logic:equal name="process" property="hasTeacherEvaluation" value="true">
+	<logic:notEmpty name="process" property="teacherEvaluationSet">
 		<strong><fr:view name="process" property="type" layout="null-as-label"/> (<fr:view name="process" property="facultyEvaluationProcess.title" />)</strong>
 		<bean:define id="externalId" name="process" property="externalId"/>
 		<fr:view name="process" property="teacherEvaluationFileBeanSet">
@@ -89,5 +99,5 @@
 				<fr:property name="visibleIf(upload)" value="canUploadEvaluationFile" />
 			</fr:layout>
 		</fr:view>
-	</logic:equal>
+	</logic:notEmpty>
 </logic:iterate>

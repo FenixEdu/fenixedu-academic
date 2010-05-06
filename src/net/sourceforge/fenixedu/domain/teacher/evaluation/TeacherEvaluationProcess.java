@@ -58,14 +58,14 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
 	return current != null && current.getAutoEvaluationLock() != null;
     }
 
+    public boolean isEvaluationLocked() {
+	TeacherEvaluation current = getCurrentTeacherEvaluation();
+	return current != null && current.getEvaluationLock() != null;
+    }
+
     public String getAutoEvaluationMark() {
 	TeacherEvaluation current = getCurrentTeacherEvaluation();
 	return current != null ? current.getAutoEvaluationMark() : null;
-    }
-
-    public TeacherEvaluationType getType() {
-	TeacherEvaluation current = getCurrentTeacherEvaluation();
-	return current != null ? current.getType() : null;
     }
 
     public String getEvaluationMark() {
@@ -73,9 +73,9 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
 	return current != null ? current.getEvaluationMark() : null;
     }
 
-    public boolean isEvaluationLocked() {
-	return true;// getTeacherEvaluation() != null &&
-	// getTeacherEvaluation().getEvaluationLock() != null;
+    public TeacherEvaluationType getType() {
+	TeacherEvaluation current = getCurrentTeacherEvaluation();
+	return current != null ? current.getType() : null;
     }
 
     public boolean isInEvaluationInterval() {
@@ -104,5 +104,9 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
 	    }
 	}
 	return teacherEvaluationFileBeans;
+    }
+
+    public boolean isInEvaluation() {
+	return isInEvaluationInterval() && !isEvaluationLocked();
     }
 }

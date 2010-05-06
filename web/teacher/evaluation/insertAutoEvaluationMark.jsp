@@ -15,14 +15,15 @@
 <p><bean:message bundle="RESEARCHER_RESOURCES"
 	key="label.teacher.evaluation.autoevaluation.insertAutoEvaluationMark.topHelpText" /></p>
 
-<fr:edit id="insert-mark" name="process" property="currentTeacherEvaluation"
-	action="/teacherEvaluation.do?method=setAutoEvaluationMark">
+<bean:define id="action" name="action"/>
+<bean:define id="slut" name="slot"/>
+<fr:edit id="insert-mark" name="process" property="currentTeacherEvaluation" action="<%="/teacherEvaluation.do?method="+action%>">
 	<fr:schema bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluation">
-		<fr:slot name="autoEvaluationMark" key="label.teacher.evaluation.autoevaluation.mark" />
+		<fr:slot name="<%=slut.toString()%>" key="label.teacher.evaluation.autoevaluation.mark" />
 	</fr:schema>
-	<fr:destination name="cancel" path="/teacherEvaluation.do?method=viewAutoEvaluation" />
-	<fr:destination name="invalid" path="/teacherEvaluation.do?method=viewAutoEvaluation" />
+	<fr:destination name="cancel" path="<%="/teacherEvaluation.do?method="+action%>" />
+	<fr:destination name="invalid" path="<%="/teacherEvaluation.do?method="+action%>" />
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle5 thlight thleft mtop05" />
 	</fr:layout>

@@ -36,7 +36,7 @@
 	</fr:view>
 
 	<logic:notEqual name="process" property="autoEvaluationLocked" value="true">
-		<p><html:link action="/teacherEvaluation.do?method=changeEvaluationType" paramId="process" paramName="process"
+		<p><html:link action="/teacherEvaluation.do?method=changeAutoEvaluationType" paramId="process" paramName="process"
 			paramProperty="externalId">
 			<bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.autoevaluation.changeEvaluationType" />
 		</html:link> | <html:link action="/teacherEvaluation.do?method=insertAutoEvaluationMark" paramId="process" paramName="process"
