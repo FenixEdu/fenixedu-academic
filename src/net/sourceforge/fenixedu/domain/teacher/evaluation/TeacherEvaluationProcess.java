@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.domain.teacher.evaluation;
 
 import java.text.Collator;
 import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -53,16 +55,54 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
 
     public boolean isAutoEvaluationLocked() {
 	TeacherEvaluation current = getCurrentTeacherEvaluation();
-	return current.getAutoEvaluationLock() != null;
+	return current != null && current.getAutoEvaluationLock() != null;
     }
 
-    public String getMark() {
+    public String getAutoEvaluationMark() {
 	TeacherEvaluation current = getCurrentTeacherEvaluation();
-	return current != null ? current.getEvaluationMark() : null;
+	return current != null ? current.getAutoEvaluationMark() : null;
     }
 
     public TeacherEvaluationType getType() {
 	TeacherEvaluation current = getCurrentTeacherEvaluation();
 	return current != null ? current.getType() : null;
+    }
+
+    public String getEvaluationMark() {
+	TeacherEvaluation current = getCurrentTeacherEvaluation();
+	return current != null ? current.getEvaluationMark() : null;
+    }
+
+    public boolean isEvaluationLocked() {
+	return true;// getTeacherEvaluation() != null &&
+	// getTeacherEvaluation().getEvaluationLock() != null;
+    }
+
+    public boolean isInEvaluationInterval() {
+	return getFacultyEvaluationProcess().getEvaluationInterval().containsNow();
+    }
+
+    public Set<TeacherEvaluationFileBean> getTeacherEvaluationFileBeanSet() {
+	Set<TeacherEvaluationFileBean> teacherEvaluationFileBeans = new HashSet<TeacherEvaluationFileBean>();
+	TeacherEvaluation currentTeacherEvaluation = getCurrentTeacherEvaluation();
+	if (currentTeacherEvaluation != null) {
+	    for (TeacherEvaluationFileType teacherEvaluationFileType : currentTeacherEvaluation.getEvaluationFileSet()) {
+		TeacherEvaluationFileBean e = new TeacherEvaluationFileBean(currentTeacherEvaluation, teacherEvaluationFileType);
+		teacherEvaluationFileBeans.add(e);
+	    }
+	}
+	return teacherEvaluationFileBeans;
+    }
+
+    public Set<TeacherEvaluationFileBean> getTeacherAutoEvaluationFileBeanSet() {
+	Set<TeacherEvaluationFileBean> teacherEvaluationFileBeans = new HashSet<TeacherEvaluationFileBean>();
+	TeacherEvaluation currentTeacherEvaluation = getCurrentTeacherEvaluation();
+	if (currentTeacherEvaluation != null) {
+	    for (TeacherEvaluationFileType teacherEvaluationFileType : currentTeacherEvaluation.getAutoEvaluationFileSet()) {
+		TeacherEvaluationFileBean e = new TeacherEvaluationFileBean(currentTeacherEvaluation, teacherEvaluationFileType);
+		teacherEvaluationFileBeans.add(e);
+	    }
+	}
+	return teacherEvaluationFileBeans;
     }
 }

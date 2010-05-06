@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.teacher.evaluation;
 
+import java.util.Set;
+
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.joda.time.DateTime;
@@ -27,6 +29,10 @@ public abstract class TeacherEvaluation extends TeacherEvaluation_Base {
     }
 
     public abstract TeacherEvaluationType getType();
+
+    public abstract Set<TeacherEvaluationFileType> getAutoEvaluationFileSet();
+
+    public abstract Set<TeacherEvaluationFileType> getEvaluationFileSet();
 
     @Service
     public void lickAutoEvaluationStamp() {

@@ -18074,3 +18074,10 @@ relation TeacherEvaluationTeacherEvaluationFile {
 		multiplicity *;
 	}
 }
+
+relation TeacherEvaluationFilePerson {
+	Person playsRole createdBy;
+	teacher.evaluation.TeacherEvaluationFile playsRole teacherEvaluationFile {
+		multiplicity *;
+	}
+}

@@ -15,6 +15,8 @@ public class FileUploadBean implements Serializable {
     private String displayName;
     private byte[] bytes;
     private FacultyEvaluationProcess facultyEvaluationProcess;
+    private TeacherEvaluationProcess teacherEvaluationProcess;
+    private TeacherEvaluationFileType teacherEvaluationFileType;
 
     public FileUploadBean() {
     }
@@ -22,6 +24,13 @@ public class FileUploadBean implements Serializable {
     public FileUploadBean(final FacultyEvaluationProcess facultyEvaluationProcess) {
 	this();
 	this.facultyEvaluationProcess = facultyEvaluationProcess;
+    }
+
+    public FileUploadBean(final TeacherEvaluationProcess teacherEvaluationProcess,
+	    TeacherEvaluationFileType teacherEvaluationFileType) {
+	this();
+	this.teacherEvaluationProcess = teacherEvaluationProcess;
+	this.teacherEvaluationFileType = teacherEvaluationFileType;
     }
 
     public InputStream getInputStream() {
@@ -49,19 +58,19 @@ public class FileUploadBean implements Serializable {
     }
 
     public byte[] getBytes() {
-        return bytes;
+	return bytes;
     }
 
     public void setBytes(byte[] bytes) {
-        this.bytes = bytes;
+	this.bytes = bytes;
     }
 
     public FacultyEvaluationProcess getFacultyEvaluationProcess() {
-        return facultyEvaluationProcess;
+	return facultyEvaluationProcess;
     }
 
     public void setFacultyEvaluationProcess(FacultyEvaluationProcess facultyEvaluationProcess) {
-        this.facultyEvaluationProcess = facultyEvaluationProcess;
+	this.facultyEvaluationProcess = facultyEvaluationProcess;
     }
 
     public void consumeInputStream() throws IOException {
@@ -73,6 +82,22 @@ public class FileUploadBean implements Serializable {
     @Service
     public void upload() {
 	facultyEvaluationProcess.uploadEvaluators(bytes);
+    }
+
+    public TeacherEvaluationProcess getTeacherEvaluationProcess() {
+	return teacherEvaluationProcess;
+    }
+
+    public void setTeacherEvaluationProcess(TeacherEvaluationProcess teacherEvaluationProcess) {
+	this.teacherEvaluationProcess = teacherEvaluationProcess;
+    }
+
+    public TeacherEvaluationFileType getTeacherEvaluationFileType() {
+	return teacherEvaluationFileType;
+    }
+
+    public void setTeacherEvaluationFileType(TeacherEvaluationFileType teacherEvaluationFileType) {
+	this.teacherEvaluationFileType = teacherEvaluationFileType;
     }
 
 }

@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.teacher.evaluation;
 
+import java.util.HashSet;
+import java.util.Set;
 
 public class NoEvaluation extends NoEvaluation_Base {
     public NoEvaluation(TeacherEvaluationProcess process) {
@@ -12,4 +14,13 @@ public class NoEvaluation extends NoEvaluation_Base {
 	return TeacherEvaluationType.NO_EVALUATION;
     }
 
+    @Override
+    public Set<TeacherEvaluationFileType> getAutoEvaluationFileSet() {
+	return new HashSet<TeacherEvaluationFileType>();
+    }
+
+    @Override
+    public Set<TeacherEvaluationFileType> getEvaluationFileSet() {
+	return new HashSet<TeacherEvaluationFileType>();
+    }
 }
