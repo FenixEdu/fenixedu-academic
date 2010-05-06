@@ -83,7 +83,7 @@ abstract public class StudentCurricularPlanEnrolment {
 	    assertStudentEnrolmentPreConditions();
 
 	} else {
-	    throw new DomainException("error.invalid.user");
+	    assertOtherRolesPreConditions();
 	}
     }
 
@@ -222,6 +222,10 @@ abstract public class StudentCurricularPlanEnrolment {
 	}
     }
 
+    protected void assertOtherRolesPreConditions() {
+	throw new DomainException("error.invalid.user");
+    }
+
     private RuleResult evaluateDegreeModules(final Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> degreeModulesEnrolMap) {
 
 	RuleResult finalResult = RuleResult.createInitialTrue();
@@ -326,6 +330,11 @@ abstract public class StudentCurricularPlanEnrolment {
     protected boolean isResponsiblePersonStudent() {
 	return getResponsiblePerson().hasRole(RoleType.STUDENT);
     }
+    
+    protected boolean isResponsiblePersonCoordinator() {
+	return getResponsiblePerson().hasRole(RoleType.COORDINATOR);
+    }
+
 
     abstract protected void unEnrol();
 

@@ -101,7 +101,6 @@ public class StudentCurricularPlanEnrolmentManager extends StudentCurricularPlan
 		continue;
 	    }
 
-	    final EnrollmentCondition enrollmentCondition = getEnrolmentCondition(entry);
 	    for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : entry.getValue()) {
 
 		if (degreeModuleToEvaluate.isEnroled()) {
@@ -110,7 +109,7 @@ public class StudentCurricularPlanEnrolmentManager extends StudentCurricularPlan
 
 		    if (moduleEnroledWrapper.getCurriculumModule() instanceof Enrolment) {
 			final Enrolment enrolment = (Enrolment) moduleEnroledWrapper.getCurriculumModule();
-			enrolment.setEnrolmentCondition(enrollmentCondition);
+			enrolment.setEnrolmentCondition(getEnrolmentCondition(enrolment, entry.getKey()));
 		    }
 		} else {
 
@@ -119,11 +118,12 @@ public class StudentCurricularPlanEnrolmentManager extends StudentCurricularPlan
 
 		    if (degreeModule.isLeaf()) {
 			if (degreeModuleToEvaluate.isOptional()) {
-			    createOptionalEnrolmentFor(enrollmentCondition, degreeModuleToEvaluate, curriculumGroup);
+			    createOptionalEnrolmentFor(getEnrolmentCondition(null, entry.getKey()), degreeModuleToEvaluate,
+				    curriculumGroup);
 
 			} else {
 			    new Enrolment(getStudentCurricularPlan(), curriculumGroup, (CurricularCourse) degreeModule,
-				    getExecutionSemester(), enrollmentCondition, createdBy);
+				    getExecutionSemester(), getEnrolmentCondition(null, entry.getKey()), createdBy);
 			}
 
 		    } else if (degreeModule instanceof CycleCourseGroup) {
@@ -138,8 +138,8 @@ public class StudentCurricularPlanEnrolmentManager extends StudentCurricularPlan
 	}
     }
 
-    protected EnrollmentCondition getEnrolmentCondition(final Entry<EnrolmentResultType, List<IDegreeModuleToEvaluate>> entry) {
-	return entry.getKey().getEnrollmentCondition();
+    protected EnrollmentCondition getEnrolmentCondition(final Enrolment enrolment, final EnrolmentResultType enrolmentResultType) {
+	return enrolmentResultType.getEnrollmentCondition();
     }
 
     private void createOptionalEnrolmentFor(final EnrollmentCondition enrollmentCondition,

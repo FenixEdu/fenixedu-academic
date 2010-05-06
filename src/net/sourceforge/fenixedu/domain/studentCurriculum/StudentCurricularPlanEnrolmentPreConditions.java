@@ -120,8 +120,8 @@ public class StudentCurricularPlanEnrolmentPreConditions {
 
 	} else if (semester.isFirstOfYear() && hasPrescribed(scp, semester)) {
 
-	    // Should exist Prescribed period !!! Meanwhile use special season
-	    // period
+	    // TODO: Should exist Prescribed period !!! Meanwhile use special
+	    // season period
 
 	    if (scp.getDegreeCurricularPlan().getActualEnrolmentPeriodInCurricularCoursesSpecialSeason() == null) {
 		return outOfPeriodResult("flunked.students", scp.getDegreeCurricularPlan()
@@ -135,6 +135,10 @@ public class StudentCurricularPlanEnrolmentPreConditions {
 	return createTrue();
     }
 
+    /*
+     * Student must have flunked state and then registered (in same year),
+     * otherwise is not considered to be prescribed
+     */
     private static boolean hasPrescribed(StudentCurricularPlan scp, ExecutionSemester semester) {
 	return scp.getRegistration().hasFlunkedState(semester.getExecutionYear())
 		&& scp.getRegistration().hasRegisteredActiveState();
