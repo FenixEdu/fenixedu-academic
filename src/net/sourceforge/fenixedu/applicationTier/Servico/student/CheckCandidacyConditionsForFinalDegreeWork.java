@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
@@ -206,11 +207,18 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends FenixService {
 
     private static Registration findStudent(final Person person) {
 	if (person != null) {
+	    Registration firstCycle = null;
 	    for (final Registration registration : person.getStudent().getRegistrationsSet()) {
-		if (registration.getActiveStudentCurricularPlan() != null) {
-		    return registration;
+		final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
+		if (studentCurricularPlan != null) {
+		    if (studentCurricularPlan.getDegreeType().hasCycleTypes(CycleType.SECOND_CYCLE)) {
+			return registration;
+		    } else if (studentCurricularPlan.getDegreeType().hasCycleTypes(CycleType.FIRST_CYCLE)) {
+			firstCycle = registration;
+		    }
 		}
 	    }
+	    return firstCycle;
 	}
 	return null;
     }

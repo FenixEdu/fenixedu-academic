@@ -235,7 +235,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	    groups = Collections.emptySet();
 	}
 	final CollectionFilter<FinalDegreeWorkGroup> collectionFilter;
-	collectionFilter = new CollectionFilter<FinalDegreeWorkGroup>(filterBean.getPredicates());
+	collectionFilter = new CollectionFilter<FinalDegreeWorkGroup>(filterBean.getPredicates(), FinalDegreeWorkGroup.COMPARATOR_BY_STUDENT_NUMBERS);
 	final Set<FinalDegreeWorkGroup> filteredGroups = collectionFilter.filter(groups);
 
 	final CollectionPager<FinalDegreeWorkGroup> pager = new CollectionPager<FinalDegreeWorkGroup>(filteredGroups, 45);
