@@ -96,9 +96,19 @@
 			<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.upload" bundle="RESEARCHER_RESOURCES"/>
 		</html:link>
 	</p>
+	<p>
 		<bean:size id="count" name="facultyEvaluationProcess" property="teacherEvaluationProcess"/>
 		<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.teacherEvaluationProcess.count" bundle="RESEARCHER_RESOURCES"/>:
 		<%= count %>
+	</p>
+	<p>
+		<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.teacherEvaluationProcess.autoEvaluation.locked.count" bundle="RESEARCHER_RESOURCES"/>:
+		TODO
+	</p>
+	<p>
+		<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.teacherEvaluationProcess.evaluation.locked.count" bundle="RESEARCHER_RESOURCES"/>:
+		TODO
+	</p>
 	<table class="tstyle2 thlight thleft">
 		<tr>
 			<th>
@@ -150,6 +160,7 @@
 				</th>
 			</tr>
 			<logic:iterate id="facultyEvaluationProcess" name="facultyEvaluationProcessSet">
+			<tr>
 				<td>
 					<fr:view name="facultyEvaluationProcess" property="title"/>
 				</td>
@@ -168,6 +179,7 @@
 						<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.view" bundle="RESEARCHER_RESOURCES"/>
 					</html:link>
 				</td>
+			</tr>
 			</logic:iterate>
 		</table>
 	</logic:notEmpty>
