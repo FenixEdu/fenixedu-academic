@@ -27,7 +27,6 @@
 				<fr:property name="eachSchema" value="" />
 				<fr:property name="eachLayout" value="values" />
 			</fr:slot>
-			<fr:slot name="autoEvaluationMark" key="label.teacher.evaluation.autoevaluation.mark" layout="null-as-label" />
 			<fr:slot name="type" key="label.teacher.evaluation.autoevaluation.type" layout="null-as-label" />
 			<fr:slot name="evaluationMark" key="label.teacher.evaluation.evaluation.mark" layout="null-as-label" />
 		</fr:schema>
@@ -36,20 +35,14 @@
 		</fr:layout>
 	</fr:view>
 
-	<p>
-	<logic:empty name="process" property="teacherEvaluationSet">
-		<logic:equal name="process" property="inEvaluation" value="true">
-			<html:link action="/teacherEvaluation.do?method=changeEvaluationType" paramId="process" paramName="process" paramProperty="externalId">
-				<bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.autoevaluation.changeEvaluationType" />
-			</html:link> 
-		</logic:equal>
-	</logic:empty>
+	
 	<logic:notEmpty name="process" property="teacherEvaluationSet">
+		<p>
 		<logic:equal name="process" property="inEvaluation" value="true">
 			<html:link action="/teacherEvaluation.do?method=insertEvaluationMark" paramId="process" paramName="process" paramProperty="externalId">
 				<bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.autoevaluation.insertMark" />
 			</html:link>
-			<logic:notEmpty name="process" property="evaluationMark">
+			<logic:equal name="process" property="possibleToLockEvaluation" value="true">
 				<bean:define id="processId" name="process" property="externalId" />
 				<a href="#" style="cursor: pointer;" onclick="<%="check(document.getElementById('warning"+processId+"'));return false;"%>"> <bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.evaluation.lock" /> </a>
 				
@@ -65,23 +58,22 @@
 						</p>
 					</div>
 				</div>
-			</logic:notEmpty>
+			</logic:equal>
 		</logic:equal>
-	</logic:notEmpty>
-	</p>
+		</p>
 	
-	<script type="text/javascript">
-	function check(e,v){
-		if (e.className == "dnone") {
-		  e.className = "dblock";
-		  v.value = "-";
-		} else {
-		  e.className = "dnone";
-	  	  v.value = "+";
+		<script type="text/javascript">
+		function check(e,v){
+			if (e.className == "dnone") {
+			  e.className = "dblock";
+			  v.value = "-";
+			} else {
+			  e.className = "dnone";
+		  	  v.value = "+";
+			}
 		}
-	}
-	</script>
-	<logic:notEmpty name="process" property="teacherEvaluationSet">
+		</script>
+	
 		<strong><fr:view name="process" property="type" layout="null-as-label"/> (<fr:view name="process" property="facultyEvaluationProcess.title" />)</strong>
 		<bean:define id="externalId" name="process" property="externalId"/>
 		<fr:view name="process" property="teacherEvaluationFileBeanSet">

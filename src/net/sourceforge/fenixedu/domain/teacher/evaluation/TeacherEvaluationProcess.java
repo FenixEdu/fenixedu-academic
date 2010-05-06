@@ -8,6 +8,8 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
+import org.apache.commons.lang.StringUtils;
+
 public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
 
     public static Comparator<TeacherEvaluationProcess> COMPARATOR_BY_EVALUEE = new Comparator<TeacherEvaluationProcess>() {
@@ -107,6 +109,25 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
     }
 
     public boolean isInEvaluation() {
-	return isInEvaluationInterval() && !isEvaluationLocked();
+	return isInEvaluationInterval() && isAutoEvaluationLocked() && !isEvaluationLocked();
+    }
+
+    public boolean isPossibleToLockEvaluation() {
+	return !StringUtils.isEmpty(getEvaluationMark()) && hasAllNeededFiles();
+    }
+
+    private boolean hasAllNeededFiles() {
+	TeacherEvaluation currentTeacherEvaluation = getCurrentTeacherEvaluation();
+	Set<TeacherEvaluationFileType> files = new HashSet<TeacherEvaluationFileType>();
+	if (currentTeacherEvaluation != null) {
+	    for (TeacherEvaluationFile teacherEvaluationFile : currentTeacherEvaluation.getTeacherEvaluationFileSet()) {
+		files.add(teacherEvaluationFile.getTeacherEvaluationFileType());
+	    }
+	    if (currentTeacherEvaluation.getAutoEvaluationFileSet().containsAll(files)
+		    && files.containsAll(currentTeacherEvaluation.getAutoEvaluationFileSet())) {
+		return true;
+	    }
+	}
+	return false;
     }
 }
