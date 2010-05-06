@@ -117,6 +117,7 @@
 				<fr:property name="columnClasses" value=",,tdclear tderror1" />
 				<fr:property name="requiredMarkShown" value="true" />
 			</fr:layout>
+
 			<fr:destination name="invalid" path="/phdProgramCandidacyProcess.do?method=registrationFormalizationInvalid" />
 		</fr:edit>
 

@@ -47,6 +47,7 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
+import net.sourceforge.fenixedu.domain.phd.candidacy.RegistrationFormalizationBean;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessStateType;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
@@ -112,7 +113,6 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	activities.add(new FlunkedPhdProgramProcess());
 
 	activities.add(new AddCandidacyReferees());
-
 	activities.add(new UploadDocuments());
 
 	activities.add(new AddCustomAlert());
@@ -135,6 +135,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
 	activities.add(new AcceptEnrolments());
 	activities.add(new RejectEnrolments());
+
+	activities.add(new EditWhenStartedStudies());
     }
 
     @StartActivity
@@ -923,6 +925,36 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
 	private List<CurriculumModule> getCurriculumModules(List<Enrolment> enrolmentsToValidate) {
 	    return new ArrayList<CurriculumModule>(enrolmentsToValidate);
+	}
+
+    }
+
+    static public class EditWhenStartedStudies extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
+		Object object) {
+
+	    final RegistrationFormalizationBean bean = (RegistrationFormalizationBean) object;
+
+	    process.check(bean.getWhenStartedStudies(),
+		    "error.PhdIndividualProgramProcess.EditWhenStartedStudies.invalid.when.started.studies");
+
+	    process.setWhenStartedStudies(bean.getWhenStartedStudies());
+
+	    if (process.hasRegistration()) {
+		process.getRegistration().editStartDates(bean.getWhenStartedStudies(),
+			process.getCandidacyProcess().getWhenRatified(), bean.getWhenStartedStudies());
+	    }
+
+	    return process;
 	}
 
     }

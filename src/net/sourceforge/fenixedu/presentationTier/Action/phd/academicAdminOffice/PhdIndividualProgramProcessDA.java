@@ -51,12 +51,14 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditIndiv
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditPersonalInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditQualificationExams;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditStudyPlan;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditWhenStartedStudies;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.FlunkedPhdProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.NotAdmittedPhdProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RequestPublicThesisPresentation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.SuspendPhdProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlert;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlertBean;
+import net.sourceforge.fenixedu.domain.phd.candidacy.RegistrationFormalizationBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.CommonPhdIndividualProgramProcessDA;
@@ -122,7 +124,9 @@ import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
 
 	@Forward(name = "createEnrolmentPeriod", path = "/phd/academicAdminOffice/periods/createEnrolmentPeriod.jsp"),
 
-	@Forward(name = "editEnrolmentPeriod", path = "/phd/academicAdminOffice/periods/editEnrolmentPeriod.jsp")
+	@Forward(name = "editEnrolmentPeriod", path = "/phd/academicAdminOffice/periods/editEnrolmentPeriod.jsp"),
+
+	@Forward(name = "editWhenStartedStudies", path = "/phd/academicAdminOffice/editWhenStartedStudies.jsp")
 
 })
 public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramProcessDA {
@@ -957,12 +961,46 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 	try {
 	    ((EnrolmentPeriod) getDomainObject(request, "periodId")).delete();
 	    return redirect("/phdIndividualProgramProcess.do?method=manageEnrolmentPeriods", request);
-	
+
 	} catch (final DomainException e) {
 	    addErrorMessage(request, e.getMessage(), e.getArgs());
 	    return manageEnrolmentPeriods(mapping, actionForm, request, response);
 	}
 
     }
+
     // End of edit Phd Enrolment Periods
+
+    // Edit when started studies
+    public ActionForward prepareEditWhenStartedStudies(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final RegistrationFormalizationBean bean = new RegistrationFormalizationBean();
+	bean.setWhenStartedStudies(getProcess(request).getWhenStartedStudies());
+
+	request.setAttribute("registrationFormalizationBean", bean);
+	return mapping.findForward("editWhenStartedStudies");
+    }
+
+    public ActionForward editWhenStartedStudies(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final PhdIndividualProgramProcess process = getProcess(request);
+	final RegistrationFormalizationBean bean = (RegistrationFormalizationBean) getRenderedObject("registrationFormalizationBean");
+
+	try {
+
+	    ExecuteProcessActivity.run(process, EditWhenStartedStudies.class.getSimpleName(), bean);
+
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getMessage(), e.getArgs());
+	    return mapping.findForward("editWhenStartedStudies");
+	}
+
+	return redirect(
+		String.format("/phdIndividualProgramProcess.do?method=viewProcess&processId=%s", process.getExternalId()),
+		request);
+    }
+
+    // End of edit when started studies
 }

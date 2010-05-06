@@ -29,6 +29,11 @@
 							<bean:message bundle="PHD_RESOURCES" key="label.phd.view.curriculum"/>
 						</html:link>
 					</li>
+					<li>
+						<html:link action="/phdIndividualProgramProcess.do?method=prepareEditWhenStartedStudies" paramId="processId" paramName="process" paramProperty="externalId">
+							<bean:message bundle="PHD_RESOURCES" key="label.phd.edit.when.started.studies"/>
+						</html:link>
+					</li>
 				</ul>
 			</td>
 		</tr>

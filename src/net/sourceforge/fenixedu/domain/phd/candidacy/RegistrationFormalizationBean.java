@@ -18,6 +18,9 @@ public class RegistrationFormalizationBean implements Serializable {
     private boolean selectRegistration;
     private Registration registration;
 
+    public RegistrationFormalizationBean() {
+    }
+
     public RegistrationFormalizationBean(PhdProgramCandidacyProcess process) {
 	this.process = process;
     }

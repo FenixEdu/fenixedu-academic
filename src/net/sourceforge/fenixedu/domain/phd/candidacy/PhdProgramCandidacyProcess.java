@@ -685,6 +685,8 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	registration.setStudiesStartDate(bean.getWhenStartedStudies());
 	registration.setIngression(Ingression.CIA3C);
 	registration.setPhdIndividualProgramProcess(getIndividualProgramProcess());
+
+	registration.editStartDates(bean.getWhenStartedStudies(), getWhenRatified(), bean.getWhenStartedStudies());
     }
 
     private Registration getOrCreateRegistration(final RegistrationFormalizationBean bean, final DegreeCurricularPlan dcp,
