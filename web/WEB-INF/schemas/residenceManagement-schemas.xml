@@ -149,7 +149,7 @@
 	</slot>
 </schema>
 
-<schema name="residenceRoleManagment.searchPerson" type="net.sourceforge.fenixedu.presentationTier.Action.residenceManagement.ResidenceRoleManagementBean">
+<schema name="residenceRoleManagment.searchPerson" type="net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ResidenceRoleManagementBean">
 	<slot name="person">
 	</slot>
 </schema>
