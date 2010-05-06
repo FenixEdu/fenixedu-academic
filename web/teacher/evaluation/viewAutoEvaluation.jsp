@@ -27,7 +27,7 @@
 				<fr:property name="eachSchema" value="" />
 				<fr:property name="eachLayout" value="values" />
 			</fr:slot>
-			<fr:slot name="mark" key="label.teacher.evaluation.autoevaluation.mark" layout="null-as-label" />
+			<fr:slot name="autoEvaluationMark" key="label.teacher.evaluation.autoevaluation.mark" layout="null-as-label" />
 			<fr:slot name="type" key="label.teacher.evaluation.autoevaluation.type" layout="null-as-label" />
 		</fr:schema>
 		<fr:layout name="tabular">
@@ -64,21 +64,23 @@
 	</div>
 
 	<logic:present name="process" property="currentTeacherEvaluation">
-		I has it.
-	</logic:present>
-
-	<logic:notPresent name="process" property="teacherEvaluation">
-		<fr:create id="process-selection"
-			type="net.sourceforge.fenixedu.presentationTier.Action.teacher.evaluation.TeacherEvaluationTypeSelection"
-			action="/teacherEvaluation.do?method=selectEvaluationType">
-			<fr:schema bundle="RESEARCHER_RESOURCES"
-				type="net.sourceforge.fenixedu.presentationTier.Action.teacher.evaluation.TeacherEvaluationTypeSelection">
-				<fr:slot name="type" key="label.teacher.evaluation.autoevaluation.type" />
+		<strong><fr:view name="process" property="type" layout="null-as-label"/> (<fr:view name="process" property="facultyEvaluationProcess.title" />)</strong>
+	
+		<bean:define id="externalId" name="process" property="externalId"/>
+		<fr:view name="process" property="teacherAutoEvaluationFileBeanSet">
+			<fr:schema bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationFileBean">
+				<fr:slot name="teacherEvaluationFileType" key="label.teacher.evaluation.empty" layout="null-as-label" />
+				<fr:slot name="teacherEvaluationFile" layout="link" key="label.teacher.evaluation.file" />
+				<fr:slot name="teacherEvaluationFileUploadDate" key="label.teacher.evaluation.date" layout="null-as-label" />
 			</fr:schema>
-		</fr:create>
-	</logic:notPresent>
-
-	<logic:present name="process" property="teacherEvaluation">
-
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle1 thlight mtop05" />
+				<fr:property name="link(upload)" value="<%= "/teacherEvaluation.do?method=prepareUploadAutoEvaluationFile&OID="+externalId %>"/>
+				<fr:property name="key(upload)" value="label.teacher.evaluation.upload" />
+				<fr:property name="param(upload)" value="teacherEvaluationFileType/type" />
+				<fr:property name="bundle(upload)" value="RESEARCHER_RESOURCES" />
+				<fr:property name="visibleIf(upload)" value="canUploadEvaluationFile" />
+			</fr:layout>
+		</fr:view>	
 	</logic:present>
 </logic:iterate>
