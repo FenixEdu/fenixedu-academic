@@ -110,6 +110,17 @@ public class AlertService {
 	new PhdCustomAlert(alertBean);
     }
 
+    static public void alertStudent(PhdIndividualProgramProcess process, AlertMessage subject, AlertMessage body) {
+	final PhdCustomAlertBean alertBean = new PhdCustomAlertBean(process, true, false, false);
+
+	alertBean.setSubject(getSubjectPrefixed(process, subject));
+	alertBean.setBody(getBodyText(process, body));
+	alertBean.setFireDate(new LocalDate());
+	alertBean.setTargetGroup(new FixedSetGroup(process.getPerson()));
+
+	new PhdCustomAlert(alertBean);
+    }
+    
     static public void alertGuiders(PhdIndividualProgramProcess process, String subjectKey, String bodyKey) {
 
 	final Set<Person> toNotify = new HashSet<Person>();
