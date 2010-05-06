@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 execute "Insert new role ResidenceManager" insertResidenceManagerRole.sql 
+execute "Add OJB_CONCRETE_CLASS Column To TeacherEvaluation" addColumnToTeacherEvaluation.sql
