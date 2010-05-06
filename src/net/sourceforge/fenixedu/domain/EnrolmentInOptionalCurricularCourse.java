@@ -9,8 +9,12 @@ import net.sourceforge.fenixedu.util.EnrolmentAction;
  * @author dcs-rjao
  * 
  *         24/Mar/2003
+ * 
+ * 
+ * @deprecated use OptionalEnrolment
+ * 
  */
-
+@Deprecated
 public class EnrolmentInOptionalCurricularCourse extends EnrolmentInOptionalCurricularCourse_Base {
 
     protected EnrolmentInOptionalCurricularCourse() {

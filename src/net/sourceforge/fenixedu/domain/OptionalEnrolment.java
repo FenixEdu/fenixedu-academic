@@ -25,6 +25,7 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
     public OptionalEnrolment(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup,
 	    CurricularCourse curricularCourse, ExecutionSemester executionSemester, EnrollmentCondition enrolmentCondition,
 	    String createdBy, OptionalCurricularCourse optionalCurricularCourse) {
+
 	if (studentCurricularPlan == null || curriculumGroup == null || curricularCourse == null || executionSemester == null
 		|| enrolmentCondition == null || createdBy == null || optionalCurricularCourse == null) {
 	    throw new DomainException("invalid arguments");
@@ -85,9 +86,21 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
 
     @Override
     public MultiLanguageString getName() {
-	ExecutionSemester executionSemester = getExecutionPeriod();
+	final ExecutionSemester executionSemester = getExecutionPeriod();
 	return MultiLanguageString.i18n().add("pt", this.getOptionalCurricularCourse().getName(executionSemester)).add("en",
 		this.getOptionalCurricularCourse().getNameEn(executionSemester)).finish();
+    }
+
+    @Override
+    public MultiLanguageString getPresentationName() {
+
+	final String namePt = String.format("%s (%s)", getOptionalCurricularCourse().getName(getExecutionPeriod()),
+		getCurricularCourse().getName(getExecutionPeriod()));
+
+	final String nameEn = String.format("%s (%s)", getOptionalCurricularCourse().getNameEn(getExecutionPeriod()),
+		getCurricularCourse().getNameEn(getExecutionPeriod()));
+
+	return MultiLanguageString.i18n().add("pt", namePt).add("en", nameEn).finish();
     }
 
     @Override

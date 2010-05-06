@@ -202,7 +202,7 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
 	CurricularCourse course = getCurricularCourse();
 	return MultiLanguageString.i18n().nadd("pt", course.getName(period)).nadd("en", course.getNameEn(period)).finish();
     }
-
+    
     public boolean hasExecutionPeriod() {
 	return getExecutionPeriod() != null;
     }

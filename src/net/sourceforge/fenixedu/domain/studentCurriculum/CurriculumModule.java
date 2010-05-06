@@ -154,6 +154,10 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 	}
 	return multiLanguageString;
     }
+    
+    public MultiLanguageString getPresentationName()  {
+	return getName();
+    }
 
     public boolean isApproved(final CurricularCourse curricularCourse) {
 	return isApproved(curricularCourse, null);
