@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.predicates;
 
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accessControl.PermissionType;
@@ -14,8 +15,14 @@ public class StudentCurricularPlanPredicates {
 
 	public boolean evaluate(StudentCurricularPlan studentCurricularPlan) {
 	    final Person person = AccessControl.getPerson();
-	    return person.hasRole(RoleType.STUDENT) || person.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
-		    || person.hasRole(RoleType.MANAGER);
+	    return person.hasRole(RoleType.STUDENT)
+		    || person.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
+		    || person.hasRole(RoleType.MANAGER)
+		    /*
+		     * used in PhdIndividualProgramProcess enrolments management
+		     */
+		    || person.isCoordinatorFor(studentCurricularPlan.getDegreeCurricularPlan(), ExecutionYear
+			    .readCurrentExecutionYear());
 	}
 
     };
