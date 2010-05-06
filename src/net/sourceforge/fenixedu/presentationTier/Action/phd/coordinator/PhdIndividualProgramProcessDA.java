@@ -9,18 +9,23 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.phd.ManageEnrolmentsBean;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AcceptEnrolments;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RejectEnrolments;
+import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.CommonPhdIndividualProgramProcessDA;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.ManageEnrolmentsBean;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdCandidacyPredicateContainer;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdInactivePredicateContainer;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdSeminarPredicateContainer;
@@ -30,6 +35,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -53,7 +59,9 @@ import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
 
 @Forward(name = "viewCurriculum", path = "/phd/coordinator/viewCurriculum.jsp"),
 
-@Forward(name = "manageEnrolments", path = "/phd/coordinator/enrolments/manageEnrolments.jsp")
+@Forward(name = "manageEnrolments", path = "/phd/coordinator/enrolments/manageEnrolments.jsp"),
+
+@Forward(name = "validateEnrolments", path = "/phd/coordinator/enrolments/validateEnrolments.jsp")
 
 })
 public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramProcessDA {
@@ -90,48 +98,6 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 	return result;
     }
 
-    public ActionForward manageEnrolments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	final PhdIndividualProgramProcess process = getProcess(request);
-	ManageEnrolmentsBean bean = (ManageEnrolmentsBean) getRenderedObject("manageEnrolmentsBean");
-
-	if (bean == null) {
-	    bean = new ManageEnrolmentsBean();
-	    bean.setProcess(process);
-	    bean.setSemester(ExecutionSemester.readActualExecutionSemester());
-	}
-
-	filterEnrolments(bean, process);
-
-	request.setAttribute("manageEnrolmentsBean", bean);
-	return mapping.findForward("manageEnrolments");
-    }
-
-    private void filterEnrolments(ManageEnrolmentsBean bean, PhdIndividualProgramProcess process) {
-	final StudentCurricularPlan scp = process.getRegistration().getLastStudentCurricularPlan();
-
-	final Collection<Enrolment> enrolmentsPerformedByStudent = new HashSet<Enrolment>();
-	final Collection<Enrolment> enrolmentsPerformedByAdminOffice = new HashSet<Enrolment>();
-
-	for (final Enrolment enrolment : scp.getEnrolmentsByExecutionPeriod(bean.getSemester())) {
-
-	    if (isPeformedByStudent(enrolment)) {
-		enrolmentsPerformedByStudent.add(enrolment);
-	    } else {
-		enrolmentsPerformedByAdminOffice.add(enrolment);
-	    }
-	}
-
-	bean.setEnrolmentsPerformedByStudent(enrolmentsPerformedByStudent);
-	bean.setRemainingEnrolments(enrolmentsPerformedByAdminOffice);
-    }
-
-    private boolean isPeformedByStudent(Enrolment enrolment) {
-	final Person person = Person.readPersonByUsername(enrolment.getCreatedBy());
-	return person.hasRole(RoleType.STUDENT) && enrolment.getStudent().equals(person.getStudent());
-    }
-
     @Override
     protected PhdInactivePredicateContainer getConcludedContainer() {
 	return PhdInactivePredicateContainer.CONCLUDED_THIS_YEAR;
@@ -152,4 +118,127 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 	return Arrays.asList(CANDIDACY_CATEGORY);
     }
 
+    // Manage enrolments
+
+    public ActionForward manageEnrolments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final PhdIndividualProgramProcess process = getProcess(request);
+	ManageEnrolmentsBean bean = (ManageEnrolmentsBean) getRenderedObject("manageEnrolmentsBean");
+
+	if (bean == null) {
+	    bean = new ManageEnrolmentsBean();
+	    bean.setProcess(process);
+	    bean.setSemester(ExecutionSemester.readActualExecutionSemester());
+	}
+
+	filterEnrolments(bean, process, false);
+
+	request.setAttribute("manageEnrolmentsBean", bean);
+	return mapping.findForward("manageEnrolments");
+    }
+
+    private void filterEnrolments(ManageEnrolmentsBean bean, PhdIndividualProgramProcess process, boolean filterByTemporary) {
+	final StudentCurricularPlan scp = process.getRegistration().getLastStudentCurricularPlan();
+
+	final Collection<Enrolment> enrolmentsPerformedByStudent = new HashSet<Enrolment>();
+	final Collection<Enrolment> enrolmentsPerformedByAdminOffice = new HashSet<Enrolment>();
+
+	for (final Enrolment enrolment : scp.getEnrolmentsByExecutionPeriod(bean.getSemester())) {
+
+	    if (filterByTemporary && !enrolment.isTemporary()) {
+		continue;
+	    }
+
+	    if (isPerformedByStudent(enrolment)) {
+		enrolmentsPerformedByStudent.add(enrolment);
+	    } else {
+		enrolmentsPerformedByAdminOffice.add(enrolment);
+	    }
+	}
+
+	bean.setEnrolmentsPerformedByStudent(enrolmentsPerformedByStudent);
+	bean.setRemainingEnrolments(enrolmentsPerformedByAdminOffice);
+    }
+
+    private boolean isPerformedByStudent(Enrolment enrolment) {
+	final Person person = Person.readPersonByUsername(enrolment.getCreatedBy());
+	return person.hasRole(RoleType.STUDENT) && enrolment.getStudent().equals(person.getStudent());
+    }
+
+    public ActionForward prepareValidateEnrolments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final PhdIndividualProgramProcess process = getProcess(request);
+	ManageEnrolmentsBean bean = (ManageEnrolmentsBean) getRenderedObject("manageEnrolmentsBean");
+
+	if (bean == null) {
+	    bean = new ManageEnrolmentsBean();
+	    bean.setProcess(process);
+	    setExecutionSemester(request, bean);
+	}
+
+	filterEnrolments(bean, process, true);
+	request.setAttribute("manageEnrolmentsBean", bean);
+
+	setDefaultMailInformation(bean, getProcess(request));
+	return mapping.findForward("validateEnrolments");
+    }
+
+    private void setExecutionSemester(HttpServletRequest request, ManageEnrolmentsBean bean) {
+	final ExecutionSemester semester = getDomainObject(request, "executionSemesterId");
+	if (semester != null) {
+	    bean.setSemester(semester);
+	} else {
+	    bean.setSemester(ExecutionSemester.readActualExecutionSemester());
+	}
+    }
+
+    private void setDefaultMailInformation(ManageEnrolmentsBean bean, PhdIndividualProgramProcess process) {
+	bean.setMailSubject(AlertService.getSubjectPrefixed(process, "message.phd.enrolments.validation.default.subject"));
+	bean.setMailBody(AlertService.getBodyText(process, "message.phd.enrolments.validation.default.body"));
+    }
+
+    public ActionForward acceptEnrolments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final ManageEnrolmentsBean bean = (ManageEnrolmentsBean) getRenderedObject("manageEnrolmentsBean");
+	request.setAttribute("manageEnrolmentsBean", bean);
+
+	try {
+
+	    ExecuteProcessActivity.run(getProcess(request), AcceptEnrolments.class, bean);
+
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getMessage(), e.getArgs());
+	    return mapping.findForward("validateEnrolments");
+	}
+
+	RenderUtils.invalidateViewState();
+	return redirect(String.format("/phdIndividualProgramProcess.do?method=manageEnrolments&processId=%s", getProcess(request)
+		.getExternalId()), request);
+    }
+
+    public ActionForward rejectEnrolments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final ManageEnrolmentsBean bean = (ManageEnrolmentsBean) getRenderedObject("manageEnrolmentsBean");
+	request.setAttribute("manageEnrolmentsBean", bean);
+
+	try {
+
+	    ExecuteProcessActivity.run(getProcess(request), RejectEnrolments.class, bean);
+
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getMessage(), e.getArgs());
+	    return mapping.findForward("validateEnrolments");
+	}
+
+	RenderUtils.invalidateViewState();
+
+	return redirect(String.format("/phdIndividualProgramProcess.do?method=manageEnrolments&processId=%s", getProcess(request)
+		.getExternalId()), request);
+    }
+
+    // end of manage enrolments
 }

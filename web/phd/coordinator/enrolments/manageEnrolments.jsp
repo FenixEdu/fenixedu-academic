@@ -4,7 +4,8 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <%@page import="net.sourceforge.fenixedu.domain.Enrolment"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.Action.phd.ManageEnrolmentsBean"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.ManageEnrolmentsBean" %>
+<%@page import="net.sourceforge.fenixedu.presentationTier.Action.phd.coordinator.providers.PhdManageEnrolmentsExecutionSemestersProvider"%>
 
 <logic:present role="COORDINATOR">
 
@@ -29,7 +30,7 @@
 	<fr:edit id="manageEnrolmentsBean" name="manageEnrolmentsBean">
 		<fr:schema bundle="PHD_RESOURCES" type="<%= ManageEnrolmentsBean.class.getName() %>">
 			<fr:slot name="semester" layout="menu-select-postback">
-				<fr:property name="providerClass" value="<%= ManageEnrolmentsBean.PhdManageEnrolmentsExecutionSemestersProviders.class.getName()  %>"/>
+				<fr:property name="providerClass" value="<%= PhdManageEnrolmentsExecutionSemestersProvider.class.getName()  %>"/>
 				<fr:property name="format" value="${qualifiedName}" />
 			</fr:slot>
 		</fr:schema>
@@ -50,20 +51,42 @@
 	<em><bean:message key="label.phd.no.enrolments.found" bundle="PHD_RESOURCES" /></em>
 </logic:empty>
 
-<fr:view name="manageEnrolmentsBean" property="enrolmentsPerformedByStudent">
-	<fr:schema bundle="PHD_RESOURCES" type="<%= Enrolment.class.getName() %>">
-		<fr:slot name="name" />
-		<fr:slot name="ectsCredits" />
-		<fr:slot name="executionPeriod.qualifiedName" />
-		<fr:slot name="enrolmentCondition" layout="phd-enum-renderer" />
-	</fr:schema>
+<logic:notEmpty name="manageEnrolmentsBean" property="enrolmentsPerformedByStudent">
+	
+	<table class="tstyle2 thlight mtop10">
+		<tr>
+			<th><bean:message key="label.net.sourceforge.fenixedu.domain.Enrolment.name" bundle="PHD_RESOURCES" /></th>
+			<th><bean:message key="label.net.sourceforge.fenixedu.domain.Enrolment.ectsCredits" bundle="PHD_RESOURCES" /></th>
+			<th><bean:message key="label.net.sourceforge.fenixedu.domain.Enrolment.executionPeriod.qualifiedName" bundle="PHD_RESOURCES" /></th>
+			<th><bean:message key="label.net.sourceforge.fenixedu.domain.Enrolment.enrolmentCondition" bundle="PHD_RESOURCES" /></th>
+		</tr>
+		<logic:iterate id="enrolment" name="manageEnrolmentsBean" property="enrolmentsPerformedByStudent">
+			<tr>
+				<td><bean:write name="enrolment" property="presentationName.content" /></td>
+				<td><bean:write name="enrolment" property="ectsCredits" /></td>
+				<td><bean:write name="enrolment" property="executionPeriod.qualifiedName" /></td>
+				<td>
+					<bean:define id="enrolmentCondition" name="enrolment" property="enrolmentCondition" />
+					<logic:equal name="enrolmentCondition" value="VALIDATED">
+						<div style="color: #146e14;" ><bean:write name="enrolment" property="enrolmentCondition.description" /></div>
+					</logic:equal>
+					<logic:equal name="enrolmentCondition" value="TEMPORARY">
+						<div style="color: #804500;"><bean:write name="enrolment" property="enrolmentCondition.description" /></div>
+					</logic:equal>
+				</td>
+			</tr>
+		</logic:iterate>
+	</table>
+	
+	<p>
+	<bean:define id="executionSemesterId" name="manageEnrolmentsBean" property="semester.externalId" />
+	<html:link action="<%= String.format("/phdIndividualProgramProcess.do?method=prepareValidateEnrolments&processId=%s&executionSemesterId=%s", processId, executionSemesterId) %>">
+		<bean:message bundle="PHD_RESOURCES" key="label.phd.validate.enrolments"/>
+	</html:link>
+	</p>
+</logic:notEmpty>
 
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle2 thlight mtop10" />
-		<fr:property name="sortBy" value="name=asc" />
-	</fr:layout>
-</fr:view>
-
+<br/>
 <strong><bean:message key="label.phd.remaining.enrolments" bundle="PHD_RESOURCES" /></strong>
 
 <logic:empty name="manageEnrolmentsBean" property="remainingEnrolments">
@@ -72,7 +95,7 @@
 
 <fr:view name="manageEnrolmentsBean" property="remainingEnrolments">
 	<fr:schema bundle="PHD_RESOURCES" type="<%= Enrolment.class.getName() %>">
-		<fr:slot name="name" />
+		<fr:slot name="presentationName" />
 		<fr:slot name="ectsCredits" />
 		<fr:slot name="executionPeriod.qualifiedName" />
 	</fr:schema>

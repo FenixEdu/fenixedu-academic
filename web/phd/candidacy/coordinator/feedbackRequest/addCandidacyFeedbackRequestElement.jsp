@@ -110,7 +110,7 @@
 
 	<br/>
 
-	<strong>Email a enviar: </strong>
+	<strong><bean:message key="label.phd.email.to.send" bundle="PHD_RESOURCES" />:</strong>
 	<fr:edit id="elementBean-mail-information" name="elementBean">
 		
 		<fr:layout name="tabular">

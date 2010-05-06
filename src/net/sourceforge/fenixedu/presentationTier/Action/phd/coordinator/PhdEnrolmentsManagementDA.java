@@ -16,8 +16,8 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.phd.ManageEnrolmentsBean;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.ManageEnrolmentsBean;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
 import net.sourceforge.fenixedu.presentationTier.renderers.degreeStructure.DegreeCurricularPlanRendererConfig;
 
@@ -145,7 +145,7 @@ public class PhdEnrolmentsManagementDA extends PhdProcessDA {
     }
 
     private String getFileName(final CurricularCourse curricularCourse, final ExecutionSemester semester) {
-	return curricularCourse.getName(semester).replace(" ", "_");
+	return curricularCourse.getName(semester).replace(" ", "_") + ".xls";
     }
 
     public ActionForward manageEnrolments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

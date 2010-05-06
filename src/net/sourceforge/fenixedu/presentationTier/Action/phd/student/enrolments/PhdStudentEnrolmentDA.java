@@ -150,7 +150,9 @@ public class PhdStudentEnrolmentDA extends BolonhaStudentEnrollmentDispatchActio
     }
     
     @Override
-    protected void enroledWithSuccess(HttpServletRequest request, BolonhaStudentEnrollmentBean bolonhaStudentEnrollmentBean) {
-	addActionMessage("warning", request, "message.phd.enrolments.waiting.for.approval");
+    protected void enroledWithSuccess(HttpServletRequest request, BolonhaStudentEnrollmentBean bean) {
+	if (bean.getStudentCurricularPlan().hasAnyEnrolmentForExecutionPeriod(bean.getExecutionPeriod())) {
+	    addActionMessage("warning", request, "message.phd.enrolments.waiting.for.approval");
+	}
     }
 }

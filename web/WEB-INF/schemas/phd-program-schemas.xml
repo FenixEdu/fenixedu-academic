@@ -1393,3 +1393,7 @@
 <schema name="DegreeCurricularPlan.presentationName" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" bundle="PHD_RESOURCES">
 	<slot name="presentationName" />
 </schema>
+
+<schema name="Enrolment.view.name" type="net.sourceforge.fenixedu.domain.Enrolment" bundle="PHD_RESOURCES">
+	<slot name="presentationName" />
+</schema>

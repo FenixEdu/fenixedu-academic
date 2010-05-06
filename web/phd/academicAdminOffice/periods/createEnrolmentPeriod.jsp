@@ -3,7 +3,9 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<%@page import="net.sourceforge.fenixedu.presentationTier.Action.phd.ManageEnrolmentsBean"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.ManageEnrolmentsBean"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.Action.phd.coordinator.providers.PhdDegreeCurricularPlansProvider"%>
+
 <html:xhtml/>
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
@@ -35,7 +37,7 @@
 		<fr:slot name="degreeCurricularPlans" layout="option-select" required="true">
 			<fr:property name="classes" value="nobullet noindent" />
 		
-			<fr:property name="providerClass" value="<%= ManageEnrolmentsBean.PhdDegreeCurricularPlansProvider.class.getName() %>" />
+			<fr:property name="providerClass" value="<%= PhdDegreeCurricularPlansProvider.class.getName() %>" />
 
 			<fr:property name="eachLayout" value="values" />
 			<fr:property name="eachSchema" value="DegreeCurricularPlan.presentationName" />

@@ -61,7 +61,7 @@
 	<logic:messagesPresent message="true" property="success">
 		<p>
 		<span class="success0" style="padding: 0.25em;">
-			<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES">
+			<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES" property="success">
 				<span><bean:write name="messages" /></span>
 			</html:messages>
 		</span>

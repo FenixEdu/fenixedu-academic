@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<%@page import="net.sourceforge.fenixedu.presentationTier.Action.phd.ManageEnrolmentsBean"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.ManageEnrolmentsBean"%>
 <%@page import="net.sourceforge.fenixedu.presentationTier.renderers.providers.NotClosedExecutionPeriodsProvider"%>
 <%@page import="net.sourceforge.fenixedu.domain.EnrolmentPeriod"%>
 

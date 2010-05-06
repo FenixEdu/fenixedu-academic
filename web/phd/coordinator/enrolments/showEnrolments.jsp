@@ -4,9 +4,10 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <%@page import="net.sourceforge.fenixedu.domain.Enrolment"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.ManageEnrolmentsBean"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.Action.phd.coordinator.providers.CurricularCourseDegreeExecutionSemesterProvider"%>
 
-
-<%@page import="net.sourceforge.fenixedu.presentationTier.Action.phd.ManageEnrolmentsBean"%><logic:present role="COORDINATOR">
+<logic:present role="COORDINATOR">
 
 <em><bean:message key="label.phd.coordinator.breadcrumb" bundle="PHD_RESOURCES"/></em>
 <h2><bean:message key="label.phd.manage.enrolments" bundle="PHD_RESOURCES" /></h2>
@@ -28,7 +29,7 @@
 	
 		<fr:schema bundle="PHD_RESOURCES" type="<%= ManageEnrolmentsBean.class.getName() %>">
 			<fr:slot name="semester" layout="menu-select-postback">
-				<fr:property name="providerClass" value="<%= ManageEnrolmentsBean.CurricularCourseDegreeExecutionSemesterProvider.class.getName()  %>"/>
+				<fr:property name="providerClass" value="<%= CurricularCourseDegreeExecutionSemesterProvider.class.getName()  %>"/>
 				<fr:property name="format" value="${qualifiedName}" />
 			</fr:slot>
 		</fr:schema>

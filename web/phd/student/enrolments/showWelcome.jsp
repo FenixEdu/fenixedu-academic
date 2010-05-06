@@ -56,7 +56,7 @@ Não é possível a inscrição em qualquer unidade curricular se não estiver garanti
 
 <p class="mtop05">
 <strong>5. Inscrição em Melhoria de Nota</strong><br/>
-Estas inscrições são realizadas <strong>exclusivamente junto dos Serviços Académicos</strong> de acordo com os prazos constantes no <a href="http://www.ist.utl.pt/files/alunos/reg_1e2ciclo_20092010.pdf">Regulamento de 1º e 2º Ciclo 2009/2010</a> 
+Estas inscrições são realizadas <strong>exclusivamente junto dos Serviços Académicos</strong> de acordo com os prazos constantes no <a href="http://www.ist.utl.pt/files/alunos/reg_3ciclo.pdf">Regulamento de 3º Ciclo</a> 
 
 </p>
 
