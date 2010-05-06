@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.CreateCompetenceCourseInformationChangeRequest;
 import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.DeleteCompetenceCourseInformationChangeRequest;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
@@ -25,6 +24,8 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ManageCompetenceCourseInformationVersions extends FenixDispatchAction {
 
@@ -188,12 +189,35 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
 	CompetenceCourseLoadBean load = (CompetenceCourseLoadBean) RenderUtils.getViewState("editVersionLoad").getMetaObject()
 		.getObject();
 	try {
-	    CreateCompetenceCourseInformationChangeRequest.run(bean, load, getLoggedPerson(request));
+	    createCompetenceCourseInformationChangeRequest(bean, load, getLoggedPerson(request));
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	    return prepareCreateVersion(mapping, form, request, response);
 	}
 	return showVersions(mapping, form, request, response);
+    }
+
+    @Checked("RolePredicates.BOLONHA_MANAGER_PREDICATE")
+    @Service
+    private static void createCompetenceCourseInformationChangeRequest(CompetenceCourseInformationRequestBean bean,
+	    CompetenceCourseLoadBean loadBean, Person requestor) {
+	CompetenceCourse course = bean.getCompetenceCourse();
+	ExecutionSemester period = bean.getExecutionPeriod();
+	CompetenceCourseInformationChangeRequest request = course.getCompetenceCourseInformationChangeRequests(period);
+	if (request != null) {
+	    request.delete();
+	}
+
+	new CompetenceCourseInformationChangeRequest(bean.getName(), bean.getNameEn(), bean.getJustification(), bean.getRegime(),
+		bean.getObjectives(), bean.getObjectivesEn(), bean.getProgram(), bean.getProgramEn(), bean.getEvaluationMethod(),
+		bean.getEvaluationMethodEn(), bean.getCompetenceCourse(), bean.getCompetenceCourseLevel(), bean
+			.getExecutionPeriod(), requestor, loadBean.getTheoreticalHours(), loadBean.getProblemsHours(), loadBean
+			.getLaboratorialHours(), loadBean.getSeminaryHours(), loadBean.getFieldWorkHours(), loadBean
+			.getTrainingPeriodHours(), loadBean.getTutorialOrientationHours(), loadBean.getAutonomousWorkHours(),
+		loadBean.getEctsCredits(), loadBean.getSecondTheoreticalHours(), loadBean.getSecondProblemsHours(), loadBean
+			.getSecondLaboratorialHours(), loadBean.getSecondSeminaryHours(), loadBean.getSecondFieldWorkHours(),
+		loadBean.getSecondTrainingPeriodHours(), loadBean.getSecondTutorialOrientationHours(), loadBean
+			.getSecondAutonomousWorkHours(), loadBean.getSecondEctsCredits(), bean.getReferences());
     }
 
     public ActionForward showVersions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
