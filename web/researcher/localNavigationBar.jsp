@@ -37,7 +37,7 @@
 			</html:link>
 		</li>
 		<li>
-			<html:link page="/teacherEvaluation.do?method=viewEvaluation">
+			<html:link page="/teacherEvaluation.do?method=viewEvaluees">
 				<bean:message key="label.teacher.evaluation.evaluation.title" bundle="RESEARCHER_RESOURCES"/>
 			</html:link>
 		</li>
@@ -47,7 +47,7 @@
 			</html:link>
 		</li>
 	</ul>
- --%>
+  --%>
  
 	<ul style="margin-top: 0.75em;">
 		<li class="navheader"><bean:message key="researcher.find.an.expert" bundle="RESEARCHER_RESOURCES"/></li>
