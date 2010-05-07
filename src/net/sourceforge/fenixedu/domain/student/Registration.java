@@ -3637,6 +3637,10 @@ public class Registration extends Registration_Base {
 	return isForOffice(AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE));
     }
 
+    public void editStartDates(final LocalDate startDate, final LocalDate homologationDate, final LocalDate studiesStartDate) {
+	editStartDates(new YearMonthDay(startDate), new YearMonthDay(homologationDate), new YearMonthDay(studiesStartDate));
+    }
+
     public void editStartDates(final YearMonthDay startDate, final YearMonthDay homologationDate,
 	    final YearMonthDay studiesStartDate) {
 
