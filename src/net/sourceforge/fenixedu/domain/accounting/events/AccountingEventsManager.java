@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.accounting.events.gratuity.StandaloneEnro
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.InvocationResult;
@@ -69,6 +70,15 @@ public class AccountingEventsManager {
 
     public InvocationResult createGratuityEvent(final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionYear executionYear, final boolean checkConditions) {
+
+	if (studentCurricularPlan.getDegreeCurricularPlan().isPast()) {
+	    /*
+	     * TODO: To create events in past dcps its necessary to change
+	     * method args to add ammount and create PastDegreeGratuityEvent.
+	     * For now tt's easier to create debts for past students by script.
+	     */
+	    throw new DomainException("error.AccountingEventsManager.invalid.degree.curricular.plan.type");
+	}
 
 	if (studentCurricularPlan.getDegreeType() == DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA) {
 	    return createDfaGratuityEvent(studentCurricularPlan, executionYear, checkConditions);
