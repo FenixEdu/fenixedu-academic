@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.publicRelationsOffice;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -14,17 +13,18 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.alumni.CerimonyInquiry;
 import net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryAnswer;
 import net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryPerson;
+import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.EmailsDA;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -228,8 +228,27 @@ public class AlumniCerimonyDA extends FenixDispatchAction {
 	    sheet.addCell(person.getName());
 	    sheet.addCell(person.getEmail());
 	    sheet.addCell((inquiryAnswer != null? inquiryAnswer.getText():new String("-")));
-
+	    sheet.addCell(getDegrees(person));
 	}
+    }
+
+    private String getDegrees(final Person person) {
+	final StringBuilder stringBuilder = new StringBuilder();
+	final Student student = person.getStudent();
+	if (student != null) {
+	    final Set<String> names = new TreeSet<String>();
+	    for (final Registration registration : student.getRegistrationsSet()) {
+		final Degree degree = registration.getDegree();
+		names.add(degree.getSigla());
+	    }
+	    for (final String name : names) {
+		if (stringBuilder.length() > 0) {
+		    stringBuilder.append(", ");
+		}
+		stringBuilder.append(name);
+	    }
+	}
+	return stringBuilder.toString();
     }
 
     private void setHeaders(final StyledExcelSpreadsheet spreadsheet) {
@@ -238,6 +257,7 @@ public class AlumniCerimonyDA extends FenixDispatchAction {
 	spreadsheet.addHeader(getResourceMessage("label.name"));
 	spreadsheet.addHeader(getResourceMessage("label.email"));
 	spreadsheet.addHeader(getResourceMessage("label.publicRelationOffice.alumniCerimony.inquiry.people.answer"));
+	spreadsheet.addHeader(getResourceMessage("label.degrees"));
 
     }
 

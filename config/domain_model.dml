@@ -1137,6 +1137,16 @@ class DomainObject {
 		class teacher.evaluation.RadistEvaluation extends teacher.evaluation.TeacherEvaluation {
 		}
 
+	class teacher.evaluation.TeacherEvaluationCoEvaluator extends DomainObject {
+	}
+
+		class teacher.evaluation.InternalCoEvaluator extends teacher.evaluation.TeacherEvaluationCoEvaluator {
+		}
+
+		class teacher.evaluation.ExternalCoEvaluator extends teacher.evaluation.TeacherEvaluationCoEvaluator {
+			String name;
+		}
+
     class Photograph extends DomainObject {
         ContentType contentType;
         PhotoType photoType;
@@ -18091,3 +18101,25 @@ relation TeacherEvaluationFilePerson {
 		multiplicity *;
 	}
 }
+
+relation RootDomainObjectTeacherEvaluationCoEvaluator {
+	RootDomainObject playsRole rootDomainObject;
+	teacher.evaluation.TeacherEvaluationCoEvaluator playsRole teacherEvaluationCoEvaluator {
+		multiplicity *;
+	}
+}
+
+relation TeacherEvaluationProcessTeacherEvaluationCoEvaluator {
+	teacher.evaluation.TeacherEvaluationProcess playsRole teacherEvaluationProcessFromEvaluee;
+	teacher.evaluation.TeacherEvaluationCoEvaluator playsRole teacherEvaluationCoEvaluator {
+		multiplicity *;
+	}
+}
+
+relation InternalCoEvaluatorPerson {
+	teacher.evaluation.InternalCoEvaluator playsRole internalCoEvaluator {
+		multiplicity *;
+	}
+	Person playsRole person;
+}
+
