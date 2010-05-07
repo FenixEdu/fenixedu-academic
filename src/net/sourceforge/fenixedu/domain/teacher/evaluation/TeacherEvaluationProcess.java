@@ -130,4 +130,13 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
 	}
 	return false;
     }
+
+    public String getCoEvaluatorsAsString() {
+	final StringBuilder stringBuilder = new StringBuilder();
+	for (final TeacherEvaluationCoEvaluator teacherEvaluationCoEvaluator : getTeacherEvaluationCoEvaluatorSet()) {
+	    stringBuilder.append(teacherEvaluationCoEvaluator.getDescription());
+	}
+	return stringBuilder.toString();
+    }
+
 }
