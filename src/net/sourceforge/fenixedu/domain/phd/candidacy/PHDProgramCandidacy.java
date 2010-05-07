@@ -32,12 +32,19 @@ public class PHDProgramCandidacy extends PHDProgramCandidacy_Base {
     }
 
     private String getDegreeInformation() {
+
 	if (hasExecutionDegree()) {
+
 	    return getExecutionDegree().getDegreeCurricularPlan().getName() + " - "
 		    + getExecutionDegree().getExecutionYear().getYear();
+
+	} else if (hasRegistration()) {
+	    return getRegistration().getDegreeCurricularPlanName();
+
+	} else {
+	    return getCandidacyProcess().getPhdProgram().getName().getContent();
 	}
 
-	return getCandidacyProcess().getPhdProgram().getName().getContent();
     }
 
     @Override
