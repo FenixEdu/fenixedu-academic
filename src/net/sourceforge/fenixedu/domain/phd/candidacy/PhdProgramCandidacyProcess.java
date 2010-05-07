@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramFocusArea;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdFinalProofRequestAlert;
@@ -742,6 +743,10 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
     PhdProgram getPhdProgram() {
 	return getIndividualProgramProcess().getPhdProgram();
+    }
+    
+    PhdProgramFocusArea getPhdProgramFocusArea() {
+	return getIndividualProgramProcess().getPhdProgramFocusArea();
     }
 
     public boolean hasPhdProgram() {
