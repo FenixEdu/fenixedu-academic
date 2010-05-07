@@ -109,12 +109,14 @@
 		<%= count %>
 	</p>
 	<p>
+		<bean:define id="autoEvaluatedCount" name="facultyEvaluationProcess" property="autoEvaluatedCount"/>
 		<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.teacherEvaluationProcess.autoEvaluation.locked.count" bundle="RESEARCHER_RESOURCES"/>:
-		TODO
+		<%= autoEvaluatedCount %>
 	</p>
 	<p>
+		<bean:define id="evaluatedCount" name="facultyEvaluationProcess" property="evaluatedCount"/>
 		<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.teacherEvaluationProcess.evaluation.locked.count" bundle="RESEARCHER_RESOURCES"/>:
-		TODO
+		<%= evaluatedCount %>
 	</p>
 	<table class="tstyle2 thlight thleft">
 		<tr>

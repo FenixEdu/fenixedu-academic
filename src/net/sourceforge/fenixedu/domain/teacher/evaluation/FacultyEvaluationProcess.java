@@ -92,4 +92,26 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base {
 	}
     }
 
+    public int getAutoEvaluatedCount() {
+	int count = 0;
+	for (final TeacherEvaluationProcess teacherEvaluationProcess : getTeacherEvaluationProcessSet()) {
+	    final TeacherEvaluation currentTeacherEvaluation = teacherEvaluationProcess.getCurrentTeacherEvaluation();
+	    if (currentTeacherEvaluation != null && currentTeacherEvaluation.getAutoEvaluationLock() != null) {
+		count++;
+	    }
+	}
+	return count;
+    }
+
+    public int getEvaluatedCount() {
+	int count = 0;
+	for (final TeacherEvaluationProcess teacherEvaluationProcess : getTeacherEvaluationProcessSet()) {
+	    final TeacherEvaluation currentTeacherEvaluation = teacherEvaluationProcess.getCurrentTeacherEvaluation();
+	    if (currentTeacherEvaluation != null && currentTeacherEvaluation.getEvaluationLock() != null) {
+		count++;
+	    }
+	}
+	return count;
+    }
+
 }
