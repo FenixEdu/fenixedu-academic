@@ -1196,4 +1196,9 @@
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
+	<definition name="erasmus.stork.attr.list.test" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/erasmus/storkAttrListTest.jsp" />
+		<put name="hideLanguage" value="true" />
+	</definition>
+	
 </tiles-definitions>

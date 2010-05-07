@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.StorkAttributeType;
+
 public class SPUtil {
 
     private static SPUtil instance;
@@ -38,7 +40,7 @@ public class SPUtil {
 	    String name = this.properties.getProperty(f("attribute%s.name", i));
 	    Boolean mandatory = Boolean.valueOf(this.properties.getProperty(f("attribute%s.type", i)));
 	    String value = this.properties.getProperty(f("%s.value", name));
-	    this.attributes.add(new Attribute(i, name, mandatory, value));
+	    this.attributes.add(new Attribute(i, StorkAttributeType.getTypeFromStorkName(name), mandatory, value));
 	}
 
     }
@@ -81,7 +83,7 @@ public class SPUtil {
 
     public Attribute getAttributeByName(String name) {
 	for (Attribute attr : this.attributes) {
-	    if (name.equals(attr.getName()))
+	    if (name.equals(attr.getType().getStorkName()))
 		return attr;
 	}
 
@@ -106,9 +108,10 @@ public class SPUtil {
 
 	for (Attribute attribute : this.getAttributes()) {
 	    if (attribute.isValueAssigned()) {
-		sb.append(f("%s:%s:%s;", attribute.getName(), attribute.getMandatory().toString(), attribute.getValue()));
+		sb.append(f("%s:%s:%s;", attribute.getType().getStorkName(), attribute.getMandatory().toString(), attribute
+			.getValue()));
 	    } else {
-		sb.append(f("%s:%s;", attribute.getName(), attribute.getMandatory().toString()));
+		sb.append(f("%s:%s;", attribute.getType().getStorkName(), attribute.getMandatory().toString()));
 	    }
 	}
 

@@ -7,6 +7,8 @@
 <%@page import="org.apache.struts.action.ActionMessages" %>
 <%@ page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
 <%@ page import="java.util.Locale"%>
+<%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean" %>
+<%@ page import="net.sourceforge.fenixedu.util.StringUtils" %>
 
 <%!
 	static String f(String value, Object ... args) {
@@ -39,6 +41,8 @@
 <bean:define id="fullPath"><%= request.getContextPath() + "/publico" + mappingPath + ".do" %></bean:define>
 <bean:define id="applicationInformationLinkDefault" name="application.information.link.default"/>
 <bean:define id="applicationInformationLinkEnglish" name="application.information.link.english"/>
+
+<bean:define id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" type="ErasmusIndividualCandidacyProcessBean"/>
 
 <div class="breadcumbs">
 	<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://gri.ist.utl.pt/en">NMCI</a> &gt;
@@ -104,8 +108,120 @@
 		<logic:equal value="true" name="individualCandidacyProcessBean" property="toAccessFenix">
 		<fr:edit id="candidacyProcess.personalDataBean"
 			name="individualCandidacyProcessBean"
-			property="personBean" 
-			schema="ErasmusIndividualCandidacyPublicProcess.personalDataBean.with.email.confirmation">
+			property="personBean">
+			
+			<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="APPLICATION_RESOURCES">
+				<fr:slot name="name" key="label.name" >
+					<fr:property name="readOnly" value="<%= String.valueOf(!StringUtils.isEmpty(individualCandidacyProcessBean.getPersonBean().getName())) %>" />
+					<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+					<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+						<fr:property name="type" value="character"/>
+						<fr:property name="length" value="100"/>
+					</fr:validator>
+					<fr:property name="size" value="50"/>
+					<fr:property name="maxlength" value="100"/>		
+				</fr:slot>
+						
+				<fr:slot name="gender" key="label.gender" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+					<fr:property name="readOnly" value="<%= String.valueOf(individualCandidacyProcessBean.getPersonBean().getGender() != null) %>" />
+				</fr:slot>
+
+				<fr:slot name="dateOfBirth" key="label.dateOfBirth" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+					<fr:property name="readOnly" value="<%= String.valueOf(individualCandidacyProcessBean.getPersonBean().getDateOfBirth() != null) %>" />
+					<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+					<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.AdvancedDateValidator">
+						<fr:property name="validationPeriod" value="PAST"/>
+						<fr:property name="bundle" value="CANDIDATE_RESOURCES"/>
+						<fr:property name="message" value="error.birth.date.not.less.actual.date"/>
+					</fr:validator>	
+					<fr:property name="size" value="15"/>
+					<fr:property name="maxLength" value="10"/>
+				</fr:slot>	
+		
+				<fr:slot name="documentIdNumber" key="label.identificationNumber" >
+					<fr:property name="readOnly" value="<%= String.valueOf(!StringUtils.isEmpty(individualCandidacyProcessBean.getPersonBean().getDocumentIdNumber())) %>" />
+					<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+					<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+						<fr:property name="type" value="character"/>
+						<fr:property name="length" value="50"/>
+					</fr:validator>
+					<fr:property name="size" value="50"/>
+					<fr:property name="maxlength" value="50"/>			
+				</fr:slot>
+	
+				<fr:slot name="nationality" layout="menu-select" key="label.nationality" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+					<fr:property name="readOnly" value="<%= String.valueOf(individualCandidacyProcessBean.getPersonBean().getNationality() != null) %>" />
+					<fr:property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/>
+					<fr:property name="format" value="${countryNationality}" />
+					<fr:property name="sortBy" value="countryNationality"/>
+				</fr:slot>
+	
+				<fr:slot name="address" key="label.address">
+					<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+					<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+						<fr:property name="type" value="character"/>
+						<fr:property name="length" value="100"/>
+					</fr:validator>
+					<fr:property name="size" value="50"/>
+					<fr:property name="maxlength" value="100"/>
+				</fr:slot>
+	
+				<fr:slot name="areaCode" key="label.areaCode">
+					<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+					<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+						<fr:property name="type" value="character"/>
+						<fr:property name="length" value="10"/>
+					</fr:validator>
+					<fr:property name="size" value="15"/>
+				</fr:slot>
+	
+				<fr:slot name="area" key="label.area" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+					<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+						<fr:property name="type" value="character"/>
+						<fr:property name="length" value="40"/>
+					</fr:validator>
+					<fr:property name="size" value="40"/>
+				</fr:slot>
+	
+				<fr:slot name="countryOfResidence" key="label.countryOfResidence" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
+					<fr:property name="format" value="${localizedName}"/>
+					<fr:property name="sortBy" value="localizedName=asc" />
+					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+				</fr:slot>
+			
+				<fr:slot name="phone" key="label.phone">
+			    	<fr:property name="size" value="15"/>
+					<fr:property name="maxLength" value="15"/>
+					<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+					<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+			            <fr:property name="regexp" value="(\d{4,15})?"/>
+			            <fr:property name="message" value="error.phone.invalidFormat"/>
+			            <fr:property name="key" value="true"/>
+			        </fr:validator>
+			    </fr:slot>
+
+				<fr:slot name="email" key="label.email">
+					<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+					<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.EmailValidator"/>
+					<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+						<fr:property name="type" value="character"/>
+						<fr:property name="length" value="40"/>
+					</fr:validator>
+					<fr:property name="size" value="40"/>
+				</fr:slot>
+				
+				<fr:slot name="emailConfirmation" key="erasmus.label.email.confirmation">
+					<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+					<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.EmailValidator"/>
+					<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+						<fr:property name="type" value="character"/>
+						<fr:property name="length" value="40"/>
+					</fr:validator>
+					<fr:property name="size" value="40"/>
+				</fr:slot>
+				
+			</fr:schema>
+						
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thlight thleft mtop05"/>
 		        <fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>

@@ -50,7 +50,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "prepare-edit-candidacy-documents", path = "/candidacy/erasmus/editCandidacyDocuments.jsp"),
 	@Forward(name = "create-student-data", path = "/candidacy/erasmus/createStudentData.jsp"),
 	@Forward(name = "view-student-data-username", path = "/candidacy/erasmus/viewStudentDataUsername.jsp"),
-	@Forward(name = "edit-eidentifier", path = "/candidacy/erasmus/editEidentifier.jsp") })
+	@Forward(name = "edit-eidentifier", path = "/candidacy/erasmus/editEidentifier.jsp"),
+	@Forward(name = "cancel-candidacy", path = "/candidacy/cancelCandidacy.jsp") })
 public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProcessDA {
 
     @Override

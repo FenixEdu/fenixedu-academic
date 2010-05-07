@@ -2269,7 +2269,7 @@
 	<slot name="areaCode" key="label.areaCode" />
 	<slot name="area" key="label.area" />
 	<slot name="countryOfResidence.nameI18N" key="label.countryOfResidence" />
-	<slot name="phone" key="label.phone" />
+	<slot name="telephoneContact" key="label.phone" />
 	<slot name="email" key="label.email" />	
 </schema>
 

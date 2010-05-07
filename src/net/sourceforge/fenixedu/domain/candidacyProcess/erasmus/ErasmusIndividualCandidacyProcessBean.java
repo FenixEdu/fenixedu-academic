@@ -48,6 +48,8 @@ public class ErasmusIndividualCandidacyProcessBean extends IndividualCandidacyPr
 
     private Boolean sendEmail;
 
+    private StorkAttributesList personalFieldsFromStork;
+
     public ErasmusIndividualCandidacyProcessBean() {
 	setCandidacyDate(new LocalDate());
 	initializeDocumentUploadBeans();
@@ -168,6 +170,14 @@ public class ErasmusIndividualCandidacyProcessBean extends IndividualCandidacyPr
 
     public void setSendEmail(Boolean sendEmail) {
 	this.sendEmail = sendEmail;
+    }
+
+    public StorkAttributesList getPersonalFieldsFromStork() {
+	return this.personalFieldsFromStork;
+    }
+
+    public void setPersonalFieldsFromStork(final StorkAttributesList value) {
+	this.personalFieldsFromStork = value;
     }
 
     public ErasmusVacancy calculateErasmusVacancy() {

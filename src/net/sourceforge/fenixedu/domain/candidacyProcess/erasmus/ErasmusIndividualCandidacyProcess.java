@@ -78,6 +78,9 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 
 	setValidatedByErasmusCoordinator(false);
 	setValidatedByGri(false);
+
+	setPersonalFieldsFromStork(bean.getPersonalFieldsFromStork() != null ? bean.getPersonalFieldsFromStork()
+		: StorkAttributesList.EMPTY);
     }
 
     @Override

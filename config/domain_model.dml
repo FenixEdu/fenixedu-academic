@@ -576,6 +576,15 @@ valueType net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.TypeOfProgram
     internalizeWith importFromString();
 }
 
+
+valueType net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.StorkAttributesList as erasmus.StorkAttributesList {
+    externalizeWith {
+        String toString();
+    }
+    
+    internalizeWith importFromString();
+}
+
 /* Phd Module */
 valueType net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessTypeList as PhdProcessAccessTypeList {
 	externalizeWith {
@@ -6644,6 +6653,7 @@ class candidacyProcess.CandidacyProcess extends caseHandling.Process {
     class candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess extends candidacyProcess.IndividualCandidacyProcess {
     	Boolean validatedByGri;
     	Boolean validatedByErasmusCoordinator;
+    	erasmus.StorkAttributesList personalFieldsFromStork;
     }
         
 class candidacyProcess.IndividualCandidacy extends DomainObject {

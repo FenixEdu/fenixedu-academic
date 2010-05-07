@@ -1,14 +1,16 @@
 package net.sourceforge.fenixedu.util.stork;
 
+import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.StorkAttributeType;
+
 public class Attribute {
     Integer id;
-    String name;
+    StorkAttributeType type;
     Boolean mandatory;
     String value;
 
-    public Attribute(Integer id, String name, Boolean mandatory, String value) {
+    public Attribute(Integer id, StorkAttributeType type, Boolean mandatory, String value) {
 	setId(id);
-	setName(name);
+	setType(type);
 	setMandatory(mandatory);
 	setValue(value);
     }
@@ -21,12 +23,12 @@ public class Attribute {
 	this.id = order;
     }
 
-    public String getName() {
-	return name;
+    public StorkAttributeType getType() {
+	return this.type;
     }
 
-    public void setName(String name) {
-	this.name = name;
+    public void setType(StorkAttributeType type) {
+	this.type = type;
     }
 
     public Boolean getMandatory() {
