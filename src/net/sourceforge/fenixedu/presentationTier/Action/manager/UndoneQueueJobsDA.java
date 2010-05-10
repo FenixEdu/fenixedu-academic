@@ -6,6 +6,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.QueueJob;
+import net.sourceforge.fenixedu.domain.TutorshipStudentLowPerformanceQueueJob;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -13,10 +17,6 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-
-import net.sourceforge.fenixedu.domain.QueueJob;
-import net.sourceforge.fenixedu.domain.TutorshipStudentLowPerformanceQueueJob;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 @Mapping(path = "/undoneQueueJobs", module = "manager")
 @Forwards( { @Forward(name = "undoneQueueJobs", path = "/manager/undoneQueueJobs.jsp")})
@@ -43,13 +43,13 @@ public class UndoneQueueJobsDA extends FenixDispatchAction{
     
     public ActionForward resendQueuedJob(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
 	int oid = Integer.valueOf(request.getParameter("id"));
-	QueueJob.resendQueueJob(oid);
+//	QueueJob.resendQueueJob(oid);
 	return prepareUndoneQueueJobList(mapping, actionForm, request, response);
     }
     
     public ActionForward cancelQueuedJob(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
 	int oid = Integer.valueOf(request.getParameter("id"));
-	QueueJob.cancelQueuedJob(oid);
+//	QueueJob.cancelQueuedJob(oid);
 	return prepareUndoneQueueJobList(mapping, actionForm, request, response);
     }
     
