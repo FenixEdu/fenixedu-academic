@@ -43,4 +43,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Teacher Evaluation Mark" updates.sql
