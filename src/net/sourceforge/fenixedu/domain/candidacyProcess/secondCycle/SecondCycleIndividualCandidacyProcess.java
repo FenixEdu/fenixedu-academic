@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegree
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
@@ -571,23 +572,23 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
     public List<IndividualCandidacyDocumentFileType> getMissingRequiredDocumentFiles() {
 	List<IndividualCandidacyDocumentFileType> missingDocumentFiles = new ArrayList<IndividualCandidacyDocumentFileType>();
 
-	if (getFileForType(IndividualCandidacyDocumentFileType.PHOTO) == null) {
+	if (getActiveFileForType(IndividualCandidacyDocumentFileType.PHOTO) == null) {
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.PHOTO);
 	}
 
-	if (getFileForType(IndividualCandidacyDocumentFileType.CV_DOCUMENT) == null) {
+	if (getActiveFileForType(IndividualCandidacyDocumentFileType.CV_DOCUMENT) == null) {
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.CV_DOCUMENT);
 	}
 
-	if (getFileForType(IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT) == null) {
+	if (getActiveFileForType(IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT) == null) {
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT);
 	}
 
-	if (getFileForType(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION) == null) {
+	if (getActiveFileForType(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION) == null) {
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION);
 	}
 
-	if (getFileForType(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT) == null) {
+	if (getActiveFileForType(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT) == null) {
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT);
 	}
 
@@ -635,6 +636,11 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	    process.rejectCandidacy(userView.getPerson());
 	    return process;
 	}
+    }
+
+    @Override
+    protected void executeOperationsBeforeDocumentFileBinding(IndividualCandidacyDocumentFile documentFile) {
+	// Do nothing
     }
 
 }

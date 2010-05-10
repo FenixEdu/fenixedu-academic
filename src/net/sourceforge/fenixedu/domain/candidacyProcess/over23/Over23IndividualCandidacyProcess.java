@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
@@ -526,27 +527,27 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
     public List<IndividualCandidacyDocumentFileType> getMissingRequiredDocumentFiles() {
 	List<IndividualCandidacyDocumentFileType> missingDocumentFiles = new ArrayList<IndividualCandidacyDocumentFileType>();
 
-	if (getFileForType(IndividualCandidacyDocumentFileType.PHOTO) == null) {
+	if (getActiveFileForType(IndividualCandidacyDocumentFileType.PHOTO) == null) {
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.PHOTO);
 	}
 
-	if (getFileForType(IndividualCandidacyDocumentFileType.CV_DOCUMENT) == null) {
+	if (getActiveFileForType(IndividualCandidacyDocumentFileType.CV_DOCUMENT) == null) {
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.CV_DOCUMENT);
 	}
 
-	if (getFileForType(IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT) == null) {
+	if (getActiveFileForType(IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT) == null) {
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT);
 	}
 
-	if (getFileForType(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION) == null) {
+	if (getActiveFileForType(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION) == null) {
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION);
 	}
 
-	if (getFileForType(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT) == null) {
+	if (getActiveFileForType(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT) == null) {
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT);
 	}
 
-	if (getFileForType(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT) == null) {
+	if (getActiveFileForType(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT) == null) {
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT);
 	}
 
@@ -559,8 +560,8 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	}
 
 	@Override
-	protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process,
-		IUserView userView, Object object) {
+	protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
+		Object object) {
 	    DegreeOfficePublicCandidacyHashCode hashCode = (DegreeOfficePublicCandidacyHashCode) object;
 	    hashCode.sendEmailForApplicationSuccessfullySubmited();
 	    return process;
@@ -593,6 +594,26 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	    process.setPaymentChecked(((IndividualCandidacyProcessBean) object).getPaymentChecked());
 	    return process;
 	}
+    }
+
+    @Override
+    protected void executeOperationsBeforeDocumentFileBinding(IndividualCandidacyDocumentFile documentFile) {
+	IndividualCandidacyDocumentFileType type = documentFile.getCandidacyFileType();
+
+	IndividualCandidacyDocumentFile file = getActiveFileForType(type);
+	if (file == null) {
+	    return;
+	}
+
+	if (IndividualCandidacyDocumentFileType.REPORT_OR_WORK_DOCUMENT.equals(type)) {
+	    return;
+	}
+
+	if (IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT.equals(type)) {
+	    throw new DomainException("error.over23.uploading.payment.document.more.than.once");
+	}
+
+	file.setCandidacyFileActive(false);
     }
 
 }

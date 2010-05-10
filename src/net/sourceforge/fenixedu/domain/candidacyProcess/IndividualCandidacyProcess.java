@@ -284,11 +284,11 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     }
 
     public IndividualCandidacyDocumentFile getPhoto() {
-	IndividualCandidacyDocumentFile photo = getFileForType(IndividualCandidacyDocumentFileType.PHOTO);
+	IndividualCandidacyDocumentFile photo = getActiveFileForType(IndividualCandidacyDocumentFileType.PHOTO);
 	return photo;
     }
 
-    public IndividualCandidacyDocumentFile getFileForType(IndividualCandidacyDocumentFileType type) {
+    public IndividualCandidacyDocumentFile getActiveFileForType(IndividualCandidacyDocumentFileType type) {
 	for (IndividualCandidacyDocumentFile document : this.getCandidacy().getDocuments()) {
 	    if (document.getCandidacyFileType().equals(type) && document.getCandidacyFileActive())
 		return document;
@@ -297,11 +297,26 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 	return null;
     }
 
+    public List<IndividualCandidacyDocumentFile> getAllFilesForType(IndividualCandidacyDocumentFileType type) {
+	List<IndividualCandidacyDocumentFile> files = new ArrayList<IndividualCandidacyDocumentFile>();
+	for (IndividualCandidacyDocumentFile document : this.getCandidacy().getDocuments()) {
+	    if (document.getCandidacyFileType().equals(type)) {
+		files.add(document);
+	    }
+	}
+
+	return files;
+    }
+
     public void bindIndividualCandidacyDocumentFile(CandidacyProcessDocumentUploadBean uploadBean) {
 	if (uploadBean.getDocumentFile() != null) {
+	    executeOperationsBeforeDocumentFileBinding(uploadBean.getDocumentFile());
+
 	    uploadBean.getDocumentFile().setIndividualCandidacy(this.getCandidacy());
 	}
     }
+
+    protected abstract void executeOperationsBeforeDocumentFileBinding(IndividualCandidacyDocumentFile documentFile);
 
     public abstract List<IndividualCandidacyDocumentFileType> getMissingRequiredDocumentFiles();
 
@@ -327,7 +342,7 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     }
 
     public Boolean getCandidacyHasVatDocument() {
-	return getFileForType(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT) != null;
+	return getActiveFileForType(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT) != null;
     }
 
     /**

@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
@@ -177,28 +178,38 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	// TODO Auto-generated method stub
 	return null;
     }
-
+    
+    @Override
+    protected void executeOperationsBeforeDocumentFileBinding(IndividualCandidacyDocumentFile documentFile) {
+	IndividualCandidacyDocumentFileType type = documentFile.getCandidacyFileType();
+	IndividualCandidacyDocumentFile file = this.getActiveFileForType(type);
+	
+	if(file != null) {
+	    file.setCandidacyFileActive(false);
+	}
+    }
+    
     @Override
     public List<IndividualCandidacyDocumentFileType> getMissingRequiredDocumentFiles() {
 	List<IndividualCandidacyDocumentFileType> missingDocumentFiles = new ArrayList<IndividualCandidacyDocumentFileType>();
 
-	if (getFileForType(IndividualCandidacyDocumentFileType.PHOTO) == null) {
+	if (getActiveFileForType(IndividualCandidacyDocumentFileType.PHOTO) == null) {
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.PHOTO);
 	}
 
-	if (getFileForType(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION) == null) {
+	if (getActiveFileForType(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION) == null) {
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION);
 	}
 
-	if (getFileForType(IndividualCandidacyDocumentFileType.LEARNING_AGREEMENT) == null) {
+	if (getActiveFileForType(IndividualCandidacyDocumentFileType.LEARNING_AGREEMENT) == null) {
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.LEARNING_AGREEMENT);
 	}
 
-	if (getFileForType(IndividualCandidacyDocumentFileType.CV_DOCUMENT) == null) {
+	if (getActiveFileForType(IndividualCandidacyDocumentFileType.CV_DOCUMENT) == null) {
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.CV_DOCUMENT);
 	}
 
-	if (getFileForType(IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT) == null) {
+	if (getActiveFileForType(IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT) == null) {
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT);
 	}
 

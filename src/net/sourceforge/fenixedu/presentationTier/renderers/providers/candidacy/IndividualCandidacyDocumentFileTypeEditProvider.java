@@ -25,49 +25,50 @@ public class IndividualCandidacyDocumentFileTypeEditProvider {
 	    CandidacyProcessDocumentUploadBean uploadBean = (CandidacyProcessDocumentUploadBean) source;
 	    IndividualCandidacyProcess individualCandidacyProcess = uploadBean.getIndividualCandidacyProcess();
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.PHOTO) == null) {
+	    if (individualCandidacyProcess.getActiveFileForType(IndividualCandidacyDocumentFileType.PHOTO) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.PHOTO);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.CV_DOCUMENT) == null) {
+	    if (individualCandidacyProcess.getActiveFileForType(IndividualCandidacyDocumentFileType.CV_DOCUMENT) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.CV_DOCUMENT);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT) == null) {
+	    if (individualCandidacyProcess
+		    .getActiveFileForType(IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION) == null) {
+	    if (individualCandidacyProcess.getActiveFileForType(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT) == null) {
+	    if (individualCandidacyProcess.getActiveFileForType(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.REGISTRATION_CERTIFICATE) == null) {
+	    if (individualCandidacyProcess.getActiveFileForType(IndividualCandidacyDocumentFileType.REGISTRATION_CERTIFICATE) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.REGISTRATION_CERTIFICATE);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.NO_PRESCRIPTION_CERTIFICATE) == null) {
+	    if (individualCandidacyProcess.getActiveFileForType(IndividualCandidacyDocumentFileType.NO_PRESCRIPTION_CERTIFICATE) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.NO_PRESCRIPTION_CERTIFICATE);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT) == null) {
+	    if (individualCandidacyProcess.getActiveFileForType(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT);
 	    }
 
 	    if (individualCandidacyProcess
-		    .getFileForType(IndividualCandidacyDocumentFileType.FIRST_CYCLE_ACCESS_HABILITATION_CERTIFICATE) == null) {
+		    .getActiveFileForType(IndividualCandidacyDocumentFileType.FIRST_CYCLE_ACCESS_HABILITATION_CERTIFICATE) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.FIRST_CYCLE_ACCESS_HABILITATION_CERTIFICATE);
 	    }
 
 	    if (individualCandidacyProcess
-		    .getFileForType(IndividualCandidacyDocumentFileType.FOREIGN_INSTITUTION_SCALE_CERTIFICATE) == null) {
+		    .getActiveFileForType(IndividualCandidacyDocumentFileType.FOREIGN_INSTITUTION_SCALE_CERTIFICATE) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.FOREIGN_INSTITUTION_SCALE_CERTIFICATE);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.GRADES_DOCUMENT) == null) {
+	    if (individualCandidacyProcess.getActiveFileForType(IndividualCandidacyDocumentFileType.GRADES_DOCUMENT) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.GRADES_DOCUMENT);
 	    }
 
@@ -90,36 +91,37 @@ public class IndividualCandidacyDocumentFileTypeEditProvider {
 	    CandidacyProcessDocumentUploadBean uploadBean = (CandidacyProcessDocumentUploadBean) source;
 	    IndividualCandidacyProcess individualCandidacyProcess = uploadBean.getIndividualCandidacyProcess();
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.PHOTO) == null) {
+	    if (individualCandidacyProcess.getActiveFileForType(IndividualCandidacyDocumentFileType.PHOTO) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.PHOTO);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.CV_DOCUMENT) == null) {
+	    if (individualCandidacyProcess.getActiveFileForType(IndividualCandidacyDocumentFileType.CV_DOCUMENT) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.CV_DOCUMENT);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT) == null) {
+	    if (individualCandidacyProcess
+		    .getActiveFileForType(IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION) == null) {
+	    if (individualCandidacyProcess.getActiveFileForType(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT) == null) {
+	    if (individualCandidacyProcess.getActiveFileForType(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.DEGREE_CERTIFICATE) == null) {
+	    if (individualCandidacyProcess.getActiveFileForType(IndividualCandidacyDocumentFileType.DEGREE_CERTIFICATE) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.DEGREE_CERTIFICATE);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT) == null) {
+	    if (individualCandidacyProcess.getActiveFileForType(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT);
 	    }
 
 	    if (individualCandidacyProcess
-		    .getFileForType(IndividualCandidacyDocumentFileType.FOREIGN_INSTITUTION_SCALE_CERTIFICATE) == null) {
+		    .getActiveFileForType(IndividualCandidacyDocumentFileType.FOREIGN_INSTITUTION_SCALE_CERTIFICATE) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.FOREIGN_INSTITUTION_SCALE_CERTIFICATE);
 	    }
 
@@ -145,32 +147,33 @@ public class IndividualCandidacyDocumentFileTypeEditProvider {
 	    CandidacyProcessDocumentUploadBean uploadBean = (CandidacyProcessDocumentUploadBean) source;
 	    IndividualCandidacyProcess individualCandidacyProcess = uploadBean.getIndividualCandidacyProcess();
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.PHOTO) == null) {
+	    if (individualCandidacyProcess.getActiveFileForType(IndividualCandidacyDocumentFileType.PHOTO) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.PHOTO);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.CV_DOCUMENT) == null) {
+	    if (individualCandidacyProcess.getActiveFileForType(IndividualCandidacyDocumentFileType.CV_DOCUMENT) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.CV_DOCUMENT);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT) == null) {
+	    if (individualCandidacyProcess
+		    .getActiveFileForType(IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION) == null) {
+	    if (individualCandidacyProcess.getActiveFileForType(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT) == null) {
+	    if (individualCandidacyProcess.getActiveFileForType(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT) == null) {
+	    if (individualCandidacyProcess.getActiveFileForType(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT);
 	    }
 
 	    if (individualCandidacyProcess
-		    .getFileForType(IndividualCandidacyDocumentFileType.FOREIGN_INSTITUTION_SCALE_CERTIFICATE) == null) {
+		    .getActiveFileForType(IndividualCandidacyDocumentFileType.FOREIGN_INSTITUTION_SCALE_CERTIFICATE) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.FOREIGN_INSTITUTION_SCALE_CERTIFICATE);
 	    }
 
@@ -196,23 +199,23 @@ public class IndividualCandidacyDocumentFileTypeEditProvider {
 	    CandidacyProcessDocumentUploadBean uploadBean = (CandidacyProcessDocumentUploadBean) source;
 	    IndividualCandidacyProcess individualCandidacyProcess = uploadBean.getIndividualCandidacyProcess();
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.PHOTO) == null) {
+	    if (individualCandidacyProcess.getAllFilesForType(IndividualCandidacyDocumentFileType.PHOTO).size() < 3) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.PHOTO);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION) == null) {
+	    if (individualCandidacyProcess.getAllFilesForType(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION).size() < 3) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.LEARNING_AGREEMENT) == null) {
+	    if (individualCandidacyProcess.getAllFilesForType(IndividualCandidacyDocumentFileType.LEARNING_AGREEMENT).size() < 3) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.LEARNING_AGREEMENT);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.CV_DOCUMENT) == null) {
+	    if (individualCandidacyProcess.getAllFilesForType(IndividualCandidacyDocumentFileType.CV_DOCUMENT).size() < 3) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.CV_DOCUMENT);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.TRANSCRIPT_OF_RECORDS) == null) {
+	    if (individualCandidacyProcess.getAllFilesForType(IndividualCandidacyDocumentFileType.TRANSCRIPT_OF_RECORDS).size() < 3) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.TRANSCRIPT_OF_RECORDS);
 	    }
 
@@ -236,53 +239,54 @@ public class IndividualCandidacyDocumentFileTypeEditProvider {
 	    CandidacyProcessDocumentUploadBean uploadBean = (CandidacyProcessDocumentUploadBean) source;
 	    IndividualCandidacyProcess individualCandidacyProcess = uploadBean.getIndividualCandidacyProcess();
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.PHOTO) == null) {
+	    if (individualCandidacyProcess.getActiveFileForType(IndividualCandidacyDocumentFileType.PHOTO) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.PHOTO);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.CV_DOCUMENT) == null) {
+	    if (individualCandidacyProcess.getActiveFileForType(IndividualCandidacyDocumentFileType.CV_DOCUMENT) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.CV_DOCUMENT);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT) == null) {
+	    if (individualCandidacyProcess
+		    .getActiveFileForType(IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION) == null) {
+	    if (individualCandidacyProcess.getActiveFileForType(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT) == null) {
+	    if (individualCandidacyProcess.getActiveFileForType(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT) == null) {
+	    if (individualCandidacyProcess.getActiveFileForType(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.DEGREE_CERTIFICATE) == null) {
+	    if (individualCandidacyProcess.getActiveFileForType(IndividualCandidacyDocumentFileType.DEGREE_CERTIFICATE) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.DEGREE_CERTIFICATE);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.REGISTRATION_CERTIFICATE) == null) {
+	    if (individualCandidacyProcess.getActiveFileForType(IndividualCandidacyDocumentFileType.REGISTRATION_CERTIFICATE) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.REGISTRATION_CERTIFICATE);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.NO_PRESCRIPTION_CERTIFICATE) == null) {
+	    if (individualCandidacyProcess.getActiveFileForType(IndividualCandidacyDocumentFileType.NO_PRESCRIPTION_CERTIFICATE) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.NO_PRESCRIPTION_CERTIFICATE);
 	    }
 
 	    if (individualCandidacyProcess
-		    .getFileForType(IndividualCandidacyDocumentFileType.FIRST_CYCLE_ACCESS_HABILITATION_CERTIFICATE) == null) {
+		    .getActiveFileForType(IndividualCandidacyDocumentFileType.FIRST_CYCLE_ACCESS_HABILITATION_CERTIFICATE) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.FIRST_CYCLE_ACCESS_HABILITATION_CERTIFICATE);
 	    }
 
 	    if (individualCandidacyProcess
-		    .getFileForType(IndividualCandidacyDocumentFileType.FOREIGN_INSTITUTION_SCALE_CERTIFICATE) == null) {
+		    .getActiveFileForType(IndividualCandidacyDocumentFileType.FOREIGN_INSTITUTION_SCALE_CERTIFICATE) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.FOREIGN_INSTITUTION_SCALE_CERTIFICATE);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.GRADES_DOCUMENT) == null) {
+	    if (individualCandidacyProcess.getActiveFileForType(IndividualCandidacyDocumentFileType.GRADES_DOCUMENT) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.GRADES_DOCUMENT);
 	    }
 
@@ -308,31 +312,32 @@ public class IndividualCandidacyDocumentFileTypeEditProvider {
 	    CandidacyProcessDocumentUploadBean uploadBean = (CandidacyProcessDocumentUploadBean) source;
 	    IndividualCandidacyProcess individualCandidacyProcess = uploadBean.getIndividualCandidacyProcess();
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.PHOTO) == null) {
+	    if (individualCandidacyProcess.getAllFilesForType(IndividualCandidacyDocumentFileType.PHOTO).size() < 3) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.PHOTO);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.CV_DOCUMENT) == null) {
+	    if (individualCandidacyProcess.getAllFilesForType(IndividualCandidacyDocumentFileType.CV_DOCUMENT).size() < 3) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.CV_DOCUMENT);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT) == null) {
+	    if (individualCandidacyProcess.getAllFilesForType(
+		    IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT).size() < 3) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION) == null) {
+	    if (individualCandidacyProcess.getAllFilesForType(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION).size() < 3) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT) == null) {
+	    if (individualCandidacyProcess.getActiveFileForType(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT) == null) {
+	    if (individualCandidacyProcess.getAllFilesForType(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT).size() < 3) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT);
 	    }
 
-	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.DEGREE_CERTIFICATE) == null) {
+	    if (individualCandidacyProcess.getAllFilesForType(IndividualCandidacyDocumentFileType.DEGREE_CERTIFICATE).size() < 3) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.DEGREE_CERTIFICATE);
 	    }
 

@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
@@ -329,5 +330,11 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
     public List<IndividualCandidacyDocumentFileType> getMissingRequiredDocumentFiles() {
 	// TODO Auto-generated method stub
 	return null;
+    }
+
+    @Override
+    protected void executeOperationsBeforeDocumentFileBinding(IndividualCandidacyDocumentFile documentFile) {
+	// Do nothing
+
     }
 }
