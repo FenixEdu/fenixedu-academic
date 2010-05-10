@@ -7,6 +7,7 @@ public class NoEvaluation extends NoEvaluation_Base {
     public NoEvaluation(TeacherEvaluationProcess process) {
 	super();
 	setTeacherEvaluationProcess(process);
+	setEvaluationMark(TeacherEvaluationMark.GOOD);
     }
 
     @Override
