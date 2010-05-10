@@ -921,4 +921,9 @@
 		<setter signature="edit(person,country,branch,dateYearMonthDay,degree,degreeRecognition,equivalenceDateYearMonthDay,equivalenceSchool,mark,school,specializationArea,title,type,year,designation,attendedBegin,attendedEnd)"/>
 </schema>
 
+<schema name="manager.list.queueJobs.undone" type="net.sourceforge.fenixedu.domain.QueueJob" bundle="MANAGER_RESOURCES">
+	<slot name="class.name" layout="null-as-label" key="label.queueJobs.list.listing"/>
+	<slot name="requestDate" key="label.queueJobs.list.date"/>
+	<slot name="person.name" key="label.queueJobs.list.person"/>
+</schema>
 
