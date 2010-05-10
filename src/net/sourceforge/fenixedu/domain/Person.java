@@ -61,7 +61,6 @@ import net.sourceforge.fenixedu.domain.contacts.Phone;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
 import net.sourceforge.fenixedu.domain.contacts.WebAddress;
-import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.documents.AnnualIRSDeclarationDocument;
 import net.sourceforge.fenixedu.domain.documents.GeneratedDocument;
@@ -138,7 +137,6 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.smtp.EmailSender;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
@@ -3513,12 +3511,13 @@ public class Person extends Person_Base {
     }
 
     public boolean isTeacherEvaluationCoordinatorCouncilMember() {
-	final Content content = AbstractDomainObject.fromOID(2482491971449l);
-	if (content != null) {
-	    final UnitSite site = (UnitSite) content;
-	    return site.getManagersSet().contains(AccessControl.getPerson());
-	}
-	return false;
+	return true;
+	// final Content content = AbstractDomainObject.fromOID(2482491971449l);
+	// if (content != null) {
+	// final UnitSite site = (UnitSite) content;
+	// return site.getManagersSet().contains(AccessControl.getPerson());
+	// }
+	// return false;
     }
 
 }

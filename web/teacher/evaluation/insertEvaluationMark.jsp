@@ -15,8 +15,7 @@
 
 <bean:define id="action" name="action" />
 <bean:define id="slut" name="slot" />
-<fr:edit id="insert-mark" name="process" property="currentTeacherEvaluation"
-	action="<%="/teacherEvaluation.do?method="+action%>">
+<fr:edit id="insert-mark" name="process" action="<%="/teacherEvaluation.do?method="+action%>">
 	<fr:schema bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluation">
 		<fr:slot name="<%=slut.toString()%>" key="label.teacher.evaluation.mark">
 			<fr:property name="defaultOptionHidden" value="true" />

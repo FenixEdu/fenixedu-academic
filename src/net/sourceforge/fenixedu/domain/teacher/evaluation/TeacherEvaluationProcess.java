@@ -7,6 +7,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
 
@@ -73,6 +74,10 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
 	return current != null ? current.getAutoEvaluationMark() : null;
     }
 
+    public void setEvaluationMark(TeacherEvaluationMark mark) {
+	getCurrentTeacherEvaluation().setEvaluationMark(mark);
+    }
+
     public TeacherEvaluationMark getEvaluationMark() {
 	if (getApprovedEvaluationMark() != null)
 	    return getApprovedEvaluationMark();
@@ -94,6 +99,10 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
 
     public boolean isInEvaluation() {
 	return isInEvaluationInterval() && isAutoEvaluationLocked() && !isEvaluationLocked();
+    }
+
+    public boolean isPossibleToInsertApprovedMark() {
+	return !isInEvaluation() && AccessControl.getPerson().isTeacherEvaluationCoordinatorCouncilMember();
     }
 
     public boolean isPossibleToLockAutoEvaluation() {

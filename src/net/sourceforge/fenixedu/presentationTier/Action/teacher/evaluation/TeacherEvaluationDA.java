@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher.evaluation;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -81,6 +80,15 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 	return mapping.findForward("insertEvaluationMark");
     }
 
+    public ActionForward insertApprovedEvaluationMark(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	TeacherEvaluationProcess process = getDomainObject(request, "process");
+	request.setAttribute("action", "viewEvaluation&evalueeOID=" + process.getEvaluee().getExternalId());
+	request.setAttribute("process", process);
+	request.setAttribute("slot", "approvedEvaluationMark");
+	return mapping.findForward("insertEvaluationMark");
+    }
+
     public ActionForward lockAutoEvaluation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	TeacherEvaluationProcess process = getDomainObject(request, "process");
@@ -128,7 +136,6 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 		openProcesses.add(teacherEvaluationProcess);
 	    }
 	}
-
 	request.setAttribute("openProcesses", openProcesses);
 	return mapping.findForward("viewEvaluation");
     }

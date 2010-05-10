@@ -36,7 +36,12 @@
 
 
 	<logic:notEmpty name="process" property="teacherEvaluationSet">
-		<p><logic:equal name="process" property="inEvaluation" value="true">
+		<p><logic:equal name="process" property="possibleToInsertApprovedMark" value="true">
+			<html:link action="/teacherEvaluation.do?method=insertApprovedEvaluationMark" paramId="process" paramName="process"
+				paramProperty="externalId">
+				<bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.insertApprovedEvaluationMark" />
+			</html:link>
+		</logic:equal> <logic:equal name="process" property="inEvaluation" value="true">
 			<html:link action="/teacherEvaluation.do?method=insertEvaluationMark" paramId="process" paramName="process"
 				paramProperty="externalId">
 				<bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.insertEvaluationMark" />
@@ -102,7 +107,7 @@
 		</logic:notEmpty>
 
 		<logic:empty name="process" property="teacherEvaluationFileBeanSet">
-			<p><bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.noFilesNeeded.warning"/></p>
+			<p><bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.noFilesNeeded.warning" /></p>
 		</logic:empty>
 	</logic:notEmpty>
 </logic:iterate>
