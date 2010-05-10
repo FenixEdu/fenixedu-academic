@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -32,6 +33,7 @@ import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
+import net.sourceforge.fenixedu.domain.studentCurriculum.BranchCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.BundleUtil;
@@ -286,16 +288,19 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 
 	setHeaders(spreadsheet, extendedInfo);
 	for (RegistrationWithStateForExecutionYearBean registrationWithStateForExecutionYearBean : registrations) {
-	    Registration registration = registrationWithStateForExecutionYearBean.getRegistration();
+
+	    final Registration registration = registrationWithStateForExecutionYearBean.getRegistration();
 	    spreadsheet.newRow();
-	    Degree degree = registration.getDegree();
+
+	    final Degree degree = registration.getDegree();
 	    spreadsheet.addCell(!(StringUtils.isEmpty(degree.getSigla())) ? degree.getSigla() : degree.getNameFor(executionYear)
 		    .toString());
 	    spreadsheet.addCell(registration.getNumber().toString());
+
 	    final Person person = registration.getPerson();
 	    spreadsheet.addCell(person.getName());
-	    final RegistrationState lastRegistrationState = registration.getLastRegistrationState(executionYear);
 
+	    final RegistrationState lastRegistrationState = registration.getLastRegistrationState(executionYear);
 	    spreadsheet.addCell(lastRegistrationState.getStateType().getDescription());
 	    spreadsheet.addCell(registration.getRegistrationAgreement().getName());
 
@@ -311,22 +316,44 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 		spreadsheet.addCell(BundleUtil.getEnumName(registration.getRegimeType(executionYear)));
 
 		fillSpreadSheetPreBolonhaInfo(spreadsheet, registration);
+
+		final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
+
 		if (getAdministratedCycleTypes().contains(CycleType.FIRST_CYCLE)) {
-		    fillSpreadSheetBolonhaInfo(spreadsheet, registration, registration.getLastStudentCurricularPlan().getCycle(
-			    CycleType.FIRST_CYCLE));
+		    fillSpreadSheetBolonhaInfo(spreadsheet, registration, studentCurricularPlan.getCycle(CycleType.FIRST_CYCLE));
 		}
 		if (getAdministratedCycleTypes().contains(CycleType.SECOND_CYCLE)) {
-		    fillSpreadSheetBolonhaInfo(spreadsheet, registration, registration.getLastStudentCurricularPlan().getCycle(
-			    CycleType.SECOND_CYCLE));
+		    fillSpreadSheetBolonhaInfo(spreadsheet, registration, studentCurricularPlan.getCycle(CycleType.SECOND_CYCLE));
 		}
 		if (getAdministratedCycleTypes().contains(CycleType.THIRD_CYCLE)) {
-		    fillSpreadSheetBolonhaInfo(spreadsheet, registration, registration.getLastStudentCurricularPlan().getCycle(
-			    CycleType.THIRD_CYCLE));
+		    fillSpreadSheetBolonhaInfo(spreadsheet, registration, studentCurricularPlan.getCycle(CycleType.THIRD_CYCLE));
 		}
 
 		spreadsheet.addCell(registrationWithStateForExecutionYearBean.getPersonalDataAuthorization());
+
+		addBranchsInformation(spreadsheet, studentCurricularPlan);
 	    }
 	}
+    }
+
+    private void addBranchsInformation(final StyledExcelSpreadsheet spreadsheet, final StudentCurricularPlan studentCurricularPlan) {
+
+	final StringBuilder majorBranches = new StringBuilder();
+	final StringBuilder minorBranches = new StringBuilder();
+
+	for (final BranchCurriculumGroup group : studentCurricularPlan.getBranchCurriculumGroups()) {
+	    if (group.isMajor()) {
+		majorBranches.append(group.getName().toString()).append(",");
+	    } else if (group.isMinor()) {
+		minorBranches.append(group.getName().toString()).append(",");
+	    }
+	}
+
+	spreadsheet.addCell(majorBranches.length() > 0 ? majorBranches.deleteCharAt(majorBranches.length() - 1).toString()
+		: majorBranches.toString());
+
+	spreadsheet.addCell(minorBranches.length() > 0 ? minorBranches.deleteCharAt(minorBranches.length() - 1).toString()
+		: minorBranches.toString());
     }
 
     private void fillSpreadSheetPreBolonhaInfo(StyledExcelSpreadsheet spreadsheet, Registration registration) {
@@ -405,6 +432,9 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 	    }
 
 	    spreadsheet.addHeader(getResourceMessage("label.studentData.personalDataAuthorization"));
+
+	    spreadsheet.addHeader(getResourceMessage("label.main.branch"));
+	    spreadsheet.addHeader(getResourceMessage("label.minor.branch"));
 	}
     }
 
