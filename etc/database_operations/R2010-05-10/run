@@ -42,4 +42,7 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
-
+execute "Insert new role ResidenceManager" insertResidenceManagerRole.sql 
+execute "Add OJB_CONCRETE_CLASS Column To TeacherEvaluation" addColumnToTeacherEvaluation.sql
+execute "Updates" updates.sql
+execute "Add Personal Fields From Stork To Process" addPersonalFieldsFromStorkToProcess.sql
