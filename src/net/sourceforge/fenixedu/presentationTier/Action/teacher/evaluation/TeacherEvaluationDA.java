@@ -71,8 +71,7 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 	selection.createEvaluation();
 	String action = (String) getFromRequest(request, "action");
 	if (!StringUtils.isEmpty(action) && action.equals("viewEvaluation")) {
-	    request.setAttribute("evalueeOID", selection.getProcess().getEvaluee().getExternalId());
-	    return viewEvaluation(mapping, form, request, response);
+	    return viewEvaluation(mapping, request, selection.getProcess().getEvaluee());
 	}
 	return viewAutoEvaluation(mapping, form, request, response);
     }
@@ -106,8 +105,7 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	TeacherEvaluationProcess process = getDomainObject(request, "process");
 	process.getCurrentTeacherEvaluation().lickEvaluationStamp();
-	request.setAttribute("evalueeOID", process.getEvaluee().getExternalId());
-	return viewEvaluation(mapping, form, request, response);
+	return viewEvaluation(mapping, request, process.getEvaluee());
     }
 
     public ActionForward viewEvaluees(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -129,15 +127,18 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
     public ActionForward viewEvaluation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	final Person evaluee = getDomainObject(request, "evalueeOID");
+	return viewEvaluation(mapping, request, evaluee);
+    }
+
+    public ActionForward viewEvaluation(final ActionMapping mapping, final HttpServletRequest request, final Person evaluee) throws Exception {
 	final Person loggedPerson = getLoggedPerson(request);
 	SortedSet<TeacherEvaluationProcess> openProcesses = new TreeSet<TeacherEvaluationProcess>(
 		TeacherEvaluationProcess.COMPARATOR_BY_INTERVAL);
 	for (TeacherEvaluationProcess teacherEvaluationProcess : evaluee.getTeacherEvaluationProcessFromEvaluee()) {
-	    if (teacherEvaluationProcess.getEvaluator().equals(loggedPerson)) {
+	    if (teacherEvaluationProcess.getEvaluator() == loggedPerson || loggedPerson.isTeacherEvaluationCoordinatorCouncilMember()) {
 		openProcesses.add(teacherEvaluationProcess);
 	    }
 	}
-
 	request.setAttribute("openProcesses", openProcesses);
 	return mapping.findForward("viewEvaluation");
     }
@@ -166,8 +167,7 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
     public ActionForward uploadEvaluationFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	final FileUploadBean fileUploadBean = uploadEvaluationFile(request);
-	request.setAttribute("evalueeOID", fileUploadBean.getTeacherEvaluationProcess().getEvaluee().getExternalId());
-	return viewEvaluation(mapping, form, request, response);
+	return viewEvaluation(mapping, request, fileUploadBean.getTeacherEvaluationProcess().getEvaluee());
     }
 
     public ActionForward uploadAutoEvaluationFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,

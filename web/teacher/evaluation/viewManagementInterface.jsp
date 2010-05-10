@@ -129,6 +129,8 @@
 			<th>
 				<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.teacherEvaluationProcess.coevaluators" bundle="RESEARCHER_RESOURCES"/>
 			</th>
+			<th>
+			</th>
 		</tr>
 		<logic:iterate id="teacherEvaluationProcess" name="facultyEvaluationProcess" property="sortedTeacherEvaluationProcess">
 			<tr>
@@ -140,6 +142,11 @@
 				</td>
 				<td>
 					<bean:write name="teacherEvaluationProcess" property="coEvaluatorsAsString"/>
+				</td>
+				<td>
+					<html:link page="/teacherEvaluation.do?method=viewEvaluation" paramId="evalueeOID" paramName="teacherEvaluationProcess" paramProperty="evaluee.externalId">
+						<bean:message key="label.view" bundle="APPLICATION_RESOURCES"/>
+					</html:link>
 				</td>
 			</tr>
 		</logic:iterate>
