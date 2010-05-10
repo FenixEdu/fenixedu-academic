@@ -147,7 +147,8 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends FenixService {
 
 	if (registration.getRegistrationAgreement() != RegistrationAgreement.ERASMUS
 		&& registration.getRegistrationAgreement() != RegistrationAgreement.AFA
-		&& registration.getRegistrationAgreement() != RegistrationAgreement.MA) {
+		&& registration.getRegistrationAgreement() != RegistrationAgreement.MA
+		&& registration.getRegistrationAgreement() != RegistrationAgreement.TIME) {
 
 	    CycleCurriculumGroup firstCycleCurriculumGroup = studentCurricularPlan.getFirstCycle();
 	    if (firstCycleCurriculumGroup != null) {
