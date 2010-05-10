@@ -38,7 +38,7 @@
 
 	<bean:define id="processId" name="process" property="externalId" />
 	<logic:equal name="process" property="inAutoEvaluation" value="true">
-		<p><html:link action="/teacherEvaluation.do?method=changeAutoEvaluationType" paramId="process" paramName="process"
+		<p><html:link action="/teacherEvaluation.do?method=changeEvaluationType" paramId="process" paramName="process"
 			paramProperty="externalId">
 			<logic:empty name="process" property="type">
 				<bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.autoevaluation.setEvaluationType" />
@@ -86,9 +86,9 @@
 		<p class="mbottom05"><strong><fr:view name="process" property="type" layout="null-as-label" /> (<fr:view
 			name="process" property="facultyEvaluationProcess.title" />)</strong></p>
 
-		<logic:notEmpty name="process" property="teacherAutoEvaluationFileBeanSet">
+		<logic:notEmpty name="process" property="teacherEvaluationFileBeanSet">
 			<bean:define id="externalId" name="process" property="externalId" />
-			<fr:view name="process" property="teacherAutoEvaluationFileBeanSet">
+			<fr:view name="process" property="teacherEvaluationFileBeanSet">
 				<fr:schema bundle="RESEARCHER_RESOURCES"
 					type="net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationFileBean">
 					<fr:slot name="teacherEvaluationFileType" key="label.teacher.evaluation.empty" layout="null-as-label" />
@@ -107,7 +107,7 @@
 			</fr:view>
 		</logic:notEmpty>
 		
-		<logic:empty name="process" property="teacherAutoEvaluationFileBeanSet">
+		<logic:empty name="process" property="teacherEvaluationFileBeanSet">
 			<p><bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.noFilesNeeded.warning"/></p>
 		</logic:empty>
 	</logic:present>

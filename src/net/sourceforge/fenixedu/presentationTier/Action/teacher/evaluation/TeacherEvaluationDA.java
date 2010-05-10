@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationFileT
 import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationProcess;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -37,7 +36,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "viewEvaluees", path = "/teacher/evaluation/viewEvaluees.jsp"),
 	@Forward(name = "viewEvaluation", path = "/teacher/evaluation/viewEvaluation.jsp"),
 	@Forward(name = "uploadEvaluationFile", path = "/teacher/evaluation/uploadEvaluationFile.jsp"),
-	@Forward(name = "uploadAutoEvaluationFile", path = "/teacher/evaluation/uploadAutoEvaluationFile.jsp"),
 	@Forward(name = "viewManagementInterface", path = "/teacher/evaluation/viewManagementInterface.jsp") })
 public class TeacherEvaluationDA extends FenixDispatchAction {
 
@@ -50,17 +48,9 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 	return mapping.findForward("viewAutoEvaluation");
     }
 
-    public ActionForward changeAutoEvaluationType(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	TeacherEvaluationProcess process = getDomainObject(request, "process");
-	request.setAttribute("typeSelection", new TeacherEvaluationTypeSelection(process));
-	return mapping.findForward("changeEvaluationType");
-    }
-
     public ActionForward changeEvaluationType(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	TeacherEvaluationProcess process = getDomainObject(request, "process");
-	request.setAttribute("action", "viewEvaluation&evalueeOID=" + process.getEvaluee().getExternalId());
 	request.setAttribute("typeSelection", new TeacherEvaluationTypeSelection(process));
 	return mapping.findForward("changeEvaluationType");
     }
@@ -69,13 +59,10 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	TeacherEvaluationTypeSelection selection = (TeacherEvaluationTypeSelection) getRenderedObject("process-selection");
 	selection.createEvaluation();
-	String action = (String) getFromRequest(request, "action");
-	if (!StringUtils.isEmpty(action) && action.equals("viewEvaluation")) {
-	    return viewEvaluation(mapping, request, selection.getProcess().getEvaluee());
-	}
 	return viewAutoEvaluation(mapping, form, request, response);
     }
 
+    @Deprecated
     public ActionForward insertAutoEvaluationMark(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	TeacherEvaluationProcess process = getDomainObject(request, "process");
@@ -130,15 +117,18 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 	return viewEvaluation(mapping, request, evaluee);
     }
 
-    public ActionForward viewEvaluation(final ActionMapping mapping, final HttpServletRequest request, final Person evaluee) throws Exception {
+    public ActionForward viewEvaluation(final ActionMapping mapping, final HttpServletRequest request, final Person evaluee)
+	    throws Exception {
 	final Person loggedPerson = getLoggedPerson(request);
 	SortedSet<TeacherEvaluationProcess> openProcesses = new TreeSet<TeacherEvaluationProcess>(
 		TeacherEvaluationProcess.COMPARATOR_BY_INTERVAL);
 	for (TeacherEvaluationProcess teacherEvaluationProcess : evaluee.getTeacherEvaluationProcessFromEvaluee()) {
-	    if (teacherEvaluationProcess.getEvaluator() == loggedPerson || loggedPerson.isTeacherEvaluationCoordinatorCouncilMember()) {
+	    if (teacherEvaluationProcess.getEvaluator() == loggedPerson
+		    || loggedPerson.isTeacherEvaluationCoordinatorCouncilMember()) {
 		openProcesses.add(teacherEvaluationProcess);
 	    }
 	}
+
 	request.setAttribute("openProcesses", openProcesses);
 	return mapping.findForward("viewEvaluation");
     }
@@ -146,13 +136,15 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
     public ActionForward prepareUploadEvaluationFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	prepareUploadFile(request);
+	request.setAttribute("backAction", "viewEvaluation");
 	return mapping.findForward("uploadEvaluationFile");
     }
 
     public ActionForward prepareUploadAutoEvaluationFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	prepareUploadFile(request);
-	return mapping.findForward("uploadAutoEvaluationFile");
+	request.setAttribute("backAction", "viewAutoEvaluation");
+	return mapping.findForward("uploadEvaluationFile");
     }
 
     private void prepareUploadFile(HttpServletRequest request) {
@@ -166,21 +158,16 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 
     public ActionForward uploadEvaluationFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	final FileUploadBean fileUploadBean = uploadEvaluationFile(request);
-	return viewEvaluation(mapping, request, fileUploadBean.getTeacherEvaluationProcess().getEvaluee());
-    }
-
-    public ActionForward uploadAutoEvaluationFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	uploadEvaluationFile(request);
-	return viewAutoEvaluation(mapping, form, request, response);
-    }
-
-    private FileUploadBean uploadEvaluationFile(HttpServletRequest request) throws IOException {
 	final FileUploadBean fileUploadBean = (FileUploadBean) getRenderedObject("fileUploadBean");
 	fileUploadBean.consumeInputStream();
 	TeacherEvaluationFile.create(fileUploadBean, getLoggedPerson(request));
-	return fileUploadBean;
+	String backAction = request.getParameter("backAction");
+	if (backAction.equals("viewEvaluation")) {
+	    request.setAttribute("evalueeOID", fileUploadBean.getTeacherEvaluationProcess().getEvaluee().getExternalId());
+	    return viewEvaluation(mapping, form, request, response);
+	} else {
+	    return viewAutoEvaluation(mapping, form, request, response);
+	}
     }
 
     public ActionForward viewManagementInterface(ActionMapping mapping, ActionForm form, HttpServletRequest request,

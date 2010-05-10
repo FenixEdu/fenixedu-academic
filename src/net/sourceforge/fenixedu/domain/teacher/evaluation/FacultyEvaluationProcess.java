@@ -1,8 +1,6 @@
 package net.sourceforge.fenixedu.domain.teacher.evaluation;
 
 import java.util.Comparator;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -22,7 +20,15 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base {
     public static Comparator<FacultyEvaluationProcess> COMPARATOR_BY_INTERVAL = new Comparator<FacultyEvaluationProcess>() {
 	@Override
 	public int compare(FacultyEvaluationProcess p1, FacultyEvaluationProcess p2) {
-	    return p1.getAutoEvaluationInterval().getStart().compareTo(p2.getAutoEvaluationInterval().getStart());
+	    if (p1.getAutoEvaluationInterval().getStart().compareTo(p2.getAutoEvaluationInterval().getStart()) != 0) {
+		return p1.getAutoEvaluationInterval().getStart().compareTo(p2.getAutoEvaluationInterval().getStart());
+	    } else {
+		if (p1.getTitle().compareTo(p2.getTitle()) != 0) {
+		    return p1.getTitle().compareTo(p2.getTitle());
+		} else {
+		    return p1.getExternalId().compareTo(p2.getExternalId());
+		}
+	    }
 	}
     };
 
@@ -71,7 +77,8 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base {
 
 	    boolean updatedCoEvaluator = false;
 	    boolean updatedCoEvaluatorString = false;
-	    for (final TeacherEvaluationCoEvaluator teacherEvaluationCoEvaluator : existingTeacherEvaluationProcess.getTeacherEvaluationCoEvaluatorSet()) {
+	    for (final TeacherEvaluationCoEvaluator teacherEvaluationCoEvaluator : existingTeacherEvaluationProcess
+		    .getTeacherEvaluationCoEvaluatorSet()) {
 		if (teacherEvaluationCoEvaluator instanceof InternalCoEvaluator) {
 		    final InternalCoEvaluator internalCoEvaluator = (InternalCoEvaluator) teacherEvaluationCoEvaluator;
 		    updatedCoEvaluator = true;

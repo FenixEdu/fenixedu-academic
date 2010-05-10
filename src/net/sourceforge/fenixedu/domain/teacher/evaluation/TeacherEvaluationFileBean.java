@@ -52,12 +52,14 @@ public class TeacherEvaluationFileBean implements Serializable {
     public boolean getCanUploadAutoEvaluationFile() {
 	IUserView user = UserView.getUser();
 	return (!hasTeacherEvaluationFile() || teacherEvaluationFile.getCreatedBy().equals(user.getPerson()))
+		&& teacherEvaluationFileType.isAutoEvaluationFile()
 		&& teacherEvaluation.getTeacherEvaluationProcess().isInAutoEvaluation();
     }
 
     public boolean getCanUploadEvaluationFile() {
 	IUserView user = UserView.getUser();
 	return (!hasTeacherEvaluationFile() || teacherEvaluationFile.getCreatedBy().equals(user.getPerson()))
+		&& !teacherEvaluationFileType.isAutoEvaluationFile()
 		&& teacherEvaluation.getTeacherEvaluationProcess().isInEvaluation();
     }
 
