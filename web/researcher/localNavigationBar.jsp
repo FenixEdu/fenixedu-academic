@@ -3,8 +3,14 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<%@page import="net.sourceforge.fenixedu.domain.contents.Content"%>
+<%@page import="pt.ist.fenixframework.pstm.AbstractDomainObject"%>
+<%@page import="net.sourceforge.fenixedu.domain.Site"%>
+<%@page import="net.sourceforge.fenixedu.domain.UnitSite"%>
+<%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
 
-<html:xhtml/>
+
+<%@page import="net.sourceforge.fenixedu.domain.Person"%><html:xhtml/>
 
 <logic:present role="RESEARCHER">
 	<ul>
@@ -28,33 +34,44 @@
 		--%>
 	</ul>
 
-<%--
 	<bean:define id="autoEvalProcesses" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.teacherEvaluationProcessFromEvalueeSet" type="java.util.List"/>
 	<bean:define id="evalProcesses" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.teacherEvaluationProcessFromEvaluator" type="java.util.List"/>
-	<ul style="margin-top: 0.75em;">
-		<li class="navheader"><bean:message key="label.teacher.evaluation.title" bundle="RESEARCHER_RESOURCES"/></li>
-		<logic:notEmpty name="autoEvalProcesses">
-		<li>
-			<html:link page="/teacherEvaluation.do?method=viewAutoEvaluation">
-				<bean:message key="label.teacher.evaluation.autoevaluation.title" bundle="RESEARCHER_RESOURCES"/>
-			</html:link>
-		</li>
-		</logic:notEmpty>
-		<logic:notEmpty name="evalProcesses">
-		<li>
-			<html:link page="/teacherEvaluation.do?method=viewEvaluees">
-				<bean:message key="label.teacher.evaluation.evaluation.title" bundle="RESEARCHER_RESOURCES"/>
-			</html:link>
-		</li>
-		</logic:notEmpty>
-		<li>
-			<html:link page="/teacherEvaluation.do?method=viewManagementInterface">
-				<bean:message key="label.teacher.evaluation.management.title" bundle="RESEARCHER_RESOURCES"/>
-			</html:link>
-		</li>
-	</ul>
-  --%>
- 
+<%
+	final Person person = AccessControl.getPerson();
+	if (person.isTeacherEvaluationCoordinatorCouncilMember() || !autoEvalProcesses.isEmpty() || !evalProcesses.isEmpty()) {
+%>
+		<ul style="margin-top: 0.75em;">
+			<li class="navheader"><bean:message key="label.teacher.evaluation.title" bundle="RESEARCHER_RESOURCES"/></li>
+			<logic:notEmpty name="autoEvalProcesses">
+				<li>
+					<html:link page="/teacherEvaluation.do?method=viewAutoEvaluation">
+						<bean:message key="label.teacher.evaluation.autoevaluation.title" bundle="RESEARCHER_RESOURCES"/>
+					</html:link>
+				</li>
+			</logic:notEmpty>
+			<logic:notEmpty name="evalProcesses">
+				<li>
+					<html:link page="/teacherEvaluation.do?method=viewEvaluees">
+						<bean:message key="label.teacher.evaluation.evaluation.title" bundle="RESEARCHER_RESOURCES"/>
+					</html:link>
+				</li>
+			</logic:notEmpty>
+<%
+			if (person.isTeacherEvaluationCoordinatorCouncilMember()) {
+%>
+				<li>
+					<html:link page="/teacherEvaluation.do?method=viewManagementInterface">
+						<bean:message key="label.teacher.evaluation.management.title" bundle="RESEARCHER_RESOURCES"/>
+					</html:link>
+				</li>
+<%
+			}
+%>
+		</ul>
+<%
+	}
+%>
+
 	<ul style="margin-top: 0.75em;">
 		<li class="navheader"><bean:message key="researcher.find.an.expert" bundle="RESEARCHER_RESOURCES"/></li>
 		<li><html:link page="/researcherManagement.do?method=prepare"><bean:message key="label.options" bundle="RESEARCHER_RESOURCES"/></html:link></li>
