@@ -47,12 +47,14 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -95,6 +97,7 @@ import org.apache.struts.util.MessageResources;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 import pt.utl.ist.fenix.tools.util.CollectionUtils;
 import pt.utl.ist.fenix.tools.util.excel.ExcelStyle;
@@ -945,7 +948,19 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	// final Employee employee =
 	// Employee.readByNumber(Integer.valueOf(number));
 	// final Person person = employee.getPerson();
-	final Person person = Person.readPersonByIstUsername(number);
+	Person person = Person.readPersonByIstUsername(number);
+	if (StringUtils.isNumeric(number)) {
+	    final Integer n = new Integer(number);
+	    final Teacher teacher = Teacher.readByNumber(n);
+	    if (teacher == null) {
+		final Employee employee = Employee.readByNumber(n);
+		if (employee != null) {
+		    person = employee.getPerson();
+		}
+	    } else {
+		person = teacher.getPerson();
+	    }
+	}
 	if (person == null /*
 			    * || !(person.hasRole(RoleType.TEACHER) ||
 			    * person.hasRole(RoleType.RESEARCHER))
@@ -997,11 +1012,12 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	// degreeCurricularPlanID);
 	request.setAttribute("degreeCurricularPlanID", request.getParameter("degreeCurricularPlanID"));
 
-	InfoExecutionDegree infoExecutionDegree = CommonServiceRequests.getInfoExecutionDegree(userView, Integer
-		.valueOf(degreeId));
+	ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(request.getParameter("executionDegreeOID"));
+//	InfoExecutionDegree infoExecutionDegree = CommonServiceRequests.getInfoExecutionDegree(userView, Integer
+//		.valueOf(degreeId));
 
-	final ExecutionDegree executionDegree = (ExecutionDegree) readDomainObject(request, ExecutionDegree.class,
-		infoExecutionDegree.getIdInternal());
+//	final ExecutionDegree executionDegree = (ExecutionDegree) readDomainObject(request, ExecutionDegree.class,
+//		infoExecutionDegree.getIdInternal());
 	request.setAttribute("executionDegree", executionDegree);
 	// request.setAttribute("executionDegreeOID",
 	// executionDegree.getIdInternal());
