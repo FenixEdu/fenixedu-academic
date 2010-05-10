@@ -42,20 +42,21 @@ public class ExternalCurriculumGroup extends ExternalCurriculumGroup_Base {
     }
 
     @Override
-    protected void checkInitConstraints(final StudentCurricularPlan studentCurricularPlan, final CourseGroup courseGroup) {
-	super.checkInitConstraints(studentCurricularPlan, courseGroup);
+    protected void checkInitConstraints(final CurriculumGroup parent, final CourseGroup courseGroup) {
+	super.checkInitConstraints(parent, courseGroup);
 
-	if (studentCurricularPlan.getDegreeCurricularPlan() == courseGroup.getParentDegreeCurricularPlan()) {
+	if (parent.getDegreeCurricularPlanOfStudent() == courseGroup.getParentDegreeCurricularPlan()) {
 	    throw new DomainException(
 		    "error.studentCurriculum.CurriculumGroup.courseGroup.must.have.different.degreeCurricularPlan");
 	}
 
-	checkIfCycleCourseGroupIsInDestinationAffinitiesOfSource(studentCurricularPlan, courseGroup);
+	checkIfCycleCourseGroupIsInDestinationAffinitiesOfSource(parent.getStudentCurricularPlan(), courseGroup);
 
     }
 
     private void checkIfCycleCourseGroupIsInDestinationAffinitiesOfSource(final StudentCurricularPlan studentCurricularPlan,
 	    final CourseGroup courseGroup) {
+
 	final CycleCourseGroup cycleCourseGroup = (CycleCourseGroup) courseGroup;
 	final CycleCourseGroup sourceAffinityCycleCourseGroup = studentCurricularPlan.getDegreeCurricularPlan()
 		.getCycleCourseGroup(cycleCourseGroup.getCycleType().getSourceCycleAffinity());

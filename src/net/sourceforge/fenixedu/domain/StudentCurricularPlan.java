@@ -2742,11 +2742,11 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public Collection<CycleCurriculumGroup> getCycleCurriculumGroups() {
-	return hasRoot() ? getRoot().getCycleCurriculumGroups() : Collections.EMPTY_SET;
+	return hasRoot() ? getRoot().getCycleCurriculumGroups() : Collections.<CycleCurriculumGroup> emptySet();
     }
 
     public List<CycleCurriculumGroup> getInternalCycleCurriculumGrops() {
-	return hasRoot() ? getRoot().getInternalCycleCurriculumGroups() : Collections.EMPTY_LIST;
+	return hasRoot() ? getRoot().getInternalCycleCurriculumGroups() : Collections.<CycleCurriculumGroup> emptyList();
     }
 
     public Collection<ExternalCurriculumGroup> getExternalCurriculumGroups() {
@@ -3004,12 +3004,16 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	this.setEndStageDate(date);
     }
 
-    public BranchCurriculumGroup getMajorBranchCurriculumGroup() {
-	return hasRoot() ? getRoot().getMajorBranchCurriculumGroup() : null;
+    public Set<BranchCurriculumGroup> getBranchCurriculumGroups() {
+	return hasRoot() ? getRoot().getBranchCurriculumGroups() : Collections.<BranchCurriculumGroup> emptySet();
     }
 
-    public BranchCurriculumGroup getMinorBranchCurriculumGroup() {
-	return hasRoot() ? getRoot().getMinorBranchCurriculumGroup() : null;
+    public Set<BranchCurriculumGroup> getMajorBranchCurriculumGroups() {
+	return hasRoot() ? getRoot().getMajorBranchCurriculumGroups() : Collections.<BranchCurriculumGroup> emptySet();
+    }
+
+    public Set<BranchCurriculumGroup> getMinorBranchCurriculumGroups() {
+	return hasRoot() ? getRoot().getMinorBranchCurriculumGroups() : Collections.<BranchCurriculumGroup> emptySet();
     }
 
 }

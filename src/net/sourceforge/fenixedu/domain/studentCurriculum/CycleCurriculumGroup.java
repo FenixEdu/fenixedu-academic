@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.studentCurriculum;
 
 import java.math.BigDecimal;
 import java.util.Comparator;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -303,4 +304,37 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
     public CycleCurriculumGroup getParentCycleCurriculumGroup() {
 	return this;
     }
+
+    /**
+     * 
+     * Cycle can have only one branch by type
+     * 
+     * @param branchType
+     */
+    public BranchCurriculumGroup getBranchCurriculumGroup(final BranchType branchType) {
+	final Set<BranchCurriculumGroup> groups = getBranchCurriculumGroups(branchType);
+	return groups.isEmpty() ? null : groups.iterator().next();
+    }
+    
+    public BranchCurriculumGroup getMajorBranchCurriculumGroup() {
+	return getBranchCurriculumGroup(BranchType.MAJOR);
+    }
+
+    public BranchCurriculumGroup getMinorBranchCurriculumGroup() {
+	return getBranchCurriculumGroup(BranchType.MINOR);
+    }
+
+    public BranchCourseGroup getBranchCourseGroup(final BranchType branchType) {
+	final Set<BranchCourseGroup> groups = getBranchCourseGroups(branchType);
+	return groups.isEmpty() ? null : groups.iterator().next();
+    }
+
+    public BranchCourseGroup getMajorBranchCourseGroup() {
+	return getBranchCourseGroup(BranchType.MAJOR);
+    }
+
+    public BranchCourseGroup getMinorBranchCourseGroup() {
+	return getBranchCourseGroup(BranchType.MINOR);
+    }
+
 }
