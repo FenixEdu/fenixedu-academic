@@ -3,9 +3,9 @@ package net.sourceforge.fenixedu.domain.teacher.evaluation;
 import net.sourceforge.fenixedu.domain.Person;
 
 public class InternalCoEvaluator extends InternalCoEvaluator_Base {
-    
+
     public InternalCoEvaluator() {
-        super();
+	super();
     }
 
     public InternalCoEvaluator(final TeacherEvaluationProcess teacherEvaluationProcessFromEvaluee, final Person coEvaluatorPerson) {
@@ -16,12 +16,12 @@ public class InternalCoEvaluator extends InternalCoEvaluator_Base {
     @Override
     public void delete() {
 	removePerson();
-        super.delete();
+	super.delete();
     }
 
     @Override
     public String getDescription() {
-        return getPerson().getName();
+	return getPerson().getName() + " (" + getPerson().getMostImportantAlias() + ")";
     }
 
 }

@@ -8,8 +8,6 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
-import org.apache.commons.lang.StringUtils;
-
 public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
 
     public static Comparator<TeacherEvaluationProcess> COMPARATOR_BY_EVALUEE = new Comparator<TeacherEvaluationProcess>() {
@@ -55,6 +53,11 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
 	return current != null ? current.getState() : getFacultyEvaluationProcess().getState();
     }
 
+    public TeacherEvaluationType getType() {
+	TeacherEvaluation current = getCurrentTeacherEvaluation();
+	return current != null ? current.getType() : null;
+    }
+
     public boolean isAutoEvaluationLocked() {
 	TeacherEvaluation current = getCurrentTeacherEvaluation();
 	return current != null && current.getAutoEvaluationLock() != null;
@@ -65,23 +68,40 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
 	return current != null && current.getEvaluationLock() != null;
     }
 
-    public String getAutoEvaluationMark() {
+    public TeacherEvaluationMark getAutoEvaluationMark() {
 	TeacherEvaluation current = getCurrentTeacherEvaluation();
 	return current != null ? current.getAutoEvaluationMark() : null;
     }
 
-    public String getEvaluationMark() {
+    public TeacherEvaluationMark getEvaluationMark() {
+	if (getApprovedEvaluationMark() != null)
+	    return getApprovedEvaluationMark();
 	TeacherEvaluation current = getCurrentTeacherEvaluation();
 	return current != null ? current.getEvaluationMark() : null;
     }
 
-    public TeacherEvaluationType getType() {
-	TeacherEvaluation current = getCurrentTeacherEvaluation();
-	return current != null ? current.getType() : null;
+    public boolean isInAutoEvaluationInterval() {
+	return getFacultyEvaluationProcess().getAutoEvaluationInterval().containsNow();
     }
 
     public boolean isInEvaluationInterval() {
 	return getFacultyEvaluationProcess().getEvaluationInterval().containsNow();
+    }
+
+    public boolean isInAutoEvaluation() {
+	return isInAutoEvaluationInterval() && !isAutoEvaluationLocked();
+    }
+
+    public boolean isInEvaluation() {
+	return isInEvaluationInterval() && isAutoEvaluationLocked() && !isEvaluationLocked();
+    }
+
+    public boolean isPossibleToLockAutoEvaluation() {
+	return hasAllNeededFilesForAuto();
+    }
+
+    public boolean isPossibleToLockEvaluation() {
+	return getEvaluationMark() != null && hasAllNeededFiles();
     }
 
     public Set<TeacherEvaluationFileBean> getTeacherEvaluationFileBeanSet() {
@@ -108,12 +128,19 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
 	return teacherEvaluationFileBeans;
     }
 
-    public boolean isInEvaluation() {
-	return isInEvaluationInterval() && isAutoEvaluationLocked() && !isEvaluationLocked();
-    }
-
-    public boolean isPossibleToLockEvaluation() {
-	return !StringUtils.isEmpty(getEvaluationMark()) && hasAllNeededFiles();
+    private boolean hasAllNeededFilesForAuto() {
+	TeacherEvaluation currentTeacherEvaluation = getCurrentTeacherEvaluation();
+	Set<TeacherEvaluationFileType> files = new HashSet<TeacherEvaluationFileType>();
+	if (currentTeacherEvaluation != null) {
+	    for (TeacherEvaluationFile teacherEvaluationFile : currentTeacherEvaluation.getTeacherEvaluationFileSet()) {
+		files.add(teacherEvaluationFile.getTeacherEvaluationFileType());
+	    }
+	    if (currentTeacherEvaluation.getAutoEvaluationFileSet().containsAll(files)
+		    && files.containsAll(currentTeacherEvaluation.getAutoEvaluationFileSet())) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     private boolean hasAllNeededFiles() {
@@ -123,8 +150,8 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
 	    for (TeacherEvaluationFile teacherEvaluationFile : currentTeacherEvaluation.getTeacherEvaluationFileSet()) {
 		files.add(teacherEvaluationFile.getTeacherEvaluationFileType());
 	    }
-	    if (currentTeacherEvaluation.getAutoEvaluationFileSet().containsAll(files)
-		    && files.containsAll(currentTeacherEvaluation.getAutoEvaluationFileSet())) {
+	    if (currentTeacherEvaluation.getEvaluationFileSet().containsAll(files)
+		    && files.containsAll(currentTeacherEvaluation.getEvaluationFileSet())) {
 		return true;
 	    }
 	}

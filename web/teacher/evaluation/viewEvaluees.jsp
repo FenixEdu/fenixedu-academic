@@ -34,7 +34,7 @@
 		<logic:iterate id="evaluationProcess" name="entries" property="value">
 			<td><fr:view name="evaluationProcess" layout="values">
 				<fr:schema bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationProcess">
-					<fr:slot name="state" key="label.teacher.evaluation.autoevaluation.state">
+					<fr:slot name="state" key="label.teacher.evaluation.state">
 						<fr:property name="eachSchema" value="" />
 						<fr:property name="eachLayout" value="values" />
 					</fr:slot>

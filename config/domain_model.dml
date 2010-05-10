@@ -204,7 +204,7 @@ enum net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionState   
 enum net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusAlertEntityType                                      as ErasmusAlertEntityType;
 enum net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusApplyForSemesterType								  as ErasmusApplyForSemesterType;
 enum net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationFileType                                         as TeacherEvaluationFileType;
-
+enum net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationMark                                             as TeacherEvaluationMark;
 
 /*
  * Value types that need special externalization
@@ -1118,14 +1118,15 @@ class DomainObject {
 	}
 
 	class teacher.evaluation.TeacherEvaluationProcess extends DomainObject {
+		TeacherEvaluationMark approvedEvaluationMark;
 	}
 
 	class teacher.evaluation.TeacherEvaluation extends DomainObject {
 		DateTime createdDate;
 		DateTime autoEvaluationLock;
 		DateTime evaluationLock;
-		String autoEvaluationMark;
-		String evaluationMark;
+		TeacherEvaluationMark autoEvaluationMark;
+		TeacherEvaluationMark evaluationMark;
 	}
 
 		class teacher.evaluation.NoEvaluation extends teacher.evaluation.TeacherEvaluation {

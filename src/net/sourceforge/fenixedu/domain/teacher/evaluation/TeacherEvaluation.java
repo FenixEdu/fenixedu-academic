@@ -19,9 +19,9 @@ public abstract class TeacherEvaluation extends TeacherEvaluation_Base {
     public TeacherEvaluationState getState() {
 	if (getTeacherEvaluationProcess().getFacultyEvaluationProcess().getAutoEvaluationInterval().getStart().isAfterNow()) {
 	    return null;
-	} else if (getAutoEvaluationMark() == null) {
+	} else if (getAutoEvaluationLock() == null) {
 	    return TeacherEvaluationState.AUTO_EVALUATION;
-	} else if (getEvaluationMark() == null) {
+	} else if (getEvaluationLock() == null) {
 	    return TeacherEvaluationState.EVALUATION;
 	} else {
 	    return TeacherEvaluationState.EVALUATED;

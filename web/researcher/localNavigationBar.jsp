@@ -29,18 +29,24 @@
 	</ul>
 
 <%--
+	<bean:define id="autoEvalProcesses" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.teacherEvaluationProcessFromEvalueeSet" type="java.util.List"/>
+	<bean:define id="evalProcesses" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.teacherEvaluationProcessFromEvaluator" type="java.util.List"/>
 	<ul style="margin-top: 0.75em;">
 		<li class="navheader"><bean:message key="label.teacher.evaluation.title" bundle="RESEARCHER_RESOURCES"/></li>
+		<logic:notEmpty name="autoEvalProcesses">
 		<li>
 			<html:link page="/teacherEvaluation.do?method=viewAutoEvaluation">
 				<bean:message key="label.teacher.evaluation.autoevaluation.title" bundle="RESEARCHER_RESOURCES"/>
 			</html:link>
 		</li>
+		</logic:notEmpty>
+		<logic:notEmpty name="evalProcesses">
 		<li>
 			<html:link page="/teacherEvaluation.do?method=viewEvaluees">
 				<bean:message key="label.teacher.evaluation.evaluation.title" bundle="RESEARCHER_RESOURCES"/>
 			</html:link>
 		</li>
+		</logic:notEmpty>
 		<li>
 			<html:link page="/teacherEvaluation.do?method=viewManagementInterface">
 				<bean:message key="label.teacher.evaluation.management.title" bundle="RESEARCHER_RESOURCES"/>

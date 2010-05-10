@@ -1,0 +1,2 @@
+-- Inserted at 2010-05-10T11:21:41.109+01:00
+alter table `TEACHER_EVALUATION_PROCESS` add column `APPROVED_EVALUATION_MARK` text;

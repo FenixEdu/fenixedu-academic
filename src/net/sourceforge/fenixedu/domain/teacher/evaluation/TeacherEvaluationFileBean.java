@@ -11,7 +11,7 @@ import pt.ist.fenixWebFramework.security.UserView;
 public class TeacherEvaluationFileBean implements Serializable {
     private TeacherEvaluationFileType teacherEvaluationFileType;
     private TeacherEvaluationFile teacherEvaluationFile;
-    private TeacherEvaluation teacherEvaluation;
+    private final TeacherEvaluation teacherEvaluation;
 
     public TeacherEvaluationFileBean(TeacherEvaluation teacherEvaluation, TeacherEvaluationFileType teacherEvaluationFileType) {
 	this.teacherEvaluationFileType = teacherEvaluationFileType;
@@ -47,6 +47,12 @@ public class TeacherEvaluationFileBean implements Serializable {
 
     public boolean hasTeacherEvaluationFile() {
 	return teacherEvaluationFile != null;
+    }
+
+    public boolean getCanUploadAutoEvaluationFile() {
+	IUserView user = UserView.getUser();
+	return (!hasTeacherEvaluationFile() || teacherEvaluationFile.getCreatedBy().equals(user.getPerson()))
+		&& teacherEvaluation.getTeacherEvaluationProcess().isInAutoEvaluation();
     }
 
     public boolean getCanUploadEvaluationFile() {

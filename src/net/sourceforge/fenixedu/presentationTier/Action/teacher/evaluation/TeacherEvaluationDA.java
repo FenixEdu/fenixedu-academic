@@ -33,7 +33,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(module = "researcher", path = "/teacherEvaluation")
 @Forwards( { @Forward(name = "viewAutoEvaluation", path = "/teacher/evaluation/viewAutoEvaluation.jsp"),
 	@Forward(name = "changeEvaluationType", path = "/teacher/evaluation/changeEvaluationType.jsp"),
-	@Forward(name = "insertAutoEvaluationMark", path = "/teacher/evaluation/insertAutoEvaluationMark.jsp"),
+	@Forward(name = "insertEvaluationMark", path = "/teacher/evaluation/insertEvaluationMark.jsp"),
 	@Forward(name = "viewEvaluees", path = "/teacher/evaluation/viewEvaluees.jsp"),
 	@Forward(name = "viewEvaluation", path = "/teacher/evaluation/viewEvaluation.jsp"),
 	@Forward(name = "uploadEvaluationFile", path = "/teacher/evaluation/uploadEvaluationFile.jsp"),
@@ -43,26 +43,16 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 
     public ActionForward viewAutoEvaluation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	SortedSet<TeacherEvaluationProcess> openProcesses = new TreeSet<TeacherEvaluationProcess>(
+	SortedSet<TeacherEvaluationProcess> processes = new TreeSet<TeacherEvaluationProcess>(
 		TeacherEvaluationProcess.COMPARATOR_BY_INTERVAL);
-	final Set<FacultyEvaluationProcess> facultyEvaluationProcessSet = rootDomainObject.getFacultyEvaluationProcessSet();
-	for (FacultyEvaluationProcess process : facultyEvaluationProcessSet) {
-	    if (process.getAutoEvaluationInterval().getStart().isBeforeNow()) {
-		for (TeacherEvaluationProcess teacherProcess : process.getTeacherEvaluationProcessSet()) {
-		    if (teacherProcess.getEvaluee().equals(getLoggedPerson(request))) {
-			openProcesses.add(teacherProcess);
-		    }
-		}
-	    }
-	}
-	request.setAttribute("openProcesses", openProcesses);
+	processes.addAll(getLoggedPerson(request).getTeacherEvaluationProcessFromEvalueeSet());
+	request.setAttribute("processes", processes);
 	return mapping.findForward("viewAutoEvaluation");
     }
 
     public ActionForward changeAutoEvaluationType(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	TeacherEvaluationProcess process = getDomainObject(request, "process");
-	request.setAttribute("action", "viewAutoEvaluation");
 	request.setAttribute("typeSelection", new TeacherEvaluationTypeSelection(process));
 	return mapping.findForward("changeEvaluationType");
     }
@@ -93,7 +83,7 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 	request.setAttribute("action", "viewAutoEvaluation");
 	request.setAttribute("process", process);
 	request.setAttribute("slot", "autoEvaluationMark");
-	return mapping.findForward("insertAutoEvaluationMark");
+	return mapping.findForward("insertEvaluationMark");
     }
 
     public ActionForward insertEvaluationMark(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -102,7 +92,7 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 	request.setAttribute("action", "viewEvaluation&evalueeOID=" + process.getEvaluee().getExternalId());
 	request.setAttribute("process", process);
 	request.setAttribute("slot", "evaluationMark");
-	return mapping.findForward("insertAutoEvaluationMark");
+	return mapping.findForward("insertEvaluationMark");
     }
 
     public ActionForward lockAutoEvaluation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
