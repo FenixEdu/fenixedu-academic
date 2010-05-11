@@ -9,8 +9,6 @@
 
 <h2><bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.upload.title" /></h2>
 
-<p><bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.upload.topHelpText" /></p>
-
 <logic:present name="fileUploadBean">
 	<bean:define id="urlUploadInvalid">/teacherEvaluation.do?method=<bean:write name="backAction" />&amp;evalueeOID=<bean:write
 			name="fileUploadBean" property="teacherEvaluationProcess.evaluee.externalId" />

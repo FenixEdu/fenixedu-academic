@@ -30,6 +30,7 @@
 			</fr:slot>
 			<fr:slot name="type" key="label.teacher.evaluation.type" layout="null-as-label" />
 			<fr:slot name="evaluationMark" key="label.teacher.evaluation.mark" layout="null-as-label" />
+			<fr:slot name="approvedEvaluationMark" key="label.teacher.evaluation.approvedMark" layout="null-as-label" />
 		</fr:schema>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight thleft mtop05" />

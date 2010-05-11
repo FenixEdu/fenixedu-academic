@@ -79,8 +79,6 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
     }
 
     public TeacherEvaluationMark getEvaluationMark() {
-	if (getApprovedEvaluationMark() != null)
-	    return getApprovedEvaluationMark();
 	TeacherEvaluation current = getCurrentTeacherEvaluation();
 	return current != null ? current.getEvaluationMark() : null;
     }
@@ -102,7 +100,8 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
     }
 
     public boolean isPossibleToInsertApprovedMark() {
-	return !isInEvaluation() && AccessControl.getPerson().isTeacherEvaluationCoordinatorCouncilMember();
+	return getFacultyEvaluationProcess().getEvaluationInterval().getEnd().isBeforeNow()
+		&& AccessControl.getPerson().isTeacherEvaluationCoordinatorCouncilMember();
     }
 
     public boolean isPossibleToLockAutoEvaluation() {

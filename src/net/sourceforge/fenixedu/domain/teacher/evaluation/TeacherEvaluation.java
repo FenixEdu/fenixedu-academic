@@ -34,6 +34,14 @@ public abstract class TeacherEvaluation extends TeacherEvaluation_Base {
 
     public abstract Set<TeacherEvaluationFileType> getEvaluationFileSet();
 
+    public TeacherEvaluationMark getApprovedEvaluationMark() {
+	return getTeacherEvaluationProcess().getApprovedEvaluationMark();
+    }
+
+    public void setApprovedEvaluationMark(TeacherEvaluationMark mark) {
+	getTeacherEvaluationProcess().setApprovedEvaluationMark(mark);
+    }
+
     @Service
     public void lickAutoEvaluationStamp() {
 	setAutoEvaluationLock(new DateTime());
