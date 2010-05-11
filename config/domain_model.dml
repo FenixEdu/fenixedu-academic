@@ -1115,6 +1115,7 @@ class DomainObject {
 		MultiLanguageString title;
 		Interval autoEvaluationInterval;
 		Interval evaluationInterval;
+		boolean allowNoEval;
 	}
 
 	class teacher.evaluation.TeacherEvaluationProcess extends DomainObject {

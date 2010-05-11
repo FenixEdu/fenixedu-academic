@@ -17,6 +17,7 @@ public class FacultyEvaluationProcessBean implements Serializable {
     private DateTime autoEvaluationIntervalEnd;
     private DateTime evaluationIntervalStart;
     private DateTime evaluationIntervalEnd;
+    private boolean allowNoEval;
     private byte[] evaluatorListFileContent;
     private FacultyEvaluationProcess facultyEvaluationProcess;
 
@@ -30,6 +31,7 @@ public class FacultyEvaluationProcessBean implements Serializable {
 	setAutoEvaluationIntervalEnd(facultyEvaluationProcess.getAutoEvaluationInterval().getEnd());
 	setEvaluationIntervalStart(facultyEvaluationProcess.getEvaluationInterval().getStart());
 	setEvaluationIntervalEnd(facultyEvaluationProcess.getEvaluationInterval().getEnd());
+	setAllowNoEval(facultyEvaluationProcess.getAllowNoEval());
 	setFacultyEvaluationProcess(facultyEvaluationProcess);
     }
 
@@ -73,6 +75,14 @@ public class FacultyEvaluationProcessBean implements Serializable {
 	this.evaluationIntervalEnd = evaluationIntervalEnd;
     }
 
+    public boolean isAllowNoEval() {
+	return allowNoEval;
+    }
+
+    public void setAllowNoEval(boolean allowNoEval) {
+	this.allowNoEval = allowNoEval;
+    }
+
     public byte[] getEvaluatorListFileContent() {
 	return evaluatorListFileContent;
     }
@@ -107,6 +117,7 @@ public class FacultyEvaluationProcessBean implements Serializable {
 	facultyEvaluationProcess.setTitle(getTitle());
 	facultyEvaluationProcess.setAutoEvaluationInterval(getAutoEvaluationInterval());
 	facultyEvaluationProcess.setEvaluationInterval(getEvaluationInterval());
+	facultyEvaluationProcess.setAllowNoEval(isAllowNoEval());
     }
 
 }

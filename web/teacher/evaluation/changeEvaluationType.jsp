@@ -16,6 +16,9 @@
 	<fr:schema bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.presentationTier.Action.teacher.evaluation.TeacherEvaluationTypeSelection">
 		<fr:slot name="type" key="label.teacher.evaluation.type">
+			<logic:equal name="typeSelection" property="process.facultyEvaluationProcess.allowNoEval" value="false">
+				<fr:property name="excludedValues" value="NO_EVALUATION" />
+			</logic:equal>
 			<fr:property name="defaultOptionHidden" value="true" />
 		</fr:slot>
 	</fr:schema>
