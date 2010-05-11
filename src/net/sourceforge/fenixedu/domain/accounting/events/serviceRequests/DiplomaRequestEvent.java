@@ -76,4 +76,9 @@ abstract public class DiplomaRequestEvent extends DiplomaRequestEvent_Base {
 		getAcademicServiceRequest().getRequestDate());
     }
 
+    @Override
+    public boolean isExemptionAppliable() {
+        return true;
+    }
+
 }

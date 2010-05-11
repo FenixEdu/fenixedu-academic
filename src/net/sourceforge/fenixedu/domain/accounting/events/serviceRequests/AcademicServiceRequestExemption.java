@@ -66,6 +66,10 @@ public class AcademicServiceRequestExemption extends AcademicServiceRequestExemp
 	}
     }
 
+    public LocalDate getDispatchDate() {
+	return ((AcademicServiceRequestExemptionJustification) getExemptionJustification()).getDispatchDate();
+    }
+
     @Service
     static public AcademicServiceRequestExemption create(final Employee employee, final AcademicServiceRequestEvent event,
 	    final Money value, final AcademicServiceRequestJustificationType justificationType, final LocalDate dispatchDate,
