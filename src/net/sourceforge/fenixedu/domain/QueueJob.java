@@ -7,6 +7,8 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public abstract class QueueJob extends QueueJob_Base {
     public static enum Priority {
 	HIGH, NORMAL;
@@ -81,6 +83,25 @@ public abstract class QueueJob extends QueueJob_Base {
 
     public Priority getPriority() {
 	return Priority.NORMAL;
+    }
+    @Service
+    static public void cancelQueuedJob(int oid) {
+	for (QueueJob queueJob : RootDomainObject.getInstance().getQueueJob()) {
+	    if (queueJob.getIdInternal() == oid) {
+		List<QueueJob> undoneJobs = RootDomainObject.getInstance().getQueueJobUndone();
+		undoneJobs.remove(queueJob);
+	    }
+	}
+    }
+    
+    @Service
+    static public void resendQueueJob(int oid) {
+	for (QueueJob queueJob : RootDomainObject.getInstance().getQueueJob()) {
+	    if (queueJob.getIdInternal() == oid) {
+		List<QueueJob> undoneJobs = RootDomainObject.getInstance().getQueueJobUndone();
+		undoneJobs.add(queueJob);
+	    }
+	}
     }
 
 }
