@@ -830,6 +830,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	     * concluded, etc etc
 	     */
 
+	    //TODO: create debts
+	    
 	    // TODO: create state in this step?
 	    individualProcess.createState(PhdIndividualProgramProcessState.THESIS_DISCUSSION, userView.getPerson());
 
