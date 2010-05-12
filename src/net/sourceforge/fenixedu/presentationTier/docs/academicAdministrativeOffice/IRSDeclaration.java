@@ -39,7 +39,7 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
 	setAmounts(person, civilYear);
 	setEmployeeFields();
 
-	addParameter("day", new YearMonthDay().toString(DD_MM_YYYY, getLocale()));
+	addParameter("day", new YearMonthDay().toString(DD_MMMM_YYYY, getLocale()));
     }
 
     final private void setPersonFields(final Registration registration, final Person person) {

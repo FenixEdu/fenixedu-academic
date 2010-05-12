@@ -84,7 +84,7 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 
 	if (!request.mustHideConclusionDate()) {
 	    result.append(SINGLE_SPACE).append(getResourceBundle().getString("label.in"));
-	    result.append(SINGLE_SPACE).append(request.getConclusionDate().toString(DD_MM_YYYY, getLocale()));
+	    result.append(SINGLE_SPACE).append(request.getConclusionDate().toString(DD_MMMM_YYYY, getLocale()));
 	}
 
 	return result.toString();
@@ -99,7 +99,7 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 		result.append(getResourceBundle().getString(
 			"documents.DegreeFinalizationCertificate.exceptionalConclusionInfo.technicalEngineer"));
 	    } else {
-		final String date = request.getExceptionalConclusionDate().toString(DD_MM_YYYY, getLocale());
+		final String date = request.getExceptionalConclusionDate().toString(DD_MMMM_YYYY, getLocale());
 		if (request.getInternshipAbolished()) {
 		    result.append(SINGLE_SPACE).append(getResourceBundle().getString("label.in"));
 		    result.append(SINGLE_SPACE).append(date);

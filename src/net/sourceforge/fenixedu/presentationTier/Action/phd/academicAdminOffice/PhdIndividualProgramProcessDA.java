@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
 import net.sourceforge.fenixedu.applicationTier.Servico.fileManager.StorePersonalPhoto;
 import net.sourceforge.fenixedu.applicationTier.Servico.phd.CreateEnrolmentPeriods;
@@ -63,7 +64,9 @@ import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.CommonPhdIndividualProgramProcessDA;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdInactivePredicateContainer;
+import net.sourceforge.fenixedu.presentationTier.docs.phd.registration.PhdSchoolRegistrationDeclarationDocument;
 import net.sourceforge.fenixedu.util.ContentType;
+import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -1003,4 +1006,17 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
     }
 
     // End of edit when started studies
+
+    // Print school registration declaration
+
+    public ActionForward printSchoolRegistrationDeclaration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws IOException, JRException {
+
+	final PhdSchoolRegistrationDeclarationDocument report = new PhdSchoolRegistrationDeclarationDocument(getProcess(request));
+	writeFile(response, report.getReportFileName() + ".pdf", "application/pdf", ReportsUtils
+		.exportToProcessedPdfAsByteArray(report));
+	return null;
+    }
+
+    // End of Print school registration declaration
 }

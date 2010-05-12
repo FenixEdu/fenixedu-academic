@@ -77,7 +77,7 @@ public class CreditNoteDocument extends FenixReport {
 	addParameter("receiptNumber", this.creditNote.getReceipt().getNumberWithSeries() + "/"
 		+ this.creditNote.getReceipt().getYear().toString());
 	addParameter("annulled", this.creditNote.isAnnulled());
-	addParameter("creditNoteDate", this.creditNote.getWhenCreated().toString(DD_MM_YYYY, getLocale()));
+	addParameter("creditNoteDate", this.creditNote.getWhenCreated().toString(DD_MMMM_YYYY, getLocale()));
 	addParameter("total", this.creditNote.getTotalAmount().toPlainString());
 
 	addParameter("original", this.original);

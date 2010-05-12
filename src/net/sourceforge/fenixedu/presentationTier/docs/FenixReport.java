@@ -37,7 +37,7 @@ abstract public class FenixReport implements Serializable {
 
     static final protected String SINGLE_SPACE = StringUtils.SINGLE_SPACE;
 
-    static final protected String DD_MM_YYYY = "dd MMMM yyyy";
+    static final protected String DD_MMMM_YYYY = "dd MMMM yyyy";
 
     static final protected String DD_SLASH_MM_SLASH_YYYY = "dd/MM/yyyy";
 

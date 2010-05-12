@@ -174,7 +174,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
 
 	addParameter("degreeDescription", getDegreeDescription());
 	addParameter("employeeLocation", AccessControl.getPerson().getEmployee().getCurrentCampus().getLocation());
-	addParameter("day", new LocalDate().toString(DD_MM_YYYY, getLocale()));
+	addParameter("day", new LocalDate().toString(DD_MMMM_YYYY, getLocale()));
     }
 
     protected boolean showPriceFields() {

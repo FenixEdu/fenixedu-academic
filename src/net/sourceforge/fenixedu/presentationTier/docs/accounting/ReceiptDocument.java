@@ -79,7 +79,7 @@ public class ReceiptDocument extends FenixReport {
 	addParameter("year", this.receipt.getYear().toString());
 	addParameter("secondPrintVersion", this.receipt.isSecondPrintVersion());
 	addParameter("annulled", this.receipt.isAnnulled());
-	addParameter("receiptDate", this.receipt.getReceiptDate().toString(DD_MM_YYYY, getLocale()));
+	addParameter("receiptDate", this.receipt.getReceiptDate().toString(DD_MMMM_YYYY, getLocale()));
 	addParameter("total", this.receipt.getTotalAmount().toPlainString());
 
 	addParameter("original", this.original);

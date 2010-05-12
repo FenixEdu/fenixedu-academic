@@ -57,7 +57,7 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
 	addParameter("administrativeOfficeName", employee.getCurrentWorkingPlace().getName());
 	addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
 	addParameter("universityName", UniversityUnit.getInstitutionsUniversityUnit().getName());
-	addParameter("day", new LocalDate().toString(DD_MM_YYYY, getLocale()));
+	addParameter("day", new LocalDate().toString(DD_MMMM_YYYY, getLocale()));
 
 	createProgramsList();
     }

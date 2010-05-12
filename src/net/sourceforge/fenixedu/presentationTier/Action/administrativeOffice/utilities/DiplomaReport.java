@@ -32,9 +32,9 @@ abstract public class DiplomaReport extends FenixReport {
 	addParameter("nameOfMother", StringFormatter.prettyPrint(this.studentDiplomaInformation.getNameOfMother()));
 	addParameter("birthLocale", StringFormatter.prettyPrint(this.studentDiplomaInformation.getBirthLocale()));
 
-	addParameter("conclusionDate", this.studentDiplomaInformation.getConclusionDate().toString(DD_MM_YYYY, getLocale()));
+	addParameter("conclusionDate", this.studentDiplomaInformation.getConclusionDate().toString(DD_MMMM_YYYY, getLocale()));
 	addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
-	addParameter("day", new YearMonthDay().toString(DD_MM_YYYY, getLocale()));
+	addParameter("day", new YearMonthDay().toString(DD_MMMM_YYYY, getLocale()));
 	addParameter("dissertationTitle", this.studentDiplomaInformation.getDissertationTitle());
 
 	fillReportSpecificParameters();
