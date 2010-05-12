@@ -842,8 +842,10 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 	    HttpServletRequest request, HttpServletResponse response) {
 
 	final PhdThesisProcessBean bean = new PhdThesisProcessBean();
-	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.PROVISIONAL_THESIS));
 	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.THESIS_REQUIREMENT));
+	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.THESIS_ABSTRACT));
+	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.PROVISIONAL_THESIS));
+	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.CV));
 
 	request.setAttribute("requestPublicThesisPresentation", bean);
 
@@ -853,21 +855,28 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
     }
 
     private void addThesisPreConditionsInformation(HttpServletRequest request, final PhdIndividualProgramProcess process) {
+
 	request.setAttribute("hasPublicPresentationSeminar", process.hasSeminarProcess());
-	request.setAttribute("hasPublicPresentationSeminarReport", process.hasSeminarReportDocument());
+
+	if (process.hasSeminarProcess() && !process.getSeminarProcess().isExempted()) {
+	    request.setAttribute("hasPublicPresentationSeminarReport", process.hasSeminarReportDocument());
+	}
+
 	request.setAttribute("hasSchoolPartConcluded", process.hasSchoolPartConcluded());
 	request.setAttribute("hasQualificationExamsToPerform", process.hasQualificationExamsToPerform());
+
+	if (process.hasRegistration() && process.hasStudyPlan() && process.getStudyPlan().hasAnyPropaeudeuticsOrExtraEntries()) {
+	    request.setAttribute("hasPropaeudeuticsOrExtraEntriesApproved", process.hasPropaeudeuticsOrExtraEntriesApproved());
+	}
     }
 
     public ActionForward prepareRequestPublicThesisPresentationInvalid(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
 	request.setAttribute("requestPublicThesisPresentation", getRenderedObject("requestPublicThesisPresentation"));
-
 	addThesisPreConditionsInformation(request, getProcess(request));
 
 	RenderUtils.invalidateViewState("requestPublicThesisPresentation.edit.documents");
-
 	return mapping.findForward("requestPublicThesisPresentation");
     }
 

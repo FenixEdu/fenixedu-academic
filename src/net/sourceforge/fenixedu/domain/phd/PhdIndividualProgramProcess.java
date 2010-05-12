@@ -1417,4 +1417,13 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return hasStudyPlan() && !getStudyPlan().isExempted() && getStudyPlan().isToEnrolInCurricularCourses();
     }
 
+    public boolean hasPropaeudeuticsOrExtraEntriesApproved() {
+
+	if (!hasStudyPlan() || !hasRegistration()) {
+	    return false;
+	}
+
+	return getStudyPlan().isExempted() || getStudyPlan().hasPropaeudeuticsOrExtraEntriesApproved();
+    }
+
 }

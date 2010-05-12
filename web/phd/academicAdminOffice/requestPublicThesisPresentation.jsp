@@ -39,7 +39,7 @@
 
 <br/>
 
-
+<%-- pre conditions --%>
 <div class="warning1 mbottom05" style="width: 700px;">
 	<table>
 		<tr>
@@ -48,12 +48,14 @@
 				<html:img src="<%= request.getContextPath() + ((Boolean) request.getAttribute("hasPublicPresentationSeminar") ?  "/images/correct.gif"  : "/images/incorrect.gif" )%>"/>
 			</td>
 		</tr>
-		<tr>
-			<td><bean:message  key="label.phd.public.presentation.seminar.report.document" bundle="PHD_RESOURCES"/> <bean:message  key="label.phd.publicPresentationSeminar" bundle="PHD_RESOURCES"/>: </td>
-			<td class="acenter">
-				<html:img src="<%= request.getContextPath() + ((Boolean) request.getAttribute("hasPublicPresentationSeminarReport") ?  "/images/correct.gif"  : "/images/incorrect.gif" )%>"/>
-			</td>
-		</tr>
+		<logic:present name="hasPublicPresentationSeminarReport">
+			<tr>
+				<td><bean:message  key="label.phd.public.presentation.seminar.report.document" bundle="PHD_RESOURCES"/> <bean:message  key="label.phd.publicPresentationSeminar" bundle="PHD_RESOURCES"/>: </td>
+				<td class="acenter">
+					<html:img src="<%= request.getContextPath() + ((Boolean) request.getAttribute("hasPublicPresentationSeminarReport") ?  "/images/correct.gif"  : "/images/incorrect.gif" )%>"/>
+				</td>
+			</tr>
+		</logic:present>
 		<tr>
 			<td><bean:message  key="label.phd.qualification.exams" bundle="PHD_RESOURCES"/>: </td>
 			<td class="acenter">
@@ -66,8 +68,17 @@
 				<html:img src="<%= request.getContextPath() + ((Boolean) request.getAttribute("hasSchoolPartConcluded") ?  "/images/correct.gif"  : "/images/incorrect.gif" )%>"/>
 			</td>
 		</tr>
+		<logic:present name="hasPropaeudeuticsOrExtraEntriesApproved">
+			<tr>
+				<td><bean:message  key="label.phd.hasPropaeudeuticsOrExtraEntriesToApprove" bundle="PHD_RESOURCES"/>: </td>
+				<td class="acenter">
+					<html:img src="<%= request.getContextPath() + ((Boolean) request.getAttribute("hasPropaeudeuticsOrExtraEntriesApproved") ?  "/images/correct.gif"  : "/images/incorrect.gif" )%>"/>
+				</td>
+			</tr>
+		</logic:present>
 	</table>
 </div>
+<%-- End of pre conditions --%>
 
 <%--  ### End Of Context Information  ### --%>
 

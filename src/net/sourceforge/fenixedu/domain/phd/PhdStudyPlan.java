@@ -9,7 +9,9 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
@@ -198,4 +200,44 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
     public boolean isExempted() {
 	return getExempted() != null && getExempted().booleanValue();
     }
+
+    public boolean hasAnyPropaeudeuticsOrExtraEntries() {
+	for (final PhdStudyPlanEntry entry : getEntries()) {
+	    if (entry.isPropaedeutic() || entry.isExtraCurricular()) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    public boolean hasPropaeudeuticsOrExtraEntriesApproved() {
+	final StudentCurricularPlan scp = getProcess().getRegistration().getLastStudentCurricularPlan();
+
+	for (final PhdStudyPlanEntry entry : getEntries()) {
+
+	    if ((entry.isPropaedeutic() || entry.isExtraCurricular()) && entry.isInternalEntry()) {
+
+		if (findEnrolment(scp, (InternalPhdStudyPlanEntry) entry) == null) {
+		    return false;
+		}
+	    }
+	}
+
+	return hasAnyEntries();
+    }
+
+    private Enrolment findEnrolment(final StudentCurricularPlan scp, final InternalPhdStudyPlanEntry entry) {
+	for (final Enrolment enrolment : scp.getRoot().getEnrolments()) {
+	    if (enrolment.isApproved() && isFor(enrolment, entry.getCompetenceCourse())) {
+		return enrolment;
+	    }
+	}
+
+	return null;
+    }
+
+    private boolean isFor(final Enrolment enrolment, final CompetenceCourse competenceCourse) {
+	return enrolment.getCurricularCourse().getCompetenceCourse().equals(competenceCourse);
+    }
+
 }
