@@ -51,4 +51,13 @@ public abstract class TeacherEvaluation extends TeacherEvaluation_Base {
     public void lickEvaluationStamp() {
 	setEvaluationLock(new DateTime());
     }
+
+    public void delete() {
+	removeTeacherEvaluationProcess();
+	for (final TeacherEvaluationFile teacherEvaluationFile : getTeacherEvaluationFileSet()) {
+	    teacherEvaluationFile.delete();
+	}
+	removeRootDomainObject();
+	deleteDomainObject();
+    }
 }

@@ -174,4 +174,18 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
 	return stringBuilder.toString();
     }
 
+    public void delete() {
+	removeEvaluator();
+	removeEvaluee();
+	removeFacultyEvaluationProcess();
+	for (final TeacherEvaluation teacherEvaluation : getTeacherEvaluationSet()) {
+	    teacherEvaluation.delete();
+	}
+	for (final TeacherEvaluationCoEvaluator teacherEvaluationCoEvaluator : getTeacherEvaluationCoEvaluatorSet()) {
+	    teacherEvaluationCoEvaluator.delete();
+	}
+	removeRootDomainObject();
+	deleteDomainObject();
+    }
+
 }

@@ -224,6 +224,13 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 	return mapping.findForward("viewManagementInterface");
     }
 
+    public ActionForward deleteFacultyEvaluationProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	final FacultyEvaluationProcess facultyEvaluationProcess = getDomainObject(request, "facultyEvaluationProcessOID");
+	facultyEvaluationProcess.delete();
+	return viewManagementInterface(mapping, form, request, response);
+    }
+
     public ActionForward prepareUploadEvaluators(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	final FacultyEvaluationProcess facultyEvaluationProcess = getDomainObject(request, "facultyEvaluationProcessOID");

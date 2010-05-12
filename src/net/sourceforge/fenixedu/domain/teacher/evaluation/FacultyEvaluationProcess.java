@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.Interval;
 
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base {
@@ -53,6 +54,9 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base {
 	final String[] lines = contents.split("\n");
 	for (final String line : lines) {
 	    final String[] parts = line.split("\t");
+	    if (parts.length < 2) {
+		throw new DomainException("error.invalid.file.format");
+	    }
 	    final String evaluee = parts[0];
 	    final String evaluator = parts[1];
 	    final String coevaluator = parts.length > 2 ? parts[2] : null;
@@ -160,6 +164,15 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base {
 	    }
 	}
 	return count;
+    }
+
+    @Service
+    public void delete() {
+	for (final TeacherEvaluationProcess teacherEvaluationProcess : getTeacherEvaluationProcessSet()) {
+	    teacherEvaluationProcess.delete();
+	}
+	removeRootDomainObject();
+	deleteDomainObject();
     }
 
 }
