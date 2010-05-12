@@ -50,6 +50,8 @@ public enum PhdIndividualProgramDocumentType {
     FINAL_THESIS,
 
     THESIS_REQUIREMENT,
+    
+    THESIS_ABSTRACT,
 
     JURY_ELEMENTS,
 
