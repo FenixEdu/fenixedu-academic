@@ -235,7 +235,7 @@ function check(e,v){
 							<bean:define id="aa" value="<%= "aa" + personIndex %>" />
 							<bean:define id="id" value="<%= "id" + (personIndex.intValue() + 40) %>" />
 							<span class="switchInline">
-								<input alt="input.input" type = button value="+"  id="<%= pageContext.findAttribute("id").toString()%>" onClick="check(document.getElementById('<%= pageContext.findAttribute("aa").toString() %>'),document.getElementById('<%= pageContext.findAttribute("id").toString() %>'));return false;"/>													
+								<input alt="input.input" type="button" value="+"  id="<%= pageContext.findAttribute("id").toString()%>" onClick="check(document.getElementById('<%= pageContext.findAttribute("aa").toString() %>'),document.getElementById('<%= pageContext.findAttribute("id").toString() %>'));return false;"/>													
 							</span>
   						<!-- </td>-->
 					</td>
