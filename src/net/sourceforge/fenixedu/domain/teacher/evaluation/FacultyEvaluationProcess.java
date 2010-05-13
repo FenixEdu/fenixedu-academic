@@ -47,9 +47,6 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base {
     }
 
     public void uploadEvaluators(final byte[] bytes) {
-	if (!getAutoEvaluationInterval().isAfterNow()) {
-	    throw new DomainException("error.evaluation.process.already.under.way");
-	}
 	final String contents = new String(bytes);
 	final String[] lines = contents.split("\n");
 	for (final String line : lines) {
@@ -77,7 +74,13 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base {
 		if (existingTeacherEvaluationProcess == null) {
 		    existingTeacherEvaluationProcess = new TeacherEvaluationProcess(this, evalueePerson, evaluatorPerson);
 		} else {
-		    existingTeacherEvaluationProcess.setEvaluator(evaluatorPerson);
+		    if (evaluatorPerson != existingTeacherEvaluationProcess.getEvaluator()) {
+			existingTeacherEvaluationProcess.setEvaluator(evaluatorPerson);
+			// TODO : check whether this makes sense or not.
+			for (final TeacherEvaluation teacherEvaluation : existingTeacherEvaluationProcess.getTeacherEvaluationSet()) {
+			    teacherEvaluation.setEvaluationLock(null);
+			}
+		    }
 		}
 
 		boolean updatedCoEvaluator = false;
