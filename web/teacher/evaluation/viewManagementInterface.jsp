@@ -158,7 +158,9 @@
 						<bean:write name="teacherEvaluationProcess" property="evaluee.name"/>
 					</td>
 					<td>
-						<bean:write name="teacherEvaluationProcess" property="evaluator.name"/>
+						<logic:present name="teacherEvaluationProcess" property="evaluator">
+							<bean:write name="teacherEvaluationProcess" property="evaluator.name"/>
+						</logic:present>
 					</td>
 					<td>
 						<bean:write name="teacherEvaluationProcess" property="coEvaluatorsAsString"/>
