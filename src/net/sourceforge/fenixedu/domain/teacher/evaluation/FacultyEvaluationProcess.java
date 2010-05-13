@@ -64,50 +64,52 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base {
 
 	    final Person evalueePerson = findPerson(evaluee);
 	    final Person evaluatorPerson = findPerson(evaluator);
-	    final Person coEvaluatorPerson = findPerson(coevaluator);
-	    TeacherEvaluationProcess existingTeacherEvaluationProcess = null;
-	    for (final TeacherEvaluationProcess teacherEvaluationProcess : evalueePerson
-		    .getTeacherEvaluationProcessFromEvalueeSet()) {
-		if (teacherEvaluationProcess.getFacultyEvaluationProcess() == this) {
-		    existingTeacherEvaluationProcess = teacherEvaluationProcess;
-		    break;
+	    if (evalueePerson != null && evaluatorPerson != null) {
+		final Person coEvaluatorPerson = findPerson(coevaluator);
+		TeacherEvaluationProcess existingTeacherEvaluationProcess = null;
+		for (final TeacherEvaluationProcess teacherEvaluationProcess : evalueePerson
+			.getTeacherEvaluationProcessFromEvalueeSet()) {
+		    if (teacherEvaluationProcess.getFacultyEvaluationProcess() == this) {
+			existingTeacherEvaluationProcess = teacherEvaluationProcess;
+			break;
+		    }
 		}
-	    }
-	    if (existingTeacherEvaluationProcess == null) {
-		existingTeacherEvaluationProcess = new TeacherEvaluationProcess(this, evalueePerson, evaluatorPerson);
-	    } else {
-		existingTeacherEvaluationProcess.setEvaluator(evaluatorPerson);
-	    }
-
-	    boolean updatedCoEvaluator = false;
-	    boolean updatedCoEvaluatorString = false;
-	    for (final TeacherEvaluationCoEvaluator teacherEvaluationCoEvaluator : existingTeacherEvaluationProcess
-		    .getTeacherEvaluationCoEvaluatorSet()) {
-		if (teacherEvaluationCoEvaluator instanceof InternalCoEvaluator) {
-		    final InternalCoEvaluator internalCoEvaluator = (InternalCoEvaluator) teacherEvaluationCoEvaluator;
-		    updatedCoEvaluator = true;
-		    if (coEvaluatorPerson == null) {
-			internalCoEvaluator.delete();
-		    } else {
-			internalCoEvaluator.setPerson(coEvaluatorPerson);
-		    }
-		} else if (teacherEvaluationCoEvaluator instanceof ExternalCoEvaluator) {
-		    final ExternalCoEvaluator externalCoEvaluator = (ExternalCoEvaluator) teacherEvaluationCoEvaluator;
-		    updatedCoEvaluatorString = true;
-		    if (coevaluatorString == null || coevaluatorString.isEmpty()) {
-			externalCoEvaluator.delete();
-		    } else {
-			externalCoEvaluator.setName(coevaluatorString);
-		    }
+		if (existingTeacherEvaluationProcess == null) {
+		    existingTeacherEvaluationProcess = new TeacherEvaluationProcess(this, evalueePerson, evaluatorPerson);
 		} else {
-		    throw new DomainException("unknown type: " + teacherEvaluationCoEvaluator.getClass().getName());
+		    existingTeacherEvaluationProcess.setEvaluator(evaluatorPerson);
 		}
-	    }
-	    if (coEvaluatorPerson != null && !updatedCoEvaluator) {
-		new InternalCoEvaluator(existingTeacherEvaluationProcess, coEvaluatorPerson);
-	    }
-	    if (coevaluatorString != null && !coevaluatorString.isEmpty() && !updatedCoEvaluatorString) {
-		new ExternalCoEvaluator(existingTeacherEvaluationProcess, coevaluatorString);
+
+		boolean updatedCoEvaluator = false;
+		boolean updatedCoEvaluatorString = false;
+		for (final TeacherEvaluationCoEvaluator teacherEvaluationCoEvaluator : existingTeacherEvaluationProcess
+			.getTeacherEvaluationCoEvaluatorSet()) {
+		    if (teacherEvaluationCoEvaluator instanceof InternalCoEvaluator) {
+			final InternalCoEvaluator internalCoEvaluator = (InternalCoEvaluator) teacherEvaluationCoEvaluator;
+			updatedCoEvaluator = true;
+			if (coEvaluatorPerson == null) {
+			    internalCoEvaluator.delete();
+			} else {
+			    internalCoEvaluator.setPerson(coEvaluatorPerson);
+			}
+		    } else if (teacherEvaluationCoEvaluator instanceof ExternalCoEvaluator) {
+			final ExternalCoEvaluator externalCoEvaluator = (ExternalCoEvaluator) teacherEvaluationCoEvaluator;
+			updatedCoEvaluatorString = true;
+			if (coevaluatorString == null || coevaluatorString.isEmpty()) {
+			    externalCoEvaluator.delete();
+			} else {
+			    externalCoEvaluator.setName(coevaluatorString);
+			}
+		    } else {
+			throw new DomainException("unknown type: " + teacherEvaluationCoEvaluator.getClass().getName());
+		    }
+		}
+		if (coEvaluatorPerson != null && !updatedCoEvaluator) {
+		    new InternalCoEvaluator(existingTeacherEvaluationProcess, coEvaluatorPerson);
+		}
+		if (coevaluatorString != null && !coevaluatorString.isEmpty() && !updatedCoEvaluatorString) {
+		    new ExternalCoEvaluator(existingTeacherEvaluationProcess, coevaluatorString);
+		}
 	    }
 	}
     }
