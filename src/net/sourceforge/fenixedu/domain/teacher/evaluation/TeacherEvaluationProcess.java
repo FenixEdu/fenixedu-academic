@@ -122,6 +122,14 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
 	return isPossibleToInsertApprovedMark() || getEvaluator().equals(AccessControl.getPerson());
     }
 
+    public boolean isPossibleToUnlockAutoEvaluation() {
+	return isAutoEvaluationLocked() && !isEvaluationLocked();
+    }
+
+    public boolean isPossibleToUnlockEvaluation() {
+	return isEvaluationLocked();
+    }
+
     public Set<TeacherEvaluationFileBean> getTeacherEvaluationFileBeanSet() {
 	SortedSet<TeacherEvaluationFileBean> teacherEvaluationFileBeans = new TreeSet<TeacherEvaluationFileBean>(
 		TeacherEvaluationFileBean.COMPARATOR_BY_TYPE);

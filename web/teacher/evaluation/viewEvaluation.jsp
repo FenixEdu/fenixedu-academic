@@ -45,6 +45,16 @@
 				paramProperty="externalId">
 				<bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.insertApprovedEvaluationMark" />
 			</html:link>
+		</logic:equal><logic:equal name="process" property="possibleToUnlockAutoEvaluation" value="true"> | 
+			<html:link action="/teacherEvaluation.do?method=unlockAutoEvaluation" paramId="process" paramName="process"
+				paramProperty="externalId">
+				<bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.autoevaluation.unlock" />
+			</html:link>
+		</logic:equal><logic:equal name="process" property="possibleToUnlockEvaluation" value="true"> | 
+			<html:link action="/teacherEvaluation.do?method=unlockEvaluation" paramId="process" paramName="process"
+				paramProperty="externalId">
+				<bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.evaluation.unlock" />
+			</html:link>
 		</logic:equal> <logic:equal name="process" property="inEvaluation" value="true">
 			<html:link action="/teacherEvaluation.do?method=insertEvaluationMark" paramId="process" paramName="process"
 				paramProperty="externalId">
@@ -110,7 +120,7 @@
 					</fr:layout>
 				</fr:view>
 			</logic:notEmpty>
-	
+
 			<logic:empty name="process" property="teacherEvaluationFileBeanSet">
 				<p><bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.noFilesNeeded.warning" /></p>
 			</logic:empty>

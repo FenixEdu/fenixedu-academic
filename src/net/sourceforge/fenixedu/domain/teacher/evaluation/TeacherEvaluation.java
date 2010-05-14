@@ -60,4 +60,14 @@ public abstract class TeacherEvaluation extends TeacherEvaluation_Base {
 	removeRootDomainObject();
 	deleteDomainObject();
     }
+
+    @Service
+    public void rubAutoEvaluationStamp() {
+	setAutoEvaluationLock(null);
+    }
+
+    @Service
+    public void rubEvaluationStamp() {
+	setEvaluationLock(null);
+    }
 }

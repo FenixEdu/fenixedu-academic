@@ -103,6 +103,20 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 	return viewEvaluation(mapping, request, process.getEvaluee());
     }
 
+    public ActionForward unlockAutoEvaluation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	TeacherEvaluationProcess process = getDomainObject(request, "process");
+	process.getCurrentTeacherEvaluation().rubAutoEvaluationStamp();
+	return viewEvaluation(mapping, request, process.getEvaluee());
+    }
+
+    public ActionForward unlockEvaluation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	TeacherEvaluationProcess process = getDomainObject(request, "process");
+	process.getCurrentTeacherEvaluation().rubEvaluationStamp();
+	return viewEvaluation(mapping, request, process.getEvaluee());
+    }
+
     public ActionForward viewEvaluees(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	SortedMap<Person, SortedSet<TeacherEvaluationProcess>> processes = new TreeMap<Person, SortedSet<TeacherEvaluationProcess>>(
