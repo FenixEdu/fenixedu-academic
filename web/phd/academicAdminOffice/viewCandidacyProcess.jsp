@@ -44,6 +44,11 @@
 						<bean:message bundle="PHD_RESOURCES" key="label.phd.printCandidacyDeclaration.en"/>
 					</html:link>
 				</li>
+				<li>
+					<html:link action="/phdIndividualProgramProcess.do?method=printSchoolRegistrationDeclaration&language=pt" paramId="processId" paramName="process" paramProperty="externalId">
+						<bean:message bundle="PHD_RESOURCES" key="label.phd.print.school.registration.declaration"/>
+					</html:link>
+				</li>
 			</logic:notEmpty>
 		</ul>
 	</td>
