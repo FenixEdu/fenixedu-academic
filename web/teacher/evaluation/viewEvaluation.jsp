@@ -27,8 +27,8 @@
 				<fr:property name="eachSchema" value="" />
 				<fr:property name="eachLayout" value="values" />
 			</fr:slot>
-			<fr:slot name="type" key="label.teacher.evaluation.type" layout="null-as-label" />
 			<logic:equal name="process" property="possibleToViewEvaluation" value="true">
+				<fr:slot name="type" key="label.teacher.evaluation.type" layout="null-as-label" />
 				<fr:slot name="evaluationMark" key="label.teacher.evaluation.mark" layout="null-as-label" />
 				<fr:slot name="approvedEvaluationMark" key="label.teacher.evaluation.approvedMark" layout="null-as-label" />
 			</logic:equal>
