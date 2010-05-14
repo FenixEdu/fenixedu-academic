@@ -216,12 +216,7 @@ public class AttributesManagement {
 	    }
 
 	    String attrName = params[0];
-	    String value = null;
-	    if (StorkAttributeType.STORK_RETURN_CODE.getStorkName().equals(attrName)) {
-		value = params[1].equals("null") ? null : params[1];
-	    } else {
-		value = params[1].equals("null") ? null : params[1].substring(1, params[1].length() - 1);
-	    }
+	    String value = params[1].equals("null") ? null : params[1].substring(1, params[1].length() - 1);
 
 	    attributes.put(StorkAttributeType.getTypeFromStorkName(attrName), new Attribute(i++, StorkAttributeType
 		    .getTypeFromStorkName(attrName), false, value));

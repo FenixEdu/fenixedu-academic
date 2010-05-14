@@ -6,6 +6,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
+import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.joda.time.DateTime;
 
@@ -109,6 +110,28 @@ abstract public class CandidacyProcess extends CandidacyProcess_Base {
 	for (IndividualCandidacyProcess child : this.getChildProcesses()) {
 	    if (documentId.equals(child.getCandidacy().getPersonalDetails().getDocumentIdNumber())
 		    && !child.isCandidacyCancelled()) {
+		return child;
+	    }
+	}
+
+	return null;
+    }
+
+    public IndividualCandidacyProcess getOpenChildProcessByEidentifier(final String eidentifier) {
+	if (StringUtils.isEmpty(eidentifier)) {
+	    return null;
+	}
+	
+	for (IndividualCandidacyProcess child : this.getChildProcesses()) {
+	    if (child.isCandidacyCancelled()) {
+		continue;
+	    }
+
+	    if (StringUtils.isEmpty(child.getPersonalDetails().getEidentifier())) {
+		continue;
+	    }	    
+	    
+	    if (eidentifier.equalsIgnoreCase(child.getPersonalDetails().getEidentifier())) {
 		return child;
 	    }
 	}

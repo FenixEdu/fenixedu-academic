@@ -3,22 +3,22 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%>
-<%@page import="net.sourceforge.fenixedu.util.stork.SPUtil" %>
-<%@page import="java.net.URL" %>
-<%@page import="com.lowagie.text.html.HtmlEncoder" %>
-
+<%@ page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%>
+<%@ page import="java.util.Locale"%>
+<%@ page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
 
 <%!
-
 	static String f(String value, Object ... args) {
     	return String.format(value, args);
 	}
 %>
 
+<html:xhtml/>
 
 <bean:define id="mappingPath" name="mappingPath"/>
 <bean:define id="fullPath"><%= request.getContextPath() + "/publico" + mappingPath + ".do" %></bean:define>
+<bean:define id="applicationInformationLinkDefault" name="application.information.link.default"/>
+<bean:define id="applicationInformationLinkEnglish" name="application.information.link.english"/>
 
 <div class="breadcumbs">
 	<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://gri.ist.utl.pt/en">NMCI</a> &gt;
@@ -27,17 +27,11 @@
 	<bean:message key="erasmus.title.application.submission" bundle="CANDIDATE_RESOURCES" />
 </div>
 
-<h1><bean:message key="title.application.name.erasmus" bundle="CANDIDATE_RESOURCES"/></h1>
 
-<%
-	// String applicationUrl = SPUtil.getInstance().getSpInvokeUrl();
-	
-	String applicationUrl = java.net.URLEncoder.encode("http://cidhcp117.ist.utl.pt:8080/ciapl/applications/erasmus/returnFromPeps");
-	String attributes = java.net.URLEncoder.encode(SPUtil.getInstance().getAttributesList());
-	applicationUrl = f("http://storker.ist.utl.pt/IST-SP/IndexPage?applicationUrl=%s&attributesList=%s", applicationUrl, attributes);
-%>
+<h1><bean:write name="application.name" bundle="CANDIDATE_RESOURCES"/></h1>
 
-<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= applicationUrl %>">Click here in order to authenticate with your national citizen card</a>
+An error ocurred with the application submission. If the problem persists please contact us.
 
-</body>
-</html>
+<div class="mtop15" id="contacts">
+	<bean:message key="erasmus.contacts.text" bundle="CANDIDATE_RESOURCES" />
+</div>

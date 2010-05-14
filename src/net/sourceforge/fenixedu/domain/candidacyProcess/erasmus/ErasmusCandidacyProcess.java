@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.ErasmusCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -165,6 +166,27 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 
 	for (ErasmusIndividualCandidacyProcess process : childProcesses) {
 	    if (eIdentifier.equals(process.getPersonalDetails().getPerson().getEidentifier())) {
+		return process;
+	    }
+	}
+
+	return null;
+    }
+
+    public ErasmusIndividualCandidacyProcess getOpenProcessByEIdentifier(String eIdentifier) {
+	List<ErasmusIndividualCandidacyProcess> childProcesses = new java.util.ArrayList<ErasmusIndividualCandidacyProcess>(
+		(List) this.getChildProcesses());
+
+	for (ErasmusIndividualCandidacyProcess process : childProcesses) {
+	    if (process.isCandidacyCancelled()) {
+		continue;
+	    }
+
+	    if (StringUtils.isEmpty(process.getPersonalDetails().getEidentifier())) {
+		continue;
+	    }
+
+	    if (eIdentifier.equals(process.getPersonalDetails().getEidentifier())) {
 		return process;
 	    }
 	}

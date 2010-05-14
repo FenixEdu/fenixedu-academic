@@ -156,7 +156,7 @@
 
 	<h2 class="mtop1 mbottom05"><bean:message key="label.erasmus.current.study" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
 	<em><bean:message key="label.erasmus.current.study.detailed" bundle="ACADEMIC_OFFICE_RESOURCES" /></em>
-	<fr:view name="individualCandidacyProcess" schema="ErasmusIndividualCandidacyProcess.current.study.view" >
+	<fr:view name="individualCandidacyProcess" schema="ErasmusIndividualCandidacyProcess.current.study.view" property="candidacy.erasmusStudentData">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight thright mtop025"/>
 	        <fr:property name="columnClasses" value="width175px,,,,"/>

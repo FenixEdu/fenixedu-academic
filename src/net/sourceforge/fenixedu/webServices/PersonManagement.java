@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.webServices;
 
-import java.text.ParseException;
 
 import javax.servlet.ServletRequest;
 
@@ -41,7 +40,7 @@ public class PersonManagement implements IPersonManagement {
     }
 
     public Boolean setPersonInformation(String username, String password, PersonInformationFromUniqueCardDTO personDTO,
-	    MessageContext context) throws NotAuthorizedException, ParseException {
+	    MessageContext context) throws NotAuthorizedException {
 
 	checkPermissions(username, password, context);
 

@@ -2006,11 +2006,11 @@
 </schema> 
 
  
-<schema name="ErasmusIndividualCandidacyProcess.current.study.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="candidacy.erasmusStudentData.hasDiplomaOrDegree" key="label.erasmus.current.study.obtained.diploma.or.degree" />
-	<slot name="candidacy.erasmusStudentData.diplomaName" key="label.erasmus.current.study.name.of.diploma.or.degree" />
-	<slot name="candidacy.erasmusStudentData.diplomaConclusionYear" key="label.erasmus.current.study.conclusion.year.of.diploma" />
-	<slot name="candidacy.erasmusStudentData.experienceCarryingOutProject" key="label.erasmus.current.study.has.experience.carrying.out.research.project" /> 
+<schema name="ErasmusIndividualCandidacyProcess.current.study.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusStudentData" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="hasDiplomaOrDegree" key="label.erasmus.current.study.obtained.diploma.or.degree" />
+	<slot name="diplomaName" key="label.erasmus.current.study.name.of.diploma.or.degree" />
+	<slot name="diplomaConclusionYear" key="label.erasmus.current.study.conclusion.year.of.diploma" />
+	<slot name="experienceCarryingOutProject" key="label.erasmus.current.study.has.experience.carrying.out.research.project" /> 
 </schema>
 
 
@@ -2268,7 +2268,7 @@
 	<slot name="address" key="label.address" />
 	<slot name="areaCode" key="label.areaCode" />
 	<slot name="area" key="label.area" />
-	<slot name="countryOfResidence.nameI18N" key="label.countryOfResidence" />
+	<slot name="countryOfResidence.localizedName" key="label.countryOfResidence" />
 	<slot name="telephoneContact" key="label.phone" />
 	<slot name="email" key="label.email" />	
 </schema>

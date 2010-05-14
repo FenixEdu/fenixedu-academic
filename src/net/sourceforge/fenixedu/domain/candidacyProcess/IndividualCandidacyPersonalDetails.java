@@ -214,4 +214,6 @@ public abstract class IndividualCandidacyPersonalDetails extends IndividualCandi
 
     public abstract Boolean hasAnyRole();
 
+    public abstract String getEidentifier();
+
 }

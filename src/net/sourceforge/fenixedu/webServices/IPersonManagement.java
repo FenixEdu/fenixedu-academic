@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.webServices;
 
-import java.text.ParseException;
-
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInformationDTO;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInformationFromUniqueCardDTO;
 import net.sourceforge.fenixedu.webServices.exceptions.NotAuthorizedException;
@@ -14,5 +12,5 @@ public interface IPersonManagement {
 	    MessageContext context) throws NotAuthorizedException;
 
     public abstract Boolean setPersonInformation(String username, String password, PersonInformationFromUniqueCardDTO personDTO,
-	    MessageContext context) throws NotAuthorizedException, ParseException;
+	    MessageContext context) throws NotAuthorizedException;
 }

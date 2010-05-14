@@ -101,4 +101,9 @@ public class IndividualCandidacyExternalPersonDetails extends IndividualCandidac
     public void editPublic(PersonBean personBean) {
 	this.edit(personBean);
     }
+
+    @Override
+    public String getEidentifier() {
+	return null;
+    }
 }

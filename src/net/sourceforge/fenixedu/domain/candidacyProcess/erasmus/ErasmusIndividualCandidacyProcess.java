@@ -96,6 +96,12 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 		bean.getPersonBean().getDocumentIdNumber())) {
 	    throw new DomainException("error.IndividualCandidacy.exists.for.same.document.id");
 	}
+	
+	if (!StringUtils.isEmpty(bean.getPersonBean().getEidentifier())
+		&& existsIndividualCandidacyProcessForEidentifier(bean.getCandidacyProcess(), bean.getPersonBean()
+			.getEidentifier())) {
+	    throw new DomainException("error.individualCandidacy.exists.for.same.eIdentifier");
+	}
 
 	setCandidacyProcess(bean.getCandidacyProcess());
 	createIndividualCandidacy(bean);
@@ -109,6 +115,10 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	setCandidacyDocumentFiles(bean);
 
 	setProcessCodeForThisIndividualCandidacy(bean.getCandidacyProcess());
+    }
+
+    protected boolean existsIndividualCandidacyProcessForEidentifier(final CandidacyProcess process, String eidentifier) {
+	return process.getOpenChildProcessByEidentifier(eidentifier) != null;
     }
 
     private void setSpecificIndividualCandidacyDocumentFiles(ErasmusIndividualCandidacyProcessBean bean) {

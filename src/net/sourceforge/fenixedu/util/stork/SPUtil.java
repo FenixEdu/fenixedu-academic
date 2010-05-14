@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.util.stork;
 
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -15,11 +16,11 @@ public class SPUtil {
     private List<Attribute> attributes;
 
     public static SPUtil getInstance() {
-	if (instance == null) {
-	    instance = new SPUtil();
-	}
+	// if (instance == null) {
+	// instance = new SPUtil();
+	// }
 
-	return instance;
+	return new SPUtil();
     }
 
     private SPUtil() {
@@ -27,7 +28,7 @@ public class SPUtil {
 
 	try {
 	    this.properties = new Properties();
-	    properties.load(SPUtil.class.getClassLoader().getResourceAsStream("/sp.properties"));
+	    properties.load(new FileInputStream("/Users/anilmamede/Documents/workspace/new-fenix/web/WEB-INF/classes/sp.properties"));
 	} catch (Exception e) {
 	    throw new RuntimeException(e);
 	}

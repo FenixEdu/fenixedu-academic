@@ -54,7 +54,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "show-pre-creation-candidacy-form", path = "erasmus.show.pre.creation.candidacy.form"),
 	@Forward(name = "show-email-message-sent", path = "erasmus.show.email.message.sent"),
 	@Forward(name = "show-application-submission-conditions", path = "erasmus.show.application.submission.conditions"),
-	@Forward(name = "open-candidacy-processes-not-found", path = "individual.candidacy.not.found"),
+	@Forward(name = "open-candidacy-processes-not-found", path = "erasmus.individual.candidacy.not.found"),
 	@Forward(name = "show-candidacy-creation-page", path = "erasmus.candidacy.creation.page"),
 	@Forward(name = "candidacy-continue-creation", path = "erasmus.candidacy.continue.creation"),
 	@Forward(name = "fill-degree-and-courses-information", path = "erasmus.fill.degree.and.courses.information"),
@@ -74,7 +74,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "stork-error-authentication-failed", path = "erasmus.stork.authentication.failed"),
 	@Forward(name = "show-recover-access-link-form", path = "erasmus.show.access.link.form"),
 	@Forward(name = "show-recovery-email-sent", path = "erasmus.recovery.email.sent"),
-	@Forward(name = "stork-attr-list-test", path = "erasmus.stork.attr.list.test") })
+	@Forward(name = "stork-attr-list-test", path = "erasmus.stork.attr.list.test"),
+	@Forward(name = "error-on-application-submission", path = "erasmus.error.on.application.submission.contact.gri") })
 public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndividualCandidacyProcessPublicDA {
 
     @Override
@@ -324,7 +325,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	    addActionMessage(request, e.getMessage(), e.getArgs());
 	    e.printStackTrace();
 	    request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
-	    return mapping.findForward("accept-honour-declaration");
+	    return mapping.findForward("error-on-application-submission");
 	}
     }
 
@@ -472,9 +473,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
 	    attrManagement = new AttributesManagement(attrList);
 
-	    if (StringUtils.isEmpty(attrManagement.getStorkReturnCode())
-		    || !AttributesManagement.STORK_RETURN_CODE_OK.equals(attrManagement.getStorkReturnCode())) {
-
+	    if (!AttributesManagement.STORK_RETURN_CODE_OK.equals(attrManagement.getStorkReturnCode())) {
 		new Exception(String.format("Error on stork authentication method, Error: %s, Description: %s", attrManagement
 			.getStorkErrorCode(), attrManagement.getStorkErrorMessage())).printStackTrace();
 		return mapping.findForward("stork-error-authentication-failed");
@@ -487,7 +486,11 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
 	String eidentifier = attrManagement.getEIdentifier();
 	ErasmusIndividualCandidacyProcess process = ((ErasmusCandidacyProcess) getCurrentOpenParentProcess())
-		.getProcessByEIdentifier(eidentifier);
+		.getOpenProcessByEIdentifier(eidentifier);
+
+	if (process == null) {
+	    return mapping.findForward("open-candidacy-processes-not-found");
+	}
 
 	request.setAttribute("individualCandidacyProcess", process);
 	return viewCandidacy(mapping, form, request, response);

@@ -263,4 +263,8 @@ public class IndividualCandidacyInternalPersonDetails extends IndividualCandidac
 	this.getPerson().editByPublicCandidate(personBean);
     }
 
+    @Override
+    public String getEidentifier() {
+	return this.getPerson().getEidentifier();
+    }
 }

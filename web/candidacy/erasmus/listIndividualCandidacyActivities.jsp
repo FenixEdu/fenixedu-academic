@@ -83,7 +83,7 @@
 	<br/>
 	<strong><bean:message key="label.erasmus.current.study" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong>
 	<em><bean:message key="label.erasmus.current.study.detailed" bundle="ACADEMIC_OFFICE_RESOURCES" /></em>
-	<fr:view name="process" schema="ErasmusIndividualCandidacyProcess.current.study.view" >
+	<fr:view name="process" schema="ErasmusIndividualCandidacyProcess.current.study.view" property="candidacy.erasmusStudentData">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
