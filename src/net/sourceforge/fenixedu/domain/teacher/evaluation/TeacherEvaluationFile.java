@@ -25,6 +25,13 @@ public class TeacherEvaluationFile extends TeacherEvaluationFile_Base {
 	return filePath;
     }
 
+    @Override
+    public void delete() {
+	removeTeacherEvaluation();
+	removeCreatedBy();
+	super.delete();
+    }
+
     @Service
     public static TeacherEvaluationFile create(FileUploadBean fileUploadBean, Person createdBy) throws IOException {
 	return new TeacherEvaluationFile(fileUploadBean.getTeacherEvaluationProcess().getCurrentTeacherEvaluation(),

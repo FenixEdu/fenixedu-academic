@@ -77,7 +77,8 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base {
 		    if (evaluatorPerson != existingTeacherEvaluationProcess.getEvaluator()) {
 			existingTeacherEvaluationProcess.setEvaluator(evaluatorPerson);
 
-			final TeacherEvaluation teacherEvaluation = existingTeacherEvaluationProcess.getCurrentTeacherEvaluation();
+			final TeacherEvaluation teacherEvaluation = existingTeacherEvaluationProcess
+				.getCurrentTeacherEvaluation();
 			teacherEvaluation.setEvaluationLock(null);
 		    }
 		}

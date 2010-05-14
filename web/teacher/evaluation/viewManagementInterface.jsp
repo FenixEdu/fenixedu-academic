@@ -225,9 +225,11 @@
 					<html:link page="/teacherEvaluation.do?method=viewFacultyEvaluationProcess" paramId="facultyEvaluationProcessOID" paramName="facultyEvaluationProcess" paramProperty="OID">
 						<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.view" bundle="RESEARCHER_RESOURCES"/>
 					</html:link>
-					<html:link page="/teacherEvaluation.do?method=deleteFacultyEvaluationProcess" paramId="facultyEvaluationProcessOID" paramName="facultyEvaluationProcess" paramProperty="OID">
-						<bean:message key="label.delete" bundle="APPLICATION_RESOURCES"/>
-					</html:link>
+					<logic:present role="MANAGER">
+						<html:link page="/teacherEvaluation.do?method=deleteFacultyEvaluationProcess" paramId="facultyEvaluationProcessOID" paramName="facultyEvaluationProcess" paramProperty="OID">
+							<bean:message key="label.delete" bundle="APPLICATION_RESOURCES"/>
+						</html:link>
+					</logic:present>
 				</td>
 			</tr>
 			</logic:iterate>
