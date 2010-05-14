@@ -32,6 +32,9 @@
         <fr:property name="chooseManagersLink">
         	<html:link page="/unitSiteManagement.do?method=chooseManagers&amp;oid=${site.idInternal}">
         		<bean:message key="link.site.manage.chooseManagers" bundle="SITE_RESOURCES"/>
+        	</html:link> , 
+        	<html:link page="/unitSiteManagement.do?method=prepareCreateEntryPoint&amp;oid=${site.idInternal}">
+        		<bean:message key="link.site.manage.entryPoint" bundle="SITE_RESOURCES"/>
         	</html:link>
 		</fr:property>
     </fr:layout>

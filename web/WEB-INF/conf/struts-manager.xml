@@ -2293,6 +2293,7 @@
 	      type="net.sourceforge.fenixedu.presentationTier.Action.manager.organizationalStructure.UnitSiteManagementDA">
 	      <forward name="showUnits" path="manage-site-show-units"/>
 	      <forward name="chooseManagers" path="edit-research-site-managers"/>
+	      <forward name="createEntryPoint" path="create-entry-point"/>
          </action>
 
         <action path="/degreeCurricularPlan/equivalencyPlan"

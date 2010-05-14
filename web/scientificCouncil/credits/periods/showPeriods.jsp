@@ -21,7 +21,7 @@
 	
 	<logic:notEmpty name="teacherCreditsBean">
 		
-		<fr:form action="/defineCreditsPeriods.do?method=showPeriods">
+		<fr:form action="/defineCreditsPeriods.do">
 			<fr:edit name="teacherCreditsBean" schema="teacher.credits.list.execution.periods" id="teacherCreditsBeanID">
 				<fr:destination name="postBack" path="/defineCreditsPeriods.do?method=showPeriods"/>		
 				<fr:layout name="tabular">
@@ -29,7 +29,7 @@
 					<fr:property name="columnClasses" value=",,tdclear"/>			
 				</fr:layout>			
 			</fr:edit>
-		</fr:form>
+	
 		<logic:notPresent name="closePeriodTeacherCredits"> 
 						<bean:message key="link.teacherCredits.closing"/>
 		</logic:notPresent>
@@ -41,23 +41,26 @@
 				<bean:message key="label.teacherCredits.close.message"/>
 			</logic:equal>
 			<logic:equal name="closePeriodTeacherCredits" value="true">
-				<p class="mvert05">
-				<a href="#" onclick="check(document.getElementById('warning'));return false;"><bean:message key="link.teacherCredits.open"/></a>  
-				<bean:message key="label.teacherCredits.open.message"/>
-				</p>
-				
-				<div id="warning" class="dnone">
-					<div class="warning1">
-						<p class="mvert05"><b><bean:message key="label.teacherCredits.open.attention.message"/></b><bean:message key="label.teacherCredits.open.information.message"/></p>
-						<p class="mvert05"><bean:message key="label.teacherCredits.open.confirmation.message"/> </p>
-						<p class="mtop1 mbottom05">
-							<input type="button" value="Abrir">
-							<input type="button" value="Cancelar" onclick="check(document.getElementById('warning'));return false;"/>
-						</p>
+					<p class="mvert05">
+					<a href="#" onclick="check(document.getElementById('warning'));return false;"><bean:message key="link.teacherCredits.open"/></a>  
+					<bean:message key="label.teacherCredits.open.message"/>
+					</p>
+					
+					<div id="warning" class="dnone">
+						<div class="warning1">
+							<p class="mvert05"><b><bean:message key="label.teacherCredits.open.attention.message"/></b><bean:message key="label.teacherCredits.open.information.message"/></p>
+							<p class="mvert05"><bean:message key="label.teacherCredits.open.confirmation.message"/> </p>
+							<p class="mtop1 mbottom05">
+								<html:hidden name="form" property="method" value="openAllPeriodsByExecutionSemester"/>		
+								<html:hidden name="teacherCreditsBean" property="executionPeriod.idInternal" value="executionPeriodId"/>
+								<html:submit><bean:message key="button.open"/></html:submit>
+								<html:cancel onclick="check(document.getElementById('warning'));return false;"><bean:message key="button.cancel"/></html:cancel> 
+							</p>
+						</div>
 					</div>
-				</div>
-				</logic:equal>
+			</logic:equal>
 		</logic:present>
+		</fr:form>
 		<h3 class="mtop15 mbottom05"><bean:message key="label.teacher"/></h3>
 		<fr:view name="teacherCreditsBean" schema="teacher.credits.period.view" layout="tabular">	
 			<fr:layout>

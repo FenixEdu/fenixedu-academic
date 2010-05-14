@@ -2,6 +2,9 @@ package net.sourceforge.fenixedu.domain.contents;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.Site;
+import pt.ist.fenixWebFramework.services.Service;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class Portal extends Portal_Base {
 
@@ -39,4 +42,8 @@ public class Portal extends Portal_Base {
 	super.disconnect();
     }
 
+    @Service
+    public void addContentJump(Site site, MultiLanguageString jumpName) {
+	this.addChild(new ContentJump(jumpName, site));
+    }
 }

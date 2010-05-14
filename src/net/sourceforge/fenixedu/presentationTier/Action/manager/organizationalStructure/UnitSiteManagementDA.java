@@ -8,7 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.CreateUnitSite;
+import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.contents.Portal;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.CustomUnitSiteManagementDA;
@@ -16,6 +19,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.CustomUni
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class UnitSiteManagementDA extends CustomUnitSiteManagementDA {
 
@@ -56,4 +61,27 @@ public class UnitSiteManagementDA extends CustomUnitSiteManagementDA {
 	return null;
     }
 
+    public ActionForward prepareCreateEntryPoint(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	request.setAttribute("multiLanguageStringBean", getMultiLanguageString());
+	request.setAttribute("siteOid", getSite(request).getIdInternal());
+	return mapping.findForward("createEntryPoint");
+    }
+
+    public ActionForward createEntryPoint(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	VariantBean multilanguagebean = getMultiLanguageString();
+	Site site = getSite(request);
+	Portal.getRootPortal().addContentJump(site, multilanguagebean.getMLString());
+	return prepare(mapping, actionForm, request, response);
+    }
+
+    private VariantBean getMultiLanguageString() {
+	VariantBean variantBean = (VariantBean) getRenderedObject();
+	if (variantBean == null) {
+	    variantBean = new VariantBean();
+	    variantBean.setMLString(new MultiLanguageString());
+	}
+	return variantBean;
+    }
 }
