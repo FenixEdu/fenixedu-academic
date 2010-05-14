@@ -1,14 +1,26 @@
 package net.sourceforge.fenixedu.domain.teacher.evaluation;
 
 import java.io.Serializable;
-
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import java.util.Comparator;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.UserView;
-
 public class TeacherEvaluationFileBean implements Serializable {
+    public static final Comparator<TeacherEvaluationFileBean> COMPARATOR_BY_TYPE = new Comparator<TeacherEvaluationFileBean>() {
+	@Override
+	public int compare(TeacherEvaluationFileBean b1, TeacherEvaluationFileBean b2) {
+	    if (b1.getTeacherEvaluationFileType().compareTo(b2.getTeacherEvaluationFileType()) != 0) {
+		return b1.getTeacherEvaluationFileType().compareTo(b2.getTeacherEvaluationFileType());
+	    } else if (b1.getTeacherEvaluationFile() != null && b2.getTeacherEvaluationFile() != null) {
+		return b1.getTeacherEvaluationFile().getExternalId().compareTo(b2.getTeacherEvaluationFile().getExternalId());
+	    } else if (b1.getTeacherEvaluationFile() != null && b2.getTeacherEvaluationFile() == null) {
+		return 1;
+	    } else {
+		return -1;
+	    }
+	}
+    };
+
     private TeacherEvaluationFileType teacherEvaluationFileType;
     private TeacherEvaluationFile teacherEvaluationFile;
     private final TeacherEvaluation teacherEvaluation;
@@ -50,16 +62,12 @@ public class TeacherEvaluationFileBean implements Serializable {
     }
 
     public boolean getCanUploadAutoEvaluationFile() {
-	IUserView user = UserView.getUser();
-	return (!hasTeacherEvaluationFile() || teacherEvaluationFile.getCreatedBy().equals(user.getPerson()))
-		&& teacherEvaluationFileType.isAutoEvaluationFile()
+	return teacherEvaluationFileType.isAutoEvaluationFile()
 		&& teacherEvaluation.getTeacherEvaluationProcess().isInAutoEvaluation();
     }
 
     public boolean getCanUploadEvaluationFile() {
-	IUserView user = UserView.getUser();
-	return (!hasTeacherEvaluationFile() || teacherEvaluationFile.getCreatedBy().equals(user.getPerson()))
-		&& !teacherEvaluationFileType.isAutoEvaluationFile()
+	return !teacherEvaluationFileType.isAutoEvaluationFile()
 		&& teacherEvaluation.getTeacherEvaluationProcess().isInEvaluation();
     }
 

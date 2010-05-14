@@ -10,7 +10,7 @@
 <h2><bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.upload.title" /></h2>
 
 <logic:present name="fileUploadBean">
-	<bean:define id="urlUploadInvalid">/teacherEvaluation.do?method=<bean:write name="backAction" />&amp;evalueeOID=<bean:write
+	<bean:define id="urlUploadInvalid">/teacherEvaluation.do?method=<bean:write name="backAction" />&evalueeOID=<bean:write
 			name="fileUploadBean" property="teacherEvaluationProcess.evaluee.externalId" />
 	</bean:define>
 	<bean:define id="type" name="fileUploadBean" property="teacherEvaluationFileType.name" type="java.lang.String" />

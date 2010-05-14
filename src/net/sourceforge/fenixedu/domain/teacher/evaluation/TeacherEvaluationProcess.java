@@ -4,6 +4,8 @@ import java.text.Collator;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -99,11 +101,12 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
     }
 
     public boolean isInEvaluation() {
-	return isInEvaluationInterval() && isAutoEvaluationLocked() && !isEvaluationLocked();
+	return isInEvaluationInterval() && isAutoEvaluationLocked() && !isEvaluationLocked()
+		&& getEvaluator().equals(AccessControl.getPerson());
     }
 
     public boolean isPossibleToInsertApprovedMark() {
-	return getFacultyEvaluationProcess().getEvaluationInterval().getEnd().isBeforeNow()
+	return (isEvaluationLocked() || getFacultyEvaluationProcess().getEvaluationInterval().getEnd().isBeforeNow())
 		&& AccessControl.getPerson().isTeacherEvaluationCoordinatorCouncilMember();
     }
 
@@ -112,28 +115,51 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
     }
 
     public boolean isPossibleToLockEvaluation() {
-	return getEvaluationMark() != null && hasAllNeededFiles();
+	return getEvaluationMark() != null && hasAllNeededFiles() && getEvaluator().equals(AccessControl.getPerson());
+    }
+
+    public boolean isPossibleToViewEvaluation() {
+	return isPossibleToInsertApprovedMark() || getEvaluator().equals(AccessControl.getPerson());
     }
 
     public Set<TeacherEvaluationFileBean> getTeacherEvaluationFileBeanSet() {
-	Set<TeacherEvaluationFileBean> teacherEvaluationFileBeans = new HashSet<TeacherEvaluationFileBean>();
+	SortedSet<TeacherEvaluationFileBean> teacherEvaluationFileBeans = new TreeSet<TeacherEvaluationFileBean>(
+		TeacherEvaluationFileBean.COMPARATOR_BY_TYPE);
 	TeacherEvaluation currentTeacherEvaluation = getCurrentTeacherEvaluation();
 	if (currentTeacherEvaluation != null) {
-	    for (TeacherEvaluationFileType teacherEvaluationFileType : currentTeacherEvaluation.getEvaluationFileSet()) {
-		TeacherEvaluationFileBean e = new TeacherEvaluationFileBean(currentTeacherEvaluation, teacherEvaluationFileType);
-		teacherEvaluationFileBeans.add(e);
+	    if (isAutoEvaluationLocked()) {
+		for (TeacherEvaluationFileType teacherEvaluationFileType : currentTeacherEvaluation.getAutoEvaluationFileSet()) {
+		    TeacherEvaluationFileBean e = new TeacherEvaluationFileBean(currentTeacherEvaluation,
+			    teacherEvaluationFileType);
+		    teacherEvaluationFileBeans.add(e);
+		}
+		if (isPossibleToViewEvaluation()) {
+		    for (TeacherEvaluationFileType teacherEvaluationFileType : currentTeacherEvaluation.getEvaluationFileSet()) {
+			TeacherEvaluationFileBean e = new TeacherEvaluationFileBean(currentTeacherEvaluation,
+				teacherEvaluationFileType);
+			teacherEvaluationFileBeans.add(e);
+		    }
+		}
 	    }
 	}
 	return teacherEvaluationFileBeans;
     }
 
     public Set<TeacherEvaluationFileBean> getTeacherAutoEvaluationFileBeanSet() {
-	Set<TeacherEvaluationFileBean> teacherEvaluationFileBeans = new HashSet<TeacherEvaluationFileBean>();
+	SortedSet<TeacherEvaluationFileBean> teacherEvaluationFileBeans = new TreeSet<TeacherEvaluationFileBean>(
+		TeacherEvaluationFileBean.COMPARATOR_BY_TYPE);
 	TeacherEvaluation currentTeacherEvaluation = getCurrentTeacherEvaluation();
 	if (currentTeacherEvaluation != null) {
 	    for (TeacherEvaluationFileType teacherEvaluationFileType : currentTeacherEvaluation.getAutoEvaluationFileSet()) {
 		TeacherEvaluationFileBean e = new TeacherEvaluationFileBean(currentTeacherEvaluation, teacherEvaluationFileType);
 		teacherEvaluationFileBeans.add(e);
+	    }
+	    if (isEvaluationLocked()) {
+		for (TeacherEvaluationFileType teacherEvaluationFileType : currentTeacherEvaluation.getEvaluationFileSet()) {
+		    TeacherEvaluationFileBean e = new TeacherEvaluationFileBean(currentTeacherEvaluation,
+			    teacherEvaluationFileType);
+		    teacherEvaluationFileBeans.add(e);
+		}
 	    }
 	}
 	return teacherEvaluationFileBeans;
@@ -146,8 +172,7 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
 	    for (TeacherEvaluationFile teacherEvaluationFile : currentTeacherEvaluation.getTeacherEvaluationFileSet()) {
 		files.add(teacherEvaluationFile.getTeacherEvaluationFileType());
 	    }
-	    if (currentTeacherEvaluation.getAutoEvaluationFileSet().containsAll(files)
-		    && files.containsAll(currentTeacherEvaluation.getAutoEvaluationFileSet())) {
+	    if (files.containsAll(currentTeacherEvaluation.getAutoEvaluationFileSet())) {
 		return true;
 	    }
 	}
@@ -161,8 +186,7 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
 	    for (TeacherEvaluationFile teacherEvaluationFile : currentTeacherEvaluation.getTeacherEvaluationFileSet()) {
 		files.add(teacherEvaluationFile.getTeacherEvaluationFileType());
 	    }
-	    if (currentTeacherEvaluation.getEvaluationFileSet().containsAll(files)
-		    && files.containsAll(currentTeacherEvaluation.getEvaluationFileSet())) {
+	    if (files.containsAll(currentTeacherEvaluation.getEvaluationFileSet())) {
 		return true;
 	    }
 	}

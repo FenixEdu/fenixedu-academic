@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher.evaluation;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
+import java.util.SortedMap;
 import java.util.SortedSet;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
@@ -105,7 +105,8 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 
     public ActionForward viewEvaluees(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	Map<Person, SortedSet<TeacherEvaluationProcess>> processes = new HashMap<Person, SortedSet<TeacherEvaluationProcess>>();
+	SortedMap<Person, SortedSet<TeacherEvaluationProcess>> processes = new TreeMap<Person, SortedSet<TeacherEvaluationProcess>>(
+		Person.COMPARATOR_BY_NAME_AND_ID);
 	final Person loggedPerson = getLoggedPerson(request);
 	for (TeacherEvaluationProcess teacherEvaluationProcess : loggedPerson.getTeacherEvaluationProcessFromEvaluator()) {
 	    SortedSet<TeacherEvaluationProcess> sortedSet = processes.get(teacherEvaluationProcess.getEvaluee());

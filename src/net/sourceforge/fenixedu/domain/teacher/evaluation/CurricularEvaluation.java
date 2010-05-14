@@ -25,8 +25,6 @@ public class CurricularEvaluation extends CurricularEvaluation_Base {
     @Override
     public Set<TeacherEvaluationFileType> getEvaluationFileSet() {
 	Set<TeacherEvaluationFileType> teacherEvaluationFileTypeSet = new HashSet<TeacherEvaluationFileType>();
-	teacherEvaluationFileTypeSet.add(TeacherEvaluationFileType.AUTO_ACTIVITY_DESCRIPTION);
-	teacherEvaluationFileTypeSet.add(TeacherEvaluationFileType.AUTO_CURRICULAR_EVALUATION_EXCEL);
 	teacherEvaluationFileTypeSet.add(TeacherEvaluationFileType.CURRICULAR_EVALUATION_EXCEL);
 	return teacherEvaluationFileTypeSet;
     }

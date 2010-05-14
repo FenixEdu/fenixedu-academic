@@ -24,7 +24,6 @@ public class RadistEvaluation extends RadistEvaluation_Base {
     @Override
     public Set<TeacherEvaluationFileType> getEvaluationFileSet() {
 	Set<TeacherEvaluationFileType> teacherEvaluationFileTypeSet = new HashSet<TeacherEvaluationFileType>();
-	teacherEvaluationFileTypeSet.add(TeacherEvaluationFileType.AUTO_MULTI_CRITERIA_EXCEL);
 	teacherEvaluationFileTypeSet.add(TeacherEvaluationFileType.MULTI_CRITERIA_EXCEL);
 	return teacherEvaluationFileTypeSet;
     }

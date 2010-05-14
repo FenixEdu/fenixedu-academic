@@ -29,8 +29,10 @@
 				<fr:property name="eachLayout" value="values" />
 			</fr:slot>
 			<fr:slot name="type" key="label.teacher.evaluation.type" layout="null-as-label" />
-			<fr:slot name="evaluationMark" key="label.teacher.evaluation.mark" layout="null-as-label" />
-			<fr:slot name="approvedEvaluationMark" key="label.teacher.evaluation.approvedMark" layout="null-as-label" />
+			<logic:equal name="process" property="evaluationLocked" value="true">
+				<fr:slot name="evaluationMark" key="label.teacher.evaluation.mark" layout="null-as-label" />
+				<fr:slot name="approvedEvaluationMark" key="label.teacher.evaluation.approvedMark" layout="null-as-label" />
+			</logic:equal>
 		</fr:schema>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight thleft mtop05" />
@@ -58,7 +60,7 @@
 
 	<div id="<%="warning" + processId%>" class="dnone">
 	<div class="warning1">
-	<p class="mvert05"><bean:message key="label.teacher.evaluation.evaluation.lock.confirm"
+	<p class="mvert05"><bean:message key="label.teacher.evaluation.autoevaluation.lock.confirm"
 		bundle="RESEARCHER_RESOURCES" /></p>
 	<p class="mtop1 mbottom05">
 	<form method="post" id="lockMark"
@@ -87,9 +89,9 @@
 		<p class="mbottom05"><strong><fr:view name="process" property="type" layout="null-as-label" /> (<fr:view
 			name="process" property="facultyEvaluationProcess.title" />)</strong></p>
 
-		<logic:notEmpty name="process" property="teacherEvaluationFileBeanSet">
+		<logic:notEmpty name="process" property="teacherAutoEvaluationFileBeanSet">
 			<bean:define id="externalId" name="process" property="externalId" />
-			<fr:view name="process" property="teacherEvaluationFileBeanSet">
+			<fr:view name="process" property="teacherAutoEvaluationFileBeanSet">
 				<fr:schema bundle="RESEARCHER_RESOURCES"
 					type="net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationFileBean">
 					<fr:slot name="teacherEvaluationFileType" key="label.teacher.evaluation.empty" layout="null-as-label" />
@@ -107,9 +109,9 @@
 				</fr:layout>
 			</fr:view>
 		</logic:notEmpty>
-		
-		<logic:empty name="process" property="teacherEvaluationFileBeanSet">
-			<p><bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.noFilesNeeded.warning"/></p>
+
+		<logic:empty name="process" property="teacherAutoEvaluationFileBeanSet">
+			<p><bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.noFilesNeeded.warning" /></p>
 		</logic:empty>
 	</logic:present>
 </logic:iterate>
