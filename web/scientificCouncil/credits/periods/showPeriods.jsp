@@ -30,16 +30,18 @@
 				</fr:layout>			
 			</fr:edit>
 	
-		<logic:notPresent name="closePeriodTeacherCredits"> 
-						<bean:message key="link.teacherCredits.closing"/>
-		</logic:notPresent>
-		<logic:present name="closePeriodTeacherCredits">
-			<logic:equal name="closePeriodTeacherCredits"  value="false">	
-				<html:link page="/defineCreditsPeriods.do?method=closeAllPeriodsByExecutionSemester" paramName="teacherCreditsBean" paramProperty="executionPeriod.idInternal" paramId="executionPeriodId">
+			<logic:notPresent name="closePeriodTeacherCredits"> 
+							<bean:message key="link.teacherCredits.closing"/>
+			</logic:notPresent>
+			
+			<logic:present name="closePeriodTeacherCredits">
+				<logic:equal name="closePeriodTeacherCredits"  value="false">	
+					<html:link page="/defineCreditsPeriods.do?method=closeAllPeriodsByExecutionSemester" paramName="teacherCreditsBean" paramProperty="executionPeriod.idInternal" paramId="executionPeriodId">
 						<bean:message key="link.teacherCredits.close"/>
-				</html:link>
+					</html:link>
 				<bean:message key="label.teacherCredits.close.message"/>
 			</logic:equal>
+			
 			<logic:equal name="closePeriodTeacherCredits" value="true">
 					<p class="mvert05">
 					<a href="#" onclick="check(document.getElementById('warning'));return false;"><bean:message key="link.teacherCredits.open"/></a>  
@@ -59,6 +61,7 @@
 						</div>
 					</div>
 			</logic:equal>
+			
 		</logic:present>
 		</fr:form>
 		<h3 class="mtop15 mbottom05"><bean:message key="label.teacher"/></h3>
