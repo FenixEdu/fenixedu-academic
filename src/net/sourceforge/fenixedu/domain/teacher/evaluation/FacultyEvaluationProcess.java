@@ -76,10 +76,9 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base {
 		} else {
 		    if (evaluatorPerson != existingTeacherEvaluationProcess.getEvaluator()) {
 			existingTeacherEvaluationProcess.setEvaluator(evaluatorPerson);
-			// TODO : check whether this makes sense or not.
-			for (final TeacherEvaluation teacherEvaluation : existingTeacherEvaluationProcess.getTeacherEvaluationSet()) {
-			    teacherEvaluation.setEvaluationLock(null);
-			}
+
+			final TeacherEvaluation teacherEvaluation = existingTeacherEvaluationProcess.getCurrentTeacherEvaluation();
+			teacherEvaluation.setEvaluationLock(null);
 		    }
 		}
 
@@ -123,7 +122,7 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base {
 	    if (user != null) {
 		return user.getPerson();
 	    }
-	    if (StringUtils.isNumeric(string)) {
+	    if (!string.isEmpty() && StringUtils.isNumeric(string)) {
 		final int number = Integer.parseInt(string);
 		if (number > 0) {
 		    final Teacher teacher = Teacher.readByNumber(new Integer(number));
