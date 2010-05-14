@@ -34,13 +34,6 @@
 							<bean:message bundle="PHD_RESOURCES" key="label.phd.edit.when.started.studies"/>
 						</html:link>
 					</li>
-					<logic:notEmpty name="process" property="registration">
-						<li>
-							<html:link action="/phdIndividualProgramProcess.do?method=printSchoolRegistrationDeclaration&language=en" paramId="processId" paramName="process" paramProperty="externalId">
-								<bean:message bundle="PHD_RESOURCES" key="label.phd.print.school.registration.declaration"/>
-							</html:link>
-						</li>
-					</logic:notEmpty>
 				</ul>
 			</td>
 		</tr>
@@ -51,29 +44,12 @@
 <logic:notPresent name="registrationConclusionBean">
 	<logic:notEmpty name="process" property="studyPlan">
 		<strong><bean:message  key="label.phd.studyPlan" bundle="PHD_RESOURCES"/></strong>
-		<table>
-			<tr>
-				<td>
-					<fr:view schema="PhdStudyPlan.description" name="process" property="studyPlan">
-						<fr:layout name="tabular">
-							<fr:property name="classes" value="tstyle2 thlight mtop10" />
-						</fr:layout>
-					</fr:view>
-				</td>
-				<td>
-					<ul class="operations">
-						<logic:notEmpty name="process" property="registration">
-							<li>
-								<html:link action="/phdIndividualProgramProcess.do?method=printSchoolRegistrationDeclaration&language=en" paramId="processId" paramName="process" paramProperty="externalId">
-									<bean:message bundle="PHD_RESOURCES" key="label.phd.print.school.registration.declaration"/>
-								</html:link>
-							</li>
-						</logic:notEmpty>
-					</ul>
-				</td>
-			</tr>
-		</table>
+		<br/>
+		<fr:view schema="PhdStudyPlan.description" name="process" property="studyPlan">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle2 thlight mtop10" />
+			</fr:layout>
+		</fr:view>
 		<br />
 	</logic:notEmpty>
 </logic:notPresent>
-
