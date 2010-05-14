@@ -239,7 +239,7 @@
 	<h3>
 		<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.add.list.of.evaluees" bundle="RESEARCHER_RESOURCES"/>
 	</h3>
-	<p>
+	<p class="infoop">
 		<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.add.list.of.evaluees.instruction" bundle="RESEARCHER_RESOURCES"/>
 	</p>
 	<bean:define id="urlUploadInvalid">/teacherEvaluation.do?method=viewFacultyEvaluationProcess&facultyEvaluationProcessOID=<bean:write name="fileUploadBean" property="facultyEvaluationProcess.externalId"/></bean:define>
