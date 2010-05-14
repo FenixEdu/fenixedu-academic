@@ -1,7 +1,9 @@
 package net.sourceforge.fenixedu.domain.phd.debts;
 
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountType;
+import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
@@ -25,6 +27,12 @@ abstract public class PhdEvent extends PhdEvent_Base {
 
     protected PhdProgramUnit getUnit() {
 	return getPhdProgram().getPhdProgramUnit();
+    }
+
+    @Override
+    public LabelFormatter getDescriptionForEntryType(final EntryType entryType) {
+	return new LabelFormatter().appendLabel(entryType.name(), "enum").appendLabel(" (").appendLabel(
+		getPhdProgram().getName().getContent()).appendLabel(")");
     }
 
     abstract protected PhdProgram getPhdProgram();

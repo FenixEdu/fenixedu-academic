@@ -104,6 +104,11 @@
 	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view">
 </schema>
 
+<schema name="PhdThesisRequestFeePR.view"
+	type="net.sourceforge.fenixedu.domain.phd.debts.PhdThesisRequestFeePR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view">
+</schema>
+
 <schema name="DFAGratuityPR.view" 
 		type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityPR"  
 		extends="PostingRule.view" bundle="APPLICATION_RESOURCES">
@@ -342,6 +347,11 @@
 	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.edit">
 </schema>
 
+<schema name="PhdThesisRequestFeePR.edit"
+	type="net.sourceforge.fenixedu.domain.phd.debts.PhdThesisRequestFeePR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.edit">
+</schema>
+
 <schema name="BaseAmountPlusAmountPerUnitPR.edit"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR"
 	bundle="APPLICATION_RESOURCES">
@@ -479,6 +489,10 @@
 </schema>
 
 <schema name="PhdProgramCandidacyPR.view-student" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view-student">
+</schema>
+
+<schema name="PhdThesisRequestFeePR.view-student" type="net.sourceforge.fenixedu.domain.phd.debts.PhdThesisRequestFeePR"
 	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view-student">
 </schema>
 

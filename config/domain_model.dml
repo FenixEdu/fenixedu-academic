@@ -7268,6 +7268,12 @@ class phd.debts.PhdRegistrationFee extends phd.debts.PhdEvent {
 class phd.debts.PhdRegistrationFeePR extends accounting.postingRules.FixedAmountWithPenaltyPR {
 }
 
+class phd.debts.PhdThesisRequestFee extends phd.debts.PhdEvent {
+}
+
+class phd.debts.PhdThesisRequestFeePR extends accounting.postingRules.FixedAmountPR {
+}
+
 class phd.debts.PhdEventExemption extends accounting.Exemption {
     Money value;
 }
@@ -7536,6 +7542,11 @@ relation PhdProgramCandidacyProcessPhdProgramCandidacyEvent {
 relation PhdIndividualProgramProcessPhdRegistrationFee {
     phd.PhdIndividualProgramProcess playsRole process;
     phd.debts.PhdRegistrationFee playsRole registrationFee;
+}
+
+relation PhdIndividualProgramProcessPhdThesisRequestFee {
+    phd.PhdIndividualProgramProcess playsRole process;
+    phd.debts.PhdThesisRequestFee playsRole thesisRequestFee;
 }
 
 relation PhdProgramCandidacyProcessPhdProgramCandidacy {

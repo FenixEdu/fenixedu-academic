@@ -1,24 +1,20 @@
 package net.sourceforge.fenixedu.domain.phd.debts;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
-import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
-public class PhdRegistrationFee extends PhdRegistrationFee_Base {
+public class PhdThesisRequestFee extends PhdThesisRequestFee_Base {
 
-    private PhdRegistrationFee() {
+    private PhdThesisRequestFee() {
 	super();
     }
 
-    public PhdRegistrationFee(final PhdIndividualProgramProcess process) {
+    public PhdThesisRequestFee(final PhdIndividualProgramProcess process) {
 	this();
 	init(AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE), process.getPerson(),
 		process);
@@ -31,10 +27,10 @@ public class PhdRegistrationFee extends PhdRegistrationFee_Base {
     }
 
     private void checkProcess(PhdIndividualProgramProcess process) {
-	check(process, "error.PhdRegistrationFee.process.cannot.be.null");
+	check(process, "error.PhdThesisRequestFee.process.cannot.be.null");
 
 	if (process.hasRegistrationFee()) {
-	    throw new DomainException("error.PhdRegistrationFee.process.already.has.registration.fee");
+	    throw new DomainException("error.PhdThesisRequestFee.process.already.has.registration.fee");
 	}
     }
 
@@ -52,24 +48,5 @@ public class PhdRegistrationFee extends PhdRegistrationFee_Base {
     @Override
     public boolean isExemptionAppliable() {
 	return true;
-    }
-
-    public boolean hasPhdRegistrationFeePenaltyExemption() {
-	return getPhdRegistrationFeePenaltyExemption() != null;
-    }
-
-    public PhdRegistrationFeePenaltyExemption getPhdRegistrationFeePenaltyExemption() {
-	for (final Exemption exemption : getExemptionsSet()) {
-	    if (exemption instanceof PhdRegistrationFeePenaltyExemption) {
-		return (PhdRegistrationFeePenaltyExemption) exemption;
-	    }
-	}
-
-	return null;
-    }
-
-    @Service
-    static public PhdRegistrationFee create(final PhdIndividualProgramProcess process) {
-	return new PhdRegistrationFee(process);
     }
 }
