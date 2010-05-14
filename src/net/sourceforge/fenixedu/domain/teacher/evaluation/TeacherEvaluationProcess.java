@@ -37,6 +37,9 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
 	setFacultyEvaluationProcess(facultyEvaluationProcess);
 	setEvaluee(evaluee);
 	setEvaluator(evaluator);
+	if (facultyEvaluationProcess.getAllowNoEval()) {
+	    new NoEvaluation(this);
+	}
     }
 
     public TeacherEvaluation getCurrentTeacherEvaluation() {
