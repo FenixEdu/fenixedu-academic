@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+
+execute updates.sql "Added missing columns."
