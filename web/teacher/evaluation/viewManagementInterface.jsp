@@ -16,9 +16,7 @@
 <span class="warning0"><!-- Error messages go here --><html:errors /></span>
 
 <html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
-	<p>
-		<span class="warning0"> <bean:write name="message" /> </span>
-	</p>
+	<pre><span class="warning0"> <bean:write name="message" /> </span></pre>
 </html:messages>
 
 

@@ -263,7 +263,7 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 	try {
 	    fileUploadBean.upload();
 	} catch (final DomainException ex) {
-	    addActionMessage(request, ex.getMessage());
+	    addActionMessage(request, ex.getMessage(), ex.getArgs());
 	    RenderUtils.invalidateViewState();
 	}
 	return mapping.findForward("viewManagementInterface");
