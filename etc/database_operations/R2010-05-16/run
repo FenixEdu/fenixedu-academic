@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "add suffix to faculty evaluation process" updates.sql
