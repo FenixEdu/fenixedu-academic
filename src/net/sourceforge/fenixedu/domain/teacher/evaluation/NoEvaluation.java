@@ -7,7 +7,6 @@ public class NoEvaluation extends NoEvaluation_Base {
     public NoEvaluation(TeacherEvaluationProcess process) {
 	super();
 	setTeacherEvaluationProcess(process);
-	setEvaluationMark(TeacherEvaluationMark.GOOD);
     }
 
     @Override
@@ -23,5 +22,17 @@ public class NoEvaluation extends NoEvaluation_Base {
     @Override
     public Set<TeacherEvaluationFileType> getEvaluationFileSet() {
 	return new HashSet<TeacherEvaluationFileType>();
+    }
+
+    @Override
+    protected void internalLickingBusiness() {
+	super.internalLickingBusiness();
+	super.lickEvaluationStamp();
+	setEvaluationMark(TeacherEvaluationMark.GOOD);
+    }
+
+    @Override
+    public String getFilenameTypePrefix() {
+	return "";
     }
 }

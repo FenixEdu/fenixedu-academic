@@ -34,6 +34,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "insertEvaluationMark", path = "/teacher/evaluation/insertEvaluationMark.jsp"),
 	@Forward(name = "viewEvaluees", path = "/teacher/evaluation/viewEvaluees.jsp"),
 	@Forward(name = "viewEvaluation", path = "/teacher/evaluation/viewEvaluation.jsp"),
+	@Forward(name = "viewEvaluationByCCAD", path = "/teacher/evaluation/viewEvaluationByCCAD.jsp"),
 	@Forward(name = "uploadEvaluationFile", path = "/teacher/evaluation/uploadEvaluationFile.jsp"),
 	@Forward(name = "viewManagementInterface", path = "/teacher/evaluation/viewManagementInterface.jsp") })
 public class TeacherEvaluationDA extends FenixDispatchAction {
@@ -83,7 +84,7 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
     public ActionForward insertApprovedEvaluationMark(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	TeacherEvaluationProcess process = getDomainObject(request, "process");
-	request.setAttribute("action", "viewEvaluation&evalueeOID=" + process.getEvaluee().getExternalId());
+	request.setAttribute("action", "viewEvaluationByCCAD&processId=" + process.getExternalId());
 	request.setAttribute("process", process);
 	request.setAttribute("slot", "approvedEvaluationMark");
 	return mapping.findForward("insertEvaluationMark");
@@ -107,14 +108,16 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	TeacherEvaluationProcess process = getDomainObject(request, "process");
 	process.getCurrentTeacherEvaluation().rubAutoEvaluationStamp();
-	return viewEvaluation(mapping, request, process.getEvaluee());
+	request.setAttribute("process", process);
+	return mapping.findForward("viewEvaluationByCCAD");
     }
 
     public ActionForward unlockEvaluation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	TeacherEvaluationProcess process = getDomainObject(request, "process");
 	process.getCurrentTeacherEvaluation().rubEvaluationStamp();
-	return viewEvaluation(mapping, request, process.getEvaluee());
+	request.setAttribute("process", process);
+	return mapping.findForward("viewEvaluationByCCAD");
     }
 
     public ActionForward viewEvaluees(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -146,8 +149,7 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 	SortedSet<TeacherEvaluationProcess> openProcesses = new TreeSet<TeacherEvaluationProcess>(
 		TeacherEvaluationProcess.COMPARATOR_BY_INTERVAL);
 	for (TeacherEvaluationProcess teacherEvaluationProcess : evaluee.getTeacherEvaluationProcessFromEvaluee()) {
-	    if (teacherEvaluationProcess.getEvaluator() == loggedPerson
-		    || loggedPerson.isTeacherEvaluationCoordinatorCouncilMember()) {
+	    if (teacherEvaluationProcess.getEvaluator().equals(loggedPerson)) {
 		openProcesses.add(teacherEvaluationProcess);
 	    }
 	}
@@ -269,4 +271,10 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 	return mapping.findForward("viewManagementInterface");
     }
 
+    public ActionForward viewEvaluationByCCAD(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	TeacherEvaluationProcess process = getDomainObject(request, "processId");
+	request.setAttribute("process", process);
+	return mapping.findForward("viewEvaluationByCCAD");
+    }
 }

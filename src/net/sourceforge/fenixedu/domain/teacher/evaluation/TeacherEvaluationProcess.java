@@ -130,6 +130,10 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
 	return isEvaluationLocked();
     }
 
+    public boolean isReadyForCCADConsideration() {
+	return isEvaluationLocked() || getFacultyEvaluationProcess().getEvaluationInterval().getEnd().isBeforeNow();
+    }
+
     public Set<TeacherEvaluationFileBean> getTeacherEvaluationFileBeanSet() {
 	SortedSet<TeacherEvaluationFileBean> teacherEvaluationFileBeans = new TreeSet<TeacherEvaluationFileBean>(
 		TeacherEvaluationFileBean.COMPARATOR_BY_TYPE);

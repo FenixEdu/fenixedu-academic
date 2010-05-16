@@ -27,4 +27,9 @@ public class RadistEvaluation extends RadistEvaluation_Base {
 	teacherEvaluationFileTypeSet.add(TeacherEvaluationFileType.MULTI_CRITERIA_EXCEL);
 	return teacherEvaluationFileTypeSet;
     }
+
+    @Override
+    public String getFilenameTypePrefix() {
+	return "mc";
+    }
 }

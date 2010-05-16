@@ -21,7 +21,6 @@
 					value="${start.dayOfMonth,02d}-${start.monthOfYear,02d}-${start.year} a ${end.dayOfMonth,02d}-${end.monthOfYear,02d}-${end.year}" />
 			</fr:slot>
 			<fr:slot name="evaluee" key="label.teacher.evaluation.evaluee" layout="name-with-alias" />
-			<fr:slot name="evaluator" key="label.teacher.evaluation.evaluator" layout="name-with-alias" />
 			<fr:slot name="coEvaluatorsAsString" key="label.teacher.evaluation.coEvaluator" />
 			<fr:slot name="state" key="label.teacher.evaluation.state">
 				<fr:property name="eachSchema" value="" />
@@ -40,22 +39,7 @@
 
 
 	<logic:notEmpty name="process" property="teacherEvaluationSet">
-		<p><logic:equal name="process" property="possibleToInsertApprovedMark" value="true">
-			<html:link action="/teacherEvaluation.do?method=insertApprovedEvaluationMark" paramId="process" paramName="process"
-				paramProperty="externalId">
-				<bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.insertApprovedEvaluationMark" />
-			</html:link>
-		</logic:equal><logic:equal name="process" property="possibleToUnlockAutoEvaluation" value="true"> | 
-			<html:link action="/teacherEvaluation.do?method=unlockAutoEvaluation" paramId="process" paramName="process"
-				paramProperty="externalId">
-				<bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.autoevaluation.unlock" />
-			</html:link>
-		</logic:equal><logic:equal name="process" property="possibleToUnlockEvaluation" value="true"> | 
-			<html:link action="/teacherEvaluation.do?method=unlockEvaluation" paramId="process" paramName="process"
-				paramProperty="externalId">
-				<bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.evaluation.unlock" />
-			</html:link>
-		</logic:equal> <logic:equal name="process" property="inEvaluation" value="true">
+		<p><logic:equal name="process" property="inEvaluation" value="true">
 			<html:link action="/teacherEvaluation.do?method=insertEvaluationMark" paramId="process" paramName="process"
 				paramProperty="externalId">
 				<bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.insertEvaluationMark" />

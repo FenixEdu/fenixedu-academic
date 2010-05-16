@@ -1116,6 +1116,7 @@ class DomainObject {
 		Interval autoEvaluationInterval;
 		Interval evaluationInterval;
 		boolean allowNoEval;
+		String suffix;
 	}
 
 	class teacher.evaluation.TeacherEvaluationProcess extends DomainObject {

@@ -28,4 +28,9 @@ public class CurricularEvaluation extends CurricularEvaluation_Base {
 	teacherEvaluationFileTypeSet.add(TeacherEvaluationFileType.CURRICULAR_EVALUATION_EXCEL);
 	return teacherEvaluationFileTypeSet;
     }
+
+    @Override
+    public String getFilenameTypePrefix() {
+	return "pc";
+    }
 }
