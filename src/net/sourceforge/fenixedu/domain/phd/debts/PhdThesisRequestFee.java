@@ -29,8 +29,8 @@ public class PhdThesisRequestFee extends PhdThesisRequestFee_Base {
     private void checkProcess(PhdIndividualProgramProcess process) {
 	check(process, "error.PhdThesisRequestFee.process.cannot.be.null");
 
-	if (process.hasRegistrationFee()) {
-	    throw new DomainException("error.PhdThesisRequestFee.process.already.has.registration.fee");
+	if (process.hasThesisRequestFee()) {
+	    throw new DomainException("error.PhdThesisRequestFee.process.already.has.thesis.fee");
 	}
     }
 
