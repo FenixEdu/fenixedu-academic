@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
+import net.sourceforge.fenixedu.domain.phd.debts.PhdThesisRequestFee;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.AddJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.AddPresidentJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.DeleteJuryElement;
@@ -47,9 +48,14 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 
 	@Override
 	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
+	    
 	    final PhdThesisProcess result = new PhdThesisProcess();
-	    final PhdThesisProcessBean phdThesisProcessBean = (PhdThesisProcessBean) object;
-	    result.createState(PhdThesisProcessStateType.NEW, userView.getPerson(), phdThesisProcessBean.getRemarks());
+	    
+	    final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
+	    result.createState(PhdThesisProcessStateType.NEW, userView.getPerson(), bean.getRemarks());
+
+	    new PhdThesisRequestFee(bean.getProcess());
+	    
 	    return result;
 	}
     }

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 
 import org.joda.time.LocalDate;
@@ -12,6 +12,8 @@ import org.joda.time.LocalDate;
 public class PhdThesisProcessBean implements Serializable {
 
     static private final long serialVersionUID = 1L;
+
+    private PhdIndividualProgramProcess process;
 
     private String remarks;
     private Boolean finalThesis;
@@ -24,6 +26,14 @@ public class PhdThesisProcessBean implements Serializable {
 
     public PhdThesisProcessBean() {
 	this.documents = new ArrayList<PhdProgramDocumentUploadBean>();
+    }
+
+    public PhdIndividualProgramProcess getProcess() {
+	return process;
+    }
+
+    public void setProcess(PhdIndividualProgramProcess process) {
+	this.process = process;
     }
 
     public String getRemarks() {
