@@ -753,10 +753,6 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	return getPhdProgram() != null;
     }
 
-    public Set<PhdProgramProcessDocument> getLatestDocumentVersions() {
-	return filterLatestDocumentVersions(getDocuments());
-    }
-
     public boolean hasStudyPlan() {
 	return getIndividualProgramProcess().hasStudyPlan();
     }

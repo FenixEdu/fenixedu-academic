@@ -85,6 +85,10 @@ abstract public class PhdProgramProcess extends PhdProgramProcess_Base {
 	return documents.isEmpty() ? null : documents.iterator().next();
     }
 
+    public Set<PhdProgramProcessDocument> getLatestDocumentVersions() {
+	return filterLatestDocumentVersions(getDocuments());
+    }
+
     static public boolean isMasterDegreeAdministrativeOfficeEmployee(IUserView userView) {
 	return userView != null && userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
 		&& userView.getPerson().getEmployeeAdministrativeOffice().isMasterDegree();
