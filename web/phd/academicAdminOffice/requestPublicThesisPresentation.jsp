@@ -97,7 +97,7 @@
 <fr:edit id="requestPublicThesisPresentation.edit.documents" name="requestPublicThesisPresentation" property="documents">
 	
 	<fr:schema type="<%= PhdProgramDocumentUploadBean.class.getName() %>" bundle="PHD_RESOURCES">
-		<fr:slot name="type" readOnly="true" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean.type"/>
+		<fr:slot name="type" readOnly="true" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean.type" layout="phd-enum-renderer" />
 		<fr:slot name="file" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean.file">
 			<fr:property name="fileNameSlot" value="filename"/>
 			<fr:property name="size" value="20"/>

@@ -29,6 +29,11 @@
 	</td>
 	<td>
 		<ul class="operations" >
+			<li>
+				<html:link action="/phdThesisProcess.do?method=manageThesisDocuments" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
+					<bean:message bundle="PHD_RESOURCES" key="label.phd.manageThesisDocuments"/>
+				</html:link>
+			</li>
 			<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= DownloadProvisionalThesisDocument.class %>">
 			<li>
 				<bean:define id="provisionalThesisDownloadUrl" name="thesisProcess" property="provisionalThesisDocument.downloadUrl" />
@@ -46,13 +51,6 @@
 					<bean:write name="thesisProcess" property="finalThesisDocument.documentType.localizedName"/> 
 					(<bean:message  key="label.version" bundle="PHD_RESOURCES" /> <bean:write name="thesisProcess" property="finalThesisDocument.documentVersion"/>)
 				</a>
-			</li>
-			</phd:activityAvailable>
-			
-			<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= DownloadThesisRequirement.class %>">
-			<li>
-				<bean:define id="thesisRequirementDownloadUrl" name="thesisProcess" property="thesisRequirementDocument.downloadUrl" />
-				<a href="<%= thesisRequirementDownloadUrl.toString() %>"><bean:write name="thesisProcess" property="thesisRequirementDocument.documentType.localizedName"/> </a>
 			</li>
 			</phd:activityAvailable>
 		</ul>

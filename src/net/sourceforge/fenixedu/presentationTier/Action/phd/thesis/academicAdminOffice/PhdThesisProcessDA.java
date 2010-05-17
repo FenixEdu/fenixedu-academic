@@ -9,7 +9,9 @@ import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.DeleteDocument;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisJuryElementBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
@@ -24,6 +26,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitJuryElementsD
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitThesis;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SwapJuryElementsOrder;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.ValidateJury;
+import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdDocumentsZip;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.thesis.CommonPhdThesisProcessDA;
 import net.sourceforge.fenixedu.presentationTier.docs.phd.thesis.PhdThesisJuryElementsDocument;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
@@ -59,7 +62,9 @@ import pt.utl.ist.fenix.tools.util.Pair;
 
 @Forward(name = "requestJuryReviews", path = "/phd/thesis/academicAdminOffice/requestJuryReviews.jsp"),
 
-@Forward(name = "addPresidentJuryElement", path = "/phd/thesis/academicAdminOffice/addPresidentJuryElement.jsp")
+@Forward(name = "addPresidentJuryElement", path = "/phd/thesis/academicAdminOffice/addPresidentJuryElement.jsp"),
+
+@Forward(name = "manageThesisDocuments", path = "/phd/thesis/academicAdminOffice/manageThesisDocuments.jsp")
 
 })
 public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
@@ -422,4 +427,31 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
     // End of Request Jury Reviews
 
+    // Manage thesis documents
+
+    public ActionForward manageThesisDocuments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	return mapping.findForward("manageThesisDocuments");
+    }
+
+    public ActionForward downloadThesisDocuments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws IOException {
+
+	writeFile(response, getThesisDocumentsFilename(request), PhdDocumentsZip.ZIP_MIME_TYPE, createZip(request));
+	return null;
+    }
+
+    private String getThesisDocumentsFilename(HttpServletRequest request) {
+	final PhdIndividualProgramProcess process = getProcess(request).getIndividualProgramProcess();
+	return String.format("%s-%s.zip", process.getProcessNumber().replace("/", "-"), getMessageFromResource(
+		"label.phd.manageThesisDocuments").replace(" ", "_"));
+    }
+
+    public ActionForward deleteDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	return executeActivity(DeleteDocument.class, getDomainObject(request, "documentId"), request, mapping,
+		"manageThesisDocuments", "manageThesisDocuments", "message.document.deleted.successfuly");
+    }
+
+    // End of manage thesis documents
 }
