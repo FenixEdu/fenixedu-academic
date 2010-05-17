@@ -44,3 +44,4 @@ function executeWithTempFile() {
 }
 
 execute "Add column over23 individual candidacy event amount" addOver23IndividualCandidacyEventAmount.sql
+execute "fixDanglingConclusionProcess" fixDanglingConclusionProcessIST.sql IST
