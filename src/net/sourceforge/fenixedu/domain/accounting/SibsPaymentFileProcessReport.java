@@ -65,6 +65,7 @@ public class SibsPaymentFileProcessReport extends SibsPaymentFileProcessReport_B
 		.getDegreeTransferIndividualCandidacyAmount());
 	super.setSecondCycleIndividualCandidacyAmount(sibsPaymentFileProcessReportDTO.getSecondCycleIndividualCandidacyAmount());
 	super.setStandaloneEnrolmentGratuityEventAmount(sibsPaymentFileProcessReportDTO.getStandaloneEnrolmentGratuityEventAmount());
+	super.setOver23IndividualCandidacyEventAmount(sibsPaymentFileProcessReportDTO.getOver23IndividualCandidacyEventAmount());
     }
 
     private void checkRulesToCreate(SibsPaymentFileProcessReportDTO sibsPaymentFileProcessReportDTO) {

@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFee
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.DegreeCandidacyForGraduatedPersonEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.DegreeChangeIndividualCandidacyEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.DegreeTransferIndividualCandidacyEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.candidacy.Over23IndividualCandidacyEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.DfaGratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
@@ -70,6 +71,8 @@ public class SibsPaymentFileProcessReportDTO {
 
     private Money standaloneEnrolmentGratuityEventAmount;
 
+    private Money over23IndividualCandidacyEventAmount;
+
     public SibsPaymentFileProcessReportDTO() {
 	super();
 	this.degreeGratuityTotalAmount = Money.ZERO;
@@ -92,6 +95,7 @@ public class SibsPaymentFileProcessReportDTO {
 	this.secondCycleIndividualCandidacyAmount = Money.ZERO;
 	this.degreeCandidacyForGraduatedPersonAmount = Money.ZERO;
 	this.standaloneEnrolmentGratuityEventAmount = Money.ZERO;
+	this.over23IndividualCandidacyEventAmount = Money.ZERO;
     }
 
     public SibsPaymentFileProcessReportDTO(final SibsIncommingPaymentFile sibsIncomingPaymentFile) {
@@ -215,6 +219,14 @@ public class SibsPaymentFileProcessReportDTO {
 	return phdGratuityTotalAmout;
     }
 
+    public Money getOver23IndividualCandidacyEventAmount() {
+	return over23IndividualCandidacyEventAmount;
+    }
+
+    public void addOver23IndividualCandidacyEventAmount(final Money amount) {
+	this.over23IndividualCandidacyEventAmount = this.over23IndividualCandidacyEventAmount.add(amount);
+    }
+
     public Money getTotalCost() {
 	return totalCost;
     }
@@ -281,6 +293,8 @@ public class SibsPaymentFileProcessReportDTO {
 	    addDegreeTransferIndividualCandidacyAmount(detailLine.getAmount());
 	} else if (event instanceof StandaloneEnrolmentGratuityEvent) {
 	    addStandaloneEnrolmentGratuityEventAmount(detailLine.getAmount());
+	} else if (event instanceof Over23IndividualCandidacyEvent) {
+	    addOver23IndividualCandidacyEventAmount(detailLine.getAmount());
 	} else {
 	    throw new IllegalArgumentException("Unknown accounting event " + event.getClass().getName());
 	}

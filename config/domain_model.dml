@@ -2441,6 +2441,7 @@ class DomainObject {
         Money secondCycleIndividualCandidacyAmount;
         Money degreeCandidacyForGraduatedPersonAmount;
         Money standaloneEnrolmentGratuityEventAmount;
+        Money over23IndividualCandidacyEventAmount;
         DateTime whenProcessed;
         YearMonthDay whenProcessedBySibs;
     }
