@@ -33,4 +33,10 @@ public class CurricularEvaluation extends CurricularEvaluation_Base {
     public String getFilenameTypePrefix() {
 	return "pc";
     }
+
+    @Override
+    public void copyAutoEvaluation() {
+	CurricularEvaluation copy = new CurricularEvaluation(getTeacherEvaluationProcess());
+	internalCopyAutoEvaluation(copy);
+    }
 }

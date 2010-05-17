@@ -32,4 +32,10 @@ public class RadistEvaluation extends RadistEvaluation_Base {
     public String getFilenameTypePrefix() {
 	return "mc";
     }
+
+    @Override
+    public void copyAutoEvaluation() {
+	CurricularEvaluation copy = new CurricularEvaluation(getTeacherEvaluationProcess());
+	internalCopyAutoEvaluation(copy);
+    }
 }

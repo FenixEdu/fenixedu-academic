@@ -76,4 +76,15 @@ public abstract class TeacherEvaluation extends TeacherEvaluation_Base {
     public void rubEvaluationStamp() {
 	setEvaluationLock(null);
     }
+
+    public abstract void copyAutoEvaluation();
+
+    protected void internalCopyAutoEvaluation(TeacherEvaluation copy) {
+	copy.setAutoEvaluationLock(getAutoEvaluationLock());
+	for (TeacherEvaluationFile file : getTeacherEvaluationFileSet()) {
+	    if (file.getTeacherEvaluationFileType().isAutoEvaluationFile()) {
+		file.copy(copy);
+	    }
+	}
+    }
 }

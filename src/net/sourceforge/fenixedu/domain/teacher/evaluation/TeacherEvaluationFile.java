@@ -61,4 +61,8 @@ public class TeacherEvaluationFile extends TeacherEvaluationFile_Base {
 		fileUploadBean.getTeacherEvaluationFileType(), fileUploadBean.getFilename(), fileUploadBean.getBytes(), createdBy);
     }
 
+    public TeacherEvaluationFile copy(TeacherEvaluation evaluation) {
+	return new TeacherEvaluationFile(evaluation, getTeacherEvaluationFileType(), getFilename(), getContents(), getCreatedBy());
+    }
+
 }

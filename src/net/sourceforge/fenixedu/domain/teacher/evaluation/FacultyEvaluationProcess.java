@@ -69,16 +69,16 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base {
 	    final Person evalueePerson = findPerson(evaluee);
 	    final Person evaluatorPerson = findPerson(evaluator);
 	    if (evalueePerson == null) {
-		appendMessage(stringBuilder, lineNumber, "error.evaluee.not.found", new String[] {evaluee});
+		appendMessage(stringBuilder, lineNumber, "error.evaluee.not.found", new String[] { evaluee });
 	    } else {
 		if (evaluees.contains(evalueePerson)) {
-		    appendMessage(stringBuilder, lineNumber, "error.evaluee.duplicate", new String[] {evaluee});
+		    appendMessage(stringBuilder, lineNumber, "error.evaluee.duplicate", new String[] { evaluee });
 		} else {
 		    evaluees.add(evalueePerson);
 		}
 	    }
 	    if (evaluatorPerson == null) {
-		appendMessage(stringBuilder, lineNumber, "error.evaluator.not.found", new String[] {evaluator});
+		appendMessage(stringBuilder, lineNumber, "error.evaluator.not.found", new String[] { evaluator });
 	    }
 	    if (evalueePerson != null && evaluatorPerson != null) {
 		final Person coEvaluatorPerson = findPerson(coevaluator);
@@ -99,7 +99,7 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base {
 			final TeacherEvaluation teacherEvaluation = existingTeacherEvaluationProcess
 				.getCurrentTeacherEvaluation();
 			if (teacherEvaluation != null) {
-			    teacherEvaluation.setEvaluationLock(null);
+			    teacherEvaluation.copyAutoEvaluation();
 			}
 		    }
 		}
@@ -141,10 +141,8 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base {
 	}
     }
 
-    private void appendMessage(final StringBuilder stringBuilder, final int lineNumber,
-	    final String key, final String[] args) {
-	final String description = BundleUtil.getFormattedStringFromResourceBundle("resources.ApplicationResources",
-		key, args);
+    private void appendMessage(final StringBuilder stringBuilder, final int lineNumber, final String key, final String[] args) {
+	final String description = BundleUtil.getFormattedStringFromResourceBundle("resources.ApplicationResources", key, args);
 	final String message = BundleUtil.getFormattedStringFromResourceBundle("resources.ApplicationResources",
 		"error.invalid.file.contents.line", Integer.toString(lineNumber), description);
 	stringBuilder.append("\n\t");

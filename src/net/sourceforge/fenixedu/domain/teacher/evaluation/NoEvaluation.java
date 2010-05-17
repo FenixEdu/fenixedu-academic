@@ -35,4 +35,10 @@ public class NoEvaluation extends NoEvaluation_Base {
     public String getFilenameTypePrefix() {
 	return "";
     }
+
+    @Override
+    public void copyAutoEvaluation() {
+	CurricularEvaluation copy = new CurricularEvaluation(getTeacherEvaluationProcess());
+	internalCopyAutoEvaluation(copy);
+    }
 }
