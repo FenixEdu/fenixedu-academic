@@ -167,10 +167,6 @@ abstract public class CommonPhdCandidacyDA extends PhdProcessDA {
 		"label.phd.manageCandidacyDocuments").replace(" ", "_"));
     }
 
-    private byte[] createZip(HttpServletRequest request) throws IOException {
-	return new PhdDocumentsZip().addAll(getProcess(request).getLatestDocumentVersions()).create();
-    }
-
     /*
      * Upload candidacy feedback
      */

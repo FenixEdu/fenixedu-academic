@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -55,11 +56,10 @@ abstract public class PhdProcessDA extends FenixDispatchAction {
      * First read value from request attribute to allow overriding of processId
      * value
      */
-    protected Process getProcess(HttpServletRequest request) {
+    protected PhdProgramProcess getProcess(HttpServletRequest request) {
 	final String processIdAttribute = (String) request.getAttribute("processId");
-	return (Process) DomainObject.fromExternalId(processIdAttribute != null ? processIdAttribute : (String) request
+	return DomainObject.fromExternalId(processIdAttribute != null ? processIdAttribute : (String) request
 		.getParameter("processId"));
-
     }
 
     protected ActionForward executeActivity(Class<? extends Activity<? extends Process>> activity, Object activityParameter,
@@ -141,6 +141,10 @@ abstract public class PhdProcessDA extends FenixDispatchAction {
 
     protected byte[] createZip(final Collection<PhdProgramProcessDocument> documents) throws IOException {
 	return PhdDocumentsZip.zip(documents);
+    }
+
+    protected byte[] createZip(HttpServletRequest request) throws IOException {
+	return PhdDocumentsZip.zip(getProcess(request).getLatestDocumentVersions());
     }
 
 }
