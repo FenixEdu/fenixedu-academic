@@ -15,6 +15,7 @@ public class PhdThesisProcessBean implements Serializable {
 
     private PhdIndividualProgramProcess process;
 
+    private boolean toNotify = true;
     private String remarks;
     private Boolean finalThesis;
     private LocalDate whenJuryValidated;
@@ -34,6 +35,14 @@ public class PhdThesisProcessBean implements Serializable {
 
     public void setProcess(PhdIndividualProgramProcess process) {
 	this.process = process;
+    }
+
+    public boolean isToNotify() {
+	return toNotify;
+    }
+
+    public void setToNotify(boolean toNotify) {
+	this.toNotify = toNotify;
     }
 
     public String getRemarks() {

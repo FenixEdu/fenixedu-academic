@@ -51,6 +51,9 @@
 	
 	<fr:edit id="thesisProcessBean" name="thesisProcessBean">
 		<fr:schema bundle="PHD_RESOURCES" type="<%= PhdThesisProcessBean.class.getName() %>">
+			<fr:slot name="toNotify" layout="radio">
+				<fr:property name="classes" value="liinline nobullet"/>
+			</fr:slot>
 			<fr:slot name="remarks" layout="longText">
 				<fr:property name="rows" value="8" />
 				<fr:property name="columns" value="80" />

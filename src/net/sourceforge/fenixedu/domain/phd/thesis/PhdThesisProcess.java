@@ -48,14 +48,14 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 
 	@Override
 	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
-	    
+
 	    final PhdThesisProcess result = new PhdThesisProcess();
-	    
+
 	    final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
 	    result.createState(PhdThesisProcessStateType.NEW, userView.getPerson(), bean.getRemarks());
 
 	    new PhdThesisRequestFee(bean.getProcess());
-	    
+
 	    return result;
 	}
     }
@@ -223,15 +223,29 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 
     public List<PhdProgramProcessDocument> getThesisDocumentsToFeedback() {
 	final List<PhdProgramProcessDocument> documents = new ArrayList<PhdProgramProcessDocument>(3);
-	documents.add(getCandidacyProcess().getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.CV));
-	documents.add(getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.PROVISIONAL_THESIS));
 
-	// TODO: add remaining documents here (Abstract /resume)
+	addDocument(documents, getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.THESIS_REQUIREMENT));
+	addDocument(documents, getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.THESIS_ABSTRACT));
+	addDocument(documents, getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.PROVISIONAL_THESIS));
+	addDocument(documents, getCV());
 
 	return documents;
     }
 
-    // TODO: The domain needs explicit information about the conclusion date
+    private void addDocument(List<PhdProgramProcessDocument> documents, PhdProgramProcessDocument document) {
+	if (document != null) {
+	    documents.add(document);
+	}
+    }
+
+    private PhdProgramProcessDocument getCV() {
+	final PhdProgramProcessDocument cv = getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.CV);
+	return (cv != null) ? cv : getCandidacyProcess().getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.CV);
+    }
+
+    /*
+     * TODO: The domain needs explicit information about the conclusion date
+     */
     public LocalDate getConclusionDate() {
 	return new LocalDate();
     }

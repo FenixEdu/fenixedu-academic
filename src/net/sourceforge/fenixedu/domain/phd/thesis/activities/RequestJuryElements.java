@@ -28,8 +28,10 @@ public class RequestJuryElements extends PhdThesisActivity {
 	final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
 	process.createState(PhdThesisProcessStateType.WAITING_FOR_JURY_CONSTITUTION, userView.getPerson(), bean.getRemarks());
 
-	AlertService.alertCoordinator(process.getIndividualProgramProcess(), "message.phd.alert.request.jury.elements.subject",
-		"message.phd.alert.request.jury.elements.body");
+	if (bean.isToNotify()) {
+	    AlertService.alertCoordinator(process.getIndividualProgramProcess(),
+		    "message.phd.alert.request.jury.elements.subject", "message.phd.alert.request.jury.elements.body");
+	}
 
 	return process;
     }
