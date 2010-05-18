@@ -107,7 +107,7 @@
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
 	</slot>
    	<slot name="nationality" layout="menu-select"> 
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/> 
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryProvider"/> 
 		<property name="format" value="${nationality}"/>
 		<property name="sortBy" value="nationality=asc" />
 	</slot>
@@ -226,7 +226,7 @@
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
 	</slot>
    	<slot name="nationality" layout="menu-select"> 
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/> 
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryProvider"/> 
 		<property name="format" value="${nationality}"/>
 		<property name="sortBy" value="nationality=asc" />
 	</slot>
@@ -916,7 +916,6 @@
 			<property name="format" value="${name}"/>
 			<property name="sortBy" value="name=asc" />z
 			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
-			<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country" />
 		</slot>	
 		<setter signature="edit(person,country,branch,dateYearMonthDay,degree,degreeRecognition,equivalenceDateYearMonthDay,equivalenceSchool,mark,school,specializationArea,title,type,year,designation,attendedBegin,attendedEnd)"/>
 </schema>

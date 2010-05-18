@@ -36,7 +36,6 @@
 constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy">
 	<slot name="assiduousnessStatus" layout="menu-select" key="label.status" bundle="ASSIDUOUSNESS_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.assiduousness.AssiduousnessStatusAsProvider" />
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatus" />
 		<property name="format" value="${description}"/>
 	</slot>
 	<slot read-only="true" name="beginDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
@@ -49,7 +48,6 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy">
 	<slot name="assiduousnessStatus" layout="menu-select" key="label.status" bundle="ASSIDUOUSNESS_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.assiduousness.AssiduousnessStatusAsProvider" />
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatus" />
 		<property name="format" value="${description}"/>
 	</slot>
 	<slot name="beginDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
@@ -366,7 +364,6 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 		<property name="size" value="50"/>
 	</slot>
 	<slot name="justificationType" key="label.type" layout="menu-select" bundle="ASSIDUOUSNESS_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.assiduousness.JustificationType" />
 		<property name="eachLayout" value="this-does-not-exist" />
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.assiduousness.JustificationTypeAsProvider" />
 	</slot>
@@ -399,7 +396,6 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 		<property name="size" value="50"/>
 	</slot>
 	<slot name="justificationType" key="label.type" layout="menu-select" bundle="ASSIDUOUSNESS_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.assiduousness.JustificationType" />
 		<property name="eachLayout" value="this-does-not-exist" />
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.assiduousness.JustificationTypeAsProvider" />
 	</slot>
@@ -682,7 +678,6 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 
 <schema name="edit.employeeJustificationType" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory">
 	<slot name="justificationType" key="label.type" bundle="ASSIDUOUSNESS_RESOURCES" layout="menu-select-postback">
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType" />
 		<property name="eachLayout" value="this-does-not-exist" />
 		<property name="destination" value="justificationMotivePostBack"/>
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.assiduousness.JustificationTypeAsProvider" />
@@ -692,7 +687,6 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 <schema name="edit.employeeTimeJustificationMotive" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory">
 	<slot name="justificationMotive" key="label.justification" bundle="ASSIDUOUSNESS_RESOURCES" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.assiduousness.JustificationMotiveAsProvider" />
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive" />
 		<property name="format" value="${acronym} - ${description}"/>
 	</slot>
 	<slot name="beginDate" key="label.date" bundle="ASSIDUOUSNESS_RESOURCES" >
@@ -717,7 +711,6 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 <schema name="edit.chooseOccurrenceJustificationMotive" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory">
 	<slot name="justificationMotive" key="label.justification" bundle="ASSIDUOUSNESS_RESOURCES" layout="menu-select-postback">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.assiduousness.JustificationMotiveAsProvider" />
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive" />
 		<property name="format" value="${acronym} - ${description}"/>
 		<property name="destination" value="justificationMotivePostBack"/>
 	</slot>
@@ -746,7 +739,6 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 <schema name="edit.employeeHalfOccurrenceTimeJustificationMotive" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory">
 	<slot name="justificationMotive" key="label.justification" bundle="ASSIDUOUSNESS_RESOURCES" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.assiduousness.JustificationMotiveAsProvider" />
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive" />
 		<property name="format" value="${acronym} - ${description}"/>
 	</slot>
 	<slot name="beginDate" key="label.date" bundle="ASSIDUOUSNESS_RESOURCES" >
@@ -762,7 +754,6 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 <schema name="edit.employeeHalfOccurrenceJustificationMotive" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory">
 	<slot name="justificationMotive" key="label.justification" bundle="ASSIDUOUSNESS_RESOURCES" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.assiduousness.JustificationMotiveAsProvider" />
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive" />
 		<property name="format" value="${acronym} - ${description}"/>
 	</slot>
 	<slot name="beginDate" key="label.date" bundle="ASSIDUOUSNESS_RESOURCES" >
@@ -777,7 +768,6 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 <schema name="edit.employeeBalanceJustificationMotive" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory">
 	<slot name="justificationMotive" key="label.justification" bundle="ASSIDUOUSNESS_RESOURCES" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.assiduousness.JustificationMotiveAsProvider" />
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive" />
 		<property name="format" value="${acronym} - ${description}"/>
 	</slot>
 	<slot name="beginDate" >
@@ -797,7 +787,6 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 <schema name="edit.severalEmployeeJustificationFactoryCreator" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory$SeveralEmployeeJustificationFactoryCreator">
 	<slot name="assiduousnessStatus" layout="option-select" key="label.status" bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.assiduousness.ActiveAssiduousnessStatusAsProvider" />
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatus" />
 		<property name="eachSchema" value="show.status" />
 		<property name="eachLayout" value="values" />
 	</slot>
@@ -806,7 +795,6 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 <schema name="edit.employeeRegularization" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory">
 	<slot name="justificationMotive" key="label.regularization" bundle="ASSIDUOUSNESS_RESOURCES" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.assiduousness.JustificationMotiveAsProvider" />
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive" />
 		<property name="format" value="${acronym} - ${description}"/>
 	</slot>
 	<slot name="beginDate" key="label.date" bundle="ASSIDUOUSNESS_RESOURCES" >
@@ -824,7 +812,6 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	<slot name="justificationMotive" key="label.regularization" bundle="ASSIDUOUSNESS_RESOURCES" layout="menu-select"
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.assiduousness.JustificationMotiveAsProvider" />
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive" />
 		<property name="format" value="${acronym} - ${description}"/>
 	</slot>
 </schema>

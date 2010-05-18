@@ -5,7 +5,6 @@
 		<property name="choiceType" value="pt.ist.fenixframework.pstm.TransactionAction"/>
 	</slot>	
 	<slot name="server" layout="menu-select">
-		<property name="choiceType" value="java.lang.String"/>
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.TransactionServersProvider"/>
 	</slot>
 </schema>

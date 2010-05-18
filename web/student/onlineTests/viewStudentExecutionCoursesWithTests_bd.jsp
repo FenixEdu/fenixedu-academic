@@ -15,7 +15,6 @@
 			<fr:edit id="executionYear" name="registrationSelectExecutionYearBean" slot="executionYear">
 				<fr:layout name="menu-select-postback">
 					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.StudentExecutionYearsProvider" />
-					<fr:property name="choiceType" value="net.sourceforge.fenixedu.domain.ExecutionYear" />
 					<fr:property name="format" value="${year}" />
 					<fr:property name="destination" value="postBack"/>
 				</fr:layout>

@@ -13,7 +13,6 @@
 			<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.PeriodsDA$ContextBean" bundle="APPLICATION_RESOURCES">
 				<fr:slot name="executionSemester" layout="menu-select-postback" key="label.executionPeriod">
 					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionSemestersProvider"/>
-					<fr:property name="choiceType" value="net.sourceforge.fenixedu.domain.ExecutionSemester"/>
 					<fr:property name="format" value="${semester} - ${executionYear.year}" />
 				</fr:slot>
 			</fr:schema>
@@ -41,7 +40,6 @@
 			<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.PeriodsDA$ContextBean" bundle="APPLICATION_RESOURCES">
 				<fr:slot name="executionDegree" layout="menu-select-postback" key="label.executionDegree">
 					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionDegreeForExecutionPeriodProvider"/>
-					<fr:property name="choiceType" value="net.sourceforge.fenixedu.domain.ExecutionSemester"/>
 					<fr:property name="format" value="${degree.presentationName}" />
 				</fr:slot>
 			</fr:schema>

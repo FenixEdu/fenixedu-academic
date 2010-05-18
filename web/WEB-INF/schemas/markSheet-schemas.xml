@@ -5,8 +5,6 @@
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsNotClosedPublicProvider" />
-		<property name="choiceType"
-			value="net.sourceforge.fenixedu.domain.ExecutionSemester" />
 		<property name="format"
 			value="${executionYear.year} - ${semester}º Sem" />
 	</slot>
@@ -15,8 +13,6 @@
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DegreeTypeDegrees" />
-		<property name="choiceType"
-			value="net.sourceforge.fenixedu.domain.Degree" />
 		<property name="format" value="${presentationName}" />
 		<property name="destination" value="postBack"/>
 	</slot>
@@ -25,8 +21,6 @@
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DegreeCurricularPlansForDegree" />
-		<property name="choiceType"
-			value="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" />
 		<property name="format" value="${name}" />
 		<property name="destination" value="postBack"/>
 	</slot>
@@ -43,8 +37,6 @@
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsReverseOrderProvider" />
-		<property name="choiceType"
-			value="net.sourceforge.fenixedu.domain.ExecutionSemester" />
 		<property name="format"
 			value="${executionYear.year} - ${semester}º Sem" />
 	</slot>
@@ -53,8 +45,6 @@
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.markSheet.DegreeTypeDegreesManager" />
-		<property name="choiceType"
-			value="net.sourceforge.fenixedu.domain.Degree" />
 		<property name="format" value="${presentationName}" />
 		<property name="destination" value="postBack"/>
 	</slot>
@@ -63,8 +53,6 @@
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.markSheet.DegreeCurricularPlansForDegreeManager" />
-		<property name="choiceType"
-			value="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" />
 		<property name="format" value="${name}" />
 		<property name="destination" value="postBack"/>
 	</slot>
@@ -292,7 +280,6 @@
 		
 	<slot name="selectedCurricularCourse" key="label.markSheet.curricularCourse" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.gradeSubmission.CurricularCoursesByExecutionPeriodProvider" />
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.CurricularCourse" />
 		<property name="eachLayout" value="values-dash" />
 		<property name="eachSchema" value="degreeCurricularPlan.and.curricularCourse" />
 		<property name="defaultText" value="label.markSheet.all.fem"/>
@@ -354,8 +341,6 @@
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsNotClosedPublicProvider" />
-		<property name="choiceType"
-			value="net.sourceforge.fenixedu.domain.ExecutionSemester" />
 		<property name="format"
 			value="${executionYear.year} - ${semester}º Sem" />
 	</slot>
@@ -363,8 +348,6 @@
 		layout="menu-select-postback">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DegreeTypeDegrees" />
-		<property name="choiceType"
-			value="net.sourceforge.fenixedu.domain.Degree" />
 		<property name="format" value="${presentationName}" />
 		<property name="destination" value="postBack"/>
 	</slot>
@@ -372,8 +355,6 @@
 		layout="menu-select">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DegreeCurricularPlansForDegree" />
-		<property name="choiceType"
-			value="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" />
 		<property name="format" value="${name}" />
 	</slot>
 </schema>
@@ -489,8 +470,6 @@
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionPeriodsForOldMarkSheets" />
-		<property name="choiceType"
-			value="net.sourceforge.fenixedu.domain.ExecutionSemester" />
 		<property name="format"
 			value="${executionYear.year} - ${semester}º Sem" />
 	</slot>
@@ -499,8 +478,6 @@
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DegreeTypesDegreeForOldMarkSheets" />
-		<property name="choiceType"
-			value="net.sourceforge.fenixedu.domain.Degree" />
 		<property name="format" value="${presentationName}" />
 		<property name="destination" value="postBack"/>
 	</slot>
@@ -509,8 +486,6 @@
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DegreeCurricularPlansForDegree" />
-		<property name="choiceType"
-			value="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" />
 		<property name="format" value="${name}" />
 		<property name="destination" value="postBack"/>
 	</slot>

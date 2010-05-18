@@ -17,7 +17,6 @@
 		<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.DumpRoomAllocationDA$DumpContextBean" bundle="APPLICATION_RESOURCES">
 			<fr:slot name="executionPeriod" layout="menu-select-postback">
 				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionSemestersProvider"/>
-				<fr:property name="choiceType" value="net.sourceforge.fenixedu.domain.ExecutionSemester"/>
 				<fr:property name="format" value="${semester} - ${executionYear.year}" />
 			</fr:slot>			
 		</fr:schema>

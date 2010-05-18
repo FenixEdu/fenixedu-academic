@@ -32,7 +32,6 @@
 				<fr:schema bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.DepartmentSummaryElement">
 					<fr:slot name="executionSemester" layout="menu-select-postback" key="label.curricular.course.semester" bundle="APPLICATION_RESOURCES">
 						<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.NotClosedExecutionPeriodsProvider"/>
-						<fr:property name="choiceType"	value="net.sourceforge.fenixedu.domain.ExecutionSemester"/>
 						<fr:property name="format" value="${executionYear.year} - ${semester}º Semestre" />
 					</fr:slot>										
 				</fr:schema>
@@ -71,7 +70,6 @@
 				<fr:schema bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.DepartmentSummaryElement">
 					<fr:slot name="executionSemester" layout="menu-select-postback" key="label.curricular.course.semester" bundle="APPLICATION_RESOURCES">
 						<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.NotClosedExecutionPeriodsProvider"/>
-						<fr:property name="choiceType"	value="net.sourceforge.fenixedu.domain.ExecutionSemester"/>
 						<fr:property name="format" value="${executionYear.year} - ${semester}º Semestre" />
 					</fr:slot>									
 				</fr:schema>

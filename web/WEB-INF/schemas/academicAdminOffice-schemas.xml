@@ -5,8 +5,6 @@
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionDegree.DegreesByEmployeeUnit" />
-		<property name="choiceType"
-			value="net.sourceforge.fenixedu.domain.Degree" />
 		<property name="format" value="${presentationName}" />
 	</slot>
 	<slot name="executionYear" key="label.executionYear" 
@@ -14,8 +12,6 @@
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
-		<property name="choiceType"
-			value="net.sourceforge.fenixedu.domain.ExecutionYear" />
 		<property name="format" value="${year}" />
 		<property name="destination" value="degreePostBack"/>
 	</slot>			
@@ -29,8 +25,6 @@
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionDegree.DegreeCurricularPlansForDegree" />
-		<property name="choiceType"
-			value="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" />
 		<property name="format" value="${name}" />
 		<property name="destination" value="degreeCurricularPlanPostBack"/>		
 	</slot>
@@ -126,7 +120,7 @@
 		<property name="maxLength" value="10"/>
 	</slot>
 	<slot name="nationality" layout="menu-select" key="label.nationality" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/>
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryProvider"/>
 		<property name="format" value="${nationality}" />
 		<property name="sortBy" value="nationality"/>
 	</slot>
@@ -206,7 +200,6 @@
 <schema name="student.precedentDegreeInformation-edit" type="net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean" bundle="ACADEMIC_OFFICE_RESOURCES" >
 	<slot name="schoolLevel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentProvider" />
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.SchoolLevelType" />
 		<property name="eachLayout" value="this-does-not-exist" />
 	</slot>
 	<slot name="otherSchoolLevel" />
@@ -282,12 +275,10 @@
 	</slot>
 	<slot name="highSchoolType" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.HighSchoolTypesProvider" />
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType" />
 		<property name="eachLayout" value="this-does-not-exist" />
 	</slot>
 	<slot name="motherSchoolLevel" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentHouseholdProvider" />
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.SchoolLevelType" />
 		<property name="eachLayout" value="this-does-not-exist" />
 	</slot>
 	<slot name="motherProfessionType" />
@@ -295,7 +286,6 @@
 
 	<slot name="fatherSchoolLevel" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentHouseholdProvider" />
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.SchoolLevelType" />
 		<property name="eachLayout" value="this-does-not-exist" />
 	</slot>
 	<slot name="fatherProfessionType"/>
@@ -303,7 +293,6 @@
 	
 	<slot name="spouseSchoolLevel" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentHouseholdProvider" />
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.SchoolLevelType" />
 		<property name="eachLayout" value="this-does-not-exist" />
 	</slot>
 	<slot name="spouseProfessionType" />
@@ -565,8 +554,6 @@
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionDegree.PreBolonhaMasterDegrees" />
-		<property name="choiceType"
-			value="net.sourceforge.fenixedu.domain.Degree" />
 		<property name="format" value="${name}" />
 	</slot>
     <slot name="year">
@@ -587,8 +574,6 @@
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionDegree.PreBolonhaMasterDegrees" />
-		<property name="choiceType"
-			value="net.sourceforge.fenixedu.domain.Degree" />
 		<property name="format" value="${name}" />
 	</slot>
     <slot name="year">
@@ -809,8 +794,6 @@
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DegreeCurricularPlansForCreateStudentCurricularPlan" />
-		<property name="choiceType"
-			value="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" />
 		<property name="format" value="${name}" />
 	</slot>
 </schema>
@@ -1325,14 +1308,12 @@
 	<slot name="registration" key="label.degree" 
 		layout="menu-select-postback">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.student.RegistrationsProvider" />
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.student.Registration" />
 		<property name="format" value="${degreeNameWithDescription}" />
 		<property name="destination" value="registrationPostBack"/>
 	</slot>
 	<slot name="studentCurricularPlan" key="label.degreeCurricularPlan"
 		layout="menu-select-postback">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.student.StudentCurricularPlansProvider" />
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.StudentCurricularPlan" />
 		<property name="format" value="${name}" />
 		<property name="destination" value="studentCurricularPlanPostBack"/>
 	</slot>
@@ -1405,8 +1386,6 @@
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OpenExecutionYearsProvider" />
-		<property name="choiceType"
-			value="net.sourceforge.fenixedu.domain.ExecutionYear" />
 		<property name="format" value="${year}" />
 		<property name="destination" value="postBack"/>
 	</slot>
@@ -1414,7 +1393,6 @@
 		layout="menu-select-postback" bundle="APPLICATION_RESOURCES">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.lists.DegreeTypesForEmployeeAcademicOfficeProvider" />
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.degree.DegreeType" />
 		<property name="destination" value="postBack"/>
 		<property name="eachLayout" value="this-does-not-exist" />
 	</slot>
@@ -1422,7 +1400,6 @@
 		layout="menu-select-postback">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.lists.DegreesForExecutionYear" />
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Degree" />
 		<property name="format" value="${presentationName}" />
 		<property name="destination" value="postBack"/>
 	</slot>
@@ -1433,7 +1410,7 @@
 	extends="DegreeByExecutionYearBean.edit" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="regime" key="registration.regime"/>
 	<slot name="nationality" layout="menu-select" key="label.nationality">
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/>
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryProvider"/>
 		<property name="format" value="${nationality}" />
 		<property name="sortBy" value="nationality"/>
 	</slot>
@@ -1484,7 +1461,6 @@
         <validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.serviceRequests.AcademicServiceRequestSituationTypeProvider" />
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType" />
 		<property name="format" value="${localizedName}" />
 		<property name="destination" value="postBack"/>
 	</slot>
@@ -1525,8 +1501,6 @@
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OpenExecutionYearsProvider" />
-		<property name="choiceType"
-			value="net.sourceforge.fenixedu.domain.ExecutionYear" />
 		<property name="format" value="${year}" />
 		<property name="destination" value="executionYearPostBack"/>
 	</slot>
@@ -1535,8 +1509,6 @@
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.lists.DegreeCurricularPlansForExecutionYear" />
-		<property name="choiceType"
-			value="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" />
 		<property name="format" value="${degree.tipoCurso.localizedName} - ${degree.name} - ${name}" />		
 	</slot>	
 </schema>
@@ -1592,8 +1564,6 @@
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
             value="net.sourceforge.fenixedu.presentationTier.renderers.providers.lists.DegreesByEmployeeUnit" />
-		<property name="choiceType"
-            value="net.sourceforge.fenixedu.domain.Degree" />
         <property name="format" value="${tipoCurso.localizedName} - ${name}" />     
         <property name="destination" value="degreePostBack"/>
 	</slot>
@@ -1602,8 +1572,6 @@
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.lists.DegreeCurricularPlansProvider" />
-		<property name="choiceType"
-			value="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" />
 		<property name="format" value="${degree.tipoCurso.localizedName} - ${degree.name} - ${name}" />		
         <property name="destination" value="curricularPlanPostBack"/>
 	</slot>	
@@ -1612,8 +1580,6 @@
         validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="providerClass"
             value="net.sourceforge.fenixedu.presentationTier.renderers.providers.lists.AcademicIntervalProviderForListsContextBean" />
-        <property name="choiceType"
-            value="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval" />
         <property name="format" value="${pathName}" />
     </slot>
 </schema>
@@ -1632,7 +1598,6 @@
 <schema name="StudentDataByExecutionYearBean" type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.StudentDataByExecutionYearBean" bundle="APPLICATION_RESOURCES">
 	<slot name="executionYear" label="label.executionYear.year" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.ExecutionYear" />
 		<property name="format" value="${year}" />
 	</slot>
 	<slot name="choice" label="label.personalDataAuthorization" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
@@ -1903,7 +1868,6 @@
 	<slot name="registration" hidden="true"/>
 	<slot name="executionYear" key="label.executionYear" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OpenExecutionYearsProvider" />
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.ExecutionYear" />
 		<property name="format" value="${year}" />
 		<property name="sortBy" value="year=desc" />
 	</slot>
@@ -1917,7 +1881,6 @@
 		bundle="APPLICATION_RESOURCES">
 	<slot name="executionYear" key="label.executionYear" layout="menu-select-postback">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.ExecutionYear" />
 		<property name="format" value="${year}" />
 	</slot>
 	<slot name="degreeType" key="label.degreeType"

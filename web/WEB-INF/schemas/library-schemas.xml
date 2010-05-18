@@ -13,7 +13,6 @@
 	<slot name="year" layout="menu-select" key="label.ExecutionYear.year">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ThesisExecutionYearsProvider" />
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.ExecutionYear" />
 		<property name="format" value="${year}" />
 		<property name="key" value="true" />
 		<property name="bundle" value="ENUMERATION_RESOURCES" />

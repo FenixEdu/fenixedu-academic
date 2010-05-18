@@ -8,8 +8,6 @@
 			validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
-		<property name="choiceType"
-			value="net.sourceforge.fenixedu.domain.ExecutionYear" />
 		<property name="format"
 			value="${year}" />			
 	</slot>

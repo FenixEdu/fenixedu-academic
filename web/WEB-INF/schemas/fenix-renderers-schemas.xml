@@ -292,7 +292,7 @@
 		<!-- Filiation -->
 		<slot name="dateOfBirthYearMonthDay" />
 		<slot name="nationality" layout="menu-select"> 
-			<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/> 
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryProvider"/> 
 			<property name="format" value="${nationality}"/>
 		</slot>
 		<slot name="parishOfBirth" />

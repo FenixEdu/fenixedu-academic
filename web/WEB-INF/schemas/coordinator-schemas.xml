@@ -499,7 +499,6 @@
 <schema name="thesis.context.bean" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisContextBean">
     <slot name="executionYear" key="label.executionYear" layout="menu-select-postback">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProviderForThesisContextBean" />
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.ExecutionYear" />
 		<property name="format" value="${year}" />
     	<property name="destination" value="listThesis"/>
     </slot>
@@ -524,7 +523,6 @@
     <slot name="sourceDegreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"
     		layout="menu-select" key="label.choose.curricularPlan">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DegreeCurricularPlanProvider" />
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" />
 		<property name="format" value="${presentationName}" />
     </slot>
 	<setter signature="createEquivalencePlan(sourceDegreeCurricularPlan)"/>
@@ -534,7 +532,6 @@
     <slot name="originDegreeModuleToAdd" type="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
     		layout="menu-select" key="label.degreeModule">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OriginDegreeModuleForEquivalencePlanEntryProvider"/>
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule" />
 		<property name="format" value="${name}" />
     </slot>
     <setter signature="addOrigin(originDegreeModuleToAdd)"/>
@@ -544,7 +541,6 @@
     <slot name="destinationDegreeModuleToAdd" type="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
     		layout="menu-select" key="label.degreeModule">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DestinationDegreeModuleForEquivalencePlanEntryProvider"/>
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule" />
 		<property name="format" value="${name}" />
     </slot>
     <setter signature="addDestination(destinationDegreeModuleToAdd)"/>
@@ -554,14 +550,12 @@
     <slot name="originLogicOperator" type="net.sourceforge.fenixedu.domain.util.LogicOperator"
     		layout="menu-select" key="label.left.hand.operator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.LogicOperatorProvider"/>
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.util.LogicOperator"/>
 		<property name="format" value="${localizedName}" />
     </slot>
     <slot name="transitiveOrigin" key="label.left.hand.transitive" />
     <slot name="destinationLogicOperator" type="net.sourceforge.fenixedu.domain.util.LogicOperator"
     		layout="menu-select" key="label.right.hand.operator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.LogicOperatorProvider"/>
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.util.LogicOperator"/>
 		<property name="format" value="${localizedName}" />
     </slot>
     <slot name="destinationDegreeModulesPreviousCourseGroup" type="net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup"
@@ -588,7 +582,6 @@
     <slot name="degreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"
     		layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DegreeCurricularPlanForStudentEquivalenciesProvider" />
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" />
 		<property name="format" value="${presentationName}" />
     </slot>
 </schema>
@@ -603,7 +596,6 @@
     <slot name="originDegreeModuleToAdd" type="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
     		layout="menu-select" key="label.degreeModule">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OriginDegreeModuleForStudentEquivalencyPlanEntryCreatorProvider"/>
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule" />
 		<property name="format" value="${name}" />
     </slot>
     <setter signature="addOrigin(originDegreeModuleToAdd)"/>
@@ -613,7 +605,6 @@
     <slot name="destinationDegreeModuleToAdd" type="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
     		layout="menu-select" key="label.degreeModule">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DestinationDegreeModuleForStudentEquivalencyPlanEntryCreatorProvider"/>
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule" />
 		<property name="format" value="${name}" />
     </slot>
     <setter signature="addDestination(destinationDegreeModuleToAdd)"/>
@@ -623,14 +614,12 @@
     <slot name="originLogicOperator" type="net.sourceforge.fenixedu.domain.util.LogicOperator"
     		layout="menu-select" key="label.left.hand.operator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.LogicOperatorProvider"/>
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.util.LogicOperator"/>
 		<property name="format" value="${localizedName}" />
     </slot>
     <slot name="transitiveOrigin" key="label.left.hand.transitive" />
     <slot name="destinationLogicOperator" type="net.sourceforge.fenixedu.domain.util.LogicOperator"
     		layout="menu-select" key="label.right.hand.operator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.LogicOperatorProvider"/>
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.util.LogicOperator"/>
 		<property name="format" value="${localizedName}" />
     </slot>
     <slot name="destinationDegreeModulesPreviousCourseGroup" type="net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup"
@@ -886,7 +875,6 @@
 		type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ManageThesisContext">
     <slot name="executionDegree" key="label.executionYear" layout="menu-select-postback">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ManageThesisContextProvider" />
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.ExecutionYear" />
 		<property name="format" value="${executionYear.year}" />
     </slot>
 </schema>

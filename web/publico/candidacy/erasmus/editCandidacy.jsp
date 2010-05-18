@@ -118,7 +118,7 @@
 	
 				<fr:slot name="nationality" layout="menu-select" key="label.nationality" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 					<fr:property name="readOnly" value="<%= String.valueOf(individualCandidacyProcess.getPersonalFieldsFromStork().getTypes().contains(StorkAttributeType.STORK_NATIONALITY)) %>" />
-					<fr:property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/>
+					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryProvider"/>
 					<fr:property name="format" value="${countryNationality}" />
 					<fr:property name="sortBy" value="countryNationality"/>
 				</fr:slot>

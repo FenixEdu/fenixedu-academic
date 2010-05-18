@@ -133,7 +133,6 @@
         key="label.internship.InternshipCandidacy.student.countryOfBirth" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="providerClass"
             value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryProvider" />
-        <property name="choiceType" value="net.sourceforge.fenixedu.domain.Country" />
         <property name="format" value="${countryNationality}" />
     </slot>
 </schema>
@@ -248,7 +247,6 @@
 		key="label.internationalrelations.internship.candidacy.destination.firstoption">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.dataTransferObject.internship.InternshipCandidacyBean$DestinationsProvider" />
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country" />
 		<property name="format" value="${name}" />
 		<property name="sortBy" value="name" />
 	</slot>
@@ -256,7 +254,6 @@
 		key="label.internationalrelations.internship.candidacy.destination.secondoption">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.dataTransferObject.internship.InternshipCandidacyBean$DestinationsProvider" />
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country" />
 		<property name="format" value="${name}" />
 		<property name="sortBy" value="name" />
 	</slot>
@@ -264,7 +261,6 @@
 		key="label.internationalrelations.internship.candidacy.destination.thirdoption">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.dataTransferObject.internship.InternshipCandidacyBean$DestinationsProvider" />
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country" />
 		<property name="format" value="${name}" />
 		<property name="sortBy" value="name" />
 	</slot>
