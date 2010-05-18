@@ -30,6 +30,7 @@
 				<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
 			</fr:layout>			
 			<fr:destination name="input" path="/cardManagement.do?method=generatePdfCard&modify=true"/>
+			<fr:destination name="partyClassificationPostBack" path="/cardManagement.do?method=postBack"/>
 		</fr:edit>
 	</logic:equal>
 
@@ -41,10 +42,11 @@
 					<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
 				</fr:layout>
 				<fr:destination name="input" path="/cardManagement.do?method=generatePdfCard&modify=true"/>
+				<fr:destination name="partyClassificationPostBack" path="/cardManagement.do?method=postBack"/>
 			</fr:edit>
 		</logic:equal>
+		
 		<logic:notEqual name="libraryCardDTO" property="partyClassification" value="TEACHER">
-
 			<logic:notEqual name="libraryCardDTO" property="partyClassification" value="PERSON">
 				<fr:edit id="libraryCardEdit" name="libraryCardDTO" schema="library.card.edit">
 					<fr:layout name="tabular">
@@ -52,6 +54,7 @@
 						<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
 					</fr:layout>			
 					<fr:destination name="input" path="/cardManagement.do?method=generatePdfCard&modify=true"/>
+					<fr:destination name="partyClassificationPostBack" path="/cardManagement.do?method=postBack"/>
 				</fr:edit>
 			</logic:notEqual>
 
@@ -62,6 +65,7 @@
 						<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
 					</fr:layout>			
 					<fr:destination name="input" path="/cardManagement.do?method=generatePdfCard&modify=true"/>
+					<fr:destination name="partyClassificationPostBack" path="/cardManagement.do?method=postBack"/>
 				</fr:edit>
 			</logic:equal>
 		</logic:notEqual>	

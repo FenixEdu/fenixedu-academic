@@ -224,20 +224,8 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	LibraryCardDTO libraryCardDTO = (LibraryCardDTO) getRenderedObject("libraryCardDTO");
 
 	if (request.getParameter("modify") != null) {
-	    libraryCardDTO = getRenderedObject("libraryCardEdit") != null ? (LibraryCardDTO) getRenderedObject("libraryCardEdit")
-		    : libraryCardDTO;
-	    // TODO remove this condition, when user names that already exist
-	    // are no longer bigger than the max length
-	    if (libraryCardDTO.getPerson().getName().length() > maxUserNameLength) {
-		addMessage(request, "message.card.userName.tooLong", libraryCardDTO.getPerson().getName().length(),
-			maxUserNameLength);
-	    }
-	    if (libraryCardDTO.getPartyClassification().equals(PartyClassification.TEACHER)) {
-		libraryCardDTO.setChosenUnitNameToEdit();
-	    }
-	    request.setAttribute("libraryCardDTO", libraryCardDTO);
-	    request.setAttribute("libraryCardSearch", getRenderedObject("libraryCardSearch"));
-	    return mapping.findForward("edit-card");
+	    prepareEdit(request);			
+	    return mapping.findForward("edit-card");	   
 	}
 
 	List<LibraryCardDTO> cardList = new ArrayList<LibraryCardDTO>();
@@ -258,6 +246,30 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	response.flushBuffer();
 
 	return null;
+    }
+
+    public ActionForward postBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	prepareEdit(request);
+	
+	RenderUtils.invalidateViewState();
+	return mapping.findForward("edit-card");
+    }
+
+    private void prepareEdit(HttpServletRequest request) {
+	LibraryCardDTO libraryCardDTO = (LibraryCardDTO) getRenderedObject("libraryCardDTO");
+	libraryCardDTO = getRenderedObject("libraryCardEdit") != null ? (LibraryCardDTO) getRenderedObject("libraryCardEdit")
+		: libraryCardDTO;
+	// TODO remove this condition, when user names that already exist
+	// are no longer bigger than the max length
+	if (libraryCardDTO.getPerson().getName().length() > maxUserNameLength) {
+	    addMessage(request, "message.card.userName.tooLong", libraryCardDTO.getPerson().getName().length(), maxUserNameLength);
+	}
+	if (PartyClassification.TEACHER.equals(libraryCardDTO.getPartyClassification())) {
+	    libraryCardDTO.setChosenUnitNameToEdit();
+	}
+	request.setAttribute("libraryCardDTO", libraryCardDTO);
+	request.setAttribute("libraryCardSearch", getRenderedObject("libraryCardSearch"));
     }
 
     public ActionForward editCard(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
