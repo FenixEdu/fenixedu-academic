@@ -26,12 +26,14 @@
     	<name>process</name>
     	<required>true</required>
     	<rtexprvalue>true</rtexprvalue>
+    	<description>Process instance</description>
 	</attribute>
 	
 	<attribute>
     	<name>activity</name>
     	<required>true</required>
     	<rtexprvalue>true</rtexprvalue>
+    	<description>PhdActivity class</description>
 	</attribute>
 
   </tag>
