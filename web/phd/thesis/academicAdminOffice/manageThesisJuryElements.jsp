@@ -34,15 +34,34 @@
 
 
 <%--  ### Context Information (e.g. Person Information, Registration Information)  ### --%>
-<strong><bean:message  key="label.phd.process" bundle="PHD_RESOURCES"/></strong>
-<fr:view schema="PhdIndividualProgramProcess.view.resume" name="process" property="individualProgramProcess">
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle2 thlight mtop15" />
-	</fr:layout>
-</fr:view>
-
 <bean:define id="processId" name="process" property="externalId" />
 <bean:define id="process" name="process" />
+
+<strong><bean:message  key="label.phd.process" bundle="PHD_RESOURCES"/></strong>
+<table>
+	<tr>
+		<td>
+			<fr:view schema="PhdIndividualProgramProcess.view.resume" name="process" property="individualProgramProcess">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle2 thlight mtop15" />
+				</fr:layout>
+			</fr:view>
+		</td>
+		<td>
+			<ul class="operations">
+			<logic:empty name="process" property="thesisJuryElements">
+				<phd:activityAvailable process="<%= process %>" activity="<%= RejectJuryElements.class %>">
+					<li>
+					<html:link action="/phdThesisProcess.do?method=prepareRejectJuryElements" paramId="processId" paramName="process" paramProperty="externalId">
+						<bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.reject.jury.elements"/>
+					</html:link>
+					</li>
+				</phd:activityAvailable>
+			</logic:empty>
+			</ul>
+		</td>
+	</tr>
+</table>
 
 <logic:equal name="process" property="juryValidated" value="true">
 	<br/>
@@ -54,32 +73,24 @@
 	<br/>
 	
 <logic:notEmpty name="process" property="juryPresidentDocument">
-	<br/>
+	<p>
 	<strong><bean:message  key="label.phd.thesis.jury.president.document" bundle="PHD_RESOURCES"/>: </strong>
 	<bean:define id="url2" name="process" property="juryPresidentDocument.downloadUrl" />
 	<a href="<%= url2.toString() %>">
 		<bean:write name="process" property="juryPresidentDocument.documentType.localizedName"/> 
 		(<bean:message  key="label.version" bundle="PHD_RESOURCES" /> <bean:write name="process" property="juryPresidentDocument.documentVersion"/>)
 	</a>
-	<br/>
+	</p>
 </logic:notEmpty>
 
 <logic:notEmpty name="process" property="juryElementsDocument">
-	<strong><bean:message  key="label.phd.thesis.jury.elements.document" bundle="PHD_RESOURCES"/>: </strong>
+	<p><strong><bean:message  key="label.phd.thesis.jury.elements.document" bundle="PHD_RESOURCES"/>: </strong>
 	<bean:define id="finalThesisDownloadUrl" name="process" property="juryElementsDocument.downloadUrl" />
 	<a href="<%= finalThesisDownloadUrl.toString() %>">
 		<bean:write name="process" property="juryElementsDocument.documentType.localizedName"/> 
 		(<bean:message  key="label.version" bundle="PHD_RESOURCES" /> <bean:write name="process" property="juryElementsDocument.documentVersion"/>)
 	</a>
-	<br/>
-	<logic:empty name="process" property="thesisJuryElements">
-	<phd:activityAvailable process="<%= process %>" activity="<%= RejectJuryElements.class %>">
-		(<html:link action="/phdThesisProcess.do?method=prepareRejectJuryElements" paramId="processId" paramName="process" paramProperty="externalId">
-			<bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.reject.jury.elements"/>
-		</html:link>)
-	</phd:activityAvailable>
-	</logic:empty>
-	
+	</p>
 	<br/><br/>
 </logic:notEmpty>
 

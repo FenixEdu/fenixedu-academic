@@ -1,14 +1,17 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean"%>
-<%@page import="pt.ist.fenixWebFramework.renderers.validators.FileValidator"%><html:xhtml/>
-
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+<%@ taglib uri="/WEB-INF/phd.tld" prefix="phd" %>
+
+<%@page import="net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean"%>
+<%@page import="pt.ist.fenixWebFramework.renderers.validators.FileValidator"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitJuryElementsDocuments"%>
+<html:xhtml/>
 
 <logic:present role="COORDINATOR">
 
+<bean:define id="process" name="process" />
 <bean:define id="individualProcessId" name="process" property="individualProgramProcess.externalId" />
 
 <%-- ### Title #### --%>
@@ -56,7 +59,8 @@
 
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 
-<logic:equal name="process" property="activeState.name" value="WAITING_FOR_JURY_CONSTITUTION">
+<phd:activityAvailable process="<%= process %>" activity="<%= SubmitJuryElementsDocuments.class %>">
+
 	<bean:define id="processId" name="process" property="externalId" />
 	
 	<fr:form action="<%= "/phdThesisProcess.do?processId=" + processId.toString() %>" encoding="multipart/form-data">
@@ -66,7 +70,7 @@
 		
 		<fr:edit id="thesisProcessBean.edit.documents" name="thesisProcessBean" property="documents">
 			<fr:schema bundle="PHD_RESOURCES" type="<%= PhdProgramDocumentUploadBean.class.getName() %>">
-				<fr:slot name="type" readOnly="true" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean.type"/>
+				<fr:slot name="type" readOnly="true" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean.type" layout="phd-enum-renderer" />
 				<fr:slot name="file" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean.file" required="true">
 					<fr:validator name="<%= FileValidator.class.getName() %>" />
 					<fr:property name="fileNameSlot" value="filename"/>
@@ -85,7 +89,7 @@
 		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='viewIndividualProgramProcess';"><bean:message bundle="PHD_RESOURCES" key="label.cancel"/></html:cancel>	
 	</fr:form>
 
-</logic:equal>
+</phd:activityAvailable>
 
 <%--  ### End of Operation Area  ### --%>
 

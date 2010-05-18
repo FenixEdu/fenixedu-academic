@@ -1,6 +1,3 @@
-/**
- * 
- */
 package net.sourceforge.fenixedu.domain.phd.thesis.activities;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
@@ -22,11 +19,14 @@ public class RejectJuryElements extends PhdThesisActivity {
 
     @Override
     protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
-	process.createState(PhdThesisProcessStateType.WAITING_FOR_JURY_CONSTITUTION, userView.getPerson(),
-		((PhdThesisProcessBean) object).getRemarks());
 
-	AlertService.alertCoordinator(process.getIndividualProgramProcess(), "message.phd.alert.jury.elements.rejected.subject",
-		"message.phd.alert.jury.elements.rejected.body");
+	final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
+	process.createState(PhdThesisProcessStateType.WAITING_FOR_JURY_CONSTITUTION, userView.getPerson(), bean.getRemarks());
+
+	if (bean.isToNotify()) {
+	    AlertService.alertCoordinator(process.getIndividualProgramProcess(),
+		    "message.phd.alert.jury.elements.rejected.subject", "message.phd.alert.jury.elements.rejected.body");
+	}
 
 	return process;
     }

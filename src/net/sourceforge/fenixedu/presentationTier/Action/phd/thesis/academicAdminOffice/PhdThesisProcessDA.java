@@ -427,31 +427,4 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
     // End of Request Jury Reviews
 
-    // Manage thesis documents
-
-    public ActionForward manageThesisDocuments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	return mapping.findForward("manageThesisDocuments");
-    }
-
-    public ActionForward downloadThesisDocuments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws IOException {
-
-	writeFile(response, getThesisDocumentsFilename(request), PhdDocumentsZip.ZIP_MIME_TYPE, createZip(request));
-	return null;
-    }
-
-    private String getThesisDocumentsFilename(HttpServletRequest request) {
-	final PhdIndividualProgramProcess process = getProcess(request).getIndividualProgramProcess();
-	return String.format("%s-%s.zip", process.getProcessNumber().replace("/", "-"), getMessageFromResource(
-		"label.phd.manageThesisDocuments").replace(" ", "_"));
-    }
-
-    public ActionForward deleteDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	return executeActivity(DeleteDocument.class, getDomainObject(request, "documentId"), request, mapping,
-		"manageThesisDocuments", "manageThesisDocuments", "message.document.deleted.successfuly");
-    }
-
-    // End of manage thesis documents
 }

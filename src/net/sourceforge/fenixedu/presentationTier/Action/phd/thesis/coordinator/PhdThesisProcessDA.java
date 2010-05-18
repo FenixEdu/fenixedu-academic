@@ -29,7 +29,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Forward(name = "manageThesisJuryElements", path = "/phd/thesis/coordinator/manageThesisJuryElements.jsp"),
 
-@Forward(name = "juryReporterFeedbackUpload", path = "/phd/thesis/coordinator/juryReporterFeedbackUpload.jsp")
+@Forward(name = "juryReporterFeedbackUpload", path = "/phd/thesis/coordinator/juryReporterFeedbackUpload.jsp"),
+
+@Forward(name = "manageThesisDocuments", path = "/phd/thesis/coordinator/manageThesisDocuments.jsp")
 
 })
 public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {

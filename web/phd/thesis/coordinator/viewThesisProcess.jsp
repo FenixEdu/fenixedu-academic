@@ -28,6 +28,11 @@
 	</td>
 	<td>
 		<ul class="operations" >
+			<li>
+				<html:link action="/phdThesisProcess.do?method=manageThesisDocuments" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
+					<bean:message bundle="PHD_RESOURCES" key="label.phd.manageThesisDocuments"/>
+				</html:link>
+			</li>
 			<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= DownloadProvisionalThesisDocument.class %>">
 				<li>
 					<fr:view name="thesisProcess" property="provisionalThesisDocument" layout="link" />
@@ -38,14 +43,6 @@
 					<fr:view name="thesisProcess" property="finalThesisDocument" layout="link" />
 				</li>
 			</phd:activityAvailable>
-			<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= DownloadThesisRequirement.class %>">
-				<li><fr:view name="thesisProcess" property="thesisRequirementDocument" layout="link" /></li>
-			</phd:activityAvailable>
-			<logic:notEmpty name="thesisProcess" property="juryPresidentDocument">
-				<li>
-					<fr:view name="thesisProcess" property="juryPresidentDocument" layout="link" />
-				</li>
-			</logic:notEmpty>
 		</ul>
 	</td>
   </tr>
@@ -60,7 +57,7 @@
 		</li>
 	</phd:activityAvailable>
 	<%-- 
-	TODO: add activity available tag here too
+	TODO: add activity available tag here too if coordinator can manage elements (now only admin office can execute this task)
 	<li style="display: inline;">
 		<html:link action="/phdThesisProcess.do?method=manageThesisJuryElements" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
 			<bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.jury.elements"/>
