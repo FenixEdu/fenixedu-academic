@@ -16,12 +16,22 @@ public class BundleUtil {
     private static final String APPLICATION_MODULE = "Application";
     private static final String ENUMERATION_MODULE = "Enumeration";
 
-    public static String getMessageFromModuleOrApplication(final String moduleName, final String key, final String... args) {
+    public static String getStringFromResourceBundle(final String bundle, final String key, String... arguments) {
 	try {
-	    return MessageFormat.format(getResourceBundleByModuleName(moduleName).getString(key), (Object[]) args);
+	    final ResourceBundle resourceBundle = getResourceBundleByName(bundle);
+	    return MessageFormat.format(resourceBundle.getString(key), (Object[]) arguments);
+	} catch (MissingResourceException e) {
+	    return key;
+	}
+    }
+
+    public static String getMessageFromModuleOrApplication(final String moduleName, final String key, final String... arguments) {
+	try {
+	    return MessageFormat.format(getResourceBundleByModuleName(moduleName).getString(key), (Object[]) arguments);
 	} catch (MissingResourceException e) {
 	    try {
-		return MessageFormat.format(getResourceBundleByModuleName(APPLICATION_MODULE).getString(key), (Object[]) args);
+		return MessageFormat.format(getResourceBundleByModuleName(APPLICATION_MODULE).getString(key),
+			(Object[]) arguments);
 	    } catch (MissingResourceException ex) {
 		return key;
 	    }
@@ -72,18 +82,4 @@ public class BundleUtil {
     private static ResourceBundle getResourceBundleByName(final String bundleName) {
 	return ResourceBundle.getBundle(bundleName, Language.getLocale());
     }
-
-    public static String getStringFromResourceBundle(final String bundle, final String key) {
-	final ResourceBundle resourceBundle = ResourceBundle.getBundle(bundle, Language.getLocale());
-	return resourceBundle.getString(key);
-    }
-
-    public static String getFormattedStringFromResourceBundle(final String bundle, final String key, String... arguments) {
-	String resourceString = getStringFromResourceBundle(bundle, key);
-	for (int i = 0; i < arguments.length; i++) {
-	    resourceString = resourceString.replace("{" + i + "}", arguments[i]);
-	}
-	return resourceString;
-    }
-
 }
