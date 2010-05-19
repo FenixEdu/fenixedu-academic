@@ -101,6 +101,7 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
 	participant.tryDelete();
 
 	removeProcess();
+	removeProcessForPresidentJuryElement();
 	removeRootDomainObject();
     }
 
