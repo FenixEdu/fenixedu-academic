@@ -139,6 +139,11 @@ public class InternalPhdParticipant extends InternalPhdParticipant_Base {
     }
 
     @Override
+    protected boolean canBeDeleted() {
+	return super.canBeDeleted() && !getIndividualProcess().isCoordinatorForPhdProgram(getPerson());
+    }
+
+    @Override
     protected void disconnect() {
 	removePerson();
 	super.disconnect();
