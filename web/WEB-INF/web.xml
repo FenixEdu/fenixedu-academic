@@ -296,6 +296,10 @@
         <servlet-name>XFireServlet</servlet-name>
         <servlet-class>org.codehaus.xfire.transport.http.XFireConfigurableServlet</servlet-class>
     </servlet>
+    <servlet>
+    	<servlet-name>FenixGWTServlet</servlet-name>
+    	<servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.gwt.FenixGWTServlet</servlet-class>
+    </servlet>
     
     <!-- Servlet Mapping -->
     <servlet-mapping>
@@ -333,6 +337,10 @@
     <servlet-mapping>
         <servlet-name>DomainBrowser</servlet-name>
         <url-pattern>/domainbrowser/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+    	<servlet-name>FenixGWTServlet</servlet-name>
+    	<url-pattern>*.gwt</url-pattern>
     </servlet-mapping>
 
 	<session-config>

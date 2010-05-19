@@ -27,6 +27,9 @@ public class RequestChecksumFilter extends pt.ist.fenixWebFramework.servlets.fil
 	if (uri.indexOf("images/") >= 0) {
 	    return false;
 	}
+	if (uri.indexOf("gwt/") >= 0) {
+	    return false;
+	}
 	if (uri.indexOf("javaScript/") >= 0) {
 	    return false;
 	}
