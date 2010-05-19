@@ -7,6 +7,8 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisJuryElementBean"%>
+<%@page import="net.sourceforge.fenixedu.domain.person.PersonName"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.Action.phd.thesis.academicAdminOffice.PhdThesisProcessDA"%>
 
 <html:xhtml/>
 
@@ -44,14 +46,15 @@
 	
 				<%-- Add existing participant to thesis jury --%>
 				<logic:equal name="thesisJuryElementBean" property="participantSelectType.name" value="EXISTING">
-					<fr:slot name="participant" layout="autoComplete" required="true">
-						<fr:property name="size" value="50"/>
-						<fr:property name="labelField" value="nameWithTitle"/>
-						<fr:property name="indicatorShown" value="true"/>		
-						<fr:property name="serviceName" value="SearchTeachersByName"/>
-				        <fr:property name="serviceArgs" value="phdProcessOID=${individualProgramProcess.externalId}"/>
-						<fr:property name="className" value="net.sourceforge.fenixedu.domain.phd.PhdParticipant"/>
-						<fr:property name="minChars" value="3"/>				
+					<fr:slot name="participant" layout="menu-select" required="true" >
+						<fr:property name="classes" value="nobullet noindent" />
+						
+						<fr:property name="providerClass" value="<%= PhdThesisProcessDA.ExistingPhdParticipantsNotInPhdThesisProcess.class.getName() %>" />
+						
+						<fr:property name="eachLayout" value="values" />
+						<fr:property name="eachSchema" value="PhdParticipant.view.name.with.title" />
+	
+						<fr:property name="sortBy" value="name" />
 					</fr:slot>
 				</logic:equal>
 	
@@ -72,10 +75,11 @@
 							<fr:slot name="personName" layout="autoComplete" required="true">
 								<fr:property name="size" value="50"/>
 								<fr:property name="labelField" value="name"/>
+								<fr:property name="format" value="${person.name} (d${person.teacher.teacherNumber})" />
 								<fr:property name="indicatorShown" value="true"/>		
-								<fr:property name="serviceName" value="SearchInternalPersons"/>
+								<fr:property name="serviceName" value="SearchInternalPersonsByNameHavingTeacher"/>
 								<fr:property name="serviceArgs" value="size=50"/>
-								<fr:property name="className" value="net.sourceforge.fenixedu.domain.person.PersonName"/>
+								<fr:property name="className" value="<%= PersonName.class.getName() %>"/>
 								<fr:property name="minChars" value="4"/>				
 							</fr:slot>
 						</logic:equal>
@@ -119,7 +123,7 @@
 		<fr:destination name="postBack" path="<%= String.format("/phdThesisProcess.do?method=%s&processId=%s", postbackMethod , processId.toString()) %>"/>
 	</fr:edit>
 
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="<%= String.format("this.form.method.value='%s';", createMethod) %>"><bean:message bundle="PHD_RESOURCES" key="label.add"/></html:submit>
-	<html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='manageThesisJuryElements';"><bean:message bundle="PHD_RESOURCES" key="label.cancel"/></html:cancel>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="<%= String.format("this.form.method.value='%s';return true;", createMethod) %>"><bean:message bundle="PHD_RESOURCES" key="label.add"/></html:submit>
+	<html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='manageThesisJuryElements';return true;"><bean:message bundle="PHD_RESOURCES" key="label.cancel"/></html:cancel>
 	
 </fr:form>

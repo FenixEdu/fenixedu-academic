@@ -1392,3 +1392,7 @@
 <schema name="Enrolment.view.name" type="net.sourceforge.fenixedu.domain.Enrolment" bundle="PHD_RESOURCES">
 	<slot name="presentationName" />
 </schema>
+
+<schema name="PhdParticipant.view.name.with.title" type="net.sourceforge.fenixedu.domain.phd.PhdParticipant">
+	<slot name="nameWithTitle" />
+</schema>

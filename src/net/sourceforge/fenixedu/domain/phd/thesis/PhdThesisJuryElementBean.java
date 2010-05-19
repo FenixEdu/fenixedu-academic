@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.domain.phd.thesis;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean;
 
 public class PhdThesisJuryElementBean extends PhdParticipantBean {
@@ -29,4 +33,15 @@ public class PhdThesisJuryElementBean extends PhdParticipantBean {
     public void setReporter(boolean reporter) {
 	this.reporter = reporter;
     }
+
+    public List<PhdParticipant> getExistingParticipants() {
+	final List<PhdParticipant> result = new ArrayList<PhdParticipant>();
+	for (final PhdParticipant participant : getIndividualProgramProcess().getParticipantsSet()) {
+	    if (!participant.hasAnyThesisJuryElements()) {
+		result.add(participant);
+	    }
+	}
+	return result;
+    }
+
 }
