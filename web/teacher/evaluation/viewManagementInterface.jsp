@@ -16,7 +16,7 @@
 <span class="warning0"><!-- Error messages go here --><html:errors /></span>
 
 <html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
-	<pre><span class="warning0"> <bean:write name="message" /> </span></pre>
+	<p><span class="warning0"><bean:write name="message" /></span></p>
 </html:messages>
 
 
@@ -41,7 +41,7 @@
 			<fr:destination name="invalid" path="/teacherEvaluation.do?method=prepareCreateFacultyEvaluationProcess"/>
 		</fr:edit>
 	
-		<p class="mtop15">
+		<p>
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="MESSAGING_RESOURCES" key="messaging.save.button"/></html:submit>
 			<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton"><bean:message bundle="MESSAGING_RESOURCES" key="messaging.cancel.button"/></html:cancel>
 		</p>
@@ -70,7 +70,7 @@
 			<fr:destination name="invalid" path="<%= urlEditInvalid %>"/>
 		</fr:edit>
 	
-		<p class="mtop15">
+		<p>
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="MESSAGING_RESOURCES" key="messaging.save.button"/></html:submit>
 			<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton"><bean:message bundle="MESSAGING_RESOURCES" key="messaging.cancel.button"/></html:cancel>
 		</p>
@@ -78,10 +78,10 @@
 </logic:present>
 
 <logic:present name="facultyEvaluationProcess">
-	<h3 class="mbottom05">
+	<h3 class="mtop15 mbottom05">
 		<fr:view name="facultyEvaluationProcess" property="title"/>
 	</h3>
-	<table class="tstyle2 thlight thleft">
+	<table class="tstyle2 thlight thleft mtop05">
 		<tr>
 			<th>
 				<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.autoEvaluationInterval" bundle="RESEARCHER_RESOURCES"/>
@@ -192,7 +192,7 @@
 		</p>
 	</logic:empty>
 	<logic:notEmpty name="facultyEvaluationProcessSet">
-		<table class="tstyle2 thlight thleft">
+		<table class="tstyle2 thlight thleft mtop05">
 			<tr>
 				<th>
 					<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.process" bundle="RESEARCHER_RESOURCES"/>
@@ -238,10 +238,10 @@
 </logic:present>
 
 <logic:present name="fileUploadBean">
-	<h3>
+	<h3 class="mtop15 mbottom05">
 		<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.add.list.of.evaluees" bundle="RESEARCHER_RESOURCES"/>
 	</h3>
-	<p class="infoop">
+	<p class="mbottom1">
 		<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.add.list.of.evaluees.instruction" bundle="RESEARCHER_RESOURCES"/>
 	</p>
 	<bean:define id="urlUploadInvalid">/teacherEvaluation.do?method=viewFacultyEvaluationProcess&facultyEvaluationProcessOID=<bean:write name="fileUploadBean" property="facultyEvaluationProcess.externalId"/></bean:define>

@@ -7,9 +7,13 @@
 
 <html:xhtml />
 
+<em><bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.title"/></em>
+
 <h2><bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.autoevaluation.title" /></h2>
 
-<p><bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.autoevaluation.topHelpText" /></p>
+<div>
+	<bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.autoevaluation.topHelpText" />
+</div>
 
 <logic:iterate id="process" name="processes">
 	<h3 class="separator2 mtop15"><fr:view name="process" property="facultyEvaluationProcess.title" /></h3>
@@ -41,36 +45,38 @@
 
 	<bean:define id="processId" name="process" property="externalId" />
 	<logic:equal name="process" property="inAutoEvaluation" value="true">
-		<p><html:link action="/teacherEvaluation.do?method=changeEvaluationType" paramId="process" paramName="process"
-			paramProperty="externalId">
-			<logic:empty name="process" property="type">
-				<bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.autoevaluation.setEvaluationType" />
-			</logic:empty>
-			<logic:notEmpty name="process" property="type">
-				<bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.autoevaluation.changeEvaluationType" />
-			</logic:notEmpty>
-		</html:link><logic:equal name="process" property="possibleToLockAutoEvaluation" value="true"> | <a href="#"
-				style="cursor: pointer;"
-				onclick="<%="check(document.getElementById('warning"
-								+ processId + "'));return false;"%>"> <bean:message
-				bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.autoevaluation.lock" /> </a>
-
-		</logic:equal></p>
+		<p class="mtop0 mbottom15">
+			<html:link action="/teacherEvaluation.do?method=changeEvaluationType" paramId="process" paramName="process"
+				paramProperty="externalId">
+				<logic:empty name="process" property="type">
+					<bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.autoevaluation.setEvaluationType" />
+				</logic:empty>
+				<logic:notEmpty name="process" property="type">
+					<bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.autoevaluation.changeEvaluationType" />
+				</logic:notEmpty>
+			</html:link><logic:equal name="process" property="possibleToLockAutoEvaluation" value="true"> | <a href="#"
+					style="cursor: pointer;"
+					onclick="<%="check(document.getElementById('warning"
+									+ processId + "'));return false;"%>"> <bean:message
+					bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.autoevaluation.lock" /> </a>
+	
+			</logic:equal>
+		</p>
 	</logic:equal>
 
 	<div id="<%="warning" + processId%>" class="dnone">
-	<div class="warning1">
-	<p class="mvert05"><bean:message key="label.teacher.evaluation.autoevaluation.lock.confirm"
-		bundle="RESEARCHER_RESOURCES" /></p>
-	<p class="mtop1 mbottom05">
-	<form method="post" id="lockMark"
-		action="<%=request.getContextPath()
-								+ "/researcher/teacherEvaluation.do?method=lockAutoEvaluation&process="
-								+ processId%>">
-	<html:submit> Lacrar</html:submit> <input value="Cancelar"
-		onclick="check(document.getElementById('<%="warning" + processId%>'));return false;" type="button"></form>
-	</p>
-	</div>
+		<div class="warning1">
+			<p class="mvert05"><bean:message key="label.teacher.evaluation.autoevaluation.lock.confirm"
+				bundle="RESEARCHER_RESOURCES" /></p>
+			<div class="mtop1 mbottom05">
+				<form method="post" id="lockMark"
+					action="<%=request.getContextPath()
+											+ "/researcher/teacherEvaluation.do?method=lockAutoEvaluation&process="
+											+ processId%>">
+				<html:submit> Lacrar</html:submit> <input value="Cancelar"
+					onclick="check(document.getElementById('<%="warning" + processId%>'));return false;" type="button"></form>
+			</div>
+		</div>
 	</div>
 
 	<script type="text/javascript">
@@ -100,6 +106,12 @@
 				</fr:schema>
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle1 thlight mtop05" />
+					
+					<%--
+					<fr:property name="headerClasses" value=",,,thclear" />
+					<fr:property name="columnClasses" value=",,,tdclear" />
+					--%>
+					
 					<fr:property name="link(upload)"
 						value="<%= "/teacherEvaluation.do?method=prepareUploadAutoEvaluationFile&OID="+externalId %>" />
 					<fr:property name="key(upload)" value="label.teacher.evaluation.upload" />

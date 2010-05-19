@@ -7,12 +7,14 @@
 
 <html:xhtml/>
 
+<em><bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.title"/></em>
+
 <h2>
 	<bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.evaluees.title"/>
 </h2>
 
-<table class="tstyle1 thlight thleft mtop05">
 
+<table class="tstyle1 thlight thleft mtop15">
 
 <logic:iterate id="entries" name="processes" indexId="index">
 	<logic:equal name="index" value="0">
@@ -43,4 +45,5 @@
 		</logic:iterate>
 	</tr>
 </logic:iterate>
+
 </table>

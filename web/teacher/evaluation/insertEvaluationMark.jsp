@@ -7,9 +7,11 @@
 
 <html:xhtml />
 
+<em><bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.title"/></em>
+
 <h2><bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.insertEvaluationMark.title" /></h2>
 
-<h3 class="mtop15"><fr:view name="process" property="facultyEvaluationProcess.title" /></h3>
+<h3 class="mtop15 mbottom05"><fr:view name="process" property="facultyEvaluationProcess.title" /></h3>
 
 <bean:define id="action" name="action" />
 <bean:define id="slut" name="slot" />
@@ -23,5 +25,6 @@
 	<fr:destination name="cancel" path="<%="/teacherEvaluation.do?method=" + action%>" />
 	<fr:layout>
 		<fr:property name="classes" value="tstyle5 thlight thleft mtop05" />
+		<fr:property name="columnClasses" value=",,tdclear tderror1" />
 	</fr:layout>
 </fr:edit>

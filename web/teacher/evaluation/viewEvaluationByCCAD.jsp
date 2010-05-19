@@ -7,9 +7,11 @@
 
 <html:xhtml />
 
+<em><bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.title"/></em>
+
 <h2><bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.evaluation.ccad.title" /></h2>
 
-<h3 class="separator2 mtop15"><fr:view name="process" property="facultyEvaluationProcess.title" /></h3>
+<h3 class="mtop15 mbottom05"><fr:view name="process" property="facultyEvaluationProcess.title" /></h3>
 
 <fr:view name="process">
 	<fr:schema bundle="RESEARCHER_RESOURCES"

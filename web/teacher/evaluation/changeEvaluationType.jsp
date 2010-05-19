@@ -7,6 +7,8 @@
 
 <html:xhtml />
 
+<em><bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.title"/></em>
+
 <h2><bean:message bundle="RESEARCHER_RESOURCES"
 	key="label.teacher.evaluation.autoevaluation.changeEvaluationType.title" /></h2>
 

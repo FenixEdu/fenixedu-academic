@@ -7,6 +7,8 @@
 
 <html:xhtml />
 
+<em><bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.title"/></em>
+
 <h2><bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.evaluation.title" /></h2>
 
 <logic:iterate id="process" name="openProcesses">
@@ -39,34 +41,36 @@
 
 
 	<logic:notEmpty name="process" property="teacherEvaluationSet">
-		<p><logic:equal name="process" property="inEvaluation" value="true">
-			<html:link action="/teacherEvaluation.do?method=insertEvaluationMark" paramId="process" paramName="process"
-				paramProperty="externalId">
-				<bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.insertEvaluationMark" />
-			</html:link>
-			<logic:equal name="process" property="possibleToLockEvaluation" value="true">
-				<bean:define id="processId" name="process" property="externalId" /> | 
-				<a href="#" style="cursor: pointer;"
-					onclick="<%="check(document.getElementById('warning"
-									+ processId + "'));return false;"%>"> <bean:message
-					bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.evaluation.lock" /> </a>
-
-				<div id="<%="warning" + processId%>" class="dnone">
-				<div class="warning1">
-				<p class="mvert05"><bean:message key="label.teacher.evaluation.evaluation.lock.confirm"
-					bundle="RESEARCHER_RESOURCES" /></p>
-				<p class="mtop1 mbottom05">
-				<form method="post" id="lockMark"
-					action="<%=request.getContextPath()
-											+ "/researcher/teacherEvaluation.do?method=lockEvaluation&process="
-											+ processId%>">
-				<html:submit> Lacrar</html:submit> <input value="Cancelar"
-					onclick="check(document.getElementById('<%="warning" + processId%>'));return false;" type="button"></form>
-				</p>
-				</div>
-				</div>
+		<div class="mtop0 mbottom15">
+			<logic:equal name="process" property="inEvaluation" value="true">
+				<html:link action="/teacherEvaluation.do?method=insertEvaluationMark" paramId="process" paramName="process"
+					paramProperty="externalId">
+					<bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.insertEvaluationMark" />
+				</html:link>
+				<logic:equal name="process" property="possibleToLockEvaluation" value="true">
+					<bean:define id="processId" name="process" property="externalId" /> | 
+					<a href="#" style="cursor: pointer;"
+						onclick="<%="check(document.getElementById('warning"
+										+ processId + "'));return false;"%>"> <bean:message
+						bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.evaluation.lock" /> </a>
+	
+					<div id="<%="warning" + processId%>" class="dnone">
+						<div class="warning1 mtop1">
+							<p class="mvert05"><bean:message key="label.teacher.evaluation.evaluation.lock.confirm"
+								bundle="RESEARCHER_RESOURCES" /></p>
+							<div class="mtop1 mbottom05">
+								<form method="post" id="lockMark"
+									action="<%=request.getContextPath()
+															+ "/researcher/teacherEvaluation.do?method=lockEvaluation&process="
+															+ processId%>">
+								<html:submit> Lacrar</html:submit> <input value="Cancelar"
+									onclick="check(document.getElementById('<%="warning" + processId%>'));return false;" type="button"></form>
+							</div>
+						</div>
+					</div>
+				</logic:equal>
 			</logic:equal>
-		</logic:equal></p>
+		</div>
 
 		<script type="text/javascript">
 		function check(e,v){

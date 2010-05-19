@@ -381,6 +381,7 @@ background: none;
 }
 th.thclear {
 border-left: none;
+border-right: none;
 border-bottom: none;
 border-top: none;
 background: none;
