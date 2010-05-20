@@ -96,7 +96,7 @@
 		<property name="gwt.args" value="" />
 		
 		<!-- Configure path to GWT SDK -->
-		<property name="gwt.sdk" value="${build.home.webinf.libs}" />
+		<property name="gwt.sdk" value="${lib}" />
 		
 	</target>
 
