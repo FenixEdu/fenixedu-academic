@@ -24,7 +24,7 @@
 	<fr:form action="/teacherEvaluation.do?method=createFacultyEvaluationProcess">
 		<fr:edit id="facultyEvaluationProcessCreationBean" name="facultyEvaluationProcessCreationBean">
 			<fr:schema bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.teacher.evaluation.FacultyEvaluationProcessBean">
-				<fr:slot name="title" key="label.teacher.evaluation.facultyEvaluationProcess.title" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+				<fr:slot name="title" key="label.teacher.evaluation.facultyEvaluationProcess.title" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
 					<fr:property name="size" value="40"/>
 				</fr:slot>
 				<fr:slot name="autoEvaluationIntervalStart" key="label.teacher.evaluation.facultyEvaluationProcess.autoEvaluationIntervalStart" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
@@ -39,6 +39,7 @@
 				<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
 			</fr:layout>
 			<fr:destination name="invalid" path="/teacherEvaluation.do?method=prepareCreateFacultyEvaluationProcess"/>
+			<fr:destination name="cancel" path="/teacherEvaluation.do?method=viewManagementInterface"/>
 		</fr:edit>
 	
 		<p>

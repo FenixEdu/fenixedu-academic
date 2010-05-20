@@ -44,6 +44,9 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base {
     public FacultyEvaluationProcess(final MultiLanguageString title, final Interval autoEvaluationInterval,
 	    final Interval evaluationInterval) {
 	this();
+	if (title == null || !title.hasContent()) {
+	    throw new DomainException("error.title.cannot.be.null");
+	}
 	setTitle(title);
 	setAutoEvaluationInterval(autoEvaluationInterval);
 	setEvaluationInterval(evaluationInterval);
