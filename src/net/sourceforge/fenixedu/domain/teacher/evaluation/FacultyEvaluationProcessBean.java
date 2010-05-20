@@ -119,7 +119,11 @@ public class FacultyEvaluationProcessBean implements Serializable {
 
     @Service
     public FacultyEvaluationProcess create() {
-	return new FacultyEvaluationProcess(getTitle(), getAutoEvaluationInterval(), getEvaluationInterval());
+	FacultyEvaluationProcess process = new FacultyEvaluationProcess(getTitle(), getAutoEvaluationInterval(),
+		getEvaluationInterval());
+	process.setAllowNoEval(isAllowNoEval());
+	process.setSuffix(getSuffix());
+	return process;
     }
 
     @Service
