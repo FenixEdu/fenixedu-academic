@@ -5,6 +5,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTime;
+import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 
 public class EmployeeContractSituation extends EmployeeContractSituation_Base {
@@ -35,4 +36,36 @@ public class EmployeeContractSituation extends EmployeeContractSituation_Base {
 	}
     }
 
+    public static EmployeeContractSituation getCurrentEmployeeContractSituation(Employee employee) {
+	LocalDate today = new LocalDate();
+	for (final EmployeeContractSituation employeeContractSituation : employee.getEmployeeContractSituations()) {
+	    if (employeeContractSituation.isActive(today)) {
+		return employeeContractSituation;
+	    }
+	}
+	return null;
+    }
+
+    private boolean isActive(LocalDate day) {
+	return getEndDate() == null ? !getBeginDate().isAfter(day) : getInterval().contains(day.toDateTimeAtStartOfDay());
+    }
+
+    private Interval getInterval() {
+	return getEndDate() != null ? new Interval(getBeginDate().toDateTimeAtStartOfDay(), getEndDate().toDateTimeAtStartOfDay()
+		.plusMillis(1)) : null;
+    }
+
+    public static EmployeeContractSituation getLastEmployeeContractSituation(Employee employee) {
+	LocalDate today = new LocalDate();
+	EmployeeContractSituation lastEmployeeContractSituation = null;
+	for (EmployeeContractSituation employeeContractSituation : employee.getEmployeeContractSituations()) {
+	    if (employeeContractSituation.isActive(today)) {
+		return employeeContractSituation;
+	    } else if (lastEmployeeContractSituation == null
+		    || employeeContractSituation.getBeginDate().isAfter(lastEmployeeContractSituation.getBeginDate())) {
+		lastEmployeeContractSituation = employeeContractSituation;
+	    }
+	}
+	return lastEmployeeContractSituation;
+    }
 }
