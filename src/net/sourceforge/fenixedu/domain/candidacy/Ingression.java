@@ -3,12 +3,14 @@
  */
 package net.sourceforge.fenixedu.domain.candidacy;
 
+import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
+
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * @author - Ângela Almeida (argelina@ist.utl.pt)
  * 
  */
-public enum Ingression {
+public enum Ingression implements IPresentableEnum {
 
     ACO01("Acordo ELF"),
 
@@ -112,6 +114,11 @@ public enum Ingression {
 
     public boolean hasEntryPhase() {
 	return this.equals(Ingression.CNA01) || this.equals(Ingression.PMT);
+    }
+
+    @Override
+    public String getLocalizedName() {
+	return getName() + " - " + getDescription();
     }
 
 }
