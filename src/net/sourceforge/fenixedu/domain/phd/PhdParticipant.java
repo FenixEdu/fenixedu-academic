@@ -47,8 +47,6 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
 
     abstract public String getQualification();
 
-    abstract public String getCategory();
-
     abstract public String getAddress();
 
     abstract public String getEmail();
@@ -143,7 +141,7 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
     static public PhdParticipant getUpdatedOrCreate(final PhdIndividualProgramProcess process, final PhdParticipantBean bean) {
 
 	if (bean.hasParticipant()) {
-	    bean.getParticipant().updateInformationIfNecessary(bean);
+	    bean.getParticipant().updateTitleIfNecessary(bean);
 	    return bean.getParticipant();
 	}
 
@@ -154,10 +152,17 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
 	}
     }
 
-    private void updateInformationIfNecessary(final PhdParticipantBean bean) {
+    private void updateTitleIfNecessary(final PhdParticipantBean bean) {
 	if (isEmpty(getTitle())) {
 	    setTitle(bean.getTitle());
 	}
+    }
+
+    public void edit(final PhdParticipantBean bean) {
+	setTitle(bean.getTitle());
+	setCategory(bean.getCategory());
+	setWorkLocation(bean.getWorkLocation());
+	setInstitution(bean.getInstitution());
     }
 
     static public PhdParticipant readByAccessHashCode(final String hash) {

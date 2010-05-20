@@ -7141,6 +7141,7 @@ class phd.PhdParticipant extends DomainObject {
 	String password;
 	
 	String title;
+	String category;
 	String workLocation;
 	String institution;
 }
@@ -7151,7 +7152,6 @@ class phd.PhdParticipant extends DomainObject {
     class phd.ExternalPhdParticipant extends phd.PhdParticipant {
         String name;
         String qualification;
-        String category;
         String address;
         String email;
         String phone;

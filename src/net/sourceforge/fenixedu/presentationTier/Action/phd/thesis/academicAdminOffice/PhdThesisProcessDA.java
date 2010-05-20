@@ -17,6 +17,8 @@ import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.AddJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.AddPresidentJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.DeleteJuryElement;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.EditJuryElement;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.MoveJuryElementOrder;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RejectJuryElements;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryElements;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryReviews;
@@ -55,6 +57,8 @@ import pt.utl.ist.fenix.tools.util.Pair;
 @Forward(name = "rejectJuryElements", path = "/phd/thesis/academicAdminOffice/rejectJuryElements.jsp"),
 
 @Forward(name = "addJuryElement", path = "/phd/thesis/academicAdminOffice/addJuryElement.jsp"),
+
+@Forward(name = "editJuryElement", path = "/phd/thesis/academicAdminOffice/editJuryElement.jsp"),
 
 @Forward(name = "validateJury", path = "/phd/thesis/academicAdminOffice/validateJury.jsp"),
 
@@ -184,7 +188,35 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 	    final PhdThesisJuryElementBean bean = (PhdThesisJuryElementBean) source;
 	    return bean.getExistingParticipants();
 	}
+    }
 
+    public ActionForward prepareEditJuryElement(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("thesisJuryElementBean", new PhdThesisJuryElementBean(getProcess(request), getJuryElement(request)));
+	return mapping.findForward("editJuryElement");
+    }
+
+    public ActionForward editJuryElementInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("thesisJuryElementBean", getRenderedObject("thesisJuryElementBean"));
+	return mapping.findForward("editJuryElement");
+    }
+
+    public ActionForward editJuryElement(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	try {
+	    ExecuteProcessActivity.run(getProcess(request), EditJuryElement.class, getRenderedObject("thesisJuryElementBean"));
+
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getMessage(), e.getArgs());
+	    return editJuryElementInvalid(mapping, actionForm, request, response);
+	}
+
+	return redirect(String.format("/phdThesisProcess.do?method=manageThesisJuryElements&processId=%s", getProcess(request)
+		.getExternalId()), request);
     }
 
     public ActionForward deleteJuryElement(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -198,7 +230,8 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 	    addErrorMessage(request, e.getMessage(), e.getArgs());
 	}
 
-	return manageThesisJuryElements(mapping, actionForm, request, response);
+	return redirect(String.format("/phdThesisProcess.do?method=manageThesisJuryElements&processId=%s", getProcess(request)
+		.getExternalId()), request);
     }
 
     private ThesisJuryElement getJuryElement(HttpServletRequest request) {
@@ -209,6 +242,16 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 	try {
 	    ExecuteProcessActivity.run(getProcess(request), SwapJuryElementsOrder.class,
 		    new Pair<ThesisJuryElement, ThesisJuryElement>(e1, e2));
+	    addSuccessMessage(request, "message.thesis.jury.element.swapped");
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getMessage(), e.getArgs());
+	}
+    }
+
+    private void moveElement(HttpServletRequest request, ThesisJuryElement element, Integer position) {
+	try {
+	    ExecuteProcessActivity.run(getProcess(request), MoveJuryElementOrder.class, new Pair<ThesisJuryElement, Integer>(
+		    element, position));
 	    addSuccessMessage(request, "message.thesis.jury.element.swapped");
 	} catch (final DomainException e) {
 	    addErrorMessage(request, e.getMessage(), e.getArgs());
@@ -251,7 +294,7 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 	final ThesisJuryElement first = process.getOrderedThesisJuryElements().first();
 
 	if (juryElement != first) {
-	    swapJuryElements(request, juryElement, first);
+	    moveElement(request, juryElement, first.getElementOrder() - 1);
 	}
 
 	return manageThesisJuryElements(mapping, actionForm, request, response);
@@ -265,7 +308,7 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 	final ThesisJuryElement last = process.getOrderedThesisJuryElements().last();
 
 	if (juryElement != last) {
-	    swapJuryElements(request, juryElement, last);
+	    moveElement(request, juryElement, last.getElementOrder() - 1);
 	}
 
 	return manageThesisJuryElements(mapping, actionForm, request, response);

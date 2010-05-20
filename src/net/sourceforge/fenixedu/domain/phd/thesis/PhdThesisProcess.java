@@ -20,9 +20,11 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.DeleteJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.DownloadFinalThesisDocument;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.DownloadProvisionalThesisDocument;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.DownloadThesisRequirement;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.EditJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryDocumentsDownload;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryReporterFeedbackExternalUpload;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryReporterFeedbackUpload;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.MoveJuryElementOrder;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.PhdThesisActivity;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.PrintJuryElementsDocument;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RejectJuryElements;
@@ -65,8 +67,10 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	activities.add(new RequestJuryElements());
 	activities.add(new SubmitJuryElementsDocuments());
 	activities.add(new AddJuryElement());
+	activities.add(new EditJuryElement());
 	activities.add(new DeleteJuryElement());
 	activities.add(new SwapJuryElementsOrder());
+	activities.add(new MoveJuryElementOrder());
 	activities.add(new AddPresidentJuryElement());
 	activities.add(new ValidateJury());
 	activities.add(new PrintJuryElementsDocument());
@@ -97,7 +101,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	    e2.setElementOrder(order1);
 	}
     }
-
+    
     public void deleteJuryElement(ThesisJuryElement element) {
 	if (hasThesisJuryElements(element)) {
 	    final Integer elementOrder = element.getElementOrder();

@@ -184,4 +184,9 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
 	return document != null && document.isAssignedToProcess();
     }
 
+    public void edit(final PhdThesisJuryElementBean bean) {
+	getParticipant().edit(bean);
+	setReporter(bean.isReporter());
+    }
+
 }

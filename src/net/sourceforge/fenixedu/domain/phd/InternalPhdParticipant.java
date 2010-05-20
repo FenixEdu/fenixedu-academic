@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.util.StringUtils;
 import dml.runtime.RelationAdapter;
 
 public class InternalPhdParticipant extends InternalPhdParticipant_Base {
@@ -40,14 +39,8 @@ public class InternalPhdParticipant extends InternalPhdParticipant_Base {
 	init(process);
 	setPerson(bean.getPerson());
 	setTitle(bean.getTitle());
-
-	if (!StringUtils.isEmpty(bean.getInstitution())) {
-	    setInstitution(bean.getInstitution());
-	}
-
-	if (!StringUtils.isEmpty(bean.getWorkLocation())) {
-	    setWorkLocation(bean.getWorkLocation());
-	}
+	setInstitution(bean.getInstitution());
+	setWorkLocation(bean.getWorkLocation());
     }
 
     private void checkPerson(PhdIndividualProgramProcess process, final Person person) {
@@ -74,6 +67,10 @@ public class InternalPhdParticipant extends InternalPhdParticipant_Base {
 
     @Override
     public String getCategory() {
+	if (!isEmpty(super.getCategory())) {
+	    return super.getCategory();
+	}
+
 	final String category = getPerson().getEmployee().getCurrentEmployeeProfessionalCategoryName();
 	return !isEmpty(category) ? category : (hasTeacher() ? getTeacher().getCategory().getName().getContent() : EMPTY);
     }
@@ -88,7 +85,7 @@ public class InternalPhdParticipant extends InternalPhdParticipant_Base {
 
     @Override
     public String getWorkLocation() {
-	if (super.getWorkLocation() != null) {
+	if (!isEmpty(super.getWorkLocation())) {
 	    return super.getWorkLocation();
 
 	} else if (getPerson().hasEmployee()) {
@@ -102,7 +99,7 @@ public class InternalPhdParticipant extends InternalPhdParticipant_Base {
 
     @Override
     public String getInstitution() {
-	return super.getInstitution() != null ? super.getInstitution() : getRootDomainObject().getInstitutionUnit().getName();
+	return !isEmpty(super.getInstitution()) ? super.getInstitution() : getRootDomainObject().getInstitutionUnit().getName();
     }
 
     @Override

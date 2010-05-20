@@ -1,6 +1,3 @@
-/**
- * 
- */
 package net.sourceforge.fenixedu.domain.phd.thesis.activities;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
@@ -9,11 +6,10 @@ import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisJuryElementBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
 
-public class AddPresidentJuryElement extends PhdThesisActivity {
+public class EditJuryElement extends PhdThesisActivity {
 
     @Override
     protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
-
 	if (process.isJuryValidated()) {
 	    throw new PreConditionNotValidException();
 	}
@@ -25,12 +21,14 @@ public class AddPresidentJuryElement extends PhdThesisActivity {
 
     @Override
     protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
-	
-	if (process.hasPresidentJuryElement()) {
-	    process.getPresidentJuryElement().delete();
+
+	final PhdThesisJuryElementBean bean = (PhdThesisJuryElementBean) object;
+	final ThesisJuryElement juryElement = bean.getJuryElement();
+
+	if (process.hasThesisJuryElements(juryElement)) {
+	    juryElement.edit(bean);
 	}
 
-	ThesisJuryElement.createPresident(process, (PhdThesisJuryElementBean) object);
 	return process;
     }
 }

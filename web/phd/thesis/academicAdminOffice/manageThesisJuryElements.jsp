@@ -114,47 +114,36 @@
 		<fr:slot name="elementOrder" />
 		<fr:slot name="nameWithTitle" />
 		<fr:slot name="category" />
+		<%-- 
 		<fr:slot name="workLocation" />
 		<fr:slot name="institution" />
+		--%>
 		<fr:slot name="email" />
 		<fr:slot name="reporter" />
 	</fr:schema>
 
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thlight mtop15" />
+		
+		<fr:link name="top" label="label.move.top,PHD_RESOURCES" order="1" condition="!topElement"
+ 			link="<%= "/phdThesisProcess.do?method=moveTop&juryElementId=${externalId}&processId=" + processId.toString() %>" />
+	
+		<fr:link  name="up" label="label.move.up,PHD_RESOURCES" order="2" condition="!topElement"
+			link="<%= "/phdThesisProcess.do?method=moveUp&juryElementId=${externalId}&processId=" + processId.toString() %>"/>
 
-		<fr:property name="linkFormat(top)" value="<%= "/phdThesisProcess.do?method=moveTop&juryElementId=${externalId}&processId=" + processId.toString() %>"/>
-		<fr:property name="key(top)" value="label.move.top"/>
-		<fr:property name="bundle(top)" value="PHD_RESOURCES"/>
-		<fr:property name="visibleIfNot(top)" value="topElement"/>
-		<fr:property name="order(top)" value="1"/>
+		<fr:link name="down" label="label.move.down,PHD_RESOURCES" order="3" condition="!bottomElement" 
+			link="<%= "/phdThesisProcess.do?method=moveDown&juryElementId=${externalId}&processId=" + processId.toString() %>"/>
+		
+		<fr:link name="bottom" label="label.move.bottom,PHD_RESOURCES" order="4" condition="!bottomElement" 
+			link="<%= "/phdThesisProcess.do?method=moveBottom&juryElementId=${externalId}&processId=" + processId.toString() %>"/>
+		
+		<fr:link name="edit" label="label.edit,PHD_RESOURCES" order="5" 
+			link="<%= "/phdThesisProcess.do?method=prepareEditJuryElement&juryElementId=${externalId}&processId=" + processId.toString() %>"/>
+		
+		<fr:link name="delete" label="label.delete,PHD_RESOURCES" order="6" confirmation="label.phd.thesis.process.remove.jury.element.confirmation,PHD_RESOURCES"
+			link="<%= "/phdThesisProcess.do?method=deleteJuryElement&juryElementId=${externalId}&processId=" + processId.toString() %>"/>
 
-		<fr:property name="linkFormat(up)" value="<%= "/phdThesisProcess.do?method=moveUp&juryElementId=${externalId}&processId=" + processId.toString() %>"/>
-		<fr:property name="key(up)" value="label.move.up"/>
-		<fr:property name="bundle(up)" value="PHD_RESOURCES"/>
-		<fr:property name="visibleIfNot(up)" value="topElement"/>
-		<fr:property name="order(up)" value="2"/>
-
-		<fr:property name="linkFormat(down)" value="<%= "/phdThesisProcess.do?method=moveDown&juryElementId=${externalId}&processId=" + processId.toString() %>"/>
-		<fr:property name="key(down)" value="label.move.down"/>
-		<fr:property name="bundle(down)" value="PHD_RESOURCES"/>
-		<fr:property name="visibleIfNot(down)" value="bottomElement"/>
-		<fr:property name="order(down)" value="3"/>
-
-		<fr:property name="linkFormat(bottom)" value="<%= "/phdThesisProcess.do?method=moveBottom&juryElementId=${externalId}&processId=" + processId.toString() %>"/>
-		<fr:property name="key(bottom)" value="label.move.bottom"/>
-		<fr:property name="bundle(bottom)" value="PHD_RESOURCES"/>
-		<fr:property name="visibleIfNot(bottom)" value="bottomElement"/>
-		<fr:property name="order(bottom)" value="4"/>
-
-		<fr:property name="linkFormat(delete)" value="<%= "/phdThesisProcess.do?method=deleteJuryElement&juryElementId=${externalId}&processId=" + processId.toString() %>"/>
-		<fr:property name="key(delete)" value="label.delete"/>
-		<fr:property name="bundle(delete)" value="PHD_RESOURCES"/>
-		<fr:property name="order(delete)" value="5"/>
-		<fr:property name="confirmationKey(delete)" value="label.phd.thesis.process.remove.jury.element.confirmation" />
-		<fr:property name="confirmationBundle(delete)" value="PHD_RESOURCES" />
-
-		<fr:property name="sortBy" value="elementOrder=asc"/>
+		<fr:property name="sortBy" value="elementOrder=asc" />
 	</fr:layout>
 </fr:view>
 </logic:notEmpty>

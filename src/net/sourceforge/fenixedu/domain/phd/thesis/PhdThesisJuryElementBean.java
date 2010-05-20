@@ -13,9 +13,35 @@ public class PhdThesisJuryElementBean extends PhdParticipantBean {
     private PhdThesisProcess thesisProcess;
     private boolean reporter;
 
-    public PhdThesisJuryElementBean(final PhdThesisProcess thesisProcess) {
-	super(thesisProcess.getIndividualProgramProcess());
-	setThesisProcess(thesisProcess);
+    private ThesisJuryElement juryElement;
+
+    public PhdThesisJuryElementBean(final PhdThesisProcess process) {
+	super(process.getIndividualProgramProcess());
+	setThesisProcess(process);
+    }
+
+    public PhdThesisJuryElementBean(final PhdThesisProcess process, final ThesisJuryElement element) {
+
+	this(process);
+
+	setParticipant(element.getParticipant());
+	setParticipantType(element.getParticipant().isInternal() ? PhdParticipantType.INTERNAL : PhdParticipantType.EXTERNAL);
+	setJuryElement(element);
+
+	setName(element.getName());
+	setTitle(element.getTitle());
+	setCategory(element.getCategory());
+	setWorkLocation(element.getWorkLocation());
+	setInstitution(element.getInstitution());
+
+	if (!element.getParticipant().isInternal()) {
+	    setQualification(element.getQualification());
+	    setAddress(element.getAddress());
+	    setEmail(element.getEmail());
+	    setPhone(element.getPhone());
+	}
+
+	setReporter(element.getReporter().booleanValue());
     }
 
     public PhdThesisProcess getThesisProcess() {
@@ -32,6 +58,14 @@ public class PhdThesisJuryElementBean extends PhdParticipantBean {
 
     public void setReporter(boolean reporter) {
 	this.reporter = reporter;
+    }
+
+    public ThesisJuryElement getJuryElement() {
+	return juryElement;
+    }
+
+    public void setJuryElement(ThesisJuryElement juryElement) {
+	this.juryElement = juryElement;
     }
 
     public List<PhdParticipant> getExistingParticipants() {

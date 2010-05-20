@@ -6,7 +6,7 @@ public class ExternalPhdParticipant extends ExternalPhdParticipant_Base {
 	super();
     }
 
-    ExternalPhdParticipant(PhdIndividualProgramProcess process, PhdParticipantBean bean) {
+    ExternalPhdParticipant(final PhdIndividualProgramProcess process, final PhdParticipantBean bean) {
 	this();
 	init(process);
 	edit(bean.getName(), bean.getTitle(), bean.getQualification(), bean.getWorkLocation(), bean.getInstitution(), bean
@@ -23,6 +23,7 @@ public class ExternalPhdParticipant extends ExternalPhdParticipant_Base {
 	setTitle(title);
 	setQualification(qualification);
 	setWorkLocation(workLocation);
+	setInstitution(institution);
 	setEmail(email);
     }
 
@@ -32,4 +33,14 @@ public class ExternalPhdParticipant extends ExternalPhdParticipant_Base {
 	setPhone(phone);
     }
 
+    @Override
+    public void edit(final PhdParticipantBean bean) {
+	super.edit(bean);
+
+	setName(bean.getName());
+	setQualification(bean.getQualification());
+	setAddress(bean.getAddress());
+	setEmail(bean.getEmail());
+	setPhone(bean.getPhone());
+    }
 }

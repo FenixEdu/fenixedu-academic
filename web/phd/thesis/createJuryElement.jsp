@@ -86,23 +86,36 @@
 						
 						<%-- EXTERNAL element --%>						
 						<logic:equal name="thesisJuryElementBean" property="participantType.name" value="EXTERNAL">
-							<fr:slot name="name" required="true" />
-							<fr:slot name="qualification" required="true" />
-							<fr:slot name="category" required="true" />
-							<fr:slot name="email" required="true" />
-							<fr:slot name="address" />
-							<fr:slot name="phone" />
+							<fr:slot name="name" required="true" >
+								<fr:property name="size" value="50" />
+							</fr:slot>
+							<fr:slot name="qualification" required="true" >
+								<fr:property name="size" value="50" />
+							</fr:slot>
+							<fr:slot name="category" required="true" >
+								<fr:property name="size" value="50" />
+							</fr:slot>
+							<fr:slot name="email" required="true" >
+								<fr:property name="size" value="50" />
+							</fr:slot>
+							<fr:slot name="address" >
+								<fr:property name="size" value="50" />
+							</fr:slot>
+							<fr:slot name="phone" >
+								<fr:property name="size" value="50" />
+							</fr:slot>
+							<fr:slot name="title">
+								<fr:property name="size" value="30" />
+							</fr:slot>
+							<fr:slot name="workLocation">
+								<fr:property name="size" value="50" />
+							</fr:slot>
+							<fr:slot name="institution">
+								<fr:property name="size" value="50" />
+							</fr:slot>
 						</logic:equal>
 						<%-- end: create new external element --%>
 					</logic:notEmpty>
-
-					<fr:slot name="title" />
-					<fr:slot name="workLocation">
-						<fr:property name="size" value="15" />
-					</fr:slot>
-					<fr:slot name="institution">
-						<fr:property name="size" value="15" />
-					</fr:slot>
 
 				</logic:equal>
 
