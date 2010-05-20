@@ -116,11 +116,7 @@
 		<delete dir="${build.home}/images/logs" />
 		<delete dir="${deploy.home}" />
 		<delete dir="${src_gen}" />
-		<delete includeemptydirs="true">
-			<fileset dir="${build.gwtdestdir}">
-				<include name="**/*" />
-			</fileset>
-		</delete>
+		<delete dir="${build.gwtdestdir}" />
 		<delete file=".actionAnnotationLog" />
 	</target>
 
@@ -154,6 +150,7 @@
 		<mkdir dir="${build.home.webinf.classes}" />
 		<mkdir dir="${build.home.xfire}" />
 		<mkdir dir="${build.home}/images/logs" />
+		<mkdir dir="${build.gwtdestdir}" />
 
 		<echo file="${build.home.webinf.classes}/.build.version">${build.version}</echo>
 
