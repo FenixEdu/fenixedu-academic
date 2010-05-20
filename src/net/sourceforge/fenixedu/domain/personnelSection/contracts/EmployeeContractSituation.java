@@ -39,11 +39,16 @@ public class EmployeeContractSituation extends EmployeeContractSituation_Base {
     public static EmployeeContractSituation getCurrentEmployeeContractSituation(Employee employee) {
 	LocalDate today = new LocalDate();
 	for (final EmployeeContractSituation employeeContractSituation : employee.getEmployeeContractSituations()) {
-	    if (employeeContractSituation.isActive(today)) {
+	    if (employeeContractSituation.isValid() && employeeContractSituation.isActive(today)) {
 		return employeeContractSituation;
 	    }
 	}
 	return null;
+    }
+
+    public boolean isValid() {
+	return getProfessionalCategory() != null && getBeginDate() != null
+		&& (getEndDate() == null || !getBeginDate().isAfter(getEndDate()));
     }
 
     private boolean isActive(LocalDate day) {
@@ -59,11 +64,13 @@ public class EmployeeContractSituation extends EmployeeContractSituation_Base {
 	LocalDate today = new LocalDate();
 	EmployeeContractSituation lastEmployeeContractSituation = null;
 	for (EmployeeContractSituation employeeContractSituation : employee.getEmployeeContractSituations()) {
-	    if (employeeContractSituation.isActive(today)) {
-		return employeeContractSituation;
-	    } else if (lastEmployeeContractSituation == null
-		    || employeeContractSituation.getBeginDate().isAfter(lastEmployeeContractSituation.getBeginDate())) {
-		lastEmployeeContractSituation = employeeContractSituation;
+	    if (employeeContractSituation.isValid()) {
+		if (employeeContractSituation.isActive(today)) {
+		    return employeeContractSituation;
+		} else if (lastEmployeeContractSituation == null
+			|| employeeContractSituation.getBeginDate().isAfter(lastEmployeeContractSituation.getBeginDate())) {
+		    lastEmployeeContractSituation = employeeContractSituation;
+		}
 	    }
 	}
 	return lastEmployeeContractSituation;
