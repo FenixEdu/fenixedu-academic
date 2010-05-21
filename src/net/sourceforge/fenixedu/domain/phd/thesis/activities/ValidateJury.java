@@ -28,9 +28,11 @@ public class ValidateJury extends PhdThesisActivity {
 	process.setWhenJuryValidated(bean.getWhenJuryValidated());
 	process.setWhenJuryDesignated(bean.getWhenJuryDesignated());
 
-	/*
-	 * TODO: SEND ALERT after create!!!!!!!!!!!!
-	 */
+	if (bean.isToNotify()) {
+	    /*
+	     * TODO: SEND ALERT after create!!!!!!!!!!!!
+	     */
+	}
 
 	return process;
     }

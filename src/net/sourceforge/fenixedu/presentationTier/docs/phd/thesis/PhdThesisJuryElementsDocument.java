@@ -77,7 +77,7 @@ public class PhdThesisJuryElementsDocument extends FenixReport {
 	    }
 
 	    if (!StringUtils.isEmpty(element.getInstitution())) {
-		builder.append(" ").append(getMessage("label.phd.thesis.jury.elements.document.keyword.of")).append(
+		builder.append(" ").append(getMessage("label.phd.thesis.jury.elements.document.keyword.of")).append(" ").append(
 			element.getInstitution());
 	    }
 

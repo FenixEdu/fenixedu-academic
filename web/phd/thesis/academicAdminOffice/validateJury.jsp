@@ -46,6 +46,9 @@
 	<fr:edit id="thesisBean" name="thesisBean">
 	
 		<fr:schema bundle="PHD_RESOURCES" type="<%= PhdThesisProcessBean.class.getName() %>">
+			<fr:slot name="toNotify" layout="radio">
+				<fr:property name="classes" value="liinline nobullet"/>
+			</fr:slot>
 			<fr:slot name="whenJuryValidated" required="true" />
 			<fr:slot name="whenJuryDesignated" required="true" />
 		</fr:schema>

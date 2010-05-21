@@ -73,24 +73,23 @@
 	<br/>
 	
 <logic:notEmpty name="process" property="juryPresidentDocument">
-	<p>
+	<br/>
 	<strong><bean:message  key="label.phd.thesis.jury.president.document" bundle="PHD_RESOURCES"/>: </strong>
 	<bean:define id="url2" name="process" property="juryPresidentDocument.downloadUrl" />
 	<a href="<%= url2.toString() %>">
 		<bean:write name="process" property="juryPresidentDocument.documentType.localizedName"/> 
 		(<bean:message  key="label.version" bundle="PHD_RESOURCES" /> <bean:write name="process" property="juryPresidentDocument.documentVersion"/>)
 	</a>
-	</p>
+	<br/>
 </logic:notEmpty>
 
 <logic:notEmpty name="process" property="juryElementsDocument">
-	<p><strong><bean:message  key="label.phd.thesis.jury.elements.document" bundle="PHD_RESOURCES"/>: </strong>
+	<strong><bean:message  key="label.phd.thesis.jury.elements.document" bundle="PHD_RESOURCES"/>: </strong>
 	<bean:define id="finalThesisDownloadUrl" name="process" property="juryElementsDocument.downloadUrl" />
 	<a href="<%= finalThesisDownloadUrl.toString() %>">
 		<bean:write name="process" property="juryElementsDocument.documentType.localizedName"/> 
 		(<bean:message  key="label.version" bundle="PHD_RESOURCES" /> <bean:write name="process" property="juryElementsDocument.documentVersion"/>)
 	</a>
-	</p>
 	<br/><br/>
 </logic:notEmpty>
 
