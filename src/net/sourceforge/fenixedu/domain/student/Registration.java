@@ -3794,7 +3794,7 @@ public class Registration extends Registration_Base {
 	}
 
 	final ExecutionYear previousExecutionYear = executionYear.getPreviousExecutionYear();
-	if (getStartExecutionYear() == executionYear) {
+	if (getStartExecutionYear() == executionYear && getLastDegreeCurricularPlan() != null) {
 	    return getLastDegreeCurricularPlan().hasExecutionDegreeFor(executionYear);
 
 	} else if (getDegreeType() == DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA) {
