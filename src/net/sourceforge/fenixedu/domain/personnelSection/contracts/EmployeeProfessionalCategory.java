@@ -9,17 +9,21 @@ import org.joda.time.LocalDate;
 public class EmployeeProfessionalCategory extends EmployeeProfessionalCategory_Base {
 
     public EmployeeProfessionalCategory(final Employee employee, final LocalDate beginDate, final LocalDate endDate,
-	    final ProfessionalCategory professionalCategory, final ProfessionalRegime professionalRegime,
-	    final ProfessionalRelation professionalRelation, final String step, final String level, final DateTime creationDate,
-	    final DateTime modifiedDate) {
+	    final ProfessionalCategory professionalCategory, final String professionalCategoryGiafId,
+	    final ProfessionalRegime professionalRegime, final String professionalRegimeGiafId,
+	    final ProfessionalRelation professionalRelation, final String professionalRelationGiafId, final String step,
+	    final String level, final DateTime creationDate, final DateTime modifiedDate) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setEmployee(employee);
 	setBeginDate(beginDate);
 	setEndDate(endDate);
 	setProfessionalCategory(professionalCategory);
+	setProfessionalCategoryGiafId(professionalCategoryGiafId);
 	setProfessionalRegime(professionalRegime);
+	setProfessionalRegimeGiafId(professionalRegimeGiafId);
 	setProfessionalRelation(professionalRelation);
+	setProfessionalRelationGiafId(professionalRelationGiafId);
 	setStep(step);
 	setLevel(level);
 	setCreationDate(creationDate);

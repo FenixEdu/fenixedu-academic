@@ -6130,6 +6130,8 @@ class personnelSection.contracts.EmployeeContractSituation extends DomainObject 
     DateTime modifiedDate;
     DateTime importationDate;
     DateTime anulationDate;
+    String contractSituationGiafId;
+    String professionalCategoryGiafId;
 }
 
 class personnelSection.contracts.ProfessionalCategory extends DomainObject {
@@ -6147,6 +6149,9 @@ class personnelSection.contracts.EmployeeProfessionalCategory extends DomainObje
     DateTime modifiedDate;
     DateTime importationDate;
     DateTime anulationDate;
+    String professionalCategoryGiafId;
+    String professionalRegimeGiafId;
+    String professionalRelationGiafId;
 }
 
 class personnelSection.contracts.ProfessionalRegime extends DomainObject {
@@ -6163,6 +6168,7 @@ class personnelSection.contracts.EmployeeProfessionalRegime extends DomainObject
     DateTime modifiedDate;
     DateTime importationDate;
     DateTime anulationDate;
+    String professionalRegimeGiafId;
 }
 
 class personnelSection.contracts.ProfessionalRelation extends DomainObject {
@@ -6178,6 +6184,8 @@ class personnelSection.contracts.EmployeeProfessionalRelation extends DomainObje
     DateTime modifiedDate;
     DateTime importationDate;
     DateTime anulationDate;
+    String professionalRelationGiafId;
+    String professionalCategoryGiafId;
 }
 
 class personnelSection.contracts.FunctionsAccumulation extends DomainObject {
@@ -6192,7 +6200,9 @@ class personnelSection.contracts.EmployeeFunctionsAccumulation extends DomainObj
     DateTime creationDate;
     DateTime modifiedDate;
     DateTime importationDate;
-    DateTime anulationDate; 
+    DateTime anulationDate;
+    String functionsAccumulationGiafId;
+    String professionalRegimeGiafId;
 }
 
 class personnelSection.contracts.EmployeeProfessionalExemption extends DomainObject {
