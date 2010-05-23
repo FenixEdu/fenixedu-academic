@@ -43,4 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Alter Employee Contract tables" alterEmployeeContractTables.sql
+execute "Alter Employee Contract tables." alterEmployeeContractTables.sql
+execute "Create tables for remote plugin." remote.sql

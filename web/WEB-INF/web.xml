@@ -300,8 +300,16 @@
     	<servlet-name>FenixGWTServlet</servlet-name>
     	<servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.gwt.FenixGWTServlet</servlet-class>
     </servlet>
+    <servlet>
+    	<servlet-name>RemoteServlet</servlet-name>
+    	<servlet-class>pt.ist.fenixframework.plugins.remote.servlet.RemoteServlet</servlet-class>
+    </servlet>
     
     <!-- Servlet Mapping -->
+    <servlet-mapping>
+        <servlet-name>RemoteServlet</servlet-name>
+        <url-pattern>/remote/*</url-pattern>
+    </servlet-mapping>    
     <servlet-mapping>
         <servlet-name>XFireServlet</servlet-name>
         <url-pattern>/servlet/XFireServlet/*</url-pattern>

@@ -10,9 +10,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import org.apache.commons.lang.StringUtils;
+
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.Config;
 import pt.ist.fenixWebFramework.Config.CasConfig;
+import pt.ist.fenixframework.FenixFrameworkPlugin;
 import pt.ist.fenixframework.pstm.dml.FenixDomainModelWithOCC;
 
 /**
@@ -107,7 +110,32 @@ public class PropertiesManager extends pt.utl.ist.fenix.tools.util.PropertiesMan
 		casConfigByHost = Collections.unmodifiableMap(casConfigMap);
 
 		exceptionHandlerClassname = "net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler";
+
+		plugins = getPluginArray();
 	    }
+
+	    private FenixFrameworkPlugin[] getPluginArray() {
+		String property = getProperty("plugins");
+		if (StringUtils.isEmpty(property)) {
+		    return new FenixFrameworkPlugin[0];
+		}
+		String[] classNames = property.split("\\s*,\\s*");
+
+		FenixFrameworkPlugin[] pluginArray = new FenixFrameworkPlugin[classNames.length];
+		for (int i = 0; i < classNames.length; i++) {
+		    try {
+			pluginArray[i] = (FenixFrameworkPlugin) Class.forName(classNames[i].trim()).newInstance();
+		    } catch (InstantiationException e) {
+			throw new Error(e);
+		    } catch (IllegalAccessException e) {
+			throw new Error(e);
+		    } catch (ClassNotFoundException e) {
+			throw new Error(e);
+		    }
+		}
+		return pluginArray;
+	    }
+
 	};
     }
 }

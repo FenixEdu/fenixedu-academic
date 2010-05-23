@@ -546,7 +546,9 @@
 				<pathelement path="${build.home.webinf.classes}" />
 			</classpath>
 		</java>
-		<java classname="dml.DmlCompiler" fork="true">
+		<java classname="pt.ist.fenixframework.plugins.remote.codeGenerator.RemoteConverterClassAwareDmlCompiler" fork="true">
+			<arg value="${build.home.webinf.classes}" />
+			<arg value="-originalDomainModelLimit" />
 			<arg value="-d" />
 			<arg value="${src_remote}" />
 			<arg value="-db" />
