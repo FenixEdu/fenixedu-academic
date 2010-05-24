@@ -574,6 +574,12 @@
 			<src path="${src_remote}" />
 			<src path="${src_gen_remote}" />
 		</javac>
+        <post-process-domain dir="${src_gen_remote}" dml="${src_remote}/remote.dml">
+          <classpath refid="class.path.lib.ref" />
+          <classpath>
+            <pathelement path="${src_gen_remote}" />
+          </classpath>
+        </post-process-domain>
 		<mkdir dir="${deploy.home}" />
 		<jar destfile="${deploy.home}/fenix-remote.jar">
 			<fileset dir="${src_remote}">
