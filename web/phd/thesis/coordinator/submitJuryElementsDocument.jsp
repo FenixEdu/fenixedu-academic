@@ -59,7 +59,7 @@
 
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 
-<phd:activityAvailable process="<%= process %>" activity="<%= SubmitJuryElementsDocuments.class %>">
+<logic:equal name="process" property="juryValidated" value="false">
 
 	<bean:define id="processId" name="process" property="externalId" />
 	
@@ -89,7 +89,7 @@
 		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='viewIndividualProgramProcess';"><bean:message bundle="PHD_RESOURCES" key="label.cancel"/></html:cancel>	
 	</fr:form>
 
-</phd:activityAvailable>
+</logic:equal>
 
 <%--  ### End of Operation Area  ### --%>
 

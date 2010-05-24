@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.phd.thesis;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.TreeSet;
@@ -101,7 +102,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	    e2.setElementOrder(order1);
 	}
     }
-    
+
     public void deleteJuryElement(ThesisJuryElement element) {
 	if (hasThesisJuryElements(element)) {
 	    final Integer elementOrder = element.getElementOrder();
@@ -262,4 +263,17 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	return getIndividualProgramProcess().getProcessNumber();
     }
 
+    public Collection<ThesisJuryElement> getReportThesisJuryElements() {
+	final Collection<ThesisJuryElement> result = new ArrayList<ThesisJuryElement>();
+	for (final ThesisJuryElement element : getThesisJuryElements()) {
+	    if (element.getReporter().booleanValue()) {
+		result.add(element);
+	    }
+	}
+	return result;
+    }
+
+    public boolean isWaitingForJuryReporterFeedback() {
+	return getActiveState() == PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK;
+    }
 }

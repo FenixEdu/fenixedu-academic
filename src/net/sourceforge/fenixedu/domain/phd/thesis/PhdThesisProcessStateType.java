@@ -18,7 +18,7 @@ public enum PhdThesisProcessStateType implements PhdProcessStateType {
 
     WAITING_FOR_JURY_REPORTER_FEEDBACK,
 
-    WAITING_FOR_THESIS_PROVISIONAL_VERSION_APPROVAL,
+    WAITING_FOR_THESIS_PROVISIONAL_VERSION_APPROVAL, // is this state correct?
 
     WAITING_FOR_THESIS_DISCUSSION_DATE_SCHEDULING,
 
@@ -30,7 +30,7 @@ public enum PhdThesisProcessStateType implements PhdProcessStateType {
     public String getName() {
 	return name();
     }
-    
+
     @Override
     public String getLocalizedName() {
 	return getLocalizedName(Language.getLocale());

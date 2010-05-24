@@ -10,13 +10,13 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessType;
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService.AlertMessage;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
+import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType;
 import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
 import net.sourceforge.fenixedu.domain.util.email.Message;
@@ -41,12 +41,17 @@ public class RequestJuryReviews extends PhdThesisActivity {
     @Override
     protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
 
-	notifyJuryElements(process);
-	sendEmailToJuryElement(process.getIndividualProgramProcess(), process.getPresidentJuryElement().getParticipant(),
-		"message.phd.request.jury.reviews.external.access.jury.president.body");
+	final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
+
+	if (bean.isToNotify()) {
+	    notifyJuryElements(process);
+	    sendEmailToJuryElement(process.getIndividualProgramProcess(), process.getPresidentJuryElement().getParticipant(),
+		    "message.phd.request.jury.reviews.external.access.jury.president.body");
+	}
 
 	if (process.getActiveState() != PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK) {
-	    process.createState(PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK, userView.getPerson(), null);
+	    process.createState(PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK, userView.getPerson(), bean
+		    .getRemarks());
 	}
 
 	return process;
@@ -56,7 +61,11 @@ public class RequestJuryReviews extends PhdThesisActivity {
 
 	for (final ThesisJuryElement juryElement : process.getThesisJuryElements()) {
 
-	    if (!isCoordinatorOrGuider(process, juryElement)) {
+	    if (juryElement.isDocumentValidated()) {
+		continue;
+	    }
+
+	    if (!juryElement.isInternal()) {
 		createExternalAccess(juryElement);
 	    }
 
@@ -79,8 +88,8 @@ public class RequestJuryReviews extends PhdThesisActivity {
     private String getAccessInformation(PhdIndividualProgramProcess process, PhdParticipant participant) {
 
 	if (!participant.isInternal()) {
-	    return AlertMessage.get("message.phd.external.access", PhdProperties.getPhdExternalAccessLink(),
-		    participant.getAccessHashCode(), participant.getPassword());
+	    return AlertMessage.get("message.phd.external.access", PhdProperties.getPhdExternalAccessLink(), participant
+		    .getAccessHashCode(), participant.getPassword());
 
 	} else {
 	    final Person person = ((InternalPhdParticipant) participant).getPerson();
@@ -88,7 +97,7 @@ public class RequestJuryReviews extends PhdThesisActivity {
 	    if (process.isCoordinatorForPhdProgram(person)) {
 		return AlertMessage.get("message.phd.request.jury.reviews.coordinator.access");
 
-	    } else if (process.isGuiderOrAssistentGuider(person) || person.hasRole(RoleType.TEACHER)) {
+	    } else if (process.isGuiderOrAssistentGuider(person) || person.hasTeacher()) {
 		return AlertMessage.get("message.phd.request.jury.reviews.teacher.access");
 	    }
 	}
@@ -135,17 +144,6 @@ public class RequestJuryReviews extends PhdThesisActivity {
     private void email(String email, String subject, String body) {
 	final SystemSender sender = RootDomainObject.getInstance().getSystemSender();
 	new Message(sender, sender.getConcreteReplyTos(), null, null, null, subject, body, Collections.singleton(email));
-    }
-
-    private boolean isCoordinatorOrGuider(PhdThesisProcess process, ThesisJuryElement juryElement) {
-
-	if (!juryElement.isInternal()) {
-	    return false;
-	}
-
-	final Person person = ((InternalPhdParticipant) juryElement.getParticipant()).getPerson();
-	return process.getIndividualProgramProcess().isCoordinatorForPhdProgram(person)
-		|| (process.getIndividualProgramProcess().isGuiderOrAssistentGuider(person) && person.hasRole(RoleType.TEACHER));
     }
 
 }

@@ -14,17 +14,21 @@ public class SubmitThesis extends PhdThesisActivity {
     @Override
     protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
 
-	if (!process.isJuryValidated()) {
-	    throw new PreConditionNotValidException();
-	}
-
-	if (!PhdThesisProcess.isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-	    throw new PreConditionNotValidException();
-	}
+	// if (!process.isJuryValidated()) {
+	// throw new PreConditionNotValidException();
+	// }
+	//
+	// if
+	// (!PhdThesisProcess.isMasterDegreeAdministrativeOfficeEmployee(userView))
+	// {
+	// throw new PreConditionNotValidException();
+	// }
 
 	/*
 	 * TODO: check if all reports answered?
 	 */
+
+	throw new PreConditionNotValidException();
     }
 
     @Override

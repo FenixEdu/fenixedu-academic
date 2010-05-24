@@ -39,17 +39,42 @@
 		<fr:property name="classes" value="tstyle2 thlight mtop15" />
 	</fr:layout>
 </fr:view>
-<%--  ### End Of Context Information  ### --%>
 
 <br/>
+<strong><bean:message key="label.phd.jury.reporters" bundle="PHD_RESOURCES" /></trong>
+<fr:view name="process" property="reportThesisJuryElements">
+
+	<fr:schema bundle="PHD_RESOURCES" type="<%= ThesisJuryElement.class.getName() %>">
+		<fr:slot name="nameWithTitle" />
+		<fr:slot name="email" />
+		<fr:slot name="documentValidated" layout="boolean-icon">
+			<fr:property name="falseIconPath" value="/images/incorrect.gif" />
+		</fr:slot>
+		<fr:slot name="lastFeedbackDocument" layout="null-as-label">
+			<fr:property name="subLayout" value="link" />
+		</fr:slot>
+	</fr:schema>
+
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle2 thlight mtop15" />
+		<fr:property name="columnClasses" value="acenter" />
+	</fr:layout>
+</fr:view>
+
+<%--  ### End Of Context Information  ### --%>
+
 
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 
-
+<br/>
+<strong><bean:message key="label.phd.request.jury.reviews" bundle="PHD_RESOURCES" /></strong>
 <fr:form action="<%= "/phdThesisProcess.do?processId=" + processId.toString() %>">
 	<input type="hidden" name="method" />
 	<fr:edit id="requestJuryReviewsBean" name="requestJuryReviewsBean">
 		<fr:schema bundle="PHD_RESOURCES" type="<%= PhdThesisProcessBean.class.getName() %>">
+			<fr:slot name="toNotify" layout="radio">
+				<fr:property name="classes" value="liinline nobullet"/>
+			</fr:slot>
 			<fr:slot name="remarks" layout="longText">
 				<fr:property name="columns" value="80"/>
 				<fr:property name="rows" value="8"/>

@@ -4,12 +4,10 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
 
 import org.apache.commons.lang.StringUtils;
 
-import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
@@ -27,7 +25,7 @@ public class PhdThesisReportFeedbackDocument extends PhdThesisReportFeedbackDocu
 	check(element, "error.PhdThesisReportFeedbackDocument.invalid.element");
 	setJuryElement(element);
 
-	init(null, PhdIndividualProgramDocumentType.JURY_REPORT_FEEDBACK, remarks, content, filename, uploader);
+	init(element.getProcess(), PhdIndividualProgramDocumentType.JURY_REPORT_FEEDBACK, remarks, content, filename, uploader);
     }
 
     @Override
@@ -68,12 +66,6 @@ public class PhdThesisReportFeedbackDocument extends PhdThesisReportFeedbackDocu
 	filePath.addNode(new VirtualPathNode(getJuryElement().getProcess().getIndividualProgramProcess().getIdInternal()
 		.toString(), getJuryElement().getProcess().getIndividualProgramProcess().getIdInternal().toString()));
 	return filePath;
-    }
-
-    @Service
-    public void associateToProcess(final PhdThesisProcess process) {
-	check(process, "error.phd.PhdProgramProcessDocument.process.cannot.be.null");
-	setPhdProgramProcess(process);
     }
 
     @Override

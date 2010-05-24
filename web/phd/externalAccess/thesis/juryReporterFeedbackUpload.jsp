@@ -6,7 +6,6 @@
 
 <%@page import="net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessType"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.access.PhdExternalOperationBean"%>
-<%@page import="pt.ist.fenixWebFramework.renderers.validators.EmailValidator"%>
 
 <%@page import="pt.ist.fenixWebFramework.renderers.validators.FileValidator"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.PhdThesisReportFeedbackDocument"%><html:xhtml/>
@@ -36,7 +35,7 @@
 <logic:notEmpty name="participant">
 	
 	<%-- Process details --%>
-	<jsp:include page="processDetails.jsp" />
+	<jsp:include page="/phd/externalAccess/processDetails.jsp" />
 	
 	<logic:notEmpty name="lastReportFeedbackDocument">
 		<br/>
@@ -57,19 +56,14 @@
 		<br/>
 	</logic:notEmpty>	
 	
-	<logic:equal name="canUploadFeedbackDocument" value="true">
+	<logic:equal name="waitingForJuryReporterFeedback" value="true">
 
 		<fr:form action="/phdExternalAccess.do?method=juryReporterFeedbackUpload" encoding="multipart/form-data">
 		
 			<fr:edit id="operationBean" name="operationBean">
 				<fr:schema bundle="PHD_RESOURCES" type="<%= PhdExternalOperationBean.class.getName() %>">
 				
-					<fr:slot name="email" required="true" validator="<%= EmailValidator.class.getName() %>">
-						<fr:property name="size" value="40" />
-					</fr:slot>
-					<fr:slot name="password" required="true" layout="password">
-						<fr:property name="size" value="40" />
-					</fr:slot>
+					<%@include file="/phd/externalAccess/common/accessInformation.jsp" %>
 					
 					<fr:slot name="documentBean.file" required="true">
 						<fr:validator name="<%= FileValidator.class.getName() %>">

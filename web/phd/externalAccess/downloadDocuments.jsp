@@ -7,7 +7,6 @@
 
 <%@page import="net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessType"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.access.PhdExternalOperationBean"%>
-<%@page import="pt.ist.fenixWebFramework.renderers.validators.EmailValidator"%>
 
 
 <html:xhtml/>
@@ -53,12 +52,9 @@
 		<fr:edit id="operationBean" name="operationBean">
 		
 			<fr:schema bundle="PHD_RESOURCES" type="<%= PhdExternalOperationBean.class.getName() %>">
-				<fr:slot name="email" required="true" validator="<%= EmailValidator.class.getName() %>">
-					<fr:property name="size" value="40" />
-				</fr:slot>
-				<fr:slot name="password" required="true" layout="password">
-					<fr:property name="size" value="40" />
-				</fr:slot>
+			
+				<%@include file="/phd/externalAccess/common/accessInformation.jsp" %>
+			
 			</fr:schema>
 		
 			<fr:layout name="tabular">

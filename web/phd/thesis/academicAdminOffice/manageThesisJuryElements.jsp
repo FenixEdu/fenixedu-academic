@@ -10,7 +10,8 @@
 
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.RejectJuryElements"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.ValidateJury"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.PrintJuryElementsDocument"%><html:xhtml/>
+<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.PrintJuryElementsDocument"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.AddJuryElement"%><html:xhtml/>
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 <bean:define id="individualProcessId" name="process" property="individualProgramProcess.externalId" />
@@ -153,11 +154,13 @@
 
 
 <ul class="operations" >
-	<li style="display: inline;">
-		<html:link action="/phdThesisProcess.do?method=prepareAddJuryElement" paramId="processId" paramName="process" paramProperty="externalId">
-			<bean:message bundle="PHD_RESOURCES" key="label.phd.add.thesis.jury.element"/>
-		</html:link>
-	</li>
+	<phd:activityAvailable process="<%= process %>" activity="<%= AddJuryElement.class %>">
+		<li style="display: inline;">
+			<html:link action="/phdThesisProcess.do?method=prepareAddJuryElement" paramId="processId" paramName="process" paramProperty="externalId">
+				<bean:message bundle="PHD_RESOURCES" key="label.phd.add.thesis.jury.element"/>
+			</html:link>
+		</li>
+	</phd:activityAvailable>
 	<li style="display: inline;">
 		<html:link action="/phdThesisProcess.do?method=prepareAddPresidentJuryElement" paramId="processId" paramName="process" paramProperty="externalId"> 
 			<bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.add.president.jury.element"/>

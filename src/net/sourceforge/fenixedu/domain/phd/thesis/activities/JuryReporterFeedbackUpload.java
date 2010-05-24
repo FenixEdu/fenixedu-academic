@@ -7,6 +7,8 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdThesisReportFeedbackDocument;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
+import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType;
+import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
 
 public class JuryReporterFeedbackUpload extends PhdThesisActivity {
 
@@ -14,6 +16,10 @@ public class JuryReporterFeedbackUpload extends PhdThesisActivity {
     protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
 
 	if (!process.isJuryValidated()) {
+	    throw new PreConditionNotValidException();
+	}
+
+	if (!process.hasState(PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK)) {
 	    throw new PreConditionNotValidException();
 	}
 
@@ -25,7 +31,8 @@ public class JuryReporterFeedbackUpload extends PhdThesisActivity {
 	    throw new PreConditionNotValidException();
 	}
 
-	if (process.getThesisJuryElement(userView.getPerson()) == null) {
+	final ThesisJuryElement element = process.getThesisJuryElement(userView.getPerson());
+	if (element == null || !element.getReporter().booleanValue()) {
 	    throw new PreConditionNotValidException();
 	}
     }

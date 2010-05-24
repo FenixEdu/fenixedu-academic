@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
-import net.sourceforge.fenixedu.domain.phd.PhdThesisReportFeedbackDocument;
 import net.sourceforge.fenixedu.domain.phd.access.PhdExternalOperationBean;
 import net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessType;
 import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestElement;
@@ -147,10 +146,9 @@ public class PhdExternalAccessDA extends PhdProcessDA {
 	bean.setDocumentBean(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.JURY_REPORT_FEEDBACK));
 
 	request.setAttribute("operationBean", bean);
-
-	final PhdThesisReportFeedbackDocument document = getThesisJuryElement(request, bean).getLastFeedbackDocument();
-	request.setAttribute("lastReportFeedbackDocument", document);
-	request.setAttribute("canUploadFeedbackDocument", !document.isAssignedToProcess());
+	request.setAttribute("lastReportFeedbackDocument", getThesisJuryElement(request, bean).getLastFeedbackDocument());
+	request.setAttribute("waitingForJuryReporterFeedback", getProcess(request).getThesisProcess()
+		.isWaitingForJuryReporterFeedback());
 
 	return mapping.findForward("juryReporterFeedbackUpload");
     }
@@ -160,10 +158,9 @@ public class PhdExternalAccessDA extends PhdProcessDA {
 
 	final PhdExternalOperationBean bean = getOperationBean();
 	request.setAttribute("operationBean", bean);
-
-	final PhdThesisReportFeedbackDocument document = getThesisJuryElement(request, bean).getLastFeedbackDocument();
-	request.setAttribute("lastReportFeedbackDocument", document);
-	request.setAttribute("canUploadFeedbackDocument", !document.isAssignedToProcess());
+	request.setAttribute("lastReportFeedbackDocument", getThesisJuryElement(request, bean).getLastFeedbackDocument());
+	request.setAttribute("waitingForJuryReporterFeedback", getProcess(request).getThesisProcess()
+		.isWaitingForJuryReporterFeedback());
 
 	return mapping.findForward("juryReporterFeedbackUpload");
     }
