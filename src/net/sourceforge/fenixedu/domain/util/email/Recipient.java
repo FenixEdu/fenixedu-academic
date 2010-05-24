@@ -57,24 +57,7 @@ public class Recipient extends Recipient_Base {
 
     public void addDestinationEmailAddresses(final Set<String> emailAddresses) {
 	for (final Person person : getMembers().getElements()) {
-	    EmailAddress emailAddress = null;
-	    for (final PartyContact partyContact : person.getPartyContactsSet()) {
-		if (partyContact.isEmailAddress()) {
-		    final EmailAddress otherEmailAddress = (EmailAddress) partyContact;
-		    final String value = otherEmailAddress.getValue();
-		    if (value != null && !value.isEmpty()) {
-			if (otherEmailAddress.isInstitutionalType()) {
-			    emailAddress = otherEmailAddress;
-			    break;			    
-			}
-			if (otherEmailAddress.isDefault()) {
-			    emailAddress = otherEmailAddress;
-			} else if (emailAddress == null) {
-			    emailAddress = otherEmailAddress;
-			}
-		    }
-		}
-	    }
+	    final EmailAddress emailAddress = person.getEmailAddressForSendingEmails();
 	    if (emailAddress != null) {
 		final String value = emailAddress.getValue();
 		if (value != null && !value.isEmpty()) {

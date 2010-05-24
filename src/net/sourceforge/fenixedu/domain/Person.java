@@ -56,6 +56,7 @@ import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationProblem;
 import net.sourceforge.fenixedu.domain.cardGeneration.Category;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
+import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
 import net.sourceforge.fenixedu.domain.contacts.Phone;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
@@ -3519,6 +3520,33 @@ public class Person extends Person_Base {
 	    return site.getManagersSet().contains(AccessControl.getPerson());
 	}
 	return false;
+    }
+
+    public EmailAddress getEmailAddressForSendingEmails() {
+	EmailAddress emailAddress = null;
+	for (final PartyContact partyContact : getPartyContactsSet()) {
+	    if (partyContact.isEmailAddress()) {
+		final EmailAddress otherEmailAddress = (EmailAddress) partyContact;
+		final String value = otherEmailAddress.getValue();
+		if (value != null && !value.isEmpty()) {
+		    if (otherEmailAddress.isInstitutionalType()) {
+			emailAddress = otherEmailAddress;
+			break;			    
+		    }
+		    if (otherEmailAddress.isDefault()) {
+			emailAddress = otherEmailAddress;
+		    } else if (emailAddress == null) {
+			emailAddress = otherEmailAddress;
+		    }
+		}
+	    }
+	}
+	return emailAddress;
+    }
+
+    public String getEmailForSendingEmails() {
+	final EmailAddress emailAddress = getEmailAddressForSendingEmails();
+	return emailAddress == null ? null : emailAddress.getValue();
     }
 
 }
