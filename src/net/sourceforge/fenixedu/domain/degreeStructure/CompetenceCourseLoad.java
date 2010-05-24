@@ -12,6 +12,13 @@ public class CompetenceCourseLoad extends CompetenceCourseLoad_Base implements C
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
+    public CompetenceCourseLoad(CompetenceCourseLoad existingLoad) {
+	this(existingLoad.getTheoreticalHours(), existingLoad.getProblemsHours(), existingLoad.getLaboratorialHours(),
+		existingLoad.getSeminaryHours(), existingLoad.getFieldWorkHours(), existingLoad.getTrainingPeriodHours(),
+		existingLoad.getTutorialOrientationHours(), existingLoad.getAutonomousWorkHours(), existingLoad.getEctsCredits(),
+		existingLoad.getLoadOrder(), existingLoad.getAcademicPeriod());
+    }
+
     public CompetenceCourseLoad(Double theoreticalHours, Double problemsHours, Double laboratorialHours, Double seminaryHours,
 	    Double fieldWorkHours, Double trainingPeriodHours, Double tutorialOrientationHours, Double autonomousWorkHours,
 	    Double ectsCredits, Integer order, AcademicPeriod academicPeriod) {

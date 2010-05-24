@@ -217,7 +217,7 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
 		loadBean.getEctsCredits(), loadBean.getSecondTheoreticalHours(), loadBean.getSecondProblemsHours(), loadBean
 			.getSecondLaboratorialHours(), loadBean.getSecondSeminaryHours(), loadBean.getSecondFieldWorkHours(),
 		loadBean.getSecondTrainingPeriodHours(), loadBean.getSecondTutorialOrientationHours(), loadBean
-			.getSecondAutonomousWorkHours(), loadBean.getSecondEctsCredits(), bean.getReferences());
+			.getSecondAutonomousWorkHours(), loadBean.getSecondEctsCredits(), bean.getReferences(), null);
     }
 
     public ActionForward showVersions(ActionMapping mapping, ActionForm form, HttpServletRequest request,

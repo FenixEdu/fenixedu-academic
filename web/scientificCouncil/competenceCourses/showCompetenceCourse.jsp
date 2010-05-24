@@ -15,12 +15,9 @@
 		<h:outputText escape="false" value="<input alt='input.competenceCourseID' id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourseID}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.selectedDepartmentUnitID' id='selectedDepartmentUnitID' name='selectedDepartmentUnitID' type='hidden' value='#{CompetenceCourseManagement.selectedDepartmentUnitID}'/>"/>
 
-		<h:selectOneMenu value="#{CompetenceCourseManagement.executionYearID}">
-			<f:selectItems value="#{CompetenceCourseManagement.executionYears}" />
-		</h:selectOneMenu>
-
-		<h:commandButton alt="#{htmlAltBundle['commandButton.associate']}" value="#{scouncilBundle['button.researchActivity.choose']}"
-			action="competenceCourseManagementPostBack"/>	
+		<fc:selectOneMenu value="#{CompetenceCourseManagement.executionSemesterID}" onchange="submit()">
+			<f:selectItems binding="#{CompetenceCourseManagement.competenceCourseExecutionSemesters}"/>
+		</fc:selectOneMenu>	
 	</h:form>
 	
 	<h:outputText value="<ul class='nobullet padding1 indent0 mtop15'>" escape="false"/>
@@ -28,11 +25,9 @@
 	<h:outputText rendered="#{!empty CompetenceCourseManagement.competenceCourse.startExecutionSemester}" value="<span class='highlight4'>#{CompetenceCourseManagement.competenceCourse.startExecutionSemester.qualifiedName}<span></li>" escape="false"/>	
 	<h:outputText rendered="#{empty CompetenceCourseManagement.competenceCourse.startExecutionSemester}" value="-</li>" escape="false"/>
 	<h:outputText value="<li><strong>#{scouncilBundle['department']}: </strong>" escape="false"/>
-	<h:outputText value="#{CompetenceCourseManagement.competenceCourse.departmentUnit.department.realName}</li>" escape="false"/>
-	<fc:dataRepeater value="#{CompetenceCourseManagement.competenceCourse.competenceCourseGroupUnit.parentUnits}" var="scientificAreaUnit">
-		<h:outputText value="<li><strong>#{scouncilBundle['area']}: </strong>" escape="false"/>
-		<h:outputText value="#{scientificAreaUnit.name} > #{CompetenceCourseManagement.competenceCourse.competenceCourseGroupUnit.name}</li>" escape="false"/>
-	</fc:dataRepeater>		
+	<h:outputText value="#{CompetenceCourseManagement.departmentRealName}</li>" escape="false"/>
+	<h:outputText value="<li><strong>#{scouncilBundle['area']}: </strong>" escape="false"/>
+	<h:outputText value="#{CompetenceCourseManagement.scientificAreaUnitName} > #{CompetenceCourseManagement.competenceCourseGroupUnitName}</li>" escape="false"/>
 	<h:outputText value="</ul>" escape="false"/>
 
 	

@@ -5,6 +5,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
@@ -15,6 +16,21 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
+    public CompetenceCourseInformationChangeRequest(CompetenceCourseInformation information, String justification,
+	    Person requester) {
+	this(information.getName(), information.getNameEn(), justification, information.getRegime(), information.getObjectives(),
+		information.getObjectivesEn(), information.getProgram(), information.getProgramEn(), information
+			.getEvaluationMethod(), information.getEvaluationMethodEn(), information.getCompetenceCourse(),
+		information.getCompetenceCourseLevel(), information.getExecutionPeriod(), requester, information
+			.getTheoreticalHours(1), information.getProblemsHours(1), information.getLaboratorialHours(1),
+		information.getSeminaryHours(1), information.getFieldWorkHours(1), information.getTrainingPeriodHours(1),
+		information.getTutorialOrientationHours(1), information.getAutonomousWorkHours(1), information.getEctsCredits(1),
+		information.getTheoreticalHours(2), information.getProblemsHours(2), information.getLaboratorialHours(2),
+		information.getSeminaryHours(2), information.getFieldWorkHours(2), information.getTrainingPeriodHours(2),
+		information.getTutorialOrientationHours(2), information.getAutonomousWorkHours(2), information.getEctsCredits(2),
+		information.getBibliographicReferences(), information.getCompetenceCourseGroupUnit());
+    }
+
     public CompetenceCourseInformationChangeRequest(String name, String nameEn, String justification, RegimeType regime,
 	    String objectives, String objectivesEn, String program, String programEn, String evaluationMethod,
 	    String evaluationMethodEn, CompetenceCourse course, CompetenceCourseLevel level, ExecutionSemester period,
@@ -23,17 +39,21 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
 	    Double ectsCredits, Double secondTheoreticalHours, Double secondProblemsHours, Double secondLaboratorialHours,
 	    Double secondSeminaryHours, Double secondFieldWorkHours, Double secondTrainingPeriodHours,
 	    Double secondTutorialOrientationHours, Double secondAutonomousWorkHours, Double secondEctsCredits,
-	    BibliographicReferences references) {
+	    BibliographicReferences references, CompetenceCourseGroupUnit group) {
 	this();
 
 	if (name == null || nameEn == null || justification == null || regime == null || objectives == null
 		|| objectivesEn == null || program == null || programEn == null || evaluationMethod == null
-		|| evaluationMethodEn == null || course == null || period == null || requester == null || level == null
+		|| evaluationMethodEn == null || course == null || period == null || requester == null
 		|| theoreticalHours == null || problemsHours == null || laboratorialHours == null || seminaryHours == null
 		|| fieldWorkHours == null || trainingPeriodHours == null || tutorialOrientationHours == null
 		|| autonomousWorkHours == null || ectsCredits == null) {
 
 	    throw new DomainException("error.fields.are.required");
+	}
+
+	if (level == null) {
+	    level = CompetenceCourseLevel.UNKNOWN;
 	}
 
 	setName(name);
@@ -73,6 +93,8 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
 	setSecondEctsCredits(secondEctsCredits);
 
 	setBibliographicReferences(references);
+
+	setCompetenceCourseGroupUnit(group == null ? course.getCompetenceCourseGroupUnit() : group);
     }
 
     public RequestStatus getStatus() {
@@ -121,8 +143,8 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
 	CompetenceCourseInformation information = null;
 	if (course.isCompetenceCourseInformationDefinedAtExecutionPeriod(executionSemester)) {
 	    information = course.findCompetenceCourseInformationForExecutionPeriod(executionSemester);
-	    information.edit(getName(), getNameEn(), information.getBasic(), getCompetenceCourseLevel(), course
-		    .getCompetenceCourseGroupUnit());
+	    information.edit(getName(), getNameEn(), information.getBasic(), getCompetenceCourseLevel(),
+		    getCompetenceCourseGroupUnit());
 	    information.setRegime(getRegime());
 	    information.edit(getObjectives(), getProgram(), getEvaluationMethod(), getObjectivesEn(), getProgramEn(),
 		    getEvaluationMethodEn());
@@ -135,7 +157,7 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
 
 	} else {
 	    information = new CompetenceCourseInformation(getName(), getNameEn(), course.isBasic(), getRegime(),
-		    getCompetenceCourseLevel(), getExecutionPeriod(), course.getCompetenceCourseGroupUnit());
+		    getCompetenceCourseLevel(), getExecutionPeriod(), getCompetenceCourseGroupUnit());
 	    information.edit(getObjectives(), getProgram(), getEvaluationMethod(), getObjectivesEn(), getProgramEn(),
 		    getEvaluationMethodEn());
 	    information.setAcronym(course.getAcronym());

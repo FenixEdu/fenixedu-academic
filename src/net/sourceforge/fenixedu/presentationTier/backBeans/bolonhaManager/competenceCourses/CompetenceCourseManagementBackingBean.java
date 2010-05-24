@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.TreeSet;
 
 import javax.faces.component.UISelectItems;
 import javax.faces.event.ValueChangeEvent;
@@ -43,9 +44,11 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
@@ -62,6 +65,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     private Integer selectedDepartmentUnitID = null;
     private Integer competenceCourseID = null;
     private Integer executionYearID = null;
+    private Integer executionSemesterID = null;
     private Unit competenceCourseGroupUnit = null;
     private CompetenceCourse competenceCourse = null;
 
@@ -91,6 +95,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     private UISelectItems departmentUnitItems;
     private UISelectItems scientificAreaUnitItems;
     private UISelectItems competenceCourseGroupUnitItems;
+    private UISelectItems competenceCourseExecutionSemesters;
+    private UISelectItems executionSemesterItems;
 
     private List<SelectItem> selectedYears = null;
 
@@ -411,15 +417,6 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 		: competenceCourseID;
     }
 
-    public void setExecutionYearID(Integer executionYearID) {
-	this.executionYearID = executionYearID;
-	reset();
-    }
-
-    public Integer getExecutionYearID() {
-	return (executionYearID == null) ? (executionYearID = getAndHoldIntegerParameter("executionYearID")) : executionYearID;
-    }
-
     public void setCompetenceCourseID(Integer competenceCourseID) {
 	this.competenceCourseID = competenceCourseID;
     }
@@ -433,10 +430,6 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     public void setCompetenceCourse(CompetenceCourse competenceCourse) {
 	this.competenceCourse = competenceCourse;
-    }
-
-    public ExecutionYear getExecutionYear() {
-	return (getExecutionYearID() != null) ? rootDomainObject.readExecutionYearByOID(getExecutionYearID()) : null;
     }
 
     public ExecutionSemester getAssociatedExecutionPeriod() {
@@ -887,6 +880,18 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 	return "";
     }
 
+    public String getDepartmentRealName() {
+	return getCompetenceCourse().getDepartmentUnit(getExecutionSemester()).getDepartment().getRealName();
+    }
+
+    public String getScientificAreaUnitName() {
+	return getCompetenceCourse().getScientificAreaUnit(getExecutionSemester()).getName();
+    }
+
+    public String getCompetenceCourseGroupUnitName() {
+	return getCompetenceCourse().getCompetenceCourseGroupUnit(getExecutionSemester()).getName();
+    }
+
     public UISelectItems getDepartmentUnitItems() {
 	if (departmentUnitItems == null) {
 	    departmentUnitItems = new UISelectItems();
@@ -902,6 +907,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     public void onChangeDepartmentUnit(ValueChangeEvent event) {
 	setTransferToDepartmentUnitID((Integer) event.getNewValue());
 	getScientificAreaUnitItems().setValue(readScientificAreaUnitLabels((Integer) event.getNewValue()));
+	getCompetenceCourseGroupUnitItems().setValue(readCompetenceCourseGroupUnitLabels(null));
     }
 
     private List<SelectItem> readDepartmentUnitLabels() {
@@ -1003,11 +1009,15 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     @Service
     public String transferCompetenceCourse() {
 	try {
-	    if (getCompetenceCourse() == null || readCompetenceCourseGroupUnitToTransferTo() == null) {
+	    if (getCompetenceCourse() == null || readCompetenceCourseGroupUnitToTransferTo() == null
+		    || getExecutionSemester() == null) {
 		addErrorMessage(scouncilBundle.getString("error.transferingCompetenceCourse"));
 		return "competenceCoursesManagement";
 	    }
-	    getCompetenceCourse().transfer((CompetenceCourseGroupUnit) readCompetenceCourseGroupUnitToTransferTo());
+	    getCompetenceCourse().transfer((CompetenceCourseGroupUnit) readCompetenceCourseGroupUnitToTransferTo(),
+		    getExecutionSemester(),
+		    BundleUtil.getMessageFromModuleOrApplication("ScientificCouncil", "transfer.done.by.scientific.council"),
+		    AccessControl.getPerson());
 
 	} catch (IllegalDataAccessException e) {
 	    this.addErrorMessage(scouncilBundle.getString("error.notAuthorized"));
@@ -1033,6 +1043,108 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     public void setTransferToCompetenceCourseGroupUnitID(Integer transferToCompetenceCourseGroupUnitID) {
 	this.getViewState().setAttribute("transferToCompetenceCourseGroupUnitID", transferToCompetenceCourseGroupUnitID);
+    }
+
+    private ExecutionSemester getExecutionSemester() {
+	return rootDomainObject.readExecutionSemesterByOID(getExecutionSemesterID());
+    }
+
+    public Integer getExecutionSemesterID() {
+	if (executionSemesterID == null) {
+	    executionSemesterID = (Integer) getViewState().getAttribute("executionSemesterID");
+	}
+	if (executionSemesterID == null) {
+	    executionSemesterID = ExecutionSemester.readActualExecutionSemester().getIdInternal();
+	}
+	return executionSemesterID;
+    }
+
+    public void setExecutionSemesterID(Integer executionSemesterID) {
+	this.executionSemesterID = executionSemesterID;
+	reset();
+    }
+
+    public ExecutionYear getExecutionYear() {
+	return rootDomainObject.readExecutionYearByOID(getExecutionYearID());
+    }
+
+    public Integer getExecutionYearID() {
+	if (executionYearID == null) {
+	    executionYearID = getAndHoldIntegerParameter("executionYearID");
+	}
+	if (executionYearID == null) {
+	    executionYearID = ExecutionYear.readCurrentExecutionYear().getIdInternal();
+	}
+	return executionYearID;
+    }
+
+    public void setExecutionYearID(Integer executionYearID) {
+	this.executionYearID = executionYearID;
+	reset();
+    }
+
+    public UISelectItems getExecutionSemesterItems() {
+	if (executionSemesterItems == null) {
+	    executionSemesterItems = new UISelectItems();
+	    executionSemesterItems.setValue(readExecutionSemesterLabels());
+	}
+	return executionSemesterItems;
+    }
+
+    public void setExecutionSemesterItems(UISelectItems executionSemesterItems) {
+	this.executionSemesterItems = executionSemesterItems;
+    }
+
+    private List<SelectItem> readExecutionSemesterLabels() {
+	final List<SelectItem> result = new ArrayList<SelectItem>();
+	for (ExecutionSemester semester : getOrderedExecutionSemesters()) {
+	    result.add(new SelectItem(semester.getIdInternal(), semester.getQualifiedName()));
+	}
+	return result;
+    }
+
+    private TreeSet<ExecutionSemester> getOrderedExecutionSemesters() {
+	final TreeSet<ExecutionSemester> result = new TreeSet<ExecutionSemester>(
+		ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
+	ExecutionSemester semester = ExecutionSemester.readActualExecutionSemester();
+	result.add(semester);
+	while (semester.hasNextExecutionPeriod()) {
+	    semester = semester.getNextExecutionPeriod();
+	    result.add(semester);
+	}
+	return result;
+    }
+
+    public UISelectItems getCompetenceCourseExecutionSemesters() {
+	if (competenceCourseExecutionSemesters == null) {
+	    competenceCourseExecutionSemesters = new UISelectItems();
+	    competenceCourseExecutionSemesters.setValue(readCompetenceCourseExecutionSemesterLabels());
+	}
+	return competenceCourseExecutionSemesters;
+    }
+
+    public void setCompetenceCourseExecutionSemesters(UISelectItems competenceCourseExecutionSemesters) {
+	this.competenceCourseExecutionSemesters = competenceCourseExecutionSemesters;
+    }
+
+    private List<SelectItem> readCompetenceCourseExecutionSemesterLabels() {
+	final List<SelectItem> result = new ArrayList<SelectItem>();
+	for (ExecutionSemester semester : getOrderedCompetenceCourseExecutionSemesters()) {
+	    result.add(new SelectItem(semester.getIdInternal(), semester.getQualifiedName()));
+	}
+	return result;
+    }
+
+    private TreeSet<ExecutionSemester> getOrderedCompetenceCourseExecutionSemesters() {
+	final TreeSet<ExecutionSemester> result = new TreeSet<ExecutionSemester>(
+		ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
+	ExecutionSemester semester = getCompetenceCourse().getStartExecutionSemester();
+	result.add(semester);
+	while (semester.hasNextExecutionPeriod()) {
+	    semester = semester.getNextExecutionPeriod();
+	    result.add(semester);
+	}
+	return result;
     }
 
     public String editAcronym() {

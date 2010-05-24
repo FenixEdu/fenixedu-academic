@@ -28,6 +28,25 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
+    public CompetenceCourseInformation(CompetenceCourseInformation existingInformation) {
+	this(existingInformation.getName(), existingInformation.getNameEn(), existingInformation.getBasic(), existingInformation
+		.getRegime(), existingInformation.getCompetenceCourseLevel(), existingInformation.getExecutionPeriod(),
+		existingInformation.getCompetenceCourseGroupUnit());
+	setCompetenceCourse(existingInformation.getCompetenceCourse());
+	for (CompetenceCourseLoad load : existingInformation.getCompetenceCourseLoads()) {
+	    CompetenceCourseLoad newLoad = new CompetenceCourseLoad(load);
+	    addCompetenceCourseLoads(newLoad);
+	}
+	setAcronym(existingInformation.getAcronym());
+	setBibliographicReferences(existingInformation.getBibliographicReferences());
+	setEvaluationMethod(existingInformation.getEvaluationMethod());
+	setEvaluationMethodEn(existingInformation.getEvaluationMethodEn());
+	setObjectives(existingInformation.getObjectives());
+	setObjectivesEn(existingInformation.getObjectivesEn());
+	setProgram(existingInformation.getProgram());
+	setProgramEn(existingInformation.getProgramEn());
+    }
+
     public CompetenceCourseInformation(String name, String nameEn, Boolean basic, RegimeType regimeType,
 	    CompetenceCourseLevel competenceCourseLevel, ExecutionSemester period, CompetenceCourseGroupUnit unit) {
 
@@ -46,8 +65,11 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
     private void checkParameters(String name, String nameEn, Boolean basic, RegimeType regimeType,
 	    CompetenceCourseLevel competenceCourseLevel) {
 
-	if (name == null || nameEn == null || basic == null || regimeType == null || competenceCourseLevel == null) {
+	if (name == null || nameEn == null || basic == null || regimeType == null) {
 	    throw new DomainException("competence.course.information.invalid.parameters");
+	}
+	if (competenceCourseLevel == null) {
+	    competenceCourseLevel = CompetenceCourseLevel.UNKNOWN;
 	}
     }
 

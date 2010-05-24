@@ -15,7 +15,9 @@ public enum CompetenceCourseLevel {
 
     DOCTORATE,
 
-    SPECIALIZATION;
+    SPECIALIZATION,
+
+    UNKNOWN;
 
     public String getName() {
 	return name();

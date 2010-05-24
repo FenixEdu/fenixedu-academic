@@ -267,11 +267,18 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     private CompetenceCourseInformation getMostRecentCompetenceCourseInformation() {
-	final Set<CompetenceCourseInformation> competenceCourseInformations = getCompetenceCourseInformationsSet();
-	if (competenceCourseInformations.isEmpty()) {
-	    return null;
+	return getMostRecentCompetenceCourseInformationUntil(ExecutionSemester.readActualExecutionSemester());
+    }
+
+    private CompetenceCourseInformation getMostRecentCompetenceCourseInformationUntil(ExecutionSemester semester) {
+	CompetenceCourseInformation mostRecentInformation = getOldestCompetenceCourseInformation();
+	for (CompetenceCourseInformation information : getCompetenceCourseInformations()) {
+	    if (information.getExecutionPeriod().isAfter(mostRecentInformation.getExecutionPeriod())
+		    && !information.getExecutionPeriod().isAfter(semester)) {
+		mostRecentInformation = information;
+	    }
 	}
-	return Collections.max(competenceCourseInformations, CompetenceCourseInformation.COMPARATORY_BY_EXECUTION_PERIOD);
+	return mostRecentInformation;
     }
 
     private CompetenceCourseInformation getOldestCompetenceCourseInformation() {
@@ -790,12 +797,30 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public DepartmentUnit getDepartmentUnit() {
-	final CompetenceCourseGroupUnit competenceCourseGroupUnit = getCompetenceCourseGroupUnit();
+	return getDepartmentUnit(ExecutionSemester.readActualExecutionSemester());
+    }
+
+    public DepartmentUnit getDepartmentUnit(ExecutionYear executionYear) {
+	ExecutionSemester semester = ExecutionSemester.readBySemesterAndExecutionYear(2, executionYear.getYear());
+	return getDepartmentUnit(semester);
+    }
+
+    public DepartmentUnit getDepartmentUnit(ExecutionSemester semester) {
+	final CompetenceCourseGroupUnit competenceCourseGroupUnit = getCompetenceCourseGroupUnit(semester);
 	return competenceCourseGroupUnit == null ? null : competenceCourseGroupUnit.getDepartmentUnit();
     }
 
     public CompetenceCourseGroupUnit getCompetenceCourseGroupUnit() {
-	return getMostRecentCompetenceCourseInformation().getCompetenceCourseGroupUnit();
+	return getCompetenceCourseGroupUnit(ExecutionSemester.readActualExecutionSemester());
+    }
+
+    public CompetenceCourseGroupUnit getCompetenceCourseGroupUnit(ExecutionYear executionYear) {
+	ExecutionSemester semester = ExecutionSemester.readBySemesterAndExecutionYear(2, executionYear.getYear());
+	return getCompetenceCourseGroupUnit(semester);
+    }
+
+    public CompetenceCourseGroupUnit getCompetenceCourseGroupUnit(ExecutionSemester semester) {
+	return getMostRecentCompetenceCourseInformationUntil(semester).getCompetenceCourseGroupUnit();
     }
 
     public List<CompetenceCourseLoad> getSortedCompetenceCourseLoads(final ExecutionSemester period) {
@@ -870,12 +895,21 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public ScientificAreaUnit getScientificAreaUnit() {
+	return getScientificAreaUnit(ExecutionSemester.readActualExecutionSemester());
+    }
+
+    public ScientificAreaUnit getScientificAreaUnit(ExecutionYear executionYear) {
+	ExecutionSemester semester = ExecutionSemester.readBySemesterAndExecutionYear(2, executionYear.getYear());
+	return getScientificAreaUnit(semester);
+    }
+
+    public ScientificAreaUnit getScientificAreaUnit(ExecutionSemester executionSemester) {
 	if (this.getCompetenceCourseGroupUnit().hasAnyParentUnits()) {
 	    if (this.getCompetenceCourseGroupUnit().getParentUnits().size() > 1) {
 		throw new DomainException("compentence.course.should.have.only.one.scientific.area");
 	    }
 
-	    return (ScientificAreaUnit) this.getCompetenceCourseGroupUnit().getParentUnits().iterator().next();
+	    return (ScientificAreaUnit) this.getCompetenceCourseGroupUnit(executionSemester).getParentUnits().iterator().next();
 	}
 	return null;
     }
@@ -896,13 +930,25 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	return getCurricularStage() == CurricularStage.APPROVED;
     }
 
-    public void transfer(CompetenceCourseGroupUnit competenceCourseGroupUnit) {
-	for (CompetenceCourseInformation information : getCompetenceCourseInformations()) {
-	    information.setCompetenceCourseGroupUnit(competenceCourseGroupUnit);
+    public void transfer(CompetenceCourseGroupUnit competenceCourseGroupUnit, ExecutionSemester period, String justification,
+	    Person requester) {
+
+	CompetenceCourseInformation information = null;
+	for (CompetenceCourseInformation existingInformation : getCompetenceCourseInformations()) {
+	    if (existingInformation.getExecutionPeriod() == period) {
+		information = existingInformation;
+	    }
 	}
-	for (CompetenceCourseInformationChangeRequest changeRequest : getCompetenceCourseInformationChangeRequests()) {
-	    changeRequest.setCompetenceCourseGroupUnit(competenceCourseGroupUnit);
+	if (information == null) {
+	    CompetenceCourseInformation latestInformation = getMostRecentCompetenceCourseInformationUntil(period);
+	    information = new CompetenceCourseInformation(latestInformation);
+	    information.setExecutionPeriod(period);
 	}
+
+	CompetenceCourseInformationChangeRequest changeRequest = new CompetenceCourseInformationChangeRequest(information,
+		justification, requester);
+	changeRequest.setCompetenceCourseGroupUnit(competenceCourseGroupUnit);
+	changeRequest.approve(requester);
     }
 
     public MultiLanguageString getNameI18N() {

@@ -74,7 +74,9 @@ public class CompetenceCourseGroupUnit extends CompetenceCourseGroupUnit_Base {
 	final SortedSet<CompetenceCourse> result = new TreeSet<CompetenceCourse>(
 		CompetenceCourse.COMPETENCE_COURSE_COMPARATOR_BY_NAME);
 	for (CompetenceCourseInformation competenceInformation : getCompetenceCourseInformations()) {
-	    result.add(competenceInformation.getCompetenceCourse());
+	    if (competenceInformation.getCompetenceCourse().getCompetenceCourseGroupUnit() == this) {
+		result.add(competenceInformation.getCompetenceCourse());
+	    }
 	}
 	return result;
     }
