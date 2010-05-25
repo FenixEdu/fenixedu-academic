@@ -36,6 +36,11 @@
     		description="Compiles standalone application">
 		<ant antfile="build_compile.xml" target="compile"/>
     </target>
+	
+	<target name="compile-without-gwtc"
+			description="Same as 'compile' excluding the call to gwtc">
+		<ant antfile="build_compile.xml" target="compile-without-gwtc"/>
+	</target>
 
     <target name="war"
     		description="Generates a web archive of the application.">

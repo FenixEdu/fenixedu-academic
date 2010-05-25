@@ -134,5 +134,9 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-remote-plugin.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/spymemcached-1.0.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-r46854.jar" sourcepath="/fenix-web-framework"/>
+	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/gwt-dev.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/gwt-user.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/gwt-servlet.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

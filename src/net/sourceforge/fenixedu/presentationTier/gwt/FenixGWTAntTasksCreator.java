@@ -65,6 +65,7 @@ public class FenixGWTAntTasksCreator {
     
     private void writeHeader() {
 	
+	out.println("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>");
 	out.println("<project basedir=\".\">");
 	out.println("");
 	

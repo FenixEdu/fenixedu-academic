@@ -404,6 +404,8 @@
 	</target>
 
 	<target name="compile-base" description="Compile application" depends="i18nDefault, compile-domain, write-all-properties, generate, generate-groups-language, base-compile, FenixGWT" />
+	
+	<target name="compile-base-noGWT" description="Compile application" depends="i18nDefault, compile-domain, write-all-properties, generate, generate-groups-language, base-compile" />
 
 	<target name="compile" description="Compile application" depends="compile-base">
 		<java classname="pt.ist.fenixWebFramework.security.accessControl.CheckedAnnotationInjector" failonerror="true"
@@ -432,6 +434,34 @@
 		</parallel>
 		<antcall target="post-compile"/>
 	</target>
+	
+	<target name="compile-without-gwtc" description="Compile application" depends="compile-base-noGWT">
+			<java classname="pt.ist.fenixWebFramework.security.accessControl.CheckedAnnotationInjector" failonerror="true"
+					fork="true" maxmemory="1500m">
+				<classpath refid="class.path.lib.ref" />
+				<classpath>
+					<pathelement path="${build.home.webinf.classes}" />
+				</classpath>
+				<arg value="net.sourceforge.fenixedu.injectionCode.AccessControl.check(this, net.sourceforge.fenixedu.predicates." />
+				<arg value="net.sourceforge.fenixedu.injectionCode.AccessControl.check(net.sourceforge.fenixedu.predicates." />
+				<arg value=");" />
+				<arg value="${build.home.webinf.classes}" />
+				<!--<arg value="${build.home.webinf.libs}/dml-20091101.jar" />-->
+				<arg value="${build.home.webinf.libs}/jvstm.jar" />
+	                        <!-- arg value="${build.home.webinf.libs}/fenix-framework.jar" / -->
+				<arg value="${build.home.webinf.libs}/fenix-web-framework-r46854.jar" />
+				<arg value="${build.home.webinf.libs}/joda-time-1.5.2.jar" />
+				<arg value="${build.home.webinf.libs}/struts.jar" />
+				<arg value="lib/servlet-api-2.3.jar" />
+			</java>
+			<parallel threadsperprocessor="1" threadcount="2">
+				<antcall target="compile-reports" />
+				<sequential>
+					<ant antfile="build_injectionCode.xml" target="inject-domainObjectActionLog-code" />
+				</sequential>
+			</parallel>
+			<antcall target="post-compile"/>
+		</target>
 
 	<target name="compile-without-injectionCode" description="Compile application" depends="compile-base">
 		<parallel threadsperprocessor="1" threadcount="2">
@@ -710,7 +740,7 @@
 		</java>
 	</target>
 	
-	<target name="FenixGWT" depends="base-compile"
+	<target name="FenixGWT" depends="set-properties, set-properties-gwt"
 		description="Calls gwtc for each GWT module under Fenix scope (each module is defined by an unique *.gwt.xml).">
 		<java
 			classname="net.sourceforge.fenixedu.presentationTier.gwt.FenixGWTAntTasksCreator"
