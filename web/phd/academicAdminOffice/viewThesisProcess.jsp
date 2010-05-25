@@ -88,6 +88,7 @@
 	</li>
 	</phd:activityAvailable>
 	
+	<%-- This activity is not used yet --%>
 	<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= SubmitThesis.class %>">
 	<li style="display: inline;">
 		<html:link action="/phdThesisProcess.do?method=prepareSubmitThesis" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
