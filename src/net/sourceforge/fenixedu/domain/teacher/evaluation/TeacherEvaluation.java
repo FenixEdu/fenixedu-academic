@@ -1,8 +1,15 @@
 package net.sourceforge.fenixedu.domain.teacher.evaluation;
 
+import java.util.Collections;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.util.email.Message;
+import net.sourceforge.fenixedu.domain.util.email.Recipient;
+import net.sourceforge.fenixedu.domain.util.email.SystemSender;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.joda.time.DateTime;
 
@@ -56,6 +63,18 @@ public abstract class TeacherEvaluation extends TeacherEvaluation_Base {
     @Service
     public void lickEvaluationStamp() {
 	setEvaluationLock(new DateTime());
+
+	final TeacherEvaluationProcess teacherEvaluationProcess = getTeacherEvaluationProcess();
+	final Person evaluee = teacherEvaluationProcess.getEvaluee();
+	if (evaluee != AccessControl.getPerson()) {
+	    final Recipient recipient = new Recipient(Collections.singletonList(evaluee));
+	    final FacultyEvaluationProcess facultyEvaluationProcess = teacherEvaluationProcess.getFacultyEvaluationProcess();
+	    final String title = facultyEvaluationProcess.getTitle().getContent();
+	    final String message = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources",
+		    "message.email.stamp.teacher.evaluation.process", title);
+	    final SystemSender systemSender = RootDomainObject.getInstance().getSystemSender();
+	    new Message(systemSender, recipient, title, message);
+	}
     }
 
     public void delete() {
