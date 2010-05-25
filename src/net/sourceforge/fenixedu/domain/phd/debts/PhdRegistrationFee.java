@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.phd.debts;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
@@ -10,7 +9,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class PhdRegistrationFee extends PhdRegistrationFee_Base {
 
