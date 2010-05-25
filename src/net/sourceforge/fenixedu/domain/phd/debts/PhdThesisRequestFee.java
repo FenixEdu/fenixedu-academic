@@ -21,7 +21,7 @@ public class PhdThesisRequestFee extends PhdThesisRequestFee_Base {
     }
 
     private void init(AdministrativeOffice administrativeOffice, Person person, PhdIndividualProgramProcess process) {
-	super.init(administrativeOffice, EventType.PHD_REGISTRATION_FEE, person);
+	super.init(administrativeOffice, EventType.PHD_THESIS_REQUEST_FEE, person);
 	checkProcess(process);
 	super.setProcess(process);
     }
