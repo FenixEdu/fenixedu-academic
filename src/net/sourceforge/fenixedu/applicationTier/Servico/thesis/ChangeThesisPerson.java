@@ -6,8 +6,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class ChangeThesisPerson extends FenixService {
@@ -56,7 +58,9 @@ public class ChangeThesisPerson extends FenixService {
 	    throws FenixServiceException {
 	Person person = getPerson(change);
 
-	thesis.checkIsScientificCommission();
+	if (!AccessControl.getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
+	    thesis.checkIsScientificCommission();
+	}
 
 	switch (change.type) {
 	case orientator:

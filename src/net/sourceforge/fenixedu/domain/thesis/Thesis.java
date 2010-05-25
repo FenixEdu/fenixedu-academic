@@ -1606,7 +1606,7 @@ public class Thesis extends Thesis_Base {
 	return getCurrentDiscussedDate() != null;
     }
 
-    @Checked("ThesisPredicates.isScientificCommissionOrScientificCouncil")
+    @Checked("ThesisPredicates.isScientificCommission")
     public void checkIsScientificCommission() {
 	// Nothing to do here... just the access control stuff that is injected
 	// whenever necessary
