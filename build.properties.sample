@@ -520,6 +520,12 @@ ldap.user.importation.service.username=xpto
 ldap.user.importation.service.password=password
 
 
+#---------------------------------------------------------------
+# Fenix Framework Plugin Configurations.
+#---------------------------------------------------------------
+
+plugins=pt.ist.fenixframework.plugins.remote.RemotePlugin
+
 #
 #
 #
