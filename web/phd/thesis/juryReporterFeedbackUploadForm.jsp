@@ -40,11 +40,7 @@
 </logic:notEmpty>
 
 <strong><bean:message key="label.phd.public.document" bundle="PHD_RESOURCES" /></strong>
-<logic:equal name="thesisProcessBean" property="juryElement.documentValidated" value="true">
-	<em><strong><bean:message key="label.phd.thesis.jury.reporter.feedback.document.already.validated" bundle="PHD_RESOURCES" /></strong></em>
-</logic:equal>
-
-<logic:equal name="thesisProcessBean" property="juryElement.documentValidated" value="false">
+<logic:equal name="process" property="waitingForJuryReporterFeedback" value="true">
 	<br/>
 	<fr:form action="<%= "/phdThesisProcess.do?processId=" + processId.toString() %>" encoding="multipart/form-data">
 		<input type="hidden" name="method" />

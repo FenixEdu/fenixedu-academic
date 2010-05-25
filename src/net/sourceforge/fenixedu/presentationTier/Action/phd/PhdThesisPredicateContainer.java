@@ -1,5 +1,13 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd;
 
+import static net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType.JURY_VALIDATED;
+import static net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType.JURY_WAITING_FOR_VALIDATION;
+import static net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType.NEW;
+import static net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType.THESIS_DISCUSSION_DATE_SCHECULED;
+import static net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType.WAITING_FOR_JURY_CONSTITUTION;
+import static net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK;
+import static net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType.WAITING_FOR_THESIS_DISCUSSION_DATE_SCHEDULING;
+import static net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType.WAITING_FOR_THESIS_PROVISIONAL_VERSION_APPROVAL;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType;
 import pt.utl.ist.fenix.tools.predicates.InlinePredicate;
@@ -12,15 +20,19 @@ public enum PhdThesisPredicateContainer implements PredicateContainer<PhdIndivid
     PROVISIONAL_THESIS_DELIVERED {
 	public Predicate<PhdIndividualProgramProcess> getPredicate() {
 
-	    final PhdThesisPredicate waitingProvisionalVersionFilter = new PhdThesisPredicate(
-		    PhdThesisProcessStateType.WAITING_FOR_THESIS_PROVISIONAL_VERSION_APPROVAL);
-	    final PhdThesisPredicate waitingDiscussionDateFilter = new PhdThesisPredicate(
-		    PhdThesisProcessStateType.WAITING_FOR_THESIS_DISCUSSION_DATE_SCHEDULING);
-
 	    return new OrPredicate<PhdIndividualProgramProcess>() {
 		{
-		    add(waitingProvisionalVersionFilter);
-		    add(waitingDiscussionDateFilter);
+
+		    // can remove some states if we want to distinguish each
+		    // situation
+		    add(new PhdThesisPredicate(NEW));
+		    add(new PhdThesisPredicate(WAITING_FOR_JURY_CONSTITUTION));
+		    add(new PhdThesisPredicate(JURY_WAITING_FOR_VALIDATION));
+		    add(new PhdThesisPredicate(JURY_VALIDATED));
+
+		    add(new PhdThesisPredicate(WAITING_FOR_JURY_REPORTER_FEEDBACK));
+		    add(new PhdThesisPredicate(WAITING_FOR_THESIS_PROVISIONAL_VERSION_APPROVAL));
+		    add(new PhdThesisPredicate(WAITING_FOR_THESIS_DISCUSSION_DATE_SCHEDULING));
 		}
 	    };
 	}
@@ -28,7 +40,7 @@ public enum PhdThesisPredicateContainer implements PredicateContainer<PhdIndivid
 
     DISCUSSION_SCHEDULED {
 	public Predicate<PhdIndividualProgramProcess> getPredicate() {
-	    return new PhdThesisPredicate(PhdThesisProcessStateType.THESIS_DISCUSSION_DATE_SCHECULED);
+	    return new PhdThesisPredicate(THESIS_DISCUSSION_DATE_SCHECULED);
 	}
     };
 

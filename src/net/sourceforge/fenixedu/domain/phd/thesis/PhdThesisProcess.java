@@ -52,11 +52,14 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	@Override
 	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
 
+	    final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
+
 	    final PhdThesisProcess result = new PhdThesisProcess();
 
-	    final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
 	    result.createState(PhdThesisProcessStateType.NEW, userView.getPerson(), bean.getRemarks());
-
+	    result.addDocuments(bean.getDocuments(), userView.getPerson());
+	    result.setIndividualProgramProcess(bean.getProcess());
+	    
 	    new PhdThesisRequestFee(bean.getProcess());
 
 	    return result;

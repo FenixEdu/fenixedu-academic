@@ -54,7 +54,7 @@ public enum PhdCandidacyPredicateContainer implements PredicateContainer<PhdIndi
 
 		@Override
 		public boolean eval(PhdIndividualProgramProcess process) {
-		    return (!process.hasSeminarProcess()) && super.eval(process);
+		    return !process.hasSeminarProcess() && !process.hasThesisProcess() && super.eval(process);
 		}
 	    };
 	}
