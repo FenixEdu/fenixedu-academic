@@ -4,25 +4,20 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionDegreesByExecutionYearAndType;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ChangeThesisPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.MakeThesisDocumentsAvailable;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.MakeThesisDocumentsUnavailable;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
+import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ChangeThesisPerson.PersonChange;
+import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ChangeThesisPerson.PersonTarget;
 import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
-import net.sourceforge.fenixedu.dataTransferObject.commons.DegreeByExecutionYearBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Employee;
@@ -40,7 +35,6 @@ import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.ThesisFileReadersGroup;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.domain.interfaces.HasExecutionYear;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
@@ -48,15 +42,14 @@ import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
 import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.AbstractManageThesisDA;
+import net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisPresentationState;
 import net.sourceforge.fenixedu.presentationTier.Action.student.thesis.ThesisFileBean;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionDegreesWithDissertationByExecutionYearProvider;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -76,7 +69,10 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 	@Forward(name = "list-scientific-comission", path = "/scientificCouncil/thesis/listScientificComission.jsp"),
 	@Forward(name = "list-thesis-creation-periods", path = "/scientificCouncil/thesis/listThesisCreationPeriods.jsp"),
 	@Forward(name = "viewOperationsThesis", path = "/student/thesis/viewOperationsThesis.jsp"),
-	@Forward(name = "showDissertationsInfo", path = "/scientificCouncil/thesis/showDissertationsInfo.jsp")})
+	@Forward(name = "showDissertationsInfo", path = "/scientificCouncil/thesis/showDissertationsInfo.jsp"),
+	@Forward(name = "editParticipant", path = "/scientificCouncil/thesis/editParticipant.jsp"),
+	@Forward(name = "select-person", path = "/scientificCouncil/thesis/selectPerson.jsp")
+	})
 public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 
     @Override
@@ -710,4 +706,180 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 	    row.setCell(odsb.toString());
 	}
     }
+
+    public ActionForward changeParticipationInfo(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	String target = request.getParameter("target");
+
+	if (target == null) {
+	    return editProposal(mapping, actionForm, request, response);
+	}
+
+	Thesis thesis = getThesis(request);
+	ThesisEvaluationParticipant participant;
+
+	PersonTarget targetType = PersonTarget.valueOf(target);
+	switch (targetType) {
+	case orientator:
+	    participant = thesis.getOrientator();
+	    break;
+	case coorientator:
+	    participant = thesis.getCoorientator();
+
+	    // HACK: ouch! type is used for a lable in the destination page, and
+	    // we don't
+	    // want to make a distinction between orientator and coorientator
+	    targetType = PersonTarget.orientator;
+	    break;
+	case president:
+	    participant = thesis.getPresident();
+	    break;
+	case vowel:
+	    participant = getVowel(request);
+	    break;
+	default:
+	    participant = null;
+	}
+
+	if (participant == null) {
+	    return editProposal(mapping, actionForm, request, response);
+	} else {
+	    request.setAttribute("targetType", targetType);
+	    request.setAttribute("participant", participant);
+	    return mapping.findForward("editParticipant");
+	}
+    }
+    public ActionForward editProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	Thesis thesis = getThesis(request);
+
+//	if (thesis == null) {
+//	    return listThesis(mapping, actionForm, request, response);
+//	}
+//
+	request.setAttribute("conditions", thesis.getConditions());
+
+	if (thesis.isOrientatorCreditsDistributionNeeded()) {
+	    request.setAttribute("orientatorCreditsDistribution", true);
+	}
+
+	if (thesis.isCoorientatorCreditsDistributionNeeded()) {
+	    request.setAttribute("coorientatorCreditsDistribution", true);
+	}
+
+	return viewThesis(mapping, actionForm, request, response);
+    }
+
+    private ThesisEvaluationParticipant getVowel(HttpServletRequest request) {
+	String parameter = request.getParameter("vowelID");
+	if (parameter == null) {
+	    return null;
+	}
+
+	Integer id = Integer.valueOf(parameter);
+
+	Thesis thesis = getThesis(request);
+	for (ThesisEvaluationParticipant participant : thesis.getVowels()) {
+	    if (participant.getIdInternal().equals(id)) {
+		return participant;
+	    }
+	}
+
+	return null;
+    }
+
+    public ActionForward changePerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	String target = request.getParameter("target");
+	boolean remove = request.getParameter("remove") != null;
+
+	if (target == null) {
+	    return editProposal(mapping, actionForm, request, response);
+	}
+
+	Thesis thesis = getThesis(request);
+	ThesisBean bean = new ThesisBean(thesis);
+
+	Degree degree = getDegree(request);
+	bean.setDegree(degree);
+
+	PersonTarget targetType = PersonTarget.valueOf(target);
+	bean.setTargetType(targetType);
+
+	if (targetType.equals(PersonTarget.vowel)) {
+	    ThesisEvaluationParticipant targetVowel = getVowel(request);
+
+	    if (targetVowel != null) {
+		bean.setTarget(targetVowel);
+	    } else {
+		bean.setTarget(null);
+	    }
+	}
+
+	if (remove) {
+	    DegreeCurricularPlan degreeCurricularPlan = null;
+	    ChangeThesisPerson.run(degreeCurricularPlan, thesis, new PersonChange(bean.getTargetType(), null, bean.getTarget()));
+
+	    return editProposal(mapping, actionForm, request, response);
+	} else {
+	    request.setAttribute("bean", bean);
+	    return mapping.findForward("select-person");
+	}
+    }
+
+    public ActionForward changeCredits(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	String target = request.getParameter("target");
+
+	if (target == null) {
+	    return editProposal(mapping, actionForm, request, response);
+	}
+
+	switch (PersonTarget.valueOf(target)) {
+	case orientator:
+	    request.setAttribute("editOrientatorCreditsDistribution", true);
+	    break;
+	case coorientator:
+	    request.setAttribute("editCoorientatorCreditsDistribution", true);
+	    break;
+	default:
+	}
+
+	return editProposal(mapping, actionForm, request, response);
+    }
+
+    public ActionForward selectPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	ThesisBean bean = (ThesisBean) getRenderedObject("bean");
+
+	if (bean == null) {
+	    return editProposal(mapping, actionForm, request, response);
+	}
+
+	request.setAttribute("bean", bean);
+
+	Person selectedPerson = bean.getPerson();
+	if (selectedPerson == null) {
+	    addActionMessage("info", request, "thesis.selectPerson.internal.required");
+	    return mapping.findForward("select-person");
+	} else {
+	    Degree degree = getDegree(request);
+	    ExecutionYear executionYear = getExecutionYear(request);
+	    List<DegreeCurricularPlan> degreeCurricularPlansForYear = degree.getDegreeCurricularPlansForYear(executionYear);
+	    DegreeCurricularPlan degreeCurricularPlan = degreeCurricularPlansForYear.iterator().next();
+	    Thesis thesis = getThesis(request);
+	    final PersonTarget personTarget = bean.getTargetType();
+	    if (personTarget == PersonTarget.president) {
+		if (selectedPerson == null || !degreeCurricularPlan.isScientificCommissionMember(executionYear, selectedPerson)) {
+		    addActionMessage("info", request, "thesis.selectPerson.president.required.scientific.commission");
+		    return mapping.findForward("select-person");
+		}
+	    }
+	    ChangeThesisPerson.run(degreeCurricularPlan, thesis, new PersonChange(bean.getTargetType(), selectedPerson, bean
+		    .getTarget()));
+
+	    return editProposal(mapping, actionForm, request, response);
+	}
+    }
+
 }

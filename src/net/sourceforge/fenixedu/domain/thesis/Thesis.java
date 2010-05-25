@@ -1460,7 +1460,7 @@ public class Thesis extends Thesis_Base {
 	}
     }
 
-    @Checked("ThesisPredicates.isScientificCommission")
+    @Checked("ThesisPredicates.isScientificCommissionOrScientificCouncil")
     public void setOrientator(Person person) {
 	setParticipation(person, ThesisParticipationType.ORIENTATOR);
 
@@ -1469,7 +1469,7 @@ public class Thesis extends Thesis_Base {
 	}
     }
 
-    @Checked("ThesisPredicates.isScientificCommission")
+    @Checked("ThesisPredicates.isScientificCommissionOrScientificCouncil")
     public void setCoorientator(Person person) {
 	setParticipation(person, ThesisParticipationType.COORIENTATOR);
 
@@ -1478,7 +1478,7 @@ public class Thesis extends Thesis_Base {
 	}
     }
 
-    @Checked("ThesisPredicates.isScientificCommission")
+    @Checked("ThesisPredicates.isScientificCommissionOrScientificCouncil")
     public void setPresident(Person person) {
 	setParticipation(person, ThesisParticipationType.PRESIDENT);
     }
@@ -1511,7 +1511,7 @@ public class Thesis extends Thesis_Base {
 	}
     }
 
-    @Checked("ThesisPredicates.isScientificCommission")
+    @Checked("ThesisPredicates.isScientificCommissionOrScientificCouncil")
     public void addVowel(Person person) {
 	if (person != null) {
 	    new ThesisEvaluationParticipant(this, person, ThesisParticipationType.VOWEL);
@@ -1606,7 +1606,7 @@ public class Thesis extends Thesis_Base {
 	return getCurrentDiscussedDate() != null;
     }
 
-    @Checked("ThesisPredicates.isScientificCommission")
+    @Checked("ThesisPredicates.isScientificCommissionOrScientificCouncil")
     public void checkIsScientificCommission() {
 	// Nothing to do here... just the access control stuff that is injected
 	// whenever necessary

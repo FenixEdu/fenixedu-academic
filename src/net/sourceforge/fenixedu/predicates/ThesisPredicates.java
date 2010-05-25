@@ -67,4 +67,12 @@ public class ThesisPredicates {
 
     };
 
+    public static final AccessControlPredicate<Thesis> isScientificCommissionOrScientificCouncil = new AccessControlPredicate<Thesis>() {
+
+	public boolean evaluate(final Thesis thesis) {
+	    return isScientificCommission.evaluate(thesis) || isScientificCouncil.evaluate(thesis);
+	}
+
+    };
+
 }

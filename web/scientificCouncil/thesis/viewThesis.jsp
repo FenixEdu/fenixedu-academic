@@ -336,6 +336,23 @@
     </logic:empty>
 </logic:empty>
 
+<logic:empty name="thesis" property="orientator">
+    <p>
+ 	   <html:link page="<%= String.format("/scientificCouncilManageThesis.do?method=changePerson&amp;target=orientator&amp;degreeId=%s&amp;executionYearId=%s&amp;thesisID=%s", degreeId, executionYearId, thesisId) %>">
+	   		<bean:message key="link.coordinator.thesis.edit.addOrientation" bundle="APPLICATION_RESOURCES"/>
+	   </html:link>
+    </p>
+</logic:empty>
+<logic:notEmpty name="thesis" property="orientator">
+    <logic:empty name="thesis" property="coorientator">
+        <p>
+	        <html:link page="<%= String.format("/scientificCouncilManageThesis.do?method=changePerson&amp;target=coorientator&amp;degreeId=%s&amp;executionYearId=%s&amp;thesisID=%s", degreeId, executionYearId, thesisId) %>">
+                <bean:message key="link.coordinator.thesis.edit.addOrientation" bundle="APPLICATION_RESOURCES"/>
+    	    </html:link>
+        </p>
+    </logic:empty>
+</logic:notEmpty>
+
 <logic:notEmpty name="thesis" property="orientator">
     <fr:view name="thesis" property="orientator" layout="tabular" schema="thesis.jury.proposal.person.loginInfo">
         <fr:layout name="tabular">
@@ -344,18 +361,66 @@
         </fr:layout>
     </fr:view>
     <logic:equal name="thesis" property="orientatorCreditsDistributionNeeded" value="true">
-        <table class="tstyle2 thlight thright mtop0 mbottom05 tgluetop">
-            <tr>
-                <th class="width12em"><bean:message key="label.scientificCouncil.thesis.edit.teacher.credits"/>:</th>
-                <td class="width35em">
-                    <logic:empty name="thesis" property="orientatorCreditsDistribution">-</logic:empty>
-                    <logic:notEmpty name="thesis" property="orientatorCreditsDistribution">
-                        <fr:view name="thesis" property="orientatorCreditsDistribution"/> %
-                    </logic:notEmpty>
-                </td>
-            </tr>
-        </table>
+        <logic:present name="editOrientatorCreditsDistribution">
+            <table class="tstyle2 thlight thright mtop0 mbottom05 tgluetop">
+                <tr>
+                    <th class="width12em"><bean:message key="label.coordinator.thesis.edit.teacher.credits" bundle="APPLICATION_RESOURCES"/>:</th>
+                    <td class="width35em">
+                        <fr:form action="<%= String.format("/scientificCouncilManageThesis.do?method=editProposal&amp;degreeId=%s&amp;executionYearId=%s&amp;thesisID=%s", degreeId, executionYearId, thesisId) %>">
+                            <fr:edit id="editCreditsOrientator" name="thesis" slot="orientatorCreditsDistribution">
+                                <fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+                                <fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.LongRangeValidator">
+                                    <fr:property name="lowerBound" value="0"/>
+                                    <fr:property name="upperBound" value="100"/>
+                                </fr:validator>
+                                <fr:layout>
+                                    <fr:property name="size" value="10"/>
+                                </fr:layout>
+                            </fr:edit> %
+                            
+                            <html:submit>
+                                <bean:message key="button.submit"/>
+                            </html:submit>
+                            <html:cancel>
+                                <bean:message key="button.cancel"/>
+                            </html:cancel>
+                        </fr:form>
+                    </td>
+                    <td class="tdclear">
+                        <span class="error0">
+                            <fr:message for="editCreditsOrientator" type="validation" />
+                        </span>
+                    </td>
+                </tr>
+            </table>
+        </logic:present>
+        <logic:notPresent name="editOrientatorCreditsDistribution">
+        	<table class="tstyle2 thlight thright mtop0 mbottom05 tglue	top">
+	            <tr>
+    	            <th class="width12em"><bean:message key="label.scientificCouncil.thesis.edit.teacher.credits"/>:</th>
+        	        <td class="width35em">
+            	        <logic:empty name="thesis" property="orientatorCreditsDistribution">-</logic:empty>
+                	    <logic:notEmpty name="thesis" property="orientatorCreditsDistribution">
+                    	    <fr:view name="thesis" property="orientatorCreditsDistribution"/> %
+                    	</logic:notEmpty>
+              	        	&nbsp;&nbsp;&nbsp;&nbsp;
+                  	    	(<html:link page="<%= String.format("/scientificCouncilManageThesis.do?method=changeCredits&amp;target=orientator&amp;degreeId=%s&amp;executionYearId=%s&amp;thesisID=%s", degreeId, executionYearId, thesisId) %>">
+                       	    	<bean:message key="label.change" bundle="APPLICATION_RESOURCES"/>
+                       		</html:link>)
+                	</td>
+            	</tr>
+        	</table>
+        </logic:notPresent>
     </logic:equal>
+
+    <p class="mtop05">
+        <html:link page="<%= String.format("/scientificCouncilManageThesis.do?method=changeParticipationInfo&amp;target=orientator&amp;remove=true&amp;degreeId=%s&amp;executionYearId=%s&amp;thesisID=%s", degreeId, executionYearId, thesisId) %>">
+            <bean:message key="link.coordinator.thesis.edit.changePerson"  bundle="APPLICATION_RESOURCES"/>
+        </html:link>,
+        <html:link page="<%= String.format("/scientificCouncilManageThesis.do?method=changePerson&amp;target=orientator&amp;remove=true&amp;degreeId=%s&amp;executionYearId=%s&amp;thesisID=%s", degreeId, executionYearId, thesisId) %>">
+            <bean:message key="link.coordinator.thesis.edit.removePerson"  bundle="APPLICATION_RESOURCES"/>
+        </html:link>
+    </p>
 </logic:notEmpty>
   
 <logic:notEmpty name="thesis" property="coorientator">
@@ -366,18 +431,64 @@
         </fr:layout>
     </fr:view>
     <logic:equal name="thesis" property="coorientatorCreditsDistributionNeeded" value="true">
-        <table class="tstyle2 thlight thright mtop0 mbottom05 tgluetop">
-            <tr>
-                <th class="width12em"><bean:message key="label.scientificCouncil.thesis.edit.teacher.credits"/>:</th>
-                <td class="width35em">
-                    <logic:empty name="thesis" property="coorientatorCreditsDistribution">-</logic:empty>
-                    <logic:notEmpty name="thesis" property="coorientatorCreditsDistribution">
-                        <fr:view name="thesis" property="coorientatorCreditsDistribution"/> %
-                    </logic:notEmpty>
-                </td>
-            </tr>
-        </table>
+        <logic:present name="editCoorientatorCreditsDistribution">
+            <table class="tstyle2 thlight thright mtop0 mbottom05 tgluetop">
+                <tr>
+                    <th class="width12em"><bean:message key="label.coordinator.thesis.edit.teacher.credits" bundle="APPLICATION_RESOURCES"/>:</th>
+                    <td class="width35em">
+                        <fr:form action="<%= String.format("/scientificCouncilManageThesis.do?method=editProposal&amp;degreeId=%s&amp;executionYearId=%s&amp;thesisID=%s", degreeId, executionYearId, thesisId) %>">
+                            <fr:edit id="editCreditsCoorientator" name="thesis" slot="coorientatorCreditsDistribution">
+                                <fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.LongRangeValidator">
+                                    <fr:property name="lowerBound" value="0"/>
+                                    <fr:property name="upperBound" value="100"/>
+                                </fr:validator>
+                                <fr:layout>
+                                    <fr:property name="size" value="10"/>
+                                </fr:layout>
+                            </fr:edit> %
+                            
+                            <html:submit>
+                                <bean:message key="button.submit"/>
+                            </html:submit>
+                            <html:cancel>
+                                <bean:message key="button.cancel"/>
+                            </html:cancel>
+                        </fr:form>
+                    </td>
+                    <td class="tdclear">
+                        <span class="error0">
+                            <fr:message for="editCreditsCoorientator" type="validation"/>
+                        </span>
+                    </td>
+                </tr>
+            </table>
+        </logic:present>
+        <logic:notPresent name="editCoorientatorCreditsDistribution">
+        	<table class="tstyle2 thlight thright mtop0 mbottom05 tgluetop">
+            	<tr>
+                	<th class="width12em"><bean:message key="label.scientificCouncil.thesis.edit.teacher.credits"/>:</th>
+                	<td class="width35em">
+	                    <logic:empty name="thesis" property="coorientatorCreditsDistribution">-</logic:empty>
+    	                <logic:notEmpty name="thesis" property="coorientatorCreditsDistribution">
+        	                <fr:view name="thesis" property="coorientatorCreditsDistribution"/> %
+            	        </logic:notEmpty>
+                	        &nbsp;&nbsp;&nbsp;&nbsp;
+                    	    (<html:link page="<%= String.format("/scientificCouncilManageThesis.do?method=changeCredits&amp;target=coorientator&amp;degreeId=%s&amp;executionYearId=%s&amp;thesisID=%s", degreeId, executionYearId, thesisId) %>">
+                        	    <bean:message key="label.change" bundle="APPLICATION_RESOURCES"/>
+                        	</html:link>)
+                	</td>
+            	</tr>
+        	</table>
+        </logic:notPresent>
     </logic:equal>
+    <p class="mtop05">
+        <html:link page="<%= String.format("/scientificCouncilManageThesis.do?method=changeParticipationInfo&amp;target=coorientator&amp;remove=true&amp;degreeId=%s&amp;executionYearId=%s&amp;thesisID=%s", degreeId, executionYearId, thesisId) %>">
+            <bean:message key="link.coordinator.thesis.edit.changePerson" bundle="APPLICATION_RESOURCES"/>
+        </html:link>,
+        <html:link page="<%= String.format("/scientificCouncilManageThesis.do?method=changePerson&amp;target=coorientator&amp;remove=true&amp;degreeId=%s&amp;executionYearId=%s&amp;thesisID=%s", degreeId, executionYearId, thesisId) %>">
+            <bean:message key="link.coordinator.thesis.edit.removePerson" bundle="APPLICATION_RESOURCES"/>
+        </html:link>
+    </p>
 </logic:notEmpty>
 
 <%-- Jury/President --%>
@@ -396,6 +507,16 @@
         		<fr:property name="columnClasses" value="width12em,width35em,"/>
         </fr:layout>
     </fr:view>
+<%--
+	<bean:define id="urlChangePerson">/scientificCouncilManageThesis.do?method=changeParticipationInfo&amp;degreeId=<bean:write name="degreeId"/>&amp;executionYearId=<bean:write name="executionYearId"/></bean:define>
+    <html:link page="<%= String.format(urlChangePerson + "&amp;target=president&amp;thesisID=%s", thesisId) %>">
+        <bean:message key="link.coordinator.thesis.edit.changePerson" bundle="APPLICATION_RESOURCES"/>
+    </html:link>
+    <bean:define id="urlRemovePerson">/scientificCouncilManageThesis.do?method=changePerson&amp;remove=true&amp;degreeId=<bean:write name="degreeId"/>&amp;executionYearId=<bean:write name="executionYearId"/></bean:define>
+    <html:link page="<%= String.format(urlRemovePerson + "&amp;thesisID=%s", thesisId) %>">
+        <bean:message key="link.coordinator.thesis.edit.removePerson" bundle="APPLICATION_RESOURCES"/>
+    </html:link>
+ --%>
 </logic:notEmpty>
 
 <%-- Jury/"Vowels" --%>
