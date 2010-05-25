@@ -54,6 +54,7 @@ public class GraduationReportFile extends GraduationReportFile_Base {
 	spreadsheet.setHeader("telemovel");
 	spreadsheet.setHeader("email");
 	spreadsheet.setHeader("sexo");
+	spreadsheet.setHeader("data nascimento");
 
 	final Set<ExecutionYear> toInspectSet = getExecutionYear() == null ? getRootDomainObject().getExecutionYearsSet()
 		: Collections.singleton(getExecutionYear());
@@ -109,6 +110,6 @@ public class GraduationReportFile extends GraduationReportFile_Base {
 	row.setCell(person.getDefaultMobilePhoneNumber());
 	row.setCell(person.getInstitutionalOrDefaultEmailAddressValue());
 	row.setCell(person.getGender().toLocalizedString());
+	row.setCell(person.getDateOfBirthYearMonthDay().toString("yyyy-MM-dd"));
     }
-
 }
