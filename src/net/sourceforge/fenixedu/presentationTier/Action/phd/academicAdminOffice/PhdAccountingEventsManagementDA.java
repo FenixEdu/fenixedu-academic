@@ -73,9 +73,17 @@ public class PhdAccountingEventsManagementDA extends PhdProcessDA {
 	try {
 
 	    final AccountingEventCreateBean bean = (AccountingEventCreateBean) getRenderedObject("eventBean");
-	    final InvocationResult result = new AccountingEventsManager().createInsuranceEvent(getProcess(request)
-		    .getPerson(), bean.getExecutionYear());
-	    
+	    final PhdIndividualProgramProcess process = getProcess(request);
+
+	    if (process.getExecutionYear().isAfter(bean.getExecutionYear())) {
+		addActionMessage("error", request, "error.phd.accounting.events.insurance.invalid.execution.period", process
+			.getExecutionYear().getQualifiedName());
+		return prepareCreateInsuranceEvent(mapping, actionForm, request, response);
+	    }
+
+	    final InvocationResult result = new AccountingEventsManager().createInsuranceEvent(process.getPerson(), bean
+		    .getExecutionYear());
+
 	    if (result.isSuccess()) {
 		addActionMessage("success", request, "message.phd.accounting.events.insurance.created.with.success");
 		return prepare(mapping, actionForm, request, response);
