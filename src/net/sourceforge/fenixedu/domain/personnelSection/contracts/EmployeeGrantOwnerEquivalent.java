@@ -26,4 +26,8 @@ public class EmployeeGrantOwnerEquivalent extends EmployeeGrantOwnerEquivalent_B
 	setImportationDate(new DateTime());
     }
 
+    public boolean isValid() {
+	return getCountry() != null && getBeginDate() != null && (getEndDate() == null || !getBeginDate().isAfter(getEndDate()))
+		&& getGrantOwnerEquivalent() != null;
+    }
 }

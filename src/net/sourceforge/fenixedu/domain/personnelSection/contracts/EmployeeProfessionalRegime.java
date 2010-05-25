@@ -22,5 +22,9 @@ public class EmployeeProfessionalRegime extends EmployeeProfessionalRegime_Base 
 	setModifiedDate(modifiedDate);
 	setImportationDate(new DateTime());
     }
-    
+
+    public boolean isValid() {
+	return getProfessionalRegime() != null && getBeginDate() != null
+		&& (getEndDate() == null || !getBeginDate().isAfter(getEndDate()));
+    }
 }

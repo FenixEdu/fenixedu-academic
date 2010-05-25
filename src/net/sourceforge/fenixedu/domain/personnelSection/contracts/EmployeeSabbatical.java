@@ -20,4 +20,7 @@ public class EmployeeSabbatical extends EmployeeSabbatical_Base {
 	setImportationDate(new DateTime());
     }
 
+    public boolean isValid() {
+	return getBeginDate() != null && (getEndDate() == null || !getBeginDate().isAfter(getEndDate()));
+    }
 }

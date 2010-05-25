@@ -6120,6 +6120,7 @@ class personnelSection.contracts.EmployeeProfessionalContract extends DomainObje
     DateTime modifiedDate;
     DateTime importationDate;
     DateTime anulationDate;
+    String contractSituationGiafId;
 }
 
 class personnelSection.contracts.EmployeeContractSituation extends DomainObject {

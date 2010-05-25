@@ -29,4 +29,8 @@ public class EmployeeFunctionsAccumulation extends EmployeeFunctionsAccumulation
 	setImportationDate(new DateTime());
     }
 
+    public boolean isValid() {
+	return getFunctionsAccumulation() != null && getBeginDate() != null
+		&& (getEndDate() == null || !getBeginDate().isAfter(getEndDate())) && getProfessionalRegime() != null;
+    }
 }

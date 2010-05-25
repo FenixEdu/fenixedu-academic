@@ -39,4 +39,9 @@ public class EmployeeProfessionalCategory extends EmployeeProfessionalCategory_B
 	return getBeginDate() != null && (!getBeginDate().isAfter(date) && (!hasEndDate() || !getEndDate().isBefore(date)));
     }
 
+    public boolean isValid() {
+	return getProfessionalCategory() != null && getBeginDate() != null
+		&& (getEndDate() == null || !getBeginDate().isAfter(getEndDate())) && getProfessionalRegime() != null
+		&& getProfessionalRelation() != null;
+    }
 }

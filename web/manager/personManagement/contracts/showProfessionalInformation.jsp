@@ -28,6 +28,10 @@
 			<html:link page="<%= "/professionalInformation.do?method=showGrantOwnerEquivalences&personId="+ personID%>"><bean:message key="label.grantOwnerEquivalences" bundle="CONTRACTS_RESOURCES"/></html:link>
 		</p>
 		
+		<style>
+			.invaliddata { color:red;}
+		</style>
+		
 		<bean:define id="employee" name="person" property="employee"/>
 
 		<logic:present name="situations">
@@ -38,6 +42,21 @@
 				<fr:layout name="tabular">
 					<fr:property name="sortBy" value="beginDate, endDate"/>
 					<fr:property name="classes" value="tstyle1 thlight mtop025" />
+					<fr:property name="conditionalColumnClass(0)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(0)" value="valid"/>
+					<fr:property name="column(0)" value="0"/>
+					<fr:property name="conditionalColumnClass(1)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(1)" value="valid"/>
+					<fr:property name="column(1)" value="1"/>
+					<fr:property name="conditionalColumnClass(2)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(2)" value="valid"/>
+					<fr:property name="column(2)" value="2"/>
+					<fr:property name="conditionalColumnClass(3)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(3)" value="valid"/>
+					<fr:property name="column(3)" value="3"/>
+					<fr:property name="conditionalColumnClass(4)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(4)" value="valid"/>
+					<fr:property name="column(4)" value="4"/>
 				</fr:layout>
 			</fr:view>
 		</logic:present>
@@ -50,6 +69,24 @@
 				<fr:layout name="tabular">
 					<fr:property name="sortBy" value="beginDate, endDate"/>
 					<fr:property name="classes" value="tstyle1 thlight mtop025" />
+					<fr:property name="conditionalColumnClass(0)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(0)" value="valid"/>
+					<fr:property name="column(0)" value="0"/>
+					<fr:property name="conditionalColumnClass(1)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(1)" value="valid"/>
+					<fr:property name="column(1)" value="1"/>
+					<fr:property name="conditionalColumnClass(2)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(2)" value="valid"/>
+					<fr:property name="column(2)" value="2"/>
+					<fr:property name="conditionalColumnClass(3)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(3)" value="valid"/>
+					<fr:property name="column(3)" value="3"/>
+					<fr:property name="conditionalColumnClass(4)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(4)" value="valid"/>
+					<fr:property name="column(4)" value="4"/>
+					<fr:property name="conditionalColumnClass(5)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(5)" value="valid"/>
+					<fr:property name="column(5)" value="5"/>
 				</fr:layout>
 			</fr:view>
 		</logic:present>
@@ -62,6 +99,14 @@
 				<fr:layout name="tabular">
 					<fr:property name="sortBy" value="beginDate, endDate"/>
 					<fr:property name="classes" value="tstyle1 thlight mtop025" />
+					<fr:property name="useCssIfNot(0)" value="valid"/>
+					<fr:property name="column(0)" value="0"/>
+					<fr:property name="conditionalColumnClass(1)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(1)" value="valid"/>
+					<fr:property name="column(1)" value="1"/>
+					<fr:property name="conditionalColumnClass(2)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(2)" value="valid"/>
+					<fr:property name="column(2)" value="2"/>
 				</fr:layout>
 			</fr:view>
 		</logic:present>
@@ -74,6 +119,18 @@
 				<fr:layout name="tabular">
 					<fr:property name="sortBy" value="beginDate, endDate"/>
 					<fr:property name="classes" value="tstyle1 thlight mtop025" />
+					<fr:property name="conditionalColumnClass(0)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(0)" value="valid"/>
+					<fr:property name="column(0)" value="0"/>
+					<fr:property name="conditionalColumnClass(1)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(1)" value="valid"/>
+					<fr:property name="column(1)" value="1"/>
+					<fr:property name="conditionalColumnClass(2)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(2)" value="valid"/>
+					<fr:property name="column(2)" value="2"/>
+					<fr:property name="conditionalColumnClass(3)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(3)" value="valid"/>
+					<fr:property name="column(3)" value="3"/>
 				</fr:layout>
 			</fr:view>
 		</logic:present>
@@ -86,6 +143,15 @@
 				<fr:layout name="tabular">
 					<fr:property name="sortBy" value="beginDate, endDate"/>
 					<fr:property name="classes" value="tstyle1 thlight mtop025" />
+					<fr:property name="conditionalColumnClass(0)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(0)" value="valid"/>
+					<fr:property name="column(0)" value="0"/>
+					<fr:property name="conditionalColumnClass(1)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(1)" value="valid"/>
+					<fr:property name="column(1)" value="1"/>
+					<fr:property name="conditionalColumnClass(2)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(2)" value="valid"/>
+					<fr:property name="column(2)" value="2"/>
 				</fr:layout>
 			</fr:view>
 		</logic:present>
@@ -98,6 +164,21 @@
 				<fr:layout name="tabular">
 					<fr:property name="sortBy" value="beginDate, endDate"/>
 					<fr:property name="classes" value="tstyle1 thlight mtop025" />
+					<fr:property name="conditionalColumnClass(0)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(0)" value="valid"/>
+					<fr:property name="column(0)" value="0"/>
+					<fr:property name="conditionalColumnClass(1)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(1)" value="valid"/>
+					<fr:property name="column(1)" value="1"/>
+					<fr:property name="conditionalColumnClass(2)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(2)" value="valid"/>
+					<fr:property name="column(2)" value="2"/>
+					<fr:property name="conditionalColumnClass(3)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(3)" value="valid"/>
+					<fr:property name="column(3)" value="3"/>
+					<fr:property name="conditionalColumnClass(4)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(4)" value="valid"/>
+					<fr:property name="column(4)" value="4"/>
 				</fr:layout>
 			</fr:view>
 		</logic:present>
@@ -110,6 +191,12 @@
 				<fr:layout name="tabular">
 					<fr:property name="sortBy" value="beginDate, endDate"/>
 					<fr:property name="classes" value="tstyle1 thlight mtop025" />
+					<fr:property name="conditionalColumnClass(0)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(0)" value="valid"/>
+					<fr:property name="column(0)" value="0"/>
+					<fr:property name="conditionalColumnClass(1)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(1)" value="valid"/>
+					<fr:property name="column(1)" value="1"/>
 				</fr:layout>
 			</fr:view>
 		</logic:present>
@@ -122,6 +209,15 @@
 				<fr:layout name="tabular">
 					<fr:property name="sortBy" value="beginDate, endDate"/>
 					<fr:property name="classes" value="tstyle1 thlight mtop025" />
+					<fr:property name="conditionalColumnClass(0)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(0)" value="valid"/>
+					<fr:property name="column(0)" value="0"/>
+					<fr:property name="conditionalColumnClass(1)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(1)" value="valid"/>
+					<fr:property name="column(1)" value="1"/>
+					<fr:property name="conditionalColumnClass(2)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(2)" value="valid"/>
+					<fr:property name="column(2)" value="2"/>
 				</fr:layout>
 			</fr:view>
 		</logic:present>
@@ -134,6 +230,24 @@
 				<fr:layout name="tabular">
 					<fr:property name="sortBy" value="beginDate, endDate"/>
 					<fr:property name="classes" value="tstyle1 thlight mtop025" />
+						<fr:property name="conditionalColumnClass(0)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(0)" value="valid"/>
+					<fr:property name="column(0)" value="0"/>
+					<fr:property name="conditionalColumnClass(1)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(1)" value="valid"/>
+					<fr:property name="column(1)" value="1"/>
+					<fr:property name="conditionalColumnClass(2)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(2)" value="valid"/>
+					<fr:property name="column(2)" value="2"/>
+					<fr:property name="conditionalColumnClass(3)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(3)" value="valid"/>
+					<fr:property name="column(3)" value="3"/>
+					<fr:property name="conditionalColumnClass(4)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(4)" value="valid"/>
+					<fr:property name="column(4)" value="4"/>
+					<fr:property name="conditionalColumnClass(5)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(5)" value="valid"/>
+					<fr:property name="column(5)" value="5"/>
 				</fr:layout>
 			</fr:view>
 		</logic:present>

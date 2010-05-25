@@ -1,0 +1,3 @@
+alter table `EMPLOYEE_PROFESSIONAL_CONTRACT` add column `CONTRACT_SITUATION_GIAF_ID` text;
+
+

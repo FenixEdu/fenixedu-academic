@@ -26,4 +26,8 @@ public class EmployeeProfessionalRelation extends EmployeeProfessionalRelation_B
 	setImportationDate(new DateTime());
     }
 
+    public boolean isValid() {
+	return getProfessionalCategory() != null && getBeginDate() != null
+		&& (getEndDate() == null || !getBeginDate().isAfter(getEndDate())) && getProfessionalRelation() != null;
+    }
 }

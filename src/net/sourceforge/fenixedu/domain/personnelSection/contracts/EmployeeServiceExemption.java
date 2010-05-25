@@ -21,4 +21,9 @@ public class EmployeeServiceExemption extends EmployeeServiceExemption_Base {
 	setImportationDate(new DateTime());
     }
 
+    public boolean isValid() {
+	return getServiceExemption() != null && getBeginDate() != null
+		&& (getEndDate() == null || !getBeginDate().isAfter(getEndDate()));
+    }
+
 }
