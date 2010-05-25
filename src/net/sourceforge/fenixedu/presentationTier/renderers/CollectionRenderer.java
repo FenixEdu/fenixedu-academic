@@ -869,12 +869,12 @@ public class CollectionRenderer extends OutputRenderer {
 	return getColumnCss(name).getUseIfNot();
     }
 
-    public void setColumn(String name, int column) {
-	getColumnCss(name).setColumnNumber(column);
+    public void setColumn(String name, String column) {
+	getColumnCss(name).setColumnNumber(Integer.parseInt(column));
     }
 
-    public int getColumn(String name) {
-	return getColumnCss(name).getColumnNumber();
+    public String getColumn(String name) {
+	return String.valueOf(getColumnCss(name).getColumnNumber());
     }
 
     public void setConditionalColumnClass(String name, String cssClasses) {
@@ -1131,9 +1131,9 @@ public class CollectionRenderer extends OutputRenderer {
 	private void applyConditionalClasses(MetaObject metaObject, HtmlComponent component, ColumnCss columnCss) {
 	    Boolean useIf = ((columnCss.getUseIf() != null) && (Boolean) RendererPropertyUtils.getProperty(
 		    metaObject.getObject(), columnCss.getUseIf(), false));
-	    Boolean useIfNot = ((columnCss.getUseIfNot() != null) && (Boolean) RendererPropertyUtils.getProperty(metaObject
-		    .getObject(), columnCss.getUseIfNot(), false));
-	    if (useIf || !useIfNot) {
+	    Boolean useIfNot = ((columnCss.getUseIfNot() != null) && (!(Boolean) RendererPropertyUtils.getProperty(metaObject
+		    .getObject(), columnCss.getUseIfNot(), false)));
+	    if (useIf || useIfNot) {
 		component.setClasses(columnCss.getStyleClass());
 	    }
 	}
@@ -1313,7 +1313,7 @@ public class CollectionRenderer extends OutputRenderer {
 	private String confirmationArgs;
 
 	private Boolean blankTarget = false;
-	
+
 	private String target;
 
 	public TableLink() {
@@ -1490,11 +1490,11 @@ public class CollectionRenderer extends OutputRenderer {
 	public void setBlankTarget(Boolean blankTarget) {
 	    this.blankTarget = blankTarget;
 	}
-	
+
 	public String getTarget() {
 	    return target;
 	}
-	
+
 	public void setTarget(String target) {
 	    this.target = target;
 	}
@@ -1549,7 +1549,7 @@ public class CollectionRenderer extends OutputRenderer {
 
 		if (getBlankTarget().booleanValue()) {
 		    link.setTarget(Target.BLANK);
-		    
+
 		} else if (getTarget() != null && !getTarget().isEmpty()) {
 		    link.setTarget(getTarget());
 		}
