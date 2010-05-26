@@ -52,9 +52,6 @@ public class PastDegreeGratuityEvent extends PastDegreeGratuityEvent_Base {
     @Override
     public void setPastDegreeGratuityAmount(Money pastDegreeGratuityAmount) {
 	super.setPastDegreeGratuityAmount(pastDegreeGratuityAmount);
-	// throw new DomainException(
-	// "error.net.sourceforge.fenixedu.domain.accounting.events.gratuity.PastDegreeGratuityEvent.cannot.modify.pastDegreeGratuityAmount"
-	// );
     }
 
     @Override
