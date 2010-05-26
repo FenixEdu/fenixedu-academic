@@ -4,7 +4,6 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.joda.time.DateTime;
-import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 
 public class EmployeeContractSituation extends EmployeeContractSituation_Base {
@@ -28,43 +27,12 @@ public class EmployeeContractSituation extends EmployeeContractSituation_Base {
 	setImportationDate(new DateTime());
     }
 
-    public static EmployeeContractSituation getCurrentEmployeeContractSituation(Employee employee) {
-	LocalDate today = new LocalDate();
-	for (final EmployeeContractSituation employeeContractSituation : employee.getEmployeeContractSituations()) {
-	    if (employeeContractSituation.isValid() && employeeContractSituation.isActive(today)) {
-		return employeeContractSituation;
-	    }
-	}
-	return null;
+    public boolean hasValidDates() {
+	return getBeginDate() != null && (getEndDate() == null || !getBeginDate().isAfter(getEndDate()));
     }
 
     public boolean isValid() {
-	return getProfessionalCategory() != null && getBeginDate() != null
-		&& (getEndDate() == null || !getBeginDate().isAfter(getEndDate()));
+	return getProfessionalCategory() != null && hasValidDates();
     }
 
-    private boolean isActive(LocalDate day) {
-	return getEndDate() == null ? !getBeginDate().isAfter(day) : getInterval().contains(day.toDateTimeAtStartOfDay());
-    }
-
-    private Interval getInterval() {
-	return getEndDate() != null ? new Interval(getBeginDate().toDateTimeAtStartOfDay(), getEndDate().toDateTimeAtStartOfDay()
-		.plusMillis(1)) : null;
-    }
-
-    public static EmployeeContractSituation getLastEmployeeContractSituation(Employee employee) {
-	LocalDate today = new LocalDate();
-	EmployeeContractSituation lastEmployeeContractSituation = null;
-	for (EmployeeContractSituation employeeContractSituation : employee.getEmployeeContractSituations()) {
-	    if (employeeContractSituation.isValid()) {
-		if (employeeContractSituation.isActive(today)) {
-		    return employeeContractSituation;
-		} else if (lastEmployeeContractSituation == null
-			|| employeeContractSituation.getBeginDate().isAfter(lastEmployeeContractSituation.getBeginDate())) {
-		    lastEmployeeContractSituation = employeeContractSituation;
-		}
-	    }
-	}
-	return lastEmployeeContractSituation;
-    }
 }
