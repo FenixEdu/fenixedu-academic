@@ -201,12 +201,13 @@ public class SummariesControlAction extends FenixDispatchAction {
 		lessonsDeclared = lessonsDeclared.setScale(1, RoundingMode.HALF_UP);
 		givenSumariesPercentage = getDifference(lessonsDeclared, summariesGiven);
 
-		Category category = professorship.getTeacher().getCategory();
+		Teacher teacher = professorship.getTeacher();
+		Category category = teacher != null ? teacher.getCategory() : null;
 		String categoryName = (category != null) ? category.getCode() : "";
 		String siglas = getSiglas(professorship);
 
-		DetailSummaryElement listElementDTO = new DetailSummaryElement(professorship.getTeacher().getPerson().getName(),
-			professorship.getExecutionCourse().getNome(), professorship.getTeacher().getTeacherNumber(),
+		DetailSummaryElement listElementDTO = new DetailSummaryElement(professorship.getPerson().getName(),
+			professorship.getExecutionCourse().getNome(), teacher != null ? teacher.getTeacherNumber() : null,
 			categoryName, lessonsDeclared, summariesGiven, givenSumariesPercentage, siglas);
 
 		allListElements.add(listElementDTO);
