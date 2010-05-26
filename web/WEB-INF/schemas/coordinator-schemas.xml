@@ -879,6 +879,7 @@
     </slot>
 </schema>
 
+<!--
 <schema name="coordinator.xviews.inar" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.xviews.Inar" bundle="COORDINATOR_RESOURCES">
 	<slot name="enrolled" key="label.enrolled">
 		<property name="bundle" value="COORDINATOR_RESOURCES"/>
@@ -889,3 +890,4 @@
 	<slot name="flunked" key="label.flunked" />
 	<slot name="checksum" key="label.checksum"/>
 </schema>
+-->
