@@ -77,12 +77,10 @@
 			<fileset dir="${lib}">
 				<include name="*.jar" />
 				<exclude name="gwt-dev*.jar" />
-				<exclude name="gwt-user.jar" />
 			</fileset>
 			<fileset dir="${build.home.webinf.libs}">
 				<include name="*.jar" />
 				<exclude name="gwt-dev*.jar" />
-				<exclude name="gwt-user.jar" />
 			</fileset>
 		</path>
 	</target>

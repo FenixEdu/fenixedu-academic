@@ -163,9 +163,15 @@ public class FenixGWTAntTasksCreator {
 	if(children != null) {
 	    for(int i=0; i<children.length; i++) {
 		
-		if(children[i].matches(".*\\.gwt\\.xml")) {
-		    path += "/" + children[i];
-		    resultSet.add(path);
+		//RaphaelGWT module serves only as a lib. Does not define an entrypoint,
+		// donc it can't be gwtcompiled and must be ignored.
+		if(!children[i].equals("RaphaelGWT.gwt.xml")) {
+		    
+		    if(children[i].matches(".*\\.gwt\\.xml")) {
+			path += "/" + children[i];
+			resultSet.add(path);
+		    }
+		
 		}
 		
 		String newPath = path + "/" + children[i];
