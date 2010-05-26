@@ -4,7 +4,6 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.RoleTypeGroup;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -23,7 +22,7 @@ public class ThesisPredicates {
     public static final AccessControlPredicate<Thesis> isScientificCouncil = new AccessControlPredicate<Thesis>() {
 
 	public boolean evaluate(Thesis thesis) {
-	    return new RoleTypeGroup(RoleType.SCIENTIFIC_COUNCIL).isMember(AccessControl.getPerson());
+	    return AccessControl.getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL);
 	}
 
     };
