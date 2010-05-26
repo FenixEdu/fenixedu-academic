@@ -61,6 +61,11 @@ public class PartialRegistrationRegimeRequest extends PartialRegistrationRegimeR
     }
 
     @Override
+    protected boolean isPayed() {
+	return super.isPayed() || getEvent().isCancelled();
+    }
+
+    @Override
     protected void createAcademicServiceRequestSituations(AcademicServiceRequestBean academicServiceRequestBean) {
 	super.createAcademicServiceRequestSituations(academicServiceRequestBean);
 
