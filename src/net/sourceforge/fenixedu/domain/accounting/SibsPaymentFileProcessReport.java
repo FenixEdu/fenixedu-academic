@@ -64,7 +64,8 @@ public class SibsPaymentFileProcessReport extends SibsPaymentFileProcessReport_B
 	super.setDegreeTransferIndividualCandidacyAmount(sibsPaymentFileProcessReportDTO
 		.getDegreeTransferIndividualCandidacyAmount());
 	super.setSecondCycleIndividualCandidacyAmount(sibsPaymentFileProcessReportDTO.getSecondCycleIndividualCandidacyAmount());
-	super.setStandaloneEnrolmentGratuityEventAmount(sibsPaymentFileProcessReportDTO.getStandaloneEnrolmentGratuityEventAmount());
+	super.setStandaloneEnrolmentGratuityEventAmount(sibsPaymentFileProcessReportDTO
+		.getStandaloneEnrolmentGratuityEventAmount());
 	super.setOver23IndividualCandidacyEventAmount(sibsPaymentFileProcessReportDTO.getOver23IndividualCandidacyEventAmount());
     }
 
@@ -132,4 +133,8 @@ public class SibsPaymentFileProcessReport extends SibsPaymentFileProcessReport_B
 	return new SibsPaymentFileProcessReport(reportDTO);
     }
 
+    public void delete() {
+	removeRootDomainObject();
+	super.deleteDomainObject();
+    }
 }
