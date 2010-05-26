@@ -405,7 +405,7 @@
 	
 	<target name="compile-base-noGWT" description="Compile application" depends="i18nDefault, compile-domain, write-all-properties, generate, generate-groups-language, base-compile" />
 
-	<target name="compile" description="Compile application" depends="compile-base">
+	<target name="compile" description="Compile application" depends="compile-base-noGWT">
 		<java classname="pt.ist.fenixWebFramework.security.accessControl.CheckedAnnotationInjector" failonerror="true"
 				fork="true" maxmemory="1500m">
 			<classpath refid="class.path.lib.ref" />
@@ -433,7 +433,7 @@
 		<antcall target="post-compile"/>
 	</target>
 	
-	<target name="compile-without-gwtc" description="Compile application" depends="compile-base-noGWT">
+	<target name="compile-with-gwtc" description="Compile application" depends="compile-base">
 			<java classname="pt.ist.fenixWebFramework.security.accessControl.CheckedAnnotationInjector" failonerror="true"
 					fork="true" maxmemory="1500m">
 				<classpath refid="class.path.lib.ref" />

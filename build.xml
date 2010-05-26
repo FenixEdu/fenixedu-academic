@@ -37,9 +37,9 @@
 		<ant antfile="build_compile.xml" target="compile"/>
     </target>
 	
-	<target name="compile-without-gwtc"
-			description="Same as 'compile' excluding the call to gwtc">
-		<ant antfile="build_compile.xml" target="compile-without-gwtc"/>
+	<target name="compile-with-gwtc"
+			description="Same as 'compile' including the call to gwtc">
+		<ant antfile="build_compile.xml" target="compile-with-gwtc"/>
 	</target>
 
     <target name="war"
