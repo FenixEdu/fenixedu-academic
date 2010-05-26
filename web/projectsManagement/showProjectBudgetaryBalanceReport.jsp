@@ -65,6 +65,12 @@
 				<td><strong><bean:message key="label.coordinator" />:</strong></td>
 				<td><bean:write name="infoProject" property="coordinatorName" /></td>
 			</tr>
+			<logic:notEmpty name="infoProject" property="projectManagerName">
+				<tr>
+					<td><strong><bean:message key="label.projectManager" />:</strong></td>
+					<td><bean:write name="infoProject" property="projectManagerName" /></td>
+				</tr>
+			</logic:notEmpty>
 			<tr>
 				<td><strong><bean:message key="label.date" />:</strong></td>
 				<td><report:computeDate /></td>

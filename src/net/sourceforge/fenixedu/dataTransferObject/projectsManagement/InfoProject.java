@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
-import net.sourceforge.fenixedu.domain.projectsManagement.Project;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -41,6 +40,8 @@ public class InfoProject extends DataTranferObject {
     private String coordination;
 
     private Integer explorationUnit;
+
+    private String projectManagerName;
 
     public String getCoordination() {
 	return coordination;
@@ -140,29 +141,6 @@ public class InfoProject extends DataTranferObject {
 	return false;
     }
 
-    public void copyFromDomain(Project project) {
-	if (project != null) {
-	    setCoordination(project.getCoordination());
-	    setCoordinatorCode(project.getCoordinatorCode());
-	    setCoordinatorName(project.getCoordinatorName());
-	    setCost(project.getCost());
-	    setExplorationUnit(project.getExplorationUnit());
-	    setOrigin(project.getOrigin());
-	    setProjectCode(project.getProjectCode());
-	    setTitle(project.getTitle());
-	    setType(project.getType());
-	}
-    }
-
-    public static InfoProject newInfoFromDomain(Project project) {
-	InfoProject infoProject = null;
-	if (project != null) {
-	    infoProject = new InfoProject();
-	    infoProject.copyFromDomain(project);
-	}
-	return infoProject;
-    }
-
     public HSSFSheet getProjectInformationToExcel(HSSFSheet sheet, ExcelStyle excelStyle) {
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.ProjectsManagementResources", Language.getLocale());
 	HSSFRow row = sheet.createRow((short) 2);
@@ -202,6 +180,14 @@ public class InfoProject extends DataTranferObject {
 	cell.setCellValue(formatter.format(new Date()));
 	cell.setCellStyle(excelStyle.getValueStyle());
 	return sheet;
+    }
+
+    public String getProjectManagerName() {
+	return projectManagerName;
+    }
+
+    public void setProjectManagerName(String projectManagerName) {
+	this.projectManagerName = projectManagerName;
     }
 
 }

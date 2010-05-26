@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoAdiant
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoCabimentosReportLine;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoExpensesReport;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoExpensesReportLine;
-import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProject;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoSummaryEURReportLine;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoSummaryPTEReportLine;
 import net.sourceforge.fenixedu.domain.projectsManagement.IExpensesReportLine;
@@ -41,7 +40,7 @@ public class ReadExpensesReport extends FenixService {
 			|| ProjectAccess.getByUsernameAndProjectCode(username, projectCode, it) != null || (costCenter != null && ProjectAccess
 			.getAllByPersonUsernameAndDatesAndCostCenter(username, costCenter, it) != null))) {
 	    List infoLines = new ArrayList();
-	    infoReport.setInfoProject(InfoProject.newInfoFromDomain(persistentProject.readProject(projectCode, it)));
+	    infoReport.setInfoProject(persistentProject.readProject(projectCode, it));
 	    List lines = null;
 	    IPersistentExpensesReport persistentExpensesReport = null;
 	    if (reportType.equals(ReportType.EXPENSES)) {

@@ -11,8 +11,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.projectsManagement.Project;
+import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProject;
+import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.struts.util.LabelValueBean;
 
@@ -22,12 +24,12 @@ import org.apache.struts.util.LabelValueBean;
  */
 public class PersistentProject {
 
-    public List<Project> readByUserLogin(String userLogin, Boolean it) throws ExcepcaoPersistencia {
-	List<Project> projects = new ArrayList<Project>();
+    public List<InfoProject> readByUserLogin(String userLogin, Boolean it) throws ExcepcaoPersistencia {
+	List<InfoProject> projects = new ArrayList<InfoProject>();
 
 	StringBuilder query = new StringBuilder();
 	query
-		.append("select p.projectCode, p.title, p.origem, p.tipo, p.custo, p.coordenacao, p.UNID_EXPLORACAO from  V_PROJECTOS p , web_user_projs up where up.login ='");
+		.append("select p.projectCode, p.title, p.origem, p.tipo, p.custo, p.coordenacao, p.UNID_EXPLORACAO, p.gestor from  V_PROJECTOS p , web_user_projs up where up.login ='");
 	query.append(userLogin);
 	query.append("' and p.projectCode = up.id_proj order by p.projectCode");
 	// String query = " select p.projectCode, p.title, p.origem, p.tipo,
@@ -46,7 +48,7 @@ public class PersistentProject {
 	    ResultSet rs = stmt.executeQuery();
 
 	    while (rs.next()) {
-		Project project = new Project();
+		InfoProject project = new InfoProject();
 		project.setProjectCode(rs.getString("projectCode"));
 		project.setTitle(rs.getString("title"));
 		project.setOrigin(rs.getString("origem"));
@@ -54,6 +56,7 @@ public class PersistentProject {
 		project.setCost(rs.getString("custo"));
 		project.setCoordination(rs.getString("coordenacao"));
 		project.setExplorationUnit(new Integer(rs.getInt("UNID_EXPLORACAO")));
+		project.setProjectManagerName(getPersonName(rs.getString("gestor")));
 		projects.add(project);
 	    }
 	    rs.close();
@@ -64,12 +67,20 @@ public class PersistentProject {
 	return projects;
     }
 
-    public List<Project> readByProjectsCodes(List<Integer> projectCodes, Boolean it) throws ExcepcaoPersistencia {
-	List<Project> projects = new ArrayList<Project>();
+    private String getPersonName(String username) {
+	if (!StringUtils.isEmpty(username)) {
+	    User user = User.readUserByUserUId(username.trim());
+	    return user != null ? user.getPerson().getName() : null;
+	}
+	return null;
+    }
+
+    public List<InfoProject> readByProjectsCodes(List<Integer> projectCodes, Boolean it) throws ExcepcaoPersistencia {
+	List<InfoProject> projects = new ArrayList<InfoProject>();
 	if (projectCodes != null && projectCodes.size() != 0) {
 	    StringBuilder stringBuffer = new StringBuilder();
 	    stringBuffer
-		    .append("select p.projectCode, p.title, p.origem, p.tipo, p.custo, p.coordenacao, p.UNID_EXPLORACAO from  V_PROJECTOS p where p.projectCode IN (");
+		    .append("select p.projectCode, p.title, p.origem, p.tipo, p.custo, p.coordenacao, p.UNID_EXPLORACAO, p.gestor from  V_PROJECTOS p where p.projectCode IN (");
 	    for (int i = 0; i < projectCodes.size(); i++) {
 		if (i != 0)
 		    stringBuffer.append(", ");
@@ -87,7 +98,7 @@ public class PersistentProject {
 		ResultSet rs = stmt.executeQuery();
 
 		while (rs.next()) {
-		    Project project = new Project();
+		    InfoProject project = new InfoProject();
 		    project.setProjectCode(rs.getString("projectCode"));
 		    project.setTitle(rs.getString("title"));
 		    project.setOrigin(rs.getString("origem"));
@@ -95,6 +106,7 @@ public class PersistentProject {
 		    project.setCost(rs.getString("custo"));
 		    project.setCoordination(rs.getString("coordenacao"));
 		    project.setExplorationUnit(new Integer(rs.getInt("UNID_EXPLORACAO")));
+		    project.setProjectManagerName(getPersonName(rs.getString("gestor")));
 		    projects.add(project);
 		}
 		rs.close();
@@ -106,12 +118,12 @@ public class PersistentProject {
 	return projects;
     }
 
-    public List<Project> readByCoordinatorAndNotProjectsCodes(Integer coordinatorId, List projectCodes, Boolean it)
+    public List<InfoProject> readByCoordinatorAndNotProjectsCodes(Integer coordinatorId, List projectCodes, Boolean it)
 	    throws ExcepcaoPersistencia {
-	List<Project> projects = new ArrayList<Project>();
+	List<InfoProject> projects = new ArrayList<InfoProject>();
 	StringBuilder stringBuffer = new StringBuilder();
 	stringBuffer
-		.append("select p.projectCode, p.title, p.origem, p.tipo, p.custo, p.coordenacao, p.UNID_EXPLORACAO from  V_PROJECTOS p , web_user_projs up where up.login = '");
+		.append("select p.projectCode, p.title, p.origem, p.tipo, p.custo, p.coordenacao, p.UNID_EXPLORACAO, p.gestor from  V_PROJECTOS p , web_user_projs up where up.login = '");
 	stringBuffer.append(coordinatorId);
 	stringBuffer.append("' and p.projectCode = up.id_proj");
 	if (projectCodes != null && projectCodes.size() != 0) {
@@ -135,7 +147,7 @@ public class PersistentProject {
 	    ResultSet rs = stmt.executeQuery();
 
 	    while (rs.next()) {
-		Project project = new Project();
+		InfoProject project = new InfoProject();
 		project.setProjectCode(rs.getString("projectCode"));
 		project.setTitle(rs.getString("title"));
 		project.setOrigin(rs.getString("origem"));
@@ -143,6 +155,7 @@ public class PersistentProject {
 		project.setCost(rs.getString("custo"));
 		project.setCoordination(rs.getString("coordenacao"));
 		project.setExplorationUnit(new Integer(rs.getInt("UNID_EXPLORACAO")));
+		project.setProjectManagerName(getPersonName(rs.getString("gestor")));
 		projects.add(project);
 	    }
 	    rs.close();
@@ -153,10 +166,10 @@ public class PersistentProject {
 	return projects;
     }
 
-    public Project readProject(Integer projectCode, Boolean it) throws ExcepcaoPersistencia {
-	String query = "select title, c.nome, tp.descricao, p.origem, p.tipo, p.custo, p.coordenacao, p.UNID_EXPLORACAO  from V_Projectos p, V_COORD c , V_TIPOS_PROJECTOS tp  where p.idCoord = c.idCoord and tp.cod = p.tipo and p.projectCode ="
+    public InfoProject readProject(Integer projectCode, Boolean it) throws ExcepcaoPersistencia {
+	String query = "select title, c.nome, tp.descricao, p.origem, p.tipo, p.custo, p.coordenacao, p.UNID_EXPLORACAO, p.gestor from V_Projectos p, V_COORD c , V_TIPOS_PROJECTOS tp  where p.idCoord = c.idCoord and tp.cod = p.tipo and p.projectCode ="
 		+ projectCode;
-	Project project = new Project();
+	InfoProject project = new InfoProject();
 	try {
 	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
 	    p.startTransaction();
@@ -172,6 +185,7 @@ public class PersistentProject {
 		project.setCost(rs.getString("custo"));
 		project.setCoordination(rs.getString("coordenacao"));
 		project.setExplorationUnit(new Integer(rs.getInt("UNID_EXPLORACAO")));
+		project.setProjectManagerName(getPersonName(rs.getString("gestor")));
 	    }
 	    rs.close();
 	    p.commitTransaction();

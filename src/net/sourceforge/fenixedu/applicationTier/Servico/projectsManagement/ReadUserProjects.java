@@ -9,7 +9,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProject;
-import net.sourceforge.fenixedu.domain.projectsManagement.Project;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentProject;
@@ -38,19 +37,15 @@ public class ReadUserProjects extends FenixService {
 	}
 	PersistentProject persistentProject = new PersistentProject();
 
-	List<Project> projectList = new ArrayList<Project>();
 	if (StringUtils.isEmpty(costCenter) || costCenter.equals(userNumber)) {
-	    projectList = persistentProject.readByUserLogin(userNumber, it);
+	    infoProjectList = persistentProject.readByUserLogin(userNumber, it);
 	}
 
 	if (all) {
-	    projectList.addAll(persistentProject.readByProjectsCodes(projectCodes, it));
+	    infoProjectList.addAll(persistentProject.readByProjectsCodes(projectCodes, it));
 	    for (Integer ccCode : costCenterCodes) {
-		projectList.addAll(persistentProject.readByCoordinatorAndNotProjectsCodes(ccCode, null, it));
+		infoProjectList.addAll(persistentProject.readByCoordinatorAndNotProjectsCodes(ccCode, null, it));
 	    }
-	}
-	for (Project project : projectList) {
-	    infoProjectList.add(InfoProject.newInfoFromDomain(project));
 	}
 	return infoProjectList;
     }

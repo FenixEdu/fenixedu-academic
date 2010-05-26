@@ -10,7 +10,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.IReportLine;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoMovementReport;
-import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProject;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProjectBudgetaryBalanceReportLine;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProjectReport;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoRevenueReportLine;
@@ -40,7 +39,7 @@ public class ReadReport extends FenixService {
 		&& (persistentProject.isUserProject(new Integer(userNumber), projectCode, it) || ProjectAccess
 			.getByUsernameAndProjectCode(userView, projectCode, it) != null)
 		|| (costCenter != null && ProjectAccess.getAllByPersonUsernameAndDatesAndCostCenter(userView, costCenter, it) != null)) {
-	    infoReport.setInfoProject(InfoProject.newInfoFromDomain(persistentProject.readProject(projectCode, it)));
+	    infoReport.setInfoProject(persistentProject.readProject(projectCode, it));
 	    if (reportType.equals(ReportType.REVENUE)) {
 		List<IRevenueReportLine> lines = new PersistentRevenueReport().getCompleteReport(reportType, projectCode, it);
 		for (IRevenueReportLine revenueReportLine : lines) {

@@ -10,10 +10,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProject;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.projectsManagement.Project;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentProject;
@@ -41,9 +41,9 @@ public class InsertNewProjectAccess extends FenixService {
 	}
 
 	PersistentProject persistentProject = new PersistentProject();
-	List<Project> projectList = persistentProject.readByCoordinatorAndNotProjectsCodes(coordinatorCode, projectCodes, it);
+	List<InfoProject> projectList = persistentProject.readByCoordinatorAndNotProjectsCodes(coordinatorCode, projectCodes, it);
 
-	for (Project project : projectList) {
+	for (InfoProject project : projectList) {
 	    if (ProjectAccess.getByPersonAndProject(person, new Integer(project.getProjectCode()), it) != null) {
 		throw new IllegalArgumentException();
 	    }

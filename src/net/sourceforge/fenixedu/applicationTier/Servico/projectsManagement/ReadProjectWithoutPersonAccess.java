@@ -8,9 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
-import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProject;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProjectAccess;
-import net.sourceforge.fenixedu.domain.projectsManagement.Project;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentProject;
 
@@ -29,12 +27,7 @@ public class ReadProjectWithoutPersonAccess extends FenixService {
 	    projectCodes.add(infoProjectAccess.getKeyProject());
 	}
 
-	List<Project> projectList = new PersistentProject().readByCoordinatorAndNotProjectsCodes(coordinatorId, projectCodes, it);
-	List<InfoProject> infoProjects = new ArrayList<InfoProject>();
-	for (Project project : projectList) {
-	    infoProjects.add(InfoProject.newInfoFromDomain(project));
-	}
-	return infoProjects;
+	return new PersistentProject().readByCoordinatorAndNotProjectsCodes(coordinatorId, projectCodes, it);
     }
 
 }

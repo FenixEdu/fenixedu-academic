@@ -10,7 +10,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProject;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProjectAccess;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
@@ -32,8 +31,7 @@ public class ReadProjectAccesses extends FenixService {
 	List<InfoProjectAccess> infoProjectAcessesList = new ArrayList<InfoProjectAccess>();
 	for (ProjectAccess projectAccess : projectAcessesList) {
 	    InfoProjectAccess infoProjectAccess = InfoProjectAccess.newInfoFromDomain(projectAccess);
-	    infoProjectAccess.setInfoProject(InfoProject.newInfoFromDomain(persistentProject.readProject(infoProjectAccess
-		    .getKeyProject(), it)));
+	    infoProjectAccess.setInfoProject(persistentProject.readProject(infoProjectAccess.getKeyProject(), it));
 	    infoProjectAcessesList.add(infoProjectAccess);
 	}
 
@@ -50,8 +48,7 @@ public class ReadProjectAccesses extends FenixService {
 	    PersistentProject persistentProject = new PersistentProject();
 	    for (ProjectAccess projectAccess : projectAcessesList) {
 		InfoProjectAccess infoProjectAccess = InfoProjectAccess.newInfoFromDomain(projectAccess);
-		infoProjectAccess.setInfoProject(InfoProject.newInfoFromDomain(persistentProject.readProject(infoProjectAccess
-			.getKeyProject(), it)));
+		infoProjectAccess.setInfoProject(persistentProject.readProject(infoProjectAccess.getKeyProject(), it));
 		infoProjectAcessesList.add(infoProjectAccess);
 	    }
 	}
@@ -64,8 +61,7 @@ public class ReadProjectAccesses extends FenixService {
 	PersistentProject persistentProject = new PersistentProject();
 	InfoProjectAccess infoProjectAccess = InfoProjectAccess.newInfoFromDomain(ProjectAccess.getByPersonAndProject(person,
 		projectCode, it));
-	infoProjectAccess.setInfoProject(InfoProject.newInfoFromDomain(persistentProject.readProject(infoProjectAccess
-		.getKeyProject(), it)));
+	infoProjectAccess.setInfoProject(persistentProject.readProject(infoProjectAccess.getKeyProject(), it));
 	return infoProjectAccess;
     }
 
