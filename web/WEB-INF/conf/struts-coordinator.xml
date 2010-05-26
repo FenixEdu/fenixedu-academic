@@ -961,6 +961,8 @@
 		key="CONTENT_RESOURCES" null="false" />
 	<message-resources parameter="resources.ScientificCouncilResources" 
 		key="SCIENTIFIC_COUNCIL_RESOURCES" null="false"/>
+	<message-resources parameter="resources.CoordinatorResources" 
+		key="COORDINATOR_RESOURCES" null="false"/>
 
 	<!--
 		========== Plug Ins Configuration =================================
