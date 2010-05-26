@@ -109,12 +109,13 @@ public class ExportGrantsAction extends FenixDispatchAction {
 	if (qualification != null) {
 	    spreadsheet.addCell(qualification.getType() != null ? qualification.getType().getLocalizedName() : qualification
 		    .getTitle());
+	    spreadsheet.addCell(qualification.getDegree());
 	    spreadsheet.addCell(qualification.getYear());
 	    spreadsheet.addCell(qualification.getSpecializationArea());
 	    spreadsheet.addCell(qualification.getCountry() != null ? qualification.getCountry().getName() : EMPTY_STRING);
 	}
 
-	spreadsheet.addCell(grantContractRegime.getGrantContract().getContractNumber(), 11);
+	spreadsheet.addCell(grantContractRegime.getGrantContract().getContractNumber(), 12);
 	spreadsheet.addCell(grantContractRegime.getDateBeginContractYearMonthDay().toString());
 
 	LocalDate endDate = new LocalDate(grantContractRegime.getDateEndContractYearMonthDay());
@@ -164,20 +165,20 @@ public class ExportGrantsAction extends FenixDispatchAction {
 		    .addCell(
 			    grantContractRegime.getGrantContract().getGrantInsurance().getDateBeginInsuranceYearMonthDay() != null ? grantContractRegime
 				    .getGrantContract().getGrantInsurance().getDateBeginInsuranceYearMonthDay().toString()
-				    : EMPTY_STRING, 22);
+				    : EMPTY_STRING, 23);
 	    spreadsheet
 		    .addCell(
 			    grantContractRegime.getGrantContract().getGrantInsurance().getDateEndInsuranceYearMonthDay() != null ? grantContractRegime
 				    .getGrantContract().getGrantInsurance().getDateEndInsuranceYearMonthDay().toString()
-				    : EMPTY_STRING, 23);
+				    : EMPTY_STRING, 24);
 	    int totalDays = Days.daysBetween(
 		    grantContractRegime.getGrantContract().getGrantInsurance().getDateBeginInsuranceYearMonthDay(),
 		    grantContractRegime.getGrantContract().getGrantInsurance().getDateEndInsuranceYearMonthDay()).getDays();
-	    spreadsheet.addCell(totalDays, 24);
-	    spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantInsurance().getTotalValue(), 25);
+	    spreadsheet.addCell(totalDays, 25);
+	    spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantInsurance().getTotalValue(), 26);
 	    spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantInsurance().getGrantPaymentEntity().getNumber()
 		    + separtor
-		    + grantContractRegime.getGrantContract().getGrantInsurance().getGrantPaymentEntity().getDesignation(), 26,
+		    + grantContractRegime.getGrantContract().getGrantInsurance().getGrantPaymentEntity().getDesignation(), 27,
 		    true);
 	    if (betweenDates) {
 		LocalDate beginLocalDate = grantContractRegime.getGrantContract().getGrantInsurance()
@@ -191,8 +192,8 @@ public class ExportGrantsAction extends FenixDispatchAction {
 		    endLocalDate = grantSearch.getEndDate();
 		}
 		int totalDaysBetween = Math.max(Days.daysBetween(beginLocalDate, endLocalDate).getDays(), 0);
-		spreadsheet.addCell(totalDaysBetween, 27);
-		spreadsheet.addCell(FormatDouble.round((InfoGrantInsurance.dayValueOfInsurance / 365) * totalDaysBetween), 28);
+		spreadsheet.addCell(totalDaysBetween, 28);
+		spreadsheet.addCell(FormatDouble.round((InfoGrantInsurance.dayValueOfInsurance / 365) * totalDaysBetween), 29);
 	    }
 	}
     }
@@ -225,22 +226,22 @@ public class ExportGrantsAction extends FenixDispatchAction {
 	spreadsheet.newHeaderRow();
 	spreadsheet.addHeader(0, bundle.getString("label.grant.owner.information"));
 	spreadsheet.addHeader(7, bundle.getString("label.grant.qualification.information"));
-	spreadsheet.addHeader(11, bundle.getString("label.grant.contract.information"));
-	spreadsheet.addHeader(17, bundle.getString("label.list.grant.contract.subsidies"));
-	spreadsheet.addHeader(22, bundle.getString("label.grant.insurance.information"));
+	spreadsheet.addHeader(12, bundle.getString("label.grant.contract.information"));
+	spreadsheet.addHeader(18, bundle.getString("label.list.grant.contract.subsidies"));
+	spreadsheet.addHeader(23, bundle.getString("label.grant.insurance.information"));
 	if (betweenDates) {
-	    spreadsheet.addHeader(27, MessageFormat.format(bundle.getString("label.grant.insurance.information.betweenDates"),
+	    spreadsheet.addHeader(28, MessageFormat.format(bundle.getString("label.grant.insurance.information.betweenDates"),
 		    new Object[] { dateFormat.print(grantSearch.getBeginDate()), dateFormat.print(grantSearch.getEndDate()) }));
 	}
 
 	spreadsheet.newHeaderRow();
 	spreadsheet.mergeCells(0, 1, 0, 6);
-	spreadsheet.mergeCells(0, 1, 7, 10);
-	spreadsheet.mergeCells(0, 1, 11, 16);
-	spreadsheet.mergeCells(0, 1, 17, 21);
-	spreadsheet.mergeCells(0, 1, 22, 26);
+	spreadsheet.mergeCells(0, 1, 7, 11);
+	spreadsheet.mergeCells(0, 1, 12, 17);
+	spreadsheet.mergeCells(0, 1, 18, 22);
+	spreadsheet.mergeCells(0, 1, 23, 27);
 	if (betweenDates) {
-	    spreadsheet.mergeCells(0, 1, 27, 28);
+	    spreadsheet.mergeCells(0, 1, 28, 29);
 	}
 
 	spreadsheet.newHeaderRow();
@@ -254,6 +255,7 @@ public class ExportGrantsAction extends FenixDispatchAction {
 	spreadsheet.addHeader(bundle.getString("label.grant.owner.infoperson.nationality"), 5000);
 
 	spreadsheet.addHeader(bundle.getString("label.grant.qualification.title"));
+	spreadsheet.addHeader(bundle.getString("label.grant.qualification.degree"));
 	spreadsheet.addHeader(bundle.getString("label.grant.qualification.qualificationDate"));
 	spreadsheet.addHeader(bundle.getString("label.grant.qualification.specializationArea"));
 	spreadsheet.addHeader(bundle.getString("label.grant.qualification.country"));
