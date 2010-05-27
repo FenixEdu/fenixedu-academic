@@ -67,13 +67,16 @@ public abstract class TeacherEvaluation extends TeacherEvaluation_Base {
 	final TeacherEvaluationProcess teacherEvaluationProcess = getTeacherEvaluationProcess();
 	final Person evaluee = teacherEvaluationProcess.getEvaluee();
 	if (evaluee != AccessControl.getPerson()) {
+	    final Person evaluator = teacherEvaluationProcess.getEvaluator();
 	    final Recipient recipient = new Recipient(Collections.singletonList(evaluee));
+	    final Recipient ccRecipient = new Recipient(Collections.singletonList(evaluator));
 	    final FacultyEvaluationProcess facultyEvaluationProcess = teacherEvaluationProcess.getFacultyEvaluationProcess();
 	    final String title = facultyEvaluationProcess.getTitle().getContent();
-	    final String message = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources",
+	    final String body = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources",
 		    "message.email.stamp.teacher.evaluation.process", title);
 	    final SystemSender systemSender = RootDomainObject.getInstance().getSystemSender();
-	    new Message(systemSender, recipient, title, message);
+	    final Message message = new Message(systemSender, recipient, title, body);
+	    message.addCcs(ccRecipient);
 	}
     }
 
