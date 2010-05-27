@@ -2045,23 +2045,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
     }
 
-    final public void createModules(Collection<DegreeModuleToEnrol> degreeModulesToEnrol, ExecutionSemester executionSemester,
-	    EnrollmentCondition enrollmentCondition) {
-
-	for (DegreeModuleToEnrol degreeModuleToEnrol : degreeModulesToEnrol) {
-	    final DegreeModule childDegreeModule = degreeModuleToEnrol.getContext().getChildDegreeModule();
-	    if (childDegreeModule.isLeaf()) {
-		new Enrolment(this, degreeModuleToEnrol.getCurriculumGroup(), (CurricularCourse) childDegreeModule,
-			executionSemester, enrollmentCondition, AccessControl.getUserView().getUtilizador());
-	    } else if (childDegreeModule instanceof CycleCourseGroup) {
-		new CycleCurriculumGroup((RootCurriculumGroup) degreeModuleToEnrol.getCurriculumGroup(),
-			(CycleCourseGroup) childDegreeModule, executionSemester);
-	    } else {
-		new CurriculumGroup(degreeModuleToEnrol.getCurriculumGroup(), (CourseGroup) childDegreeModule, executionSemester);
-	    }
-	}
-    }
-
     final public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(final ExecutionSemester executionSemester) {
 	return isBolonhaDegree() ? getRoot().getDegreeModulesToEvaluate(executionSemester) : Collections.EMPTY_SET;
     }
