@@ -42,7 +42,7 @@
 				<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 		        <fr:property name="columnClasses" value="width12em,width40em"/>
-		        <fr:property name="sortBy" value="degree.presentationName=asc,teacher.name=asc" />
+		        <fr:property name="sortBy" value="degree.presentationName=asc,teacher.person.name=asc" />
 	
 				<fr:property name="linkFormat(remove)" value="<%= String.format("/caseHandlingErasmusCandidacyProcess.do?method=executeRemoveTeacherFromCoordinators&amp;processId=%s&amp;erasmusCoordinatorExternalId=${externalId}", processId.toString()) %>" />
 				<fr:property name="key(remove)" value="label.erasmus.coordinator.removal" />
