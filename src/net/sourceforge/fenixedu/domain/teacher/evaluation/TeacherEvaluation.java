@@ -1,12 +1,16 @@
 package net.sourceforge.fenixedu.domain.teacher.evaluation;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.util.EmailAddressList;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
+import net.sourceforge.fenixedu.domain.util.email.ReplyTo;
+import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.BundleUtil;
@@ -75,7 +79,9 @@ public abstract class TeacherEvaluation extends TeacherEvaluation_Base {
 	    final String body = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources",
 		    "message.email.stamp.teacher.evaluation.process", title);
 	    final SystemSender systemSender = RootDomainObject.getInstance().getSystemSender();
-	    final Message message = new Message(systemSender, recipient, title, body);
+	    final Message message = new Message(systemSender, Collections.EMPTY_LIST,
+		    Collections.EMPTY_LIST, title, body, new EmailAddressList(Collections.EMPTY_LIST).toString());
+	    message.addTos(recipient);
 	    message.addCcs(ccRecipient);
 	}
     }
