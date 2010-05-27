@@ -401,11 +401,11 @@
 		<delete dir="${xfire.stubsTempDir}" />
 	</target>
 
-	<target name="compile-base" description="Compile application" depends="i18nDefault, compile-domain, write-all-properties, generate, generate-groups-language, base-compile, FenixGWT" />
+	<target name="compile-base" description="Compile application" depends="i18nDefault, compile-domain, write-all-properties, generate, generate-groups-language, base-compile" />
 	
-	<target name="compile-base-noGWT" description="Compile application" depends="i18nDefault, compile-domain, write-all-properties, generate, generate-groups-language, base-compile" />
+	<target name="compile-base-withGWT" description="Compile application" depends="i18nDefault, compile-domain, write-all-properties, generate, generate-groups-language, base-compile, FenixGWT" />
 
-	<target name="compile" description="Compile application" depends="compile-base-noGWT">
+	<target name="compile" description="Compile application" depends="compile-base">
 		<java classname="pt.ist.fenixWebFramework.security.accessControl.CheckedAnnotationInjector" failonerror="true"
 				fork="true" maxmemory="1500m">
 			<classpath refid="class.path.lib.ref" />
@@ -433,7 +433,7 @@
 		<antcall target="post-compile"/>
 	</target>
 	
-	<target name="compile-with-gwtc" description="Compile application" depends="compile-base">
+	<target name="compile-with-gwtc" description="Compile application" depends="compile-base-withGWT">
 			<java classname="pt.ist.fenixWebFramework.security.accessControl.CheckedAnnotationInjector" failonerror="true"
 					fork="true" maxmemory="1500m">
 				<classpath refid="class.path.lib.ref" />
