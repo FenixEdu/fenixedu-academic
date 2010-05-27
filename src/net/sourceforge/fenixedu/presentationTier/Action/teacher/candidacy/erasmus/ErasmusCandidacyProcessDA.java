@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.coordinator.candidacy.erasmus;
+package net.sourceforge.fenixedu.presentationTier.Action.teacher.candidacy.erasmus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,26 +9,30 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.period.ErasmusCandidacyPeriod;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
+import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.renderers.DataProvider;
+import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 
-@Mapping(path = "/caseHandlingErasmusCandidacyProcess", module = "coordinator", formBeanClass = ErasmusCandidacyProcessDA.ErasmusCandidacyProcessForm.class)
-@Forwards(tileProperties = @Tile(navLocal = "/coordinator/localNavigationBar.jsp"), value = { @Forward(name = "intro", path = "/coordinator/candidacy/erasmus/mainCandidacyProcess.jsp") })
+@Mapping(path = "/caseHandlingErasmusCandidacyProcess", module = "teacher", formBeanClass = ErasmusCandidacyProcessDA.ErasmusCandidacyProcessForm.class)
+@Forwards( { @Forward(name = "intro", path = "/teacher/candidacy/erasmus/mainCandidacyProcess.jsp") })
 public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 
     static public class ErasmusCandidacyProcessForm extends CandidacyProcessForm {
@@ -47,14 +51,16 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	setChooseDegreeBean(request);
-	return super.execute(mapping, actionForm, request, response);
+	ActionForward forward = super.execute(mapping, actionForm, request, response);
+	setChooseDegreeBean(request);
+	return forward;
     }
 
     private void setChooseDegreeBean(HttpServletRequest request) {
 	ChooseDegreeBean chooseDegreeBean = (ChooseDegreeBean) getObjectFromViewState("choose.degree.bean");
 
 	if (chooseDegreeBean == null) {
-	    chooseDegreeBean = new ChooseDegreeBean();
+	    chooseDegreeBean = new ChooseDegreeBean(getProcess(request));
 	}
 
 	request.setAttribute("chooseDegreeBean", chooseDegreeBean);
@@ -137,13 +143,21 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 	Degree selectedDegree = getChooseDegreeBean(request).getDegree();
 
 	for (IndividualCandidacyProcess child : processes) {
-	    if ((selectedDegree == null)
-		    || ((ErasmusIndividualCandidacyProcess) child).getCandidacy().getSelectedDegree() == selectedDegree) {
+	    if(!getProcess(request).getDegreesAssociatedToTeacherAsCoordinator(getTeacher()).contains(
+		    ((ErasmusIndividualCandidacyProcess) child).getCandidacy().getSelectedDegree())) {
+		continue;
+	    }
+
+	    if (((selectedDegree == null) || ((ErasmusIndividualCandidacyProcess) child).getCandidacy().getSelectedDegree() == selectedDegree)) {
 		selectedDegreesIndividualCandidacyProcesses.add(child);
 	    }
 	}
 
 	return selectedDegreesIndividualCandidacyProcesses;
+    }
+
+    private Teacher getTeacher() {
+	return AccessControl.getPerson().getTeacher();
     }
 
     @Override
@@ -213,6 +227,21 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 	}
 
 	return null;
+    }
+
+    public static class ErasmusCandidacyDegreesProvider implements DataProvider {
+
+	public Object provide(Object source, Object currentValue) {
+	    ChooseDegreeBean bean = (ChooseDegreeBean) source;
+
+	    Teacher teacher = AccessControl.getPerson().getTeacher();
+	    return ((ErasmusCandidacyProcess) bean.getCandidacyProcess()).getDegreesAssociatedToTeacherAsCoordinator(teacher);
+	}
+
+	public Converter getConverter() {
+	    return new DomainObjectKeyConverter();
+	}
+
     }
 
 }

@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyPersonalDetails;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
+import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.casehandling.CaseHandlingDispatchAction;
@@ -100,11 +101,17 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
 	return intro(mapping, form, request, response);
     }
 
-    @Override
-    public ActionForward listProcessAllowedActivities(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	setCandidacyProcessInformation(request, getProcess(request));
-	return introForward(mapping);
+    protected List<Activity> getAllowedActivities(final CandidacyProcess process) {
+	List<Activity> activities = process.getAllowedActivities(AccessControl.getUserView());
+	ArrayList<Activity> resultActivities = new ArrayList<Activity>();
+
+	for (Activity activity : activities) {
+	    if (activity.isVisibleForAdminOffice()) {
+		resultActivities.add(activity);
+	    }
+	}
+
+	return resultActivities;
     }
 
     @Override
@@ -115,7 +122,7 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
     protected void setCandidacyProcessInformation(final HttpServletRequest request, final CandidacyProcess process) {
 	if (process != null) {
 	    request.setAttribute("process", process);
-	    request.setAttribute("processActivities", process.getAllowedActivities(AccessControl.getUserView()));
+	    request.setAttribute("processActivities", getAllowedActivities(process));
 	    request.setAttribute("childProcesses", getChildProcesses(process, request));
 	    request.setAttribute("canCreateChildProcess", canCreateProcess(getChildProcessType().getName()));
 	    request.setAttribute("childProcessName", getChildProcessType().getSimpleName());
@@ -409,8 +416,14 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
 
 	private Degree degree;
 
+	private CandidacyProcess candidacyProcess;
+
 	public ChooseDegreeBean() {
 
+	}
+
+	public ChooseDegreeBean(final CandidacyProcess process) {
+	    this.candidacyProcess = process;
 	}
 
 	public Degree getDegree() {
@@ -419,6 +432,14 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
 
 	public void setDegree(Degree degree) {
 	    this.degree = degree;
+	}
+
+	public CandidacyProcess getCandidacyProcess() {
+	    return candidacyProcess;
+	}
+
+	public void setCandidacyProcess(final CandidacyProcess process) {
+	    this.candidacyProcess = process;
 	}
     }
 

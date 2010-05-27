@@ -71,7 +71,7 @@
 	<%-- show home institution data --%>
 	<br/>
 	<strong><bean:message key="label.erasmus.home.institution" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong>
-	<fr:view name="process" schema="ErasmusIndividualCandidacyProcess.home.institution.view">
+	<fr:view name="process" property="candidacy.erasmusStudentData" schema="ErasmusIndividualCandidacyProcess.home.institution.view">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>

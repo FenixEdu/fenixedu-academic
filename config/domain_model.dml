@@ -7365,6 +7365,10 @@ class ImportRegisterLog extends DomainObject {
 	DateTime instant;
 }
 
+class candidacyProcess.erasmus.ErasmusCoordinator extends DomainObject {
+}
+
+
 /*
  * Relations definitions
  * 
@@ -18147,5 +18151,37 @@ relation InternalCoEvaluatorPerson {
 		multiplicity *;
 	}
 	Person playsRole person;
+}
+
+
+relation ErasmusCoordinatorRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	candidacyProcess.erasmus.ErasmusCoordinator playsRole erasmusCoordinators {
+		multiplicity *;
+	}
+}
+
+relation ErasmusCoordinatorErasmusCandidacyProcess { 
+	candidacyProcess.erasmus.ErasmusCoordinator playsRole coordinators {
+		multiplicity *;
+	}
+	candidacyProcess.erasmus.ErasmusCandidacyProcess playsRole process;
+}
+
+
+relation ErasmusCoordinatorDegree {
+	candidacyProcess.erasmus.ErasmusCoordinator playsRole coordinators {
+		multiplicity *;
+	}
+	
+	Degree playsRole degree;	
+}
+
+relation ErasmusCoordinatorTeacher {
+	candidacyProcess.erasmus.ErasmusCoordinator playsRole erasmusCoordinator {
+		multiplicity *;
+	}	
+	
+	Teacher playsRole teacher;
 }
 

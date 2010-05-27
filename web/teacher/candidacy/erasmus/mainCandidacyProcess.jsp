@@ -110,7 +110,7 @@
 			</tr>
 			
 			<p/>		
-			<fr:edit id="choose.degree.bean" name="chooseDegreeBean" schema="SecondCycleChooseDegreeBean.selectDegree" >
+			<fr:edit id="choose.degree.bean" name="chooseDegreeBean" schema="ErasmusChooseDegreeBean.coordinator.selectDegree" >
 				<fr:destination name="postback" path="<%= "/caseHandling" + processName.toString() + ".do?method=intro" %>"/>
 			</fr:edit>				
 			

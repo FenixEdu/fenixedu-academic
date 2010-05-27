@@ -76,8 +76,7 @@ public class DegreeOfficePublicCandidacyHashCode extends DegreeOfficePublicCandi
 		+ INFORM_APPLICATION_SUCCESS_SUBJECT);
 	String body = bundle.getString(this.getIndividualCandidacyProcess().getClass().getSimpleName()
 		+ INFORM_APPLICATION_SUCCESS_BODY);
-	String link = String.format(bundle.getString(this.getIndividualCandidacyProcess().getClass().getSimpleName()
-		+ APPLICATION_ACCESS_LINK), this.getValue(), Language.getLocale().getLanguage());
+	String link = getDefaultPublicLink();
 
 	body = String.format(body, new String[] {
 		this.getIndividualCandidacyProcess().getProcessCode(),
@@ -97,12 +96,17 @@ public class DegreeOfficePublicCandidacyHashCode extends DegreeOfficePublicCandi
 		+ RECOVERY_APPLICATION_SUBJECT);
 	String body = bundle.getString(this.getIndividualCandidacyProcess().getClass().getSimpleName()
 		+ RECOVERY_APPLICATION_BODY);
-	String link = String.format(bundle.getString(this.getIndividualCandidacyProcess().getClass().getSimpleName()
-		+ APPLICATION_ACCESS_LINK), this.getValue(), Language.getLocale().getLanguage());
+	String link = getDefaultPublicLink();
 
 	body = String.format(body, new String[] { link, this.getIndividualCandidacyProcess().getProcessCode() });
 
 	sendEmail(subject, body);
+    }
+
+    public String getDefaultPublicLink() {
+	ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
+	return String.format(bundle.getString(this.getIndividualCandidacyProcess().getClass().getSimpleName()
+		+ APPLICATION_ACCESS_LINK), this.getValue(), Language.getLocale().getLanguage());
     }
 
     /**

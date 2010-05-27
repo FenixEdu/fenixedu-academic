@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessState;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyPersonalDetails;
@@ -26,6 +27,9 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.ErasmusCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.Transformer;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
@@ -45,6 +49,9 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 	activities.add(new ViewErasmusVancacies());
 	activities.add(new InsertErasmusVacancy());
 	activities.add(new RemoveErasmusVacancy());
+	activities.add(new ViewErasmusCoordinators());
+	activities.add(new AssignCoordinator());
+	activities.add(new RemoveTeacherFromCoordinators());
     }
 
     public ErasmusCandidacyProcess() {
@@ -198,6 +205,46 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 	return (ErasmusCandidacyPeriod) super.getCandidacyPeriod();
     }
 
+    public List<ErasmusCoordinator> getErasmusCoordinatorForTeacher(final Teacher teacher) {
+	return new ArrayList<ErasmusCoordinator>(CollectionUtils.select(getCoordinators(), new Predicate() {
+
+	    @Override
+	    public boolean evaluate(Object arg0) {
+		return ((ErasmusCoordinator) arg0).getTeacher() == teacher;
+	    }
+
+	}));
+    }
+
+    public ErasmusCoordinator getCoordinatorForTeacherAndDegree(final Teacher teacher, final Degree degree) {
+	List<ErasmusCoordinator> coordinators = getErasmusCoordinatorForTeacher(teacher);
+
+	return (ErasmusCoordinator) CollectionUtils.find(coordinators, new Predicate() {
+
+	    @Override
+	    public boolean evaluate(Object arg0) {
+		ErasmusCoordinator coordinator = (ErasmusCoordinator) arg0;
+		return coordinator.getDegree() == degree;
+	    }
+	});
+    }
+
+    public List<Degree> getDegreesAssociatedToTeacherAsCoordinator(final Teacher teacher) {
+	List<ErasmusCoordinator> coordinators = getErasmusCoordinatorForTeacher(teacher);
+
+	return new ArrayList<Degree>(CollectionUtils.collect(coordinators, new Transformer() {
+
+	    @Override
+	    public Object transform(Object arg0) {
+		return ((ErasmusCoordinator) arg0).getDegree();
+	    }
+	}));
+    }
+
+    public boolean isTeacherErasmusCoordinatorForDegree(final Teacher teacher, final Degree degree) {
+	return getCoordinatorForTeacherAndDegree(teacher, degree) != null;
+    }
+
     @StartActivity
     static public class CreateCandidacyPeriod extends Activity<ErasmusCandidacyProcess> {
 
@@ -301,6 +348,92 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 	    }
 	    
 	    vacancy.delete();
+
+	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return false;
+	}
+
+	@Override
+	public Boolean isVisibleForCoordinator() {
+	    return false;
+	}
+
+	@Override
+	public Boolean isVisibleForGriOffice() {
+	    return false;
+	}
+
+    }
+
+    static private class ViewErasmusCoordinators extends Activity<ErasmusCandidacyProcess> {
+	@Override
+	public void checkPreConditions(ErasmusCandidacyProcess process, IUserView userView) {
+	    if (!isGriOfficeEmployee(userView) && !isManager(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected ErasmusCandidacyProcess executeActivity(ErasmusCandidacyProcess process, IUserView userView, Object object) {
+	    return process;
+	}
+    }
+
+    static private class AssignCoordinator extends Activity<ErasmusCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(ErasmusCandidacyProcess process, IUserView userView) {
+	    if (!isGriOfficeEmployee(userView) && !isManager(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected ErasmusCandidacyProcess executeActivity(ErasmusCandidacyProcess process, IUserView userView, Object object) {
+	    ErasmusCoordinatorBean bean = (ErasmusCoordinatorBean) object;
+	    new ErasmusCoordinator(process, bean);
+
+	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return false;
+	}
+
+	@Override
+	public Boolean isVisibleForCoordinator() {
+	    return false;
+	}
+
+	@Override
+	public Boolean isVisibleForGriOffice() {
+	    return false;
+	}
+
+    }
+
+    static private class RemoveTeacherFromCoordinators extends Activity<ErasmusCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(ErasmusCandidacyProcess process, IUserView userView) {
+	    if (!isGriOfficeEmployee(userView) && !isManager(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected ErasmusCandidacyProcess executeActivity(ErasmusCandidacyProcess process, IUserView userView, Object object) {
+	    ErasmusCoordinatorBean bean = (ErasmusCoordinatorBean) object;
+	    
+	    if (bean.getErasmusCoordinator() != null) {
+		bean.getErasmusCoordinator().delete();
+	    }
+	    bean.setErasmusCoordinator(null);
 
 	    return process;
 	}

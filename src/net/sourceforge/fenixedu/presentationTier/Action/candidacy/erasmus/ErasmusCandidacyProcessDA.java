@@ -53,7 +53,7 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 	ChooseDegreeBean chooseDegreeBean = (ChooseDegreeBean) getObjectFromViewState("choose.degree.bean");
 
 	if (chooseDegreeBean == null) {
-	    chooseDegreeBean = new ChooseDegreeBean();
+	    chooseDegreeBean = new ChooseDegreeBean(getProcess(request));
 	}
 
 	request.setAttribute("chooseDegreeBean", chooseDegreeBean);

@@ -128,6 +128,16 @@
 		</fr:layout>
 	</fr:view>
 	
+	<%-- show public candidacy access information --%>
+	<h3 style="margin-top: 1em;"><bean:message key="title.public.candidacy.information.access" bundle="CANDIDATE_RESOURCES" />:</h3>
+	
+	<fr:view name="process" property="candidacyHashCode" schema="PublicCandidacyHashCode.view" >
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
+	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+		</fr:layout>	
+	</fr:view>
+	
 	<%-- show documents--%>
 	<br/>
 	<h2 style="margin-top: 1em;"><bean:message key="label.documentation" bundle="CANDIDATE_RESOURCES"/></h2> 

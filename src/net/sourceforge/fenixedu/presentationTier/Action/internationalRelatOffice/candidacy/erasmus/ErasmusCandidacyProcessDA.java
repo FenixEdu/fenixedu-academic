@@ -12,17 +12,23 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCoordinator;
+import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCoordinatorBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusVacancy;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusVacancyBean;
+import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CountryUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.period.ErasmusCandidacyPeriod;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 
@@ -45,7 +51,9 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 	@Forward(name = "prepare-create-new-process", path = "/candidacy/createCandidacyPeriod.jsp"),
 	@Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp"),
 	@Forward(name = "view-university-agreements", path = "/candidacy/erasmus/viewErasmusVacancies.jsp"),
-	@Forward(name = "insert-university-agreement", path = "/candidacy/erasmus/insertErasmusVacancy.jsp") })
+	@Forward(name = "insert-university-agreement", path = "/candidacy/erasmus/insertErasmusVacancy.jsp"),
+	@Forward(name = "view-erasmus-coordinators", path = "/candidacy/erasmus/viewErasmusCoordinators.jsp"),
+	@Forward(name = "assign-coordinator", path = "/candidacy/erasmus/assignCoordinator.jsp") })
 public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 
     static public class ErasmusCandidacyProcessForm extends CandidacyProcessForm {
@@ -72,7 +80,7 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 	ChooseDegreeBean chooseDegreeBean = (ChooseDegreeBean) getObjectFromViewState("choose.degree.bean");
 
 	if (chooseDegreeBean == null) {
-	    chooseDegreeBean = new ChooseDegreeBean();
+	    chooseDegreeBean = new ChooseDegreeBean(getProcess(request));
 	}
 
 	request.setAttribute("chooseDegreeBean", chooseDegreeBean);
@@ -280,8 +288,90 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 	return prepareExecuteViewErasmusVancacies(mapping, form, request, response);
     }
 
+    public ActionForward prepareExecuteViewErasmusCoordinators(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	return mapping.findForward("view-erasmus-coordinators");
+    }
+
+    public ActionForward prepareExecuteAssignCoordinator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("erasmusCoordinatorBean", new ErasmusCoordinatorBean());
+	
+	return mapping.findForward("assign-coordinator");
+    }
+
+    public ActionForward executeAssignCoordinator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	ErasmusCoordinatorBean bean = getErasmusCoordinatorBean();
+	
+	try {
+	    executeActivity(getProcess(request), "AssignCoordinator", bean);
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getMessage());
+
+	    return prepareExecuteAssignCoordinator(mapping, form, request, response);
+	}
+	
+
+	return prepareExecuteViewErasmusCoordinators(mapping, form, request, response);
+    }
+
+    public ActionForward executeAssignCoordinatorInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	return prepareExecuteAssignCoordinator(mapping, form, request, response);
+    }
+
+    public ActionForward executeRemoveTeacherFromCoordinators(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	ErasmusCoordinator coordinator = getErasmusCoordinator(request);
+
+	executeActivity(getProcess(request), "RemoveTeacherFromCoordinators", new ErasmusCoordinatorBean(coordinator));
+
+	return prepareExecuteViewErasmusCoordinators(mapping, form, request, response);
+    }
+
+    public ActionForward executeRemoveTeacherFromCoordinatorsInvalid(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request,
+	    HttpServletResponse response) {
+	return prepareExecuteViewErasmusCoordinators(mapping, form, request, response);
+    }
+
+    public ActionForward searchTeacherByNumber(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	ErasmusCoordinatorBean bean = getErasmusCoordinatorBean();
+	Teacher teacher = Teacher.readByNumber(bean.getTeacherNumber());
+
+	bean.setTeacher(teacher);
+	request.setAttribute("erasmusCoordinatorBean", bean);
+	
+	return mapping.findForward("assign-coordinator");
+    }
+
+    private ErasmusCoordinator getErasmusCoordinator(HttpServletRequest request) {
+	return (ErasmusCoordinator) getDomainObject(request, "erasmusCoordinatorExternalId");
+    }
+
+    private ErasmusCoordinatorBean getErasmusCoordinatorBean() {
+	return (ErasmusCoordinatorBean) getRenderedObject("erasmus.coordinator.bean");
+    }
+
     private ErasmusVacancyBean getErasmusVacancyBean() {
 	return (ErasmusVacancyBean) getRenderedObject("erasmus.vacancy.bean");
+    }
+
+    protected List<Activity> getAllowedActivities(final CandidacyProcess process) {
+	List<Activity> activities = process.getAllowedActivities(AccessControl.getUserView());
+	ArrayList<Activity> resultActivities = new ArrayList<Activity>();
+
+	for (Activity activity : activities) {
+	    if (activity.isVisibleForGriOffice()) {
+		resultActivities.add(activity);
+	    }
+	}
+
+	return resultActivities;
     }
 
     public static class UniversityUnitsProvider implements DataProvider {
@@ -311,7 +401,7 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 
     }
 
-    public static class DegreeProviderForVacancy implements DataProvider {
+    public static class DegreesProvider implements DataProvider {
 
 	@Override
 	public Converter getConverter() {

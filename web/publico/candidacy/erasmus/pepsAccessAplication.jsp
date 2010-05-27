@@ -28,7 +28,7 @@
 <%
 	// String applicationUrl = SPUtil.getInstance().getSpInvokeUrl();
 	
-	String applicationUrl = java.net.URLEncoder.encode("http://cidhcp117.ist.utl.pt:8080/ciapl/applications/erasmus/pepsApplicationAccess");
+	String applicationUrl = java.net.URLEncoder.encode("http://fenix.ist.utl.pt/applications/erasmus/pepsApplicationAccess");
 	applicationUrl = String.format("http://storker.ist.utl.pt/IST-SP/IndexPage?applicationUrl=%s", applicationUrl);
 	
 %>

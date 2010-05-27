@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.coordinator.candidacy.erasmus;
+package net.sourceforge.fenixedu.presentationTier.Action.teacher.candidacy.erasmus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,13 +29,12 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(path = "/caseHandlingErasmusIndividualCandidacyProcess", module = "coordinator", formBeanClass = FenixActionForm.class)
-@Forwards(tileProperties = @Tile(navLocal = "/coordinator/localNavigationBar.jsp"), value = {
+@Mapping(path = "/caseHandlingErasmusIndividualCandidacyProcess", module = "teacher", formBeanClass = FenixActionForm.class)
+@Forwards( {
 	@Forward(name = "intro", path = "/caseHandlingErasmusCandidacyProcess.do?method=listProcessAllowedActivities"),
 	@Forward(name = "list-allowed-activities", path = "/candidacy/erasmus/listIndividualCandidacyActivities.jsp"),
-	@Forward(name = "set-coordinator-validation", path = "/coordinator/candidacy/erasmus/setCoordinatorValidation.jsp"),
+	@Forward(name = "set-coordinator-validation", path = "/teacher/candidacy/erasmus/setCoordinatorValidation.jsp"),
 	@Forward(name = "visualize-alerts", path = "/candidacy/erasmus/visualizeAlerts.jsp") })
 public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProcessDA {
 

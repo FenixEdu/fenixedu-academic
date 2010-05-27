@@ -1313,4 +1313,9 @@ public class Teacher extends Teacher_Base {
 	}
 	return false;
     }
+
+    public boolean isErasmusCoordinator() {
+	return !getErasmusCoordinator().isEmpty();
+    }
+
 }
