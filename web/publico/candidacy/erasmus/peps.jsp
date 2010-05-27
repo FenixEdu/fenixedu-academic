@@ -32,9 +32,10 @@
 <%
 	// String applicationUrl = SPUtil.getInstance().getSpInvokeUrl();
 	
-	String applicationUrl = java.net.URLEncoder.encode("http://fenix.ist.utl.pt/applications/erasmus/returnFromPeps");
+	String spToInvoke = SPUtil.getInstance().getSpInvokeUrl();
+	String applicationUrl = java.net.URLEncoder.encode(SPUtil.getInstance().getSPReturnFromPepsUrl());
 	String attributes = java.net.URLEncoder.encode(SPUtil.getInstance().getAttributesList());
-	applicationUrl = f("http://storker.ist.utl.pt/IST-SP/IndexPage?applicationUrl=%s&attributesList=%s", applicationUrl, attributes);
+	applicationUrl = f("%s?applicationUrl=%s&attributesList=%s", spToInvoke, applicationUrl, attributes);
 %>
 
 <%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= applicationUrl %>">Click here in order to authenticate with your national citizen card</a>

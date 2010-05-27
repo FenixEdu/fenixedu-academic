@@ -26,11 +26,9 @@
 <h1><bean:message key="title.application.name.erasmus" bundle="CANDIDATE_RESOURCES"/></h1>
 
 <%
-	// String applicationUrl = SPUtil.getInstance().getSpInvokeUrl();
-	
-	String applicationUrl = java.net.URLEncoder.encode("http://fenix.ist.utl.pt/applications/erasmus/pepsApplicationAccess");
-	applicationUrl = String.format("http://storker.ist.utl.pt/IST-SP/IndexPage?applicationUrl=%s", applicationUrl);
-	
+	String spToInvoke = SPUtil.getInstance().getSpInvokeUrlToAccessApplication();
+	String applicationUrl = java.net.URLEncoder.encode(SPUtil.getInstance().getSPReturnFromPepsToAccessApplicationUrl());
+	applicationUrl = f("%s?applicationUrl=%s", spToInvoke, applicationUrl);	
 %>
 
 <%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= applicationUrl %>">Click here in order to authenticate with your national citizen card</a>
