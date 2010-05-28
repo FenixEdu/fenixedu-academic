@@ -1,4 +1,4 @@
-<module rename-to='hellofenix'>
+<module rename-to='helloFenix'>
     <!-- Inherit the core Web Toolkit stuff. -->
     <inherits name="com.google.gwt.user.User" />
 

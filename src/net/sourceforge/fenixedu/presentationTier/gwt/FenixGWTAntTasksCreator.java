@@ -19,6 +19,7 @@ public class FenixGWTAntTasksCreator {
     public String gwtArgs;
     public PrintWriter out;
     public File file;
+    public List<String> targetsList;
     
     
     public FenixGWTAntTasksCreator(String... args) {
@@ -29,6 +30,8 @@ public class FenixGWTAntTasksCreator {
 	gwtDestDir = args[1];
 	gwtSdk = args[2];
 	gwtArgs = args[3];
+	
+	targetsList = new ArrayList<String>();
     }
     
     /**
@@ -54,6 +57,7 @@ public class FenixGWTAntTasksCreator {
 	    
 	    writeHeader();
 	    writeTasks();
+	    writeTargetCalls();
 	    writeTail();
 	    
 	} catch (IOException ioe) {
@@ -94,11 +98,6 @@ public class FenixGWTAntTasksCreator {
 	out.println("<property name=\"build.destdir\" location=\"web/gwt\"/>");
 	out.println("");
 	
-	out.println("<target name=\"gwtc\" description=\"Compiles GWT client-side code to JavaScript\">");
-	out.println("");
-	out.println("<sequential>");
-	out.println("");
-	
 	out.flush();
     }
     
@@ -107,10 +106,9 @@ public class FenixGWTAntTasksCreator {
 	List<String> modules = lookupForModules(gwtModulesPath);
 	
 	for(String module : modules) {
-	    writeTaskTemplate();
-	    out.println("<arg value=\"" + digest(module) + "\"/>");
-	    out.println("</java>");
-	    out.println("");    
+	    targetsList.add(extractModuleName(module));
+	    writeRequirementCheck(module);
+	    writeTask(module);   
 	}
 	
 	out.flush();
@@ -119,10 +117,6 @@ public class FenixGWTAntTasksCreator {
     
     private void writeTail() {
 	
-	out.println("</sequential>");
-	out.println("");
-	out.println("</target>");
-	out.println("");
 	out.println("</project>");
 	out.println("");
 	
@@ -130,8 +124,9 @@ public class FenixGWTAntTasksCreator {
 	
     }
     
-    private void writeTaskTemplate() {
+    private void writeTask(String module) {
 	
+	out.println("<target name=\"" + extractModuleName(module) + "\" unless=\"compile-" + extractModuleName(module) + ".notRequired\">");
 	out.println("<java failonerror=\"true\" fork=\"true\" classname=\"com.google.gwt.dev.Compiler\">");
 	out.println("<classpath>");
 	out.println("<pathelement location=\"src\"/>");
@@ -141,6 +136,10 @@ public class FenixGWTAntTasksCreator {
 	out.println("<arg line=\"${gwt.args}\"/>");
 	out.println("<arg value=\"-war\"/>");
 	out.println("<arg value=\"" + this.gwtDestDir + "\"/>");
+	out.println("<arg value=\"" + digest(module) + "\"/>");
+	out.println("</java>");
+	out.println("</target>");
+	out.println(""); 
 	
     }
     
@@ -191,6 +190,53 @@ public class FenixGWTAntTasksCreator {
 	String processed = inProcess.replace('/', '.');
 	return processed;
 	
+    }
+    
+    private void writeRequirementCheck(String module) {
+
+	out.println("");
+	out.println("<condition property=\"compile-" + extractModuleName(module) + ".notRequired\">");
+	out.println("<and>");
+	out.println("<uptodate targetfile=\"" + this.gwtDestDir + "/" + extractModuleName(module) + "/" + extractModuleName(module) + ".nocache.js\">");
+	out.println("<srcfiles dir=\"" + extractModulePath(module) + "client\" />");
+	out.println("</uptodate>");
+	out.println("<uptodate targetfile=\"" + this.gwtDestDir + "/" + extractModuleName(module) + "/" + extractModuleName(module) + ".nocache.js\">");
+	out.println("<srcfiles dir=\"" + this.gwtModulesPath + "/frameworks\" />");
+	out.println("</uptodate>");
+	out.println("</and>");
+	out.println("</condition>");
+	out.println("");
+	
+    }
+    
+    private String extractModuleName(String module) {
+	
+	String digested = digest(module);
+	String[] splinters = digested.split("\\.");
+	String moduleName = splinters[splinters.length - 2];
+	return moduleName;
+	
+    }
+    
+    private void writeTargetCalls() {
+	
+	out.println("<target name=\"gwtc\" description=\"Compiles GWT client-side code to JavaScript\">");
+	for(String target : targetsList) {
+	    out.println("<antcall target=\"" + target + "\" />");
+	}
+	out.println("</target>");
+	out.println("");
+	
+    }
+    
+    private String extractModulePath(String module) {
+	String digested = digest(module);
+	String[] splinters = digested.split("\\.");
+	String gwtXmlFileName = splinters[splinters.length - 1];
+	
+	String result = module.replace(gwtXmlFileName + ".gwt.xml", "");
+	
+	return result;
     }
 
 
