@@ -43,7 +43,7 @@
 
 		</ul>
 		
-		<ul style="margin-top: 1em">
+		<ul>
 	  		<li>
 	  		
 			  	<html:link page="/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume">
@@ -52,6 +52,13 @@
 			</li>
 		</ul>
 		
+		<ul>
+			<li>
+				<html:link page="/departmentForum.do?method=prepare">
+					<bean:message key="link.foruns"/>
+				</html:link>
+			</li>
+		</ul> 
 		<ul style="margin-top: 1em">
 			<bean:define id="userView" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>"/>
 			<% String deiCode = "28"; %>

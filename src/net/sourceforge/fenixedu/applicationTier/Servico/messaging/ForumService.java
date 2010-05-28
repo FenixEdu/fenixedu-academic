@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.messaging.ConversationMessage;
 import net.sourceforge.fenixedu.domain.messaging.ConversationThread;
-import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum;
 import net.sourceforge.fenixedu.domain.messaging.ForumSubscription;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.util.email.Message;
@@ -123,32 +122,11 @@ public abstract class ForumService extends FenixService {
 
     private String getEmailFormattedBody(ConversationMessage conversationMessage, boolean isForTeacher) {
 	String emailBodyAsText = HtmlToTextConverterUtil.convertToText(conversationMessage.getBody().getContent());
+
 	String emailFormattedBody = MessageFormat.format(GLOBAL_RESOURCES.getString("forum.email.body"), conversationMessage
 		.getCreator().getName(), conversationMessage.getConversationThread().getTitle(), conversationMessage
-		.getConversationThread().getForum().getName(), emailBodyAsText, getConversationThreadUrl(conversationMessage,
-		isForTeacher));
+		.getConversationThread().getForum().getName(), emailBodyAsText);
 
 	return emailFormattedBody;
-    }
-
-    private String getConversationThreadUrl(ConversationMessage conversationMessage, boolean isForTeacher) {
-	return (isForTeacher) ? getConversationThreadUrlForTeacher(conversationMessage)
-		: getConversationThreadUrlForStudent(conversationMessage);
-    }
-
-    private String getConversationThreadUrlForTeacher(final ConversationMessage conversationMessage) {
-	// TODO: this should be removed when foruns can be viewed on same portal
-	final ExecutionCourseForum executionCourseForum = (ExecutionCourseForum) conversationMessage.getConversationThread()
-		.getForum();
-	return MessageFormat.format(GLOBAL_RESOURCES.getString("forum.email.conversationThread.teacher.url"), GLOBAL_RESOURCES
-		.getString("fenix.url"), executionCourseForum.getExecutionCourse().getIdInternal().toString(),
-		conversationMessage.getConversationThread().getForum().getIdInternal().toString(), conversationMessage
-			.getConversationThread().getIdInternal().toString());
-    }
-
-    private String getConversationThreadUrlForStudent(final ConversationMessage conversationMessage) {
-	return MessageFormat.format(GLOBAL_RESOURCES.getString("forum.email.conversationThread.student.url"), GLOBAL_RESOURCES
-		.getString("fenix.url"), conversationMessage.getConversationThread().getForum().getIdInternal().toString(),
-		conversationMessage.getConversationThread().getIdInternal().toString());
     }
 }

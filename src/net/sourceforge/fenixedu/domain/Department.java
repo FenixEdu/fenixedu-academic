@@ -22,8 +22,10 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.commons.CollectionUtils;
+import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
+import net.sourceforge.fenixedu.domain.messaging.DepartmentForum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
@@ -350,6 +352,22 @@ public class Department extends Department_Base {
     public boolean hasCurrentActiveWorkingEmployee(final Employee employee) {
 	final Unit unit = getDepartmentUnit();
 	return unit != null && unit.hasCurrentActiveWorkingEmployee(employee);
+    }
+
+    public DepartmentForum getDepartmentForum() {
+	if (hasDepartmentUnit()) {
+	    return getForumFromNodes(getDepartmentUnit().getSite().getChildren());
+	}
+	return null;
+    }
+
+    private DepartmentForum getForumFromNodes(List<Node> siteNodes) {
+	for (Node node : siteNodes) {
+	    if (node.getChild() instanceof DepartmentForum) {
+		return (DepartmentForum) node.getChild();
+	    }
+	}
+	return null;
     }
 
 }

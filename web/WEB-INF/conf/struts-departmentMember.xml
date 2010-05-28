@@ -647,6 +647,7 @@
 	<message-resources parameter="resources.ResourceAllocationManagerResources" key="SOP_RESOURCES" null="false"/>
 	<message-resources parameter="resources.InquiriesResources" key="INQUIRIES_RESOURCES" null="false"/>
 	<message-resources parameter="resources.PedagogicalCouncilResources" key="PEDAGOGICAL_COUNCIL" null="false"/>
+	<message-resources parameter="resources.MessagingResources" key="MESSAGING_RESOURCES" null="false"/>
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
         <set-property property="pathnames" 

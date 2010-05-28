@@ -6427,6 +6427,8 @@ class elections.DelegateElectionVotingPeriod extends elections.DelegateElectionP
 
         class messaging.ExecutionCourseForum extends messaging.Forum {
         }
+        class messaging.DepartmentForum extends messaging.Forum {
+        }
 
     class Item extends contents.Container {
         Boolean enabled;
