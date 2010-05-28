@@ -110,6 +110,6 @@ public class GraduationReportFile extends GraduationReportFile_Base {
 	row.setCell(person.getDefaultMobilePhoneNumber());
 	row.setCell(person.getInstitutionalOrDefaultEmailAddressValue());
 	row.setCell(person.getGender().toLocalizedString());
-	row.setCell(person.getDateOfBirthYearMonthDay().toString("yyyy-MM-dd"));
+	row.setCell(person.getDateOfBirthYearMonthDay() != null ? person.getDateOfBirthYearMonthDay().toString("yyyy-MM-dd") : StringUtils.EMPTY);
     }
 }
