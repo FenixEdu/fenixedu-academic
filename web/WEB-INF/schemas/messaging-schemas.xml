@@ -236,6 +236,8 @@
 	    <property name="eachSchema" value="net.sourceforge.fenixedu.domain.util.email.ReplyTo.selectItem"/>
         <property name="eachLayout" value="values"/>
 	</slot>
+	<slot name="recipientsAsToText" bundle="MESSAGING_RESOURCES" key="label.receiversGroup.to"/>
+	<slot name="recipientsAsCcText" bundle="MESSAGING_RESOURCES" key="label.receiversGroup.cc"/>
 	<slot name="recipientsAsText" bundle="MESSAGING_RESOURCES" key="label.receiversGroup"/>
 	<slot name="subject" bundle="MANAGER_RESOURCES" key="label.email.subject"/>
 	<slot name="body" bundle="MANAGER_RESOURCES" key="label.email.message" />

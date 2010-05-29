@@ -121,12 +121,7 @@ public class Message extends Message_Base {
 
     public String getRecipientsAsText() {
 	final StringBuilder stringBuilder = new StringBuilder();
-	for (final Recipient recipient : getRecipientsSet()) {
-	    if (stringBuilder.length() > 0) {
-		stringBuilder.append("\n");
-	    }
-	    stringBuilder.append(recipient.getToName());
-	}
+	recipients2Text(stringBuilder, getRecipientsSet());
 	if (getBccs() != null && !getBccs().isEmpty()) {
 	    if (stringBuilder.length() > 0) {
 		stringBuilder.append("\n");
@@ -134,6 +129,29 @@ public class Message extends Message_Base {
 	    stringBuilder.append(getBccs());
 	}
 	return stringBuilder.toString();
+    }
+
+    public String getRecipientsAsToText() {
+	return recipients2Text(getTosSet());
+    }
+
+    public String getRecipientsAsCcText() {
+	return recipients2Text(getCcsSet());
+    }
+
+    protected static String recipients2Text(final Set<Recipient> recipients) {
+	final StringBuilder stringBuilder = new StringBuilder();
+	recipients2Text(stringBuilder, recipients);
+	return stringBuilder.toString();
+    }
+
+    protected static void recipients2Text(final StringBuilder stringBuilder, final Set<Recipient> recipients) {
+	for (final Recipient recipient : recipients) {
+	    if (stringBuilder.length() > 0) {
+		stringBuilder.append("\n");
+	    }
+	    stringBuilder.append(recipient.getToName());
+	}
     }
 
     protected Set<String> getRecipientAddresses(Set<Recipient> recipients) {
