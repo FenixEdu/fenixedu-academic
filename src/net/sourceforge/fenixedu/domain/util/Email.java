@@ -228,15 +228,20 @@ public class Email extends Email_Base {
 	}
 
 	private void addRecipientsAux() {
+	    boolean hasAnyToOrCC = false;
 	    if (hasAnyRecipients(getToAddresses())) {
 		final EmailAddressList tos = getToAddresses();
 		final EmailAddressList remainder = addRecipientsAux(RecipientType.TO, tos);
 		setToAddresses(remainder);
-	    } else if (hasAnyRecipients(getCcAddresses())) {
+		hasAnyToOrCC = true;
+	    }
+	    if (hasAnyRecipients(getCcAddresses())) {
 		final EmailAddressList ccs = getCcAddresses();
 		final EmailAddressList remainder = addRecipientsAux(RecipientType.CC, ccs);
 		setCcAddresses(remainder);
-	    } else if (hasAnyRecipients(getBccAddresses())) {
+		hasAnyToOrCC = true;
+	    }
+	    if (!hasAnyToOrCC && hasAnyRecipients(getBccAddresses())) {
 		final EmailAddressList bccs = getBccAddresses();
 		final EmailAddressList remainder = addRecipientsAux(RecipientType.BCC, bccs);
 		setBccAddresses(remainder);
