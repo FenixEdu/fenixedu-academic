@@ -128,8 +128,10 @@
 	<li><html:link page="/phdIndividualProgramProcess.do?method=manageProcesses"><bean:message key="label.phd.manageProcesses" bundle="PHD_RESOURCES"/></html:link></li>
 	<li><html:link page="/phdIndividualProgramProcess.do?method=viewAlertMessages"><bean:message key="label.phd.alertMessages" bundle="PHD_RESOURCES"/></html:link></li>
 	
-	<logic:equal name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.teacher.erasmusCoordinator" value="true"> 
-		<li class="navheader"><bean:message key="title.candidacies" bundle="CANDIDATE_RESOURCES" /></li>
-		<li><html:link page="/caseHandlingErasmusCandidacyProcess.do?method=intro"><bean:message key="link.coordinator.erasmus.application" bundle="APPLICATION_RESOURCES" /></html:link></li>
-	</logic:equal>
+	<logic:present name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.teacher">
+		<logic:equal name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.teacher.erasmusCoordinator" value="true"> 
+			<li class="navheader"><bean:message key="title.candidacies" bundle="CANDIDATE_RESOURCES" /></li>
+			<li><html:link page="/caseHandlingErasmusCandidacyProcess.do?method=intro"><bean:message key="link.coordinator.erasmus.application" bundle="APPLICATION_RESOURCES" /></html:link></li>
+		</logic:equal>
+	</logic:present>
 </ul>
