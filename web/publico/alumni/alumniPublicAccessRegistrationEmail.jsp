@@ -3,33 +3,18 @@
 <html:xhtml />
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<!-- alumniPublicAccessRegistrationEmail.jsp -->
-
-<h1>Inscrição Alumni</h1>
+<h1><bean:message key="label.alumni.registration" bundle="ALUMNI_RESOURCES" /></h1>
 
 <div class="alumnilogo">
 
+	<h2><bean:message key="label.confirm.email" bundle="ALUMNI_RESOURCES" /> <span class="color777 fwnormal"><bean:message key="label.step.2.3" bundle="ALUMNI_RESOURCES" /></span></h2>
+	
+	<logic:present name="alumniEmailErrorMessage">
+		<html:messages id="message" message="true" bundle="ALUMNI_RESOURCES">
+			<p><span class="error"><!-- Error messages go here --><bean:write name="message" /></span></p>
+		</html:messages>
+		<bean:write name="alumniEmailErrorMessage"  scope="request" />
+	</logic:present>
 
-<h2><bean:message key="label.confirm.email" bundle="ALUMNI_RESOURCES" /></h2>
-
-<logic:notPresent name="alumniEmailErrorMessage">
-	<p class="greytxt"><bean:message key="label.check.email" bundle="ALUMNI_RESOURCES" /></p>
-</logic:notPresent>
-
-<logic:present name="alumniEmailErrorMessage">
-	<html:messages id="message" message="true" bundle="ALUMNI_RESOURCES">
-		<p><span class="error"><!-- Error messages go here --><bean:write name="message" /></span></p>
-	</html:messages>
-	<bean:write name="alumniEmailErrorMessage"  scope="request" />
-</logic:present>
-
-<%--
-<logic:present name="alumniEmailSuccessMessage">
-	<p>O endereço abaixo será enviado por email. Nesta fase de testes, estará aqui visível:</p>
-	<p><a href='<bean:write name="alumniEmailSuccessMessage"  scope="request" />'><bean:write name="alumniEmailSuccessMessage"  scope="request" /></a></p>
-</logic:present>
---%>
-
-<br/><br/><br/><br/><br/><br/><br/><br/>
+</div>

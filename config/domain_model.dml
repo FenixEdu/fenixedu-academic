@@ -1584,6 +1584,7 @@ class DomainObject {
 
     class Formation extends Qualification {
         FormationType formationType;
+        AcademicalInstitutionType institutionType;
         String beginYear;
         BigDecimal ectsCredits;
         Integer formationHours;
@@ -2918,6 +2919,7 @@ class DomainObject {
     class contacts.PartyContact extends DomainObject {
         Boolean defaultContact;
         PartyContactType type;
+        DateTime lastModifiedDate;
         Boolean visibleToPublic (REQUIRED);
         Boolean visibleToStudents (REQUIRED);
         Boolean visibleToTeachers (REQUIRED);
@@ -4112,6 +4114,8 @@ class DomainObject {
         JobApplicationType jobApplicationType;
         ContractType contractType;
         SalaryType salaryType;
+        DateTime lastModifiedDate;
+        Double salary;
     }
     
     class Alert extends DomainObject {
@@ -17049,6 +17053,13 @@ relation JobBusinessArea {
     }
 }
 
+relation JobParentBusinessArea {
+    BusinessArea playsRole parentBusinessArea;
+    Job playsRole parentJobs {
+        multiplicity *;
+    }
+}
+
 relation BusinessAreaBusinessArea {
     BusinessArea playsRole parentArea;
     BusinessArea playsRole childAreas {
@@ -17089,6 +17100,20 @@ relation FormationUnit {
         multiplicity *;
     }
     organizationalStructure.Unit playsRole institution;
+}
+
+relation BaseFormationUnit {
+    Formation playsRole associatedBaseFormations {
+        multiplicity *;
+    }
+    organizationalStructure.Unit playsRole baseInstitution;
+}
+
+relation FormationCountryUnit {
+    Formation playsRole associatedCountryUnitFormations {
+        multiplicity *;
+    }
+    organizationalStructure.CountryUnit playsRole countryUnit;
 }
 
 relation ResidencePriceTableRootDomainObject {

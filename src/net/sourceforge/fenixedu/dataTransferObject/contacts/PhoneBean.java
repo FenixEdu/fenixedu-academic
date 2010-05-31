@@ -28,7 +28,7 @@ public class PhoneBean extends PartyContactBean {
     public void edit() {
 	super.edit();
 	if (!getType().equals(PartyContactType.INSTITUTIONAL)) {
-	    ((Phone) getContact()).setNumber(getValue());
+	    ((Phone) getContact()).edit(getValue());
 	}
     }
 

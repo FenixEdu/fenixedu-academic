@@ -20,7 +20,6 @@
 	<bean:define id="schema" value="alumni.search.bean.full" />
 </logic:notEmpty>
 
-
 <fr:form id="searchAlumniForm" action="/searchAlumni.do?method=showAlumniList">
 	
 	<fr:edit id="searchAlumniBean" name="searchAlumniBean" schema="<%= schema.toString() %>" >

@@ -28,7 +28,7 @@ public class MobilePhoneBean extends PartyContactBean {
     public void edit() {
 	super.edit();
 	if (!getType().equals(PartyContactType.INSTITUTIONAL)) {
-	    ((MobilePhone) getContact()).setNumber(getValue());
+	    ((MobilePhone) getContact()).edit(getValue());
 	}
     }
 

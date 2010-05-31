@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
 
 public class WebAddress extends WebAddress_Base {
 
@@ -78,6 +79,7 @@ public class WebAddress extends WebAddress_Base {
 
     public void edit(final String url) {
 	super.setUrl(url);
+	setLastModifiedDate(new DateTime());
     }
 
     public boolean hasUrl() {

@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
 
 public class Phone extends Phone_Base {
 
@@ -78,6 +79,7 @@ public class Phone extends Phone_Base {
 
     public void edit(final String number) {
 	super.setNumber(number);
+	setLastModifiedDate(new DateTime());
     }
 
     @Override

@@ -100,4 +100,16 @@
     <definition name="view-reports" extends="definition.gep.two-column">
         <put name="body" value="/gep/viewReports.jsp"/>
     </definition>		
+    <definition name="alumni.prepare.sendEmail" extends="definition.gep.two-column">
+        <put name="body" value="/gep/alumni/prepareSendEmail.jsp"/>
+    </definition>    
+    <definition name="alumni.recipients.manage" extends="definition.gep.two-column">
+        <put name="body" value="/gep/alumni/manageRecipients.jsp"/>
+    </definition>
+    <definition name="alumni.recipients.add" extends="definition.gep.two-column">
+        <put name="body" value="/gep/alumni/addRecipients.jsp"/>
+    </definition>
+    <definition name="alumni.recipients.remove" extends="definition.gep.two-column">
+        <put name="body" value="/gep/alumni/removeRecipients.jsp"/>
+    </definition>        
 </tiles-definitions>

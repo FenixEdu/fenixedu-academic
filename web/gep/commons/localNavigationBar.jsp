@@ -85,9 +85,15 @@
 		<html:link page="/alumni.do?method=showAlumniStatistics">
 	  		<bean:message key="label.alumni.statistics" bundle="GEP_RESOURCES"/>
 	  	</html:link>
+	</li>
 	<li>
 		<html:link page="/alumni.do?method=searchAlumni">
 	  		<bean:message key="label.alumni.search" bundle="GEP_RESOURCES"/>
+	  	</html:link>
+	</li>
+	<li>
+		<html:link page="/alumni.do?method=manageRecipients">
+	  		<bean:message key="link.alumni.recipients.manage" bundle="GEP_RESOURCES"/>
 	  	</html:link>
 	</li>	
 </ul>

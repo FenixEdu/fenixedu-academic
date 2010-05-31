@@ -30,6 +30,7 @@ public class AlumniJobBean implements Serializable {
     private JobApplicationType applicationType;
     private ContractType contractType;
     private SalaryType salaryType;
+    private Double salary;
 
     private AlumniJobBean(Alumni alumni, String schema) {
 	setAlumni(alumni);
@@ -44,8 +45,8 @@ public class AlumniJobBean implements Serializable {
 	this(alumni, "alumni.public.access.jobContact.full");
 	setEmployerName(job.getEmployerName());
 	setCity(job.getCity());
-	setCountry(job.getCountry());
-	setParentBusinessArea(job.getBusinessArea().getParentArea());
+	setCountry(job.getCountry());	
+	setParentBusinessArea(job.getParentBusinessArea());
 	setChildBusinessArea(job.getBusinessArea());
 	setPosition(job.getPosition());
 	setBeginDateAsDate(job.getBeginDate());
@@ -54,6 +55,7 @@ public class AlumniJobBean implements Serializable {
 	setContractType(job.getContractType());
 	setSalaryType(job.getSalaryType());
 	setJobId(job.getIdInternal());
+	setSalary(job.getSalary());
     }
 
     public void setAlumni(Alumni alumni) {
@@ -96,8 +98,11 @@ public class AlumniJobBean implements Serializable {
 	this.position = jobPosition;
     }
 
-    public void setParentBusinessArea(BusinessArea businessArea) {
+    public void setParentBusinessArea(BusinessArea businessArea) {	
 	this.parentBusinessArea = businessArea;
+	if(businessArea == null) {
+	    setChildBusinessArea(null);
+	}
     }
 
     public BusinessArea getParentBusinessArea() {
@@ -204,4 +209,11 @@ public class AlumniJobBean implements Serializable {
 	this.salaryType = salaryType;
     }
 
+    public Double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(Double salary) {
+        this.salary = salary;
+    }
 }

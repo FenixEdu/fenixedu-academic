@@ -66,7 +66,7 @@
         <forward name="index" path="/index.do" redirect="true"/>
         <forward name="logoff" path="/logoff.do" contextRelative="true"/>
         <forward name="redirect" path="/redirect.do" contextRelative="true"/>
-        <forward name="home" path="/mainPortalPage.jsp" redirect="true" contextRelative="true"/>
+        <forward name="home" path="/mainPortalPage.jsp" redirect="true" contextRelative="true"/>      
         <forward name="firstPage" path="/loginPage.jsp"/>
         <forward name="exceptionHandling" path="/exceptionHandlingAction.do?method=goBack" contextRelative="true"/>
     </global-forwards>
@@ -83,6 +83,7 @@
         <action path="/nonExistingObject" forward="/nonExistingError.jsp"/>
         <action path="/publicNotAuthorized" forward="/exception/publicNotAuthorized.jsp"/>
         <action path="/userDoesNotExistOrIsInactive" forward="/userDoesNotExistOrIsInactive.jsp"/>
+        <action path="/alumniReminder" forward="/showAlumniDataReminder.jsp"/>
 
 	    <action path="/siteMap"
 	    		type="net.sourceforge.fenixedu.presentationTier.Action.SiteMapAction">
@@ -91,6 +92,9 @@
 
         <action path="/home"
 				type="net.sourceforge.fenixedu.presentationTier.Action.CreateContentsContextAction" />
+            	
+		<action path="/alumniRedirect"
+				type="net.sourceforge.fenixedu.presentationTier.Action.alumni.AlumniLoginRedirectAction" />                
             	
         <action path="/login"
 				type="net.sourceforge.fenixedu.presentationTier.Action.LocalAuthenticationAction"
@@ -182,8 +186,7 @@
         		parameter="method"
 				type="net.sourceforge.fenixedu.presentationTier.Action.RespondToYearDelegateInquiriesQuestion">
             <forward name="respondToYearDelegateInquiriesQuestion" path="/respondToYearDelegateInquiriesQuestion.jsp"/>
-        </action>		                
-
+        </action>		      
     </action-mappings>
 
     <!-- ========== Controller Configuration ================================ -->

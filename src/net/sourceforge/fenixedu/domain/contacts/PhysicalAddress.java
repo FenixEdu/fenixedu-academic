@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
 
 public class PhysicalAddress extends PhysicalAddress_Base {
 
@@ -68,6 +69,7 @@ public class PhysicalAddress extends PhysicalAddress_Base {
 	super.setDistrictSubdivisionOfResidence(data.getDistrictSubdivisionOfResidence());
 	super.setDistrictOfResidence(data.getDistrictOfResidence());
 	super.setCountryOfResidence(data.getCountryOfResidence());
+	setLastModifiedDate(new DateTime());
     }
 
     // Called from renders with edit clause.

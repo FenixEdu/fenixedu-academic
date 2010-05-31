@@ -3,16 +3,24 @@ package net.sourceforge.fenixedu.domain;
 import java.math.BigDecimal;
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.dataTransferObject.alumni.formation.AlumniFormation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.CountryUnit;
 
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
 
 public class Formation extends Formation_Base {
 
     static final public Comparator<Formation> COMPARATOR_BY_BEGIN_YEAR = new Comparator<Formation>() {
 	public int compare(final Formation f1, final Formation f2) {
-	    return f1.getBeginYear().compareTo(f2.getBeginYear());
+	    if (f1.getBeginYear() != null && f2.getBeginYear() != null) {
+		return f1.getBeginYear().compareTo(f2.getBeginYear());
+	    } else {
+		return f1.getBeginYear() != null ? 1 : -1;
+	    }
 	}
     };
 
@@ -22,50 +30,40 @@ public class Formation extends Formation_Base {
 
     public Formation(Person person, FormationType formationType, QualificationType degree, EducationArea educationArea,
 	    String beginYear, String endYear, BigDecimal ectsCredits, Integer formationHours,
-	    AcademicalInstitutionUnit institution) {
+	    AcademicalInstitutionUnit institution, AcademicalInstitutionUnit baseInstitution,
+	    AcademicalInstitutionType institutionType, CountryUnit countryUnit) {
 	this();
 
 	checkParameters(person, formationType, degree, educationArea, beginYear, endYear, ectsCredits, formationHours,
-		institution);
+		baseInstitution, institutionType);
 
 	setPerson(person);
 	setFormationType(formationType);
-	setDegree(degree.getName());
+	if (degree != null) {
+	    setDegree(degree.getName());
+	}
 	setType(degree);
 	setEducationArea(educationArea);
 	setBeginYear(beginYear);
 	setYear(endYear);
 	setInstitution(institution);
+	setBaseInstitution(baseInstitution);
+	setInstitutionType(institutionType);
 	setEctsCredits(ectsCredits);
-	setFormationHours(formationHours);
+	setFormationHours(formationHours);	
+	setCountryUnit(countryUnit);
     }
 
     private void checkParameters(Person person, FormationType formationType, QualificationType degree,
 	    EducationArea educationArea, String beginYear, String endYear, BigDecimal ectsCredits, Integer formationHours,
-	    AcademicalInstitutionUnit institution) {
+	    AcademicalInstitutionUnit institution, AcademicalInstitutionType institutionType) {
 
 	if (person == null) {
 	    throw new DomainException("formation.creation.person.null");
 	}
-
-	if (formationType == null) {
-	    throw new DomainException("formation.creation.formationType.null");
-	}
-
-	if (degree == null) {
-	    throw new DomainException("formation.creation.degree.null");
-	}
-
-	if (educationArea == null) {
-	    throw new DomainException("formation.creation.educationArea.null");
-	}
-
-	if (institution == null) {
-	    throw new DomainException("formation.creation.institution.null");
-	}
-
-	if (StringUtils.isEmpty(beginYear)) {
-	    throw new DomainException("formation.creation.beginYear.null");
+	if (formationType == null && degree == null && educationArea == null && StringUtils.isEmpty(beginYear)
+		&& StringUtils.isEmpty(endYear) && ectsCredits == null && institutionType == null && institution == null) {
+	    throw new DomainException("formation.creation.allFields.null");
 	}
 
 	if (!StringUtils.isEmpty(beginYear) && !StringUtils.isEmpty(endYear)) {
@@ -78,7 +76,34 @@ public class Formation extends Formation_Base {
     public void delete() {
 	removeEducationArea();
 	removeInstitution();
+	removeBaseInstitution();
+	removeCountryUnit();
+	removeCreator();
 	super.delete();
+    }
+
+    public void edit(AlumniFormation formation, AcademicalInstitutionUnit academicalInstitutionUnit) {
+	checkParameters(formation.getAssociatedFormation().getPerson(), formation.getFormationType(), formation
+		.getFormationDegree(), formation.getEducationArea(), formation.getFormationBeginYear(), formation
+		.getFormationEndYear(), formation.getFormationCredits(), formation.getFormationHours(), formation
+		.getParentInstitution(), formation.getInstitutionType());
+	setFormationType(formation.getFormationType());
+	if (formation.getFormationDegree() != null) {
+	    setDegree(formation.getFormationDegree().getName());
+	} else {
+	    setDegree(null);
+	}
+	setType(formation.getFormationDegree());
+	setEducationArea(formation.getEducationArea());
+	setBeginYear(formation.getFormationBeginYear());
+	setYear(formation.getFormationEndYear());
+	setEctsCredits(formation.getFormationCredits());
+	setFormationHours(formation.getFormationHours());
+	setInstitutionType(formation.getInstitutionType());
+	setInstitution(academicalInstitutionUnit);
+	setBaseInstitution(formation.getParentInstitution());
+	setCountryUnit(formation.getCountryUnit());	
+	setLastModificationDateDateTime(new DateTime());
     }
 
 }

@@ -137,21 +137,22 @@ public class RegisterAlumniData extends AlumniNotificationService {
 	if (alumniBean.getCurrentJob() == null) {
 	    final AlumniJobBean jobBean = alumniBean.getJobBean();
 	    new Job(jobBean.getAlumni().getStudent().getPerson(), jobBean.getEmployerName(), jobBean.getCity(), jobBean
-		    .getCountry(), jobBean.getChildBusinessArea(), jobBean.getPosition(), jobBean.getBeginDateAsLocalDate(),
-		    jobBean.getEndDateAsLocalDate(), jobBean.getApplicationType(), jobBean.getContractType(), jobBean
-			    .getSalaryType());
+		    .getCountry(), jobBean.getChildBusinessArea(), jobBean.getParentBusinessArea(), jobBean.getPosition(),
+		    jobBean.getBeginDateAsLocalDate(), jobBean.getEndDateAsLocalDate(), jobBean.getApplicationType(), jobBean
+			    .getContractType(), jobBean.getSalary());
 	} else {
 	    final AlumniJobBean jobBean = alumniBean.getJobBean();
 	    alumniBean.getCurrentJob().setEmployerName(jobBean.getEmployerName());
 	    alumniBean.getCurrentJob().setCity(jobBean.getCity());
 	    alumniBean.getCurrentJob().setCountry(jobBean.getCountry());
 	    alumniBean.getCurrentJob().setBusinessArea(jobBean.getChildBusinessArea());
+	    alumniBean.getCurrentJob().setParentBusinessArea(jobBean.getParentBusinessArea());
 	    alumniBean.getCurrentJob().setPosition(jobBean.getPosition());
 	    alumniBean.getCurrentJob().setBeginDate(jobBean.getBeginDateAsLocalDate());
 	    alumniBean.getCurrentJob().setEndDate(jobBean.getEndDateAsLocalDate());
 	    alumniBean.getCurrentJob().setJobApplicationType(jobBean.getApplicationType());
 	    alumniBean.getCurrentJob().setContractType(jobBean.getContractType());
-	    alumniBean.getCurrentJob().setSalaryType(jobBean.getSalaryType());
+	    alumniBean.getCurrentJob().setSalary(jobBean.getSalary());
 
 	}
     }

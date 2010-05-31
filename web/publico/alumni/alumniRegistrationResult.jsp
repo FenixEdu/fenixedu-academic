@@ -35,7 +35,7 @@
 		</p>
 		<p>
 			Caso nunca tenha acedido ao sistema deverá <a href="https://id.ist.utl.pt/password/recover.php" target="_blank">obter uma password</a>.
-		</p>
+		</p>		
 	</logic:equal>
 	
 	
@@ -51,14 +51,8 @@
 		
 	<div class="h_box_alt" style="margin-top: 3em;">
 		<ul class="material">
-			<li class="lightbulb">
-				Está a decorrer o <strong>IV Inquérito ao Percurso Sócio-Profissional dos Diplomados</strong>.
-			</li>
 			<li style="padding-left: 35px;">
 				Participe activamente na melhoria contínua do IST. O seu contributo é fundamental.
-			</li>
-			<li style="padding-left: 35px;">
-				<em>Nota: O inquérito encontra-se disponível na <a href="<bean:message key="label.fenix.login.hostname" bundle="ALUMNI_RESOURCES" />">intranet</a> no portal privado Alumni.<em>
 			</li>
 		</ul>
 	</div>

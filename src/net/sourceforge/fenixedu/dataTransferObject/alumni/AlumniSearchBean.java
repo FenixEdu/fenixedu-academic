@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.dataTransferObject.alumni;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,21 +9,20 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
-public class AlumniSearchBean implements Serializable {
+public class AlumniSearchBean extends AlumniMailSendToBean {
 
     private int totalItems;
 
-    private ExecutionYear firstExecutionYear;
-    private ExecutionYear finalExecutionYear;
     private String name;
     private Integer studentNumber;
     private String documentIdNumber;
-    private DegreeType degreeType;
     private Degree degree;
     private List<Registration> alumni;
     private String email;
     private String mobileNumber;
     private String telephoneNumber;
+    private ExecutionYear firstExecutionYear;
+    private ExecutionYear finalExecutionYear;
 
     public AlumniSearchBean() {
 	this("", ExecutionYear.readFirstExecutionYear(), ExecutionYear.readLastExecutionYear());
@@ -40,22 +38,6 @@ public class AlumniSearchBean implements Serializable {
 	setFirstExecutionYear(firstYear);
 	setFinalExecutionYear(lastYear);
 	setDegreeType(null);
-    }
-
-    public ExecutionYear getFirstExecutionYear() {
-	return (this.firstExecutionYear != null) ? this.firstExecutionYear : ExecutionYear.readFirstExecutionYear();
-    }
-
-    public void setFirstExecutionYear(ExecutionYear executionYear) {
-	this.firstExecutionYear = executionYear;
-    }
-
-    public ExecutionYear getFinalExecutionYear() {
-	return (this.finalExecutionYear != null) ? this.finalExecutionYear : ExecutionYear.readLastExecutionYear();
-    }
-
-    public void setFinalExecutionYear(ExecutionYear executionYear) {
-	this.finalExecutionYear = executionYear;
     }
 
     public List<Registration> getAlumni() {
@@ -88,14 +70,6 @@ public class AlumniSearchBean implements Serializable {
 	this.name = name;
     }
 
-    public DegreeType getDegreeType() {
-	return degreeType;
-    }
-
-    public void setDegreeType(DegreeType arg) {
-	this.degreeType = arg;
-    }
-
     public String getSearchElementsAsParameters() {
 	String urlParameters = "&amp;beansearch=" + this.getDegreeType() + ":" + this.getName() + ":";
 	urlParameters += (this.getFirstExecutionYear() == null ? "null" : this.getFirstExecutionYear().getIdInternal()) + ":";
@@ -120,6 +94,22 @@ public class AlumniSearchBean implements Serializable {
 	}
     }
 
+    public ExecutionYear getFinalExecutionYear() {
+        return finalExecutionYear;
+    }
+
+    public void setFinalExecutionYear(ExecutionYear finalExecutionYear) {
+        this.finalExecutionYear = finalExecutionYear;
+    }
+
+    public ExecutionYear getFirstExecutionYear() {
+        return firstExecutionYear;
+    }
+
+    public void setFirstExecutionYear(ExecutionYear firstExecutionYear) {
+        this.firstExecutionYear = firstExecutionYear;
+    }
+    
     public int getTotalItems() {
 	return totalItems;
     }

@@ -810,9 +810,6 @@
 	<definition name="alumni.alumniPublicAccessInformationInquiry" extends="definition.public.alumni">
 		<put name="body" value="/publico/alumni/alumniPublicAccessInformationInquiry.jsp" />
 	</definition>
-	<definition name="alumni.alumniPublicAccessCreateFormation" extends="definition.public.alumni">
-		<put name="body" value="/publico/alumni/alumniPublicAccessCreateFormation.jsp" />
-	</definition>
 	<definition name="alumni.alumniCreatePasswordRequest" extends="definition.public.alumni">
 		<put name="body" value="/publico/alumni/alumniCreatePasswordRequest.jsp" />
 	</definition>

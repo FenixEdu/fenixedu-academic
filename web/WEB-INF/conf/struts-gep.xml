@@ -18,7 +18,7 @@
 	    <form-bean name="teachingReportForm" 
                    type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
                 <form-property name="executionCourseId" type="java.lang.Integer" />
-        </form-bean>
+        </form-bean>        
 
 		<!-- ==================== View Curricular Course Historic ================== -->
 		<form-bean name="executionYearDegreeCurricularPlanForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
@@ -310,6 +310,9 @@
 	      		type="net.sourceforge.fenixedu.presentationTier.Action.gep.AlumniInformationAction"> 	                   
    	       <forward name="alumni.showAlumniStatistics" path="alumni.showAlumniStatistics"/>
    	       <forward name="alumni.showAlumniDetails" path="alumni.showAlumniDetails"/>
+   	       <forward name="manageRecipients" path="alumni.recipients.manage"/>  
+   	       <forward name="removeRecipients" path="alumni.recipients.remove"/>
+   	       <forward name="addRecipients" path="alumni.recipients.add"/>
 	    </action>
 
     </action-mappings>
@@ -342,7 +345,8 @@
    	<message-resources parameter="resources.AlumniResources" key="ALUMNI_RESOURCES" null="false"/>
 	<message-resources parameter="resources.PedagogicalCouncilResources" key="PEDAGOGICAL_COUNCIL" null="false"/>   	
     <message-resources parameter="resources.CommonResources" key="COMMON_RESOURCES" null="false"/>       
-    <message-resources parameter="resources.DomainResources" key="DOMAIN_RESOURCES" null="false"/>       
+    <message-resources parameter="resources.DomainResources" key="DOMAIN_RESOURCES" null="false"/>    
+    <message-resources parameter="resources.GroupNameResources" key="GROUP_NAME_RESOURCES" null="false"/>   
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
         <set-property property="pathnames" 

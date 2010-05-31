@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
@@ -107,6 +108,7 @@ public class EmailAddress extends EmailAddress_Base {
     public void edit(final String value) {
 	if (!isInstitutionalType()) {
 	    super.setValue(value);
+	    setLastModifiedDate(new DateTime());
 	}
     }
 

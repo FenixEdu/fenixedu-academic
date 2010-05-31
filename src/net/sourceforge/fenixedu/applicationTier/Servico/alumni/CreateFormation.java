@@ -20,10 +20,10 @@ public class CreateFormation extends FormationManagement {
 
     private void createAlumniFormation(final Alumni alumni, final AlumniFormation formation) {
 
-	Formation newFormation = new Formation(alumni.getStudent().getPerson(), formation.getFormationType(), formation
-		.getFormationDegree(), formation.getEducationArea(), formation.getFormationBeginYear(), formation
-		.getFormationEndYear(), formation.getFormationCredits(), formation.getFormationHours(),
-		getFormationInstitution(formation));
+	new Formation(alumni.getStudent().getPerson(), formation.getFormationType(), formation.getFormationDegree(), formation
+		.getEducationArea(), formation.getFormationBeginYear(), formation.getFormationEndYear(), formation
+		.getFormationCredits(), formation.getFormationHours(), getFormationInstitution(formation), formation.getParentInstitution(),
+		formation.getInstitutionType(), formation.getCountryUnit());
     }
 
 }

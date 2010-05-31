@@ -38,7 +38,7 @@
 		</li>
 		<li>
 			<html:link page="/formation.do?method=innerFormationManagement">
-				<bean:message key="link.post.graduate.education" bundle="ALUMNI_RESOURCES" />
+				<bean:message key="link.graduate.education" bundle="ALUMNI_RESOURCES" />
 			</html:link>
 		</li>
 
@@ -69,14 +69,14 @@
 		</li>
 
 
-		<li class="navheader">
+		<!-- li class="navheader">
 			<bean:message key="inquiries.title" bundle="ALUMNI_RESOURCES" />
 		</li>
 		<li>
 			<html:link page="/alumniInquiries.do?method=showMainPage">
 				<bean:message key="inquiries.alumni.menu" bundle="ALUMNI_RESOURCES" />
 			</html:link>
-		</li>
+		</li-->
 
 	</ul>
 </logic:present>

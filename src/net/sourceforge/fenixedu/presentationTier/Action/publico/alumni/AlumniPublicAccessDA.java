@@ -28,6 +28,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.utl.ist.fenix.tools.util.EMail;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import com.octo.captcha.module.struts.CaptchaServicePlugin;
@@ -128,6 +129,7 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
 		    .getPerson().getFirstAndLastName(), alumni.getIdInternal().toString(), alumni.getUrlRequestToken(),
 		    ResourceBundle.getBundle("resources.GlobalResources").getString("fenix.url"));
 	    request.setAttribute("alumniEmailSuccessMessage", "http" + url.split("http")[1]);
+	    request.setAttribute("alumni", alumni);
 
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
@@ -139,6 +141,25 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
 	return mapping.findForward("alumniPublicAccessRegistrationEmail");
     }
 
+    public ActionForward sendEmailReportingError(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	final AlumniLinkRequestBean alumniBean = (AlumniLinkRequestBean) getRenderedObject();
+	EMail email = null;
+	try {
+	    if (!request.getServerName().equals("localhost")) {
+		email = new EMail("mail.adm", "erro@dot.ist.utl.pt");
+		//email.send("suporte@dot.ist.utl.pt", "Fenix Error Report" + subject, mailBody);
+	    } else {
+		email = new EMail("mail.rnl.ist.utl.pt", "erro@dot.ist.utl.pt");
+		//email.send("suporte@dot.ist.utl.pt", "Localhost Error Report", mailBody);
+	    }
+	} catch (Throwable t) {
+	    t.printStackTrace();
+	    throw new Error(t);
+	}
+	return null;
+    }
+    
     public ActionForward innerFenixPublicAccessValidation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -169,126 +190,14 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
 	request.setAttribute("urlToken", request.getParameter(urlToken));
 	return mapping.findForward("alumniPublicAccessInner");
     }
-
-    // 2nd validation: student number and document number match
-    public ActionForward initPasswordGenerationInquiry(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+    
+    public ActionForward registrationConclusion(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	final AlumniLinkRequestBean alumniBean = (AlumniLinkRequestBean) getObjectFromViewState("alumniBean");
-	final Alumni alumni = alumniBean.getAlumni();
-
-	if (!alumni.hasDocumentIdNumber(alumniBean.getDocumentIdNumber())) {
-	    RenderUtils.invalidateViewState("error");
-	    addActionMessage("error", request, "registration.error.wrong.document.number");
-	    request.setAttribute("alumniBean", new AlumniLinkRequestBean(alumni));
-	    return mapping.findForward("alumniPublicAccessInner");
-	}
-
-	if (!alumni.hasStudentNumber(alumniBean.getStudentNumber())) {
-	    RenderUtils.invalidateViewState("error");
-	    addActionMessage("error", request, "registration.error.wrong.student.number");
-	    request.setAttribute("alumniBean", new AlumniLinkRequestBean(alumni));
-	    return mapping.findForward("alumniPublicAccessInner");
-	}
-
-	request.setAttribute("publicAccessBean", new AlumniPublicAccessBean(alumni));
-	return mapping.findForward("alumniPublicAccessInformationInquiry");
-    }
-
-    public ActionForward invalidPasswordGenerationInquiry(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-	request.setAttribute("publicAccessBean", getObjectFromViewState("publicAccessBean"));
-	return mapping.findForward("alumniPublicAccessInformationInquiry");
-    }
-
-    public ActionForward professionalInformationPostback(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-	RenderUtils.invalidateViewState("parentBusinessArea-validated");
-	RenderUtils.invalidateViewState("childBusinessArea-validated");
-	request.setAttribute("professionalInformationPostback", "true");
-	request.setAttribute("publicAccessBean", getObjectFromViewState("publicAccessBean"));
-	return mapping.findForward("alumniPublicAccessInformationInquiry");
-    }
-
-    public ActionForward updateAlumniInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	final AlumniPublicAccessBean alumniBean = (AlumniPublicAccessBean) getObjectFromViewState("publicAccessBean");
-	if (Boolean.valueOf(getFromRequest(request, "isEmployed").toString())) {
-
-	    if (alumniBean.getJobBean().getChildBusinessArea() == null) {
-		RenderUtils.invalidateViewState("parentBusinessArea-validated");
-		alumniBean.getJobBean().setParentBusinessArea(null);
-		request.setAttribute("childBusinessArea-validated", RESOURCES.getString("label.mandatory.field"));
-		request.setAttribute("publicAccessBean", alumniBean);
-		request.setAttribute("professionalInformationPostback", "true"); // hack
-		return mapping.findForward("alumniPublicAccessInformationInquiry");
-	    }
-
-	    if (StringUtils.isEmpty(alumniBean.getJobBean().getPosition())) {
-		request.setAttribute("position-validated", RESOURCES.getString("label.mandatory.field"));
-		request.setAttribute("publicAccessBean", alumniBean);
-		request.setAttribute("professionalInformationPostback", "true"); // hack
-		return mapping.findForward("alumniPublicAccessInformationInquiry");
-	    }
-	}
-
-	try {
-	    RegisterAlumniData.run(alumniBean, Boolean.valueOf(getFromRequest(request, "isEmployed").toString()));
-	} catch (FenixServiceException e) {
-	    addActionMessage("error", request, e.getMessage());
-	    return updateAlumniInformationError(mapping, actionForm, request, response);
-	}
-
-	request.setAttribute("formationBean", new AlumniFormationBean(alumniBean.getAlumni()));
-	return mapping.findForward("alumniCreateFormation");
-    }
-
-    public ActionForward updateAlumniInformationError(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	request.setAttribute("publicAccessBean", getRenderedObject("publicAccessBean"));
-	RenderUtils.invalidateViewState("message");
-	request.setAttribute("professionalInformationPostback", "true"); // hack
-	return mapping.findForward("alumniPublicAccessInformationInquiry");
-    }
-
-    public ActionForward updateAlumniFormationTypePostback(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-	AlumniFormationBean formationBean = (AlumniFormationBean) getObjectFromViewState("formationBean");
-	formationBean.getAlumniFormation().updateTypeSchema();
-	request.setAttribute("formationEducationArea", getFromRequest(request, "formationEducationArea"));
+	final Alumni alumni = ((AlumniLinkRequestBean) getObjectFromViewState("alumniBean")).getAlumni();
 	RenderUtils.invalidateViewState();
-	request.setAttribute("formationBean", formationBean);
-	request.setAttribute("formationUpdate", "true");
-	return mapping.findForward("alumniCreateFormation");
-    }
-
-    public ActionForward updateAlumniFormationInfoPostback(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-	AlumniFormationBean formationBean = (AlumniFormationBean) getObjectFromViewState("formationBean");
-	formationBean.getAlumniFormation().updateInstitutionSchema();
-	request.setAttribute("formationEducationArea", getFromRequest(request, "formationEducationArea"));
-	RenderUtils.invalidateViewState();
-	request.setAttribute("formationBean", formationBean);
-	request.setAttribute("formationUpdate", "true");
-	return mapping.findForward("alumniCreateFormation");
-    }
-
-    public ActionForward createFormationNext(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	final AlumniFormationBean formationBean = (AlumniFormationBean) getObjectFromViewState("formationBean");
-	RenderUtils.invalidateViewState();
-
-	Alumni alumni = formationBean.getAlumni();
 
 	if (alumni.hasPastLogin()) {
-
 	    try {
 		RegisterAlumniData.run(alumni, Boolean.TRUE);
 		request.setAttribute("loginAlias", alumni.getLoginUsername());
@@ -308,64 +217,6 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
 	    }
 	    return mapping.findForward("alumniCreatePasswordRequest");
 	}
-    }
-
-    public ActionForward createFormationError(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	request.setAttribute("formationBean", getRenderedObject("formationBean"));
-	return mapping.findForward("alumniCreateFormation");
-    }
-
-    public ActionForward createFormation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	final Alumni alumni = ((AlumniFormationBean) getObjectFromViewState("formationBean")).getAlumni();
-	if (innerFormationCreation(request)) {
-	    RenderUtils.invalidateViewState();
-	    request.setAttribute("formationBean", new AlumniFormationBean(alumni));
-	}
-	return mapping.findForward("alumniCreateFormation");
-    }
-
-    private Boolean innerFormationCreation(HttpServletRequest request) throws FenixServiceException, FenixFilterException {
-
-	final AlumniFormationBean formationBean = (AlumniFormationBean) getObjectFromViewState("formationBean");
-	AlumniFormation alumniFormation = formationBean.getAlumniFormation();
-
-	if (getIntegerFromRequest(request, "formationEducationArea") != null) {
-	    alumniFormation.setEducationArea(getIntegerFromRequest(request, "formationEducationArea"));
-	}
-
-	if (alumniFormation.hasFullInformation()) {
-	    try {
-		if (alumniFormation.hasAssociatedFormation()) {
-		    executeService("EditFormation", new Object[] { alumniFormation });
-		} else {
-		    executeService("CreateFormation", new Object[] { formationBean.getAlumni(), alumniFormation });
-		}
-		return Boolean.TRUE;
-
-	    } catch (DomainException e) {
-		addActionMessage("error", request, e.getMessage());
-	    }
-	} else {
-	    addActionMessage("error", request, "formation.creation.incomplete.data");
-	}
-
-	request.setAttribute("formationBean", formationBean);
-	return Boolean.FALSE;
-    }
-
-    public ActionForward deleteFormation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	DeleteQualification.run(getIntegerFromRequest(request, "formationId"));
-
-	RenderUtils.invalidateViewState();
-	final Alumni alumni = rootDomainObject.readAlumniByOID(getIntegerFromRequest(request, "alumniId"));
-	request.setAttribute("formationBean", new AlumniFormationBean(alumni));
-	return mapping.findForward("alumniCreateFormation");
     }
 
     public ActionForward createPasswordRequestInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

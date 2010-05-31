@@ -9,7 +9,7 @@
 <!-- alumniPublicAccessIdentityCheck.jsp -->
 
 
-<h1>Inscrição Alumni</h1>
+<h1><bean:message key="label.alumni.registration" bundle="ALUMNI_RESOURCES" /></h1>
 
 <div class="alumnilogo">
 <%-- <div class="col_right_alumni"><img src="http://www.ist.utl.pt/img/alumni/alumni_deco_3.gif" alt="[Image] Alumni" /></div> --%>
@@ -17,7 +17,7 @@
 	<h2><bean:message key="label.alumni.student.number.recovery" bundle="ALUMNI_RESOURCES" /></h2>
 	
 	<p class="mtop15 mbottom05">
-		<a href="<%= request.getContextPath() + "/publico/alumni.do?method=initFenixPublicAccess"%>">&laquo; Voltar</a>
+		<a href="<%= request.getContextPath() + "/publico/alumni.do?method=initFenixPublicAccess"%>">&laquo; <bean:message key="link.alumni.back" bundle="ALUMNI_RESOURCES" /></a>
 	</p>
 	
 	<p class="greytxt" style="margin-bottom: 1em;"><bean:message key="label.alumni.student.number.recovery.text" bundle="ALUMNI_RESOURCES" /></p>

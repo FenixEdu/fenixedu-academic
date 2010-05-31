@@ -19,7 +19,7 @@
 <h2>
 	<bean:message key="label.confirm.identity" bundle="ALUMNI_RESOURCES" />
 	<span class="color777 fwnormal">
-		<bean:message key="label.step.1.3" bundle="ALUMNI_RESOURCES" />
+		<bean:message key="label.step.3.3" bundle="ALUMNI_RESOURCES" />
 	</span>
 </h2>
 
@@ -27,7 +27,7 @@
 
 
 <div class="reg_form">	
-	<fr:form action="/alumni.do?&method=initPasswordGenerationInquiry">
+	<fr:form action="/alumni.do?&method=registrationConclusion">
 	
 		<fieldset style="margin-bottom: 1em;">
 	

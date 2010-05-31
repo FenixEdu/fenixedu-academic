@@ -55,7 +55,7 @@ public class CreateContentsContextAction extends FenixAction {
 	response.sendRedirect(HostRedirector.getRedirectPageLogin(request.getRequestURL().toString()));
     }
 
-    private ActionForward menuActionForward(Content content, HttpServletRequest request) {
+    protected ActionForward menuActionForward(Content content, HttpServletRequest request) {
 	ActionForward actionForward = new ActionForward();
 	actionForward.setRedirect(true);
 	Portal rootPortal = RootDomainObject.getInstance().getRootPortal();

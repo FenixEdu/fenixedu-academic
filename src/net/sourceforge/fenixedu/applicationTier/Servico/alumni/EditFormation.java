@@ -21,14 +21,7 @@ public class EditFormation extends FormationManagement {
     private void editAlumniFormation(final AlumniFormation formation) {
 
 	Formation dbFormation = formation.getAssociatedFormation();
-	dbFormation.setFormationType(formation.getFormationType());
-	dbFormation.setDegree(formation.getFormationDegree().getName());
-	dbFormation.setEducationArea(formation.getEducationArea());
-	dbFormation.setBeginYear(formation.getFormationBeginYear());
-	dbFormation.setYear(formation.getFormationEndYear());
-	dbFormation.setEctsCredits(formation.getFormationCredits());
-	dbFormation.setFormationHours(formation.getFormationHours());
-	dbFormation.setInstitution(getFormationInstitution(formation));
+	dbFormation.edit(formation,getFormationInstitution(formation));
     }
 
 }

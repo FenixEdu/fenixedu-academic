@@ -11,15 +11,6 @@ public class EditProfessionalInformation extends FenixService {
     public static void run(final AlumniJobBean jobBean) {
 
 	Job job = rootDomainObject.readJobByOID(jobBean.getJobId());
-	job.setEmployerName(jobBean.getEmployerName());
-	job.setCity(jobBean.getCity());
-	job.setCountry(jobBean.getCountry());
-	job.setBusinessArea(jobBean.getChildBusinessArea());
-	job.setPosition(jobBean.getPosition());
-	job.setBeginDate(jobBean.getBeginDateAsLocalDate());
-	job.setEndDate(jobBean.getEndDateAsLocalDate());
-	job.setJobApplicationType(jobBean.getApplicationType());
-	job.setContractType(jobBean.getContractType());
-	job.setSalaryType(jobBean.getSalaryType());
+	job.edit(jobBean);	
     }
 }

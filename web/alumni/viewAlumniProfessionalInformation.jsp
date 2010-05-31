@@ -46,10 +46,10 @@
 <logic:notEmpty name="alumni" property="jobs">
 	<logic:iterate id="eachJob" indexId="jobIndex" name="alumni" property="jobs">
 		<bean:define id="jobID" name="eachJob" property="idInternal" />
-		<fr:view name="eachJob" layout="tabular" schema="alumni.professional.information.job">
+		<fr:view name="eachJob" layout="tabular" schema="alumni.professional.information.job.output">
 			<fr:layout>
 				<fr:property name="subLayout" value="values"/>
-				<fr:property name="subSchema" value="alumni.professional.information.job"/>
+				<fr:property name="subSchema" value="alumni.professional.information.job.output"/>
 				<fr:property name="classes" value="tstyle2 thlight thright mbottom025" />
 			</fr:layout>
 		</fr:view>

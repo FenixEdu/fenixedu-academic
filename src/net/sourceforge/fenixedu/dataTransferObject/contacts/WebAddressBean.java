@@ -28,7 +28,7 @@ public class WebAddressBean extends PartyContactBean {
     public void edit() {
 	super.edit();
 	if (!getType().equals(PartyContactType.INSTITUTIONAL)) {
-	    ((WebAddress) getContact()).setUrl(getValue());
+	    ((WebAddress) getContact()).edit(getValue());
 	}
     }
 

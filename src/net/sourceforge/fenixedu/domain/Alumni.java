@@ -23,16 +23,14 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 
 public class Alumni extends Alumni_Base {
 
     public Alumni(Student student) {
 	this(student, null, Boolean.FALSE);
-    }
-
-    public Alumni(Student student, UUID uuid) {
-	this(student, uuid, Boolean.FALSE);
     }
 
     public Alumni(Student student, UUID uuid, Boolean registered) {
@@ -264,7 +262,6 @@ public class Alumni extends Alumni_Base {
 		}
 	    }
 	} else {
-
 	    if (studentNumber != null) {
 		Student student = Student.readStudentByNumber(studentNumber);
 		if (student != null && matchDocumentIdNumber(student.getPerson(), documentIdNumber)) {
@@ -278,7 +275,7 @@ public class Alumni extends Alumni_Base {
 		Collection<Person> persons = Person.readByDocumentIdNumber(documentIdNumber);
 		if (!persons.isEmpty()) {
 		    Person person = persons.iterator().next();
-		    if (matchStudentNumber(person, studentNumber)) {
+		    if (matchStudentNumber(person, studentNumber) && person.hasStudent()) {
 			for (Registration registration : person.getStudent().getRegistrations()) {
 			    if (registration.isConcluded()) {
 				resultRegistrations.add(registration);
@@ -303,32 +300,26 @@ public class Alumni extends Alumni_Base {
 		    if (registration.getPerson().getPartyContacts().isEmpty()) {
 			continue;
 		    }
-
 		    if (!StringUtils.isEmpty(mobileNumber) && !registration.getPerson().hasAnyPartyContact(MobilePhone.class)) {
 			continue;
 		    }
-
 		    if (!StringUtils.isEmpty(telephoneNumber) && !registration.getPerson().hasAnyPartyContact(Phone.class)) {
 			continue;
 		    }
-
 		    if (!StringUtils.isEmpty(email) && !registration.getPerson().hasAnyPartyContact(EmailAddress.class)) {
 			continue;
 		    }
-
 		    for (PartyContact contact : registration.getPerson().getPartyContacts()) {
 			if (!StringUtils.isEmpty(mobileNumber) && contact.isMobile()
 				&& !mobileNumber.equals(contact.getPresentationValue())) {
 			    match = false;
 			    break;
 			}
-
 			if (!StringUtils.isEmpty(telephoneNumber) && contact.isPhone()
 				&& !telephoneNumber.equals(contact.getPresentationValue())) {
 			    match = false;
 			    break;
 			}
-
 			if (!StringUtils.isEmpty(email) && contact.isEmailAddress()
 				&& !email.equals(contact.getPresentationValue())) {
 			    match = false;
@@ -336,67 +327,54 @@ public class Alumni extends Alumni_Base {
 			}
 		    }
 		}
-
 		if (match) {
 		    filteredResultRegistrations.add(registration);
 		}
 	    }
 	} else if (!StringUtils.isEmpty(telephoneNumber) || !StringUtils.isEmpty(email) || !StringUtils.isEmpty(mobileNumber)) {
 	    List<Class<? extends PartyContact>> clazzList = new ArrayList<Class<? extends PartyContact>>();
-
 	    if (!StringUtils.isEmpty(telephoneNumber)) {
 		clazzList.add(Phone.class);
 	    }
-
 	    if (!StringUtils.isEmpty(email)) {
 		clazzList.add(EmailAddress.class);
 	    }
-
 	    if (!StringUtils.isEmpty(mobileNumber)) {
 		clazzList.add(MobilePhone.class);
 	    }
-
 	    Set<Party> partyRead = new HashSet<Party>();
 	    for (PartyContact contact : PartyContact.readPartyContactsOfType(clazzList.toArray(new Class[0]))) {
 		if (!StringUtils.isEmpty(mobileNumber)
 			&& !(contact.isMobile() && mobileNumber.equals(contact.getPresentationValue()))) {
 		    continue;
 		}
-
 		if (!StringUtils.isEmpty(telephoneNumber)
 			&& !(contact.isPhone() && telephoneNumber.equals(contact.getPresentationValue()))) {
 		    continue;
 		}
-
 		if (!StringUtils.isEmpty(email) && !(contact.isEmailAddress() && email.equals(contact.getPresentationValue()))) {
 		    continue;
 		}
-
 		if (!contact.getParty().isPerson()) {
 		    continue;
 		}
-
 		if (partyRead.contains(contact.getParty())) {
 		    continue;
 		}
-
 		Person person = (Person) contact.getParty();
 		partyRead.add(person);
 
 		if (!person.hasRole(RoleType.ALUMNI) || !person.hasStudent()) {
 		    continue;
 		}
-
 		for (Registration registration : person.getStudent().getRegistrations()) {
 		    if (!registration.isConcluded()) {
 			continue;
 		    }
-
 		    filteredResultRegistrations.add(registration);
 		}
 	    }
 	}
-
 	return filteredResultRegistrations;
     }
 
@@ -439,6 +417,15 @@ public class Alumni extends Alumni_Base {
 	return false;
     }
 
+    public AlumniIdentityCheckRequest getLastIdentityRequest() {
+	Set<AlumniIdentityCheckRequest> orderedSet = new TreeSet<AlumniIdentityCheckRequest>(new ReverseComparator(
+		new BeanComparator("creationDateTime")));
+	for (AlumniIdentityCheckRequest request : getIdentityRequests()) {
+	    orderedSet.add(request);
+	}
+	return orderedSet.iterator().next();
+    }
+
     public String getLoginUsername() {
 	Person person = getStudent().getPerson();
 	if (person.getIstUsername() == null) {
@@ -458,5 +445,12 @@ public class Alumni extends Alumni_Base {
 
     public String getName() {
 	return getStudent().getPerson().getName();
+    }
+
+    public void delete() {
+	removeStudent();
+	getIdentityRequests().clear();
+	removeRootDomainObject();
+	super.deleteDomainObject();
     }
 }

@@ -71,7 +71,7 @@
     
     <!-- ========== Action Mapping Definitions =============================== -->
     <action-mappings type="org.apache.struts.action.ActionMapping">
-        <action path="/index" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
+        <action path="/index" type="net.sourceforge.fenixedu.presentationTier.Action.alumni.AlumniHomeDA">
             <forward name="Success" path="index"/>
         </action>
 

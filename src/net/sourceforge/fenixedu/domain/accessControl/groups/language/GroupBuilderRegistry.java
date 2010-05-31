@@ -58,6 +58,7 @@ import net.sourceforge.fenixedu.domain.accessControl.PedagogicalCouncilMembersGr
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PersonsInFunctionGroup;
+import net.sourceforge.fenixedu.domain.accessControl.ConclusionYearDegreesStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ResearchUnitElementGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ResearchUnitMembersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ResearchersGroup;
@@ -251,6 +252,7 @@ public class GroupBuilderRegistry {
 		new MasterDegreeAdministrativeOfficeGroup.Builder());
 	register("activeStudentsFromDegreeTypeGroup", ActiveStudentsFromDegreeTypeGroup.class, new ActiveStudentsFromDegreeTypeGroup.Builder());
 	register("cerimonyInquiryGroup", CerimonyInquiryGroup.class, new CerimonyInquiryGroup.Builder());
+	register("conclusionYearDegreesStudentsGroup", ConclusionYearDegreesStudentsGroup.class, new ConclusionYearDegreesStudentsGroup.Builder());
 	registerGroupsWithNoArguments();
     }
 

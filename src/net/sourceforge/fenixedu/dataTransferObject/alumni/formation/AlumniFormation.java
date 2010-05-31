@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.EducationArea;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Formation;
@@ -14,7 +15,6 @@ import net.sourceforge.fenixedu.domain.QualificationType;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CountryUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.SchoolUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -66,11 +66,28 @@ public class AlumniFormation implements Serializable, IFormation {
 
 	AlumniFormation formation = new AlumniFormation();
 
-	formation.setTypeSchema("alumni.formation.degree.both");
+	if(dbFormation.getFormationType() == null) {
+	    formation.setTypeSchema("alumni.formation.degree");
+	} else {
+	    formation.setTypeSchema("alumni.formation.degree.both");
+	}
 	formation.setFormationType(dbFormation.getFormationType());
 	formation.setFormationDegree(dbFormation.getType());
 
+	formation.setInstitutionType(dbFormation.getInstitutionType());
+	if(dbFormation.getInstitutionType() != null) {
+	    formation.setInstitutionSchema("alumni.formation.national.institution.parent");
+	}
+	//if the institution is not null the correspondent schema will be resetted in the next method
 	setInstitution(formation, dbFormation);
+	if(dbFormation.getBaseInstitution() != null) {
+	    formation.setParentInstitution((AcademicalInstitutionUnit) dbFormation.getBaseInstitution());	    
+	    if (((AcademicalInstitutionUnit)dbFormation.getBaseInstitution()).hasAnyOfficialChilds()) {
+		formation.setInstitutionSchema("alumni.formation.national.institution.both");
+	    } else {
+		formation.setInstitutionSchema("alumni.formation.national.institution.parent");
+	    }
+	}
 
 	formation.setEducationArea(dbFormation.getEducationArea());
 
@@ -88,8 +105,7 @@ public class AlumniFormation implements Serializable, IFormation {
 	Unit institution = dbFormation.getInstitution();
 	if (institution instanceof AcademicalInstitutionUnit) {
 
-	    AcademicalInstitutionType academicalInstitutionType = ((AcademicalInstitutionUnit) institution).getInstitutionType();
-	    bean.setInstitutionType(academicalInstitutionType);
+	    AcademicalInstitutionType academicalInstitutionType = dbFormation.getInstitutionType();
 
 	    switch (academicalInstitutionType) {
 
@@ -100,43 +116,41 @@ public class AlumniFormation implements Serializable, IFormation {
 		    bean.setInstitutionSchema("alumni.formation.national.institution.parent");
 
 		} else {
-		    for (AcademicalInstitutionUnit parent : AcademicalInstitutionUnit.readOfficialParentUnitsByType(bean
-			    .getInstitutionType())) {
-			for (Accountability unitRelation : parent.getChilds()) {
-			    if (unitRelation.getChildParty().equals(institution)) {
-				bean.setParentInstitution((AcademicalInstitutionUnit) unitRelation.getParentParty());
-			    }
-			}
-		    }
 		    bean.setChildInstitution((AcademicalInstitutionUnit) institution);
 		    bean.setInstitutionSchema("alumni.formation.national.institution.both");
 		}
 		break;
 	    case FOREIGN_INSTITUTION:
-		setNonNationalInstitution(bean, institution, "alumni.formation.foreign.institution");
+		setNonNationalInstitution(bean, institution, "alumni.formation.foreign.institution", dbFormation.getCountryUnit());
 		break;
 	    case OTHER_INSTITUTION:
-		setNonNationalInstitution(bean, institution, "alumni.formation.other.institution");
+		setNonNationalInstitution(bean, institution, "alumni.formation.other.institution", dbFormation.getCountryUnit());
 		break;
 	    }
 
 	} else {
-	    bean.setForeignUnit(institution.getName());
-	    if (institution.hasParentUnit(CountryUnit.getDefault())) {
-		bean.setInstitutionType(AcademicalInstitutionType.OTHER_INSTITUTION);
-		bean.setInstitutionSchema("alumni.formation.other.institution");
+	    if (institution != null) {
+		bean.setForeignUnit(institution.getName());
+		if (institution.hasParentUnit(CountryUnit.getDefault())) {
+		    bean.setInstitutionSchema("alumni.formation.other.institution");
+		} else {
+		    bean.setInstitutionSchema("alumni.formation.foreign.institution");
+		}
 	    } else {
-		bean.setInstitutionType(AcademicalInstitutionType.FOREIGN_INSTITUTION);
-		bean.setInstitutionSchema("alumni.formation.foreign.institution");
+		if(bean.getInstitutionType() == AcademicalInstitutionType.FOREIGN_INSTITUTION) {
+		    bean.setInstitutionSchema("alumni.formation.foreign.institution");
+		} else if(bean.getInstitutionType() == AcademicalInstitutionType.OTHER_INSTITUTION) {
+		    bean.setInstitutionSchema("alumni.formation.other.institution");
+		}
 	    }
 	}
     }
 
-    private static void setNonNationalInstitution(AlumniFormation bean, Unit institution, String schema) {
+    private static void setNonNationalInstitution(AlumniFormation bean, Unit institution, String schema, CountryUnit countryUnit) {
 	bean.setInstitutionSchema(schema);
 	bean.setForeignUnit(institution.getName());
 	bean.setChildInstitution((AcademicalInstitutionUnit) institution);
-	bean.setCountryUnit((CountryUnit) institution.getParentParties(CountryUnit.class).iterator().next());
+	bean.setCountryUnit(countryUnit);
     }
 
     public int getFirstYear() {
@@ -206,6 +220,9 @@ public class AlumniFormation implements Serializable, IFormation {
 
     public void setFormationType(FormationType formationType) {
 	this.formationType = formationType;
+	if (formationType == null) {
+	    setFormationDegree(null);
+	}
     }
 
     public QualificationType getFormationDegree() {
@@ -286,6 +303,9 @@ public class AlumniFormation implements Serializable, IFormation {
 
     public void setParentInstitution(AcademicalInstitutionUnit parentUnit) {
 	this.parentUnit = parentUnit;
+	if (parentUnit == null) {
+	    setChildInstitution(null);
+	}
     }
 
     public AcademicalInstitutionUnit getChildInstitution() {

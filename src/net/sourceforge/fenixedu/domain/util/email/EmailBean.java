@@ -164,4 +164,12 @@ public class EmailBean implements Serializable {
 	return new Message(getSender(), getReplyTos(), getRecipients(), getSubject(), message.toString(), bccs);
     }
 
+    @Service
+    public void removeRecipients() {
+	for(Recipient recipient : getRecipients()) {
+	    getSender().removeRecipients(recipient);
+	}
+	setRecipients(null);
+    }
+
 }

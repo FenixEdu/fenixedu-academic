@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryPerson;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -65,6 +66,8 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 		return handleSessionCreationAndForwardToCoordinationExecutionDegreeReportsQuestion(request, userView, session);
 	    } else if (isStudentAndHasGratuityDebtsToPay(userView)) {
 		return handleSessionCreationAndForwardToGratuityPaymentsReminder(request, userView, session);
+	    } else if (isAlumniWithNoData(userView)){
+		return handleSessionCreationAndForwardToAlumniReminder(request, userView, session);
 	    } else {
 		return handleSessionCreationAndGetForward(mapping, request, userView, session);
 	    }
@@ -78,6 +81,20 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	    if (cerimonyInquiryPerson.isPendingResponse()) {
 		return true;
 	    }
+	}
+	return false;
+    }
+
+    private ActionForward handleSessionCreationAndForwardToAlumniReminder(HttpServletRequest request, IUserView userView,
+	    HttpSession session) {
+	createNewSession(request, session, userView);
+	return new ActionForward("/alumniReminder.do");
+    }
+
+    private boolean isAlumniWithNoData(IUserView userView) {
+	Person person = userView.getPerson();
+	if(person.getStudent() != null && person.getStudent().getAlumni() != null) {
+	    return person.getJobs().isEmpty();
 	}
 	return false;
     }

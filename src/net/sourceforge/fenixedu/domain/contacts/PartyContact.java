@@ -12,6 +12,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
+import org.joda.time.DateTime;
+
 public abstract class PartyContact extends PartyContact_Base {
 
     public static Comparator<PartyContact> COMPARATOR_BY_TYPE = new Comparator<PartyContact>() {
@@ -29,6 +31,7 @@ public abstract class PartyContact extends PartyContact_Base {
 	setVisibleToTeachers(Boolean.FALSE);
 	setVisibleToEmployees(Boolean.FALSE);
 	setVisibleToAlumni(Boolean.FALSE);
+	setLastModifiedDate(new DateTime());
     }
 
     protected void init(final Party party, final PartyContactType type, final boolean defaultContact) {
@@ -51,6 +54,7 @@ public abstract class PartyContact extends PartyContact_Base {
 	    setVisibleToEmployees(type == PartyContactType.WORK);
 	}
 	setDefaultContactInformation(defaultContact);
+	setLastModifiedDate(new DateTime());
     }
 
     protected void init(final Party party, final PartyContactType type, final boolean visibleToPublic,
@@ -65,6 +69,7 @@ public abstract class PartyContact extends PartyContact_Base {
 	setVisibleToEmployees(new Boolean(visibleToEmployees));
 	setVisibleToAlumni(new Boolean(visibleToAlumni));
 	setDefaultContactInformation(defaultContact);
+	setLastModifiedDate(new DateTime());
     }
 
     private void setVisibleToPublic() {
