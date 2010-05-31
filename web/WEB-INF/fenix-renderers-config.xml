@@ -290,6 +290,8 @@ Documentation:
 	<renderer type="org.joda.time.Duration" class="net.sourceforge.fenixedu.presentationTier.renderers.DurationRenderer"/>
 	
 	<renderer mode="input" type="java.lang.Object" layout="matrix" class="pt.ist.fenixWebFramework.renderers.MatrixRenderer"/>
+	
+	<renderer type="java.lang.Object" layout="matrix" class="pt.ist.fenixWebFramework.renderers.MatrixRenderer"/>
 
 	<!--@ The default presentation for a joda partial is the presentation of all the date components of partial as
 		  a normal date and a label explaining the components presented -->
