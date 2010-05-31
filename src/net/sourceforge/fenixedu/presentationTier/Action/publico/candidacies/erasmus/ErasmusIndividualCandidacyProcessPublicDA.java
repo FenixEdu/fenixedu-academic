@@ -75,7 +75,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "show-recover-access-link-form", path = "erasmus.show.access.link.form"),
 	@Forward(name = "show-recovery-email-sent", path = "erasmus.recovery.email.sent"),
 	@Forward(name = "stork-attr-list-test", path = "erasmus.stork.attr.list.test"),
-	@Forward(name = "error-on-application-submission", path = "erasmus.error.on.application.submission.contact.gri") })
+	@Forward(name = "error-on-application-submission", path = "erasmus.error.on.application.submission.contact.gri"),
+	@Forward(name = "bind-link-submited-individual-candidacy-with-stork", path = "erasmus.bind.submited.individua.candidacy.with.stork"),
+	@Forward(name = "show-bind-process-success", path = "erasmus.show.bind.process.success") })
 public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndividualCandidacyProcessPublicDA {
 
     @Override
@@ -734,6 +736,53 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	request.setAttribute("storkTestAttrList", bean.getAttrList());
 
 	return returnFromPeps(mapping, form, request, response);
+    }
+
+    public ActionForward prepareBindLinkSubmitedIndividualCandidacyWithStork(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+	ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
+
+	return mapping.findForward("bind-link-submited-individual-candidacy-with-stork");
+    }
+
+    public ActionForward bindLinkSubmitedIndividualCandidacyWithStork(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	AttributesManagement attrManagement = null;
+	try {
+	    String memcachedCode = request.getParameter("key");
+	    MemcachedClient c = new MemcachedClient(new InetSocketAddress(SPUtil.getInstance().getMemcachedHostname(), SPUtil
+		    .getInstance().getMemcachedPort()));
+	    String attrList = (String) c.get(memcachedCode);
+
+	    if (StringUtils.isEmpty(attrList)) {
+		return mapping.findForward("stork-error-authentication-failed");
+	    }
+
+	    attrManagement = new AttributesManagement(attrList);
+
+	    if (!AttributesManagement.STORK_RETURN_CODE_OK.equals(attrManagement.getStorkReturnCode())) {
+		new Exception(String.format("Error on stork authentication method, Error: %s, Description: %s", attrManagement
+			.getStorkErrorCode(), attrManagement.getStorkErrorMessage())).printStackTrace();
+		return mapping.findForward("stork-error-authentication-failed");
+	    }
+
+	} catch (IOException e) {
+	    e.printStackTrace();
+	    return mapping.findForward("stork-error-authentication-failed");
+	}
+
+	String eidentifier = attrManagement.getEIdentifier();
+	ErasmusIndividualCandidacyProcess process = (ErasmusIndividualCandidacyProcess) getProcess(request);
+
+	if (process == null) {
+	    return mapping.findForward("open-candidacy-processes-not-found");
+	}
+
+	executeActivity(process, "BindLinkSubmitedIndividualCandidacyWithEidentifier", eidentifier);
+
+	request.setAttribute("individualCandidacyProcess", process);
+	return mapping.findForward("show-bind-process-success");
     }
 
     public static class StorkAttrStringTestBean implements java.io.Serializable {

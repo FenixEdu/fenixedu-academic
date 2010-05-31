@@ -25,11 +25,17 @@
 
 <h1><bean:message key="title.application.name.erasmus" bundle="CANDIDATE_RESOURCES"/></h1>
 
+<bean:define id="process" name="process" />
+<bean:define id="processId" name="process" property="idInternal" />
+
 <%
 	String spToInvoke = SPUtil.getInstance().getSpInvokeUrl();
-	String applicationUrl = java.net.URLEncoder.encode(SPUtil.getInstance().getSPReturnFromPepsToAccessApplicationUrl());
+	String applicationUrl = SPUtil.getInstance().getSPReturnFromPepsToAccessApplicationUrl() + "?processId=" + processId;
+	applicationUrl = java.net.URLEncoder.encode(applicationUrl);
 	applicationUrl = f("%s?applicationUrl=%s", spToInvoke, applicationUrl);	
 %>
+
+<p>Now you can access your application with your national citizen card.</p>
 
 <%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= applicationUrl %>">Click here in order to authenticate with your national citizen card</a>
 

@@ -1210,5 +1210,15 @@
 		<put name="body" value="/publico/candidacy/erasmus/individualCandidacyNotFound.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
-
+	
+	
+	<definition name="erasmus.bind.submited.individua.candidacy.with.stork" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/erasmus/bindSubmitedIndividualCandidacyWithStork.jsp" />
+		<put name="hideLanguage" value="true" />
+	</definition>
+	
+	<definition name="erasmus.show.bind.process.success" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/erasmus/showBindProcessSuccess.jsp" />
+		<put name="hideLanguage" value="true" />
+	</definition>
 </tiles-definitions>

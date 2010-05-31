@@ -57,6 +57,7 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	activities.add(new CreateStudentData());
 	activities.add(new SetEIdentifierForTesting());
 	activities.add(new ImportToLDAP());
+	activities.add(new BindLinkSubmitedIndividualCandidacyWithEidentifier());
     }
 
     public ErasmusIndividualCandidacyProcess() {
@@ -189,6 +190,10 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	return null;
     }
     
+    public boolean getIsCandidacyProcessWithEidentifer() {
+	return !StringUtils.isEmpty(getPersonalDetails().getEidentifier());
+    }
+
     @Override
     protected void executeOperationsBeforeDocumentFileBinding(IndividualCandidacyDocumentFile documentFile) {
 	IndividualCandidacyDocumentFileType type = documentFile.getCandidacyFileType();
@@ -713,6 +718,51 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	public Boolean isVisibleForGriOffice() {
 	    return Boolean.FALSE;
 	}
+    }
+
+    private static class BindLinkSubmitedIndividualCandidacyWithEidentifier extends Activity<ErasmusIndividualCandidacyProcess> {
+	@Override
+	public void checkPreConditions(ErasmusIndividualCandidacyProcess process, IUserView userView) {
+	    if (!StringUtils.isEmpty(process.getPersonalDetails().getEidentifier())) {
+		throw new PreConditionNotValidException();
+	    }
+
+	}
+
+	@Override
+	protected ErasmusIndividualCandidacyProcess executeActivity(ErasmusIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    String eidentifier = (String) object;
+	    
+	    if (StringUtils.isEmpty(eidentifier)) {
+		throw new DomainException("error.erasmus.candidacy.eidentifer.must.not.be.empty");
+	    }
+	    
+	    ErasmusCandidacyProcess parentProcess =  (ErasmusCandidacyProcess) process.getCandidacyProcess();
+
+	    if(parentProcess.getOpenChildProcessByEidentifier(eidentifier) != null) {
+		throw new DomainException("error.erasmus.candidacy.already.exists.with.eidentifier");
+	    }
+	    
+	    process.getPersonalDetails().getPerson().setEidentifier(eidentifier);
+	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return Boolean.FALSE;
+	}
+
+	@Override
+	public Boolean isVisibleForCoordinator() {
+	    return Boolean.FALSE;
+	}
+
+	@Override
+	public Boolean isVisibleForGriOffice() {
+	    return Boolean.FALSE;
+	}
+
     }
 
     private static boolean importToLDAP(ErasmusIndividualCandidacyProcess process) {

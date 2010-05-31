@@ -73,16 +73,24 @@ public class SPUtil {
 	return this.properties.getProperty("sp.invoke.url");
     }
 
-    public String getSpInvokeUrlToAccessApplication() {
-	return this.properties.getProperty("sp.invoke.url.to.access.aplication");
-    }
-
     public String getSPReturnFromPepsUrl() {
 	return this.properties.getProperty("sp.return.from.peps.url");
     }
 
+    public String getSPReturnFromPepsUrlEncoded() {
+	return java.net.URLEncoder.encode(getSPReturnFromPepsUrl());
+    }
+
     public String getSPReturnFromPepsToAccessApplicationUrl() {
 	return this.properties.getProperty("sp.return.from.peps.to.access.application.url");
+    }
+
+    public String getSPReturnFromPepsToAccessApplicationUrlEncoded() {
+	return java.net.URLEncoder.encode(getSPReturnFromPepsToAccessApplicationUrl());
+    }
+
+    public String getSPReturnFromPepsToBindApplicationWithStork() {
+	return this.properties.getProperty("sp.return.from.peps.to.bind.application.with.stork");
     }
 
     public List<Attribute> getAttributes() {

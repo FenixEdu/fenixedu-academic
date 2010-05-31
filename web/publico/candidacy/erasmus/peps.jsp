@@ -30,8 +30,6 @@
 <h1><bean:message key="title.application.name.erasmus" bundle="CANDIDATE_RESOURCES"/></h1>
 
 <%
-	// String applicationUrl = SPUtil.getInstance().getSpInvokeUrl();
-	
 	String spToInvoke = SPUtil.getInstance().getSpInvokeUrl();
 	String applicationUrl = java.net.URLEncoder.encode(SPUtil.getInstance().getSPReturnFromPepsUrl());
 	String attributes = java.net.URLEncoder.encode(SPUtil.getInstance().getAttributesList());
