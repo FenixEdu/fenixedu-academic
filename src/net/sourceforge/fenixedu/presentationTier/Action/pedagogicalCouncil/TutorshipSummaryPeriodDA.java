@@ -4,13 +4,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.ActionRedirect;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -51,7 +53,14 @@ public class TutorshipSummaryPeriodDA extends FenixDispatchAction {
 
 	if (bean != null && bean.isValid()) {
 	    bean.save();
-	    return new ActionRedirect("/tutorshipSummary.do?method=searchTeacher");
+
+	    ActionForward forward = new ActionForward();
+	    forward.setRedirect(true);
+	    String realPath = "/tutorshipSummary.do?method=searchTeacher&" + ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
+		    + "=" + FilterFunctionalityContext.getCurrentContext(request).getSelectedContainer().getReversePath();
+	    forward.setPath(realPath + "&" + GenericChecksumRewriter.CHECKSUM_ATTRIBUTE_NAME + "="
+		    + GenericChecksumRewriter.calculateChecksum(request.getContextPath() + realPath));
+	    return forward;
 	}
 
 	return prepareCreate2(mapping, actionForm, request, response);
