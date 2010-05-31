@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create table EmployeeProfessionalData" createTableEmployeeProfessionalData.sql
+execute "Drop column Employee from EmployeeProfessionalInfoTables" dropColumnEmployeeFromEmployeeProfessionalInfoTables.sql IST

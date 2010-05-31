@@ -368,7 +368,7 @@ public class Employee extends Employee_Base {
 
     public String getCurrentEmployeeProfessionalCategoryName() {
 	final LocalDate now = new LocalDate();
-	for (final EmployeeProfessionalCategory category : getEmployeeProfessionalCategories()) {
+	for (final EmployeeProfessionalCategory category : getEmployeeProfessionalData().getEmployeeProfessionalCategories()) {
 	    if (category.contains(now)) {
 		return category.getProfessionalCategory().getName().getContent();
 

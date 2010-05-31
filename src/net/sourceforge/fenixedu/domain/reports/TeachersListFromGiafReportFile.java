@@ -187,7 +187,8 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
 
 		// Coluna "Nº de anos na instituição"
 		Period yearsInHouse = Period.ZERO;
-		for (EmployeeContractSituation current : teacher.getEmployee().getEmployeeContractSituations()) {
+		for (EmployeeContractSituation current : teacher.getEmployee().getEmployeeProfessionalData()
+			.getEmployeeContractSituations()) {
 		    yearsInHouse = yearsInHouse.plus(new Period(current.getBeginDate(),
 			    (current.getEndDate() == null ? new LocalDate() : current.getEndDate())));
 		}
@@ -201,7 +202,8 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
     private EmployeeProfessionalRelation getLastRelationFromOneTeacherAndExecutionYear(Teacher teacher,
 	    ExecutionYear executionYear) {
 	EmployeeProfessionalRelation relation = null;
-	for (EmployeeProfessionalRelation rel : teacher.getEmployee().getEmployeeProfessionalRelations()) {
+	for (EmployeeProfessionalRelation rel : teacher.getEmployee().getEmployeeProfessionalData()
+		.getEmployeeProfessionalRelations()) {
 	    if (isPeriodInExecutionYear(rel.getBeginDate(), rel.getEndDate(), executionYear)
 		    && ((relation == null) || (relation.getBeginDate().isBefore(rel.getBeginDate())))) {
 		relation = rel;
@@ -212,7 +214,8 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
 
     private EmployeeProfessionalRegime getLastRegimeFromOneTeacherAndExecutionYear(Teacher teacher, ExecutionYear executionYear) {
 	EmployeeProfessionalRegime regime = null;
-	for (EmployeeProfessionalRegime reg : teacher.getEmployee().getEmployeeProfessionalRegimes()) {
+	for (EmployeeProfessionalRegime reg : teacher.getEmployee().getEmployeeProfessionalData()
+		.getEmployeeProfessionalRegimes()) {
 	    if (isPeriodInExecutionYear(reg.getBeginDate(), reg.getEndDate(), executionYear)
 		    && ((regime == null) || (regime.getBeginDate().isBefore(reg.getBeginDate())))) {
 		regime = reg;
@@ -224,7 +227,8 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
     private EmployeeProfessionalCategory getLastCategoryFromOneTeacherAndExecutionYear(Teacher teacher,
 	    ExecutionYear executionYear) {
 	EmployeeProfessionalCategory category = null;
-	for (EmployeeProfessionalCategory cat : teacher.getEmployee().getEmployeeProfessionalCategories()) {
+	for (EmployeeProfessionalCategory cat : teacher.getEmployee().getEmployeeProfessionalData()
+		.getEmployeeProfessionalCategories()) {
 	    if (isPeriodInExecutionYear(cat.getBeginDate(), cat.getEndDate(), executionYear)
 		    && ((category == null) || (category.getBeginDate().isBefore(cat.getBeginDate())))) {
 		category = cat;
@@ -235,7 +239,7 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
 
     private EmployeeContractSituation getLastSituationFromOneTeacherAndExecutionYear(Teacher teacher, ExecutionYear executionYear) {
 	EmployeeContractSituation situation = null;
-	for (EmployeeContractSituation ecs : teacher.getEmployee().getEmployeeContractSituations()) {
+	for (EmployeeContractSituation ecs : teacher.getEmployee().getEmployeeProfessionalData().getEmployeeContractSituations()) {
 	    if (ecs.getContractSituation().getEndSituation() == false
 		    && isPeriodInExecutionYear(ecs.getBeginDate(), ecs.getEndDate(), executionYear)
 		    && ((situation == null) || (situation.getBeginDate().isBefore(ecs.getBeginDate())))) {

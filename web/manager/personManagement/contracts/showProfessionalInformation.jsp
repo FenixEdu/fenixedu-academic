@@ -17,6 +17,7 @@
 		<bean:define id="personID" name="person" property="idInternal"/>
 		<bean:define id="personExternalId" name="person" property="externalId"/>
 		<p class="invisible">
+		<html:link page="<%= "/professionalInformation.do?method=showProfessioanlData&personId="+ personExternalId%>"><bean:message key="label.professionalData" bundle="CONTRACTS_RESOURCES"/></html:link>,
 			<html:link page="<%= "/professionalInformation.do?method=showSituations&personId="+ personExternalId%>"><bean:message key="label.situations" bundle="CONTRACTS_RESOURCES"/></html:link>,
 			<html:link page="<%= "/professionalInformation.do?method=showCategories&personId="+ personID%>"><bean:message key="label.categories" bundle="CONTRACTS_RESOURCES"/></html:link>, 
 			<html:link page="<%= "/professionalInformation.do?method=showRegimes&personId="+ personID%>"><bean:message key="label.regimes" bundle="CONTRACTS_RESOURCES"/></html:link>,
@@ -34,6 +35,57 @@
 		
 		<bean:define id="employee" name="person" property="employee"/>
 
+		<logic:present name="professionalData">
+			<div class="infoop">
+				<strong><bean:message key="label.professionalData" bundle="CONTRACTS_RESOURCES"/></strong>
+			</div><br/>
+			<fr:view name="professionalData" schema="view.employee.employeeProfessionalData">
+				<fr:layout name="matrix">
+					<fr:property name="classes" value="tstyle1 thlight mtop025" />
+					<fr:property name="slot(professionalContractType)" value="professionalContractType"/>
+					<fr:property name="row(professionalContractType)" value="0"/>
+					<fr:property name="column(professionalContractType)" value="0"/>
+					<fr:property name="columnSpan(professionalContractType)" value="2"/>
+					
+					<fr:property name="slot(contractSituation)" value="contractSituation"/>
+					<fr:property name="row(contractSituation)" value="1"/>
+					<fr:property name="column(contractSituation)" value="0"/>
+					
+					<fr:property name="slot(contractSituationDate)" value="contractSituationDate"/>
+					<fr:property name="labelHidden(contractSituationDate)" value="true"/>
+					<fr:property name="row(contractSituationDate)" value="1"/>
+					<fr:property name="column(contractSituationDate)" value="1"/>
+					
+					<fr:property name="slot(professionalRelation)" value="professionalRelation"/>
+					<fr:property name="row(professionalRelation)" value="2"/>
+					<fr:property name="column(professionalRelation)" value="0"/>
+					
+					<fr:property name="slot(professionalRelationDate)" value="professionalRelationDate"/>
+					<fr:property name="labelHidden(professionalRelationDate)" value="true"/>
+					<fr:property name="row(professionalRelationDate)" value="2"/>
+					<fr:property name="column(professionalRelationDate)" value="1"/>
+					
+					<fr:property name="slot(professionalCategory)" value="professionalCategory"/>
+					<fr:property name="row(professionalCategory)" value="3"/>
+					<fr:property name="column(professionalCategory)" value="0"/>
+					
+					<fr:property name="slot(professionalCategoryDate)" value="professionalCategoryDate"/>
+					<fr:property name="labelHidden(professionalCategoryDate)" value="true"/>
+					<fr:property name="row(professionalCategoryDate)" value="3"/>
+					<fr:property name="column(professionalCategoryDate)" value="1"/>
+					
+					<fr:property name="slot(professionalRegime)" value="professionalRegime"/>
+					<fr:property name="row(professionalRegime)" value="4"/>
+					<fr:property name="column(professionalRegime)" value="0"/>
+					
+					<fr:property name="slot(professionalRegimeDate)" value="professionalRegimeDate"/>
+					<fr:property name="labelHidden(professionalRegimeDate)" value="true"/>
+					<fr:property name="row(professionalRegimeDate)" value="4"/>
+					<fr:property name="column(professionalRegimeDate)" value="1"/>
+				</fr:layout>
+			</fr:view>
+		</logic:present>
+		
 		<logic:present name="situations">
 			<div class="infoop">
 				<strong><bean:message key="label.situations" bundle="CONTRACTS_RESOURCES"/></strong>

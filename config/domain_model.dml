@@ -6113,6 +6113,27 @@ class personnelSection.contracts.ContractSituation extends DomainObject {
     Boolean endSituation;
 }
 
+class personnelSection.contracts.ProfessionalContractType extends DomainObject {
+    String giafId;
+    MultiLanguageString name;
+}
+
+class personnelSection.contracts.EmployeeProfessionalData extends DomainObject {
+	String contractSituationGiafId;
+	LocalDate contractSituationDate;
+	String professionalRelationGiafId;
+	LocalDate professionalRelationDate;
+	String professionalContractTypeGiafId;
+	String professionalCategoryGiafId;
+	LocalDate professionalCategoryDate;
+    String professionalRegimeGiafId;
+    LocalDate professionalRegimeDate;
+    DateTime creationDate;
+    DateTime modifiedDate;
+    DateTime importationDate;
+    DateTime anulationDate;
+}
+
 class personnelSection.contracts.EmployeeProfessionalContract extends DomainObject {
     LocalDate beginDate;
     LocalDate endDate;
@@ -6221,9 +6242,11 @@ class personnelSection.contracts.EmployeeProfessionalExemption extends DomainObj
     class personnelSection.contracts.EmployeeGrantOwnerEquivalent extends personnelSection.contracts.EmployeeProfessionalExemption {
         String motive;
         String local;
+        String grantOwnerEquivalentGiafId;
     }
 
     class personnelSection.contracts.EmployeeServiceExemption extends personnelSection.contracts.EmployeeProfessionalExemption {
+	    String serviceExemptionGiafId;
     }
 
 class personnelSection.contracts.GrantOwnerEquivalent extends DomainObject {
@@ -16042,55 +16065,95 @@ relation EmployeeMonthlyBonusInstallmentRootDomainObject {
     }
 }
 
-relation EmployeeProfessionalContractEmployee {
+relation EmployeeProfessionalDataEmployee {
     Employee playsRole employee;
+    personnelSection.contracts.EmployeeProfessionalData playsRole employeeProfessionalData;
+}
+
+
+relation EmployeeProfessionalContractEmployeeProfessionalData {
+    personnelSection.contracts.EmployeeProfessionalData playsRole employeeProfessionalData;
     personnelSection.contracts.EmployeeProfessionalContract playsRole employeeProfessionalContracts {
         multiplicity *;
     }
 }
 
-relation EmployeeProfessionalContractSituationEmployee {
-    Employee playsRole employee;
+relation EmployeeProfessionalContractSituationEmployeeProfessionalData {
+     personnelSection.contracts.EmployeeProfessionalData playsRole employeeProfessionalData;
     personnelSection.contracts.EmployeeContractSituation playsRole employeeContractSituations {
         multiplicity *;
     }
 }
 
-relation EmployeeProfessionalCategoryEmployee {
-    Employee playsRole employee;
+relation EmployeeProfessionalCategoryEmployeeProfessionalData {
+     personnelSection.contracts.EmployeeProfessionalData playsRole employeeProfessionalData;
     personnelSection.contracts.EmployeeProfessionalCategory playsRole employeeProfessionalCategories {
         multiplicity *;
     }
 }
 
-relation EmployeeProfessionalRegimeEmployee {
-    Employee playsRole employee;
+relation EmployeeProfessionalRegimeEmployeeProfessionalData {
+    personnelSection.contracts.EmployeeProfessionalData playsRole employeeProfessionalData;
     personnelSection.contracts.EmployeeProfessionalRegime playsRole employeeProfessionalRegimes {
         multiplicity *;
     }
 }
 
-relation EmployeeProfessionalRelationEmployee {
-    Employee playsRole employee;
+relation EmployeeProfessionalRelationEmployeeProfessionalData {
+    personnelSection.contracts.EmployeeProfessionalData playsRole employeeProfessionalData;
     personnelSection.contracts.EmployeeProfessionalRelation playsRole employeeProfessionalRelations {
         multiplicity *;
     }
 }
 
-relation EmployeeProfessionalExemptionEmployee {
-    Employee playsRole employee;
+relation EmployeeProfessionalExemptionEmployeeProfessionalData {
+    personnelSection.contracts.EmployeeProfessionalData playsRole employeeProfessionalData;
     personnelSection.contracts.EmployeeProfessionalExemption playsRole employeeProfessionalExemptions {
         multiplicity *;
     }
 }
 
-relation EmployeeFunctionsAccumulationEmployee {
-    Employee playsRole employee;
+relation EmployeeFunctionsAccumulationEmployeeProfessionalData {
+    personnelSection.contracts.EmployeeProfessionalData playsRole employeeProfessionalData;
     personnelSection.contracts.EmployeeFunctionsAccumulation playsRole employeeFunctionsAccumulations {
         multiplicity *;
     }
 }
 
+relation EmployeeProfessionalDataContractSituation {
+    personnelSection.contracts.ContractSituation playsRole contractSituation;
+    personnelSection.contracts.EmployeeProfessionalData playsRole employeesProfessionalData {
+        multiplicity *;
+    }
+}
+
+relation EmployeeProfessionalDataProfessionalRelation {
+    personnelSection.contracts.ProfessionalRelation playsRole professionalRelation;
+    personnelSection.contracts.EmployeeProfessionalData playsRole employeeProfessionalData {
+        multiplicity *;
+    }
+}
+
+relation EmployeeProfessionalDataProfessionalContractType {
+    personnelSection.contracts.ProfessionalContractType playsRole professionalContractType;
+    personnelSection.contracts.EmployeeProfessionalData playsRole employeeProfessionalData {
+        multiplicity *;
+    }
+}
+
+relation EmployeeProfessionalDataProfessionalCategory {
+    personnelSection.contracts.ProfessionalCategory playsRole professionalCategory;
+    personnelSection.contracts.EmployeeProfessionalData playsRole employeeProfessionalData {
+        multiplicity *;
+    }
+}
+
+relation EmployeeProfessionalDataProfessionalRegime {
+    personnelSection.contracts.ProfessionalRegime playsRole professionalRegime;
+    personnelSection.contracts.EmployeeProfessionalData playsRole employeeProfessionalData {
+        multiplicity *;
+    }
+}
 
 relation ContractSituationEmployeeProfessionalContract {
     personnelSection.contracts.ContractSituation playsRole contractSituation;
@@ -17589,6 +17652,13 @@ relation FormationExecutionYear {
     }
 }
 
+relation EmployeeProfessionalDataRootDomainObject {
+    RootDomainObject playsRole rootDomainObject;
+    personnelSection.contracts.EmployeeProfessionalData playsRole employeesProfessionalData {
+        multiplicity *;
+    }
+}
+
 relation EmployeeProfessionalContractRootDomainObject {
     RootDomainObject playsRole rootDomainObject;
     personnelSection.contracts.EmployeeProfessionalContract playsRole employeeProfessionalContracts {
@@ -17627,6 +17697,13 @@ relation EmployeeProfessionalRelationRootDomainObject {
 relation ContractSituationRootDomainObject {
     RootDomainObject playsRole rootDomainObject;
     personnelSection.contracts.ContractSituation playsRole contractSituations {
+        multiplicity *;
+    }
+}
+
+relation ProfessionalContractTypeRootDomainObject {
+    RootDomainObject playsRole rootDomainObject;
+    personnelSection.contracts.ProfessionalContractType playsRole professionalContractTypes {
         multiplicity *;
     }
 }

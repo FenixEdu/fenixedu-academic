@@ -32,13 +32,25 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Forwards( { @Forward(name = "showProfessionalInformation", path = "/manager/personManagement/contracts/showProfessionalInformation.jsp") })
 public class ProfessionalInformationDA extends FenixDispatchAction {
 
+    public ActionForward showProfessioanlData(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	Person person = DomainObject.fromExternalId((String) getFromRequest(request, "personId"));
+
+	if (person.getEmployee() != null && person.getEmployee().getEmployeeProfessionalData() != null) {
+	    request.setAttribute("professionalData", person.getEmployee().getEmployeeProfessionalData());
+	}
+	request.setAttribute("person", person);
+	return mapping.findForward("showProfessionalInformation");
+    }
+
     public ActionForward showSituations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	Person person = DomainObject.fromExternalId((String) getFromRequest(request, "personId"));
 
 	List<EmployeeContractSituation> situations = new ArrayList<EmployeeContractSituation>();
-	if (person.getEmployee() != null) {
-	    for (EmployeeContractSituation employeeContractSituation : person.getEmployee().getEmployeeContractSituations()) {
+	if (person.getEmployee() != null && person.getEmployee().getEmployeeProfessionalData() != null) {
+	    for (EmployeeContractSituation employeeContractSituation : person.getEmployee().getEmployeeProfessionalData()
+		    .getEmployeeContractSituations()) {
 		if (employeeContractSituation.getAnulationDate() == null) {
 		    situations.add(employeeContractSituation);
 		}
@@ -54,8 +66,8 @@ public class ProfessionalInformationDA extends FenixDispatchAction {
 	Person person = (Person) rootDomainObject.readPartyByOID(getIntegerFromRequest(request, "personId"));
 
 	List<EmployeeProfessionalCategory> categories = new ArrayList<EmployeeProfessionalCategory>();
-	if (person.getEmployee() != null) {
-	    for (EmployeeProfessionalCategory employeeProfessionalCategory : person.getEmployee()
+	if (person.getEmployee() != null && person.getEmployee().getEmployeeProfessionalData() != null) {
+	    for (EmployeeProfessionalCategory employeeProfessionalCategory : person.getEmployee().getEmployeeProfessionalData()
 		    .getEmployeeProfessionalCategories()) {
 		if (employeeProfessionalCategory.getAnulationDate() == null) {
 		    categories.add(employeeProfessionalCategory);
@@ -72,8 +84,9 @@ public class ProfessionalInformationDA extends FenixDispatchAction {
 	Person person = (Person) rootDomainObject.readPartyByOID(getIntegerFromRequest(request, "personId"));
 
 	List<EmployeeProfessionalRegime> regimes = new ArrayList<EmployeeProfessionalRegime>();
-	if (person.getEmployee() != null) {
-	    for (EmployeeProfessionalRegime employeeProfessionalRegime : person.getEmployee().getEmployeeProfessionalRegimes()) {
+	if (person.getEmployee() != null && person.getEmployee().getEmployeeProfessionalData() != null) {
+	    for (EmployeeProfessionalRegime employeeProfessionalRegime : person.getEmployee().getEmployeeProfessionalData()
+		    .getEmployeeProfessionalRegimes()) {
 		if (employeeProfessionalRegime.getAnulationDate() == null) {
 		    regimes.add(employeeProfessionalRegime);
 		}
@@ -89,8 +102,8 @@ public class ProfessionalInformationDA extends FenixDispatchAction {
 	Person person = (Person) rootDomainObject.readPartyByOID(getIntegerFromRequest(request, "personId"));
 
 	List<EmployeeProfessionalRelation> relations = new ArrayList<EmployeeProfessionalRelation>();
-	if (person.getEmployee() != null) {
-	    for (EmployeeProfessionalRelation employeeProfessionalRelation : person.getEmployee()
+	if (person.getEmployee() != null && person.getEmployee().getEmployeeProfessionalData() != null) {
+	    for (EmployeeProfessionalRelation employeeProfessionalRelation : person.getEmployee().getEmployeeProfessionalData()
 		    .getEmployeeProfessionalRelations()) {
 		if (employeeProfessionalRelation.getAnulationDate() == null) {
 		    relations.add(employeeProfessionalRelation);
@@ -107,8 +120,8 @@ public class ProfessionalInformationDA extends FenixDispatchAction {
 	Person person = (Person) rootDomainObject.readPartyByOID(getIntegerFromRequest(request, "personId"));
 
 	List<EmployeeProfessionalContract> contracts = new ArrayList<EmployeeProfessionalContract>();
-	if (person.getEmployee() != null) {
-	    for (EmployeeProfessionalContract employeeProfessionalContract : person.getEmployee()
+	if (person.getEmployee() != null && person.getEmployee().getEmployeeProfessionalData() != null) {
+	    for (EmployeeProfessionalContract employeeProfessionalContract : person.getEmployee().getEmployeeProfessionalData()
 		    .getEmployeeProfessionalContracts()) {
 		if (employeeProfessionalContract.getAnulationDate() == null) {
 		    contracts.add(employeeProfessionalContract);
@@ -125,8 +138,8 @@ public class ProfessionalInformationDA extends FenixDispatchAction {
 	Person person = (Person) rootDomainObject.readPartyByOID(getIntegerFromRequest(request, "personId"));
 
 	List<EmployeeFunctionsAccumulation> functionsAccumulations = new ArrayList<EmployeeFunctionsAccumulation>();
-	if (person.getEmployee() != null) {
-	    for (EmployeeFunctionsAccumulation employeeFunctionsAccumulation : person.getEmployee()
+	if (person.getEmployee() != null && person.getEmployee().getEmployeeProfessionalData() != null) {
+	    for (EmployeeFunctionsAccumulation employeeFunctionsAccumulation : person.getEmployee().getEmployeeProfessionalData()
 		    .getEmployeeFunctionsAccumulations()) {
 		if (employeeFunctionsAccumulation.getAnulationDate() == null) {
 		    functionsAccumulations.add(employeeFunctionsAccumulation);
@@ -143,8 +156,8 @@ public class ProfessionalInformationDA extends FenixDispatchAction {
 	Person person = (Person) rootDomainObject.readPartyByOID(getIntegerFromRequest(request, "personId"));
 
 	List<EmployeeProfessionalExemption> sabbaticals = new ArrayList<EmployeeProfessionalExemption>();
-	if (person.getEmployee() != null) {
-	    for (EmployeeProfessionalExemption employeeProfessionalExemption : person.getEmployee()
+	if (person.getEmployee() != null && person.getEmployee().getEmployeeProfessionalData() != null) {
+	    for (EmployeeProfessionalExemption employeeProfessionalExemption : person.getEmployee().getEmployeeProfessionalData()
 		    .getEmployeeProfessionalExemptions()) {
 		if (employeeProfessionalExemption instanceof EmployeeSabbatical
 			&& employeeProfessionalExemption.getAnulationDate() == null) {
@@ -162,8 +175,8 @@ public class ProfessionalInformationDA extends FenixDispatchAction {
 	Person person = (Person) rootDomainObject.readPartyByOID(getIntegerFromRequest(request, "personId"));
 
 	List<EmployeeProfessionalExemption> serviceExemptions = new ArrayList<EmployeeProfessionalExemption>();
-	if (person.getEmployee() != null) {
-	    for (EmployeeProfessionalExemption employeeProfessionalExemption : person.getEmployee()
+	if (person.getEmployee() != null && person.getEmployee().getEmployeeProfessionalData() != null) {
+	    for (EmployeeProfessionalExemption employeeProfessionalExemption : person.getEmployee().getEmployeeProfessionalData()
 		    .getEmployeeProfessionalExemptions()) {
 		if (employeeProfessionalExemption instanceof EmployeeServiceExemption
 			&& employeeProfessionalExemption.getAnulationDate() == null) {
@@ -181,8 +194,8 @@ public class ProfessionalInformationDA extends FenixDispatchAction {
 	Person person = (Person) rootDomainObject.readPartyByOID(getIntegerFromRequest(request, "personId"));
 
 	List<EmployeeProfessionalExemption> grantOwnerEquivalences = new ArrayList<EmployeeProfessionalExemption>();
-	if (person.getEmployee() != null) {
-	    for (EmployeeProfessionalExemption employeeProfessionalExemption : person.getEmployee()
+	if (person.getEmployee() != null && person.getEmployee().getEmployeeProfessionalData() != null) {
+	    for (EmployeeProfessionalExemption employeeProfessionalExemption : person.getEmployee().getEmployeeProfessionalData()
 		    .getEmployeeProfessionalExemptions()) {
 		if (employeeProfessionalExemption instanceof EmployeeGrantOwnerEquivalent
 			&& employeeProfessionalExemption.getAnulationDate() == null) {

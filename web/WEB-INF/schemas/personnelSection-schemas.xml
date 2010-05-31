@@ -1405,6 +1405,18 @@ constructor="description, state, modifiedBy">
 	<setter signature="editAssiduousnessStatus(description, state, modifiedBy)"/>
 </schema>
 
+<schema name="view.employee.employeeProfessionalData" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.EmployeeProfessionalData" bundle="CONTRACTS_RESOURCES">
+	<slot name="professionalContractType" key="label.type" layout="values" schema="view.professionalContractType.name"/>
+	<slot name="contractSituation" key="label.situation" layout="values" schema="view.contractSituation.name"/>
+	<slot name="contractSituationDate" key="label.date"/>
+	<slot name="professionalRelation" key="label.relation" layout="values" schema="view.professionalRelation.name"/>
+	<slot name="professionalRelationDate" key="label.date"/>
+	<slot name="professionalCategory" key="label.category" layout="values" schema="view.professionalCategory.name"/>
+	<slot name="professionalCategoryDate" key="label.date"/>
+	<slot name="professionalRegime" key="label.regime" layout="values" schema="view.professionalCategory.name"/>
+	<slot name="professionalRegimeDate" key="label.date"/>
+</schema>
+
 <schema name="view.employee.employeeContractSituation" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.EmployeeContractSituation" bundle="CONTRACTS_RESOURCES">
 	<slot name="beginDate"/>
 	<slot name="endDate"/>
@@ -1468,6 +1480,10 @@ constructor="description, state, modifiedBy">
 	<slot name="local"/>
 	<slot name="country" schema="country.name" layout="values"/>
 	<slot name="grantOwnerEquivalent" key="label.type" layout="values" schema="view.grantOwnerEquivalent.name"/>
+</schema>
+
+<schema name="view.professionalContractType.name" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalContractType" bundle="CONTRACTS_RESOURCES">
+	<slot name="name" key="label.type" layout="null-as-label"/>
 </schema>
 
 <schema name="view.contractSituation.name" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.ContractSituation" bundle="CONTRACTS_RESOURCES">

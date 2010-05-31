@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.personnelSection.contracts;
 
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.joda.time.DateTime;
@@ -8,12 +7,12 @@ import org.joda.time.LocalDate;
 
 public class EmployeeProfessionalRegime extends EmployeeProfessionalRegime_Base {
 
-    public EmployeeProfessionalRegime(final Employee employee, final LocalDate beginDate, final LocalDate endDate,
-	    final ProfessionalRegime professionalRegime, final String professionalRegimeGiafId, final DateTime creationDate,
-	    final DateTime modifiedDate) {
+    public EmployeeProfessionalRegime(final EmployeeProfessionalData employeeProfessionalData, final LocalDate beginDate,
+	    final LocalDate endDate, final ProfessionalRegime professionalRegime, final String professionalRegimeGiafId,
+	    final DateTime creationDate, final DateTime modifiedDate) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
-	setEmployee(employee);
+	setEmployeeProfessionalData(employeeProfessionalData);
 	setBeginDate(beginDate);
 	setEndDate(endDate);
 	setProfessionalRegime(professionalRegime);
