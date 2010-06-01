@@ -1320,9 +1320,9 @@ extends="eventCreation">
 	<slot name="volume"><property name="size" value="40"/></slot>
 	<slot name="series"><property name="size" value="15"/></slot>
 	<slot name="isbn">
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.ISBNValidator"/>
+<!--  		<validator class="pt.ist.fenixWebFramework.renderers.validators.ISBNValidator"/>
 		<property name="size" value="15"/>
-	</slot>
+	--></slot>
 	<slot name="numberPages">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
 		<property name="size" value="5"/>
