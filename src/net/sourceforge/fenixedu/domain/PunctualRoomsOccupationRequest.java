@@ -228,14 +228,16 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
     }
 
     public String getSubject() {
-	PunctualRoomsOccupationComment firstComment = getFirstComment();
+	final PunctualRoomsOccupationComment firstComment = getFirstComment();
 	final String content = firstComment != null ? firstComment.getSubject().getContent() : null;
 	return content == null || content.isEmpty() ? getIdentification().toString() : content;
     }
 
     public String getDescription() {
-	PunctualRoomsOccupationComment firstComment = getFirstComment();
-	return firstComment != null ? firstComment.getDescription().getContent() : null;
+	final PunctualRoomsOccupationComment firstComment = getFirstComment();
+	final MultiLanguageString description = firstComment == null ? null : firstComment.getDescription();
+	final String content = description == null ? null : description.getContent();
+	return content == null ? getExternalId() : content;
     }
 
     public RequestState getCurrentState() {
