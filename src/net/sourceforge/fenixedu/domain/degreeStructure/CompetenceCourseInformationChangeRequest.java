@@ -111,6 +111,7 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
 	removeRequester();
 	removeExecutionPeriod();
 	removeRootDomainObject();
+	removeCompetenceCourseGroupUnit();
 	super.deleteDomainObject();
     }
 
