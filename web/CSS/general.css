@@ -390,7 +390,7 @@ td.tdwarning span {
 background-color: #fff8bb; color: #664400;
 }
 
-table.ulnomargin tr td ul { margin: 0; padding: 0; }
+table.ulnomargin tr td ul { margin: 0; padding: 0; list-style: none; }
 table.ulnomargin tr td ul li { margin: 0; padding: 0; }
 
 

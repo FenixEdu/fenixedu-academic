@@ -44,7 +44,7 @@
 	</fr:layout>
 </fr:view>
 
-<p><!--  <logic:equal name="process" property="readyForCCADConsideration" value="true">
+<p class="mtop05 mbottom15"><!--  <logic:equal name="process" property="readyForCCADConsideration" value="true">
 	<html:link action="/teacherEvaluation.do?method=insertApprovedEvaluationMark" paramId="process" paramName="process"
 		paramProperty="externalId">
 		<bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.insertApprovedEvaluationMark" />
