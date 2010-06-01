@@ -28,7 +28,10 @@ public class PersonGroup extends DomainBackedGroup<Person> {
     public Set<Person> getElements() {
 	Set<Person> elements = super.buildSet();
 
-	elements.add(getObject());
+	final Person object = getObject();
+	if (object != null) {
+	    elements.add(object);
+	}
 
 	return super.freezeSet(elements);
     }
@@ -99,8 +102,9 @@ public class PersonGroup extends DomainBackedGroup<Person> {
 	    }
 
 	    if (person == null) {
-		throw new GroupDynamicExpressionException("accessControl.group.builder.person.doesNotExist", String
-			.valueOf(argument));
+		System.out.println("accessControl.group.builder.person.doesNotExist" +  String.valueOf(argument));
+//		throw new GroupDynamicExpressionException("accessControl.group.builder.person.doesNotExist", String
+//			.valueOf(argument));
 	    }
 
 	    return new PersonGroup(person);
