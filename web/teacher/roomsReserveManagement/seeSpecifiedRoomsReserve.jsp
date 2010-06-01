@@ -18,7 +18,7 @@
 					<bean:write name="message"/>
 				</html:messages>
 			</span>
-		<p>
+		</p>
 	</logic:messagesPresent>	
 		
 	<logic:notEmpty name="roomsReserveBean">
