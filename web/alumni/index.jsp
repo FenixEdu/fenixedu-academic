@@ -127,7 +127,7 @@ ul.material li.feedback { background: url(<%= request.getContextPath() %>/images
 	</div>
 </logic:notPresent>
 
-<h3>Notícias</h3>
+<!-- h3>Notícias</h3-->
 
 <h3>Vantagens</h3>
 <div style="background: #f5f5f5; border: 1px solid #ddd; padding: 0.75em 0.5em;">
