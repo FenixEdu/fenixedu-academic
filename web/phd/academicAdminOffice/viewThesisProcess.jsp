@@ -10,6 +10,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryElements"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryReviews"%>
 <%@page import="net.sourceforge.fenixedu.applicationTier.Servico.thesis.SubmitThesis"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisMeetingRequest"%>
 
 <logic:notEmpty name="process" property="thesisProcess">
 <logic:equal name="process" property="activeState.active" value="true">
@@ -84,6 +85,14 @@
 	<li style="display: inline;">
 		<html:link action="/phdThesisProcess.do?method=prepareRequestJuryReviews" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
 			<bean:message bundle="PHD_RESOURCES" key="label.phd.request.jury.reviews"/>
+		</html:link>
+	</li>
+	</phd:activityAvailable>
+	
+	<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= ScheduleThesisMeetingRequest.class %>">
+	<li style="display: inline;">
+		<html:link action="/phdThesisProcess.do?method=prepareRequestScheduleThesisMeeting" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
+			<bean:message bundle="PHD_RESOURCES" key="label.phd.request.schedule.meeting"/>
 		</html:link>
 	</li>
 	</phd:activityAvailable>

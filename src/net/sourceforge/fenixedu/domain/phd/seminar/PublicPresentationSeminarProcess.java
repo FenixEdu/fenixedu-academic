@@ -156,7 +156,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 	    process.createState(PublicPresentationSeminarProcessStateType.WAITING_FOR_COMISSION_CONSTITUTION, userView
 		    .getPerson(), bean.getRemarks());
 
-	    AlertService.alertCoordinator(process.getIndividualProgramProcess(),
+	    AlertService.alertCoordinators(process.getIndividualProgramProcess(),
 		    "message.phd.alert.public.presentation.seminar.comission.rejected.subject",
 		    "message.phd.alert.public.presentation.seminar.comission.rejected.body");
 
@@ -261,7 +261,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 	    process.createState(PublicPresentationSeminarProcessStateType.REPORT_VALIDATED, userView.getPerson(), bean
 		    .getRemarks());
 
-	    AlertService.alertCoordinator(process.getIndividualProgramProcess(),
+	    AlertService.alertCoordinators(process.getIndividualProgramProcess(),
 		    "message.phd.alert.public.presentation.seminar.report.validated.subject",
 		    "message.phd.alert.public.presentation.seminar.report.validated.body");
 

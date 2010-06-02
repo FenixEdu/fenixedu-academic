@@ -179,21 +179,33 @@ public class AlertService {
 	return group != null ? group : new MasterDegreeAdministrativeOfficeGroup();
     }
 
-    static public void alertCoordinator(PhdIndividualProgramProcess process, String subjectKey, String bodyKey) {
+    static public void alertCoordinators(PhdIndividualProgramProcess process, String subjectKey, String bodyKey) {
+	alertCoordinators(process, process.getCoordinatorsFor(ExecutionYear.readCurrentExecutionYear()), subjectKey, bodyKey);
+    }
+
+    static private void alertCoordinators(PhdIndividualProgramProcess process, Set<Person> persons, String subjectKey, String bodyKey) {
 	final PhdCustomAlertBean alertBean = new PhdCustomAlertBean(process, true, false, false);
 	alertBean.setSubject(getSubjectPrefixed(process, subjectKey));
 	alertBean.setBody(getBodyText(process, bodyKey));
-	alertBean.setTargetGroup(new FixedSetGroup(process.getCoordinatorsFor(ExecutionYear.readCurrentExecutionYear())));
+	alertBean.setTargetGroup(new FixedSetGroup(persons));
 	alertBean.setFireDate(new LocalDate());
 
 	new PhdCustomAlert(alertBean);
     }
 
-    static public void alertCoordinator(PhdIndividualProgramProcess process, AlertMessage subject, AlertMessage body) {
+    static public void alertCoordinators(PhdIndividualProgramProcess process, AlertMessage subject, AlertMessage body) {
+	alertCoordinators(process, process.getCoordinatorsFor(ExecutionYear.readCurrentExecutionYear()), subject, body);
+    }
+    
+    static public void alertResponsibleCoordinators(PhdIndividualProgramProcess process, AlertMessage subject, AlertMessage body) {
+	alertCoordinators(process, process.getResponsibleCoordinatorsFor(ExecutionYear.readCurrentExecutionYear()), subject, body);
+    }
+    
+    static private void alertCoordinators(PhdIndividualProgramProcess process, Set<Person> persons, AlertMessage subject, AlertMessage body) {
 	final PhdCustomAlertBean alertBean = new PhdCustomAlertBean(process, true, false, false);
 	alertBean.setSubject(getSubjectPrefixed(process, subject));
 	alertBean.setBody(getBodyText(process, body));
-	alertBean.setTargetGroup(new FixedSetGroup(process.getCoordinatorsFor(ExecutionYear.readCurrentExecutionYear())));
+	alertBean.setTargetGroup(new FixedSetGroup(persons));
 	alertBean.setFireDate(new LocalDate());
 	new PhdCustomAlert(alertBean);
     }

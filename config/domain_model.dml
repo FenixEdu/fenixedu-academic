@@ -7160,6 +7160,10 @@ class phd.seminar.PublicPresentationSeminarProcess extends phd.PhdProgramProcess
 class phd.thesis.PhdThesisProcess extends phd.PhdProgramProcess {
 	LocalDate whenJuryValidated;
 	LocalDate whenJuryDesignated;
+	
+	// meeting information
+	DateTime meetingDate;
+	String meetingPlace;  
 }
 
 class phd.thesis.ThesisJuryElement extends DomainObject {

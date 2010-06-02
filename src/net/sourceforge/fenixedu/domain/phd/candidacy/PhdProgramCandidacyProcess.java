@@ -281,7 +281,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	    process.createState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION, userView.getPerson(), bean
 		    .getRemarks());
 
-	    AlertService.alertCoordinator(mainProcess, subject(), body(mainProcess));
+	    AlertService.alertCoordinators(mainProcess, subject(), body(mainProcess));
 
 	    return process;
 	}

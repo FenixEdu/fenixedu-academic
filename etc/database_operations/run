@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add new columns to phd thesis process table" updatePhdThesisProcessTable.sql

@@ -31,6 +31,8 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.PrintJuryElementsDo
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RejectJuryElements;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryElements;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryReviews;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisMeeting;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisMeetingRequest;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitJuryElementsDocuments;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitThesis;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SwapJuryElementsOrder;
@@ -59,7 +61,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	    result.createState(PhdThesisProcessStateType.NEW, userView.getPerson(), bean.getRemarks());
 	    result.addDocuments(bean.getDocuments(), userView.getPerson());
 	    result.setIndividualProgramProcess(bean.getProcess());
-	    
+
 	    new PhdThesisRequestFee(bean.getProcess());
 
 	    return result;
@@ -87,6 +89,8 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	activities.add(new JuryDocumentsDownload());
 	activities.add(new JuryReporterFeedbackUpload());
 	activities.add(new JuryReporterFeedbackExternalUpload());
+	activities.add(new ScheduleThesisMeetingRequest());
+	activities.add(new ScheduleThesisMeeting());
     }
 
     private PhdThesisProcess() {
@@ -220,13 +224,17 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	return getIndividualProgramProcess().isParticipant(person);
     }
 
-    public ThesisJuryElement getThesisJuryElement(Person person) {
+    public ThesisJuryElement getThesisJuryElement(final Person person) {
 	for (final ThesisJuryElement element : getThesisJuryElements()) {
 	    if (element.isFor(person)) {
 		return element;
 	    }
 	}
 	return null;
+    }
+
+    public boolean isPresidentJuryElement(final Person person) {
+	return hasPresidentJuryElement() && getPresidentJuryElement().isFor(person);
     }
 
     public List<PhdProgramProcessDocument> getThesisDocumentsToFeedback() {

@@ -17,6 +17,15 @@ public class ValidateJury extends PhdThesisActivity {
 	    throw new PreConditionNotValidException();
 	}
 
+	if (!process.hasPresidentJuryElement()) {
+	    /*
+	     * if this condition is removed then must update
+	     * ScheduleThesisMeeting: scheduling is performed by president jury
+	     * element
+	     */
+	    throw new PreConditionNotValidException();
+	}
+
 	if (!PhdThesisProcess.isMasterDegreeAdministrativeOfficeEmployee(userView)) {
 	    throw new PreConditionNotValidException();
 	}

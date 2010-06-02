@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.MoveJuryElementOrde
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RejectJuryElements;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryElements;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryReviews;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisMeetingRequest;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitJuryElementsDocuments;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitThesis;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SwapJuryElementsOrder;
@@ -68,7 +69,9 @@ import pt.utl.ist.fenix.tools.util.Pair;
 
 @Forward(name = "addPresidentJuryElement", path = "/phd/thesis/academicAdminOffice/addPresidentJuryElement.jsp"),
 
-@Forward(name = "manageThesisDocuments", path = "/phd/thesis/academicAdminOffice/manageThesisDocuments.jsp")
+@Forward(name = "manageThesisDocuments", path = "/phd/thesis/academicAdminOffice/manageThesisDocuments.jsp"),
+
+@Forward(name = "requestScheduleThesisMeeting", path = "/phd/thesis/academicAdminOffice/requestScheduleThesisMeeting.jsp")
 
 })
 public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
@@ -480,9 +483,35 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 	}
 
 	return viewIndividualProgramProcess(request, getProcess(request));
-
     }
 
     // End of Request Jury Reviews
+
+    // Schedule thesis meeting request
+    public ActionForward prepareRequestScheduleThesisMeeting(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	request.setAttribute("thesisProcessBean", new PhdThesisProcessBean());
+	return mapping.findForward("requestScheduleThesisMeeting");
+    }
+
+    public ActionForward requestScheduleThesisMeeting(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final PhdThesisProcessBean bean = (PhdThesisProcessBean) getRenderedObject("thesisProcessBean");
+	try {
+	    ExecuteProcessActivity.run(getProcess(request), ScheduleThesisMeetingRequest.class, bean);
+
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getMessage(), e.getArgs());
+	    request.setAttribute("thesisProcessBean", bean);
+	    return mapping.findForward("requestScheduleThesisMeeting");
+	}
+
+	return viewIndividualProgramProcess(request, getProcess(request));
+
+    }
+
+    // End of schedule thesis meeting request
 
 }

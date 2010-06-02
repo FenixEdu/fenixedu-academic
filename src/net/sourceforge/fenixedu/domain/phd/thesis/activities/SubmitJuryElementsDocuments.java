@@ -63,7 +63,7 @@ public class SubmitJuryElementsDocuments extends PhdThesisActivity {
 
 	switch (each.getType()) {
 	case JURY_PRESIDENT_ELEMENT:
-	    AlertService.alertCoordinator(process.getIndividualProgramProcess(),
+	    AlertService.alertCoordinators(process.getIndividualProgramProcess(),
 		    "message.phd.alert.request.jury.president.subject", "message.phd.alert.request.jury.president.body");
 	    break;
 

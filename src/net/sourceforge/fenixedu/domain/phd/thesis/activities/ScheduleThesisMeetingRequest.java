@@ -1,0 +1,52 @@
+package net.sourceforge.fenixedu.domain.phd.thesis.activities;
+
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
+import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
+import net.sourceforge.fenixedu.domain.phd.alert.AlertService.AlertMessage;
+import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
+import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
+import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType;
+
+public class ScheduleThesisMeetingRequest extends PhdThesisActivity {
+
+    @Override
+    protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
+
+	if (!process.hasState(PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK)) {
+	    throw new PreConditionNotValidException();
+	}
+
+	if (process.getActiveState() == PhdThesisProcessStateType.WAITING_FOR_THESIS_DISCUSSION_DATE_SCHEDULING) {
+	    throw new PreConditionNotValidException();
+	}
+
+	if (!PhdThesisProcess.isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	    throw new PreConditionNotValidException();
+	}
+    }
+
+    @Override
+    protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
+
+	final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
+
+	if (bean.isToNotify()) {
+
+	    AlertService.alertParticipants(process.getIndividualProgramProcess(), AlertMessage
+		    .create("message.phd.request.schedule.meeting.president.notification.subject"), AlertMessage
+		    .create("message.phd.request.schedule.meeting.president.notification.body"), process
+		    .getPresidentJuryElement().getParticipant());
+
+	    AlertService.alertResponsibleCoordinators(process.getIndividualProgramProcess(), AlertMessage
+		    .create("message.phd.request.schedule.meeting.coordinator.notification.subject"), AlertMessage.create(
+		    "message.phd.request.schedule.meeting.coordinator.notification.body", process.getPresidentJuryElement()
+			    .getNameWithTitle()));
+
+	}
+
+	process.createState(PhdThesisProcessStateType.WAITING_FOR_THESIS_DISCUSSION_DATE_SCHEDULING, userView.getPerson(), bean
+		.getRemarks());
+	return process;
+    }
+}

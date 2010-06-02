@@ -121,6 +121,23 @@ public class PhdProgram extends PhdProgram_Base {
 	return result;
     }
 
+    public Set<Person> getResponsibleCoordinatorsFor(ExecutionYear executionYear) {
+	final ExecutionDegree executionDegree = getDegree().getLastActiveDegreeCurricularPlan().getExecutionDegreeByYear(
+		executionYear);
+
+	final Set<Person> result = new HashSet<Person>();
+	if (executionDegree != null) {
+	    for (final Coordinator coordinator : executionDegree.getCoordinatorsList()) {
+		if (coordinator.isResponsible()) {
+		    result.add(coordinator.getPerson());
+		}
+	    }
+	}
+
+	return result;
+    }
+
+    
     @Service
     static public PhdProgram create(final Degree degree, final MultiLanguageString name, final String acronym) {
 	return new PhdProgram(degree, name, acronym);
