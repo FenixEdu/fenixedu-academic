@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add columns to Job and Qualification Tables" alumniRelatedChanges.sql
