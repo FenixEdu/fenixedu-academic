@@ -48,7 +48,7 @@
 			</html:link>
 		</p>
 
-		<div id="<%= "deleteConfirm" + formationIndex %>" class="infoop2 width300px switchInline">
+		<div id="<%= "deleteConfirm" + formationIndex %>" class="infoop2 switchInline">
 			<fr:form id="<%= "deleteForm" + formationIndex %>" action="<%= "/formation.do?method=deleteFormation&formationId=" + formationID %>" >
 
 				<p class="mvert05"><bean:message key="label.confirm.delete" bundle="ALUMNI_RESOURCES" /></p>
