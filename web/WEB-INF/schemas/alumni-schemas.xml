@@ -449,8 +449,8 @@
 		<slot name="formationEndYear" key="label.formation.endDate" layout="menu-select" >
 			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CivilYearsProvider"/>
 		</slot>
-		<slot name="formationCredits" key="label.formation.credits" />
-		<slot name="formationHours" key="label.formation.hours" />
+		<slot name="formationCredits" key="label.formation.credits" validator="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
+		<slot name="formationHours" key="label.formation.hours" validator="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
 	</schema>
 
 	<schema name="alumni.formation.list" type="net.sourceforge.fenixedu.domain.Formation" bundle="ALUMNI_RESOURCES">
