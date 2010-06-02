@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject.person;
 
+import java.awt.color.CMMException;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -108,37 +109,42 @@ public class PhotographUploadBean implements Serializable {
     }
 
     public void processImage() throws IOException, UnableToProcessTheImage {
-	BufferedImage image = ImageIO.read(new ByteArrayInputStream(rawContents));
-	if (image == null) {
-	    throw new UnableToProcessTheImage();
-	}
-	ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-
-	// calculate resize factor
-	double resizeFactor = Math.min((double) OUTPUT_PHOTO_WIDTH / image.getWidth(), (double) OUTPUT_PHOTO_HEIGHT
-		/ image.getHeight());
-
-	if (resizeFactor == 1) {
-	    compressedContents = rawContents;
-	} else {
-	    // resize image
-	    AffineTransform tx = new AffineTransform();
-	    tx.scale(resizeFactor, resizeFactor);
-	    AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
-	    image = op.filter(image, null);
-
-	    // set compression
-	    ImageWriter writer = ImageIO.getImageWritersByMIMEType(ContentType.getContentType(contentType).getMimeType()).next();
-	    ImageWriteParam param = writer.getDefaultWriteParam();
-	    if (contentType.equals(ContentType.JPG)) {
-		param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-		param.setCompressionQuality(1);
+	try {
+	    BufferedImage image = ImageIO.read(new ByteArrayInputStream(rawContents));
+	    if (image == null) {
+		throw new UnableToProcessTheImage();
 	    }
+	    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-	    // write to stream
-	    writer.setOutput(ImageIO.createImageOutputStream(outputStream));
-	    writer.write(null, new IIOImage(image, null, null), param);
-	    compressedContents = outputStream.toByteArray();
+	    // calculate resize factor
+	    double resizeFactor = Math.min((double) OUTPUT_PHOTO_WIDTH / image.getWidth(), (double) OUTPUT_PHOTO_HEIGHT
+		    / image.getHeight());
+
+	    if (resizeFactor == 1) {
+		compressedContents = rawContents;
+	    } else {
+		// resize image
+		AffineTransform tx = new AffineTransform();
+		tx.scale(resizeFactor, resizeFactor);
+		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+		image = op.filter(image, null);
+
+		// set compression
+		ImageWriter writer = ImageIO.getImageWritersByMIMEType(ContentType.getContentType(contentType).getMimeType())
+			.next();
+		ImageWriteParam param = writer.getDefaultWriteParam();
+		if (contentType.equals(ContentType.JPG)) {
+		    param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+		    param.setCompressionQuality(1);
+		}
+
+		// write to stream
+		writer.setOutput(ImageIO.createImageOutputStream(outputStream));
+		writer.write(null, new IIOImage(image, null, null), param);
+		compressedContents = outputStream.toByteArray();
+	    }
+	} catch (final CMMException ex) {
+	    throw new UnableToProcessTheImage();
 	}
 
     }
