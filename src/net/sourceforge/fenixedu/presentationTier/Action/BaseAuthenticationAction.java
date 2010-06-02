@@ -94,7 +94,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
     private boolean isAlumniWithNoData(IUserView userView) {
 	Person person = userView.getPerson();
 	if(person.getStudent() != null && person.getStudent().getAlumni() != null) {
-	    return person.getJobs().isEmpty();
+	    return person.getFormations().isEmpty();
 	}
 	return false;
     }
