@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
+import net.sourceforge.fenixedu.domain.Person;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -41,7 +42,7 @@ public class InfoProject extends DataTranferObject {
 
     private Integer explorationUnit;
 
-    private String projectManagerName;
+    private Person projectManager;
 
     public String getCoordination() {
 	return coordination;
@@ -182,12 +183,12 @@ public class InfoProject extends DataTranferObject {
 	return sheet;
     }
 
-    public String getProjectManagerName() {
-	return projectManagerName;
+    public Person getProjectManager() {
+	return projectManager;
     }
 
-    public void setProjectManagerName(String projectManagerName) {
-	this.projectManagerName = projectManagerName;
+    public void setProjectManager(Person projectManager) {
+	this.projectManager = projectManager;
     }
 
 }

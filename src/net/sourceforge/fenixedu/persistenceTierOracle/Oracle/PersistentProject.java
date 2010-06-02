@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProject;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.StringUtils;
@@ -56,7 +57,7 @@ public class PersistentProject {
 		project.setCost(rs.getString("custo"));
 		project.setCoordination(rs.getString("coordenacao"));
 		project.setExplorationUnit(new Integer(rs.getInt("UNID_EXPLORACAO")));
-		project.setProjectManagerName(getPersonName(rs.getString("gestor")));
+		project.setProjectManager(getPerson(rs.getString("gestor")));
 		projects.add(project);
 	    }
 	    rs.close();
@@ -67,10 +68,10 @@ public class PersistentProject {
 	return projects;
     }
 
-    private String getPersonName(String username) {
+    private Person getPerson(String username) {
 	if (!StringUtils.isEmpty(username)) {
 	    User user = User.readUserByUserUId(username.trim());
-	    return user != null ? user.getPerson().getName() : null;
+	    return user != null ? user.getPerson() : null;
 	}
 	return null;
     }
@@ -106,7 +107,7 @@ public class PersistentProject {
 		    project.setCost(rs.getString("custo"));
 		    project.setCoordination(rs.getString("coordenacao"));
 		    project.setExplorationUnit(new Integer(rs.getInt("UNID_EXPLORACAO")));
-		    project.setProjectManagerName(getPersonName(rs.getString("gestor")));
+		    project.setProjectManager(getPerson(rs.getString("gestor")));
 		    projects.add(project);
 		}
 		rs.close();
@@ -155,7 +156,7 @@ public class PersistentProject {
 		project.setCost(rs.getString("custo"));
 		project.setCoordination(rs.getString("coordenacao"));
 		project.setExplorationUnit(new Integer(rs.getInt("UNID_EXPLORACAO")));
-		project.setProjectManagerName(getPersonName(rs.getString("gestor")));
+		project.setProjectManager(getPerson(rs.getString("gestor")));
 		projects.add(project);
 	    }
 	    rs.close();
@@ -185,7 +186,7 @@ public class PersistentProject {
 		project.setCost(rs.getString("custo"));
 		project.setCoordination(rs.getString("coordenacao"));
 		project.setExplorationUnit(new Integer(rs.getInt("UNID_EXPLORACAO")));
-		project.setProjectManagerName(getPersonName(rs.getString("gestor")));
+		project.setProjectManager(getPerson(rs.getString("gestor")));
 	    }
 	    rs.close();
 	    p.commitTransaction();

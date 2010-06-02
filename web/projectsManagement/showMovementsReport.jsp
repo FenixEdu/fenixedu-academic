@@ -4,6 +4,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/projectReports.tld" prefix="report"%>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+
 <logic:present name="infoReport">
 	<bean:define id="code" value="" />
 	<logic:present name="infoCostCenter" scope="request">
@@ -39,44 +41,69 @@
 
 		</table>
 		<br />
-		<table>
-			<tr class="printHeader">
-				<td rowspan="7"><img height="110" alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />"
-					src="<bean:message key="university.logo" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>" /></td>
-			</tr>
-			<tr class="printHeader">
-				<td colspan="2">
-				<h2><bean:message key="<%="title."+reportType%>" /></h2>
-				</td>
-			</tr>
-			<tr>
-				<td><strong><bean:message key="label.acronym" />:</strong></td>
-				<td><bean:write name="infoProject" property="title" /></td>
-			</tr>
-			<tr>
-				<td><strong><bean:message key="label.projectNumber" />:</strong></td>
-				<td><bean:write name="infoProject" property="projectIdentification" /></td>
-			</tr>
-			<tr>
-				<td><strong><bean:message key="label.type" />:</strong></td>
-				<bean:define id="type" name="infoProject" property="type" />
-				<td><bean:write name="type" property="label" />&nbsp;-&nbsp;<bean:write name="type" property="value" /></td>
-			</tr>
-			<tr>
-				<td><strong><bean:message key="label.coordinator" />:</strong></td>
-				<td><bean:write name="infoProject" property="coordinatorName" /></td>
-			</tr>
-			<logic:notEmpty name="infoProject" property="projectManagerName">
+		<table><tr>
+			<td style="vertical-align: top;"><table>
+				<tr class="printHeader">
+					<td rowspan="7"><img height="110" alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />"
+						src="<bean:message key="university.logo" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>" /></td>
+				</tr>
+				<tr class="printHeader">
+					<td colspan="2">
+					<h2><bean:message key="<%="title."+reportType%>"  /></h2>
+					</td>
+				</tr>
+				<tr>
+					<td><strong><bean:message key="label.acronym" />:</strong></td>
+					<td><bean:write name="infoProject" property="title" /></td>
+				</tr>
+				<tr>
+					<td><strong><bean:message key="label.projectNumber" />:</strong></td>
+					<td><bean:write name="infoProject" property="projectIdentification" /></td>
+				</tr>
+				<tr>
+					<td><strong><bean:message key="label.type" />:</strong></td>
+					<bean:define id="type" name="infoProject" property="type" />
+					<td><bean:write name="type" property="label" />&nbsp;-&nbsp;<bean:write name="type" property="value" /></td>
+				</tr>
+				<tr>
+					<td><strong><bean:message key="label.coordinator" />:</strong></td>
+					<td><bean:write name="infoProject" property="coordinatorName" /></td>
+				</tr>
+				<tr>
+					<td><strong><bean:message key="label.date" />:</strong></td>
+					<td><report:computeDate /></td>
+				</tr>
+			</table></td>
+		<logic:notEmpty name="infoProject" property="projectManager">
+			<bean:define id="projectManager" name="infoProject" property="projectManager"/>
+			<td style="vertical-align: top; padding-left: 10px;"><table>
 				<tr>
 					<td><strong><bean:message key="label.projectManager" />:</strong></td>
-					<td><bean:write name="infoProject" property="projectManagerName" /></td>
+					<td><bean:write name="projectManager" property="name" /></td>
 				</tr>
-			</logic:notEmpty>
-			<tr>
-				<td><strong><bean:message key="label.date" />:</strong></td>
-				<td><report:computeDate /></td>
-			</tr>
-		</table>
+		  		<tr>
+    		  		<td><strong><bean:message key="label.workPhone" />:</strong></td>
+		  			<td>
+                        <fr:view name="projectManager" property="phones">
+                            <fr:layout name="contact-list">
+                                <fr:property name="classes" value="nobullet list6" />
+                            </fr:layout>
+                        </fr:view>
+					</td>
+				</tr>
+				<tr>
+                    <td><strong><bean:message key="label.email" />:</strong></td>
+                    <td>
+                        <fr:view name="projectManager" property="emailAddresses">
+                            <fr:layout name="contact-list">
+                                <fr:property name="classes" value="nobullet list6" />
+                            </fr:layout>
+                        </fr:view>
+                    </td>
+				</tr>
+			</table></td>
+		</logic:notEmpty>
+		</tr></table>
 		<br />
 		<br />
 		<br />
