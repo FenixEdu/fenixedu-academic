@@ -753,7 +753,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
 	    publicPresentationSeminarProcess.setIndividualProgramProcess(individualProcess);
 
-	    AlertService.alertCoordinator(individualProcess,
+	    AlertService.alertCoordinators(individualProcess,
 		    "message.phd.alert.public.presentation.seminar.comission.definition.subject",
 		    "message.phd.alert.public.presentation.seminar.comission.definition.body");
 
@@ -819,20 +819,9 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		Object object) {
 
 	    final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
-	    final PhdThesisProcess thesisProcess = Process.createNewProcess(userView, PhdThesisProcess.class, bean);
+	    bean.setProcess(individualProcess);
 
-	    thesisProcess.setIndividualProgramProcess(individualProcess);
-	    thesisProcess.addDocuments(bean.getDocuments(), userView.getPerson());
-
-	    /*
-	     * 
-	     * TODO: SEND ALERTS ALERTS: alert to detect if process must be
-	     * concluded, etc etc
-	     */
-
-	    //TODO: create debts
-	    
-	    // TODO: create state in this step?
+	    Process.createNewProcess(userView, PhdThesisProcess.class, bean);
 	    individualProcess.createState(PhdIndividualProgramProcessState.THESIS_DISCUSSION, userView.getPerson());
 
 	    return individualProcess;
@@ -1335,6 +1324,10 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return getPhdProgram().getCoordinatorsFor(executionYear);
     }
 
+    public Set<Person> getResponsibleCoordinatorsFor(ExecutionYear executionYear) {
+	return getPhdProgram().getResponsibleCoordinatorsFor(executionYear);
+    }
+    
     public boolean hasPhdPublicPresentationSeminarAlert() {
 	return hasPhdAlert(PhdPublicPresentationSeminarAlert.class);
     }
