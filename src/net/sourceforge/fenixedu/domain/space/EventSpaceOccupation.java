@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -113,7 +114,7 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
 
 	    List<Interval> thisOccupationIntervals = getEventSpaceOccupationIntervals(occupation.getBeginDate(), occupation
 		    .getEndDate());
-	    List<Interval> passedOccupationIntervals = occupation.getEventSpaceOccupationIntervals(null, null);
+	    List<Interval> passedOccupationIntervals = occupation.getEventSpaceOccupationIntervals((YearMonthDay)null, (YearMonthDay)null);
 
 	    for (Interval interval : thisOccupationIntervals) {
 		for (Interval passedInterval : passedOccupationIntervals) {
@@ -150,6 +151,17 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
 	    }
 	}
 	return false;
+    }
+
+    public List<Interval> getEventSpaceOccupationIntervals(DateTime start, DateTime end) {
+	final List<Interval> intervals = getEventSpaceOccupationIntervals(start.toYearMonthDay(), end.toYearMonthDay());
+	for (final Iterator<Interval> iterator = intervals.iterator(); iterator.hasNext(); ) {
+	    final Interval interval = iterator.next();
+	    if (!interval.contains(start) && !interval.contains(end)) {
+		iterator.remove();
+	    }
+	}
+	return intervals;
     }
 
     public List<Interval> getEventSpaceOccupationIntervals(YearMonthDay startDateToSearch, YearMonthDay endDateToSearch) {

@@ -292,7 +292,7 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 
     public List<Interval> getGanttDiagramEventSortedIntervals() {
 	if (!getGenericEventSpaceOccupations().isEmpty()) {
-	    return getGenericEventSpaceOccupations().get(0).getEventSpaceOccupationIntervals(null, null);
+	    return getGenericEventSpaceOccupations().get(0).getEventSpaceOccupationIntervals((YearMonthDay)null, (YearMonthDay)null);
 	}
 	return Collections.emptyList();
     }

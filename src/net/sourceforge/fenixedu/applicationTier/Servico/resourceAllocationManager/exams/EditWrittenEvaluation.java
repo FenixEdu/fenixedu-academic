@@ -16,7 +16,10 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
+import net.sourceforge.fenixedu.domain.space.EventSpaceOccupation;
 import net.sourceforge.fenixedu.domain.util.email.ConcreteReplyTo;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
@@ -26,6 +29,8 @@ import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.util.Season;
 
 import org.joda.time.DateTime;
+import org.joda.time.Interval;
+import org.joda.time.YearMonthDay;
 
 public class EditWrittenEvaluation extends FenixService {
 
@@ -65,6 +70,25 @@ public class EditWrittenEvaluation extends FenixService {
 	    throw new InvalidArgumentsServiceException();
 	}
 
+	for (final AllocatableSpace allocatableSpace : roomsToAssociate) {
+	    int intervalCount = 0;
+	    DateTime beginDateTime = new DateTime(writtenEvaluationStartTime.getTime());
+	    YearMonthDay beginYMD = beginDateTime.toYearMonthDay();
+	    
+	    DateTime endDateTime = new DateTime(writtenEvaluationEndTime.getTime());
+	    YearMonthDay endYMD = endDateTime.toYearMonthDay();
+	    
+	    for(ResourceAllocation resource : allocatableSpace.getResourceAllocationsSet()) {
+		if (resource.isEventSpaceOccupation()) {
+		    EventSpaceOccupation eventSpaceOccupation =  (EventSpaceOccupation) resource;
+		    List<Interval> intervals = eventSpaceOccupation.getEventSpaceOccupationIntervals(beginDateTime, endDateTime);
+		    intervalCount += intervals.size();
+		    if(intervalCount > 1) {
+			throw new DomainException("error.noRoom");
+		    }
+		}
+	    }
+	}
     }
 
     private boolean timeModificationIsBiggerThanFiveMinutes(Date writtenEvaluationStartTime, Date beginningDate) {
