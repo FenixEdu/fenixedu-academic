@@ -12,7 +12,8 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RegistrationFormalization"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.AssociateRegistration"%>
 
-<strong><bean:message  key="label.phd.candidacyProcess" bundle="PHD_RESOURCES"/></strong>
+
+<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess"%><strong><bean:message  key="label.phd.candidacyProcess" bundle="PHD_RESOURCES"/></strong>
 <br/>
 
 <bean:define id="candidacyProcess" name="process" property="candidacyProcess" />
@@ -44,11 +45,13 @@
 						<bean:message bundle="PHD_RESOURCES" key="label.phd.printCandidacyDeclaration.en"/>
 					</html:link>
 				</li>
-				<li>
-					<html:link action="/phdIndividualProgramProcess.do?method=printSchoolRegistrationDeclaration&language=pt" paramId="processId" paramName="process" paramProperty="externalId">
-						<bean:message bundle="PHD_RESOURCES" key="label.phd.print.school.registration.declaration"/>
-					</html:link>
-				</li>
+				<logic:notEmpty name="process" property="student">
+					<li>
+						<html:link action="/phdIndividualProgramProcess.do?method=printSchoolRegistrationDeclaration&language=pt" paramId="processId" paramName="process" paramProperty="externalId">
+							<bean:message bundle="PHD_RESOURCES" key="label.phd.print.school.registration.declaration"/>
+						</html:link>
+					</li>
+				</logic:notEmpty>
 			</logic:notEmpty>
 		</ul>
 	</td>

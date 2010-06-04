@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
 
 import org.joda.time.DateTime;
@@ -41,7 +42,7 @@ public class PhdSchoolRegistrationDeclarationDocument extends FenixReport {
 	addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getPartyName().getContent());
 	addParameter("universityName", UniversityUnit.getInstitutionsUniversityUnit().getPartyName().getContent());
 
-	addParameter("studentNumber", getRegistration().getNumber().toString());
+	addParameter("studentNumber", getStudentNumber());
 	addParameter("studentName", getPerson().getName());
 	addParameter("documentId", getPerson().getDocumentIdNumber());
 	addParameter("parishOfBirth", getPerson().getParishOfBirth());
@@ -54,6 +55,10 @@ public class PhdSchoolRegistrationDeclarationDocument extends FenixReport {
 	addParameter("documentDate", new LocalDate().toString(DD_MMMM_YYYY, Language.getLocale()));
     }
 
+    private String getStudentNumber() {
+	return hasRegistration() ? getRegistration().getNumber().toString() : getStudent().getNumber().toString();
+    }
+
     private String getRegistrationStateLabel() {
 	final Gender gender = getPerson().getGender();
 	return gender == Gender.MALE ? getMessage("label.phd.schoolRegistrationDeclaration.registered.male")
@@ -64,8 +69,16 @@ public class PhdSchoolRegistrationDeclarationDocument extends FenixReport {
 	return process.getPerson();
     }
 
+    private Student getStudent() {
+	return getPerson().getStudent();
+    }
+
     private Registration getRegistration() {
 	return process.getRegistration();
+    }
+
+    private boolean hasRegistration() {
+	return process.hasRegistration();
     }
 
     private String getMessage(final String key) {
