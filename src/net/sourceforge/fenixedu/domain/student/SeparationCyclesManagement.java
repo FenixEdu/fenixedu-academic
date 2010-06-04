@@ -558,6 +558,7 @@ public class SeparationCyclesManagement {
 	}
 
 	if (!newStudentCurricularPlan.hasGratuityEvent(getExecutionYear(), GratuityEventWithPaymentPlan.class)) {
+	    correctRegistrationRegime(oldStudentCurricularPlan, newStudentCurricularPlan);
 	    createGratuityEvent(newStudentCurricularPlan);
 	}
 
@@ -583,7 +584,9 @@ public class SeparationCyclesManagement {
 
     private void movePayments(final GratuityEventWithPaymentPlan firstEvent, final GratuityEventWithPaymentPlan secondEvent) {
 
-	secondEvent.configurateDefaultPaymentPlan();
+	if (mustConfigurateToDefault(secondEvent)) {
+	    secondEvent.configurateDefaultPaymentPlan();
+	}
 
 	if (firstEvent.hasCustomGratuityPaymentPlan()) {
 	    return;
@@ -607,6 +610,22 @@ public class SeparationCyclesManagement {
 	final Money originalTotalAmount = secondEvent.getGratuityPaymentPlan().calculateOriginalTotalAmount();
 	secondEvent.addDiscount(getPerson(), Money.min(amountLessPenalty, originalTotalAmount));
 	secondEvent.recalculateState(new DateTime());
+    }
+
+    private boolean mustConfigurateToDefault(GratuityEventWithPaymentPlan secondEvent) {
+	return !secondEvent.getRegistration().isPartialRegime(getExecutionYear());
+    }
+
+    private void correctRegistrationRegime(final StudentCurricularPlan oldStudentCurricularPlan,
+	    final StudentCurricularPlan newStudentCurricularPlan) {
+
+	if (oldStudentCurricularPlan.getRegistration().isPartialRegime(getExecutionYear())
+		&& !newStudentCurricularPlan.getRegistration().isPartialRegime(getExecutionYear())) {
+
+	    new RegistrationRegime(newStudentCurricularPlan.getRegistration(), getExecutionYear(),
+		    RegistrationRegimeType.PARTIAL_TIME);
+
+	}
     }
 
     private Person getPerson() {
