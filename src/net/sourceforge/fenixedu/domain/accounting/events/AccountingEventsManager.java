@@ -75,7 +75,7 @@ public class AccountingEventsManager {
 	    /*
 	     * TODO: To create events in past dcps its necessary to change
 	     * method args to add ammount and create PastDegreeGratuityEvent.
-	     * For now tt's easier to create debts for past students by script.
+	     * It's easier to create debts for past students by script.
 	     */
 	    throw new DomainException("error.AccountingEventsManager.invalid.degree.curricular.plan.type");
 	}
