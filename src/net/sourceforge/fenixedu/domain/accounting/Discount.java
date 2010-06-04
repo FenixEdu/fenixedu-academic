@@ -30,7 +30,7 @@ public class Discount extends Discount_Base {
 	}
     }
 
-    void delete() {
+    public void delete() {
 	removeEvent();
 	removeRootDomainObject();
 	super.deleteDomainObject();
