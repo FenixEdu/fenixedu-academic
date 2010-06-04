@@ -15,12 +15,12 @@
 
 
 <em><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></em>
-<h2><bean:message key="label.erasmus.validate.application" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
+<h2><bean:message key="label.erasmus.validate.application.title" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
 <html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
-	<span class="error0"> <bean:write name="message" /> </span>
-	<br />
+	<p><span class="error0"><bean:write name="message" /></span></p>
 </html:messages>
+
 <fr:hasMessages for="individualCandidacyProcessBean.precedentDegreeInformation" type="conversion">
 	<ul class="nobullet list6">
 		<fr:messages>
@@ -31,9 +31,7 @@
 
 <bean:define id="processId" name="process" property="idInternal" />
 
-<script src="<%= request.getContextPath() + "/javaScript/jquery/jquery.js" %>" type="text/javascript" >
-</script>
-
+<script src="<%= request.getContextPath() + "/javaScript/jquery/jquery.js" %>" type="text/javascript" ></script>
 
 
 <script type="text/javascript">
@@ -59,6 +57,10 @@
 	<fr:edit 	id="coordinator.validation"
 				name="individualCandidacyProcessBean"
 				schema="ErasmusIndividualCandidacyProcess.setCoordinatorValidation">
+		<fr:layout name="tabular-editable">
+			<fr:property name="classes" value="tstyle5 thlight thright mbottom0"/>
+	        <fr:property name="columnClasses" value="width12em,width40em,tdclear tderror1"/>
+		</fr:layout>	
 	</fr:edit>
 	
 	<fr:edit	id="coordinator.alert.contents"
@@ -66,8 +68,8 @@
 				schema="ErasmusIndividualCandidacyProcess.alertContents">
 		<fr:destination name="cancel" path="<%= f("/caseHandlingErasmusIndividualCandidacyProcess.do?method=listProcessAllowedActivities&amp;processId=%s&amp", processId.toString()) %>"/>
 		<fr:layout name="tabular-editable">
-			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
-	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+			<fr:property name="classes" value="tstyle5 thlight thright mtop0"/>
+	        <fr:property name="columnClasses" value="width12em,width40em,tdclear tderror1"/>
 		</fr:layout>		
 	</fr:edit>
 	

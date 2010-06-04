@@ -2224,6 +2224,7 @@
 			<property name="type" value="character"/>
 			<property name="length" value="255"/>
 		</validator>
+		<property name="size" value="50" />
 	</slot>
 	
 	<slot name="alertBody" key="label.erasmus.alert.body" layout="longText">
@@ -2231,9 +2232,8 @@
 			<property name="type" value="character"/>
 			<property name="length" value="3000"/>
 		</validator>
-		
-		<property name="rows" value="3" />
-		<property name="columns" value="70" />
+		<property name="rows" value="4" />
+		<property name="columns" value="50" />
 	</slot>
 </schema>
 

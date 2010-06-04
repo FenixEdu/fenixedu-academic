@@ -15,19 +15,21 @@
 
 
 <em><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></em>
-<h2><bean:message key="label.erasmus.visualize.alerts" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
+<h2><bean:message key="label.erasmus.visualize.alerts.title" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
 <bean:define id="processId" name="process" property="idInternal" />
 
-<html:link action='<%= f("/caseHandlingErasmusIndividualCandidacyProcess.do?method=listProcessAllowedActivities&amp;processId=%s", processId.toString()) %>'>
-	« <bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
-</html:link>
-<br/>
+<p>
+	<html:link action='<%= f("/caseHandlingErasmusIndividualCandidacyProcess.do?method=listProcessAllowedActivities&amp;processId=%s", processId.toString()) %>'>
+		« <bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
+	</html:link>
+</p>
 
 <html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
-	<span class="error0"> <bean:write name="message" /> </span>
-	<br />
+	<p><span class="error0"><bean:write name="message" /></span></p>
 </html:messages>
+
+
 <fr:hasMessages for="individualCandidacyProcessBean.precedentDegreeInformation" type="conversion">
 	<ul class="nobullet list6">
 		<fr:messages>
@@ -36,18 +38,17 @@
 	</ul>
 </fr:hasMessages>
 
-<script src="<%= request.getContextPath() + "/javaScript/jquery/jquery.js" %>" type="text/javascript" >
-</script>
+
+
+<script src="<%= request.getContextPath() + "/javaScript/jquery/jquery.js" %>" type="text/javascript" ></script>
 
 
 <logic:iterate name="individualCandidacyProcessBean" property="individualCandidacyProcess.alert" id="alert">
-	<hr>
 	<fr:view name="alert" schema="ErasmusAlert.view">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
-	        <fr:property name="columnClasses" value="width12em,width40em"/>
+			<fr:property name="classes" value="tstyle1 thlight thright mtop025"/>
 		</fr:layout>		
 	</fr:view>
 </logic:iterate>
-<hr>
+
 
