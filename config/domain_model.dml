@@ -4736,7 +4736,7 @@ class DomainObject {
             class research.result.publication.Book extends research.result.publication.ResearchResultPublication {
                 String address;
                 String edition;
-                Integer isbn;
+                String isbn;
                 String language;
                 Integer numberPages;
                 ScopeType scope;

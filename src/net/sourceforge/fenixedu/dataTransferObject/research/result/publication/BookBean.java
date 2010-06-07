@@ -99,7 +99,7 @@ public class BookBean extends ResultPublicationBean implements Serializable {
 	return isbn;
     }
 
-    public void setIsbn(Integer isbn) {
+    public void setIsbn(String isbn) {
 	this.isbn = isbn;
     }
 
