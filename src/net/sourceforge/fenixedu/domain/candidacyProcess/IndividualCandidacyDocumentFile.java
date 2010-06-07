@@ -68,4 +68,9 @@ public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocument
 	    IndividualCandidacyDocumentFileType type, String processName, String documentIdNumber) {
 	return new IndividualCandidacyDocumentFile(type, contents, filename, obtainVirtualPath(processName, documentIdNumber));
     }
+
+    public IndividualCandidacyDocumentFile getSelf() {
+	return this;
+    }
+
 }

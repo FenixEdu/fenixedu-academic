@@ -7160,10 +7160,6 @@ class phd.seminar.PublicPresentationSeminarProcess extends phd.PhdProgramProcess
 class phd.thesis.PhdThesisProcess extends phd.PhdProgramProcess {
 	LocalDate whenJuryValidated;
 	LocalDate whenJuryDesignated;
-	
-	// meeting information
-	DateTime meetingDate;
-	String meetingPlace;  
 }
 
 class phd.thesis.ThesisJuryElement extends DomainObject {
@@ -18293,3 +18289,9 @@ relation ErasmusCoordinatorTeacher {
 	Teacher playsRole teacher;
 }
 
+relation ErasmusIndividualCandidacyLearningAgrement {
+	candidacyProcess.erasmus.ErasmusIndividualCandidacy playsRole erasmusIndividualCandidacy;
+	candidacyProcess.IndividualCandidacyDocumentFile playsRole approvedLearningAgreements {
+		multiplicity *;
+	}
+}

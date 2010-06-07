@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
+import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCodeOperations;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess;
@@ -305,7 +306,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	    if (bean.isToAccessFenix() && bean.getPublicCandidacyHashCode() == null) {
 		DegreeOfficePublicCandidacyHashCode candidacyHashCode = null;
 		try {
-		    candidacyHashCode = DegreeOfficePublicCandidacyHashCode
+		    candidacyHashCode = DegreeOfficePublicCandidacyHashCodeOperations
 			    .getUnusedOrCreateNewHashCodeAndSendEmailForApplicationSubmissionToCandidate(getProcessType(),
 				    getCurrentOpenParentProcess(), bean.getPersonBean().getEmail());
 		    bean.setPublicCandidacyHashCode(candidacyHashCode);

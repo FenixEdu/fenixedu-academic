@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewPr
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
-import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -24,6 +23,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegree
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
+import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCodeOperations;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
@@ -34,7 +34,6 @@ import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
-import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.casehandling.CaseHandlingDispatchAction;
@@ -362,7 +361,7 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 	}
 
 	try {
-	    DegreeOfficePublicCandidacyHashCode candidacyHashCode = DegreeOfficePublicCandidacyHashCode
+	    DegreeOfficePublicCandidacyHashCode candidacyHashCode = DegreeOfficePublicCandidacyHashCodeOperations
 		    .getUnusedOrCreateNewHashCode(getProcessType(), getParentProcess(request), bean.getPersonBean().getEmail());
 	    bean.setPublicCandidacyHashCode(candidacyHashCode);
 	} catch (HashCodeForEmailAndProcessAlreadyBounded e) {

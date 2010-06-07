@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher.candidacy.erasmus;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,9 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess;
@@ -35,7 +39,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "intro", path = "/caseHandlingErasmusCandidacyProcess.do?method=listProcessAllowedActivities"),
 	@Forward(name = "list-allowed-activities", path = "/candidacy/erasmus/listIndividualCandidacyActivities.jsp"),
 	@Forward(name = "set-coordinator-validation", path = "/teacher/candidacy/erasmus/setCoordinatorValidation.jsp"),
-	@Forward(name = "visualize-alerts", path = "/candidacy/erasmus/visualizeAlerts.jsp") })
+	@Forward(name = "visualize-alerts", path = "/candidacy/erasmus/visualizeAlerts.jsp"),
+	@Forward(name = "upload-learning-agreement", path = "/candidacy/erasmus/uploadLearningAgreement.jsp") })
 public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProcessDA {
 
     @Override
@@ -158,6 +163,51 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
 
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 	return mapping.findForward("visualize-alerts");
+    }
+
+    public ActionForward prepareExecuteUploadApprovedLearningAgreement(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+	final IndividualCandidacyProcess process = getProcess(request);
+	
+	CandidacyProcessDocumentUploadBean bean = new CandidacyProcessDocumentUploadBean();
+	
+	bean.setType(IndividualCandidacyDocumentFileType.LEARNING_AGREEMENT);
+	bean.setIndividualCandidacyProcess(process);
+	
+	request.setAttribute("learningAgreementUploadBean", bean);
+
+	return mapping.findForward("upload-learning-agreement");
+    }
+
+    public ActionForward executeUploadApprovedLearningAgreement(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+	CandidacyProcessDocumentUploadBean learningAgreementUploadBean = (CandidacyProcessDocumentUploadBean) getObjectFromViewState("individualCandidacyProcessBean.document.file");
+
+	try {
+	    IndividualCandidacyDocumentFile documentFile = createIndividualCandidacyDocumentFile(learningAgreementUploadBean,
+		    learningAgreementUploadBean.getIndividualCandidacyProcess().getPersonalDetails().getDocumentIdNumber());
+
+	    executeActivity(learningAgreementUploadBean.getIndividualCandidacyProcess(), "UploadApprovedLearningAgreement",
+		    documentFile);
+	    request.setAttribute("individualCandidacyProcess", learningAgreementUploadBean.getIndividualCandidacyProcess());
+	} catch (final IOException e) {
+	    invalidateDocumentFileRelatedViewStates();
+	    addActionMessage(request, "error.erasmus.upload.approved.learning.agreement");
+	    return prepareExecuteUploadApprovedLearningAgreement(mapping, form, request, response);
+	} catch (final DomainException e) {
+	    invalidateDocumentFileRelatedViewStates();
+	    addActionMessage(request, e.getMessage(), e.getArgs());
+	    return prepareExecuteUploadApprovedLearningAgreement(mapping, form, request, response);
+	}
+
+	return listProcessAllowedActivities(mapping, form, request, response);
+    }
+
+    public ActionForward executeUploadApprovedLearningAgreementInvalid(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	return prepareExecuteUploadApprovedLearningAgreement(mapping, form, request, response);
     }
 
 }

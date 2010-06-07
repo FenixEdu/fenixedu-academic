@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -796,24 +797,53 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	return getDepartmentUnit() != null;
     }
 
+    /**
+     * @see #getDeparmentUnit(ExecutionYear)
+     */
     public DepartmentUnit getDepartmentUnit() {
 	return getDepartmentUnit(ExecutionSemester.readActualExecutionSemester());
     }
 
+    /**
+     * @see #getDeparmentUnit(ExecutionSemester)
+     */
     public DepartmentUnit getDepartmentUnit(ExecutionYear executionYear) {
 	ExecutionSemester semester = ExecutionSemester.readBySemesterAndExecutionYear(2, executionYear.getYear());
 	return getDepartmentUnit(semester);
     }
 
+    /**
+     * In an ExecutionSemester the CompetenceCourse belongs to a Department.
+     * This association is built by CompetenceCourseGroupUnit which aggregates
+     * versions of CompetenceCourses (CompetenceCourseInformation). We can see
+     * CompetenceCourseGroupUnit like a bag of CompetenceCourses beloging to a
+     * Department.
+     * 
+     * The association between a CompetenceCourse and the ExecutionSemester is
+     * represented by CompetenceCourseInformation. We can see
+     * CompetenceCourseInformation as a version of CompetenceCourse's
+     * attributes.
+     * 
+     * ExecutionSemester assumes the role of start period of this version
+     * 
+     * @see CompetenceCourseInformation
+     * @see CompetenceCourseGroupUnit
+     */
     public DepartmentUnit getDepartmentUnit(ExecutionSemester semester) {
 	final CompetenceCourseGroupUnit competenceCourseGroupUnit = getCompetenceCourseGroupUnit(semester);
 	return competenceCourseGroupUnit == null ? null : competenceCourseGroupUnit.getDepartmentUnit();
     }
 
+    /**
+     * @see #getDeparmentUnit(ExecutionSemester)
+     */
     public CompetenceCourseGroupUnit getCompetenceCourseGroupUnit() {
 	return getCompetenceCourseGroupUnit(ExecutionSemester.readActualExecutionSemester());
     }
 
+    /**
+     * @see #getDeparmentUnit(ExecutionSemester)
+     */
     public CompetenceCourseGroupUnit getCompetenceCourseGroupUnit(ExecutionYear executionYear) {
 	ExecutionSemester semester = ExecutionSemester.readBySemesterAndExecutionYear(2, executionYear.getYear());
 	return getCompetenceCourseGroupUnit(semester);
@@ -1101,6 +1131,54 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	    }
 	}
 	return result;
+    }
+
+    @Override
+    @Deprecated
+    /**
+     * 
+     * The association between CompetenceCourses and Departments are made by CompetenceCourseGroupUnit.
+     * This direct association, CompetenceCourse many-by-many Department, is legacy.
+     * 
+     * @see #getDepartmentUnit(ExecutionSemester)
+     * 
+     */
+    public List<Department> getDepartments() {
+	// TODO Auto-generated method stub
+	return super.getDepartments();
+    }
+
+    @Override
+    @Deprecated
+    /**
+     * 
+     * @see #getDepartments()
+     */
+    public int getDepartmentsCount() {
+	// TODO Auto-generated method stub
+	return super.getDepartmentsCount();
+    }
+
+    @Override
+    @Deprecated
+    /**
+     * 
+     * @see #getDepartments()
+     */
+    public Iterator<Department> getDepartmentsIterator() {
+	// TODO Auto-generated method stub
+	return super.getDepartmentsIterator();
+    }
+
+    @Override
+    @Deprecated
+    /**
+     * 
+     * @see #getDepartments()
+     */
+    public Set<Department> getDepartmentsSet() {
+	// TODO Auto-generated method stub
+	return super.getDepartmentsSet();
     }
 
 }

@@ -5,7 +5,6 @@ import java.util.UUID;
 
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacyProcess.exceptions.HashCodeForEmailAndProcessAlreadyBounded;
-import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -38,7 +37,6 @@ public class DegreeOfficePublicCandidacyHashCode extends DegreeOfficePublicCandi
      * 
      * @throws HashCodeForEmailAndProcessAlreadyBounded
      */
-    @Service
     static public DegreeOfficePublicCandidacyHashCode getUnusedOrCreateNewHashCodeAndSendEmailForApplicationSubmissionToCandidate(
 	    Class<? extends IndividualCandidacyProcess> individualCandidadyProcessClass, CandidacyProcess parentProcess,
 	    String email) throws HashCodeForEmailAndProcessAlreadyBounded {
@@ -115,7 +113,6 @@ public class DegreeOfficePublicCandidacyHashCode extends DegreeOfficePublicCandi
      * 
      * @throws HashCodeForEmailAndProcessAlreadyBounded
      */
-    @Service
     static public DegreeOfficePublicCandidacyHashCode getUnusedOrCreateNewHashCode(
 	    Class<? extends IndividualCandidacyProcess> individualCandidadyProcessClass, CandidacyProcess parentProcess,
 	    String email) throws HashCodeForEmailAndProcessAlreadyBounded {

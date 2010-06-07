@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
+import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCodeOperations;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
@@ -256,7 +257,8 @@ public abstract class IndividualCandidacyProcessPublicDA extends IndividualCandi
 	    HttpServletRequest request, HttpServletResponse response) {
 	try {
 	    String email = (String) getObjectFromViewState("PublicAccessCandidacy.preCreationForm");
-	    PublicCandidacyHashCode candidacyHashCode = DegreeOfficePublicCandidacyHashCode.getUnusedOrCreateNewHashCode(
+	    PublicCandidacyHashCode candidacyHashCode = DegreeOfficePublicCandidacyHashCodeOperations
+		    .getUnusedOrCreateNewHashCode(
 		    getProcessType(), getCurrentOpenParentProcess(), email);
 	    sendEmailForApplicationSubmissionCandidacyForm(candidacyHashCode, mapping, request);
 

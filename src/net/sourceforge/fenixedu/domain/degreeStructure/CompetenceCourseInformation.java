@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -15,6 +16,30 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseG
 import net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.CompetenceCourseLoadBean;
 import net.sourceforge.fenixedu.util.StringFormatter;
 
+/**
+ * Represents a set of attributes that defines a CompetenceCourse in a given
+ * period of time.
+ * 
+ * <pre>
+ * 
+ * This attributes can be: 
+ * - Deparment which belongs; 
+ * - Name, descriptions, goals and bibliographic references; 
+ * - Study and work load (number hours of theoretical or pratical classes)
+ * 
+ * </pre>
+ * 
+ * In the perspective of a CompetenceCourse we can see this class as a version
+ * of attributes that defines it. The start period of the version is done by an
+ * association with ExecutionSemester.
+ * 
+ * A CompetenceCourseInformation (the version of the CompetenceCourse) belongs
+ * to a CompetenceCourseGroupUnit which belongs to a DepartmentUnit.
+ * 
+ * @see CompetenceCourse
+ * @see CompetenceCourseGroupUnit
+ * 
+ */
 public class CompetenceCourseInformation extends CompetenceCourseInformation_Base {
 
     static public final Comparator<CompetenceCourseInformation> COMPARATORY_BY_EXECUTION_PERIOD = new Comparator<CompetenceCourseInformation>() {

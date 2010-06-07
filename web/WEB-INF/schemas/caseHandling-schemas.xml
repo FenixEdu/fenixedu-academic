@@ -2411,3 +2411,17 @@
         <property name="sortBy" value="degreeType, name"/>
     </slot>
 </schema>
+
+
+<schema name="ApprovedLearningAgreement.documentUploadBean" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="stream" key="label.erasmus.candidacy.learning.agreement.file">
+		<property name="fileNameSlot" value="fileName"/>
+		<property name="fileSizeSlot" value="fileSize"/>
+		<validator
+			class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
+			<property name="maxSize" value="3698688"/>
+			<property name="acceptedTypes" value="*" />			
+		</validator>		
+	</slot>
+</schema>
+

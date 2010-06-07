@@ -58,6 +58,7 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	activities.add(new SetEIdentifierForTesting());
 	activities.add(new ImportToLDAP());
 	activities.add(new BindLinkSubmitedIndividualCandidacyWithEidentifier());
+	activities.add(new UploadApprovedLearningAgreement());
     }
 
     public ErasmusIndividualCandidacyProcess() {
@@ -160,6 +161,15 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 
     static private boolean isManager(IUserView userView) {
 	return userView.hasRoleType(RoleType.MANAGER);
+    }
+
+    private boolean isCoordinatorOfProcess(IUserView userView) {
+	if (!userView.getPerson().hasTeacher()) {
+	    return false;
+	}
+
+	return ((ErasmusCandidacyProcess) getCandidacyProcess()).isTeacherErasmusCoordinatorForDegree(userView.getPerson()
+		.getTeacher(), getCandidacy().getSelectedDegree());
     }
 
     @Override
@@ -763,6 +773,44 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	    return Boolean.FALSE;
 	}
 
+    }
+
+    private static class UploadApprovedLearningAgreement extends Activity<ErasmusIndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(ErasmusIndividualCandidacyProcess process, IUserView userView) {
+	    if(isManager(userView)) {
+		return;
+	    }
+	    
+	    if(isGriOfficeEmployee(userView)) {
+		return;
+	    }
+	    
+	    if (process.isCoordinatorOfProcess(userView)) {
+		return;
+	    }
+	    
+	    throw new PreConditionNotValidException();
+	}
+
+	@Override
+	protected ErasmusIndividualCandidacyProcess executeActivity(ErasmusIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    process.getCandidacy().addApprovedLearningAgreements((IndividualCandidacyDocumentFile) object);
+
+	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForCoordinator() {
+	    return true;
+	}
+
+	@Override
+	public Boolean isVisibleForGriOffice() {
+	    return true;
+	}
     }
 
     private static boolean importToLDAP(ErasmusIndividualCandidacyProcess process) {

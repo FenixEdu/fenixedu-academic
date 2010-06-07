@@ -34,12 +34,5 @@
 				</html:link>
 			</li>
 		</logic:equal>
-<%--		
-		<li>
-			<html:link page="/caseHandlingErasmusCandidacyProcess.do?method=intro">
-				<bean:message key="link.coordinator.erasmus.application" bundle="APPLICATION_RESOURCES"/>
-			</html:link>
-		</li>
---%>		
 	</ul>
 </logic:present>

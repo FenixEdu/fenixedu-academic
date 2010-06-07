@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegree
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
+import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCodeOperations;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
@@ -135,7 +136,7 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 
 	try {
 	    String email = (String) getObjectFromViewState("PublicAccessCandidacy.preCreationForm");
-	    DegreeOfficePublicCandidacyHashCode hash = DegreeOfficePublicCandidacyHashCode
+	    DegreeOfficePublicCandidacyHashCode hash = DegreeOfficePublicCandidacyHashCodeOperations
 		    .getUnusedOrCreateNewHashCodeAndSendEmailForApplicationSubmissionToCandidate(getProcessType(),
 			    getCurrentOpenParentProcess(), email);
 
