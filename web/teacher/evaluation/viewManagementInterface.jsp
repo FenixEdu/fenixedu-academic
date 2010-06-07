@@ -154,6 +154,9 @@
 					<bean:message key="label.teacher.evaluation.state" bundle="RESEARCHER_RESOURCES"/>
 				</th>
 				<th>
+					<bean:message key="label.teacher.evaluation.mark" bundle="RESEARCHER_RESOURCES"/>
+				</th>
+				<th>
 				</th>
 			</tr>
 			<logic:iterate id="teacherEvaluationProcess" name="facultyEvaluationProcess" property="sortedTeacherEvaluationProcess">
@@ -171,6 +174,11 @@
 					</td>
 					<td>
 						<fr:view name="teacherEvaluationProcess" property="state" layout="null-as-label" />
+					</td>
+					<td>
+						<logic:present name="teacherEvaluationProcess" property="evaluationMark">
+							<fr:view name="teacherEvaluationProcess" property="evaluationMark" layout="null-as-label"/>
+						</logic:present>
 					</td>
 					<td>
 						<html:link page="/teacherEvaluation.do?method=viewEvaluationByCCAD" paramId="processId" paramName="teacherEvaluationProcess" paramProperty="externalId">
