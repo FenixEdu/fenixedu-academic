@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add Approved Learning Agreeemnt association" addApprovedLearningAgreementAssociation.sql
