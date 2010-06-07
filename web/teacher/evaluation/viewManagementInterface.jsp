@@ -199,6 +199,11 @@
 			<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.create" bundle="RESEARCHER_RESOURCES"/>
 		</html:link>
 	</p>
+	<p class="mtop15">
+		<html:link page="/teacherEvaluation.do?method=exportEvaluationFiles">
+			<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.exportEvaluationFiles" bundle="RESEARCHER_RESOURCES"/>
+		</html:link>
+	</p>
 	<logic:empty name="facultyEvaluationProcessSet">
 		<p class="mtop1">
 			<em>

@@ -1,11 +1,16 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher.evaluation;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,6 +19,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.FacultyEvaluationProcess;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.FacultyEvaluationProcessBean;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.FileUploadBean;
+import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluation;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationFile;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationFileType;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationProcess;
@@ -277,4 +283,46 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 	request.setAttribute("process", process);
 	return mapping.findForward("viewEvaluationByCCAD");
     }
+
+    public ActionForward exportEvaluationFiles(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	ByteArrayOutputStream bout = new ByteArrayOutputStream();
+	ZipOutputStream zip = new ZipOutputStream(bout);
+	final String fileSeparator = "/";
+	try {
+	    for (FacultyEvaluationProcess facultyEvaluationProcess : rootDomainObject.getFacultyEvaluationProcess()) {
+		String evaluationName = (facultyEvaluationProcess.getSuffix() == null ? facultyEvaluationProcess.getTitle()
+			.getContent() : facultyEvaluationProcess.getSuffix());
+		for (TeacherEvaluationProcess teacherEvaluationProcess : facultyEvaluationProcess
+			.getTeacherEvaluationProcessSet()) {
+		    TeacherEvaluation teacherEvaluation = teacherEvaluationProcess.getCurrentTeacherEvaluation();
+		    if (teacherEvaluation != null) {
+			String department = teacherEvaluation.getTeacherEvaluationProcess().getEvaluee().getTeacher()
+				.getCurrentWorkingDepartment().getName();
+			for (TeacherEvaluationFile teacherEvaluationFile : teacherEvaluation.getTeacherEvaluationFileSet()) {
+			    if (teacherEvaluation.getEvaluationFileSet().contains(
+				    teacherEvaluationFile.getTeacherEvaluationFileType())) {
+				zip.putNextEntry(new ZipEntry(department + fileSeparator + evaluationName + fileSeparator
+					+ teacherEvaluationFile.getFilename()));
+				zip.write(teacherEvaluationFile.getContents());
+				zip.closeEntry();
+			    }
+			}
+		    }
+		}
+	    }
+	    zip.close();
+	    response.setContentType("application/zip");
+	    response.addHeader("Content-Disposition", "attachment; filename=avaliação.zip");
+	    ServletOutputStream writer = response.getOutputStream();
+	    writer.write(bout.toByteArray());
+	    writer.flush();
+	    writer.close();
+	    response.flushBuffer();
+	} catch (IOException e) {
+	    e.printStackTrace();
+	}
+	return null;
+    }
+
 }
