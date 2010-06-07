@@ -16,7 +16,7 @@ public class BookBean extends ResultPublicationBean implements Serializable {
 
     private String edition;
 
-    private Integer isbn;
+    private String isbn;
 
     private Integer numberPages;
 
@@ -95,7 +95,7 @@ public class BookBean extends ResultPublicationBean implements Serializable {
 	this.edition = edition;
     }
 
-    public Integer getIsbn() {
+    public String getIsbn() {
 	return isbn;
     }
 

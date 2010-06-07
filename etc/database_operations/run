@@ -44,3 +44,4 @@ function executeWithTempFile() {
 }
 
 execute "Add new columns to phd thesis process table" updatePhdThesisProcessTable.sql
+execute "Modifying ISBN data type from Integer to String" modifyISBNdataType.sql

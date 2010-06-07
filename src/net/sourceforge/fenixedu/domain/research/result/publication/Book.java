@@ -28,7 +28,7 @@ public class Book extends Book_Base {
     }
 
     public Book(Person participator, ResultParticipationRole participatorRole, String title, MultiLanguageString keywords,
-	    String publisher, Integer year, String volume, String series, String address, String edition, Integer isbn,
+	    String publisher, Integer year, String volume, String series, String address, String edition, String isbn,
 	    Integer numberPages, String language, Country country, ScopeType scope, MultiLanguageString note, Month month,
 	    String url) {
 	this();
@@ -41,7 +41,7 @@ public class Book extends Book_Base {
 
     @Checked("ResultPredicates.writePredicate")
     public void setEditAll(String title, MultiLanguageString keywords, String publisher, Integer year, String volume,
-	    String series, String address, String edition, Integer isbn, Integer numberPages, String language, Country country,
+	    String series, String address, String edition, String isbn, Integer numberPages, String language, Country country,
 	    ScopeType scope, MultiLanguageString note, Month month, String url) {
 	super.checkRequiredParameters(keywords, note);
 	checkRequiredParameters(title, note, keywords, publisher, year);
@@ -51,7 +51,7 @@ public class Book extends Book_Base {
     }
 
     private void fillAllAttributes(String title, MultiLanguageString keywords, String publisher, Integer year, String volume,
-	    String series, String address, String edition, Integer isbn, Integer numberPages, String language, Country country,
+	    String series, String address, String edition, String isbn, Integer numberPages, String language, Country country,
 	    ScopeType scope, MultiLanguageString note, Month month, String url) {
 	super.setTitle(title);
 	super.setPublisher(publisher);
@@ -180,7 +180,7 @@ public class Book extends Book_Base {
     }
 
     @Override
-    public void setIsbn(Integer isbn) {
+    public void setIsbn(String isbn) {
 	throw new DomainException("error.researcher.Book.call", "setIsbn");
     }
 
