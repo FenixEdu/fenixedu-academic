@@ -66,7 +66,9 @@
 	        <fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
 		</fr:layout>
 	</fr:view>
-
+	
+	
+	<logic:present role="MANAGER">
 	<%-- show public candidacy access information --%>
 	<h3 style="margin-top: 1em;"><bean:message key="title.public.candidacy.information.access" bundle="CANDIDATE_RESOURCES" />:</h3>
 	
@@ -76,6 +78,7 @@
 	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 		</fr:layout>	
 	</fr:view>
+	</logic:present>
 
 	<%-- show home institution data --%>
 	<p class="mbottom05"><strong><bean:message key="label.erasmus.home.institution" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></p>

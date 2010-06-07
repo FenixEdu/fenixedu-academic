@@ -128,6 +128,7 @@
 		</fr:layout>
 	</fr:view>
 	
+	<logic:present role="MANAGER">
 	<%-- show public candidacy access information --%>
 	<h3 style="margin-top: 1em;"><bean:message key="title.public.candidacy.information.access" bundle="CANDIDATE_RESOURCES" />:</h3>
 	
@@ -137,6 +138,7 @@
 	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 		</fr:layout>	
 	</fr:view>
+	</logic:present>
 	
 	<%-- show documents--%>
 	<br/>
