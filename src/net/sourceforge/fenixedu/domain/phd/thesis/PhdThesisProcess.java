@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.phd.thesis;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.TreeSet;
@@ -25,6 +26,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.EditJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryDocumentsDownload;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryReporterFeedbackExternalUpload;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryReporterFeedbackUpload;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryReviewDocumentsDownload;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.MoveJuryElementOrder;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.PhdThesisActivity;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.PrintJuryElementsDocument;
@@ -91,6 +93,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	activities.add(new JuryReporterFeedbackExternalUpload());
 	activities.add(new ScheduleThesisMeetingRequest());
 	activities.add(new ScheduleThesisMeeting());
+	activities.add(new JuryReviewDocumentsDownload());
     }
 
     private PhdThesisProcess() {
@@ -287,4 +290,24 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
     public boolean isWaitingForJuryReporterFeedback() {
 	return getActiveState() == PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK;
     }
+
+    public boolean isAnyDocumentToValidate() {
+	for (final ThesisJuryElement element : getThesisJuryElements()) {
+	    if (element.getReporter().booleanValue() && !element.isDocumentValidated()) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    public Collection<PhdProgramProcessDocument> getReportThesisJuryElementDocuments() {
+	final Collection<PhdProgramProcessDocument> result = new HashSet<PhdProgramProcessDocument>();
+	for (final ThesisJuryElement element : getThesisJuryElements()) {
+	    if (element.getReporter().booleanValue() && element.isDocumentValidated()) {
+		result.add(element.getLastFeedbackDocument());
+	    }
+	}
+	return result;
+    }
+
 }
