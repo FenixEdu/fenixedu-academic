@@ -120,11 +120,10 @@ public class AlertService {
 
 	new PhdCustomAlert(alertBean);
     }
-    
+
     static public void alertGuiders(PhdIndividualProgramProcess process, String subjectKey, String bodyKey) {
 
 	final Set<Person> toNotify = new HashSet<Person>();
-
 	for (final PhdParticipant guiding : process.getGuidingsAndAssistantGuidings()) {
 	    if (guiding.isInternal()) {
 		toNotify.add(((InternalPhdParticipant) guiding).getPerson());
@@ -138,6 +137,30 @@ public class AlertService {
 	final PhdCustomAlertBean alertBean = new PhdCustomAlertBean(process, true, false, false);
 	alertBean.setSubject(getSubjectPrefixed(process, subjectKey));
 	alertBean.setBody(getBodyText(process, bodyKey));
+	alertBean.setFireDate(new LocalDate());
+	alertBean.setTargetGroup(new FixedSetGroup(toNotify));
+
+	new PhdCustomAlert(alertBean);
+
+    }
+
+    static public void alertGuiders(PhdIndividualProgramProcess process, AlertMessage subjectMessage, AlertMessage bodyMessage) {
+
+	final Set<Person> toNotify = new HashSet<Person>();
+
+	for (final PhdParticipant guiding : process.getGuidingsAndAssistantGuidings()) {
+	    if (guiding.isInternal()) {
+		toNotify.add(((InternalPhdParticipant) guiding).getPerson());
+	    } else {
+		new Message(RootDomainObject.getInstance().getSystemSender(), Collections.EMPTY_LIST, Collections.EMPTY_LIST,
+			getSubjectPrefixed(process, subjectMessage), getBodyText(process, bodyMessage), Collections
+				.singleton(guiding.getEmail()));
+	    }
+	}
+
+	final PhdCustomAlertBean alertBean = new PhdCustomAlertBean(process, true, false, false);
+	alertBean.setSubject(getSubjectPrefixed(process, subjectMessage));
+	alertBean.setBody(getBodyText(process, bodyMessage));
 	alertBean.setFireDate(new LocalDate());
 	alertBean.setTargetGroup(new FixedSetGroup(toNotify));
 
@@ -166,6 +189,17 @@ public class AlertService {
 	new PhdCustomAlert(alertBean);
     }
 
+    static public void alertAcademicOffice(PhdIndividualProgramProcess process, PhdPermissionType permissionType,
+	    AlertMessage subjectMessage, AlertMessage bodyMessage) {
+	final PhdCustomAlertBean alertBean = new PhdCustomAlertBean(process, true, false, true);
+	alertBean.setSubject(getSubjectPrefixed(process, subjectMessage));
+	alertBean.setBody(getBodyText(process, bodyMessage));
+	alertBean.setFireDate(new LocalDate());
+	alertBean.setTargetGroup(getTargetGroup(permissionType));
+
+	new PhdCustomAlert(alertBean);
+    }
+
     static protected AdministrativeOffice getAdministrativeOffice() {
 	return AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE);
     }
@@ -183,7 +217,8 @@ public class AlertService {
 	alertCoordinators(process, process.getCoordinatorsFor(ExecutionYear.readCurrentExecutionYear()), subjectKey, bodyKey);
     }
 
-    static private void alertCoordinators(PhdIndividualProgramProcess process, Set<Person> persons, String subjectKey, String bodyKey) {
+    static private void alertCoordinators(PhdIndividualProgramProcess process, Set<Person> persons, String subjectKey,
+	    String bodyKey) {
 	final PhdCustomAlertBean alertBean = new PhdCustomAlertBean(process, true, false, false);
 	alertBean.setSubject(getSubjectPrefixed(process, subjectKey));
 	alertBean.setBody(getBodyText(process, bodyKey));
@@ -196,12 +231,13 @@ public class AlertService {
     static public void alertCoordinators(PhdIndividualProgramProcess process, AlertMessage subject, AlertMessage body) {
 	alertCoordinators(process, process.getCoordinatorsFor(ExecutionYear.readCurrentExecutionYear()), subject, body);
     }
-    
+
     static public void alertResponsibleCoordinators(PhdIndividualProgramProcess process, AlertMessage subject, AlertMessage body) {
 	alertCoordinators(process, process.getResponsibleCoordinatorsFor(ExecutionYear.readCurrentExecutionYear()), subject, body);
     }
-    
-    static private void alertCoordinators(PhdIndividualProgramProcess process, Set<Person> persons, AlertMessage subject, AlertMessage body) {
+
+    static private void alertCoordinators(PhdIndividualProgramProcess process, Set<Person> persons, AlertMessage subject,
+	    AlertMessage body) {
 	final PhdCustomAlertBean alertBean = new PhdCustomAlertBean(process, true, false, false);
 	alertBean.setSubject(getSubjectPrefixed(process, subject));
 	alertBean.setBody(getBodyText(process, body));
@@ -211,11 +247,11 @@ public class AlertService {
     }
 
     static public String getSubjectPrefixed(PhdIndividualProgramProcess process, AlertMessage message) {
-	return getProcessNumberPrefix(process) + message.getMessage();
+	return (message.withPrefix() ? getProcessNumberPrefix(process) : "") + message.getMessage();
     }
 
     static public String getBodyText(PhdIndividualProgramProcess process, AlertMessage body) {
-	return getBodyCommonText(process) + body.getMessage();
+	return (body.withPrefix() ? getBodyCommonText(process) : "") + body.getMessage();
     }
 
     static public void alertParticipants(PhdIndividualProgramProcess process, AlertMessage subject, AlertMessage body,
@@ -244,6 +280,7 @@ public class AlertService {
 	private String label;
 	private Object[] args;
 	private boolean isKey = true;
+	private boolean withPrefix = true;
 
 	public AlertMessage label(String label) {
 	    this.label = label;
@@ -257,6 +294,15 @@ public class AlertService {
 
 	public AlertMessage isKey(boolean value) {
 	    this.isKey = value;
+	    return this;
+	}
+
+	protected boolean withPrefix() {
+	    return withPrefix;
+	}
+
+	public AlertMessage withPrefix(boolean value) {
+	    withPrefix = value;
 	    return this;
 	}
 
