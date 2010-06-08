@@ -3,14 +3,8 @@
  */
 package net.sourceforge.fenixedu.domain.phd.thesis.activities;
 
-import java.util.Collections;
-
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessType;
@@ -19,9 +13,6 @@ import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType;
 import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
-import net.sourceforge.fenixedu.domain.util.email.Message;
-import net.sourceforge.fenixedu.domain.util.email.SystemSender;
-import net.sourceforge.fenixedu.util.phd.PhdProperties;
 
 public class RequestJuryReviews extends PhdThesisActivity {
 
@@ -75,7 +66,7 @@ public class RequestJuryReviews extends PhdThesisActivity {
 		sendEmailToReporter(process.getIndividualProgramProcess(), participant);
 
 		// TODO:
-		// TODO: create alert to submit review
+		// TODO: create alert to submit review?
 		// TODO:
 
 	    } else {
@@ -83,26 +74,6 @@ public class RequestJuryReviews extends PhdThesisActivity {
 			"message.phd.request.jury.reviews.external.access.jury.body");
 	    }
 	}
-    }
-
-    private String getAccessInformation(PhdIndividualProgramProcess process, PhdParticipant participant) {
-
-	if (!participant.isInternal()) {
-	    return AlertMessage.get("message.phd.external.access", PhdProperties.getPhdExternalAccessLink(), participant
-		    .getAccessHashCode(), participant.getPassword());
-
-	} else {
-	    final Person person = ((InternalPhdParticipant) participant).getPerson();
-
-	    if (process.isCoordinatorForPhdProgram(person)) {
-		return AlertMessage.get("message.phd.request.jury.reviews.coordinator.access");
-
-	    } else if (process.isGuiderOrAssistentGuider(person) || person.hasTeacher()) {
-		return AlertMessage.get("message.phd.request.jury.reviews.teacher.access");
-	    }
-	}
-
-	throw new DomainException("error.PhdThesisProcess.unexpected.participant.type");
     }
 
     private void sendEmailToReporter(PhdIndividualProgramProcess process, PhdParticipant participant) {
@@ -115,7 +86,8 @@ public class RequestJuryReviews extends PhdThesisActivity {
 		+ "\n\n"
 		+ AlertMessage.get("message.phd.request.jury.reviews.reporter.body")
 		+ "\n\n"
-		+ getAccessInformation(process, participant);
+		+ getAccessInformation(process, participant, "message.phd.request.jury.reviews.coordinator.access",
+			"message.phd.request.jury.reviews.teacher.access");
 
 	email(participant.getEmail(), subject, body);
     }
@@ -124,8 +96,10 @@ public class RequestJuryReviews extends PhdThesisActivity {
 	final String subject = AlertMessage.get("message.phd.request.jury.reviews.external.access.subject", process
 		.getPhdProgram().getName());
 
-	final String body = AlertMessage.get(bodyMessage, process.getPerson().getName(), process.getProcessNumber()) + "\n\n"
-		+ getAccessInformation(process, participant) + "\n\n"
+	final String body = AlertMessage.get(bodyMessage, process.getPerson().getName(), process.getProcessNumber())
+		+ "\n\n"
+		+ getAccessInformation(process, participant, "message.phd.request.jury.reviews.coordinator.access",
+			"message.phd.request.jury.reviews.teacher.access") + "\n\n"
 		+ AlertMessage.get("message.phd.request.jury.external.access.reviews.body");
 
 	email(participant.getEmail(), subject, body);
@@ -139,11 +113,6 @@ public class RequestJuryReviews extends PhdThesisActivity {
 	if (juryElement.getReporter().booleanValue()) {
 	    participant.addAccessType(PhdProcessAccessType.JURY_REPORTER_FEEDBACK_UPLOAD);
 	}
-    }
-
-    private void email(String email, String subject, String body) {
-	final SystemSender sender = RootDomainObject.getInstance().getSystemSender();
-	new Message(sender, sender.getConcreteReplyTos(), null, null, null, subject, body, Collections.singleton(email));
     }
 
 }

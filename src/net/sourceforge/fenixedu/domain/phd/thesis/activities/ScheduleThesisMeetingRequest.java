@@ -13,11 +13,7 @@ public class ScheduleThesisMeetingRequest extends PhdThesisActivity {
     @Override
     protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
 
-	if (!process.hasState(PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK)) {
-	    throw new PreConditionNotValidException();
-	}
-
-	if (process.getActiveState() == PhdThesisProcessStateType.WAITING_FOR_THESIS_DISCUSSION_DATE_SCHEDULING) {
+	if (!process.getActiveState().equals(PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK)) {
 	    throw new PreConditionNotValidException();
 	}
 
@@ -33,6 +29,7 @@ public class ScheduleThesisMeetingRequest extends PhdThesisActivity {
 
 	if (bean.isToNotify()) {
 
+	    // Alert president jury element
 	    AlertService.alertParticipants(process.getIndividualProgramProcess(), AlertMessage
 		    .create("message.phd.request.schedule.meeting.president.notification.subject"), AlertMessage
 		    .create("message.phd.request.schedule.meeting.president.notification.body"), process
@@ -45,8 +42,9 @@ public class ScheduleThesisMeetingRequest extends PhdThesisActivity {
 
 	}
 
-	process.createState(PhdThesisProcessStateType.WAITING_FOR_THESIS_DISCUSSION_DATE_SCHEDULING, userView.getPerson(), bean
+	process.createState(PhdThesisProcessStateType.WAITING_FOR_THESIS_MEETING_SCHEDULING, userView.getPerson(), bean
 		.getRemarks());
+
 	return process;
     }
 }

@@ -7,6 +7,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 public class PhdThesisProcessBean implements Serializable {
@@ -14,6 +15,7 @@ public class PhdThesisProcessBean implements Serializable {
     static private final long serialVersionUID = 1L;
 
     private PhdIndividualProgramProcess process;
+    private PhdThesisProcess thesisProcess;
 
     private boolean toNotify = true;
     private String remarks;
@@ -25,6 +27,10 @@ public class PhdThesisProcessBean implements Serializable {
 
     private ThesisJuryElement juryElement;
 
+    private DateTime meetingDate;
+    private String meetingPlace;
+    private String mailSubject, mailBody;
+
     public PhdThesisProcessBean() {
 	this.documents = new ArrayList<PhdProgramDocumentUploadBean>();
     }
@@ -35,6 +41,14 @@ public class PhdThesisProcessBean implements Serializable {
 
     public void setProcess(PhdIndividualProgramProcess process) {
 	this.process = process;
+    }
+
+    public PhdThesisProcess getThesisProcess() {
+	return thesisProcess;
+    }
+
+    public void setThesisProcess(PhdThesisProcess thesisProcess) {
+	this.thesisProcess = thesisProcess;
     }
 
     public boolean isToNotify() {
@@ -95,6 +109,38 @@ public class PhdThesisProcessBean implements Serializable {
 
     public void setJuryElement(ThesisJuryElement juryElement) {
 	this.juryElement = juryElement;
+    }
+
+    public DateTime getMeetingDate() {
+	return meetingDate;
+    }
+
+    public void setMeetingDate(DateTime meetingDate) {
+	this.meetingDate = meetingDate;
+    }
+
+    public String getMeetingPlace() {
+	return meetingPlace;
+    }
+
+    public void setMeetingPlace(String meetingPlace) {
+	this.meetingPlace = meetingPlace;
+    }
+
+    public String getMailSubject() {
+	return mailSubject;
+    }
+
+    public void setMailSubject(String mailSubject) {
+	this.mailSubject = mailSubject;
+    }
+
+    public String getMailBody() {
+	return mailBody;
+    }
+
+    public void setMailBody(String mailBody) {
+	this.mailBody = mailBody;
     }
 
 }
