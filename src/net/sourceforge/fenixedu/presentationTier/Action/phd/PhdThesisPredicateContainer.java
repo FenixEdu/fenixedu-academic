@@ -7,7 +7,7 @@ import static net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateTy
 import static net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType.WAITING_FOR_JURY_CONSTITUTION;
 import static net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK;
 import static net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType.WAITING_FOR_THESIS_DISCUSSION_DATE_SCHEDULING;
-import static net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType.WAITING_FOR_THESIS_PROVISIONAL_VERSION_APPROVAL;
+import static net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType.WAITING_FOR_THESIS_MEETING_SCHEDULING;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType;
 import pt.utl.ist.fenix.tools.predicates.InlinePredicate;
@@ -31,7 +31,7 @@ public enum PhdThesisPredicateContainer implements PredicateContainer<PhdIndivid
 		    add(new PhdThesisPredicate(JURY_VALIDATED));
 
 		    add(new PhdThesisPredicate(WAITING_FOR_JURY_REPORTER_FEEDBACK));
-		    add(new PhdThesisPredicate(WAITING_FOR_THESIS_PROVISIONAL_VERSION_APPROVAL));
+		    add(new PhdThesisPredicate(WAITING_FOR_THESIS_MEETING_SCHEDULING));
 		    add(new PhdThesisPredicate(WAITING_FOR_THESIS_DISCUSSION_DATE_SCHEDULING));
 		}
 	    };
