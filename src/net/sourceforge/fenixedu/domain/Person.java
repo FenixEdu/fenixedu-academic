@@ -3553,4 +3553,67 @@ public class Person extends Person_Base {
 	return emailAddress == null ? null : emailAddress.getValue();
     }
 
+    public String getWorkingPlaceCostCenter() {
+	final Employee employee = getEmployee();
+	final Unit unit = employee == null ? null : employee.getCurrentWorkingPlace();
+	final Integer costCenterCode = unit == null ? null : unit.getCostCenterCode();
+	return costCenterCode == null ? null : costCenterCode.toString();
+    }
+
+    public String getEmployeeRoleDescription() {
+	final RoleType roleType = getMostImportantRoleType(RoleType.TEACHER, RoleType.RESEARCHER, RoleType.EMPLOYEE);
+	return roleType.name();
+    }
+
+    private RoleType getMostImportantRoleType(final RoleType... roleTypes) {
+	for (final RoleType roleType : roleTypes) {
+	    if (hasRole(roleType)) {
+		return roleType;
+	    }
+	}
+	return null;
+    }
+
+    public String readAllTeacherInformation() {
+	return readAllInformation(RoleType.TEACHER);
+    }
+
+    public String readAllResearcherInformation() {
+	return readAllInformation(RoleType.RESEARCHER, RoleType.TEACHER);
+    }
+
+    public String readAllEmployeeInformation() {
+	return readAllInformation(RoleType.EMPLOYEE, RoleType.RESEARCHER, RoleType.TEACHER);
+    }
+
+    protected static String readAllInformation(final RoleType roleType, final RoleType... exclusionRoleTypes) {
+	final Role role = Role.getRoleByRoleType(roleType);
+	final StringBuilder result = new StringBuilder();
+	for (final Person person : role.getAssociatedPersonsSet()) {
+	    if (person.hasRole(roleType) && !hasAnyRole(person, exclusionRoleTypes)) {
+		final String costCenter = person.getWorkingPlaceCostCenter();
+		if (costCenter != null && !costCenter.isEmpty()) {
+		    if (result.length() > 0) {
+			result.append('|');
+		    }
+		    result.append(person.getUsername());
+		    result.append(':');
+		    result.append(roleType.name());
+		    result.append(':');
+		    result.append(costCenter);
+		}
+	    }
+	}
+	return result.toString();
+    }
+
+    private static boolean hasAnyRole(final Person person, final RoleType[] roleTypes) {
+	for (final RoleType roleType : roleTypes) {
+	    if (person.hasRole(roleType)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
 }
