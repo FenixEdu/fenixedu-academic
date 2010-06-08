@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 import java.util.Arrays;
 import java.util.List;
 
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
@@ -68,6 +69,17 @@ public class ProgramCertificateRequest extends ProgramCertificateRequest_Base {
     protected void disconnect() {
 	getEnrolments().clear();
 	super.disconnect();
+    }
+
+    @Override
+    protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
+	super.internalChangeState(academicServiceRequestBean);
+
+	if (academicServiceRequestBean.isToCancelOrReject()) {
+	    for (; hasAnyEnrolments();) {
+		removeEnrolments(getEnrolments().get(0));
+	    }
+	}
     }
 
     @Override

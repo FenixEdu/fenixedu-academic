@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -47,6 +48,17 @@ public class StandaloneEnrolmentCertificateRequest extends StandaloneEnrolmentCe
     @Override
     public boolean isAvailableForTransitedRegistrations() {
 	return true;
+    }
+
+    @Override
+    protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
+	super.internalChangeState(academicServiceRequestBean);
+
+	if (academicServiceRequestBean.isToCancelOrReject()) {
+	    for (; hasAnyEnrolments();) {
+		removeEnrolments(getEnrolments().get(0));
+	    }
+	}
     }
 
 }
