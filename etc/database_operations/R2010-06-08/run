@@ -44,3 +44,5 @@ function executeWithTempFile() {
 }
 
 execute "Add Approved Learning Agreeemnt association" addApprovedLearningAgreementAssociation.sql
+execute "Adding CREATION_DATE column to STUDENT_STATUTE (existing entries will be marked with present date)." addCreationDateToStudentStatute.sql
+
