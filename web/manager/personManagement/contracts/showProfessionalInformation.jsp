@@ -14,19 +14,19 @@
 		<fr:view name="person" schema="net.sourceforge.fenixedu.domain.Person.user.info" layout="tabular"/>
 	</div>
 	<logic:notEmpty name="person" property="employee">
-		<bean:define id="personID" name="person" property="idInternal"/>
 		<bean:define id="personExternalId" name="person" property="externalId"/>
 		<p class="invisible">
 		<html:link page="<%= "/professionalInformation.do?method=showProfessioanlData&personId="+ personExternalId%>"><bean:message key="label.professionalData" bundle="CONTRACTS_RESOURCES"/></html:link>,
 			<html:link page="<%= "/professionalInformation.do?method=showSituations&personId="+ personExternalId%>"><bean:message key="label.situations" bundle="CONTRACTS_RESOURCES"/></html:link>,
-			<html:link page="<%= "/professionalInformation.do?method=showCategories&personId="+ personID%>"><bean:message key="label.categories" bundle="CONTRACTS_RESOURCES"/></html:link>, 
-			<html:link page="<%= "/professionalInformation.do?method=showRegimes&personId="+ personID%>"><bean:message key="label.regimes" bundle="CONTRACTS_RESOURCES"/></html:link>,
-			<html:link page="<%= "/professionalInformation.do?method=showRelations&personId="+ personID%>"><bean:message key="label.relations" bundle="CONTRACTS_RESOURCES"/></html:link>,
-			<html:link page="<%= "/professionalInformation.do?method=showContracts&personId="+ personID%>"><bean:message key="label.contracts" bundle="CONTRACTS_RESOURCES"/></html:link>,
-			<html:link page="<%= "/professionalInformation.do?method=showFunctionsAccumulations&personId="+ personID%>"><bean:message key="label.functionsAccumulations" bundle="CONTRACTS_RESOURCES"/></html:link>,
-			<html:link page="<%= "/professionalInformation.do?method=showSabbaticals&personId="+ personID%>"><bean:message key="label.sabbaticals" bundle="CONTRACTS_RESOURCES"/></html:link>,
-			<html:link page="<%= "/professionalInformation.do?method=showServiceExemptions&personId="+ personID%>"><bean:message key="label.serviceExemptions" bundle="CONTRACTS_RESOURCES"/></html:link>,
-			<html:link page="<%= "/professionalInformation.do?method=showGrantOwnerEquivalences&personId="+ personID%>"><bean:message key="label.grantOwnerEquivalences" bundle="CONTRACTS_RESOURCES"/></html:link>
+			<html:link page="<%= "/professionalInformation.do?method=showCategories&personId="+ personExternalId%>"><bean:message key="label.categories" bundle="CONTRACTS_RESOURCES"/></html:link>, 
+			<html:link page="<%= "/professionalInformation.do?method=showRegimes&personId="+ personExternalId%>"><bean:message key="label.regimes" bundle="CONTRACTS_RESOURCES"/></html:link>,
+			<html:link page="<%= "/professionalInformation.do?method=showRelations&personId="+ personExternalId%>"><bean:message key="label.relations" bundle="CONTRACTS_RESOURCES"/></html:link>,
+			<html:link page="<%= "/professionalInformation.do?method=showContracts&personId="+ personExternalId%>"><bean:message key="label.contracts" bundle="CONTRACTS_RESOURCES"/></html:link>,
+			<html:link page="<%= "/professionalInformation.do?method=showFunctionsAccumulations&personId="+ personExternalId%>"><bean:message key="label.functionsAccumulations" bundle="CONTRACTS_RESOURCES"/></html:link>,
+			<html:link page="<%= "/professionalInformation.do?method=showSabbaticals&personId="+ personExternalId%>"><bean:message key="label.sabbaticals" bundle="CONTRACTS_RESOURCES"/></html:link>,
+			<html:link page="<%= "/professionalInformation.do?method=showServiceExemptions&personId="+ personExternalId%>"><bean:message key="label.serviceExemptions" bundle="CONTRACTS_RESOURCES"/></html:link>,
+			<html:link page="<%= "/professionalInformation.do?method=showGrantOwnerEquivalences&personId="+ personExternalId%>"><bean:message key="label.grantOwnerEquivalences" bundle="CONTRACTS_RESOURCES"/></html:link>,
+			<html:link page="<%= "/professionalInformation.do?method=showEmployeeWorkingUnits&personId="+ personExternalId%>"><bean:message key="label.employeeWorkingUnits" bundle="CONTRACTS_RESOURCES"/></html:link>
 		</p>
 		
 		<style>
@@ -304,5 +304,23 @@
 			</fr:view>
 		</logic:present>
 		
+		<logic:present name="workingUnits">
+			<div class="infoop">
+				<strong><bean:message key="label.employeeWorkingUnits" bundle="CONTRACTS_RESOURCES"/></strong>
+			</div><br/>
+			<fr:view name="workingUnits">
+				<fr:schema type="net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeContract" bundle="CONTRACTS_RESOURCES">
+					<fr:slot name="beginDate"/>
+					<fr:slot name="endDate"/>
+					<fr:slot name="parentParty.presentationName" key="label.unit">
+					</fr:slot>
+					<fr:slot name="teacherContract"/>
+				</fr:schema>
+				<fr:layout name="tabular">
+					<fr:property name="sortBy" value="beginDate, endDate"/>
+					<fr:property name="classes" value="tstyle1 thlight mtop025" />
+				</fr:layout>
+			</fr:view>
+		</logic:present>
 	</logic:notEmpty>
 </logic:present>
