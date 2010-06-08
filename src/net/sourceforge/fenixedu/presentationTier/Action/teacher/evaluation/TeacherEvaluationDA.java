@@ -284,6 +284,47 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 	return mapping.findForward("viewEvaluationByCCAD");
     }
 
+    public ActionForward exportAutoEvaluationFiles(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	ByteArrayOutputStream bout = new ByteArrayOutputStream();
+	ZipOutputStream zip = new ZipOutputStream(bout);
+	final String fileSeparator = "/";
+	try {
+	    for (FacultyEvaluationProcess facultyEvaluationProcess : rootDomainObject.getFacultyEvaluationProcess()) {
+		String evaluationName = (facultyEvaluationProcess.getSuffix() == null ? facultyEvaluationProcess.getTitle()
+			.getContent() : facultyEvaluationProcess.getSuffix());
+		for (TeacherEvaluationProcess teacherEvaluationProcess : facultyEvaluationProcess
+			.getTeacherEvaluationProcessSet()) {
+		    TeacherEvaluation teacherEvaluation = teacherEvaluationProcess.getCurrentTeacherEvaluation();
+		    if (teacherEvaluation != null) {
+			String department = teacherEvaluation.getTeacherEvaluationProcess().getEvaluee().getTeacher()
+				.getLastWorkingDepartment().getName();
+			for (TeacherEvaluationFile teacherEvaluationFile : teacherEvaluation.getTeacherEvaluationFileSet()) {
+			    if (teacherEvaluation.getAutoEvaluationFileSet().contains(
+				    teacherEvaluationFile.getTeacherEvaluationFileType())) {
+				zip.putNextEntry(new ZipEntry(department + fileSeparator + evaluationName + fileSeparator
+					+ teacherEvaluationFile.getFilename()));
+				zip.write(teacherEvaluationFile.getContents());
+				zip.closeEntry();
+			    }
+			}
+		    }
+		}
+	    }
+	    zip.close();
+	    response.setContentType("application/zip");
+	    response.addHeader("Content-Disposition", "attachment; filename=autoAvaliação.zip");
+	    ServletOutputStream writer = response.getOutputStream();
+	    writer.write(bout.toByteArray());
+	    writer.flush();
+	    writer.close();
+	    response.flushBuffer();
+	} catch (IOException e) {
+	    e.printStackTrace();
+	}
+	return null;
+    }
+
     public ActionForward exportEvaluationFiles(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	ByteArrayOutputStream bout = new ByteArrayOutputStream();
