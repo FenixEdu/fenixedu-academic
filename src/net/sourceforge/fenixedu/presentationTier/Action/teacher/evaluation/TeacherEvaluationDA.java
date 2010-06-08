@@ -290,6 +290,7 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 	ByteArrayOutputStream bout = new ByteArrayOutputStream();
 	ZipOutputStream zip = new ZipOutputStream(bout);
 	final String fileSeparator = "/";
+	final String withoutDepartment = "Sem departamento";
 	try {
 	    for (FacultyEvaluationProcess facultyEvaluationProcess : rootDomainObject.getFacultyEvaluationProcess()) {
 		String evaluationName = (facultyEvaluationProcess.getSuffix() == null ? facultyEvaluationProcess.getTitle()
@@ -299,7 +300,8 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 		    TeacherEvaluation teacherEvaluation = teacherEvaluationProcess.getCurrentTeacherEvaluation();
 		    if (teacherEvaluation != null) {
 			String department = teacherEvaluation.getTeacherEvaluationProcess().getEvaluee().getTeacher()
-				.getLastWorkingDepartment().getName();
+				.getLastWorkingDepartment() != null ? withoutDepartment : teacherEvaluation
+				.getTeacherEvaluationProcess().getEvaluee().getTeacher().getLastWorkingDepartment().getName();
 			for (TeacherEvaluationFileType teacherEvaluationFileType : teacherEvaluation.getAutoEvaluationFileSet()) {
 			    TeacherEvaluationFileBean teacherEvaluationFileBean = new TeacherEvaluationFileBean(
 				    teacherEvaluation, teacherEvaluationFileType);
@@ -332,6 +334,7 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 	ByteArrayOutputStream bout = new ByteArrayOutputStream();
 	ZipOutputStream zip = new ZipOutputStream(bout);
 	final String fileSeparator = "/";
+	final String withoutDepartment = "Sem departamento";
 	try {
 	    for (FacultyEvaluationProcess facultyEvaluationProcess : rootDomainObject.getFacultyEvaluationProcess()) {
 		String evaluationName = (facultyEvaluationProcess.getSuffix() == null ? facultyEvaluationProcess.getTitle()
@@ -341,7 +344,8 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 		    TeacherEvaluation teacherEvaluation = teacherEvaluationProcess.getCurrentTeacherEvaluation();
 		    if (teacherEvaluation != null) {
 			String department = teacherEvaluation.getTeacherEvaluationProcess().getEvaluee().getTeacher()
-				.getLastWorkingDepartment().getName();
+				.getLastWorkingDepartment() != null ? withoutDepartment : teacherEvaluation
+				.getTeacherEvaluationProcess().getEvaluee().getTeacher().getLastWorkingDepartment().getName();
 			for (TeacherEvaluationFileType teacherEvaluationFileType : teacherEvaluation.getEvaluationFileSet()) {
 			    TeacherEvaluationFileBean teacherEvaluationFileBean = new TeacherEvaluationFileBean(
 				    teacherEvaluation, teacherEvaluationFileType);
