@@ -97,10 +97,10 @@ public class Message extends Message_Base {
 	    removeRecipients(recipient);
 	}
 	for (final Recipient recipient : getTosSet()) {
-	    removeRecipients(recipient);
+	    removeTos(recipient);
 	}
 	for (final Recipient recipient : getCcsSet()) {
-	    removeRecipients(recipient);
+	    removeCcs(recipient);
 	}
 	for (final ReplyTo replyTo : getReplyTosSet()) {
 	    replyTo.safeDelete();
