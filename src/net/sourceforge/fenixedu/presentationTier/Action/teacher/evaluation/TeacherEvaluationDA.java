@@ -298,7 +298,7 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 		    TeacherEvaluation teacherEvaluation = teacherEvaluationProcess.getCurrentTeacherEvaluation();
 		    if (teacherEvaluation != null) {
 			String department = teacherEvaluation.getTeacherEvaluationProcess().getEvaluee().getTeacher()
-				.getCurrentWorkingDepartment().getName();
+				.getLastWorkingDepartment().getName();
 			for (TeacherEvaluationFile teacherEvaluationFile : teacherEvaluation.getTeacherEvaluationFileSet()) {
 			    if (teacherEvaluation.getEvaluationFileSet().contains(
 				    teacherEvaluationFile.getTeacherEvaluationFileType())) {
