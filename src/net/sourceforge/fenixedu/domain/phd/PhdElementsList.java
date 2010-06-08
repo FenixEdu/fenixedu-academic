@@ -75,8 +75,8 @@ abstract public class PhdElementsList<T> implements Serializable {
 
     public PhdElementsList<T> addAccessTypes(T... types) {
 	final PhdElementsList<T> result = createNewInstance();
-	result.types.addAll(Arrays.asList(types));
 	result.types.addAll(getTypes());
+	result.types.addAll(Arrays.asList(types));
 	return result;
     }
 
