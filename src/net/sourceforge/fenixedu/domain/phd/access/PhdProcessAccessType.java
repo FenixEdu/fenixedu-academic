@@ -7,27 +7,47 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.phd.PhdProcessStateType;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
+import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public enum PhdProcessAccessType {
 
-    CANDIDACY_FEEDBACK_DOCUMENTS_DOWNLOAD("CandidacyFeedbackDocumentsDownload",
+    CANDIDACY_FEEDBACK_DOCUMENTS_DOWNLOAD(
+
+    "CandidacyFeedbackDocumentsDownload",
 
     PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION),
 
-    CANDIDACY_FEEDBACK_UPLOAD("CandidacyFeedbackUpload",
+    CANDIDACY_FEEDBACK_UPLOAD(
+
+    "CandidacyFeedbackUpload",
 
     PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION),
 
-    JURY_DOCUMENTS_DOWNLOAD("JuryDocumentsDownload"),
+    JURY_DOCUMENTS_DOWNLOAD(
 
-    JURY_REPORTER_FEEDBACK_UPLOAD("JuryReporterFeedbackUpload");
+    "JuryDocumentsDownload",
+
+    PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK),
+
+    JURY_REPORTER_FEEDBACK_UPLOAD(
+
+    "JuryReporterFeedbackUpload",
+
+    PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK),
+
+    JURY_REVIEW_DOCUMENTS_DOWNLOAD(
+
+    "JuryReviewDocumentsDownload",
+
+    PhdThesisProcessStateType.THESIS_DISCUSSION_DATE_SCHECULED);
 
     private String descriptor;
 
     /**
-     * Indicates accepted process states. If process is not in the specified
-     * states, then access type operation will not be available.
+     * Indicates accepted process states. Operation will be available if no
+     * access type is specified or if process contais any of given process state
+     * 
      * 
      * <pre>
      * Example:
