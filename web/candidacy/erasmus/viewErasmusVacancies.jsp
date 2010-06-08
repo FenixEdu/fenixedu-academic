@@ -41,6 +41,7 @@
 			<fr:property name="linkFormat(delete)" value="<%= String.format("/caseHandlingErasmusCandidacyProcess.do?method=executeRemoveVacancy&amp;processId=%s&amp;vacancyExternalId=${externalId}", processId.toString()) %>" />
 			<fr:property name="key(delete)" value="label.erasmus.vacancy.vacancy.removal" />
 			<fr:property name="bundle(delete)" value="ACADEMIC_OFFICE_RESOURCES" />
+			<fr:property name="visibleIfNot(delete)" value="vacancyAssociatedToAnyCandidacy" />
 			<fr:property name="confirmationKey(delete)" value="message.erasmus.vacancy.confirm.vacancy.removal" />
 			<fr:property name="confirmationBundle(delete)" value="ACADEMIC_OFFICE_RESOURCES" />
 	        
