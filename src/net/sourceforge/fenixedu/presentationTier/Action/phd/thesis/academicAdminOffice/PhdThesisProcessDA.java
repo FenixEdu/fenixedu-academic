@@ -71,7 +71,9 @@ import pt.utl.ist.fenix.tools.util.Pair;
 
 @Forward(name = "manageThesisDocuments", path = "/phd/thesis/academicAdminOffice/manageThesisDocuments.jsp"),
 
-@Forward(name = "requestScheduleThesisMeeting", path = "/phd/thesis/academicAdminOffice/requestScheduleThesisMeeting.jsp")
+@Forward(name = "requestScheduleThesisMeeting", path = "/phd/thesis/academicAdminOffice/requestScheduleThesisMeeting.jsp"),
+
+@Forward(name = "scheduleThesisMeeting", path = "/phd/thesis/academicAdminOffice/scheduleThesisMeeting.jsp")
 
 })
 public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
@@ -511,7 +513,6 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 	return viewIndividualProgramProcess(request, getProcess(request));
 
     }
-
     // End of schedule thesis meeting request
 
 }

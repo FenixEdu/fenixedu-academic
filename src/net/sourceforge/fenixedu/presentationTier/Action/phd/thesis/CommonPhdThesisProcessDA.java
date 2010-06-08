@@ -10,10 +10,12 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
+import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.DeleteDocument;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryReporterFeedbackUpload;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisMeeting;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdDocumentsZip;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
@@ -130,4 +132,56 @@ abstract public class CommonPhdThesisProcessDA extends PhdProcessDA {
 
     // End of manage thesis documents
 
+    // Schedule thesis meeting
+
+    public ActionForward prepareScheduleThesisMeeting(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final PhdThesisProcessBean bean = new PhdThesisProcessBean();
+	final PhdThesisProcess thesisProcess = getProcess(request);
+
+	bean.setThesisProcess(thesisProcess);
+	setDefaultMailInformation(bean, thesisProcess);
+
+	request.setAttribute("thesisProcessBean", bean);
+	return mapping.findForward("scheduleThesisMeeting");
+    }
+
+    private void setDefaultMailInformation(final PhdThesisProcessBean bean, final PhdThesisProcess thesisProcess) {
+	final PhdIndividualProgramProcess process = thesisProcess.getIndividualProgramProcess();
+	bean.setMailSubject(AlertService
+		.getSubjectPrefixed(process, "message.phd.thesis.schedule.thesis.meeting.default.subject"));
+	bean.setMailBody(AlertService.getBodyText(process, "message.phd.thesis.schedule.thesis.meeting.default.body"));
+    }
+
+    public ActionForward scheduleThesisMeetingInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("thesisProcessBean", getThesisProcessBean());
+	return mapping.findForward("scheduleThesisMeeting");
+    }
+
+    public ActionForward scheduleThesisMeetingPostback(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("thesisProcessBean", getThesisProcessBean());
+	RenderUtils.invalidateViewState();
+	return mapping.findForward("scheduleThesisMeeting");
+    }
+
+    public ActionForward scheduleThesisMeeting(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final PhdThesisProcess thesisProcess = getProcess(request);
+
+	try {
+	    ExecuteProcessActivity.run(thesisProcess, ScheduleThesisMeeting.class, getThesisProcessBean());
+
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	    return scheduleThesisMeetingInvalid(mapping, actionForm, request, response);
+	}
+
+	return viewIndividualProgramProcess(request, thesisProcess);
+    }
+
+    // End of schedule thesis meeting
 }
