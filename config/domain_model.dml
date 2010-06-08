@@ -5265,6 +5265,7 @@ class DomainObject {
 
     class student.StudentStatute extends DomainObject {
         StudentStatuteType statuteType;
+        DateTime creationDate;
     }
 
     class student.WeeklyWorkLoad extends DomainObject {

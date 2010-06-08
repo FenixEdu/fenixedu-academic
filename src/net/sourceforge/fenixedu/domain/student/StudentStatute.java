@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.student;
 
+import org.joda.time.DateTime;
+
 import net.sourceforge.fenixedu.dataTransferObject.student.ManageStudentStatuteBean;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -17,6 +19,7 @@ public class StudentStatute extends StudentStatute_Base {
     private StudentStatute() {
 	super();
 	super.setRootDomainObject(RootDomainObject.getInstance());
+	setCreationDate(new DateTime());
     }
 
     public StudentStatute(Student student, StudentStatuteType statuteType, ExecutionSemester beginExecutionPeriod,
