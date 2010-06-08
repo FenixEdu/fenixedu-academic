@@ -37,6 +37,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisMeeti
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisMeetingRequest;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitJuryElementsDocuments;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitThesis;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitThesisMeetingMinutes;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SwapJuryElementsOrder;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.ValidateJury;
 
@@ -94,6 +95,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	activities.add(new ScheduleThesisMeetingRequest());
 	activities.add(new ScheduleThesisMeeting());
 	activities.add(new JuryReviewDocumentsDownload());
+	activities.add(new SubmitThesisMeetingMinutes());
     }
 
     private PhdThesisProcess() {
@@ -308,6 +310,10 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	    }
 	}
 	return result;
+    }
+
+    public PhdProgramProcessDocument getJuryMeetingMinutesDocument() {
+	return getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.JURY_MEETING_MINUTES);
     }
 
 }

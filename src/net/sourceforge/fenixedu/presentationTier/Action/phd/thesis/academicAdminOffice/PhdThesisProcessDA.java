@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryReviews;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisMeetingRequest;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitJuryElementsDocuments;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitThesis;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitThesisMeetingMinutes;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SwapJuryElementsOrder;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.ValidateJury;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.thesis.CommonPhdThesisProcessDA;
@@ -73,7 +74,9 @@ import pt.utl.ist.fenix.tools.util.Pair;
 
 @Forward(name = "requestScheduleThesisMeeting", path = "/phd/thesis/academicAdminOffice/requestScheduleThesisMeeting.jsp"),
 
-@Forward(name = "scheduleThesisMeeting", path = "/phd/thesis/academicAdminOffice/scheduleThesisMeeting.jsp")
+@Forward(name = "scheduleThesisMeeting", path = "/phd/thesis/academicAdminOffice/scheduleThesisMeeting.jsp"),
+
+@Forward(name = "submitThesisMeetingMinutes", path = "/phd/thesis/academicAdminOffice/submitThesisMeetingMinutes.jsp")
 
 })
 public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
@@ -513,6 +516,42 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 	return viewIndividualProgramProcess(request, getProcess(request));
 
     }
+
     // End of schedule thesis meeting request
 
+    // Submit thesis meeting minutes
+
+    public ActionForward prepareSubmitThesisMeetingMinutes(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	final PhdThesisProcessBean bean = new PhdThesisProcessBean();
+	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.JURY_MEETING_MINUTES));
+
+	request.setAttribute("thesisBean", bean);
+	return mapping.findForward("submitThesisMeetingMinutes");
+    }
+
+    public ActionForward prepareSubmitThesisMeetingMinutesInvalid(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	RenderUtils.invalidateViewState("thesisBean.edit.documents");
+	request.setAttribute("thesisBean", getRenderedObject("thesisBean"));
+
+	return mapping.findForward("submitThesisMeetingMinutes");
+    }
+
+    public ActionForward submitThesisMeetingMinutes(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	try {
+	    ExecuteProcessActivity.run(getProcess(request), SubmitThesisMeetingMinutes.class, getRenderedObject("thesisBean"));
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getMessage(), e.getArgs());
+	    return prepareSubmitThesisMeetingMinutesInvalid(mapping, form, request, response);
+	}
+
+	return viewIndividualProgramProcess(request, getProcess(request));
+    }
+
+    // End submit thesis meeting minutes
 }

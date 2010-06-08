@@ -103,6 +103,7 @@ public class ScheduleThesisMeeting extends PhdThesisActivity {
     private String getScheduledMeetingInformation(final PhdThesisProcessBean bean) {
 	final StringBuilder sb = new StringBuilder();
 
+	sb.append("\n");
 	sb.append(AlertMessage.get("label.phd.date")).append(": ");
 	sb.append(bean.getMeetingDate().toString("dd/MM/yyyy")).append("\n");
 	sb.append(AlertMessage.get("label.phd.hour")).append(": ");
