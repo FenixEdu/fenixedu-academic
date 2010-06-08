@@ -290,6 +290,7 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 	ByteArrayOutputStream bout = new ByteArrayOutputStream();
 	ZipOutputStream zip = new ZipOutputStream(bout);
 	final String fileSeparator = "/";
+	final String fileNameSeparator = "_";
 	final String withoutDepartment = "Sem departamento";
 	try {
 	    for (FacultyEvaluationProcess facultyEvaluationProcess : rootDomainObject.getFacultyEvaluationProcess()) {
@@ -307,6 +308,7 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 				    teacherEvaluation, teacherEvaluationFileType);
 			    if (teacherEvaluationFileBean.getTeacherEvaluationFile() != null) {
 				zip.putNextEntry(new ZipEntry(department + fileSeparator + evaluationName + fileSeparator
+					+ teacherEvaluationFileBean.getTeacherEvaluationFileType() + fileNameSeparator
 					+ teacherEvaluationFileBean.getTeacherEvaluationFile().getFilename()));
 				zip.write(teacherEvaluationFileBean.getTeacherEvaluationFile().getContents());
 				zip.closeEntry();
@@ -334,6 +336,7 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 	ByteArrayOutputStream bout = new ByteArrayOutputStream();
 	ZipOutputStream zip = new ZipOutputStream(bout);
 	final String fileSeparator = "/";
+	final String fileNameSeparator = "_";
 	final String withoutDepartment = "Sem departamento";
 	try {
 	    for (FacultyEvaluationProcess facultyEvaluationProcess : rootDomainObject.getFacultyEvaluationProcess()) {
@@ -351,6 +354,7 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 				    teacherEvaluation, teacherEvaluationFileType);
 			    if (teacherEvaluationFileBean.getTeacherEvaluationFile() != null) {
 				zip.putNextEntry(new ZipEntry(department + fileSeparator + evaluationName + fileSeparator
+					+ teacherEvaluationFileBean.getTeacherEvaluationFileType() + fileNameSeparator
 					+ teacherEvaluationFileBean.getTeacherEvaluationFile().getFilename()));
 				zip.write(teacherEvaluationFileBean.getTeacherEvaluationFile().getContents());
 				zip.closeEntry();
