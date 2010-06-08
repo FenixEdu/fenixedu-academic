@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.teacher.evaluation.FacultyEvaluationProce
 import net.sourceforge.fenixedu.domain.teacher.evaluation.FileUploadBean;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluation;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationFile;
+import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationFileBean;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationFileType;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationProcess;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -299,12 +300,13 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 		    if (teacherEvaluation != null) {
 			String department = teacherEvaluation.getTeacherEvaluationProcess().getEvaluee().getTeacher()
 				.getLastWorkingDepartment().getName();
-			for (TeacherEvaluationFile teacherEvaluationFile : teacherEvaluation.getTeacherEvaluationFileSet()) {
-			    if (teacherEvaluation.getAutoEvaluationFileSet().contains(
-				    teacherEvaluationFile.getTeacherEvaluationFileType())) {
+			for (TeacherEvaluationFileType teacherEvaluationFileType : teacherEvaluation.getAutoEvaluationFileSet()) {
+			    TeacherEvaluationFileBean teacherEvaluationFileBean = new TeacherEvaluationFileBean(
+				    teacherEvaluation, teacherEvaluationFileType);
+			    if (teacherEvaluationFileBean.getTeacherEvaluationFile() != null) {
 				zip.putNextEntry(new ZipEntry(department + fileSeparator + evaluationName + fileSeparator
-					+ teacherEvaluationFile.getFilename()));
-				zip.write(teacherEvaluationFile.getContents());
+					+ teacherEvaluationFileBean.getTeacherEvaluationFile().getFilename()));
+				zip.write(teacherEvaluationFileBean.getTeacherEvaluationFile().getContents());
 				zip.closeEntry();
 			    }
 			}
@@ -340,12 +342,13 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 		    if (teacherEvaluation != null) {
 			String department = teacherEvaluation.getTeacherEvaluationProcess().getEvaluee().getTeacher()
 				.getLastWorkingDepartment().getName();
-			for (TeacherEvaluationFile teacherEvaluationFile : teacherEvaluation.getTeacherEvaluationFileSet()) {
-			    if (teacherEvaluation.getEvaluationFileSet().contains(
-				    teacherEvaluationFile.getTeacherEvaluationFileType())) {
+			for (TeacherEvaluationFileType teacherEvaluationFileType : teacherEvaluation.getEvaluationFileSet()) {
+			    TeacherEvaluationFileBean teacherEvaluationFileBean = new TeacherEvaluationFileBean(
+				    teacherEvaluation, teacherEvaluationFileType);
+			    if (teacherEvaluationFileBean.getTeacherEvaluationFile() != null) {
 				zip.putNextEntry(new ZipEntry(department + fileSeparator + evaluationName + fileSeparator
-					+ teacherEvaluationFile.getFilename()));
-				zip.write(teacherEvaluationFile.getContents());
+					+ teacherEvaluationFileBean.getTeacherEvaluationFile().getFilename()));
+				zip.write(teacherEvaluationFileBean.getTeacherEvaluationFile().getContents());
 				zip.closeEntry();
 			    }
 			}
