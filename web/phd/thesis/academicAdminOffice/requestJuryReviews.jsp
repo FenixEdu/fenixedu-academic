@@ -66,6 +66,10 @@
 
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 
+<bean:define id="anyDocumentToValidate" name="process" property="anyDocumentToValidate" />
+
+<logic:equal name="anyDocumentToValidate" value="true">
+
 <br/>
 <strong><bean:message key="label.phd.request.jury.reviews" bundle="PHD_RESOURCES" /></strong>
 <fr:form action="<%= "/phdThesisProcess.do?processId=" + processId.toString() %>">
@@ -92,8 +96,12 @@
 	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='viewIndividualProgramProcess';"><bean:message bundle="PHD_RESOURCES" key="label.cancel"/></html:cancel>	
 </fr:form>
 
+</logic:equal>
 
-<br/><br/>
+<logic:equal name="anyDocumentToValidate" value="false">
+	<br/>
+	<em>Todos os pareceres foram submetidos.</em>
+</logic:equal>
 
 <%--  ### End of Operation Area  ### --%>
 

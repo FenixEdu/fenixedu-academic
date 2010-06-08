@@ -1356,7 +1356,6 @@
 	<slot name="activeState" layout="phd-enum-renderer"/>
 </schema>
 
-
 <schema name="PhdThesisProcess.view" type="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess" bundle="PHD_RESOURCES">
 	<slot name="activeState" layout="phd-enum-renderer">
 		<property name="classes" value="bold"/>
@@ -1368,6 +1367,20 @@
 	<slot name="whenRequestJury" />
 	<slot name="whenReceivedJury" />
 	<slot name="whenJuryValidated" />
+	<slot name="meetingDate" />
+	<slot name="meetingPlace" />
+	<slot name="activeStateRemarks"/>
+</schema>
+
+<schema name="PhdThesisProcess.view.simple" type="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess" bundle="PHD_RESOURCES">
+	<slot name="activeState" layout="phd-enum-renderer">
+		<property name="classes" value="bold"/>
+	</slot>
+	<slot name="whenRequestJury" />
+	<slot name="whenReceivedJury" />
+	<slot name="whenJuryValidated" />
+	<slot name="meetingDate" />
+	<slot name="meetingPlace" />
 	<slot name="activeStateRemarks"/>
 </schema>
 

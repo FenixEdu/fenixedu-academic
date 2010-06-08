@@ -16,7 +16,7 @@
 
 <%-- ### Title #### --%>
 <em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
-<h2><bean:message key="label.phd.request.schedule.meeting" bundle="PHD_RESOURCES" /></h2>
+<h2><bean:message key="label.phd.thesis.request.schedule.meeting" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 
 
@@ -46,7 +46,7 @@
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 
 <br/>
-<strong><bean:message key="label.phd.request.schedule.meeting" bundle="PHD_RESOURCES" /></strong>
+<strong><bean:message key="label.phd.thesis.request.schedule.meeting" bundle="PHD_RESOURCES" /></strong>
 <fr:form action="<%= "/phdThesisProcess.do?processId=" + processId.toString() %>">
 	<input type="hidden" name="method" />
 	<fr:edit id="thesisProcessBean" name="thesisProcessBean">
