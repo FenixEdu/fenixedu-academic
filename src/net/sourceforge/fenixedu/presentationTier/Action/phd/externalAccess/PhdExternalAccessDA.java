@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidac
 import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryDocumentsDownload;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryReporterFeedbackExternalUpload;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryReviewDocumentsDownload;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdDocumentsZip;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
 
@@ -60,7 +61,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Forward(name = "candidacyFeedbackDocumentsDownload", path = "/phd/externalAccess/downloadDocuments.jsp"),
 
-@Forward(name = "candidacyFeedbackUpload", path = "/phd/externalAccess/candidacy/candidacyFeedbackUpload.jsp")
+@Forward(name = "candidacyFeedbackUpload", path = "/phd/externalAccess/candidacy/candidacyFeedbackUpload.jsp"),
+
+@Forward(name = "juryReviewDocumentsDownload", path = "/phd/externalAccess/thesis/juryReviewDocumentsDownload.jsp")
 
 })
 public class PhdExternalAccessDA extends PhdProcessDA {
@@ -131,6 +134,7 @@ public class PhdExternalAccessDA extends PhdProcessDA {
 	    addErrorMessage(request, e.getKey(), e.getArgs());
 	    return prepareJuryDocumentsDownloadInvalid(mapping, form, request, response);
 	}
+
     }
 
     // end jury document download
@@ -294,4 +298,43 @@ public class PhdExternalAccessDA extends PhdProcessDA {
     }
 
     // end of Download candidacy feedback documents
+
+    // Jury review documents download
+
+    public ActionForward prepareJuryReviewDocumentsDownload(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	request.setAttribute("operationBean", new PhdExternalOperationBean(getPhdParticipant(request),
+		PhdProcessAccessType.JURY_REVIEW_DOCUMENTS_DOWNLOAD));
+
+	return mapping.findForward("juryReviewDocumentsDownload");
+    }
+
+    public ActionForward prepareJuryReviewDocumentsDownloadInvalid(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	request.setAttribute("operationBean", getOperationBean());
+	return mapping.findForward("juryReviewDocumentsDownload");
+    }
+
+    public ActionForward juryReviewDocumentsDownload(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws IOException {
+
+	try {
+
+	    final PhdIndividualProgramProcess process = getProcess(request);
+	    ExecuteProcessActivity.run(process.getThesisProcess(), JuryReviewDocumentsDownload.class, getOperationBean());
+
+	    writeFile(response, getZipDocumentsFilename(process), PhdDocumentsZip.ZIP_MIME_TYPE, createZip(process
+		    .getThesisProcess().getReportThesisJuryElementDocuments()));
+
+	    return null;
+
+	} catch (DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	    return prepareJuryReviewDocumentsDownloadInvalid(mapping, actionForm, request, response);
+	}
+    }
+
+    // End of jury review documents download
 }
