@@ -43,6 +43,10 @@
 <script src="<%= request.getContextPath() + "/javaScript/jquery/jquery.js" %>" type="text/javascript" ></script>
 
 
+<logic:empty name="individualCandidacyProcessBean" property="individualCandidacyProcess.alert">
+	<p class="mbottom05"><em><bean:message key="label.erasmus.visualize.alerts.empty" bundle="ACADEMIC_OFFICE_RESOURCES"/>.</em></p>
+</logic:empty>
+
 <logic:iterate name="individualCandidacyProcessBean" property="individualCandidacyProcess.alert" id="alert">
 	<fr:view name="alert" schema="ErasmusAlert.view">
 		<fr:layout name="tabular">

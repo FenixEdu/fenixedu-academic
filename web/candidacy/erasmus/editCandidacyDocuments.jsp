@@ -7,16 +7,17 @@
 <html:xhtml/>
 
 <em><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></em>
-<h2><bean:message key="label.candidacy.edit" bundle="APPLICATION_RESOURCES"/></h2>
+<h2><bean:message key="label.candidacy.edit.documents" bundle="APPLICATION_RESOURCES"/></h2>
 
 <bean:define id="processId" name="process" property="idInternal" />
 <bean:define id="processName" name="processName" />
 
 
-<html:link action='<%= "/caseHandling" + processName.toString() + ".do?method=listProcessAllowedActivities&amp;processId=" + processId.toString() %>'>
-	<bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
-</html:link>
-<br/>
+<p>
+	<html:link action='<%= "/caseHandling" + processName.toString() + ".do?method=listProcessAllowedActivities&amp;processId=" + processId.toString() %>'>
+		« <bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
+	</html:link>
+</p>
 
 <fr:form action='<%="/caseHandling" + processName + ".do?processId=" + processId.toString() %>' encoding="multipart/form-data" id="candidacyFormId">
 	<input type="hidden" name="method" id="methodId" value="uploadDocument"/>
@@ -26,19 +27,19 @@
 		name="candidacyDocumentUploadBean" 
 		schema="ErasmusIndividualCandidacyProcessBean.documentUpload.edit">
 		<fr:layout>
-			<fr:property name="classes" value="tstyle5 thlight thleft"/>
+			<fr:property name="classes" value="tstyle5 thlight thleft mtop05"/>
 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>
 	</fr:edit>
 	<span class="error0"><fr:messages for="individualCandidacyProcessBean.document" type="global"/></span>
 	
-	<html:submit><bean:message key="button.submit" bundle="APPLICATION_RESOURCES" /></html:submit>		
+	<html:submit><bean:message key="button.upload" bundle="APPLICATION_RESOURCES" /></html:submit>		
 
 
 <bean:define id="individualCandidacyProcess" name="process"/>
  	
 <logic:empty name="individualCandidacyProcess" property="candidacy.documents">
-	<p><em><bean:message key="message.documents.empty" bundle="CANDIDATE_RESOURCES"/>.</em></p>
+	<p class="mtop2"><em><bean:message key="message.documents.empty" bundle="CANDIDATE_RESOURCES"/>.</em></p>
 </logic:empty>
 
 <logic:notEmpty name="individualCandidacyProcess" property="candidacy.documents">

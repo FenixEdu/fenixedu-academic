@@ -15,7 +15,10 @@
 
 
 <em><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></em>
-<h2><bean:message key="label.candidacy.edit" bundle="APPLICATION_RESOURCES"/></h2>
+
+<%-- <h2><bean:message key="label.candidacy.edit" bundle="APPLICATION_RESOURCES"/></h2> --%>
+
+<h2>Edit Degree and Course Information</h2>
 
 <html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
 	<span class="error0"> <bean:write name="message" /> </span>
@@ -31,21 +34,20 @@
 
 <bean:define id="processId" name="process" property="idInternal" />
 
-<script src="<%= request.getContextPath() + "/javaScript/jquery/jquery.js" %>" type="text/javascript" >
-</script>
+<script src="<%= request.getContextPath() + "/javaScript/jquery/jquery.js" %>" type="text/javascript" ></script>
 
 <fr:form action='<%= f("/caseHandlingErasmusIndividualCandidacyProcess.do?userAction=editCandidacy&amp;processId=%s&amp", processId.toString()) %>'>
 
 	<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
 	<fr:edit id="degree.course.information.bean" name="degreeCourseInformationBean" visible="false" />
 
-	<h2 class="mtop1"><bean:message key="label.erasmus.home.institution" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
+	<p><strong><bean:message key="label.erasmus.home.institution" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></p>
 	<fr:edit 	id="erasmusIndividualCandidacyProcessBean.home.institution" 
 				name="individualCandidacyProcessBean"
 				schema="ErasmusIndividualCandidacyProcess.university.edit" 
 				property="erasmusStudentDataBean">
 		<fr:layout name="tabular-editable">
-			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
+			<fr:property name="classes" value="tstyle5 thlight thright"/>
 	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 		</fr:layout>
 		<fr:destination name="chooseCountryPostback" path="<%= "/caseHandlingErasmusIndividualCandidacyProcess.do?userAction=editCandidacy&method=chooseCountry&amp;processId=" + processId.toString() %>"/>
@@ -68,7 +70,7 @@
 	<fr:edit id="degree.course.information.bean" name="degreeCourseInformationBean" visible="false" />
 
 
-	<h2 class="mtop1"><bean:message key="label.erasmus.chooseCourses" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
+	<p><strong><bean:message key="label.erasmus.chooseCourses" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></p>
 
 	<bean:define id="universityName" name="individualCandidacyProcessBean" property="erasmusStudentDataBean.selectedUniversity.nameI18n.content" type="String"/> 
 	<p><em><bean:message key="message.erasmus.for.chosen.university.must.select.majority.of.courses" bundle="ACADEMIC_OFFICE_RESOURCES" arg0="<%= universityName %>"/></em></p>
@@ -76,7 +78,7 @@
 	<fr:view	name="individualCandidacyProcessBean"
 				schema="ErasmusCandidacyProcess.view.possible.degrees">
 			<fr:layout>
-				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
+				<fr:property name="classes" value="tstyle1 thlight thright"/>
 		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 			</fr:layout>
 	</fr:view>
@@ -85,13 +87,17 @@
 	<p><em><bean:message key="message.erasmus.select.courses.of.associated.degrees" bundle="ACADEMIC_OFFICE_RESOURCES" /></em></p>
 	<fr:edit id="degree.course.information.bean.edit" name="degreeCourseInformationBean" schema="ErasmusCandidacyProcess.degreeCourseInformationBean">
 		<fr:layout name="tabular-editable">
-			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
+			<fr:property name="classes" value="tstyle5 thlight thright"/>
 	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 	        <fr:destination name="chooseDegreePostback" path='<%= f("/caseHandlingErasmusIndividualCandidacyProcess.do?userAction=editCandidacy&method=chooseDegree&amp;processId=%s", processId) %>' />
 		</fr:layout>
 	</fr:edit>
 		
-	<html:submit onclick="$('#methodId').attr('value', 'addCourse'); $('#skipValidationId').attr('value', 'true'); $('#thisForm').submit(); return true;"><bean:message key="label.add" bundle="APPLICATION_RESOURCES" /></html:submit>
+	
+	<p><html:submit onclick="$('#methodId').attr('value', 'addCourse'); $('#skipValidationId').attr('value', 'true'); $('#thisForm').submit(); return true;">+ <bean:message key="label.add" bundle="APPLICATION_RESOURCES" /></html:submit></p>
+	
+	
+	
 	
 	<table class="tstyle2 thlight thcenter">
 	<tr>
@@ -124,8 +130,10 @@
 		<strong><bean:message key="label.eramsus.candidacy.choosed.degree" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong>:
 		<fr:view	name="individualCandidacyProcessBean" property="selectedCourseNameForView"/>
 	</p>
-				
-	<html:submit onclick="this.form.method.value='executeEditDegreeAndCoursesInformation'; return true;"><bean:message key="label.edit" bundle="APPLICATION_RESOURCES" /></html:submit>
-	<html:cancel onclick="this.form.method.value='listProcessAllowedActivities'; return true;"><bean:message key="label.cancel" bundle="APPLICATION_RESOURCES" /></html:cancel>
+	
+	<p>
+		<html:submit onclick="this.form.method.value='executeEditDegreeAndCoursesInformation'; return true;"><bean:message key="label.submit" bundle="APPLICATION_RESOURCES" /></html:submit>
+		<html:cancel onclick="this.form.method.value='listProcessAllowedActivities'; return true;"><bean:message key="label.cancel" bundle="APPLICATION_RESOURCES" /></html:cancel>
+	</p>
 </fr:form>
 </logic:notEmpty>

@@ -18,25 +18,25 @@
 	<br />
 </html:messages>
 
-<html:link action='<%= "/caseHandling" + processName.toString() + ".do?method=listProcessAllowedActivities&amp;processId=" + processId.toString() %>'>
-	<bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
-</html:link>
-<br/>
+<p>
+	<html:link action='<%= "/caseHandling" + processName.toString() + ".do?method=listProcessAllowedActivities&amp;processId=" + processId.toString() %>'>
+		« <bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
+	</html:link>
+</p>
 
 <%-- student information --%>
 <logic:notEmpty name="process" property="personalDetails.student">
-	<br/>
-	<strong><bean:message key="label.studentDetails" bundle="APPLICATION_RESOURCES"/>:</strong>
+	<p class="mbottom05"><strong><bean:message key="label.studentDetails" bundle="APPLICATION_RESOURCES"/></strong></p>
 	<fr:view name="process" schema="ErasmusIndividualCandidacyProcess.view">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
+			<fr:property name="classes" value="tstyle1 thlight thright mtop05"/>
 	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>
 
 
-Do want to create and import an user for this candidate?
+<p>Do want to create and import an user for this candidate?</p>
 
 <fr:form action='<%= "/caseHandlingErasmusIndividualCandidacyProcess.do?method=executeCreateStudentData&processId=" + processId.toString() %>' id="erasmusCandidacyForm">	
 	<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />

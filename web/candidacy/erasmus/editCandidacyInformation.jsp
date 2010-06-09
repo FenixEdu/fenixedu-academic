@@ -5,7 +5,9 @@
 <html:xhtml/>
 
 <em><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></em>
-<h2><bean:message key="label.candidacy.edit" bundle="APPLICATION_RESOURCES"/></h2>
+<%-- <h2><bean:message key="label.candidacy.edit" bundle="APPLICATION_RESOURCES"/></h2> --%>
+
+<h2>Edit Application Data</h2>
 
 <html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
 	<span class="error0"> <bean:write name="message" /> </span>
@@ -27,50 +29,52 @@
  	
 	<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
 
+
+		<p class="mtop1 mbottom0"><strong>Date</strong></p>
 		<fr:edit id="individualCandidacyProcessBean.candidacyDate" 
 			 name="individualCandidacyProcessBean"
 			 schema="ErasmusCandidacyProcessBean.candidacyDate">
 			<fr:layout name="tabular-editable">
-				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
-		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+				<fr:property name="classes" value="tstyle5 thlight thright ulnomargin thmiddle"/>
+		        <fr:property name="columnClasses" value="width18em,,tdclear tderror1"/>
 			</fr:layout>
 			<fr:destination name="invalid" path='<%= "/caseHandlingErasmusIndividualCandidacyProcess.do?method=executeEditCandidacyInformationInvalid&amp;processId=" + processId.toString() %>'  />
 		</fr:edit>
 
-		<h2 class="mtop1"><bean:message key="label.erasmus.home.institution" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
+		<p class="mtop1 mbottom0"><strong><bean:message key="label.erasmus.home.institution" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></p>
 		<fr:edit 	id="erasmusIndividualCandidacyProcessBean.home.institution" 
 					name="individualCandidacyProcessBean" 
 					schema="ErasmusIndividualCandidacyProcess.exchange.coordinator.edit" 
 					property="erasmusStudentDataBean" >
 			<fr:layout name="tabular-editable">
-				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
-		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+				<fr:property name="classes" value="tstyle5 thlight thright ulnomargin thmiddle"/>
+		        <fr:property name="columnClasses" value="width18em,,tdclear tderror1"/>
 			</fr:layout>
 		</fr:edit>
 		
-		<h2 class="mtop1"><bean:message key="label.erasmus.current.study" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
+		<p class="mtop1 mbottom0"><strong><bean:message key="label.erasmus.current.study" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></p>
 		<fr:edit 	id="erasmusIndividualCandidacyProcessBean.current.study" 
 					name="individualCandidacyProcessBean" 
 					schema="ErasmusIndividualCandidacyProcess.current.study.edit" >
 			<fr:layout name="tabular-editable">
-				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
-		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+				<fr:property name="classes" value="tstyle5 thlight thright ulnomargin"/>
+		        <fr:property name="columnClasses" value="width18em,,tdclear tderror1"/>
 			</fr:layout>
 		</fr:edit>
 		
-		<h2 class="mtop1"><bean:message key="label.erasmus.period.of.study" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
+		<p class="mtop1 mbottom0"><strong><bean:message key="label.erasmus.period.of.study" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></p>
 		<fr:edit	id="erasmusIndividualCandidacyProcessBean.period.of.study"
 					name="individualCandidacyProcessBean"
 					schema="ErasmusIndividualCandidacyProcess.period.of.study.edit" >
 			<fr:layout name="tabular-editable">
-				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
-		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+				<fr:property name="classes" value="tstyle5 thlight thright ulnomargin"/>
+		        <fr:property name="columnClasses" value="width18em,,tdclear tderror1"/>
 			</fr:layout>
 		</fr:edit>
 		
-	<p></p>
-	
-	<html:submit onclick="this.form.method.value='executeEditCandidacyInformation'; return true;"><bean:message key="label.edit" bundle="APPLICATION_RESOURCES" /></html:submit>
-	<html:cancel onclick="this.form.method.value='listProcessAllowedActivities'; return true;"><bean:message key="label.cancel" bundle="APPLICATION_RESOURCES" /></html:cancel>
+		<p>
+			<html:submit onclick="this.form.method.value='executeEditCandidacyInformation'; return true;"><bean:message key="label.submit" bundle="APPLICATION_RESOURCES" /></html:submit>
+			<html:cancel onclick="this.form.method.value='listProcessAllowedActivities'; return true;"><bean:message key="label.cancel" bundle="APPLICATION_RESOURCES" /></html:cancel>
+		</p>
 
 </fr:form>
