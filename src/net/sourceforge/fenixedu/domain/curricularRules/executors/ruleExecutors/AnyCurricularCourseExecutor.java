@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.enrolment.OptionalDegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 
 public class AnyCurricularCourseExecutor extends CurricularRuleExecutor {
@@ -75,8 +76,11 @@ public class AnyCurricularCourseExecutor extends CurricularRuleExecutor {
 	result &= rule.hasDegree() ? rule.getDegree() == degree : rule.hasBolonhaDegreeType() ? degree.getDegreeType() == rule
 		.getBolonhaDegreeType() : true;
 
-	result &= rule.hasDepartmentUnit() ? rule.getDepartmentUnit().hasCompetenceCourses(
-		curricularCourseToEnrol.getCompetenceCourse()) : true;
+	if (rule.hasDepartmentUnit()) {
+	    final DepartmentUnit departmentUnit = curricularCourseToEnrol.getCompetenceCourse().getDepartmentUnit(
+		    executionSemester);
+	    result &= departmentUnit != null && departmentUnit.equals(rule.getDepartmentUnit());
+	}
 
 	if (result) {
 	    return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
