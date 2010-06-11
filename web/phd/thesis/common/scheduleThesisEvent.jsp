@@ -6,6 +6,8 @@
 
 <html:xhtml/>
 
+<!-- Configuration -->
+
 <%
 	final String notifyElements = request.getParameter("notifyElements");
 	if (notifyElements != null) {
@@ -13,9 +15,19 @@
 	} else {
 	    request.setAttribute("notifyElements", Boolean.FALSE);
 	}
+	
+	request.setAttribute("submitMethod", request.getParameter("submitMethod"));
+	request.setAttribute("invalidMethod", request.getParameter("invalidMethod"));
+	request.setAttribute("postBackMethod", request.getParameter("postBackMethod"));
 %>
 
+<bean:define id="submitMethod" name="submitMethod" />
+<bean:define id="invalidMethod" name="invalidMethod" />
+<bean:define id="postBackMethod" name="postBackMethod" />
+
 <bean:define id="processId" name="process" property="externalId" />
+
+<!-- End of configuration -->
 
 <fr:form action="<%=String.format("/phdThesisProcess.do?processId=%s", processId) %>">
 
@@ -23,7 +35,7 @@
 	<fr:edit id="thesisProcessBean" name="thesisProcessBean" visible="false" />
 
 	<br/><br/>
-	<strong><bean:message key="label.phd.thesis.schedule.thesis.meeting" bundle="PHD_RESOURCES" /></strong>
+	<strong><bean:message key="label.phd.thesis.schedule" bundle="PHD_RESOURCES" /></strong>
 	<fr:edit id="thesisProcessBean-info" name="thesisProcessBean">
 
 		<fr:layout name="tabular">
@@ -32,8 +44,8 @@
 			<fr:property name="requiredMarkShown" value="true" />
 		</fr:layout>
 
-		<fr:destination name="invalid" path="<%= "/phdThesisProcess.do?method=scheduleThesisMeetingInvalid&processId=" + processId %>" />
-		<fr:destination name="postBack" path="<%= "/phdThesisProcess.do?method=scheduleThesisMeetingPostback&processId=" + processId %>"/>
+		<fr:destination name="invalid" path="<%= String.format("/phdThesisProcess.do?method=%s&processId=%s", invalidMethod ,processId) %>" />
+		<fr:destination name="postBack" path="<%= String.format("/phdThesisProcess.do?method=%s&processId=%s", postBackMethod, processId) %>"/>
 
 		<fr:schema bundle="PHD_RESOURCES" type="<%= PhdThesisProcessBean.class.getName() %>">
 
@@ -43,8 +55,8 @@
 				</fr:slot>
 			</logic:equal>
 
-			<fr:slot name="meetingDate" required="true" />
-			<fr:slot name="meetingPlace" required="true">
+			<fr:slot name="scheduledDate" required="true" />
+			<fr:slot name="scheduledPlace" required="true">
 				<fr:property name="size" value="40" />
 			</fr:slot>
 		</fr:schema>
@@ -62,8 +74,8 @@
 				<fr:property name="requiredMarkShown" value="true" />
 			</fr:layout>
 	
-			<fr:destination name="invalid" path="<%= "/phdThesisProcess.do?method=scheduleThesisMeetingInvalid&processId=" + processId %>" />
-			<fr:destination name="postBack" path="<%= "/phdThesisProcess.do?method=scheduleThesisMeetingPostback&processId=" + processId %>"/>
+			<fr:destination name="invalid" path="<%= String.format("/phdThesisProcess.do?method=%s&processId=&s", invalidMethod ,processId) %>" />
+			<fr:destination name="postBack" path="<%= String.format("/phdThesisProcess.do?method=%s&processId=%s", postBackMethod, processId) %>"/>
 	
 			<fr:schema bundle="PHD_RESOURCES" type="<%= PhdThesisProcessBean.class.getName() %>">
 				<fr:slot name="mailSubject" required="true">
@@ -81,13 +93,13 @@
 			<strong>Notas - </strong> O sistema irá anexar automaticamente no final da mensagem de mail a seguinte informação:
 		</p>
 		<ul>
-			<li>Data, hora e local da reunião de júri introduzidos</li>
+			<li>Data, hora e local introduzidos</li>
 			<li>Informação de acesso aos pareceres para os elementos do júri</li>
 		</ul>
 	</logic:equal>	
 	
 	<br/>
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='scheduleThesisMeeting';"><bean:message bundle="PHD_RESOURCES" key="label.submit"/></html:submit>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="<%= String.format("this.form.method.value='%s';", submitMethod) %>"><bean:message bundle="PHD_RESOURCES" key="label.submit"/></html:submit>
 	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='viewIndividualProgramProcess';"><bean:message bundle="PHD_RESOURCES" key="label.cancel"/></html:cancel>	
 
 </fr:form>

@@ -13,6 +13,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisMeetingRequest"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisMeeting"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitThesisMeetingMinutes"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisDiscussion"%>
 
 <logic:notEmpty name="process" property="thesisProcess">
 <logic:equal name="process" property="activeState.active" value="true">
@@ -114,8 +115,16 @@
 			</html:link>
 		</li>
 	</phd:activityAvailable>
+	
+	<phd:activityAvailable process="<%= thesisProcess %>" activity="<%= ScheduleThesisDiscussion.class %>">
+		<li style="display: inline;">
+			<html:link action="/phdThesisProcess.do?method=prepareScheduleThesisDiscussion" paramId="processId" paramName="thesisProcess" paramProperty="externalId">
+				<bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.schedule.thesis.discussion"/>
+			</html:link>
+		</li>
+	</phd:activityAvailable>
 
-	<%-- This activity is not used yet --%>
+	<%-- This activity is not used yet, maybe when some modifications are necessary --%>
 	<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= SubmitThesis.class %>">
 	<li style="display: inline;">
 		<html:link action="/phdThesisProcess.do?method=prepareSubmitThesis" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">

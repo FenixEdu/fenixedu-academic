@@ -10,8 +10,8 @@
 <bean:define id="individualProcessId" name="process" property="individualProgramProcess.externalId" />
 
 <%-- ### Title #### --%>
-<em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
-<h2><bean:message key="label.phd.thesis.schedule.thesis.meeting" bundle="PHD_RESOURCES" /></h2>
+<em><bean:message  key="label.phd.coordinator.breadcrumb" bundle="PHD_RESOURCES"/></em>
+<h2><bean:message key="label.phd.thesis.schedule.thesis.discussion" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
@@ -41,9 +41,9 @@
 
 <jsp:include page="/phd/thesis/common/scheduleThesisEvent.jsp">
 	<jsp:param name="notifyElements" value="true" />
-	<jsp:param name="submitMethod" value="scheduleThesisMeeting" />
-	<jsp:param name="invalidMethod" value="scheduleThesisMeetingInvalid" />
-	<jsp:param name="postBackMethod" value="scheduleThesisMeetingPostback" />
+	<jsp:param name="submitMethod" value="scheduleThesisDiscussion" />
+	<jsp:param name="invalidMethod" value="scheduleThesisDiscussionInvalid" />
+	<jsp:param name="postBackMethod" value="scheduleThesisDiscussionPostback" />
 </jsp:include>
 
 <%--  ### End of Operation Area  ### --%>

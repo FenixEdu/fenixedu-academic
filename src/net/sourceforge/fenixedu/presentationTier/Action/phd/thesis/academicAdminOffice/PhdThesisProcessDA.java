@@ -9,7 +9,9 @@ import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
+import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisJuryElementBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
@@ -22,6 +24,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.MoveJuryElementOrde
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RejectJuryElements;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryElements;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryReviews;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisDiscussion;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisMeetingRequest;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitJuryElementsDocuments;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitThesis;
@@ -76,7 +79,9 @@ import pt.utl.ist.fenix.tools.util.Pair;
 
 @Forward(name = "scheduleThesisMeeting", path = "/phd/thesis/academicAdminOffice/scheduleThesisMeeting.jsp"),
 
-@Forward(name = "submitThesisMeetingMinutes", path = "/phd/thesis/academicAdminOffice/submitThesisMeetingMinutes.jsp")
+@Forward(name = "submitThesisMeetingMinutes", path = "/phd/thesis/academicAdminOffice/submitThesisMeetingMinutes.jsp"),
+
+@Forward(name = "scheduleThesisDiscussion", path = "/phd/thesis/academicAdminOffice/scheduleThesisDiscussion.jsp")
 
 })
 public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
@@ -554,4 +559,57 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
     }
 
     // End submit thesis meeting minutes
+
+    // Schedule thesis discussion
+
+    public ActionForward prepareScheduleThesisDiscussion(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	final PhdThesisProcessBean bean = new PhdThesisProcessBean();
+	final PhdThesisProcess thesisProcess = getProcess(request);
+
+	bean.setThesisProcess(thesisProcess);
+	setDefaultDiscussionMailInformation(bean, thesisProcess);
+
+	request.setAttribute("thesisProcessBean", bean);
+	return mapping.findForward("scheduleThesisDiscussion");
+    }
+
+    private void setDefaultDiscussionMailInformation(final PhdThesisProcessBean bean, final PhdThesisProcess thesisProcess) {
+	final PhdIndividualProgramProcess process = thesisProcess.getIndividualProgramProcess();
+	bean.setMailSubject(AlertService
+		.getSubjectPrefixed(process, "message.phd.thesis.schedule.thesis.discussion.default.subject"));
+	bean.setMailBody(AlertService.getBodyText(process, "message.phd.thesis.schedule.thesis.discussion.default.body"));
+    }
+
+    public ActionForward scheduleThesisDiscussionInvalid(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("thesisProcessBean", getThesisProcessBean());
+	return mapping.findForward("scheduleThesisDiscussion");
+    }
+
+    public ActionForward scheduleThesisDiscussionPostback(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("thesisProcessBean", getThesisProcessBean());
+	RenderUtils.invalidateViewState();
+	return mapping.findForward("scheduleThesisDiscussion");
+    }
+
+    public ActionForward scheduleThesisDiscussion(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final PhdThesisProcess thesisProcess = getProcess(request);
+
+	try {
+	    ExecuteProcessActivity.run(thesisProcess, ScheduleThesisDiscussion.class, getThesisProcessBean());
+
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	    return scheduleThesisDiscussionPostback(mapping, actionForm, request, response);
+	}
+
+	return viewIndividualProgramProcess(request, thesisProcess);
+    }
+
+    // End of schedule thesis discussion
 }

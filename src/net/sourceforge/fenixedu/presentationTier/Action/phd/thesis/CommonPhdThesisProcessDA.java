@@ -141,13 +141,13 @@ abstract public class CommonPhdThesisProcessDA extends PhdProcessDA {
 	final PhdThesisProcess thesisProcess = getProcess(request);
 
 	bean.setThesisProcess(thesisProcess);
-	setDefaultMailInformation(bean, thesisProcess);
+	setDefaultMeetingMailInformation(bean, thesisProcess);
 
 	request.setAttribute("thesisProcessBean", bean);
 	return mapping.findForward("scheduleThesisMeeting");
     }
 
-    private void setDefaultMailInformation(final PhdThesisProcessBean bean, final PhdThesisProcess thesisProcess) {
+    private void setDefaultMeetingMailInformation(final PhdThesisProcessBean bean, final PhdThesisProcess thesisProcess) {
 	final PhdIndividualProgramProcess process = thesisProcess.getIndividualProgramProcess();
 	bean.setMailSubject(AlertService
 		.getSubjectPrefixed(process, "message.phd.thesis.schedule.thesis.meeting.default.subject"));

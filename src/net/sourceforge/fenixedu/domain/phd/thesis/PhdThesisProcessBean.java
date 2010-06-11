@@ -27,8 +27,9 @@ public class PhdThesisProcessBean implements Serializable {
 
     private ThesisJuryElement juryElement;
 
-    private DateTime meetingDate;
-    private String meetingPlace;
+    private DateTime scheduledDate;
+    private String scheduledPlace;
+
     private String mailSubject, mailBody;
 
     public PhdThesisProcessBean() {
@@ -111,20 +112,20 @@ public class PhdThesisProcessBean implements Serializable {
 	this.juryElement = juryElement;
     }
 
-    public DateTime getMeetingDate() {
-	return meetingDate;
+    public DateTime getScheduledDate() {
+	return scheduledDate;
     }
 
-    public void setMeetingDate(DateTime meetingDate) {
-	this.meetingDate = meetingDate;
+    public void setScheduledDate(DateTime scheduledDate) {
+	this.scheduledDate = scheduledDate;
     }
 
-    public String getMeetingPlace() {
-	return meetingPlace;
+    public String getScheduledPlace() {
+	return scheduledPlace;
     }
 
-    public void setMeetingPlace(String meetingPlace) {
-	this.meetingPlace = meetingPlace;
+    public void setScheduledPlace(String scheduledPlace) {
+	this.scheduledPlace = scheduledPlace;
     }
 
     public String getMailSubject() {

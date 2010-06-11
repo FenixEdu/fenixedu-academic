@@ -41,7 +41,11 @@
 
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 
-<jsp:include page="/phd/thesis/common/scheduleThesisMeeting.jsp" />
+<jsp:include page="/phd/thesis/common/scheduleThesisEvent.jsp">
+	<jsp:param name="submitMethod" value="scheduleThesisMeeting" />
+	<jsp:param name="invalidMethod" value="scheduleThesisMeetingInvalid" />
+	<jsp:param name="postBackMethod" value="scheduleThesisMeetingPostback" />
+</jsp:include>
 
 <%--  ### End of Operation Area  ### --%>
 
