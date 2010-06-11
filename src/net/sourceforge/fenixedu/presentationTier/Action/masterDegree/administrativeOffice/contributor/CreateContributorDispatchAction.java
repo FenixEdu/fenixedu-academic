@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoContributor.ContributorTy
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
+import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -77,6 +78,13 @@ public class CreateContributorDispatchAction extends FenixDispatchAction {
 	} catch (NumberFormatException e) {
 	    ActionErrors errors = new ActionErrors();
 	    errors.add("error.invalid.contributorNumber", new ActionError("error.invalid.contributorNumber"));
+	    saveErrors(request, errors);
+	    return mapping.getInputForward();
+	}
+	
+	if (StringUtils.isEmpty(createContributorForm.getString("contributorType"))) {
+	    ActionErrors errors = new ActionErrors();
+	    errors.add("error.invalid.contributorType", new ActionError("error.invalid.contributorType"));
 	    saveErrors(request, errors);
 	    return mapping.getInputForward();
 	}
