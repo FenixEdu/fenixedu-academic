@@ -73,14 +73,23 @@
 			<thead>
 				<th><bean:message key="label.accounting.manager.transaction.processed" bundle="APPLICATION_RESOURCES" /></th>
 				<th><bean:message key="label.accounting.manager.transaction.registered" bundle="APPLICATION_RESOURCES" /></th>
+				<th><bean:message key="label.accounting.manager.transaction.responsibleUser" bundle="APPLICATION_RESOURCES" /></th>
 				<th><bean:message key="label.accounting.manager.transaction.comments" bundle="APPLICATION_RESOURCES"/></th>
 				<th><bean:message key="label.accounting.manager.transaction.credit" bundle="APPLICATION_RESOURCES" /></th>
 			</thead>
 			<tbody>
 				<tr>
-				<td><fr:view name="transaction" property="transactionDetail.whenProcessed" /></td>
-				<td><fr:view name="transaction" property="transactionDetail.whenRegistered" /></td>
-				<td><bean:write name="transaction" property="transactionDetail.comments" /></td>
+				<td><fr:view name="transaction" property="whenProcessed" /></td>
+				<td><fr:view name="transaction" property="whenRegistered" /></td>
+				<td>
+					<fr:view name="transaction" property="responsibleUser" layout="null-as-label">
+						<fr:layout>
+								<fr:property name="subLayout" value="values" />
+								<fr:property name="subSchema" value="User.userUId" />
+						</fr:layout>
+					</fr:view>
+				</td>
+				<td><bean:write name="transaction" property="comments" /></td>
 				<td>
 					<bean:write name="transaction" property="toAccount.party.partyName.content" />(<bean:write name="transaction" property="toAccountEntry.originalAmount" /> &euro;)
 				</td>
@@ -97,15 +106,24 @@
 						<thead>
 							<th><bean:message key="label.accounting.manager.transaction.processed" bundle="APPLICATION_RESOURCES" /></th>
 							<th><bean:message key="label.accounting.manager.transaction.registered" bundle="APPLICATION_RESOURCES" /></th>
+							<th><bean:message key="label.accounting.manager.transaction.responsibleUser" bundle="APPLICATION_RESOURCES" /></th>
 							<th><bean:message key="label.accounting.manager.transaction.comments" bundle="APPLICATION_RESOURCES"/></th>
 							<th><bean:message key="label.accounting.manager.transaction.credit" bundle="APPLICATION_RESOURCES" /></th>
 						</thead>
 						<logic:iterate id="adjustingTransaction" name="transaction" property="adjustmentTransactions">
 						<tbody>
 							<tr>
-							<td><fr:view name="adjustingTransaction" property="transactionDetail.whenProcessed" /></td>
-							<td><fr:view name="adjustingTransaction" property="transactionDetail.whenRegistered" /></td>
-							<td><bean:write name="adjustingTransaction" property="transactionDetail.comments" /></td>
+							<td><fr:view name="adjustingTransaction" property="whenProcessed" /></td>
+							<td><fr:view name="adjustingTransaction" property="whenRegistered" /></td>
+							<td>
+								<fr:view name="adjustingTransaction" property="responsibleUser" layout="null-as-label">
+									<fr:layout>
+											<fr:property name="subLayout" value="values" />
+											<fr:property name="subSchema" value="User.userUId" />
+									</fr:layout>
+								</fr:view>
+							</td>
+							<td><bean:write name="adjustingTransaction" property="comments" /></td>
 							<td>
 								<bean:write name="adjustingTransaction" property="toAccountEntry.originalAmount" /> &euro;
 							</td>

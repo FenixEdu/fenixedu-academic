@@ -731,6 +731,10 @@
 				<property name="indicatorShown" value="true"/>		
 				<property name="className" value="net.sourceforge.fenixedu.domain.Person"/>
 		</slot>
+	</schema>
+	
+	<schema name="User.userUId" type="net.sourceforge.fenixedu.domain.User" bundle="APPLICATION_RESOURCES">
+		<slot name="userUId" />
 	</schema>	
 
  	&researcher;
