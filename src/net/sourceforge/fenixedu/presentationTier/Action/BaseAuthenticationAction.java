@@ -66,9 +66,12 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 		return handleSessionCreationAndForwardToCoordinationExecutionDegreeReportsQuestion(request, userView, session);
 	    } else if (isStudentAndHasGratuityDebtsToPay(userView)) {
 		return handleSessionCreationAndForwardToGratuityPaymentsReminder(request, userView, session);
-	    } else if (isAlumniWithNoData(userView)){
-		return handleSessionCreationAndForwardToAlumniReminder(request, userView, session);
-	    } else {
+	    } 
+// 	Removed temporarily at GEP request	    
+//	    else if (isAlumniWithNoData(userView)){
+//		return handleSessionCreationAndForwardToAlumniReminder(request, userView, session);
+//	    } 
+	    else {
 		return handleSessionCreationAndGetForward(mapping, request, userView, session);
 	    }
 	} catch (ExcepcaoAutenticacao e) {
