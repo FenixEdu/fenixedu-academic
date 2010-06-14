@@ -426,45 +426,6 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
     // end thesis jury elements management
 
-    // Submit thesis
-    public ActionForward prepareSubmitThesis(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	final PhdThesisProcessBean bean = new PhdThesisProcessBean();
-	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.PROVISIONAL_THESIS));
-	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.FINAL_THESIS));
-
-	request.setAttribute("submitThesisBean", bean);
-
-	return mapping.findForward("submitThesis");
-    }
-
-    public ActionForward prepareSubmitThesisInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	RenderUtils.invalidateViewState("submitThesisBean.edit.documents");
-
-	request.setAttribute("submitThesisBean", getRenderedObject("submitThesisBean"));
-
-	return mapping.findForward("submitThesis");
-    }
-
-    public ActionForward submitThesis(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	try {
-	    ExecuteProcessActivity.run(getProcess(request), SubmitThesis.class, getRenderedObject("submitThesisBean"));
-	} catch (final DomainException e) {
-	    addErrorMessage(request, e.getMessage(), e.getArgs());
-	    return prepareSubmitThesisInvalid(mapping, form, request, response);
-	}
-
-	return viewIndividualProgramProcess(request, getProcess(request));
-
-    }
-
-    // End of submit thesis
-
     // Request Jury Reviews
     public ActionForward prepareRequestJuryReviews(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
@@ -577,8 +538,8 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
     private void setDefaultDiscussionMailInformation(final PhdThesisProcessBean bean, final PhdThesisProcess thesisProcess) {
 	final PhdIndividualProgramProcess process = thesisProcess.getIndividualProgramProcess();
-	bean.setMailSubject(AlertService
-		.getSubjectPrefixed(process, "message.phd.thesis.schedule.thesis.discussion.default.subject"));
+	bean.setMailSubject(AlertService.getSubjectPrefixed(process,
+		"message.phd.thesis.schedule.thesis.discussion.default.subject"));
 	bean.setMailBody(AlertService.getBodyText(process, "message.phd.thesis.schedule.thesis.discussion.default.body"));
     }
 
@@ -612,4 +573,51 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
     }
 
     // End of schedule thesis discussion
+
+    // Submit thesis
+    public ActionForward prepareSubmitThesis(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final PhdThesisProcessBean bean = new PhdThesisProcessBean();
+	// bean.addDocument(new
+	// PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.PROVISIONAL_THESIS));
+	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.FINAL_THESIS));
+
+	request.setAttribute("submitThesisBean", bean);
+
+	return mapping.findForward("submitThesis");
+    }
+
+    public ActionForward prepareSubmitThesisInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("submitThesisBean", getRenderedObject("submitThesisBean"));
+	RenderUtils.invalidateViewState("submitThesisBean.edit.documents");
+
+	return mapping.findForward("submitThesis");
+    }
+
+    public ActionForward submitThesis(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	try {
+
+	    if (!RenderUtils.getViewState("submitThesisBean.edit.documents").isValid()) {
+		addErrorMessage(request, "error.phd.submitThesis.invalid.documents");
+		return prepareSubmitThesisInvalid(mapping, form, request, response);
+	    }
+
+	    ExecuteProcessActivity.run(getProcess(request), SubmitThesis.class, getRenderedObject("submitThesisBean"));
+
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getMessage(), e.getArgs());
+	    return prepareSubmitThesisInvalid(mapping, form, request, response);
+	}
+
+	return viewIndividualProgramProcess(request, getProcess(request));
+
+    }
+
+    // End of submit thesis
+
 }

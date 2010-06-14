@@ -5,30 +5,31 @@ package net.sourceforge.fenixedu.domain.phd.thesis.activities;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
+import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
+import net.sourceforge.fenixedu.domain.phd.alert.AlertService.AlertMessage;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
+import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType;
 
 public class SubmitThesis extends PhdThesisActivity {
 
     @Override
     protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
 
-	// if (!process.isJuryValidated()) {
-	// throw new PreConditionNotValidException();
-	// }
-	//
-	// if
-	// (!PhdThesisProcess.isMasterDegreeAdministrativeOfficeEmployee(userView))
-	// {
-	// throw new PreConditionNotValidException();
-	// }
-
-	/*
-	 * TODO: check if all reports answered?
-	 */
-
-	throw new PreConditionNotValidException();
+	if (!process.isJuryValidated()) {
+	    throw new PreConditionNotValidException();
+	}
+	
+	if (process.getActiveState() == PhdThesisProcessStateType.WAITING_FOR_THESIS_RATIFICATION) {
+	    throw new PreConditionNotValidException();
+	}
+	
+	if (!PhdThesisProcess.isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	    throw new PreConditionNotValidException();
+	}
     }
 
     @Override
@@ -37,11 +38,42 @@ public class SubmitThesis extends PhdThesisActivity {
 
 	for (final PhdProgramDocumentUploadBean each : bean.getDocuments()) {
 	    if (each.hasAnyInformation()) {
+
 		process.addDocument(each, userView.getPerson());
+
+		if (!isThesisFinalDocument(each)) {
+		    throw new DomainException("error.SubmitThesis.unexpected.document");
+		}
+		
+		if (bean.isToNotify()) {
+		    notifyAllElements(process, bean);
+		}
+
 	    }
+	}
+
+	if (!process.hasState(PhdThesisProcessStateType.WAITING_FOR_THESIS_RATIFICATION)) {
+	    process.createState(PhdThesisProcessStateType.WAITING_FOR_THESIS_RATIFICATION, userView.getPerson(), bean
+		    .getRemarks());
 	}
 
 	return process;
 
     }
+
+    private boolean isThesisFinalDocument(final PhdProgramDocumentUploadBean each) {
+	return each.getType() == PhdIndividualProgramDocumentType.FINAL_THESIS;
+    }
+
+    private void notifyAllElements(final PhdThesisProcess process, final PhdThesisProcessBean bean) {
+
+	final AlertMessage subject = AlertMessage.create("message.phd.thesis.submit.subject");
+	final AlertMessage body = AlertMessage.create("message.phd.thesis.submit.body");
+
+	AlertService.alertResponsibleCoordinators(process.getIndividualProgramProcess(), subject, body);
+	AlertService.alertGuiders(process.getIndividualProgramProcess(), subject, body);
+	AlertService.alertStudent(process.getIndividualProgramProcess(), subject, body);
+	
+    }
+
 }

@@ -1,6 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 
-<%@page import="pt.ist.fenixWebFramework.renderers.validators.FileValidator"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean"%><html:xhtml/>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
