@@ -25,6 +25,8 @@
 		<fr:layout name="tabular">		
 			<fr:property name="classes" value="tstyle1 mtop05"/>
 			<fr:property name="displayHeaders" value="false"/>
+			<fr:link name="download" label="link.alumni.exportList,GEP_RESOURCES"
+							 	link="/alumni.do?method=exportGroupList&recipientOID=${externalId}" />
 		</fr:layout>	
 	</fr:view>
 </logic:notEmpty>

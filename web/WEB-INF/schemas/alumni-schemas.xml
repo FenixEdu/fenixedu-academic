@@ -159,6 +159,20 @@
 		</slot>
 	</schema>
 
+	<schema name="alumni.gep.email.recipient.infoNotUpdated.create" type="net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniInfoNotUpdatedBean" bundle="GEP_RESOURCES">
+		<slot name="professionalInfo" key="label.alumni.professional.info"/>
+		<slot name="formationInfo" key="label.alumni.formation.info"/>
+		<slot name="daysNotUpdated" key="label.alumni.notUpdated.info">			
+			<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator" />
+			<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+			<property name="size" value="5" />
+			<property name="maxLength" value="4"/>
+			<property name="formatText" value="label.alumni.days"/>
+			<property name="key" value="true"/>
+			<property name="bundle" value="GEP_RESOURCES"/>			
+		</slot>
+	</schema>
+	
 	<schema name="alumni.gep.degree" type="net.sourceforge.fenixedu.domain.Degree">
 		<slot name="presentationName"/>
 	</schema>

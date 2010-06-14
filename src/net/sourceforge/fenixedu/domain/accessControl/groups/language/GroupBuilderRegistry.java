@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.accessControl.AllStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.AllTeachersByCampus;
 import net.sourceforge.fenixedu.domain.accessControl.AllTeachersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.CompetenceCourseGroup;
+import net.sourceforge.fenixedu.domain.accessControl.ConclusionYearDegreesStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeCoordinatorsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeScientificCommissionMembersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.CurricularCourseStudentsByExecutionPeriodGroup;
@@ -54,11 +55,11 @@ import net.sourceforge.fenixedu.domain.accessControl.InternalPersonGroup;
 import net.sourceforge.fenixedu.domain.accessControl.MasterDegreeAdministrativeOfficeGroup;
 import net.sourceforge.fenixedu.domain.accessControl.MasterDegreeCoordinatorsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.NoOneGroup;
+import net.sourceforge.fenixedu.domain.accessControl.NotUpdatedAlumniInfoForSpecificTimeGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PedagogicalCouncilMembersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PersonsInFunctionGroup;
-import net.sourceforge.fenixedu.domain.accessControl.ConclusionYearDegreesStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ResearchUnitElementGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ResearchUnitMembersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ResearchersGroup;
@@ -253,6 +254,7 @@ public class GroupBuilderRegistry {
 	register("activeStudentsFromDegreeTypeGroup", ActiveStudentsFromDegreeTypeGroup.class, new ActiveStudentsFromDegreeTypeGroup.Builder());
 	register("cerimonyInquiryGroup", CerimonyInquiryGroup.class, new CerimonyInquiryGroup.Builder());
 	register("conclusionYearDegreesStudentsGroup", ConclusionYearDegreesStudentsGroup.class, new ConclusionYearDegreesStudentsGroup.Builder());
+	register("notUpdatedAlumniInfoForSpecificTimeGroup", NotUpdatedAlumniInfoForSpecificTimeGroup.class, new NotUpdatedAlumniInfoForSpecificTimeGroup.Builder());
 	registerGroupsWithNoArguments();
     }
 

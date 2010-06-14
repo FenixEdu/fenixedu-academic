@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.joda.time.LocalDate;
+import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
@@ -53,9 +54,15 @@ public class ConclusionYearDegreesStudentsGroup extends LeafGroup {
     private LocalDate getConclusionDate(Degree degree, Registration registration) {
 	for (StudentCurricularPlan scp : registration.getStudentCurricularPlansByDegree(degree)) {
 	    if (registration.isBolonha()) {
-		return registration.getConclusionDate(scp.getLastConcludedCycleCurriculumGroup().getCycleType()).toLocalDate();
+		if (scp.getLastConcludedCycleCurriculumGroup() != null) {
+		    YearMonthDay conclusionDate = registration.getConclusionDate(scp.getLastConcludedCycleCurriculumGroup().getCycleType());
+		    if(conclusionDate != null) {
+			return conclusionDate.toLocalDate();
+		    }		    
+		}
+		return null;
 	    } else {
-		return registration.getConclusionDate().toLocalDate();
+		return registration.getConclusionDate() != null ? registration.getConclusionDate().toLocalDate() : null;
 	    }
 	}
 	return null;

@@ -18,7 +18,7 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" name="alumniForm" value="removeRecipients"/>
 	<fr:edit id="emailBean" name="emailBean" schema="alumni.gep.remove.recipients">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle5 thright thlight mtop05 ulnomargin"/>
+			<fr:property name="classes" value="tstyle5 thright thlight mtop05 ulnomargin thnowrap"/>
 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 			<fr:property name="displayHeaders" value="false"/>
 		</fr:layout>	
