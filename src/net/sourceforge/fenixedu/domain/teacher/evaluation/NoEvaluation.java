@@ -38,7 +38,7 @@ public class NoEvaluation extends NoEvaluation_Base {
 
     @Override
     public void copyAutoEvaluation() {
-	CurricularEvaluation copy = new CurricularEvaluation(getTeacherEvaluationProcess());
+	NoEvaluation copy = new NoEvaluation(getTeacherEvaluationProcess());
 	internalCopyAutoEvaluation(copy);
     }
 }

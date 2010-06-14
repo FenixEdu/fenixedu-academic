@@ -35,7 +35,7 @@ public class RadistEvaluation extends RadistEvaluation_Base {
 
     @Override
     public void copyAutoEvaluation() {
-	CurricularEvaluation copy = new CurricularEvaluation(getTeacherEvaluationProcess());
+	RadistEvaluation copy = new RadistEvaluation(getTeacherEvaluationProcess());
 	internalCopyAutoEvaluation(copy);
     }
 }
