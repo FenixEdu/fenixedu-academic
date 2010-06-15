@@ -1,10 +1,14 @@
 package net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.SpecialSeasonCode;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.student.StudentStatute;
+import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
 
 public class SpecialSeasonCodeBean implements Serializable {
 
@@ -39,6 +43,15 @@ public class SpecialSeasonCodeBean implements Serializable {
 
     public void setSpecialSeasonCode(SpecialSeasonCode specialSeasonCode) {
 	this.specialSeasonCode = specialSeasonCode;
+    }
+    
+    public boolean isStudentAuthorized() {
+	List<StudentStatute> statutes = studentCurricularPlan.getRegistration().getStudent().getStudentStatutes();
+	for(StudentStatute statute : statutes) {
+	    if(statute.getStatuteType().isSpecialSeasonGranted())
+		return true;
+	}
+	return false;
     }
 
 }

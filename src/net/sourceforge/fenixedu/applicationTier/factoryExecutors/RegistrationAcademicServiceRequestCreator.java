@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.EquivalencePlanRevisionRe
 import net.sourceforge.fenixedu.domain.serviceRequests.ExtraExamRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.FreeSolicitationAcademicRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.PartialRegistrationRegimeRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.SpecialSeasonRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.StudentReingressionRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.PhotocopyRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -54,6 +55,10 @@ public class RegistrationAcademicServiceRequestCreator extends RegistrationAcade
 	case FREE_SOLICITATION_ACADEMIC_REQUEST:
 	    this.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
 	    result = new FreeSolicitationAcademicRequest(this);
+	    break;
+	    
+	case SPECIAL_SEASON_REQUEST:
+	    result = new SpecialSeasonRequest(this);
 	    break;
 
 	case PHOTOCOPY_REQUEST:

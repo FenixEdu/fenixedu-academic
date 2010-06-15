@@ -3,32 +3,133 @@
  */
 package net.sourceforge.fenixedu.domain.student;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
 public enum StudentStatuteType {
 
-    WORKING_STUDENT(true),
-
-    PROFESSIONAL_ATHLETE(true),
-
-    HANDICAPPED(false),
-
-    SAS_GRANT_OWNER(true),
-
-    ASSOCIATIVE_LEADER(true),
-
-    FIREMAN(true);
-
+    /**
+     * Most common statutes
+     */
+    SENIOR(true, true, true),
+    
+    WORKING_STUDENT(true, true, true),
+    
+      
+    /**
+     * AEIST related statutes
+     */
+    AEIST_ASSOCIATIVE_LEADER(true, true, true),
+    
+    AEIST_FISCAL_COUNCIL_AND_GENERAL_ASSEMBLY_SECRETARIES(true, true, true),
+    
+    AEIST_AUTONOMOUS_SECTIONS(true, true, true),
+    
+    
+    /**
+     * Old institutional statutes
+     */
+    DIRECTIVE_COUNCIL(true, true, true),
+    
+    ASSEMBLY_OF_REPRESENTATIVES(true, true, true),
+    
+    ASSEMBLY_OF_REPRESENTATIVES_COMMITTEES(true, true, true),
+    
+    PEDAGOCICAL_COUNCIL_EXECUTIVE_BOARD(true, true, true),
+    
+    PEDAGOGICAL_COUNCIL_COORDINATING_COMMITTEE(true, true, true),
+    
+    
+    /**
+     * New institutional statutes
+     */
+    SCHOOL_ASSEMBLY(true, true, true),
+    
+    SCHOOL_COUNCIL(true, true, true),
+    
+    
+    /**
+     * Statutes related with students' extracurricular activities.
+     */
+    PROFESSIONAL_ATHLETE(true, true, true),
+    
+    IST_ATHLETE(true, true, true),
+    
+    IST_TUNA_MEMBER(true, true, true),
+    
+    ASSOCIATIVE_LEADER(true, true, true),
+    
+    FIREMAN(true, true, true),
+    
+    
+    /**
+     * Life condition imposed statutes.
+     */
+    HANDICAPPED(false, false, true),
+    
+    PARTURIENT_OR_SPOUSE(true, true, true),
+    
+    SPECIAL_SEASON_GRANTED_BY_MEDICAL_JUSTIFICATION(true, true, true),
+    
+    
+    /**
+     * Grants and external protocols related statutes.
+     */
+    SAS_GRANT_OWNER(true, true, false),
+    
+    IST_GRANT_OWNER(true, true, true),
+    
+    SPECIAL_SEASON_GRANTED_BY_MILITARY_PROTOCOL(true, true, true),
+    
+    
+    /**
+     * Other statutes.
+     */
+    SPECIAL_SEASON_GRANTED_BY_LEGI_TRANSITION_REGIME(true, false, true),
+    
+    SPECIAL_SEASON_GRANTED_BY_REQUEST(true, false, true);
+    
+    
+    
+    
     private boolean explicitCreation;
+    
+    private boolean visible;
+    
+    private boolean specialSeasonGranted;
 
-    private StudentStatuteType(boolean explicitCreation) {
+    private StudentStatuteType(boolean explicitCreation, boolean visible, boolean specialSeasonGranted) {
 	this.explicitCreation = explicitCreation;
+	this.visible = visible;
+	this.specialSeasonGranted = specialSeasonGranted;
     }
 
     public boolean isExplicitCreation() {
 	return explicitCreation;
+    }
+    
+    public boolean isVisible() {
+	return visible;
+    }
+    
+    public boolean isSpecialSeasonGranted() {
+	return specialSeasonGranted;
+    }
+    
+    public static final List<StudentStatuteType> VISIBLE_STATUTES;
+    static {
+	final List<StudentStatuteType> result = new ArrayList<StudentStatuteType>();
+	for(final StudentStatuteType statute : values()) {
+	    if(statute.isVisible()) {
+		result.add(statute);
+	    }
+	}
+	VISIBLE_STATUTES = Collections.unmodifiableList(result);
     }
 
 }

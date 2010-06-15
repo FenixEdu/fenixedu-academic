@@ -16,6 +16,8 @@ public enum AcademicServiceRequestType {
     COURSE_GROUP_CHANGE_REQUEST(true),
 
     FREE_SOLICITATION_ACADEMIC_REQUEST(true),
+    
+    SPECIAL_SEASON_REQUEST(true),
 
     EXTRA_EXAM_REQUEST(true),
 

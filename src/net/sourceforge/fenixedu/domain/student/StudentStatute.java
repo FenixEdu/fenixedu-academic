@@ -1,11 +1,14 @@
 package net.sourceforge.fenixedu.domain.student;
 
+import java.util.Set;
+
 import org.joda.time.DateTime;
 
 import net.sourceforge.fenixedu.dataTransferObject.student.ManageStudentStatuteBean;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
@@ -76,6 +79,7 @@ public class StudentStatute extends StudentStatute_Base {
     }
 
     public void delete() {
+	checkRules();
 	removeBeginExecutionPeriod();
 	removeEndExecutionPeriod();
 	removeStudent();
@@ -158,6 +162,31 @@ public class StudentStatute extends StudentStatute_Base {
     public String toDetailedString() {
 	return (getBeginExecutionPeriod() != null ? getBeginExecutionPeriod().getQualifiedName() : " - ") + " ..... "
 		+ (getEndExecutionPeriod() != null ? getEndExecutionPeriod().getQualifiedName() : " - ");
+    }
+    
+    public void checkRules() {
+	if(hasSpecialSeasonEnrolments()) {
+	    throw new DomainException("error.student.StudentStatute.has.special.season.enrolment");
+	}
+    }
+    
+    public boolean hasSpecialSeasonEnrolments() {
+	
+	ExecutionSemester lastSemester = getEndExecutionPeriod();
+
+	Set<Registration> registrations = getStudent().getRegistrationsSet();
+	for(Registration registration : registrations) {
+	    Set<StudentCurricularPlan> plans = registration.getStudentCurricularPlansSet();
+	    for(StudentCurricularPlan scp : plans) {
+		ExecutionSemester semesterIterator = getBeginExecutionPeriod();
+		while(semesterIterator != null && semesterIterator.isBeforeOrEquals(lastSemester)) {
+		    if(scp.isEnroledInSpecialSeason(semesterIterator))
+			return true;
+		    semesterIterator = semesterIterator.getNextExecutionPeriod();
+		}
+	    }
+	}
+	return false;
     }
 
 }

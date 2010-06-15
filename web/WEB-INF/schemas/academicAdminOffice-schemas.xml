@@ -735,8 +735,9 @@
 
 <schema name="student.createStatutes" bundle="ACADEMIC_OFFICE_RESOURCES" 
 		type="net.sourceforge.fenixedu.dataTransferObject.student.ManageStudentStatuteBean">
-	<slot name="statuteType" key="label.statuteType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="excludedValues" value="HANDICAPPED" />	
+	<slot name="statuteType" layout="menu-select" key="label.statuteType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.VisibleStudentStatuteTypeProvider" />	
 	</slot>
 	<slot name="beginExecutionPeriod" layout="menu-select" key="label.beginExecutionPeriod" >
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.StudentExecutionPeriodsProvider" />

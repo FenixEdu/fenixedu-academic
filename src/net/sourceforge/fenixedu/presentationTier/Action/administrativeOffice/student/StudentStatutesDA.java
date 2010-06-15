@@ -63,8 +63,12 @@ public class StudentStatutesDA extends FenixDispatchAction {
 		.readStudentStatuteByOID(getIntegerFromRequest(request, "statuteId"));
 	final Student student = studentStatute.getStudent();
 
-	// delete statute
-	executeFactoryMethod(new DeleteStudentStatuteFactory(studentStatute));
+	try {
+	    // delete statute
+	    executeFactoryMethod(new DeleteStudentStatuteFactory(studentStatute));
+	} catch (DomainException de) {
+	    addActionMessage(request, de.getMessage());
+	}
 
 	request.setAttribute("student", student);
 	request.setAttribute("manageStatuteBean", new CreateStudentStatuteFactory(student));

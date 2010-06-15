@@ -859,6 +859,15 @@
 	<slot name="purpose" key="label.serviceRequests.purpose" />
 </schema>
 
+<schema name="RegistrationAcademicServiceRequestCreateBean.SPECIAL_SEASON_REQUEST"
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.RegistrationAcademicServiceRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES"
+	extends="RegistrationAcademicServiceRequestCreateBean.choose.type">
+</schema>
+
+<schema name="SpecialSeasonRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.SpecialSeasonRequest"
+		extends="AcademicServiceRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
+</schema>
+
 <schema name="RegistrationAcademicServiceRequestCreateBean.EXTRA_EXAM_REQUEST"
 	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.RegistrationAcademicServiceRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES"
 	extends="RegistrationAcademicServiceRequestCreateBean.choose.type">

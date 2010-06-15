@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment.bolonha;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,6 +22,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.C
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.student.StudentStatute;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -144,6 +147,30 @@ public class AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA extends A
 
 	request.setAttribute("studentCurricularPlan", seasonCodeBean.getStudentCurricularPlan());
 	request.setAttribute("executionPeriod", seasonCodeBean.getExecutionPeriod());
+
+	return mapping.findForward("showStudentEnrollmentMenu");
+    }
+    
+    public ActionForward checkPermission(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	
+	StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(request);
+	ExecutionSemester executionSemester = getExecutionPeriod(request);
+	
+	List<StudentStatute> statutes = studentCurricularPlan.getRegistration().getStudent().getStudentStatutes();
+	for(StudentStatute statute : statutes) {
+	    if(statute.getStatuteType().isSpecialSeasonGranted() && statute.isValidInExecutionPeriod(executionSemester)) {
+		request.setAttribute("action", getAction());
+		request.setAttribute("bolonhaStudentEnrollmentBean", new SpecialSeasonBolonhaStudentEnrolmentBean(studentCurricularPlan,
+			executionSemester));
+
+		addDebtsWarningMessages(studentCurricularPlan.getRegistration().getStudent(), executionSemester, request);
+		return mapping.findForward("showDegreeModulesToEnrol");
+	    }
+	}
+	addActionMessage(request, "error.special.season.not.granted");
+	request.setAttribute("studentCurricularPlan", studentCurricularPlan);
+	request.setAttribute("executionPeriod", executionSemester);
 
 	return mapping.findForward("showStudentEnrollmentMenu");
     }

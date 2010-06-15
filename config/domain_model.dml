@@ -5109,6 +5109,9 @@ class DomainObject {
                 String purpose;
             }
             
+            class serviceRequests.SpecialSeasonRequest extends serviceRequests.RegistrationAcademicServiceRequest {
+            }
+            
             class serviceRequests.PartialRegistrationRegimeRequest extends serviceRequests.RegistrationAcademicServiceRequest {
             }
                         
@@ -8099,6 +8102,20 @@ relation AcademicServiceRequestSituationEmployee {
 relation EquivalencePlanRevisionRequestEquivalencePlanRequest {
     serviceRequests.EquivalencePlanRequest playsRole equivalencePlanRequest;
     serviceRequests.EquivalencePlanRevisionRequest playsRole equivalencePlanRevisionRequests {
+        multiplicity *;
+    }
+}
+
+relation SpecialSeasonRequestBeginPeriod {
+    ExecutionSemester playsRole beginExecutionPeriod;
+    serviceRequests.SpecialSeasonRequest playsRole beginningSpecialSeason {
+        multiplicity *;
+    }
+}
+
+relation SpecialSeasonRequestEndPeriod {
+    ExecutionSemester playsRole endExecutionPeriod;
+    serviceRequests.SpecialSeasonRequest playsRole endingSpecialSeason {
         multiplicity *;
     }
 }
