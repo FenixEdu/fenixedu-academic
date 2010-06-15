@@ -3,22 +3,19 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean"%>
-<%@page import="pt.ist.fenixWebFramework.renderers.validators.FileValidator"%>
-<html:xhtml/>
+<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean"%>
+<%@page import="pt.ist.fenixWebFramework.renderers.validators.FileValidator"%><html:xhtml/>
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
+
 <bean:define id="processId" name="process" property="externalId" />
 <bean:define id="individualProcessId" name="process" property="individualProgramProcess.externalId" />
 
 <%-- ### Title #### --%>
-<em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
-<h2><bean:message key="label.phd.submit.thesis" bundle="PHD_RESOURCES" /></h2>
+<em><bean:message  key="label.phd.coordinator.breadcrumb" bundle="PHD_RESOURCES"/></em>
+<h2><bean:message key="label.phd.ratify.final.thesis" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
-
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
 <html:link action="<%= "/phdIndividualProgramProcess.do?method=viewProcess&amp;processId=" + individualProcessId.toString() %>">
@@ -39,17 +36,28 @@
 		<fr:property name="classes" value="tstyle2 thlight mtop15" />
 	</fr:layout>
 </fr:view>
-<%--  ### End Of Context Information  ### --%>
 
-<br/>
+<%--  ### End Of Context Information  ### --%>
 
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 
 <fr:form action="<%= "/phdThesisProcess.do?processId=" + processId.toString() %>" encoding="multipart/form-data">
 	<input type="hidden" name="method" />
-	<fr:edit id="submitThesisBean" name="submitThesisBean" visible="false" />
 	
-	<fr:edit id="submitThesisBean.edit.documents" name="submitThesisBean" property="documents">
+	<fr:edit id="thesisProcessBean" name="thesisProcessBean" visible="false" />
+	
+	<fr:edit id="thesisProcessBean.edit" name="thesisProcessBean">
+		<fr:schema bundle="PHD_RESOURCES" type="<%= PhdThesisProcessBean.class.getName() %>">
+			<fr:slot name="whenFinalThesisRatified" required="true" />
+		</fr:schema>
+	
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
+			<fr:property name="columnClasses" value=",,tdclear tderror1" />
+		</fr:layout>
+	</fr:edit>
+	
+	<fr:edit id="thesisProcessBean.edit.documents" name="thesisProcessBean" property="documents">
 	
 		<fr:schema bundle="PHD_RESOURCES" type="<%= PhdProgramDocumentUploadBean.class.getName() %>">
 			<fr:slot name="type" readOnly="true" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean.type" layout="phd-enum-renderer" />
@@ -60,25 +68,20 @@
 			</fr:slot>
 		</fr:schema>
 	
-		<fr:layout name="tabular-editable">
+		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 			<fr:property name="columnClasses" value=",,tdclear tderror1" />
 		</fr:layout>
 		
+		<fr:destination name="invalid" path="<%= "/phdThesisProcess.do?method=ratifyFinalThesisInvalid&processId=" + processId.toString() %>" />
+
 	</fr:edit>
 
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='submitThesis';"><bean:message bundle="PHD_RESOURCES" key="label.submit"/></html:submit>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='ratifyFinalThesis';"><bean:message bundle="PHD_RESOURCES" key="label.submit"/></html:submit>
 	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='viewIndividualProgramProcess';"><bean:message bundle="PHD_RESOURCES" key="label.cancel"/></html:cancel>	
 
 </fr:form>
 
-
-<br/><br/>
-
 <%--  ### End of Operation Area  ### --%>
-
-<%--  ### Buttons (e.g. Submit)  ### --%>
-
-<%--  ### End of Buttons (e.g. Submit)  ### --%>
 
 </logic:present>

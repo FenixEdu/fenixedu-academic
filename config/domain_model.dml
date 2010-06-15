@@ -7170,6 +7170,8 @@ class phd.thesis.PhdThesisProcess extends phd.PhdProgramProcess {
 
 	DateTime discussionDate;
 	String discussionPlace;
+	
+	LocalDate whenFinalThesisRatified;
 }
 
 class phd.thesis.ThesisJuryElement extends DomainObject {

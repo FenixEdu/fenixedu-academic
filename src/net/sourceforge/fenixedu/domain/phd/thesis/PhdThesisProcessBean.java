@@ -32,6 +32,8 @@ public class PhdThesisProcessBean implements Serializable {
 
     private String mailSubject, mailBody;
 
+    private LocalDate whenFinalThesisRatified;
+
     public PhdThesisProcessBean() {
 	this.documents = new ArrayList<PhdProgramDocumentUploadBean>();
     }
@@ -142,6 +144,14 @@ public class PhdThesisProcessBean implements Serializable {
 
     public void setMailBody(String mailBody) {
 	this.mailBody = mailBody;
+    }
+
+    public LocalDate getWhenFinalThesisRatified() {
+	return whenFinalThesisRatified;
+    }
+
+    public void setWhenFinalThesisRatified(LocalDate whenFinalThesisRatified) {
+	this.whenFinalThesisRatified = whenFinalThesisRatified;
     }
 
 }

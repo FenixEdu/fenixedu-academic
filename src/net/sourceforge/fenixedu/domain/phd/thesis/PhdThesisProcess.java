@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryReviewDocuments
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.MoveJuryElementOrder;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.PhdThesisActivity;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.PrintJuryElementsDocument;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.RatifyFinalThesis;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RejectJuryElements;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryElements;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryReviews;
@@ -98,6 +99,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	activities.add(new JuryReviewDocumentsDownload());
 	activities.add(new SubmitThesisMeetingMinutes());
 	activities.add(new ScheduleThesisDiscussion());
+	activities.add(new RatifyFinalThesis());
     }
 
     private PhdThesisProcess() {

@@ -48,6 +48,8 @@ public enum PhdIndividualProgramDocumentType {
     PROVISIONAL_THESIS,
 
     FINAL_THESIS,
+    
+    FINAL_THESIS_RATIFICATION_DOCUMENT,
 
     THESIS_REQUIREMENT,
     

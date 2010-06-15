@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.AddPresidentJuryEle
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.DeleteJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.EditJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.MoveJuryElementOrder;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.RatifyFinalThesis;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RejectJuryElements;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryElements;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryReviews;
@@ -81,7 +82,9 @@ import pt.utl.ist.fenix.tools.util.Pair;
 
 @Forward(name = "submitThesisMeetingMinutes", path = "/phd/thesis/academicAdminOffice/submitThesisMeetingMinutes.jsp"),
 
-@Forward(name = "scheduleThesisDiscussion", path = "/phd/thesis/academicAdminOffice/scheduleThesisDiscussion.jsp")
+@Forward(name = "scheduleThesisDiscussion", path = "/phd/thesis/academicAdminOffice/scheduleThesisDiscussion.jsp"),
+
+@Forward(name = "ratifyFinalThesis", path = "/phd/thesis/academicAdminOffice/ratifyFinalThesis.jsp")
 
 })
 public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
@@ -579,8 +582,6 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 	    HttpServletResponse response) {
 
 	final PhdThesisProcessBean bean = new PhdThesisProcessBean();
-	// bean.addDocument(new
-	// PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.PROVISIONAL_THESIS));
 	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.FINAL_THESIS));
 
 	request.setAttribute("submitThesisBean", bean);
@@ -603,7 +604,7 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 	try {
 
 	    if (!RenderUtils.getViewState("submitThesisBean.edit.documents").isValid()) {
-		addErrorMessage(request, "error.phd.submitThesis.invalid.documents");
+		addErrorMessage(request, "error.phd.invalid.documents");
 		return prepareSubmitThesisInvalid(mapping, form, request, response);
 	    }
 
@@ -620,4 +621,48 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
     // End of submit thesis
 
+    // Ratify final thesis
+    public ActionForward prepareRatifyFinalThesis(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final PhdThesisProcessBean bean = new PhdThesisProcessBean();
+	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.FINAL_THESIS_RATIFICATION_DOCUMENT));
+
+	request.setAttribute("thesisProcessBean", bean);
+	return mapping.findForward("ratifyFinalThesis");
+    }
+    
+    public ActionForward ratifyFinalThesisInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("thesisProcessBean", getThesisProcessBean());
+	return mapping.findForward("ratifyFinalThesis");
+    }
+    
+    public ActionForward ratifyFinalThesis(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	
+	try {
+
+	    if (!RenderUtils.getViewState("thesisProcessBean.edit").isValid()) {
+		return ratifyFinalThesisInvalid(mapping, actionForm, request, response);
+	    }
+	    
+	    if (!RenderUtils.getViewState("thesisProcessBean.edit.documents").isValid()) {
+		addErrorMessage(request, "error.phd.invalid.documents");
+		return ratifyFinalThesisInvalid(mapping, actionForm, request, response);
+	    }
+
+	    ExecuteProcessActivity.run(getProcess(request), RatifyFinalThesis.class, getThesisProcessBean());
+
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getMessage(), e.getArgs());
+	    return ratifyFinalThesisInvalid(mapping, actionForm, request, response);
+	}
+
+	return viewIndividualProgramProcess(request, getProcess(request));
+
+    }
+
+    // End of ratify final thesis
 }

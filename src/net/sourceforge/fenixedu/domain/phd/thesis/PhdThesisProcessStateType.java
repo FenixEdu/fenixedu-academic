@@ -25,6 +25,8 @@ public enum PhdThesisProcessStateType implements PhdProcessStateType {
     THESIS_DISCUSSION_DATE_SCHECULED,
     
     WAITING_FOR_THESIS_RATIFICATION,
+    
+    WAITING_FOR_FINAL_GRADE,
 
     CONCLUDED;
 

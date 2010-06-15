@@ -45,3 +45,4 @@ function executeWithTempFile() {
 
 execute "Converting data from SpecialSeasonCode entities to StudentStatute entities." ConvertSSCToStatutes.sql
 execute "Adding 2 columns to table ACADEMIC_SERVICE_REQUEST (ETC: 3 mins)." alterTableAcademicServiceRequest.sql
+execute "Add new columns to phd thesis process table" updatePhdThesisProcessTable1.sql

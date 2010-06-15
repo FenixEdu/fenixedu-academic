@@ -14,6 +14,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisMeeting"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitThesisMeetingMinutes"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisDiscussion"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.RatifyFinalThesis"%>
 
 <logic:notEmpty name="process" property="thesisProcess">
 <logic:equal name="process" property="activeState.active" value="true">
@@ -132,6 +133,15 @@
 		</html:link>
 	</li>
 	</phd:activityAvailable>
+	
+	<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= RatifyFinalThesis.class %>">
+	<li style="display: inline;">
+		<html:link action="/phdThesisProcess.do?method=prepareRatifyFinalThesis" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
+			<bean:message bundle="PHD_RESOURCES" key="label.phd.ratify.final.thesis"/>
+		</html:link>
+	</li>
+	</phd:activityAvailable>
+	
 </ul>
 </logic:equal>
 <br/><br/>
