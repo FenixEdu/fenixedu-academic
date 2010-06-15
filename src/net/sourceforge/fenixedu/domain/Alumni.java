@@ -423,7 +423,7 @@ public class Alumni extends Alumni_Base {
 	for (AlumniIdentityCheckRequest request : getIdentityRequests()) {
 	    orderedSet.add(request);
 	}
-	return orderedSet.iterator().next();
+	return orderedSet.size() != 0 ? orderedSet.iterator().next() : null;
     }
 
     public String getLoginUsername() {
