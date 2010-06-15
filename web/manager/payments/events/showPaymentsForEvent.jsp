@@ -82,12 +82,10 @@
 				<td><fr:view name="transaction" property="whenProcessed" /></td>
 				<td><fr:view name="transaction" property="whenRegistered" /></td>
 				<td>
-					<fr:view name="transaction" property="responsibleUser" layout="null-as-label">
-						<fr:layout>
-								<fr:property name="subLayout" value="values" />
-								<fr:property name="subSchema" value="User.userUId" />
-						</fr:layout>
-					</fr:view>
+					<logic:notEmpty name="transaction" property="responsibleUser">
+						<fr:view name="transaction" property="responsibleUser.userUId" />
+					</logic:notEmpty>
+					<logic:empty name="transaction" property="responsibleUser">-</logic:empty>
 				</td>
 				<td><bean:write name="transaction" property="comments" /></td>
 				<td>
@@ -116,12 +114,10 @@
 							<td><fr:view name="adjustingTransaction" property="whenProcessed" /></td>
 							<td><fr:view name="adjustingTransaction" property="whenRegistered" /></td>
 							<td>
-								<fr:view name="adjustingTransaction" property="responsibleUser" layout="null-as-label">
-									<fr:layout>
-											<fr:property name="subLayout" value="values" />
-											<fr:property name="subSchema" value="User.userUId" />
-									</fr:layout>
-								</fr:view>
+								<logic:notEmpty name="adjustingTransaction" property="responsibleUser">
+									<fr:view name="adjustingTransaction" property="responsibleUser.userUId" />
+								</logic:notEmpty>
+								<logic:empty name="adjustingTransaction" property="responsibleUser">-</logic:empty>
 							</td>
 							<td><bean:write name="adjustingTransaction" property="comments" /></td>
 							<td>
