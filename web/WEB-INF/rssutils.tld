@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN" "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+
+<taglib>
+    <tlib-version>1.2</tlib-version>
+    <jsp-version>1.2</jsp-version>
+    <short-name>Rss Tag Library</short-name>
+    <uri>http://sun.com/cnpi/rsstag</uri>
+
+    <tag>
+        <name>feed</name>
+        <tag-class>com.sun.cnpi.rss.taglib.FeedTag</tag-class>
+
+        <attribute>
+            <name>url</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+        <attribute>
+            <name>feedId</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+        <attribute>
+            <name>proxyAddress</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+        <attribute>
+            <name>proxyPort</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+    </tag>
+
+    <tag>
+        <name>channelTitle</name>
+        <tag-class>com.sun.cnpi.rss.taglib.ChannelTitleTag</tag-class>
+
+        <attribute>
+            <name>feedId</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+    </tag>
+
+    <tag>
+        <name>channelLink</name>
+        <tag-class>com.sun.cnpi.rss.taglib.ChannelLinkTag</tag-class>
+
+        <attribute>
+            <name>feedId</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+        <attribute>
+            <name>asLink</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+    </tag>
+
+    <tag>
+        <name>channelDescription</name>
+        <tag-class>com.sun.cnpi.rss.taglib.ChannelDescriptionTag</tag-class>
+
+        <attribute>
+            <name>feedId</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+    </tag>
+
+    <tag>
+        <name>channelCopyright</name>
+        <tag-class>com.sun.cnpi.rss.taglib.ChannelCopyrightTag</tag-class>
+
+        <attribute>
+            <name>feedId</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+    </tag>
+
+    <tag>
+        <name>channelDocs</name>
+        <tag-class>com.sun.cnpi.rss.taglib.ChannelDocsTag</tag-class>
+
+        <attribute>
+            <name>feedId</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+        <attribute>
+            <name>useDefault</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+    </tag>
+
+    <tag>
+        <name>channelGenerator</name>
+        <tag-class>com.sun.cnpi.rss.taglib.ChannelGeneratorTag</tag-class>
+
+        <attribute>
+            <name>feedId</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+    </tag>
+
+    <tag>
+        <name>channelImage</name>
+        <tag-class>com.sun.cnpi.rss.taglib.ChannelImageTag</tag-class>
+
+        <attribute>
+            <name>feedId</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+        <attribute>
+            <name>asLink</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+        <attribute>
+            <name>width</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+        <attribute>
+            <name>height</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+    </tag>
+
+    <tag>
+        <name>channelLanguage</name>
+        <tag-class>com.sun.cnpi.rss.taglib.ChannelLanguageTag</tag-class>
+
+        <attribute>
+            <name>feedId</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+    </tag>
+
+    <tag>
+        <name>channelLastBuildDate</name>
+        <tag-class>com.sun.cnpi.rss.taglib.ChannelLastBuildDateTag</tag-class>
+
+        <attribute>
+            <name>feedId</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+        <attribute>
+            <name>formatIn</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+        <attribute>
+            <name>formatOut</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+    </tag>
+
+    <tag>
+        <name>channelManagingEditor</name>
+        <tag-class>com.sun.cnpi.rss.taglib.ChannelManagingEditorTag</tag-class>
+
+        <attribute>
+            <name>feedId</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+    </tag>
+
+    <tag>
+        <name>channelPubDate</name>
+        <tag-class>com.sun.cnpi.rss.taglib.ChannelPubDateTag</tag-class>
+
+        <attribute>
+            <name>feedId</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+        <attribute>
+            <name>formatIn</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+        <attribute>
+            <name>formatOut</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+    </tag>
+
+    <tag>
+        <name>channelSkipDays</name>
+        <tag-class>com.sun.cnpi.rss.taglib.ChannelSkipDaysTag</tag-class>
+
+        <attribute>
+            <name>feedId</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+    </tag>
+
+    <tag>
+        <name>channelSkipHours</name>
+        <tag-class>com.sun.cnpi.rss.taglib.ChannelSkipHoursTag</tag-class>
+
+        <attribute>
+            <name>feedId</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+    </tag>
+
+
+    <tag>
+        <name>channelTextInput</name>
+        <tag-class>com.sun.cnpi.rss.taglib.ChannelTextInputTag</tag-class>
+
+        <attribute>
+            <name>feedId</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+    </tag>
+
+    <tag>
+        <name>channelTTL</name>
+        <tag-class>com.sun.cnpi.rss.taglib.ChannelTtlTag</tag-class>
+
+        <attribute>
+            <name>feedId</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+    </tag>
+
+    <tag>
+        <name>itemTitle</name>
+        <tag-class>com.sun.cnpi.rss.taglib.ItemTitleTag</tag-class>
+
+        <attribute>
+            <name>feedId</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+        <attribute>
+            <name>index</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+
+    <tag>
+        <name>itemLink</name>
+        <tag-class>com.sun.cnpi.rss.taglib.ItemLinkTag</tag-class>
+
+        <attribute>
+            <name>feedId</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+        <attribute>
+            <name>index</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+
+    <tag>
+        <name>itemDescription</name>
+        <tag-class>com.sun.cnpi.rss.taglib.ItemDescriptionTag</tag-class>
+
+        <attribute>
+            <name>feedId</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+        <attribute>
+            <name>index</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+
+    <tag>
+        <name>forEachItem</name>
+        <tag-class>com.sun.cnpi.rss.taglib.ForEachItemTag</tag-class>
+
+        <attribute>
+            <name>feedId</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+        <attribute>
+            <name>startIndex</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+        <attribute>
+            <name>endIndex</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+
+
+
+
+</taglib>
