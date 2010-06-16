@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.Job;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
-import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionUnit;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -19,8 +18,6 @@ import net.sourceforge.fenixedu.util.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.joda.time.DateTime;
-import org.joda.time.Months;
 
 public class AlumniHomeDA extends FenixDispatchAction {
 
@@ -70,27 +67,7 @@ public class AlumniHomeDA extends FenixDispatchAction {
     }
 
     private boolean areContactsUpToDate(Person person) {
-	return areContactsRecent(person, EmailAddress.class) && areContactsRecent(person, MobilePhone.class);
-    }
-
-    private boolean areContactsRecent(Person person, Class<? extends PartyContact> contactClass) {
-	List<? extends PartyContact> partyContacts = person.getPartyContacts(contactClass);
-	boolean isUpdated = false;
-	for (PartyContact partyContact : partyContacts) {
-	    if (partyContact.getLastModifiedDate() == null) {
-		isUpdated = isUpdated || false;
-	    } else {
-		DateTime lastModifiedDate = partyContact.getLastModifiedDate();
-		DateTime now = new DateTime();
-		Months months = Months.monthsBetween(lastModifiedDate, now);
-		if (months.getMonths() > 12) {
-		    isUpdated = isUpdated || false;
-		} else {
-		    isUpdated = isUpdated || true;
-		}
-	    }
-	}
-	return isUpdated;
+	return person.areContactsRecent(EmailAddress.class, 365) && person.areContactsRecent(MobilePhone.class, 365);
     }
 
     private double getFormationsPercentage(List<Formation> formations) {

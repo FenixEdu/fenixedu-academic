@@ -162,6 +162,7 @@
 	<schema name="alumni.gep.email.recipient.infoNotUpdated.create" type="net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniInfoNotUpdatedBean" bundle="GEP_RESOURCES">
 		<slot name="professionalInfo" key="label.alumni.professional.info"/>
 		<slot name="formationInfo" key="label.alumni.formation.info"/>
+		<slot name="personalDataInfo" key="label.alumni.personalData.info"/>
 		<slot name="daysNotUpdated" key="label.alumni.notUpdated.info">			
 			<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator" />
 			<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />

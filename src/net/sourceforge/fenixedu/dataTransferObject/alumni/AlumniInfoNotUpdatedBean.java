@@ -12,6 +12,7 @@ public class AlumniInfoNotUpdatedBean implements Serializable {
     private Integer daysNotUpdated;
     private Boolean professionalInfo;
     private Boolean formationInfo;
+    private Boolean personalDataInfo;
 
     public AlumniInfoNotUpdatedBean(Integer daysNotUpdated, Boolean professionalInfo, Boolean formationInfo) {
 	setDaysNotUpdated(daysNotUpdated);
@@ -45,11 +46,19 @@ public class AlumniInfoNotUpdatedBean implements Serializable {
     public void setFormationInfo(Boolean formationInfo) {
 	this.formationInfo = formationInfo;
     }
+
+    public Boolean getPersonalDataInfo() {
+        return personalDataInfo;
+    }
+
+    public void setPersonalDataInfo(Boolean personalDataInfo) {
+        this.personalDataInfo = personalDataInfo;
+    }
     
     @Service
     public void createRecipientGroup(Sender sender) {
 	NotUpdatedAlumniInfoForSpecificTimeGroup recipientsGroup = new NotUpdatedAlumniInfoForSpecificTimeGroup(
-		getDaysNotUpdated(), getProfessionalInfo(), getFormationInfo());
+		getDaysNotUpdated(), getProfessionalInfo(), getFormationInfo(), getPersonalDataInfo());
 	Recipient recipients = Recipient.newInstance(recipientsGroup);
 	sender.addRecipients(recipients);
     }

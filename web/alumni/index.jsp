@@ -40,7 +40,12 @@ ul.material li.feedback { background: url(<%= request.getContextPath() %>/images
 </p>
 
 <logic:present name="displayWarning">
-	<div class="infoop2">
+
+	<!--
+	<h3>Informação Pessoal</h3>
+	-->
+	<h3 class="mbottom075">Preenchimento de Informação</h3>
+	<div class="infoop2 mbottom2">
 		<p class="mvert05"><bean:message key="message.alumni.status.title" bundle="ALUMNI_RESOURCES"/>:</p>
 		<ul class="mbottom05">
 			<logic:present name="showContactsMessage">
@@ -155,7 +160,7 @@ ul.material li.feedback { background: url(<%= request.getContextPath() %>/images
 	  		}
 	  	%>
 	    <li>
-	    	<p>
+	    	<p class="mvert05">
 	    		<logic:present name="beforeUrl">
 	    			<bean:write name="beforeUrl"/>
 	    			<html:link href="<%= request.getAttribute("twittUrl").toString() %>" target="_blank">

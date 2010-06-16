@@ -11,6 +11,8 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongTypeOfArgumentException;
+import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
+import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -23,12 +25,14 @@ public class NotUpdatedAlumniInfoForSpecificTimeGroup extends LeafGroup {
     private int daysNotUpdated;
     private boolean checkJobNotUpdated;
     private boolean checkFormationNotUpdated;
+    private boolean checkPersonalDataNotUpdated;
 
     public NotUpdatedAlumniInfoForSpecificTimeGroup(Integer daysNotUpdated, boolean checkJobNotUpdated,
-	    boolean checkFormationNotUpdated) {
+	    boolean checkFormationNotUpdated, boolean checkPersonalDataNotUpdated) {
 	setDaysNotUpdated(daysNotUpdated);
 	setCheckJobNotUpdated(checkJobNotUpdated);
 	setCheckFormationNotUpdated(checkFormationNotUpdated);
+	setCheckPersonalDataNotUpdated(checkPersonalDataNotUpdated);
     }
 
     @Override
@@ -50,6 +54,16 @@ public class NotUpdatedAlumniInfoForSpecificTimeGroup extends LeafGroup {
 	    if (continueCicle) {
 		continueCicle = false;
 		continue;
+	    }
+	    if (isCheckPersonalDataNotUpdated()) {
+		boolean areMailContactsRecent = alumni.getStudent().getPerson().areContactsRecent(EmailAddress.class,
+			getDaysNotUpdated());
+		boolean areMobileContactsRecent = alumni.getStudent().getPerson().areContactsRecent(MobilePhone.class,
+			getDaysNotUpdated());
+		if (!areMailContactsRecent || !areMobileContactsRecent) {
+		    elements.add(alumni.getStudent().getPerson());
+		    continue;
+		}
 	    }
 	    if (isCheckFormationNotUpdated()) {
 		for (Formation formation : alumni.getFormations()) {
@@ -91,6 +105,13 @@ public class NotUpdatedAlumniInfoForSpecificTimeGroup extends LeafGroup {
 		    }
 		}
 	    }
+	    if (isCheckPersonalDataNotUpdated()) {
+		boolean areMailContactsRecent = person.areContactsRecent(EmailAddress.class, getDaysNotUpdated());
+		boolean areMobileContactsRecent = person.areContactsRecent(MobilePhone.class, getDaysNotUpdated());
+		if (!areMailContactsRecent || !areMobileContactsRecent) {
+		    return true;
+		}
+	    }
 	}
 	return false;
     }
@@ -100,13 +121,34 @@ public class NotUpdatedAlumniInfoForSpecificTimeGroup extends LeafGroup {
 	StaticArgument numberOperator = new StaticArgument(getDaysNotUpdated());
 	StaticArgument jobArgument = new StaticArgument(isCheckJobNotUpdated());
 	StaticArgument formationArgument = new StaticArgument(isCheckFormationNotUpdated());
-	return new Argument[] { numberOperator, jobArgument, formationArgument };
+	StaticArgument personalDataArgument = new StaticArgument(isCheckPersonalDataNotUpdated());
+	return new Argument[] { numberOperator, jobArgument, formationArgument, personalDataArgument};
     }
 
     @Override
     public String getName() {
-	return RenderUtils.getFormatedResourceString("GROUP_NAME_RESOURCES", "label.name.alumniInfoNotUpdated",
-		getDaysNotUpdated());
+	Object[] args = new Object[4];
+	String key = "label.name.alumniInfoNotUpdated.oneItem";
+	int iter=0;
+	if(isCheckFormationNotUpdated()) {
+	    args[iter] = RenderUtils.getFormatedResourceString("GROUP_NAME_RESOURCES", "label.name.alumni.formationInfo");
+	    iter++;
+	}
+	if(isCheckJobNotUpdated()) {
+	    args[iter] = RenderUtils.getFormatedResourceString("GROUP_NAME_RESOURCES", "label.name.alumni.jobInfo");
+	    iter++;
+	}
+	if(isCheckPersonalDataNotUpdated()) {
+	    args[iter] = RenderUtils.getFormatedResourceString("GROUP_NAME_RESOURCES", "label.name.alumni.personalDataInfo");
+	    iter++;
+	}
+	if(iter == 2) {
+	    key = "label.name.alumniInfoNotUpdated.twoItems";
+	} else if(iter == 3){
+	    key = "label.name.alumniInfoNotUpdated.threeItems";
+	}
+	args[iter]=getDaysNotUpdated();
+	return RenderUtils.getFormatedResourceString("GROUP_NAME_RESOURCES", key, args);
     }
 
     public static class Builder implements GroupBuilder {
@@ -115,6 +157,7 @@ public class NotUpdatedAlumniInfoForSpecificTimeGroup extends LeafGroup {
 	    Integer daysOperator;
 	    String jobArgument;
 	    String formationArgument;
+	    String personalDataArgument;
 	    try {
 		daysOperator = (Integer) arguments[0];
 	    } catch (ClassCastException e) {
@@ -130,16 +173,21 @@ public class NotUpdatedAlumniInfoForSpecificTimeGroup extends LeafGroup {
 	    } catch (ClassCastException e) {
 		throw new WrongTypeOfArgumentException(2, StaticArgument.class, arguments[2].getClass());
 	    }
+	    try {
+		personalDataArgument = (String) arguments[3];
+	    } catch (ClassCastException e) {
+		throw new WrongTypeOfArgumentException(3, StaticArgument.class, arguments[3].getClass());
+	    }
 	    return new NotUpdatedAlumniInfoForSpecificTimeGroup(daysOperator, Boolean.valueOf(jobArgument), Boolean
-		    .valueOf(formationArgument));
+		    .valueOf(formationArgument), Boolean.valueOf(personalDataArgument));
 	}
 
 	public int getMinArguments() {
-	    return 3;
+	    return 4;
 	}
 
 	public int getMaxArguments() {
-	    return 3;
+	    return 4;
 	}
     }
 
@@ -169,5 +217,13 @@ public class NotUpdatedAlumniInfoForSpecificTimeGroup extends LeafGroup {
 
     public void setDaysNotUpdated(int daysNotUpdated) {
 	this.daysNotUpdated = daysNotUpdated;
+    }
+
+    public boolean isCheckPersonalDataNotUpdated() {
+	return checkPersonalDataNotUpdated;
+    }
+
+    public void setCheckPersonalDataNotUpdated(boolean checkPersonalDataNotUpdated) {
+	this.checkPersonalDataNotUpdated = checkPersonalDataNotUpdated;
     }
 }

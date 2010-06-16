@@ -160,9 +160,10 @@ public class AlumniInformationAction extends FenixDispatchAction {
     public ActionForward addNotUpdatedInfoRecipients(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	AlumniInfoNotUpdatedBean alumniInfoNotUpdatedBean = (AlumniInfoNotUpdatedBean) getRenderedObject("notUpdatedInfoRecipient");
-	if (!alumniInfoNotUpdatedBean.getFormationInfo() && !alumniInfoNotUpdatedBean.getProfessionalInfo()) {
+	if (!alumniInfoNotUpdatedBean.getFormationInfo() && !alumniInfoNotUpdatedBean.getProfessionalInfo()
+		&& !alumniInfoNotUpdatedBean.getPersonalDataInfo()) {
 	    RenderUtils.invalidateViewState();
-	    addActionMessage(request, "label.alumni.choose.formationOrProfessional");
+	    addActionMessage(request, "label.alumni.choose.formationOrProfessionalOrPersonal");
 	    request.setAttribute("notUpdatedInfoRecipient", alumniInfoNotUpdatedBean);
 	    request.setAttribute("createRecipient", new AlumniMailSendToBean());
 	    return mapping.findForward("addRecipients");
@@ -180,7 +181,7 @@ public class AlumniInformationAction extends FenixDispatchAction {
 	Recipient recipient = AbstractDomainObject.fromExternalId(recipientOID);
 	String fileName = recipient.getToName().replace(" ", "_");
 	final Spreadsheet groupSheet;
-	
+
 	Group group = recipient.getMembers();
 	ConclusionYearDegreesStudentsGroup yearDegreesStudentsGroup = null;
 	NotUpdatedAlumniInfoForSpecificTimeGroup alumniInfoForSpecificTimeGroup = null;
@@ -192,7 +193,7 @@ public class AlumniInformationAction extends FenixDispatchAction {
 	} else {
 	    groupSheet = new Spreadsheet(fileName);
 	    alumniInfoForSpecificTimeGroup = (NotUpdatedAlumniInfoForSpecificTimeGroup) group;
-	    setAlumniInfoForSpecificTimeSheet(recipient, groupSheet, alumniInfoForSpecificTimeGroup);
+	    setAlumniInfoForSpecificTimeSheet(recipient, groupSheet);
 	}
 
 	groupSheet.setHeaders(new String[] { "NOME", "NUMERO_ALUNO", "CURSO", "INICIO", "CONCLUSAO", "EMAIL", "TELEMOVEL" });
@@ -230,8 +231,7 @@ public class AlumniInformationAction extends FenixDispatchAction {
 	}
     }
 
-    private void setAlumniInfoForSpecificTimeSheet(Recipient recipient, final Spreadsheet groupSheet,
-	    NotUpdatedAlumniInfoForSpecificTimeGroup alumniInfoForSpecificTimeGroup) {
+    private void setAlumniInfoForSpecificTimeSheet(Recipient recipient, final Spreadsheet groupSheet) {
 	for (Person person : recipient.getMembers().getElements()) {
 	    Row row = groupSheet.addRow();
 	    row.setCell(person.getName());
@@ -257,10 +257,11 @@ public class AlumniInformationAction extends FenixDispatchAction {
 	for (StudentCurricularPlan scp : registration.getStudentCurricularPlansByDegree(degree)) {
 	    if (registration.isBolonha()) {
 		if (scp.getLastConcludedCycleCurriculumGroup() != null) {
-		    YearMonthDay conclusionDate = registration.getConclusionDate(scp.getLastConcludedCycleCurriculumGroup().getCycleType());
-		    if(conclusionDate != null) {
+		    YearMonthDay conclusionDate = registration.getConclusionDate(scp.getLastConcludedCycleCurriculumGroup()
+			    .getCycleType());
+		    if (conclusionDate != null) {
 			return conclusionDate.toLocalDate();
-		    }		    
+		    }
 		}
 		return null;
 	    } else {

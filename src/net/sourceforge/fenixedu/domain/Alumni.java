@@ -26,6 +26,8 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
+import org.joda.time.Months;
 
 public class Alumni extends Alumni_Base {
 
@@ -166,7 +168,7 @@ public class Alumni extends Alumni_Base {
 
 	return Boolean.TRUE;
     }
-
+    
     public List<Formation> getFormations() {
 	ArrayList<Formation> formations = new ArrayList<Formation>(getStudent().getPerson().getFormations());
 	Collections.sort(formations, Formation.COMPARATOR_BY_BEGIN_YEAR);

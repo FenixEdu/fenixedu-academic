@@ -135,6 +135,7 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
+import org.joda.time.Months;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -3616,4 +3617,23 @@ public class Person extends Person_Base {
 	return false;
     }
 
+    public boolean areContactsRecent(Class<? extends PartyContact> contactClass, int daysNotUpdated) {
+	List<? extends PartyContact> partyContacts = getPartyContacts(contactClass);
+	boolean isUpdated = false;
+	for (PartyContact partyContact : partyContacts) {
+	    if (partyContact.getLastModifiedDate() == null) {
+		isUpdated = isUpdated || false;
+	    } else {
+		DateTime lastModifiedDate = partyContact.getLastModifiedDate();
+		DateTime now = new DateTime();
+		Months months = Months.monthsBetween(lastModifiedDate, now);
+		if (months.getMonths() > daysNotUpdated) {
+		    isUpdated = isUpdated || false;
+		} else {
+		    isUpdated = isUpdated || true;
+		}
+	    }
+	}
+	return isUpdated;
+    }
 }
