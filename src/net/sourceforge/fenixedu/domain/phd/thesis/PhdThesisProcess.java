@@ -37,6 +37,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryReviews;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisDiscussion;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisMeeting;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisMeetingRequest;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.SetFinalGrade;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitJuryElementsDocuments;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitThesis;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitThesisMeetingMinutes;
@@ -100,6 +101,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	activities.add(new SubmitThesisMeetingMinutes());
 	activities.add(new ScheduleThesisDiscussion());
 	activities.add(new RatifyFinalThesis());
+	activities.add(new SetFinalGrade());
     }
 
     private PhdThesisProcess() {

@@ -191,7 +191,8 @@ enum net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationType       
 enum net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationState                                                as PhdNotificationState;
 enum net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessType                                              		  as PhdProcessAccessType;
 enum net.sourceforge.fenixedu.domain.phd.permissions.PhdPermissionType													  as PhdPermissionType;
-enum net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackStateType						  as PhdCandidacyFeedbackStateType; 
+enum net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackStateType						  as PhdCandidacyFeedbackStateType;
+enum net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisFinalGrade														  as PhdThesisFinalGrade; 
 enum net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType                                 as IndividualCandidacyDocumentFileType;
 enum net.sourceforge.fenixedu.domain.accounting.events.DegreeFinalizationCertificateRequestJustificationType              as DegreeFinalizationCertificateRequestJustificationType;
 enum net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestJustificationType            as AcademicServiceRequestJustificationType;
@@ -7172,6 +7173,9 @@ class phd.thesis.PhdThesisProcess extends phd.PhdProgramProcess {
 	String discussionPlace;
 	
 	LocalDate whenFinalThesisRatified;
+	
+	PhdThesisFinalGrade finalGrade;
+	LocalDate conclusionDate;
 }
 
 class phd.thesis.ThesisJuryElement extends DomainObject {

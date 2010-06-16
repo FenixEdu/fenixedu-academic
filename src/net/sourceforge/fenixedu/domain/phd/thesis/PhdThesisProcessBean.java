@@ -34,6 +34,9 @@ public class PhdThesisProcessBean implements Serializable {
 
     private LocalDate whenFinalThesisRatified;
 
+    private PhdThesisFinalGrade finalGrade;
+    private LocalDate conclusionDate;
+
     public PhdThesisProcessBean() {
 	this.documents = new ArrayList<PhdProgramDocumentUploadBean>();
     }
@@ -152,6 +155,22 @@ public class PhdThesisProcessBean implements Serializable {
 
     public void setWhenFinalThesisRatified(LocalDate whenFinalThesisRatified) {
 	this.whenFinalThesisRatified = whenFinalThesisRatified;
+    }
+
+    public PhdThesisFinalGrade getFinalGrade() {
+	return finalGrade;
+    }
+
+    public void setFinalGrade(PhdThesisFinalGrade finalGrade) {
+	this.finalGrade = finalGrade;
+    }
+
+    public LocalDate getConclusionDate() {
+	return conclusionDate;
+    }
+
+    public void setConclusionDate(LocalDate conclusionDate) {
+	this.conclusionDate = conclusionDate;
     }
 
 }

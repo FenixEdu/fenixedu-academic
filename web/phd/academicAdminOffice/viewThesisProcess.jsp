@@ -15,6 +15,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitThesisMeetingMinutes"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisDiscussion"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.RatifyFinalThesis"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.SetFinalGrade"%>
 
 <logic:notEmpty name="process" property="thesisProcess">
 <logic:equal name="process" property="activeState.active" value="true">
@@ -138,6 +139,14 @@
 	<li style="display: inline;">
 		<html:link action="/phdThesisProcess.do?method=prepareRatifyFinalThesis" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
 			<bean:message bundle="PHD_RESOURCES" key="label.phd.ratify.final.thesis"/>
+		</html:link>
+	</li>
+	</phd:activityAvailable>
+	
+	<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= SetFinalGrade.class %>">
+	<li style="display: inline;">
+		<html:link action="/phdThesisProcess.do?method=prepareSetFinalGrade" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
+			<bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.set.final.grade"/>
 		</html:link>
 	</li>
 	</phd:activityAvailable>

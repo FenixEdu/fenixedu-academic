@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryElements
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryReviews;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisDiscussion;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisMeetingRequest;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.SetFinalGrade;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitJuryElementsDocuments;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitThesis;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitThesisMeetingMinutes;
@@ -84,7 +85,9 @@ import pt.utl.ist.fenix.tools.util.Pair;
 
 @Forward(name = "scheduleThesisDiscussion", path = "/phd/thesis/academicAdminOffice/scheduleThesisDiscussion.jsp"),
 
-@Forward(name = "ratifyFinalThesis", path = "/phd/thesis/academicAdminOffice/ratifyFinalThesis.jsp")
+@Forward(name = "ratifyFinalThesis", path = "/phd/thesis/academicAdminOffice/ratifyFinalThesis.jsp"),
+
+@Forward(name = "setFinalGrade", path = "/phd/thesis/academicAdminOffice/setFinalGrade.jsp")
 
 })
 public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
@@ -631,23 +634,22 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 	request.setAttribute("thesisProcessBean", bean);
 	return mapping.findForward("ratifyFinalThesis");
     }
-    
+
     public ActionForward ratifyFinalThesisInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-
 	request.setAttribute("thesisProcessBean", getThesisProcessBean());
 	return mapping.findForward("ratifyFinalThesis");
     }
-    
+
     public ActionForward ratifyFinalThesis(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	
+
 	try {
 
 	    if (!RenderUtils.getViewState("thesisProcessBean.edit").isValid()) {
 		return ratifyFinalThesisInvalid(mapping, actionForm, request, response);
 	    }
-	    
+
 	    if (!RenderUtils.getViewState("thesisProcessBean.edit.documents").isValid()) {
 		addErrorMessage(request, "error.phd.invalid.documents");
 		return ratifyFinalThesisInvalid(mapping, actionForm, request, response);
@@ -665,4 +667,48 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
     }
 
     // End of ratify final thesis
+
+    // Set final grade
+
+    public ActionForward prepareSetFinalGrade(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final PhdThesisProcessBean bean = new PhdThesisProcessBean();
+	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.CONCLUSION_DOCUMENT));
+
+	request.setAttribute("thesisProcessBean", bean);
+	return mapping.findForward("setFinalGrade");
+    }
+
+    public ActionForward setFinalGradeInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("thesisProcessBean", getThesisProcessBean());
+	return mapping.findForward("setFinalGrade");
+    }
+
+    public ActionForward setFinalGrade(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	try {
+
+	    if (!RenderUtils.getViewState("thesisProcessBean.edit").isValid()) {
+		return setFinalGradeInvalid(mapping, actionForm, request, response);
+	    }
+
+	    if (!RenderUtils.getViewState("thesisProcessBean.edit.documents").isValid()) {
+		addErrorMessage(request, "error.phd.invalid.documents");
+		return setFinalGradeInvalid(mapping, actionForm, request, response);
+	    }
+
+	    ExecuteProcessActivity.run(getProcess(request), SetFinalGrade.class, getThesisProcessBean());
+
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getMessage(), e.getArgs());
+	    return setFinalGradeInvalid(mapping, actionForm, request, response);
+	}
+
+	return viewIndividualProgramProcess(request, getProcess(request));
+    }
+
+    // End of set final grade
 }

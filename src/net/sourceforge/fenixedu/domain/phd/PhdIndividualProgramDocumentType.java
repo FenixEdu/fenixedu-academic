@@ -65,6 +65,8 @@ public enum PhdIndividualProgramDocumentType {
 
     JURY_MEETING_MINUTES,
     
+    CONCLUSION_DOCUMENT,
+    
     OTHER(false);
 
     private boolean isVersioned;
