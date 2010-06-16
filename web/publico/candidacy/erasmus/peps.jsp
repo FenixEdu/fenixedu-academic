@@ -36,7 +36,7 @@
 	applicationUrl = f("%s?applicationUrl=%s&attributesList=%s", spToInvoke, applicationUrl, attributes);
 %>
 
-<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= applicationUrl %>">Click here in order to authenticate with your national citizen card</a>
+<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= applicationUrl %>">Click here in order to authenticate with your national citizen e-identification</a>
 
 </body>
 </html>
