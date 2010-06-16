@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.exceptions.HashCodeForEm
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.DegreeCourseInformationBean;
+import net.sourceforge.fenixedu.presentationTier.Action.commons.FenixActionForward;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.RefactoredIndividualCandidacyProcessPublicDA;
 import net.sourceforge.fenixedu.presentationTier.docs.candidacy.erasmus.LearningAgreementDocument;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
@@ -128,7 +129,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
     }
 
     public ActionForward intro(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	return redirect("http://nmci.ist.utl.pt/en/ist/erasmus/", request);
+	return new FenixActionForward(request, new ActionForward("http://nmci.ist.utl.pt/en/ist/erasmus/", true));
     }
 
     public ActionForward chooseSubmissionType(ActionMapping mapping, ActionForm form, HttpServletRequest request,
