@@ -128,7 +128,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
     }
 
     public ActionForward intro(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	return mapping.findForward("candidacy-process-intro");
+	return redirect("http://nmci.ist.utl.pt/en/ist/erasmus/", request);
     }
 
     public ActionForward chooseSubmissionType(ActionMapping mapping, ActionForm form, HttpServletRequest request,
