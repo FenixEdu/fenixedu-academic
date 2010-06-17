@@ -66,12 +66,9 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 		return handleSessionCreationAndForwardToCoordinationExecutionDegreeReportsQuestion(request, userView, session);
 	    } else if (isStudentAndHasGratuityDebtsToPay(userView)) {
 		return handleSessionCreationAndForwardToGratuityPaymentsReminder(request, userView, session);
-	    } 
-// 	Removed temporarily at GEP request	    
-//	    else if (isAlumniWithNoData(userView)){
-//		return handleSessionCreationAndForwardToAlumniReminder(request, userView, session);
-//	    } 
-	    else {
+	    } else if (isAlumniWithNoData(userView)) {
+		return handleSessionCreationAndForwardToAlumniReminder(request, userView, session);
+	    } else {
 		return handleSessionCreationAndGetForward(mapping, request, userView, session);
 	    }
 	} catch (ExcepcaoAutenticacao e) {
@@ -94,12 +91,20 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	return new ActionForward("/alumniReminder.do");
     }
 
+    /**
+     * Checks if all the person that have the Alumni object have the any formation filled in
+     * with the exception for those that are active teachers or haver a role of EMPLOYEE or RESEARCHER
+     * @param userView
+     * @return true if it has alumni and the formations list is not empty, false otherwise and if it falls
+     * under the specific cases described above 
+     */
     private boolean isAlumniWithNoData(IUserView userView) {
 	Person person = userView.getPerson();
-	if(person.getTeacher() != null && person.getTeacher().isActive()) {
-	    return false;
-	}
-	if(person.getStudent() != null && person.getStudent().getAlumni() != null) {
+	if (person.getStudent() != null && person.getStudent().getAlumni() != null) {
+	    if ((person.getTeacher() != null && person.getTeacher().isActive())
+		    || person.getPersonRole(RoleType.EMPLOYEE) != null || person.getPersonRole(RoleType.RESEARCHER) != null) {
+		return false;
+	    }
 	    return person.getFormations().isEmpty();
 	}
 	return false;
