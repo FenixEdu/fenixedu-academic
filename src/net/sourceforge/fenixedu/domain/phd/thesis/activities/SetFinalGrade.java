@@ -1,6 +1,3 @@
-/**
- * 
- */
 package net.sourceforge.fenixedu.domain.phd.thesis.activities;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
