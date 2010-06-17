@@ -165,7 +165,7 @@
 		<bean:size id="childProcessesSize" name="childProcesses" />
 		<p class="mvert05"><bean:message key="label.numberOfCandidates" bundle="APPLICATION_RESOURCES" />: <strong><bean:write name="childProcessesSize" /></strong></p>
 		
-		<fr:view name="childProcesses" schema="IndividualCandidacyProcess.list.processes">
+		<fr:view name="childProcesses" schema="ErasmusIndividualCandidacyProcess.list.processes">
 			<fr:layout name="tabular-sortable">
 				<fr:property name="classes" value="tstyle4 thcenter thcenter thcenter"/>
 				<fr:property name="columnClasses" value="tdcenter, tdcenter, tdcenter, "/>

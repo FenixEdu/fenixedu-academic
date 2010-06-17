@@ -1,5 +1,5 @@
 
---Creating the BigMash table.
+-- Creating the BigMash table.
 CREATE TEMPORARY TABLE RAW_MASH (
 		OID_YSSSC BIGINT UNSIGNED,
 		OID_EY BIGINT UNSIGNED,
@@ -10,7 +10,7 @@ CREATE TEMPORARY TABLE RAW_MASH (
 	);
 
 
---Populating the BigMash table.
+-- Populating the BigMash table.
 INSERT INTO RAW_MASH
 	SELECT YEAR_STUDENT_SPECIAL_SEASON_CODE.OID AS OID_YSSSC,
 		EXECUTION_INTERVAL.OID AS OID_EY,
@@ -26,7 +26,7 @@ INSERT INTO RAW_MASH
 	);
 
 
---Creating the Translation table.
+-- Creating the Translation table.
 CREATE TEMPORARY TABLE SSC2STATUTE (
 		SSC_NAME VARCHAR(150),
 		STATUTE_NAME VARCHAR(255)
@@ -34,7 +34,7 @@ CREATE TEMPORARY TABLE SSC2STATUTE (
 
 
 
---Populating the Translation table.
+-- Populating the Translation table.
 INSERT INTO SSC2STATUTE(SSC_NAME, STATUTE_NAME)
 	VALUES
 		('Finalistas', 'SENIOR'),
@@ -60,7 +60,7 @@ INSERT INTO SSC2STATUTE(SSC_NAME, STATUTE_NAME)
 		('Outros (requerimentos)', 'SPECIAL_SEASON_GRANTED_BY_REQUEST');
 
 
---Useless code for ESs picking functions from an EY
+-- Useless code for ESs picking functions from an EY
 /*
 DROP FUNCTION IF EXISTS pickBegin;
 delimiter $$
@@ -97,7 +97,7 @@ delimiter ;
 */
 
 
---Creating the table containing the new records.
+-- Creating the table containing the new records.
 CREATE TEMPORARY TABLE NEW_STAT_RECORDS (
 		STATUTE_TYPE VARCHAR(255),
 		OID_BEGIN_EXECUTION_PERIOD BIGINT UNSIGNED,
@@ -108,7 +108,7 @@ CREATE TEMPORARY TABLE NEW_STAT_RECORDS (
 
 
 
---Joining the BigMash with the Translation table.
+-- Joining the BigMash with the Translation table.
 INSERT INTO NEW_STAT_RECORDS(STATUTE_TYPE, OID_BEGIN_EXECUTION_PERIOD, OID_END_EXECUTION_PERIOD, OID_STUDENT)
 	SELECT SSC2STATUTE.STATUTE_NAME AS STATUTE_TYPE,
 		(SELECT OID
@@ -124,18 +124,18 @@ INSERT INTO NEW_STAT_RECORDS(STATUTE_TYPE, OID_BEGIN_EXECUTION_PERIOD, OID_END_E
 	);
 
 
---Adding the OID_ROOT_DOMAIN_OBJECT value to all new records.
+-- Adding the OID_ROOT_DOMAIN_OBJECT value to all new records.
 UPDATE NEW_STAT_RECORDS SET OID_ROOT_DOMAIN_OBJECT = (SELECT OID FROM ROOT_DOMAIN_OBJECT);
 
 
---Saving an index to later know from where were the new entries added.
+-- Saving an index to later know from where were the new entries added.
 SET @last_entry = (select max(ID_INTERNAL) from STUDENT_STATUTE);
 
---Generating the CREATION_DATE.
+-- Generating the CREATION_DATE.
 SET @created_just_now = now();
 
 
---Inserting the newly created records as new STUDENT_STATUTE entries.
+-- Inserting the newly created records as new STUDENT_STATUTE entries.
 INSERT INTO STUDENT_STATUTE(STATUTE_TYPE, OID_BEGIN_EXECUTION_PERIOD, OID_END_EXECUTION_PERIOD, OID_ROOT_DOMAIN_OBJECT, OID_STUDENT, CREATION_DATE)
 	SELECT STATUTE_TYPE, OID_BEGIN_EXECUTION_PERIOD, OID_END_EXECUTION_PERIOD, OID_ROOT_DOMAIN_OBJECT, OID_STUDENT, @created_just_now
 	FROM NEW_STAT_RECORDS;

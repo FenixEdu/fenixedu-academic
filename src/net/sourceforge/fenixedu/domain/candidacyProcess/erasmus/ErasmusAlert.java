@@ -1,8 +1,7 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus;
 
-import java.util.Collections;
+import java.util.Comparator;
 
-import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.LocalDate;
@@ -10,6 +9,15 @@ import org.joda.time.LocalDate;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ErasmusAlert extends ErasmusAlert_Base {
+
+    public static final Comparator<ErasmusAlert> WHEN_CREATED_COMPARATOR = new Comparator<ErasmusAlert>() {
+
+	@Override
+	public int compare(ErasmusAlert o1, ErasmusAlert o2) {
+	    return o1.getWhenCreated().compareTo(o2.getWhenCreated());
+	}
+
+    };
 
     public ErasmusAlert() {
 	super();
@@ -38,8 +46,9 @@ public class ErasmusAlert extends ErasmusAlert_Base {
 
     @Override
     protected void generateMessage() {
-	new Message(getRootDomainObject().getSystemSender(), null, Collections.EMPTY_LIST, buildMailSubject(), buildMailBody(),
-		getProcess().getPersonalDetails().getEmail());
+	// new Message(getRootDomainObject().getSystemSender(), null,
+	// Collections.EMPTY_LIST, buildMailSubject(), buildMailBody(),
+	// getProcess().getPersonalDetails().getEmail());
     }
 
     protected String buildMailBody() {
@@ -80,7 +89,7 @@ public class ErasmusAlert extends ErasmusAlert_Base {
     }
 
     @Override
-    protected boolean isToFire() {
+    public boolean isToFire() {
 	return getFireDate() == null;
     }
 

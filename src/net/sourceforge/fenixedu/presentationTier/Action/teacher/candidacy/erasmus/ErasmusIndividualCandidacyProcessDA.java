@@ -11,10 +11,10 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ApprovedLearningAgreementDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean;
@@ -169,7 +169,7 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
 	    HttpServletRequest request, HttpServletResponse response) {
 	final IndividualCandidacyProcess process = getProcess(request);
 	
-	CandidacyProcessDocumentUploadBean bean = new CandidacyProcessDocumentUploadBean();
+	ApprovedLearningAgreementDocumentUploadBean bean = new ApprovedLearningAgreementDocumentUploadBean();
 	
 	bean.setType(IndividualCandidacyDocumentFileType.LEARNING_AGREEMENT);
 	bean.setIndividualCandidacyProcess(process);
@@ -182,10 +182,11 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
     public ActionForward executeUploadApprovedLearningAgreement(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	CandidacyProcessDocumentUploadBean learningAgreementUploadBean = (CandidacyProcessDocumentUploadBean) getObjectFromViewState("individualCandidacyProcessBean.document.file");
+	ApprovedLearningAgreementDocumentUploadBean learningAgreementUploadBean = (ApprovedLearningAgreementDocumentUploadBean) getObjectFromViewState("individualCandidacyProcessBean.document.file");
 
 	try {
-	    IndividualCandidacyDocumentFile documentFile = createIndividualCandidacyDocumentFile(learningAgreementUploadBean,
+	    IndividualCandidacyDocumentFile documentFile = learningAgreementUploadBean.createIndividualCandidacyDocumentFile(
+		    getParentProcessType(),
 		    learningAgreementUploadBean.getIndividualCandidacyProcess().getPersonalDetails().getDocumentIdNumber());
 
 	    executeActivity(learningAgreementUploadBean.getIndividualCandidacyProcess(), "UploadApprovedLearningAgreement",

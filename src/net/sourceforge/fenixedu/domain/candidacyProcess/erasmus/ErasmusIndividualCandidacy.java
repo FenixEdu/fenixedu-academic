@@ -1,6 +1,9 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -108,6 +111,27 @@ public class ErasmusIndividualCandidacy extends ErasmusIndividualCandidacy_Base 
     @Override
     public ErasmusIndividualCandidacyProcess getCandidacyProcess() {
 	return (ErasmusIndividualCandidacyProcess) super.getCandidacyProcess();
+    }
+
+    public ApprovedLearningAgreementDocumentFile getMostRecentApprovedLearningAgreement() {
+	if(!hasAnyApprovedLearningAgreements()) {
+	    return null;
+	}
+	
+	List<ApprovedLearningAgreementDocumentFile> approvedLearningAgreement = new ArrayList<ApprovedLearningAgreementDocumentFile>(
+		getApprovedLearningAgreements());
+	
+	Collections.sort(approvedLearningAgreement, Collections.reverseOrder(ApprovedLearningAgreementDocumentFile.SUBMISSION_DATE_COMPARATOR));
+	
+	return approvedLearningAgreement.get(0);
+    }
+
+    public boolean isMostRecentApprovedLearningAgreementNotViewed() {
+	if(!hasAnyApprovedLearningAgreements()) {
+	    return false;
+	}
+
+	return !getMostRecentApprovedLearningAgreement().isApprovedLearningAgreementViewed();
     }
 
 }

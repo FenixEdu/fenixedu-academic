@@ -1904,10 +1904,6 @@
 	<slot name="candidacySelectedDegree" key="label.eramsus.candidacy.choosed.degree">
 		<property name="format" value="${presentationName} - ${sigla}" />
 	</slot>
-	<slot name="candidacy.erasmusStudentData.homeInstitutionName" key="label.erasmus.home.institution.name.detailed" read-only="true" />
-	<slot name="candidacy.erasmusStudentData.homeInstitutionAddress" key="label.erasmus.home.institution.address.detailed" read-only="true" />
-	<slot name="candidacy.erasmusStudentData.dateOfArrival" key="label.erasmus.period.of.study.date.of.arrival" read-only="true" />
-	<slot name="candidacy.erasmusStudentData.dateOfDeparture" key="label.erasmus.period.of.study.date.of.departure" read-only="true" />
 </schema>
 
 <schema name="ErasmusCandidacyProcessBean.candidacyDate" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
@@ -2251,6 +2247,8 @@
 	<slot name="processCode" key="label.process.id" bundle="CANDIDATE_RESOURCES"/>
 	<slot name="personalDetails.documentIdNumber" key="label.identificationNumber" />
 	<slot name="candidacyState" key="label.candidacy.process.state" />
+	<slot name="validatedByGri" key="label.erasmus.validated.by.gri" bundle="ACADEMIC_OFFICE_RESOURCES" />
+	<slot name="validatedByErasmusCoordinator" key="label.erasmus.validated.by.coordinator" bundle="ACADEMIC_OFFICE_RESOURCES" />
 </schema>
 
 <schema name="ErasmusCandidacyProcess.personalData"
@@ -2425,3 +2423,37 @@
 	</slot>
 </schema>
 
+<schema name="IndividualCandidacyDocumentFile.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile" bundle="CANDIDATE_RESOURCES">
+	<slot name="candidacyFileType" key="label.candidacy.document.kind" />
+	<slot name="uploadTime" key="label.dateTime.submission" />
+	<slot name="filename" key="label.document.file.name" />
+	<slot name="candidacyFileActive" key="label.document.file.active" />
+	<slot name="self" key="label.document.file.link" layout="link"/>
+</schema>
+
+<schema name="ApprovedLearningAgreementDocumentFile.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ApprovedLearningAgreementDocumentFile" extends="IndividualCandidacyDocumentFile.view" bundle="CANDIDATE_RESOURCES">
+	<remove name="candidacyFileType" />
+	<slot name="mostRecentViewedLearningAgreementActionWhenOccured" key="label.erasmus.last.viewed.learning.agreement.view" layout="null-as-label" />
+	<slot name="mostRecentSentLearningAgreementActionWhenOccured" key="label.erasmus.last.sent.learning.agreement.when" layout="null-as-label" />
+</schema>
+
+<schema name="ErasmusIndividualCandidacyProcess.list.processes" type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess" bundle="APPLICATION_RESOURCES">
+	<slot name="candidacyDate" key="label.candidacy.date" />
+	<slot name="personalDetails.name" key="label.name" />
+	<slot name="processCode" key="label.process.id" bundle="CANDIDATE_RESOURCES"/>
+	<slot name="personalDetails.documentIdNumber" key="label.identificationNumber" />
+	<slot name="candidacyState" key="label.candidacy.process.state" />
+</schema>
+
+
+<schema name="ErasmusIndividualCandidacyProcess.show.not.viewed.learning.agreements" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess" bundle="APPLICATION_RESOURCES">
+	<slot name="processCode" key="label.process.id" bundle="CANDIDATE_RESOURCES"/>
+	<slot name="personalDetails.name" key="label.name" />
+	<slot name="candidacy.mostRecentApprovedLearningAgreement.uploadTime" key="label.dateTime.submission" bundle="CANDIDATE_RESOURCES" />
+</schema>
+
+<schema name="ErasmusIndividualCandidacyProcess.show.not.viewed.alerts.processes" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess" bundle="APPLICATION_RESOURCES">
+	<slot name="processCode" key="label.process.id" bundle="CANDIDATE_RESOURCES"/>
+	<slot name="personalDetails.name" key="label.name" />
+	<slot name="mostRecentAlert.whenCreated" key="label.dateTime.submission" bundle="CANDIDATE_RESOURCES" />
+</schema>

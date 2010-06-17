@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.candidacy;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -25,7 +24,6 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocument
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCodeOperations;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
-import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
@@ -590,32 +588,9 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 	return prepareExecuteCandidacyPayment(mapping, actionForm, request, response);
     }
 
-    private static final int MAX_FILE_SIZE = 3698688;
-
     protected IndividualCandidacyDocumentFile createIndividualCandidacyDocumentFile(
 	    CandidacyProcessDocumentUploadBean uploadBean, String documentIdNumber) throws IOException {
-	if (uploadBean == null) {
-	    return null;
-	}
-
-	InputStream stream = uploadBean.getStream();
-	String fileName = uploadBean.getFileName();
-	long fileLength = uploadBean.getFileSize();
-	IndividualCandidacyDocumentFileType type = uploadBean.getType();
-
-	if (stream == null || fileLength == 0) {
-	    return null;
-	}
-
-	if (fileLength > MAX_FILE_SIZE) {
-	    throw new DomainException("error.file.to.big");
-	}
-
-	byte[] contents = new byte[(int) fileLength];
-	stream.read(contents);
-
-	return IndividualCandidacyDocumentFile.createCandidacyDocument(contents, fileName, type, getParentProcessType()
-		.getSimpleName(), documentIdNumber);
+	return uploadBean.createIndividualCandidacyDocumentFile(getParentProcessType(), documentIdNumber);
     }
 
     public ActionForward executeChangeProcessCheckedState(ActionMapping mapping, ActionForm actionForm,

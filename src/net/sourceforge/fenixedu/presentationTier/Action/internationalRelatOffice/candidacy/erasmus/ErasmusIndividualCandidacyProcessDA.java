@@ -13,6 +13,8 @@ import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ApprovedLearningAgreementDocumentFile;
+import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusAlert;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean;
@@ -51,7 +53,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "create-student-data", path = "/candidacy/erasmus/createStudentData.jsp"),
 	@Forward(name = "view-student-data-username", path = "/candidacy/erasmus/viewStudentDataUsername.jsp"),
 	@Forward(name = "edit-eidentifier", path = "/candidacy/erasmus/editEidentifier.jsp"),
-	@Forward(name = "cancel-candidacy", path = "/candidacy/cancelCandidacy.jsp") })
+	@Forward(name = "cancel-candidacy", path = "/candidacy/cancelCandidacy.jsp"),
+	@Forward(name = "view-approved-learning-agreements", path = "/candidacy/erasmus/viewApprovedLearningAgreements.jsp") })
 public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProcessDA {
 
     @Override
@@ -399,4 +402,37 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
 	return listProcessAllowedActivities(mapping, actionForm, request, response);
     }
 
+    public ActionForward prepareExecuteViewApprovedLearningAgreements(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	final ErasmusIndividualCandidacyProcessBean bean = new ErasmusIndividualCandidacyProcessBean(getProcess(request));
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
+
+	return mapping.findForward("view-approved-learning-agreements");
+    }
+
+    public ActionForward markApprovedLearningAgreementAsViewed(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	ApprovedLearningAgreementDocumentFile file = ApprovedLearningAgreementDocumentFile.fromExternalId(request
+		.getParameter("approvedLearningAgreementId"));
+	file.markLearningAgreementViewed();
+
+	return prepareExecuteViewApprovedLearningAgreements(mapping, actionForm, request, response);
+    }
+
+    public ActionForward markApprovedLearningAgreementAsSent(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	ApprovedLearningAgreementDocumentFile file = ApprovedLearningAgreementDocumentFile.fromExternalId(request
+		.getParameter("approvedLearningAgreementId"));
+	file.markLearningAgreementSent();
+
+	return prepareExecuteViewApprovedLearningAgreements(mapping, actionForm, request, response);
+    }
+
+    public ActionForward markAlertAsViewed(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	ErasmusAlert alert = ErasmusAlert.fromExternalId(request.getParameter("erasmusAlertId"));
+	executeActivity(getProcess(request), "MarkAlertAsViewed", alert);
+
+	return prepareExecuteVisualizeAlerts(mapping, actionForm, request, response);
+    }
 }

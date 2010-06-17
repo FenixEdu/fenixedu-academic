@@ -206,6 +206,7 @@ enum net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusAlertEntity
 enum net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusApplyForSemesterType								  as ErasmusApplyForSemesterType;
 enum net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationFileType                                         as TeacherEvaluationFileType;
 enum net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationMark                                             as TeacherEvaluationMark;
+enum net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ExecutedActionType										  as ExecutedActionType;
 
 /*
  * Value types that need special externalization
@@ -6868,6 +6869,18 @@ class candidacyProcess.erasmus.ErasmusAlert extends Alert {
 	ErasmusAlertEntityType entity;
 }
 
+    class candidacyProcess.erasmus.ApprovedLearningAgreementDocumentFile extends candidacyProcess.IndividualCandidacyDocumentFile {
+    	
+    }
+
+class candidacyProcess.erasmus.ExecutedAction extends DomainObject {
+	ExecutedActionType type;
+	DateTime whenOccured;
+}
+
+	class candidacyProcess.erasmus.ApprovedLearningAgreementExecutedAction extends candidacyProcess.erasmus.ExecutedAction {
+	}
+	
 class candidacyProcess.CandidacyPrecedentDegreeInformation extends DomainObject {
     SchoolLevelType schoolLevel;
     String otherSchoolLevel;
@@ -18302,7 +18315,6 @@ relation ErasmusCoordinatorErasmusCandidacyProcess {
 	candidacyProcess.erasmus.ErasmusCandidacyProcess playsRole process;
 }
 
-
 relation ErasmusCoordinatorDegree {
 	candidacyProcess.erasmus.ErasmusCoordinator playsRole coordinators {
 		multiplicity *;
@@ -18319,9 +18331,30 @@ relation ErasmusCoordinatorTeacher {
 	Teacher playsRole teacher;
 }
 
-relation ErasmusIndividualCandidacyLearningAgrement {
+relation ErasmusIndividualCandidacyApprovedLearningAgreementDocumentFile {
 	candidacyProcess.erasmus.ErasmusIndividualCandidacy playsRole erasmusIndividualCandidacy;
-	candidacyProcess.IndividualCandidacyDocumentFile playsRole approvedLearningAgreements {
+	candidacyProcess.erasmus.ApprovedLearningAgreementDocumentFile playsRole approvedLearningAgreements {
+		multiplicity *;
+	}
+}
+
+relation ExecutedActionRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	candidacyProcess.erasmus.ExecutedAction playsRole executedActions {
+		multiplicity *;
+	}
+}
+
+relation ExecutedActionPerson {
+	Person playsRole whoMade;
+	candidacyProcess.erasmus.ExecutedAction playsRole executedActions {
+		multiplicity *;
+	}
+}
+
+relation ApprovedLearningAgreementDocumentFileExecutedAction {
+	candidacyProcess.erasmus.ApprovedLearningAgreementDocumentFile playsRole approvedLearningAgreement;
+	candidacyProcess.erasmus.ApprovedLearningAgreementExecutedAction playsRole executedActions {
 		multiplicity *;
 	}
 }

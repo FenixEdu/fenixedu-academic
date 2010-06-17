@@ -39,6 +39,22 @@
 		</ul>
 	</logic:notEmpty>
 	
+	<logic:present role="INTERNATIONAL_RELATION_OFFICE">
+		<logic:equal name="process" property="candidacy.mostRecentApprovedLearningAgreementNotViewed" value="true">
+			<div class="infoop-blue">
+				<bean:message key="message.erasmus.most.approved.learning.agreement.is.not.viewed" bundle="ACADEMIC_OFFICE_RESOURCES" />
+			</div>
+		</logic:equal>
+	</logic:present>
+	
+	<logic:present role="INTERNATIONAL_RELATION_OFFICE">
+		<logic:equal name="process" property="processWithMostRecentAlertMessageNotViewed" value="true">
+			<div class="infoop-blue">
+				<bean:message key="message.erasmus.most.recent.alert.not.viewed" bundle="ACADEMIC_OFFICE_RESOURCES" />
+			</div>
+		</logic:equal>
+	</logic:present>
+	
 	<%-- student information --%>
 	<logic:notEmpty name="process" property="personalDetails.student">
 		<p class="mbottom05"><strong><bean:message key="label.studentDetails" bundle="APPLICATION_RESOURCES"/></strong></p>
@@ -169,33 +185,21 @@
 		</table>
 	</logic:notEmpty>
 
-	<%-- show approved learning agreeemnts--%>
+	<%-- show approved learning agreements--%>
 
 	<p><strong><bean:message key="label.erasmus.approved.learning.agreements" bundle="CANDIDATE_RESOURCES"/></strong></p> 
 	
-	<logic:empty name="individualCandidacyProcess" property="candidacy.documents">
-		<p><em><bean:message key="message.documents.empty" bundle="CANDIDATE_RESOURCES"/>.</em></p>
+	<logic:empty name="individualCandidacyProcess" property="candidacy.approvedLearningAgreements" >
+		<p class="mbottom05"><em><bean:message key="label.erasmus.approved.learning.agreements.empty" bundle="ACADEMIC_OFFICE_RESOURCES" /></em></p>
 	</logic:empty>
 	
-	<logic:notEmpty name="individualCandidacyProcess" property="candidacy.documents">
-		<table class="tstyle1 thlight thcenter">
-			<tr>
-				<th><bean:message key="label.candidacy.document.kind" bundle="CANDIDATE_RESOURCES"/></th>
-				<th><bean:message key="label.dateTime.submission" bundle="CANDIDATE_RESOURCES"/></th>
-				<th><bean:message key="label.document.file.name" bundle="CANDIDATE_RESOURCES"/></th>
-				<th><bean:message key="label.document.file.active" bundle="CANDIDATE_RESOURCES"/></th>
-				<th></th>
-			</tr>
-			<logic:iterate id="documentFile" name="individualCandidacyProcess" property="candidacy.documents">
-				<tr>
-					<td><fr:view name="documentFile" property="candidacyFileType"/></td>
-					<td><fr:view name="documentFile" property="uploadTime"/></td>
-					<td><fr:view name="documentFile" property="filename"/></td>
-					<td><fr:view name="documentFile" property="candidacyFileActive"/></td>
-					<td><fr:view name="documentFile" layout="link"/></td>
-				</tr>	
-			</logic:iterate>
-		</table>
+	<logic:notEmpty name="individualCandidacyProcess" property="candidacy.approvedLearningAgreements" >
+		<fr:view name="individualCandidacyProcess" property="candidacy.approvedLearningAgreements" schema="IndividualCandidacyDocumentFile.view">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle1 thlight thright mtop025"/>
+			
+			</fr:layout>
+		</fr:view>
 	</logic:notEmpty>
 
 </logic:notEmpty>

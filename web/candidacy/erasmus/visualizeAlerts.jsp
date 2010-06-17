@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusAlert" %>
 
 <%!
 
@@ -47,7 +48,14 @@
 	<p class="mbottom05"><em><bean:message key="label.erasmus.visualize.alerts.empty" bundle="ACADEMIC_OFFICE_RESOURCES"/>.</em></p>
 </logic:empty>
 
-<logic:iterate name="individualCandidacyProcessBean" property="individualCandidacyProcess.alert" id="alert">
+<logic:iterate name="individualCandidacyProcessBean" property="individualCandidacyProcess.alert" id="alert" type="ErasmusAlert">
+	<logic:equal name="alert" property="toFire" value="true">
+		<logic:present role="INTERNATIONAL_RELATION_OFFICE" >
+			<html:link action='<%= f("/caseHandlingErasmusIndividualCandidacyProcess.do?method=markAlertAsViewed&amp;erasmusAlertId=%s&amp;processId=%s", alert.getExternalId(), processId.toString()) %>'>
+				<bean:message key="label.eramus.alert.mark.as.viewed" bundle="ACADEMIC_OFFICE_RESOURCES" />
+			</html:link>
+		</logic:present>
+	</logic:equal>
 	<fr:view name="alert" schema="ErasmusAlert.view">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1 thlight thright mtop025"/>

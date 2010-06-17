@@ -157,6 +157,59 @@
 		</ul>
 	</logic:notEmpty>
 	
+	<logic:present role="INTERNATIONAL_RELATION_OFFICE">
+		<%-- Show processes with not viewed learning agreements --%>
+		<p><strong><bean:message key="title.erasmus.not.viewed.approved.learning.agreements.list" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
+		<logic:empty name="process" property="processesWithNotViewedApprovedLearningAgreements">
+			<p><bean:message key="message.erasmus.not.viewed.approved.learning.agreements.empty" bundle="ACADEMIC_OFFICE_RESOURCES" /></p>
+		</logic:empty>
+		
+		<logic:notEmpty name="process" property="processesWithNotViewedApprovedLearningAgreements">
+			<fr:view name="process" property="processesWithNotViewedApprovedLearningAgreements" schema="ErasmusIndividualCandidacyProcess.show.not.viewed.learning.agreements">
+				<fr:layout name="tabular-sortable">
+					<fr:property name="classes" value="tstyle4 thcenter thcenter thcenter"/>
+					<fr:property name="columnClasses" value="tdcenter, tdcenter, tdcenter, "/>
+				
+					<fr:property name="sortParameter" value="sortBy"/>
+		            <fr:property name="sortUrl" value='<%= "/caseHandling" + processName.toString() + ".do?method=listProcessAllowedActivities&amp;processId=" + processId.toString() %>'/>
+	    	        <fr:property name="sortBy" value="<%= request.getParameter("sortBy") == null ? "candidacy.mostRecentApprovedLearningAgreement.uploadTime" : request.getParameter("sortBy") %>"/>
+	
+					<fr:property name="linkFormat(viewProcess)" value='<%= "/caseHandling" + childProcessName.toString() + ".do?method=listProcessAllowedActivities&amp;processId=${idInternal}"%>' />
+					<fr:property name="key(viewProcess)" value="label.candidacy.show.candidate"/>
+					<fr:property name="bundle(viewProcess)" value="APPLICATION_RESOURCES"/>
+					
+				</fr:layout>
+			</fr:view>
+		</logic:notEmpty>
+	</logic:present>
+	
+	<logic:present role="INTERNATIONAL_RELATION_OFFICE">
+		<%-- Show processes with not viewed learning agreements --%>
+		<p><strong><bean:message key="title.erasmus.not.viewed.erasmus.alerts.process.list" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
+		<logic:empty name="process" property="processesWithNotViewedAlerts">
+			<p><bean:message key="message.erasmus.not.viewed.erasmus.alerts.process.empty" bundle="ACADEMIC_OFFICE_RESOURCES" /></p>
+		</logic:empty>
+		
+		<logic:notEmpty name="process" property="processesWithNotViewedAlerts">
+			<fr:view name="process" property="processesWithNotViewedAlerts" schema="ErasmusIndividualCandidacyProcess.show.not.viewed.alerts.processes">
+				<fr:layout name="tabular-sortable">
+					<fr:property name="classes" value="tstyle4 thcenter thcenter thcenter"/>
+					<fr:property name="columnClasses" value="tdcenter, tdcenter, tdcenter, "/>
+				
+					<fr:property name="sortParameter" value="sortBy"/>
+		            <fr:property name="sortUrl" value='<%= "/caseHandling" + processName.toString() + ".do?method=listProcessAllowedActivities&amp;processId=" + processId.toString() %>'/>
+	    	        <fr:property name="sortBy" value="<%= request.getParameter("sortBy") == null ? "mostRecentAlert.whenCreated" : request.getParameter("sortBy") %>"/>
+	
+					<fr:property name="linkFormat(viewProcess)" value='<%= "/caseHandling" + childProcessName.toString() + ".do?method=listProcessAllowedActivities&amp;processId=${idInternal}"%>' />
+					<fr:property name="key(viewProcess)" value="label.candidacy.show.candidate"/>
+					<fr:property name="bundle(viewProcess)" value="APPLICATION_RESOURCES"/>
+					
+				</fr:layout>
+			</fr:view>
+		</logic:notEmpty>
+	</logic:present>
+	
+	<p><strong><bean:message key="title.erasmus.application.process.list" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
 	<%-- create child process --%>
 	<logic:equal name="canCreateChildProcess" value="true">
 		<html:link action='<%= "/caseHandling" + childProcessName.toString() + ".do?method=prepareCreateNewProcess&amp;parentProcessId=" + processId.toString() %>'>

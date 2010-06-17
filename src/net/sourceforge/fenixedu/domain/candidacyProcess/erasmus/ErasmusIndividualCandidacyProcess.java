@@ -24,6 +24,9 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.StringUtils;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.restlet.Client;
 import org.restlet.data.ChallengeResponse;
@@ -59,6 +62,8 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	activities.add(new ImportToLDAP());
 	activities.add(new BindLinkSubmitedIndividualCandidacyWithEidentifier());
 	activities.add(new UploadApprovedLearningAgreement());
+	activities.add(new ViewApprovedLearningAgreements());
+	activities.add(new MarkAlertAsViewed());
     }
 
     public ErasmusIndividualCandidacyProcess() {
@@ -262,6 +267,37 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>(getCandidacy().getCurricularCoursesSet());
 	Collections.sort(curricularCourses, CurricularCourse.COMPARATOR_BY_NAME);
 	return curricularCourses;
+    }
+
+    public List<ErasmusAlert> getAlertsNotViewed() {
+	List<ErasmusAlert> alertsNotViewed = new ArrayList<ErasmusAlert>();
+
+	CollectionUtils.select(getAlert(), new Predicate() {
+
+	    @Override
+	    public boolean evaluate(Object arg0) {
+		ErasmusAlert alert = (ErasmusAlert) arg0;
+		return alert.isToFire();
+	    }
+
+	}, alertsNotViewed);
+
+	Collections.sort(alertsNotViewed, Collections.reverseOrder(ErasmusAlert.WHEN_CREATED_COMPARATOR));
+
+	return alertsNotViewed;
+    }
+
+    public ErasmusAlert getMostRecentAlert() {
+	List<ErasmusAlert> alerts = new ArrayList<ErasmusAlert>(getAlert());
+	Collections.sort(alerts, Collections.reverseOrder(ErasmusAlert.WHEN_CREATED_COMPARATOR));
+	
+	return alerts.get(0);
+    }
+
+    public boolean isProcessWithMostRecentAlertMessageNotViewed() {
+	List<ErasmusAlert> alertsNotViewed = getAlertsNotViewed();
+	
+	return !alertsNotViewed.isEmpty() && alertsNotViewed.get(0) == getMostRecentAlert();
     }
 
     @StartActivity
@@ -797,7 +833,7 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	@Override
 	protected ErasmusIndividualCandidacyProcess executeActivity(ErasmusIndividualCandidacyProcess process,
 		IUserView userView, Object object) {
-	    process.getCandidacy().addApprovedLearningAgreements((IndividualCandidacyDocumentFile) object);
+	    process.getCandidacy().addApprovedLearningAgreements((ApprovedLearningAgreementDocumentFile) object);
 
 	    return process;
 	}
@@ -809,7 +845,79 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 
 	@Override
 	public Boolean isVisibleForGriOffice() {
+	    return false;
+	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return Boolean.FALSE;
+	}
+
+    }
+
+    private static class ViewApprovedLearningAgreements extends Activity<ErasmusIndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(ErasmusIndividualCandidacyProcess process, IUserView userView) {
+	    if (isManager(userView)) {
+		return;
+	    }
+
+	    if (isGriOfficeEmployee(userView)) {
+		return;
+	    }
+	}
+
+	@Override
+	protected ErasmusIndividualCandidacyProcess executeActivity(ErasmusIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForCoordinator() {
+	    return false;
+	}
+
+	@Override
+	public Boolean isVisibleForGriOffice() {
 	    return true;
+	}
+
+
+    }
+
+    private static class MarkAlertAsViewed extends Activity<ErasmusIndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(ErasmusIndividualCandidacyProcess process, IUserView userView) {
+	    if (isGriOfficeEmployee(userView)) {
+		return;
+	    }
+	}
+
+	@Override
+	protected ErasmusIndividualCandidacyProcess executeActivity(ErasmusIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    ErasmusAlert alert = (ErasmusAlert) object;
+	    alert.setFireDate(new DateTime());
+
+	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return false;
+	}
+
+	@Override
+	public Boolean isVisibleForCoordinator() {
+	    return false;
+	}
+
+	@Override
+	public Boolean isVisibleForGriOffice() {
+	    return false;
 	}
     }
 

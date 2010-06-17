@@ -16,6 +16,7 @@ public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocument
 
     public IndividualCandidacyDocumentFile(IndividualCandidacyDocumentFileType type, IndividualCandidacy candidacy,
 	    byte[] contents, String filename) {
+	this();
 	this.setCandidacyFileActive(Boolean.TRUE);
 	setIndividualCandidacy(candidacy);
 	setCandidacyFileType(type);
@@ -26,8 +27,9 @@ public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocument
 	}
     }
 
-    private IndividualCandidacyDocumentFile(IndividualCandidacyDocumentFileType type, byte[] contents, String filename,
+    protected IndividualCandidacyDocumentFile(IndividualCandidacyDocumentFileType type, byte[] contents, String filename,
 	    VirtualPath path) {
+	this();
 	this.setCandidacyFileActive(Boolean.TRUE);
 	setCandidacyFileType(type);
 	init(path, filename, filename, null, contents, null);
@@ -37,7 +39,7 @@ public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocument
 	}
     }
 
-    private VirtualPath getVirtualPath() {
+    protected VirtualPath getVirtualPath() {
 	final VirtualPath filePath = new VirtualPath();
 	filePath.addNode(new VirtualPathNode(ROOT_DIR, ROOT_DIR_DESCRIPTION));
 
@@ -51,7 +53,7 @@ public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocument
 	return filePath;
     }
 
-    private static VirtualPath obtainVirtualPath(String processName, String documentIdNumber) {
+    protected static VirtualPath obtainVirtualPath(String processName, String documentIdNumber) {
 	final VirtualPath filePath = new VirtualPath();
 	filePath.addNode(new VirtualPathNode(ROOT_DIR, ROOT_DIR_DESCRIPTION));
 
@@ -66,7 +68,8 @@ public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocument
     @Service
     public static IndividualCandidacyDocumentFile createCandidacyDocument(byte[] contents, String filename,
 	    IndividualCandidacyDocumentFileType type, String processName, String documentIdNumber) {
-	return new IndividualCandidacyDocumentFile(type, contents, filename, obtainVirtualPath(processName, documentIdNumber));
+	return new IndividualCandidacyDocumentFile(type, contents, filename, obtainVirtualPath(processName,
+		documentIdNumber));
     }
 
     public IndividualCandidacyDocumentFile getSelf() {

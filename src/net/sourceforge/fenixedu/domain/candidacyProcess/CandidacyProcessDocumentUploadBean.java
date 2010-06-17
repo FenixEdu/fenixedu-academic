@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
 public class CandidacyProcessDocumentUploadBean implements Serializable {
     /**
      * 
@@ -15,14 +17,14 @@ public class CandidacyProcessDocumentUploadBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     IndividualCandidacyProcess individualCandidacyProcess;
-    private IndividualCandidacyDocumentFileType type;
-    private transient InputStream stream;
-    private long fileSize;
-    private String fileName;
+    protected IndividualCandidacyDocumentFileType type;
+    protected transient InputStream stream;
+    protected long fileSize;
+    protected String fileName;
 
-    private Long id;
+    protected Long id;
 
-    private IndividualCandidacyDocumentFile documentFile;
+    protected IndividualCandidacyDocumentFile documentFile;
 
     public CandidacyProcessDocumentUploadBean() {
 	this.id = System.currentTimeMillis();
@@ -84,4 +86,46 @@ public class CandidacyProcessDocumentUploadBean implements Serializable {
     public void setDocumentFile(IndividualCandidacyDocumentFile documentFile) {
 	this.documentFile = documentFile;
     }
+
+    protected static final int MAX_FILE_SIZE = 3698688;
+
+    public IndividualCandidacyDocumentFile createIndividualCandidacyDocumentFile(Class<? extends CandidacyProcess> processType,
+	    String documentIdNumber) throws IOException {
+	String fileName = this.getFileName();
+	long fileLength = this.getFileSize();
+	IndividualCandidacyDocumentFileType type = this.getType();
+
+
+	if (fileLength > MAX_FILE_SIZE) {
+	    throw new DomainException("error.file.to.big");
+	}
+
+	byte[] contents = readStreamContents();
+
+	if (contents == null) {
+	    return null;
+	}
+
+	return IndividualCandidacyDocumentFile.createCandidacyDocument(contents, fileName, type, processType
+		.getSimpleName(), documentIdNumber);
+    }
+    
+    protected byte[] readStreamContents() throws IOException {
+	InputStream stream = this.getStream();
+	long fileLength = this.getFileSize();
+
+	if (stream == null || fileLength == 0) {
+	    return null;
+	}
+
+	if (fileLength > MAX_FILE_SIZE) {
+	    throw new DomainException("error.file.to.big");
+	}
+
+	byte[] contents = new byte[(int) fileLength];
+	stream.read(contents);
+
+	return contents;
+    }
+    
 }

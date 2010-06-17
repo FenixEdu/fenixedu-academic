@@ -245,6 +245,37 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 	return getCoordinatorForTeacherAndDegree(teacher, degree) != null;
     }
 
+    public List<ErasmusIndividualCandidacyProcess> getProcessesWithNotViewedApprovedLearningAgreements() {
+	List<ErasmusIndividualCandidacyProcess> processList = new ArrayList<ErasmusIndividualCandidacyProcess>();
+	CollectionUtils.select(getChildProcesses(), new Predicate() {
+
+	    @Override
+	    public boolean evaluate(Object arg0) {
+		ErasmusIndividualCandidacyProcess individualProcess = (ErasmusIndividualCandidacyProcess) arg0;
+
+		return !individualProcess.isCandidacyCancelled()
+			&& individualProcess.getCandidacy().isMostRecentApprovedLearningAgreementNotViewed();
+	    }
+	}, processList);
+
+	return processList;
+    }
+
+    public List<ErasmusIndividualCandidacyProcess> getProcessesWithNotViewedAlerts() {
+	List<ErasmusIndividualCandidacyProcess> processList = new ArrayList<ErasmusIndividualCandidacyProcess>();
+	CollectionUtils.select(getChildProcesses(), new Predicate() {
+
+	    @Override
+	    public boolean evaluate(Object arg0) {
+		ErasmusIndividualCandidacyProcess process = (ErasmusIndividualCandidacyProcess) arg0;
+		return process.isProcessWithMostRecentAlertMessageNotViewed();
+	    }
+
+	}, processList);
+
+	return processList;
+    }
+
     @StartActivity
     static public class CreateCandidacyPeriod extends Activity<ErasmusCandidacyProcess> {
 
