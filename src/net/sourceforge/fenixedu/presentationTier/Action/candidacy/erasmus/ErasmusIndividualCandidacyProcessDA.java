@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess;
@@ -44,7 +45,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProcessDA {
 
     @Override
-    protected Class getParentProcessType() {
+    protected Class<? extends CandidacyProcess> getParentProcessType() {
 	return ErasmusCandidacyProcess.class;
     }
 
@@ -86,7 +87,7 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
     }
 
     @Override
-    protected Class getProcessType() {
+    protected Class<? extends IndividualCandidacyProcess> getProcessType() {
 	return ErasmusIndividualCandidacyProcess.class;
     }
 

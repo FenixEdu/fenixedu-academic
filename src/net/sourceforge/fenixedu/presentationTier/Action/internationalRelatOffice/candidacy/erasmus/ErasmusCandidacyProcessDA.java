@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
@@ -22,14 +21,11 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividua
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusVacancy;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusVacancyBean;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CountryUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.period.ErasmusCandidacyPeriod;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -44,7 +40,6 @@ import pt.ist.fenixWebFramework.servlets.filters.I18NFilter;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 
 @Mapping(path = "/caseHandlingErasmusCandidacyProcess", module = "internationalRelatOffice", formBeanClass = ErasmusCandidacyProcessDA.ErasmusCandidacyProcessForm.class)
 @Forwards( { @Forward(name = "intro", path = "/candidacy/erasmus/mainCandidacyProcess.jsp"),
@@ -54,102 +49,15 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 	@Forward(name = "insert-university-agreement", path = "/candidacy/erasmus/insertErasmusVacancy.jsp"),
 	@Forward(name = "view-erasmus-coordinators", path = "/candidacy/erasmus/viewErasmusCoordinators.jsp"),
 	@Forward(name = "assign-coordinator", path = "/candidacy/erasmus/assignCoordinator.jsp") })
-public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
-
-    static public class ErasmusCandidacyProcessForm extends CandidacyProcessForm {
-	private Integer selectedProcessId;
-
-	public Integer getSelectedProcessId() {
-	    return selectedProcessId;
-	}
-
-	public void setSelectedProcessId(Integer selectedProcessId) {
-	    this.selectedProcessId = selectedProcessId;
-	}
-    }
+public class ErasmusCandidacyProcessDA extends net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusCandidacyProcessDA {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	setChooseDegreeBean(request);
 	I18NFilter.setLocale(request, request.getSession(true), Locale.ENGLISH);
 	return super.execute(mapping, actionForm, request, response);
     }
-
-    private void setChooseDegreeBean(HttpServletRequest request) {
-	ChooseDegreeBean chooseDegreeBean = (ChooseDegreeBean) getObjectFromViewState("choose.degree.bean");
-
-	if (chooseDegreeBean == null) {
-	    chooseDegreeBean = new ChooseDegreeBean(getProcess(request));
-	}
-
-	request.setAttribute("chooseDegreeBean", chooseDegreeBean);
-    }
-
-    private ChooseDegreeBean getChooseDegreeBean(HttpServletRequest request) {
-	return (ChooseDegreeBean) request.getAttribute("chooseDegreeBean");
-    }
-
-    @Override
-    protected Spreadsheet buildIndividualCandidacyReport(Spreadsheet spreadsheet,
-	    IndividualCandidacyProcess individualCandidacyProcess) {
-	// TODO Auto-generated method stub
-	return null;
-    }
-
-    @Override
-    protected List<CandidacyDegreeBean> createCandidacyDegreeBeans(HttpServletRequest request) {
-	// TODO Auto-generated method stub
-	return null;
-    }
-
-    @Override
-    protected Class getCandidacyPeriodType() {
-	return ErasmusCandidacyPeriod.class;
-    }
-
-    @Override
-    protected Class getChildProcessType() {
-	return ErasmusIndividualCandidacyProcess.class;
-    }
-
-    private List<ErasmusCandidacyProcess> getCandidacyProcesses(final ExecutionInterval executionInterval) {
-	final List<ErasmusCandidacyProcess> result = new ArrayList<ErasmusCandidacyProcess>();
-	for (final ErasmusCandidacyPeriod period : executionInterval.getErasmusCandidacyPeriods()) {
-	    result.add(period.getErasmusCandidacyProcess());
-	}
-	return result;
-    }
-
-    private List<ExecutionInterval> getExecutionIntervalsWithCandidacyPeriod() {
-	return ExecutionInterval.readExecutionIntervalsWithCandidacyPeriod(getCandidacyPeriodType());
-    }
-
-    @Override
-    protected ErasmusCandidacyProcess getCandidacyProcess(final HttpServletRequest request,
-	    final ExecutionInterval executionInterval) {
-
-	final Integer selectedProcessId = getIntegerFromRequest(request, "selectedProcessId");
-	if (selectedProcessId != null) {
-	    for (final ErasmusCandidacyPeriod candidacyPeriod : executionInterval.getErasmusCandidacyPeriods()) {
-		if (candidacyPeriod.getErasmusCandidacyProcess().getIdInternal().equals(selectedProcessId)) {
-		    return candidacyPeriod.getErasmusCandidacyProcess();
-		}
-	    }
-	}
-	return null;
-    }
-
-    @Override
-    protected Class getProcessType() {
-	return ErasmusCandidacyProcess.class;
-    }
-
-    private void setCandidacyProcessInformation(final ActionForm actionForm, final ErasmusCandidacyProcess process) {
-	final ErasmusCandidacyProcessForm form = (ErasmusCandidacyProcessForm) actionForm;
-	form.setSelectedProcessId(process.getIdInternal());
-	form.setExecutionIntervalId(process.getCandidacyExecutionInterval().getIdInternal());
-    }
+    
 
     @Override
     protected ErasmusCandidacyProcess getProcess(HttpServletRequest request) {
@@ -170,64 +78,6 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 	}
 
 	return selectedDegreesIndividualCandidacyProcesses;
-    }
-
-    @Override
-    protected ActionForward introForward(ActionMapping mapping) {
-	return mapping.findForward("intro");
-    }
-
-    @Override
-    public ActionForward listProcessAllowedActivities(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	setCandidacyProcessInformation(request, getProcess(request));
-	setCandidacyProcessInformation(form, getProcess(request));
-	request.setAttribute("candidacyProcesses", getCandidacyProcesses(getProcess(request).getCandidacyExecutionInterval()));
-	return introForward(mapping);
-    }
-
-    @Override
-    protected void setStartInformation(ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
-	if (!hasExecutionInterval(request)) {
-	    final List<ExecutionInterval> executionIntervals = getExecutionIntervalsWithCandidacyPeriod();
-
-	    if (executionIntervals.size() == 1) {
-		final ExecutionInterval executionInterval = executionIntervals.get(0);
-		final List<ErasmusCandidacyProcess> candidacyProcesses = getCandidacyProcesses(executionInterval);
-
-		if (candidacyProcesses.size() == 1) {
-		    setCandidacyProcessInformation(request, candidacyProcesses.get(0));
-		    setCandidacyProcessInformation(actionForm, getProcess(request));
-		    request.setAttribute("candidacyProcesses", candidacyProcesses);
-		    return;
-		}
-	    }
-
-	    request.setAttribute("canCreateProcess", canCreateProcess(getProcessType().getName()));
-	    request.setAttribute("executionIntervals", executionIntervals);
-
-	} else {
-	    final ExecutionInterval executionInterval = getExecutionInterval(request);
-	    final ErasmusCandidacyProcess candidacyProcess = getCandidacyProcess(request, executionInterval);
-
-	    if (candidacyProcess != null) {
-		setCandidacyProcessInformation(request, candidacyProcess);
-		setCandidacyProcessInformation(actionForm, getProcess(request));
-	    } else {
-		final List<ErasmusCandidacyProcess> candidacyProcesses = getCandidacyProcesses(executionInterval);
-
-		if (candidacyProcesses.size() == 1) {
-		    setCandidacyProcessInformation(request, candidacyProcesses.get(0));
-		    setCandidacyProcessInformation(actionForm, getProcess(request));
-		    request.setAttribute("candidacyProcesses", candidacyProcesses);
-		    return;
-		}
-
-		request.setAttribute("canCreateProcess", canCreateProcess(getProcessType().getName()));
-		request.setAttribute("executionIntervals", getExecutionIntervalsWithCandidacyPeriod());
-	    }
-	    request.setAttribute("candidacyProcesses", getCandidacyProcesses(executionInterval));
-	}
     }
 
     public ActionForward prepareExecuteViewErasmusVancacies(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -397,25 +247,6 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 	    Collections.sort(associatedUniversityUnits, new BeanComparator("nameI18n"));
 
 	    return associatedUniversityUnits;
-	}
-
-    }
-
-    public static class DegreesProvider implements DataProvider {
-
-	@Override
-	public Converter getConverter() {
-	    return new DomainObjectKeyConverter();
-	}
-
-	@Override
-	public Object provide(Object arg0, Object arg1) {
-	    final List<Degree> degrees = new ArrayList<Degree>(Degree.readAllByDegreeType(
-		    DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE));
-
-	    Collections.sort(degrees, Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
-
-	    return degrees;
 	}
 
     }

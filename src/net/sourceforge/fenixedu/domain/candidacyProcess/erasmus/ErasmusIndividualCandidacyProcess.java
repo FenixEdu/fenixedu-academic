@@ -521,8 +521,10 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	    process.setValidatedByGri(bean.getValidatedByGri());
 
 	    if (bean.getCreateAlert()) {
-		new ErasmusAlert(process, bean.getSendEmail(), new LocalDate(), new MultiLanguageString(bean.getAlertSubject()),
+		ErasmusAlert alert = new ErasmusAlert(process, bean.getSendEmail(), new LocalDate(), new MultiLanguageString(bean
+			.getAlertSubject()),
 			new MultiLanguageString(bean.getAlertBody()), ErasmusAlertEntityType.GRI);
+		alert.setFireDate(new DateTime());
 	    }
 
 	    return process;
@@ -884,7 +886,10 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	    return true;
 	}
 
-
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return false;
+	}
     }
 
     private static class MarkAlertAsViewed extends Activity<ErasmusIndividualCandidacyProcess> {

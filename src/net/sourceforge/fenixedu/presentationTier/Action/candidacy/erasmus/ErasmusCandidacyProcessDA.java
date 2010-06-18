@@ -12,13 +12,17 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.period.ErasmusCandidacyPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA;
+import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.renderers.DataProvider;
+import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -46,10 +50,11 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	setChooseDegreeBean(request);
+	request.setAttribute("chooseDegreeBeanSchemaName", "ErasmusChooseDegreeBean.selectDegree");
 	return super.execute(mapping, actionForm, request, response);
     }
 
-    private void setChooseDegreeBean(HttpServletRequest request) {
+    protected void setChooseDegreeBean(HttpServletRequest request) {
 	ChooseDegreeBean chooseDegreeBean = (ChooseDegreeBean) getObjectFromViewState("choose.degree.bean");
 
 	if (chooseDegreeBean == null) {
@@ -59,7 +64,7 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 	request.setAttribute("chooseDegreeBean", chooseDegreeBean);
     }
 
-    private ChooseDegreeBean getChooseDegreeBean(HttpServletRequest request) {
+    protected ChooseDegreeBean getChooseDegreeBean(HttpServletRequest request) {
 	return (ChooseDegreeBean) request.getAttribute("chooseDegreeBean");
     }
 
@@ -130,7 +135,7 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 	}
     }
 
-    private List<ErasmusCandidacyProcess> getCandidacyProcesses(final ExecutionInterval executionInterval) {
+    protected List<ErasmusCandidacyProcess> getCandidacyProcesses(final ExecutionInterval executionInterval) {
 	final List<ErasmusCandidacyProcess> result = new ArrayList<ErasmusCandidacyProcess>();
 	for (final ErasmusCandidacyPeriod period : executionInterval.getErasmusCandidacyPeriods()) {
 	    result.add(period.getErasmusCandidacyProcess());
@@ -138,7 +143,7 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 	return result;
     }
 
-    private List<ExecutionInterval> getExecutionIntervalsWithCandidacyPeriod() {
+    protected List<ExecutionInterval> getExecutionIntervalsWithCandidacyPeriod() {
 	return ExecutionInterval.readExecutionIntervalsWithCandidacyPeriod(getCandidacyPeriodType());
     }
 
@@ -162,7 +167,7 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 	return ErasmusCandidacyProcess.class;
     }
 
-    private void setCandidacyProcessInformation(final ActionForm actionForm, final ErasmusCandidacyProcess process) {
+    protected void setCandidacyProcessInformation(final ActionForm actionForm, final ErasmusCandidacyProcess process) {
 	final ErasmusCandidacyProcessForm form = (ErasmusCandidacyProcessForm) actionForm;
 	form.setSelectedProcessId(process.getIdInternal());
 	form.setExecutionIntervalId(process.getCandidacyExecutionInterval().getIdInternal());
@@ -201,6 +206,23 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 	setCandidacyProcessInformation(form, getProcess(request));
 	request.setAttribute("candidacyProcesses", getCandidacyProcesses(getProcess(request).getCandidacyExecutionInterval()));
 	return introForward(mapping);
+    }
+
+    public static class ErasmusCandidacyDegreesProvider implements DataProvider {
+
+	public Object provide(Object source, Object currentValue) {
+	    final List<Degree> degrees = new ArrayList<Degree>(Degree.readAllByDegreeType(
+		    DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE));
+
+	    java.util.Collections.sort(degrees, Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
+	    
+	    return degrees;	    
+	}
+
+	public Converter getConverter() {
+	    return new DomainObjectKeyConverter();
+	}
+
     }
 
 }

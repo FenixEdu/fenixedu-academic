@@ -11,7 +11,7 @@ import org.apache.commons.lang.StringUtils;
 public class TypeOfProgrammeList implements Serializable {
     private static EmptyTypeOfProgrammeList EMPTY = new EmptyTypeOfProgrammeList();
 
-    private static class EmptyTypeOfProgrammeList extends TypeOfProgrammeList {
+    public static class EmptyTypeOfProgrammeList extends TypeOfProgrammeList {
 	/**
 	 * 
 	 */

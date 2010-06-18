@@ -2389,7 +2389,7 @@
 <schema name="ErasmusVacancy.insert.choose.degree" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusVacancyBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="degree" key="label.erasmus.degree" layout="menu-select" >
 		<property name="format" value="${presentationName}" />
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.internationalRelatOffice.candidacy.erasmus.ErasmusCandidacyProcessDA$DegreesProvider" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusCandidacyProcessDA$ErasmusCandidacyDegreesProvider" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
 	<slot name="numberOfVacancies" key="label.erasmus.insertVacancy.number.vacancies">
@@ -2402,14 +2402,21 @@
 	<slot name="teacher.person.name" key="label.erasmus.coordinator.teacher"/>
 </schema>
 
-<schema name="ErasmusChooseDegreeBean.coordinator.selectDegree" type="net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA$ChooseDegreeBean" bundle="APPLICATION_RESOURCES">
+<schema name="ErasmusChooseDegreeBean.selectDegree" type="net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA$ChooseDegreeBean" bundle="APPLICATION_RESOURCES">
    	<slot name="degree" layout="menu-select-postback" key="label.degree.name" >
-        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.teacher.candidacy.erasmus.ErasmusCandidacyProcessDA$ErasmusCandidacyDegreesProvider" />
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusCandidacyProcessDA$ErasmusCandidacyDegreesProvider" />
         <property name="format" value="${presentationName}" />
         <property name="sortBy" value="degreeType, name"/>
     </slot>
 </schema>
 
+<schema name="ErasmusChooseDegreeBean.coordinator.selectDegree" type="net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA$ChooseDegreeBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+   	<slot name="degree" layout="menu-select-postback" key="label.erasmus.degree" >
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.teacher.candidacy.erasmus.ErasmusCandidacyProcessDA$ErasmusCandidacyDegreesProvider" />
+        <property name="format" value="${presentationName}" />
+        <property name="sortBy" value="degreeType, name"/>
+    </slot>
+</schema>
 
 <schema name="ApprovedLearningAgreement.documentUploadBean" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="stream" key="label.erasmus.candidacy.learning.agreement.file">
@@ -2457,3 +2464,4 @@
 	<slot name="personalDetails.name" key="label.name" />
 	<slot name="mostRecentAlert.whenCreated" key="label.dateTime.submission" bundle="CANDIDATE_RESOURCES" />
 </schema>
+

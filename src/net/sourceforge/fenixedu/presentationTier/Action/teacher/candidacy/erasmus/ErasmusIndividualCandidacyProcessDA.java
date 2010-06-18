@@ -9,20 +9,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
-import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ApprovedLearningAgreementDocumentUploadBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCandidacyProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.Action.candidacy.IndividualCandidacyProcessDA;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 import net.sourceforge.fenixedu.util.StringUtils;
 
@@ -41,69 +35,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "set-coordinator-validation", path = "/teacher/candidacy/erasmus/setCoordinatorValidation.jsp"),
 	@Forward(name = "visualize-alerts", path = "/candidacy/erasmus/visualizeAlerts.jsp"),
 	@Forward(name = "upload-learning-agreement", path = "/candidacy/erasmus/uploadLearningAgreement.jsp") })
-public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProcessDA {
+public class ErasmusIndividualCandidacyProcessDA extends
+	net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusIndividualCandidacyProcessDA {
 
-    @Override
-    protected Class getParentProcessType() {
-	return ErasmusCandidacyProcess.class;
-    }
-
-    @Override
-    protected void prepareInformationForBindPersonToCandidacyOperation(HttpServletRequest request,
-	    IndividualCandidacyProcess process) {
-	// TODO Auto-generated method stub
-
-    }
-
-    @Override
-    protected void setStartInformation(ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	final ErasmusIndividualCandidacyProcessBean bean = new ErasmusIndividualCandidacyProcessBean(getParentProcess(request));
-
-	/*
-	 * 06/05/2009 - Due to Public Candidacies, a candidacy created in admin
-	 * office is external So we dont require ChoosePersonBean because a
-	 * Person will not be associated or created at individual candidacy
-	 * creation stage. Instead we bind with an empty PersonBean.
-	 * 
-	 * bean.setChoosePersonBean(new ChoosePersonBean());
-	 */
-	/*
-	 * 21/07/2009 - Now we create a person to process the payments
-	 * imediately
-	 */
-	bean.setChoosePersonBean(new ChoosePersonBean());
-	bean.setPersonBean(new PersonBean());
-
-	bean.getChoosePersonBean().setName("Oh really fun");
-	bean.getChoosePersonBean().setDocumentType(IDDocumentType.FOREIGNER_IDENTITY_CARD);
-
-	/*
-	 * 06/05/2009 - Also we mark the bean as an external candidacy.
-	 */
-	bean.setInternalPersonCandidacy(Boolean.TRUE);
-	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
-
-    }
-
-    @Override
-    protected Class getProcessType() {
-	return ErasmusIndividualCandidacyProcess.class;
-    }
-
-    @Override
-    protected ErasmusCandidacyProcess getParentProcess(HttpServletRequest request) {
-	return (ErasmusCandidacyProcess) super.getParentProcess(request);
-    }
-
-    @Override
-    protected ErasmusIndividualCandidacyProcess getProcess(HttpServletRequest request) {
-	return (ErasmusIndividualCandidacyProcess) super.getProcess(request);
-    }
-
-    @Override
-    public ErasmusIndividualCandidacyProcessBean getIndividualCandidacyProcessBean() {
-	return (ErasmusIndividualCandidacyProcessBean) super.getIndividualCandidacyProcessBean();
-    }
 
     @Override
     protected List<Activity> getAllowedActivities(final IndividualCandidacyProcess process) {
@@ -155,14 +89,6 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
 	    HttpServletRequest request, HttpServletResponse response) {
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 	return mapping.findForward("set-coordinator-validation");
-    }
-
-    public ActionForward prepareExecuteVisualizeAlerts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	final ErasmusIndividualCandidacyProcessBean bean = new ErasmusIndividualCandidacyProcessBean(getProcess(request));
-
-	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
-	return mapping.findForward("visualize-alerts");
     }
 
     public ActionForward prepareExecuteUploadApprovedLearningAgreement(ActionMapping mapping, ActionForm form,

@@ -8,7 +8,9 @@
 
 <bean:define id="processName" name="processName" />
 
-<h2>Erasmus Student Application Process</h2>
+<em><bean:message key="label.erasmus.candidacy" bundle="APPLICATION_RESOURCES"/></em>
+
+<h2><bean:message key="title.application.name.erasmus" bundle="CANDIDATE_RESOURCES" /></h2>
 
 <%-- no candidacy process --%>
 <logic:empty name="process">
@@ -49,7 +51,6 @@
 			</table>
 
 			<p class="mtop05"><html:submit><bean:message key="label.choose"/></html:submit></p>			
-			
 		</html:form>
 
 	</logic:notEmpty>
@@ -62,6 +63,7 @@
 	<bean:define id="childProcessName" name="childProcessName" />
 	<bean:size id="candidacyProcessesSize" name="candidacyProcesses" />
 
+	<logic:present role="INTERNATIONAL_RELATION_OFFICE">
 	<logic:equal name="canCreateProcess" value="true">
 		<p>
 			<html:link action='<%= "/caseHandling" + processName.toString() + ".do?method=prepareCreateNewProcess"%>'>
@@ -69,12 +71,12 @@
 			</html:link>
 		</p>
 	</logic:equal>
-
+	</logic:present>
 
 	<html:form action='<%= "/caseHandling" + processName.toString() + ".do?method=intro" %>'>
-		
-		<p class="mbottom05"><strong>Filtrar candidaturas por:</strong></p>
-		
+
+		<p class="mbottom05"><strong><bean:message key="label.erasmus.filter.applications.by" bundle="CANDIDATE_RESOURCES" /></strong></p>
+
 		<table class="tstyle5 thlight thright mtop025 mbottom05 ulnomargin">
 			<tr>
 				<th><bean:message key="label.executionYear" bundle="APPLICATION_RESOURCES" /></th>
@@ -101,23 +103,22 @@
 			<tr>
 				<td><bean:message key="label.hide.cancelled.candidacies" bundle="CANDIDATE_RESOURCES"/>?</td>
 				<td> 
-				<fr:edit id="hide.cancelled.candidacies" name="hideCancelledCandidacies" slot="value">
-					<fr:layout name="radio-postback"/>
-				</fr:edit>
+					<fr:edit id="hide.cancelled.candidacies" name="hideCancelledCandidacies" slot="value">
+						<fr:layout name="radio-postback"/>
+					</fr:edit>
 				</td>
 			</tr>					
 		</table>
 
 		<p><html:submit><bean:message key="label.choose"/></html:submit></p>
-
-		<fr:edit id="choose.degree.bean" name="chooseDegreeBean" schema="SecondCycleChooseDegreeBean.selectDegree" >
+		<bean:define id="chooseDegreeBeanSchemaName" name="chooseDegreeBeanSchemaName" type="String" /> 
+		<fr:edit id="choose.degree.bean" name="chooseDegreeBean" schema="<%= chooseDegreeBeanSchemaName %>" >
 			<fr:destination name="postback" path="<%= "/caseHandling" + processName.toString() + ".do?method=intro" %>"/>
 			<fr:layout>
 				<fr:property name="classes" value="tstyle5 thlight"/>
 				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 			</fr:layout>
 		</fr:edit>
-
 	</html:form>
 
 
@@ -211,11 +212,13 @@
 	
 	<p><strong><bean:message key="title.erasmus.application.process.list" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
 	<%-- create child process --%>
-	<logic:equal name="canCreateChildProcess" value="true">
-		<html:link action='<%= "/caseHandling" + childProcessName.toString() + ".do?method=prepareCreateNewProcess&amp;parentProcessId=" + processId.toString() %>'>
-			+ <bean:message key='<%= "link.create.new.process." + childProcessName.toString()%>' bundle="APPLICATION_RESOURCES"/>	
-		</html:link>
-	</logic:equal>
+	<logic:present role="INTERNATIONAL_RELATION_OFFICE">
+		<logic:equal name="canCreateChildProcess" value="true">
+			<html:link action='<%= "/caseHandling" + childProcessName.toString() + ".do?method=prepareCreateNewProcess&amp;parentProcessId=" + processId.toString() %>'>
+				+ <bean:message key='<%= "link.create.new.process." + childProcessName.toString()%>' bundle="APPLICATION_RESOURCES"/>	
+			</html:link>
+		</logic:equal>
+	</logic:present>
 	
 	<%-- show child processes --%>
 	<logic:notEmpty name="childProcesses">
