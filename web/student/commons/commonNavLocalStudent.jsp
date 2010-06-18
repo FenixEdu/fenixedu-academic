@@ -11,6 +11,9 @@
 	--%>
 	<li class="navheader"><bean:message key="consult"/></li>
   	<li><html:link page="/viewCurriculum.do?method=prepare" titleKey="link.title.curriculum"><bean:message key="link.student.curriculum"/></html:link></li>
+	<logic:notEmpty name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.phdIndividualProgramProcesses">
+		<li><html:link page="/phdIndividualProgramProcess.do?method=viewProcess"><bean:message key="label.phds" bundle="PHD_RESOURCES"/></html:link></li>
+	</logic:notEmpty>
 	<li><html:link page="/studentTimeTable.do?method=prepare" titleKey="link.title.timetable"><bean:message key="link.my.timetable"/></html:link></li>
 	<li><html:link page="/ShowStudentStatutes.do?method=execute" titleKey="link.title.statutes"><bean:message key="label.student.statutes"/></html:link></li>
 	<ul>
@@ -75,8 +78,5 @@
 
 	<li class="navheader"><bean:message key="label.information.export" bundle="STUDENT_RESOURCES"/></li>
 	<li><html:link page="/managePasswords.do?method=managePasswords" titleKey="label.information.export.manage.passwords"><bean:message key="label.information.export.manage.passwords"/></html:link></li>
-
-	<li class="navheader"><bean:message key="label.phds" bundle="PHD_RESOURCES"/></li>
-	<li><html:link page="/phdIndividualProgramProcess.do?method=viewProcess"><bean:message key="label.phd.manageProcesses" bundle="PHD_RESOURCES"/></html:link></li>
 
 </ul>

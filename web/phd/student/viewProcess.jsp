@@ -4,10 +4,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/phd.tld" prefix="phd" %>
 
-
-<%@page import="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess.DownloadComissionDocument"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess.DownloadReportDocument"%><logic:present role="STUDENT">
+<logic:present role="STUDENT">
 
 <%-- ### Title #### --%>
 <em><bean:message  key="label.phd.student.breadcrumb" bundle="PHD_RESOURCES"/></em>
@@ -49,62 +46,18 @@
 	  </tr>
 	</table>
 	
-	<%-- CAT --%>
-	<br/>
-	<logic:notEmpty name="process" property="seminarProcess">
-		<strong><bean:message  key="label.phd.publicPresentationSeminarProcess" bundle="PHD_RESOURCES"/></strong>
-		<fr:view schema="PublicPresentationSeminarProcess.view.simple" name="process" property="seminarProcess">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle2 thlight mtop10" />
-			</fr:layout>
-		</fr:view>
-		<bean:define id="seminarProcess" name="process" property="seminarProcess" />
-		<ul class="operations">
-			
-			<phd:activityAvailable process="<%= seminarProcess  %>" activity="<%= DownloadComissionDocument.class %>">
-			<li style="display: inline;">
-				<bean:define id="comissionDocumentUrl" name="seminarProcess" property="comissionDocument.downloadUrl" />
-				<a href="<%= comissionDocumentUrl.toString() %>"><bean:message  key="label.phd.public.presentation.seminar.comission.document" bundle="PHD_RESOURCES"/></a>
-			</li>
-			</phd:activityAvailable>
-			
-			<phd:activityAvailable process="<%= seminarProcess  %>" activity="<%= DownloadReportDocument.class %>">
-			<li style="display: inline;">
-				<bean:define id="reportDocumentUrl" name="seminarProcess" property="reportDocument.downloadUrl" />
-				<a href="<%= reportDocumentUrl.toString() %>"><bean:message  key="label.phd.public.presentation.seminar.report.document" bundle="PHD_RESOURCES"/></a>
-			</li>
-			</phd:activityAvailable>
-		
-		</ul>
-	</logic:notEmpty>
+	<%--Thesis --%>
+	<jsp:include page="/phd/thesis/student/viewThesisProcess.jsp" />
 	
+	<%-- CAT --%>
+	<jsp:include page="/phd/seminar/student/viewSeminarProcess.jsp" />
+
+	<%-- School part --%>
+	<jsp:include page="/phd/student/viewSchoolPart.jsp" />
 	
 	<%-- Candidacy Process --%>
-	<br/>
-	<strong><bean:message  key="label.phd.candidacyProcess" bundle="PHD_RESOURCES"/></strong>
-	<table>
-	  <tr>
-	    <td>
-			<fr:view schema="PhdProgramCandidacyProcess.view.simple" name="process" property="candidacyProcess">
-				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle2 thlight mtop10" />
-				</fr:layout>
-			</fr:view>
-		</td>
-	  </tr>
-	  <tr>
-	    <td>
-	    	<bean:define id="candidacyProcess" name="process" property="candidacyProcess" />
-	    	<ul class="operations">
-	    		<li style="display: inline;">
-					<html:link action="/phdProgramCandidacyProcess.do?method=manageCandidacyDocuments" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
-						<bean:message bundle="PHD_RESOURCES" key="label.phd.manageCandidacyDocuments"/>
-					</html:link>
-				</li>
-			</ul>
-	    </td>
-	  </tr>
-	</table>
+	<jsp:include page="/phd/candidacy/student/viewCandidacyProcess.jsp" />
+	
 	<%--  ### End Of Context Information  ### --%>
 </logic:present>
 

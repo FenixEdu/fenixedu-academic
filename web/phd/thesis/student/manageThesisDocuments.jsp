@@ -5,12 +5,11 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-
 <logic:present role="STUDENT">
 
 <%-- ### Title #### --%>
-<em><bean:message  key="label.phd.student.breadcrumb" bundle="PHD_RESOURCES"/></em>
-<h2><bean:message key="label.phd.candidacy.academicAdminOffice.manageCandidacyDocuments" bundle="PHD_RESOURCES" /></h2>
+<em><bean:message  key="label.phd.coordinator.breadcrumb" bundle="PHD_RESOURCES"/></em>
+<h2><bean:message key="label.phd.manageThesisDocuments" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 
 
@@ -41,33 +40,25 @@
 			</fr:layout>
 		</fr:view>
 	</td>
-    <td>
-	    <strong><bean:message  key="label.phd.candidacyProcess" bundle="PHD_RESOURCES"/></strong>
-		<fr:view schema="PhdProgramCandidacyProcess.view.simple" name="process">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle2 thlight mtop15" />
-			</fr:layout>
-		</fr:view>
-    </td>
   </tr>
 </table>
-
 <%--  ### End Of Context Information  ### --%>
 
 <bean:define id="processId" name="process" property="externalId" />
 <br/>
 
 <%--  ### Documents  ### --%>
-<strong><bean:message  key="label.phd.documents" bundle="PHD_RESOURCES"/></strong>
 
 <bean:define id="latestDocumentVersionsAvailableToStudent" name="process" property="latestDocumentVersionsAvailableToStudent" />
 
 <logic:empty name="latestDocumentVersionsAvailableToStudent">
+	<strong><bean:message  key="label.phd.documents" bundle="PHD_RESOURCES"/></strong>
 	<br/>
 	<bean:message  key="label.phd.noDocuments" bundle="PHD_RESOURCES"/>
 </logic:empty>
 
 <logic:notEmpty name="latestDocumentVersionsAvailableToStudent">	
+	
 	<fr:view schema="PhdProgramProcessDocument.view" name="latestDocumentVersionsAvailableToStudent">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight mtop15" />
@@ -78,7 +69,7 @@
 			<fr:property name="order(view)" value="0" />
 			<fr:property name="hasContext(view)" value="false" />
 			<fr:property name="contextRelative(view)" value="false" />
-			
+
 			<fr:property name="sortBy" value="documentType=asc" />
 		</fr:layout>
 	</fr:view>
@@ -86,5 +77,7 @@
 
 <%--  ### End Of Documents  ### --%>
 <br/><br/>
+
+<%--  ### End of Operation Area  ### --%>
 
 </logic:present>

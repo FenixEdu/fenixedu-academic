@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.phd;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -11,9 +13,9 @@ public enum PhdIndividualProgramDocumentType {
 
     REGISTRATION_FORM,
 
-    CANDIDACY_REVIEW(false),
+    CANDIDACY_REVIEW(false, false),
 
-    STUDY_PLAN,
+    STUDY_PLAN(true, false),
 
     CV,
 
@@ -27,58 +29,65 @@ public enum PhdIndividualProgramDocumentType {
 
     SOCIAL_SECURITY,
 
-    RECOMMENDATION_LETTER(false),
+    RECOMMENDATION_LETTER(false, false),
 
     HEALTH_BULLETIN,
 
-    GUIDER_ACCEPTANCE_LETTER(false),
+    GUIDER_ACCEPTANCE_LETTER(false, false),
 
-    ASSISTENT_GUIDER_ACCEPTANCE_LETTER(false),
+    ASSISTENT_GUIDER_ACCEPTANCE_LETTER(false, false),
 
     MOTIVATION_LETTER,
 
     RESEARCH_PLAN,
 
-    CANDIDACY_RATIFICATION,
+    CANDIDACY_RATIFICATION(true, false),
 
-    PUBLIC_PRESENTATION_SEMINAR_COMISSION,
+    PUBLIC_PRESENTATION_SEMINAR_COMISSION(true, false),
 
-    PUBLIC_PRESENTATION_SEMINAR_REPORT,
+    PUBLIC_PRESENTATION_SEMINAR_REPORT(true, false),
 
     PROVISIONAL_THESIS,
 
     FINAL_THESIS,
     
-    FINAL_THESIS_RATIFICATION_DOCUMENT,
+    FINAL_THESIS_RATIFICATION_DOCUMENT(true, false),
 
     THESIS_REQUIREMENT,
     
     THESIS_ABSTRACT,
 
-    JURY_ELEMENTS,
+    JURY_ELEMENTS(true, false),
 
-    JURY_PRESIDENT_ELEMENT,
+    JURY_PRESIDENT_ELEMENT(true, false),
 
-    JURY_REPORT_FEEDBACK,
+    JURY_REPORT_FEEDBACK(true, false),
 
-    CANDIDACY_FEEDBACK_DOCUMENT,
+    CANDIDACY_FEEDBACK_DOCUMENT(true, false),
 
-    JURY_MEETING_MINUTES,
+    JURY_MEETING_MINUTES(true, false),
     
-    CONCLUSION_DOCUMENT,
+    CONCLUSION_DOCUMENT(true, false),
     
-    OTHER(false);
+    OTHER(false, false);
 
     private boolean isVersioned;
 
+    private boolean isAutomaticallyVisibleToStudent;
+    
     private PhdIndividualProgramDocumentType() {
-	this(true);
+	this(true, true);
     }
 
     private PhdIndividualProgramDocumentType(boolean isVersioned) {
-	this.isVersioned = isVersioned;
+	this(isVersioned, true);
     }
 
+    private PhdIndividualProgramDocumentType(boolean isVersioned, boolean isAutomaticallyVisibleToStudent) {
+	this.isVersioned = isVersioned;
+	this.isAutomaticallyVisibleToStudent = isAutomaticallyVisibleToStudent;
+    }
+    
     public String getLocalizedName() {
 	return getLocalizedName(Language.getLocale());
     }
@@ -93,6 +102,18 @@ public enum PhdIndividualProgramDocumentType {
 
     public boolean isVersioned() {
 	return isVersioned;
+    }
+    
+    static public Collection<PhdIndividualProgramDocumentType> getDocumentTypesVisibleToStudent() {
+	final Collection<PhdIndividualProgramDocumentType> result = new HashSet<PhdIndividualProgramDocumentType>();
+    
+	for (final PhdIndividualProgramDocumentType document : values()) {
+	    if (document.isAutomaticallyVisibleToStudent) {
+		result.add(document);
+	    }
+	}
+	
+	return result;
     }
 
 }

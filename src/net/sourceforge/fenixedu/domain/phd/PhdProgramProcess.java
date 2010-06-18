@@ -89,6 +89,21 @@ abstract public class PhdProgramProcess extends PhdProgramProcess_Base {
 	return filterLatestDocumentVersions(getDocuments());
     }
 
+    public Set<PhdProgramProcessDocument> getLatestDocumentVersionsAvailableToStudent() {
+
+	final Collection<PhdIndividualProgramDocumentType> documentTypesVisibleToStudent = PhdIndividualProgramDocumentType
+		.getDocumentTypesVisibleToStudent();
+
+	final Collection<PhdProgramProcessDocument> documents = new HashSet<PhdProgramProcessDocument>();
+	for (final PhdProgramProcessDocument document : getDocuments()) {
+	    if (documentTypesVisibleToStudent.contains(document.getDocumentType())) {
+		documents.add(document);
+	    }
+	}
+
+	return filterLatestDocumentVersions(documents);
+    }
+
     static public boolean isMasterDegreeAdministrativeOfficeEmployee(IUserView userView) {
 	return userView != null && userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
 		&& userView.getPerson().getEmployeeAdministrativeOffice().isMasterDegree();

@@ -1,11 +1,17 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd.student;
 
+import java.util.Collections;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
+import net.sourceforge.fenixedu.presentationTier.Action.phd.CommonPhdIndividualProgramProcessDA;
+import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdInactivePredicateContainer;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
 
 import org.apache.commons.lang.StringUtils;
@@ -16,6 +22,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
 
 @Mapping(path = "/phdIndividualProgramProcess", module = "student")
 @Forwards( {
@@ -29,7 +36,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Forward(name = "choosePhdProcess", path = "/phd/student/choosePhdProcess.jsp")
 
 })
-public class PhdIndividualProgramProcessDA extends PhdProcessDA {
+public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramProcessDA {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -79,6 +86,7 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 
     // End of Alerts Management
 
+    @Override
     public ActionForward viewProcess(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
@@ -96,6 +104,31 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 
 	request.setAttribute("processes", person.getPhdIndividualProgramProcesses());
 	return mapping.findForward("choosePhdProcess");
+    }
+
+    @Override
+    protected List<PredicateContainer<?>> getCandidacyCategory() {
+	return Collections.emptyList();
+    }
+
+    @Override
+    protected PhdInactivePredicateContainer getConcludedContainer() {
+	return null;
+    }
+
+    @Override
+    protected List<PredicateContainer<?>> getSeminarCategory() {
+	return Collections.emptyList();
+    }
+
+    @Override
+    protected List<PredicateContainer<?>> getThesisCategory() {
+	return Collections.emptyList();
+    }
+
+    @Override
+    protected SearchPhdIndividualProgramProcessBean initializeSearchBean(HttpServletRequest request) {
+	return null;
     }
 
 }
