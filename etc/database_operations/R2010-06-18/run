@@ -46,4 +46,3 @@ function executeWithTempFile() {
 execute "Added new column to JustificationMotive table" alterTableJustificationMotive.sql
 execute "Added new column to AssiduousnessClosedMonth table" alterTableAssiduousnessClosedMonth.sql
 execute "Update columns from JustificationMotive and AssiduousnessClosedMonth tables" updateAssiduosunessTables.sql IST
-execute "Update columns from JustificationMotive and AssiduousnessClosedMonth tables" updateAssiduosunessTables.sql IST
