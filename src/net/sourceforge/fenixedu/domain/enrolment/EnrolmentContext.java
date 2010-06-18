@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.NoCourseGroupEnrolmentBean;
-import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -14,6 +13,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.C
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
@@ -121,6 +121,10 @@ public class EnrolmentContext {
 
     public boolean hasResponsiblePerson() {
 	return getResponsiblePerson() != null;
+    }
+    
+    public boolean isResponsiblePersonStudent() {
+	return getResponsiblePerson().hasRole(RoleType.STUDENT);
     }
 
     public boolean isNormal() {

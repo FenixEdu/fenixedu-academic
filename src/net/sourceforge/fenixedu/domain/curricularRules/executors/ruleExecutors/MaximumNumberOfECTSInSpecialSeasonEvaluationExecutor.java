@@ -3,9 +3,8 @@ package net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors;
 import java.math.BigDecimal;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.SpecialSeasonCode;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
+import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfECTSInSpecialSeasonEvaluation;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
@@ -30,20 +29,36 @@ public class MaximumNumberOfECTSInSpecialSeasonEvaluationExecutor extends Curric
 	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
 	final Registration registration = enrolmentContext.getRegistration();
 
-	final ExecutionYear executionYear = enrolmentContext.getExecutionPeriod().getExecutionYear();
-	final SpecialSeasonCode specialSeasonCode = registration.getSpecialSeasonCodeByExecutionYear(executionYear);
-	if (specialSeasonCode == null) {
-	    return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
-		    "curricularRules.ruleExecutors.EnrolmentInSpecialSeasonEvaluationExecutor.no.specialSeason.code");
-	}
+//	final ExecutionYear executionYear = enrolmentContext.getExecutionPeriod().getExecutionYear();
+//	final SpecialSeasonCode specialSeasonCode = registration.getSpecialSeasonCodeByExecutionYear(executionYear);
+//	if (specialSeasonCode == null) {
+//	    return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
+//		    "curricularRules.ruleExecutors.EnrolmentInSpecialSeasonEvaluationExecutor.no.specialSeason.code");
+//	}
 
+	final MaximumNumberOfECTSInSpecialSeasonEvaluation rule = (MaximumNumberOfECTSInSpecialSeasonEvaluation) curricularRule;
 	final BigDecimal totalEcts = getTotalEcts(registration, enrolmentContext);
 
-	if (specialSeasonCode.getMaxEcts().compareTo(totalEcts) < 0) {
-	    return RuleResult.createWarning(sourceDegreeModuleToEvaluate.getDegreeModule(),
-		    "curricularRules.ruleExecutors.EnrolmentInSpecialSeasonEvaluationExecutor.too.many.specialSeason.ects",
-		    specialSeasonCode.getSituation(), specialSeasonCode.getMaxEcts().toPlainString());
+	if (!rule.allowEcts(totalEcts)) {
+	    // is student enroling, then return false
+	    if (enrolmentContext.isResponsiblePersonStudent()) {
+		return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
+			"curricularRules.ruleExecutors.EnrolmentInSpecialSeasonEvaluationExecutor.too.many.specialSeason.ects",
+			rule.getMaxEcts().toPlainString());
+
+	    } else {
+		// otherwise add warning, but let enrolment continue
+		return RuleResult.createWarning(sourceDegreeModuleToEvaluate.getDegreeModule(),
+			"curricularRules.ruleExecutors.EnrolmentInSpecialSeasonEvaluationExecutor.too.many.specialSeason.ects",
+			rule.getMaxEcts().toPlainString());
+	    }
 	}
+
+//	if (specialSeasonCode.getMaxEcts().compareTo(totalEcts) < 0) {
+//	    return RuleResult.createWarning(sourceDegreeModuleToEvaluate.getDegreeModule(),
+//		    "curricularRules.ruleExecutors.EnrolmentInSpecialSeasonEvaluationExecutor.too.many.specialSeason.ects",
+//		    specialSeasonCode.getSituation(), specialSeasonCode.getMaxEcts().toPlainString());
+//	}
 
 	return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
     }
