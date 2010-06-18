@@ -102,7 +102,9 @@ public class EmployeeWorkSheet implements Serializable {
 
     private Integer maximumWorkingDays;
     private Integer workedDaysWithBonusDaysDiscount;
+    private Integer workedDaysWithA17DaysDiscount;
     private Integer workedDaysWithA17VacationsDaysDiscount;
+    private Duration totalWorkedTimeForA17Vacations;
     private Duration totalWorkedTime;
 
     // Duration finalBalance;
@@ -315,10 +317,14 @@ public class EmployeeWorkSheet implements Serializable {
 	    setMaximumWorkingDays(getMaximumWorkingDays() + 1);
 	}
 	setTotalWorkedTime(getTotalWorkedTime().plus(workDaySheet.getWorkedTime()));
+	setTotalWorkedTimeForA17Vacations(getTotalWorkedTimeForA17Vacations().plus(workDaySheet.getWorkedTimeForA17Vacations()));
 	if (workDaySheet.isDiscountBonus()) {
 	    setWorkedDaysWithBonusDaysDiscount(getWorkedDaysWithBonusDaysDiscount() + 1);
 	}
-	if (workDaySheet.isDiscountA17()) {
+	if (workDaySheet.isWorkingDayWithDiscountA17()) {
+	    setWorkedDaysWithA17DaysDiscount(getWorkedDaysWithA17DaysDiscount() + 1);
+	}
+	if (workDaySheet.isWorkingDayWithDiscountA17Vacations()) {
 	    setWorkedDaysWithA17VacationsDaysDiscount(getWorkedDaysWithA17VacationsDaysDiscount() + 1);
 	}
 	setComplementaryWeeklyRest(getComplementaryWeeklyRest().plus(
@@ -609,8 +615,12 @@ public class EmployeeWorkSheet implements Serializable {
 	    setBalanceToCompensate(getBalanceToCompensate().plus(assiduousnessClosedMonth.getBalanceToDiscount()));
 	    setMaximumWorkingDays(getMaximumWorkingDays() + assiduousnessClosedMonth.getMaximumWorkingDays());
 	    setTotalWorkedTime(getTotalWorkedTime().plus(assiduousnessClosedMonth.getTotalWorkedTime()));
+	    setTotalWorkedTimeForA17Vacations(getTotalWorkedTimeForA17Vacations().plus(
+		    assiduousnessClosedMonth.getTotalWorkedTimeForA17Vacations()));
 	    setWorkedDaysWithBonusDaysDiscount(getWorkedDaysWithBonusDaysDiscount()
 		    + assiduousnessClosedMonth.getWorkedDaysWithBonusDaysDiscount());
+	    setWorkedDaysWithA17DaysDiscount(getWorkedDaysWithA17DaysDiscount()
+		    + assiduousnessClosedMonth.getWorkedDaysWithA17DaysDiscount());
 	    setWorkedDaysWithA17VacationsDaysDiscount(getWorkedDaysWithA17VacationsDaysDiscount()
 		    + assiduousnessClosedMonth.getWorkedDaysWithA17VacationsDaysDiscount());
 
@@ -729,6 +739,14 @@ public class EmployeeWorkSheet implements Serializable {
 	this.totalWorkedTime = totalWorkedTime;
     }
 
+    public Duration getTotalWorkedTimeForA17Vacations() {
+	return totalWorkedTimeForA17Vacations == null ? Duration.ZERO : totalWorkedTimeForA17Vacations;
+    }
+
+    public void setTotalWorkedTimeForA17Vacations(Duration totalWorkedTimeForA17Vacations) {
+	this.totalWorkedTimeForA17Vacations = totalWorkedTimeForA17Vacations;
+    }
+
     public Integer getMaximumWorkingDays() {
 	return maximumWorkingDays == null ? 0 : maximumWorkingDays;
     }
@@ -751,6 +769,14 @@ public class EmployeeWorkSheet implements Serializable {
 
     public void setWorkedDaysWithA17VacationsDaysDiscount(Integer workedDaysWithA17VacationsDaysDiscount) {
 	this.workedDaysWithA17VacationsDaysDiscount = workedDaysWithA17VacationsDaysDiscount;
+    }
+
+    public Integer getWorkedDaysWithA17DaysDiscount() {
+	return workedDaysWithA17DaysDiscount == null ? 0 : workedDaysWithA17DaysDiscount;
+    }
+
+    public void setWorkedDaysWithA17DaysDiscount(Integer workedDaysWithA17DaysDiscount) {
+	this.workedDaysWithA17DaysDiscount = workedDaysWithA17DaysDiscount;
     }
 
     public HashMap<WorkScheduleType, Duration> getExtra125Map() {

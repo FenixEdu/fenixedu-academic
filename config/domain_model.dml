@@ -2515,8 +2515,10 @@ class DomainObject {
         Double vacations;
         Integer maximumWorkingDays;
         Integer workedDaysWithBonusDaysDiscount;
+        Integer workedDaysWithA17DaysDiscount;
         Integer workedDaysWithA17VacationsDaysDiscount;
         Duration totalWorkedTime;
+        Duration totalWorkedTimeForA17Vacations;
         Duration finalBalance;
         Duration finalBalanceToCompensate;
         LocalDate beginDate;
@@ -2738,6 +2740,7 @@ class DomainObject {
         JustificationType justificationType;
         DateTime lastModifiedDate;
         Boolean discountBonus;
+        Boolean discountA17;
         Boolean discountA17Vacations;
         Boolean inExercise;
         Boolean isJustificationForUnjustifiedDays;

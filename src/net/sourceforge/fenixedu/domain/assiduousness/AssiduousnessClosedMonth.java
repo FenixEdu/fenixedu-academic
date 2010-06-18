@@ -55,10 +55,12 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	setArticle66(employeeWorkSheet.getArticle66().doubleValue());
 	setMaximumWorkingDays(employeeWorkSheet.getMaximumWorkingDays());
 	setWorkedDaysWithBonusDaysDiscount(employeeWorkSheet.getWorkedDaysWithBonusDaysDiscount());
+	setWorkedDaysWithA17DaysDiscount(employeeWorkSheet.getWorkedDaysWithA17DaysDiscount());
 	setWorkedDaysWithA17VacationsDaysDiscount(employeeWorkSheet.getWorkedDaysWithA17VacationsDaysDiscount());
 	setFinalBalance(employeeWorkSheet.getEmployeeBalanceResume().getFinalAnualBalance());
 	setFinalBalanceToCompensate(employeeWorkSheet.getEmployeeBalanceResume().getFutureBalanceToCompensate());
 	setTotalWorkedTime(employeeWorkSheet.getTotalWorkedTime());
+	setTotalWorkedTimeForA17Vacations(employeeWorkSheet.getTotalWorkedTimeForA17Vacations());
 	setUnjustifiedDays(employeeWorkSheet.getUnjustifiedDays() + employeeWorkSheet.getUnjustifiedDaysLeave());
 	setAccumulatedArticle66(employeeWorkSheet.getAccumulatedArticle66().doubleValue());
 	setAccumulatedUnjustified(employeeWorkSheet.getAccumulatedUnjustified().doubleValue());

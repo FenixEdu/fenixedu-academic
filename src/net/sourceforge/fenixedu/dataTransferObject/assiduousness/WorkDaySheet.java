@@ -106,7 +106,9 @@ public class WorkDaySheet implements Serializable {
 
     private boolean workingDay;
 
-    private boolean discountA17;
+    private boolean workingDayWithDiscountA17;
+
+    private boolean workingDayWithDiscountA17Vacations;
 
     private boolean discountBonus;
 
@@ -148,7 +150,8 @@ public class WorkDaySheet implements Serializable {
 	setArticle66(BigDecimal.ZERO);
 	setWorkingDay(false);
 	setDiscountBonus(false);
-	setDiscountA17(false);
+	setWorkingDayWithdiscountA17(false);
+	setWorkingDayWithDiscountA17Vacations(false);
 	setNightWorkBalance(Duration.ZERO);
 	setOvertimeFirstLevel(Duration.ZERO);
 	setOvertimeSecondLevel(Duration.ZERO);
@@ -258,10 +261,15 @@ public class WorkDaySheet implements Serializable {
 		    setDiscountBonus(true);
 
 		}
+		if (!leave.getJustificationMotive().getDiscountA17()
+			|| !leave.getJustificationMotive().getJustificationType().equals(JustificationType.OCCURRENCE)) {
+		    setWorkingDayWithdiscountA17(true);
+		}
 		if (!leave.getJustificationMotive().getDiscountA17Vacations()
 			|| !leave.getJustificationMotive().getJustificationType().equals(JustificationType.OCCURRENCE)) {
-		    setDiscountA17(true);
+		    setWorkingDayWithDiscountA17Vacations(true);
 		}
+
 		if (!leave.getJustificationMotive().getDiscountA17Vacations()) {
 		    if (leave.getJustificationMotive().getJustificationType().equals(JustificationType.OCCURRENCE)) {
 			thisDayWorkedTime = getWorkSchedule().getWorkScheduleType().getNormalWorkPeriod().getWorkPeriodDuration();
@@ -279,14 +287,16 @@ public class WorkDaySheet implements Serializable {
 		thisDayWorkedTime = getWorkSchedule().getWorkScheduleType().getNormalWorkPeriod().getWorkPeriodDuration();
 		if (getLeaves().isEmpty()) {
 		    setDiscountBonus(true);
-		    setDiscountA17(true);
+		    setWorkingDayWithdiscountA17(true);
+		    setWorkingDayWithDiscountA17Vacations(true);
 		}
 	    } else if (!getAssiduousnessRecords().isEmpty()) {
 		thisDayWorkedTime = getWorkSchedule().getWorkScheduleType().getNormalWorkPeriod().getWorkPeriodDuration().plus(
 			thisDayBalance);
 		if (getLeaves().isEmpty()) {
 		    setDiscountBonus(true);
-		    setDiscountA17(true);
+		    setWorkingDayWithdiscountA17(true);
+		    setWorkingDayWithDiscountA17Vacations(true);
 		}
 	    }
 
@@ -295,7 +305,7 @@ public class WorkDaySheet implements Serializable {
 	    if (!timeLeaveToDiscount.equals(Duration.ZERO)) {
 		thisDayWorkedTime = thisDayWorkedTime.minus(timeLeaveToDiscount);
 	    }
-	    setWorkedTime(getWorkedTime().plus(thisDayWorkedTime));
+	    setWorkedTime(thisDayWorkedTime);
 	} else {
 	    if (isDayHoliday) {
 		ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
@@ -782,12 +792,20 @@ public class WorkDaySheet implements Serializable {
 	this.nightWork = nightWork;
     }
 
-    public boolean isDiscountA17() {
-	return discountA17;
+    public boolean isWorkingDayWithDiscountA17() {
+	return workingDayWithDiscountA17;
     }
 
-    public void setDiscountA17(boolean discountA17) {
-	this.discountA17 = discountA17;
+    public void setWorkingDayWithdiscountA17(boolean workingDayWithDiscountA17) {
+	this.workingDayWithDiscountA17 = workingDayWithDiscountA17;
+    }
+
+    public boolean isWorkingDayWithDiscountA17Vacations() {
+	return workingDayWithDiscountA17Vacations;
+    }
+
+    public void setWorkingDayWithDiscountA17Vacations(boolean workingDayWithDiscountA17Vacations) {
+	this.workingDayWithDiscountA17Vacations = workingDayWithDiscountA17Vacations;
     }
 
     public boolean isDiscountBonus() {
@@ -902,6 +920,10 @@ public class WorkDaySheet implements Serializable {
 	result = result.concat(getClockings().replaceAll("<span class='missingClockings.*?>", "<font color='#226B17'>"));
 	result = result.replaceAll("<span.*?>", "<font color='#825101'>");
 	return result.replaceAll("</span>", "</font>");
+    }
+
+    public Duration getWorkedTimeForA17Vacations() {
+	return isWorkingDayWithDiscountA17Vacations() ? getWorkedTime() : Duration.ZERO;
     }
 
 }

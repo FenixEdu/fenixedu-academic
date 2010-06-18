@@ -1,0 +1,1 @@
+alter table `JUSTIFICATION_MOTIVE` add column `DISCOUNT_A17` tinyint(1) default 0;
