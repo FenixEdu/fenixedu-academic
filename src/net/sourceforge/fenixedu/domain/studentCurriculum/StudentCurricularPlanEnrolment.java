@@ -204,7 +204,7 @@ abstract public class StudentCurricularPlanEnrolment {
 		person.getEmployeeCampus());
     }
 
-    private void assertStudentEnrolmentPreConditions() {
+    protected void assertStudentEnrolmentPreConditions() {
 
 	if (!getResponsiblePerson().getStudent().getRegistrationsToEnrolByStudent().contains(getRegistration())) {
 	    throw new DomainException("error.StudentCurricularPlan.student.is.not.allowed.to.perform.enrol");
