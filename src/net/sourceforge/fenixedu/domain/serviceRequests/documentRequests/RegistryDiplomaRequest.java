@@ -26,7 +26,9 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base {
 	if (isPayedUponCreation() && !isFree()) {
 	    RegistryDiplomaRequestEvent.create(getAdministrativeOffice(), getRegistration().getPerson(), this);
 	}
-	setDiplomaSupplement(new DiplomaSupplementRequest(bean));
+	if (bean.getRegistration().isBolonha()) {
+	    setDiplomaSupplement(new DiplomaSupplementRequest(bean));
+	}
     }
 
     public String getFamilyNames() {

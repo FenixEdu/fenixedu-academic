@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.presentationTier.renderers.providers;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -41,6 +42,7 @@ public class DocumentRequestTypeProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue, boolean includeQuickDeliveryTypes, boolean includePreBolonhaTypes) {
 
+	DocumentRequestCreateBean bean = (DocumentRequestCreateBean) source;
 	AdministrativeOfficeType administrativeOfficeType = AccessControl.getPerson().getEmployee().getAdministrativeOffice()
 		.getAdministrativeOfficeType();
 
@@ -54,6 +56,9 @@ public class DocumentRequestTypeProvider implements DataProvider {
 		continue;
 	    }
 	    if (!includePreBolonhaTypes && documentRequestType.isPreBolonha()) {
+		continue;
+	    }
+	    if (documentRequestType.isBolonhaOnly() && !bean.getRegistration().isBolonha()) {
 		continue;
 	    }
 	    result.add(documentRequestType);

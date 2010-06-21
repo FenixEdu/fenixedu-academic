@@ -30,13 +30,13 @@ public enum DocumentRequestType {
 
     GENERIC_DECLARATION(false, true, DEGREE),
 
-    REGISTRY_DIPLOMA_REQUEST(true, false /* , DEGREE, MASTER_DEGREE */),
+    REGISTRY_DIPLOMA_REQUEST(true, false /*, DEGREE, MASTER_DEGREE */),
 
     DIPLOMA_REQUEST(false, false, DEGREE, MASTER_DEGREE),
 
-    DIPLOMA_SUPPLEMENT_REQUEST(true, false /* , DEGREE, MASTER_DEGREE */),
+    DIPLOMA_SUPPLEMENT_REQUEST(true, false, false, false, true /*, DEGREE, MASTER_DEGREE */),
 
-    PAST_DIPLOMA_REQUEST(true, false, false, true, DEGREE/* , MASTER_DEGREE */),
+    PAST_DIPLOMA_REQUEST(true, false, false, true, false, DEGREE/* , MASTER_DEGREE */),
 
     PHOTOCOPY(false, false, DEGREE, MASTER_DEGREE),
 
@@ -62,6 +62,8 @@ public enum DocumentRequestType {
 
     private boolean preBolonha;
 
+    private boolean bolonhaOnly;
+
     private Collection<AdministrativeOfficeType> administrativeOfficeTypes;
 
     static private List<DocumentRequestType> CERTIFICATES = Arrays.asList(SCHOOL_REGISTRATION_CERTIFICATE, ENROLMENT_CERTIFICATE,
@@ -72,22 +74,23 @@ public enum DocumentRequestType {
 	    IRS_DECLARATION, GENERIC_DECLARATION);
 
     private DocumentRequestType(boolean hasAdditionalInformation, boolean allowedToQuickDeliver, boolean withBranch,
-	    boolean preBolonha, AdministrativeOfficeType... administrativeOfficeTypes) {
+	    boolean preBolonha, boolean bolonhaOnly, AdministrativeOfficeType... administrativeOfficeTypes) {
 	this.hasAdditionalInformation = hasAdditionalInformation;
 	this.allowedToQuickDeliver = allowedToQuickDeliver;
 	this.withBranch = withBranch;
 	this.preBolonha = preBolonha;
+	this.bolonhaOnly = bolonhaOnly;
 	this.administrativeOfficeTypes = Arrays.asList(administrativeOfficeTypes);
     }
 
     private DocumentRequestType(boolean hasAdditionalInformation, boolean allowedToQuickDeliver, boolean withBranch,
 	    AdministrativeOfficeType... administrativeOfficeTypes) {
-	this(hasAdditionalInformation, allowedToQuickDeliver, withBranch, false, administrativeOfficeTypes);
+	this(hasAdditionalInformation, allowedToQuickDeliver, withBranch, false, false, administrativeOfficeTypes);
     }
 
     private DocumentRequestType(boolean hasAdditionalInformation, boolean allowedToQuickDeliver,
 	    AdministrativeOfficeType... administrativeOfficeTypes) {
-	this(hasAdditionalInformation, allowedToQuickDeliver, false, false, administrativeOfficeTypes);
+	this(hasAdditionalInformation, allowedToQuickDeliver, false, false, false, administrativeOfficeTypes);
     }
 
     public String getName() {
@@ -145,6 +148,10 @@ public enum DocumentRequestType {
 
     public boolean isPreBolonha() {
 	return preBolonha;
+    }
+
+    public boolean isBolonhaOnly() {
+	return bolonhaOnly;
     }
 
     public boolean withBranch() {

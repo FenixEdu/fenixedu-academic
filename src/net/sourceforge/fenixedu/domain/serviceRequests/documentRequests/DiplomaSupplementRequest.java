@@ -37,6 +37,12 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base {
 	if (!getRegistration().getStudent().getPerson().getName().equals(bean.getGivenNames() + " " + bean.getFamilyNames())) {
 	    throw new DomainException("error.diplomaSupplementRequest.splittedNamesDoNotMatch");
 	}
+	RegistryDiplomaRequest registry = getRegistration().getRegistryDiplomaRequest(bean.getRequestedCycle());
+	DiplomaRequest diploma = getRegistration().getDiplomaRequest(bean.getRequestedCycle());
+	if (registry == null && diploma == null) {
+	    throw new DomainException(
+		    "error.diplomaSupplementRequest.cannotAskForSupplementWithoutEitherRegistryDiplomaOrDiplomaRequest");
+	}
 	final DiplomaSupplementRequest supplement = getRegistration().getDiplomaSupplementRequest(bean.getRequestedCycle());
 	if (supplement != null && supplement != this) {
 	    throw new DomainException("error.diplomaSupplementRequest.alreadyRequested");
@@ -126,11 +132,19 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base {
 	super.internalChangeState(academicServiceRequestBean);
 	if (academicServiceRequestBean.isToProcess()) {
 	    if (!getRegistration().isRegistrationConclusionProcessed(getRequestedCycle())) {
-		throw new DomainException("error.registryDiploma.registration.not.submited.to.conclusion.process");
+		throw new DomainException("error.diplomaSupplement.registration.not.submited.to.conclusion.process");
 	    }
 	    if (getRegistryCode() == null) {
 		RegistryDiplomaRequest registryRequest = getRegistration().getRegistryDiplomaRequest(getRequestedCycle());
-		registryRequest.getRegistryCode().addDocumentRequest(this);
+		DiplomaRequest diploma = getRegistration().getDiplomaRequest(getRequestedCycle());
+		if (registryRequest != null) {
+		    registryRequest.getRegistryCode().addDocumentRequest(this);
+		} else if (diploma != null) {
+		    diploma.getRegistryCode().addDocumentRequest(this);
+		} else {
+		    throw new DomainException(
+			    "error.diplomaSupplement.registrationDoesNotHaveEitherRegistryDiplomaOrDiplomaRequest");
+		}
 		getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
 	    }
 	    if (getLastGeneratedDocument() == null) {
