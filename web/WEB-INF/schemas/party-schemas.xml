@@ -217,7 +217,7 @@
 	<slot name="profession" key="label.person.occupation"/>
 	<slot name="maritalStatus" key="label.person.maritalStatus"/>
 	<slot name="dateOfBirthYearMonthDay" key="label.person.birth"/>
-	<slot name="nationality.nationality" key="label.person.country"/>
+	<slot name="country.countryNationality.preferedContent" key="label.person.country"/>
 	<slot name="parishOfBirth" key="label.person.birthPlaceParish"/>
 	<slot name="districtSubdivisionOfBirth" key="label.person.birthPlaceMunicipality"/>
 	<slot name="districtOfBirth" key="label.person.birthPlaceDistrict"/>

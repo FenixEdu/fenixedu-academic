@@ -52,6 +52,7 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 	activities.add(new ViewErasmusCoordinators());
 	activities.add(new AssignCoordinator());
 	activities.add(new RemoveTeacherFromCoordinators());
+	activities.add(new ViewChildProcessWithMissingRequiredDocumentFiles());
     }
 
     public ErasmusCandidacyProcess() {
@@ -482,6 +483,35 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 	@Override
 	public Boolean isVisibleForGriOffice() {
 	    return false;
+	}
+    }
+    
+    static private class ViewChildProcessWithMissingRequiredDocumentFiles extends Activity<ErasmusCandidacyProcess> {
+	@Override
+	public void checkPreConditions(ErasmusCandidacyProcess process, IUserView userView) {
+	    if (!isGriOfficeEmployee(userView) && !isManager(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+	
+	@Override
+	protected ErasmusCandidacyProcess executeActivity(ErasmusCandidacyProcess process, IUserView userView, Object object) {
+	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return false;
+	}
+
+	@Override
+	public Boolean isVisibleForCoordinator() {
+	    return false;
+	}
+
+	@Override
+	public Boolean isVisibleForGriOffice() {
+	    return true;
 	}
 
     }

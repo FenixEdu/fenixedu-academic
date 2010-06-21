@@ -243,15 +243,21 @@ public class MergePersonsDA extends FenixDispatchAction {
 	Person domainObject2 = RootDomainObject.fromExternalId(mergePersonsBean.getRightOid());
 
 	if (Student.class.getName().equals(mergePersonsBean.getCurrentClass())) {
-	    return mergeProperty(mapping, form, request, response, domainObject1.getStudent().getExternalId(), domainObject2
+	    mergeProperty(mapping, form, request, response, domainObject1.getStudent().getExternalId(), domainObject2
 		    .getStudent().getExternalId(), Student.class.getName());
+	    return chooseObjects(mapping, form, request, response, mergePersonsBean.getLeftOid(), mergePersonsBean.getRightOid(),
+		    Person.class.getName());
+
 	}
 
-	return mergeProperty(mapping, form, request, response, domainObject1.getExternalId(), domainObject2.getExternalId(),
+	mergeProperty(mapping, form, request, response, domainObject1.getExternalId(), domainObject2.getExternalId(),
+		Person.class.getName());
+
+	return chooseObjects(mapping, form, request, response, mergePersonsBean.getLeftOid(), mergePersonsBean.getRightOid(),
 		Person.class.getName());
     }
 
-    public ActionForward mergeProperty(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public void mergeProperty(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response, String leftOid, String rightOid, String currentClass) throws FenixFilterException,
 	    FenixServiceException, IllegalAccessException, InvocationTargetException, NoSuchMethodException,
 	    ClassNotFoundException {
@@ -266,8 +272,6 @@ public class MergePersonsDA extends FenixDispatchAction {
 
 	TransferDomainObjectProperty.run((sourceOrder == 1) ? domainObject1 : domainObject2, (sourceOrder == 1) ? domainObject2
 		: domainObject1, slotName);
-
-	return chooseObjects(mapping, form, request, response);
 
     }
 
@@ -396,6 +400,29 @@ public class MergePersonsDA extends FenixDispatchAction {
 	destinyPerson.transferEventsAndAccounts(sourcePerson);
 
 	return prepareTransferEventsAndAccounts(mapping, form, request, response);
+    }
+
+    public ActionForward removeFromPersistentGroups(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	MergePersonsBean mergePersonsBean = getMergePersonsBean(request);
+	request.setAttribute("mergePersonsBean", mergePersonsBean);
+	Person destinyPerson = RootDomainObject.fromExternalId(mergePersonsBean.getLeftOid());
+	
+	MergePersonsOperations.removeFromPersistentGroups(destinyPerson);
+
+	return prepareDeletePerson(mapping, form, request, response);
+    }
+
+    public ActionForward removeFromUploadUnits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	MergePersonsBean mergePersonsBean = getMergePersonsBean(request);
+	request.setAttribute("mergePersonsBean", mergePersonsBean);
+	Person destinyPerson = RootDomainObject.fromExternalId(mergePersonsBean.getLeftOid());
+
+	MergePersonsOperations.removeFromUploadUnits(destinyPerson);
+	
+	return prepareDeletePerson(mapping, form, request, response);
     }
 
     private Person checkUser() {

@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -8,6 +10,8 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.util.StringUtils;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
 
 abstract public class CandidacyProcess extends CandidacyProcess_Base {
@@ -137,5 +141,21 @@ abstract public class CandidacyProcess extends CandidacyProcess_Base {
 	}
 
 	return null;
+    }
+
+    public List<IndividualCandidacyProcess> getChildsWithMissingRequiredDocuments() {
+	List<IndividualCandidacyProcess> childs = new ArrayList<IndividualCandidacyProcess>();
+
+	CollectionUtils.select(getChildProcesses(), new Predicate() {
+
+	    @Override
+	    public boolean evaluate(Object arg0) {
+		IndividualCandidacyProcess process = (IndividualCandidacyProcess) arg0;
+		return !process.isCandidacyCancelled() && process.isProcessMissingRequiredDocumentFiles();
+	    }
+
+	}, childs);
+	
+	return childs;
     }
 }

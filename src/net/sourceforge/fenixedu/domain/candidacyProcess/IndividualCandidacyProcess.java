@@ -320,6 +320,10 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 
     public abstract List<IndividualCandidacyDocumentFileType> getMissingRequiredDocumentFiles();
 
+    public boolean isProcessMissingRequiredDocumentFiles() {
+	return !getMissingRequiredDocumentFiles().isEmpty();
+    }
+
     public List<IndividualCandidacyDocumentFile> getActiveDocumentFiles() {
 	List<IndividualCandidacyDocumentFile> documentList = new ArrayList<IndividualCandidacyDocumentFile>();
 

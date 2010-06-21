@@ -93,6 +93,20 @@
 			</fr:layout>
 		</fr:view>
 	</logic:iterate>
+
+<fr:form action="/mergePersons.do?method=removeFromPersistentGroups">
+
+	<fr:edit id="mergePersonsBean" name="mergePersonsBean" visible="false"/>
+	
+	<html:submit><bean:message key="label.merge.persons.remove.from.unitsWithPermissionToUpload" bundle="MANAGER_RESOURCES" /></html:submit>
+</fr:form>
+	
+<fr:form action="/mergePersons.do?method=removeFromPersistentGroups">
+
+	<fr:edit id="mergePersonsBean" name="mergePersonsBean" visible="false"/>
+	
+	<html:submit><bean:message key="label.merge.persons.remove.from.persistentGroups" bundle="MANAGER_RESOURCES" /></html:submit>
+</fr:form>
 	
 <fr:form action="/mergePersons.do?method=deletePerson">
 

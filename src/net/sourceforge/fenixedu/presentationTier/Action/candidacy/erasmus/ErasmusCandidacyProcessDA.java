@@ -31,7 +31,8 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 @Mapping(path = "/caseHandlingErasmusCandidacyProcess", module = "academicAdminOffice", formBeanClass = ErasmusCandidacyProcessDA.ErasmusCandidacyProcessForm.class)
 @Forwards( { @Forward(name = "intro", path = "/candidacy/erasmus/mainCandidacyProcess.jsp"),
 	@Forward(name = "prepare-create-new-process", path = "/candidacy/createCandidacyPeriod.jsp"),
-	@Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp") })
+	@Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp"),
+	@Forward(name = "view-child-process-with-missing.required-documents", path = "/candidacy/erasmus/viewChildProcessesWithMissingRequiredDocuments.jsp") })
 public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 
     static public class ErasmusCandidacyProcessForm extends CandidacyProcessForm {
@@ -206,6 +207,15 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 	setCandidacyProcessInformation(form, getProcess(request));
 	request.setAttribute("candidacyProcesses", getCandidacyProcesses(getProcess(request).getCandidacyExecutionInterval()));
 	return introForward(mapping);
+    }
+
+    public ActionForward prepareExecuteViewChildProcessWithMissingRequiredDocumentFiles(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+	setCandidacyProcessInformation(request, getProcess(request));
+	setCandidacyProcessInformation(form, getProcess(request));
+	request.setAttribute("candidacyProcesses", getCandidacyProcesses(getProcess(request).getCandidacyExecutionInterval()));
+
+	return mapping.findForward("view-child-process-with-missing.required-documents");
     }
 
     public static class ErasmusCandidacyDegreesProvider implements DataProvider {
