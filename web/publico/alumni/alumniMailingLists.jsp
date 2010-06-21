@@ -211,9 +211,9 @@
                 <a href="mailto:alumni-matapcomp@mlists.ist.utl.pt">Matemática Aplicada e Computação</a>
             </td>
             <td>
-                João Pimentel Nunes
+                Paulo Mateus
                 <br>
-                Jaime Ramos
+                Paulo Mateus
             </td>
             <td>
                 GEP
