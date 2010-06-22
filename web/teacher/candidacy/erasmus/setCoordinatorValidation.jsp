@@ -51,7 +51,7 @@
 </script>
 
 
-<fr:form action='<%= f("/caseHandlingErasmusIndividualCandidacyProcess.do?method=executeSetCoordinatorValidation&amp;processId=%s&amp", processId.toString()) %>' id="thisForm">
+<fr:form action='<%= f("/caseHandlingErasmusIndividualCandidacyProcess.do?method=executeSetCoordinatorValidation&amp;processId=%s", processId.toString()) %>' id="thisForm">
 	<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
 	
 	<fr:edit 	id="coordinator.validation"
