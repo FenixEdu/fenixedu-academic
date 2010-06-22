@@ -212,8 +212,6 @@
             </td>
             <td>
                 Paulo Mateus
-                <br>
-                Paulo Mateus
             </td>
             <td>
                 GEP
