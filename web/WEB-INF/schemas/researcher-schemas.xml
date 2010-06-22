@@ -2413,6 +2413,7 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Co
 	<slot name="publisher"/>
  	<slot name="year"/>
 	<slot name="edition"/>
+	<slot name="isbn"/>
 	<slot name="url">
 		<property name="classes" value="greytxt1"/>
 		<property name="link" value="true"/>
