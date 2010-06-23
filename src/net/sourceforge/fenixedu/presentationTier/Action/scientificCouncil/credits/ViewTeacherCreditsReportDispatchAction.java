@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -48,6 +49,10 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.utl.ist.fenix.tools.spreadsheet.Formula;
+import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
+import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
+import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
 import pt.utl.ist.fenix.tools.util.excel.ExcelStyle;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
@@ -233,23 +238,80 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException, InvalidPeriodException,
 	    ParseException {
 
-	IUserView userView = UserView.getUser();
+	final Integer fromExecutionYearID = Integer.parseInt(request.getParameter("fromExecutionYearID"));
+	final Integer untilExecutionYearID = Integer.parseInt(request.getParameter("untilExecutionYearID"));
+	final Integer departmentID = Integer.parseInt(request.getParameter("departmentID"));
 
-	Integer fromExecutionYearID = Integer.parseInt(request.getParameter("fromExecutionYearID"));
-	Integer untilExecutionYearID = Integer.parseInt(request.getParameter("untilExecutionYearID"));
-	Integer departmentID = Integer.parseInt(request.getParameter("departmentID"));
+	final ExecutionYear beginExecutionYear = rootDomainObject.readExecutionYearByOID(fromExecutionYearID);
+	final ExecutionYear endExecutionYear = rootDomainObject.readExecutionYearByOID(untilExecutionYearID);
+	final ExecutionSemester beginExecutionSemester;
+	final ExecutionSemester endExecutionSemester = endExecutionYear.getExecutionSemesterFor(2);
+	if (beginExecutionYear.getPreviousExecutionYear().equals(
+		ExecutionSemester.readStartExecutionSemesterForCredits().getExecutionYear())) {
+	    beginExecutionSemester = ExecutionSemester.readStartExecutionSemesterForCredits();
+	} else {
+	    beginExecutionSemester = beginExecutionYear.getPreviousExecutionYear().getExecutionSemesterFor(1);
+	}
 
-	SortedMap<Department, Map<ExecutionYear, PeriodCreditsReportDTO>> teachersCreditsByDepartment = getGlobalDepartmentCreditsMap(
-		request, userView, fromExecutionYearID, untilExecutionYearID, departmentID);
+	Set<Department> departments = new TreeSet<Department>(Department.COMPARATOR_BY_NAME);
+	if (departmentID == 0) {
+	    departments.addAll(rootDomainObject.getDepartments());
+	} else {
+	    departments.add(rootDomainObject.readDepartmentByOID(departmentID));
+	}
+
+	SheetData<Department> data = new SheetData<Department>(departments) {
+	    @Override
+	    protected void makeLine(Department department) {
+		addCell("Departamento", department.getRealName(), "Total");
+
+		Map<ExecutionYear, PeriodCreditsReportDTO> departmentPeriodTotalCredits = null;
+		try {
+		    departmentPeriodTotalCredits = ReadDepartmentTotalCreditsByPeriod.run(department.getDepartmentUnit(),
+			    beginExecutionSemester, endExecutionSemester);
+		} catch (ParseException e) {
+		    e.printStackTrace();
+		}
+		ExecutionYear lastExecutionYear = null;
+		for (ExecutionYear executionYear = beginExecutionSemester.getExecutionYear(); executionYear != null
+			&& executionYear.isBeforeOrEquals(endExecutionYear); executionYear = executionYear.getNextExecutionYear()) {
+		    PeriodCreditsReportDTO periodCreditsReportDTO = departmentPeriodTotalCredits.get(executionYear);
+		    addCell(executionYear.getYear(), (short) 3, "Docentes Carreira", (short) 1,
+			    periodCreditsReportDTO == null ? null : periodCreditsReportDTO.getCareerCategoryTeacherCredits(),
+			    (short) 1, Formula.SUM_FOOTER, (short) 1);
+		    addCell("Restantes Categorias", periodCreditsReportDTO == null ? null : periodCreditsReportDTO
+			    .getNotCareerCategoryTeacherCredits(), Formula.SUM_FOOTER);
+		    addCell("Saldo Final", periodCreditsReportDTO == null ? null : periodCreditsReportDTO.getCredits(),
+			    Formula.SUM_FOOTER);
+		    lastExecutionYear = executionYear;
+		}
+		if (lastExecutionYear != null) {
+		    PeriodCreditsReportDTO periodCreditsReportDTO = departmentPeriodTotalCredits.get(lastExecutionYear);
+		    addCell("Nº Docentes " + lastExecutionYear.getYear(), (short) 3, "Docentes Carreira", (short) 1,
+			    periodCreditsReportDTO == null ? null : periodCreditsReportDTO.getCareerTeachersSize(), (short) 1,
+			    Formula.SUM_FOOTER, (short) 1);
+		    addCell("Restantes Categorias", periodCreditsReportDTO == null ? null : periodCreditsReportDTO
+			    .getNotCareerTeachersSize(), Formula.SUM_FOOTER);
+		    addCell("Saldo Final", periodCreditsReportDTO == null ? null : periodCreditsReportDTO.getTeachersSize(),
+			    Formula.SUM_FOOTER);
+
+		    addCell("Saldo per capita " + lastExecutionYear.getYear(), (short) 3, "Docentes Carreira", (short) 1,
+			    periodCreditsReportDTO == null ? null : periodCreditsReportDTO.getCareerTeachersBalance(), (short) 1,
+			    Formula.SUM_FOOTER, (short) 1);
+		    addCell("Restantes Categorias", periodCreditsReportDTO == null ? null : periodCreditsReportDTO
+			    .getNotCareerTeachersBalance(), Formula.SUM_FOOTER);
+		    addCell("Saldo Final", periodCreditsReportDTO == null ? null : periodCreditsReportDTO.getBalance(),
+			    Formula.SUM_FOOTER);
+		}
+	    }
+	};
 
 	try {
 	    String filename = "RelatorioCreditos:" + getFileName(Calendar.getInstance().getTime());
+	    final ServletOutputStream writer = response.getOutputStream();
 	    response.setContentType("application/vnd.ms-excel");
 	    response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
-
-	    ServletOutputStream writer = response.getOutputStream();
-	    exportGlobalToXls(request, teachersCreditsByDepartment, writer);
-
+	    new SpreadsheetBuilder().addSheet("RelatorioCreditos", data).build(WorkbookExportFormat.EXCEL, writer);
 	    writer.flush();
 	    response.flushBuffer();
 
@@ -257,114 +319,6 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
 	    throw new FenixServiceException();
 	}
 	return null;
-    }
-
-    private void exportGlobalToXls(HttpServletRequest request,
-	    SortedMap<Department, Map<ExecutionYear, PeriodCreditsReportDTO>> teachersCreditsByDepartment,
-	    ServletOutputStream outputStream) throws IOException {
-
-	final Spreadsheet spreadsheet = new Spreadsheet("Relatório de Créditos");
-
-	final HSSFWorkbook workbook = new HSSFWorkbook();
-	final ExcelStyle excelStyle = new ExcelStyle(workbook);
-
-	setGlobalHeaders(teachersCreditsByDepartment, spreadsheet);
-
-	for (Department department : teachersCreditsByDepartment.keySet()) {
-	    Row row = spreadsheet.addRow();
-	    row.setCell(department.getRealName());
-	    ExecutionYear lastExecutionYear = null;
-	    for (ExecutionYear executionYear : teachersCreditsByDepartment.get(department).keySet()) {
-		row.setCell(String.valueOf(teachersCreditsByDepartment.get(department).get(executionYear).getCredits()).replace(
-			'.', ','));
-		row.setCell(String.valueOf(
-			teachersCreditsByDepartment.get(department).get(executionYear).getCareerCategoryTeacherCredits())
-			.replace('.', ','));
-		row.setCell(String.valueOf(
-			teachersCreditsByDepartment.get(department).get(executionYear).getNotCareerCategoryTeacherCredits())
-			.replace('.', ','));
-		lastExecutionYear = executionYear;
-	    }
-	    row.setCell(String
-		    .valueOf(teachersCreditsByDepartment.get(department).get(lastExecutionYear).getCareerTeachersSize()));
-	    row.setCell(String.valueOf(teachersCreditsByDepartment.get(department).get(lastExecutionYear)
-		    .getNotCareerTeachersSize()));
-	    row.setCell(String.valueOf(teachersCreditsByDepartment.get(department).get(lastExecutionYear).getTeachersSize()));
-	    row.setCell(String.valueOf(
-		    teachersCreditsByDepartment.get(department).get(lastExecutionYear).getCareerTeachersBalance()).replace('.',
-		    ','));
-	    row.setCell(String.valueOf(
-		    teachersCreditsByDepartment.get(department).get(lastExecutionYear).getNotCareerTeachersBalance()).replace(
-		    '.', ','));
-	    row.setCell(String.valueOf(teachersCreditsByDepartment.get(department).get(lastExecutionYear).getBalance()).replace(
-		    '.', ','));
-	}
-
-	if (teachersCreditsByDepartment.keySet().size() > 1) {
-	    Row row = spreadsheet.addRow();
-	    row.setCell("Totais");
-	    SortedMap<ExecutionYear, GenericPair<Double, GenericPair<Double, Double>>> executionYearTotals = (SortedMap<ExecutionYear, GenericPair<Double, GenericPair<Double, Double>>>) request
-		    .getAttribute("executionYearTotals");
-	    for (GenericPair<Double, GenericPair<Double, Double>> genericPair : executionYearTotals.values()) {
-		row.setCell(String.valueOf(genericPair.getRight().getLeft()).replace('.', ','));
-		row.setCell(String.valueOf(genericPair.getRight().getRight()).replace('.', ','));
-		row.setCell(String.valueOf(genericPair.getLeft()).replace('.', ','));
-	    }
-	    row.setCell(String.valueOf(request.getAttribute("totalCareerTeachersSize")));
-	    row.setCell(String.valueOf(request.getAttribute("totalNotCareerTeachersSize")));
-	    row.setCell(String.valueOf(request.getAttribute("totalTeachersSize")));
-	    row.setCell(String.valueOf(request.getAttribute("totalCareerTeachersBalance")).replace('.', ','));
-	    row.setCell(String.valueOf(request.getAttribute("totalNotCareerTeachersBalance")).replace('.', ','));
-	    row.setCell(String.valueOf(request.getAttribute("totalBalance")).replace('.', ','));
-	}
-
-	spreadsheet.exportToXLSSheet(workbook, excelStyle.getHeaderStyle(), excelStyle.getStringStyle());
-	spreadsheet.setRows(new ArrayList<Row>());
-	workbook.write(outputStream);
-    }
-
-    private void setGlobalHeaders(SortedMap<Department, Map<ExecutionYear, PeriodCreditsReportDTO>> teachersCreditsByDepartment,
-	    final Spreadsheet spreadsheet) {
-	spreadsheet.setName("Relatório de Créditos Global");
-	final Row initialRow = spreadsheet.addRow();
-	initialRow.setCell("Departamento");
-
-	ExecutionYear lastExecutionYear = null;
-	for (Department department : teachersCreditsByDepartment.keySet()) {
-	    for (ExecutionYear executionYear : teachersCreditsByDepartment.get(department).keySet()) {
-		for (int i = 0; i < 3; i++) {
-		    initialRow.setCell("Sum. " + executionYear.getYear());
-		}
-		lastExecutionYear = executionYear;
-	    }
-	    break;
-	}
-
-	if (lastExecutionYear != null) {
-	    for (int i = 0; i < 3; i++) {
-		initialRow.setCell("Nº Docentes " + lastExecutionYear.getYear());
-	    }
-	    for (int i = 0; i < 3; i++) {
-		initialRow.setCell("Saldo per capita " + lastExecutionYear.getYear());
-	    }
-	}
-
-	final Row secondRow = spreadsheet.addRow();
-	secondRow.setCell("");
-	for (Department department : teachersCreditsByDepartment.keySet()) {
-	    for (int i = 0; i < teachersCreditsByDepartment.get(department).size(); i++) {
-		secondRow.setCell("Docentes Carreira");
-		secondRow.setCell("Restantes Categorias");
-		secondRow.setCell("Saldo Final");
-	    }
-	    break;
-	}
-
-	for (int i = 0; i < 2; i++) {
-	    secondRow.setCell("Docentes Carreira");
-	    secondRow.setCell("Restantes Categorias");
-	    secondRow.setCell("Total");
-	}
     }
 
     private SortedMap<Department, Map<ExecutionYear, PeriodCreditsReportDTO>> getGlobalDepartmentCreditsMap(
