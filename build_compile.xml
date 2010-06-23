@@ -419,7 +419,7 @@
 			<!--<arg value="${build.home.webinf.libs}/dml-20091101.jar" />-->
 			<arg value="${build.home.webinf.libs}/jvstm.jar" />
                         <!-- arg value="${build.home.webinf.libs}/fenix-framework.jar" / -->
-			<arg value="${build.home.webinf.libs}/fenix-web-framework-r46882.jar" />
+			<arg value="${build.home.webinf.libs}/fenix-web-framework-r48058.jar" />
 			<arg value="${build.home.webinf.libs}/joda-time-1.5.2.jar" />
 			<arg value="${build.home.webinf.libs}/struts.jar" />
 			<arg value="lib/servlet-api-2.3.jar" />
