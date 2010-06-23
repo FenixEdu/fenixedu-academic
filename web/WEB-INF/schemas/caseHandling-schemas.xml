@@ -2442,6 +2442,7 @@
 	<remove name="candidacyFileType" />
 	<slot name="mostRecentViewedLearningAgreementActionWhenOccured" key="label.erasmus.last.viewed.learning.agreement.view" layout="null-as-label" />
 	<slot name="mostRecentSentLearningAgreementActionWhenOccured" key="label.erasmus.last.sent.learning.agreement.when" layout="null-as-label" />
+	<slot name="mostRecentSentEmailAcceptedStudentActionWhenOccured" key="label.erasmus.last.sent.email.to.accepted.candidate" layout="null-as-label" />
 </schema>
 
 <schema name="ErasmusIndividualCandidacy.missing.required.documents.list" extends="ErasmusIndividualCandidacyProcess.list.processes" type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess" bundle="APPLICATION_RESOURCES">

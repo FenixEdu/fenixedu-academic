@@ -94,7 +94,7 @@
 		</fr:view>
 	</logic:iterate>
 
-<fr:form action="/mergePersons.do?method=removeFromPersistentGroups">
+<fr:form action="/mergePersons.do?method=removeFromUploadUnits">
 
 	<fr:edit id="mergePersonsBean" name="mergePersonsBean" visible="false"/>
 	

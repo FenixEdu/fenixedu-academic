@@ -25,7 +25,7 @@ public class ApprovedLearningAgreementDocumentFile extends ApprovedLearningAgree
 	}
     };
 
-    public ApprovedLearningAgreementDocumentFile() {
+    private ApprovedLearningAgreementDocumentFile() {
 	super();
 	this.setCandidacyFileActive(Boolean.TRUE);
     }
@@ -132,5 +132,48 @@ public class ApprovedLearningAgreementDocumentFile extends ApprovedLearningAgree
 	}
 
 	return getMostRecentViewedLearningAgreementAction().getWhenOccured();
+    }
+
+    protected List<ApprovedLearningAgreementExecutedAction> getSentEmailAcceptedStudentActions() {
+	List<ApprovedLearningAgreementExecutedAction> executedActionList = new ArrayList<ApprovedLearningAgreementExecutedAction>();
+
+	CollectionUtils.select(getExecutedActions(), new Predicate() {
+
+	    @Override
+	    public boolean evaluate(Object arg0) {
+		return ((ApprovedLearningAgreementExecutedAction) arg0).isSentEmailAcceptedStudent();
+	    };
+
+	}, executedActionList);
+
+	Collections.sort(executedActionList, Collections.reverseOrder(ExecutedAction.WHEN_OCCURED_COMPARATOR));
+
+	return executedActionList;
+    }
+
+    public ApprovedLearningAgreementExecutedAction getMostRecentSentEmailAcceptedStudentAction() {
+	List<ApprovedLearningAgreementExecutedAction> executedActionList = getSentEmailAcceptedStudentActions();
+
+	return executedActionList.isEmpty() ? null : executedActionList.get(0);
+    }
+
+    public DateTime getMostRecentSentEmailAcceptedStudentActionWhenOccured() {
+	if (getMostRecentSentEmailAcceptedStudentAction() == null) {
+	    return null;
+	}
+
+	return getMostRecentSentEmailAcceptedStudentAction().getWhenOccured();
+    }
+
+    public boolean isMostRecent() {
+	return getErasmusIndividualCandidacy().getMostRecentApprovedLearningAgreement() == this;
+    }
+
+    public ErasmusIndividualCandidacyProcess getProcess() {
+	return getErasmusIndividualCandidacy().getCandidacyProcess();
+    }
+
+    public boolean isAbleToSendEmailToAcceptStudent() {
+	return getProcess().isStudentAccepted() && isMostRecent();
     }
 }

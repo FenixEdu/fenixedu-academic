@@ -11,6 +11,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
@@ -70,7 +71,10 @@ public class DegreeCourseInformationBean implements java.io.Serializable, DataPr
 	final SortedSet<CurricularCourse> result = new TreeSet<CurricularCourse>(CurricularCourse.COMPARATOR_BY_NAME);
 
 	for (DegreeCurricularPlan degreeCurricularPlan : getChosenDegreeCurricularPlans()) {
-	    result.addAll(degreeCurricularPlan.getCurricularCourses());
+	    ExecutionSemester firstSemester = getExecutionYear().getExecutionSemesterFor(1);
+	    ExecutionSemester secondSemester = getExecutionYear().getExecutionSemesterFor(2);
+	    result.addAll(degreeCurricularPlan.getActiveCurricularCourses(firstSemester));
+	    result.addAll(degreeCurricularPlan.getActiveCurricularCourses(secondSemester));
 	}
 
 	return result;

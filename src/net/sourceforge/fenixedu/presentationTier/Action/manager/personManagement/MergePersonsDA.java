@@ -384,7 +384,8 @@ public class MergePersonsDA extends FenixDispatchAction {
 	Person domainObject1 = RootDomainObject.fromExternalId(mergePersonsBean.getLeftOid());
 	Person domainObject2 = RootDomainObject.fromExternalId(mergePersonsBean.getRightOid());
 
-	chooseObjects(mapping, form, request, response);
+	chooseObjects(mapping, form, request, response, mergePersonsBean.getLeftOid(), mergePersonsBean.getRightOid(), Person
+.class.getName());
 
 	return mapping.findForward("transfer-events-and-accounts");
     }
@@ -406,9 +407,9 @@ public class MergePersonsDA extends FenixDispatchAction {
 	    HttpServletResponse response) {
 	MergePersonsBean mergePersonsBean = getMergePersonsBean(request);
 	request.setAttribute("mergePersonsBean", mergePersonsBean);
-	Person destinyPerson = RootDomainObject.fromExternalId(mergePersonsBean.getLeftOid());
+	Person sourcePerson = RootDomainObject.fromExternalId(mergePersonsBean.getRightOid());
 	
-	MergePersonsOperations.removeFromPersistentGroups(destinyPerson);
+	MergePersonsOperations.removeFromPersistentGroups(sourcePerson);
 
 	return prepareDeletePerson(mapping, form, request, response);
     }
@@ -418,9 +419,9 @@ public class MergePersonsDA extends FenixDispatchAction {
 
 	MergePersonsBean mergePersonsBean = getMergePersonsBean(request);
 	request.setAttribute("mergePersonsBean", mergePersonsBean);
-	Person destinyPerson = RootDomainObject.fromExternalId(mergePersonsBean.getLeftOid());
+	Person sourcePerson = RootDomainObject.fromExternalId(mergePersonsBean.getRightOid());
 
-	MergePersonsOperations.removeFromUploadUnits(destinyPerson);
+	MergePersonsOperations.removeFromUploadUnits(sourcePerson);
 	
 	return prepareDeletePerson(mapping, form, request, response);
     }

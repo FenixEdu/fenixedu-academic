@@ -11,7 +11,8 @@
 <em><bean:message key="label.erasmus.candidacy" bundle="APPLICATION_RESOURCES"/></em>
 
 <h2><bean:message key="title.application.name.erasmus" bundle="CANDIDATE_RESOURCES" /></h2>
-
+	
+	<bean:define id="process" name="process" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCandidacyProcess" />
 	<bean:define id="processId" name="process" property="idInternal" />
 	<bean:define id="childProcessName" name="childProcessName" />
 	<bean:size id="candidacyProcessesSize" name="candidacyProcesses" />
@@ -36,6 +37,6 @@
 		</fr:view>
 		<bean:size id="childProcessesSize" name="childProcesses" />
 		
-		<p class="mvert05"><bean:message key="label.numberOfCandidates" bundle="APPLICATION_RESOURCES" />: <strong><bean:write name="childProcessesSize" /></strong></p>
+		<p class="mvert05"><bean:message key="label.numberOfCandidates" bundle="APPLICATION_RESOURCES" />: <strong><%= process.getChildsWithMissingRequiredDocuments().size() %></strong></p>
 		
 	</logic:notEmpty>

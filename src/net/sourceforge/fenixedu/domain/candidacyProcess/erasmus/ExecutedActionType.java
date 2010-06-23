@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public enum ExecutedActionType {
-    VIEWED_APPROVED_LEARNING_AGREEMENT, SENT_APPROVED_LEARNING_AGREEMENT, VIEWED_ALERT;
+    VIEWED_APPROVED_LEARNING_AGREEMENT, SENT_APPROVED_LEARNING_AGREEMENT, VIEWED_ALERT, SENT_EMAIL_ACCEPTED_STUDENT;
 
     public String getLocalizedName() {
 	return getLocalizedName(Language.getLocale());

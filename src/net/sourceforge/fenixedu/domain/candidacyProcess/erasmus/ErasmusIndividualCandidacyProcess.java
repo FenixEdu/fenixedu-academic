@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
@@ -22,6 +23,8 @@ import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidExceptio
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.util.email.Message;
+import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -64,6 +67,7 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	activities.add(new UploadApprovedLearningAgreement());
 	activities.add(new ViewApprovedLearningAgreements());
 	activities.add(new MarkAlertAsViewed());
+	activities.add(new SendEmailToAcceptedStudent());
     }
 
     public ErasmusIndividualCandidacyProcess() {
@@ -239,8 +243,8 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.CV_DOCUMENT);
 	}
 
-	if (getActiveFileForType(IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT) == null) {
-	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT);
+	if (getActiveFileForType(IndividualCandidacyDocumentFileType.TRANSCRIPT_OF_RECORDS) == null) {
+	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.TRANSCRIPT_OF_RECORDS);
 	}
 
 	return missingDocumentFiles;
@@ -298,6 +302,11 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	List<ErasmusAlert> alertsNotViewed = getAlertsNotViewed();
 	
 	return !alertsNotViewed.isEmpty() && alertsNotViewed.get(0) == getMostRecentAlert();
+    }
+
+    public boolean isStudentAccepted() {
+	return getValidatedByErasmusCoordinator() && getValidatedByGri()
+		&& getCandidacy().getMostRecentApprovedLearningAgreement() != null;
     }
 
     @StartActivity
@@ -847,7 +856,7 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 
 	@Override
 	public Boolean isVisibleForGriOffice() {
-	    return false;
+	    return true;
 	}
 
 	@Override
@@ -899,6 +908,8 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	    if (isGriOfficeEmployee(userView)) {
 		return;
 	    }
+
+	    throw new PreConditionNotValidException();
 	}
 
 	@Override
@@ -906,6 +917,53 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 		IUserView userView, Object object) {
 	    ErasmusAlert alert = (ErasmusAlert) object;
 	    alert.setFireDate(new DateTime());
+
+	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return false;
+	}
+
+	@Override
+	public Boolean isVisibleForCoordinator() {
+	    return false;
+	}
+
+	@Override
+	public Boolean isVisibleForGriOffice() {
+	    return false;
+	}
+    }
+
+    private static class SendEmailToAcceptedStudent extends Activity<ErasmusIndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(ErasmusIndividualCandidacyProcess process, IUserView userView) {
+	    if (!isGriOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (!process.isStudentAccepted()) {
+		throw new PreConditionNotValidException();
+	    }
+
+	}
+
+	@Override
+	protected ErasmusIndividualCandidacyProcess executeActivity(ErasmusIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    String subject = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale()).getString(
+		    "message.erasmus.accepted.student.email.subject");
+	    String body = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale()).getString(
+		    "message.erasmus.accepted.student.email.body");
+	    
+	    SystemSender systemSender = RootDomainObject.getInstance().getSystemSender();
+	    new Message(systemSender, systemSender.getConcreteReplyTos(), Collections.EMPTY_LIST, subject, body, process
+		    .getCandidacyHashCode().getEmail());
+	    
+	    new ApprovedLearningAgreementExecutedAction(process.getCandidacy().getMostRecentApprovedLearningAgreement(), ExecutedActionType.SENT_EMAIL_ACCEPTED_STUDENT);
 
 	    return process;
 	}

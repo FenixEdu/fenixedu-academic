@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -10,7 +12,10 @@ import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ApprovedLearningAgreementDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean;
@@ -296,4 +301,51 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
 	RenderUtils.invalidateViewState();
 	return mapping.findForward("edit-degree-courses-information");
     }
+
+    public ActionForward prepareExecuteUploadApprovedLearningAgreement(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+	final IndividualCandidacyProcess process = getProcess(request);
+
+	ApprovedLearningAgreementDocumentUploadBean bean = new ApprovedLearningAgreementDocumentUploadBean();
+
+	bean.setType(IndividualCandidacyDocumentFileType.LEARNING_AGREEMENT);
+	bean.setIndividualCandidacyProcess(process);
+
+	request.setAttribute("learningAgreementUploadBean", bean);
+
+	return mapping.findForward("upload-learning-agreement");
+    }
+
+    public ActionForward executeUploadApprovedLearningAgreement(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+	ApprovedLearningAgreementDocumentUploadBean learningAgreementUploadBean = (ApprovedLearningAgreementDocumentUploadBean) getObjectFromViewState("individualCandidacyProcessBean.document.file");
+
+	try {
+	    IndividualCandidacyDocumentFile documentFile = learningAgreementUploadBean.createIndividualCandidacyDocumentFile(
+		    getParentProcessType(), learningAgreementUploadBean.getIndividualCandidacyProcess().getPersonalDetails()
+			    .getDocumentIdNumber());
+
+	    executeActivity(learningAgreementUploadBean.getIndividualCandidacyProcess(), "UploadApprovedLearningAgreement",
+		    documentFile);
+	    request.setAttribute("individualCandidacyProcess", learningAgreementUploadBean.getIndividualCandidacyProcess());
+	} catch (final IOException e) {
+	    invalidateDocumentFileRelatedViewStates();
+	    addActionMessage(request, "error.erasmus.upload.approved.learning.agreement");
+	    return prepareExecuteUploadApprovedLearningAgreement(mapping, form, request, response);
+	} catch (final DomainException e) {
+	    invalidateDocumentFileRelatedViewStates();
+	    addActionMessage(request, e.getMessage(), e.getArgs());
+	    return prepareExecuteUploadApprovedLearningAgreement(mapping, form, request, response);
+	}
+
+	return listProcessAllowedActivities(mapping, form, request, response);
+    }
+
+    public ActionForward executeUploadApprovedLearningAgreementInvalid(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	return prepareExecuteUploadApprovedLearningAgreement(mapping, form, request, response);
+    }
+
 }

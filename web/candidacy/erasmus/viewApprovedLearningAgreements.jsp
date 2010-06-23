@@ -61,6 +61,14 @@
 			<fr:property name="confirmationKey(markAsSent)" value="label.erasmus.approved.learning.agreement.mark.as.sent.confirm" />
 			<fr:property name="confirmationBundle(markAsSent)" value="CANDIDATE_RESOURCES" />
 			<fr:property name="order(markAsSent)" value="2" />
+			
+			<fr:property name="linkFormat(sendEmailToAcceptedStudent)" value='<%= "/caseHandlingErasmusIndividualCandidacyProcess.do?method=sendEmailToAcceptedStudent&amp;approvedLearningAgreementId=${externalId}&amp;processId=" + processId %>' />
+			<fr:property name="key(sendEmailToAcceptedStudent)" value="label.erasmus.send.email.to.accepted.student" />
+			<fr:property name="bundle(sendEmailToAcceptedStudent)" value="CANDIDATE_RESOURCES" />
+			<fr:property name="confirmationKey(sendEmailToAcceptedStudent)" value="message.erasmus.send.email.to.accepted.student.confirm" />
+			<fr:property name="confirmationBundle(sendEmailToAcceptedStudent)" value="CANDIDATE_RESOURCES" />
+			<fr:property name="order(sendEmailToAcceptedStudent)" value="3" />
+			<fr:property name="visibleIf(sendEmailToAcceptedStudent)" value="ableToSendEmailToAcceptStudent" /> 
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>

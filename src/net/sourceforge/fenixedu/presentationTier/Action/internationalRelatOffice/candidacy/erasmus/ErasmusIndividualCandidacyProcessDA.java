@@ -45,7 +45,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "view-student-data-username", path = "/candidacy/erasmus/viewStudentDataUsername.jsp"),
 	@Forward(name = "edit-eidentifier", path = "/candidacy/erasmus/editEidentifier.jsp"),
 	@Forward(name = "cancel-candidacy", path = "/candidacy/cancelCandidacy.jsp"),
-	@Forward(name = "view-approved-learning-agreements", path = "/candidacy/erasmus/viewApprovedLearningAgreements.jsp") })
+	@Forward(name = "view-approved-learning-agreements", path = "/candidacy/erasmus/viewApprovedLearningAgreements.jsp"),
+	@Forward(name = "upload-learning-agreement", path = "/candidacy/erasmus/uploadLearningAgreement.jsp") })
 public class ErasmusIndividualCandidacyProcessDA extends
 	net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusIndividualCandidacyProcessDA {
 
@@ -199,5 +200,15 @@ public class ErasmusIndividualCandidacyProcessDA extends
 	executeActivity(getProcess(request), "MarkAlertAsViewed", alert);
 
 	return prepareExecuteVisualizeAlerts(mapping, actionForm, request, response);
+    }
+
+    public ActionForward sendEmailToAcceptedStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	ApprovedLearningAgreementDocumentFile file = ApprovedLearningAgreementDocumentFile.fromExternalId(request
+		.getParameter("approvedLearningAgreementId"));
+	executeActivity(getProcess(request), "SendEmailToAcceptedStudent", file.getErasmusIndividualCandidacy()
+		.getCandidacyProcess());
+	
+	return prepareExecuteViewApprovedLearningAgreements(mapping, actionForm, request, response);
     }
 }

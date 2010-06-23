@@ -30,4 +30,8 @@ public class ApprovedLearningAgreementExecutedAction extends ApprovedLearningAgr
     public boolean isViewedLearningAgreementAction() {
 	return ExecutedActionType.VIEWED_APPROVED_LEARNING_AGREEMENT.equals(getType());
     }
+
+    public boolean isSentEmailAcceptedStudent() {
+	return ExecutedActionType.SENT_EMAIL_ACCEPTED_STUDENT.equals(getType());
+    }
 }
