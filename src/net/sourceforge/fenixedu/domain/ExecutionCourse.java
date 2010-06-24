@@ -1153,7 +1153,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public boolean hasAnyDegreeGradeToSubmit(final ExecutionSemester period, final DegreeCurricularPlan degreeCurricularPlan) {
-	for (final CurricularCourse curricularCourse : getCurricularCoursesWithDegreeType()) {
+	for (final CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
 	    if (degreeCurricularPlan == null || degreeCurricularPlan.equals(curricularCourse.getDegreeCurricularPlan())) {
 		if (curricularCourse.hasAnyDegreeGradeToSubmit(period)) {
 		    return true;
@@ -1164,7 +1164,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public boolean hasAnyDegreeMarkSheetToConfirm(ExecutionSemester period, DegreeCurricularPlan degreeCurricularPlan) {
-	for (final CurricularCourse curricularCourse : this.getCurricularCoursesWithDegreeType()) {
+	for (final CurricularCourse curricularCourse : this.getAssociatedCurricularCourses()) {
 	    if (degreeCurricularPlan == null || degreeCurricularPlan.equals(curricularCourse.getDegreeCurricularPlan())) {
 		if (curricularCourse.hasAnyDegreeMarkSheetToConfirm(period)) {
 		    return true;

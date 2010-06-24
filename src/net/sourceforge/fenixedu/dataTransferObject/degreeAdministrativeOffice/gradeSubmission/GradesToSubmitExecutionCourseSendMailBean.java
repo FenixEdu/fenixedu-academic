@@ -64,7 +64,7 @@ public class GradesToSubmitExecutionCourseSendMailBean implements Serializable {
     public int getNumberOfStudentsWithoutGrade() {
 	int count = 0;
 
-	for (final CurricularCourse curricularCourse : executionCourse.getCurricularCoursesWithDegreeType()) {
+	for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
 	    if (degreeCurricularPlan.equals(curricularCourse.getDegreeCurricularPlan())) {
 		count += getNumberOfStudentsWithoutGrade(curricularCourse);
 	    }

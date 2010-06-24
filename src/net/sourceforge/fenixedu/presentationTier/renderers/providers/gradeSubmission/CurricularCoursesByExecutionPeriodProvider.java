@@ -16,7 +16,7 @@ public class CurricularCoursesByExecutionPeriodProvider implements DataProvider 
 
 	final MarkSheetTeacherGradeSubmissionBean submissionBean = (MarkSheetTeacherGradeSubmissionBean) source;
 	final List<CurricularCourse> result = (submissionBean.getExecutionCourse() != null) ? submissionBean.getExecutionCourse()
-		.getCurricularCoursesWithDegreeType() : Collections.EMPTY_LIST;
+		.getAssociatedCurricularCourses() : Collections.EMPTY_LIST;
 
 	Collections.sort(result, new Comparator<CurricularCourse>() {
 	    public int compare(CurricularCourse o1, CurricularCourse o2) {

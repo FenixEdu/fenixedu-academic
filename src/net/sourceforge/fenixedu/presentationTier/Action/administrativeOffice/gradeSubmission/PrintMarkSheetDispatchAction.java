@@ -134,8 +134,7 @@ public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
 	    Collection<MarkSheet> webMarkSheetsNotPrinted) {
 	final Map<CurricularCourse, Integer> result = new TreeMap<CurricularCourse, Integer>(new Comparator<CurricularCourse>() {
 	    public int compare(CurricularCourse o1, CurricularCourse o2) {
-		return o1.getDegreeCurricularPlan().getDegree().getName().compareTo(
-			o2.getDegreeCurricularPlan().getDegree().getName());
+		return o1.getName().compareTo(o2.getName());
 	    }
 	});
 	for (final MarkSheet markSheet : webMarkSheetsNotPrinted) {
