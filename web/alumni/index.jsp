@@ -44,7 +44,7 @@ ul.material li.feedback { background: url(<%= request.getContextPath() %>/images
 	<!--
 	<h3>Informação Pessoal</h3>
 	-->
-	<h3 class="mbottom075">Preenchimento de Informação</h3>
+	<h3 class="mbottom075"><bean:message key="title.information.status" bundle="ALUMNI_RESOURCES"/></h3>
 	<div class="infoop2 mbottom2">
 		<p class="mvert05"><bean:message key="message.alumni.status.title" bundle="ALUMNI_RESOURCES"/>:</p>
 		<ul class="mbottom05">
@@ -143,7 +143,7 @@ ul.material li.feedback { background: url(<%= request.getContextPath() %>/images
 	}
 %>
 
-<h3 class="mbottom05">Notícias</h3>
+<h3 class="mbottom05"><bean:message key="title.news" bundle="ALUMNI_RESOURCES"/></h3>
 <logic:equal name="displayTwitter" value="true">	
 	<p class="mtop0">
 		<bean:define id="channelTitle"><rss:channelTitle feedId="istTwitter"/></bean:define>

@@ -32,7 +32,7 @@ public class AlumniHomeDA extends FenixDispatchAction {
 	if (!areContactsUpToDate(person)) {
 	    request.setAttribute("showContactsMessage", true);
 	}
-
+	
 	int finalFormationsResult = (int) Math.round((double) formationsPercentage / (double) 10) * 10;
 	request.setAttribute("educationStatus", Integer.toString(finalFormationsResult));
 	int finalJobsResult = (int) Math.round((double) jobsPercentage / (double) 10) * 10;

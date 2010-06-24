@@ -6,45 +6,30 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ taglib uri="/WEB-INF/jcaptcha.tld" prefix="jcaptcha"%>
 
-<!-- alumniPublicAccessIdentityCheck.jsp -->
-
-
 <h1><bean:message key="label.alumni.registration" bundle="ALUMNI_RESOURCES" /></h1>
 
 <div class="alumnilogo">
-<%-- <div class="col_right_alumni"><img src="http://www.ist.utl.pt/img/alumni/alumni_deco_3.gif" alt="[Image] Alumni" /></div> --%>
-
-	<h2><bean:message key="label.alumni.student.number.recovery" bundle="ALUMNI_RESOURCES" /></h2>
+	<h2><bean:message key="title.report.error" bundle="ALUMNI_RESOURCES" /></h2>
 	
 	<p class="mtop15 mbottom05">
 		<a href="<%= request.getContextPath() + "/publico/alumni.do?method=initFenixPublicAccess"%>">&laquo; <bean:message key="link.alumni.back" bundle="ALUMNI_RESOURCES" /></a>
 	</p>
-	
-	<p class="greytxt" style="margin-bottom: 1em;"><bean:message key="label.alumni.student.number.recovery.text" bundle="ALUMNI_RESOURCES" /></p>
-	
-	<logic:present name="alumniPublicAccessMessage">
-		<span class="error0"><bean:write name="alumniPublicAccessMessage" scope="request" /></span><br/>
-	</logic:present>
-	
-	<html:messages id="message" message="true" bundle="ALUMNI_RESOURCES">
-		<span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>
-	</html:messages>	
+	<p class="greytxt" style="margin-bottom: 1em;"><bean:message key="message.public.error.form" bundle="ALUMNI_RESOURCES" /></p>
+		
+	<bean:define id="errorMessage" name="alumniErrorSendMail" property="errorMessage" type="java.lang.String"/>				
+	<span class="error0"><!-- Error messages go here --><bean:message key="<%= errorMessage %>" bundle="ALUMNI_RESOURCES"/></span>
 	
 	<div class="reg_form">	
-		<fr:form action="/alumni.do?method=processRequestIdentityCheck">
-	
+		<fr:form action="/alumni.do?method=sendEmailReportingError">
 			<fieldset style="display: block;">
-				<legend class="toplegendfix"><bean:message key="label.alumni.form" bundle="ALUMNI_RESOURCES" /></legend>
+				<legend class="toplegendfix"><bean:message key="title.mail.form" bundle="ALUMNI_RESOURCES" /></legend>
 				<p class="ptoplegendfix"><bean:message key="label.all.required.fields" bundle="ALUMNI_RESOURCES" /></p>
 			
-				<fr:edit id="alumniBean" name="alumniBean" visible="false" />
-	
-				<fr:edit id="alumniFormationDegree" name="alumniBean" schema="alumni.identity.check.request" >
+				<fr:edit id="alumniErrorSendMail" name="alumniErrorSendMail" schema="alumni.register.error" >
 					<fr:layout name="tabular-break">
 						<fr:property name="classes" value="thleft"/>
 						<fr:property name="columnClasses" value=",tderror1"/>
-					</fr:layout>
-					<fr:destination name="invalid" path="/alumni.do?method=processRequestIdentityCheckError"/>
+					</fr:layout>					
 				</fr:edit>
 	
 				<label for="captcha">
@@ -64,9 +49,8 @@
 				<html:submit>
 					<bean:message key="label.submit" bundle="ALUMNI_RESOURCES" />
 				</html:submit>
-			</p>
-		
-		</fr:form>
+			</p>		
+		</fr:form>		
 	</div>
 </div>
 

@@ -1464,6 +1464,7 @@
 	 	<forward name="alumniCreatePasswordRequest" path="alumni.alumniCreatePasswordRequest" />
 	 	<forward name="alumniPasswordRequired" path="alumni.alumniPasswordRequired" />
 	 	<forward name="alumniMailingLists" path="alumni.alumniMailingLists" />
+	 	<forward name="alumniErrorSendMail" path="alumni.errorSendMail" />
 	 </action>
 
 	 <action path="/jcaptcha"

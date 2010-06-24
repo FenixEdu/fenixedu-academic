@@ -822,7 +822,10 @@
 	<definition name="alumni.alumniMailingLists" extends="definition.public.alumni">
 		<put name="body" value="/publico/alumni/alumniMailingLists.jsp" />
 	</definition>
-	
+	<definition name="alumni.errorSendMail" extends="definition.public.alumni">
+		<put name="body" value="/publico/alumni/alumniPublicAccessErrorSendMail.jsp" />
+	</definition>
+		
 	<!--  === Candidacies -->
 	
 	<!-- Common -->

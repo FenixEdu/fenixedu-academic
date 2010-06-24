@@ -7,19 +7,17 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.alumni.RegisterAlumniData;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.qualification.DeleteQualification;
+import net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniErrorSendingMailBean;
 import net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniIdentityCheckRequestBean;
-import net.sourceforge.fenixedu.dataTransferObject.alumni.formation.AlumniFormation;
-import net.sourceforge.fenixedu.dataTransferObject.alumni.formation.AlumniFormationBean;
 import net.sourceforge.fenixedu.dataTransferObject.alumni.publicAccess.AlumniLinkRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.alumni.publicAccess.AlumniPasswordBean;
 import net.sourceforge.fenixedu.dataTransferObject.alumni.publicAccess.AlumniPublicAccessBean;
 import net.sourceforge.fenixedu.domain.Alumni;
 import net.sourceforge.fenixedu.domain.AlumniRequestType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.lang.StringUtils;
@@ -132,34 +130,70 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
 	    request.setAttribute("alumni", alumni);
 
 	} catch (DomainException e) {
+	    if ("error.no.concluded.registrations".equals(e.getKey()) || "error.no.registrations".equals(e.getKey())
+		    || "error.person.no.student".equals(e.getKey())) {
+		request.setAttribute("showReportError", "true");
+		request.setAttribute("errorMessageKey", e.getKey());
+	    }
 	    addActionMessage(request, e.getKey(), e.getArgs());
 	    request.setAttribute("showForm", "true");
-	    request.setAttribute("alumniBean", getFromRequest(request, "alumniBean"));
+	    request.setAttribute("alumniBean", alumniBean);
 	    return mapping.findForward("alumniPublicAccess");
 	}
-
 	return mapping.findForward("alumniPublicAccessRegistrationEmail");
+    }
+
+    public ActionForward prepareSendEmailReportingError(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	AlumniErrorSendingMailBean mailSendingBean = new AlumniErrorSendingMailBean();
+	mailSendingBean.setDocumentIdNumber(request.getParameter("documentIdNumber"));
+	mailSendingBean.setStudentNumber(Integer.valueOf(request.getParameter("studentNumber")));
+	mailSendingBean.setContactEmail(request.getParameter("email"));
+	mailSendingBean.setErrorMessage(request.getParameter("errorMessage"));
+
+	request.setAttribute("alumniErrorSendMail", mailSendingBean);
+	return mapping.findForward("alumniErrorSendMail");
     }
 
     public ActionForward sendEmailReportingError(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	final AlumniLinkRequestBean alumniBean = (AlumniLinkRequestBean) getRenderedObject();
+	final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.AlumniResources", Language.getLocale());
+
+	final AlumniErrorSendingMailBean alumniBean = (AlumniErrorSendingMailBean) getRenderedObject();
+	StringBuilder mailBody = new StringBuilder();
+	mailBody.append(resourceBundle.getString("message.alumni.mail.body.header"));
+	mailBody.append("'").append(resourceBundle.getString(alumniBean.getErrorMessage())).append("'\n\n");
+
+	String[] mailArgs = new String[8];
+	mailArgs[0] = alumniBean.getFullName();
+	mailArgs[1] = alumniBean.getStudentNumber().toString();
+	mailArgs[2] = alumniBean.getContactEmail();
+	mailArgs[3] = alumniBean.getDocumentIdNumber();
+	mailArgs[4] = alumniBean.getDateOfBirthYearMonthDay().toString();
+	mailArgs[5] = alumniBean.getSocialSecurityNumber();
+	mailArgs[6] = alumniBean.getNameOfFather();
+	mailArgs[7] = alumniBean.getNameOfMother();
+	
+	String messageBody = RenderUtils.getFormatedResourceString("ALUMNI_RESOURCES","message.alumni.mail.person.data", mailArgs);
+	mailBody.append(messageBody);
+	mailBody.append("\n\n").append(resourceBundle.getString("message.alumni.mail.body.footer"));
+
 	EMail email = null;
 	try {
 	    if (!request.getServerName().equals("localhost")) {
 		email = new EMail("mail.adm", "erro@dot.ist.utl.pt");
-		//email.send("suporte@dot.ist.utl.pt", "Fenix Error Report" + subject, mailBody);
-	    } else {
-		email = new EMail("mail.rnl.ist.utl.pt", "erro@dot.ist.utl.pt");
-		//email.send("suporte@dot.ist.utl.pt", "Localhost Error Report", mailBody);
+		email.send("suporte@dot.ist.utl.pt", "Erro Registo Alumni", mailBody.toString());
 	    }
 	} catch (Throwable t) {
 	    t.printStackTrace();
 	    throw new Error(t);
 	}
-	return null;
+
+	request.setAttribute("alumniPublicAccessTitle", "title.report.error");
+	request.setAttribute("alumniPublicAccessMessage", "message.public.error.mail.success");
+	return mapping.findForward("alumniPublicAccessMessage");
     }
-    
+
     public ActionForward innerFenixPublicAccessValidation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -190,7 +224,7 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
 	request.setAttribute("urlToken", request.getParameter(urlToken));
 	return mapping.findForward("alumniPublicAccessInner");
     }
-    
+
     public ActionForward registrationConclusion(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 

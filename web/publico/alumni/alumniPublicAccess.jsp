@@ -18,7 +18,17 @@
 </logic:present>
 
 <html:messages id="message" message="true" bundle="ALUMNI_RESOURCES">
-<span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>
+	<span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>
+	<logic:present name="showReportError">
+		<bean:define id="documentIdNumber" name="alumniBean" property="documentIdNumber"/>
+		<bean:define id="email" name="alumniBean" property="email"/>
+		<bean:define id="studentNumber" name="alumniBean" property="studentNumber"/>
+		<html:link  action="<%= "alumni.do?method=prepareSendEmailReportingError&amp;documentIdNumber=" + documentIdNumber + 
+								"&amp;email=" + email + "&amp;studentNumber=" + studentNumber %>"
+					paramId="errorMessage" paramName="errorMessageKey">
+			<bean:message key="label.public.report.error" bundle="ALUMNI_RESOURCES"/>
+		</html:link>
+	</logic:present>
 </html:messages>
 
 <div class="reg_form">	
@@ -28,12 +38,10 @@
 		<fieldset style="display: block;">
 			<legend>Identificação <%-- <bean:message key="label.alumni.form" bundle="ALUMNI_RESOURCES" /> --%></legend>
 			<p>
-				<bean:message key="label.alumni.registration.process" bundle="ALUMNI_RESOURCES" />
-				
+				<bean:message key="label.alumni.registration.process" bundle="ALUMNI_RESOURCES" />				
 			</p>
 		
 			<fr:edit id="alumniBean" name="alumniBean" visible="false" />
-
 
 			<label for="student_number" class="student_number">
 				<bean:message key="label.student.number" bundle="ALUMNI_RESOURCES" />:
@@ -46,9 +54,7 @@
 				</fr:layout>
 			</fr:edit>
 			<span class="error0"><fr:message for="studentNumber-validated" /></span>
-			<html:link href="<%= request.getContextPath() + "/publico/alumni.do?method=requestIdentityCheck"%>"><bean:message bundle="ALUMNI_RESOURCES" key="link.request.identity.check"/></html:link>
-			
-			
+			<html:link href="<%= request.getContextPath() + "/publico/alumni.do?method=requestIdentityCheck"%>"><bean:message bundle="ALUMNI_RESOURCES" key="link.request.identity.check"/></html:link>						
 					
 			<label for="bi_number" class="bi_number">
 				<bean:message key="label.document.id.number" bundle="ALUMNI_RESOURCES" />:
@@ -61,7 +67,6 @@
 				</fr:layout>
 			</fr:edit>
 			<span class="error0"><fr:message for="documentIdNumber-validated" /></span>
-
 			
 			<label for="email">
 				<bean:message key="label.email" bundle="ALUMNI_RESOURCES" />:
@@ -74,7 +79,6 @@
 				</fr:layout>
 			</fr:edit>
 			<span class="error0"><fr:message for="email-validated" /></span>
-
 
 			<label for="captcha">
 				<bean:message key="label.captcha" bundle="ALUMNI_RESOURCES" />:
@@ -108,8 +112,7 @@
 			<div id="policyPrivacy" class="switchInline mtop1">
 				<bean:message key="label.privacy.policy.text" bundle="ALUMNI_RESOURCES" />
 			</div>
-			
-			
+						
 			<logic:present name="privacyPolicyPublicAccessMessage">
 				<span class="error0">
 					<bean:message key="privacy.policy.acceptance" bundle="ALUMNI_RESOURCES" />
@@ -121,17 +124,10 @@
 			<html:submit>
 				<bean:message key="label.submit" bundle="ALUMNI_RESOURCES" />
 			</html:submit>
-	
 		</fieldset>
-	
 	</fr:form>
 </div>
 </div>
 
 <!-- END CONTENTS -->
 </div>
-
-
-
-
-
