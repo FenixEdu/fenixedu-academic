@@ -352,7 +352,7 @@
 		</javac>
 	</target>
 
-	<target name="post-compile" description="Does some stuff after compile">
+	<target name="post-compile" description="Does some stuff after compile" depends="set-properties">
           <post-process-domain dir="${build.home.webinf.classes}" dml="${dml.definition.file.completed}">
             <classpath refid="class.path.lib.ref" />
             <classpath>
@@ -701,7 +701,7 @@
 		</java>
 	</target>
 
-	<target name="compile-reports">
+	<target name="compile-reports" depends="set-properties">
 		<mkdir dir="${build.home.reports}" />
 		<taskdef name="jrc" 
 		      classname="net.sf.jasperreports.ant.JRAntCompileTask">
