@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
+import net.sourceforge.fenixedu.domain.elections.DelegateElectionBlankVote;
 import net.sourceforge.fenixedu.domain.elections.DelegateElectionVote;
 import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -32,7 +33,7 @@ public class VoteYearDelegateElections extends FenixService {
 		final String subject = fromName + "-" + bundle.getString("VoteYearDelegateElections.email.subject");
 		final String msg = bundle.getString("VoteYearDelegateElections.email.message");
 		final Person person = student.getPerson();
-		DelegateElectionVote vote = new DelegateElectionVote(yearDelegateElection, votedStudent);
+		DelegateElectionVote vote = createDelegateElectionVote(yearDelegateElection, votedStudent);
 		yearDelegateElection.addVotingStudents(student);
 		yearDelegateElection.addVotes(vote);
 		new Message(rootDomainObject.getSystemSender(), new ConcreteReplyTo(fromAddress).asCollection(), new Recipient(
@@ -44,4 +45,12 @@ public class VoteYearDelegateElections extends FenixService {
 	    throw new FenixServiceException(ex.getMessage(), ex.getArgs());
 	}
     }
+
+    public static DelegateElectionVote createDelegateElectionVote(YearDelegateElection yearDelegateElection, Student votedStudent) {
+	if (DelegateElectionBlankVote.isBlankVote(votedStudent)) {
+	    return new DelegateElectionBlankVote(yearDelegateElection);
+	}
+	return new DelegateElectionVote(yearDelegateElection, votedStudent);
+    }
+
 }

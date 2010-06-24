@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.student.Student;
 
 public class DelegateElectionVote extends DelegateElectionVote_Base {
 
-    private DelegateElectionVote() {
+    protected DelegateElectionVote() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
     }

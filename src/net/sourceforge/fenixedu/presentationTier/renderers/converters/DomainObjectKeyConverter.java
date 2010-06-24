@@ -6,11 +6,12 @@ import pt.ist.fenixWebFramework.renderers.components.converters.ConversionExcept
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DomainObjectKeyConverter extends Converter {
+    public static final String NULL_VALUE_MARKER = "NULL_VALUE_MARKER";
 
     @Override
     public Object convert(Class type, Object value) {
 
-	if (value == null || value.equals("")) {
+	if (value == null || value.equals("") || value.equals(NULL_VALUE_MARKER)) {
 	    return null;
 	}
 

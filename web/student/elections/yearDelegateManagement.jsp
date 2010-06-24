@@ -135,142 +135,180 @@
 
 <!-- STUDENT THAT HAS NOT VOTED YET -->
 
-<logic:notPresent name="votedStudent">
-
-<logic:present name="notVotedYearDelegate" >
-	
-	<fr:view name="notVotedYearDelegate" layout="tabular-nonNullValues" schema="student.elections.electionPeriod" >
-		<fr:layout>
-			<fr:property name="classes" value="tstyle2 thlight thright mvert05"/>
-			<fr:property name="columnClasses" value="nowrap, nowrap"/>
-			<fr:property name="rowClasses" value="bold,,,,"/>
-		</fr:layout>
-	</fr:view>
-
-	<p class="mtop1 mbottom05">
-		<b><bean:message key="label.elections.votingPeriod" bundle="APPLICATION_RESOURCES"/></b>
-	</p>
-	<p class="infoop2">
-		<bean:message key="label.elections.votingPeriod.notVoted.help" bundle="APPLICATION_RESOURCES" />
-	</p>
-	
-	<logic:present name="candidatesBeanList">
-		<logic:notEmpty name="candidatesBeanList">	
+<logic:notPresent name="studentVote">
+<logic:notPresent name="blankVote">
+	<logic:present name="notVotedYearDelegate" >
 		
-		<div class="mvert15" style="background: #f8f8f8; padding: 0.5em 1em; border: 1px solid #ccc;">
-			<h4 class="mvert05"><bean:message key="label.elections.candidatesList" bundle="APPLICATION_RESOURCES" /></h4>
+		<fr:view name="notVotedYearDelegate" layout="tabular-nonNullValues" schema="student.elections.electionPeriod" >
+			<fr:layout>
+				<fr:property name="classes" value="tstyle2 thlight thright mvert05"/>
+				<fr:property name="columnClasses" value="nowrap, nowrap"/>
+				<fr:property name="rowClasses" value="bold,,,,"/>
+			</fr:layout>
+		</fr:view>
+		
+		<p class="mtop1 mbottom05">
+			<b><bean:message key="label.elections.votingPeriod" bundle="APPLICATION_RESOURCES"/></b>
+		</p>
+		<p class="infoop2">
+			<bean:message key="label.elections.votingPeriod.notVoted.help" bundle="APPLICATION_RESOURCES" />
+		</p>
+		
 	
-			<fr:form action="/yearDelegateManagement.do">
-				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareVote" />
-
-<style>
-.column1, .column2, .column3 {
-display: block;
-}
-.column1 {
-display: block;
-width: 40px;
-padding-left: 0.3em;
-}
-.column2 {
-display: block;
-width: 250px;
-padding: 0 0.3em;
-}
-.column3 {
-display: block;
-padding: 0 0.3em;
-}
-.delegate tr td ul li {
-clear: both;
-display: block;
-padding-top: 1.5em !important;
-}
-.delegate tr td ul li input {
-}
-.delegate tr td ul li * {
-float: left;
-}
-.delegate tr td ul li span {
-margin-top: 2.5em;
-}
-.delegate tr td ul li span span {
-margin-top: 0;
-}
-</style>
-
+		
+		<logic:present name="candidatesBeanList">
+			<logic:notEmpty name="candidatesBeanList">	
 			
-				<fr:edit id="candidate" name="otherStudentsBeanList" schema="student.yearDelegateElection.voteCandidate">
-					<fr:layout name="tabular">
-						<fr:property name="classes" value="noborder thdnone mtop05 ulnomargin width100 delegate"/>
+			<div class="mvert15" style="background: #f8f8f8; padding: 0.5em 1em; border: 1px solid #ccc;">
+				<h4 class="mvert05"><bean:message key="label.elections.candidatesList" bundle="APPLICATION_RESOURCES" /></h4>
+		
+				<fr:form action="/yearDelegateManagement.do">
+					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareVote" />
+	
+	<style>
+	.column1, .column2, .column3 {
+	display: block;
+	}
+	.column1 {
+	display: block;
+	width: 40px;
+	padding-left: 0.3em;
+	}
+	.column2 {
+	display: block;
+	width: 250px;
+	padding: 0 0.3em;
+	}
+	.column3 {
+	display: block;
+	padding: 0 0.3em;
+	}
+	.delegate tr td ul li {
+	clear: both;
+	display: block;
+	padding-top: 1.5em !important;
+	}
+	.delegate tr td ul li input {
+	}
+	.delegate tr td ul li * {
+	float: left;
+	}
+	.delegate tr td ul li span {
+	margin-top: 2.5em;
+	}
+	.delegate tr td ul li span span {
+	margin-top: 0;
+	}
+	</style>
+	
+			
+					<fr:edit id="candidate" name="otherStudentsBeanList" schema="student.yearDelegateElection.voteCandidate">
+						<fr:layout name="tabular">
+							<fr:property name="classes" value="noborder thdnone mtop05 ulnomargin width100 delegate"/>
+						</fr:layout>
+						<fr:destination name="invalid" path="/yearDelegateManagement.do?method=prepare"/>
+					</fr:edit>
+					
+					
+					
+					<p class="mtop2 mbottom05">
+						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="DELEGATES_RESOURCES" key="label.submit" /></html:submit>
+						<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='prepare';"><bean:message bundle="DELEGATES_RESOURCES" key="label.clear"/></html:cancel>
+					</p>
+					
+				</fr:form>
+			</div>
+			
+			</logic:notEmpty>
+		</logic:present>
+
+
+
+		<fr:form action="/yearDelegateManagement.do">
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareVote" />
+			<fr:edit id="notVotedYearDelegate" name="notVotedYearDelegate" visible="false" />
+			
+			<div class="mvert15" style="background: #f8f8f8; padding: 0.5em 1em; border: 1px solid #ccc;">
+			
+				<h4 class="mvert05"><bean:message key="label.elections.otherStudentsList" bundle="APPLICATION_RESOURCES" /></h4>
+				
+				<fr:edit id="otherStudentsBeanList" name="otherStudentsBeanList"  schema="student.yearDelegateElection.vote" >
+					<fr:layout>
+						<fr:property name="classes" value="tstyle2 thmiddle thright thlight mtop05 thdnone tstylenone"/>
+						<fr:property name="columnClasses" value=",,tdclear tderror1"/>	
+						
 					</fr:layout>
-					<fr:destination name="invalid" path="/yearDelegateManagement.do?method=prepare"/>
-				</fr:edit>
-				<p class="mtop2 mbottom05">
+				<fr:destination name="invalid" path="/yearDelegateManagement.do?method=prepare" />
+				</fr:edit> 
+				
+				<p class="mtop15 mbottom05">
 					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="DELEGATES_RESOURCES" key="label.submit" /></html:submit>
 					<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='prepare';"><bean:message bundle="DELEGATES_RESOURCES" key="label.clear"/></html:cancel>
 				</p>
-			</fr:form>
-		</div>
-		
-		</logic:notEmpty>
-	</logic:present>
-	
-	<fr:form action="/yearDelegateManagement.do">
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareVote" />
-		<fr:edit id="notVotedYearDelegate" name="notVotedYearDelegate" visible="false" />
-		
-		<div class="mvert15" style="background: #f8f8f8; padding: 0.5em 1em; border: 1px solid #ccc;">
-		
-			<h4 class="mvert05"><bean:message key="label.elections.otherStudentsList" bundle="APPLICATION_RESOURCES" /></h4>
-			
-			<fr:edit id="otherStudentsBeanList" name="otherStudentsBeanList"  schema="student.yearDelegateElection.vote" >
-				<fr:layout>
-					<fr:property name="classes" value="tstyle2 thmiddle thright thlight mtop05 thdnone tstylenone"/>
-					<fr:property name="columnClasses" value=",,tdclear tderror1"/>	
-				</fr:layout>
-			<fr:destination name="invalid" path="/yearDelegateManagement.do?method=prepare" />
-			</fr:edit>
-			
-			<p class="mtop15 mbottom05">
-				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="DELEGATES_RESOURCES" key="label.submit" /></html:submit>
-				<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='prepare';"><bean:message bundle="DELEGATES_RESOURCES" key="label.clear"/></html:cancel>
-			</p>
-			
-		</div>
-	</fr:form>
-	
-</logic:present>
+				
+			</div>
+		</fr:form>
 
+		
+	</logic:present>
+</logic:notPresent>
 </logic:notPresent>
 
-<logic:present name="votedStudent">
-
-	<fr:view name="notVotedYearDelegate" layout="tabular-nonNullValues" schema="student.elections.electionPeriod" >
-		<fr:layout>
-			<fr:property name="classes" value="tstyle2 thlight thright mvert05"/>
-			<fr:property name="columnClasses" value="nowrap, nowrap"/>
-			<fr:property name="rowClasses" value="bold,,,,"/>
-		</fr:layout>
-	</fr:view>
-
-	<fr:form action="/yearDelegateManagement.do">
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="vote" />
-	<fr:edit id="notVotedYearDelegate" name="notVotedYearDelegate" visible="false" />
-	<fr:edit id="prepareVote" name="votedStudentBean"  visible="false" />
-	<bean:define id="nome" name="votedStudentBean" property="student.person.name"/>
-	<bean:define id="number" name="votedStudentBean" property="student.number"/>
-
-
-	<p class="mtop15">
-		<span class="highlight1">
-			<!--<bean:message key="label.elections.votingPeriod.confirmation.help" bundle="APPLICATION_RESOURCES" />-->
-			Confirma o seu voto em <strong><%= nome.toString()%> (<%= number.toString()%>)</strong> ?
-		</span>
-	</p>
-	<p class="mtop1">
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="DELEGATES_RESOURCES" key="label.confirm" /></html:submit>
-		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='prepare';"><bean:message bundle="DELEGATES_RESOURCES" key="label.cancel"/></html:cancel>
-	</p>
-</fr:form>
+<logic:present name="studentVote">
+		<fr:view name="notVotedYearDelegate" layout="tabular-nonNullValues" schema="student.elections.electionPeriod" >
+			<fr:layout>
+				<fr:property name="classes" value="tstyle2 thlight thright mvert05"/>
+				<fr:property name="columnClasses" value="nowrap, nowrap"/>
+				<fr:property name="rowClasses" value="bold,,,,"/>
+			</fr:layout>
+		</fr:view>
+	
+		<fr:form action="/yearDelegateManagement.do">
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="vote" />
+		<fr:edit id="notVotedYearDelegate" name="notVotedYearDelegate" visible="false" />
+		<fr:edit id="prepareVote" name="votedStudentBean"  visible="false" />
+		<bean:define id="nome" name="votedStudentBean" property="student.person.name"/>
+		<bean:define id="number" name="votedStudentBean" property="student.number"/>
+	
+	
+		<p class="mtop15">
+			<span class="highlight1">
+				<!--<bean:message key="label.elections.votingPeriod.confirmation.help" bundle="APPLICATION_RESOURCES" />-->
+				Confirma o seu voto em <strong><%= nome.toString()%> (<%= number.toString()%>)</strong> ?
+			</span>
+		</p>
+		<p class="mtop1">
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="DELEGATES_RESOURCES" key="label.confirm" /></html:submit>
+			<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='prepare';"><bean:message bundle="DELEGATES_RESOURCES" key="label.cancel"/></html:cancel>
+		</p>
+	</fr:form>
 </logic:present>
+
+<!--Confirmation Blank Vote -->
+<logic:notPresent name="studentVote">
+	<logic:present name="blankVote">
+		<fr:view name="notVotedYearDelegate" layout="tabular-nonNullValues" schema="student.elections.electionPeriod" >
+			<fr:layout>
+				<fr:property name="classes" value="tstyle2 thlight thright mvert05"/>
+				<fr:property name="columnClasses" value="nowrap, nowrap"/>
+				<fr:property name="rowClasses" value="bold,,,,"/>
+			</fr:layout>
+		</fr:view>
+	<fr:form action="/yearDelegateManagement.do">
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="vote" />
+		<fr:edit id="notVotedYearDelegate" name="notVotedYearDelegate" visible="false" />
+		<fr:edit id="prepareVote" name="votedStudentBean"  visible="false" />
+	
+	
+		<p class="mtop15">
+			<span class="highlight1">
+				<bean:message key="label.elections.votingPeriod.confirmation.blankVote" />
+			</span>
+		</p>
+		<p class="mtop1">
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="DELEGATES_RESOURCES" key="label.confirm" /></html:submit>
+			<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton" onclick="this.form.method.value='prepare';"><bean:message bundle="DELEGATES_RESOURCES" key="label.cancel"/></html:cancel>
+		</p>
+	</fr:form>
+	</logic:present>
+</logic:notPresent>

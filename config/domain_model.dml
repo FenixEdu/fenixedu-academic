@@ -6310,6 +6310,8 @@ class elections.YearDelegateElection extends elections.DelegateElection {
 
 class elections.DelegateElectionVote extends DomainObject {
 }
+class elections.DelegateElectionBlankVote extends elections.DelegateElectionVote {
+}
 
 class elections.DelegateElectionPeriod extends DomainObject {
     YearMonthDay startDate;

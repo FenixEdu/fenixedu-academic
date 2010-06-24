@@ -170,9 +170,9 @@ public class YearDelegateManagementDispatchAction extends FenixDispatchAction {
 	    voteBean = (StudentVoteBean) getRenderedObject("otherStudentsBeanList");
 
 	}
-
-	final Student votedStudent = voteBean.getStudent();
-	request.setAttribute("votedStudent", votedStudent);
+	voteBean = getStudentVoteOrBlankVote(voteBean);
+	request.setAttribute("studentVote", voteBean.getStudent());
+	request.setAttribute("blankVote", isBlankVote(voteBean));
 	request.setAttribute("votedStudentBean", voteBean);
 	request.setAttribute("notVotedYearDelegate", yearDelegateElection);
 
@@ -192,4 +192,14 @@ public class YearDelegateManagementDispatchAction extends FenixDispatchAction {
 	return null;
     }
 
+    private StudentVoteBean getStudentVoteOrBlankVote(StudentVoteBean voteBean) {
+	if (isBlankVote(voteBean)) {
+	    return new StudentVoteBean();
+	}
+	return voteBean;
+    }
+
+    private boolean isBlankVote(StudentVoteBean voteBean) {
+	return voteBean == null || voteBean.getStudent() == null;
+    }
 }

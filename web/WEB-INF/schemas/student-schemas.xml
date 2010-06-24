@@ -448,6 +448,8 @@
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.student.YearCandidateDelegateManagementProvider"/>
 		<property name="eachSchema" value="student.yearDelegateElection.photo"/>
 		<property name="eachLayout" value="values-dash" />
+		<property name="nullOptionKey" value="label.elections.votingPeriod.blankVote" />
+		<property name="nullOptionBundle" value="APPLICATION_RESOURCES" />
 	</slot>
 </schema>
 
