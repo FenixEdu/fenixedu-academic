@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
@@ -68,6 +69,7 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	activities.add(new ViewApprovedLearningAgreements());
 	activities.add(new MarkAlertAsViewed());
 	activities.add(new SendEmailToAcceptedStudent());
+	activities.add(new SendEmailToCandidateForMissingDocuments());
     }
 
     public ErasmusIndividualCandidacyProcess() {
@@ -107,7 +109,7 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 		bean.getPersonBean().getDocumentIdNumber())) {
 	    throw new DomainException("error.IndividualCandidacy.exists.for.same.document.id");
 	}
-	
+
 	if (!StringUtils.isEmpty(bean.getPersonBean().getEidentifier())
 		&& existsIndividualCandidacyProcessForEidentifier(bean.getCandidacyProcess(), bean.getPersonBean()
 			.getEidentifier())) {
@@ -208,7 +210,7 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	// TODO Auto-generated method stub
 	return null;
     }
-    
+
     public boolean getIsCandidacyProcessWithEidentifer() {
 	return !StringUtils.isEmpty(getPersonalDetails().getEidentifier());
     }
@@ -217,12 +219,12 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
     protected void executeOperationsBeforeDocumentFileBinding(IndividualCandidacyDocumentFile documentFile) {
 	IndividualCandidacyDocumentFileType type = documentFile.getCandidacyFileType();
 	IndividualCandidacyDocumentFile file = this.getActiveFileForType(type);
-	
-	if(file != null) {
+
+	if (file != null) {
 	    file.setCandidacyFileActive(false);
 	}
     }
-    
+
     @Override
     public List<IndividualCandidacyDocumentFileType> getMissingRequiredDocumentFiles() {
 	List<IndividualCandidacyDocumentFileType> missingDocumentFiles = new ArrayList<IndividualCandidacyDocumentFileType>();
@@ -294,13 +296,13 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
     public ErasmusAlert getMostRecentAlert() {
 	List<ErasmusAlert> alerts = new ArrayList<ErasmusAlert>(getAlert());
 	Collections.sort(alerts, Collections.reverseOrder(ErasmusAlert.WHEN_CREATED_COMPARATOR));
-	
+
 	return alerts.get(0);
     }
 
     public boolean isProcessWithMostRecentAlertMessageNotViewed() {
 	List<ErasmusAlert> alertsNotViewed = getAlertsNotViewed();
-	
+
 	return !alertsNotViewed.isEmpty() && alertsNotViewed.get(0) == getMostRecentAlert();
     }
 
@@ -531,8 +533,7 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 
 	    if (bean.getCreateAlert()) {
 		ErasmusAlert alert = new ErasmusAlert(process, bean.getSendEmail(), new LocalDate(), new MultiLanguageString(bean
-			.getAlertSubject()),
-			new MultiLanguageString(bean.getAlertBody()), ErasmusAlertEntityType.GRI);
+			.getAlertSubject()), new MultiLanguageString(bean.getAlertBody()), ErasmusAlertEntityType.GRI);
 		alert.setFireDate(new DateTime());
 	    }
 
@@ -790,17 +791,17 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	protected ErasmusIndividualCandidacyProcess executeActivity(ErasmusIndividualCandidacyProcess process,
 		IUserView userView, Object object) {
 	    String eidentifier = (String) object;
-	    
+
 	    if (StringUtils.isEmpty(eidentifier)) {
 		throw new DomainException("error.erasmus.candidacy.eidentifer.must.not.be.empty");
 	    }
-	    
-	    ErasmusCandidacyProcess parentProcess =  (ErasmusCandidacyProcess) process.getCandidacyProcess();
 
-	    if(parentProcess.getOpenChildProcessByEidentifier(eidentifier) != null) {
+	    ErasmusCandidacyProcess parentProcess = (ErasmusCandidacyProcess) process.getCandidacyProcess();
+
+	    if (parentProcess.getOpenChildProcessByEidentifier(eidentifier) != null) {
 		throw new DomainException("error.erasmus.candidacy.already.exists.with.eidentifier");
 	    }
-	    
+
 	    process.getPersonalDetails().getPerson().setEidentifier(eidentifier);
 	    return process;
 	}
@@ -826,18 +827,18 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 
 	@Override
 	public void checkPreConditions(ErasmusIndividualCandidacyProcess process, IUserView userView) {
-	    if(isManager(userView)) {
+	    if (isManager(userView)) {
 		return;
 	    }
-	    
-	    if(isGriOfficeEmployee(userView)) {
+
+	    if (isGriOfficeEmployee(userView)) {
 		return;
 	    }
-	    
+
 	    if (process.isCoordinatorOfProcess(userView)) {
 		return;
 	    }
-	    
+
 	    throw new PreConditionNotValidException();
 	}
 
@@ -958,12 +959,13 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 		    "message.erasmus.accepted.student.email.subject");
 	    String body = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale()).getString(
 		    "message.erasmus.accepted.student.email.body");
-	    
+
 	    SystemSender systemSender = RootDomainObject.getInstance().getSystemSender();
 	    new Message(systemSender, systemSender.getConcreteReplyTos(), Collections.EMPTY_LIST, subject, body, process
 		    .getCandidacyHashCode().getEmail());
-	    
-	    new ApprovedLearningAgreementExecutedAction(process.getCandidacy().getMostRecentApprovedLearningAgreement(), ExecutedActionType.SENT_EMAIL_ACCEPTED_STUDENT);
+
+	    new ApprovedLearningAgreementExecutedAction(process.getCandidacy().getMostRecentApprovedLearningAgreement(),
+		    ExecutedActionType.SENT_EMAIL_ACCEPTED_STUDENT);
 
 	    return process;
 	}
@@ -984,16 +986,85 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	}
     }
 
+    private static class SendEmailToCandidateForMissingDocuments extends Activity<ErasmusIndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(ErasmusIndividualCandidacyProcess process, IUserView userView) {
+	    if (!isGriOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (!process.isProcessMissingRequiredDocumentFiles()) {
+		throw new PreConditionNotValidException();
+	    }
+
+	}
+
+	@Override
+	protected ErasmusIndividualCandidacyProcess executeActivity(ErasmusIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    process.sendEmailForRequiredMissingDocuments();
+
+	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return false;
+	}
+
+	@Override
+	public Boolean isVisibleForCoordinator() {
+	    return false;
+	}
+
+	@Override
+	public Boolean isVisibleForGriOffice() {
+	    return false;
+	}
+
+    }
+
+    private String getMissingRequiredDocumentListText() {
+	StringBuilder sb = new StringBuilder();
+
+	for (IndividualCandidacyDocumentFileType missingDocumentType : getMissingRequiredDocumentFiles()) {
+	    sb.append("- ").append(missingDocumentType.localizedName(Locale.ENGLISH)).append("\n");
+	}
+
+	return sb.toString();
+    }
+
+    protected void sendEmailForRequiredMissingDocuments() {
+	if (!isProcessMissingRequiredDocumentFiles()) {
+	    throw new DomainException("error.erasmus.indivudual.candidacy.is.not.incomplete");
+	}
+
+	String subject = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale()).getString(
+		"message.erasmus.missing.required.documents.email.subject");
+	String body = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale()).getString(
+		"message.erasmus.missing.required.documents.email.body");
+
+	String formattedBody = String
+		.format(body, getMissingRequiredDocumentListText(), getCandidacyEnd().toString("dd/MM/yyyy"));
+	SystemSender systemSender = RootDomainObject.getInstance().getSystemSender();
+
+	new ErasmusIndividualCandidacyProcessExecutedAction(this, ExecutedActionType.SENT_EMAIL_FOR_MISSING_REQUIRED_DOCUMENTS);
+
+	new Message(systemSender, systemSender.getConcreteReplyTos(), Collections.EMPTY_LIST, subject, formattedBody,
+		getCandidacyHashCode().getEmail());
+    }
+
     private static boolean importToLDAP(ErasmusIndividualCandidacyProcess process) {
 	String ldapServiceImportationURL = PropertiesManager.getProperty("ldap.user.importation.service.url");
 
-	Request request = new Request(Method.POST, ldapServiceImportationURL + process.getPersonalDetails().getPerson()
-			.getIstUsername());
+	Request request = new Request(Method.POST, ldapServiceImportationURL
+		+ process.getPersonalDetails().getPerson().getIstUsername());
 	ChallengeScheme scheme = ChallengeScheme.HTTP_BASIC;
-	
+
 	String ldapServiceUsername = PropertiesManager.getProperty("ldap.user.importation.service.username");
 	String ldapServicePassword = PropertiesManager.getProperty("ldap.user.importation.service.password");
-	
+
 	ChallengeResponse authentication = new ChallengeResponse(scheme, ldapServiceUsername, ldapServicePassword);
 	request.setChallengeResponse(authentication);
 

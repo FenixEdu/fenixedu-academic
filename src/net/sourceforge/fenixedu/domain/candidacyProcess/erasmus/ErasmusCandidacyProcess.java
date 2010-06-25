@@ -53,6 +53,7 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 	activities.add(new AssignCoordinator());
 	activities.add(new RemoveTeacherFromCoordinators());
 	activities.add(new ViewChildProcessWithMissingRequiredDocumentFiles());
+	activities.add(new SendEmailToMissingRequiredDocumentsProcesses());
     }
 
     public ErasmusCandidacyProcess() {
@@ -378,7 +379,7 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 	    if (vacancy.isVacancyAssociatedToAnyCandidacy()) {
 		throw new DomainException("error.erasmus.vacancy.is.associated.to.candidacies");
 	    }
-	    
+
 	    vacancy.delete();
 
 	    return process;
@@ -461,7 +462,7 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 	@Override
 	protected ErasmusCandidacyProcess executeActivity(ErasmusCandidacyProcess process, IUserView userView, Object object) {
 	    ErasmusCoordinatorBean bean = (ErasmusCoordinatorBean) object;
-	    
+
 	    if (bean.getErasmusCoordinator() != null) {
 		bean.getErasmusCoordinator().delete();
 	    }
@@ -485,7 +486,7 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 	    return false;
 	}
     }
-    
+
     static private class ViewChildProcessWithMissingRequiredDocumentFiles extends Activity<ErasmusCandidacyProcess> {
 	@Override
 	public void checkPreConditions(ErasmusCandidacyProcess process, IUserView userView) {
@@ -493,7 +494,7 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 		throw new PreConditionNotValidException();
 	    }
 	}
-	
+
 	@Override
 	protected ErasmusCandidacyProcess executeActivity(ErasmusCandidacyProcess process, IUserView userView, Object object) {
 	    return process;
@@ -512,6 +513,42 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 	@Override
 	public Boolean isVisibleForGriOffice() {
 	    return true;
+	}
+
+    }
+
+    static private class SendEmailToMissingRequiredDocumentsProcesses extends Activity<ErasmusCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(ErasmusCandidacyProcess process, IUserView userView) {
+	    if (!isManager(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected ErasmusCandidacyProcess executeActivity(ErasmusCandidacyProcess process, IUserView userView, Object object) {
+	    for (IndividualCandidacyProcess childProcess : process.getChildsWithMissingRequiredDocuments()) {
+		ErasmusIndividualCandidacyProcess erasmusChildProcess = (ErasmusIndividualCandidacyProcess) childProcess;
+		erasmusChildProcess.sendEmailForRequiredMissingDocuments();
+	    }
+
+	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return false;
+	}
+
+	@Override
+	public Boolean isVisibleForCoordinator() {
+	    return false;
+	}
+
+	@Override
+	public Boolean isVisibleForGriOffice() {
+	    return false;
 	}
 
     }

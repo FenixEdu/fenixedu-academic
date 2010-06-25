@@ -23,6 +23,11 @@ public class DegreesForExecutionYearProvider implements DataProvider {
 
 	for (final Degree degree : Degree.readAllByDegreeType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE,
 		DegreeType.BOLONHA_MASTER_DEGREE)) {
+	    
+	    if (degree.getSigla().equals("MSCIT")) {
+		continue;
+	    }
+	    
 	    if (matchesExecutionYear(degree, chooseDegreeBean.getExecutionYear())) {
 		result.add(degree);
 	    }

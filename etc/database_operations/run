@@ -44,3 +44,4 @@ function executeWithTempFile() {
 }
 
 execute "alterTableDelegateElectionVote" alterTableDelegateElectionVote.sql
+execute "alterTableExecutedAction" alterTableExecutedAction.sql

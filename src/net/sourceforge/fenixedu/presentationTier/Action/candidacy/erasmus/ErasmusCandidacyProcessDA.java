@@ -224,6 +224,8 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 	    final List<Degree> degrees = new ArrayList<Degree>(Degree.readAllByDegreeType(
 		    DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE));
 
+	    degrees.remove(Degree.readBySigla("MSCIT"));
+
 	    java.util.Collections.sort(degrees, Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
 	    
 	    return degrees;	    

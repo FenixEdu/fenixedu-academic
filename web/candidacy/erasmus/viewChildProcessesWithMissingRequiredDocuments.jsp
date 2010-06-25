@@ -16,7 +16,16 @@
 	<bean:define id="processId" name="process" property="idInternal" />
 	<bean:define id="childProcessName" name="childProcessName" />
 	<bean:size id="candidacyProcessesSize" name="candidacyProcesses" />
-	
+		
+		<logic:present role="MANAGER">
+			<ul>
+				<li>
+					<html:link action='<%= "/caseHandlingErasmusCandidacyProcess.do?method=executeSendEmailToMissingRequiredDocumentsProcesses&amp;processId=" + processId.toString() %>'>
+						<bean:message key="label.erasmus.send.email.to.missing.required.documents" bundle="ACADEMIC_OFFICE_RESOURCES" />
+					</html:link>
+				</li>
+			</ul>
+		</logic:present>
 	<p><strong><bean:message key="title.erasmus.application.process.list" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
 	
 	<%-- show child processes --%>

@@ -206,8 +206,7 @@ public class ErasmusIndividualCandidacyProcessDA extends
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	ApprovedLearningAgreementDocumentFile file = ApprovedLearningAgreementDocumentFile.fromExternalId(request
 		.getParameter("approvedLearningAgreementId"));
-	executeActivity(getProcess(request), "SendEmailToAcceptedStudent", file.getErasmusIndividualCandidacy()
-		.getCandidacyProcess());
+	executeActivity(getProcess(request), "SendEmailToAcceptedStudent", null);
 	
 	return prepareExecuteViewApprovedLearningAgreements(mapping, actionForm, request, response);
     }

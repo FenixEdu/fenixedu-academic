@@ -199,6 +199,14 @@ public class ErasmusCandidacyProcessDA extends net.sourceforge.fenixedu.presenta
 	return mapping.findForward("assign-coordinator");
     }
 
+    public ActionForward executeSendEmailToMissingRequiredDocumentsProcesses(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+	executeActivity(getProcess(request), "SendEmailToMissingRequiredDocumentsProcesses", null);
+
+	return prepareExecuteViewChildProcessWithMissingRequiredDocumentFiles(mapping, form, request, response);
+    }
+
     private ErasmusCoordinator getErasmusCoordinator(HttpServletRequest request) {
 	return (ErasmusCoordinator) getDomainObject(request, "erasmusCoordinatorExternalId");
     }

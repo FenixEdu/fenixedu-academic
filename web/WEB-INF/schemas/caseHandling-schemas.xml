@@ -2246,7 +2246,6 @@
 	<slot name="personalDetails.name" key="label.name" />
 	<slot name="processCode" key="label.process.id" bundle="CANDIDATE_RESOURCES"/>
 	<slot name="personalDetails.documentIdNumber" key="label.identificationNumber" />
-	<slot name="candidacyState" key="label.candidacy.process.state" />
 	<slot name="validatedByGri" key="label.erasmus.validated.by.gri" bundle="ACADEMIC_OFFICE_RESOURCES" />
 	<slot name="validatedByErasmusCoordinator" key="label.erasmus.validated.by.coordinator" bundle="ACADEMIC_OFFICE_RESOURCES" />
 </schema>

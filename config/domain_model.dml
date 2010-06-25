@@ -6886,6 +6886,9 @@ class candidacyProcess.erasmus.ExecutedAction extends DomainObject {
 	class candidacyProcess.erasmus.ApprovedLearningAgreementExecutedAction extends candidacyProcess.erasmus.ExecutedAction {
 	}
 	
+	class candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessExecutedAction extends candidacyProcess.erasmus.ExecutedAction {
+	}
+	
 class candidacyProcess.CandidacyPrecedentDegreeInformation extends DomainObject {
     SchoolLevelType schoolLevel;
     String otherSchoolLevel;
@@ -18362,4 +18365,11 @@ relation ApprovedLearningAgreementDocumentFileExecutedAction {
 	candidacyProcess.erasmus.ApprovedLearningAgreementExecutedAction playsRole executedActions {
 		multiplicity *;
 	}
+}
+
+relation ErasmusIndividualCandidacyProcessExecutedActionIndividualCandidacyProcess {
+	candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessExecutedAction playsRole executedActions {
+		multiplicity *;
+	}
+	candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess playsRole erasmusIndividualCandidacyProcess;
 }
