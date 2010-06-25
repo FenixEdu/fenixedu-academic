@@ -36,7 +36,7 @@
 
 <script src="<%= request.getContextPath() + "/javaScript/jquery/jquery.js" %>" type="text/javascript" ></script>
 
-<fr:form action='<%= f("/caseHandlingErasmusIndividualCandidacyProcess.do?userAction=editCandidacy&amp;processId=%s&amp", processId.toString()) %>'>
+<fr:form action='<%= f("/caseHandlingErasmusIndividualCandidacyProcess.do?userAction=editCandidacy&amp;processId=%s", processId.toString()) %>'>
 
 	<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
 	<fr:edit id="degree.course.information.bean" name="degreeCourseInformationBean" visible="false" />
@@ -60,7 +60,7 @@
 </logic:empty>
 
 <logic:notEmpty name="individualCandidacyProcessBean" property="erasmusStudentDataBean.selectedUniversity">
-<fr:form action='<%= f("/caseHandlingErasmusIndividualCandidacyProcess.do?userAction=editCandidacy&amp;processId=%s&amp", processId.toString()) %>' id="thisForm">
+<fr:form action='<%= f("/caseHandlingErasmusIndividualCandidacyProcess.do?userAction=editCandidacy&amp;processId=%s", processId.toString()) %>' id="thisForm">
 
 	<input type="hidden" id="removeId" name ="removeCourseId"/>
 	<input type="hidden" id="skipValidationId" name="skipValidation" value="false"/>
