@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "alterTableDelegateElectionVote" alterTableDelegateElectionVote.sql
+execute "alterTableExecutedAction" alterTableExecutedAction.sql
