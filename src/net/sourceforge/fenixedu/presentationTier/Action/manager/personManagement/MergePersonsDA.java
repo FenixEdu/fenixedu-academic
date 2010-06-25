@@ -289,7 +289,8 @@ public class MergePersonsDA extends FenixDispatchAction {
 
 	mergePersonsBean.setCurrentClass(Student.class.getName());
 
-	return chooseObjects(mapping, form, request, response);
+	return chooseObjects(mapping, form, request, response, domainObject1.getStudent().getExternalId(), domainObject2
+		.getStudent().getExternalId(), Student.class.getName());
     }
 
     public ActionForward prepareTransferRegistrations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
