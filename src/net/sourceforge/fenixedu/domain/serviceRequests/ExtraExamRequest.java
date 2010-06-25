@@ -127,8 +127,10 @@ public class ExtraExamRequest extends ExtraExamRequest_Base {
 
 	if (academicServiceRequestBean.isToProcess()) {
 	    academicServiceRequestBean.setSituationDate(getActiveSituation().getSituationDate().toYearMonthDay());
+	}
 
-	    setEnrolment(null);
+	if (academicServiceRequestBean.isToCancelOrReject()) {
+	    removeEnrolment();
 	}
     }
 
