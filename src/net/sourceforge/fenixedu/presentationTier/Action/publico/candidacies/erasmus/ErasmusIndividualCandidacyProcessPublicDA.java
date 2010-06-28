@@ -51,8 +51,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/candidacies/caseHandlingErasmusCandidacyIndividualProcess", module = "publico", formBeanClass = FenixActionForm.class)
 @Forwards( {
-	@Forward(name = "candidacy-process-intro", path = "erasmus.candidacy.process.intro"),
-	@Forward(name = "candidacy-submission-type", path = "erasmus.candidacy.submission.type"),
 	@Forward(name = "show-pre-creation-candidacy-form", path = "erasmus.show.pre.creation.candidacy.form"),
 	@Forward(name = "show-email-message-sent", path = "erasmus.show.email.message.sent"),
 	@Forward(name = "show-application-submission-conditions", path = "erasmus.show.application.submission.conditions"),
@@ -79,7 +77,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "stork-attr-list-test", path = "erasmus.stork.attr.list.test"),
 	@Forward(name = "error-on-application-submission", path = "erasmus.error.on.application.submission.contact.gri"),
 	@Forward(name = "bind-link-submited-individual-candidacy-with-stork", path = "erasmus.bind.submited.individua.candidacy.with.stork"),
-	@Forward(name = "show-bind-process-success", path = "erasmus.show.bind.process.success") })
+	@Forward(name = "show-bind-process-success", path = "erasmus.show.bind.process.success"),
+	@Forward(name = "open-candidacy-process-closed", path = "erasmus.candidacy.process.closed") })
 public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndividualCandidacyProcessPublicDA {
 
     @Override
@@ -134,34 +133,34 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
     public ActionForward chooseSubmissionType(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	return mapping.findForward("candidacy-submission-type");
+	return new FenixActionForward(request, new ActionForward("http://nmci.ist.utl.pt/en/ist/erasmus/", true));
     }
 
     public ActionForward prepareCandidacyCreation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
+	DegreeOfficePublicCandidacyHashCode candidacyHashCode = (DegreeOfficePublicCandidacyHashCode) PublicCandidacyHashCode
+		.getPublicCandidacyCodeByHash(request.getParameter("hash"));
+
+	/*
+	 * For now just show the application so students can upload not
+	 * submitted document files
+	 */
+
+	if (candidacyHashCode.getIndividualCandidacyProcess() != null) {
+	    request.setAttribute("individualCandidacyProcess", candidacyHashCode.getIndividualCandidacyProcess());
+	    return viewCandidacy(mapping, form, request, response);
+	}
+
 	ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
 	if (actionForwardError != null)
 	    return actionForwardError;
 
 	CandidacyProcess candidacyProcess = getCurrentOpenParentProcess();
 
-	String hash = request.getParameter("hash");
-	DegreeOfficePublicCandidacyHashCode candidacyHashCode = (DegreeOfficePublicCandidacyHashCode) PublicCandidacyHashCode
-		.getPublicCandidacyCodeByHash(hash);
-
 	if (candidacyHashCode == null) {
 	    return mapping.findForward("open-candidacy-processes-not-found");
 	}
-
-	if (candidacyHashCode.getIndividualCandidacyProcess() != null
-		&& candidacyHashCode.getIndividualCandidacyProcess().getCandidacyProcess() == candidacyProcess) {
-	    request.setAttribute("individualCandidacyProcess", candidacyHashCode.getIndividualCandidacyProcess());
-	    return viewCandidacy(mapping, form, request, response);
-	} else if (candidacyHashCode.getIndividualCandidacyProcess() != null
-		&& candidacyHashCode.getIndividualCandidacyProcess().getCandidacyProcess() != candidacyProcess) {
-	    return mapping.findForward("open-candidacy-processes-not-found");
-	}
-
+	
 	ErasmusIndividualCandidacyProcessBean bean = new ErasmusIndividualCandidacyProcessBean(candidacyProcess);
 	bean.setPersonBean(new PersonBean());
 	bean.getPersonBean().setIdDocumentType(IDDocumentType.FOREIGNER_IDENTITY_CARD);
@@ -175,13 +174,20 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
     @Override
     public ActionForward fillExternalPrecedentInformation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
-	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
+	if (actionForwardError != null)
+	    return actionForwardError;
 
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 	return mapping.findForward("candidacy-continue-creation");
     }
 
     public ActionForward fillDegreeInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
+	ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
+	if (actionForwardError != null)
+	    return actionForwardError;
+
 	ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 
@@ -202,6 +208,9 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
     public ActionForward chooseDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
+	ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
+	if (actionForwardError != null)
+	    return actionForwardError;
 
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 	request.setAttribute("degreeCourseInformationBean", readDegreeCourseInformationBean(request));
@@ -217,6 +226,10 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
     public ActionForward addCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
+	ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
+	if (actionForwardError != null)
+	    return actionForwardError;
+
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 
 	ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
@@ -239,6 +252,10 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
     public ActionForward removeCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
+	ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
+	if (actionForwardError != null)
+	    return actionForwardError;
+
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 
 	ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
@@ -260,6 +277,11 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
     public ActionForward acceptHonourDeclaration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
+	ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
+	if (actionForwardError != null) {
+	    return actionForwardError;
+	}
+
 	ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 
@@ -280,8 +302,9 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	    HttpServletResponse response) throws IOException, FenixFilterException, FenixServiceException {
 	try {
 	    ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
-	    if (actionForwardError != null)
+	    if (actionForwardError != null) {
 		return actionForwardError;
+	    }
 
 	    ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
 	    bean.setInternalPersonCandidacy(Boolean.TRUE);
@@ -338,11 +361,8 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
 	try {
 	    ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
-	    if (actionForwardError != null)
+	    if (actionForwardError != null) {
 		return actionForwardError;
-
-	    if (!isApplicationSubmissionPeriodValid()) {
-		return beginCandidacyProcessIntro(mapping, form, request, response);
 	    }
 
 	    PersonBean personBean = bean.getPersonBean();
@@ -375,6 +395,11 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
     public ActionForward submitWithNationalCitizenCard(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
+	ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
+	if (actionForwardError != null) {
+	    return actionForwardError;
+	}
+
 	return mapping.findForward("redirect-to-peps");
     }
 
@@ -418,8 +443,9 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	String eIdentifier = attrManagement.getEIdentifier();
 
 	ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
-	if (actionForwardError != null)
+	if (actionForwardError != null) {
 	    return actionForwardError;
+	}
 
 	ErasmusCandidacyProcess candidacyProcess = (ErasmusCandidacyProcess) getCurrentOpenParentProcess();
 
@@ -502,21 +528,34 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
     public ActionForward prepareCandidacyCreationForStork(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
+	if (actionForwardError != null) {
+	    return actionForwardError;
+	}
 
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 	return mapping.findForward("show-candidacy-creation-page");
 
     }
 
     public ActionForward prepareEditCandidacyInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
+	if (actionForwardError != null) {
+	    return actionForwardError;
+	}
 
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 	return mapping.findForward("edit-candidacy-information");
     }
 
     public ActionForward editCandidacyInformationInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
+	ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
+	if (actionForwardError != null) {
+	    return actionForwardError;
+	}
+
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 	return mapping.findForward("edit-candidacy-information");
     }
@@ -526,11 +565,8 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
 	try {
 	    ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
-	    if (actionForwardError != null)
+	    if (actionForwardError != null) {
 		return actionForwardError;
-
-	    if (!isApplicationSubmissionPeriodValid()) {
-		return beginCandidacyProcessIntro(mapping, form, request, response);
 	    }
 
 	    if (bean.getErasmusStudentDataBean().getDateOfDeparture().isBefore(
@@ -558,6 +594,11 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
     public ActionForward prepareEditDegreeAndCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+	ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
+	if (actionForwardError != null) {
+	    return actionForwardError;
+	}
+
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 	request.setAttribute("degreeCourseInformationBean", new DegreeCourseInformationBean(
 		(ExecutionYear) getCurrentOpenParentProcess().getCandidacyExecutionInterval()));
@@ -567,6 +608,11 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
     public ActionForward prepareEditDegreeAndCoursesInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+	ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
+	if (actionForwardError != null) {
+	    return actionForwardError;
+	}
+
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 	return mapping.findForward("edit-candidacy-degree-and-courses");
     }
@@ -576,11 +622,8 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
 	try {
 	    ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
-	    if (actionForwardError != null)
+	    if (actionForwardError != null) {
 		return actionForwardError;
-
-	    if (!isApplicationSubmissionPeriodValid()) {
-		return beginCandidacyProcessIntro(mapping, form, request, response);
 	    }
 
 	    ErasmusVacancy vacancy = bean.calculateErasmusVacancy();
@@ -607,6 +650,11 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
     public ActionForward chooseCountry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
+	ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
+	if (actionForwardError != null) {
+	    return actionForwardError;
+	}
+
 	ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 	request.setAttribute("degreeCourseInformationBean", readDegreeCourseInformationBean(request));
@@ -624,6 +672,11 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
     public ActionForward chooseUniversity(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
+	ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
+	if (actionForwardError != null) {
+	    return actionForwardError;
+	}
+
 	ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 	request.setAttribute("degreeCourseInformationBean", readDegreeCourseInformationBean(request));

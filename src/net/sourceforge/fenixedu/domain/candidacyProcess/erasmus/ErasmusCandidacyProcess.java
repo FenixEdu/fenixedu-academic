@@ -54,6 +54,7 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 	activities.add(new RemoveTeacherFromCoordinators());
 	activities.add(new ViewChildProcessWithMissingRequiredDocumentFiles());
 	activities.add(new SendEmailToMissingRequiredDocumentsProcesses());
+	activities.add(new EditCandidacyPeriod());
     }
 
     public ErasmusCandidacyProcess() {
@@ -310,6 +311,22 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 	    process.edit(bean.getStart(), bean.getEnd());
 	    return process;
 	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return true;
+	}
+
+	@Override
+	public Boolean isVisibleForCoordinator() {
+	    return false;
+	}
+
+	@Override
+	public Boolean isVisibleForGriOffice() {
+	    return false;
+	}
+
     }
 
     private static class ViewErasmusVancacies extends Activity<ErasmusCandidacyProcess> {

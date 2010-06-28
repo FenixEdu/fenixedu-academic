@@ -72,15 +72,17 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
     }
 
     protected ActionForward verifySubmissionPreconditions(ActionMapping mapping) {
-	if (getCurrentOpenParentProcess() == null)
+	if (getCurrentOpenParentProcess() == null) {
 	    return mapping.findForward("open-candidacy-process-closed");
+	}
 
 	return null;
     }
 
     protected ActionForward verifyEditPreconditions(ActionMapping mapping) {
-	if (getCurrentOpenParentProcess() == null)
+	if (getCurrentOpenParentProcess() == null) {
 	    return mapping.findForward("open-candidacy-process-closed");
+	}
 
 	return null;
     }
@@ -97,8 +99,9 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
     public ActionForward preparePreCreationOfCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
-	if (actionForwardError != null)
+	if (actionForwardError != null) {
 	    return actionForwardError;
+	}
 
 	request.setAttribute("candidacyPreCreationBean", new CandidacyPreCreationBean());
 	return mapping.findForward("show-pre-creation-candidacy-form");
@@ -106,6 +109,11 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 
     public ActionForward preparePreCreationOfCandidacyInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
+	ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
+	if (actionForwardError != null) {
+	    return actionForwardError;
+	}
+
 	return preparePreCreationOfCandidacy(mapping, form, request, response);
     }
 
@@ -125,8 +133,9 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
     public ActionForward bindEmailWithHashCodeAndSendMailWithLink(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 	ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
-	if (actionForwardError != null)
+	if (actionForwardError != null) {
 	    return actionForwardError;
+	}
 
 	if (!validateCaptcha(mapping, request)) {
 	    invalidateDocumentFileRelatedViewStates();
@@ -156,8 +165,9 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
     public ActionForward showApplicationSubmissionConditions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
-	if (actionForwardError != null)
+	if (actionForwardError != null) {
 	    return actionForwardError;
+	}
 
 	String hash = request.getParameter("hash");
 	DegreeOfficePublicCandidacyHashCode candidacyHashCode = (DegreeOfficePublicCandidacyHashCode) DegreeOfficePublicCandidacyHashCode
@@ -210,6 +220,11 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 
     public ActionForward continueCandidacyCreation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
+	ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
+	if (actionForwardError != null) {
+	    return actionForwardError;
+	}
+
 	IndividualCandidacyProcessBean bean = (IndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
 
 	final PersonBean personBean = bean.getPersonBean();
@@ -282,6 +297,11 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 
     public ActionForward continueCandidacyCreationInvalid(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
+	ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
+	if (actionForwardError != null) {
+	    return actionForwardError;
+	}
+
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 	invalidateDocumentFileRelatedViewStates();
 
@@ -296,6 +316,11 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 
     public ActionForward executeCreateCandidacyPersonalInformationInvalid(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
+	ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
+	if (actionForwardError != null) {
+	    return actionForwardError;
+	}
+
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 	invalidateDocumentFileRelatedViewStates();
 
@@ -327,6 +352,11 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 
     public ActionForward fillInternalPrecedentInformation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
+	ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
+	if (actionForwardError != null) {
+	    return actionForwardError;
+	}
+
 	final IndividualCandidacyProcessWithPrecedentDegreeInformationBean bean = (IndividualCandidacyProcessWithPrecedentDegreeInformationBean) getIndividualCandidacyProcessBean();
 
 	StudentCurricularPlan studentCurricularPlan = bean.getLastPrecedentStudentCurricularPlan();
@@ -344,15 +374,17 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 	    }
 	}
 
-	// super.fillPrecedentInformationPostback(mapping, actionForm, request,
-	// response);
-
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 	return mapping.findForward("candidacy-continue-creation");
     }
 
     public ActionForward fillExternalPrecedentInformation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
+	ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
+	if (actionForwardError != null) {
+	    return actionForwardError;
+	}
+
 	final IndividualCandidacyProcessWithPrecedentDegreeInformationBean bean = (IndividualCandidacyProcessWithPrecedentDegreeInformationBean) getIndividualCandidacyProcessBean();
 	bean.setPrecedentDegreeType(PrecedentDegreeType.EXTERNAL_DEGREE);
 	bean.setPrecedentDegreeInformation(new CandidacyPrecedentDegreeInformationBean());
@@ -363,6 +395,11 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 
     public ActionForward prepareEditCandidacyProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
+	ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
+	if (actionForwardError != null) {
+	    return actionForwardError;
+	}
+
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 	return mapping.findForward("edit-candidacy");
     }
@@ -407,6 +444,11 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 
     public ActionForward prepareEditCandidacyQualifications(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
+	ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
+	if (actionForwardError != null) {
+	    return actionForwardError;
+	}
+
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 	return mapping.findForward("edit-candidacy-habilitations");
     }

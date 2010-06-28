@@ -131,6 +131,7 @@ padding: 0 !important;
 			<tr>
 				<th><bean:message key="label.erasmus.course" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
 				<th><bean:message key="label.erasmus.degree" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
+				<th><bean:message key="label.erasmus.ects" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
 				<th><!-- just in case --></th>
 			</tr>
 			<logic:iterate id="course" name="individualCandidacyProcessBean" property="sortedSelectedCurricularCourses" indexId="index">
@@ -146,6 +147,9 @@ padding: 0 !important;
 					<fr:view	name="course"
 								property="degree.sigla" />
 				</td>			
+				<td>
+					<fr:view	name="course" property="ectsCredits" />
+				</td>				
 				<td>
 					<a href="#" onclick="<%= f("$('#methodId').attr('value', 'removeCourse'); $('#skipValidationId').attr('value', 'true'); $('#removeId').attr('value', %s); $('#thisForm').submit()", curricularCourseId) %>"><bean:message key="label.erasmus.remove" bundle="ACADEMIC_OFFICE_RESOURCES" /></a>
 				</td>

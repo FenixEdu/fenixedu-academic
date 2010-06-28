@@ -7,6 +7,7 @@
 <%@ page import="java.util.Locale"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%>
 <%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile" %>
+<%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess" %>
 
 <%!
 	static String f(String value, Object ... args) {
@@ -21,7 +22,7 @@
 <bean:define id="applicationInformationLinkDefault" name="application.information.link.default"/>
 <bean:define id="applicationInformationLinkEnglish" name="application.information.link.english"/>
 
-<bean:define id="individualCandidacyProcess" name="individualCandidacyProcessBean" property="individualCandidacyProcess"/>
+<bean:define id="individualCandidacyProcess" name="individualCandidacyProcessBean" property="individualCandidacyProcess" type="ErasmusIndividualCandidacyProcess"/>
 <bean:define id="processId" name="individualCandidacyProcess" property="idInternal"/>
 
 <div class="breadcumbs">
@@ -54,6 +55,7 @@
 	<p class="mbottom05"><em><bean:message key="message.ist.conditions.note" bundle="CANDIDATE_RESOURCES"/></em></p>
 </logic:equal>
 
+<% if(!individualCandidacyProcess.getValidatedByGri() || !individualCandidacyProcess.getValidatedByErasmusCoordinator()) { %>
 
 <div class="h_box">
 	<h3 class="mtop05">Learning Agreement</h3>
@@ -61,6 +63,7 @@
 	<p>Please note that the document must be signed and stamped by your school before you upload.</p>
 	<p class="mbottom05"><html:link page="<%= mappingPath + ".do?method=retrieveLearningAgreement&processId=" + processId %>">Download learning agreement</html:link></p>
 </div>
+<% } %>
 
 <script src="<%= request.getContextPath() + "/javaScript/jquery/jquery.js" %>" type="text/javascript" >
 </script>
@@ -88,6 +91,24 @@
 
 	</p>
 </fr:form>
+</logic:equal>
+
+<logic:equal value="false" name="isApplicationSubmissionPeriodValid">
+
+<% if(!individualCandidacyProcess.getValidatedByGri() || !individualCandidacyProcess.getValidatedByErasmusCoordinator()) { %>
+<fr:form action='<%= mappingPath + ".do" %>' id="editCandidacyForm">
+	<input type="hidden" name="method" id="methodForm"/>
+	<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
+	<noscript>
+		<html:submit onclick="this.form.method.value='prepareEditCandidacyDocuments';"><bean:message key="label.edit.candidacy.documents" bundle="CANDIDATE_RESOURCES" /></html:submit>
+		<html:cancel><bean:message key="label.back" bundle="APPLICATION_RESOURCES" /></html:cancel>
+	</noscript>
+	<p class="mtop15">
+		<a href="#" onclick="$('#methodForm').attr('value', 'prepareEditCandidacyDocuments'); $('#editCandidacyForm').submit();"> <b><bean:message key="label.edit.candidacy.documents" bundle="CANDIDATE_RESOURCES" /></b></a>
+	</p>
+</fr:form>	
+<% } %>
+
 </logic:equal>
 
 
@@ -143,13 +164,9 @@
 </table>
 </logic:notEmpty>
 
+<% if(!individualCandidacyProcess.getValidatedByGri() || !individualCandidacyProcess.getValidatedByErasmusCoordinator()) { %>
 <p><a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditCandidacyDocuments';document.getElementById('editCandidacyForm').submit();"> <bean:message key="label.edit.candidacy.documents" bundle="CANDIDATE_RESOURCES" /></a></p>
-
-
-
-
-
-
+<% } %>
 
 	<h2 class="mtop15 mbottom05"><bean:message key="label.erasmus.home.institution" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
@@ -220,11 +237,6 @@
 	        <fr:property name="columnClasses" value="width175px,,,,"/>
 		</fr:layout>
 	</fr:view>
-
-
-
-
-
 
 
 <div class="mtop2" id="contacts">
