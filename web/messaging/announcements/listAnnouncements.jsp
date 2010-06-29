@@ -239,17 +239,21 @@
 					<fr:property name="key(edit)" value="messaging.edit.link" />
 					<fr:property name="bundle(edit)" value="MESSAGING_RESOURCES" />
 					<fr:property name="order(edit)" value="2" />
+
 					<fr:property name="link(view)" value="<%= urlLinkView %>" />
 					<fr:property name="param(view)" value="idInternal/announcementId" />
 					<fr:property name="key(view)" value="messaging.view.link" />
 					<fr:property name="bundle(view)" value="MESSAGING_RESOURCES" />
 					<fr:property name="order(view)" value="1" />
+
 					<fr:property name="link(remove)" value="<%= urlLinkRemove %>" />
 					<fr:property name="param(remove)"
 						value="idInternal/announcementId,announcementBoard.idInternal/announcementBoardId" />
 					<fr:property name="key(remove)" value="messaging.delete.label" />
 					<fr:property name="bundle(remove)" value="MESSAGING_RESOURCES" />
 					<fr:property name="order(remove)" value="3" />
+					<fr:property name="confirmationKey(remove)" value="message.remove.announcement.confirmation" />
+					<fr:property name="confirmationBundle(remove)" value="MESSAGING_RESOURCES" />
 
 					<fr:property name="link(approve)" value="<%= contextPrefix + "method=aproveAction&amp;announcementId=${idInternal}&amp;action=true&amp;"+extraParameters+"&amp;tabularVersion=true" %>" />
 					<fr:property name="param(approve)" value="idInternal/announcementId,announcementBoard.idInternal/announcementBoardId" />

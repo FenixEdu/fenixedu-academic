@@ -303,6 +303,7 @@ host.control.name.net.sourceforge.fenixedu.presentationTier.Action.externalServi
 host.control.name.net.sourceforge.fenixedu.presentationTier.Action.messaging.ExecutionCourseAliasExpandingAction=127.0.0.1,0:0:0:0:0:0:0:1
 host.control.name.net.sourceforge.fenixedu.presentationTier.Action.externalServices.AnnouncementBoardExport=127.0.0.1,0:0:0:0:0:0:0:1
 host.control.name.net.sourceforge.fenixedu.webServices.PersonManagement=
+host.control.name.net.sourceforge.fenixedu.webServices.AnnouncementManagement=127.0.0.1,193.136.128.66,www.ist.utl.pt,wonderland.ist.utl.pt,0:0:0:0:0:0:0:1
 
 #----------------------------------------------
 # CAS configuration

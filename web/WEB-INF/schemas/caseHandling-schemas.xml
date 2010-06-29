@@ -2445,7 +2445,6 @@
 </schema>
 
 <schema name="ErasmusIndividualCandidacy.missing.required.documents.list" extends="ErasmusIndividualCandidacyProcess.list.processes" type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess" bundle="APPLICATION_RESOURCES">
-	<remove name="candidacyState" />
 	<remove name="validatedByGri" />
 	<remove name="validatedByErasmusCoordinator" />
 	<slot name="candidacyHashCode.email" key="label.email" bundle="ACADEMIC_OFFICE_RESOURCES" />

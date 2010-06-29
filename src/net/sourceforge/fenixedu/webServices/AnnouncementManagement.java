@@ -2,13 +2,17 @@ package net.sourceforge.fenixedu.webServices;
 
 import java.util.List;
 
+import javax.servlet.ServletRequest;
+
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementCategory;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementCategoryType;
 import net.sourceforge.fenixedu.domain.space.Campus;
+import net.sourceforge.fenixedu.util.HostAccessControl;
 import net.sourceforge.fenixedu.util.StringUtils;
+import net.sourceforge.fenixedu.webServices.exceptions.NotAuthorizedException;
 
 import org.codehaus.xfire.MessageContext;
 import org.joda.time.DateTime;
@@ -44,9 +48,12 @@ public class AnnouncementManagement implements IAnnouncementManagement {
     public String addAnnouncement(String username, String password, String subject, String body, String excerpt, String keywords,
 	    String authorName, String authorEmail, String eventBeginDate, String eventEndDate, String place,
 	    String publicationBeginDate, String publicationEndDate, String[] categories, String campus, String announcementBoard,
-	    String editorNotes, String fileName, String fileContents, Long fileSize, MessageContext context) {
+	    String editorNotes, String fileName, String fileContents, Long fileSize, MessageContext context)
+	    throws NotAuthorizedException {
 
 	try {
+	    checkPermissions(context);
+
 	    validateField(subject, "Subject", MAX_SIZE_SUBJECT);
 	    validateField(body, "Body", MAX_SIZE_BODY);
 	    validateField(excerpt, "Excerpt", MAX_SIZE_EXCERPT);
@@ -121,4 +128,12 @@ public class AnnouncementManagement implements IAnnouncementManagement {
 	    super(message);
 	}
     }
+
+    private void checkPermissions(MessageContext context) throws NotAuthorizedException {
+	// check hosts accessing this service
+	if (!HostAccessControl.isAllowed(this, (ServletRequest) context.getProperty("XFireServletController.httpServletRequest"))) {
+	    throw new NotAuthorizedException();
+	}
+    }
+
 }

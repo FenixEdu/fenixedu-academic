@@ -234,11 +234,14 @@ if (month != null && year!=null)
 						<fr:property name="key(view)" value="messaging.view.link"/>
 						<fr:property name="bundle(view)" value="MESSAGING_RESOURCES"/>						
 						<fr:property name="order(view)" value="1"/>
+
 						<fr:property name="link(remove)" value="<%= contextPrefix + "method=deleteAnnouncement" + "&amp;" + extraParameters + "&amp;tabularVersion=true"%>"/>
 						<fr:property name="param(remove)" value="idInternal/announcementId,announcementBoard.idInternal/announcementBoardId"/>
 						<fr:property name="key(remove)" value="messaging.delete.label"/>
 						<fr:property name="bundle(remove)" value="MESSAGING_RESOURCES"/>				
 						<fr:property name="order(remove)" value="3"/>
+						<fr:property name="confirmationKey(remove)" value="message.remove.announcement.confirmation" />
+						<fr:property name="confirmationBundle(remove)" value="MESSAGING_RESOURCES" />
 						
 						<fr:property name="sortUrl" value="<%= "/announcements/manageUnitAnnouncementBoard.do?method=prepareEditAnnouncementBoard&amp;announcementBoardId=" + announcementBoardId + "&amp;tabularVersion=true" %>"/>
 						<fr:property name="sortParameter" value="sortBy"/>

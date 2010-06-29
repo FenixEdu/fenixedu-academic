@@ -762,7 +762,7 @@ Documentation:
 	</renderer>	
 
     <!--@ Allows to present a collection in a table were rows can be sorted by pressing the table headers. -->
-    <renderer type="java.util.Collection" layout="tabular-sortable" class="pt.ist.fenixWebFramework.renderers.OrderableCollectionRenderer">
+    <renderer type="java.util.Collection" layout="tabular-sortable" class="net.sourceforge.fenixedu.presentationTier.renderers.OrderableCollectionRenderer">
         <property name="groupLinks" value="true"/>
         <property name="linkGroupSeparator" value=", "/>
     </renderer>
