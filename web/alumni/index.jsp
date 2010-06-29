@@ -154,9 +154,19 @@ ul.material li.feedback { background: url(<%= request.getContextPath() %>/images
 	  	<bean:define id="twitt"><rss:itemDescription feedId="istTwitter"/></bean:define>
 	  	<%  if(twitt.startsWith("istecnico: ")){
 	  	  		String newtwitt = twitt.replace("istecnico: ","");
-	  	  		String[] splittedTwitt = newtwitt.split("\n");	  	  		
-	  			request.setAttribute("beforeUrl", splittedTwitt[0]);
-	  			request.setAttribute("twittUrl", splittedTwitt[1]);
+	  	  		String[] splittedTwitt = newtwitt.split("\n");
+	  	  		if(splittedTwitt.length > 1){
+		  			request.setAttribute("beforeUrl", splittedTwitt[0]);
+		  			request.setAttribute("twittUrl", splittedTwitt[1]);
+	  	  		} else {
+	  	  		    int index = newtwitt.lastIndexOf("http://");
+	  	  		    if(index >= 0) {
+	  	  				String twittUrl = newtwitt.substring(index);
+	  	  				splittedTwitt = newtwitt.split("http://");
+	  	  				request.setAttribute("beforeUrl", splittedTwitt[0]);
+			  			request.setAttribute("twittUrl", twittUrl);
+	  	  		    }	  	  		
+	  	  		}
 	  		}
 	  	%>
 	    <li>
