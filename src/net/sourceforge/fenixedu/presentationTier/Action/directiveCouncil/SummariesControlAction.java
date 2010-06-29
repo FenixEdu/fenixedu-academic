@@ -4,6 +4,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -13,16 +15,18 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.Set;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.DepartmentSummaryElement;
-import net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.ExecutionCourseSummaryElement;
 import net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.DetailSummaryElement;
+import net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.ExecutionCourseSummaryElement;
 import net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.DepartmentSummaryElement.SummaryControlCategory;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Department;
@@ -38,6 +42,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -45,16 +50,20 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.LabelValueBean;
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.Pair;
+import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class SummariesControlAction extends FenixDispatchAction {
 
     private BigDecimal EMPTY = BigDecimal.ZERO;
+    protected static final String MODULE = "directiveCouncil";
 
     public ActionForward prepareSummariesControl(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
@@ -206,9 +215,9 @@ public class SummariesControlAction extends FenixDispatchAction {
 		String categoryName = (category != null) ? category.getCode() : "";
 		String siglas = getSiglas(professorship);
 
-		DetailSummaryElement listElementDTO = new DetailSummaryElement(professorship.getPerson().getName(),
-			professorship.getExecutionCourse().getNome(), teacher != null ? teacher.getTeacherNumber() : null,
-			categoryName, lessonsDeclared, summariesGiven, givenSumariesPercentage, siglas);
+		DetailSummaryElement listElementDTO = new DetailSummaryElement(professorship.getPerson().getName(), professorship
+			.getExecutionCourse().getNome(), teacher != null ? teacher.getTeacherNumber() : null, categoryName,
+			lessonsDeclared, summariesGiven, givenSumariesPercentage, siglas);
 
 		allListElements.add(listElementDTO);
 	    }
@@ -416,5 +425,115 @@ public class SummariesControlAction extends FenixDispatchAction {
 	List<LabelValueBean> departments = getAllDepartments(allDepartments);
 	request.setAttribute("allDepartments", allDepartments);
 	request.setAttribute("departments", departments);
+    }
+
+    /**
+     * Method responsible for exporting 'departmentSummaryResume' to excel file
+     * 
+     * @param mapping
+     * @param actionForm
+     * @param request
+     * @param response
+     * @return
+     * @throws IOException
+     */
+    public ActionForward exportInfoToExcel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws IOException {
+	String departmentID = (String) request.getParameter("departmentID");
+	String executionSemesterID = (String) request.getParameter("executionSemesterID");
+
+	final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionSemesterID);
+	final Department department = AbstractDomainObject.fromExternalId(departmentID);
+
+	DepartmentSummaryElement departmentSummaryResume = getDepartmentSummaryResume(executionSemester, department);
+
+	if (departmentSummaryResume != null) {
+	    final ResourceBundle bundle = ResourceBundle.getBundle("resources/DirectiveCouncilResources", Language.getLocale());
+	    String sigla = departmentSummaryResume.getDepartment().getAcronym();
+	    final String filename = "SummaryControl_" + sigla + "_" + new DateTime().toString("ddMMyyyyHHmmss");
+
+	    response.setContentType("application/vnd.ms-excel");
+	    response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
+	    ServletOutputStream writer = response.getOutputStream();
+	    exportToXls(departmentSummaryResume, departmentSummaryResume.getDepartment(), executionSemester, writer);
+	    writer.flush();
+	    response.flushBuffer();
+	}
+
+	return null;
+    }
+
+    private void exportToXls(DepartmentSummaryElement departmentSummaryResume, final Department department,
+	    final ExecutionSemester executionSemester, final OutputStream os) throws IOException {
+	final StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet(getResourceMessage("label.alumni.main.title"));
+
+	fillSpreadSheet(departmentSummaryResume, department, executionSemester, spreadsheet);
+	spreadsheet.getWorkbook().write(os);
+    }
+
+    /**
+     * Method responsible for filling the spreadsheet with department summary
+     * information
+     * 
+     * @param departmentSummaryResume
+     * @param department
+     * @param semester
+     * @param sheet
+     */
+    private void fillSpreadSheet(DepartmentSummaryElement departmentSummaryResume, Department department,
+	    ExecutionSemester semester, final StyledExcelSpreadsheet sheet) {
+	setHeaders(sheet);
+	int counter = 0;
+	List<ExecutionCourseSummaryElement> executionCourses = departmentSummaryResume.getExecutionCourses();
+
+	// Iterate on all executionCourses and print them
+	for (ExecutionCourseSummaryElement executionCourse : executionCourses) {
+	    counter = 0;
+	    Set<Person> persons = executionCourse.getPersons();
+	    int lessons = executionCourse.getNumberOfLessonInstances().intValue();
+	    int lessonsWithSummaries = executionCourse.getNumberOfLessonInstancesWithSummary().intValue();
+	    double lessonsWithSummariesPercentage = executionCourse.getPercentageOfLessonsWithSummary().doubleValue();
+	    for (Person person : persons) {
+		if (counter == 0) {
+		    sheet.newRow();
+		    sheet.addCell(semester.getName());
+		    sheet.addCell(department.getName());
+		    sheet.addCell(executionCourse.getExecutionCourse().getName());
+		    sheet.addCell(lessons);
+		    sheet.addCell(lessonsWithSummaries);
+		    sheet.addCell(lessonsWithSummariesPercentage);
+
+		}
+		sheet.newRow();
+		sheet.addCell(null);
+		sheet.addCell(null);
+		sheet.addCell(null);
+		sheet.addCell(null);
+		sheet.addCell(null);
+		sheet.addCell(null);
+
+		sheet.addCell(person.getName());
+		sheet.addCell(person.getLoginIdentification().getUsername());
+		counter++;
+
+	    }
+	}
+    }
+
+    private void setHeaders(final StyledExcelSpreadsheet spreadsheet) {
+	spreadsheet.newHeaderRow();
+
+	spreadsheet.addHeader(getResourceMessage("label.excel.semester"));
+	spreadsheet.addHeader(getResourceMessage("label.excel.department"));
+	spreadsheet.addHeader(getResourceMessage("label.excel.course"));
+	spreadsheet.addHeader(getResourceMessage("label.excel.lessons"));
+	spreadsheet.addHeader(getResourceMessage("label.excel.lessons.summaries"));
+	spreadsheet.addHeader(getResourceMessage("label.excel.lessons.summaries.percentage"));
+	spreadsheet.addHeader(getResourceMessage("label.excel.professorName"));
+	spreadsheet.addHeader(getResourceMessage("label.excel.professorUsername"));
+    }
+
+    static private String getResourceMessage(String key) {
+	return BundleUtil.getMessageFromModuleOrApplication(MODULE, key);
     }
 }

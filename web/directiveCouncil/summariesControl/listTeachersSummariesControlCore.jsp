@@ -185,7 +185,13 @@ padding-right: 3px;
 				    sortCriteria = "executionCourse.nome=ascending";
 				}
 			%>
-
+ 		<html:link
+			page="<%= "/summariesControl.do?method=exportInfoToExcel&departmentID=" + departmentID.toString() + "&executionSemesterID=" + executionSemesterID.toString() %>">
+			<html:image border="0"
+				src="<%= request.getContextPath() + "/images/excel.gif"%>" 
+				altKey="excel" bundle="IMAGE_RESOURCES"></html:image>
+				<bean:message key="label.excel.link" bundle="DIRECTIVE_COUNCIL_RESOURCES"/>
+		</html:link>					
 			<fr:view name="departmentResume" property="executionCourses">
 				<fr:layout name="tabular-sortable">
 					<fr:property name="classes" value="tstyle4 thlight mtop05"/>
@@ -304,5 +310,6 @@ padding-right: 3px;
 				<em><bean:message key="message.summary.noDataForThisSemester" bundle="PEDAGOGICAL_COUNCIL"/></em>
 			</logic:empty>
 		</logic:iterate>			
-	</logic:present>					
+	</logic:present>
+	
 	
