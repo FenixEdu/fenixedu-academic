@@ -53,6 +53,8 @@ import org.apache.struts.util.LabelValueBean;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
@@ -450,7 +452,11 @@ public class SummariesControlAction extends FenixDispatchAction {
 	if (departmentSummaryResume != null) {
 	    final ResourceBundle bundle = ResourceBundle.getBundle("resources/DirectiveCouncilResources", Language.getLocale());
 	    String sigla = departmentSummaryResume.getDepartment().getAcronym();
-	    final String filename = "SummaryControl_" + sigla + "_" + new DateTime().toString("ddMMyyyyHHmmss");
+	    DateTime dt = new DateTime();
+	    DateTimeFormatter fmt = DateTimeFormat.forPattern("dd-MM-yyyy");
+	    String date = fmt.print(dt);
+
+	    final String filename = "SummaryControl_" + sigla + "_" + date;
 
 	    response.setContentType("application/vnd.ms-excel");
 	    response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
