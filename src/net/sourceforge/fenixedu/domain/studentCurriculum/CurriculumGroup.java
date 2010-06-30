@@ -809,6 +809,15 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	}
 	return result;
     }
+    
+    @Override
+    public Collection<Enrolment> getSpecialSeasonEnrolments(final ExecutionSemester executionSemester) {
+	final Collection<Enrolment> result = new HashSet<Enrolment>();
+	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+	    result.addAll(curriculumModule.getSpecialSeasonEnrolments(executionSemester));
+	}
+	return result;
+    }
 
     @Override
     final public void getAllDegreeModules(final Collection<DegreeModule> degreeModules) {

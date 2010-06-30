@@ -987,6 +987,9 @@ class DomainObject {
 
         class EnrolmentPeriodInCurricularCoursesSpecialSeason extends EnrolmentPeriod {
         }
+        
+        class EnrolmentPeriodInSpecialSeasonEvaluations extends EnrolmentPeriod {
+        }
 
         class EnrolmentPeriodInImprovementOfApprovedEnrolment extends EnrolmentPeriod {
         }

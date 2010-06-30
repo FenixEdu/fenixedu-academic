@@ -60,6 +60,10 @@ public abstract class EnrolmentPeriod extends EnrolmentPeriod_Base {
     public boolean isValid(final Date date) {
 	return containsDate(new DateTime(date));
     }
+    
+    public boolean isUpcomingPeriod() {
+	return getStartDateDateTime().isAfterNow();
+    }
 
     public boolean containsDate(DateTime date) {
 	return !(getStartDateDateTime().isAfter(date) || getEndDateDateTime().isBefore(date));

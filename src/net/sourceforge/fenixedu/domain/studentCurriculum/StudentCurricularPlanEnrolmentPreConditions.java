@@ -134,6 +134,14 @@ public class StudentCurricularPlanEnrolmentPreConditions {
 
 	return createTrue();
     }
+    
+    static EnrolmentPreConditionResult checkEnrolmentPeriodsForSpecialSeason(StudentCurricularPlan scp, ExecutionSemester semester) {
+	if(!scp.getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(semester)) {
+	    return outOfPeriodResult("specialSeason", scp.getDegreeCurricularPlan()
+			.getNextEnrolmentPeriodInCurricularCoursesSpecialSeason());
+	}
+	return createTrue();
+    }
 
     /*
      * Student must have flunked state and then registered (in same year),

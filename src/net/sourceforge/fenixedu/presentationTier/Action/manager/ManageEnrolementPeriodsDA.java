@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCoursesSpecialSeason;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInImprovementOfApprovedEnrolment;
+import net.sourceforge.fenixedu.domain.EnrolmentPeriodInSpecialSeasonEvaluations;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ReingressionPeriod;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -38,6 +39,8 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
 
     static List<Class<? extends EnrolmentPeriod>> VALID_ENROLMENT_PERIODS = Arrays.<Class<? extends EnrolmentPeriod>> asList(
 	    EnrolmentPeriodInCurricularCourses.class,
+	    
+	    EnrolmentPeriodInSpecialSeasonEvaluations.class,
 
 	    EnrolmentPeriodInClasses.class,
 

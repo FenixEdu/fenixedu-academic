@@ -624,6 +624,26 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	return getActualEnrolmentPeriod() != null;
     }
 
+    public EnrolmentPeriodInSpecialSeasonEvaluations getNextSpecialSeasonEnrolmentPeriod() {
+	final List<EnrolmentPeriodInSpecialSeasonEvaluations> positivesSet = new ArrayList<EnrolmentPeriodInSpecialSeasonEvaluations>();
+	for (final EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriods()) {
+	    if ((enrolmentPeriod instanceof EnrolmentPeriodInSpecialSeasonEvaluations) && enrolmentPeriod.isUpcomingPeriod()) {
+		positivesSet.add((EnrolmentPeriodInSpecialSeasonEvaluations) enrolmentPeriod);
+	    }
+	}
+	return positivesSet.isEmpty() ? null : Collections.min(positivesSet, EnrolmentPeriodInSpecialSeasonEvaluations.COMPARATOR_BY_START);
+    }
+
+    public boolean hasOpenSpecialSeasonEnrolmentPeriod(ExecutionSemester executionSemester) {
+	for (final EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriods()) {
+	    if ((enrolmentPeriod instanceof EnrolmentPeriodInSpecialSeasonEvaluations)
+		    && enrolmentPeriod.isFor(executionSemester) && enrolmentPeriod.isValid()) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
     public EnrolmentPeriodInCurricularCoursesSpecialSeason getActualEnrolmentPeriodInCurricularCoursesSpecialSeason() {
 	for (final EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriods()) {
 	    if ((enrolmentPeriod instanceof EnrolmentPeriodInCurricularCoursesSpecialSeason) && enrolmentPeriod.isValid()) {
@@ -1662,31 +1682,31 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	}
 	return (Set) branches;
     }
-    
+
     public Set<BranchCourseGroup> getBranchesByType(net.sourceforge.fenixedu.domain.degreeStructure.BranchType branchType) {
 	final Set<BranchCourseGroup> branchesByType = new TreeSet<BranchCourseGroup>(DegreeModule.COMPARATOR_BY_NAME);
 	final Set<BranchCourseGroup> branches = getAllBranches();
-	if(branches == null)
+	if (branches == null)
 	    return null;
-	for(BranchCourseGroup branch : branches) {
-	    if(branch.getBranchType() == branchType)
+	for (BranchCourseGroup branch : branches) {
+	    if (branch.getBranchType() == branchType)
 		branchesByType.add(branch);
 	}
 	return branchesByType;
     }
-    
+
     public Set<BranchCourseGroup> getMajorBranches() {
 	return getBranchesByType(net.sourceforge.fenixedu.domain.degreeStructure.BranchType.MAJOR);
     }
-    
+
     public Set<BranchCourseGroup> getMinorBranches() {
 	return getBranchesByType(net.sourceforge.fenixedu.domain.degreeStructure.BranchType.MINOR);
     }
-    
+
     public boolean hasBranches() {
 	return getAllBranches().isEmpty() ? false : true;
     }
-    
+
     public boolean hasBranchesByType(net.sourceforge.fenixedu.domain.degreeStructure.BranchType branchType) {
 	return getBranchesByType(branchType).isEmpty() ? false : true;
     }
@@ -1945,11 +1965,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	final Person person = AccessControl.getPerson();
 	return person != null && getDegree().isMemberOfCurrentScientificCommission(person, executionYear);
     }
-    
+
     public ExecutionYear getInauguralExecutionYear() {
 	return Collections.min(getExecutionDegreesSet(), ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR).getExecutionYear();
     }
-    
+
     public ExecutionYear getLastExecutionYear() {
 	return Collections.max(getExecutionDegreesSet(), ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR).getExecutionYear();
     }

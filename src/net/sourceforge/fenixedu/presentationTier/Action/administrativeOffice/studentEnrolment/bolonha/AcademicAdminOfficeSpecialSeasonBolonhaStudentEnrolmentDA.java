@@ -70,7 +70,7 @@ public class AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA extends A
 	}
     }
 
-    private boolean hasAnyAdministrativeOfficeFeeAndInsuranceInDebt(final Student student, final ExecutionYear executionYear) {
+    protected boolean hasAnyAdministrativeOfficeFeeAndInsuranceInDebt(final Student student, final ExecutionYear executionYear) {
 	for (final Event event : student.getPerson().getEvents()) {
 
 	    if (event instanceof AnnualEvent) {
@@ -88,7 +88,7 @@ public class AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA extends A
 	return false;
     }
 
-    private boolean hasAnyGratuityDebt(final Student student, final ExecutionYear executionYear) {
+    protected boolean hasAnyGratuityDebt(final Student student, final ExecutionYear executionYear) {
 	for (final Registration registration : student.getRegistrations()) {
 	    for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
 		for (final GratuityEvent gratuityEvent : studentCurricularPlan.getGratuityEvents()) {

@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCoursesSpecialSeason;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInImprovementOfApprovedEnrolment;
+import net.sourceforge.fenixedu.domain.EnrolmentPeriodInSpecialSeasonEvaluations;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ReingressionPeriod;
@@ -77,6 +78,10 @@ public class CreateEnrolmentPeriods {
 	} else if (EnrolmentPeriodInCurricularCourses.class.getName().equals(enrolmentPeriodClassName)) {
 
 	    new EnrolmentPeriodInCurricularCourses(degreeCurricularPlan, executionSemester, startDate, endDate);
+
+	} else if (EnrolmentPeriodInSpecialSeasonEvaluations.class.getName().equals(enrolmentPeriodClassName)) {
+
+	    new EnrolmentPeriodInSpecialSeasonEvaluations(degreeCurricularPlan, executionSemester, startDate, endDate);
 
 	} else if (EnrolmentPeriodInCurricularCoursesSpecialSeason.class.getName().equals(enrolmentPeriodClassName)) {
 

@@ -11,12 +11,15 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.curricularRules.EnrolmentInSpecialSeasonEvaluation;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfECTSInSpecialSeasonEvaluation;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.EnrolmentResultType;
 import net.sourceforge.fenixedu.domain.enrolment.EnroledCurriculumModuleWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.StudentStatute;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
+import net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolmentPreConditions.EnrolmentPreConditionResult;
 
 public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager extends StudentCurricularPlanEnrolment {
 
@@ -48,6 +51,29 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
 
 	if (updateRegistrationAfterConclusionProcessPermissionEvaluated()) {
 	    return;
+	}
+    }
+    
+    @Override
+    protected void assertStudentEnrolmentPreConditions() {
+	
+	if (!getResponsiblePerson().getStudent().getRegistrationsToEnrolByStudent().contains(getRegistration())) {
+	    throw new DomainException("error.StudentCurricularPlan.student.is.not.allowed.to.perform.enrol");
+	}
+	
+	if(!hasSpecialSeasonStatute()) {
+	    throw new DomainException("error.StudentCurricularPlan.student.has.no.special.season.statute");
+	}
+
+	if (getCurricularRuleLevel() != CurricularRuleLevel.SPECIAL_SEASON_ENROLMENT) {
+	    throw new DomainException("error.StudentCurricularPlan.invalid.curricular.rule.level");
+	}
+
+	final EnrolmentPreConditionResult result = StudentCurricularPlanEnrolmentPreConditions.checkEnrolmentPeriodsForSpecialSeason(
+		getStudentCurricularPlan(), getExecutionSemester());
+
+	if (!result.isValid()) {
+	    throw new DomainException(result.message(), result.args());
 	}
     }
 
@@ -121,6 +147,16 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
 		}
 	    }
 	}
+    }
+    
+    private boolean hasSpecialSeasonStatute() {
+	List<StudentStatute> statutes = getResponsiblePerson().getStudent().getStudentStatutes();
+	for(StudentStatute statute : statutes) {
+	    if(statute.getStatuteType().isSpecialSeasonGranted() && statute.isValidInExecutionPeriod(getExecutionSemester())) {
+		return true;
+	    }
+	}
+	return false;
     }
 
 }

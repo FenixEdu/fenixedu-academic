@@ -71,6 +71,9 @@
 					
 					<html:option bundle="MANAGER_RESOURCES" key="label.class.enrolment.period.in.curricular.course"
 							value="net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses"/>
+							
+					<html:option bundle="MANAGER_RESOURCES" key="label.class.enrolment.period.in.special.season.evaluation"
+							value="net.sourceforge.fenixedu.domain.EnrolmentPeriodInSpecialSeasonEvaluations"/>
 					
 					<html:option bundle="MANAGER_RESOURCES" key="label.class.enrolment.period.in.classes"
 							value="net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses"/>

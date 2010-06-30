@@ -29,13 +29,6 @@ public class MaximumNumberOfECTSInSpecialSeasonEvaluationExecutor extends Curric
 	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
 	final Registration registration = enrolmentContext.getRegistration();
 
-//	final ExecutionYear executionYear = enrolmentContext.getExecutionPeriod().getExecutionYear();
-//	final SpecialSeasonCode specialSeasonCode = registration.getSpecialSeasonCodeByExecutionYear(executionYear);
-//	if (specialSeasonCode == null) {
-//	    return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
-//		    "curricularRules.ruleExecutors.EnrolmentInSpecialSeasonEvaluationExecutor.no.specialSeason.code");
-//	}
-
 	final MaximumNumberOfECTSInSpecialSeasonEvaluation rule = (MaximumNumberOfECTSInSpecialSeasonEvaluation) curricularRule;
 	final BigDecimal totalEcts = getTotalEcts(registration, enrolmentContext);
 
@@ -54,21 +47,14 @@ public class MaximumNumberOfECTSInSpecialSeasonEvaluationExecutor extends Curric
 	    }
 	}
 
-//	if (specialSeasonCode.getMaxEcts().compareTo(totalEcts) < 0) {
-//	    return RuleResult.createWarning(sourceDegreeModuleToEvaluate.getDegreeModule(),
-//		    "curricularRules.ruleExecutors.EnrolmentInSpecialSeasonEvaluationExecutor.too.many.specialSeason.ects",
-//		    specialSeasonCode.getSituation(), specialSeasonCode.getMaxEcts().toPlainString());
-//	}
-
 	return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
     }
 
     private BigDecimal getTotalEcts(Registration registration, EnrolmentContext enrolmentContext) {
-	boolean isSecondCycle = registration.getDegreeType().isSecondCycle();
 	BigDecimal result = BigDecimal.ZERO;
 	for (IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
 	    final CurricularCourse curricularCourse = (CurricularCourse) degreeModuleToEvaluate.getDegreeModule();
-	    if (!isSecondCycle || (isSecondCycle && !curricularCourse.isDissertation())) {
+	    if (enrolmentContext.isResponsiblePersonStudent() || !curricularCourse.isDissertation()) {
 		result = result.add(BigDecimal.valueOf(degreeModuleToEvaluate.getEctsCredits()));
 	    }
 	}

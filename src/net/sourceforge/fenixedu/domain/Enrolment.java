@@ -637,6 +637,10 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	    setEnrolmentEvaluationType(EnrolmentEvaluationType.SPECIAL_SEASON);
 	    setEnrollmentState(EnrollmentState.ENROLLED);
 
+	    if (employee == null)
+		return new EnrolmentEvaluation(this, EnrolmentEvaluationType.SPECIAL_SEASON,
+			EnrolmentEvaluationState.TEMPORARY_OBJ);
+
 	    return new EnrolmentEvaluation(this, EnrolmentEvaluationType.SPECIAL_SEASON, EnrolmentEvaluationState.TEMPORARY_OBJ,
 		    employee);
 	} else {
@@ -1426,6 +1430,10 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 		&& getTempSpecialSeasonEvaluation() != null;
     }
 
+    final public boolean isSpecialSeasonEnroled(ExecutionSemester executionSemester) {
+	return isSpecialSeason() && isValid(executionSemester) && getTempSpecialSeasonEvaluation() != null;
+    }
+
     private EnrolmentEvaluation getTempSpecialSeasonEvaluation() {
 	final EnrolmentEvaluation latestSpecialSeasonEnrolmentEvaluation = getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType.SPECIAL_SEASON);
 
@@ -1442,10 +1450,23 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return getEnrolmentEvaluationType() != EnrolmentEvaluationType.SPECIAL_SEASON
 		&& getExecutionPeriod().getExecutionYear() == executionYear && !isApproved();
     }
+    
+    final public boolean canBeSpecialSeasonEnroled(ExecutionSemester executionSemester) {
+	return getEnrolmentEvaluationType() != EnrolmentEvaluationType.SPECIAL_SEASON
+		&& getExecutionPeriod() == executionSemester && !isApproved();
+    }
 
     @Override
     final public Collection<Enrolment> getSpecialSeasonEnrolments(final ExecutionYear executionYear) {
 	if (isSpecialSeason() && getExecutionPeriod().getExecutionYear().equals(executionYear)) {
+	    return Collections.singleton(this);
+	}
+	return Collections.emptySet();
+    }
+
+    @Override
+    final public Collection<Enrolment> getSpecialSeasonEnrolments(final ExecutionSemester executionSemester) {
+	if (isSpecialSeason() && isValid(executionSemester)) {
 	    return Collections.singleton(this);
 	}
 	return Collections.emptySet();

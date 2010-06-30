@@ -368,6 +368,10 @@ Documentation:
         
     <renderer mode="input" type="net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.BolonhaStudentEnrollmentBean" layout="bolonha-student-enrolment" class="net.sourceforge.fenixedu.presentationTier.renderers.student.enrollment.bolonha.BolonhaStudentEnrollmentInputRenderer"/>
     
+    <renderer mode="input" type="net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.BolonhaStudentEnrollmentBean" layout="bolonha-student-special-season-enrolment" class="net.sourceforge.fenixedu.presentationTier.renderers.student.enrollment.bolonha.BolonhaStudentEnrollmentInputRenderer">
+    	<property name="defaultLayout" value="net.sourceforge.fenixedu.presentationTier.renderers.student.enrollment.bolonha.BolonhaStudentSpecialSeasonEnrolmentLayout"/>
+    </renderer>
+    
     <renderer mode="input" type="net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.BolonhaStudentOptionalEnrollmentBean" layout="bolonha-student-optional-enrolments" class="net.sourceforge.fenixedu.presentationTier.renderers.student.enrollment.bolonha.BolonhaStudentOptionalEnrollmentInputRenderer"/>
     
     <renderer layout="viewDepartmentTeachersExpectationsNestedTemplateLayout" type="net.sourceforge.fenixedu.domain.DomainObject" class="pt.ist.fenixWebFramework.renderers.TemplateRenderer">

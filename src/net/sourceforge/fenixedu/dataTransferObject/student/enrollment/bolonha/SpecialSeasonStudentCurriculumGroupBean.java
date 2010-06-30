@@ -39,7 +39,7 @@ public class SpecialSeasonStudentCurriculumGroupBean extends StudentCurriculumGr
 	for (CurriculumModule curriculumModule : group.getCurriculumModules()) {
 	    if (curriculumModule.isEnrolment()) {
 		Enrolment enrolment = (Enrolment) curriculumModule;
-		if (enrolment.isSpecialSeasonEnroled(executionSemester.getExecutionYear())) {
+		if (enrolment.isSpecialSeasonEnroled(executionSemester)) {
 		    result.add(new StudentCurriculumEnrolmentBean(enrolment));
 		}
 	    }
@@ -52,8 +52,7 @@ public class SpecialSeasonStudentCurriculumGroupBean extends StudentCurriculumGr
     protected List<IDegreeModuleToEvaluate> buildCurricularCoursesToEnrol(CurriculumGroup group,
 	    ExecutionSemester executionSemester) {
 
-	final Collection<Enrolment> specialSeasonEnrolments = group.getSpecialSeasonEnrolments(executionSemester
-		.getExecutionYear());
+	final Collection<Enrolment> specialSeasonEnrolments = group.getSpecialSeasonEnrolments(executionSemester);
 	final Predicate<Enrolment> alreadyHasSpecialSeasonEnrolment = new InlinePredicate<Enrolment, Collection<Enrolment>>(
 		specialSeasonEnrolments) {
 
@@ -72,7 +71,7 @@ public class SpecialSeasonStudentCurriculumGroupBean extends StudentCurriculumGr
 	for (CurriculumModule curriculumModule : group.getCurriculumModules()) {
 	    if (curriculumModule.isEnrolment()) {
 		Enrolment enrolment = (Enrolment) curriculumModule;
-		if (enrolment.canBeSpecialSeasonEnroled(executionSemester.getExecutionYear())
+		if (enrolment.canBeSpecialSeasonEnroled(executionSemester)
 			&& !alreadyHasSpecialSeasonEnrolment.eval(enrolment)) {
 		    if (enrolmentsMap.get(enrolment.getCurricularCourse()) != null) {
 			Enrolment enrolmentMap = enrolmentsMap.get(enrolment.getCurricularCourse());
