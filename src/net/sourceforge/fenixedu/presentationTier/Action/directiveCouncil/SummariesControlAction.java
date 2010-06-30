@@ -513,7 +513,8 @@ public class SummariesControlAction extends FenixDispatchAction {
 		sheet.addCell(null);
 
 		sheet.addCell(person.getName());
-		sheet.addCell(person.getLoginIdentification().getUsername());
+		sheet.addCell(person.getTeacher() != null ? person.getTeacher().getTeacherNumber() : null);
+		sheet.addCell(person.getEmail());
 		counter++;
 
 	    }
@@ -531,6 +532,7 @@ public class SummariesControlAction extends FenixDispatchAction {
 	spreadsheet.addHeader(getResourceMessage("label.excel.lessons.summaries.percentage"));
 	spreadsheet.addHeader(getResourceMessage("label.excel.professorName"));
 	spreadsheet.addHeader(getResourceMessage("label.excel.professorUsername"));
+	spreadsheet.addHeader(getResourceMessage("label.excel.professorEmail"));
     }
 
     static private String getResourceMessage(String key) {

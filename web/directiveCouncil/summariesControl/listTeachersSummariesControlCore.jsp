@@ -219,6 +219,13 @@ padding-right: 3px;
 				</fr:schema>
 				<fr:destination name="teacherLink" path="<%= "/summariesControl.do?method=teacherSummariesControl&amp;executionSemesterID=" + departmentResume.getExecutionSemester().getExternalId() + "&amp;personID=${externalId}&amp;departmentID="+departmentID.toString()+"&amp;categoryControl="+categoryControl.toString() %>"/>
 			</fr:view>
+			<html:link
+			page="<%= "/summariesControl.do?method=exportInfoToExcel&departmentID=" + departmentID.toString() + "&executionSemesterID=" + executionSemesterID.toString() %>">
+			<html:image border="0"
+				src="<%= request.getContextPath() + "/images/excel.gif"%>" 
+				altKey="excel" bundle="IMAGE_RESOURCES"></html:image>
+				<bean:message key="label.excel.link" bundle="DIRECTIVE_COUNCIL_RESOURCES"/>
+		</html:link>
 		</logic:notEmpty>
 	</logic:present>	
 
