@@ -24,11 +24,11 @@ public class RemotePerson extends RemotePerson_Base {
     }
 
     public String readAllResearcherInformation() {
-	return (String) readRemoteMethod("readAllTeacherInformation");
+	return (String) readRemoteMethod("readAllResearcherInformation");
     }
 
     public String readAllEmployeeInformation() {
-	return (String) readRemoteMethod("readAllTeacherInformation");
+	return (String) readRemoteMethod("readAllEmployeeInformation");
     }
 
 }

@@ -3591,7 +3591,7 @@ public class Person extends Person_Base {
 	final Role role = Role.getRoleByRoleType(roleType);
 	final StringBuilder result = new StringBuilder();
 	for (final Person person : role.getAssociatedPersonsSet()) {
-	    if (person.hasRole(roleType) && !hasAnyRole(person, exclusionRoleTypes)) {
+	    if (!hasAnyRole(person, exclusionRoleTypes)) {
 		final String costCenter = person.getWorkingPlaceCostCenter();
 		if (costCenter != null && !costCenter.isEmpty()) {
 		    if (result.length() > 0) {
