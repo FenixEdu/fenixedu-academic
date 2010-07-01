@@ -25,7 +25,6 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/commons-digester-1.7.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/commons-fileupload_1_0.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/commons-httpclient-3.0.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/commons-io-1.2.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/commons-javaflow-20060411.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/commons-lang-2.4.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/commons-logging-1.1.1.jar"/>
@@ -130,11 +129,13 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/XmlSchema-1.1.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/xstream-1.1.1.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-tools.jar" sourcepath="/fenix-tools"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-r46762.jar" sourcepath="/fenix-framework"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-remote-plugin.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/spymemcached-1.0.jar"/>
 	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/gwt-servlet.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-r48069.jar" sourcepath="/fenix-web-framework"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/commons-io-1.4.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-r48143.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-r48121.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/rssutils.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
