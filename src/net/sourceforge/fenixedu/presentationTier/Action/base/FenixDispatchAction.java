@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate.UserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ExecuteFactoryMethod;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DomainObject;
@@ -41,15 +42,10 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.validator.DynaValidatorForm;
 
-import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
-import pt.ist.fenixWebFramework.renderers.components.state.LifeCycleConstants;
-import pt.ist.fenixWebFramework.renderers.components.state.ViewDestination;
-import pt.ist.fenixWebFramework.renderers.model.MetaObject;
-import pt.ist.fenixWebFramework.renderers.plugin.ExceptionHandler;
-import pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessorImpl;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
+
+import com.lowagie.text.pdf.codec.wmf.MetaObject;
+import com.sun.corba.se.impl.presentation.rmi.ExceptionHandler;
 
 public abstract class FenixDispatchAction extends DispatchAction implements ExceptionHandler {
 
@@ -60,9 +56,6 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-
-	// DONT COMMIT THIS LINE!!
-	System.out.println(String.format("»»» Class %s Method %s", this.getClass().getName(), request.getParameter("method")));
 
 	final ActionMessages actionMessages = new ActionMessages();
 	request.setAttribute(ACTION_MESSAGES_REQUEST_KEY, actionMessages);
@@ -83,12 +76,12 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	return ServiceUtils.executeService(serviceName, serviceArgs);
     }
 
-    @SuppressWarnings( { "static-access", "unchecked" })
+    @SuppressWarnings({ "static-access", "unchecked" })
     protected DomainObject readDomainObject(final HttpServletRequest request, final Class clazz, final Integer idInternal) {
 	return rootDomainObject.readDomainObjectByOID(clazz, idInternal);
     }
 
-    @SuppressWarnings( { "static-access", "unchecked" })
+    @SuppressWarnings({ "static-access", "unchecked" })
     protected Collection readAllDomainObjects(final HttpServletRequest request, final Class clazz) {
 	return rootDomainObject.readAllDomainObjects(clazz);
     }
