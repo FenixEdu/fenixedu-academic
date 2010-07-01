@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.accounting;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -13,15 +14,18 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.accounting.paymentPlanRules.PaymentPlanRule;
+import net.sourceforge.fenixedu.domain.accounting.paymentPlanRules.PaymentPlanRuleManager;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.Money;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-public abstract class PaymentPlan extends PaymentPlan_Base {
+abstract public class PaymentPlan extends PaymentPlan_Base {
 
     protected PaymentPlan() {
 	super();
@@ -297,9 +301,47 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
 	return false;
     }
 
-    public boolean isAppliableFor(final StudentCurricularPlan studentCurricularPlan, final ExecutionYear executionYear) {
-	return false;
+    private boolean hasExecutionYear(final ExecutionYear executionYear) {
+	return hasExecutionYear() && getExecutionYear().equals(executionYear);
     }
+
+    final public boolean isAppliableFor(final StudentCurricularPlan studentCurricularPlan, final ExecutionYear executionYear) {
+
+	if (!hasExecutionYear(executionYear)) {
+	    return false;
+	}
+
+	final Collection<PaymentPlanRule> specificRules = getSpecificPaymentPlanRules();
+
+	if (specificRules.isEmpty()) {
+	    return false;
+	}
+
+	for (final PaymentPlanRule rule : specificRules) {
+	    if (!rule.isAppliableFor(studentCurricularPlan, executionYear)) {
+		return false;
+	    }
+	}
+
+	for (final PaymentPlanRule rule : getNotSpecificPaymentRules()) {
+	    if (rule.isAppliableFor(studentCurricularPlan, executionYear)) {
+		return false;
+	    }
+	}
+
+	return true;
+    }
+
+    protected Collection<PaymentPlanRule> getNotSpecificPaymentRules() {
+	/*
+	 * All payment rules could be connected do
+	 * DegreeCurricularPlanServiceAgreementTemplate, but for now are just
+	 * value types
+	 */
+	return CollectionUtils.subtract(PaymentPlanRuleManager.getAllPaymentPlanRules(), getSpecificPaymentPlanRules());
+    }
+
+    abstract protected Collection<PaymentPlanRule> getSpecificPaymentPlanRules();
 
     public String getDescription() {
 	return ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale()).getString(

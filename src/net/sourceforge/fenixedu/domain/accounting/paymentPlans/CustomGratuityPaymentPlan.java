@@ -1,10 +1,14 @@
 package net.sourceforge.fenixedu.domain.accounting.paymentPlans;
 
+import java.util.Collection;
+import java.util.Collections;
+
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.PaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreement;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementPaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
+import net.sourceforge.fenixedu.domain.accounting.paymentPlanRules.PaymentPlanRule;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreements.DegreeCurricularPlanServiceAgreement;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import dml.runtime.RelationAdapter;
@@ -69,5 +73,10 @@ public class CustomGratuityPaymentPlan extends CustomGratuityPaymentPlan_Base {
 	removeParameters();
 	removeRootDomainObject();
 	super.deleteDomainObject();
+    }
+
+    @Override
+    protected Collection<PaymentPlanRule> getSpecificPaymentPlanRules() {
+	return Collections.emptyList();
     }
 }

@@ -1,7 +1,13 @@
 package net.sourceforge.fenixedu.domain.accounting.paymentPlans;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.accounting.paymentPlanRules.HasEnrolmentsOnlyInSecondSemesterPaymentPlanRule;
+import net.sourceforge.fenixedu.domain.accounting.paymentPlanRules.IsPartialRegimePaymentPlanRule;
+import net.sourceforge.fenixedu.domain.accounting.paymentPlanRules.PaymentPlanRule;
+import net.sourceforge.fenixedu.domain.accounting.paymentPlanRules.PaymentPlanRuleFactory;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
 
 public class GratuityPaymentPlanForPartialRegimeEnroledOnlyInSecondSemester extends
@@ -18,12 +24,14 @@ public class GratuityPaymentPlanForPartialRegimeEnroledOnlyInSecondSemester exte
     }
 
     @Override
-    public boolean isAppliableFor(StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
-	return getExecutionYear() == executionYear
-		&& studentCurricularPlan.getRegistration().isPartialRegime(executionYear)
-		&& !studentCurricularPlan.hasAnyEnrolmentForExecutionPeriod(executionYear.getFirstExecutionPeriod())
-		&& studentCurricularPlan.hasAnyEnrolmentForExecutionPeriod(executionYear.getFirstExecutionPeriod()
-			.getNextExecutionPeriod());
+    protected Collection<PaymentPlanRule> getSpecificPaymentPlanRules() {
+	return Arrays.asList(
+
+	PaymentPlanRuleFactory.create(IsPartialRegimePaymentPlanRule.class),
+
+	PaymentPlanRuleFactory.create(HasEnrolmentsOnlyInSecondSemesterPaymentPlanRule.class)
+
+	);
     }
 
     @Override

@@ -1,9 +1,13 @@
 package net.sourceforge.fenixedu.domain.accounting.paymentPlans;
 
+import java.util.Collection;
+import java.util.Collections;
+
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.Installment;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
+import net.sourceforge.fenixedu.domain.accounting.paymentPlanRules.PaymentPlanRule;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
 
 public class GratuityPaymentPlan extends GratuityPaymentPlan_Base {
@@ -31,6 +35,11 @@ public class GratuityPaymentPlan extends GratuityPaymentPlan_Base {
     @Override
     public boolean isGratuityPaymentPlan() {
 	return true;
+    }
+
+    @Override
+    protected Collection<PaymentPlanRule> getSpecificPaymentPlanRules() {
+	return Collections.emptyList();
     }
 
 }

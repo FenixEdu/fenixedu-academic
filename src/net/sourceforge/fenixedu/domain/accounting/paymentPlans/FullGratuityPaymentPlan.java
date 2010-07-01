@@ -1,7 +1,12 @@
 package net.sourceforge.fenixedu.domain.accounting.paymentPlans;
 
+import java.util.Collection;
+import java.util.Collections;
+
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.accounting.paymentPlanRules.HasEnrolmentsForExecutionSemesterPaymentPlanRule;
+import net.sourceforge.fenixedu.domain.accounting.paymentPlanRules.PaymentPlanRule;
+import net.sourceforge.fenixedu.domain.accounting.paymentPlanRules.PaymentPlanRuleFactory;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
 
 public class FullGratuityPaymentPlan extends FullGratuityPaymentPlan_Base {
@@ -22,8 +27,8 @@ public class FullGratuityPaymentPlan extends FullGratuityPaymentPlan_Base {
     }
 
     @Override
-    public boolean isAppliableFor(StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
-	return getExecutionYear() == executionYear && !studentCurricularPlan.getRegistration().isPartialRegime(executionYear)
-		&& studentCurricularPlan.hasAnyEnrolmentForExecutionPeriod(executionYear.getFirstExecutionPeriod());
+    protected Collection<PaymentPlanRule> getSpecificPaymentPlanRules() {
+	return Collections.singleton(PaymentPlanRuleFactory.create(HasEnrolmentsForExecutionSemesterPaymentPlanRule.class));
     }
+
 }
