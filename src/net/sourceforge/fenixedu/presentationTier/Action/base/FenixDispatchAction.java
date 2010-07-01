@@ -61,6 +61,9 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
+	// DONT COMMIT THIS LINE!!
+	System.out.println(String.format("»»» Class %s Method %s", this.getClass().getName(), request.getParameter("method")));
+
 	final ActionMessages actionMessages = new ActionMessages();
 	request.setAttribute(ACTION_MESSAGES_REQUEST_KEY, actionMessages);
 	final ActionForward actionForward = super.execute(mapping, actionForm, request, response);

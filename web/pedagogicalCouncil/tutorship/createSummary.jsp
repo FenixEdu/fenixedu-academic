@@ -57,14 +57,26 @@
 		</fr:layout>
 	</fr:edit>
 	
+	<style type="text/css">
+	.simpleblock3 dl dt {
+		font-weight: bold;
+	}
+	</style>
+	
 	<div class="simpleblock3">
 	<dl>
-		<dt><bean:message key="label.tutorshipSummary.form.participationType" bundle="APPLICATION_RESOURCES"/>:</dt> 
-		<dt><bean:message key="label.tutorshipSummary.form.participationRegularly" bundle="APPLICATION_RESOURCES"/>:</dt> 
+		<dt><bean:message key="label.tutorshipSummary.form.participationType" bundle="APPLICATION_RESOURCES"/>:</dt>
+		<dd>Nula (0%) Insuficiente (0-25%)  Razoável (25-50%)  Boa (50-75%)  Muito Boa (>= 75%)</dd> 
+		<dt><bean:message key="label.tutorshipSummary.form.participationRegularly" bundle="APPLICATION_RESOURCES"/>:</dt>
+		<dd>Respondeu + metade dos contactos do Tutor</dd> 
 		<dt><bean:message key="label.tutorshipSummary.form.participationNone" bundle="APPLICATION_RESOURCES"/>: </dt>
+		<dd>Não respondeu nunca ao Tutor</dd> 
 		<dt><bean:message key="label.tutorshipSummary.form.outOfTouch" bundle="APPLICATION_RESOURCES"/>: </dt>
+		<dd>Não foi possível contactar o aluno</dd> 
 		<dt><bean:message key="label.tutorshipSummary.form.highPerformance" bundle="APPLICATION_RESOURCES"/>: </dt>
+		<dd>Aprovado a todas as disciplinas</dd> 
 		<dt><bean:message key="label.tutorshipSummary.form.lowPerformance" bundle="APPLICATION_RESOURCES"/>:</dt>
+		<dd>Reprovado + metade das disciplinas</dd> 
 	</dl> 
 	</div>
 		
@@ -180,10 +192,6 @@
 
 
 	<table class="tstyle1 thlight mtop0 mbottom15 tdleft">
-		<tr>
-			<td>Os meus tutorandos estão satisfeitos com o que fiz e com o modo como o fiz?</td>
-			<td><fr:edit name="createSummaryBean" slot="tutorshipSummarySatisfaction" /></td>
-		</tr>
 		<tr>
 			<td>Apreciação Global do Programa:</td>
 			<td><fr:edit name="createSummaryBean" slot="tutorshipSummaryProgramAssessment" /></td>

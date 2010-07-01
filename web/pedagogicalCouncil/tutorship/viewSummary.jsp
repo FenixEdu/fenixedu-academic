@@ -176,10 +176,6 @@
 
 	<table class="tstyle1 thlight mtop0 mbottom15 tdleft">
 		<tr>
-			<td>Os meus tutorandos estão satisfeitos com o que fiz e com o modo como o fiz?</td>
-			<td><fr:view name="tutorshipSummary" property="tutorshipSummarySatisfaction" type="net.sourceforge.fenixedu.domain.TutorshipSummarySatisfaction" /></td>
-		</tr>
-		<tr>
 			<td>Apreciação Global do Programa:</td>
 			<td><fr:view name="tutorshipSummary" property="tutorshipSummaryProgramAssessment" type="net.sourceforge.fenixedu.domain.TutorshipSummaryProgramAssessment" /></td>
 		</tr>

@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil;
 
 import java.io.Serializable;
 
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.TutorshipParticipationType;
@@ -14,6 +16,8 @@ public class TutorshipSummaryRelationBean implements Serializable {
 
     private Tutorship tutorship;
     private TutorshipSummary tutorshipSummary;
+
+    ExecutionSemester executionSemester;
 
     private boolean participationRegularly;
     private boolean participationNone;
@@ -29,6 +33,7 @@ public class TutorshipSummaryRelationBean implements Serializable {
 
 	this.tutorship = tutorshipSummaryRelation.getTutorship();
 	this.tutorshipSummary = tutorshipSummaryRelation.getTutorshipSummary();
+	this.executionSemester = tutorshipSummaryRelation.getTutorshipSummary().getSemester();
 
 	this.participationRegularly = tutorshipSummaryRelation.getParticipationRegularly();
 	this.participationNone = tutorshipSummaryRelation.getParticipationNone();
@@ -37,10 +42,15 @@ public class TutorshipSummaryRelationBean implements Serializable {
 	this.lowPerformance = tutorshipSummaryRelation.getLowPerformance();
 
 	this.participationType = tutorshipSummaryRelation.getParticipationType();
+
+	initPerformance();
     }
 
-    public TutorshipSummaryRelationBean(Tutorship tutorship) {
+    public TutorshipSummaryRelationBean(Tutorship tutorship, ExecutionSemester executionSemester) {
 	this.tutorship = tutorship;
+	this.executionSemester = executionSemester;
+
+	initPerformance();
     }
 
     public void save() {
@@ -105,6 +115,26 @@ public class TutorshipSummaryRelationBean implements Serializable {
 
     public boolean isHighPerformance() {
 	return highPerformance;
+    }
+
+    public void initPerformance() {
+	double totalEcts = 0;
+	double approvedEcts = 0;
+
+	System.out.println("Aluno: " + getTutorship().getStudent().getName() + " in " + executionSemester);
+	for (Enrolment enrolment : getTutorship().getStudent().getEnrolments(executionSemester)) {
+	    System.out.println("Enrolment: " + enrolment.getName() + ", " + enrolment.getEctsCredits() + " Aproved?"
+		    + enrolment.isApproved());
+
+	    totalEcts += enrolment.getEctsCredits();
+
+	    if (enrolment.isApproved()) {
+		approvedEcts += enrolment.getEctsCredits();
+	    }
+	}
+
+	this.highPerformance = (approvedEcts >= totalEcts);
+	this.lowPerformance = (approvedEcts < (totalEcts / 2));
     }
 
     public void setHighPerformance(boolean highPerformance) {

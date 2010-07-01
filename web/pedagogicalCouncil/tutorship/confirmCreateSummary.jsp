@@ -17,12 +17,10 @@
 </h3>
 
 <div class="infoop2">
-<p>
-<bean:message key="message.tutorshipSummary.confirm" bundle="APPLICATION_RESOURCES" />
-<bean:message key="label.tutorshipSummary.dueDate" bundle="APPLICATION_RESOURCES" />
-[data]
+<p><bean:message key="message.tutorshipSummary.confirm" bundle="APPLICATION_RESOURCES" /></p>
+<p><bean:message key="label.tutorshipSummary.dueDate" bundle="APPLICATION_RESOURCES" />
+<bean:write name="createSummaryBean" property="executionSemester.tutorshipSummaryPeriod.endDate" /> 
 </p>
-<p>
 <html:link page="/tutorshipSummary.do?method=searchTeacher">[voltar]
 </html:link></p>
 </div>

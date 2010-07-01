@@ -761,8 +761,8 @@
 	<slot name="participationRegularly" layout="boolean-icon" key="label.tutorshipSummary.form.participationRegularly" />
 	<slot name="participationNone" layout="boolean-icon" key="label.tutorshipSummary.form.participationNone" />
 	<slot name="outOfTouch" layout="boolean-icon" key="label.tutorshipSummary.form.outOfTouch" />
-	<slot name="highPerformance" layout="boolean-icon" key="label.tutorshipSummary.form.highPerformance" />
-	<slot name="lowPerformance" layout="boolean-icon" key="label.tutorshipSummary.form.lowPerformance" />
+	<slot name="highPerformance" read-only="true" layout="boolean-icon" key="label.tutorshipSummary.form.highPerformance" />
+	<slot name="lowPerformance" read-only="true" layout="boolean-icon" key="label.tutorshipSummary.form.lowPerformance" />
 </schema>
 
 <schema name="tutorship.tutorate.viewSummaryRelation" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.TutorshipSummaryRelation">

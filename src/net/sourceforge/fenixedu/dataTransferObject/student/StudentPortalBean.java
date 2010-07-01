@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.dataTransferObject.student;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -19,6 +21,7 @@ import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
+import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -34,6 +37,10 @@ public class StudentPortalBean implements Serializable {
 	    private String register;
 	    private String enrolment;
 	    private String room;
+
+	    private boolean realizationPast;
+	    private boolean enrolmentElapsing;
+	    private boolean enrolmentPast;
 
 	    private boolean registered;
 
@@ -115,6 +122,77 @@ public class StudentPortalBean implements Serializable {
 		return registered;
 	    }
 
+	    public boolean getRealizationPast() {
+		return realizationPast;
+	    }
+
+	    public boolean getEnrolmentElapsing() {
+		return enrolmentElapsing;
+	    }
+
+	    public boolean getEnrolmentPast() {
+		return enrolmentPast;
+	    }
+
+	    public String getStatus() {
+		/*
+		 * <logic:equal name="evaluationAnnouncement"
+		 * property="evaluationType" value="Agrupamento"> <logic:equal
+		 * name="evaluationAnnouncement" property="registered"
+		 * value="true"> <tr> </logic:equal> <logic:equal
+		 * name="evaluationAnnouncement" property="registered"
+		 * value="false"> <logic:equal name="evaluationAnnouncement"
+		 * property="enrolmentPast" value="true"> <tr class="disabled">
+		 * </logic:equal> <logic:equal name="evaluationAnnouncement"
+		 * property="enrolmentPast" value="false"> <tr> </logic:equal>
+		 * </logic:equal> </logic:equal> <logic:notEqual
+		 * name="evaluationAnnouncement" property="evaluationType"
+		 * value="Agrupamento"> <logic:equal
+		 * name="evaluationAnnouncement" property="realizationPast"
+		 * value="true"> <tr class="disabled"> </logic:equal>
+		 * <logic:equal name="evaluationAnnouncement"
+		 * property="realizationPast" value="false"> <logic:equal
+		 * name="evaluationAnnouncement" property="registered"
+		 * value="true"> <tr> </logic:equal> <logic:equal
+		 * name="evaluationAnnouncement" property="registered"
+		 * value="false"> <logic:equal name="evaluationAnnouncement"
+		 * property="enrolmentElapsing" value="true"> <tr
+		 * class="elapsing"> <bean:define id="evaluationElapsing"
+		 * value="true" /> </logic:equal> <logic:equal
+		 * name="evaluationAnnouncement" property="enrolmentElapsing"
+		 * value="false"> <tr> </logic:equal> </logic:equal>
+		 * </logic:equal> </logic:notEqual>
+		 */
+
+		if (getEvaluationType().equals("Agrupamento")) {
+		    if (getRegistered()) {
+
+		    } else {
+			if (getEnrolmentPast()) {
+			    return "disabled";
+			} else {
+
+			}
+		    }
+		} else {
+		    if (getRealizationPast()) {
+			return "disabled";
+		    } else {
+			if (getRegistered()) {
+
+			} else {
+			    if (getEnrolmentElapsing()) {
+				return "elapsing";
+			    } else {
+
+			    }
+			}
+		    }
+		}
+
+		return "";
+	    }
+
 	    public void setEvaluationType(String evaluationType) {
 		this.evaluationType = evaluationType;
 	    }
@@ -124,6 +202,8 @@ public class StudentPortalBean implements Serializable {
 	    }
 
 	    public void setRealization(WrittenEvaluation writtenEvaluation) {
+		this.realizationPast = writtenEvaluation.getBeginningDateTime().isBeforeNow();
+
 		this.realization = YearMonthDay.fromDateFields(writtenEvaluation.getBeginningDateTime().toDate()).toString()
 			+ " "
 			+ writtenEvaluation.getBeginningDateTime().getHourOfDay()
@@ -137,6 +217,10 @@ public class StudentPortalBean implements Serializable {
 	    }
 
 	    public void setEnrolment(WrittenEvaluation writtenEvaluation) {
+		this.enrolmentPast = new DateTime(writtenEvaluation.getEnrollmentEndDay()).isBeforeNow();
+		this.enrolmentElapsing = new DateTime(writtenEvaluation.getEnrollmentBeginDay()).isBeforeNow()
+			&& new DateTime(writtenEvaluation.getEnrollmentEndDay()).isAfterNow();
+
 		ResourceBundle resource = ResourceBundle.getBundle("resources.StudentResources", Language.getLocale());
 		if (writtenEvaluation.getEnrollmentBeginDayDateYearMonthDay() != null
 			&& writtenEvaluation.getEnrollmentEndDayDateYearMonthDay() != null) {
@@ -150,6 +234,10 @@ public class StudentPortalBean implements Serializable {
 	    }
 
 	    public void setEnrolment(Grouping grouping) {
+		this.enrolmentPast = new DateTime(grouping.getEnrolmentEndDay()).isBeforeNow();
+		this.enrolmentElapsing = new DateTime(grouping.getEnrolmentBeginDay()).isBeforeNow()
+			&& new DateTime(grouping.getEnrolmentEndDay()).isAfterNow();
+
 		ResourceBundle resource = ResourceBundle.getBundle("resources.StudentResources", Language.getLocale());
 		this.enrolment = YearMonthDay.fromDateFields(grouping.getEnrolmentBeginDayDate()).toString() + " "
 			+ resource.getString("message.out.until") + " "
@@ -162,7 +250,7 @@ public class StudentPortalBean implements Serializable {
 			.getWrittenEvaluationEnrolments()) {
 		    if (writtenEvaluationEnrolment.getStudent() != null
 			    && writtenEvaluationEnrolment.getStudent().getStudent() == getStudent()) {
-			if(writtenEvaluationEnrolment.getRoom() != null) {
+			if (writtenEvaluationEnrolment.getRoom() != null) {
 			    this.room = writtenEvaluationEnrolment.getRoom().getIdentification();
 			    return;
 			} else {
@@ -220,6 +308,20 @@ public class StudentPortalBean implements Serializable {
 	}
 
 	public List<EvaluationAnnouncement> getEvaluationAnnouncements() {
+	    Collections.sort(evaluationAnnouncements, new Comparator() {
+		@Override
+		public int compare(Object o1, Object o2) {
+		    EvaluationAnnouncement e1 = (EvaluationAnnouncement) o1;
+		    EvaluationAnnouncement e2 = (EvaluationAnnouncement) o2;
+
+		    if (!e1.getStatus().equals("disabled") && e2.getStatus().equals("disabled")) {
+			return -1;
+		    }
+
+		    return 1;
+		}
+	    });
+
 	    return evaluationAnnouncements;
 	}
 
