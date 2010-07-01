@@ -8,9 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.CoordinatorLog;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.OperationType;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -50,17 +54,18 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
 
 	final Integer executionDegreeId = Integer.valueOf(request.getParameter("executionDegreeId"));
 	ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
-	
 	String backTo = String.valueOf(request.getParameter("from"));
 	String backPath;
-	if(backTo.equals("byYears")){
-	    backPath = "/curricularPlans/editExecutionDegreeCoordination.do?method=editByYears&executionYearId=" +  executionDegree.getExecutionYear().getExternalId().toString();
+	if (backTo.equals("byYears")) {
+	    backPath = "/curricularPlans/editExecutionDegreeCoordination.do?method=editByYears&executionYearId="
+		    + executionDegree.getExecutionYear().getExternalId().toString();
 	} else {
-	    backPath = "/curricularPlans/editExecutionDegreeCoordination.do?method=prepareEditCoordination&degreeCurricularPlanId=" +  executionDegree.getDegreeCurricularPlan().getIdInternal().toString() ;
+	    backPath = "/curricularPlans/editExecutionDegreeCoordination.do?method=prepareEditCoordination&degreeCurricularPlanId="
+		    + executionDegree.getDegreeCurricularPlan().getIdInternal().toString();
 	}
 
 	ExecutionDegreeCoordinatorsBean coordsBean = new ExecutionDegreeCoordinatorsBean(executionDegree);
-	
+
 	coordsBean.setBackPath(backPath);
 
 	request.setAttribute("coordsBean", coordsBean);
@@ -72,8 +77,13 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
     public ActionForward addCoordinator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
+	final String personId = request.getParameter("personId");
+	final Person personAdding = rootDomainObject.fromExternalId(personId);
+
 	ExecutionDegreeCoordinatorsBean coordsBean = (ExecutionDegreeCoordinatorsBean) getRenderedObject("coordsBean");
-	Coordinator.createCoordinator(coordsBean.getExecutionDegree(), coordsBean.getNewCoordinator(), Boolean.valueOf(false));
+
+	Coordinator.makeCreation(personAdding, coordsBean.getExecutionDegree(), coordsBean.getNewCoordinator(), Boolean
+		.valueOf(false));
 
 	coordsBean.setNewCoordinator(null);
 	request.setAttribute("coordsBean", coordsBean);
@@ -91,13 +101,18 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
 
 	final Integer executionDegreeId = Integer.valueOf(request.getParameter("executionDegreeId"));
 	ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
-	
+
+	final String personId = request.getParameter("personId");
+	final Person personSwitching = rootDomainObject.fromExternalId(personId);
+
 	String backPath = request.getParameter("backPath");
 
 	if (coordinator.isResponsible()) {
-	    coordinator.setAsNotResponsible();
+	    coordinator.makeAction(OperationType.CHANGERESPONSIBLE_FALSE, personSwitching);
+	    // coordinator.setAsNotResponsible();
 	} else {
-	    coordinator.setAsResponsible();
+	    coordinator.makeAction(OperationType.CHANGERESPONSIBLE_TRUE, personSwitching);
+	    // coordinator.setAsResponsible();
 	}
 
 	ExecutionDegreeCoordinatorsBean coordsBean = new ExecutionDegreeCoordinatorsBean(executionDegree);
@@ -116,10 +131,14 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
 
 	final Integer executionDegreeId = Integer.valueOf(request.getParameter("executionDegreeId"));
 	ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
-	
+
+	final String personId = request.getParameter("personId");
+	final Person personDeleting = rootDomainObject.fromExternalId(personId);
+
 	String backPath = request.getParameter("backPath");
 
-	coordinator.removeCoordinator();
+	coordinator.makeAction(OperationType.REMOVE, personDeleting);
+	// coordinator.removeCoordinator();
 
 	ExecutionDegreeCoordinatorsBean coordsBean = new ExecutionDegreeCoordinatorsBean(executionDegree);
 	coordsBean.setEscapedBackPath(backPath);
@@ -139,45 +158,76 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
 
 	return mapping.findForward("editCoordination");
     }
-    
-    public ActionForward editByYears(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	
+
+    public ActionForward editByYears(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
 	ExecutionDegreeCoordinatorsBean sessionBean = (ExecutionDegreeCoordinatorsBean) getRenderedObject("sessionBean");
-	if(sessionBean == null) {
+	if (sessionBean == null) {
 	    sessionBean = new ExecutionDegreeCoordinatorsBean();
 	    final String executionYearId = String.valueOf(request.getParameter("executionYearId"));
-	    if(!executionYearId.equals("null")) {
+	    if (!executionYearId.equals("null")) {
 		ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearId);
 		sessionBean.setExecutionYear(executionYear);
 	    } else {
 		request.setAttribute("sessionBean", sessionBean);
 		RenderUtils.invalidateViewState("sessionBean");
-		
+
 		return mapping.findForward("selectYearAndDegree");
 	    }
 	}
-	
+
 	List<ExecutionDegree> bachelors = sessionBean.getExecutionYear().getExecutionDegreesFor(DegreeType.BOLONHA_DEGREE);
 	request.setAttribute("bachelors", bachelors);
-	    
+
 	List<ExecutionDegree> masters = sessionBean.getExecutionYear().getExecutionDegreesFor(DegreeType.BOLONHA_MASTER_DEGREE);
 	request.setAttribute("masters", masters);
-	    
-	List<ExecutionDegree> integratedMasters = sessionBean.getExecutionYear().getExecutionDegreesFor(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+
+	List<ExecutionDegree> integratedMasters = sessionBean.getExecutionYear().getExecutionDegreesFor(
+		DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
 	request.setAttribute("integratedMasters", integratedMasters);
-	    
+
 	List<ExecutionDegree> otherDegrees = new ArrayList<ExecutionDegree>(sessionBean.getExecutionYear().getExecutionDegrees());
 	otherDegrees.removeAll(bachelors);
 	otherDegrees.removeAll(masters);
 	otherDegrees.removeAll(integratedMasters);
 	request.setAttribute("otherDegrees", otherDegrees);
-	    
+
 	boolean hasYearSelected = true;
 	request.setAttribute("hasYearSelected", hasYearSelected);
 
 	request.setAttribute("sessionBean", sessionBean);
 	RenderUtils.invalidateViewState("sessionBean");
-	
+
 	return mapping.findForward("selectYearAndDegree");
+    }
+
+    public List<CoordinatorLog> getCoordinatorLogsByExecDegree(ExecutionDegree executionDegree) {
+	List<CoordinatorLog> finalCoordinatorLogs = new ArrayList<CoordinatorLog>();
+	final List<CoordinatorLog> coordinatorLogs = RootDomainObject.getInstance().getCoordinatorLog();
+	for (CoordinatorLog coordinatorLog : coordinatorLogs) {
+	    ExecutionDegree coordExecDeg = coordinatorLog.getExecutionDegree();
+	    if (coordExecDeg.getExecutionYear().compareTo(executionDegree.getExecutionYear()) == 0
+		    && coordExecDeg.getDegree().compareTo(executionDegree.getDegree()) == 0) {
+		finalCoordinatorLogs.add(coordinatorLog);
+	    }
+	}
+	return finalCoordinatorLogs;
+    }
+
+    public ActionForward prepareCoordinatorLog(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	Integer execDegId = Integer.parseInt(request.getParameter("executionYearId"));
+	ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(execDegId);
+	List<CoordinatorLog> coordinatorLogs = getCoordinatorLogsByExecDegree(executionDegree);
+	request.setAttribute("coordinatorLogs", coordinatorLogs);
+
+	String backPath = request.getParameter("backPath");
+	ExecutionDegreeCoordinatorsBean coordsBean = new ExecutionDegreeCoordinatorsBean(executionDegree);
+	coordsBean.setEscapedBackPath(backPath);
+	request.setAttribute("coordsBean", coordsBean);
+	RenderUtils.invalidateViewState("coordsBean");
+	return mapping.findForward("editCoordination");
     }
 }

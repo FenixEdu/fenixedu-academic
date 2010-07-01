@@ -207,7 +207,7 @@ enum net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusApplyForSem
 enum net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationFileType                                         as TeacherEvaluationFileType;
 enum net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationMark                                             as TeacherEvaluationMark;
 enum net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ExecutedActionType										  as ExecutedActionType;
-
+enum net.sourceforge.fenixedu.domain.OperationType																		  as OperationType;
 /*
  * Value types that need special externalization
  */
@@ -7427,6 +7427,12 @@ class ImportRegisterLog extends DomainObject {
 
 class candidacyProcess.erasmus.ErasmusCoordinator extends DomainObject {
 }
+
+class CoordinatorLog extends DomainObject {
+	DateTime date;
+	OperationType operation;
+}
+
 
 
 /*
@@ -18331,4 +18337,30 @@ relation ErasmusIndividualCandidacyProcessExecutedActionIndividualCandidacyProce
 		multiplicity *;
 	}
 	candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess playsRole erasmusIndividualCandidacyProcess;
+}
+
+
+relation RootDomainObjectCoordinatorLog {
+	RootDomainObject playsRole rootDomainObject;
+	CoordinatorLog playsRole coordinatorLog {
+		multiplicity *;
+	}
+}
+relation CoordinatorLogExecutionDegree {
+	ExecutionDegree playsRole executionDegree;
+	CoordinatorLog playsRole coordinatorLog {
+		multiplicity *;
+	}		
+}
+relation CoordinatorLogWhoPerson {
+	Person playsRole personWho;
+	CoordinatorLog playsRole coordinatorLogWho {
+		multiplicity *;
+	}
+}
+relation CoordinatorLogPerson {
+	Person playsRole person;
+	CoordinatorLog playsRole coordinatorLog {
+		multiplicity *;
+	}
 }

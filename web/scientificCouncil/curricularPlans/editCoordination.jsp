@@ -124,6 +124,7 @@
 <bean:define id="edId" name="coordsBean" property="executionDegree.idInternal"/>
 <bean:define id="path" name="coordsBean" property="backPath"/>
 <bean:define id="escapedPath" name="coordsBean" property="escapedBackPath"/>
+<bean:define id="personId" name="<%=pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE%>" property="person.externalId" />
 
 <em><bean:message key="scientificCouncil" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em>
 <h2><bean:message key="label.edit.coordinationTeam" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h2>
@@ -133,11 +134,16 @@
 	<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="button.back"/>
 </html:link></p>
 
+<p><html:link action="<%= "/curricularPlans/editExecutionDegreeCoordination.do?method=prepareCoordinatorLog&executionYearId="+edId.toString()+"&backPath=" + escapedPath.toString() %>">
+	<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.coordinatorLog.title"/>
+</html:link></p>
+
 
 <p class="mvert05"><strong><fr:view name="coordsBean" property="executionDegree.degreeCurricularPlan.name" /> - <fr:view name="coordsBean" property="executionDegree.degreeCurricularPlan.degree.name" /> (<fr:view name="coordsBean" property="executionDegree.executionYear.qualifiedName" />)</strong></p>
 
 
 <fr:view name="coordsBean" property="coordinators">
+	
 	<fr:schema type="net.sourceforge.fenixedu.domain.Coordinator" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 		<fr:slot name="person.istUsername" key="label.mecanographicNumber"/>
 		<fr:slot name="person.name" key="label.name"/>
@@ -150,14 +156,14 @@
 		<fr:property name="linkGroupSeparator" value="&nbsp&nbsp|&nbsp&nbsp" />
 		
 		<fr:property name="linkFormat(roleSwitcher)"
-			value="<%="/curricularPlans/editExecutionDegreeCoordination.do?method=switchResponsability&coordinatorId=${idInternal}&executionDegreeId=" + edId.toString() + "&backPath=" + escapedPath.toString() %>"/>
+			value="<%="/curricularPlans/editExecutionDegreeCoordination.do?method=switchResponsability&coordinatorId=${idInternal}&executionDegreeId=" + edId.toString() + "&backPath=" + escapedPath.toString() +"&personId="+ personId.toString()%>"/>
 		<fr:property name="order(roleSwitcher)" value="1" />
 		<fr:property name="key(roleSwitcher)"
 			value="link.switch.role" />
 		<fr:property name="bundle(roleSwitcher)" value="SCIENTIFIC_COUNCIL_RESOURCES" />
 		
 		<fr:property name="linkFormat(delete)"
-			value="<%="/curricularPlans/editExecutionDegreeCoordination.do?method=deleteCoordinator&coordinatorId=${idInternal}&executionDegreeId=" + edId.toString() + "&backPath=" + escapedPath.toString() %>" />
+			value="<%="/curricularPlans/editExecutionDegreeCoordination.do?method=deleteCoordinator&coordinatorId=${idInternal}&executionDegreeId=" + edId.toString() + "&backPath=" + escapedPath.toString() +"&personId="+ personId.toString()%>" />
 		<fr:property name="order(delete)" value="2" />
 		<fr:property name="key(delete)"
 			value="link.delete.coordinator" />
@@ -184,7 +190,7 @@
 
 <div id="divAdicionar">
 	<p class="mtop1 mbottom0"><strong><bean:message key="label.add.coordinator" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></strong></p>
-	<fr:form action="/curricularPlans/editExecutionDegreeCoordination.do?method=addCoordinator">
+	<fr:form action="<%="/curricularPlans/editExecutionDegreeCoordination.do?method=addCoordinator&personId="+ personId.toString()%>">
 		<fr:edit name="coordsBean" id="coordsBean">
 			<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.curricularPlans.ExecutionDegreeCoordinatorsBean" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 				<fr:slot name="newCoordinator" layout="autoComplete" key="label.name.or.id" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
@@ -211,3 +217,20 @@
 	</fr:form>
 </div>
 
+<logic:notEmpty name="coordinatorLogs">
+<h2><bean:message key="label.coordinatorLog.title" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h2>
+<fr:view name="coordinatorLogs" >
+	<fr:schema bundle="SCIENTIFIC_COUNCIL_RESOURCES" type="net.sourceforge.fenixedu.domain.CoordinatorLog">
+		<fr:slot name="personWho.name" key="label.coordinatorLog.personWho"/>
+		<fr:slot name="date" key="label.coordinatorLog.date"/>
+		<fr:slot name="operation" key="label.coordinatorLog.operation"/>
+		<fr:slot name="person.name" key="label.coordinatorLog.coordinator"/>
+		<fr:slot name="executionDegree.degree.name" key="label.coordinatorLog.executionDegree"/>
+		<fr:slot name="executionDegree.executionYear.year" key="label.coordinatorLog.year"/>
+	</fr:schema>
+    <fr:layout name="tabular">
+            <fr:property name="classes" value="tstyle1 thlight mtop05" />
+            <fr:property name="columnClasses" value=",,tderror1,," />
+    </fr:layout>
+</fr:view>
+</logic:notEmpty>
