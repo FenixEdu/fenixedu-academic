@@ -6,10 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.enrolment.specialSeason.ChangeSpecialSeasonCode;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.SpecialSeasonBolonhaStudentEnrolmentBean;
-import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.SpecialSeasonCodeBean;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -106,63 +104,18 @@ public class AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA extends A
 	return "/specialSeasonBolonhaStudentEnrollment.do";
     }
 
-    public ActionForward changeSpecialSeasonCodePostBack(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-
-	SpecialSeasonCodeBean specialSeasonCodeBean = (SpecialSeasonCodeBean) RenderUtils.getViewState().getMetaObject()
-		.getObject();
-	RenderUtils.invalidateViewState();
-
-	try {
-	    ChangeSpecialSeasonCode.run(specialSeasonCodeBean.getStudentCurricularPlan().getRegistration(), specialSeasonCodeBean
-		    .getExecutionPeriod().getExecutionYear(), specialSeasonCodeBean.getSpecialSeasonCode());
-	} catch (DomainException e) {
-	    addActionMessage(request, e.getMessage());
-	    specialSeasonCodeBean.setSpecialSeasonCode(specialSeasonCodeBean.getStudentCurricularPlan().getRegistration()
-		    .getSpecialSeasonCodeByExecutionYear(specialSeasonCodeBean.getExecutionPeriod().getExecutionYear()));
-	}
-
-	return prepareChangeSpecialSeasonCode(mapping, form, request, response, specialSeasonCodeBean);
-    }
-
-    public ActionForward changeSpecialSeasonCode(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(request);
-	ExecutionSemester executionSemester = getExecutionPeriod(request);
-	SpecialSeasonCodeBean specialSeasonCodeBean = new SpecialSeasonCodeBean(studentCurricularPlan, executionSemester);
-	specialSeasonCodeBean.setSpecialSeasonCode(studentCurricularPlan.getRegistration().getSpecialSeasonCodeByExecutionYear(
-		executionSemester.getExecutionYear()));
-	return prepareChangeSpecialSeasonCode(mapping, form, request, response, specialSeasonCodeBean);
-    }
-
-    private ActionForward prepareChangeSpecialSeasonCode(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response, SpecialSeasonCodeBean specialSeasonCodeBean) {
-	request.setAttribute("specialSeasonCodeBean", specialSeasonCodeBean);
-	return mapping.findForward("changeSpecialSeasonCode");
-    }
-
-    public ActionForward backFromChooseSpeciaSeasonCode(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	SpecialSeasonCodeBean seasonCodeBean = (SpecialSeasonCodeBean) getRenderedObject();
-
-	request.setAttribute("studentCurricularPlan", seasonCodeBean.getStudentCurricularPlan());
-	request.setAttribute("executionPeriod", seasonCodeBean.getExecutionPeriod());
-
-	return mapping.findForward("showStudentEnrollmentMenu");
-    }
-    
     public ActionForward checkPermission(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	
+
 	StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(request);
 	ExecutionSemester executionSemester = getExecutionPeriod(request);
-	
+
 	List<StudentStatute> statutes = studentCurricularPlan.getRegistration().getStudent().getStudentStatutes();
-	for(StudentStatute statute : statutes) {
-	    if(statute.getStatuteType().isSpecialSeasonGranted() && statute.isValidInExecutionPeriod(executionSemester)) {
+	for (StudentStatute statute : statutes) {
+	    if (statute.getStatuteType().isSpecialSeasonGranted() && statute.isValidInExecutionPeriod(executionSemester)) {
 		request.setAttribute("action", getAction());
-		request.setAttribute("bolonhaStudentEnrollmentBean", new SpecialSeasonBolonhaStudentEnrolmentBean(studentCurricularPlan,
-			executionSemester));
+		request.setAttribute("bolonhaStudentEnrollmentBean", new SpecialSeasonBolonhaStudentEnrolmentBean(
+			studentCurricularPlan, executionSemester));
 
 		addDebtsWarningMessages(studentCurricularPlan.getRegistration().getStudent(), executionSemester, request);
 		return mapping.findForward("showDegreeModulesToEnrol");
@@ -173,13 +126,6 @@ public class AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA extends A
 	request.setAttribute("executionPeriod", executionSemester);
 
 	return mapping.findForward("showStudentEnrollmentMenu");
-    }
-
-    @Override
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	SpecialSeasonCodeBean seasonCodeBean = (SpecialSeasonCodeBean) getRenderedObject();
-	return prepareShowDegreeModulesToEnrol(mapping, form, request, response, seasonCodeBean.getStudentCurricularPlan(),
-		seasonCodeBean.getExecutionPeriod());
     }
 
 }

@@ -44,14 +44,12 @@ import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.SchoolLevelType;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.SpecialSeasonCode;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.WrittenTest;
-import net.sourceforge.fenixedu.domain.YearStudentSpecialSeasonCode;
 import net.sourceforge.fenixedu.domain.accessControl.PermissionType;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdminOffice.AdministrativeOfficePermission;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
@@ -103,7 +101,6 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.domain.studentCurriculum.StandaloneCurriculumGroup;
-import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
 import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
@@ -1594,60 +1591,6 @@ public class Registration extends Registration_Base {
 	}
 	return null;
     }
-
-    // Special Season
-    final public SpecialSeasonCode getSpecialSeasonCodeByExecutionYear(ExecutionYear executionYear) {
-	for (YearStudentSpecialSeasonCode yearStudentSpecialSeasonCode : getYearStudentSpecialSeasonCodesSet()) {
-	    if (yearStudentSpecialSeasonCode.getExecutionYear() == executionYear) {
-		return yearStudentSpecialSeasonCode.getSpecialSeasonCode();
-	    }
-	}
-	return null;
-    }
-
-    final public void setSpecialSeasonCode(ExecutionYear executionYear, SpecialSeasonCode specialSeasonCode) {
-	if (specialSeasonCode == null) {
-	    if (!getLastStudentCurricularPlan().getSpecialSeasonEnrolments(executionYear).isEmpty()) {
-		throw new DomainException("error.cannot.change.specialSeasonCode");
-	    } else {
-		deleteYearSpecialSeasonCode(executionYear);
-	    }
-	} else {
-	    if (specialSeasonCode.getMaxEcts().compareTo(getLastStudentCurricularPlan().getSpecialSeasonEcts(executionYear)) < 0) {
-		throw new DomainException("error.cannot.change.specialSeasonCode");
-	    } else {
-		changeYearSpecialSeasonCode(executionYear, specialSeasonCode);
-	    }
-	}
-    }
-
-    private void changeYearSpecialSeasonCode(ExecutionYear executionYear, SpecialSeasonCode specialSeasonCode) {
-	YearStudentSpecialSeasonCode yearStudentSpecialSeasonCode = getYearStudentSpecialSeasonCodeByExecutionYear(executionYear);
-	if (yearStudentSpecialSeasonCode != null) {
-	    yearStudentSpecialSeasonCode.setSpecialSeasonCode(specialSeasonCode);
-	} else {
-	    new YearStudentSpecialSeasonCode(this, executionYear, specialSeasonCode);
-	}
-    }
-
-    private YearStudentSpecialSeasonCode getYearStudentSpecialSeasonCodeByExecutionYear(ExecutionYear executionYear) {
-	for (YearStudentSpecialSeasonCode yearStudentSpecialSeasonCode : getYearStudentSpecialSeasonCodesSet()) {
-	    if (yearStudentSpecialSeasonCode.getExecutionYear() == executionYear) {
-		return yearStudentSpecialSeasonCode;
-	    }
-	}
-	return null;
-    }
-
-    private void deleteYearSpecialSeasonCode(ExecutionYear executionYear) {
-	for (YearStudentSpecialSeasonCode yearStudentSpecialSeasonCode : getYearStudentSpecialSeasonCodesSet()) {
-	    if (yearStudentSpecialSeasonCode.getExecutionYear() == executionYear) {
-		yearStudentSpecialSeasonCode.delete();
-	    }
-	}
-    }
-
-    // end Special Season
 
     final public List<Enrolment> getEnroledImprovements() {
 	final List<Enrolment> enroledImprovements = new ArrayList<Enrolment>();

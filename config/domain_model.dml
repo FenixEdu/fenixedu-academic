@@ -1690,12 +1690,6 @@ class DomainObject {
         Double percentage;
     }
 
-    class SpecialSeasonCode extends DomainObject {
-        Integer code;
-        BigDecimal maxEcts;
-        String situation;
-    }
-
     class StudentCurricularPlan extends DomainObject {
         Double classification;
         Integer completedCourses;
@@ -1858,9 +1852,6 @@ class DomainObject {
     }
 
     class WrittenEvaluationEnrolment extends DomainObject {
-    }
-
-    class YearStudentSpecialSeasonCode extends DomainObject {
     }
 
     class accessControl.PersistentGroupMembers extends DomainObject {
@@ -14332,13 +14323,6 @@ relation RootDomainObjectSpaceInformation {
     }
 }
 
-relation RootDomainObjectSpecialSeasonCode {
-    RootDomainObject playsRole rootDomainObject;
-    SpecialSeasonCode playsRole specialSeasonCodes {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectStudent {
     RootDomainObject playsRole rootDomainObject;
     student.Student playsRole students {
@@ -14749,13 +14733,6 @@ relation RootDomainObjectWorkScheduleType {
 relation RootDomainObjectWrittenEvaluationEnrolment {
     RootDomainObject playsRole rootDomainObject;
     WrittenEvaluationEnrolment playsRole writtenEvaluationEnrolments {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectYearStudentSpecialSeasonCode {
-    RootDomainObject playsRole rootDomainObject;
-    YearStudentSpecialSeasonCode playsRole yearStudentSpecialSeasonCodes {
         multiplicity *;
     }
 }
@@ -15965,27 +15942,6 @@ relation WrittenEvaluationWrittenEvaluationSpaceOccupation {
         multiplicity *;
     }
     space.WrittenEvaluationSpaceOccupation playsRole writtenEvaluationSpaceOccupations {
-        multiplicity *;
-    }
-}
-
-relation YearStudentSpecialSeasonCodeExecutionYear {
-    ExecutionYear playsRole executionYear;
-    YearStudentSpecialSeasonCode playsRole yearStudentSpecialSeasonCodes {
-        multiplicity *;
-    }
-}
-
-relation YearStudentSpecialSeasonCodeSpecialSeasonCode {
-    SpecialSeasonCode playsRole specialSeasonCode;
-    YearStudentSpecialSeasonCode playsRole yearStudentSpecialSeasonCodes {
-        multiplicity *;
-    }
-}
-
-relation YearStudentSpecialSeasonCodeStudent {
-    student.Registration playsRole student;
-    YearStudentSpecialSeasonCode playsRole yearStudentSpecialSeasonCodes {
         multiplicity *;
     }
 }

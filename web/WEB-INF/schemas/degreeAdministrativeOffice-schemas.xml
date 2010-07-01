@@ -1,33 +1,3 @@
-<schema name="specialSeason.choose.student"
-	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.enrolment.SpecialSeasonEnrolmentBean">
-	<slot name="studentNumber" key="label.number" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="size" value="6" />
-		<property name="maxLength" value="5" />
-	</slot>
-	<slot name="executionYear" key="lable.executionYear" 
-			validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select">
-		<property name="providerClass"
-			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
-		<property name="format"
-			value="${year}" />			
-	</slot>
-</schema>
-
-<schema name="specialSeason.show.student"
-	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.enrolment.SpecialSeasonEnrolmentBean">
-	<slot name="student.number" key="label.number" read-only="true"/>
-	<slot name="student.person.name" key="label.person.name" read-only="true"/>
-	<slot name="executionYear" layout="format" key="label.executionYear" read-only="true">
-		<property name="format" value="${year}" />
-	</slot>
-	<slot name="specialSeasonCode" key="label.specialSeasonCode" layout="menu-select-postback">
-		<property name="providerClass"
-			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.SpecialSeasonCodesProvider" />
-		<property name="format" value="${code} - ${situation}" />
-		<property name="destination" value="postBack"/>
-	</slot>	
-</schema>
-
 <schema name="specialSeason.show.curricular.to.enrol"
 	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.enrolment.SpecialSeasonToEnrolBean">
 	<slot name="toSubmit" key="label.submit" />	
