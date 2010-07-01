@@ -66,7 +66,7 @@
 	<div class="simpleblock3">
 	<dl>
 		<dt><bean:message key="label.tutorshipSummary.form.participationType" bundle="APPLICATION_RESOURCES"/>:</dt>
-		<dd>Nula (0%) Insuficiente (0-25%)  Razoável (25-50%)  Boa (50-75%)  Muito Boa (>= 75%)</dd> 
+		<dd>Nenhuma (0%) Baixa (0-25%)  Média (25-50%)  Alta (50-75%)  Muito Alta (>= 75%)</dd> 
 		<dt><bean:message key="label.tutorshipSummary.form.participationRegularly" bundle="APPLICATION_RESOURCES"/>:</dt>
 		<dd>Respondeu + metade dos contactos do Tutor</dd> 
 		<dt><bean:message key="label.tutorshipSummary.form.participationNone" bundle="APPLICATION_RESOURCES"/>: </dt>

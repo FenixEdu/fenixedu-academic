@@ -763,6 +763,7 @@
 	<slot name="outOfTouch" layout="boolean-icon" key="label.tutorshipSummary.form.outOfTouch" />
 	<slot name="highPerformance" read-only="true" layout="boolean-icon" key="label.tutorshipSummary.form.highPerformance" />
 	<slot name="lowPerformance" read-only="true" layout="boolean-icon" key="label.tutorshipSummary.form.lowPerformance" />
+	<slot name="withoutEnrolments" read-only="true" layout="boolean-icon" key="label.tutorshipSummary.form.withoutEnrolments" />
 </schema>
 
 <schema name="tutorship.tutorate.viewSummaryRelation" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.TutorshipSummaryRelation">
@@ -774,6 +775,7 @@
 	<slot name="outOfTouch" layout="boolean-icon" key="label.tutorshipSummary.form.outOfTouch" />
 	<slot name="highPerformance" layout="boolean-icon" key="label.tutorshipSummary.form.highPerformance" />
 	<slot name="lowPerformance" layout="boolean-icon" key="label.tutorshipSummary.form.lowPerformance" />
+	<slot name="withoutEnrolments" layout="boolean-icon" key="label.tutorshipSummary.form.withoutEnrolments" />
 </schema>
 
 <schema name="tutorship.summary.period" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorshipSummaryPeriodBean">

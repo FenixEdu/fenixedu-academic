@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -25,6 +26,7 @@ public class TutorshipSummaryRelationBean implements Serializable {
     private boolean highPerformance;
     private boolean lowPerformance;
     private TutorshipParticipationType participationType;
+    private boolean withoutEnrolments;
 
     private TutorshipSummaryRelation tutorshipSummaryRelation;
 
@@ -117,15 +119,24 @@ public class TutorshipSummaryRelationBean implements Serializable {
 	return highPerformance;
     }
 
+    public boolean isWithoutEnrolments() {
+	return withoutEnrolments;
+    }
+
     public void initPerformance() {
 	double totalEcts = 0;
 	double approvedEcts = 0;
 
-	System.out.println("Aluno: " + getTutorship().getStudent().getName() + " in " + executionSemester);
-	for (Enrolment enrolment : getTutorship().getStudent().getEnrolments(executionSemester)) {
-	    System.out.println("Enrolment: " + enrolment.getName() + ", " + enrolment.getEctsCredits() + " Aproved?"
-		    + enrolment.isApproved());
+	Collection<Enrolment> enrolments = getTutorship().getStudent().getEnrolments(executionSemester);
 
+	if (enrolments.isEmpty()) {
+	    highPerformance = false;
+	    lowPerformance = false;
+	    withoutEnrolments = true;
+	    return;
+	}
+
+	for (Enrolment enrolment : enrolments) {
 	    totalEcts += enrolment.getEctsCredits();
 
 	    if (enrolment.isApproved()) {
