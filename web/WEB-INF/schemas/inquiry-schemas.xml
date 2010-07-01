@@ -119,6 +119,12 @@
 	<slot name="internalDegreeDisclosureHeader" key="label.studentInquiry.uploadTeachingResults.internalDegreeDisclosureHeader" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 </schema>
 
+<schema name="studentInquiry.deleteTeachingResults"
+		type="net.sourceforge.fenixedu.dataTransferObject.inquiries.UploadStudentInquiriesTeachingResultsBean" bundle="INQUIRIES_RESOURCES">	
+	<slot name="resultsDate" key="label.studentInquiry.uploadTeachingResults.resultsDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="picker"/>
+	<slot name="keyExecutionCourseHeader" key="label.studentInquiry.deleteResults.keyExecutionCourse"/>	
+</schema>
+
 <schema name="studentInquiry.uploadCourseResults"
 		type="net.sourceforge.fenixedu.dataTransferObject.inquiries.UploadStudentInquiriesCourseResultsBean" bundle="INQUIRIES_RESOURCES">
 	<slot name="file" key="label.studentInquiry.uploadTeachingResults.file" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
@@ -127,6 +133,12 @@
 	<slot name="keyExecutionDegreeHeader" key="label.studentInquiry.uploadTeachingResults.keyExecutionDegreeHeader" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="unsatisfactoryResultsCUEvaluationHeader" key="label.studentInquiry.uploadTeachingResults.unsatisfactoryResultsCUEvaluationHeader" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="unsatisfactoryResultsCUOrganizationHeader" key="label.studentInquiry.uploadTeachingResults.unsatisfactoryResultsCUOrganizationHeader" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+</schema>
+
+<schema name="studentInquiry.deleteCourseResults"
+		type="net.sourceforge.fenixedu.dataTransferObject.inquiries.UploadStudentInquiriesCourseResultsBean" bundle="INQUIRIES_RESOURCES">	
+	<slot name="resultsDate" key="label.studentInquiry.uploadTeachingResults.resultsDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="picker"/>
+	<slot name="keyExecutionCourseHeader" key="label.studentInquiry.deleteResults.keyExecutionCourse"/>	
 </schema>
 
 <schema name="studentInquiriesCourseResult.courseResultsCoordinatorComment" 

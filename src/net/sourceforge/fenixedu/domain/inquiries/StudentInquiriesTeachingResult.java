@@ -15,10 +15,10 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
-
-import pt.ist.fenixWebFramework.services.Service;
 
 public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResult_Base {
 
@@ -663,13 +663,38 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
 	    studentInquiriesTeachingResult.valuesMap = null;
 
 	}
-
     }
 
+    @Service
     public void delete() {
 	removeExecutionDegree();
 	removeProfessorship();
 	removeRootDomainObject();
-
+	super.deleteDomainObject();
+    }
+    
+    @Service
+    public static Boolean deleteTeachingResults(UploadStudentInquiriesTeachingResultsBean teachingBean) {
+	boolean deletedItems = false;
+	for (StudentInquiriesTeachingResult teachingResult : RootDomainObject.getInstance()
+		.getStudentInquiriesTeachingResultsSet()) {
+	    if (StringUtils.isEmpty(teachingBean.getKeyExecutionCourseHeader())) {
+		if (teachingBean.getResultsDate().equals(teachingResult.getResultsDate())) {
+		    teachingResult.delete();
+		    deletedItems = true;
+		}
+	    } else {
+		ExecutionCourse executionCourse = ExecutionCourse.fromExternalId(teachingBean.getKeyExecutionCourseHeader());
+		if(executionCourse == null) {
+		    throw new DomainException("error.StudentInquiriesCourseResult.executionCourseNotFound",
+			    teachingBean.getKeyExecutionCourseHeader());
+		}
+		if (executionCourse != null && teachingResult.getProfessorship().getExecutionCourse() == executionCourse) {
+		    teachingResult.delete();
+		    deletedItems = true;
+		}
+	    }
+	}
+	return deletedItems;
     }
 }

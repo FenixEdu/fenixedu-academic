@@ -30,5 +30,4 @@ public class UploadStudentInquiriesCourseResultsBean extends UploadStudentInquir
     public void setUnsatisfactoryResultsCUOrganizationHeader(String unsatisfactoryResultsCUOrganizationHeader) {
 	this.unsatisfactoryResultsCUOrganizationHeader = unsatisfactoryResultsCUOrganizationHeader;
     }
-
 }

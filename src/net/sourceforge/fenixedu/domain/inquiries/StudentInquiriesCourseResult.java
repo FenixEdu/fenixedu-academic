@@ -784,6 +784,32 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
 
     }
 
+    @Service
+    public static Boolean deleteCurricularCoursesResults(UploadStudentInquiriesCourseResultsBean coursesBean) {
+	boolean deletedItems = false;
+	for (StudentInquiriesCourseResult courseResult : RootDomainObject.getInstance()
+		.getStudentInquiriesCourseResults()) {
+	    if (StringUtils.isEmpty(coursesBean.getKeyExecutionCourseHeader())) {
+		if (coursesBean.getResultsDate().equals(courseResult.getResultsDate())) {
+		    courseResult.delete();
+		    deletedItems = true;
+		}
+	    } else {
+		ExecutionCourse executionCourse = DomainObject.fromExternalId(coursesBean.getKeyExecutionCourseHeader());
+		if(executionCourse == null) {
+		    throw new DomainException("error.StudentInquiriesCourseResult.executionCourseNotFound",
+			    coursesBean.getKeyExecutionCourseHeader());
+		}
+		if (executionCourse != null && courseResult.getExecutionCourse() == executionCourse) {
+		    courseResult.delete();
+		    deletedItems = true;
+		}
+	    }
+	}
+	return deletedItems;
+    }
+    
+    @Service
     public void delete() {
 	if (hasCoordinatorComment()) {
 	    throw new DomainException("error.StudentInquiriesCourseResult.cannotDelete.hasCoordinatorComment");
@@ -791,6 +817,7 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
 	removeExecutionCourse();
 	removeExecutionDegree();
 	removeRootDomainObject();
+	super.deleteDomainObject();
     }
 
     @Override

@@ -80,5 +80,4 @@ public class UploadStudentInquiriesTeachingResultsBean extends UploadStudentInqu
     public void setInternalDegreeDisclosureHeader(String internalDegreeDisclosureHeader) {
 	this.internalDegreeDisclosureHeader = internalDegreeDisclosureHeader;
     }
-
 }

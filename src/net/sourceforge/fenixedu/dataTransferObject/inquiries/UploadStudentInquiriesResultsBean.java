@@ -49,5 +49,4 @@ abstract public class UploadStudentInquiriesResultsBean {
     public void setResultsDate(LocalDate resultsDate) {
 	this.resultsDate = resultsDate;
     }
-
 }

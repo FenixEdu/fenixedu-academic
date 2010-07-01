@@ -31,16 +31,28 @@ import pt.utl.ist.fenix.tools.util.FileUtils;
  * 
  */
 @Mapping(path = "/uploadStudentInquiriesResults", module = "gep")
-@Forwards( { @Forward(name = "uploadPage", path = "/gep/inquiries/uploadStudentInquiriesResults.jsp") })
+@Forwards( { @Forward(name = "prepareUploadPage", path = "/gep/inquiries/uploadStudentInquiriesResults.jsp"),
+    @Forward(name = "uploadCoursesPage", path = "/gep/inquiries/uploadStudentInquiriesResultsCurricularCourses.jsp"),
+    @Forward(name = "uploadTeachersPage", path = "/gep/inquiries/uploadStudentInquiriesResultsTeachers.jsp")})
 public class UploadStudentInquiriesResults extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	request.setAttribute("uploadTeachingFileBean", new UploadStudentInquiriesTeachingResultsBean());
+	return mapping.findForward("prepareUploadPage");
+    }
+    
+    public ActionForward prepareCurricularCourses(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	request.setAttribute("uploadCourseFileBean", new UploadStudentInquiriesCourseResultsBean());
-	return mapping.findForward("uploadPage");
+	return mapping.findForward("uploadCoursesPage");
     }
 
+    public ActionForward prepareTeachers(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("uploadTeachingFileBean", new UploadStudentInquiriesTeachingResultsBean());
+	return mapping.findForward("uploadTeachersPage");
+    }
+    
     public ActionForward submitCourseFile(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	UploadStudentInquiriesCourseResultsBean resultsBean = (UploadStudentInquiriesCourseResultsBean) getRenderedObject("uploadCourseFileBean");
@@ -55,15 +67,14 @@ public class UploadStudentInquiriesResults extends FenixDispatchAction {
 	} catch (DomainException e) {
 	    addErrorMessage(request, e.getKey(), e.getKey(), e.getArgs());
 	}
-
-	return prepare(mapping, actionForm, request, response);
+	return prepareCurricularCourses(mapping, actionForm, request, response);
     }
 
     private String[] readFile(UploadStudentInquiriesResultsBean resultsBean) throws IOException {
 	String results = FileUtils.readFile(resultsBean.getFile());
 	return results.split("\n", 2);
     }
-
+    
     public ActionForward submitTeachingFile(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	UploadStudentInquiriesTeachingResultsBean resultsBean = (UploadStudentInquiriesTeachingResultsBean) getRenderedObject("uploadTeachingFileBean");
@@ -78,8 +89,40 @@ public class UploadStudentInquiriesResults extends FenixDispatchAction {
 	} catch (DomainException e) {
 	    addErrorMessage(request, e.getKey(), e.getKey(), e.getArgs());
 	}
-
-	return prepare(mapping, actionForm, request, response);
+	return prepareTeachers(mapping, actionForm, request, response);
     }
+    
+    public ActionForward deleteCurricularCoursesData(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	UploadStudentInquiriesCourseResultsBean resultsBean = (UploadStudentInquiriesCourseResultsBean) getRenderedObject("deleteCourseDataBean");
+	RenderUtils.invalidateViewState();
 
+	try {
+	    if(StudentInquiriesCourseResult.deleteCurricularCoursesResults(resultsBean)) {
+		addActionMessage(request, "message.StudentInquiriesResult.delete.sucess");
+	    } else {
+		addActionMessage(request, "message.StudentInquiriesResult.delete.dataNotFound");
+	    }
+	} catch (DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getKey(), e.getArgs());
+	}
+	return prepareCurricularCourses(mapping, actionForm, request, response);
+    }
+    
+    public ActionForward deleteTeachingData(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	UploadStudentInquiriesTeachingResultsBean resultsBean = (UploadStudentInquiriesTeachingResultsBean) getRenderedObject("deleteTeachingDataBean");
+	RenderUtils.invalidateViewState();
+
+	try {
+	    if(StudentInquiriesTeachingResult.deleteTeachingResults(resultsBean)) {
+		addActionMessage(request, "message.StudentInquiriesResult.delete.sucess");
+	    } else {
+		addActionMessage(request, "message.StudentInquiriesResult.delete.dataNotFound");
+	    }
+	} catch (DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getKey(), e.getArgs());
+	}
+	return prepareTeachers(mapping, actionForm, request, response);
+    }
 }
