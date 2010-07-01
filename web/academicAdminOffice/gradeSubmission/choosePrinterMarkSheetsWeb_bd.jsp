@@ -60,7 +60,7 @@
 <logic:notEmpty name="curricularCourseMap">
 
 	<br/><hr/>
-	<h3><bean:write name="executionPeriod" property="executionYear.year"/> - <bean:write name="executionPeriod" property="semester"/>� Sem</h3>
+	<h3><bean:write name="executionPeriod" property="executionYear.year"/> - <bean:write name="executionPeriod" property="semester"/>o Sem</h3>
 	<br/>
 	<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheet.printMarkSheetsWeb.markSheets.lefToPrint"/></strong>:
 	<br/>
