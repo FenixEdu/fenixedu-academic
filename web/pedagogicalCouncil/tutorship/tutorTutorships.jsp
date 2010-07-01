@@ -9,8 +9,10 @@
 <h2><bean:message key="label.tutorshipSummary" bundle="APPLICATION_RESOURCES" /></h2>
 
 <html:link page="/tutorshipSummaryPeriod.do?method=prepareCreate">
-Definir Período de Preenchimento
+Definir Período de Preenchimento das Fichas
 </html:link>
+
+<br />
 
 
 <fr:form action="/tutorshipSummary.do?method=searchTeacher">
@@ -77,6 +79,7 @@ Definir Período de Preenchimento
 	</ul>
 </logic:notEmpty>
 
+<!--  finished summaries -->
 
 <p class="mtop2 mbottom1 separator2">
 	<b><bean:message key="label.tutorshipSummary.past" bundle="APPLICATION_RESOURCES"/></b>
