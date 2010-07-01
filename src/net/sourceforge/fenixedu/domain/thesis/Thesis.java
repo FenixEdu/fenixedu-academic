@@ -338,7 +338,8 @@ public class Thesis extends Thesis_Base {
 
     @Checked("ThesisPredicates.isScientificCommission")
     public void delete() {
-	if (getState() != ThesisState.DRAFT) {
+	
+	if (!canBeDeleted()) {
 	    throw new DomainException("thesis.delete.notDraft");
 	}
 
@@ -355,6 +356,10 @@ public class Thesis extends Thesis_Base {
 	removeEnrolment();
 
 	deleteDomainObject();
+    }
+
+    public boolean canBeDeleted() {
+	return getState() == ThesisState.DRAFT;
     }
 
     protected static Collection<Thesis> getThesisInState(Degree degree, ExecutionYear year, ThesisState state) {
@@ -522,7 +527,7 @@ public class Thesis extends Thesis_Base {
     // / DRAFT -> SUBMITTED
     @Checked("ThesisPredicates.isScientificCommission")
     public void submit() {
-	if (getState() != ThesisState.DRAFT) {
+	if (canBeDeleted()) {
 	    throw new DomainException("thesis.submit.notDraft");
 	}
 
