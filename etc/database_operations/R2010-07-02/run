@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Dropping SPECIAL_SEASON_CODE and YEAR_STUDENT_SPECIAL_SEASON_CODE" DeleteSSC.sql
+execute "Creating Coordinator Logs" coordinatorLogs.sql
