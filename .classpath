@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="src_gen_remote"/>
 	<classpathentry kind="src" path="src_remote"/>
 	<classpathentry kind="src" path="src_gen"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
@@ -137,5 +138,7 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-r48143.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-r48121.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/rssutils.jar"/>
+	<classpathentry kind="lib" path="lib/gwt-dev.jar"/>
+	<classpathentry kind="lib" path="lib/gwt-user.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
