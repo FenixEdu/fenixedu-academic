@@ -527,7 +527,7 @@ public class Thesis extends Thesis_Base {
     // / DRAFT -> SUBMITTED
     @Checked("ThesisPredicates.isScientificCommission")
     public void submit() {
-	if (canBeDeleted()) {
+	if (getState() != ThesisState.DRAFT) {
 	    throw new DomainException("thesis.submit.notDraft");
 	}
 
