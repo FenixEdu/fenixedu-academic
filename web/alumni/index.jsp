@@ -210,7 +210,7 @@ ul.material li.feedback { background: url(<%= request.getContextPath() %>/images
 
 <h3>Oportunidades, aconselhamento e apoio informativo</h3>
 <ul>
-	<li><a target="_blank" href="http://gcrp.ist.utl.pt/html/recrutamento/index.shtml"><span class="highlight1">Procura/Oferta de Estágio/Emprego</span></a></li>
+	<li><a target="_blank" href="http://recrutamento.ist.utl.pt/"><span class="highlight1">Procura/Oferta de Estágio/Emprego</span></a></li>
 	<li><a target="_blank" href="http://www.ist.utl.pt/html/ensino/">Ensino, Pós-graduações e Formação</a></li>
 	<li><a target="_blank" href="http://galtec.ist.utl.pt/">Licenciamento de Tecnologia</a></li>
 	<li><a target="_blank" href="http://www.istpress.ist.utl.pt/">Oportunidades de publicação de livros</a></li>
