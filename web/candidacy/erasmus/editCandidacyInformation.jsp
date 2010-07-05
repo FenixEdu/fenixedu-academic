@@ -71,6 +71,32 @@
 		        <fr:property name="columnClasses" value="width18em,,tdclear tderror1"/>
 			</fr:layout>
 		</fr:edit>
+
+		<fr:edit		id="erasmusStudentDataBean.applyForSemester.edit"
+					name="individualCandidacyProcessBean"
+					property="erasmusStudentDataBean"
+					schema="ErasmusStudentDataBean.applyForSemester.edit">
+			<fr:layout name="tabular-editable">
+				<fr:property name="classes" value="tstyle5 thlight thleft mtop05"/>
+		        <fr:property name="columnClasses" value="width225px,,tdclear tderror1"/>
+  		        <fr:property name="requiredMarkShown" value="true" />
+		        <fr:property name="requiredMessageShown" value="false" />
+			</fr:layout>
+		</fr:edit>
+		
+		
+		<p><strong>Portuguese Language Course</strong></p>
+		<fr:edit	id="erasmusIndividualCandidacyProcessBean.language.intensive.course"
+					name="individualCandidacyProcessBean"
+					property="erasmusStudentDataBean"
+					schema="ErasmusStudentData.languageCompetence.intensive.portuguese.course">
+			<fr:layout name="tabular-editable">
+				<fr:property name="classes" value="tstyle5 thlight thleft mtop05 ulnomargin inobullet"/>
+		        <fr:property name="columnClasses" value="width225px,,tdclear tderror1"/>
+		        <fr:property name="requiredMarkShown" value="true" />
+		        <fr:property name="requiredMessageShown" value="false" />
+			</fr:layout>
+		</fr:edit>
 		
 		<p>
 			<html:submit onclick="this.form.method.value='executeEditCandidacyInformation'; return true;"><bean:message key="label.submit" bundle="APPLICATION_RESOURCES" /></html:submit>

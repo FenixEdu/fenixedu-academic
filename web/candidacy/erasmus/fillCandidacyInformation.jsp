@@ -93,6 +93,32 @@
 			</fr:layout>
 			<fr:destination name="invalid" path='<%= "/caseHandlingErasmusIndividualCandidacyProcess.do?method=fillCandidacyInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>'  />
 		</fr:edit>
+
+		<fr:edit		id="erasmusStudentDataBean.applyForSemester.edit"
+					name="individualCandidacyProcessBean"
+					property="erasmusStudentDataBean"
+					schema="ErasmusStudentDataBean.applyForSemester.edit">
+			<fr:layout name="tabular-editable">
+				<fr:property name="classes" value="tstyle5 thlight thleft mtop05"/>
+		        <fr:property name="columnClasses" value="width225px,,tdclear tderror1"/>
+  		        <fr:property name="requiredMarkShown" value="true" />
+		        <fr:property name="requiredMessageShown" value="false" />
+			</fr:layout>
+		</fr:edit>
+		
+		
+		<p><strong>Portuguese Language Course</strong></p>
+		<fr:edit	id="erasmusIndividualCandidacyProcessBean.language.intensive.course"
+					name="individualCandidacyProcessBean"
+					property="erasmusStudentDataBean"
+					schema="ErasmusStudentData.languageCompetence.intensive.portuguese.course">
+			<fr:layout name="tabular-editable">
+				<fr:property name="classes" value="tstyle5 thlight thleft mtop05 ulnomargin inobullet"/>
+		        <fr:property name="columnClasses" value="width225px,,tdclear tderror1"/>
+		        <fr:property name="requiredMarkShown" value="true" />
+		        <fr:property name="requiredMessageShown" value="false" />
+			</fr:layout>
+		</fr:edit>
 		
 	</logic:notEmpty>
 	

@@ -41,7 +41,7 @@
 <script src="<%= request.getContextPath() + "/javaScript/jquery/jquery.js" %>" type="text/javascript" >
 </script>
 
-<fr:form action='<%= f("/caseHandlingErasmusIndividualCandidacyProcess.do?userAction=createCandidacy&amp;parentProcessId=%s&amp", parentProcessId.toString()) %>' id="thisForm">
+<fr:form action='<%= f("/caseHandlingErasmusIndividualCandidacyProcess.do?userAction=createCandidacy&amp;parentProcessId=%s", parentProcessId.toString()) %>' id="thisForm">
 
 	<input type="hidden" id="removeId" name ="removeCourseId"/>
 	<input type="hidden" id="skipValidationId" name="skipValidation" value="false"/>
