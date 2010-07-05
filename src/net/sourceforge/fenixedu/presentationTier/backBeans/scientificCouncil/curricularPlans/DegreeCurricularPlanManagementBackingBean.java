@@ -1,8 +1,10 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.scientificCouncil.curricularPlans;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.faces.model.SelectItem;
 
@@ -15,6 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curric
 import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans.EditDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
@@ -182,13 +185,29 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
 
 	final InfoExecutionYear currentInfoExecutionYear = ReadCurrentExecutionYear.run();
 	final List<InfoExecutionYear> notClosedInfoExecutionYears = ReadNotClosedExecutionYears.run();
+	
 	for (final InfoExecutionYear notClosedInfoExecutionYear : notClosedInfoExecutionYears) {
 	    if (notClosedInfoExecutionYear.after(currentInfoExecutionYear)) {
 		result.add(new SelectItem(notClosedInfoExecutionYear.getIdInternal(), notClosedInfoExecutionYear.getYear()));
 	    }
 	}
+
 	result.add(0, new SelectItem(currentInfoExecutionYear.getIdInternal(), currentInfoExecutionYear.getYear()));
+
+	setDefaultExecutionYearIDIfExisting();
+	
 	return result;
+    }
+
+    private void setDefaultExecutionYearIDIfExisting() {
+	final DegreeCurricularPlan dcp = getDcp();
+	if (dcp != null) {
+	    final List<ExecutionYear> executionYears = new ArrayList<ExecutionYear>(dcp.getRoot().getBeginContextExecutionYears());
+	    Collections.sort(executionYears, ExecutionYear.COMPARATOR_BY_YEAR);
+	    if (!executionYears.isEmpty()) {
+		setExecutionYearID(executionYears.get(0).getIdInternal());
+	    }
+	}
     }
 
     public String editCurricularPlan() {

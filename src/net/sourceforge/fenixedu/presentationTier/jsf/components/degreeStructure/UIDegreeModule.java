@@ -55,7 +55,8 @@ public class UIDegreeModule extends UIInput {
 
 	this.executionYear = executionYear;
 	if (this.executionYear == null) {
-	    this.executionYear = ExecutionYear.readCurrentExecutionYear();
+	    // this.executionYear = ExecutionYear.readCurrentExecutionYear();
+	    this.executionYear = ExecutionYear.readLastExecutionYear();
 	}
 	this.lastExecutionPeriod = this.executionYear.getLastExecutionPeriod();
 
