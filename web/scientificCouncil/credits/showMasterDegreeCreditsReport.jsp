@@ -142,20 +142,26 @@
 									<tr>					
 								</logic:greaterThan>
 								
-								<bean:define id="teacher" name="professorship" property="teacher" type="net.sourceforge.fenixedu.domain.Teacher"/>						
-								
-								<td class="aright"><bean:write name="teacher" property="teacherNumber"/></td>					
-								
-								<td><bean:write name="teacher" property="person.name"/></td>														
-								
-								<% 
-									TeacherMasterDegreeService masterDegreeService = null;
-									TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionCourse.getExecutionPeriod());
-									if(teacherService != null){
-										masterDegreeService = teacherService.getMasterDegreeServiceByProfessorship(professorship);										
-									} 
-								%>
+								<% TeacherMasterDegreeService masterDegreeService = null;%>
 									
+								<logic:notEmpty name="professorship" property="teacher">
+									<bean:define id="teacher" name="professorship" property="teacher" type="net.sourceforge.fenixedu.domain.Teacher"/>						
+									
+									<td class="aright"><bean:write name="teacher" property="teacherNumber"/></td>					
+									
+									<td><bean:write name="teacher" property="person.name"/></td>														
+									
+									<% 
+										TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionCourse.getExecutionPeriod());
+										if(teacherService != null){
+											masterDegreeService = teacherService.getMasterDegreeServiceByProfessorship(professorship);										
+										} 
+									%>
+								</logic:notEmpty>
+								<logic:empty name="professorship" property="teacher">
+									<td class="acenter">-</td>	
+									<td><bean:write name="professorship" property="person.name"/></td>
+								</logic:empty>
 								<% if(masterDegreeService != null) { %>																						
 									<td class="acenter"><%= masterDegreeService.getHours() %></td>
 									<td class="acenter"><%= masterDegreeService.getCredits() %></td>														
@@ -163,6 +169,7 @@
 									<td class="acenter">-</td>
 									<td class="acenter">-</td>
 								<% } %>
+								
 								
 								<%-- Observations --%>
 								<logic:equal name="isLastCellDone" value="false">

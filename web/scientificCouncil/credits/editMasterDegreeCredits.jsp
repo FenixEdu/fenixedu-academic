@@ -137,43 +137,48 @@
 								<logic:greaterThan name="professorshipIndex" value="0">
 									<tr>					
 								</logic:greaterThan>
-								
-								<bean:define id="teacher" name="professorship" property="teacher" type="net.sourceforge.fenixedu.domain.Teacher"/>						
-								
-								<td class="aright"><bean:write name="teacher" property="teacherNumber"/></td>					
-								
-								<td><bean:write name="teacher" property="person.name"/></td>
-													
-								<% 
-									TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionCourse.getExecutionPeriod());
-									TeacherMasterDegreeService masterDegreeService = null;
-									if(teacherService != null){
-										masterDegreeService = teacherService.getMasterDegreeServiceByProfessorship(professorship);
-										request.setAttribute("masterDegreeService",masterDegreeService);
-									} else {
-										request.setAttribute("masterDegreeService",null);
-									}
-								%>								
+								<logic:notEmpty name="professorship" property="teacher">
+									<bean:define id="teacher" name="professorship" property="teacher" type="net.sourceforge.fenixedu.domain.Teacher"/>
+									<td class="aright"><bean:write name="teacher" property="teacherNumber"/></td>											
+									<td><bean:write name="teacher" property="person.name"/></td>
+														
+									<% 
+										TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionCourse.getExecutionPeriod());
+										TeacherMasterDegreeService masterDegreeService = null;
+										if(teacherService != null){
+											masterDegreeService = teacherService.getMasterDegreeServiceByProfessorship(professorship);
+											request.setAttribute("masterDegreeService",masterDegreeService);
+										} else {
+											request.setAttribute("masterDegreeService",null);
+										}
+									%>								
 					
-								<logic:notEmpty name="masterDegreeService">										
-									<%	
-										hoursMap.put(professorship.getIdInternal().toString(), masterDegreeService.getHours());
-										creditsMap.put(professorship.getIdInternal().toString(), masterDegreeService.getCredits()); 
-									%>											
+									<logic:notEmpty name="masterDegreeService">										
+										<%	
+											hoursMap.put(professorship.getIdInternal().toString(), masterDegreeService.getHours());
+											creditsMap.put(professorship.getIdInternal().toString(), masterDegreeService.getCredits()); 
+										%>											
+									</logic:notEmpty>
+																
+									<bean:define id="hours">hoursMap(<bean:write name="professorship" property="idInternal"/>)</bean:define>
+									<bean:define id="credits">creditsMap(<bean:write name="professorship" property="idInternal"/>)</bean:define>
+				
+									<logic:equal name="executionCourseTrio" property="first.value" value="true">								
+										<td><html:text alt='<%= hours %>' property='<%= hours %>' size="4" /></td>
+										<td><html:text alt='<%= credits %>' property='<%= credits %>' size="4" /></td>		
+									</logic:equal>	
+									<logic:equal name="executionCourseTrio" property="first.value" value="false">
+										<td><html:text readonly="true" style="color: #777; border: none;" alt='<%= hours %>' property='<%= hours %>' size="4" /></td>
+										<td><html:text readonly="true" style="color: #777; border: none;" alt='<%= credits %>' property='<%= credits %>' size="4" /></td>		
+									</logic:equal>
 								</logic:notEmpty>
-															
-								<bean:define id="hours">hoursMap(<bean:write name="professorship" property="idInternal"/>)</bean:define>
-								<bean:define id="credits">creditsMap(<bean:write name="professorship" property="idInternal"/>)</bean:define>
-			
-								<logic:equal name="executionCourseTrio" property="first.value" value="true">								
-									<td><html:text alt='<%= hours %>' property='<%= hours %>' size="4" /></td>
-									<td><html:text alt='<%= credits %>' property='<%= credits %>' size="4" /></td>		
-								</logic:equal>	
-								<logic:equal name="executionCourseTrio" property="first.value" value="false">
-									<td><html:text readonly="true" style="color: #777; border: none;" alt='<%= hours %>' property='<%= hours %>' size="4" /></td>
-									<td><html:text readonly="true" style="color: #777; border: none;" alt='<%= credits %>' property='<%= credits %>' size="4" /></td>		
-								</logic:equal>
-	
+								<logic:empty name="professorship" property="teacher">
+									<td class="acenter">-</td>											
+									<td><bean:write name="professorship" property="person.name"/></td>
+									<td class="acenter">-</td>	
+									<td class="acenter">-</td>	
+								</logic:empty>
+		
 								<logic:equal name="isLastCellDone" value="false">
 									<td rowspan="<%= numOfProfessorships %>">
 										<logic:equal name="executionCourseTrio" property="first.value" value="true">																			
