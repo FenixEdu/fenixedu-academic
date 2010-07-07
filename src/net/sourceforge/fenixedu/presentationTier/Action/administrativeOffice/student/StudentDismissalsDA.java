@@ -59,7 +59,7 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
-	final DismissalBean dismissalBean = new DismissalBean();
+	final DismissalBean dismissalBean = createDismissalBean();
 	dismissalBean.setStudentCurricularPlan(getSCP(request));
 
 	request.setAttribute("dismissalBean", dismissalBean);
@@ -69,7 +69,11 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 	return mapping.findForward("chooseDismissalEnrolments");
     }
 
-    private Collection<SelectedExternalEnrolment> buildStudentExternalEnrolmentsInformation(final DismissalBean dismissalBean) {
+    protected DismissalBean createDismissalBean() {
+	return new DismissalBean();
+    }
+
+    protected Collection<SelectedExternalEnrolment> buildStudentExternalEnrolmentsInformation(final DismissalBean dismissalBean) {
 	final Collection<SelectedExternalEnrolment> externalEnrolments = new HashSet<SelectedExternalEnrolment>();
 	for (final ExternalEnrolment externalEnrolment : dismissalBean.getStudentCurricularPlan().getRegistration().getStudent()
 		.getSortedExternalEnrolments()) {
@@ -78,7 +82,7 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 	return externalEnrolments;
     }
 
-    private Collection<SelectedEnrolment> buildStudentEnrolmentsInformation(final DismissalBean dismissalBean) {
+    protected Collection<SelectedEnrolment> buildStudentEnrolmentsInformation(final DismissalBean dismissalBean) {
 	final Collection<SelectedEnrolment> enrolments = new HashSet<SelectedEnrolment>();
 
 	for (final StudentCurricularPlan scp : dismissalBean.getStudent().getAllStudentCurricularPlans()) {
@@ -99,15 +103,18 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 
     public ActionForward chooseEquivalents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	DismissalBean dismissalBean = (DismissalBean) getRenderedObject("dismissalBean");
+
+	final DismissalBean dismissalBean = (DismissalBean) getRenderedObject("dismissalBean");
 	dismissalBean.setDismissalType(DismissalType.CURRICULAR_COURSE_CREDITS);
 
 	final DegreeCurricularPlan dcp = dismissalBean.getStudentCurricularPlan().getDegreeCurricularPlan();
 	final ExecutionSemester actualEP = ExecutionSemester.readActualExecutionSemester();
+
 	dismissalBean.setExecutionPeriod(dcp.hasExecutionDegreeFor(actualEP.getExecutionYear()) ? actualEP : dcp
 		.getMostRecentExecutionYear().getFirstExecutionPeriod());
 
 	request.setAttribute("dismissalBean", dismissalBean);
+
 	return mapping.findForward("chooseEquivalents");
     }
 
@@ -212,13 +219,17 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 	}
 
 	try {
-	    executeService(getServiceName(), new Object[] { dismissalBean });
+	    executeCreateDismissalService(dismissalBean);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
 	    return confirmCreateDismissals(mapping, form, request, response);
 	}
 
 	return manage(mapping, form, request, response);
+    }
+
+    protected void executeCreateDismissalService(DismissalBean dismissalBean) throws FenixFilterException, FenixServiceException {
+	executeService(getServiceName(), new Object[] { dismissalBean });
     }
 
     protected String getServiceName() {

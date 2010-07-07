@@ -188,8 +188,16 @@ public class DismissalBean implements Serializable, IStudentCurricularPlanBean {
 	return result;
     }
 
+    public boolean hasAnySelectedIEnrolments() {
+	return !getSelectedEnrolments().isEmpty();
+    }
+
     public Student getStudent() {
 	return getStudentCurricularPlan().getRegistration().getStudent();
+    }
+
+    public Collection<? extends CurricularCourse> getAllCurricularCoursesToDismissal() {
+	return studentCurricularPlan.getAllCurricularCoursesToDismissal(executionSemester);
     }
 
     public static class SelectedCurricularCourse implements Serializable {

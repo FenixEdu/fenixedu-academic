@@ -45,12 +45,19 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
     public static NoCourseGroupCurriculumGroup create(final NoCourseGroupCurriculumGroupType groupType,
 	    final RootCurriculumGroup curriculumGroup) {
 	switch (groupType) {
+
 	case PROPAEDEUTICS:
 	    return new PropaedeuticsCurriculumGroup(curriculumGroup);
+
 	case EXTRA_CURRICULAR:
 	    return new ExtraCurriculumGroup(curriculumGroup);
+
 	case STANDALONE:
 	    return new StandaloneCurriculumGroup(curriculumGroup);
+
+	case INTERNAL_CREDITS_SOURCE_GROUP:
+	    return new InternalCreditsSourceCurriculumGroup(curriculumGroup);
+
 	default:
 	    throw new DomainException("error.unknown.NoCourseGroupCurriculumGroupType");
 	}
@@ -83,7 +90,7 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
 
     @Override
     public Collection<CurricularCourse> getCurricularCoursesToDismissal(final ExecutionSemester executionSemester) {
-	return Collections.EMPTY_LIST;
+	return Collections.emptyList();
     }
 
     @Override
@@ -137,7 +144,7 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
 
     @Override
     public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(ExecutionSemester executionSemester) {
-	return Collections.EMPTY_SET;
+	return Collections.emptySet();
     }
 
     @Override
@@ -217,5 +224,10 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
     @Override
     public Set<CurriculumGroup> getAllCurriculumGroupsWithoutNoCourseGroupCurriculumGroups() {
 	return Collections.emptySet();
+    }
+
+
+    public boolean isVisible() {
+	return true;
     }
 }

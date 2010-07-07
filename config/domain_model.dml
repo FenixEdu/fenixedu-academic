@@ -5342,6 +5342,9 @@ class DomainObject {
 
                 class studentCurriculum.TemporarySubstitution extends studentCurriculum.Substitution {
                 }
+                
+                class studentCurriculum.InternalSubstitution extends studentCurriculum.Substitution {
+                }
 
     class studentCurriculum.CurriculumModule extends DomainObject {
         DateTime creationDateDateTime;
@@ -5369,6 +5372,9 @@ class DomainObject {
                 }
                 
                 class studentCurriculum.StandaloneCurriculumGroup extends studentCurriculum.NoCourseGroupCurriculumGroup {
+                }
+                
+                class studentCurriculum.InternalCreditsSourceCurriculumGroup extends studentCurriculum.NoCourseGroupCurriculumGroup {
                 }
 
             class studentCurriculum.RootCurriculumGroup extends studentCurriculum.CurriculumGroup {

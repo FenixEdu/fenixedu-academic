@@ -71,8 +71,7 @@ public class SpecialSeasonStudentCurriculumGroupBean extends StudentCurriculumGr
 	for (CurriculumModule curriculumModule : group.getCurriculumModules()) {
 	    if (curriculumModule.isEnrolment()) {
 		Enrolment enrolment = (Enrolment) curriculumModule;
-		if (enrolment.canBeSpecialSeasonEnroled(executionSemester)
-			&& !alreadyHasSpecialSeasonEnrolment.eval(enrolment)) {
+		if (enrolment.canBeSpecialSeasonEnroled(executionSemester) && !alreadyHasSpecialSeasonEnrolment.eval(enrolment)) {
 		    if (enrolmentsMap.get(enrolment.getCurricularCourse()) != null) {
 			Enrolment enrolmentMap = enrolmentsMap.get(enrolment.getCurricularCourse());
 			if (enrolment.getExecutionPeriod().isAfter(enrolmentMap.getExecutionPeriod())) {
@@ -100,6 +99,7 @@ public class SpecialSeasonStudentCurriculumGroupBean extends StudentCurriculumGr
     @Override
     protected List<StudentCurriculumGroupBean> buildCurriculumGroupsEnroled(CurriculumGroup parentGroup,
 	    ExecutionSemester executionSemester, int[] curricularYears) {
+
 	final List<StudentCurriculumGroupBean> result = new ArrayList<StudentCurriculumGroupBean>();
 	for (final CurriculumGroup curriculumGroup : parentGroup.getCurriculumGroupsToEnrolmentProcess()) {
 	    result.add(new SpecialSeasonStudentCurriculumGroupBean(curriculumGroup, executionSemester));
@@ -107,6 +107,11 @@ public class SpecialSeasonStudentCurriculumGroupBean extends StudentCurriculumGr
 
 	if (!parentGroup.isNoCourseGroupCurriculumGroup()) {
 	    for (final NoCourseGroupCurriculumGroup curriculumGroup : parentGroup.getNoCourseGroupCurriculumGroups()) {
+
+		if (!curriculumGroup.isVisible()) {
+		    continue;
+		}
+
 		result.add(new SpecialSeasonStudentCurriculumGroupBean(curriculumGroup, executionSemester));
 	    }
 	}

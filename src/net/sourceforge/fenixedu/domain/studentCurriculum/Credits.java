@@ -192,7 +192,11 @@ public class Credits extends Credits_Base {
 
     @Checked("CreditsPredicates.DELETE")
     final public void delete() {
+	disconnect();
+	super.deleteDomainObject();
+    }
 
+    protected void disconnect() {
 	for (; hasAnyDismissals(); getDismissals().get(0).delete())
 	    ;
 
@@ -202,8 +206,6 @@ public class Credits extends Credits_Base {
 	removeStudentCurricularPlan();
 	removeRootDomainObject();
 	removeExecutionPeriod();
-
-	super.deleteDomainObject();
     }
 
     final public Double getEnrolmentsEcts() {

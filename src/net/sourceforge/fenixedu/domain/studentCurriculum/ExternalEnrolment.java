@@ -259,4 +259,5 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
     public String getEnrolmentTypeName() {
 	return "COMPULSORY_ENROLMENT";
     }
+
 }

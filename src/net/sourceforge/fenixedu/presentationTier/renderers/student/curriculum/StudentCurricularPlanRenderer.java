@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
+import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule.ConclusionValue;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
@@ -1172,10 +1173,19 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    sortedCurriculumGroups.addAll(parentGroup.getCurriculumGroups());
 
 	    for (final CurriculumGroup childGroup : sortedCurriculumGroups) {
-		generateRowsForGroupsOrganization(mainTable, childGroup, level);
+		if (canGenerate(childGroup)) {
+		    generateRowsForGroupsOrganization(mainTable, childGroup, level);
+		}
 	    }
 	}
 
+    }
+
+    private boolean canGenerate(final CurriculumGroup curriculumGroup) {
+	if (!curriculumGroup.isNoCourseGroupCurriculumGroup() || isViewerAdministrativeOfficeEmployeeOrManager()) {
+	    return true;
+	}
+	return ((NoCourseGroupCurriculumGroup) curriculumGroup).isVisible();
     }
 
     private void addTabsToRow(final HtmlTableRow row, final int level) {

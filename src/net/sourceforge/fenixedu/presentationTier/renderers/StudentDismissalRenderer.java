@@ -281,8 +281,8 @@ public class StudentDismissalRenderer extends InputRenderer {
 	    groupTable.setClasses(getTablesClasses());
 	    groupTable.setStyle("width: " + getInitialWidth() + "em; margin-left: 0em;");
 
-	    final List<CurricularCourse> orderedCurricularCourses = new ArrayList<CurricularCourse>(studentCurricularPlan
-		    .getAllCurricularCoursesToDismissal(executionSemester));
+	    final List<CurricularCourse> orderedCurricularCourses = new ArrayList<CurricularCourse>(dismissalBean
+		    .getAllCurricularCoursesToDismissal());
 	    Collections.sort(orderedCurricularCourses, new BeanComparator("name", Collator.getInstance()));
 
 	    for (final CurricularCourse curricularCourse : orderedCurricularCourses) {
@@ -375,6 +375,8 @@ public class StudentDismissalRenderer extends InputRenderer {
 
     private static class SelectedCurricularCoursesKeyConverter extends Converter {
 
+	static private final long serialVersionUID = 1L;
+
 	@Override
 	public Object convert(Class type, Object value) {
 
@@ -408,6 +410,8 @@ public class StudentDismissalRenderer extends InputRenderer {
     }
 
     private static class SelectedOptionalCurricularCoursesKeyConverter extends Converter {
+
+	static private final long serialVersionUID = 1L;
 
 	@Override
 	public Object convert(Class type, Object value) {

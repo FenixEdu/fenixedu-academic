@@ -25,7 +25,7 @@ public class StandaloneCurriculumGroup extends StandaloneCurriculumGroup_Base {
 
     @Override
     public Integer getChildOrder() {
-	return super.getChildOrder() - 1;
+	return super.getChildOrder() - 4;
     }
 
     @Override

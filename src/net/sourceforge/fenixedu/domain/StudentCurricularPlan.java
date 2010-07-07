@@ -44,7 +44,6 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
-import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -59,6 +58,7 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.domain.studentCurriculum.BranchCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Credits;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CreditsManager;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
@@ -67,6 +67,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExtraCurriculumGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.InternalSubstitution;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.PropaedeuticsCurriculumGroup;
@@ -2354,20 +2355,31 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	checkPermission(courseGroup, curriculumGroup, dismissals);
 
-	if (courseGroup != null) {
-	    Collection<CurricularCourse> noEnrolCurricularCourse = new ArrayList<CurricularCourse>();
-	    if (dismissals != null) {
-		for (SelectedCurricularCourse selectedCurricularCourse : dismissals) {
-		    noEnrolCurricularCourse.add(selectedCurricularCourse.getCurricularCourse());
-		}
-	    }
-	    return new Equivalence(this, courseGroup, enrolments, noEnrolCurricularCourse, givenCredits, givenGrade,
-		    executionSemester);
-	} else if (curriculumGroup != null) {
-	    return new Equivalence(this, curriculumGroup, enrolments, givenCredits, givenGrade, executionSemester);
-	} else {
-	    return new Equivalence(this, dismissals, enrolments, givenGrade, executionSemester);
-	}
+	return CreditsManager.createEquivalence(this, courseGroup, curriculumGroup, dismissals, enrolments, givenCredits,
+		givenGrade, executionSemester);
+    }
+
+    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    final public Substitution createNewSubstitutionDismissal(CourseGroup courseGroup, CurriculumGroup curriculumGroup,
+	    Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments, Double givenCredits,
+	    ExecutionSemester executionSemester) {
+
+	checkPermission(courseGroup, curriculumGroup, dismissals);
+
+	return CreditsManager.createSubstitution(this, courseGroup, curriculumGroup, dismissals, enrolments, givenCredits,
+		executionSemester);
+    }
+
+    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    public InternalSubstitution createNewInternalSubstitution(CourseGroup courseGroup, CurriculumGroup curriculumGroup,
+	    Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments, Double givenCredits,
+	    ExecutionSemester executionSemester) {
+
+	checkPermission(courseGroup, curriculumGroup, dismissals);
+
+	return CreditsManager.createInternalSubstitution(this, courseGroup, curriculumGroup, dismissals, enrolments,
+		givenCredits, executionSemester);
+
     }
 
     private void checkPermission(final CourseGroup courseGroup, final CurriculumGroup curriculumGroup,
@@ -2399,28 +2411,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    if (permission.isAppliable(getRegistration()) && !permission.isMember(person)) {
 		throw new DomainException("error.StudentCurricularPlan.cannot.create.dismissals");
 	    }
-	}
-    }
-
-    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
-    final public Equivalence createNewSubstitutionDismissal(CourseGroup courseGroup, CurriculumGroup curriculumGroup,
-	    Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments, Double givenCredits,
-	    ExecutionSemester executionSemester) {
-
-	checkPermission(courseGroup, curriculumGroup, dismissals);
-
-	if (courseGroup != null) {
-	    Collection<CurricularCourse> noEnrolCurricularCourse = new ArrayList<CurricularCourse>();
-	    if (dismissals != null) {
-		for (SelectedCurricularCourse selectedCurricularCourse : dismissals) {
-		    noEnrolCurricularCourse.add(selectedCurricularCourse.getCurricularCourse());
-		}
-	    }
-	    return new Substitution(this, courseGroup, enrolments, noEnrolCurricularCourse, givenCredits, executionSemester);
-	} else if (curriculumGroup != null) {
-	    return new Substitution(this, curriculumGroup, enrolments, givenCredits, executionSemester);
-	} else {
-	    return new Substitution(this, dismissals, enrolments, executionSemester);
 	}
     }
 

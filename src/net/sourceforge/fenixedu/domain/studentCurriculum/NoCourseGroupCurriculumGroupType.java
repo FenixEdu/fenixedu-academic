@@ -13,7 +13,9 @@ public enum NoCourseGroupCurriculumGroupType {
 
     EXTRA_CURRICULAR(CurricularRuleLevel.EXTRA_ENROLMENT),
 
-    STANDALONE(CurricularRuleLevel.STANDALONE_ENROLMENT);
+    STANDALONE(CurricularRuleLevel.STANDALONE_ENROLMENT),
+
+    INTERNAL_CREDITS_SOURCE_GROUP(CurricularRuleLevel.NULL_LEVEL);
 
     private CurricularRuleLevel level;
 

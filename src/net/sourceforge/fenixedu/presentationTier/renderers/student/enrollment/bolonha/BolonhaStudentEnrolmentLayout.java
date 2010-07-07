@@ -622,11 +622,6 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
 	return person.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE) && person.isAdministrativeOfficeEmployee();
     }
 
-    protected boolean isSelfReferredStudent(StudentCurricularPlan plan) {
-	final Person person = AccessControl.getPerson();
-	return person.hasRole(RoleType.STUDENT) && person.equals(plan.getPerson());
-    }
-
     protected void generateCycleCourseGroupToEnrol(HtmlBlockContainer container, CycleType cycleType, int depth) {
 
 	final HtmlTable groupTable = createGroupTable(container, depth);

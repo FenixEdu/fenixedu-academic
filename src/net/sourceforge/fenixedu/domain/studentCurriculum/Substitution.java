@@ -41,20 +41,30 @@ public class Substitution extends Substitution_Base {
     @Override
     protected void init(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup, Collection<IEnrolment> enrolments,
 	    Collection<CurricularCourse> noEnrolCurricularCourses, Double credits, ExecutionSemester executionSemester) {
-	if (enrolments == null || enrolments.isEmpty()) {
-	    throw new DomainException("error.substitution.wrong.arguments");
-	}
+	checkEnrolments(enrolments);
 	super.init(studentCurricularPlan, courseGroup, enrolments, noEnrolCurricularCourses, credits, executionSemester);
+    }
+
+    @Override
+    protected void init(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup,
+	    Collection<IEnrolment> enrolments, Collection<CurricularCourse> noEnrolCurricularCourses, Double credits,
+	    ExecutionSemester executionSemester) {
+	checkEnrolments(enrolments);
+	super.init(studentCurricularPlan, curriculumGroup, enrolments, noEnrolCurricularCourses, credits, executionSemester);
     }
 
     @Override
     protected void init(final StudentCurricularPlan studentCurricularPlan, final Collection<SelectedCurricularCourse> dismissals,
 	    final Collection<IEnrolment> enrolments, ExecutionSemester executionSemester) {
 
+	checkEnrolments(enrolments);
+	super.init(studentCurricularPlan, dismissals, enrolments, executionSemester);
+    }
+
+    private void checkEnrolments(final Collection<IEnrolment> enrolments) {
 	if (enrolments == null || enrolments.isEmpty()) {
 	    throw new DomainException("error.substitution.wrong.arguments");
 	}
-	super.init(studentCurricularPlan, dismissals, enrolments, executionSemester);
     }
 
     @Override

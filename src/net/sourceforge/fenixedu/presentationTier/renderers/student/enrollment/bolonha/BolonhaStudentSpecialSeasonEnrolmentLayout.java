@@ -23,13 +23,6 @@ public class BolonhaStudentSpecialSeasonEnrolmentLayout extends BolonhaStudentEn
 
 	    }
 	}
-
-	if (isSelfReferredStudent(studentCurricularPlan))
-	    return;
-
-	for (final CycleType cycleType : studentCurricularPlan.getSupportedCycleTypesToEnrol()) {
-	    generateCycleCourseGroupToEnrol(container, cycleType, depth + getRenderer().getWidthDecreasePerLevel());
-	}
     }
 
 }
