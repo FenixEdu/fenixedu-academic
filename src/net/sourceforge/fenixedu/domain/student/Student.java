@@ -682,6 +682,15 @@ public class Student extends Student_Base {
 	}
 	return result;
     }
+    
+    public boolean isSenior(ExecutionYear executionYear) {
+	for(StudentStatute statute : getStudentStatutes()) {
+	    if(statute.isValidOn(executionYear) && statute.getStatuteType() == StudentStatuteType.SENIOR) {
+		return true;
+	    }
+	}
+	return false;
+    }
 
     public void addApprovedEnrolments(final Collection<Enrolment> enrolments) {
 	for (final Registration registration : getRegistrationsSet()) {

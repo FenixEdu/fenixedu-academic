@@ -2998,5 +2998,14 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public Set<BranchCurriculumGroup> getMinorBranchCurriculumGroups() {
 	return hasRoot() ? getRoot().getMinorBranchCurriculumGroups() : Collections.<BranchCurriculumGroup> emptySet();
     }
+    
+    public Double getApprovedEctsCredits() {
+	return getRoot().getAprovedEctsCredits();
+    }
+    
+    public Double getApprovedEctsCredits(CycleType cycleType) {
+	CycleCurriculumGroup cycle = getCycle(cycleType);
+	return cycle != null ? cycle.getAprovedEctsCredits() : 0d;
+    }
 
 }

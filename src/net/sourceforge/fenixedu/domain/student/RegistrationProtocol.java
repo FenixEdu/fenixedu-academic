@@ -76,4 +76,12 @@ public class RegistrationProtocol extends RegistrationProtocol_Base {
     public void removeSupervisor(Person supervisor){
 	this.removeSupervisors(supervisor);
     }
+    
+    public boolean equals(RegistrationProtocol myOtherSelf) {
+	return this.getRegistrationAgreement().name().equals(myOtherSelf.getRegistrationAgreement().name());
+    }
+    
+    public boolean equals(RegistrationAgreement myOtherSoul) {
+	return this.getRegistrationAgreement().name().equals(myOtherSoul.name());
+    }
 }
