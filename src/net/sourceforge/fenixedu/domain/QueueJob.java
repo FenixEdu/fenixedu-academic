@@ -35,21 +35,11 @@ public abstract class QueueJob extends QueueJob_Base {
     }
 
     public boolean getIsNotDoneAndCancelled() {
-	boolean cancelled = false;
-	List<QueueJob> undoneJobs = RootDomainObject.getInstance().getQueueJobUndone();
-	if (undoneJobs.contains(this) == false) {
-	    cancelled = true;
-	}
-	return (!getDone()) && (cancelled);
+	return !getDone() && !hasRootDomainObjectQueueUndone();
     }
 
     public boolean getIsNotDoneAndNotCancelled() {
-	boolean cancelled = false;
-	List<QueueJob> undoneJobs = RootDomainObject.getInstance().getQueueJobUndone();
-	if (undoneJobs.contains(this) == false) {
-	    cancelled = true;
-	}
-	return (!getDone()) && (!cancelled);
+	return !getDone() && hasRootDomainObjectQueueUndone();
     }
 
     public static class FindQueueJobsForAClass implements Predicate {
@@ -84,24 +74,15 @@ public abstract class QueueJob extends QueueJob_Base {
     public Priority getPriority() {
 	return Priority.NORMAL;
     }
+
     @Service
-    static public void cancelQueuedJob(int oid) {
-	for (QueueJob queueJob : RootDomainObject.getInstance().getQueueJob()) {
-	    if (queueJob.getIdInternal() == oid) {
-		List<QueueJob> undoneJobs = RootDomainObject.getInstance().getQueueJobUndone();
-		undoneJobs.remove(queueJob);
-	    }
-	}
+    public void cancel() {
+	removeRootDomainObjectQueueUndone();
     }
-    
+
     @Service
-    static public void resendQueueJob(int oid) {
-	for (QueueJob queueJob : RootDomainObject.getInstance().getQueueJob()) {
-	    if (queueJob.getIdInternal() == oid) {
-		List<QueueJob> undoneJobs = RootDomainObject.getInstance().getQueueJobUndone();
-		undoneJobs.add(queueJob);
-	    }
-	}
+    public void resend() {
+	setRootDomainObjectQueueUndone(RootDomainObject.getInstance());
     }
 
 }

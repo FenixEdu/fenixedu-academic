@@ -43,7 +43,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.services.Service;
 
 public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 
@@ -161,15 +160,9 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	return viewReports(mapping, actionForm, request, response);
     }
 
-    @Service
     private void cancelQueuedJob(HttpServletRequest request) {
-	int oid = Integer.valueOf(request.getParameter("id"));
-	for (QueueJob queueJob : rootDomainObject.getQueueJob()) {
-	    if (queueJob.getIdInternal() == oid) {
-		List<QueueJob> undoneJobs = rootDomainObject.getQueueJobUndone();
-		undoneJobs.remove(queueJob);
-	    }
-	}
+	QueueJob job = getDomainObject(request, "id");
+	job.cancel();
     }
 
     public ActionForward resendJob(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -184,15 +177,9 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	return viewReports(mapping, actionForm, request, response);
     }
 
-    @Service
     private void resendJob(HttpServletRequest request) {
-	int oid = Integer.valueOf(request.getParameter("id"));
-	for (QueueJob queueJob : rootDomainObject.getQueueJob()) {
-	    if (queueJob.getIdInternal() == oid) {
-		List<QueueJob> undoneJobs = rootDomainObject.getQueueJobUndone();
-		undoneJobs.add(queueJob);
-	    }
-	}
+	QueueJob job = getDomainObject(request, "id");
+	job.resend();
     }
 
     private boolean isRepeatedJob(Person person, HttpServletRequest request, Class aClass) {

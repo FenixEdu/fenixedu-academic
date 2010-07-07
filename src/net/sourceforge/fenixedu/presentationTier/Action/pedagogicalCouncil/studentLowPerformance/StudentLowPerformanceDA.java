@@ -14,7 +14,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -60,31 +59,18 @@ public class StudentLowPerformanceDA extends FenixDispatchAction {
 	return viewJobs(mapping, actionForm, request, response, null);
     }
 
-    @Service
     private void cancelQueuedJob(HttpServletRequest request) {
-	int oid = Integer.valueOf(request.getParameter("id"));
-	for (QueueJob queueJob : rootDomainObject.getQueueJob()) {
-	    if (queueJob.getIdInternal() == oid) {
-		List<QueueJob> undoneJobs = rootDomainObject.getQueueJobUndone();
-		undoneJobs.remove(queueJob);
-	    }
-	}
+	QueueJob job = getDomainObject(request, "id");
+	job.cancel();
     }
 
-    @Service
     private void resendJob(HttpServletRequest request) {
-	int oid = Integer.valueOf(request.getParameter("id"));
-	for (QueueJob queueJob : rootDomainObject.getQueueJob()) {
-	    if (queueJob.getIdInternal() == oid) {
-		List<QueueJob> undoneJobs = rootDomainObject.getQueueJobUndone();
-		undoneJobs.add(queueJob);
-	    }
-	}
+	QueueJob job = getDomainObject(request, "id");
+	job.resend();
     }
 
     public List<QueueJob> getLatestJobs() {
 	return (QueueJob.getAllJobsForClassOrSubClass(TutorshipStudentLowPerformanceQueueJob.class, 5));
-
     }
 
     private ActionForward viewJobs(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

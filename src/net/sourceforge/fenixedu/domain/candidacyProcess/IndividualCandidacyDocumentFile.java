@@ -72,8 +72,4 @@ public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocument
 		documentIdNumber));
     }
 
-    public IndividualCandidacyDocumentFile getSelf() {
-	return this;
-    }
-
 }

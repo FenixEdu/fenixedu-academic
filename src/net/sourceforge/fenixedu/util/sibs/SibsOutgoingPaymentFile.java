@@ -15,6 +15,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 /**
@@ -45,11 +46,21 @@ public class SibsOutgoingPaymentFile {
 	private String destinationInstitutionId;
 
 	private String entityCode;
+	
+	private DateTime lastSentPaymentFile;
 
 	public Header(String sourceInstitutionId, String destinationInstitutionId, String entityCode) {
 	    this.sourceInstitutionId = sourceInstitutionId;
 	    this.destinationInstitutionId = destinationInstitutionId;
 	    this.entityCode = entityCode;
+	}
+
+	public Header(String sourceInstitutionId, String destinationInstitutionId, String entityCode,
+		DateTime lastSuccessfulSentDate) {
+	    this.sourceInstitutionId = sourceInstitutionId;
+	    this.destinationInstitutionId = destinationInstitutionId;
+	    this.entityCode = entityCode;
+	    this.lastSentPaymentFile = lastSentPaymentFile;
 	}
 
 	public String render() {
@@ -61,7 +72,7 @@ public class SibsOutgoingPaymentFile {
 	    header.append(new YearMonthDay().toString(DATE_FORMAT));
 	    header.append(OMISSION_SEQUENCE_NUMBER);
 	    // last file's data if it was already sent
-	    header.append("00000000");
+	    header.append(lastSentPaymentFile != null ? lastSentPaymentFile.toString("yyyy/MM/dd") : "00000000");
 	    header.append(OMISSION_SEQUENCE_NUMBER);
 	    header.append(this.entityCode);
 	    header.append(CURRENCY_CODE);
@@ -175,6 +186,14 @@ public class SibsOutgoingPaymentFile {
 	this.existingCodes = new HashSet<String>();
     }
 
+    public SibsOutgoingPaymentFile(String sourceInstitutionId, String destinationInstitutionId, String entity,
+	    DateTime lastSuccessfulSentDate) {
+	this.header = new Header(sourceInstitutionId, destinationInstitutionId, entity, lastSuccessfulSentDate);
+	this.lines = new ArrayList<Line>();
+	this.footer = new Footer();
+	this.existingCodes = new HashSet<String>();
+    }
+
     public void addLine(String code, Money minAmount, Money maxAmount, YearMonthDay startDate, YearMonthDay endDate) {
 	if (existingCodes.contains(code)) {
 	    throw new RuntimeException(MessageFormat.format("Code {0} is duplicated", code));
@@ -224,5 +243,5 @@ public class SibsOutgoingPaymentFile {
 	    }
 	}
     }
-
+    
 }

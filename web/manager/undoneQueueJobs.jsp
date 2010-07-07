@@ -12,14 +12,14 @@
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle1 thlight mtop05" />
 		<fr:property name="link(sendJob)" value="/manager/undoneQueueJobs.do?method=resendQueuedJob"/>
-		<fr:property name="param(sendJob)" value="idInternal/id"/>
+		<fr:property name="param(sendJob)" value="externalId/id"/>
 		<fr:property name="key(sendJob)" value="label.queueJobs.list.sendJob"/>
 		<fr:property name="bundle(sendJob)" value="MANAGER_RESOURCES"/>
 		<fr:property name="visibleIf(sendJob)" value="isNotDoneAndCancelled"/>
 		<fr:property name="module(sendJob)" value=""/>
 
 		<fr:property name="link(Cancel)" value="/manager/undoneQueueJobs.do?method=cancelQueuedJob"/>
-		<fr:property name="param(Cancel)" value="idInternal/id"/>
+		<fr:property name="param(Cancel)" value="externalId/id"/>
 		<fr:property name="key(Cancel)" value="label.queueJobs.list.cancelJob"/>
 		<fr:property name="bundle(Cancel)" value="MANAGER_RESOURCES"/>
 		<fr:property name="visibleIf(Cancel)" value="isNotDoneAndNotCancelled"/>

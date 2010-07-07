@@ -42,14 +42,16 @@ public class UndoneQueueJobsDA extends FenixDispatchAction{
     }
     
     public ActionForward resendQueuedJob(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
-	int oid = Integer.valueOf(request.getParameter("id"));
-	QueueJob.resendQueueJob(oid);
+	QueueJob job = getDomainObject(request, "id");
+	job.resend();
+
 	return prepareUndoneQueueJobList(mapping, actionForm, request, response);
     }
     
     public ActionForward cancelQueuedJob(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
-	int oid = Integer.valueOf(request.getParameter("id"));
-	QueueJob.cancelQueuedJob(oid);
+	QueueJob job = getDomainObject(request, "id");
+	job.cancel();
+
 	return prepareUndoneQueueJobList(mapping, actionForm, request, response);
     }
     

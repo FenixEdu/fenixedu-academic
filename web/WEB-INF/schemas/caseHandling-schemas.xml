@@ -2434,7 +2434,7 @@
 	<slot name="uploadTime" key="label.dateTime.submission" />
 	<slot name="filename" key="label.document.file.name" />
 	<slot name="candidacyFileActive" key="label.document.file.active" />
-	<slot name="self" key="label.document.file.link" layout="link"/>
+	<slot name="this" key="label.document.file.link" layout="link"/>
 </schema>
 
 <schema name="ApprovedLearningAgreementDocumentFile.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ApprovedLearningAgreementDocumentFile" extends="IndividualCandidacyDocumentFile.view" bundle="CANDIDATE_RESOURCES">

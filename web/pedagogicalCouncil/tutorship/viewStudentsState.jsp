@@ -38,20 +38,20 @@
     		<fr:property name="classes" value="tstyle1 mtop05" />
     		<fr:property name="columnClasses" value=",,,acenter,,,,,," />
 			<fr:property name="link(Download)" value="/downloadQueuedJob.do?method=downloadFile"/>
-			<fr:property name="param(Download)" value="idInternal/id"/>
+			<fr:property name="param(Download)" value="externalId/id"/>
 			<fr:property name="bundle(Download)" value="GEP_RESOURCES"/>
 			<fr:property name="visibleIf(Download)" value="done"/>
 			<fr:property name="module(Download)" value=""/>
 			
 			<fr:property name="link(sendJob)" value="/pedagogicalCouncil/studentLowPerformance.do?method=resendJob"/>
-			<fr:property name="param(sendJob)" value="idInternal/id"/>
+			<fr:property name="param(sendJob)" value="externalId/id"/>
 			<fr:property name="key(sendJob)" value="label.sendJob"/>
 			<fr:property name="bundle(sendJob)" value="GEP_RESOURCES"/>
 			<fr:property name="visibleIf(sendJob)" value="isNotDoneAndCancelled"/>
 			<fr:property name="module(sendJob)" value=""/>
 			
 			<fr:property name="link(Cancel)" value="/pedagogicalCouncil/studentLowPerformance.do?method=cancelQueuedJob"/>
-			<fr:property name="param(Cancel)" value="idInternal/id"/>
+			<fr:property name="param(Cancel)" value="externalId/id"/>
 			<fr:property name="key(Cancel)" value="label.cancel"/>
 			<fr:property name="bundle(Cancel)" value="GEP_RESOURCES"/>
 			<fr:property name="visibleIf(Cancel)" value="isNotDoneAndNotCancelled"/>

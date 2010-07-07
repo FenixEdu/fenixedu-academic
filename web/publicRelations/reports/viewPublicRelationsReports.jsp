@@ -51,7 +51,7 @@
     		<fr:property name="columnClasses" value=",,,acenter,,,,,," />
 			<fr:property name="link(Download)" value="/downloadQueuedJob.do?method=downloadFile"/>
 			<fr:property name="bundle(Download)" value="GRP_RESOURCES"/>
-			<fr:property name="param(Download)" value="idInternal/id"/>
+			<fr:property name="param(Download)" value="externalId/id"/>
 			<fr:property name="visibleIf(Download)" value="done"/>
 			<fr:property name="module(Download)" value=""/>
 		</fr:layout>
