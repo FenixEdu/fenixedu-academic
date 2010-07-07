@@ -16,13 +16,8 @@ import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissa
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.InternalSubstitutionDismissalBean;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedEnrolment;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
-import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.InternalCreditsSourceCurriculumGroup;
-import net.sourceforge.fenixedu.domain.studentCurriculum.InternalEnrolmentWrapper;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -44,13 +39,19 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 })
 public class StudentInternalSubstitutionsDA extends StudentDismissalsDA {
 
+    /**
+     * Can not add enrolments from previous external cycle. If credits is not
+     * correct, then admin office employee must remove credits (Equivalence,
+     * Substitution or Credits) from current registration ant then enrolment
+     * could be used as source of another credits (except internal
+     * substitution).
+     * 
+     */
     @Override
     protected Collection<SelectedEnrolment> buildStudentEnrolmentsInformation(final DismissalBean dismissalBean) {
 
 	final List<SelectedEnrolment> enrolments = new ArrayList<SelectedEnrolment>();
-
 	addEnrolmentsToDismissalFromStudentCurricularPlan(dismissalBean, enrolments);
-	addEnrolmentsToDismissalFromSourceRegistration(dismissalBean, enrolments);
 
 	Collections.sort(enrolments, new Comparator<SelectedEnrolment>() {
 	    @Override
@@ -70,45 +71,6 @@ public class StudentInternalSubstitutionsDA extends StudentDismissalsDA {
 		enrolments.add(new DismissalBean.SelectedEnrolment(enrolment));
 	    }
 	}
-    }
-
-    /**
-     * Can not add enrolment from previous external cycle that already are used
-     * in credits. If credits is not correct, then admin office employee must
-     * remove credits (Equivalence, Substitution or Credits) from current
-     * registration ant then enrolment could be used as source of internal
-     * substitution.
-     * 
-     */
-    private void addEnrolmentsToDismissalFromSourceRegistration(final DismissalBean bean, final List<SelectedEnrolment> enrolments) {
-
-	final Registration sourceRegistration = bean.getStudentCurricularPlan().getRegistration().getSourceRegistration();
-
-	if (sourceRegistration != null) {
-
-	    final StudentCurricularPlan sourceScp = sourceRegistration.getLastStudentCurricularPlan();
-	    for (final ExternalCurriculumGroup group : sourceScp.getExternalCurriculumGroups()) {
-
-		for (final CurriculumLine line : group.getApprovedCurriculumLines()) {
-
-		    if (line.isEnrolment() && canUseEnrolment(bean.getStudentCurricularPlan(), (Enrolment) line)) {
-			enrolments.add(new DismissalBean.SelectedEnrolment((Enrolment) line));
-		    }
-		}
-
-	    }
-	}
-    }
-
-    private boolean canUseEnrolment(final StudentCurricularPlan studentCurricularPlan, final Enrolment enrolment) {
-
-	for (final InternalEnrolmentWrapper wrapper : enrolment.getEnrolmentWrappers()) {
-	    if (wrapper.getCredits().getStudentCurricularPlan() == studentCurricularPlan) {
-		return false;
-	    }
-	}
-
-	return true;
     }
 
     private boolean isParentAcceptable(final CurriculumGroup curriculumGroup) {
