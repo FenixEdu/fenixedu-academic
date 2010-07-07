@@ -63,7 +63,7 @@ public class LayoutLinkInjector {
 	stringBuilder.append("\" src=\"");
 	stringBuilder.append(contextPath);
 	stringBuilder.append(path);
-	stringBuilder.append("\"/>\n");
+	stringBuilder.append("\"></script>\n");
     }
 
 }
