@@ -29,6 +29,8 @@ public class SibsOutgoingPaymentFile {
 
     private static final String NUMBER_FILLER = "0";
 
+    private static final String LINE_TERMINATOR = "\r\n";
+
     private static class Header {
 
 	private static final String HEADER_REGISTER_TYPE = "0";
@@ -40,6 +42,8 @@ public class SibsOutgoingPaymentFile {
 	private static final String CURRENCY_CODE = "978";
 
 	private static final int WHITE_SPACES_IN_HEADER = 3;
+
+
 
 	private String sourceInstitutionId;
 
@@ -72,12 +76,12 @@ public class SibsOutgoingPaymentFile {
 	    header.append(new YearMonthDay().toString(DATE_FORMAT));
 	    header.append(OMISSION_SEQUENCE_NUMBER);
 	    // last file's data if it was already sent
-	    header.append(lastSentPaymentFile != null ? lastSentPaymentFile.toString("yyyy/MM/dd") : "00000000");
+	    header.append(lastSentPaymentFile != null ? lastSentPaymentFile.toString(DATE_FORMAT) : "00000000");
 	    header.append(OMISSION_SEQUENCE_NUMBER);
 	    header.append(this.entityCode);
 	    header.append(CURRENCY_CODE);
 	    header.append(StringUtils.leftPad("", WHITE_SPACES_IN_HEADER));
-	    header.append("\n");
+	    header.append(LINE_TERMINATOR);
 
 	    return header.toString();
 	}
@@ -99,7 +103,7 @@ public class SibsOutgoingPaymentFile {
 	    footer.append(FOOTER_REGISTER_TYPE);
 	    footer.append(StringUtils.leftPad(String.valueOf(totalLines), NUMBER_OF_LINES_DESCRIPTOR_LENGTH, NUMBER_FILLER));
 	    footer.append(StringUtils.leftPad("", WHITE_SPACES_IN_FOOTER));
-	    footer.append("\n");
+	    footer.append(LINE_TERMINATOR);
 
 	    return footer.toString();
 	}
@@ -160,7 +164,7 @@ public class SibsOutgoingPaymentFile {
 	    result.append(this.startDate.toString(DATE_FORMAT));
 	    result.append(leftPadAmount(this.minAmount));
 	    result.append(StringUtils.leftPad("", WHITE_SPACES_IN_LINE));
-	    result.append("\n");
+	    result.append(LINE_TERMINATOR);
 
 	    return result.toString();
 	}

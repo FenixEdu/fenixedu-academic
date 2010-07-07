@@ -36,7 +36,6 @@ public abstract class DebtsFile extends DebtsFile_Base {
 	    StringBuilder errorsBuilder) {
 	final Map<Person, List<Event>> result = new HashMap<Person, List<Event>>();
 
-	int count = 0;
 	for (final AnnualEvent event : executionYear.getAnnualEventsSet()) {
 	    try {
 		if (getAcceptedEventClasses().contains(event.getClass()) && event.isOpen()) {

@@ -35,6 +35,9 @@
 	        <fr:property name="sortUrl" value="/exportSIBSPayments.do?method=listOutgoingPaymentsFile" />
     	    <fr:property name="sortBy" value="filename=desc"/>
 			<fr:property name="sortableSlots" value="filename, uploadTime, successfulSentDateTime" />
+			
+			<fr:link label="label.sibs.outgoing.payment.file.detail,MANAGER_RESOURCES" name="detail" 
+						link="/exportSIBSPayments.do?method=viewOutgoingPaymentFile&amp;paymentFileId=${externalId}"/>
 		</fr:layout>
 	</fr:view>
 	</logic:notEmpty>
@@ -59,11 +62,11 @@
 			<fr:property name="classes" value="tstyle4 tdleftm mtop05" />
 			<fr:property name="columnClasses" value=",acenter,aright,aright" />
 
-			<fr:link label="label.sibs.outgoing.payment.queue.job.cancel" name="cancel" 
-				link="/exportSIBSPayments.do?method=viewOutgoingPaymentFile&amp;queueJobId=${externalId}" 
+			<fr:link label="label.sibs.outgoing.payment.queue.job.cancel,MANAGER_RESOURCES" name="cancel" 
+				link="/exportSIBSPayments.do?method=cancelQueueJob&amp;queueJobId=${externalId}" 
 				condition="isNotDoneAndNotCancelled"
-				confirmation="message.sibs.outgoing.payment.queue.job.cancel.confirmation"/>
-
+				confirmation="message.sibs.outgoing.payment.queue.job.cancel.confirmation,MANAGER_RESOURCES"/>
+				
 		</fr:layout>
 	</fr:view>
 	</logic:notEmpty>

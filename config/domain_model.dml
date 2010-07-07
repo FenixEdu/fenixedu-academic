@@ -7451,6 +7451,7 @@ class accounting.events.export.DebtsFile extends File {
 	}
 
 	class accounting.events.export.SIBSOutgoingPaymentQueueJob extends QueueJob {
+		DateTime lastSuccessfulSentPaymentFileDate;
 	} 
 
 /*

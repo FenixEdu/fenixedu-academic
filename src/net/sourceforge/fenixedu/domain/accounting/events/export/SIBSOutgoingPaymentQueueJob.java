@@ -15,25 +15,22 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class SIBSOutgoingPaymentQueueJob extends SIBSOutgoingPaymentQueueJob_Base {
 
-    private transient DateTime lastSuccessfulSentPaymentFileDateTime;
-
-    public SIBSOutgoingPaymentQueueJob(DateTime lastSuccessfulSentPaymentFileDateTime) {
+    public SIBSOutgoingPaymentQueueJob(DateTime lastSuccessfulSentPaymentFileDate) {
 	super();
-
-	this.lastSuccessfulSentPaymentFileDateTime = lastSuccessfulSentPaymentFileDateTime;
+	setLastSuccessfulSentPaymentFileDate(lastSuccessfulSentPaymentFileDate);
     }
 
     @Override
     public QueueJobResult execute() throws Exception {
-	new SIBSOutgoingPaymentFile(lastSuccessfulSentPaymentFileDateTime);
+	new SIBSOutgoingPaymentFile(getLastSuccessfulSentPaymentFileDate());
 	QueueJobResult queueJobResult = new QueueJobResult();
 	queueJobResult.setDone(true);
 	return queueJobResult;
     }
 
     @Service
-    public static SIBSOutgoingPaymentQueueJob launchJob(DateTime lastSuccessfulSentPaymentFileDateTime) {
-	return new SIBSOutgoingPaymentQueueJob(lastSuccessfulSentPaymentFileDateTime);
+    public static SIBSOutgoingPaymentQueueJob launchJob(DateTime lastSuccessfulSentPaymentFileDate) {
+	return new SIBSOutgoingPaymentQueueJob(lastSuccessfulSentPaymentFileDate);
     }
 
     public static List<SIBSOutgoingPaymentQueueJob> readAllSIBSOutgoingPaymentQueueJobs() {

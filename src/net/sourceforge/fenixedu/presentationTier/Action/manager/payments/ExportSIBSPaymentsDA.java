@@ -22,7 +22,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "list-outgoing-payment-files", path = "/manager/payments/exportSIBS/listOutgoingPaymentFiles.jsp"),
 	@Forward(name = "prepare-create-outgoing-payments-file", path = "/manager/payments/exportSIBS/prepareCreateOutgoingPaymentsFiles.jsp"),
 	@Forward(name = "view-outgoing-payment-file", path = "/manager/payments/exportSIBS/viewOutgoingPaymentFile.jsp"),
-	@Forward(name = "set-successful-sent-date", path = "/manager/payments/exportSIBS/setSuccessfulSentDate.jsp") })
+	@Forward(name = "prepare-set-successful-sent-date", path = "/manager/payments/exportSIBS/prepareSetSuccessfulSentDate.jsp") })
 public class ExportSIBSPaymentsDA extends FenixDispatchAction {
 
     public ActionForward prepareCreateOutgoingPaymentsFile(ActionMapping mapping, ActionForm actionForm,
@@ -71,8 +71,18 @@ public class ExportSIBSPaymentsDA extends FenixDispatchAction {
 
 	return listOutgoingPaymentsFile(mapping, actionForm, request, response);
     }
-    
-    public ActionForward setSuccessfullSentPaymentsFileDate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+
+    public ActionForward prepareSetSuccessfulSentPaymentsFileDate(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	SIBSOutgoingPaymentFile file = getDomainObject(request, "paymentFileId");
+
+	request.setAttribute("sibsOutgoingPaymentFileDataBean", new SIBSOutgoingPaymentFileDataBean(file));
+
+	return mapping.findForward("prepare-set-successful-sent-date");
+    }
+
+    public ActionForward setSuccessfulSentPaymentsFileDate(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request,
 	    HttpServletResponse response) {
 	SIBSOutgoingPaymentFile paymentFile = getPaymentFileDataBeanFromViewState().getPaymentFile();
 	paymentFile.markAsSuccessfulSent(getPaymentFileDataBeanFromViewState().getLastOutgoingPaymentFileSent());
