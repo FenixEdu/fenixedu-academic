@@ -7,7 +7,7 @@
 <bean:define id="contactType" name="partyContact" property="type.name" />
 
 
-<h2><bean:message key="<%= "label.partyContacts.edit" +  partyContactClass %>" /></h2>
+<h2><bean:message key="<%= "label.partyContacts.edit" +  partyContactClass %>" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
 <html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
     <p><span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>

@@ -7,7 +7,7 @@
 
 <html:xhtml/>
 <logic:present name="person">
-	<em><bean:message key="label.person.main.title" /></em>
+	<em><bean:message key="label.person.main.title" bundle="APPLICATION_RESOURCES"/></em>
 	<h2><bean:message key="link.title.professionalInformation" bundle="CONTRACTS_RESOURCES"/></h2>
 	<div class="infoselected">
 		<fr:view name="person" schema="FindPersonFactoryResult" layout="tabular"/>

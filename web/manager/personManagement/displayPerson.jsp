@@ -68,7 +68,10 @@ function check(e,v){
 	</logic:equal>
 	<br /><br />
 		
-	<bean:define id="url">/manager/findPerson.do?method=findPerson&name=<bean:write name="name"/>&email=<bean:write name="email"/>&username=<bean:write name="username"/>&documentIdNumber=<bean:write name="documentIdNumber"/></bean:define>			
+	&nbsp;&nbsp;&nbsp;
+	
+	
+	<bean:define id="url">/<%= request.getAttribute("modulePrefix") %>/findPerson.do?method=findPerson&name=<bean:write name="name"/>&email=<bean:write name="email"/>&username=<bean:write name="username"/>&documentIdNumber=<bean:write name="documentIdNumber"/></bean:define>			
 	<bean:message key="label.collectionPager.page" bundle="MANAGER_RESOURCES"/>:	
 	<cp:collectionPages url="<%= url %>" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages"/>			
 	<br /><br />
@@ -81,7 +84,7 @@ function check(e,v){
 				<tr>
 					<td width="70%">
 						<strong>
-						 	<html:link href="<%= request.getContextPath() +"/manager/findPerson.do?method=viewPerson&personID="+personID %>" > <bean:write name="personalInfo" property="name"/> </html:link>					
+						 	<html:link action="<%= "/findPerson.do?method=viewPerson&personID="+personID %>" > <bean:write name="personalInfo" property="name"/> </html:link>					
 						</strong> (<bean:write name="personalInfo" property="username"/>)
 						<bean:size id="mainRolesSize" name="personalInfo" property="mainRoles"></bean:size> 
 						<logic:greaterThan name="mainRolesSize" value="0">

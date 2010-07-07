@@ -31,6 +31,16 @@
 	     <form-bean name="extraWorkForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 	    	<form-property name="action" type="java.lang.String" />
 	    </form-bean>
+    	<form-bean name="findPersonForm"
+    		type="org.apache.struts.validator.DynaValidatorForm"
+    		dynamic="true">
+    			<form-property name="name" type="java.lang.String"/>	
+    			<form-property name="email" type="java.lang.String"/>
+    			<form-property name="username" type="java.lang.String"/>
+    			<form-property name="documentIdNumber" type="java.lang.String"/>
+    			<form-property name="mechanoGraphicalNumber" type="java.lang.String"/>
+    			<form-property name="page" type="java.lang.Integer" initial="0"/>     		    		
+	    </form-bean>
 	</form-beans>
 	
 	<!-- ========== Global Exception Definitions ============================== -->
@@ -234,6 +244,39 @@
 				validate="true">
 				<forward name="upload-bonus-file" path="upload-bonus-file"/>
 		</action>
+
+		<action path="/partyContacts"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PartyContactsManagementDispatchAction"
+				parameter="method" scope="request">
+			<forward name="createPartyContact" path="partyContacts.createPartyContact" />
+			<forward name="editPartyContact" path="partyContacts.editPartyContact" />
+			<forward name="visualizePersonalInformation" path="manage-people-view-person" />
+		</action>
+
+		<action path="/professionalInformation"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.ProfessionalInformationDA"
+				parameter="method" scope="request">
+			<forward name="showProfessionalInformation" path="professionalInformation-showProfessionalInformation" />
+		</action>
+
+		<action path="/qualification"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.QualificationDA"
+				parameter="method" scope="request">
+			<forward name="showQualifications" path="qualification-showQualifications" />
+			<forward name="qualification" path="qualification-qualification" />
+			<forward name="viewPerson" path="manage-people-view-person" />
+		</action>
+
+		<action path="/findPerson"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PersonManagementAction"
+				parameter="method"
+				scope="request"
+				name="findPersonForm"
+				input="findPerson">
+			<forward name="findPerson" path="findPerson"/>
+			<forward name="displayPerson" path="displayPerson"/>
+			<forward name="viewPerson" path="manage-people-view-person" />
+		</action>
  	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
@@ -245,6 +288,9 @@
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
 	<message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>
 	<message-resources parameter="resources.ResearcherResources" key="RESEARCHER_RESOURCES" null="false"/>
+	<message-resources parameter="resources.ContractsResources" key="CONTRACTS_RESOURCES" null="false"/>
+	<message-resources parameter="resources.HomepageResources" key="HOMEPAGE_RESOURCES" null="false"/>
+	<message-resources parameter="resources.AcademicAdminOffice" key="ACADEMIC_OFFICE_RESOURCES" null="false"/>
 	
 	<!-- ========== Plug Ins Configuration ================================= -->
 	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">

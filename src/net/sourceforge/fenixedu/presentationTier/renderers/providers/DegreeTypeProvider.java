@@ -7,7 +7,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
-import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
 public class DegreeTypeProvider implements DataProvider {
 
@@ -18,7 +17,7 @@ public class DegreeTypeProvider implements DataProvider {
     }
 
     public Converter getConverter() {
-	return new EnumConverter();
+	return null;
     }
 
 }

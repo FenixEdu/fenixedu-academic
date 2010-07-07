@@ -173,5 +173,38 @@
    	<definition name="edit-file" extends="personnel.intranet">
        <put name="body" value="/commons/unitFiles/editFile.jsp"/>  
     </definition>      
-	
+
+	<definition name="manage-people-search" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/personnelSection/people/searchPeople.jsp"/>
+	</definition>
+	<definition name="manage-people-create" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/personnelSection/people/createPerson.jsp"/>
+	</definition>
+	<definition name="manage-people-create-fill-info" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/personnelSection/people/createPersonFillInfo.jsp"/>
+	</definition>
+	<definition name="manage-people-view-person" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/personnelSection/people//viewPerson.jsp" />
+	</definition>
+	<definition name="partyContacts.createPartyContact" extends="definition.managementAssiduousness.masterPage">
+		 <put name="body" value="/manager/personManagement/contacts/createPartyContact.jsp"/>
+	</definition>
+	<definition name="partyContacts.editPartyContact" extends="definition.managementAssiduousness.masterPage">
+		 <put name="body" value="/manager/personManagement/contacts/editPartyContact.jsp"/>
+	</definition>
+	<definition name="professionalInformation-showProfessionalInformation" extends="definition.managementAssiduousness.masterPage">
+		 <put name="body" value="/manager/personManagement/contracts/showProfessionalInformation.jsp"/>
+	</definition>
+	<definition name="qualification-showQualifications" extends="definition.managementAssiduousness.masterPage">
+		 <put name="body" value="/manager/qualifications/showQualifications.jsp"/>
+	</definition>
+	<definition name="qualification-qualification" extends="definition.managementAssiduousness.masterPage">
+		 <put name="body" value="/manager/qualifications/qualification.jsp"/>
+	</definition>
+	<definition name="findPerson" extends="definition.managementAssiduousness.masterPage" >
+		<put name="body" value="/manager/personManagement/findPerson.jsp" />
+	</definition>
+	<definition name="displayPerson" extends="definition.managementAssiduousness.masterPage" >
+		<put name="body" value="/manager/personManagement/displayPerson.jsp" />
+	</definition>
 </tiles-definitions>

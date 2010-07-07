@@ -63,8 +63,22 @@ public class PersonManagementAction extends FenixDispatchAction {
 	return mapping.findForward("viewPerson");
     }
 
+    private String getModulePrefix(final ActionMapping mapping, final HttpServletRequest request) {
+	final String uri = request.getRequestURI();
+	System.out.println("uri: " + uri);
+	final int contextPathLength = request.getContextPath().length() + 1;
+	System.out.println("contextPathLength: " + contextPathLength);
+	final String mappingPath = mapping.getPath();
+	System.out.println("mappingPath: " + mappingPath);
+	final int i = uri.indexOf(mappingPath);
+	System.out.println("i" + i);
+	return uri.substring(contextPathLength, i);
+    }
+
     public ActionForward prepareFindPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
+	final String modulePrefix = getModulePrefix(mapping, request);
+	request.setAttribute("modulePrefix", modulePrefix);
 	return mapping.findForward("findPerson");
     }
 
@@ -139,6 +153,9 @@ public class PersonManagementAction extends FenixDispatchAction {
 	request.setAttribute("numberOfPages", Integer.valueOf(result.getNumberOfPages()));
 	request.setAttribute("personListFinded", result.getPage(pageNumber.intValue()));
 	request.setAttribute("totalFindedPersons", result.getCollection().size());
+
+	final String modulePrefix = getModulePrefix(mapping, request);
+	request.setAttribute("modulePrefix", modulePrefix);
 
 	return mapping.findForward("displayPerson");
     }

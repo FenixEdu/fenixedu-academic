@@ -6,7 +6,7 @@
 <bean:define id="partyContactClass" scope="request" name="partyContactClass" />
 
 
-<h2><bean:message key="<%= "label.partyContacts.add" +  partyContactClass %>" /></h2>
+<h2><bean:message key="<%= "label.partyContacts.add" +  partyContactClass %>" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
 <html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
     <p><span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>

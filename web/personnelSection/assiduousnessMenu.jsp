@@ -1,9 +1,27 @@
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-<%@page import="org.joda.time.YearMonthDay"%>
 <%@page import="net.sourceforge.fenixedu.util.Month"%>
-<html:xhtml />
+<%@page import="org.joda.time.YearMonthDay"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<html:xhtml />
+
+<logic:present role="MANAGER">
+	<ul>
+		<li class="navheader">
+			<bean:message bundle="APPLICATION_RESOURCES" key="link.manage.people"/>
+		</li>
+		<li>
+			<html:link action="/findPerson.do?method=prepareFindPerson">
+				<bean:message bundle="APPLICATION_RESOURCES" key="link.manage.people.search"/>
+			</html:link>
+		</li>
+		<li>
+			<html:link action="/personnelManagePeople.do?method=prepareCreatePerson">
+				<bean:message bundle="APPLICATION_RESOURCES" key="link.manage.people.create"/>
+			</html:link>
+		</li>
+	</ul>
+</logic:present>
 
 <bean:define id="month"
 	value="<%=net.sourceforge.fenixedu.util.Month.values()[new YearMonthDay().getMonthOfYear()-1].name()%>" />

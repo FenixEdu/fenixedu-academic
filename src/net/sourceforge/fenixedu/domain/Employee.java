@@ -377,4 +377,17 @@ public class Employee extends Employee_Base {
 	return null;
     }
 
+    public static Integer getNextEmployeeNumber() {
+	final int max = findMaxEmployeeNumber();
+	return new Integer(max +1);
+    }
+
+    private static int findMaxEmployeeNumber() {
+	int max = 0;
+	for (final Employee employee : RootDomainObject.getInstance().getEmployeesSet()) {
+	    max = Math.max(max, employee.getEmployeeNumber().intValue());
+	}
+	return 0;
+    }
+
 }

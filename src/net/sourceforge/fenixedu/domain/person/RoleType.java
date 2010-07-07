@@ -2,8 +2,12 @@ package net.sourceforge.fenixedu.domain.person;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public enum RoleType {
+import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+
+public enum RoleType implements IPresentableEnum {
 
     MESSAGING("Messaging"),
 
@@ -144,4 +148,9 @@ public enum RoleType {
     private void setDefaultLabel(String defaultLabel) {
 	this.defaultLabel = defaultLabel;
     }
+
+    public String getLocalizedName() {
+	return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(name());
+    }
+
 }
