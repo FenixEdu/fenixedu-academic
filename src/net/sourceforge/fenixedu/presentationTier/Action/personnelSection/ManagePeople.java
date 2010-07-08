@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.personnelSection;
 
+import java.util.Collections;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,6 +17,7 @@ import net.sourceforge.fenixedu.domain.Person.AnyPersonSearchBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -141,6 +144,14 @@ public class ManagePeople extends FenixDispatchAction {
     		throws Exception {
 	request.setAttribute("person", person);
 	return mapping.findForward("viewPerson");
+    }
+
+    public ActionForward attributeRole(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	final Person person = getDomainObject(request, "personId");
+	final RoleType roleType = RoleType.valueOf(request.getParameter("roleType"));
+	CreateNewInternalPerson.attributeRoles(person, Collections.singleton(roleType));
+	return viewPerson(person, mapping, request);
     }
 
 }

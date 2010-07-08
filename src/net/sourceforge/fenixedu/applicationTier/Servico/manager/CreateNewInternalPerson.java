@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.person.InternalPersonBean;
@@ -17,12 +16,17 @@ public class CreateNewInternalPerson {
 
     @Service
     public static Person run(final InternalPersonBean bean) {
-	final Set<RoleType> roleTypes = new HashSet<RoleType>();
-	if (bean.getRelationTypes().isEmpty()) {
+	final Person person = new Person(bean);
+	final Set<RoleType> roleTypes = bean.getRelationTypes();
+	attributeRoles(person, roleTypes);
+	return person;
+    }
+
+    @Service
+    public static void attributeRoles(final Person person, final Set<RoleType> roleTypes) {
+	if (roleTypes.isEmpty()) {
 	    throw new DomainException("error.create.internal.person.relation.type.none");
 	}
-
-	final Person person = new Person(bean);
 
 	if (roleTypes.contains(RoleType.TEACHER)) {
 	    createTeacher(person);
@@ -36,8 +40,6 @@ public class CreateNewInternalPerson {
 	if (roleTypes.contains(RoleType.GRANT_OWNER)) {
 	    createGrantOwner(person);
 	}
-
-	return person;
     }
 
     private static void createTeacher(final Person person) {

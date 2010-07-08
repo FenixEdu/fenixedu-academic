@@ -4,10 +4,10 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
-
-<html:xhtml />
+<%@page import="net.sourceforge.fenixedu.domain.person.RoleType"%><html:xhtml />
 
 <logic:present name="person">
+	<bean:define id="person" name="person" type="net.sourceforge.fenixedu.domain.Person"/>
 
 	<h2><bean:message key="label.person.title.personalConsult" bundle="APPLICATION_RESOURCES"/></h2>
 	<bean:define id="personID" name="person" property="externalId" />
@@ -65,6 +65,85 @@
 	   		<bean:message key="link.title.qualification" bundle="MANAGER_RESOURCES"/>
 	   	</html:link>
 	</p>
+
+	 <table class="tstyle2 thlight thleft">
+	 	<tr>
+	 		<th>
+	 			<%= RoleType.TEACHER.getLocalizedName() %>
+	 		</th>
+	 		<td>
+	 			<% if (person.hasTeacher()) { %>
+	 					<%= person.getTeacher().getTeacherNumber() %>
+	 			<% } else { %>
+	 					<bean:message key="link.person.does.not.have.role" bundle="MANAGER_RESOURCES"/>
+	 					<br/>
+	 					<html:link action="/personnelManagePeople.do?method=attributeRole&amp;roleType=TEACHER" paramId="personId" paramName="person" paramProperty="externalId">
+	 						<bean:message key="link.person.give.role" bundle="MANAGER_RESOURCES"/>
+	 					</html:link>
+	 			<% } %>
+	 		</td>
+		</tr>
+		<tr>
+	 		<th>
+	 			<%= RoleType.RESEARCHER.getLocalizedName() %>
+	 		</th>
+	 		<td>
+	 			<% if (person.hasResearcher() && person.hasEmployee()) { %>
+	 					<%= person.getEmployee().getEmployeeNumber() %>
+	 			<% } else { %>
+	 					<bean:message key="link.person.does.not.have.role" bundle="MANAGER_RESOURCES"/>
+	 					<br/>
+	 					<html:link action="/personnelManagePeople.do?method=attributeRole&amp;roleType=RESEARCHER" paramId="personId" paramName="person" paramProperty="externalId">
+	 						<bean:message key="link.person.give.role" bundle="MANAGER_RESOURCES"/>
+	 					</html:link>
+	 			<% } %>
+	 		</td>
+		</tr>
+		<tr>
+	 		<th>
+	 			<%= RoleType.EMPLOYEE.getLocalizedName() %>
+	 		</th>
+	 		<td>
+	 			<% if (person.hasEmployee()) { %>
+	 					<%= person.getEmployee().getEmployeeNumber() %>
+	 			<% } else { %>
+	 					<bean:message key="link.person.does.not.have.role" bundle="MANAGER_RESOURCES"/>
+	 					<br/>
+	 					<html:link action="/personnelManagePeople.do?method=attributeRole&amp;roleType=EMPLOYEE" paramId="personId" paramName="person" paramProperty="externalId">
+	 						<bean:message key="link.person.give.role" bundle="MANAGER_RESOURCES"/>
+	 					</html:link>
+	 			<% } %>
+	 		</td>
+		</tr>
+		<tr>
+	 		<th>
+	 			<%= RoleType.GRANT_OWNER.getLocalizedName() %>
+	 		</th>
+	 		<td>
+	 			<% if (person.hasGrantOwner()) { %>
+	 					<%= person.getGrantOwner().getNumber() %>
+	 			<% } else { %>
+	 					<bean:message key="link.person.does.not.have.role" bundle="MANAGER_RESOURCES"/>
+	 					<br/>
+	 					<html:link action="/personnelManagePeople.do?method=attributeRole&amp;roleType=GRANT_OWNER" paramId="personId" paramName="person" paramProperty="externalId">
+	 						<bean:message key="link.person.give.role" bundle="MANAGER_RESOURCES"/>
+	 					</html:link>
+	 			<% } %>
+	 		</td>
+		</tr>
+		<tr>
+	 		<th>
+	 			<%= RoleType.STUDENT.getLocalizedName() %>
+	 		</th>
+	 		<td>
+	 			<% if (person.hasStudent()) { %>
+	 					<%= person.getStudent().getNumber() %>
+	 			<% } else { %>
+	 					<bean:message key="link.person.does.not.have.role" bundle="MANAGER_RESOURCES"/>
+	 			<% } %>
+	 		</td>
+	 	</tr>
+	 </table>
 
 	<!-- Contactos -->
 	<table class="mtop15" width="98%" cellpadding="0" cellspacing="0">

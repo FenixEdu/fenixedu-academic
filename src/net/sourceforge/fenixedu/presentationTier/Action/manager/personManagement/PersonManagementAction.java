@@ -65,13 +65,9 @@ public class PersonManagementAction extends FenixDispatchAction {
 
     private String getModulePrefix(final ActionMapping mapping, final HttpServletRequest request) {
 	final String uri = request.getRequestURI();
-	System.out.println("uri: " + uri);
 	final int contextPathLength = request.getContextPath().length() + 1;
-	System.out.println("contextPathLength: " + contextPathLength);
 	final String mappingPath = mapping.getPath();
-	System.out.println("mappingPath: " + mappingPath);
 	final int i = uri.indexOf(mappingPath);
-	System.out.println("i" + i);
 	return uri.substring(contextPathLength, i);
     }
 
