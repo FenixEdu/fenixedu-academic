@@ -239,6 +239,23 @@
 	</fr:view>
 
 
+	<%-- show approved learning agreements--%>
+
+	<p><strong><bean:message key="label.erasmus.approved.learning.agreements" bundle="CANDIDATE_RESOURCES"/></strong></p> 
+	
+	<logic:empty name="individualCandidacyProcess" property="candidacy.approvedLearningAgreements" >
+		<p class="mbottom05"><em><bean:message key="label.erasmus.approved.learning.agreements.empty" bundle="ACADEMIC_OFFICE_RESOURCES" /></em></p>
+	</logic:empty>
+	
+	<logic:notEmpty name="individualCandidacyProcess" property="candidacy.mostRecentApprovedLearningAgreement" >
+		<fr:view name="individualCandidacyProcess" property="candidacy.mostRecentApprovedLearningAgreement" schema="IndividualCandidacyDocumentFile.view">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle1 thlight thright mtop025"/>
+			</fr:layout>
+		</fr:view>
+	</logic:notEmpty>
+
+
 <div class="mtop2" id="contacts">
 	<bean:message key="erasmus.contacts.text" bundle="CANDIDATE_RESOURCES" />
 </div>
