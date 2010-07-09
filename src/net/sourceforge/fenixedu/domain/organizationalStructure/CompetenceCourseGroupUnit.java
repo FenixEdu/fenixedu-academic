@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
@@ -83,6 +84,34 @@ public class CompetenceCourseGroupUnit extends CompetenceCourseGroupUnit_Base {
 
     public List<CompetenceCourse> getCompetenceCourses() {
 	return new ArrayList<CompetenceCourse>(getCompetenceCoursesSet());
+    }
+
+    public List<CompetenceCourse> getCurrentOrFutureCompetenceCourses() {
+	final SortedSet<CompetenceCourse> result = new TreeSet<CompetenceCourse>(
+		CompetenceCourse.COMPETENCE_COURSE_COMPARATOR_BY_NAME);
+	for (CompetenceCourseInformation competenceInformation : getCompetenceCourseInformations()) {
+	    if (competenceInformation.getCompetenceCourse().getCompetenceCourseGroupUnit() == this) {
+		result.add(competenceInformation.getCompetenceCourse());
+	    }
+	    if (competenceInformation.getCompetenceCourse().getCompetenceCourseGroupUnit(
+		    ExecutionSemester.readLastExecutionSemester()) == this) {
+		result.add(competenceInformation.getCompetenceCourse());
+	    }
+	}
+	return new ArrayList<CompetenceCourse>(result);
+    }
+
+    public List<CompetenceCourse> getOldCompetenceCourses() {
+	final SortedSet<CompetenceCourse> result = new TreeSet<CompetenceCourse>(
+		CompetenceCourse.COMPETENCE_COURSE_COMPARATOR_BY_NAME);
+	for (CompetenceCourseInformation competenceInformation : getCompetenceCourseInformations()) {
+	    CompetenceCourse course = competenceInformation.getCompetenceCourse();
+	    if ((course.getDepartmentUnit() != getDepartmentUnit())
+		    && (course.getMostRecentGroupInDepartment(getDepartmentUnit()) == this)) {
+		result.add(competenceInformation.getCompetenceCourse());
+	    }
+	}
+	return new ArrayList<CompetenceCourse>(result);
     }
 
     @Override

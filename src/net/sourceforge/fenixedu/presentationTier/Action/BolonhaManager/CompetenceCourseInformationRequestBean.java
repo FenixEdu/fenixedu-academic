@@ -40,6 +40,8 @@ public class CompetenceCourseInformationRequestBean implements Serializable {
 
     private BibliographicReferences references;
 
+    private boolean showOldCompetenceCourses;
+
     public CompetenceCourseInformationRequestBean(CompetenceCourseInformationChangeRequest request) {
 	setCompetenceCourse(request.getCompetenceCourse());
 	setRegime(request.getRegime());
@@ -84,6 +86,20 @@ public class CompetenceCourseInformationRequestBean implements Serializable {
     public boolean isCompetenceCourseDefinedForExecutionPeriod() {
 	if (getCompetenceCourse() != null && getExecutionPeriod() != null) {
 	    return getCompetenceCourse().isCompetenceCourseInformationDefinedAtExecutionPeriod(getExecutionPeriod());
+	}
+	return false;
+    }
+
+    public boolean isRequestDraftAvailable() {
+	if (getCompetenceCourse() != null && getExecutionPeriod() != null) {
+	    return getCompetenceCourse().isRequestDraftAvailable(getExecutionPeriod());
+	}
+	return false;
+    }
+
+    public boolean isLoggedPersonAllowedToCreateChangeRequests() {
+	if (getCompetenceCourse() != null && getExecutionPeriod() != null) {
+	    return getCompetenceCourse().isLoggedPersonAllowedToCreateChangeRequests(getExecutionPeriod());
 	}
 	return false;
     }
@@ -227,5 +243,17 @@ public class CompetenceCourseInformationRequestBean implements Serializable {
 
     public void setNameEn(String nameEn) {
 	this.nameEn = nameEn;
+    }
+
+    public void setShowOldCompetenceCourses(boolean showOldCompetenceCourses) {
+	this.showOldCompetenceCourses = showOldCompetenceCourses;
+    }
+
+    public boolean isShowOldCompetenceCourses() {
+	return showOldCompetenceCourses;
+    }
+
+    public boolean getIsShowOldCompetenceCourses() {
+	return isShowOldCompetenceCourses();
     }
 }

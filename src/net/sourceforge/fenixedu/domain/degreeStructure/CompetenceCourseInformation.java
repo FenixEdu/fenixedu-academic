@@ -9,10 +9,16 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
+import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.CompetenceCourseLoadBean;
 import net.sourceforge.fenixedu.util.StringFormatter;
 
@@ -85,6 +91,28 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
 	setBibliographicReferences(new BibliographicReferences());
 	setExecutionPeriod(period);
 	setCompetenceCourseGroupUnit(unit);
+    }
+
+    public ScientificAreaUnit getScientificAreaUnit() {
+	if (getCompetenceCourseGroupUnit().hasAnyParentUnits()) {
+	    if (getCompetenceCourseGroupUnit().getParentUnits().size() > 1) {
+		throw new DomainException("competence.course.should.have.only.one.scientific.area");
+	    }
+
+	    return (ScientificAreaUnit) getCompetenceCourseGroupUnit().getParentUnits().iterator().next();
+	}
+	return null;
+    }
+
+    public DepartmentUnit getDepartmentUnit() {
+	if (getScientificAreaUnit().hasAnyParentUnits()) {
+	    if (getScientificAreaUnit().getParentUnits().size() > 1) {
+		throw new DomainException("scientific.area.should.have.only.one.department");
+	    }
+
+	    return (DepartmentUnit) getScientificAreaUnit().getParentUnits().iterator().next();
+	}
+	return null;
     }
 
     private void checkParameters(String name, String nameEn, Boolean basic, RegimeType regimeType,
@@ -296,6 +324,20 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
 	    }
 	}
 	return false;
+    }
+
+    public boolean isLoggedPersonAllowedToEdit() {
+	Person person = AccessControl.getPerson();
+	if (isCompetenceCourseInformationChangeRequestDraftAvailable()) {
+	    return false;
+	}
+	if (person.hasPersonRoles(Role.getRoleByRoleType(RoleType.SCIENTIFIC_COUNCIL))) {
+	    return true;
+	}
+	if (!person.hasPersonRoles(Role.getRoleByRoleType(RoleType.BOLONHA_MANAGER))) {
+	    return false;
+	}
+	return getDepartmentUnit().getDepartment().isUserMemberOfCompetenceCourseMembersGroup(person);
     }
 
     public ExecutionYear getExecutionYear() {

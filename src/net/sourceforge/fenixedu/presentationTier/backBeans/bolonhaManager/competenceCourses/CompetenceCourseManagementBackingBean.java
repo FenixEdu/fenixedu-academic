@@ -433,7 +433,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public ExecutionSemester getAssociatedExecutionPeriod() {
-	return (getExecutionYear() != null) ? getExecutionYear().getLastExecutionPeriod() : null;
+	return getExecutionSemester();
     }
 
     public String getObjectives() {

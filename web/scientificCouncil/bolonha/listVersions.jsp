@@ -14,7 +14,7 @@
 <logic:notEmpty name="changeRequests">
 	<table class="tstyle2 thlight">
 	<tr>
-		<th><bean:message key="label.year" bundle="BOLONHA_MANAGER_RESOURCES"/></th>
+		<th class="nowrap"><bean:message key="label.year" bundle="BOLONHA_MANAGER_RESOURCES"/></th>
 		<th><bean:message key="label.semester" bundle="BOLONHA_MANAGER_RESOURCES"/></th>
 		<th><bean:message key="label.competenceCourse" bundle="BOLONHA_MANAGER_RESOURCES"/></th>
 		<th><bean:message key="label.modificationRequestedBy" bundle="BOLONHA_MANAGER_RESOURCES"/></th>
@@ -28,7 +28,7 @@
 		<bean:define id="competenceCourseID" name="changeRequest" property="competenceCourse.idInternal"/>
 		<tr>
 			<td><fr:view name="changeRequest" property="executionPeriod.executionYear.year"/></td>			
-			<td><fr:view name="changeRequest" property="executionPeriod.name"/></td>
+			<td class="nowrap"><fr:view name="changeRequest" property="executionPeriod.name"/></td>
 			<td><fr:view name="changeRequest" property="competenceCourse.name"/></td>
 			<td><fr:view name="changeRequest" property="requester.name"/></td>
 			<td class="acenter">
@@ -43,22 +43,21 @@
 			<td class="<%= (changeRequest.getApproved() == null ? "draft" : (changeRequest.getApproved() ? "approved" : "rejected")) %>">
 				<fr:view name="changeRequest" property="status"/>
 			</td>
-
-			<td>			
-			<html:link page="<%= "/competenceCourses/manageVersions.do?method=viewVersion&changeRequestID=" + changeRequestID + "&departmentID=" + request.getParameter("departmentID") %>">
-				<bean:message key="label.generic.check" bundle="APPLICATION_RESOURCES"/>
-			</html:link>
-			
-			<logic:notPresent name="changeRequest" property="approved">
-			,
-			<html:link page="<%= "/competenceCourses/manageVersions.do?method=approveRequest&changeRequestID=" + changeRequestID + "&departmentID=" + request.getParameter("departmentID") %>">
-				<bean:message key="label.approve" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
-			</html:link>
-			,
-			<html:link page="<%= "/competenceCourses/manageVersions.do?method=rejectRequest&changeRequestID=" + changeRequestID + "&departmentID=" + request.getParameter("departmentID") %>">
-				<bean:message key="label.reject" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
-			</html:link>
-			</logic:notPresent>		
+			<td class="nowrap">			
+				<html:link page="<%= "/competenceCourses/manageVersions.do?method=viewVersion&changeRequestID=" + changeRequestID + "&departmentID=" + request.getParameter("departmentID") %>">
+					<bean:message key="label.generic.check" bundle="APPLICATION_RESOURCES"/>
+				</html:link>
+				
+				<logic:notPresent name="changeRequest" property="approved">
+					,
+					<html:link page="<%= "/competenceCourses/manageVersions.do?method=approveRequest&changeRequestID=" + changeRequestID + "&departmentID=" + request.getParameter("departmentID") %>">
+						<bean:message key="label.approve" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+					</html:link>
+					,
+					<html:link page="<%= "/competenceCourses/manageVersions.do?method=rejectRequest&changeRequestID=" + changeRequestID + "&departmentID=" + request.getParameter("departmentID") %>">
+						<bean:message key="label.reject" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+					</html:link>
+				</logic:notPresent>		
 			</td>			
 		</tr>
 

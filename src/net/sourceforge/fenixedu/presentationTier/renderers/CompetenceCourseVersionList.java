@@ -8,9 +8,12 @@ import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.CollectionRenderer.TableLink;
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
@@ -43,13 +46,17 @@ public class CompetenceCourseVersionList extends OutputRenderer {
 
     private String filterBy;
 
-    private Map<String, TableLink> links;
+    private final Map<String, TableLink> links;
 
-    private List<TableLink> sortedLinks;
+    private final List<TableLink> sortedLinks;
 
     private boolean groupLinks;
 
     private String linkGroupSeparator;
+
+    private boolean showOldCompetenceCourses;
+
+    private String messageClass;
 
     public String getFilterBy() {
 	return filterBy;
@@ -97,6 +104,14 @@ public class CompetenceCourseVersionList extends OutputRenderer {
 
     public void setDraftClass(String draftClass) {
 	this.draftClass = draftClass;
+    }
+
+    public String getMessageClass() {
+	return messageClass;
+    }
+
+    public void setMessageClass(String messageClass) {
+	this.messageClass = messageClass;
     }
 
     public String getPublishedClass() {
@@ -372,6 +387,18 @@ public class CompetenceCourseVersionList extends OutputRenderer {
 	this.linkGroupSeparator = linkGroupSeparator;
     }
 
+    public boolean isShowOldCompetenceCourses() {
+	return showOldCompetenceCourses;
+    }
+
+    /**
+     * Indicates whether or not to show old competence courses
+     * 
+     */
+    public void setShowOldCompetenceCourses(boolean showOldCompetenceCourses) {
+	this.showOldCompetenceCourses = showOldCompetenceCourses;
+    }
+
     public String getLinkFormat(String name) {
 	return getTableLink(name).getLinkFormat();
     }
@@ -473,10 +500,11 @@ public class CompetenceCourseVersionList extends OutputRenderer {
 		    }
 		    courseContainer.addChild(groupName);
 		    HtmlTable table = new HtmlTable();
-		    for (CompetenceCourse course : group.getCompetenceCourses()) {
+		    for (CompetenceCourse course : group.getCurrentOrFutureCompetenceCourses()) {
 			if (course.getCurricularStage().equals(stage)) {
 			    HtmlTableRow courseRow = table.createRow();
-			    HtmlComponent coursePresentation = getCoursePresentation(course);
+			    HtmlComponent coursePresentation = getCurrentOrFutureCoursePresentation(course, group, department
+				    .getDepartmentUnit());
 			    if (getCourseNameClasses() != null) {
 				coursePresentation.setClasses(getCourseNameClasses());
 			    }
@@ -484,6 +512,21 @@ public class CompetenceCourseVersionList extends OutputRenderer {
 			    HtmlTableCell cell = courseRow.createCell();
 			    cell.setBody(getLinks(course));
 			    cell.setClasses("aright");
+			}
+		    }
+		    if (isShowOldCompetenceCourses()) {
+			for (CompetenceCourse course : group.getOldCompetenceCourses()) {
+			    if (course.getCurricularStage().equals(stage)) {
+				HtmlTableRow courseRow = table.createRow();
+				HtmlComponent coursePresentation = getOldCoursePresentation(course);
+				if (getCourseNameClasses() != null) {
+				    coursePresentation.setClasses(getCourseNameClasses());
+				}
+				courseRow.createCell().setBody(coursePresentation);
+				HtmlTableCell cell = courseRow.createCell();
+				cell.setBody(getLinks(course));
+				cell.setClasses("aright");
+			    }
 			}
 		    }
 		    courseContainer.addChild(table);
@@ -514,15 +557,70 @@ public class CompetenceCourseVersionList extends OutputRenderer {
 
 	}
 
-	private HtmlComponent getCoursePresentation(CompetenceCourse course) {
+	private HtmlComponent getCurrentOrFutureCoursePresentation(CompetenceCourse course, CompetenceCourseGroupUnit group,
+		DepartmentUnit department) {
 	    HtmlInlineContainer container = new HtmlInlineContainer();
 	    container.addChild(new HtmlText(course.getName()));
 	    container.addChild(new HtmlText(" ("));
 	    container.addChild(new HtmlText(course.getAcronym()));
 	    container.addChild(new HtmlText(") "));
 	    container.addChild(getStage(course.getCurricularStage()));
+	    if (course.getCompetenceCourseGroupUnit() != group) {
+		container.addChild(new HtmlText(" ("));
+		container.addChild(getFutureTransferMessage(course));
+		container.addChild(new HtmlText(") "));
+	    } else if (course.getDepartmentUnit(ExecutionSemester.readLastExecutionSemester()) != department) {
+		container.addChild(new HtmlText(" ("));
+		container.addChild(getFutureDepartmentMessage(course));
+		container.addChild(new HtmlText(") "));
+	    } else if (course.getCompetenceCourseGroupUnit(ExecutionSemester.readLastExecutionSemester()) != group) {
+		container.addChild(new HtmlText(" ("));
+		container.addChild(getFutureGroupMessage(course));
+		container.addChild(new HtmlText(") "));
+	    }
 	    container.setIndented(false);
 	    return container;
+	}
+
+	private HtmlComponent getFutureDepartmentMessage(CompetenceCourse course) {
+	    HtmlText text = new HtmlText(BundleUtil.getMessageFromModuleOrApplication("BolonhaManager", "future.department")
+		    + ": " + course.getDepartmentUnit(ExecutionSemester.readLastExecutionSemester()).getAcronym());
+	    text.setClasses(getMessageClass());
+	    return text;
+	}
+
+	private HtmlComponent getFutureGroupMessage(CompetenceCourse course) {
+	    HtmlText text = new HtmlText(BundleUtil.getMessageFromModuleOrApplication("BolonhaManager", "future.group") + ": "
+		    + course.getCompetenceCourseGroupUnit(ExecutionSemester.readLastExecutionSemester()).getName());
+	    text.setClasses(getMessageClass());
+	    return text;
+	}
+
+	private HtmlComponent getFutureTransferMessage(CompetenceCourse course) {
+	    HtmlText text = new HtmlText(BundleUtil.getMessageFromModuleOrApplication("BolonhaManager", "future.transfer"));
+	    text.setClasses(getMessageClass());
+	    return text;
+	}
+
+	private HtmlComponent getOldCoursePresentation(CompetenceCourse course) {
+	    HtmlInlineContainer container = new HtmlInlineContainer();
+	    container.addChild(new HtmlText(course.getName()));
+	    container.addChild(new HtmlText(" ("));
+	    container.addChild(new HtmlText(course.getAcronym()));
+	    container.addChild(new HtmlText(") "));
+	    container.addChild(getStage(course.getCurricularStage()));
+	    container.addChild(new HtmlText(" ("));
+	    container.addChild(getOldDepartmentMessage(course));
+	    container.addChild(new HtmlText(")"));
+	    container.setIndented(false);
+	    return container;
+	}
+
+	private HtmlComponent getOldDepartmentMessage(CompetenceCourse course) {
+	    HtmlText text = new HtmlText(BundleUtil.getMessageFromModuleOrApplication("BolonhaManager", "current.department")
+		    + ": " + course.getDepartmentUnit().getAcronym());
+	    text.setClasses(getMessageClass());
+	    return text;
 	}
 
 	private HtmlComponent getStage(CurricularStage curricularStage) {

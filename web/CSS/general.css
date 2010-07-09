@@ -2509,6 +2509,7 @@ border: 3px solid #97bac6;
 }
 
 table.thpadding5px10px th { padding: 5px 10px;  }
+table.thpadding0px th { padding: 0px;  }
 /*
 table.tborderccc { border: 1px solid #ccc; }
 .brightccc { border-right: 1px solid #ccc !important; }

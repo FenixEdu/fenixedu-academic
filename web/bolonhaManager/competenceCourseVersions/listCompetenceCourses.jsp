@@ -3,17 +3,21 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<html:xhtml/>
+
+<%@page import="net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.CompetenceCourseInformationRequestBean"%><html:xhtml/>
+<%@page import="net.sourceforge.fenixedu.domain.ExecutionSemester"%><html:xhtml/>
 
 <em><bean:message key="bolonhaManager" bundle="BOLONHA_MANAGER_RESOURCES"/></em>
-<h2><bean:message key="label.manage.versions" bundle="BOLONHA_MANAGER_RESOURCES"/></h2>
-
-<p class="mtop15 mbottom05"><strong class='highlight1'><bean:message key="groupMembers" bundle="BOLONHA_MANAGER_RESOURCES"/></strong> <bean:message key="label.group.members.explanation" bundle="BOLONHA_MANAGER_RESOURCES"/></strong></p>
+<h2><bean:write name="department" property="realName"/></h2>
+<h3><bean:message key="label.manage.versions" bundle="BOLONHA_MANAGER_RESOURCES"/></h3>
 
 <logic:notEmpty name="department" property="competenceCourseMembersGroup.elements">
+
+<p class="mtop15 mbottom05"><strong class='highlight1'><bean:message key="groupMembers" bundle="BOLONHA_MANAGER_RESOURCES"/></strong> <bean:message key="label.group.members.explanation" bundle="BOLONHA_MANAGER_RESOURCES"/></p>
+
 <ul>
 	<logic:iterate id="person" type="net.sourceforge.fenixedu.domain.Person" name="department" property="competenceCourseMembersGroup.elements">
-		<li><fr:view name="person" layout="name-with-alias"/>
+		<li><fr:view name="person" layout="name-with-alias"/></li>
 	</logic:iterate>
 </ul>
 </logic:notEmpty>
@@ -24,11 +28,32 @@
 	</p>
 </logic:empty>
 
-<div class="mtop2">
+<bean:define id="showOldCompetenceCourses" name="requestBean" property="isShowOldCompetenceCourses" />
+<p><fr:form id="requestForm" action="/competenceCourses/manageVersions.do?method=prepare">
+	<fr:edit id="requestBean" name="requestBean">
+		<fr:schema bundle="BOLONHA_MANAGER_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.CompetenceCourseInformationRequestBean">
+			<fr:slot name="showOldCompetenceCourses" layout="option-select-postback"/>
+		</fr:schema>
+		<fr:layout>
+			<fr:property name="classes" value="thlight thpadding0px mtop05"/>
+		</fr:layout>
+	</fr:edit>
+</fr:form></p>
+
+<p class="mtop15 mbottom05"><strong><bean:message key="caption" bundle="BOLONHA_MANAGER_RESOURCES" /></strong></p>
+<ul>
+	<logic:equal name="showOldCompetenceCourses" value="true" ><li><span class="warning0"><bean:message key="current.department" bundle="BOLONHA_MANAGER_RESOURCES" /></span> = <bean:message key="current.department.caption" bundle="BOLONHA_MANAGER_RESOURCES" /></li></logic:equal>
+	<li><span class="warning0"><bean:message key="future.department" bundle="BOLONHA_MANAGER_RESOURCES" /></span> = <bean:message key="future.department.caption" bundle="BOLONHA_MANAGER_RESOURCES" /></li>
+	<li><span class="warning0"><bean:message key="future.group" bundle="BOLONHA_MANAGER_RESOURCES" /></span> = <bean:message key="future.group.caption" bundle="BOLONHA_MANAGER_RESOURCES" /></li>
+	<li><span class="warning0"><bean:message key="future.transfer" bundle="BOLONHA_MANAGER_RESOURCES" /></span> = <bean:message key="future.transfer.caption" bundle="BOLONHA_MANAGER_RESOURCES" /></li>
+</ul>
+
+<div class="mtop15">
 <logic:equal name="department" property="currentUserMemberOfCompetenceCourseMembersGroup" value="true">
 	<fr:view name="department">
 		<fr:layout name="competence-course-list">
 			<fr:property name="scientificAreaNameClasses" value="bold"/>
+			<fr:property name="showOldCompetenceCourses" value="<%= ((Boolean) showOldCompetenceCourses) ? "true" : "false" %>"/>
 			<fr:property name="tableClasses" value="showinfo1 smallmargin mtop05 width100"/>
 			<fr:property name="link(manageVersions)" value="/competenceCourses/manageVersions.do?method=showVersions"/>
 			<fr:property name="key(manageVersions)" value="label.view.versions"/>

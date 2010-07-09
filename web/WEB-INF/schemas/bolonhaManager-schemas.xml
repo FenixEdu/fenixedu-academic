@@ -229,6 +229,9 @@
 <schema name="view.competenceCourseInformation" type="net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation" bundle="APPLICATION_RESOURCES">
 		<slot name="executionPeriod.executionYear.year" key="label.executionYear"/>
 		<slot name="executionPeriod.name" key="label.executionPeriod"/>
+		<slot name="departmentUnit" key="label.department">
+			<property name="format" value="${acronym}" />
+		</slot>
 </schema>    
 
 

@@ -3,10 +3,13 @@ package net.sourceforge.fenixedu.domain.degreeStructure;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -185,5 +188,17 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
 
 	    information.addCompetenceCourseLoads(secondCourseLoad);
 	}
+    }
+
+    public boolean isLoggedPersonAllowedToEdit() {
+	Person person = AccessControl.getPerson();
+	if (person.hasPersonRoles(Role.getRoleByRoleType(RoleType.SCIENTIFIC_COUNCIL))) {
+	    return true;
+	}
+	if (!person.hasPersonRoles(Role.getRoleByRoleType(RoleType.BOLONHA_MANAGER))) {
+	    return false;
+	}
+	return getCompetenceCourse().getDepartmentUnit(getExecutionPeriod()).getDepartment()
+		.isUserMemberOfCompetenceCourseMembersGroup(person);
     }
 }

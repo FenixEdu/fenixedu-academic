@@ -29,8 +29,10 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.UniqueAcronymCreator;
 
 import org.apache.commons.collections.Predicate;
@@ -293,6 +295,42 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     public boolean isCompetenceCourseInformationDefinedAtExecutionPeriod(final ExecutionSemester executionSemester) {
 	final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(executionSemester);
 	return information != null && information.getExecutionPeriod().equals(executionSemester);
+    }
+
+    public boolean isLoggedPersonAllowedToViewChangeRequests() {
+	Person person = AccessControl.getPerson();
+	if (person.hasPersonRoles(Role.getRoleByRoleType(RoleType.SCIENTIFIC_COUNCIL))) {
+	    return true;
+	}
+	if (!person.hasPersonRoles(Role.getRoleByRoleType(RoleType.BOLONHA_MANAGER))) {
+	    return false;
+	}
+	for (CompetenceCourseInformation information : getCompetenceCourseInformations()) {
+	    if (information.getDepartmentUnit().getDepartment().isUserMemberOfCompetenceCourseMembersGroup(person)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    public boolean isLoggedPersonAllowedToCreateChangeRequests(ExecutionSemester semester) {
+	Person person = AccessControl.getPerson();
+	if (person.hasPersonRoles(Role.getRoleByRoleType(RoleType.SCIENTIFIC_COUNCIL))) {
+	    return true;
+	}
+	if (!person.hasPersonRoles(Role.getRoleByRoleType(RoleType.BOLONHA_MANAGER))) {
+	    return false;
+	}
+	return getDepartmentUnit(semester).getDepartment().isUserMemberOfCompetenceCourseMembersGroup(person);
+    }
+
+    public boolean canLoggedPersonCreateChangeRequest(ExecutionSemester semester) {
+	return (isLoggedPersonAllowedToCreateChangeRequests(semester) && !isRequestDraftAvailable(semester));
+    }
+
+    public boolean isRequestDraftAvailable(ExecutionSemester semester) {
+	CompetenceCourseInformationChangeRequest request = getCompetenceCourseInformationChangeRequests(semester);
+	return request != null && (request.getApproved() == null || !request.getApproved());
     }
 
     public CompetenceCourseInformation findCompetenceCourseInformationForExecutionPeriod(final ExecutionSemester executionSemester) {
@@ -830,8 +868,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
      * @see CompetenceCourseGroupUnit
      */
     public DepartmentUnit getDepartmentUnit(ExecutionSemester semester) {
-	final CompetenceCourseGroupUnit competenceCourseGroupUnit = getCompetenceCourseGroupUnit(semester);
-	return competenceCourseGroupUnit == null ? null : competenceCourseGroupUnit.getDepartmentUnit();
+	return getMostRecentCompetenceCourseInformationUntil(semester).getDepartmentUnit();
     }
 
     /**
@@ -851,6 +888,17 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     public CompetenceCourseGroupUnit getCompetenceCourseGroupUnit(ExecutionSemester semester) {
 	return getMostRecentCompetenceCourseInformationUntil(semester).getCompetenceCourseGroupUnit();
+    }
+
+    public CompetenceCourseGroupUnit getMostRecentGroupInDepartment(DepartmentUnit departmentUnit) {
+	ExecutionSemester semester = ExecutionSemester.readActualExecutionSemester();
+	while (semester != null) {
+	    if (getDepartmentUnit(semester) == departmentUnit) {
+		return getCompetenceCourseGroupUnit(semester);
+	    }
+	    semester = semester.getPreviousExecutionPeriod();
+	}
+	return null;
     }
 
     public List<CompetenceCourseLoad> getSortedCompetenceCourseLoads(final ExecutionSemester period) {
@@ -933,15 +981,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	return getScientificAreaUnit(semester);
     }
 
-    public ScientificAreaUnit getScientificAreaUnit(ExecutionSemester executionSemester) {
-	if (this.getCompetenceCourseGroupUnit().hasAnyParentUnits()) {
-	    if (this.getCompetenceCourseGroupUnit().getParentUnits().size() > 1) {
-		throw new DomainException("compentence.course.should.have.only.one.scientific.area");
-	    }
-
-	    return (ScientificAreaUnit) this.getCompetenceCourseGroupUnit(executionSemester).getParentUnits().iterator().next();
-	}
-	return null;
+    public ScientificAreaUnit getScientificAreaUnit(ExecutionSemester semester) {
+	return getMostRecentCompetenceCourseInformationUntil(semester).getScientificAreaUnit();
     }
 
     public boolean isAnual() {

@@ -9,12 +9,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.lang.StringUtils;
@@ -31,14 +29,29 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	Person loggedPerson = getLoggedPerson(request);
+	CompetenceCourseInformationRequestBean requestBean = getOrCreateRequestBean(request);
+
 	request.setAttribute("department", loggedPerson.getEmployee().getCurrentDepartmentWorkingPlace());
+	request.setAttribute("requestBean", requestBean);
 	return mapping.findForward("showCourses");
+    }
+
+    private CompetenceCourseInformationRequestBean getOrCreateRequestBean(HttpServletRequest request) {
+	CompetenceCourseInformationRequestBean requestBean = (CompetenceCourseInformationRequestBean) getObjectFromViewState("requestBean");
+	if (requestBean == null) {
+	    requestBean = new CompetenceCourseInformationRequestBean();
+	    requestBean.setShowOldCompetenceCourses(true);
+	}
+	return requestBean;
     }
 
     public ActionForward editVersion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-
 	CompetenceCourseInformationChangeRequest changeRequest = getCompetenceCourseInformationRequest(request);
+	if (changeRequest == null || !changeRequest.isLoggedPersonAllowedToEdit()) {
+	    addActionMessage(request, "error.cannot.edit.request");
+	    return forwardToViewVersions(mapping, request, changeRequest.getCompetenceCourse());
+	}
 	CompetenceCourseInformationRequestBean bean = new CompetenceCourseInformationRequestBean(changeRequest);
 	CompetenceCourseLoadBean loadBean = new CompetenceCourseLoadBean(changeRequest);
 	request.setAttribute("beanLoad", loadBean);
@@ -50,7 +63,6 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
 	    HttpServletResponse response) {
 
 	CompetenceCourse course = getCompetenceCourse(request);
-
 	ExecutionSemester period = getExecutionPeriod(request);
 
 	CompetenceCourseInformationRequestBean bean = null;
@@ -83,11 +95,15 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
 	if (viewStateLoad != null) {
 	    load = (CompetenceCourseLoadBean) viewStateLoad.getMetaObject().getObject();
 	} else {
-	    load = (information != null && information.getCompetenceCourseLoadsCount() > 0) ? new CompetenceCourseLoadBean(
-		    information.getCompetenceCourseLoads().get(0)) : (period != null) ? new CompetenceCourseLoadBean(course
-		    .findCompetenceCourseInformationForExecutionPeriod(period).getCompetenceCourseLoads().get(0))
-		    : new CompetenceCourseLoadBean();
-
+	    if (information != null && information.getCompetenceCourseLoadsCount() > 0) {
+		load = new CompetenceCourseLoadBean(information.getCompetenceCourseLoads().get(0));
+	    } else if (period != null
+		    && course.findCompetenceCourseInformationForExecutionPeriod(period).getCompetenceCourseLoadsCount() > 0) {
+		load = new CompetenceCourseLoadBean(course.findCompetenceCourseInformationForExecutionPeriod(period)
+			.getCompetenceCourseLoads().get(0));
+	    } else {
+		load = new CompetenceCourseLoadBean();
+	    }
 	}
 
 	request.setAttribute("beanLoad", load);
@@ -98,6 +114,11 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
 
 	request.setAttribute("bean", bean);
 	return mapping.findForward("createVersions");
+    }
+
+    private ActionForward forwardToViewVersions(ActionMapping mapping, HttpServletRequest request, CompetenceCourse course) {
+	request.setAttribute("competenceCourse", course);
+	return mapping.findForward("viewVersions");
     }
 
     private ExecutionSemester getExecutionPeriod(HttpServletRequest request) {
@@ -115,12 +136,14 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	CompetenceCourseInformationChangeRequest changeRequest = getChangeRequest(request);
-	if (changeRequest != null && isAllowedToViewChangeRequest(getLoggedPerson(request), changeRequest)) {
-	    try {
-		DeleteCompetenceCourseInformationChangeRequest.run(changeRequest);
-	    } catch (DomainException e) {
-		addActionMessage(request, e.getMessage());
-	    }
+	if (changeRequest == null || !changeRequest.isLoggedPersonAllowedToEdit()) {
+	    addActionMessage(request, "error.cannot.edit.request");
+	    return forwardToViewVersions(mapping, request, changeRequest.getCompetenceCourse());
+	}
+	try {
+	    DeleteCompetenceCourseInformationChangeRequest.run(changeRequest);
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getMessage());
 	}
 
 	return showVersions(mapping, form, request, response);
@@ -159,11 +182,12 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
 	request.setAttribute("bean", bean);
 	request.setAttribute("beanLoad", load);
 
-	if (areBeanValid(bean, load)) {
+	if (areBeansValid(bean, load)) {
 	    request.setAttribute("referenceBean", new CreateReferenceBean());
 	    return mapping.findForward("editBiblio");
 	} else {
 	    addActionMessage(request, "error.all.fields.are.required");
+	    request.setAttribute("proposal", getFromRequest(request, "proposal"));
 	    return mapping.findForward("createVersions");
 	}
     }
@@ -188,6 +212,11 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
 		.getObject();
 	CompetenceCourseLoadBean load = (CompetenceCourseLoadBean) RenderUtils.getViewState("editVersionLoad").getMetaObject()
 		.getObject();
+	CompetenceCourse course = bean.getCompetenceCourse();
+	if (!course.isLoggedPersonAllowedToCreateChangeRequests(bean.getExecutionPeriod())) {
+	    addActionMessage(request, "error.cannot.create.request.in.chosen.semester");
+	    return forwardToViewVersions(mapping, request, course);
+	}
 	try {
 	    createCompetenceCourseInformationChangeRequest(bean, load, getLoggedPerson(request));
 	} catch (DomainException e) {
@@ -224,9 +253,7 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	CompetenceCourse course = getCompetenceCourse(request);
-	request.setAttribute("competenceCourse", course);
-
-	return mapping.findForward("viewVersions");
+	return forwardToViewVersions(mapping, request, course);
     }
 
     private CompetenceCourse getCompetenceCourse(HttpServletRequest request) {
@@ -240,9 +267,11 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	CompetenceCourseInformationChangeRequest changeRequest = getCompetenceCourseInformationRequest(request);
-	if (changeRequest != null && isAllowedToViewChangeRequest(getLoggedPerson(request), changeRequest)) {
-	    request.setAttribute("changeRequest", changeRequest);
+	if (changeRequest == null || !changeRequest.getCompetenceCourse().isLoggedPersonAllowedToViewChangeRequests()) {
+	    addActionMessage(request, "error.cannot.view.request");
+	    return forwardToViewVersions(mapping, request, getCompetenceCourse(request));
 	}
+	request.setAttribute("changeRequest", changeRequest);
 	return mapping.findForward("viewVersionDetails");
     }
 
@@ -269,14 +298,6 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
 	return mapping.findForward("viewInformationDetails");
     }
 
-    private boolean isAllowedToViewChangeRequest(Person loggedPerson, CompetenceCourseInformationChangeRequest changeRequest) {
-
-	return loggedPerson.hasPersonRoles(Role.getRoleByRoleType(RoleType.SCIENTIFIC_COUNCIL))
-		|| (loggedPerson.hasPersonRoles(Role.getRoleByRoleType(RoleType.BOLONHA_MANAGER)) && changeRequest
-			.getCompetenceCourse().getDepartmentUnit().getDepartment().isUserMemberOfCompetenceCourseMembersGroup(
-				loggedPerson));
-    }
-
     private CompetenceCourseInformationChangeRequest getChangeRequest(HttpServletRequest request) {
 	String competenceCourseInformationChangeRequestId = request.getParameter("changeRequestID");
 	CompetenceCourseInformationChangeRequest changeRequest = null;
@@ -287,7 +308,7 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
 	return changeRequest;
     }
 
-    private boolean areBeanValid(CompetenceCourseInformationRequestBean bean, CompetenceCourseLoadBean loadBean) {
+    private boolean areBeansValid(CompetenceCourseInformationRequestBean bean, CompetenceCourseLoadBean loadBean) {
 	if (StringUtils.isEmpty(bean.getName()) || StringUtils.isEmpty(bean.getNameEn())
 		|| StringUtils.isEmpty(bean.getJustification()) || bean.getRegime() == null
 		|| StringUtils.isEmpty(bean.getObjectives()) || StringUtils.isEmpty(bean.getObjectivesEn())
