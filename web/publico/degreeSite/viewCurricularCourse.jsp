@@ -33,8 +33,8 @@
      <h:outputText rendered="#{empty CurricularCourseManagement.organizeBy}" value="<a href='showDegreeCurricularPlanBolonha.faces?degreeID=#{CurricularCourseManagement.degreeCurricularPlan.degree.idInternal}&amp;degreeCurricularPlanID=#{CurricularCourseManagement.degreeCurricularPlanID}&amp;executionPeriodID=#{CurricularCourseManagement.executionYearID}&amp;organizeBy=groups&amp;showRules=false&amp;hideCourses=false'>#{publicDegreeInfoBundle['public.degree.information.label.curriculum']}</a>" escape="false"/>	 	
 
 	&nbsp;&gt;&nbsp;
-	<h:outputText rendered="#{!CurricularCourseManagement.renderInEnglish}" value="#{CurricularCourseManagement.curricularCourse.name}"/>
-	<h:outputText rendered="#{CurricularCourseManagement.renderInEnglish}" value="#{CurricularCourseManagement.curricularCourse.nameEn}"/>
+	<h:outputText rendered="#{!CurricularCourseManagement.renderInEnglish}" value="#{CurricularCourseManagement.curricularCourseSemesterBean.curricularCourseName}"/>
+	<h:outputText rendered="#{CurricularCourseManagement.renderInEnglish}" value="#{CurricularCourseManagement.curricularCourseSemesterBean.curricularCourseNameEn}"/>
 
 	<h:outputText value="<br/><br/>" escape="false"/>
 
@@ -43,9 +43,9 @@
 	<h:outputFormat value="<h2 class='greytxt'>#{publicDegreeInfoBundle['public.degree.information.label.curricularPlan']} #{CurricularCourseManagement.degreeCurricularPlan.name}</h2>" escape="false"/>
 	<h:outputText value="<br/>" escape="false"/>
 	<h:outputFormat value="<h2 class='greytxt'>" escape="false"/>
-	<h:outputText rendered="#{!CurricularCourseManagement.renderInEnglish}" value="#{CurricularCourseManagement.curricularCourse.name}"/>
-	<h:outputText rendered="#{CurricularCourseManagement.renderInEnglish}" value="#{CurricularCourseManagement.curricularCourse.nameEn}"/>
-	<h:outputText rendered="#{!empty CurricularCourseManagement.curricularCourse.acronym}" value=" (#{CurricularCourseManagement.curricularCourse.acronym})"/>
+	<h:outputText rendered="#{!CurricularCourseManagement.renderInEnglish}" value="#{CurricularCourseManagement.curricularCourseSemesterBean.curricularCourseName}"/>
+	<h:outputText rendered="#{CurricularCourseManagement.renderInEnglish}" value="#{CurricularCourseManagement.curricularCourseSemesterBean.curricularCourseNameEn}"/>
+	<h:outputText rendered="#{!empty CurricularCourseManagement.curricularCourseSemesterBean.acronym}" value=" (#{CurricularCourseManagement.curricularCourseSemesterBean.acronym})"/>
 	<h:outputFormat value="</h2>" escape="false"/>
 
 
@@ -65,12 +65,12 @@
 			<h:outputText value="<strong>#{bolonhaBundle['competenceCourse']}</strong></td></tr>" escape="false"/>
 			<h:outputText value="<tr><td class='box_cell'>" escape="false"/>
 				
-				<h:outputText rendered="#{!CurricularCourseManagement.renderInEnglish}" value="#{CurricularCourseManagement.hasContextCommentString}<a href='#{CurricularCourseManagement.contextPath}/publico/department/showCompetenceCourse.faces?competenceCourseID=#{CurricularCourseManagement.curricularCourse.competenceCourse.idInternal}&amp;selectedDepartmentUnitID=#{CurricularCourseManagement.curricularCourse.competenceCourse.departmentUnit.idInternal}&amp;#{CurricularCourseManagement.contentContextPathAttributeName}=#{CurricularCourseManagement.departmentUnit.site.reversePath}'>#{CurricularCourseManagement.curricularCourse.name}</a>" escape="false"/> 
-				<h:outputText rendered="#{CurricularCourseManagement.renderInEnglish}" value="#{CurricularCourseManagement.hasContextCommentString}<a href='#{CurricularCourseManagement.contextPath}/publico/department/showCompetenceCourse.faces?competenceCourseID=#{CurricularCourseManagement.curricularCourse.competenceCourse.idInternal}&amp;selectedDepartmentUnitID=#{CurricularCourseManagement.curricularCourse.competenceCourse.departmentUnit.idInternal}&amp;#{CurricularCourseManagement.contentContextPathAttributeName}=#{CurricularCourseManagement.departmentUnit.site.reversePath}'>#{CurricularCourseManagement.curricularCourse.nameEn}</a>" escape="false"/> 			
+				<h:outputText rendered="#{!CurricularCourseManagement.renderInEnglish}" value="#{CurricularCourseManagement.hasContextCommentString}<a href='#{CurricularCourseManagement.contextPath}/publico/department/showCompetenceCourse.faces?competenceCourseID=#{CurricularCourseManagement.curricularCourse.competenceCourse.idInternal}&amp;selectedDepartmentUnitID=#{CurricularCourseManagement.curricularCourseSemesterBean.departmentUnit.idInternal}&amp;#{CurricularCourseManagement.contentContextPathAttributeName}=#{CurricularCourseManagement.departmentUnit.site.reversePath}'>#{CurricularCourseManagement.curricularCourseSemesterBean.curricularCourseName}</a>" escape="false"/> 
+				<h:outputText rendered="#{CurricularCourseManagement.renderInEnglish}" value="#{CurricularCourseManagement.hasContextCommentString}<a href='#{CurricularCourseManagement.contextPath}/publico/department/showCompetenceCourse.faces?competenceCourseID=#{CurricularCourseManagement.curricularCourse.competenceCourse.idInternal}&amp;selectedDepartmentUnitID=#{CurricularCourseManagement.curricularCourseSemesterBean.departmentUnit.idInternal}&amp;#{CurricularCourseManagement.contentContextPathAttributeName}=#{CurricularCourseManagement.departmentUnit.site.reversePath}'>#{CurricularCourseManagement.curricularCourseSemesterBean.curricularCourseNameEn}</a>" escape="false"/> 			
 											
 				<h:outputText value=" #{publicDegreeInfoBundle['public.degree.information.label.from.masculine']} "/>
 							
-				<fc:contentLink content="#{CurricularCourseManagement.curricularCourse.competenceCourse.departmentUnit.site}" label="#{CurricularCourseManagement.curricularCourse.competenceCourse.departmentUnit.name}"></fc:contentLink>
+				<fc:contentLink content="#{CurricularCourseManagement.curricularCourseSemesterBean.departmentUnit.site}" label="#{CurricularCourseManagement.curricularCourseSemesterBean.departmentUnit.name}"></fc:contentLink>
 															
 			<h:outputText value="</td></tr>" escape="false"/>
 		</h:panelGroup>
@@ -101,10 +101,10 @@
 		</fc:dataRepeater>
 	
 		<!-- WEIGHT -->
-		<h:panelGroup rendered="#{!empty CurricularCourseManagement.curricularCourse.weigth && CurricularCourseManagement.curricularCourse.weigth != 0.0}">
+		<h:panelGroup rendered="#{!empty CurricularCourseManagement.curricularCourseSemesterBean.weight && CurricularCourseManagement.curricularCourseSemesterBean.weight != 0.0}">
 			<h:outputText value="<h2 class='arrow_bullet'>#{bolonhaBundle['weight']}</h2>" escape="false"/>
 			<h:outputText value="<p>" escape="false"/>
-			<h:outputText value="#{CurricularCourseManagement.curricularCourse.weigth} (#{bolonhaBundle['for.average.grade.calculus']})"/>
+			<h:outputText value="#{CurricularCourseManagement.curricularCourseSemesterBean.weight} (#{bolonhaBundle['for.average.grade.calculus']})"/>
 			<h:outputText value="</p>" escape="false"/>
 		</h:panelGroup>
 		
@@ -118,29 +118,29 @@
 		</h:panelGroup>
 		
 		<!-- OBJECTIVES -->
-		<h:panelGroup rendered="#{!empty CurricularCourseManagement.curricularCourse.objectives}">
+		<h:panelGroup rendered="#{!empty CurricularCourseManagement.curricularCourseSemesterBean.objectives}">
 			<h:outputText value="<h2 class='arrow_bullet'>#{bolonhaBundle['objectives']}</h2>" escape="false"/>
 			<h:outputText value="<p>" escape="false"/>
-			<fc:extendedOutputText rendered="#{!CurricularCourseManagement.renderInEnglish}" value="#{CurricularCourseManagement.curricularCourse.objectives}" linebreak="true"/>
-			<fc:extendedOutputText rendered="#{CurricularCourseManagement.renderInEnglish}" value="#{CurricularCourseManagement.curricularCourse.objectivesEn}" linebreak="true"/>		
+			<fc:extendedOutputText rendered="#{!CurricularCourseManagement.renderInEnglish}" value="#{CurricularCourseManagement.curricularCourseSemesterBean.objectives}" linebreak="true"/>
+			<fc:extendedOutputText rendered="#{CurricularCourseManagement.renderInEnglish}" value="#{CurricularCourseManagement.curricularCourseSemesterBean.objectivesEn}" linebreak="true"/>		
 			<h:outputText value="</p>" escape="false"/>
 		</h:panelGroup>
 		
 		<!-- PROGRAM -->
-		<h:panelGroup rendered="#{!empty CurricularCourseManagement.curricularCourse.program}">
+		<h:panelGroup rendered="#{!empty CurricularCourseManagement.curricularCourseSemesterBean.program}">
 			<h:outputText value="<h2 class='arrow_bullet'>#{bolonhaBundle['program']}</h2>" escape="false"/>
 			<h:outputText value="<p>" escape="false"/>
-			<fc:extendedOutputText rendered="#{!CurricularCourseManagement.renderInEnglish}" value="#{CurricularCourseManagement.curricularCourse.program}" linebreak="true"/>
-			<fc:extendedOutputText rendered="#{CurricularCourseManagement.renderInEnglish}" value="#{CurricularCourseManagement.curricularCourse.programEn}" linebreak="true"/>		
+			<fc:extendedOutputText rendered="#{!CurricularCourseManagement.renderInEnglish}" value="#{CurricularCourseManagement.curricularCourseSemesterBean.program}" linebreak="true"/>
+			<fc:extendedOutputText rendered="#{CurricularCourseManagement.renderInEnglish}" value="#{CurricularCourseManagement.curricularCourseSemesterBean.programEn}" linebreak="true"/>		
 			<h:outputText value="</p>" escape="false"/>
 		</h:panelGroup>
 		
 		<!-- EVALUATION METHOD -->
-		<h:panelGroup rendered="#{!empty CurricularCourseManagement.curricularCourse.evaluationMethod}">
+		<h:panelGroup rendered="#{!empty CurricularCourseManagement.curricularCourseSemesterBean.evaluationMethod}">
 			<h:outputText value="<h2 class='arrow_bullet'>#{bolonhaBundle['evaluationMethod']}</h2>" escape="false"/>
 			<h:outputText value="<p>" escape="false"/>
-			<fc:extendedOutputText rendered="#{!CurricularCourseManagement.renderInEnglish}" value="#{CurricularCourseManagement.curricularCourse.evaluationMethod}" linebreak="true"/>
-			<fc:extendedOutputText rendered="#{CurricularCourseManagement.renderInEnglish}" value="#{CurricularCourseManagement.curricularCourse.evaluationMethodEn}" linebreak="true"/>
+			<fc:extendedOutputText rendered="#{!CurricularCourseManagement.renderInEnglish}" value="#{CurricularCourseManagement.curricularCourseSemesterBean.evaluationMethod}" linebreak="true"/>
+			<fc:extendedOutputText rendered="#{CurricularCourseManagement.renderInEnglish}" value="#{CurricularCourseManagement.curricularCourseSemesterBean.evaluationMethodEn}" linebreak="true"/>
 			<h:outputText value="</p>" escape="false"/>
 		</h:panelGroup>
 	</h:panelGroup>

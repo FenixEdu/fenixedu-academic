@@ -32,6 +32,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.EctsConversionTable;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.precedences.Restriction;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse;
 import net.sourceforge.fenixedu.domain.space.Campus;
@@ -1144,9 +1145,28 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     @Override
+    @Deprecated()
+    // typo: use getWeight() instead
     final public Double getWeigth() {
+	return getWeight();
+    }
+
+    final public Double getWeight() {
 	if (isBolonhaDegree()) {
 	    return getEctsCredits();
+	}
+
+	if (getDegreeType().isMasterDegree()) {
+	    return getCredits();
+	}
+
+	final Double weigth = super.getWeigth();
+	return (weigth == null || weigth == 0.0) ? WEIGHT_FOR_PRE_BOLONHA : weigth;
+    }
+
+    final public Double getWeight(ExecutionSemester semester) {
+	if (isBolonhaDegree()) {
+	    return getEctsCredits(semester);
 	}
 
 	if (getDegreeType().isMasterDegree()) {
@@ -1410,6 +1430,14 @@ public class CurricularCourse extends CurricularCourse_Base {
 	return super.getAcronym();
     }
 
+    public DepartmentUnit getDepartmentUnit(ExecutionSemester semester) {
+	return getCompetenceCourse().getDepartmentUnit(semester);
+    }
+
+    public DepartmentUnit getDepartmentUnit() {
+	return getCompetenceCourse().getDepartmentUnit();
+    }
+
     public Boolean getBasic(ExecutionSemester period) {
 	return (super.getBasic() == null) ? this.getCompetenceCourse().isBasic(period) : super.getBasic();
     }
@@ -1452,7 +1480,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     public String getProgram(ExecutionSemester period) {
 	if (isBolonhaDegree()) {
-	    return this.getCompetenceCourse().getProgram();
+	    return this.getCompetenceCourse().getProgram(period);
 	}
 	return getCurriculumFactoryEditCurriculum(period).getProgram();
     }
@@ -1680,7 +1708,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 
 	for (final CurricularCourse curricularCourse : equivalence.getOldCurricularCourses()) {
 	    if (curricularCourse.getDegreeCurricularPlan().isBolonhaDegree()) {
-		
+
 		for (final CurriculumModule module : curricularCourse.getCurriculumModules()) {
 		    if (module.isEnrolment()) {
 			final Enrolment enrolment = (Enrolment) module;

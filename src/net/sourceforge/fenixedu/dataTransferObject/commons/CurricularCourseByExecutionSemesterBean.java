@@ -5,6 +5,7 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 
 public class CurricularCourseByExecutionSemesterBean implements Serializable, Comparable<CurricularCourseByExecutionSemesterBean> {
 
@@ -40,6 +41,10 @@ public class CurricularCourseByExecutionSemesterBean implements Serializable, Co
 	return getCurricularCourse().getName(getExecutionSemester());
     }
 
+    public String getCurricularCourseNameEn() {
+	return getCurricularCourse().getNameEn(getExecutionSemester());
+    }
+
     public Double getCurricularCourseEcts() {
 	return getCurricularCourse().getEctsCredits(getExecutionSemester());
     }
@@ -50,6 +55,42 @@ public class CurricularCourseByExecutionSemesterBean implements Serializable, Co
 
     public String getKey() {
 	return getCurricularCourse().getOID() + ":" + getExecutionSemester().getOID();
+    }
+
+    public String getAcronym() {
+	return getCurricularCourse().getAcronym(getExecutionSemester());
+    }
+
+    public DepartmentUnit getDepartmentUnit() {
+	return getCurricularCourse().getDepartmentUnit(getExecutionSemester());
+    }
+
+    public Double getWeight() {
+	return getCurricularCourse().getWeight(getExecutionSemester());
+    }
+
+    public String getObjectives() {
+	return getCurricularCourse().getObjectives(getExecutionSemester());
+    }
+
+    public String getObjectivesEn() {
+	return getCurricularCourse().getObjectivesEn(getExecutionSemester());
+    }
+
+    public String getProgram() {
+	return getCurricularCourse().getProgram(getExecutionSemester());
+    }
+
+    public String getProgramEn() {
+	return getCurricularCourse().getProgramEn(getExecutionSemester());
+    }
+
+    public String getEvaluationMethod() {
+	return getCurricularCourse().getEvaluationMethod(getExecutionSemester());
+    }
+
+    public String getEvaluationMethodEn() {
+	return getCurricularCourse().getEvaluationMethodEn(getExecutionSemester());
     }
 
     @Override

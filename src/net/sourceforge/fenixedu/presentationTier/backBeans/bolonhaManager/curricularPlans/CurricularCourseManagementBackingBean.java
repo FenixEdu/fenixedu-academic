@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.CreateCurricularCourse;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
+import net.sourceforge.fenixedu.dataTransferObject.commons.CurricularCourseByExecutionSemesterBean;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -76,6 +77,23 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     public List<SelectItem> courseGroups = null;
     public List<SelectItem> curricularCourses = null;
     public List<SelectItem> executionYearItems = null;
+
+    public CurricularCourseByExecutionSemesterBean curricularCourseSemesterBean = null;
+
+    public CurricularCourseManagementBackingBean() {
+	if (getCurricularCourse() != null && getExecutionYear() != null) {
+	    curricularCourseSemesterBean = new CurricularCourseByExecutionSemesterBean(getCurricularCourse(), ExecutionSemester
+		    .readBySemesterAndExecutionYear(2, getExecutionYear().getYear()));
+	}
+    }
+
+    public CurricularCourseByExecutionSemesterBean getCurricularCourseSemesterBean() {
+	return curricularCourseSemesterBean;
+    }
+
+    public void setCurricularCourseSemesterBean(CurricularCourseByExecutionSemesterBean curricularCourseSemesterBean) {
+	this.curricularCourseSemesterBean = curricularCourseSemesterBean;
+    }
 
     public Integer getDegreeCurricularPlanID() {
 	CoordinatedDegreeInfo.setCoordinatorContext(getRequest());
