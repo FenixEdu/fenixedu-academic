@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
@@ -133,26 +132,24 @@ public class SubmitMarksAction extends FenixDispatchAction {
 	}
 
 	final Integer teacherNumber = Integer.valueOf((String) marksForm.get("teacherNumber"));
+	final ActionErrors actionErrors = new ActionErrors();
 
-	// Insert final evaluation
-	final Collection<InfoEnrolmentEvaluation> errors = new HashSet<InfoEnrolmentEvaluation>();
 	for (final InfoEnrolmentEvaluation infoEnrolmentEvaluation : infoEnrolmentEvaluations) {
 	    try {
 
 		InsertStudentsFinalEvaluation.run(infoEnrolmentEvaluation, teacherNumber, evaluationDate);
-	    } catch (NonExistingServiceException e) {
-		throw new NonExistingActionException(teacherNumber.toString(), e);
+		
 	    } catch (DomainException e) {
-		errors.add(infoEnrolmentEvaluation);
+		actionErrors.add(e.getKey(), new ActionError(e.getKey(), e.getArgs()));
+
 	    } catch (FenixServiceException e) {
 		e.printStackTrace();
 		throw new FenixActionException(e);
 	    }
 	}
 
-	// check for invalid marks
-	if (!errors.isEmpty()) {
-	    saveErrors(request, getErrors(errors));
+	if (!actionErrors.isEmpty()) {
+	    saveErrors(request, actionErrors);
 	    return mapping.getInputForward();
 	}
 
@@ -188,15 +185,17 @@ public class SubmitMarksAction extends FenixDispatchAction {
 	return null;
     }
 
-    private ActionErrors getErrors(final Collection<InfoEnrolmentEvaluation> errors) {
-	final ActionErrors actionErrors = new ActionErrors();
-
-	for (final InfoEnrolmentEvaluation error : errors) {
-	    actionErrors.add("invalidGrade", new ActionError("errors.invalidMark", error.getGradeValue(), String.valueOf(error
-		    .getInfoEnrolment().getInfoStudentCurricularPlan().getInfoStudent().getNumber().intValue())));
-	}
-
-	return actionErrors;
-    }
+    // private ActionErrors getErrors(final Collection<InfoEnrolmentEvaluation>
+    // errors) {
+    // final ActionErrors actionErrors = new ActionErrors();
+    //
+    // for (final InfoEnrolmentEvaluation error : errors) {
+    // actionErrors.add("invalidGrade", new ActionError("errors.invalidMark",
+    // error.getGradeValue(), String.valueOf(error
+    // .getInfoEnrolment().getInfoStudentCurricularPlan().getInfoStudent().getNumber().intValue())));
+    // }
+    //
+    // return actionErrors;
+    // }
 
 }
