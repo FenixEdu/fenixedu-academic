@@ -142,7 +142,7 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
     }
 
     private static String outgoingFilename() {
-	return String.format("SIBS-%s.txt", new DateTime().toString("dd-MM-yyyy H:m:s"));
+	return String.format("SIBS-%s.txt", new DateTime().toString("dd-MM-yyyy_H_m_s"));
     }
 
     public static List<SIBSOutgoingPaymentFile> readSuccessfulSentPaymentFiles() {

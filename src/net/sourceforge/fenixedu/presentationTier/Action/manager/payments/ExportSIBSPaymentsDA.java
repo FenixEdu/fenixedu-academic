@@ -41,7 +41,6 @@ public class ExportSIBSPaymentsDA extends FenixDispatchAction {
 
     public ActionForward launchOutgoingPaymentsFileCreationInvalid(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
-	SIBSOutgoingPaymentQueueJob.launchJob(getPaymentFileDataBeanFromViewState().getLastOutgoingPaymentFileSent());
 	request.setAttribute("sibsOutgoingPaymentFileDataBean", getPaymentFileDataBeanFromViewState());
 
 	return mapping.findForward("prepare-create-outgoing-payments-file");

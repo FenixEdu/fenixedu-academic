@@ -64,7 +64,7 @@ public class SibsOutgoingPaymentFile {
 	    this.sourceInstitutionId = sourceInstitutionId;
 	    this.destinationInstitutionId = destinationInstitutionId;
 	    this.entityCode = entityCode;
-	    this.lastSentPaymentFile = lastSentPaymentFile;
+	    this.lastSentPaymentFile = lastSuccessfulSentDate;
 	}
 
 	public String render() {

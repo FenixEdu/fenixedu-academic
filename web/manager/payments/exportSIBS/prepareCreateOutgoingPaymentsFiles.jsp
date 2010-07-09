@@ -20,6 +20,9 @@
 					<fr:property name="format" value="dd/MM/yyyy" />
 				</fr:slot>
 			</fr:schema>
+			
+			
+			<fr:destination name="invalid" path="/exportSIBSPayments.do?method=launchOutgoingPaymentsFileCreationInvalid"/>
 		</fr:edit>
 		
 		<html:submit ><bean:message key="label.sibs.outgoing.payment.queue.job.create" bundle="MANAGER_RESOURCES" /></html:submit>

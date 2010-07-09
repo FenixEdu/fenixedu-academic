@@ -243,17 +243,27 @@
 
 	<p><strong><bean:message key="label.erasmus.approved.learning.agreements" bundle="CANDIDATE_RESOURCES"/></strong></p> 
 	
+	<logic:equal name="individualCandidacyProcess" property="studentAccepted" value="false">
+		<p class="mbottom05"><em><bean:message key="label.erasmus.approved.learning.agreements.empty" bundle="ACADEMIC_OFFICE_RESOURCES" /></em></p>	
+	</logic:equal>
+
 	<logic:empty name="individualCandidacyProcess" property="candidacy.approvedLearningAgreements" >
 		<p class="mbottom05"><em><bean:message key="label.erasmus.approved.learning.agreements.empty" bundle="ACADEMIC_OFFICE_RESOURCES" /></em></p>
 	</logic:empty>
 	
+	<logic:equal name="individualCandidacyProcess" property="studentAccepted" value="true">
 	<logic:notEmpty name="individualCandidacyProcess" property="candidacy.mostRecentApprovedLearningAgreement" >
 		<fr:view name="individualCandidacyProcess" property="candidacy.mostRecentApprovedLearningAgreement" schema="IndividualCandidacyDocumentFile.view">
+			<fr:schema type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile" bundle="CANDIDATE_RESOURCES">
+				<fr:slot name="filename" key="label.document.file.name" />
+				<fr:slot name="this" key="label.document.file.link" layout="link"/>
+			</fr:schema>
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle1 thlight thright mtop025"/>
 			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>
+	</logic:equal>
 
 
 <div class="mtop2" id="contacts">
