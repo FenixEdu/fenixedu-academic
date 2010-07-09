@@ -1330,7 +1330,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	} else {
 	    d = super.getWeigth();
 	}
-	return d == null ? null : BigDecimal.valueOf(d);
+	return d == null ? BigDecimal.ZERO : BigDecimal.valueOf(d);
     }
 
     private boolean isExecutionYearEnrolmentAfterOrEqualsExecutionYear0607() {
