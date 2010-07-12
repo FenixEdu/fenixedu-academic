@@ -20,10 +20,13 @@ public class SecondCyclePublicIndividualCandidacyDegreesProvider implements Data
 	List<Degree> degrees = new ArrayList<Degree>(Degree.readAllByDegreeType(DegreeType.BOLONHA_MASTER_DEGREE,
 		DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
 
+	Degree degreeToRemoveComplexInfrastructure = Degree
+		.readBySigla(DEGREE_TO_REMOVE_COMPLEX_TRANSPORT_INFRASTRUCTURE_SYSTEMS_ACRONYM);
 	Degree degreeToRemoveTerritory = Degree.readBySigla(DEGREE_TO_REMOVE_TERRITORY_ACRONYM);
 	Degree degreeToPharmaceutical = Degree.readBySigla(DEGREE_TO_REMOVE_PHARMACEUTICAL_ACRONYM);
 	Degree degreeToRemoveMpot = Degree.readBySigla(DEGREE_TO_REMOVE_MPOT_ACRONYM);
 
+	degrees.remove(degreeToRemoveComplexInfrastructure);
 	degrees.remove(degreeToRemoveTerritory);
 	degrees.remove(degreeToPharmaceutical);
 	degrees.remove(degreeToRemoveMpot);

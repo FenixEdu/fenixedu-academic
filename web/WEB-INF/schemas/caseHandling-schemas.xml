@@ -1361,8 +1361,8 @@
 
 	<slot name="personBean.nationality" layout="menu-select" key="label.nationality" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryProvider"/>
-		<property name="format" value="${countryNationality.content}" />
-		<property name="sortBy" value="nationality"/>
+		<property name="format" value="${countryNationality}" />
+		<property name="sortBy" value="countryNationality"/>
 	</slot>
 	
 	<slot name="personBean.fiscalCode" key="label.fiscalCode" >
@@ -1376,8 +1376,8 @@
 
 	<slot name="personBean.countryOfResidence" key="label.countryOfResidence" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-		<property name="format" value="${localizedName.content}"/>
-		<property name="sortBy" value="name=asc" />
+		<property name="format" value="${localizedName}"/>
+		<property name="sortBy" value="localizedName=asc" />
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
 	</slot>	
 
@@ -1502,7 +1502,7 @@
 <schema name="PublicCandidacyProcessBean.institution.country.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
 	<slot name="precedentDegreeInformation.country" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select">
 		<property name="format" value="${localizedName}"/>
-		<property name="sortBy" value="name=asc" />
+		<property name="sortBy" value="localizedName=asc" />
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
 	</slot>
 </schema>
