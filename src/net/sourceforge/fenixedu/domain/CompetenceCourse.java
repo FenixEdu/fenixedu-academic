@@ -1023,34 +1023,52 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public MultiLanguageString getNameI18N() {
+	return getNameI18N(null);
+    }
+
+    public MultiLanguageString getNameI18N(ExecutionSemester semester) {
 	final MultiLanguageString multiLanguageString = new MultiLanguageString();
-	if (getName() != null && getName().length() > 0) {
-	    multiLanguageString.setContent(Language.pt, getName());
+	String name = getName(semester);
+	if (name != null && name.length() > 0) {
+	    multiLanguageString.setContent(Language.pt, name);
 	}
-	if (getNameEn() != null && getNameEn().length() > 0) {
-	    multiLanguageString.setContent(Language.en, getNameEn());
+	String nameEn = getNameEn(semester);
+	if (nameEn != null && nameEn.length() > 0) {
+	    multiLanguageString.setContent(Language.en, nameEn);
 	}
 	return multiLanguageString;
     }
 
     public MultiLanguageString getObjectivesI18N() {
+	return getObjectivesI18N(null);
+    }
+
+    public MultiLanguageString getObjectivesI18N(ExecutionSemester semester) {
 	final MultiLanguageString multiLanguageString = new MultiLanguageString();
-	if (getObjectives() != null && getObjectives().length() > 0) {
-	    multiLanguageString.setContent(Language.pt, getObjectives());
+	String objectives = getObjectives(semester);
+	if (objectives != null && objectives.length() > 0) {
+	    multiLanguageString.setContent(Language.pt, objectives);
 	}
-	if (getObjectivesEn() != null && getObjectivesEn().length() > 0) {
-	    multiLanguageString.setContent(Language.en, getObjectivesEn());
+	String objectivesEn = getObjectivesEn(semester);
+	if (objectivesEn != null && objectivesEn.length() > 0) {
+	    multiLanguageString.setContent(Language.en, objectivesEn);
 	}
 	return multiLanguageString;
     }
 
     public MultiLanguageString getProgramI18N() {
+	return getProgramI18N(null);
+    }
+
+    public MultiLanguageString getProgramI18N(ExecutionSemester semester) {
 	final MultiLanguageString multiLanguageString = new MultiLanguageString();
-	if (getProgram() != null && getProgram().length() > 0) {
-	    multiLanguageString.setContent(Language.pt, getProgram());
+	String program = getProgram(semester);
+	if (program != null && program.length() > 0) {
+	    multiLanguageString.setContent(Language.pt, program);
 	}
-	if (getProgramEn() != null && getProgramEn().length() > 0) {
-	    multiLanguageString.setContent(Language.en, getProgramEn());
+	String programEn = getProgramEn(semester);
+	if (programEn != null && programEn.length() > 0) {
+	    multiLanguageString.setContent(Language.en, programEn);
 	}
 	return multiLanguageString;
     }

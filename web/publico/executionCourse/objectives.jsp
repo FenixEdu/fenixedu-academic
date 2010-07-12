@@ -6,6 +6,8 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
+<%@page import="net.sourceforge.fenixedu.domain.CompetenceCourse"%> 
+
 <h2 class="mbottom1">
 	<bean:message key="link.objectives"/>
 </h2>
@@ -16,7 +18,8 @@
 	<bean:define id="competenceCourse" name="entry" property="key"/>
 	<logic:equal name="competenceCourse" property="curricularStage.name" value="APPROVED">
 		<div class="mbottom2">
-		<p class="mbottom05"><em><fr:view name="competenceCourse" property="nameI18N"/></em></p>
+		<% request.setAttribute("nameI18N", ((CompetenceCourse) competenceCourse).getNameI18N(executionPeriod));  %>
+		<p class="mbottom05"><em><fr:view name="nameI18N"/></em></p>
 		<h3 class="mvert0">
 			<logic:iterate id="curricularCourse" name="entry" property="value" indexId="i">
 				<logic:notEqual name="i" value="0"><br/></logic:notEqual>
@@ -29,9 +32,11 @@
 			<h4 class="mbottom05 greytxt">
 				<bean:message key="label.generalObjectives"/>
 			</h4>
-			<logic:present name="competenceCourse" property="objectives">
+			<bean:define id="objectives" value="<%= ((CompetenceCourse) competenceCourse).getObjectives(executionPeriod) %>" />
+			<logic:present name="objectives">
 				<div class="coutput2 mvert0">
-				<fr:view name="competenceCourse" property="objectivesI18N">
+				<% request.setAttribute("objectivesI18N", ((CompetenceCourse) competenceCourse).getObjectivesI18N(executionPeriod));  %>
+				<fr:view name="objectivesI18N">
 					<fr:layout>
 						<fr:property name="escaped" value="false" />
 						<fr:property name="newlineAware" value="false" />
@@ -43,8 +48,7 @@
 	</logic:equal>
 </logic:iterate>
 
-	<logic:iterate id="curricularCourse" type="net.sourceforge.fenixedu.domain.CurricularCourse"
-			name="executionCourse" property="curricularCoursesSortedByDegreeAndCurricularCourseName">
+	<logic:iterate id="curricularCourse" type="net.sourceforge.fenixedu.domain.CurricularCourse" name="executionCourse" property="curricularCoursesSortedByDegreeAndCurricularCourseName">
 		<bean:define id="degree" name="curricularCourse" property="degreeCurricularPlan.degree"/>
 		<logic:notEqual name="curricularCourse" property="bolonhaDegree" value="true">
 			<% net.sourceforge.fenixedu.domain.Curriculum curriculum = curricularCourse.findLatestCurriculumModifiedBefore(executionPeriod.getExecutionYear().getEndDate()); %>

@@ -5,8 +5,9 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<h2><bean:message key="link.program" /></h2>
+<%@page import="net.sourceforge.fenixedu.domain.CompetenceCourse"%>
 
+<h2><bean:message key="link.program" /></h2>
 
 <div class="infoop2">
 	<bean:message key="label.program.explanation" />
@@ -25,42 +26,38 @@
 
 	<bean:define id="showNote" value="false" toScope="request"/>
 	
-	<bean:define id="executionPeriod" type="net.sourceforge.fenixedu.domain.ExecutionSemester"
-			name="executionCourse" property="executionPeriod"/>
+	<bean:define id="executionPeriod" name="executionCourse" property="executionPeriod" type="net.sourceforge.fenixedu.domain.ExecutionSemester" />
 
-	<logic:iterate id="curricularCourse" type="net.sourceforge.fenixedu.domain.CurricularCourse"
-			name="executionCourse" property="curricularCoursesSortedByDegreeAndCurricularCourseName">
+	<logic:iterate id="curricularCourse" name="executionCourse" property="curricularCoursesSortedByDegreeAndCurricularCourseName" type="net.sourceforge.fenixedu.domain.CurricularCourse">
 		<bean:define id="degree" name="curricularCourse" property="degreeCurricularPlan.degree"/>
 
 		<logic:equal name="curricularCourse" property="bolonhaDegree" value="true">
 			<bean:define id="competenceCourse" name="curricularCourse" property="competenceCourse"/>
-	
-				
-							
-				<bean:define id="competenceCourse" name="curricularCourse" property="competenceCourse"/>
-				<p class="mtop15 mbottom025 color777">
-					<bean:write name="degree" property="presentationName"/>
-				</p>
-				<h3 class="mtop025">
-					<bean:write name="competenceCourse" property="name"/>
-					<logic:equal name="competenceCourse" property="curricularStage.name" value="PUBLISHED">
-								<bean:define id="showNote" value="true" toScope="request"/>
-								<span style="font-size: 0.7em; font-weight: normal; background: #ffa;"><bean:message key="label.competenceCourse.notAprroved"/>(*)</span>
-					</logic:equal>
-				</h3>
-				<blockquote>
+			
+			<p class="mtop15 mbottom025 color777">
+				<bean:write name="degree" property="presentationName"/>
+			</p>
+			<h3 class="mtop025">
+				<%= ((CompetenceCourse) competenceCourse).getName(executionPeriod) %>
+				<logic:equal name="competenceCourse" property="curricularStage.name" value="PUBLISHED">
+					<bean:define id="showNote" value="true" toScope="request"/>
+					<span style="font-size: 0.7em; font-weight: normal; background: #ffa;"><bean:message key="label.competenceCourse.notAproved"/>(*)</span>
+				</logic:equal>
+			</h3>
+			<blockquote>
+				<h4>
+					<bean:message key="title.program"/>
+				</h4>
+				<%= ((CompetenceCourse) competenceCourse).getProgram(executionPeriod) %>
+				<bean:define id="programEn" value="<%= ((CompetenceCourse) competenceCourse).getProgramEn(executionPeriod) %>" />
+				<logic:present name="programEn">
+					<br/>
 					<h4>
-						<bean:message key="title.program"/>
+						<bean:message key="title.program.eng"/>
 					</h4>
-					<bean:write name="competenceCourse" property="program" filter="false"/>
-					<logic:present name="competenceCourse" property="programEn">
-						<br/>
-						<h4>
-							<bean:message key="title.program.eng"/>
-						</h4>
-						<bean:write name="competenceCourse" property="programEn" filter="false"/>
-					</logic:present>
-				</blockquote>
+					<%= programEn %>
+				</logic:present>
+			</blockquote>
 		</logic:equal>
 
 		<logic:notEqual name="curricularCourse" property="bolonhaDegree" value="true">
@@ -116,7 +113,7 @@
 	</logic:iterate>
 
 <logic:equal name="showNote" value="true">
-		<p  class="mtop2"><em>* <bean:message key="label.competenceCourse.notAprroved.note"/></em></p>
+		<p  class="mtop2"><em>* <bean:message key="label.competenceCourse.notAproved.note"/></em></p>
 	</logic:equal>
 	
 </logic:present>
