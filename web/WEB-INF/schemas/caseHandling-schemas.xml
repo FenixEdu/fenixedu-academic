@@ -1835,7 +1835,7 @@
    	<slot name="selectedDegree" layout="menu-select" key="label.degree.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SecondCyclePublicIndividualCandidacyDegreesProvider" />
         <property name="format" value="${presentationName}" />
-        <property name="sortBy" value="degreeType, name"/>
+        <property name="sortBy" value="degreeType, presentationName"/>
     </slot>
 </schema>
 
