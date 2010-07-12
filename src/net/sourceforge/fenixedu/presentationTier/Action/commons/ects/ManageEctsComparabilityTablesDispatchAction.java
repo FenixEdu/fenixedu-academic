@@ -26,13 +26,13 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.EctsComparabilityPercentages;
 import net.sourceforge.fenixedu.domain.degreeStructure.EctsComparabilityTable;
 import net.sourceforge.fenixedu.domain.degreeStructure.EctsCompetenceCourseConversionTable;
+import net.sourceforge.fenixedu.domain.degreeStructure.EctsConversionTable.DuplicateEctsConversionTable;
 import net.sourceforge.fenixedu.domain.degreeStructure.EctsCycleGraduationGradeConversionTable;
 import net.sourceforge.fenixedu.domain.degreeStructure.EctsDegreeByCurricularYearConversionTable;
 import net.sourceforge.fenixedu.domain.degreeStructure.EctsDegreeGraduationGradeConversionTable;
 import net.sourceforge.fenixedu.domain.degreeStructure.EctsInstitutionByCurricularYearConversionTable;
 import net.sourceforge.fenixedu.domain.degreeStructure.IEctsConversionTable;
 import net.sourceforge.fenixedu.domain.degreeStructure.NullEctsConversionTable;
-import net.sourceforge.fenixedu.domain.degreeStructure.EctsConversionTable.DuplicateEctsConversionTable;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
@@ -52,11 +52,12 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
 import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
 import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
-import pt.utl.ist.fenix.tools.util.FileUtils;
 
 @Mapping(path = "/manageEctsComparabilityTables", module = "gep")
-@Forwards( { @Forward(name = "index", path = "/gep/ects/comparabilityTableIndex.jsp") })
+@Forwards({ @Forward(name = "index", path = "/gep/ects/comparabilityTableIndex.jsp") })
 public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAction {
+    private static final String SEPARATOR = "\\t";
+
     public ActionForward index(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	EctsTableFilter filter = readFilter(request);
@@ -86,10 +87,10 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 	try {
 	    try {
 		SheetData<?> builder = exportTemplate(request, filter);
-		response.setContentType("application/vnd.ms-excel");
-		response.setHeader("Content-disposition", "attachment; filename=template.xls");
-		new SpreadsheetBuilder().addSheet("template", builder).build(WorkbookExportFormat.EXCEL,
-			response.getOutputStream());
+		response.setContentType("text/csv");
+		response.setHeader("Content-disposition", "attachment; filename=template.tsv");
+		new SpreadsheetBuilder().addSheet("template", builder)
+			.build(WorkbookExportFormat.TSV, response.getOutputStream());
 		return null;
 	    } finally {
 		response.flushBuffer();
@@ -106,8 +107,7 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 	    HttpServletResponse response) {
 	EctsTableFilter filter = readFilter(request);
 	try {
-	    importTables(filter.getExecutionInterval(), filter.getType(), filter.getLevel(), FileUtils.readFile(filter
-		    .getInputStream()));
+	    importTables(filter.getExecutionInterval(), filter.getType(), filter.getLevel(), filter.getContent());
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
 	} catch (IOException e) {
@@ -299,20 +299,23 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 
     @Service
     private void importEnrolmentByCompetenceCourseTables(AcademicInterval executionInterval, String file) {
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.GEPResources");
 	ExecutionSemester querySemester = ExecutionYear.readByAcademicInterval(executionInterval).getFirstExecutionPeriod();
 	for (String line : file.split("\n")) {
-	    String[] parts = line.split("\\s*;\\s*");
-	    CompetenceCourse competence = DomainObject.fromExternalId(parts[0]);
-	    if (!competence.getDepartmentUnit().getName().equals(parts[1])) {
-		throw new DomainException("error.ectsComparabilityTable.invalidLine.nonMatchingCourse", parts[0], parts[1]);
-	    }
-	    if (!competence.getName(querySemester).equals(parts[2])) {
-		throw new DomainException("error.ectsComparabilityTable.invalidLine.nonMatchingCourse", parts[0], parts[2]);
-	    }
-	    try {
-		EctsCompetenceCourseConversionTable.createConversionTable(competence, executionInterval, Arrays.copyOfRange(
-			parts, 6, 17));
-	    } catch (DuplicateEctsConversionTable e) {
+	    if (!line.startsWith(bundle.getString("label.externalId"))) {
+		String[] parts = line.split("\\s*" + SEPARATOR + "\\s*");
+		CompetenceCourse competence = DomainObject.fromExternalId(parts[0]);
+		if (!competence.getDepartmentUnit().getName().equals(parts[1])) {
+		    throw new DomainException("error.ectsComparabilityTable.invalidLine.nonMatchingCourse", parts[0], parts[1]);
+		}
+		if (!competence.getName(querySemester).equals(parts[2])) {
+		    throw new DomainException("error.ectsComparabilityTable.invalidLine.nonMatchingCourse", parts[0], parts[2]);
+		}
+		try {
+		    EctsCompetenceCourseConversionTable.createConversionTable(competence, executionInterval,
+			    Arrays.copyOfRange(parts, 6, 17));
+		} catch (DuplicateEctsConversionTable e) {
+		}
 	    }
 	}
     }
@@ -326,8 +329,8 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 			    || degree.getDegreeType().equals(DegreeType.BOLONHA_MASTER_DEGREE) || degree.getDegreeType().equals(
 			    DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE))) {
 		for (int i = 1; i <= degree.getDegreeType().getYears(); i++) {
-		    EctsDegreeByCurricularYearConversionTable table = degree.getEctsCourseConversionTable(filter
-			    .getExecutionInterval(), CurricularYear.readByYear(i));
+		    EctsDegreeByCurricularYearConversionTable table = degree.getEctsCourseConversionTable(
+			    filter.getExecutionInterval(), CurricularYear.readByYear(i));
 		    if (table != null) {
 			tables.add(table);
 		    } else {
@@ -360,20 +363,23 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 
     @Service
     private void importEnrolmentByDegreeTables(AcademicInterval executionInterval, String file) {
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.GEPResources");
 	for (String line : file.split("\n")) {
-	    String[] parts = line.split("\\s*;\\s*");
-	    Degree degree = DomainObject.fromExternalId(parts[0]);
-	    if (!degree.getDegreeType().getLocalizedName().equals(parts[1])) {
-		throw new DomainException("error.ectsComparabilityTable.invalidLine.nonMatchingCourse", parts[0], parts[1]);
-	    }
-	    if (!degree.getName().equals(parts[2])) {
-		throw new DomainException("error.ectsComparabilityTable.invalidLine.nonMatchingCourse", parts[0], parts[2]);
-	    }
-	    CurricularYear year = CurricularYear.readByYear(Integer.parseInt(parts[3]));
-	    try {
-		EctsDegreeByCurricularYearConversionTable.createConversionTable(degree, executionInterval, year, Arrays
-			.copyOfRange(parts, 4, 15));
-	    } catch (DuplicateEctsConversionTable e) {
+	    if (!line.startsWith(bundle.getString("label.externalId"))) {
+		String[] parts = line.split("\\s*" + SEPARATOR + "\\s*");
+		Degree degree = DomainObject.fromExternalId(parts[0]);
+		if (!degree.getDegreeType().getLocalizedName().equals(parts[1])) {
+		    throw new DomainException("error.ectsComparabilityTable.invalidLine.nonMatchingCourse", parts[0], parts[1]);
+		}
+		if (!degree.getName().equals(parts[2])) {
+		    throw new DomainException("error.ectsComparabilityTable.invalidLine.nonMatchingCourse", parts[0], parts[2]);
+		}
+		CurricularYear year = CurricularYear.readByYear(Integer.parseInt(parts[3]));
+		try {
+		    EctsDegreeByCurricularYearConversionTable.createConversionTable(degree, executionInterval, year,
+			    Arrays.copyOfRange(parts, 4, 15));
+		} catch (DuplicateEctsConversionTable e) {
+		}
 	    }
 	}
     }
@@ -395,8 +401,8 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 		break;
 	    }
 	    for (Integer year : years) {
-		EctsInstitutionByCurricularYearConversionTable table = ist.getEctsCourseConversionTable(filter
-			.getExecutionInterval(), cycle, CurricularYear.readByYear(year));
+		EctsInstitutionByCurricularYearConversionTable table = ist.getEctsCourseConversionTable(
+			filter.getExecutionInterval(), cycle, CurricularYear.readByYear(year));
 		if (table != null) {
 		    tables.add(table);
 		} else {
@@ -428,20 +434,23 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 
     @Service
     private void importEnrolmentByCurricularYearTables(AcademicInterval executionInterval, String file) {
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.GEPResources");
 	for (String line : file.split("\n")) {
-	    String[] parts = line.split("\\s*;\\s*");
-	    final Unit ist = UnitUtils.readInstitutionUnit();
-	    CycleType cycle;
-	    try {
-		cycle = CycleType.getSortedValues().toArray(new CycleType[0])[Integer.parseInt(parts[0]) - 1];
-	    } catch (NumberFormatException e) {
-		cycle = null;
-	    }
-	    CurricularYear year = CurricularYear.readByYear(Integer.parseInt(parts[1]));
-	    try {
-		EctsInstitutionByCurricularYearConversionTable.createConversionTable(ist, executionInterval, cycle, year, Arrays
-			.copyOfRange(parts, 2, 13));
-	    } catch (DuplicateEctsConversionTable e) {
+	    if (!line.startsWith(bundle.getString("label.cycle"))) {
+		String[] parts = line.split("\\s*" + SEPARATOR + "\\s*");
+		final Unit ist = UnitUtils.readInstitutionUnit();
+		CycleType cycle;
+		try {
+		    cycle = CycleType.getSortedValues().toArray(new CycleType[0])[Integer.parseInt(parts[0]) - 1];
+		} catch (NumberFormatException e) {
+		    cycle = null;
+		}
+		CurricularYear year = CurricularYear.readByYear(Integer.parseInt(parts[1]));
+		try {
+		    EctsInstitutionByCurricularYearConversionTable.createConversionTable(ist, executionInterval, cycle, year,
+			    Arrays.copyOfRange(parts, 2, 13));
+		} catch (DuplicateEctsConversionTable e) {
+		}
 	    }
 	}
     }
@@ -455,8 +464,8 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 			    || degree.getDegreeType().equals(DegreeType.BOLONHA_MASTER_DEGREE) || degree.getDegreeType().equals(
 			    DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE))) {
 		for (CycleType cycle : degree.getDegreeType().getCycleTypes()) {
-		    EctsDegreeGraduationGradeConversionTable table = degree.getEctsGraduationGradeConversionTable(filter
-			    .getExecutionInterval(), cycle);
+		    EctsDegreeGraduationGradeConversionTable table = degree.getEctsGraduationGradeConversionTable(
+			    filter.getExecutionInterval(), cycle);
 		    if (table != null) {
 			tables.add(table);
 		    } else {
@@ -497,25 +506,28 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 
     @Service
     private void importGraduationByDegreeTables(AcademicInterval executionInterval, String file) {
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.GEPResources");
 	for (String line : file.split("\n")) {
-	    String[] parts = line.split("\\s*;\\s*");
-	    Degree degree = DomainObject.fromExternalId(parts[0]);
-	    if (!degree.getDegreeType().getLocalizedName().equals(parts[1])) {
-		throw new DomainException("error.ectsComparabilityTable.invalidLine.nonMatchingCourse", parts[0], parts[1]);
-	    }
-	    if (!degree.getName().equals(parts[2])) {
-		throw new DomainException("error.ectsComparabilityTable.invalidLine.nonMatchingCourse", parts[0], parts[2]);
-	    }
-	    CycleType cycle;
-	    try {
-		cycle = CycleType.getSortedValues().toArray(new CycleType[0])[Integer.parseInt(parts[3]) - 1];
-	    } catch (NumberFormatException e) {
-		cycle = null;
-	    }
-	    try {
-		EctsDegreeGraduationGradeConversionTable.createConversionTable(degree, executionInterval, cycle, Arrays
-			.copyOfRange(parts, 4, 15), Arrays.copyOfRange(parts, 15, 26));
-	    } catch (DuplicateEctsConversionTable e) {
+	    if (!line.startsWith(bundle.getString("label.externalId"))) {
+		String[] parts = line.split("\\s*" + SEPARATOR + "\\s*");
+		Degree degree = DomainObject.fromExternalId(parts[0]);
+		if (!degree.getDegreeType().getLocalizedName().equals(parts[1])) {
+		    throw new DomainException("error.ectsComparabilityTable.invalidLine.nonMatchingCourse", parts[0], parts[1]);
+		}
+		if (!degree.getName().equals(parts[2])) {
+		    throw new DomainException("error.ectsComparabilityTable.invalidLine.nonMatchingCourse", parts[0], parts[2]);
+		}
+		CycleType cycle;
+		try {
+		    cycle = CycleType.getSortedValues().toArray(new CycleType[0])[Integer.parseInt(parts[3]) - 1];
+		} catch (NumberFormatException e) {
+		    cycle = null;
+		}
+		try {
+		    EctsDegreeGraduationGradeConversionTable.createConversionTable(degree, executionInterval, cycle,
+			    Arrays.copyOfRange(parts, 4, 15), Arrays.copyOfRange(parts, 15, 26));
+		} catch (DuplicateEctsConversionTable e) {
+		}
 	    }
 	}
     }
@@ -524,8 +536,8 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 	final Unit ist = UnitUtils.readInstitutionUnit();
 	Set<IEctsConversionTable> tables = new HashSet<IEctsConversionTable>();
 	for (CycleType cycle : CycleType.getSortedValues()) {
-	    EctsCycleGraduationGradeConversionTable table = ist.getEctsGraduationGradeConversionTable(filter
-		    .getExecutionInterval(), cycle);
+	    EctsCycleGraduationGradeConversionTable table = ist.getEctsGraduationGradeConversionTable(
+		    filter.getExecutionInterval(), cycle);
 	    if (table != null) {
 		tables.add(table);
 	    } else {
@@ -558,14 +570,17 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 
     @Service
     private void importGraduationByCycleTables(AcademicInterval executionInterval, String file) {
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.GEPResources");
 	for (String line : file.split("\n")) {
-	    String[] parts = line.split("\\s*;\\s*");
-	    CycleType cycle = CycleType.getSortedValues().toArray(new CycleType[0])[Integer.parseInt(parts[0]) - 1];
-	    final Unit ist = UnitUtils.readInstitutionUnit();
-	    try {
-		EctsCycleGraduationGradeConversionTable.createConversionTable(ist, executionInterval, cycle, Arrays.copyOfRange(
-			parts, 1, 12), Arrays.copyOfRange(parts, 12, 23));
-	    } catch (DuplicateEctsConversionTable e) {
+	    if (!line.startsWith(bundle.getString("label.cycle"))) {
+		String[] parts = line.split("\\s*" + SEPARATOR + "\\s*");
+		CycleType cycle = CycleType.getSortedValues().toArray(new CycleType[0])[Integer.parseInt(parts[0]) - 1];
+		final Unit ist = UnitUtils.readInstitutionUnit();
+		try {
+		    EctsCycleGraduationGradeConversionTable.createConversionTable(ist, executionInterval, cycle,
+			    Arrays.copyOfRange(parts, 1, 12), Arrays.copyOfRange(parts, 12, 23));
+		} catch (DuplicateEctsConversionTable e) {
+		}
 	    }
 	}
     }

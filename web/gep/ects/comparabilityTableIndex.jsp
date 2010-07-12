@@ -54,9 +54,6 @@
                             <fr:schema bundle="GEP_RESOURCES"
                                 type="net.sourceforge.fenixedu.presentationTier.Action.commons.ects.EctsTableFilter">
                                 <fr:slot name="inputStream" key="label.ects.tablesManagement.importTables" required="true">
-                                    <fr:validator name="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
-                                        <fr:property name="acceptedExtensions" value="csv" />
-                                    </fr:validator>
                                     <fr:property name="fileNameSlot" value="filename" />
                                 </fr:slot>
                             </fr:schema>

@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.commons.ects;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import net.sourceforge.fenixedu.presentationTier.renderers.converters.AcademicIn
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
+import pt.utl.ist.fenix.tools.util.FileUtils;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class EctsTableFilter implements Serializable {
@@ -58,6 +60,8 @@ public class EctsTableFilter implements Serializable {
 
     private String filename;
 
+    private String content;
+
     public AcademicInterval getExecutionInterval() {
 	return executionInterval;
     }
@@ -88,6 +92,13 @@ public class EctsTableFilter implements Serializable {
 
     public void setInputStream(InputStream inputStream) {
 	this.inputStream = inputStream;
+    }
+
+    public String getContent() throws IOException {
+	if (content == null) {
+	    content = FileUtils.readFile(getInputStream());
+	}
+	return content;
     }
 
     public String getFilename() {
