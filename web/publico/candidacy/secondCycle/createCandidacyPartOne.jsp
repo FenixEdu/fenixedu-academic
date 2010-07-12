@@ -11,25 +11,6 @@
 
 <html:xhtml/>
 
-<script language="javascript">
-	function set_image_size(imagetag, image) {
-		var image_width = image.width;
-		var image_height = image.height;
-		
-		if(image_width > 400 || image_height > 300) {
-			var width_ratio = 400 / image_width;
-			var height_ratio = 300 / image_height;
-
-			imagetag.width = image_width * Math.min(width_ratio, height_ratio);
-			imagetag.height = image_height * Math.min(width_ratio, height_ratio);
-		} else {
-			imagetag.width = image_width;
-			imagetag.height = image_height;
-		}
-	}
-</script>
-
-
 <bean:define id="mappingPath" name="mappingPath"/>
 <bean:define id="fullPath"><%= request.getContextPath() + "/publico" + mappingPath + ".do" %></bean:define>
 <bean:define id="applicationInformationLinkDefault" name="application.information.link.default"/>
