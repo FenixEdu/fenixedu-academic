@@ -78,7 +78,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     public List<SelectItem> curricularCourses = null;
     public List<SelectItem> executionYearItems = null;
 
-    public CurricularCourseByExecutionSemesterBean curricularCourseSemesterBean = null;
+    private CurricularCourseByExecutionSemesterBean curricularCourseSemesterBean = null;
 
     public CurricularCourseManagementBackingBean() {
 	if (getCurricularCourse() != null && getExecutionYear() != null) {

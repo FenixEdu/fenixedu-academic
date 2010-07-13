@@ -18,9 +18,9 @@
 		<h:outputText value="<h4 class='first'>#{bolonhaBundle['competenceCourse']}</h4>" escape="false"/>
 		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>	
 		<h:outputText value="<p><label>#{bolonhaBundle['department']}:</label>" escape="false"/>
-		<h:outputText value="#{ManagerCurricularCourseManagement.curricularCourse.competenceCourse.departmentUnit.name}</p>" escape="false"/>	
+		<h:outputText value="#{ManagerCurricularCourseManagement.curricularCourseSemesterBean.departmentUnit.name}</p>" escape="false"/>	
 		<h:outputText value="<p><label>#{bolonhaBundle['course']}:</label>" escape="false"/>
-		<h:outputText value="<span class='attention'>#{ManagerCurricularCourseManagement.curricularCourse.name}</span></p>" escape="false"/>	
+		<h:outputText value="<span class='attention'>#{ManagerCurricularCourseManagement.curricularCourseSemesterBean.curricularCourseName}</span> (#{ManagerCurricularCourseManagement.curricularCourseSemesterBean.executionYear.qualifiedName})</p>" escape="false"/>	
 		<h:outputText value="<p class='mtop1'><label class='lempty'>.</label>" escape="false"/>
 		<h:outputLink value="#{ManagerCurricularCourseManagement.contextPath}/manager/bolonha/competenceCourses/showCompetenceCourse.faces" target="_blank">
 			<h:outputText value="(#{bolonhaBundle['showPage']} #{bolonhaBundle['competenceCourse']})"/>
@@ -34,7 +34,7 @@
 	<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
 	<h:panelGroup rendered="#{ManagerCurricularCourseManagement.selectedCurricularCourseType == 'NORMAL_COURSE'}">
 		<h:outputText value="<p><label>#{bolonhaBundle['weight']}:</label>" escape="false"/>
-		<h:outputText value="#{ManagerCurricularCourseManagement.curricularCourse.weigth} (#{bolonhaBundle['for.average.grade.calculus']})</p>" escape="false"/>
+		<h:outputText value="#{ManagerCurricularCourseManagement.curricularCourseSemesterBean.weight} (#{bolonhaBundle['for.average.grade.calculus']})</p>" escape="false"/>
 		<h:outputText value="<p><label>#{bolonhaBundle['prerequisites']}:</label>" escape="false"/>
 		<h:outputText value="<div style='margin-left: 11em;'>#{ManagerCurricularCourseManagement.curricularCourse.prerequisites}</div></p>" escape="false" rendered="#{!empty ManagerCurricularCourseManagement.curricularCourse.prerequisites}"/>	
 		<h:outputText value="<i>#{bolonhaBundle['empty.field']}</i></p>" escape="false" rendered="#{empty ManagerCurricularCourseManagement.curricularCourse.prerequisites}"/>
@@ -44,9 +44,9 @@
 	</h:panelGroup>
 	<h:panelGroup rendered="#{ManagerCurricularCourseManagement.selectedCurricularCourseType == 'OPTIONAL_COURSE'}">
 		<h:outputText value="<p><label>#{bolonhaBundle['name']} (pt):</label>" escape="false"/>
-		<h:outputText value="#{ManagerCurricularCourseManagement.curricularCourse.name}</p>" escape="false"/>
+		<h:outputText value="#{ManagerCurricularCourseManagement.curricularCourseSemesterBean.curricularCourseName}</p>" escape="false"/>
 		<h:outputText value="<p><label>#{bolonhaBundle['nameEn']} (en):</label>" escape="false"/>
-		<h:outputText value="#{ManagerCurricularCourseManagement.curricularCourse.nameEn}</p>" escape="false"/>
+		<h:outputText value="#{ManagerCurricularCourseManagement.curricularCourseSemesterBean.curricularCourseNameEn}</p>" escape="false"/>
 	</h:panelGroup>
 	<h:outputText value="</fieldset></div>" escape="false"/>
 	

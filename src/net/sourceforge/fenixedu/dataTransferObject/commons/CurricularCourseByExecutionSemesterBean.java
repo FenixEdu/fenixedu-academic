@@ -5,6 +5,7 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 
 public class CurricularCourseByExecutionSemesterBean implements Serializable, Comparable<CurricularCourseByExecutionSemesterBean> {
@@ -35,6 +36,10 @@ public class CurricularCourseByExecutionSemesterBean implements Serializable, Co
 
     public void setExecutionSemester(ExecutionSemester executionSemester) {
 	this.executionSemester = executionSemester;
+    }
+
+    public ExecutionYear getExecutionYear() {
+	return executionSemester.getExecutionYear();
     }
 
     public String getCurricularCourseName() {

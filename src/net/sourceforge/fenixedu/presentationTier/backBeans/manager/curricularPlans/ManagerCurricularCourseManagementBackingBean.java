@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateOldCurricularCourse;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.EditOldCurricularCourse;
+import net.sourceforge.fenixedu.dataTransferObject.commons.CurricularCourseByExecutionSemesterBean;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -49,6 +50,25 @@ public class ManagerCurricularCourseManagementBackingBean extends CurricularCour
     private String gradeScaleString;
 
     private GradeScale gradeScale;
+
+    private CurricularCourseByExecutionSemesterBean curricularCourseSemesterBean = null;
+
+    public ManagerCurricularCourseManagementBackingBean() {
+	if (getCurricularCourse() != null && getExecutionYear() != null) {
+	    curricularCourseSemesterBean = new CurricularCourseByExecutionSemesterBean(getCurricularCourse(), ExecutionSemester
+		    .readBySemesterAndExecutionYear(2, getExecutionYear().getYear()));
+	}
+    }
+
+    @Override
+    public CurricularCourseByExecutionSemesterBean getCurricularCourseSemesterBean() {
+	return curricularCourseSemesterBean;
+    }
+
+    @Override
+    public void setCurricularCourseSemesterBean(CurricularCourseByExecutionSemesterBean curricularCourseSemesterBean) {
+	this.curricularCourseSemesterBean = curricularCourseSemesterBean;
+    }
 
     public String getAcronym() {
 	if (getCurricularCourse() != null) {
