@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.internationalRelatOffic
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,12 +13,15 @@ import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ApprovedLearningAgreementDocumentFile;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusAlert;
+import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.presentationTier.docs.candidacy.erasmus.LearningAgreementDocument;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 import net.sourceforge.fenixedu.util.StringUtils;
+import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -210,4 +214,25 @@ public class ErasmusIndividualCandidacyProcessDA extends
 	
 	return prepareExecuteViewApprovedLearningAgreements(mapping, actionForm, request, response);
     }
+
+    public ActionForward retrieveLearningAgreement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	ErasmusIndividualCandidacyProcess process = (ErasmusIndividualCandidacyProcess) getProcess(request);
+
+	final LearningAgreementDocument document = new LearningAgreementDocument((ErasmusIndividualCandidacyProcess) process);
+	byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(document);
+
+	response.setContentLength(data.length);
+	response.setContentType("application/pdf");
+	response.addHeader("Content-Disposition", "attachment; filename=" + document.getReportFileName() + ".pdf");
+
+	final ServletOutputStream writer = response.getOutputStream();
+	writer.write(data);
+	writer.flush();
+	writer.close();
+
+	response.flushBuffer();
+	return mapping.findForward("");
+    }
+
 }
