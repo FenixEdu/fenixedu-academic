@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Reverting last granting of Senior Statute (script granted some false positives)." revertSeniorStatuteGranting.sql IST
