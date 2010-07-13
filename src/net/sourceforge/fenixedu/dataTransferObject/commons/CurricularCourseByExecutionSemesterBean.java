@@ -22,7 +22,7 @@ public class CurricularCourseByExecutionSemesterBean implements Serializable, Co
     }
 
     public CurricularCourse getCurricularCourse() {
-	return this.curricularCourse;
+	return curricularCourse;
     }
 
     public void setCurricularCourse(CurricularCourse curricularCourse) {
@@ -30,7 +30,7 @@ public class CurricularCourseByExecutionSemesterBean implements Serializable, Co
     }
 
     public ExecutionSemester getExecutionSemester() {
-	return this.executionSemester;
+	return executionSemester;
     }
 
     public void setExecutionSemester(ExecutionSemester executionSemester) {
