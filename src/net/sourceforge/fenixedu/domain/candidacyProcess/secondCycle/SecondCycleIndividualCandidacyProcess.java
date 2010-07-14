@@ -640,7 +640,22 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
     @Override
     protected void executeOperationsBeforeDocumentFileBinding(IndividualCandidacyDocumentFile documentFile) {
-	// Do nothing
+	IndividualCandidacyDocumentFileType type = documentFile.getCandidacyFileType();
+
+	IndividualCandidacyDocumentFile file = getActiveFileForType(type);
+	if (file == null) {
+	    return;
+	}
+
+	if (IndividualCandidacyDocumentFileType.REPORT_OR_WORK_DOCUMENT.equals(type)) {
+	    return;
+	}
+
+	if (IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT.equals(type)) {
+	    throw new DomainException("error.second.cycle.uploading.payment.document.more.than.once");
+	}
+
+	file.setCandidacyFileActive(false);
     }
 
 }
