@@ -29,20 +29,28 @@ public class EctsDegreeByCurricularYearConversionTable extends EctsDegreeByCurri
     }
 
     @Service
-    public static EctsDegreeByCurricularYearConversionTable createConversionTable(Degree degree,
-	    AcademicInterval executionInterval, CurricularYear curricularYear, String[] table) {
-	for (EctsDegreeByCurricularYearConversionTable conversion : degree.getEctsCourseConversionTables()) {
-	    if (conversion.getYear().equals(executionInterval) && conversion.getCurricularYear().equals(curricularYear)) {
-		throw new DuplicateEctsConversionTable();
-	    }
+    public static void createConversionTable(Degree degree, AcademicInterval executionInterval, CurricularYear curricularYear,
+	    String[] table) {
+	EctsDegreeByCurricularYearConversionTable conversion = degree.getEctsCourseConversionTable(executionInterval,
+		curricularYear);
+	EctsComparabilityTable ectsTable = EctsComparabilityTable.fromStringArray(table);
+	if (conversion != null) {
+	    conversion.delete();
 	}
-	return new EctsDegreeByCurricularYearConversionTable(degree, executionInterval, curricularYear,
-		new EctsComparabilityTable(table));
+	if (ectsTable != null) {
+	    new EctsDegreeByCurricularYearConversionTable(degree, executionInterval, curricularYear, ectsTable);
+	}
     }
 
     @Override
     public CycleType getCycle() {
 	throw new UnsupportedOperationException();
+    }
+
+    public void delete() {
+	removeDegree();
+	removeCurricularYear();
+	deleteDomainObject();
     }
 
 }

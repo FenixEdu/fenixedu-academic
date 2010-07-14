@@ -28,14 +28,15 @@ public class EctsCompetenceCourseConversionTable extends EctsCompetenceCourseCon
     }
 
     @Service
-    public static EctsCompetenceCourseConversionTable createConversionTable(CompetenceCourse competence,
-	    AcademicInterval executionInterval, String[] table) {
-	for (EctsCompetenceCourseConversionTable conversion : competence.getEctsConversionTables()) {
-	    if (conversion.getYear().equals(executionInterval)) {
-		throw new DuplicateEctsConversionTable();
-	    }
+    public static void createConversionTable(CompetenceCourse competence, AcademicInterval executionInterval, String[] table) {
+	EctsCompetenceCourseConversionTable conversion = competence.getEctsCourseConversionTable(executionInterval);
+	EctsComparabilityTable ectsTable = EctsComparabilityTable.fromStringArray(table);
+	if (conversion != null) {
+	    conversion.delete();
 	}
-	return new EctsCompetenceCourseConversionTable(competence, executionInterval, new EctsComparabilityTable(table));
+	if (ectsTable != null) {
+	    new EctsCompetenceCourseConversionTable(competence, executionInterval, ectsTable);
+	}
     }
 
     @Override
@@ -51,5 +52,10 @@ public class EctsCompetenceCourseConversionTable extends EctsCompetenceCourseCon
     @Override
     public EctsComparabilityPercentages getPercentages() {
 	return new NullEctsComparabilityPercentages();
+    }
+
+    public void delete() {
+	removeCompetenceCourse();
+	deleteDomainObject();
     }
 }

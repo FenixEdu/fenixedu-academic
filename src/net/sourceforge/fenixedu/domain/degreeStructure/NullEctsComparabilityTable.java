@@ -8,7 +8,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 public class NullEctsComparabilityTable extends EctsComparabilityTable {
     private static final long serialVersionUID = 117805162304348863L;
 
-    public NullEctsComparabilityTable() {
+    NullEctsComparabilityTable() {
 	super(new char[0]);
     }
 

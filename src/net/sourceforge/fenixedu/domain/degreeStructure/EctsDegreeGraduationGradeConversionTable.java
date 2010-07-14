@@ -38,31 +38,34 @@ public class EctsDegreeGraduationGradeConversionTable extends EctsDegreeGraduati
     }
 
     @Service
-    public static EctsDegreeGraduationGradeConversionTable createConversionTable(Degree degree,
-	    AcademicInterval executionInterval, CycleType cycle, String[] table, String[] percentages) {
+    public static void createConversionTable(Degree degree, AcademicInterval executionInterval, CycleType cycle, String[] table,
+	    String[] percentages) {
+	EctsDegreeGraduationGradeConversionTable conversion = degree.getEctsGraduationGradeConversionTable(executionInterval,
+		cycle);
 	if (degree.getDegreeType().isComposite()) {
 	    if (cycle == null)
 		throw new ConversionTableCycleIsRequiredInIntegratedMasterDegree();
-	    for (EctsDegreeGraduationGradeConversionTable conversion : degree.getEctsGraduationGradeConversionTables()) {
-		if (conversion.getYear().equals(executionInterval) && conversion.getCycle().equals(cycle)) {
-		    throw new DuplicateEctsConversionTable();
-		}
-	    }
 	} else {
 	    if (cycle != null)
 		throw new ConversionTableCycleIsOnlyRequiredInIntegratedMasterDegree();
-	    for (EctsDegreeGraduationGradeConversionTable conversion : degree.getEctsGraduationGradeConversionTables()) {
-		if (conversion.getYear().equals(executionInterval)) {
-		    throw new DuplicateEctsConversionTable();
-		}
-	    }
 	}
-	return new EctsDegreeGraduationGradeConversionTable(degree, executionInterval, cycle, new EctsComparabilityTable(table),
-		new EctsComparabilityPercentages(percentages));
+	EctsComparabilityTable ectsTable = EctsComparabilityTable.fromStringArray(table);
+	EctsComparabilityPercentages ectsPercentages = EctsComparabilityPercentages.fromStringArray(percentages);
+	if (conversion != null) {
+	    conversion.delete();
+	}
+	if (ectsTable != null && ectsPercentages != null) {
+	    new EctsDegreeGraduationGradeConversionTable(degree, executionInterval, cycle, ectsTable, ectsPercentages);
+	}
     }
 
     @Override
     public CurricularYear getCurricularYear() {
 	throw new UnsupportedOperationException();
+    }
+
+    public void delete() {
+	removeDegree();
+	deleteDomainObject();
     }
 }

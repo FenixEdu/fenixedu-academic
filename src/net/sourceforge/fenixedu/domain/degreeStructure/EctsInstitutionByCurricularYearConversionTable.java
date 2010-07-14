@@ -30,15 +30,22 @@ public class EctsInstitutionByCurricularYearConversionTable extends EctsInstitut
     }
 
     @Service
-    public static EctsInstitutionByCurricularYearConversionTable createConversionTable(Unit ist,
-	    AcademicInterval executionInterval, CycleType cycleType, CurricularYear curricularYear, String[] table) {
-	for (EctsInstitutionByCurricularYearConversionTable conversion : ist.getEctsCourseConversionTables()) {
-	    if (conversion.getYear().equals(executionInterval) && conversion.getCycle().equals(cycleType)
-		    && conversion.getCurricularYear().equals(curricularYear)) {
-		throw new DuplicateEctsConversionTable();
-	    }
+    public static void createConversionTable(Unit ist, AcademicInterval executionInterval, CycleType cycleType,
+	    CurricularYear curricularYear, String[] table) {
+	EctsInstitutionByCurricularYearConversionTable conversion = ist.getEctsCourseConversionTable(executionInterval,
+		cycleType, curricularYear);
+	EctsComparabilityTable ectsTable = EctsComparabilityTable.fromStringArray(table);
+	if (conversion != null) {
+	    conversion.delete();
 	}
-	return new EctsInstitutionByCurricularYearConversionTable(ist, executionInterval, cycleType, curricularYear,
-		new EctsComparabilityTable(table));
+	if (ectsTable != null) {
+	    new EctsInstitutionByCurricularYearConversionTable(ist, executionInterval, cycleType, curricularYear, ectsTable);
+	}
+    }
+
+    public void delete() {
+	removeSchool();
+	removeCurricularYear();
+	deleteDomainObject();
     }
 }

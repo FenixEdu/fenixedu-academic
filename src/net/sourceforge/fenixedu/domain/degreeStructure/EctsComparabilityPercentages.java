@@ -13,11 +13,11 @@ public class EctsComparabilityPercentages implements Serializable {
 
     private final double[] percentages;
 
-    public EctsComparabilityPercentages(double[] percentages) {
+    EctsComparabilityPercentages(double[] percentages) {
 	this.percentages = percentages;
     }
 
-    public EctsComparabilityPercentages(String[] percentages) {
+    EctsComparabilityPercentages(String[] percentages) {
 	this.percentages = extractPercentages(percentages);
     }
 
@@ -50,5 +50,19 @@ public class EctsComparabilityPercentages implements Serializable {
 
     public static EctsComparabilityPercentages fromString(String serialized) {
 	return new EctsComparabilityPercentages(serialized.split(":"));
+    }
+
+    public static EctsComparabilityPercentages fromStringArray(String[] percentages) {
+	if (isEmpty(percentages))
+	    return null;
+	return new EctsComparabilityPercentages(percentages);
+    }
+
+    private static boolean isEmpty(String[] table) {
+	for (String part : table) {
+	    if (part != null)
+		return false;
+	}
+	return true;
     }
 }

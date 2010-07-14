@@ -12,11 +12,11 @@ public class EctsComparabilityTable implements Serializable {
 
     private final char[] table;
 
-    public EctsComparabilityTable(char[] table) {
+    EctsComparabilityTable(char[] table) {
 	this.table = table;
     }
 
-    public EctsComparabilityTable(String[] table) {
+    EctsComparabilityTable(String[] table) {
 	char[] converted = new char[table.length];
 	for (int i = 0; i < table.length; i++) {
 	    if (table[i].trim().length() != 1 || table[i].trim().charAt(0) < 'A' || table[i].trim().charAt(0) > 'E')
@@ -52,5 +52,19 @@ public class EctsComparabilityTable implements Serializable {
 
     public static EctsComparabilityTable fromString(String serialized) {
 	return new EctsComparabilityTable(serialized.toCharArray());
+    }
+
+    public static EctsComparabilityTable fromStringArray(String[] table) {
+	if (isEmpty(table))
+	    return null;
+	return new EctsComparabilityTable(table);
+    }
+
+    private static boolean isEmpty(String[] table) {
+	for (String part : table) {
+	    if (part != null)
+		return false;
+	}
+	return true;
     }
 }

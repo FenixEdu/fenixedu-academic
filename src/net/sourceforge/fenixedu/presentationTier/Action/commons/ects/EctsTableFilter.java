@@ -101,6 +101,11 @@ public class EctsTableFilter implements Serializable {
 	return content;
     }
 
+    public void clearFileContent() {
+	this.inputStream = null;
+	this.content = null;
+    }
+
     public String getFilename() {
 	return filename;
     }

@@ -5,11 +5,6 @@ import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public abstract class EctsConversionTable extends EctsConversionTable_Base implements IEctsConversionTable {
-
-    public static class DuplicateEctsConversionTable extends RuntimeException {
-	private static final long serialVersionUID = 4540431507249909228L;
-    }
-
     public Grade convert(Grade grade) {
 	switch (grade.getGradeScale()) {
 	case TYPE20:
