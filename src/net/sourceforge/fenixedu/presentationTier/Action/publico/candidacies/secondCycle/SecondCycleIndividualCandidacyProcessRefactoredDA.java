@@ -42,7 +42,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "show-candidacy-details", path = "second.cycle.show.candidacy.details"),
 	@Forward(name = "edit-candidacy", path = "second.cycle.edit.candidacy"),
 	@Forward(name = "edit-candidacy-habilitations", path = "second.cycle.edit.candidacy.habilitations"),
-	@Forward(name = "edit-candidacy-documents", path = "second.cycle.edit.candidacy.documents") })
+	@Forward(name = "edit-candidacy-documents", path = "second.cycle.edit.candidacy.documents"),
+	@Forward(name = "show-recover-access-link-form", path = "second.cycle.show.access.link.form"),
+	@Forward(name = "show-recovery-email-sent", path = "second.cycle.recovery.email.sent") })
 public class SecondCycleIndividualCandidacyProcessRefactoredDA extends RefactoredIndividualCandidacyProcessPublicDA {
 
     @Override

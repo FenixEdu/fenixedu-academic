@@ -7454,6 +7454,10 @@ class accounting.events.export.DebtsFile extends File {
 		DateTime lastSuccessfulSentPaymentFileDate;
 	} 
 
+
+class residence.StudentsPerformanceReport extends QueueJobWithFile {
+}
+
 /*
  * Relations definitions
  * 
@@ -18384,10 +18388,26 @@ relation CoordinatorLogPerson {
 	}
 }
 
-
 relation SIBSOutgoingPaymentFileExecutionYear {
 	ExecutionYear playsRole executionYear;
 	accounting.events.export.SIBSOutgoingPaymentFile playsRole sIBSOutgoingPaymentFiles {
+		multiplicity *;
+	}
+}
+
+relation StudentsPerformanceReportExecutionSemester {
+	ExecutionSemester playsRole executionSemester;
+	residence.StudentsPerformanceReport playsRole studentsPerformanceReports {
+		multiplicity *;
+	}
+}
+
+relation ResidenceManagementStudentsPerformanceReportStudent {
+	residence.StudentsPerformanceReport playsRole reports {
+		multiplicity *;
+	}
+	
+	student.Student playsRole students {
 		multiplicity *;
 	}
 }

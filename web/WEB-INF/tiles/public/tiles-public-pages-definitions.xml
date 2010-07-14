@@ -1073,6 +1073,17 @@
 		<put name="body" value="/publico/candidacy/secondCycle/editCandidacyHabilitations.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
+
+	<definition name="second.cycle.show.access.link.form" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/secondCycle/recoverAccess.jsp" />
+		<put name="hideLanguage" value="true" />
+	</definition>
+
+	<definition name="second.cycle.recovery.email.sent" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/secondCycle/recoveryEmailSent.jsp" />
+		<put name="hideLanguage" value="true" />
+	</definition>
+	
 	
 	<!-- Erasmus Candidacies -->
 	<definition name="erasmus.candidacy.process.intro" extends="definition.candidacy.process">

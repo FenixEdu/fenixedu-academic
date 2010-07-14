@@ -750,34 +750,6 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	return mapping.findForward("candidacy-continue-creation");
     }
 
-    public ActionForward prepareRecoverAccessLink(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
-	if (actionForwardError != null)
-	    return actionForwardError;
-
-	request.setAttribute("candidacyPreCreationBean", new CandidacyPreCreationBean());
-	return mapping.findForward("show-recover-access-link-form");
-    }
-
-    public ActionForward prepareRecoverAccessLinkInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	request.setAttribute("candidacyPreCreationBean", new CandidacyPreCreationBean());
-	return mapping.findForward("show-recover-access-link-form");
-    }
-
-    public ActionForward sendAccessLinkEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	String email = (String) getObjectFromViewState("PublicAccessCandidacy.preCreationForm");
-	DegreeOfficePublicCandidacyHashCode hash = DegreeOfficePublicCandidacyHashCode.getPublicCandidacyHashCodeByEmailAndCandidacyProcessTypeOrNotAssociated(email, getProcessType(), getCurrentOpenParentProcess());
-
-	if (hash != null) {
-	    hash.sendEmailFoAccessLinkRecovery();
-	}
-
-	return mapping.findForward("show-recovery-email-sent");
-    }
-
     public ActionForward prepareTestStorkAttrString(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	request.setAttribute("attrStringTestBean", new StorkAttrStringTestBean());

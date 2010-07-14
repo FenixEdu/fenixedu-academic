@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Students Performance Report" addTableAndColumnsForResidenceStudentPerformanceReport.sql
