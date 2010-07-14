@@ -8,10 +8,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 
 public class OptionalDegreeModuleToEnrol extends DegreeModuleToEnrol {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = -7335154953414429996L;
+    static private final long serialVersionUID = -7335154953414429996L;
 
     private CurricularCourse curricularCourse;
 
@@ -67,4 +64,13 @@ public class OptionalDegreeModuleToEnrol extends DegreeModuleToEnrol {
 	return getDegreeModule() == degreeModule || getCurricularCourse() == degreeModule;
     }
 
+    @Override
+    public double getAccumulatedEctsCredits(final ExecutionSemester executionSemester) {
+	if (isLeaf()) {
+	    return getCurriculumGroup().getStudentCurricularPlan().getAccumulatedEctsCredits(executionSemester,
+		    getCurricularCourse());
+	} else {
+	    return 0d;
+	}
+    }
 }
