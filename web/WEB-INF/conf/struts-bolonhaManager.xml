@@ -36,19 +36,7 @@
     <action-mappings type="org.apache.struts.action.ActionMapping">
         <action path="/index" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
             <forward name="Success" path="index"/>
-        </action>       
-        
-        <action path="/competenceCourses/manageVersions" 
-        	type="net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.ManageCompetenceCourseInformationVersions"
-        	scope="request"
-        	parameter="method">
-        	<forward name="showCourses" path="show-courses"/>
-        	<forward name="createVersions" path="create-version"/>
-			<forward name="viewVersions" path="view-versions"/>
-			<forward name="viewVersionDetails" path="view-version-details"/>
-            <forward name="editBiblio" path="edit-Biblio"/>
-            <forward name="viewInformationDetails" path="view-information-details"/>
-       	</action>  
+        </action>
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->
@@ -67,10 +55,15 @@
         <set-property property="pathnames" 
             value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-bolonhaManager.xml"/>
     </plug-in>
-    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
+    <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin" >
         <set-property property="definitions-config" 
             value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/bolonhaManager/tiles-bolonhaManager-definitions.xml,/WEB-INF/tiles/bolonhaManager/tiles-bolonhaManager-pages-definitions.xml" />
         <set-property property="moduleAware" value="true" />
         <set-property property="definitions-parser-validate" value="true" />
+        <set-property property="factoryClassname" value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" />
+        <set-property property="defaultTileDefinition" value="bolonhaManager.masterPage" />
     </plug-in>
+    
+    <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn" />
+    
 </struts-config>

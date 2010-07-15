@@ -297,6 +297,20 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	return information != null && information.getExecutionPeriod().equals(executionSemester);
     }
 
+    public boolean isLoggedPersonAllowedToView() {
+	Person person = AccessControl.getPerson();
+	if (isApproved()) {
+	    return true;
+	}
+	if (person.hasPersonRoles(Role.getRoleByRoleType(RoleType.SCIENTIFIC_COUNCIL))) {
+	    return true;
+	}
+	if (!person.hasPersonRoles(Role.getRoleByRoleType(RoleType.BOLONHA_MANAGER))) {
+	    return false;
+	}
+	return getDepartmentUnit().getDepartment().isUserMemberOfCompetenceCourseMembersGroup(person);
+    }
+
     public boolean isLoggedPersonAllowedToViewChangeRequests() {
 	Person person = AccessControl.getPerson();
 	if (person.hasPersonRoles(Role.getRoleByRoleType(RoleType.SCIENTIFIC_COUNCIL))) {
@@ -322,10 +336,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	    return false;
 	}
 	return getDepartmentUnit(semester).getDepartment().isUserMemberOfCompetenceCourseMembersGroup(person);
-    }
-
-    public boolean canLoggedPersonCreateChangeRequest(ExecutionSemester semester) {
-	return (isLoggedPersonAllowedToCreateChangeRequests(semester) && !isRequestDraftAvailable(semester));
     }
 
     public boolean isRequestDraftAvailable(ExecutionSemester semester) {
@@ -1167,6 +1177,22 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	for (final CompetenceCourse competenceCourse : RootDomainObject.getInstance().getCompetenceCoursesSet()) {
 	    if (competenceCourse.isBolonha()) {
 		result.add(competenceCourse);
+	    }
+	}
+	return result;
+    }
+
+    static public Collection<CompetenceCourse> searchBolonhaCompetenceCoursesByName(String searchName) {
+	final Set<CompetenceCourse> result = new TreeSet<CompetenceCourse>(COMPETENCE_COURSE_COMPARATOR_BY_NAME);
+	for (final CompetenceCourse competenceCourse : RootDomainObject.getInstance().getCompetenceCoursesSet()) {
+	    if (!competenceCourse.isBolonha()) {
+		continue;
+	    }
+	    for (final CompetenceCourseInformation information : competenceCourse.getCompetenceCourseInformations()) {
+		if (information.getName().matches(".*" + searchName.replaceAll(" ", ".*") + ".*")) {
+		    result.add(competenceCourse);
+		    break;
+		}
 	    }
 	}
 	return result;

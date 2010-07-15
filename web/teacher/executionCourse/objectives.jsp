@@ -42,7 +42,7 @@
 				<%= ((CompetenceCourse) competenceCourse).getName(executionPeriod) %>
 				<logic:equal name="competenceCourse" property="curricularStage.name" value="PUBLISHED">
 					<bean:define id="showNote" value="true" toScope="request"/>
-					<span style="font-size: 0.7em; font-weight: normal; background: #ffa;"><bean:message key="label.competenceCourse.notAproved"/>(*)</span>
+					<span style="font-size: 0.7em; font-weight: normal; background: #ffa;"><bean:message key="label.competenceCourse.notApproved"/>(*)</span>
 				</logic:equal>
 			</h3>
 			<blockquote>
@@ -127,7 +127,7 @@
 	</logic:iterate>
 	
 	<logic:equal name="showNote" value="true">
-		<p  class="mtop2"><em>* <bean:message key="label.competenceCourse.notAproved.note"/></em></p>
+		<p  class="mtop2"><em>* <bean:message key="label.competenceCourse.notApproved.note"/></em></p>
 	</logic:equal>
 	
 </logic:present>

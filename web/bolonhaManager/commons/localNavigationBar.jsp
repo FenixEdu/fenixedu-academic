@@ -11,6 +11,13 @@
 			<html:link page="/competenceCourses/competenceCoursesManagement.faces">
 				<bean:message key="navigation.competenceCoursesManagement"/>
 			</html:link>
+			<!--<ul>
+				<li>
+					<html:link page="/competenceCourses/searchCompetenceCourses.do?method=search">
+						<bean:message key="navigation.search.competenceCourses"/>
+					</html:link>
+				</li>
+			</ul> -->
 		</li>
 		
 		  
