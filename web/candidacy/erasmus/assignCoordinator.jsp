@@ -57,7 +57,7 @@
 		<fr:edit id="erasmus.coordinator.bean.assign" name="erasmusCoordinatorBean">
 			<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCoordinatorBean">
 				<fr:slot name="degree" layout="menu-select" key="label.erasmus.degree" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.internationalRelatOffice.candidacy.erasmus.ErasmusCandidacyProcessDA$DegreesProvider" />
+					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusCandidacyProcessDA$ErasmusCandidacyDegreesProvider" />
 			        <fr:property name="format" value="${degreeType.localizedName} - ${nameI18N}" />
 			        <fr:property name="sortBy" value="degreeType.localizedName=asc, nameI18N=asc"/>
 				</fr:slot>
