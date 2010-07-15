@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.domain.serviceRequests;
 
+import java.util.ResourceBundle;
+
+import pt.ist.fenixWebFramework.services.Service;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ExecuteFactoryMethod;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.RegistrationAcademicServiceRequestCreateBean;
@@ -13,47 +17,63 @@ import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
 import net.sourceforge.fenixedu.domain.student.StudentStatute.CreateStudentStatuteFactory;
 
 public class SpecialSeasonRequest extends SpecialSeasonRequest_Base {
-    
-    public  SpecialSeasonRequest() {
-        super();
+
+    public SpecialSeasonRequest() {
+	super();
     }
-    
+
     public SpecialSeasonRequest(final RegistrationAcademicServiceRequestCreateBean bean) {
 	this();
 	super.init(bean);
-	
+
 	super.setBeginExecutionPeriod(bean.getExecutionYear().getFirstExecutionPeriod());
 	super.setEndExecutionPeriod(bean.getExecutionYear().getLastExecutionPeriod());
     }
-    
+
     @Override
     protected void createAcademicServiceRequestSituations(AcademicServiceRequestBean academicServiceRequestBean) {
 	super.createAcademicServiceRequestSituations(academicServiceRequestBean);
 
-	if(academicServiceRequestBean.isNew()) {
+	if (academicServiceRequestBean.isNew()) {
 	    AcademicServiceRequestSituation.create(this, new AcademicServiceRequestBean(
 		    AcademicServiceRequestSituationType.PROCESSING, academicServiceRequestBean.getEmployee()));
 	}
-	
-	if(academicServiceRequestBean.isToConclude()) {
+
+	if (academicServiceRequestBean.isToConclude()) {
 	    AcademicServiceRequestSituation.create(this, new AcademicServiceRequestBean(
 		    AcademicServiceRequestSituationType.DELIVERED, academicServiceRequestBean.getEmployee()));
 	}
-	
+
     }
-    
+
     @Override
     protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
 	super.internalChangeState(academicServiceRequestBean);
-	
-	if(academicServiceRequestBean.isToConclude()) {
-	    
+
+	if (academicServiceRequestBean.isToConclude()) {
+
 	    Student student = getRegistration().getStudent();
- 
-	    new StudentStatute(student, StudentStatuteType.SPECIAL_SEASON_GRANTED_BY_REQUEST,
-		    getBeginExecutionPeriod(), getEndExecutionPeriod());
+
+	    if (getDeferred() != null && getDeferred() == true)
+		new StudentStatute(student, StudentStatuteType.SPECIAL_SEASON_GRANTED_BY_REQUEST, getBeginExecutionPeriod(),
+			getEndExecutionPeriod());
 	}
-	
+
+    }
+    
+    public String getDefermentDescription() {
+	if(getDeferred() == null)
+	    return "-";
+	if(getDeferred() == true) {
+	    return ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale()).getString("request.granted");
+	} else {
+	    return ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale()).getString("request.declined");
+	}
+    }
+    
+    @Service
+    public void setDeferment(Boolean deferred) {
+	this.setDeferred(deferred);
     }
 
     @Override
@@ -90,5 +110,5 @@ public class SpecialSeasonRequest extends SpecialSeasonRequest_Base {
     public boolean isToPrint() {
 	return false;
     }
-    
+
 }

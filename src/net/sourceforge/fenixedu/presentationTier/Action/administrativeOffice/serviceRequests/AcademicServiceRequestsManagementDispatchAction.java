@@ -31,6 +31,8 @@ import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.SpecialSeasonRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -92,6 +94,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	private String justification;
 	private Integer numberOfPages;
 	private Boolean sendEmailToStudent;
+	private Boolean deferRequest;
 
 	public String getJustification() {
 	    return justification;
@@ -115,6 +118,14 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 
 	public void setSendEmailToStudent(Boolean sendEmailToStudent) {
 	    this.sendEmailToStudent = sendEmailToStudent;
+	}
+	
+	public Boolean getDeferRequest() {
+	    return deferRequest;
+	}
+	
+	public void setDeferRequest(Boolean deferRequest) {
+	    this.deferRequest = deferRequest;
 	}
 
     }
@@ -358,8 +369,16 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
     public ActionForward concludeAcademicServiceRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	final RegistrationAcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
+	RegistrationAcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
 	final AcademicServiceRequestsManagementForm form = (AcademicServiceRequestsManagementForm) actionForm;
+	if(academicServiceRequest.getAcademicServiceRequestType() == AcademicServiceRequestType.SPECIAL_SEASON_REQUEST) {
+	    if(form.getDeferRequest() == null) {
+		return prepareConcludeAcademicServiceRequest(mapping, actionForm, request, response);
+	    }
+	    final SpecialSeasonRequest specialSeasonRequest = (SpecialSeasonRequest) academicServiceRequest;
+	    specialSeasonRequest.setDeferment(form.getDeferRequest());
+	    academicServiceRequest = specialSeasonRequest;
+	}
 
 	try {
 	    ConcludeAcademicServiceRequest.run(academicServiceRequest, form.getSendEmailToStudent(), getSituationDate(),

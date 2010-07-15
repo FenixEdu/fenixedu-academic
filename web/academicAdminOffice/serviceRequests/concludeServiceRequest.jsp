@@ -2,7 +2,19 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+
+<%@page import="net.sourceforge.fenixedu.domain.serviceRequests.SpecialSeasonRequest"%>
+
 <html:xhtml/>
+
+<script src="<%= request.getContextPath() + "/javaScript/jquery/jquery.js" %>" type="text/javascript"></script>
+<script type="text/javascript">
+	jQuery.noConflict();
+
+	function turnSubmitterVisible(){
+		jQuery("#submitter").removeAttr('disabled');
+	}
+</script>
 
 <bean:define id="academicServiceRequest" name="academicServiceRequest" type="net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest"/>
 
@@ -42,8 +54,26 @@
 	
 	<br/>
 	<strong><bean:message key="label.serviceRequests.sendEmailToStudent" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong><html:radio property="sendEmailToStudent" value="true"><bean:message key="label.yes" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:radio><html:radio property="sendEmailToStudent" value="false"><bean:message key="label.no" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:radio>
+	<%
+	if(academicServiceRequest instanceof SpecialSeasonRequest) {
+	%>
+	<br/>
+	<br/>
+	<br/>
+	<strong><bean:message key="label.serviceRequests.deferRequest" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong><html:radio property="deferRequest" value="true" onclick="turnSubmitterVisible();"><bean:message key="label.yes" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:radio><html:radio property="deferRequest" value="false" onclick="turnSubmitterVisible();"><bean:message key="label.no" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:radio>
+	<br/>
+	<br/>
+	<logic:notPresent name="academicServiceRequestsManagementForm" property="deferRequest">
+		<html:submit styleId="submitter" disabled="true"><bean:message key="button.submit" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>
+	</logic:notPresent>
+	<%
+	} else {
+	%>
 	<br/>
 	<br/>
 	<html:submit><bean:message key="button.submit" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>
+	<%
+	}
+	%>
 	<html:cancel onclick="this.form.method.value='backToViewRegistration'"><bean:message key="back" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:cancel>
 </html:form>

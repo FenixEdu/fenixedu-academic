@@ -866,6 +866,9 @@
 
 <schema name="SpecialSeasonRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.SpecialSeasonRequest"
 		extends="AcademicServiceRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
+		<slot name="defermentDescription" key="label.serviceRequests.defermentDescription">
+			<property name="style" value="font-style: italic;"/>
+		</slot>
 </schema>
 
 <schema name="RegistrationAcademicServiceRequestCreateBean.EXTRA_EXAM_REQUEST"

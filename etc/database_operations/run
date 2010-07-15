@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Adding DEFERRED column (for SpecialSeasonRequests). Correcting one record of this type." alterAcademicServiceRequest.sql

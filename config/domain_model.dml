@@ -5109,6 +5109,7 @@ class DomainObject {
             }
             
             class serviceRequests.SpecialSeasonRequest extends serviceRequests.RegistrationAcademicServiceRequest {
+            	Boolean deferred;
             }
             
             class serviceRequests.PartialRegistrationRegimeRequest extends serviceRequests.RegistrationAcademicServiceRequest {
