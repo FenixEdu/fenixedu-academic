@@ -1145,6 +1145,21 @@
       </description>
     </attribute>
     
+    <attribute>
+    	<name>module</name>
+    	<required>false</required>
+    	<rtexprvalue>false</rtexprvalue>
+    	<type>java.lang.String</type>
+	    <description>
+	      	<![CDATA[
+	        <pre>
+	        	Set the context for this link. This context, if given, is prepended to the link.
+	        	If it is not given it will prepend the context associated with the action that generated the page.
+	        </pre>
+	        ]]>
+	    </description>
+    </attribute>
+    
   </tag>
 
 </taglib>

@@ -7459,6 +7459,11 @@ class accounting.events.export.DebtsFile extends File {
 class residence.StudentsPerformanceReport extends QueueJobWithFile {
 }
 
+class alumni.AlumniReportFile extends QueueJobWithFile {
+	boolean fullReport;
+	boolean onlyRegisteredAlumni;
+}
+
 /*
  * Relations definitions
  * 
@@ -18409,6 +18414,13 @@ relation ResidenceManagementStudentsPerformanceReportStudent {
 	}
 	
 	student.Student playsRole students {
+		multiplicity *;
+	}
+}
+
+relation AlumniReportFileExecutionYear {
+	ExecutionYear playsRole executionYear;
+	alumni.AlumniReportFile playsRole alumniReportFiles {
 		multiplicity *;
 	}
 }

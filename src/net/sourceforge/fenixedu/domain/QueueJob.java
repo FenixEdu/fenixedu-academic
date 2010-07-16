@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
 
@@ -42,31 +43,16 @@ public abstract class QueueJob extends QueueJob_Base {
 	return !getDone() && hasRootDomainObjectQueueUndone();
     }
 
-    public static class FindQueueJobsForAClass implements Predicate {
+    public static List<QueueJob> getAllJobsForClassOrSubClass(final Class aClass, int max) {
+	List<QueueJob> tempList = (List<QueueJob>) CollectionUtils.select(RootDomainObject
+		.getInstance().getQueueJob(), new Predicate() {
 
-	Class aClass;
-
-	public FindQueueJobsForAClass(Class reportClass) {
-	    this.aClass = reportClass;
-	}
-
-	public boolean evaluate(Object object) {
-	    QueueJob queueJob = (QueueJob) object;
-	    try {
-		aClass.cast(queueJob);
-		return true;
-
-	    } catch (ClassCastException E) {
-		return false;
+	    @Override
+	    public boolean evaluate(Object arg0) {
+		return aClass.isInstance(arg0);
 	    }
 
-	}
-    }
-
-    public static List<QueueJob> getAllJobsForClassOrSubClass(Class aClass, int max) {
-	Predicate predicate = new FindQueueJobsForAClass(aClass);
-	List<QueueJob> tempList = (List<QueueJob>) org.apache.commons.collections.CollectionUtils.select(RootDomainObject
-		.getInstance().getQueueJob(), predicate);
+	});
 
 	return tempList.size() > max ? tempList.subList(0, max) : tempList;
     }

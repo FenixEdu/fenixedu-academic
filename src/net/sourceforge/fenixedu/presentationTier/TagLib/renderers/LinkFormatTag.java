@@ -27,6 +27,7 @@ public class LinkFormatTag extends TagSupport {
     private String confirmation;
     private String order;
     private String target;
+    private String module;
 
     public LinkFormatTag() {
     }
@@ -106,6 +107,18 @@ public class LinkFormatTag extends TagSupport {
 	return !empty(this.target);
     }
 
+    public String getModule() {
+	return module;
+    }
+
+    public void setModule(String module) {
+	this.module = module;
+    }
+
+    private boolean hasModule() {
+	return this.module != null;
+    }
+
     @Override
     public int doEndTag() throws JspException {
 	PropertyContainerTag parent = (PropertyContainerTag) findAncestorWithClass(this, PropertyContainerTag.class);
@@ -124,7 +137,8 @@ public class LinkFormatTag extends TagSupport {
     }
 
     private void setProperties(final PropertyContainerTag parent) throws JspException {
-	setLink(parent).setLabel(parent).setCondition(parent).setConfirmation(parent).setOrder(parent).setTarget(parent);
+	setLink(parent).setLabel(parent).setCondition(parent).setConfirmation(parent).setOrder(parent).setTarget(parent)
+		.setModule(parent);
     }
 
     private LinkFormatTag setLink(final PropertyContainerTag parent) {
@@ -264,6 +278,15 @@ public class LinkFormatTag extends TagSupport {
 	return this;
     }
 
+    private LinkFormatTag setModule(final PropertyContainerTag parent) throws JspException {
+
+	if (hasModule()) {
+	    parent.addProperty(format("module(%s)", getName()), module);
+	}
+
+	return this;
+    }
+
     private String getFormattedTarget() {
 	final String target = getTarget();
 	return target.startsWith("_") ? target : "_" + target;
@@ -274,5 +297,6 @@ public class LinkFormatTag extends TagSupport {
     private boolean targetIsValid(String value) {
 	return !ACCEPTED_TARGETS.contains(value);
     }
+
 
 }

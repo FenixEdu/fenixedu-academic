@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+run "Add Queue Job Columns for alumni reports" addQueueJobColumns.sql
