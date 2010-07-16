@@ -8,12 +8,17 @@
 <h2><bean:message key="label.search.competenceCourses" bundle="BOLONHA_MANAGER_RESOURCES"/></h2>
 
 <fr:form action="/competenceCourses/searchCompetenceCourses.do?method=search">
-	<fr:edit id="searchBean" name="searchBean">
-		<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.SearchCompetenceCoursesDA$SearchCompetenceCourseBean" bundle="BOLONHA_MANAGER_RESOURCES">
-			<fr:slot name="searchName"/>
-		</fr:schema>
-	</fr:edit>
-	<html:submit><bean:message key="label.search" bundle="BOLONHA_MANAGER_RESOURCES"/></html:submit>
+	<table>
+		<tr><td>
+			<fr:edit id="searchBean" name="searchBean">
+				<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.SearchCompetenceCoursesDA$SearchCompetenceCourseBean" bundle="BOLONHA_MANAGER_RESOURCES">
+					<fr:slot name="searchName"/>
+				</fr:schema>
+			</fr:edit>
+		</td><td>			
+			<html:submit><bean:message key="label.search" bundle="BOLONHA_MANAGER_RESOURCES"/></html:submit>
+		</td></tr>
+	</table>
 </fr:form>
 
 <logic:present name="searchResults">
@@ -25,7 +30,8 @@
 		</fr:schema>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thright thlight thcenter"/>
+			<fr:property name="sortBy" value="curricularStage=desc, departmentUnit.acronym=asc, name=asc"/>
 			<fr:link name="showApprovedCompetenceCourse" label="show" link="/competenceCourses/showCompetenceCourse.faces?action=ccm&competenceCourseID=${idInternal}" target="_blank" condition="loggedPersonAllowedToView"/>
 		</fr:layout>
 	</fr:view>
-</logic:present> 
+</logic:present>

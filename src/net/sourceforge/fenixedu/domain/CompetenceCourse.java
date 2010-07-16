@@ -39,6 +39,7 @@ import org.apache.commons.collections.Predicate;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.utl.ist.fenix.tools.util.StringNormalizer;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -1184,12 +1185,13 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     static public Collection<CompetenceCourse> searchBolonhaCompetenceCoursesByName(String searchName) {
 	final Set<CompetenceCourse> result = new TreeSet<CompetenceCourse>(COMPETENCE_COURSE_COMPARATOR_BY_NAME);
+	searchName = StringNormalizer.normalizeAndReplaceNonAlphaNumeric(searchName, " ");
 	for (final CompetenceCourse competenceCourse : RootDomainObject.getInstance().getCompetenceCoursesSet()) {
 	    if (!competenceCourse.isBolonha()) {
 		continue;
 	    }
 	    for (final CompetenceCourseInformation information : competenceCourse.getCompetenceCourseInformations()) {
-		if (information.getName().toLowerCase().matches(".*" + searchName.toLowerCase().replaceAll(" ", ".*") + ".*")) {
+		if (StringNormalizer.normalize(information.getName()).matches(".*" + searchName.replaceAll(" ", ".*") + ".*")) {
 		    result.add(competenceCourse);
 		    break;
 		}
