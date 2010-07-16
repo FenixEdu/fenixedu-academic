@@ -1189,7 +1189,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 		continue;
 	    }
 	    for (final CompetenceCourseInformation information : competenceCourse.getCompetenceCourseInformations()) {
-		if (information.getName().matches(".*" + searchName.replaceAll(" ", ".*") + ".*")) {
+		if (information.getName().toLowerCase().matches(".*" + searchName.toLowerCase().replaceAll(" ", ".*") + ".*")) {
 		    result.add(competenceCourse);
 		    break;
 		}
