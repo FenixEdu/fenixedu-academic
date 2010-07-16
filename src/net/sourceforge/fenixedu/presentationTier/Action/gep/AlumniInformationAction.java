@@ -367,8 +367,6 @@ public class AlumniInformationAction extends FenixDispatchAction {
 	public String getEmail() {
 	    if (registration.getPerson().getDefaultEmailAddress() == null) {
 		return NOT_AVAILABLE;
-	    } else if (!registration.getPerson().getDefaultEmailAddress().getVisibleToEmployees()) {
-		return NOT_AVAILABLE;
 	    }
 
 	    return registration.getPerson().getDefaultEmailAddress().getValue();
@@ -377,9 +375,8 @@ public class AlumniInformationAction extends FenixDispatchAction {
 	public String getMobilePhone() {
 	    if (registration.getPerson().getDefaultMobilePhone() == null) {
 		return NOT_AVAILABLE;
-	    } else if (!registration.getPerson().getDefaultMobilePhone().getVisibleToEmployees()) {
-		return NOT_AVAILABLE;
 	    }
+
 	    return registration.getPerson().getDefaultMobilePhone().getNumber();
 	}
     }
