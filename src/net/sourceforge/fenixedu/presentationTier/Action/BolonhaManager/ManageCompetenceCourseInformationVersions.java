@@ -244,21 +244,31 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
 	    CompetenceCourseLoadBean loadBean, Person requestor) {
 	CompetenceCourse course = bean.getCompetenceCourse();
 	ExecutionSemester period = bean.getExecutionPeriod();
-	CompetenceCourseInformationChangeRequest request = course.getCompetenceCourseInformationChangeRequests(period);
+	CompetenceCourseInformationChangeRequest request = course.getChangeRequestDraft(period);
 	if (request != null) {
-	    request.delete();
+	    request.edit(bean.getName(), bean.getNameEn(), bean.getJustification(), bean.getRegime(), bean.getObjectives(), bean
+		    .getObjectivesEn(), bean.getProgram(), bean.getProgramEn(), bean.getEvaluationMethod(), bean
+		    .getEvaluationMethodEn(), bean.getCompetenceCourseLevel(), requestor, loadBean.getTheoreticalHours(),
+		    loadBean.getProblemsHours(), loadBean.getLaboratorialHours(), loadBean.getSeminaryHours(), loadBean
+			    .getFieldWorkHours(), loadBean.getTrainingPeriodHours(), loadBean.getTutorialOrientationHours(),
+		    loadBean.getAutonomousWorkHours(), loadBean.getEctsCredits(), loadBean.getSecondTheoreticalHours(), loadBean
+			    .getSecondProblemsHours(), loadBean.getSecondLaboratorialHours(), loadBean.getSecondSeminaryHours(),
+		    loadBean.getSecondFieldWorkHours(), loadBean.getSecondTrainingPeriodHours(), loadBean
+			    .getSecondTutorialOrientationHours(), loadBean.getSecondAutonomousWorkHours(), loadBean
+			    .getSecondEctsCredits(), bean.getReferences(), null);
+	} else {
+	    new CompetenceCourseInformationChangeRequest(bean.getName(), bean.getNameEn(), bean.getJustification(), bean
+		    .getRegime(), bean.getObjectives(), bean.getObjectivesEn(), bean.getProgram(), bean.getProgramEn(), bean
+		    .getEvaluationMethod(), bean.getEvaluationMethodEn(), bean.getCompetenceCourse(), bean
+		    .getCompetenceCourseLevel(), bean.getExecutionPeriod(), requestor, loadBean.getTheoreticalHours(), loadBean
+		    .getProblemsHours(), loadBean.getLaboratorialHours(), loadBean.getSeminaryHours(), loadBean
+		    .getFieldWorkHours(), loadBean.getTrainingPeriodHours(), loadBean.getTutorialOrientationHours(), loadBean
+		    .getAutonomousWorkHours(), loadBean.getEctsCredits(), loadBean.getSecondTheoreticalHours(), loadBean
+		    .getSecondProblemsHours(), loadBean.getSecondLaboratorialHours(), loadBean.getSecondSeminaryHours(), loadBean
+		    .getSecondFieldWorkHours(), loadBean.getSecondTrainingPeriodHours(), loadBean
+		    .getSecondTutorialOrientationHours(), loadBean.getSecondAutonomousWorkHours(), loadBean
+		    .getSecondEctsCredits(), bean.getReferences(), null);
 	}
-
-	new CompetenceCourseInformationChangeRequest(bean.getName(), bean.getNameEn(), bean.getJustification(), bean.getRegime(),
-		bean.getObjectives(), bean.getObjectivesEn(), bean.getProgram(), bean.getProgramEn(), bean.getEvaluationMethod(),
-		bean.getEvaluationMethodEn(), bean.getCompetenceCourse(), bean.getCompetenceCourseLevel(), bean
-			.getExecutionPeriod(), requestor, loadBean.getTheoreticalHours(), loadBean.getProblemsHours(), loadBean
-			.getLaboratorialHours(), loadBean.getSeminaryHours(), loadBean.getFieldWorkHours(), loadBean
-			.getTrainingPeriodHours(), loadBean.getTutorialOrientationHours(), loadBean.getAutonomousWorkHours(),
-		loadBean.getEctsCredits(), loadBean.getSecondTheoreticalHours(), loadBean.getSecondProblemsHours(), loadBean
-			.getSecondLaboratorialHours(), loadBean.getSecondSeminaryHours(), loadBean.getSecondFieldWorkHours(),
-		loadBean.getSecondTrainingPeriodHours(), loadBean.getSecondTutorialOrientationHours(), loadBean
-			.getSecondAutonomousWorkHours(), loadBean.getSecondEctsCredits(), bean.getReferences(), null);
     }
 
     public ActionForward showVersions(ActionMapping mapping, ActionForm form, HttpServletRequest request,

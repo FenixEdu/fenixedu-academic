@@ -340,8 +340,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public boolean isRequestDraftAvailable(ExecutionSemester semester) {
-	CompetenceCourseInformationChangeRequest request = getCompetenceCourseInformationChangeRequests(semester);
-	return request != null && (request.getApproved() == null || !request.getApproved());
+	return getChangeRequestDraft(semester) != null;
     }
 
     public CompetenceCourseInformation findCompetenceCourseInformationForExecutionPeriod(final ExecutionSemester executionSemester) {
@@ -1125,9 +1124,20 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	return count;
     }
 
-    public CompetenceCourseInformationChangeRequest getCompetenceCourseInformationChangeRequests(final ExecutionSemester period) {
+    public Set<CompetenceCourseInformationChangeRequest> getCompetenceCourseInformationChangeRequests(
+	    final ExecutionSemester semester) {
+	Set<CompetenceCourseInformationChangeRequest> changeRequests = new HashSet<CompetenceCourseInformationChangeRequest>();
 	for (CompetenceCourseInformationChangeRequest request : getCompetenceCourseInformationChangeRequests()) {
-	    if (request.getExecutionPeriod() == period) {
+	    if (request.getExecutionPeriod() == semester) {
+		changeRequests.add(request);
+	    }
+	}
+	return changeRequests;
+    }
+
+    public CompetenceCourseInformationChangeRequest getChangeRequestDraft(final ExecutionSemester semester) {
+	for (CompetenceCourseInformationChangeRequest request : getCompetenceCourseInformationChangeRequests(semester)) {
+	    if (request.getApproved() == null || !request.getApproved()) {
 		return request;
 	    }
 	}
@@ -1136,8 +1146,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     @Override
     public void addCompetenceCourseInformationChangeRequests(CompetenceCourseInformationChangeRequest request) {
-	if (getCompetenceCourseInformationChangeRequests(request.getExecutionPeriod()) != null) {
-	    throw new DomainException("error.can.only.exist.one.request.per.execution.period");
+	if (isRequestDraftAvailable(request.getExecutionPeriod())) {
+	    throw new DomainException("error.can.only.exist.one.request.draft.per.execution.period");
 	}
 	super.addCompetenceCourseInformationChangeRequests(request);
     }
