@@ -39,7 +39,11 @@ public enum RegistrationAgreement {
 
     SMILE(false, false),
 
-    ANGOLA_TELECOM(false, true);
+    ANGOLA_TELECOM(false, true),
+    
+    ERASMUS_MUNDUS(false, false),
+    
+    ALMEIDA_GARRETT(false, false);
 
     private boolean enrolmentByStudentAllowed;
 

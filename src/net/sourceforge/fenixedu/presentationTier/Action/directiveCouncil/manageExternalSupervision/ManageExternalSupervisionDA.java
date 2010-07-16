@@ -30,6 +30,8 @@ public class ManageExternalSupervisionDA extends FenixDispatchAction {
     
     public ActionForward showSupervisors(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	ManageExternalSupervisionBean bean = (ManageExternalSupervisionBean) getRenderedObject("sessionBean");
+	RegistrationProtocol registrationProtocol = RegistrationProtocol.serveRegistrationProtocol(bean.getRegistrationAgreement());
+	bean.setRegistrationProtocol(registrationProtocol);
 	request.setAttribute("sessionBean", bean);
 	RenderUtils.invalidateViewState("sessionBean");
 	return mapping.findForward("showSupervisors");

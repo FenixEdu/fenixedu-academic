@@ -78,7 +78,7 @@ public class RegistrationProtocol extends RegistrationProtocol_Base {
     }
     
     public boolean equals(RegistrationProtocol myOtherSelf) {
-	return this.getRegistrationAgreement().name().equals(myOtherSelf.getRegistrationAgreement().name());
+	return (this == myOtherSelf);
     }
     
     public boolean equals(RegistrationAgreement myOtherSoul) {

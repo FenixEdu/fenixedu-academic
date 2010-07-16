@@ -43,4 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
-run "Add Queue Job Columns for alumni reports" addQueueJobColumns.sql
+execute "Add Queue Job Columns for alumni reports" addQueueJobColumns.sql
+execute "Reverting last granting of Senior Statute (script granted some false positives)." revertSeniorStatuteGrantingStrikesBack.sql IST

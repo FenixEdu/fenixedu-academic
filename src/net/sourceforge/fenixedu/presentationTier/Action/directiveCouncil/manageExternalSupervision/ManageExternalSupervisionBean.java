@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 public class ManageExternalSupervisionBean implements Serializable {
     
     private RegistrationProtocol registrationProtocol;
+    private RegistrationAgreement registrationAgreement;
     private Person newSupervisor;
     
     
@@ -32,11 +33,11 @@ public class ManageExternalSupervisionBean implements Serializable {
     }
     
     public RegistrationAgreement getRegistrationAgreement() {
-	return registrationProtocol == null ? null : registrationProtocol.getRegistrationAgreement();
+	return registrationAgreement;
     }
     
     public void setRegistrationAgreement(RegistrationAgreement registrationAgreement){
-	this.registrationProtocol = RegistrationProtocol.serveRegistrationProtocol(registrationAgreement);
+	this.registrationAgreement = registrationAgreement;
     }
     
     public Person getNewSupervisor() {
