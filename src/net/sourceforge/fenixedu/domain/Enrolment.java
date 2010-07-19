@@ -39,6 +39,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.EnrolmentWrapper;
+import net.sourceforge.fenixedu.domain.studentCurriculum.InternalCreditsSourceCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.InternalEnrolmentWrapper;
 import net.sourceforge.fenixedu.domain.studentCurriculum.OptionalDismissal;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
@@ -1454,7 +1455,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return getEnrolmentEvaluationType() != EnrolmentEvaluationType.SPECIAL_SEASON
 		&& getExecutionPeriod().getExecutionYear() == executionYear && !isApproved();
     }
-    
+
     final public boolean canBeSpecialSeasonEnroled(ExecutionSemester executionSemester) {
 	return getEnrolmentEvaluationType() != EnrolmentEvaluationType.SPECIAL_SEASON
 		&& getExecutionPeriod() == executionSemester && !isApproved();
@@ -1745,4 +1746,13 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	    setEnrollmentState(EnrollmentState.ENROLLED);
 	}
     }
+
+    public boolean canBeUsedAsCreditsSource() {
+	return !isInvisible() && isApproved() && parentIsNotInternalCreditsGroup();
+    }
+
+    private boolean parentIsNotInternalCreditsGroup() {
+	return getCurriculumGroup() instanceof InternalCreditsSourceCurriculumGroup;
+    }
+
 }
