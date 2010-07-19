@@ -791,7 +791,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public Set<Enrolment> getDismissalApprovedEnrolments() {
 	Set<Enrolment> aprovedEnrolments = new HashSet<Enrolment>();
 	for (final Enrolment enrolment : getEnrolmentsSet()) {
-	    if (!enrolment.isInvisible() && enrolment.isApproved()) {
+	    if (enrolment.canBeUsedAsCreditsSource() ) {
 		aprovedEnrolments.add(enrolment);
 	    }
 	}
