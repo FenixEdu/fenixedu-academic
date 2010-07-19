@@ -3,15 +3,11 @@ package net.sourceforge.fenixedu.domain.student;
 import java.util.Comparator;
 import java.util.Set;
 
-import dml.runtime.Relation;
-import dml.runtime.RelationAdapter;
-import dml.runtime.RelationListener;
-
-import pt.ist.fenixWebFramework.services.Service;
-
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import pt.ist.fenixWebFramework.services.Service;
+import dml.runtime.RelationAdapter;
 
 public class RegistrationProtocol extends RegistrationProtocol_Base {
     
