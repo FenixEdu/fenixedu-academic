@@ -20,7 +20,7 @@ public class EctsComparabilityTable implements Serializable {
 	char[] converted = new char[table.length];
 	for (int i = 0; i < table.length; i++) {
 	    if (table[i].trim().length() != 1 || table[i].trim().charAt(0) < 'A' || table[i].trim().charAt(0) > 'E')
-		throw new DomainException("error.EctsComparabilityTable.invalidTable", StringUtils.join(table, "; "));
+		throw new DomainException("error.ects.invalidTable", StringUtils.join(table, "<tab>"));
 	    converted[i] = table[i].trim().charAt(0);
 	}
 	this.table = converted;
@@ -62,7 +62,7 @@ public class EctsComparabilityTable implements Serializable {
 
     private static boolean isEmpty(String[] table) {
 	for (String part : table) {
-	    if (part != null)
+	    if (!StringUtils.isEmpty(part))
 		return false;
 	}
 	return true;

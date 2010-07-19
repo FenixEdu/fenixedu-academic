@@ -22,11 +22,15 @@ public class EctsComparabilityPercentages implements Serializable {
     }
 
     private double[] extractPercentages(String[] percentages) {
-	double[] perc = new double[11];
-	for (int i = 0; i < perc.length; i++) {
-	    perc[i] = Double.parseDouble(percentages[i]);
+	try {
+	    double[] perc = new double[11];
+	    for (int i = 0; i < perc.length; i++) {
+		perc[i] = Double.parseDouble(percentages[i]);
+	    }
+	    return perc;
+	} catch (NumberFormatException e) {
+	    throw new DomainException("error.ects.invalidTable", StringUtils.join(percentages, "<tab>"));
 	}
-	return perc;
     }
 
     public double getPercentage(int grade) {
@@ -60,7 +64,7 @@ public class EctsComparabilityPercentages implements Serializable {
 
     private static boolean isEmpty(String[] table) {
 	for (String part : table) {
-	    if (part != null)
+	    if (!StringUtils.isEmpty(part))
 		return false;
 	}
 	return true;

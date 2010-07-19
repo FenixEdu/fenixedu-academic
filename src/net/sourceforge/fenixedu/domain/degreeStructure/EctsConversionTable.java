@@ -12,7 +12,7 @@ public abstract class EctsConversionTable extends EctsConversionTable_Base imple
 	case TYPEAP:
 	    return Grade.createGrade(GradeScale.NA, GradeScale.TYPEECTS);
 	default:
-	    throw new DomainException("error.unable.to.convert.grade");
+	    throw new DomainException("error.ects.unable.to.convert.grade");
 	}
     }
 }
