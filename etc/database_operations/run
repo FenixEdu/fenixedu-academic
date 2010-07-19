@@ -43,7 +43,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Drop old employee professional information tables" dropOldEmployeeProfessionalInformationTables.sql IST
-execute "Create person professional information tables" createPersonProfessionalInformationTables.sql
-execute "Create and update new countries" updateCoutries.sql IST
-execute "Drops the unique CardNumber ParkingParty key" dropParkingPartyKey.sql IST

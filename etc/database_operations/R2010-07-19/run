@@ -45,3 +45,7 @@ function executeWithTempFile() {
 
 execute "Add Queue Job Columns for alumni reports" addQueueJobColumns.sql
 execute "Reverting last granting of Senior Statute (script granted some false positives)." revertSeniorStatuteGrantingStrikesBack.sql IST
+execute "Drop old employee professional information tables" dropOldEmployeeProfessionalInformationTables.sql IST
+execute "Create person professional information tables" createPersonProfessionalInformationTables.sql
+execute "Create and update new countries" updateCoutries.sql IST
+execute "Drops the unique CardNumber ParkingParty key" dropParkingPartyKey.sql IST
