@@ -1,16 +1,22 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
+import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
+
+import org.joda.time.DateTime;
 
 public class InternalSubstitution extends InternalSubstitution_Base {
 
@@ -71,15 +77,9 @@ public class InternalSubstitution extends InternalSubstitution_Base {
 	    final Collection<IEnrolment> enrolments) {
 
 	ensureSourceNoCourseGroupCurriculumGroup(studentCurricularPlan);
-
 	final NoCourseGroupCurriculumGroup curriculumGroup = getInternalCreditsSourceGroup(studentCurricularPlan);
 
 	for (final IEnrolment iEnrolment : enrolments) {
-
-	    if (iEnrolment.isExternalEnrolment()) {
-		continue;
-	    }
-
 	    final Enrolment enrolment = (Enrolment) iEnrolment;
 	    enrolment.setCurriculumGroup(curriculumGroup);
 	}
@@ -107,16 +107,15 @@ public class InternalSubstitution extends InternalSubstitution_Base {
     /**
      * When deleting existing internal substitution all source enrolments are
      * moved to extra curriculum group. In this case, admin office can move to
-     * correct group or use it in another credits.
+     * correct group or use it in another credits. Note: wrapper can not have
+     * external enrolments so we can cast to enrolment
      */
     private void moveExistingEnrolmentsToExtraCurriculumGroup() {
 	final ExtraCurriculumGroup extraCurriculumGroup = ensureExtraCurriculumGroup();
 
 	for (final EnrolmentWrapper wrapper : getEnrolments()) {
-	    if (wrapper.getIEnrolment().isEnrolment()) {
-		final Enrolment enrolment = (Enrolment) wrapper.getIEnrolment();
-		enrolment.setCurriculumGroup(extraCurriculumGroup);
-	    }
+	    final Enrolment enrolment = (Enrolment) wrapper.getIEnrolment();
+	    enrolment.setCurriculumGroup(extraCurriculumGroup);
 	}
     }
 
@@ -126,6 +125,33 @@ public class InternalSubstitution extends InternalSubstitution_Base {
 	    extraCurriculumGroup = getStudentCurricularPlan().createExtraCurriculumGroup();
 	}
 	return extraCurriculumGroup;
+    }
+
+    @Override
+    public boolean isInternalSubstitution() {
+	return true;
+    }
+
+    @Override
+    public Curriculum getCurriculum(final Dismissal dismissal, final DateTime when, final ExecutionYear year) {
+
+	Curriculum curriculum = Curriculum.createEmpty(year);
+
+	for (final EnrolmentWrapper wrapper : getEnrolmentsSet()) {
+	    final Enrolment enrolment = (Enrolment) wrapper.getIEnrolment();
+
+	    if (enrolment.wasCreated(when) && isBefore(enrolment, year)) {
+		curriculum.add(new Curriculum(dismissal, year, Collections.singleton((ICurriculumEntry) enrolment),
+			Collections.EMPTY_SET, Collections.singleton((ICurriculumEntry) enrolment)));
+	    }
+	}
+
+	return curriculum;
+
+    }
+
+    private boolean isBefore(final Enrolment enrolment, final ExecutionYear year) {
+	return year == null || enrolment.getExecutionYear().isBefore(year);
     }
 
 }

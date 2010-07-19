@@ -246,6 +246,7 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
     @Override
     @SuppressWarnings("unchecked")
     final public Curriculum getCurriculum(final DateTime when, final ExecutionYear year) {
+
 	if (wasCreated(when) && (year == null || !hasExecutionPeriod() || getExecutionYear().isBeforeOrEquals(year))) {
 
 	    final Collection<ICurriculumEntry> averageEntries = getAverageEntries(year);
@@ -254,6 +255,8 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 			.singleton((ICurriculumEntry) this));
 	    }
 
+	} else if (getCredits().isInternalSubstitution()) {
+	    return getCredits().getCurriculum(this, when, year);
 	}
 
 	return Curriculum.createEmpty(this, year);

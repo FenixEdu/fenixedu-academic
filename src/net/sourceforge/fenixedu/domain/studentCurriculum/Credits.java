@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.joda.time.DateTime;
+
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedOptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -19,6 +21,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
@@ -236,6 +239,10 @@ public class Credits extends Credits_Base {
 	return false;
     }
 
+    public boolean isInternalSubstitution() {
+	return false;
+    }
+
     public boolean isEquivalence() {
 	return false;
     }
@@ -263,4 +270,7 @@ public class Credits extends Credits_Base {
 	return false;
     }
 
+    public Curriculum getCurriculum(final Dismissal dismissal, final DateTime when, final ExecutionYear year) {
+	throw new DomainException("error.Credits.unsupported.operation");
+    }
 }
