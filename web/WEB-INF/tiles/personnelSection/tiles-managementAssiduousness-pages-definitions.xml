@@ -184,7 +184,7 @@
 		<put name="body" value="/personnelSection/people/createPersonFillInfo.jsp"/>
 	</definition>
 	<definition name="manage-people-view-person" extends="definition.managementAssiduousness.masterPage">
-		<put name="body" value="/personnelSection/people//viewPerson.jsp" />
+		<put name="body" value="/personnelSection/people/viewPerson.jsp" />
 	</definition>
 	<definition name="partyContacts.createPartyContact" extends="definition.managementAssiduousness.masterPage">
 		 <put name="body" value="/manager/personManagement/contacts/createPartyContact.jsp"/>
