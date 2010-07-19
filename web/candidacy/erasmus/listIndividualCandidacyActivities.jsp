@@ -155,7 +155,9 @@
 		</logic:iterate>
 	</table>	
 	
-	<p class="mbottom05"><html:link page="<%= "/caseHandling" + processName.toString() + ".do?method=retrieveLearningAgreement&processId=" + processId %>">Download learning agreement</html:link></p>
+	<logic:present role="INTERNATIONAL_RELATION_OFFICE">
+		<p class="mbottom05"><html:link page="<%= "/caseHandling" + processName.toString() + ".do?method=retrieveLearningAgreement&processId=" + processId %>">Download learning agreement</html:link></p>
+	</logic:present>
 	
 	<%-- show documents--%>
 
