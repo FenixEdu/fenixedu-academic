@@ -13898,13 +13898,6 @@ relation RootDomainObjectPersistentGroupMembers {
     }
 }
 
-relation RootDomainObjectPerson {
-    RootDomainObject playsRole rootDomainObjectGiafPendingPersons;
-    Person playsRole giafPendingPersons {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectPersonAccount {
     RootDomainObject playsRole rootDomainObject;
     PersonAccount playsRole personAccounts {
