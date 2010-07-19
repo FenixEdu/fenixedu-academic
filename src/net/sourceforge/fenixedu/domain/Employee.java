@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.EmployeeProfessionalCategory;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalCategory;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 
@@ -368,7 +368,8 @@ public class Employee extends Employee_Base {
 
     public String getCurrentEmployeeProfessionalCategoryName() {
 	final LocalDate now = new LocalDate();
-	for (final EmployeeProfessionalCategory category : getEmployeeProfessionalData().getEmployeeProfessionalCategories()) {
+	for (final PersonProfessionalCategory category : getPerson().getPersonProfessionalData()
+		.getPersonProfessionalCategories()) {
 	    if (category.contains(now)) {
 		return category.getProfessionalCategory().getName().getContent();
 
@@ -379,7 +380,7 @@ public class Employee extends Employee_Base {
 
     public static Integer getNextEmployeeNumber() {
 	final int max = findMaxEmployeeNumber();
-	return new Integer(max +1);
+	return new Integer(max + 1);
     }
 
     private static int findMaxEmployeeNumber() {
@@ -387,7 +388,7 @@ public class Employee extends Employee_Base {
 	for (final Employee employee : RootDomainObject.getInstance().getEmployeesSet()) {
 	    max = Math.max(max, employee.getEmployeeNumber().intValue());
 	}
-	return 0;
+	return max;
     }
 
 }

@@ -1410,7 +1410,7 @@ constructor="description, state, modifiedBy">
 	<setter signature="editAssiduousnessStatus(description, state, modifiedBy)"/>
 </schema>
 
-<schema name="view.employee.employeeProfessionalData" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.EmployeeProfessionalData" bundle="CONTRACTS_RESOURCES">
+<schema name="view.person.personProfessionalData" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData" bundle="CONTRACTS_RESOURCES">
 	<slot name="professionalContractType" key="label.type" layout="values" schema="view.professionalContractType.name"/>
 	<slot name="contractSituation" key="label.situation" layout="values" schema="view.contractSituation.name"/>
 	<slot name="contractSituationDate" key="label.date"/>
@@ -1422,7 +1422,7 @@ constructor="description, state, modifiedBy">
 	<slot name="professionalRegimeDate" key="label.date"/>
 </schema>
 
-<schema name="view.employee.employeeContractSituation" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.EmployeeContractSituation" bundle="CONTRACTS_RESOURCES">
+<schema name="view.person.personContractSituation" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation" bundle="CONTRACTS_RESOURCES">
 	<slot name="beginDate"/>
 	<slot name="endDate"/>
 	<slot name="contractSituation" key="label.situation" layout="values" schema="view.contractSituation.name"/>
@@ -1430,7 +1430,7 @@ constructor="description, state, modifiedBy">
 	<slot name="professionalCategory" key="label.category" layout="values" schema="view.professionalCategory.name"/>
 </schema>
 
-<schema name="view.employee.employeeProfessionalCategory" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.EmployeeProfessionalCategory" bundle="CONTRACTS_RESOURCES">
+<schema name="view.person.personProfessionalCategory" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalCategory" bundle="CONTRACTS_RESOURCES">
 	<slot name="beginDate"/>
 	<slot name="endDate"/>
 	<slot name="professionalCategory" key="label.category" layout="values" schema="view.professionalCategory.name"/>
@@ -1440,26 +1440,26 @@ constructor="description, state, modifiedBy">
 	<slot name="step"/>
 </schema>
 
-<schema name="view.employee.employeeProfessionalRegime" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.EmployeeProfessionalRegime" bundle="CONTRACTS_RESOURCES">
+<schema name="view.person.personProfessionalRegime" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalRegime" bundle="CONTRACTS_RESOURCES">
 	<slot name="beginDate"/>
 	<slot name="endDate"/>
 	<slot name="professionalRegime" key="label.regime" layout="values" schema="view.professionalRegime.name"/>
 </schema>
 
-<schema name="view.employee.employeeProfessionalRelation" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.EmployeeProfessionalRelation" bundle="CONTRACTS_RESOURCES">
+<schema name="view.person.personProfessionalRelation" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalRelation" bundle="CONTRACTS_RESOURCES">
 	<slot name="beginDate"/>
 	<slot name="endDate"/>
 	<slot name="professionalRelation" key="label.relation" layout="values" schema="view.professionalRelation.name"/>
 	<slot name="professionalCategory" key="label.category" layout="values"  schema="view.professionalCategory.name"/>
 </schema>
 
-<schema name="view.employee.employeeProfessionalContract" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.EmployeeProfessionalContract" bundle="CONTRACTS_RESOURCES">
+<schema name="view.person.personProfessionalContract" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalContract" bundle="CONTRACTS_RESOURCES">
 	<slot name="beginDate"/>
 	<slot name="endDate"/>
 	<slot name="contractSituation" key="label.situation" layout="values" schema="view.contractSituation.name"/>
 </schema>
 
-<schema name="view.employee.employeeFunctionsAccumulation" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.EmployeeFunctionsAccumulation" bundle="CONTRACTS_RESOURCES">
+<schema name="view.person.personFunctionsAccumulation" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonFunctionsAccumulation" bundle="CONTRACTS_RESOURCES">
 	<slot name="beginDate"/>
 	<slot name="endDate"/>
 	<slot name="hours" />
@@ -1467,22 +1467,23 @@ constructor="description, state, modifiedBy">
 	<slot name="functionsAccumulation" key="label.function" layout="values" schema="view.functionsAccumulation.name"/>
 </schema>
 
-<schema name="view.employee.employeeSabbatical" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.EmployeeProfessionalExemption" bundle="CONTRACTS_RESOURCES">
+<schema name="view.person.personSabbatical" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalExemption" bundle="CONTRACTS_RESOURCES">
 	<slot name="beginDate"/>
 	<slot name="endDate"/>
 </schema>
 
-<schema name="view.employee.employeeServiceExemption" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.EmployeeProfessionalExemption" bundle="CONTRACTS_RESOURCES">
+<schema name="view.person.personServiceExemption" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalExemption" bundle="CONTRACTS_RESOURCES">
 	<slot name="beginDate"/>
 	<slot name="endDate"/>
 	<slot name="serviceExemption" key="label.exemption" layout="values" schema="view.serviceExemption.name"/>
 </schema>
 
-<schema name="view.employee.employeeGrantOwnerEquivalent" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.EmployeeProfessionalExemption" bundle="CONTRACTS_RESOURCES">
+<schema name="view.person.personGrantOwnerEquivalent" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalExemption" bundle="CONTRACTS_RESOURCES">
 	<slot name="beginDate"/>
 	<slot name="endDate"/>
 	<slot name="motive"/>
 	<slot name="local"/>
+	<slot name="giafCountryName"/>
 	<slot name="country" schema="country.name" layout="values"/>
 	<slot name="grantOwnerEquivalent" key="label.type" layout="values" schema="view.grantOwnerEquivalent.name"/>
 </schema>

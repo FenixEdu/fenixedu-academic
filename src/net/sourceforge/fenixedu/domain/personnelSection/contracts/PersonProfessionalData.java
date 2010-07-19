@@ -1,14 +1,14 @@
 package net.sourceforge.fenixedu.domain.personnelSection.contracts;
 
-import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-public class EmployeeProfessionalData extends EmployeeProfessionalData_Base {
+public class PersonProfessionalData extends PersonProfessionalData_Base {
 
-    public EmployeeProfessionalData(final Employee employee, final ContractSituation contractSituation,
+    public PersonProfessionalData(final Person person, final ContractSituation contractSituation,
 	    final String contractSituationGiafId, final LocalDate contractSituationDate,
 	    final ProfessionalRelation professionalRelation, final String professionalRelationGiafId,
 	    final LocalDate professionalRelationDate, final ProfessionalContractType professionalContractType,
@@ -18,7 +18,7 @@ public class EmployeeProfessionalData extends EmployeeProfessionalData_Base {
 	    final LocalDate professionalRegimeDate, final DateTime creationDate, final DateTime modifiedDate) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
-	setEmployee(employee);
+	setPerson(person);
 	setContractSituation(contractSituation);
 	setContractSituationGiafId(contractSituationGiafId);
 	setContractSituationDate(contractSituationDate);
@@ -37,5 +37,4 @@ public class EmployeeProfessionalData extends EmployeeProfessionalData_Base {
 	setModifiedDate(modifiedDate);
 	setImportationDate(new DateTime());
     }
-
 }

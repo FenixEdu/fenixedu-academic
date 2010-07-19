@@ -39,7 +39,7 @@
 			<div class="infoop">
 				<strong><bean:message key="label.professionalData" bundle="CONTRACTS_RESOURCES"/></strong>
 			</div><br/>
-			<fr:view name="professionalData" schema="view.employee.employeeProfessionalData">
+			<fr:view name="professionalData" schema="view.person.personProfessionalData">
 				<fr:layout name="matrix">
 					<fr:property name="classes" value="tstyle1 thlight mtop025" />
 					<fr:property name="slot(professionalContractType)" value="professionalContractType"/>
@@ -90,7 +90,7 @@
 			<div class="infoop">
 				<strong><bean:message key="label.situations" bundle="CONTRACTS_RESOURCES"/></strong>
 			</div><br/>
-			<fr:view name="situations" schema="view.employee.employeeContractSituation">
+			<fr:view name="situations" schema="view.person.personContractSituation">
 				<fr:layout name="tabular">
 					<fr:property name="sortBy" value="beginDate, endDate"/>
 					<fr:property name="classes" value="tstyle1 thlight mtop025" />
@@ -117,7 +117,7 @@
 			<div class="infoop">
 				<strong><bean:message key="label.categories" bundle="CONTRACTS_RESOURCES"/></strong>
 			</div><br/>
-			<fr:view name="categories" schema="view.employee.employeeProfessionalCategory">
+			<fr:view name="categories" schema="view.person.personProfessionalCategory">
 				<fr:layout name="tabular">
 					<fr:property name="sortBy" value="beginDate, endDate"/>
 					<fr:property name="classes" value="tstyle1 thlight mtop025" />
@@ -147,7 +147,7 @@
 			<div class="infoop">
 				<strong><bean:message key="label.regimes" bundle="CONTRACTS_RESOURCES"/></strong>
 			</div><br/>
-			<fr:view name="regimes" schema="view.employee.employeeProfessionalRegime">
+			<fr:view name="regimes" schema="view.person.personProfessionalRegime">
 				<fr:layout name="tabular">
 					<fr:property name="sortBy" value="beginDate, endDate"/>
 					<fr:property name="classes" value="tstyle1 thlight mtop025" />
@@ -167,7 +167,7 @@
 			<div class="infoop">
 				<strong><bean:message key="label.relations" bundle="CONTRACTS_RESOURCES"/></strong>
 			</div><br/>
-			<fr:view name="relations" schema="view.employee.employeeProfessionalRelation">
+			<fr:view name="relations" schema="view.person.personProfessionalRelation">
 				<fr:layout name="tabular">
 					<fr:property name="sortBy" value="beginDate, endDate"/>
 					<fr:property name="classes" value="tstyle1 thlight mtop025" />
@@ -191,7 +191,7 @@
 			<div class="infoop">
 				<strong><bean:message key="label.contracts" bundle="CONTRACTS_RESOURCES"/></strong>
 			</div><br/>
-			<fr:view name="contracts" schema="view.employee.employeeProfessionalContract">
+			<fr:view name="contracts" schema="view.person.personProfessionalContract">
 				<fr:layout name="tabular">
 					<fr:property name="sortBy" value="beginDate, endDate"/>
 					<fr:property name="classes" value="tstyle1 thlight mtop025" />
@@ -212,7 +212,7 @@
 			<div class="infoop">
 				<strong><bean:message key="label.functionsAccumulations" bundle="CONTRACTS_RESOURCES"/></strong>
 			</div><br/>
-			<fr:view name="functionsAccumulations" schema="view.employee.employeeFunctionsAccumulation">
+			<fr:view name="functionsAccumulations" schema="view.person.personFunctionsAccumulation">
 				<fr:layout name="tabular">
 					<fr:property name="sortBy" value="beginDate, endDate"/>
 					<fr:property name="classes" value="tstyle1 thlight mtop025" />
@@ -239,7 +239,7 @@
 			<div class="infoop">
 				<strong><bean:message key="label.sabbaticals" bundle="CONTRACTS_RESOURCES"/></strong>
 			</div><br/>
-			<fr:view name="sabbaticals" schema="view.employee.employeeSabbatical">
+			<fr:view name="sabbaticals" schema="view.person.personSabbatical">
 				<fr:layout name="tabular">
 					<fr:property name="sortBy" value="beginDate, endDate"/>
 					<fr:property name="classes" value="tstyle1 thlight mtop025" />
@@ -257,7 +257,7 @@
 			<div class="infoop">
 				<strong><bean:message key="label.serviceExemptions" bundle="CONTRACTS_RESOURCES"/></strong>
 			</div><br/>
-			<fr:view name="serviceExemptions" schema="view.employee.employeeServiceExemption">
+			<fr:view name="serviceExemptions" schema="view.person.personServiceExemption">
 				<fr:layout name="tabular">
 					<fr:property name="sortBy" value="beginDate, endDate"/>
 					<fr:property name="classes" value="tstyle1 thlight mtop025" />
@@ -278,7 +278,7 @@
 			<div class="infoop">
 				<strong><bean:message key="label.grantOwnerEquivalences" bundle="CONTRACTS_RESOURCES"/></strong>
 			</div><br/>
-			<fr:view name="grantOwnerEquivalences" schema="view.employee.employeeGrantOwnerEquivalent">
+			<fr:view name="grantOwnerEquivalences" schema="view.person.personGrantOwnerEquivalent">
 				<fr:layout name="tabular">
 					<fr:property name="sortBy" value="beginDate, endDate"/>
 					<fr:property name="classes" value="tstyle1 thlight mtop025" />
@@ -300,6 +300,9 @@
 					<fr:property name="conditionalColumnClass(5)" value="invaliddata"/>
 					<fr:property name="useCssIfNot(5)" value="valid"/>
 					<fr:property name="column(5)" value="5"/>
+					<fr:property name="conditionalColumnClass(6)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(6)" value="valid"/>
+					<fr:property name="column(6)" value="6"/>
 				</fr:layout>
 			</fr:view>
 		</logic:present>
