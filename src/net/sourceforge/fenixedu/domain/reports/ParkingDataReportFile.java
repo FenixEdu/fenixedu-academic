@@ -66,9 +66,11 @@ public class ParkingDataReportFile extends ParkingDataReportFile_Base {
 	final Date now = new DateTime().toDate();
 	final Map<String, Integer> parkingGroupCodes = getParkingGroupCodes();
 	for (ParkingParty parkingParty : parkingParties) {
-	    Object[] newRow = new Object[28];
-	    fillInRow(parkingParty, newRow, parkingGroupCodes, now);
-	    xml.addRow(newRow);
+	    if (parkingParty.getCardNumber() != 0) {
+		Object[] newRow = new Object[28];
+		fillInRow(parkingParty, newRow, parkingGroupCodes, now);
+		xml.addRow(newRow);
+	    }
 	}
     }
 

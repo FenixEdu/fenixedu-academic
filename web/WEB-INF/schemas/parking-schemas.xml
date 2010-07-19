@@ -336,7 +336,7 @@
 <schema name="edit.parkingPartyBean.user" type="net.sourceforge.fenixedu.dataTransferObject.parking.ParkingPartyBean">
 	<slot name="cardNumber" key="label.cardNumber">
 		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.LongRangeValidator">
-			<property name="lowerBound" value="1"/>
+			<property name="lowerBound" value="0"/>
 		</validator>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>

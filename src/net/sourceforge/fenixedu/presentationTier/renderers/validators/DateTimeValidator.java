@@ -45,7 +45,6 @@ public class DateTimeValidator extends HtmlValidator {
 		setValid(false);
 	    } else {
 		int indexOfT = value.indexOf('T');
-		System.out.println("value: " + value);
 		String[] dateParts = value.substring(0, indexOfT).split("-");
 		String[] timeParts = value.substring(indexOfT + 1).split(":");
 

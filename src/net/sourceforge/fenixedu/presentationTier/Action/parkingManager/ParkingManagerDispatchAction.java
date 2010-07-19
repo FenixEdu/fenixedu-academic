@@ -226,7 +226,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	    Integer group = null;
 	    try {
 		cardNumber = new Long(request.getParameter("cardNumber"));
-		if (cardNumber <= 0) {
+		if (cardNumber < 0) {
 		    saveErrorMessage(request, "cardNumber", "error.number.below.minimum");
 		    request.setAttribute("idInternal", parkingRequestID);
 		    return showRequest(mapping, actionForm, request, response);
@@ -253,7 +253,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	    }
 
 	    ParkingPartyBean parkingPartyBean = (ParkingPartyBean) getFactoryObject();
-	    if (!isValidCardNumber(cardNumber, parkingPartyBean)) {
+	    if (!isRepeatedCardNumber(cardNumber, parkingPartyBean.getParkingParty())) {
 		saveErrorMessage(request, "cardNumber", "error.alreadyExistsCardNumber");
 		request.setAttribute("idInternal", parkingRequestID);
 		return showRequest(mapping, actionForm, request, response);
@@ -415,16 +415,16 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	return false;
     }
 
-    private boolean isValidCardNumber(Long cardNumber, ParkingPartyBean parkingPartyBean) {
-	for (ParkingParty parkingParty : rootDomainObject.getParkingParties()) {
-	    if (parkingParty.getCardNumber() != null && parkingPartyBean.getParkingParty() != parkingParty
-		    && parkingParty.getCardNumber().equals(cardNumber)) {
+    private boolean isRepeatedCardNumber(Long cardNumber, ParkingParty parkingParty) {
+	for (ParkingParty tempParkingParty : rootDomainObject.getParkingParties()) {
+	    if (tempParkingParty.getCardNumber() != null && tempParkingParty.getCardNumber() != 0
+		    && tempParkingParty.getCardNumber().equals(cardNumber) && tempParkingParty != parkingParty) {
 		return false;
 	    }
 	}
 	return true;
     }
-
+    
     private void saveErrorMessage(HttpServletRequest request, String error, String errorMessage) {
 	ActionMessages actionMessages = getMessages(request);
 	actionMessages.add(error, new ActionMessage(errorMessage));
@@ -677,15 +677,5 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	request.setAttribute("parkingPartyHistories", parkingPartyHistories);
 	request.setAttribute("parkingParty", parkingParty);
 	return mapping.findForward("showParkingHistories");
-    }
-
-    private boolean isRepeatedCardNumber(Long cardNumber, ParkingParty parkingParty) {
-	for (ParkingParty tempParkingParty : rootDomainObject.getParkingParties()) {
-	    if (tempParkingParty.getCardNumber() != null && tempParkingParty.getCardNumber().equals(cardNumber)
-		    && tempParkingParty != parkingParty) {
-		return false;
-	    }
-	}
-	return true;
-    }
+    }    
 }
