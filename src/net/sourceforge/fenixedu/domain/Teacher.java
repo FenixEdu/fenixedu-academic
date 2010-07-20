@@ -552,11 +552,7 @@ public class Teacher extends Teacher_Base {
     }
 
     public Category getCategoryForCreditsByPeriod(ExecutionSemester executionSemester) {
-	OccupationPeriod occupationPeriod = executionSemester.getLessonsPeriod();
-	if (occupationPeriod == null) {
-	    return null;
-	}
-	return getLastCategory(occupationPeriod.getStartYearMonthDay(), occupationPeriod.getEndYearMonthDay());
+	return getLastCategory(executionSemester.getBeginDateYearMonthDay(), executionSemester.getEndDateYearMonthDay());
     }
 
     public List<TeacherServiceExemption> getValidTeacherServiceExemptionsToCountInCredits(ExecutionSemester executionSemester) {
