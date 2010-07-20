@@ -2255,7 +2255,7 @@ public class Person extends Person_Base {
 	if (grantOwner != null && grantOwner.hasCurrentContract()) {
 	    return PartyClassification.GRANT_OWNER;
 	}
-	if (isPersonResearcher()) {
+	if (isPersonResearcher() && employee != null) {
 	    return PartyClassification.RESEARCHER;
 	}
 	final Student student = getStudent();
@@ -3536,7 +3536,7 @@ public class Person extends Person_Base {
 		if (value != null && !value.isEmpty()) {
 		    if (otherEmailAddress.isInstitutionalType()) {
 			emailAddress = otherEmailAddress;
-			break;			    
+			break;
 		    }
 		    if (otherEmailAddress.isDefault()) {
 			emailAddress = otherEmailAddress;
