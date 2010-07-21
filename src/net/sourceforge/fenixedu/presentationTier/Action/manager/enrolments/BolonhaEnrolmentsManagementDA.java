@@ -33,8 +33,23 @@ import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
+@Mapping(path = "/bolonhaStudentEnrolment", module = "manager", formBean = "bolonhaStudentEnrolmentForm")
+@Forwards( {
+	@Forward(name = "viewStudentCurriculum", path = "/manager/bolonha/enrolments/displayStudentCurriculum.jsp"),
+	@Forward(name = "chooseStudentInformation", path = "/manager/bolonha/enrolments/chooseStudentInformation.jsp"),
+	@Forward(name = "showExecutionPeriodToEnrol", path = "/manager/bolonha/enrolments/chooseExecutionPeriod.jsp"),
+	@Forward(name = "showDegreeModulesToEnrol", path = "/manager/bolonha/enrolments/showDegreeModulesToEnrol.jsp"),
+	@Forward(name = "chooseOptionalCurricularCourseToEnrol", path = "/manager/bolonha/enrolments/chooseOptionalCurricularCourseToEnrol.jsp"),
+	@Forward(name = "chooseCycleCourseGroupToEnrol", path = "/manager/bolonha/enrolments/chooseCycleCourseGroupToEnrol.jsp"),
+	@Forward(name = "transitToBolonha", path = "/manager/bolonha/enrolments/transitToBolonha.jsp"),
+	@Forward(name ="showRegistrationStatesLog", path="/manager/bolonha/enrolments/showRegistrationStatesLog.jsp")
+
+})
 public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollmentDA {
 
     public ActionForward prepareSearchStudent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -194,7 +209,7 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
 	try {
 	    new AffinityCyclesManagement(scp).createCycleOrRepeateSeparate();
 	    addActionMessage("success", request, "message.cycles.separated.with.success");
-	    
+
 	} catch (final DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
 	}
@@ -202,4 +217,12 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
 	request.setAttribute("studentId", scp.getRegistration().getStudent().getIdInternal());
 	return showAllStudentCurricularPlans(mapping, actionForm, request, response);
     }
+
+    public ActionForward showRegistrationStatesLog(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	
+	request.setAttribute("registration", getDomainObject(request, "registrationId"));
+	return mapping.findForward("showRegistrationStatesLog");
+    }
+
 }

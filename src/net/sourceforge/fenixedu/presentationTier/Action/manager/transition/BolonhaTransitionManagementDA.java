@@ -21,7 +21,6 @@ public class BolonhaTransitionManagementDA extends AbstractBolonhaTransitionMana
 	    HttpServletResponse response) {
 
 	request.setAttribute("studentNumberBean", new StudentNumberBean());
-
 	return mapping.findForward("chooseStudent");
     }
 
@@ -32,14 +31,12 @@ public class BolonhaTransitionManagementDA extends AbstractBolonhaTransitionMana
 	request.setAttribute("studentId", Student.readStudentByNumber(studentNumberBean.getNumber()).getIdInternal());
 
 	return prepare(mapping, form, request, response);
-
     }
 
     @Override
     protected List<Registration> getRegistrations(final HttpServletRequest request) {
 	final Student student = getStudent(request);
-	return student != null ? student.getTransitionRegistrations() : Collections.EMPTY_LIST;
-
+	return student != null ? student.getTransitionRegistrations() : Collections.<Registration> emptyList();
     }
 
     private Student getStudent(final HttpServletRequest request) {

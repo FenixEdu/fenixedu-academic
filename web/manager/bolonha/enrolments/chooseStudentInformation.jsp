@@ -64,6 +64,9 @@
 						</html:link>
 					</logic:notEmpty>
 				
+					,
+					<html:link action="/bolonhaStudentEnrolment.do?method=showRegistrationStatesLog" paramId="registrationId" paramName="registration" paramProperty="externalId" ><bean:message  key="student.registration.states.log" bundle="APPLICATION_RESOURCES"/></html:link>
+				
 				</logic:notEmpty>
 				
 				<%-- show student curricular plans information --%>
