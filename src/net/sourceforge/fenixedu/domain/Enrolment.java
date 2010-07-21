@@ -1748,10 +1748,10 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     public boolean canBeUsedAsCreditsSource() {
-	return !isInvisible() && isApproved() && parentIsNotInternalCreditsGroup();
+	return !isInvisible() && isApproved() && !parentIsInternalCreditsGroup();
     }
 
-    private boolean parentIsNotInternalCreditsGroup() {
+    private boolean parentIsInternalCreditsGroup() {
 	return getCurriculumGroup() instanceof InternalCreditsSourceCurriculumGroup;
     }
 
