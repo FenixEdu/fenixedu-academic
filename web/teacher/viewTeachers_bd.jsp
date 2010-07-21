@@ -47,9 +47,9 @@
 			<td>
 				<bean:message key="label.no.capitalized" />
 			</td>
-			<bean:define id="teacherCode" name="person" property="istUsername"/>		
 			<td>
-				<html:link page="<%= "/teachersManagerDA.do?method=removeTeacher&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;teacherCode=" + teacherCode %>">
+				<bean:define id="teacherOID" name="professorship" property="externalId"/>		
+				<html:link page="<%= "/teachersManagerDA.do?method=removeTeacher&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;teacherOID=" + teacherOID %>">
 					<bean:message key="link.removeTeacher"/>
 				</html:link>
 			</td>
@@ -58,7 +58,6 @@
 			<td>
 				<bean:message key="label.yes.capitalized" />
 			</td>
-			<bean:define id="teacherCode" name="person" property="istUsername"/>		
 			<td>
 				<bean:message key="label.notAvailable" />
 			</td>

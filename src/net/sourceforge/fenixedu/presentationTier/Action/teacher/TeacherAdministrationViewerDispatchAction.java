@@ -443,20 +443,14 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
     public ActionForward removeTeacher(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	String teacherCodeString = request.getParameter("teacherCode");
-	if (teacherCodeString == null) {
-	    teacherCodeString = (String) request.getAttribute("teacherCode");
-	}
+	Professorship professorship = getDomainObject(request, "teacherOID");
 	Integer objectCode = getObjectCode(request);
 	try {
-	    DeleteProfessorshipWithPerson.run(Person.readPersonByIstUsername(teacherCodeString), rootDomainObject
-		    .readExecutionCourseByOID(objectCode));
+	    DeleteProfessorshipWithPerson.run(professorship.getPerson(), rootDomainObject.readExecutionCourseByOID(objectCode));
 	} catch (NotAuthorizedException e) {
 	    final ActionErrors actionErrors = new ActionErrors();
 	    actionErrors.add("error", new ActionError("label.not.authorized.action"));
 	    saveErrors(request, actionErrors);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
 	} catch (DomainException domainException) {
 	    final ActionErrors actionErrors = new ActionErrors();
 	    actionErrors.add("error", new ActionError(domainException.getMessage()));
