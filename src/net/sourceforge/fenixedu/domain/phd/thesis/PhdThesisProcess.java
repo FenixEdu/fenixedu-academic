@@ -64,8 +64,8 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	    final PhdThesisProcess result = new PhdThesisProcess();
 
 	    result.createState(PhdThesisProcessStateType.NEW, userView.getPerson(), bean.getRemarks());
-	    result.addDocuments(bean.getDocuments(), userView.getPerson());
 	    result.setIndividualProgramProcess(bean.getProcess());
+	    result.addDocuments(bean.getDocuments(), userView.getPerson());
 
 	    new PhdThesisRequestFee(bean.getProcess());
 
