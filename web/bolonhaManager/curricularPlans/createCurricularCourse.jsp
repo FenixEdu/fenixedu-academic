@@ -65,12 +65,12 @@
 		
 		<h:panelGroup rendered="#{CurricularCourseManagement.selectedCurricularCourseType == 'OPTIONAL_COURSE'}">
 			<h:outputText value="<p><label>#{bolonhaBundle['name']} (pt):</label>" escape="false"/>
-			<h:inputText alt="#{htmlAltBundle['inputText.name']}" id="name" size="40" maxlength="40" value="#{CurricularCourseManagement.name}"/>
+			<h:inputText alt="#{htmlAltBundle['inputText.name']}" id="name" size="50" maxlength="200" value="#{CurricularCourseManagement.name}"/>
 			<h:message for="name" styleClass="error0"/>
 			<h:outputText value="</p>" escape="false"/>
 			
 			<h:outputText value="<p><label>#{bolonhaBundle['nameEn']} (en):</label>" escape="false"/>
-			<h:inputText alt="#{htmlAltBundle['inputText.nameEn']}" id="nameEn" size="40" maxlength="40" value="#{CurricularCourseManagement.nameEn}"/>
+			<h:inputText alt="#{htmlAltBundle['inputText.nameEn']}" id="nameEn" size="50" maxlength="200" value="#{CurricularCourseManagement.nameEn}"/>
 			<h:message for="nameEn" styleClass="error0"/>
 			<h:outputText value="</p>" escape="false"/>		
 		</h:panelGroup>
