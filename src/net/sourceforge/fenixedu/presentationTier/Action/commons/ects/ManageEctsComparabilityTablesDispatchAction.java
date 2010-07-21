@@ -311,10 +311,12 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 		String[] parts = fillArray(line.split(SEPARATOR), 17);
 		CompetenceCourse competence = DomainObject.fromExternalId(parts[0]);
 		if (!competence.getDepartmentUnit().getName().equals(parts[1])) {
-		    throw new DomainException("error.ects.invalidLine.nonMatchingCourse", parts[0], parts[1]);
+		    throw new DomainException("error.ects.invalidLine.nonMatchingCourse", parts[0], parts[1], competence
+			    .getDepartmentUnit().getName());
 		}
 		if (!competence.getName(querySemester).equals(parts[2])) {
-		    throw new DomainException("error.ects.invalidLine.nonMatchingCourse", parts[0], parts[2]);
+		    throw new DomainException("error.ects.invalidLine.nonMatchingCourse", parts[0], parts[2],
+			    competence.getName(querySemester));
 		}
 		EctsCompetenceCourseConversionTable.createConversionTable(competence, executionInterval,
 			Arrays.copyOfRange(parts, 6, 17));
@@ -369,10 +371,11 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 		String[] parts = fillArray(line.split(SEPARATOR), 15);
 		Degree degree = DomainObject.fromExternalId(parts[0]);
 		if (!degree.getDegreeType().getLocalizedName().equals(parts[1])) {
-		    throw new DomainException("error.ects.invalidLine.nonMatchingCourse", parts[0], parts[1]);
+		    throw new DomainException("error.ects.invalidLine.nonMatchingCourse", parts[0], parts[1], degree
+			    .getDegreeType().getLocalizedName());
 		}
 		if (!degree.getName().equals(parts[2])) {
-		    throw new DomainException("error.ects.invalidLine.nonMatchingCourse", parts[0], parts[2]);
+		    throw new DomainException("error.ects.invalidLine.nonMatchingCourse", parts[0], parts[2], degree.getName());
 		}
 		CurricularYear year = CurricularYear.readByYear(Integer.parseInt(parts[3]));
 		EctsDegreeByCurricularYearConversionTable.createConversionTable(degree, executionInterval, year,
@@ -502,10 +505,11 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 		String[] parts = fillArray(line.split(SEPARATOR), 26);
 		Degree degree = DomainObject.fromExternalId(parts[0]);
 		if (!degree.getDegreeType().getLocalizedName().equals(parts[1])) {
-		    throw new DomainException("error.ects.invalidLine.nonMatchingCourse", parts[0], parts[1]);
+		    throw new DomainException("error.ects.invalidLine.nonMatchingCourse", parts[0], parts[1], degree
+			    .getDegreeType().getLocalizedName());
 		}
 		if (!degree.getName().equals(parts[2])) {
-		    throw new DomainException("error.ects.invalidLine.nonMatchingCourse", parts[0], parts[2]);
+		    throw new DomainException("error.ects.invalidLine.nonMatchingCourse", parts[0], parts[2], degree.getName());
 		}
 		CycleType cycle;
 		try {
