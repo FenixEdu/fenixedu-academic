@@ -95,6 +95,10 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 		    : ((ExecutionSemester) interval).getExecutionYear();
 	    final ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionYear);
 
+	    if (executionDegree == null) {
+		continue;
+	    }
+
 	    for (Coordinator coordinator : executionDegree.getCoordinatorsList()) {
 		if (coordinator.getPerson() == AccessControl.getPerson()) {
 		    returnExecutionIntervals.add(interval);
