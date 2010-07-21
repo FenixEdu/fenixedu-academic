@@ -528,6 +528,16 @@ public class MarkSheet extends MarkSheet_Base {
     }
 
     private void changeRectifiedEnrolmentEvaluationToPreviowsState() {
+
+	/*
+	 * This is not common, but if by any reason the rectified marksheet was
+	 * removed from system and rectified enrolment evaluation was removed
+	 * too, no enrolment evaluation will be available
+	 */
+	if (!hasAnyEnrolmentEvaluations()) {
+	    return;
+	}
+
 	EnrolmentEvaluation enrolmentEvaluation = this.getEnrolmentEvaluations().get(0).getRectified();
 	enrolmentEvaluation
 		.setEnrolmentEvaluationState((enrolmentEvaluation.getMarkSheet().getMarkSheetState() == MarkSheetState.RECTIFICATION) ? EnrolmentEvaluationState.RECTIFICATION_OBJ
