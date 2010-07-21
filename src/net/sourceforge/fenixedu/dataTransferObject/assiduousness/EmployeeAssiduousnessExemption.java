@@ -140,7 +140,8 @@ public class EmployeeAssiduousnessExemption implements Serializable {
 	Duration totalWorkedTime = getTotalWorkedTime(assiduousnessStatusHistory, beginDate.getYear());
 	int efectiveWorkDays = 0;
 	if (!totalWorkedTime.equals(Duration.ZERO)) {
-	    Duration averageWorkPeriodDuration = assiduousnessStatusHistory.getSheculeWeightedAverage(beginDate, endDate);
+	    Duration averageWorkPeriodDuration = assiduousnessStatusHistory.getSheculeWeightedAverage(beginDate, endDate
+		    .plusDays(1));
 	    efectiveWorkDays = Math.round((float) (totalWorkedTime.getMillis() * Math.pow(averageWorkPeriodDuration.getMillis(),
 		    -1)));
 	}
