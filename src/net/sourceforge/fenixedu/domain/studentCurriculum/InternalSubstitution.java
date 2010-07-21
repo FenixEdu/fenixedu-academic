@@ -101,6 +101,7 @@ public class InternalSubstitution extends InternalSubstitution_Base {
     @Override
     protected void disconnect() {
 	moveExistingEnrolmentsToExtraCurriculumGroup();
+	deleteSourceGroupIfEmpty();
 	super.disconnect();
     }
 
@@ -127,6 +128,15 @@ public class InternalSubstitution extends InternalSubstitution_Base {
 	return extraCurriculumGroup;
     }
 
+    private void deleteSourceGroupIfEmpty() {
+	final NoCourseGroupCurriculumGroup group = getStudentCurricularPlan().getNoCourseGroupCurriculumGroup(
+		NoCourseGroupCurriculumGroupType.INTERNAL_CREDITS_SOURCE_GROUP);
+
+	if (group != null && group.canBeDeleted()) {
+	    group.delete();
+	}
+    }
+
     @Override
     public boolean isInternalSubstitution() {
 	return true;
@@ -141,8 +151,8 @@ public class InternalSubstitution extends InternalSubstitution_Base {
 	    final Enrolment enrolment = (Enrolment) wrapper.getIEnrolment();
 
 	    if (enrolment.wasCreated(when) && isBefore(enrolment, year)) {
-		curriculum.add(new Curriculum(dismissal, year, Collections.singleton((ICurriculumEntry) enrolment),
-			Collections.EMPTY_SET, Collections.singleton((ICurriculumEntry) enrolment)));
+		curriculum.add(new Curriculum(dismissal, year, Collections.singleton((ICurriculumEntry) enrolment), Collections
+			.<ICurriculumEntry> emptySet(), Collections.singleton((ICurriculumEntry) enrolment)));
 	    }
 	}
 
