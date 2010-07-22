@@ -55,4 +55,6 @@
 		</phd:activityAvailable>
 
 	</ul>
+	<br/>
+	<br/>
 </logic:notEmpty>
