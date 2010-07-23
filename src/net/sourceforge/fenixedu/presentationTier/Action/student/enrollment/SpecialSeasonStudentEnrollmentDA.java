@@ -54,6 +54,9 @@ public class SpecialSeasonStudentEnrollmentDA extends AcademicAdminOfficeSpecial
 	} else if (hasPendingDebts(student)) {
 	    addActionMessage("error", request, "error.special.season.cannot.enroll.due.to.pending.debts");
 	    request.setAttribute("disableContinue", true);
+	    
+	} else if(scps.isEmpty()) {
+	    request.setAttribute("disableContinue", true);
 	}
 
 	return mapping.findForward("showStudentEnrollmentMenu");
