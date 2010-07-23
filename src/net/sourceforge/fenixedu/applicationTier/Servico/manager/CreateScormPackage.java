@@ -8,10 +8,10 @@ import java.io.InputStream;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.FileContentCreationBean.EducationalResourceType;
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
@@ -23,10 +23,11 @@ import pt.utl.ist.fenix.tools.file.VirtualPath;
 
 public class CreateScormPackage extends CreateFileContent {
 
-    public void run(Site site, Item item, File file, String originalFilename, String displayName, Group permittedGroup,
+    @Override
+    public void run(Site site, Container container, File file, String originalFilename, String displayName, Group permittedGroup,
 	    Person person, EducationalResourceType type) throws DomainException, FenixServiceException, IOException {
 
-	super.run(site, item, file, originalFilename, displayName, permittedGroup, person, type);
+	super.run(site, container, file, originalFilename, displayName, permittedGroup, person, type);
     }
 
     @Override
