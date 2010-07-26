@@ -48,6 +48,7 @@ import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.Interval;
@@ -521,8 +522,9 @@ public class Teacher extends Teacher_Base {
 
     private int getLessonHours(OccupationPeriod lessonsPeriod) {
 	if (lessonsPeriod != null) {
+	    YearMonthDay lessonPeriodEndDate = lessonsPeriod.getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay();
 	    TeacherProfessionalSituation teacherLegalRegimen = getLastLegalRegimenWithoutSpecialSituations(lessonsPeriod
-		    .getStartYearMonthDay(), lessonsPeriod.getEndYearMonthDay());
+		    .getStartYearMonthDay(), lessonPeriodEndDate);
 	    if (teacherLegalRegimen != null && teacherLegalRegimen.getWeeklyLessonHours() != null) {
 		return teacherLegalRegimen.getWeeklyLessonHours();
 	    }
@@ -732,12 +734,13 @@ public class Teacher extends Teacher_Base {
 	    return 0.0;
 	}
 
-	Interval lessonsInterval = new Interval(lessonsPeriod.getStartYearMonthDay().toDateMidnight(), lessonsPeriod
-		.getEndYearMonthDay().toDateMidnight());
+	DateMidnight lessonPeriodEndDate = lessonsPeriod.getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay()
+		.toDateMidnight();
+	Interval lessonsInterval = new Interval(lessonsPeriod.getStartYearMonthDay().toDateMidnight(), lessonPeriodEndDate);
 
 	Interval serviceExemptionsInterval = new Interval(teacherServiceExemption.getBeginDateYearMonthDay().toDateMidnight(),
 		(teacherServiceExemption.getEndDateYearMonthDay() != null) ? teacherServiceExemption.getEndDateYearMonthDay()
-			.toDateMidnight() : lessonsPeriod.getEndYearMonthDay().toDateMidnight());
+			.toDateMidnight() : lessonPeriodEndDate);
 
 	Interval overlapInterval = lessonsInterval.overlap(serviceExemptionsInterval);
 	if (overlapInterval != null) {
