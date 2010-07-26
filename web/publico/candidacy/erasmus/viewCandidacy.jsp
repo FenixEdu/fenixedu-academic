@@ -253,7 +253,7 @@
 	
 	<logic:equal name="individualCandidacyProcess" property="studentAccepted" value="true">
 	<logic:notEmpty name="individualCandidacyProcess" property="candidacy.mostRecentApprovedLearningAgreement" >
-		<fr:view name="individualCandidacyProcess" property="candidacy.mostRecentApprovedLearningAgreement" schema="IndividualCandidacyDocumentFile.view">
+		<fr:view name="individualCandidacyProcess" property="candidacy.mostRecentApprovedLearningAgreement">
 			<fr:schema type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile" bundle="CANDIDATE_RESOURCES">
 				<fr:slot name="filename" key="label.document.file.name" />
 				<fr:slot name="this" key="label.document.file.link" layout="link"/>
