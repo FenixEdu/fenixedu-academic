@@ -301,7 +301,14 @@ public class MergePersonsDA extends FenixDispatchAction {
 	Person domainObject1 = RootDomainObject.fromExternalId(mergePersonsBean.getLeftOid());
 	Person domainObject2 = RootDomainObject.fromExternalId(mergePersonsBean.getRightOid());
 
-	chooseObjects(mapping, form, request, response);
+	if (domainObject1.getStudent() == null || domainObject2.getStudent() == null) {
+	    return mapping.findForward("only-one-person-with-student-object");
+	}
+
+	mergePersonsBean.setCurrentClass(Student.class.getName());
+
+	chooseObjects(mapping, form, request, response, domainObject1.getStudent().getExternalId(), domainObject2.getStudent()
+		.getExternalId(), Student.class.getName());
 
 	return mapping.findForward("transfer-registrations");
     }
