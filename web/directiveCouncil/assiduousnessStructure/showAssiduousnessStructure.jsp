@@ -73,6 +73,12 @@
 					<fr:property name="key(edit)" value="label.edit" />
 					<fr:property name="param(edit)" value="idInternal" />
 					<fr:property name="visibleIfNot(edit)" value="finished" />
+					
+					<logic:present role="MANAGER">
+						<fr:property name="link(delete)" value="/assiduousnessStructure.do?method=deletePersonFunction" />
+						<fr:property name="key(delete)" value="label.delete" />
+						<fr:property name="param(delete)" value="idInternal" />
+					</logic:present>
 				</fr:layout>
 			</fr:view>
 		</logic:notEmpty>
