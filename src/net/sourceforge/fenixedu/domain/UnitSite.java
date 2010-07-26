@@ -7,6 +7,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
+import net.sourceforge.fenixedu.domain.accessControl.WebSiteManagersGroup;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -364,6 +365,7 @@ public class UnitSite extends UnitSite_Base {
     @Override
     public List<IGroup> getContextualPermissionGroups() {
 	List<IGroup> groups = super.getContextualPermissionGroups();
+	groups.add(new WebSiteManagersGroup(this));
 	groups.addAll(getUnit().getGroups());
 
 	return groups;
