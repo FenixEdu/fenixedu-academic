@@ -651,10 +651,6 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	    return;
 	}
 
-	if (IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT.equals(type)) {
-	    throw new DomainException("error.second.cycle.uploading.payment.document.more.than.once");
-	}
-
 	file.setCandidacyFileActive(false);
     }
 

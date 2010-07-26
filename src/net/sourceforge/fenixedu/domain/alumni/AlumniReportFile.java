@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
@@ -78,7 +77,7 @@ public class AlumniReportFile extends AlumniReportFile_Base {
     public String getFilename() {
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources/GEPResources", Language.getLocale());
 	return MessageFormat.format(getFullReport() ? bundle.getString("alumni.full.reports.name") : bundle
-		.getString("alumni.partial.reports.name"), new DateTime().toString("ddMMyyyyHHmmss"));
+		.getString("alumni.partial.reports.name"), getRequestDate());
     }
 
     private List<Spreadsheet> buildReport() {
