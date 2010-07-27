@@ -115,7 +115,7 @@
 	</logic:empty>
 	
 
-	<p class="mtop2 mbottom05"><strong><bean:message key="label.secundaryBibliography" bundle="BOLONHA_MANAGER_RESOURCES"/></strong></p>
+	<p class="mtop2 mbottom05"><strong><bean:message key="label.secondaryBibliography" bundle="BOLONHA_MANAGER_RESOURCES"/></strong></p>
 	<logic:notEmpty name="bean" property="references.secondaryBibliographicReferences">
 	<logic:iterate id="secondaryReference" name="bean" property="references.secondaryBibliographicReferences">
 		<bean:define id="index" name="secondaryReference" property="order"/>	

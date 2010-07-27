@@ -70,6 +70,9 @@
 
 
 <schema name="present.competenceCourseInformation.change.request" type="net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest" bundle="BOLONHA_MANAGER_RESOURCES">
+	<slot name="departmentUnit.name"/>
+	<slot name="scientificAreaUnit.name"/>
+	<slot name="competenceCourseGroupUnit.name"/>
 	<slot name="competenceCourse.name"/>
 	<slot name="name" key="label.proposedName"/>
 	<slot name="nameEn" key="label.proposedNameEn"/>
@@ -236,6 +239,9 @@
 
 
 <schema name="view.competenceCourseInformation.details" type="net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation" bundle="BOLONHA_MANAGER_RESOURCES">
+	<slot name="departmentUnit.name"/>
+	<slot name="scientificAreaUnit.name"/>
+	<slot name="competenceCourseGroupUnit.name"/>
 	<slot name="name"/>
 	<slot name="nameEn"/>
 	<slot name="acronym"/>

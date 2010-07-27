@@ -21,7 +21,7 @@
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1 thlight thright thtop mtop05"/>
 			<fr:property name="columnClasses" value="width150px,"/>
-			<fr:property name="rowClasses" value="bold,,,,,,tdhl1,,,,,,,,,,,"/>
+			<fr:property name="rowClasses" value=",,,bold,,,,,,tdhl1,,,,,,,,,,,"/>
 		</fr:layout>
 	</fr:view>
 	
@@ -59,7 +59,7 @@
 		</logic:notEmpty>
 
 		<logic:notEmpty name="changeRequest" property="bibliographicReferences.secondaryBibliographicReferences">		
-			<p class="mtop2 mbottom05"><strong><bean:message key="label.secundaryBibliography" bundle="BOLONHA_MANAGER_RESOURCES"/></strong></p>
+			<p class="mtop2 mbottom05"><strong><bean:message key="label.secondaryBibliography" bundle="BOLONHA_MANAGER_RESOURCES"/></strong></p>
 			<fr:view name="changeRequest" property="bibliographicReferences.secondaryBibliographicReferences" schema="view.reference">	
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle1 thlight thright thcenter mtop05"/>

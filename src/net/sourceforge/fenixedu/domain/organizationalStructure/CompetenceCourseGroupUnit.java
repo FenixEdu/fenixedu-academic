@@ -71,6 +71,30 @@ public class CompetenceCourseGroupUnit extends CompetenceCourseGroupUnit_Base {
 	return competenceCourse.getCompetenceCourseGroupUnit().equals(this);
     }
 
+    public ScientificAreaUnit getScientificAreaUnit() {
+	if (hasAnyParentUnits()) {
+	    if (getParentUnits().size() > 1) {
+		throw new DomainException("competence.course.group.should.have.only.one.scientific.area");
+	    }
+
+	    return (ScientificAreaUnit) getParentUnits().iterator().next();
+	}
+	return null;
+    }
+
+    @Override
+    public DepartmentUnit getDepartmentUnit() {
+	ScientificAreaUnit area = getScientificAreaUnit();
+	if (area.hasAnyParentUnits()) {
+	    if (area.getParentUnits().size() > 1) {
+		throw new DomainException("scientific.area.should.have.only.one.department");
+	    }
+
+	    return (DepartmentUnit) area.getParentUnits().iterator().next();
+	}
+	return null;
+    }
+
     public Set<CompetenceCourse> getCompetenceCoursesSet() {
 	final SortedSet<CompetenceCourse> result = new TreeSet<CompetenceCourse>(
 		CompetenceCourse.COMPETENCE_COURSE_COMPARATOR_BY_NAME);

@@ -94,25 +94,11 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
     }
 
     public ScientificAreaUnit getScientificAreaUnit() {
-	if (getCompetenceCourseGroupUnit().hasAnyParentUnits()) {
-	    if (getCompetenceCourseGroupUnit().getParentUnits().size() > 1) {
-		throw new DomainException("competence.course.should.have.only.one.scientific.area");
-	    }
-
-	    return (ScientificAreaUnit) getCompetenceCourseGroupUnit().getParentUnits().iterator().next();
-	}
-	return null;
+	return getCompetenceCourseGroupUnit().getScientificAreaUnit();
     }
 
     public DepartmentUnit getDepartmentUnit() {
-	if (getScientificAreaUnit().hasAnyParentUnits()) {
-	    if (getScientificAreaUnit().getParentUnits().size() > 1) {
-		throw new DomainException("scientific.area.should.have.only.one.department");
-	    }
-
-	    return (DepartmentUnit) getScientificAreaUnit().getParentUnits().iterator().next();
-	}
-	return null;
+	return getCompetenceCourseGroupUnit().getDepartmentUnit();
     }
 
     private void checkParameters(String name, String nameEn, Boolean basic, RegimeType regimeType,

@@ -17,6 +17,7 @@
 <fr:view name="information" schema="view.competenceCourseInformation.details">
 	<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight thright thtop mtop05"/>
+			<fr:property name="rowClasses" value=",,,bold,,,,,,,,,,"/>
 	</fr:layout>
 </fr:view>
 
@@ -33,7 +34,7 @@
 		</logic:notEmpty>
 
 		<logic:notEmpty name="information" property="bibliographicReferences.secondaryBibliographicReferences">		
-			<p class="mbottom05"><strong><bean:message key="label.secundaryBibliography" bundle="BOLONHA_MANAGER_RESOURCES"/></strong></p>
+			<p class="mbottom05"><strong><bean:message key="label.secondaryBibliography" bundle="BOLONHA_MANAGER_RESOURCES"/></strong></p>
 			<fr:view name="information" property="bibliographicReferences.secondaryBibliographicReferences" schema="view.reference">	
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle2 thlight thright thcenter mtop05"/>

@@ -7,6 +7,8 @@ import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -127,6 +129,14 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
 	} else {
 	    return (getApproved()) ? RequestStatus.APPROVED : RequestStatus.REJECTED;
 	}
+    }
+
+    public ScientificAreaUnit getScientificAreaUnit() {
+	return getCompetenceCourseGroupUnit().getScientificAreaUnit();
+    }
+
+    public DepartmentUnit getDepartmentUnit() {
+	return getCompetenceCourseGroupUnit().getDepartmentUnit();
     }
 
     public void delete() {
