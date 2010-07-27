@@ -65,7 +65,8 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 public class SummariesControlAction extends FenixDispatchAction {
 
     private BigDecimal EMPTY = BigDecimal.ZERO;
-    protected static final String MODULE = "directiveCouncil";
+    private static final String DEFAULT_MODULE = "pedagogicalCouncil";
+    private static final String ENUMERATION_MODULE = "Enumeration";
 
     public ActionForward prepareSummariesControl(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
@@ -441,13 +442,23 @@ public class SummariesControlAction extends FenixDispatchAction {
      */
     public ActionForward exportInfoToExcel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
-	String departmentID = (String) request.getParameter("departmentID");
-	String executionSemesterID = (String) request.getParameter("executionSemesterID");
+	String departmentID = request.getParameter("departmentID");
+	String executionSemesterID = request.getParameter("executionSemesterID");
+	String categoryControl = request.getParameter("categoryControl");
 
 	final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionSemesterID);
 	final Department department = AbstractDomainObject.fromExternalId(departmentID);
+	SummaryControlCategory summaryControlCategory = null;
+	String controlCategory = null;
+	if (!StringUtils.isEmpty(categoryControl)) {
+	    summaryControlCategory = SummaryControlCategory.valueOf(categoryControl);
+	    controlCategory = getResourceMessage(ENUMERATION_MODULE, summaryControlCategory.toString());
+	} else {
+	    controlCategory = "0-100";
+	}
 
 	DepartmentSummaryElement departmentSummaryResume = getDepartmentSummaryResume(executionSemester, department);
+	departmentSummaryResume.setSummaryControlCategory(summaryControlCategory);
 
 	if (departmentSummaryResume != null) {
 	    final ResourceBundle bundle = ResourceBundle.getBundle("resources/DirectiveCouncilResources", Language.getLocale());
@@ -456,7 +467,8 @@ public class SummariesControlAction extends FenixDispatchAction {
 	    DateTimeFormatter fmt = DateTimeFormat.forPattern("dd-MM-yyyy");
 	    String date = fmt.print(dt);
 
-	    final String filename = "SummaryControl_" + sigla + "_" + date;
+	    final String filename = getResourceMessage(DEFAULT_MODULE, "link.summaries.control") + "_" + controlCategory + "_"
+		    + sigla + "_" + date;
 
 	    response.setContentType("application/vnd.ms-excel");
 	    response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
@@ -471,7 +483,8 @@ public class SummariesControlAction extends FenixDispatchAction {
 
     private void exportToXls(DepartmentSummaryElement departmentSummaryResume, final Department department,
 	    final ExecutionSemester executionSemester, final OutputStream os) throws IOException {
-	final StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet(getResourceMessage("label.alumni.main.title"));
+	final StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet(getResourceMessage(DEFAULT_MODULE,
+		"link.summaries.control"));
 
 	fillSpreadSheet(departmentSummaryResume, department, executionSemester, spreadsheet);
 	spreadsheet.getWorkbook().write(os);
@@ -484,6 +497,7 @@ public class SummariesControlAction extends FenixDispatchAction {
      * @param departmentSummaryResume
      * @param department
      * @param semester
+     * @param x
      * @param sheet
      */
     private void fillSpreadSheet(DepartmentSummaryElement departmentSummaryResume, Department department,
@@ -520,7 +534,7 @@ public class SummariesControlAction extends FenixDispatchAction {
 
 		sheet.addCell(person.getName());
 		sheet.addCell(person.getTeacher() != null ? person.getTeacher().getTeacherNumber() : null);
-		sheet.addCell(person.getEmail());
+		sheet.addCell(person.getDefaultEmailAddress());
 		counter++;
 
 	    }
@@ -530,18 +544,18 @@ public class SummariesControlAction extends FenixDispatchAction {
     private void setHeaders(final StyledExcelSpreadsheet spreadsheet) {
 	spreadsheet.newHeaderRow();
 
-	spreadsheet.addHeader(getResourceMessage("label.excel.semester"));
-	spreadsheet.addHeader(getResourceMessage("label.excel.department"));
-	spreadsheet.addHeader(getResourceMessage("label.excel.course"));
-	spreadsheet.addHeader(getResourceMessage("label.excel.lessons"));
-	spreadsheet.addHeader(getResourceMessage("label.excel.lessons.summaries"));
-	spreadsheet.addHeader(getResourceMessage("label.excel.lessons.summaries.percentage"));
-	spreadsheet.addHeader(getResourceMessage("label.excel.professorName"));
-	spreadsheet.addHeader(getResourceMessage("label.excel.professorUsername"));
-	spreadsheet.addHeader(getResourceMessage("label.excel.professorEmail"));
+	spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.semester"));
+	spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.department"));
+	spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.course"));
+	spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.lessons"));
+	spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.lessons.summaries"));
+	spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.lessons.summaries.percentage"));
+	spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.professorName"));
+	spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.professorUsername"));
+	spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.professorEmail"));
     }
 
-    static private String getResourceMessage(String key) {
-	return BundleUtil.getMessageFromModuleOrApplication(MODULE, key);
+    static private String getResourceMessage(String module, String key) {
+	return BundleUtil.getMessageFromModuleOrApplication(module, key);
     }
 }
