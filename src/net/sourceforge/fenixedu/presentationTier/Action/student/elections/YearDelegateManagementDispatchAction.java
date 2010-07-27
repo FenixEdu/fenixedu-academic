@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
 import net.sourceforge.fenixedu.domain.elections.DelegateElectionPeriod;
 import net.sourceforge.fenixedu.domain.elections.DelegateElectionResultsByStudentDTO;
+import net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod;
 import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -58,19 +59,21 @@ public class YearDelegateManagementDispatchAction extends FenixDispatchAction {
 	}
 
 	if (currentPeriod != null && currentPeriod.isVotingPeriod()) {
-	    if (yearDelegateElection.getVotingStudents().contains(person.getStudent())) {
+	    if (((DelegateElectionVotingPeriod) currentPeriod).getVotingStudents().contains(person.getStudent())) {
 		// aluno ja votou: pode apenas verificar em quem votou e alterar
 		// voto?
 		request.setAttribute("votedYearDelegate", yearDelegateElection);
 	    } else {
 		// aluno ainda nao votou: pode votar
 		final List<Student> candidatesList = yearDelegateElection.getCandidates();
+
 		List<StudentVoteBean> candidatesBeanList = new ArrayList<StudentVoteBean>();
 		for (final Student student : candidatesList) {
 		    candidatesBeanList.add(new StudentVoteBean(student));
 		}
 
 		final List<Student> otherStudentsList = yearDelegateElection.getNotCandidatedStudents();
+
 		List<StudentVoteBean> otherStudentsBeanList = new ArrayList<StudentVoteBean>();
 		for (final Student student : otherStudentsList) {
 		    otherStudentsBeanList.add(new StudentVoteBean(student));
@@ -85,14 +88,15 @@ public class YearDelegateManagementDispatchAction extends FenixDispatchAction {
 	    }
 	}
 
-	if (yearDelegateElection != null && yearDelegateElection.hasVotingPeriod()
-		&& yearDelegateElection.getVotingPeriod().isPastPeriod()) {
+	if (yearDelegateElection != null && yearDelegateElection.hasLastVotingPeriod()
+		&& yearDelegateElection.getLastVotingPeriod().isPastPeriod()) {
 	    final List<DelegateElectionResultsByStudentDTO> electionResultsByStudentDTOList = yearDelegateElection
-		    .getDelegateElectionResults();
+		    .getLastVotingPeriod().getDelegateElectionResults();
 
 	    request.setAttribute("yearDelegateResultsElection", electionResultsByStudentDTOList);
 	    request.setAttribute("yearDelegateElection", yearDelegateElection);
 	}
+	request.setAttribute("nrBlankVotes", yearDelegateElection.getLastVotingPeriod().getBlankVotesElection());
 
 	return mapping.findForward("showYearDelegateManagement");
     }
@@ -202,4 +206,5 @@ public class YearDelegateManagementDispatchAction extends FenixDispatchAction {
     private boolean isBlankVote(StudentVoteBean voteBean) {
 	return voteBean == null || voteBean.getStudent() == null;
     }
+
 }

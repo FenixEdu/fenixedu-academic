@@ -16345,8 +16345,8 @@ relation DelegateElectionStudent {
     }
 }
 
-relation DelegateElectionVotingStudent {
-    elections.DelegateElection playsRole electionsWithVotingStudents {
+relation DelegateElectionVotingPeriodVotingStudent {
+    elections.DelegateElectionVotingPeriod playsRole electionsWithVotingStudents {
         multiplicity *;
     }
     student.Student playsRole votingStudents {
@@ -16354,9 +16354,11 @@ relation DelegateElectionVotingStudent {
     }
 }
 
-relation DelegateElectionVote {
-    elections.DelegateElection playsRole delegateElection;
-    elections.DelegateElectionVote playsRole votes {
+relation DelegateElectionVotingPeriodStudentForNewRoundElections {
+    elections.DelegateElectionVotingPeriod playsRole votingPeriodForNewRoundElections {
+        multiplicity *;
+    }
+    student.Student playsRole candidatesForNewRoundElections {
         multiplicity *;
     }
 }
@@ -16389,7 +16391,15 @@ relation DelegateElectionDelegateElectionCandidacyPeriod {
 
 relation DelegateElectionDelegateElectionVotingPeriod {
     elections.DelegateElection playsRole delegateElection;
-    elections.DelegateElectionVotingPeriod playsRole votingPeriod;
+    elections.DelegateElectionVotingPeriod playsRole votingPeriod
+    {
+        multiplicity *;
+    }
+}
+relation DelegateElectionVotingPeriodDelegateElectionVote {
+    elections.DelegateElectionVotingPeriod playsRole delegateElection;
+    elections.DelegateElectionVote playsRole votes {
+        multiplicity *;    }
 }
 
 relation StudentDelegateElection {

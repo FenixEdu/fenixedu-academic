@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.elections.DelegateElectionBlankVote;
 import net.sourceforge.fenixedu.domain.elections.DelegateElectionVote;
+import net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod;
 import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -26,16 +27,18 @@ public class VoteYearDelegateElections extends FenixService {
 	    throws FenixServiceException {
 
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.DelegateResources", Language.getLocale());
+	DelegateElectionVotingPeriod votingPeriod = yearDelegateElection.getCurrentVotingPeriod();
+
 	try {
-	    if (!yearDelegateElection.getVotingStudents().contains(student)) {
+	    if (!votingPeriod.getVotingStudents().contains(student)) {
 		final String fromName = bundle.getString("VoteYearDelegateElections.email.fromName");
 		final String fromAddress = bundle.getString("VoteYearDelegateElections.email.fromAddress");
 		final String subject = fromName + "-" + bundle.getString("VoteYearDelegateElections.email.subject");
 		final String msg = bundle.getString("VoteYearDelegateElections.email.message");
 		final Person person = student.getPerson();
-		DelegateElectionVote vote = createDelegateElectionVote(yearDelegateElection, votedStudent);
-		yearDelegateElection.addVotingStudents(student);
-		yearDelegateElection.addVotes(vote);
+		DelegateElectionVote vote = createDelegateElectionVote(votingPeriod, votedStudent);
+		votingPeriod.addVotingStudents(student);
+		votingPeriod.addVotes(vote);
 		new Message(rootDomainObject.getSystemSender(), new ConcreteReplyTo(fromAddress).asCollection(), new Recipient(
 			new PersonGroup(person)).asCollection(), subject, msg, "");
 	    } else {
@@ -46,11 +49,11 @@ public class VoteYearDelegateElections extends FenixService {
 	}
     }
 
-    public static DelegateElectionVote createDelegateElectionVote(YearDelegateElection yearDelegateElection, Student votedStudent) {
+    private static DelegateElectionVote createDelegateElectionVote(DelegateElectionVotingPeriod votingPeriod, Student votedStudent) {
 	if (DelegateElectionBlankVote.isBlankVote(votedStudent)) {
-	    return new DelegateElectionBlankVote(yearDelegateElection);
+	    return new DelegateElectionBlankVote(votingPeriod);
 	}
-	return new DelegateElectionVote(yearDelegateElection, votedStudent);
+	return new DelegateElectionVote(votingPeriod, votedStudent);
     }
 
 }

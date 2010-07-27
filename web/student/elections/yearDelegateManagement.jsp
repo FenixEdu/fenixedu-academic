@@ -17,6 +17,18 @@
 	</html:messages>
 </logic:messagesPresent>
 
+<logic:present name="votedYearDelegate"> 
+	<logic:equal value="true" name="votedYearDelegate" property="lastVotingPeriod.secondRoundElections">
+		<h3><bean:message key="label.elections.secondRoundElections" bundle="PEDAGOGICAL_COUNCIL" /></h3>
+	</logic:equal>  
+</logic:present>
+
+<logic:present name="notVotedYearDelegate"> 
+	<logic:equal value="true" name="notVotedYearDelegate" property="lastVotingPeriod.secondRoundElections">
+		<h3><bean:message key="label.elections.secondRoundElections" bundle="PEDAGOGICAL_COUNCIL" /></h3>
+	</logic:equal>  
+</logic:present>
+
 <logic:notPresent name="currentYearDelegateElection" >
 	<logic:notPresent name="votedYearDelegate" >
 		<logic:notPresent name="notVotedYearDelegate" >
@@ -47,6 +59,8 @@
 			            	<fr:property name="sortBy" value="<%= request.getParameter("sortBy") == null ? "votesNumber=descending" : request.getParameter("sortBy")  %>"/>
 						</fr:layout>
 					</fr:view>
+					<b><bean:message key="label.elections.nrBlankVotes" bundle="PEDAGOGICAL_COUNCIL"/></b>
+					<bean:write name="yearDelegateElection"  property="lastVotingPeriod.blankVotesElection"/>
 				</logic:present>
 		</logic:notPresent>
 	</logic:notPresent>
@@ -223,7 +237,7 @@
 		</logic:present>
 
 
-
+	<logic:equal value="false" name="notVotedYearDelegate" property="lastVotingPeriod.secondRoundElections">
 		<fr:form action="/yearDelegateManagement.do">
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareVote" />
 			<fr:edit id="notVotedYearDelegate" name="notVotedYearDelegate" visible="false" />
@@ -248,7 +262,7 @@
 				
 			</div>
 		</fr:form>
-
+	</logic:equal>
 		
 	</logic:present>
 </logic:notPresent>

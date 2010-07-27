@@ -2,18 +2,22 @@ package net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.elec
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.pedagogicalCouncil.elections.CreateDelegateVotingPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.ElectionPeriodBean;
+import net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.NewRoundElectionBean;
 import net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.YearDelegateElectionsPeriodsByDegreeBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
 import net.sourceforge.fenixedu.domain.elections.DelegateElectionResultsByStudentDTO;
+import net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod;
 import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -118,7 +122,7 @@ public class ElectionsPeriodsManagementDispatchAction extends FenixDispatchActio
 
 	final ExecutionYear executionYear = yearDelegateElection.getExecutionYear();
 
-	List<DelegateElectionResultsByStudentDTO> electionResultsByStudentDTOList = yearDelegateElection
+	List<DelegateElectionResultsByStudentDTO> electionResultsByStudentDTOList = yearDelegateElection.getLastVotingPeriod()
 		.getDelegateElectionResults();
 
 	ElectionPeriodBean bean = new ElectionPeriodBean();
@@ -194,16 +198,68 @@ public class ElectionsPeriodsManagementDispatchAction extends FenixDispatchActio
 
 	request.setAttribute("selectedPeriod", election);
 
-	if (election.hasVotingPeriod() && !election.getVotingPeriod().isPastPeriod())
+	if (election.hasLastVotingPeriod() && !election.getLastVotingPeriod().isPastPeriod())
 	    return mapping.findForward("editYearDelegateVotingPeriod");
 	else
 	    return mapping.findForward("createYearDelegateVotingPeriod");
+    }
+
+    public ActionForward secondRoundElections(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	Integer electionOID = Integer.parseInt(request.getParameter("selectedPeriod"));
+	final DelegateElection election = rootDomainObject.readDelegateElectionByOID(electionOID);
+
+	List<Student> candidatesHadVoted = new LinkedList<Student>();
+
+	List<Student> candidatesHadNotVoted = new LinkedList<Student>();
+
+	ElectionPeriodBean bean = new ElectionPeriodBean();
+	bean.setDegree(election.getDegree());
+	bean.setDegreeType(election.getDegree().getDegreeType());
+	bean.setCurricularYear(((YearDelegateElection) election).getCurricularYear());
+	bean.setElection(election);
+
+	DelegateElectionVotingPeriod votingPeriod = election.getLastVotingPeriod();
+
+	request.setAttribute("electionPeriodBean", bean);
+	request.setAttribute("newElectionPeriodBean", bean);
+	request.setAttribute("secondRoundElectionsCandidatesBean", new NewRoundElectionBean(candidatesHadVoted, election));
+	request.setAttribute("secondRoundElectionsNotCandidatesBean", new NewRoundElectionBean(candidatesHadNotVoted, election));
+
+	if (!votingPeriod.isFirstRoundElections()) {
+	    return mapping.findForward("secondRoundElections");
+	}
+
+	for (Student candidate : election.getCandidaciesHadVoted(votingPeriod)) {
+	    candidatesHadVoted.add(candidate);
+	}
+
+	for (Student candidate : election.getNotCandidaciesHadVoted(votingPeriod)) {
+	    candidatesHadNotVoted.add(candidate);
+	}
+
+	return mapping.findForward("secondRoundElections");
+    }
+
+    public ActionForward addCandidatesToSecondRoundElections(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	NewRoundElectionBean secondRoundElectionsCandidatesBean = (NewRoundElectionBean) getRenderedObject("secondRoundElectionsCandidatesBean");
+	NewRoundElectionBean secondRoundElectionsNotCandidatesBean = (NewRoundElectionBean) getRenderedObject("secondRoundElectionsNotCandidatesBean");
+
+	ElectionPeriodBean newElectionPeriodBean = (ElectionPeriodBean) getRenderedObject("newElectionPeriodBean");
+
+	CreateDelegateVotingPeriod.run(newElectionPeriodBean, secondRoundElectionsCandidatesBean,
+		secondRoundElectionsNotCandidatesBean);
+
+	return prepare(mapping, actionForm, request, response);
     }
 
     /*
      * AUXIALIARY METHODS
      */
 
+    @Override
     protected Object getFromRequest(HttpServletRequest request, String id) {
 	if (RenderUtils.getViewState(id) != null)
 	    return RenderUtils.getViewState(id).getMetaObject().getObject();

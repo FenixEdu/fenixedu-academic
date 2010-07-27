@@ -240,8 +240,7 @@ public class DelegateElectionPeriodRenderer extends OutputRenderer {
 			    + ((DelegateElectionCandidacyPeriod) electionPeriod).getDelegateElection().getCandidatesCount()
 			    + postLabel + ")";
 		} else {
-		    longResume = "(" + ((DelegateElectionVotingPeriod) electionPeriod).getDelegateElection().getVotesCount()
-			    + postLabel + ")";
+		    longResume = "(" + ((DelegateElectionVotingPeriod) electionPeriod).getVotesCount() + postLabel + ")";
 		}
 
 		return (isLongResume ? shortResume + "<br/>" + longResume : shortResume);

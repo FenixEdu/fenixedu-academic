@@ -29,6 +29,17 @@ public abstract class DelegateElectionPeriod extends DelegateElectionPeriod_Base
 	return (currentDate.isAfter(this.getEndDate()) ? true : false);
     }
 
+    public boolean containsPeriod(YearMonthDay startDate, YearMonthDay endDate) {
+	if (startDate == null || endDate == null) {
+	    return false;
+	}
+	if (((startDate.isAfter(getStartDate()) || startDate.isEqual(getStartDate())) && (endDate.isBefore(getEndDate()) || endDate
+		.isEqual(getEndDate()))))
+	    return true;
+	return false;
+
+    }
+
     public boolean endsBefore(DelegateElectionPeriod electionPeriod) {
 	if (this.getEndDate().isBefore(electionPeriod.getStartDate()))
 	    return true;
@@ -51,4 +62,11 @@ public abstract class DelegateElectionPeriod extends DelegateElectionPeriod_Base
 	super.removeRootDomainObject();
 	super.deleteDomainObject();
     }
+
+    public abstract boolean isFirstRoundElections();
+
+    public abstract boolean isSecondRoundElections();
+
+    public abstract boolean isOpenRoundElections();
+
 }

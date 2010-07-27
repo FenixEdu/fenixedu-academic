@@ -2,10 +2,10 @@ package net.sourceforge.fenixedu.domain.elections;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Student;
 
@@ -22,14 +22,14 @@ public abstract class DelegateElection extends DelegateElection_Base {
 
     public static final Comparator<DelegateElection> ELECTION_COMPARATOR_BY_VOTING_START_DATE_AND_CANDIDACY_START_DATE = new Comparator<DelegateElection>() {
 	public int compare(DelegateElection e1, DelegateElection e2) {
-	    if (e1.getVotingStartDate() == null && e2.getVotingStartDate() != null) {
+	    if (e1.getLastVotingStartDate() == null && e2.getLastVotingStartDate() != null) {
 		return -1;
-	    } else if (e1.getVotingStartDate() != null && e2.getVotingStartDate() == null) {
+	    } else if (e1.getLastVotingStartDate() != null && e2.getLastVotingStartDate() == null) {
 		return 1;
-	    } else if (e1.getVotingStartDate() == null && e2.getVotingStartDate() == null) {
+	    } else if (e1.getLastVotingStartDate() == null && e2.getLastVotingStartDate() == null) {
 		return (e1.getCandidacyStartDate().isBefore(e2.getCandidacyStartDate()) ? -1 : 1);
 	    } else {
-		return (e1.getVotingStartDate().isBefore(e2.getVotingStartDate()) ? -1 : 1);
+		return (e1.getLastVotingStartDate().isBefore(e2.getLastVotingStartDate()) ? -1 : 1);
 	    }
 	}
     };
@@ -54,16 +54,16 @@ public abstract class DelegateElection extends DelegateElection_Base {
 	    return null;
     }
 
-    public YearMonthDay getVotingStartDate() {
-	if (hasVotingPeriod())
-	    return getVotingPeriod().getStartDate();
+    public YearMonthDay getLastVotingStartDate() {
+	if (hasLastVotingPeriod())
+	    return getLastVotingPeriod().getStartDate();
 	else
 	    return null;
     }
 
-    public YearMonthDay getVotingEndDate() {
-	if (hasVotingPeriod())
-	    return getVotingPeriod().getEndDate();
+    public YearMonthDay getLastVotingEndDate() {
+	if (hasLastVotingPeriod())
+	    return getLastVotingPeriod().getEndDate();
 	else
 	    return null;
     }
@@ -75,9 +75,11 @@ public abstract class DelegateElection extends DelegateElection_Base {
 	if (hasCandidacyPeriod())
 	    getCandidacyPeriod().delete();
 
-	if (hasVotingPeriod())
-	    deleteVotingPeriod();
-
+	if (hasAnyVotingPeriod()) {
+	    for (DelegateElectionVotingPeriod votingPeriod : getVotingPeriod()) {
+		deleteVotingPeriod(votingPeriod);
+	    }
+	}
 	super.getStudents().clear();
 	super.getCandidates().clear();
 
@@ -89,28 +91,30 @@ public abstract class DelegateElection extends DelegateElection_Base {
 	super.deleteDomainObject();
     }
 
-    protected void deleteVotingPeriod() {
-	getVotingPeriod().delete();
+    protected void deleteVotingPeriod(DelegateElectionVotingPeriod votingPeriod) {
 
-	for (; hasAnyVotes(); getVotes().get(0).delete())
+	for (; votingPeriod.hasAnyVotes(); votingPeriod.getVotes().get(0).delete())
 	    ;
 
 	if (hasElectedStudent())
 	    removeElectedStudent();
 
-	super.getVotingStudents().clear();
+	votingPeriod.getVotingStudents().clear();
+
+	votingPeriod.delete();
+
     }
 
     public DelegateElectionPeriod getLastElectionPeriod() {
-	if (hasVotingPeriod())
-	    return getVotingPeriod();
+	if (hasLastVotingPeriod())
+	    return getLastVotingPeriod();
 	else
 	    return getCandidacyPeriod();
     }
 
     public DelegateElectionPeriod getCurrentElectionPeriod() {
-	if (hasVotingPeriod() && getVotingPeriod().isCurrentPeriod())
-	    return getVotingPeriod();
+	if (hasLastVotingPeriod() && getLastVotingPeriod().isCurrentPeriod())
+	    return getLastVotingPeriod();
 	else if (getCandidacyPeriod().isCurrentPeriod())
 	    return getCandidacyPeriod();
 	return null;
@@ -124,18 +128,9 @@ public abstract class DelegateElection extends DelegateElection_Base {
     }
 
     public boolean hasVotingPeriodIntersecting(YearMonthDay startDate, YearMonthDay endDate) {
-	if (!(startDate.isAfter(getVotingEndDate()) || startDate.isEqual(getVotingEndDate())
-		|| endDate.isBefore(getVotingStartDate()) || endDate.isEqual(getVotingStartDate())))
+	if (!(startDate.isAfter(getLastVotingEndDate()) || startDate.isEqual(getLastVotingEndDate())
+		|| endDate.isBefore(getLastVotingStartDate()) || endDate.isEqual(getLastVotingStartDate())))
 	    return true;
-	return false;
-    }
-
-    public boolean hasVotedStudent(Student student) {
-	for (DelegateElectionVote vote : getVotes()) {
-	    if (vote.getStudent().equals(student)) {
-		return true;
-	    }
-	}
 	return false;
     }
 
@@ -145,33 +140,68 @@ public abstract class DelegateElection extends DelegateElection_Base {
 	return result;
     }
 
-    public List<DelegateElectionResultsByStudentDTO> getDelegateElectionResults() {
-	Map<Student, DelegateElectionResultsByStudentDTO> votingResultsMap = new HashMap<Student, DelegateElectionResultsByStudentDTO>();
-
-	Student student = null;
-	int totalVoteCount = 0;
-	int studentVotesCount = 0;
-	int totalStudentsCount = getCandidatesCount() + getStudentsCount();
-
-	for (DelegateElectionVote vote : getVotes()) {
-	    totalVoteCount++;
-	    student = vote.getStudent();
-	    if (votingResultsMap.containsKey(student)) {
-		DelegateElectionResultsByStudentDTO votingResults = votingResultsMap.get(student);
-		studentVotesCount = votingResults.getVotesNumber() + 1;
-		votingResults.setVotesNumber(studentVotesCount);
-	    } else {
-		votingResultsMap.put(student, new DelegateElectionResultsByStudentDTO(this, student));
+    public List<Student> getCandidaciesHadVoted(DelegateElectionVotingPeriod votingPeriod) {
+	List<Student> candidateshadVoted = new ArrayList<Student>();
+	for (Student student : getCandidates()) {
+	    if (votingPeriod.hasVotedStudent(student)) {
+		candidateshadVoted.add(student);
 	    }
 	}
+	return candidateshadVoted;
+    }
 
-	List<DelegateElectionResultsByStudentDTO> votingResultsBeanList = new ArrayList<DelegateElectionResultsByStudentDTO>(
-		votingResultsMap.values());
-	for (DelegateElectionResultsByStudentDTO results : votingResultsBeanList) {
-	    results.calculateResults(totalStudentsCount, totalVoteCount);
+    public List<Student> getNotCandidaciesHadVoted(DelegateElectionVotingPeriod votingPeriod) {
+	List<Student> candidacieshadVoted = new ArrayList<Student>();
+	for (Student student : getNotCandidatedStudents()) {
+	    if (votingPeriod.hasVotedStudent(student)) {
+		candidacieshadVoted.add(student);
+	    }
 	}
+	return candidacieshadVoted;
+    }
 
-	return votingResultsBeanList;
+    public DelegateElectionVotingPeriod getLastVotingPeriod() {
+	DelegateElectionVotingPeriod lastVotingPeriod = null;
+	for (DelegateElectionVotingPeriod votingPeriod : getVotingPeriod()) {
+	    if (lastVotingPeriod == null) {
+		lastVotingPeriod = votingPeriod;
+	    } else {
+		if (!votingPeriod.endsBefore(lastVotingPeriod)) {
+		    lastVotingPeriod = votingPeriod;
+		}
+	    }
+	}
+	return lastVotingPeriod;
+    }
+
+    public boolean hasLastVotingPeriod() {
+	return getVotingPeriodCount() > 0;
+    }
+
+    public boolean hasVotingPeriod(YearMonthDay startDate, YearMonthDay endDate) {
+	return getVotingPeriod(startDate, endDate) != null;
+    }
+
+    public DelegateElectionVotingPeriod getVotingPeriod(YearMonthDay startDate, YearMonthDay endDate) {
+	for (DelegateElectionVotingPeriod votingPeriod : getVotingPeriod()) {
+	    if (votingPeriod.containsPeriod(startDate, endDate)) {
+		return votingPeriod;
+	    }
+	}
+	return null;
+    }
+
+    public boolean isCurrentDelegationElection() {
+	return getExecutionYear().equals(ExecutionYear.readCurrentExecutionYear());
+    }
+
+    public static DelegateElection readCurrentDelegateElectionByDegree(Degree degree) {
+	for (DelegateElection election : RootDomainObject.getInstance().getDelegateElections()) {
+	    if (election.isCurrentDelegationElection() && election.getDegree().equals(degree)) {
+		return election;
+	    }
+	}
+	return null;
     }
 
     /*
@@ -181,9 +211,10 @@ public abstract class DelegateElection extends DelegateElection_Base {
 
     public abstract void editCandidacyPeriod(YearMonthDay startDate, YearMonthDay endDate);
 
-    public abstract void editVotingPeriod(YearMonthDay startDate, YearMonthDay endDate);
+    public abstract void editVotingPeriod(YearMonthDay startDate, YearMonthDay endDate, DelegateElectionVotingPeriod votingPeriod);
 
     public abstract void deleteCandidacyPeriod();
 
-    public abstract void deleteVotingPeriod(boolean removeElection);
+    public abstract void deleteVotingPeriod(DelegateElectionVotingPeriod votingPeriod, boolean removeElection);
+
 }

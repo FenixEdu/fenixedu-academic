@@ -19,7 +19,7 @@ public class EditDelegateVotingPeriod extends FenixService {
 	DelegateElection election = bean.getElection();
 
 	try {
-	    election.editVotingPeriod(bean.getStartDate(), bean.getEndDate());
+	    election.editVotingPeriod(bean.getStartDate(), bean.getEndDate(), election.getLastVotingPeriod());
 	} catch (DomainException ex) {
 	    throw new FenixServiceException(ex.getMessage(), ex.getArgs());
 	}

@@ -45,6 +45,7 @@ import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
+import net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod;
 import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithInvocationResult;
@@ -270,7 +271,7 @@ public class Student extends Student_Base {
 	return activeRegistrations.isEmpty() ? null : (Registration) Collections.max(activeRegistrations,
 		Registration.COMPARATOR_BY_START_DATE);
     }
-    
+
     public Registration getLastRegistration() {
 	List<Registration> activeRegistrations = getRegistrations();
 	return activeRegistrations.isEmpty() ? null : (Registration) Collections.max(activeRegistrations,
@@ -682,10 +683,10 @@ public class Student extends Student_Base {
 	}
 	return result;
     }
-    
+
     public boolean isSenior(ExecutionYear executionYear) {
-	for(StudentStatute statute : getStudentStatutes()) {
-	    if(statute.isValidOn(executionYear) && statute.getStatuteType() == StudentStatuteType.SENIOR) {
+	for (StudentStatute statute : getStudentStatutes()) {
+	    if (statute.isValidOn(executionYear) && statute.getStatuteType() == StudentStatuteType.SENIOR) {
 		return true;
 	    }
 	}
@@ -1598,10 +1599,11 @@ public class Student extends Student_Base {
 	return firstYear;
     }
 
-    public boolean hasAlreadyVotedForYearDelegateElection(ExecutionYear executionYear) {
-	for (DelegateElection delegateElection : getElectionsWithVotingStudentsSet()) {
-	    if (delegateElection instanceof YearDelegateElection) {
-		YearDelegateElection yearDelegateElection = (YearDelegateElection) delegateElection;
+    public boolean hasAlreadyVotedForYearDelegateElection(ExecutionYear executionYear, DelegateElectionVotingPeriod votingPeriod) {
+	for (DelegateElectionVotingPeriod delegateElectionVotingPeriod : getElectionsWithVotingStudentsSet()) {
+	    if (delegateElectionVotingPeriod.getDelegateElection() instanceof YearDelegateElection) {
+		YearDelegateElection yearDelegateElection = (YearDelegateElection) delegateElectionVotingPeriod
+			.getDelegateElection();
 		if (yearDelegateElection.getExecutionYear() == executionYear) {
 		    return true;
 		}
@@ -1702,6 +1704,18 @@ public class Student extends Student_Base {
 
     public void deleteExportInformationPassword() {
 	setExportInformationPassword(null);
+    }
+
+    public int getNrVotesLastElection() {
+	DelegateElection delegateElection = DelegateElection.readCurrentDelegateElectionByDegree(getLastActiveRegistration()
+		.getDegree());
+	return delegateElection.getLastVotingPeriod().getNrVotesByStudent(this);
+    }
+
+    public int getTotalPercentageLastElection() {
+	DelegateElection delegateElection = DelegateElection.readCurrentDelegateElectionByDegree(getLastActiveRegistration()
+		.getDegree());
+	return delegateElection.getLastVotingPeriod().getTotalPercentageElection(this);
     }
 
     @Override

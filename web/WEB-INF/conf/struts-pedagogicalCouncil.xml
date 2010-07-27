@@ -110,6 +110,7 @@
 			 <forward name="showVotingPeriods" path="showVotingPeriods"/>
 			 <forward name="showVotingResults" path="showVotingResults"/>
 			 <forward name="showPossibleDelegates" path="showPossibleDelegates"/>
+			 <forward name="secondRoundElections" path="secondRoundElections"/>
 		 </action>
 		 
 		 <action path="/sendEmailToStudents"

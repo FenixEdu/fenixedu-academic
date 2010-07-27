@@ -164,7 +164,7 @@ public class DelegateBean implements Serializable {
     }
 
     public boolean isEmptyYearDelegateBeanWithElection() {
-	return (hasDelegateElection() && getDelegateElection().hasVotingPeriod() && !hasYearDelegate() ? true : false);
+	return (hasDelegateElection() && getDelegateElection().hasLastVotingPeriod() && !hasYearDelegate() ? true : false);
     }
 
     public boolean isYearDelegateBeanWithElectedElection() {

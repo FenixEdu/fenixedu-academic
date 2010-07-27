@@ -71,6 +71,10 @@
        <put name="body" value="/pedagogicalCouncil/elections/showVotingResults.jsp"/>  
     </definition>
     
+    <definition name="secondRoundElections" extends="pedagogicalCouncil.masterPage">
+       <put name="body" value="/pedagogicalCouncil/elections/secondRoundElections.jsp"/>  
+    </definition>
+
     <definition name="createEditDelegates" extends="pedagogicalCouncil.masterPage">
        <put name="body" value="/pedagogicalCouncil/delegates/createEditDelegates.jsp"/>  
     </definition>

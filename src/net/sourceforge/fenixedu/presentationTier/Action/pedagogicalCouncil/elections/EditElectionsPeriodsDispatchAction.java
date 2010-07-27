@@ -64,8 +64,8 @@ public class EditElectionsPeriodsDispatchAction extends ElectionsPeriodsManageme
 	Integer electionOID = Integer.parseInt((String) getFromRequest(request, "selectedPeriod"));
 	final DelegateElection election = rootDomainObject.readDelegateElectionByOID(electionOID);
 
-	YearMonthDay startDate = election.getVotingStartDate();
-	YearMonthDay endDate = election.getVotingEndDate();
+	YearMonthDay startDate = election.getLastVotingStartDate();
+	YearMonthDay endDate = election.getLastVotingEndDate();
 
 	return prepareEditYearDelegateElectionPeriod(mapping, actionForm, request, response, election, startDate, endDate);
     }

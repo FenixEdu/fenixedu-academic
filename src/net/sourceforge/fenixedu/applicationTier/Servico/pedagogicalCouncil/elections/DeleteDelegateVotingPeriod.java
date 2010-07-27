@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
+import net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
@@ -17,7 +18,13 @@ public class DeleteDelegateVotingPeriod extends FenixService {
     public static void run(ElectionPeriodBean bean) throws FenixServiceException {
 	try {
 	    DelegateElection election = bean.getElection();
-	    election.deleteVotingPeriod(bean.getRemoveCandidacyPeriod());
+	    DelegateElectionVotingPeriod votingPeriod;
+	    if (election.hasVotingPeriod(bean.getStartDate(), bean.getEndDate())) {
+		votingPeriod = election.getVotingPeriod(bean.getStartDate(), bean.getEndDate());
+	    } else {
+		votingPeriod = election.getLastVotingPeriod();
+	    }
+	    election.deleteVotingPeriod(votingPeriod, bean.getRemoveCandidacyPeriod());
 	} catch (DomainException ex) {
 	    throw new FenixServiceException(ex.getMessage(), ex.getArgs());
 	}

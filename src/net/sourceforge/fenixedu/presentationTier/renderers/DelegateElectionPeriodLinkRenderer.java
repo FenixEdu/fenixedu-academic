@@ -62,6 +62,10 @@ public class DelegateElectionPeriodLinkRenderer extends OutputRenderer {
 
     private boolean isVotingPeriodPreLabelKey;
 
+    private String secondRoundPeriodLabel;
+
+    private String secondRoundPeriodLink;
+
     public String getDateHtmlSeparator() {
 	return dateHtmlSeparator;
     }
@@ -327,6 +331,22 @@ public class DelegateElectionPeriodLinkRenderer extends OutputRenderer {
 	this.pastPeriodClasses = pastPeriodClasses;
     }
 
+    public void setSecondRoundPeriodLabel(String secondRoundPeriodLabel) {
+	this.secondRoundPeriodLabel = secondRoundPeriodLabel;
+    }
+
+    public String getSecondRoundPeriodLabel() {
+	return secondRoundPeriodLabel;
+    }
+
+    public void setSecondRoundPeriodLink(String secondRoundPeriodLink) {
+	this.secondRoundPeriodLink = secondRoundPeriodLink;
+    }
+
+    public String getSecondRoundPeriodLink() {
+	return secondRoundPeriodLink;
+    }
+
     @Override
     protected Layout getLayout(Object object, Class type) {
 	return new Layout() {
@@ -372,6 +392,16 @@ public class DelegateElectionPeriodLinkRenderer extends OutputRenderer {
 				link.setBody(new HtmlText(createLabel));
 				linkContainer.addChild(link);
 				container.addChild(linkContainer);
+			    } else {
+				// Secound Round Elections
+				if (electionPeriod.isOpenRoundElections() && electionPeriod.isFirstRoundElections()) {
+				    String createLabel = RenderUtils.getResourceString(getBundle(), getSecondRoundPeriodLabel());
+				    HtmlBlockContainer linkContainer = new HtmlBlockContainer();
+				    HtmlLink linkSecondRound = getSecondRoundLink(targetObject);
+				    linkSecondRound.setBody(new HtmlText(createLabel));
+				    linkContainer.addChild(linkSecondRound);
+				    container.addChild(linkContainer);
+				}
 			    }
 
 			    String pastPeriodLabel = (isPastPeriodLabelKey() ? RenderUtils.getResourceString(getBundle(),
@@ -429,13 +459,20 @@ public class DelegateElectionPeriodLinkRenderer extends OutputRenderer {
 			url = "#";
 		    }
 		}
+		setLink(link, url, usedObject);
+		return link;
+	    }
 
+	    private HtmlLink getSecondRoundLink(Object usedObject) {
+		HtmlLink link = new HtmlLink();
+		setLink(link, getSecondRoundPeriodLink(), usedObject);
+		return link;
+	    }
+
+	    private void setLink(HtmlLink link, String url, Object usedObject) {
 		link.setUrl(RenderUtils.getFormattedProperties(url, usedObject));
-
 		link.setModuleRelative(isModuleRelative());
 		link.setContextRelative(isContextRelative());
-
-		return link;
 	    }
 
 	    private String getPeriodResume(DelegateElectionPeriod electionPeriod, String preLabel, String postLabel,
@@ -452,8 +489,7 @@ public class DelegateElectionPeriodLinkRenderer extends OutputRenderer {
 			    + ((DelegateElectionCandidacyPeriod) electionPeriod).getDelegateElection().getCandidatesCount()
 			    + postLabel + ")";
 		} else {
-		    longResume = "(" + ((DelegateElectionVotingPeriod) electionPeriod).getDelegateElection().getVotesCount()
-			    + postLabel + ")";
+		    longResume = "(" + ((DelegateElectionVotingPeriod) electionPeriod).getVotesCount() + postLabel + ")";
 		}
 
 		return (isLongResume ? preLabel + shortResume + "<br/>" + longResume : preLabel + shortResume);

@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
+import net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod;
 
 import org.joda.time.YearMonthDay;
 
@@ -24,6 +25,8 @@ public class ElectionPeriodBean implements Serializable {
     private YearMonthDay endDate;
 
     private DelegateElection election;
+
+    private DelegateElectionVotingPeriod delegateElectionVotingPeriod;
 
     private boolean removeCandidacyPeriod;
 
@@ -94,5 +97,13 @@ public class ElectionPeriodBean implements Serializable {
 
     public void setExecutionYear(ExecutionYear executionYear) {
 	this.executionYear = executionYear;
+    }
+
+    public void setDelegateElectionVotingPeriod(DelegateElectionVotingPeriod delegateElectionVotingPeriod) {
+	this.delegateElectionVotingPeriod = delegateElectionVotingPeriod;
+    }
+
+    public DelegateElectionVotingPeriod getDelegateElectionVotingPeriod() {
+	return delegateElectionVotingPeriod;
     }
 }

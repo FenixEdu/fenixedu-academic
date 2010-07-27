@@ -5,10 +5,10 @@ import net.sourceforge.fenixedu.domain.student.Student;
 
 public class DelegateElectionBlankVote extends DelegateElectionBlankVote_Base {
 
-    public DelegateElectionBlankVote(DelegateElection election) {
+    public DelegateElectionBlankVote(DelegateElectionVotingPeriod votingPeriod) {
 	super();
-	checkParameters(election);
-	setDelegateElection(election);
+	checkParameters(votingPeriod);
+	setDelegateElection(votingPeriod);
     }
 
     @Override
@@ -18,9 +18,9 @@ public class DelegateElectionBlankVote extends DelegateElectionBlankVote_Base {
 	super.deleteDomainObject();
     }
 
-    private void checkParameters(final DelegateElection election) {
-	if (election == null) {
-	    throw new DomainException("error.delegateElection.cannot.be.null");
+    private void checkParameters(final DelegateElectionVotingPeriod votingPeriod) {
+	if (votingPeriod == null) {
+	    throw new DomainException("error.votingPeriod.cannot.be.null");
 	}
     }
 

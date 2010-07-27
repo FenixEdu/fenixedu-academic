@@ -1,11 +1,15 @@
 package net.sourceforge.fenixedu.domain.elections;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Student;
 
 import org.joda.time.YearMonthDay;
 
@@ -38,11 +42,12 @@ public class YearDelegateElection extends YearDelegateElection_Base {
     public void setCandidacyPeriod(DelegateElectionCandidacyPeriod candidacyPeriod) {
 	if (candidacyPeriod != null) {
 	    validatePeriodGivenExecutionYear(getExecutionYear(), candidacyPeriod);
-
-	    if (hasVotingPeriod() && !candidacyPeriod.endsBefore(getVotingPeriod())) {
-		throw new DomainException("error.elections.edit.colidesWithVotingPeriod", new String[] { getDegree().getSigla(),
-			getCurricularYear().getYear().toString(), candidacyPeriod.getPeriod(), getVotingPeriod().getPeriod() });
-	    }
+	    if (hasLastVotingPeriod())
+		if (candidacyPeriod.endsBefore(getLastVotingPeriod())) {
+		    throw new DomainException("error.elections.edit.colidesWithVotingPeriod", new String[] {
+			    getDegree().getSigla(), getCurricularYear().getYear().toString(), candidacyPeriod.getPeriod(),
+			    getLastVotingPeriod().getPeriod() });
+		}
 	}
 
 	super.setCandidacyPeriod(candidacyPeriod);
@@ -50,7 +55,7 @@ public class YearDelegateElection extends YearDelegateElection_Base {
     }
 
     @Override
-    public void setVotingPeriod(DelegateElectionVotingPeriod votingPeriod) {
+    public void addVotingPeriod(DelegateElectionVotingPeriod votingPeriod) {
 	if (votingPeriod != null) {
 	    validatePeriodGivenExecutionYear(getExecutionYear(), votingPeriod);
 
@@ -60,12 +65,18 @@ public class YearDelegateElection extends YearDelegateElection_Base {
 	    }
 
 	    if (!getCandidacyPeriod().endsBefore(votingPeriod)) {
-		throw new DomainException("error.elections.edit.colidesWithVotingPeriod", new String[] { getDegree().getSigla(),
-			getCurricularYear().getYear().toString(), getCandidacyPeriod().getPeriod(), votingPeriod.getPeriod() });
+		throw new DomainException("error.elections.edit.colidesWithCandidacyPeriod", new String[] {
+			getDegree().getSigla(), getCurricularYear().getYear().toString(), getCandidacyPeriod().getPeriod(),
+			votingPeriod.getPeriod() });
+	    }
+	    if (!getLastElectionPeriod().endsBefore(votingPeriod)) {
+		throw new DomainException("error.elections.edit.colidesWithPreviousVotingPeriod", new String[] {
+			getDegree().getSigla(), getCurricularYear().getYear().toString(), getCandidacyPeriod().getPeriod(),
+			votingPeriod.getPeriod() });
+
 	    }
 	}
-
-	super.setVotingPeriod(votingPeriod);
+	super.addVotingPeriod(votingPeriod);
     }
 
     /*
@@ -80,7 +91,7 @@ public class YearDelegateElection extends YearDelegateElection_Base {
     }
 
     public boolean getCanYearDelegateBeElected() {
-	return (getVotingPeriod().isCurrentPeriod() || hasElectedStudent() ? false : true);
+	return (getLastVotingPeriod().isCurrentPeriod() || hasElectedStudent() ? false : true);
     }
 
     /*
@@ -109,16 +120,16 @@ public class YearDelegateElection extends YearDelegateElection_Base {
 
 	final DelegateElection previousElection = degree.getYearDelegateElectionWithLastCandidacyPeriod(executionYear,
 		curricularYear);
-	if (previousElection != null && previousElection.hasVotingPeriod()
-		&& previousElection.getVotingPeriod().isCurrentPeriod()) {
+	if (previousElection != null && previousElection.hasLastVotingPeriod()
+		&& previousElection.getLastVotingPeriod().isCurrentPeriod()) {
 	    throw new DomainException("error.elections.newElection.currentVotingPeriodExists", new String[] { degree.getSigla(),
-		    curricularYear.getYear().toString(), previousElection.getVotingPeriod().getPeriod() });
+		    curricularYear.getYear().toString(), previousElection.getLastVotingPeriod().getPeriod() });
 	}
 
 	if (previousElection != null && previousElection.getVotingPeriod() != null
-		&& !previousElection.getVotingPeriod().isPastPeriod()) {
+		&& !previousElection.getLastVotingPeriod().isPastPeriod()) {
 	    // future voting period (must be deleted)
-	    previousElection.getVotingPeriod().delete();
+	    previousElection.getLastVotingPeriod().delete();
 	}
     }
 
@@ -156,7 +167,7 @@ public class YearDelegateElection extends YearDelegateElection_Base {
 	    if (delegateElection instanceof YearDelegateElection) {
 		if (delegateElection.getDegree().equals(election.getDegree())
 			&& delegateElection.getExecutionYear().equals(election.getExecutionYear())
-			&& !delegateElection.getVotingPeriod().isPastPeriod()) {
+			&& !delegateElection.getLastVotingPeriod().isPastPeriod()) {
 		    return true;
 		}
 	    }
@@ -166,25 +177,29 @@ public class YearDelegateElection extends YearDelegateElection_Base {
 
     @Override
     public void createVotingPeriod(YearMonthDay startDate, YearMonthDay endDate) {
-	if (hasVotingPeriod()) {
-	    if (getVotingPeriod().isPastPeriod()) {
+	if (hasLastVotingPeriod()) {
+	    if (getLastVotingPeriod().isPastPeriod() && !getLastVotingPeriod().isFirstRoundElections()) {
 		throw new DomainException("error.elections.createVotingPeriod.mustCreateNewCandidacyPeriod", new String[] {
 			getDegree().getSigla(), getCurricularYear().getYear().toString() });
 	    }
-	    if (getVotingPeriod().isCurrentPeriod()) {
+	    if (getLastVotingPeriod().isCurrentPeriod()) {
 		throw new DomainException("error.elections.createVotingPeriod.onlyCanExtendPeriod", new String[] {
+			getDegree().getSigla(), getCurricularYear().getYear().toString() });
+	    }
+	    if (hasVotingPeriodIntersecting(startDate, endDate)) {
+		throw new DomainException("error.elections.createVotingPeriod.votingPeriodIntersecting", new String[] {
 			getDegree().getSigla(), getCurricularYear().getYear().toString() });
 	    }
 	}
 
 	DelegateElectionVotingPeriod period = new DelegateElectionVotingPeriod(startDate, endDate);
-	setVotingPeriod(period);
+	addVotingPeriod(period);
     }
 
     @Override
     public void editCandidacyPeriod(final YearMonthDay startDate, final YearMonthDay endDate) {
 	final DelegateElectionCandidacyPeriod candidacyPeriod = getCandidacyPeriod();
-	final DelegateElectionVotingPeriod votingPeriod = getVotingPeriod();
+	final DelegateElectionVotingPeriod votingPeriod = getVotingPeriod(startDate, endDate);
 
 	if (candidacyPeriod.isPastPeriod() && votingPeriod != null && votingPeriod.getStartDate().isBefore(new YearMonthDay())) {
 	    throw new DomainException("error.yearDelegateElections.edit.pastPeriod", new String[] { getDegree().getSigla(),
@@ -200,16 +215,16 @@ public class YearDelegateElection extends YearDelegateElection_Base {
     }
 
     @Override
-    public void editVotingPeriod(YearMonthDay startDate, YearMonthDay endDate) {
-	if (!endDate.isAfter(getVotingEndDate()))
+    public void editVotingPeriod(YearMonthDay startDate, YearMonthDay endDate, DelegateElectionVotingPeriod votingPeriod) {
+	if (!endDate.isAfter(getLastVotingEndDate()))
 	    throw new DomainException("error.elections.edit.newEndDateMustBeGreater", getDegree().getSigla(), getCurricularYear()
 		    .getYear().toString());
 
-	if (!getVotingPeriod().isPastPeriod()) {
-	    getVotingPeriod().setEndDate(endDate);
+	if (!votingPeriod.isPastPeriod()) {
+	    votingPeriod.setEndDate(endDate);
 	} else {
 	    throw new DomainException("error.yearDelegateElections.edit.pastPeriod", new String[] { getDegree().getSigla(),
-		    getCurricularYear().getYear().toString(), getVotingPeriod().getPeriod() });
+		    getCurricularYear().getYear().toString(), votingPeriod.getPeriod() });
 	}
     }
 
@@ -224,17 +239,46 @@ public class YearDelegateElection extends YearDelegateElection_Base {
     }
 
     @Override
-    public void deleteVotingPeriod(boolean removeElection) {
-	if (hasVotingPeriod()) {
-	    if (!getVotingPeriod().isPastPeriod()) {
-		super.deleteVotingPeriod();
-		if (removeElection) {
-		    this.deleteCandidacyPeriod();
-		}
-	    } else {
-		throw new DomainException("error.yearDelegateElections.delete.pastPeriod", new String[] { getDegree().getSigla(),
-			getCurricularYear().getYear().toString(), getVotingPeriod().getPeriod() });
+    public void deleteVotingPeriod(DelegateElectionVotingPeriod votingPeriod, boolean removeElection) {
+
+	if (!votingPeriod.isPastPeriod() && !votingPeriod.isCurrentPeriod()) {
+	    super.deleteVotingPeriod(votingPeriod);
+	    if (removeElection) {
+		this.deleteCandidacyPeriod();
+	    }
+	} else {
+	    throw new DomainException("error.yearDelegateElections.delete.pastPeriod", new String[] { getDegree().getSigla(),
+		    getCurricularYear().getYear().toString(),
+		    getVotingPeriod(votingPeriod.getStartDate(), votingPeriod.getEndDate()).getPeriod() });
+	}
+
+    }
+
+    public DelegateElectionVotingPeriod getCurrentVotingPeriod() {
+	for (DelegateElectionVotingPeriod votingPeriod : getVotingPeriod()) {
+	    if (votingPeriod.isCurrentPeriod()) {
+		return votingPeriod;
 	    }
 	}
+	return null;
     }
+
+    @Override
+    public List<Student> getCandidates() {
+	if (getLastVotingPeriod().isFirstRoundElections()) {
+	    return super.getCandidates();
+	}
+	return getLastVotingPeriod().getCandidatesForNewRoundElections();
+
+    }
+
+    @Override
+    public List<Student> getNotCandidatedStudents() {
+	if (getLastVotingPeriod().isFirstRoundElections()) {
+	    return getNotCandidatedStudents();
+	}
+	// Don't have candidates
+	return new LinkedList<Student>();
+    }
+
 }

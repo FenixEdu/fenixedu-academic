@@ -11,10 +11,10 @@ public class DelegateElectionVote extends DelegateElectionVote_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public DelegateElectionVote(DelegateElection election, Student student) {
+    public DelegateElectionVote(DelegateElectionVotingPeriod votingPeriod, Student student) {
 	this();
-	checkParameters(student, election);
-	setDelegateElection(election);
+	checkParameters(student, votingPeriod);
+	setDelegateElection(votingPeriod);
 	setStudent(student);
     }
 
@@ -25,12 +25,12 @@ public class DelegateElectionVote extends DelegateElectionVote_Base {
 	super.deleteDomainObject();
     }
 
-    private void checkParameters(final Student student, final DelegateElection election) {
+    private void checkParameters(final Student student, final DelegateElectionVotingPeriod votingPeriod) {
 	if (student == null) {
 	    throw new DomainException("error.student.cannot.be.null");
 	}
-	if (election == null) {
-	    throw new DomainException("error.delegateElection.cannot.be.null");
+	if (votingPeriod == null) {
+	    throw new DomainException("error.votingPeriod.cannot.be.null");
 	}
     }
 

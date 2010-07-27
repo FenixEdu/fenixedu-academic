@@ -19,4 +19,20 @@ public class DelegateElectionCandidacyPeriod extends DelegateElectionCandidacyPe
 	removeDelegateElection();
 	super.delete();
     }
+
+    @Override
+    public boolean isSecondRoundElections() {
+	return false;
+    }
+
+    @Override
+    public boolean isFirstRoundElections() {
+	return false;
+    }
+
+    @Override
+    public boolean isOpenRoundElections() {
+	return false;
+    }
+
 }
