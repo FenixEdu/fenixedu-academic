@@ -14,6 +14,9 @@
 				<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.SearchCompetenceCoursesDA$SearchCompetenceCourseBean" bundle="BOLONHA_MANAGER_RESOURCES">
 					<fr:slot name="searchName"/>
 				</fr:schema>
+			   	<fr:layout name="tabular">
+					<fr:property name="classes" value="thlight thmiddle mvert05"/>
+				</fr:layout>
 			</fr:edit>
 		</td><td>			
 			<html:submit><bean:message key="label.search" bundle="BOLONHA_MANAGER_RESOURCES"/></html:submit>
