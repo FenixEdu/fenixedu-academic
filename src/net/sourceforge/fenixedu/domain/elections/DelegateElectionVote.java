@@ -14,13 +14,13 @@ public class DelegateElectionVote extends DelegateElectionVote_Base {
     public DelegateElectionVote(DelegateElectionVotingPeriod votingPeriod, Student student) {
 	this();
 	checkParameters(student, votingPeriod);
-	setDelegateElectionVotingPeriod(votingPeriod);
+	setDelegateElection(votingPeriod);
 	setStudent(student);
     }
 
     public void delete() {
 	removeStudent();
-	removeDelegateElectionVotingPeriod();
+	removeDelegateElection();
 	removeRootDomainObject();
 	super.deleteDomainObject();
     }

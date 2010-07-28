@@ -8,12 +8,12 @@ public class DelegateElectionBlankVote extends DelegateElectionBlankVote_Base {
     public DelegateElectionBlankVote(DelegateElectionVotingPeriod votingPeriod) {
 	super();
 	checkParameters(votingPeriod);
-	setDelegateElectionVotingPeriod(votingPeriod);
+	setDelegateElection(votingPeriod);
     }
 
     @Override
     public void delete() {
-	removeDelegateElectionVotingPeriod();
+	removeDelegateElection();
 	removeRootDomainObject();
 	super.deleteDomainObject();
     }

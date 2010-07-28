@@ -265,7 +265,7 @@ public class YearDelegateElection extends YearDelegateElection_Base {
 
     @Override
     public List<Student> getCandidates() {
-	if (getLastVotingPeriod().isFirstRoundElections()) {
+	if (!hasLastVotingPeriod() || getLastVotingPeriod().isFirstRoundElections()) {
 	    return super.getCandidates();
 	}
 	return getLastVotingPeriod().getCandidatesForNewRoundElections();
@@ -274,8 +274,8 @@ public class YearDelegateElection extends YearDelegateElection_Base {
 
     @Override
     public List<Student> getNotCandidatedStudents() {
-	if (getLastVotingPeriod().isFirstRoundElections()) {
-	    return getNotCandidatedStudents();
+	if (!hasLastVotingPeriod() || getLastVotingPeriod().isFirstRoundElections()) {
+	    return super.getNotCandidatedStudents();
 	}
 	// Don't have candidates
 	return new LinkedList<Student>();

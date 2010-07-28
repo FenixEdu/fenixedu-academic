@@ -96,7 +96,6 @@ public class YearDelegateManagementDispatchAction extends FenixDispatchAction {
 	    request.setAttribute("yearDelegateResultsElection", electionResultsByStudentDTOList);
 	    request.setAttribute("yearDelegateElection", yearDelegateElection);
 	}
-	request.setAttribute("nrBlankVotes", yearDelegateElection.getLastVotingPeriod().getBlankVotesElection());
 
 	return mapping.findForward("showYearDelegateManagement");
     }
