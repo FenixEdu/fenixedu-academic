@@ -29,7 +29,8 @@
 </logic:empty>
 
 <bean:define id="showOldCompetenceCourses" name="requestBean" property="isShowOldCompetenceCourses" />
-<p><fr:form id="requestForm" action="/competenceCourses/manageVersions.do?method=prepare">
+<p>
+<fr:form id="requestForm" action="/competenceCourses/manageVersions.do?method=prepare">
 	<fr:edit id="requestBean" name="requestBean">
 		<fr:schema bundle="BOLONHA_MANAGER_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.CompetenceCourseInformationRequestBean">
 			<fr:slot name="showOldCompetenceCourses" layout="option-select-postback"/>
@@ -38,15 +39,8 @@
 			<fr:property name="classes" value="thlight thpadding0px mtop05"/>
 		</fr:layout>
 	</fr:edit>
-</fr:form></p>
-
-<p class="mtop15 mbottom05"><strong><bean:message key="caption" bundle="BOLONHA_MANAGER_RESOURCES" /></strong></p>
-<ul>
-	<logic:equal name="showOldCompetenceCourses" value="true" ><li><span class="warning0"><bean:message key="current.department" bundle="BOLONHA_MANAGER_RESOURCES" /></span> = <bean:message key="current.department.caption" bundle="BOLONHA_MANAGER_RESOURCES" /></li></logic:equal>
-	<li><span class="warning0"><bean:message key="future.department" bundle="BOLONHA_MANAGER_RESOURCES" /></span> = <bean:message key="future.department.caption" bundle="BOLONHA_MANAGER_RESOURCES" /></li>
-	<li><span class="warning0"><bean:message key="future.group" bundle="BOLONHA_MANAGER_RESOURCES" /></span> = <bean:message key="future.group.caption" bundle="BOLONHA_MANAGER_RESOURCES" /></li>
-	<li><span class="warning0"><bean:message key="future.transfer" bundle="BOLONHA_MANAGER_RESOURCES" /></span> = <bean:message key="future.transfer.caption" bundle="BOLONHA_MANAGER_RESOURCES" /></li>
-</ul>
+</fr:form>
+</p>
 
 <div class="mtop15">
 <logic:equal name="department" property="currentUserMemberOfCompetenceCourseMembersGroup" value="true">

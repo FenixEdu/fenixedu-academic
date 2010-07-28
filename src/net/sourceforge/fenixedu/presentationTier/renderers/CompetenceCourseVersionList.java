@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUni
 import net.sourceforge.fenixedu.util.BundleUtil;
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.CollectionRenderer.TableLink;
+import pt.ist.fenixWebFramework.renderers.components.Face;
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlInlineContainer;
@@ -471,10 +472,52 @@ public class CompetenceCourseVersionList extends OutputRenderer {
 
     private class ComputerCourseVersionLayout extends Layout {
 
+	private static final String CAPTION_CLASSES = "mtop15 mbottom05";
+
+	private boolean futureDepartmentMessageShown = false;
+
+	private boolean futureGroupMessageShown = false;
+
+	private boolean futureTransferMessageShown = false;
+
+	private boolean oldDepartmentMessageShown = false;
+
+	private void setFutureDepartmentMessageShown(boolean futureDepartmentMessageShown) {
+	    this.futureDepartmentMessageShown = futureDepartmentMessageShown;
+	}
+
+	private boolean isFutureDepartmentMessageShown() {
+	    return futureDepartmentMessageShown;
+	}
+
+	private void setFutureGroupMessageShown(boolean futureGroupMessageShown) {
+	    this.futureGroupMessageShown = futureGroupMessageShown;
+	}
+
+	private boolean isFutureGroupMessageShown() {
+	    return futureGroupMessageShown;
+	}
+
+	private void setFutureTransferMessageShown(boolean futureTransferMessageShown) {
+	    this.futureTransferMessageShown = futureTransferMessageShown;
+	}
+
+	private boolean isFutureTransferMessageShown() {
+	    return futureTransferMessageShown;
+	}
+
+	private void setOldDepartmentMessageShown(boolean oldDepartmentMessageShown) {
+	    this.oldDepartmentMessageShown = oldDepartmentMessageShown;
+	}
+
+	private boolean isOldDepartmentMessageShown() {
+	    return oldDepartmentMessageShown;
+	}
+
 	@Override
 	public HtmlComponent createComponent(Object object, Class type) {
 	    Department department = (Department) object;
-	    HtmlBlockContainer container = new HtmlBlockContainer();
+	    HtmlBlockContainer listContainer = new HtmlBlockContainer();
 
 	    for (ScientificAreaUnit scientificArea : department.getDepartmentUnit().getScientificAreaUnits()) {
 
@@ -482,7 +525,6 @@ public class CompetenceCourseVersionList extends OutputRenderer {
 		if (getScientificAreaNameClasses() != null) {
 		    areaName.setClasses(getScientificAreaNameClasses());
 		}
-		container.addChild(areaName);
 		HtmlList list = new HtmlList();
 
 		CurricularStage stage = null;
@@ -536,8 +578,12 @@ public class CompetenceCourseVersionList extends OutputRenderer {
 
 		    item.setBody(courseContainer);
 		}
-		container.addChild(list);
+		listContainer.addChild(areaName);
+		listContainer.addChild(list);
 	    }
+	    HtmlBlockContainer container = new HtmlBlockContainer();
+	    container.addChild(getCaptionPresentation());
+	    container.addChild(listContainer);
 
 	    return container;
 	}
@@ -583,6 +629,7 @@ public class CompetenceCourseVersionList extends OutputRenderer {
 	}
 
 	private HtmlComponent getFutureDepartmentMessage(CompetenceCourse course) {
+	    setFutureDepartmentMessageShown(true);
 	    HtmlText text = new HtmlText(BundleUtil.getMessageFromModuleOrApplication("BolonhaManager", "future.department")
 		    + ": " + course.getDepartmentUnit(ExecutionSemester.readLastExecutionSemester()).getAcronym());
 	    text.setClasses(getMessageClass());
@@ -590,6 +637,7 @@ public class CompetenceCourseVersionList extends OutputRenderer {
 	}
 
 	private HtmlComponent getFutureGroupMessage(CompetenceCourse course) {
+	    setFutureGroupMessageShown(true);
 	    HtmlText text = new HtmlText(BundleUtil.getMessageFromModuleOrApplication("BolonhaManager", "future.group") + ": "
 		    + course.getCompetenceCourseGroupUnit(ExecutionSemester.readLastExecutionSemester()).getName());
 	    text.setClasses(getMessageClass());
@@ -597,6 +645,7 @@ public class CompetenceCourseVersionList extends OutputRenderer {
 	}
 
 	private HtmlComponent getFutureTransferMessage(CompetenceCourse course) {
+	    setFutureTransferMessageShown(true);
 	    HtmlText text = new HtmlText(BundleUtil.getMessageFromModuleOrApplication("BolonhaManager", "future.transfer"));
 	    text.setClasses(getMessageClass());
 	    return text;
@@ -617,10 +666,73 @@ public class CompetenceCourseVersionList extends OutputRenderer {
 	}
 
 	private HtmlComponent getOldDepartmentMessage(CompetenceCourse course) {
+	    setOldDepartmentMessageShown(true);
 	    HtmlText text = new HtmlText(BundleUtil.getMessageFromModuleOrApplication("BolonhaManager", "current.department")
 		    + ": " + course.getDepartmentUnit().getAcronym());
 	    text.setClasses(getMessageClass());
 	    return text;
+	}
+
+	private HtmlComponent getCaptionPresentation() {
+	    HtmlBlockContainer container = new HtmlBlockContainer();
+	    if (isFutureDepartmentMessageShown() || isFutureGroupMessageShown() || isFutureTransferMessageShown()
+		    || isOldDepartmentMessageShown()) {
+		HtmlText caption = new HtmlText(BundleUtil.getMessageFromModuleOrApplication("BolonhaManager", "caption"));
+		caption.setClasses(CAPTION_CLASSES);
+		caption.setFace(Face.STRONG);
+		container.addChild(caption);
+		HtmlList list = new HtmlList();
+		if (isOldDepartmentMessageShown()) {
+		    HtmlListItem item = list.createItem();
+		    HtmlInlineContainer messageLine = new HtmlInlineContainer();
+		    HtmlText message = new HtmlText(BundleUtil.getMessageFromModuleOrApplication("BolonhaManager",
+			    "current.department")
+			    + ":");
+		    message.setFace(Face.EMPHASIS);
+		    messageLine.addChild(message);
+		    messageLine.addChild(new HtmlText(BundleUtil.getMessageFromModuleOrApplication("BolonhaManager",
+			    "current.department.caption")));
+		    item.addChild(messageLine);
+		}
+		if (isFutureDepartmentMessageShown()) {
+		    HtmlListItem item = list.createItem();
+		    HtmlInlineContainer messageLine = new HtmlInlineContainer();
+		    HtmlText message = new HtmlText(BundleUtil.getMessageFromModuleOrApplication("BolonhaManager",
+			    "future.department")
+			    + ":");
+		    message.setFace(Face.EMPHASIS);
+		    messageLine.addChild(message);
+		    messageLine.addChild(new HtmlText(BundleUtil.getMessageFromModuleOrApplication("BolonhaManager",
+			    "future.department.caption")));
+		    item.addChild(messageLine);
+		}
+		if (isFutureGroupMessageShown()) {
+		    HtmlListItem item = list.createItem();
+		    HtmlInlineContainer messageLine = new HtmlInlineContainer();
+		    HtmlText message = new HtmlText(BundleUtil
+			    .getMessageFromModuleOrApplication("BolonhaManager", "future.group")
+			    + ":");
+		    message.setFace(Face.EMPHASIS);
+		    messageLine.addChild(message);
+		    messageLine.addChild(new HtmlText(BundleUtil.getMessageFromModuleOrApplication("BolonhaManager",
+			    "future.group.caption")));
+		    item.addChild(messageLine);
+		}
+		if (isFutureTransferMessageShown()) {
+		    HtmlListItem item = list.createItem();
+		    HtmlInlineContainer messageLine = new HtmlInlineContainer();
+		    HtmlText message = new HtmlText(BundleUtil.getMessageFromModuleOrApplication("BolonhaManager",
+			    "future.transfer")
+			    + ":");
+		    message.setFace(Face.EMPHASIS);
+		    messageLine.addChild(message);
+		    messageLine.addChild(new HtmlText(BundleUtil.getMessageFromModuleOrApplication("BolonhaManager",
+			    "future.transfer.caption")));
+		    item.addChild(messageLine);
+		}
+		container.addChild(list);
+	    }
+	    return container;
 	}
 
 	private HtmlComponent getStage(CurricularStage curricularStage) {
