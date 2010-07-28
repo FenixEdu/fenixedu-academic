@@ -16397,7 +16397,7 @@ relation DelegateElectionDelegateElectionVotingPeriod {
     }
 }
 relation DelegateElectionVotingPeriodDelegateElectionVote {
-    elections.DelegateElectionVotingPeriod playsRole delegateElection;
+    elections.DelegateElectionVotingPeriod playsRole delegateElectionVotingPeriod;
     elections.DelegateElectionVote playsRole votes {
         multiplicity *;    }
 }
