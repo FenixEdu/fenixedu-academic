@@ -78,6 +78,12 @@
 			<html:link page="<%=  "/residenceManagement.do?method=editRoomValues&monthOID=" + monthOID %>">
 				<bean:message key="label.modify.roomValues" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/>
 			</html:link>
+			<logic:present role="MANAGER">
+			|
+			<html:link page="<%= "/residenceEventManagement.do?method=generatePaymentCodes&monthOID=" + monthOID %>">
+				<bean:message key="label.residence.events.generate.payment.codes" bundle="RESIDENCE_MANAGEMENT_RESOURCES" />
+			</html:link>
+			</logic:present>
 		</p>
 
 		<logic:notEmpty name="searchBean" property="residenceMonth.events">		
