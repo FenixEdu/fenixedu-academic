@@ -534,7 +534,8 @@ public class SummariesControlAction extends FenixDispatchAction {
 
 		sheet.addCell(person.getName());
 		sheet.addCell(person.getTeacher() != null ? person.getTeacher().getTeacherNumber() : null);
-		sheet.addCell(person.getDefaultEmailAddress());
+		sheet.addCell(person.getDefaultEmailAddress() != null ? person.getDefaultEmailAddress().getPresentationValue()
+			: StringUtils.EMPTY);
 		counter++;
 
 	    }
