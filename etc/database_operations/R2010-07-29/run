@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "createAlterTablesForDelegateElections" createAlterTablesForDelegateElections.sql
