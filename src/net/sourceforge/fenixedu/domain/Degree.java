@@ -740,6 +740,20 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	return result;
     }
 
+    public DegreeCurricularPlan getFirstDegreeCurricularPlan() {
+	DegreeCurricularPlan firstDCP = getDegreeCurricularPlans().get(0);
+	for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlans()) {
+	    if (degreeCurricularPlan.getInitialDateYearMonthDay() == null) {
+		continue;
+	    }
+	    if ((firstDCP.getInitialDateYearMonthDay() == null)
+		    || (degreeCurricularPlan.getInitialDateYearMonthDay().isBefore(firstDCP.getInitialDateYearMonthDay()))) {
+		firstDCP = degreeCurricularPlan;
+	    }
+	}
+	return (firstDCP.getInitialDateYearMonthDay() == null) ? null : firstDCP;
+    }
+
     public DegreeCurricularPlan getLastActiveDegreeCurricularPlan() {
 	DegreeCurricularPlan result = null;
 	ExecutionDegree mostRecentExecutionDegree = null;

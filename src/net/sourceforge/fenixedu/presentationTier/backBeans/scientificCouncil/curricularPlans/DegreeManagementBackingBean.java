@@ -366,15 +366,28 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
     }
 
     public boolean isAbleToEditName() {
+	final DegreeCurricularPlan firstDegreeCurricularPlan = getDegree().getFirstDegreeCurricularPlan();
 	final DegreeCurricularPlan lastActiveDegreeCurricularPlan = getDegree().getLastActiveDegreeCurricularPlan();
-	if (lastActiveDegreeCurricularPlan == null || !lastActiveDegreeCurricularPlan.hasAnyExecutionDegrees()) {
+	if (firstDegreeCurricularPlan == null) {
 	    return true;
-	} else if (getSelectedExecutionYear().isAfter(ExecutionYear.readCurrentExecutionYear())) {
-	    return true;
-	} else if (getSelectedExecutionYear().isCurrent()) {
-	    return new YearMonthDay().isBefore(getSelectedExecutionYear().getFirstExecutionPeriod().getBeginDateYearMonthDay());
-	} else {
-	    return false;
 	}
+	ExecutionYear firstExecutionYear = ExecutionYear.readByDateTime(firstDegreeCurricularPlan.getInitialDateYearMonthDay()
+		.toDateTimeAtMidnight());
+	if (getSelectedExecutionYear().isBefore(firstExecutionYear)) {
+	    return true;
+	}
+	if (lastActiveDegreeCurricularPlan == null) {
+	    return true;
+	}
+	if (!lastActiveDegreeCurricularPlan.hasAnyExecutionDegrees()) {
+	    return true;
+	}
+	if (getSelectedExecutionYear().isAfter(ExecutionYear.readCurrentExecutionYear())) {
+	    return true;
+	}
+	if (getSelectedExecutionYear().isCurrent()) {
+	    return new YearMonthDay().isBefore(getSelectedExecutionYear().getFirstExecutionPeriod().getBeginDateYearMonthDay());
+	}
+	return false;
     }
 }
