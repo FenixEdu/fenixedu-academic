@@ -117,6 +117,8 @@ public class StatusAndApprovalReportFile extends StatusAndApprovalReportFile_Bas
 	spreadsheet.setHeader("semestre");
 	setDegreeHeaders(spreadsheet);
 	spreadsheet.setHeader("estatuto");
+	spreadsheet.setHeader("ciclo de estudos");
+	spreadsheet.setHeader("regime");
 	spreadsheet.setHeader("número inscricoes");
 	spreadsheet.setHeader("número aprovacoes");
 
@@ -148,6 +150,8 @@ public class StatusAndApprovalReportFile extends StatusAndApprovalReportFile_Bas
 				    stringBuilder.append(studentStatuteBean.getStudentStatute().getStatuteType());
 				}
 				row.setCell(stringBuilder.toString());
+				row.setCell(registration.getCycleType(getExecutionYear()).getDescription());
+				row.setCell(registration.getRegimeType(getExecutionYear()).getLocalizedName());
 				row.setCell(Integer.toString(enrolmentAndAprovalCounter.getEnrolments()));
 				row.setCell(Integer.toString(enrolmentAndAprovalCounter.getAprovals()));
 			    }

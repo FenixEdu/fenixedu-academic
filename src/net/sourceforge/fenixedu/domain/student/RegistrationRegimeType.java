@@ -1,6 +1,11 @@
 package net.sourceforge.fenixedu.domain.student;
 
-public enum RegistrationRegimeType {
+import java.util.ResourceBundle;
+
+import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+
+public enum RegistrationRegimeType implements IPresentableEnum {
 
     FULL_TIME,
 
@@ -20,5 +25,10 @@ public enum RegistrationRegimeType {
 
     final static public RegistrationRegimeType defaultType() {
 	return FULL_TIME;
+    }
+
+    @Override
+    public String getLocalizedName() {
+	return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(getQualifiedName());
     }
 }
