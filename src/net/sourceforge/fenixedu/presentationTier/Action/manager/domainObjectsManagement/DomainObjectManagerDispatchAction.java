@@ -79,6 +79,7 @@ public class DomainObjectManagerDispatchAction extends FenixDispatchAction {
 			+ " Deleted. God have mercy of your soul...");
 
 	    } catch (Exception e) {
+		e.printStackTrace();
 		request.setAttribute("message", "Error deleting Object " + classToDelete + " with ID:" + classToDeleteId);
 	    }
 

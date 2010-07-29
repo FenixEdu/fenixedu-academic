@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -44,17 +45,29 @@ public abstract class QueueJob extends QueueJob_Base {
     }
 
     public static List<QueueJob> getAllJobsForClassOrSubClass(final Class aClass, int max) {
-	List<QueueJob> tempList = (List<QueueJob>) CollectionUtils.select(RootDomainObject
-		.getInstance().getQueueJob(), new Predicate() {
+	List<QueueJob> tempList = (List<QueueJob>) CollectionUtils.select(RootDomainObject.getInstance().getQueueJob(),
+		new Predicate() {
 
-	    @Override
-	    public boolean evaluate(Object arg0) {
-		return aClass.isInstance(arg0);
-	    }
+		    @Override
+		    public boolean evaluate(Object arg0) {
+			return aClass.isInstance(arg0);
+		    }
 
-	});
+		});
 
 	return tempList.size() > max ? tempList.subList(0, max) : tempList;
+    }
+
+    public static List<QueueJob> getUndoneJobsForClass(final Class clazz) {
+	return new ArrayList<QueueJob>(CollectionUtils.select(RootDomainObject.getInstance().getQueueJobUndone(),
+		new Predicate() {
+
+		    @Override
+		    public boolean evaluate(Object arg0) {
+			return clazz.isInstance(arg0);
+		    }
+
+		}));
     }
 
     public Priority getPriority() {

@@ -3636,4 +3636,14 @@ public class Person extends Person_Base {
 	}
 	return isUpdated;
     }
+
+    @Deprecated
+    public String getFiscalCode() {
+	return super.getFiscalCode();
+    }
+
+    @Deprecated
+    public void setFiscalCode(String value) {
+	super.setFiscalCode(value);
+    }
 }

@@ -70,7 +70,6 @@
 <logic:notEmpty name="undoneJobs">
 	<fr:view name="undoneJobs">
 		<fr:schema type="net.sourceforge.fenixedu.domain.alumni.AlumniReportFile" bundle="GEP_RESOURCES">
-			<fr:slot name="filename" key="label.alumni.report.file.filename" />
 			<fr:slot name="requestDate" key="label.alumni.report.file.request.date" />
 			<fr:slot name="jobStartTime" key="label.alumni.report.file.job.start.time" />
 			<fr:slot name="jobEndTime" key="label.alumni.report.file.job.end.time" />

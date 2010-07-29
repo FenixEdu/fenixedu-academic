@@ -474,6 +474,13 @@ public abstract class Event extends Event_Base {
 	}
     }
 
+    /**
+     * Returns the total amount less the amount already paid. In other others
+     * returns the debt due to this event (if positive)
+     * 
+     * @param whenRegistered
+     * @return
+     */
     public Money calculateAmountToPay(DateTime whenRegistered) {
 	final Money totalAmountToPay = calculateTotalAmountToPay(whenRegistered);
 
@@ -493,6 +500,16 @@ public abstract class Event extends Event_Base {
 
     public Money getAmountToPay() {
 	return calculateAmountToPay(new DateTime());
+    }
+
+    public Money getTotalAmountToPay(final DateTime whenRegistered) {
+	final Money totalAmountToPay = calculateTotalAmountToPay(whenRegistered);
+
+	return totalAmountToPay;
+    }
+
+    public Money getTotalAmountToPay() {
+	return getTotalAmountToPay(new DateTime());
     }
 
     public List<EntryDTO> calculateEntries() {

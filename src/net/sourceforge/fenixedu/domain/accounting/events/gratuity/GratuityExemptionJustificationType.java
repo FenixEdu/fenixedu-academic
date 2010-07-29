@@ -2,8 +2,11 @@ package net.sourceforge.fenixedu.domain.accounting.events.gratuity;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public enum GratuityExemptionJustificationType {
 
@@ -62,4 +65,13 @@ public enum GratuityExemptionJustificationType {
 	}
 
     }
+
+    public String localizedName(Locale locale) {
+	return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getQualifiedName());
+    }
+
+    public String getLocalizedName() {
+	return localizedName(Language.getLocale());
+    }
+
 }

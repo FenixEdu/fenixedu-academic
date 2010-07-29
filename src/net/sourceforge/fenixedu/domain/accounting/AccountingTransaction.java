@@ -348,4 +348,9 @@ public class AccountingTransaction extends AccountingTransaction_Base {
     public PaymentMode getPaymentMode() {
 	return getTransactionDetail().getPaymentMode();
     }
+
+    public Money getOriginalAmount() {
+	return getToAccountEntry().getOriginalAmount();
+    }
+
 }

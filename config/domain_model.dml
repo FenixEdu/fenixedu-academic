@@ -7466,6 +7466,10 @@ class alumni.AlumniReportFile extends QueueJobWithFile {
 	boolean onlyRegisteredAlumni;
 }
 
+
+class accounting.report.GratuityReportQueueJob extends QueueJobWithFile {
+}
+
 /*
  * Relations definitions
  * 
@@ -18436,3 +18440,11 @@ relation AlumniReportFileExecutionYear {
 		multiplicity *;
 	}
 }
+
+relation GratuityReportQueueJobExecutionYear {
+	ExecutionYear playsRole executionYear;
+	accounting.report.GratuityReportQueueJob playsRole gratuityReportQueueJobs {
+		multiplicity *;
+	}
+}
+
