@@ -602,8 +602,18 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 
     @Override
     protected void executeOperationsBeforeDocumentFileBinding(IndividualCandidacyDocumentFile documentFile) {
-	// Do nothing
+	IndividualCandidacyDocumentFileType type = documentFile.getCandidacyFileType();
 
+	IndividualCandidacyDocumentFile file = getActiveFileForType(type);
+	if (file == null) {
+	    return;
+	}
+
+	if (IndividualCandidacyDocumentFileType.REPORT_OR_WORK_DOCUMENT.equals(type)) {
+	    return;
+	}
+
+	file.setCandidacyFileActive(false);
     }
 
 }
