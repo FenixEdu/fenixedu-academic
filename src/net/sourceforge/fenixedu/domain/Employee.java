@@ -391,4 +391,16 @@ public class Employee extends Employee_Base {
 	return max;
     }
 
+    public boolean hasMultipleDepartments() {
+	List<Department> departments = RootDomainObject.getInstance().getDepartments();
+	int count = 0;
+	final int several = 2;
+	for (Department department : departments) {
+	    if (department.hasAssociatedPersons(getPerson())) {
+		count++;
+	    }
+	}
+	return count >= several ? true : false;
+    }
+
 }

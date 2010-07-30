@@ -9,6 +9,10 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DepartmentCreditsBean implements Serializable {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
     private Department department;
     private String employeeNumber;
 
@@ -47,10 +51,11 @@ public class DepartmentCreditsBean implements Serializable {
 
     @Service
     public static void removePermission(Department department, Employee employee) throws Exception {
-	employee.getPerson().removeRoleByType(RoleType.DEPARTMENT_CREDITS_MANAGER);
-	employee.getPerson().removeRoleByType(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
+	if (!employee.hasMultipleDepartments()) {
+	    employee.getPerson().removeRoleByType(RoleType.DEPARTMENT_CREDITS_MANAGER);
+	    employee.getPerson().removeRoleByType(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
+	}
 	employee.getPerson().getManageableDepartmentCredits().remove(department);
-
     }
 
 }
