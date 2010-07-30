@@ -80,7 +80,7 @@ public class CourseStatistics extends FenixBackingBean {
 	    executionPeriodId = (Integer) getRequestAttribute("executionPeriodId");
 
 	    if (executionPeriodId == null) {
-		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) ReadCurrentExecutionPeriod.run();
+		InfoExecutionPeriod infoExecutionPeriod = ReadCurrentExecutionPeriod.run();
 
 		if (infoExecutionPeriod == null) {
 		    executionPeriodId = (Integer) this.getExecutionPeriods().get(this.executionPeriods.size() - 1).getValue();
@@ -121,7 +121,7 @@ public class CourseStatistics extends FenixBackingBean {
     public List<SelectItem> getExecutionPeriods() {
 	if (this.executionPeriods == null) {
 
-	    List<InfoExecutionYear> executionYearsList = (List<InfoExecutionYear>) ReadNotClosedExecutionYears.run();
+	    List<InfoExecutionYear> executionYearsList = ReadNotClosedExecutionYears.run();
 	    List<SelectItem> result = new ArrayList<SelectItem>();
 	    for (InfoExecutionYear executionYear : executionYearsList) {
 		List<ExecutionSemester> executionSemesters = rootDomainObject.readExecutionYearByOID(
@@ -279,10 +279,10 @@ public class CourseStatistics extends FenixBackingBean {
 
 	    final CycleCurriculumGroup cycle = enrolment.getParentCycleCurriculumGroup();
 
-	    final BranchCurriculumGroup major = cycle.getMajorBranchCurriculumGroup();
+	    final BranchCurriculumGroup major = cycle == null ? null : cycle.getMajorBranchCurriculumGroup();
 	    row.setCell(major != null ? major.getName().getContent() : "");
 
-	    final BranchCurriculumGroup minor = cycle.getMinorBranchCurriculumGroup();
+	    final BranchCurriculumGroup minor = cycle == null ? null : cycle.getMinorBranchCurriculumGroup();
 	    row.setCell(minor != null ? minor.getName().getContent() : "");
 
 	    row.setCell(getNumberOfEnrolments(enrolment));
