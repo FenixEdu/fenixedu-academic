@@ -401,7 +401,7 @@ lhe manda passar a presente carta de curso.]]></text>
 				<line direction="TopDown">
 					<reportElement
 						x="112"
-						y="730"
+						y="754"
 						width="156"
 						height="0"
 						key="line-1"
@@ -413,7 +413,7 @@ lhe manda passar a presente carta de curso.]]></text>
 				<line direction="TopDown">
 					<reportElement
 						x="330"
-						y="730"
+						y="754"
 						width="156"
 						height="0"
 						key="line-3"
@@ -425,7 +425,7 @@ lhe manda passar a presente carta de curso.]]></text>
 				<staticText>
 					<reportElement
 						x="389"
-						y="734"
+						y="758"
 						width="36"
 						height="16"
 						key="staticText-22"
@@ -443,7 +443,7 @@ lhe manda passar a presente carta de curso.]]></text>
 				<staticText>
 					<reportElement
 						x="122"
-						y="734"
+						y="758"
 						width="139"
 						height="16"
 						key="staticText-23"
@@ -497,28 +497,13 @@ lhe manda passar a presente carta de curso.]]></text>
 				<break>
 					<reportElement
 						x="0"
-						y="791"
+						y="815"
 						width="595"
 						height="0"
 						key="element-1">
 							<printWhenExpression><![CDATA[$P{registryCode} != null]]></printWhenExpression>
 						</reportElement>
 				</break>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="59"
-						y="792"
-						width="468"
-						height="19"
-						key="textField-35">
-							<printWhenExpression><![CDATA[$P{registryCode} != null]]></printWhenExpression>
-						</reportElement>
-					<box></box>
-					<textElement textAlignment="Left">
-						<font/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["número de registo: " + $P{registryCode}]]></textFieldExpression>
-				</textField>
 			</band>
 		</detail>
 		<columnFooter>
@@ -531,6 +516,21 @@ lhe manda passar a presente carta de curso.]]></text>
 		</pageFooter>
 		<lastPageFooter>
 			<band height="50"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="59"
+						y="0"
+						width="468"
+						height="19"
+						key="textField-35">
+							<printWhenExpression><![CDATA[$P{registryCode} != null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement textAlignment="Left">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["número de registo: " + $P{registryCode}]]></textFieldExpression>
+				</textField>
 			</band>
 		</lastPageFooter>
 		<summary>
