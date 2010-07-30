@@ -109,7 +109,7 @@ public class DegreeUnit extends DegreeUnit_Base {
     public Function getActiveDelegateFunctionByType(FunctionType functionType) {
 	YearMonthDay today = new YearMonthDay();
 	for (Function function : getFunctions()) {
-	    if (function.getFunctionType().equals(functionType) && function.isActive(today)) {
+	    if (functionType.equals(function.getFunctionType()) && function.isActive(today)) {
 		return function;
 	    }
 	}
