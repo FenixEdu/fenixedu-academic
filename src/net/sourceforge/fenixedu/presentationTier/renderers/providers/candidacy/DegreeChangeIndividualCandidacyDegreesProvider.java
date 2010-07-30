@@ -11,12 +11,15 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 public class DegreeChangeIndividualCandidacyDegreesProvider implements DataProvider {
 
     private static final String DEGREE_TO_REMOVE_FIRST_CYCLE_CHEMISTRY = "LQ";
+    private static final String DEGREE_TO_REMOVE_FIRST_CYCLE_TERRITORY = "LET";
+    private static final String DEGREE_TO_REMOVE_FIRST_CYCLE_ENVIRONMENT = "LEAmb";
 
     public Object provide(Object source, Object currentValue) {
 	List<Degree> degrees = Degree.readAllByDegreeType(DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
 
-	Degree degreeToRemoveChemistry = Degree.readBySigla(DEGREE_TO_REMOVE_FIRST_CYCLE_CHEMISTRY);
-	degrees.remove(degreeToRemoveChemistry);
+	degrees.remove(Degree.readBySigla(DEGREE_TO_REMOVE_FIRST_CYCLE_CHEMISTRY));
+	degrees.remove(Degree.readBySigla(DEGREE_TO_REMOVE_FIRST_CYCLE_TERRITORY));
+	degrees.remove(Degree.readBySigla(DEGREE_TO_REMOVE_FIRST_CYCLE_ENVIRONMENT));
 
 	return degrees;
 
