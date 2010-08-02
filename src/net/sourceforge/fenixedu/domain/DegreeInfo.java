@@ -53,17 +53,30 @@ public class DegreeInfo extends DegreeInfo_Base {
 	return hasName() && getName().equals(name);
     }
 
-    private boolean canEdit() {
+    public boolean canEdit() {
+	final DegreeCurricularPlan firstDegreeCurricularPlan = getDegree().getFirstDegreeCurricularPlan();
 	final DegreeCurricularPlan lastActiveDegreeCurricularPlan = getDegree().getLastActiveDegreeCurricularPlan();
-	if (lastActiveDegreeCurricularPlan == null || !lastActiveDegreeCurricularPlan.hasAnyExecutionDegrees()) {
+	if (firstDegreeCurricularPlan == null) {
 	    return true;
-	} else if (getExecutionYear().isAfter(ExecutionYear.readCurrentExecutionYear())) {
-	    return true;
-	} else if (getExecutionYear().isCurrent()) {
-	    return new YearMonthDay().isBefore(getExecutionYear().getFirstExecutionPeriod().getBeginDateYearMonthDay());
-	} else {
-	    return false;
 	}
+	ExecutionYear firstExecutionYear = ExecutionYear.readByDateTime(firstDegreeCurricularPlan.getInitialDateYearMonthDay()
+		.toDateTimeAtMidnight());
+	if (getExecutionYear().isBefore(firstExecutionYear)) {
+	    return true;
+	}
+	if (lastActiveDegreeCurricularPlan == null) {
+	    return true;
+	}
+	if (!lastActiveDegreeCurricularPlan.hasAnyExecutionDegrees()) {
+	    return true;
+	}
+	if (getExecutionYear().isAfter(ExecutionYear.readCurrentExecutionYear())) {
+	    return true;
+	}
+	if (getExecutionYear().isCurrent()) {
+	    return new YearMonthDay().isBefore(getExecutionYear().getFirstExecutionPeriod().getBeginDateYearMonthDay());
+	}
+	return false;
     }
 
     protected DegreeInfo(DegreeInfo degreeInfo, ExecutionYear executionYear) {
