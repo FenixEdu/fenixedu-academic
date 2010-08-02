@@ -431,6 +431,12 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	    process.editFormerIstStudentNumber((SecondCycleIndividualCandidacyProcessBean) object);
 	    process.getCandidacy().editSelectedDegree(((SecondCycleIndividualCandidacyProcessBean) object).getSelectedDegree());
 	    process.getCandidacy().editObservations((SecondCycleIndividualCandidacyProcessBean) object);
+
+	    if (process.getCandidacy().getPrecedentDegreeInformation().isExternal()) {
+		process.getCandidacy().getPrecedentDegreeInformation().edit(
+			((SecondCycleIndividualCandidacyProcessBean) object).getPrecedentDegreeInformation());
+	    }
+
 	    return process;
 	}
 
