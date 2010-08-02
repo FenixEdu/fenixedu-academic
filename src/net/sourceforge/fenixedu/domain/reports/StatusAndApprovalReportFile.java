@@ -150,8 +150,8 @@ public class StatusAndApprovalReportFile extends StatusAndApprovalReportFile_Bas
 				    stringBuilder.append(studentStatuteBean.getStudentStatute().getStatuteType());
 				}
 				row.setCell(stringBuilder.toString());
-				row.setCell(registration.getCycleType(getExecutionYear()).getDescription());
-				row.setCell(registration.getRegimeType(getExecutionYear()).getLocalizedName());
+				row.setCell(registration.getCycleType(executionSemester.getExecutionYear()).getDescription());
+				row.setCell(registration.getRegimeType(executionSemester.getExecutionYear()).getLocalizedName());
 				row.setCell(Integer.toString(enrolmentAndAprovalCounter.getEnrolments()));
 				row.setCell(Integer.toString(enrolmentAndAprovalCounter.getAprovals()));
 			    }
