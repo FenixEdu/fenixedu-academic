@@ -401,7 +401,7 @@ lhe manda passar a presente carta de curso.]]></text>
 				<line direction="TopDown">
 					<reportElement
 						x="112"
-						y="754"
+						y="763"
 						width="156"
 						height="0"
 						key="line-1"
@@ -413,7 +413,7 @@ lhe manda passar a presente carta de curso.]]></text>
 				<line direction="TopDown">
 					<reportElement
 						x="330"
-						y="754"
+						y="763"
 						width="156"
 						height="0"
 						key="line-3"
@@ -425,7 +425,7 @@ lhe manda passar a presente carta de curso.]]></text>
 				<staticText>
 					<reportElement
 						x="389"
-						y="758"
+						y="767"
 						width="36"
 						height="16"
 						key="staticText-22"
@@ -443,7 +443,7 @@ lhe manda passar a presente carta de curso.]]></text>
 				<staticText>
 					<reportElement
 						x="122"
-						y="758"
+						y="767"
 						width="139"
 						height="16"
 						key="staticText-23"
