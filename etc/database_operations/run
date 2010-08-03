@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Refactored AcademicServiceRequestExemption to AcademicEventExemption" refactorAcademicServiceRequestExemption.sql

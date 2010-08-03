@@ -31,8 +31,8 @@ public class DegreeFinalizationCertificateRequestPR extends DegreeFinalizationCe
 
 	final DegreeFinalizationCertificateRequestEvent requestEvent = (DegreeFinalizationCertificateRequestEvent) event;
 
-	if (requestEvent.hasAcademicServiceRequestExemption()) {
-	    return total.subtract(requestEvent.getAcademicServiceRequestExemption().getValue());
+	if (requestEvent.hasAcademicEventExemption()) {
+	    return total.subtract(requestEvent.getAcademicEventExemption().getValue());
 	}
 
 	return total;

@@ -2,19 +2,19 @@ package net.sourceforge.fenixedu.dataTransferObject.accounting;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent;
-import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestJustificationType;
+import net.sourceforge.fenixedu.domain.accounting.AcademicEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicEventJustificationType;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.LocalDate;
 
-public class AcademicServiceRequestExemptionBean implements Serializable {
+public class AcademicEventExemptionBean implements Serializable {
 
     static private final long serialVersionUID = 1L;
 
-    private AcademicServiceRequestEvent event;
+    private AcademicEvent event;
 
-    private AcademicServiceRequestJustificationType justificationType;
+    private AcademicEventJustificationType justificationType;
 
     private Money value;
 
@@ -22,23 +22,23 @@ public class AcademicServiceRequestExemptionBean implements Serializable {
 
     private String reason;
 
-    public AcademicServiceRequestExemptionBean(final AcademicServiceRequestEvent event) {
+    public AcademicEventExemptionBean(final AcademicEvent event) {
 	setEvent(event);
     }
 
-    public AcademicServiceRequestEvent getEvent() {
-	return this.event;
+    public AcademicEvent getEvent() {
+	return event;
     }
 
-    public void setEvent(AcademicServiceRequestEvent event) {
+    public void setEvent(AcademicEvent event) {
 	this.event = event;
     }
 
-    public AcademicServiceRequestJustificationType getJustificationType() {
+    public AcademicEventJustificationType getJustificationType() {
 	return justificationType;
     }
 
-    public void setJustificationType(AcademicServiceRequestJustificationType justificationType) {
+    public void setJustificationType(AcademicEventJustificationType justificationType) {
 	this.justificationType = justificationType;
     }
 

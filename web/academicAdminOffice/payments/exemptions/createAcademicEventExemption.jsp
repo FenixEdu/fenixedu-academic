@@ -51,15 +51,15 @@
 	<fr:form action='<%="/exemptionsManagement.do?eventId=" + eventId %>'>
 		<html:hidden property="method" value="" />
 
-		<fr:edit id="exemptionBean" name="exemptionBean" schema="AcademicServiceRequestExemption.edit">
+		<fr:edit id="exemptionBean" name="exemptionBean" schema="AcademicEventExemptionBean.edit">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4" />
 				<fr:property name="columnClasses" value=",,tdclear tderror1" />
 			</fr:layout>
-			<fr:destination name="invalid" path='<%="/exemptionsManagement.do?method=prepareCreateAcademicServiceRequestExemptionInvalid&amp;eventId=" + eventId %>'/>
+			<fr:destination name="invalid" path='<%="/exemptionsManagement.do?method=prepareCreateAcademicEventExemptionInvalid&amp;eventId=" + eventId %>'/>
 		</fr:edit>
 
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='createAcademicServiceRequestExemption';">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='createAcademicEventExemption';">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.create" />
 		</html:submit>
 		<html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.cancel" onclick="this.form.method.value='showExemptions';">

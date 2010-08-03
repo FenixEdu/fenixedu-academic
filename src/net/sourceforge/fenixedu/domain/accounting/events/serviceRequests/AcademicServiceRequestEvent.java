@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.accounting.AccountType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
+import net.sourceforge.fenixedu.domain.accounting.events.AcademicEventExemption;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
@@ -65,16 +66,4 @@ abstract public class AcademicServiceRequestEvent extends AcademicServiceRequest
 	super.disconnect();
     }
 
-    public boolean hasAcademicServiceRequestExemption() {
-	return getAcademicServiceRequestExemption() != null;
-    }
-
-    public AcademicServiceRequestExemption getAcademicServiceRequestExemption() {
-	for (final Exemption exemption : getExemptionsSet()) {
-	    if (exemption instanceof AcademicServiceRequestExemption) {
-		return (AcademicServiceRequestExemption) exemption;
-	    }
-	}
-	return null;
-    }
 }

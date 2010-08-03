@@ -35,8 +35,8 @@ public class DiplomaRequestPR extends DiplomaRequestPR_Base {
 	Money amountToPay = super.calculateTotalAmountToPay(event, when);
 
 	final AcademicServiceRequestEvent requestEvent = (AcademicServiceRequestEvent) event;
-	if (requestEvent.hasAcademicServiceRequestExemption()) {
-	    amountToPay = amountToPay.subtract(requestEvent.getAcademicServiceRequestExemption().getValue());
+	if (requestEvent.hasAcademicEventExemption()) {
+	    amountToPay = amountToPay.subtract(requestEvent.getAcademicEventExemption().getValue());
 	}
 
 	return amountToPay.isPositive() ? amountToPay : Money.ZERO;

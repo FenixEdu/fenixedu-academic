@@ -312,11 +312,11 @@
 	</slot>
 </schema>
 
-<schema name="AcademicServiceRequestExemption.edit" 
-		type="net.sourceforge.fenixedu.dataTransferObject.accounting.AcademicServiceRequestExemptionBean"
+<schema name="AcademicEventExemptionBean.edit" 
+		type="net.sourceforge.fenixedu.dataTransferObject.accounting.AcademicEventExemptionBean"
 		bundle="APPLICATION_RESOURCES">
 	<slot name="justificationType" layout="radio-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.payments.AcademicServiceRequestJustificationTypeProvider" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.payments.AcademicEventJustificationTypeProvider" />
         <property name="saveOptions" value="true"/>
 	</slot>
 	<slot name="dispatchDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
@@ -362,8 +362,8 @@
 	<slot name="description" key="label.net.sourceforge.fenixedu.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyExemption.description" />
 </schema>
 
-<schema name="AcademicServiceRequestExemption.view"
-		type="net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestExemption" 
+<schema name="AcademicEventExemption.view"
+		type="net.sourceforge.fenixedu.domain.accounting.events.AcademicEventExemption" 
 		bundle="APPLICATION_RESOURCES">
 	<slot name="description" key="label.net.sourceforge.fenixedu.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyExemption.description" />
 	<slot name="value" />

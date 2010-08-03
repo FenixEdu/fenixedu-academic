@@ -31,10 +31,7 @@ abstract public class DFAGratuityPR extends DFAGratuityPR_Base implements IGratu
 
     abstract protected static class DFAGratuityPREditor implements FactoryExecutor, Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -5454487291500203873L;
+	static private final long serialVersionUID = -5454487291500203873L;
 
 	private DateTime beginDate;
 

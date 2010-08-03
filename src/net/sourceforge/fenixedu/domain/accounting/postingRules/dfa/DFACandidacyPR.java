@@ -6,6 +6,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.domain.accounting.AcademicEvent;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
@@ -29,6 +30,7 @@ public class DFACandidacyPR extends DFACandidacyPR_Base {
 
     public DFACandidacyPR(DateTime startDate, DateTime endDate, ServiceAgreementTemplate serviceAgreementTemplate,
 	    Money fixedAmount, Money fixedAmountPenalty) {
+	this();
 	super.init(EntryType.CANDIDACY_ENROLMENT_FEE, EventType.CANDIDACY_ENROLMENT, startDate, endDate,
 		serviceAgreementTemplate, fixedAmount, fixedAmountPenalty);
 
@@ -64,6 +66,18 @@ public class DFACandidacyPR extends DFACandidacyPR_Base {
 	    throw new DomainException(
 		    "error.accounting.postingRules.dfa.DFACandidacyPR.cannot.process.without.candidacy.period.defined");
 	}
+    }
+
+    @Override
+    public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+        Money amountToPay = super.calculateTotalAmountToPay(event, when, applyDiscount);
+
+        final AcademicEvent academicEvent = (AcademicEvent) event;
+	if (academicEvent.hasAcademicEventExemption()) {
+	    amountToPay = amountToPay.subtract(academicEvent.getAcademicEventExemption().getValue());
+	}
+	
+	return amountToPay;
     }
 
 }

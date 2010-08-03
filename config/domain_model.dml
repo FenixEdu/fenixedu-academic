@@ -195,7 +195,7 @@ enum net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyF
 enum net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisFinalGrade														  as PhdThesisFinalGrade; 
 enum net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType                                 as IndividualCandidacyDocumentFileType;
 enum net.sourceforge.fenixedu.domain.accounting.events.DegreeFinalizationCertificateRequestJustificationType              as DegreeFinalizationCertificateRequestJustificationType;
-enum net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestJustificationType            as AcademicServiceRequestJustificationType;
+enum net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicEventJustificationType                     as AcademicEventJustificationType;
 enum net.sourceforge.fenixedu.domain.EntryPhase                                                                           as EntryPhase;
 enum net.sourceforge.fenixedu.domain.research.result.publication.PreferredPublicationPriority                             as PreferredPublicationPriority;
 enum net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationContext                                                as EnrolmentEvaluationContext;
@@ -2094,7 +2094,7 @@ class DomainObject {
         class accounting.events.AdministrativeOfficeFeeAndInsuranceExemption extends accounting.Exemption {
         }
         
-        class accounting.events.serviceRequests.AcademicServiceRequestExemption extends accounting.Exemption {
+        class accounting.events.AcademicEventExemption extends accounting.Exemption {
             Money value;
         }
 
@@ -2175,12 +2175,11 @@ class DomainObject {
                 }
                 
                 class accounting.paymentPlans.FullGratuityPaymentPlanForPartialRegime extends accounting.paymentPlans.GratuityPaymentPlan {
-                    
                 }
                 
                     class accounting.paymentPlans.GratuityPaymentPlanForPartialRegimeEnroledOnlyInSecondSemester extends accounting.paymentPlans.FullGratuityPaymentPlanForPartialRegime {
                     }
-                
+
         class accounting.ServiceAgreementPaymentPlan extends accounting.PaymentPlan {
         }
         
@@ -2474,8 +2473,8 @@ class DomainObject {
                 YearMonthDay dispatchDate;
             }
             
-        class accounting.events.serviceRequests.AcademicServiceRequestExemptionJustification extends accounting.events.ExemptionJustification {
-            AcademicServiceRequestJustificationType justificationType;
+        class accounting.events.serviceRequests.AcademicEventExemptionJustification extends accounting.events.ExemptionJustification {
+            AcademicEventJustificationType justificationType;
             LocalDate dispatchDate;
         }
 

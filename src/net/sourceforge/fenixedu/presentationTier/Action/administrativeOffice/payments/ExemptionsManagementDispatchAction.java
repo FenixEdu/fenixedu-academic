@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.accounting.ExemptionsMan
 import net.sourceforge.fenixedu.applicationTier.Servico.accounting.gratuity.CreateGratuityExemption;
 import net.sourceforge.fenixedu.applicationTier.Servico.accounting.gratuity.CreateInstallmentPenaltyExemption;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.accounting.AcademicServiceRequestExemptionBean;
+import net.sourceforge.fenixedu.dataTransferObject.accounting.AcademicEventExemptionBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.AdministrativeOfficeFeeAndInsuranceExemptionBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.SecondCycleIndividualCandidacyExemptionBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.gratuityExemption.CreateGratuityExemptionBean;
@@ -22,15 +22,15 @@ import net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.C
 import net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreateInstallmentPenaltyExemptionBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreatePhdRegistrationFeePenaltyExemptionBean;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accounting.AcademicEvent;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
+import net.sourceforge.fenixedu.domain.accounting.events.AcademicEventExemption;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.ImprovementOfApprovedEnrolmentEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
-import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent;
-import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestExemption;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdEvent;
@@ -56,7 +56,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "showForAdministrativeOfficeFeeAndInsuranceEvent", path = "/academicAdminOffice/payments/exemptions/showForAdministrativeOfficeFeeAndInsuranceEvent.jsp"),
 	@Forward(name = "showForSecondCycleIndividualCandidacyEvent", path = "/academicAdminOffice/payments/exemptions/showForSecondCycleIndividualCandidacyEvent.jsp"),
 	@Forward(name = "showForPhdRegistrationFee", path = "/phd/academicAdminOffice/payments/exemptions/showForPhdRegistrationFee.jsp"),
-	@Forward(name = "showForAcademicServiceRequestEvent", path = "/academicAdminOffice/payments/exemptions/showForAcademicServiceRequestEvent.jsp"),
+	@Forward(name = "showForAcademicEvent", path = "/academicAdminOffice/payments/exemptions/showForAcademicEvent.jsp"),
 	@Forward(name = "showForPhdEvent", path = "/phd/academicAdminOffice/payments/exemptions/showForPhdEvent.jsp"),
 	@Forward(name = "createGratuityExemption", path = "/academicAdminOffice/payments/exemptions/payment/gratuity/create.jsp"),
 	@Forward(name = "createInstallmentPenaltyExemption", path = "/academicAdminOffice/payments/exemptions/penalty/createInstallmentExemption.jsp"),
@@ -65,7 +65,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "createAdministrativeOfficeFeeAndInsuranceExemption", path = "/academicAdminOffice/payments/exemptions/payment/administrativeOfficeFeeAndInsurance/create.jsp"),
 	@Forward(name = "createSecondCycleIndividualCandidacyExemption", path = "/academicAdminOffice/payments/exemptions/createSecondCycleIndividualCandidacyExemption.jsp"),
 	@Forward(name = "createPhdRegistrationFeePenaltyExemption", path = "/phd/academicAdminOffice/payments/exemptions/createPhdRegistrationFeePenaltyExemption.jsp"),
-	@Forward(name = "createAcademicServiceRequestExemption", path = "/academicAdminOffice/payments/exemptions/createAcademicServiceRequestExemption.jsp"),
+	@Forward(name = "createAcademicEventExemption", path = "/academicAdminOffice/payments/exemptions/createAcademicEventExemption.jsp"),
 	@Forward(name = "createPhdEventExemption", path = "/phd/academicAdminOffice/payments/exemptions/createPhdEventExemption.jsp")
 
 })
@@ -232,8 +232,8 @@ public class ExemptionsManagementDispatchAction extends AcademicAdminOfficePayme
 	    return mapping.findForward("showForSecondCycleIndividualCandidacyEvent");
 	} else if (event instanceof PhdRegistrationFee) {
 	    return mapping.findForward("showForPhdRegistrationFee");
-	} else if (event instanceof AcademicServiceRequestEvent) {
-	    return mapping.findForward("showForAcademicServiceRequestEvent");
+	} else if (event instanceof AcademicEvent) {
+	    return mapping.findForward("showForAcademicEvent");
 	} else if (event instanceof PhdEvent) {
 	    return mapping.findForward("showForPhdEvent");
 	} else {
@@ -353,34 +353,34 @@ public class ExemptionsManagementDispatchAction extends AcademicAdminOfficePayme
 	return showExemptions(mapping, form, request, response);
     }
 
-    public ActionForward prepareCreateAcademicServiceRequestExemption(ActionMapping mapping, ActionForm form,
+    public ActionForward prepareCreateAcademicEventExemption(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	request.setAttribute("exemptionBean", new AcademicServiceRequestExemptionBean(
-		(AcademicServiceRequestEvent) getEvent(request)));
-	return mapping.findForward("createAcademicServiceRequestExemption");
+	request.setAttribute("exemptionBean", new AcademicEventExemptionBean(
+		(AcademicEvent) getEvent(request)));
+	return mapping.findForward("createAcademicEventExemption");
     }
 
-    public ActionForward prepareCreateAcademicServiceRequestExemptionInvalid(ActionMapping mapping, ActionForm actionForm,
+    public ActionForward prepareCreateAcademicEventExemptionInvalid(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 	request.setAttribute("exemptionBean", getRenderedObject("exemptionBean"));
-	return mapping.findForward("createAcademicServiceRequestExemption");
+	return mapping.findForward("createAcademicEventExemption");
     }
 
-    public ActionForward createAcademicServiceRequestExemption(ActionMapping mapping, ActionForm form,
+    public ActionForward createAcademicEventExemption(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	try {
-	    final AcademicServiceRequestExemptionBean bean = (AcademicServiceRequestExemptionBean) getRenderedObject("exemptionBean");
-	    AcademicServiceRequestExemption.create(getLoggedPerson(request).getEmployee(), bean.getEvent(), bean.getValue(), bean
+	    final AcademicEventExemptionBean bean = (AcademicEventExemptionBean) getRenderedObject("exemptionBean");
+	    AcademicEventExemption.create(getLoggedPerson(request).getEmployee(), bean.getEvent(), bean.getValue(), bean
 		    .getJustificationType(), bean.getDispatchDate(), bean.getReason());
 
 	} catch (DomainExceptionWithLabelFormatter ex) {
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
-	    return prepareCreateAcademicServiceRequestExemptionInvalid(mapping, form, request, response);
+	    return prepareCreateAcademicEventExemptionInvalid(mapping, form, request, response);
 
 	} catch (DomainException ex) {
 	    addActionMessage(request, ex.getKey(), ex.getArgs());
-	    return prepareCreateAcademicServiceRequestExemptionInvalid(mapping, form, request, response);
+	    return prepareCreateAcademicEventExemptionInvalid(mapping, form, request, response);
 	}
 
 	return showExemptions(mapping, form, request, response);

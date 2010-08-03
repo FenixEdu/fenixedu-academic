@@ -79,8 +79,8 @@ public class EquivalencePlanRequestPR extends EquivalencePlanRequestPR_Base {
 	    }
 	}
 
-	if (planRequest.hasAcademicServiceRequestExemption()) {
-	    amountToPay = amountToPay.subtract(planRequest.getAcademicServiceRequestExemption().getValue());
+	if (planRequest.hasAcademicEventExemption()) {
+	    amountToPay = amountToPay.subtract(planRequest.getAcademicEventExemption().getValue());
 	}
 
 	return amountToPay.isPositive() ? amountToPay : Money.ZERO;

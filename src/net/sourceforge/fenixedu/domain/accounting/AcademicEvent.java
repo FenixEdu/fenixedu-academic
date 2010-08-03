@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accounting.events.AcademicEventExemption;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -29,6 +30,19 @@ public abstract class AcademicEvent extends AcademicEvent_Base {
     protected void disconnect() {
 	super.setAdministrativeOffice(null);
 	super.disconnect();
+    }
+
+    public boolean hasAcademicEventExemption() {
+	return getAcademicEventExemption() != null;
+    }
+
+    public AcademicEventExemption getAcademicEventExemption() {
+	for (final Exemption exemption : getExemptionsSet()) {
+	    if (exemption instanceof AcademicEventExemption) {
+		return (AcademicEventExemption) exemption;
+	    }
+	}
+	return null;
     }
 
 }
