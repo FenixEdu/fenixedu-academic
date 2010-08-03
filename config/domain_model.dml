@@ -2179,6 +2179,9 @@ class DomainObject {
                 
                     class accounting.paymentPlans.GratuityPaymentPlanForPartialRegimeEnroledOnlyInSecondSemester extends accounting.paymentPlans.FullGratuityPaymentPlanForPartialRegime {
                     }
+                
+                class accounting.paymentPlans.FullGratuityPaymentPlanForFirstTimeInstitutionStudents extends accounting.paymentPlans.GratuityPaymentPlan {
+                }
 
         class accounting.ServiceAgreementPaymentPlan extends accounting.PaymentPlan {
         }
