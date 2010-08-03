@@ -21,6 +21,8 @@ public class PaymentPlanBean implements Serializable, PaymentsBean {
 
     private boolean forPartialRegime;
 
+    private boolean forFirstTimeInstitutionStudents;
+
     private List<DegreeCurricularPlan> degreeCurricularPlans;
 
     private ExecutionYear executionYear;
@@ -79,6 +81,14 @@ public class PaymentPlanBean implements Serializable, PaymentsBean {
 
     public void setForPartialRegime(boolean forPartialRegime) {
 	this.forPartialRegime = forPartialRegime;
+    }
+
+    public boolean isForFirstTimeInstitutionStudents() {
+	return forFirstTimeInstitutionStudents;
+    }
+
+    public void setForFirstTimeInstitutionStudents(boolean forFirstTimeInstitutionStudents) {
+	this.forFirstTimeInstitutionStudents = forFirstTimeInstitutionStudents;
     }
 
     public ExecutionYear getExecutionYear() {

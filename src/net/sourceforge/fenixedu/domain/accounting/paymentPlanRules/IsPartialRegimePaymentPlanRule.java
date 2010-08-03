@@ -9,6 +9,11 @@ public class IsPartialRegimePaymentPlanRule implements PaymentPlanRule {
     }
 
     @Override
+    public boolean isEvaluatedInNotSpecificPaymentRules() {
+	return true;
+    }
+
+    @Override
     public boolean isAppliableFor(StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
 	return studentCurricularPlan.getRegistration().isPartialRegime(executionYear);
     }

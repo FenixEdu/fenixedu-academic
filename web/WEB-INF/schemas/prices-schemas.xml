@@ -697,9 +697,10 @@
 		<property name="format" value="${year}" />
 		<property name="destination" value="changeExecutionYearPostback"/>
 	</slot>
-	<slot name="forStudentEnroledOnSecondSemesterOnly" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="main" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="forPartialRegime" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="forFirstTimeInstitutionStudents" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="forStudentEnroledOnSecondSemesterOnly" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="degreeCurricularPlans" layout="option-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.GraduationDegreeCurricularPlansProvider" />
 		<property name="format" value="${presentationName}" />

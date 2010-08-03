@@ -49,7 +49,6 @@ abstract public class PaymentPlan extends PaymentPlan_Base {
 	if (defaultPlan == null) {
 	    throw new DomainException("error.accounting.PaymentPlan.defaultPlan.cannot.be.null");
 	}
-
     }
 
     @Override
@@ -324,7 +323,7 @@ abstract public class PaymentPlan extends PaymentPlan_Base {
 	}
 
 	for (final PaymentPlanRule rule : getNotSpecificPaymentRules()) {
-	    if (rule.isAppliableFor(studentCurricularPlan, executionYear)) {
+	    if (rule.isEvaluatedInNotSpecificPaymentRules() && rule.isAppliableFor(studentCurricularPlan, executionYear)) {
 		return false;
 	    }
 	}

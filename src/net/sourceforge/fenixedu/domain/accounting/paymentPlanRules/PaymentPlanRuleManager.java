@@ -12,6 +12,7 @@ public class PaymentPlanRuleManager {
 	rules.put(HasEnrolmentsForExecutionSemesterPaymentPlanRule.class, new HasEnrolmentsForExecutionSemesterPaymentPlanRule());
 	rules.put(HasEnrolmentsOnlyInSecondSemesterPaymentPlanRule.class, new HasEnrolmentsOnlyInSecondSemesterPaymentPlanRule());
 	rules.put(IsPartialRegimePaymentPlanRule.class, new IsPartialRegimePaymentPlanRule());
+	rules.put(FirstTimeInstitutionStudentsPaymentPlanRule.class, new FirstTimeInstitutionStudentsPaymentPlanRule());
     }
 
     static public void register(final Class<? extends PaymentPlanRule> clazz) {
