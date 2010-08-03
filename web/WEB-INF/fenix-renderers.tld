@@ -1052,9 +1052,15 @@
       <rtexprvalue>true</rtexprvalue>
       <type>java.lang.String</type>
       <description>
+       <![CDATA[
+        <pre>
         Specifies the url to be used in link. Example:
+       
         	 '/myAction.do?method=myMethod&amp;oid=${oid}' -> oid will be replaced by invoking getOid in current object
+       
         	 '/myAction.do?method=myMethod&amp;valueA=value'
+       	</pre>
+       ]]>
       </description>
     </attribute>
     
@@ -1064,11 +1070,18 @@
       <rtexprvalue>true</rtexprvalue>
       <type>java.lang.String</type>
       <description>
+      	<![CDATA[
+        <pre>
         Specifies the key as the link label and the name of the bundle where to search key. Examples:
+             
              1 - label='my.key'
+             
              2 - label='my.key,MY_BUNDLE'
         
         if label is empty then jsp will not compile. If bundle is empty then no bundle is set and renderers will try to find label
+        
+         </pre>
+        ]]>
       </description>
     </attribute>
     
@@ -1088,10 +1101,17 @@
       <rtexprvalue>false</rtexprvalue>
       <type>java.lang.String</type>
       <description>
+      	<![CDATA[
+        <pre>
         Specifies the condition used to check if link can be rendered or not. Condition must be any method of object being rendered.
         For now, you can use condition like this:
+        	
         	1 - 'objectMethod' : link is visible if objectMethod returns true
+        	
         	2 - '!objectMethod' : link is visible if !objectMethod returns true
+        
+         </pre>
+        ]]>
       </description>
     </attribute>
     
