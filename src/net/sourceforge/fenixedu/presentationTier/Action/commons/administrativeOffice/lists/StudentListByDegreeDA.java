@@ -307,6 +307,8 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 	    if (extendedInfo) {
 		spreadsheet.addCell(person.getCountry() == null ? EMPTY : person.getCountry().getName());
 		spreadsheet.addCell(person.getDefaultEmailAddress() == null ? EMPTY : person.getDefaultEmailAddress().getValue());
+		spreadsheet.addCell(getFullAddress(person));
+		spreadsheet.addCell(person.hasDefaultMobilePhone() ? person.getDefaultMobilePhoneNumber() : EMPTY);
 		spreadsheet.addCell(person.getGender().toLocalizedString());
 		spreadsheet.addCell(person.getDateOfBirthYearMonthDay() == null ? EMPTY : person.getDateOfBirthYearMonthDay()
 			.toString(YMD_FORMAT));
@@ -334,6 +336,32 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 		addBranchsInformation(spreadsheet, studentCurricularPlan);
 	    }
 	}
+    }
+
+    private String getFullAddress(final Person person) {
+	if (person.hasDefaultPhysicalAddress()) {
+	    StringBuilder sb = new StringBuilder();
+
+	    if (!StringUtils.isEmpty(person.getDefaultPhysicalAddress().getAddress())) {
+		sb.append(person.getDefaultPhysicalAddress().getAddress()).append(" ");
+	    }
+
+	    if (!StringUtils.isEmpty(person.getDefaultPhysicalAddress().getArea())) {
+		sb.append(person.getDefaultPhysicalAddress().getArea()).append(" ");
+	    }
+
+	    if (!StringUtils.isEmpty(person.getDefaultPhysicalAddress().getAreaCode())) {
+		sb.append(person.getDefaultPhysicalAddress().getAreaCode()).append(" ");
+	    }
+
+	    if (!StringUtils.isEmpty(person.getDefaultPhysicalAddress().getAreaOfAreaCode())) {
+		sb.append(person.getDefaultPhysicalAddress().getAreaOfAreaCode()).append(" ");
+	    }
+
+	    return StringUtils.isEmpty(sb.toString()) ? EMPTY : sb.toString();
+	}
+
+	return EMPTY;
     }
 
     private void addBranchsInformation(final StyledExcelSpreadsheet spreadsheet, final StudentCurricularPlan studentCurricularPlan) {
@@ -401,6 +429,8 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 	if (extendedInfo) {
 	    spreadsheet.addHeader(getResourceMessage("label.nationality"));
 	    spreadsheet.addHeader(getResourceMessage("label.email"));
+	    spreadsheet.addHeader(getResourceMessage("label.person.title.addressInfo"));
+	    spreadsheet.addHeader(getResourceMessage("label.person.title.contactInfo"));
 	    spreadsheet.addHeader(getResourceMessage("label.gender"));
 	    spreadsheet.addHeader(getResourceMessage("label.dateOfBirth"));
 	    spreadsheet.addHeader(getResourceMessage("label.registration.enrolments.number.short"));
