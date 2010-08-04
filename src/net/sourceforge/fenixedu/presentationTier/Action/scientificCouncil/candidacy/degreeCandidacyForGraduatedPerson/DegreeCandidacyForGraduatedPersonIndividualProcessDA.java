@@ -22,65 +22,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/caseHandlingDegreeCandidacyForGraduatedPersonIndividualProcess", module = "scientificCouncil", formBeanClass = FenixActionForm.class)
-@Forwards( { // @Forward(name = "intro", path =
-	// "/candidacy/mainCandidacyProcess.jsp"),
+@Forwards( {
 	@Forward(name = "intro", path = "/caseHandlingDegreeCandidacyForGraduatedPersonProcess.do?method=listProcessAllowedActivities"),
 	@Forward(name = "list-allowed-activities", path = "/scientificCouncil/candidacy/graduatedPerson/listIndividualCandidacyActivities.jsp") })
-public class DegreeCandidacyForGraduatedPersonIndividualProcessDA extends IndividualCandidacyProcessDA {
-
-    @Override
-    protected Class getParentProcessType() {
-	return DegreeCandidacyForGraduatedPersonProcess.class;
-    }
-
-    @Override
-    protected Class getProcessType() {
-	return DegreeCandidacyForGraduatedPersonIndividualProcess.class;
-    }
-
-    @Override
-    protected DegreeCandidacyForGraduatedPersonProcess getParentProcess(HttpServletRequest request) {
-	return (DegreeCandidacyForGraduatedPersonProcess) super.getParentProcess(request);
-    }
-
-    @Override
-    protected DegreeCandidacyForGraduatedPersonIndividualProcess getProcess(HttpServletRequest request) {
-	return (DegreeCandidacyForGraduatedPersonIndividualProcess) super.getProcess(request);
-    }
-
-    @Override
-    protected DegreeCandidacyForGraduatedPersonIndividualProcessBean getIndividualCandidacyProcessBean() {
-	return (DegreeCandidacyForGraduatedPersonIndividualProcessBean) super.getIndividualCandidacyProcessBean();
-    }
-
-    @Override
-    protected void setStartInformation(ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	throw new RuntimeException("this shouldnt be called");
-    }
-
-    private DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean getCandidacyResultBean() {
-	return (DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean) getRenderedObject("individualCandidacyResultBean");
-    }
-
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	return super.execute(mapping, actionForm, request, response);
-    }
-
-    @Override
-    /*
-     * * Prepare the beans to choose a person or create a new one
-     */
-    protected void prepareInformationForBindPersonToCandidacyOperation(HttpServletRequest request,
-	    IndividualCandidacyProcess process) {
-	throw new RuntimeException("this shouldnt be called");
-    }
-
-    @Override
-    public ActionForward createNewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	throw new RuntimeException("this shouldnt be called");
-    }
+public class DegreeCandidacyForGraduatedPersonIndividualProcessDA extends net.sourceforge.fenixedu.presentationTier.Action.candidacy.graduatedPerson.DegreeCandidacyForGraduatedPersonIndividualProcessDA {
 
 }

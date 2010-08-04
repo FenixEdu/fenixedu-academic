@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.candidacy.degreeTransfer;
+package net.sourceforge.fenixedu.presentationTier.Action.nape.candidacy.degreeCandidacyForGraduatedPerson;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -9,10 +9,11 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/caseHandlingDegreeTransferCandidacyProcess", module = "scientificCouncil", formBeanClass = CandidacyProcessDA.CandidacyProcessForm.class)
+@Mapping(path = "/caseHandlingDegreeCandidacyForGraduatedPersonProcess", module = "nape", formBeanClass = CandidacyProcessDA.CandidacyProcessForm.class)
 @Forwards( { @Forward(name = "intro", path = "/scientificCouncil/candidacy/mainCandidacyProcess.jsp") })
-public class DegreeTransferCandidacyProcessDA extends
-	net.sourceforge.fenixedu.presentationTier.Action.candidacy.degreeTransfer.DegreeTransferCandidacyProcessDA {
+public class DegreeCandidacyForGraduatedPersonProcessDA extends
+	net.sourceforge.fenixedu.presentationTier.Action.candidacy.graduatedPerson.DegreeCandidacyForGraduatedPersonProcessDA {
+
 
     public DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
 	final Integer degreeCurricularPlanOID = CoordinatedDegreeInfo.findDegreeCurricularPlanID(request);
