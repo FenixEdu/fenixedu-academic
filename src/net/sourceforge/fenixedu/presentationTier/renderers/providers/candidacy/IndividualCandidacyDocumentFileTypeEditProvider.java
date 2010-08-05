@@ -196,6 +196,29 @@ public class IndividualCandidacyDocumentFileTypeEditProvider {
 	public Object provide(Object source, Object currentValue) {
 	    List<IndividualCandidacyDocumentFileType> fileTypesList = new ArrayList<IndividualCandidacyDocumentFileType>();
 
+	    fileTypesList.add(IndividualCandidacyDocumentFileType.PHOTO);
+	    fileTypesList.add(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION);
+	    fileTypesList.add(IndividualCandidacyDocumentFileType.LEARNING_AGREEMENT);
+	    fileTypesList.add(IndividualCandidacyDocumentFileType.CV_DOCUMENT);
+	    fileTypesList.add(IndividualCandidacyDocumentFileType.TRANSCRIPT_OF_RECORDS);
+
+	    return fileTypesList;
+	}
+
+    }
+
+    public static class PublicErasmusIndividualCandidacyDocumentFileTypeEditProvider implements DataProvider {
+
+	@Override
+	public Converter getConverter() {
+	    // TODO Auto-generated method stub
+	    return null;
+	}
+
+	@Override
+	public Object provide(Object source, Object currentValue) {
+	    List<IndividualCandidacyDocumentFileType> fileTypesList = new ArrayList<IndividualCandidacyDocumentFileType>();
+
 	    CandidacyProcessDocumentUploadBean uploadBean = (CandidacyProcessDocumentUploadBean) source;
 	    IndividualCandidacyProcess individualCandidacyProcess = uploadBean.getIndividualCandidacyProcess();
 
@@ -223,6 +246,7 @@ public class IndividualCandidacyDocumentFileTypeEditProvider {
 	}
 
     }
+
 
     public static class AllDocumentFileTypeEditProvider implements DataProvider {
 

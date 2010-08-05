@@ -70,6 +70,7 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	activities.add(new MarkAlertAsViewed());
 	activities.add(new SendEmailToAcceptedStudent());
 	activities.add(new SendEmailToCandidateForMissingDocuments());
+	activities.add(new RevokeDocumentFile());
     }
 
     public ErasmusIndividualCandidacyProcess() {
@@ -1023,6 +1024,38 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	    return false;
 	}
 
+    }
+
+    static protected class RevokeDocumentFile extends Activity<ErasmusIndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(ErasmusIndividualCandidacyProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView) && !isGriOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected ErasmusIndividualCandidacyProcess executeActivity(ErasmusIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    ((CandidacyProcessDocumentUploadBean) object).getDocumentFile().setCandidacyFileActive(Boolean.FALSE);
+	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return Boolean.FALSE;
+	}
+
+	@Override
+	public Boolean isVisibleForCoordinator() {
+	    return false;
+	}
+
+	@Override
+	public Boolean isVisibleForGriOffice() {
+	    return false;
+	}
     }
 
     private String getMissingRequiredDocumentListText() {
