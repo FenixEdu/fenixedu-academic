@@ -429,6 +429,10 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		RegistrationStateCreator.createState(process.getRegistration(), userView.getPerson(), new DateTime(),
 			RegistrationStateType.CANCELED);
 	    }
+	    
+	    if (process.getCandidacyProcess().hasCandidacy() && process.getCandidacyProcess().getCandidacy().isActive()) {
+		process.getCandidacyProcess().getCandidacy().cancelCandidacy();
+	    }
 
 	    return process;
 	}

@@ -774,7 +774,8 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
      * registration then it wiil be corrected by existing code
      */
     public boolean hasCandidacyWithMissingInformation(final ExecutionYear executionYear) {
-	return hasCandidacy() && !getCandidacy().hasRegistration() && !getCandidacy().getCandidacyInformationBean().isValid();
+	return hasCandidacy() && getCandidacy().isActive() && !getCandidacy().hasRegistration()
+		&& !getCandidacy().getCandidacyInformationBean().isValid();
     }
 
     public CandidacyInformationBean getCandidacyInformationBean() {
