@@ -430,7 +430,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 			RegistrationStateType.CANCELED);
 	    }
 	    
-	    if (process.getCandidacyProcess().hasCandidacy() && process.getCandidacyProcess().getCandidacy().isActive()) {
+	    if (process.getCandidacyProcess().hasCandidacy()) {
 		process.getCandidacyProcess().getCandidacy().cancelCandidacy();
 	    }
 

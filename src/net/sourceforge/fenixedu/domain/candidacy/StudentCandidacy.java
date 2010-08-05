@@ -187,8 +187,10 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 
     @Override
     public boolean isConcluded() {
-	return (getActiveCandidacySituation().getCandidacySituationType() == CandidacySituationType.REGISTERED || getActiveCandidacySituation()
-		.getCandidacySituationType() == CandidacySituationType.CANCELLED);
+	final CandidacySituation activeSituation = getActiveCandidacySituation();
+	return activeSituation != null
+		&& (activeSituation.getCandidacySituationType() == CandidacySituationType.REGISTERED || getActiveCandidacySituation()
+			.getCandidacySituationType() == CandidacySituationType.CANCELLED);
     }
 
     public boolean cancelCandidacy() {

@@ -749,6 +749,10 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	return getIndividualProgramProcess().getPhdProgramFocusArea();
     }
 
+    boolean hasPhdProgramFocusArea() {
+	return getPhdProgramFocusArea() != null;
+    }
+
     public boolean hasPhdProgram() {
 	return getPhdProgram() != null;
     }
@@ -774,8 +778,15 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
      * registration then it wiil be corrected by existing code
      */
     public boolean hasCandidacyWithMissingInformation(final ExecutionYear executionYear) {
-	return hasCandidacy() && getCandidacy().isActive() && !getCandidacy().hasRegistration()
-		&& !getCandidacy().getCandidacyInformationBean().isValid();
+	return hasValidCandidacy() && !getCandidacy().getCandidacyInformationBean().isValid();
+    }
+
+    private boolean hasValidCandidacy() {
+	return hasCandidacy() && getCandidacy().isActive() && !getCandidacy().hasRegistration() && isCandidacyCorrectlyAttached();
+    }
+
+    private boolean isCandidacyCorrectlyAttached() {
+	return getCandidacy().hasExecutionDegree() || hasPhdProgram() || hasPhdProgramFocusArea();
     }
 
     public CandidacyInformationBean getCandidacyInformationBean() {
