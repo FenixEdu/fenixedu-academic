@@ -53,7 +53,7 @@ public class Installment extends Installment_Base {
 	super.setEndDate(endDate);
     }
 
-    private void checkParameters(PaymentPlan paymentPlan, Money amount, YearMonthDay startDate, YearMonthDay endDate) {
+    protected void checkParameters(PaymentPlan paymentPlan, Money amount, YearMonthDay startDate, YearMonthDay endDate) {
 
 	if (paymentPlan == null) {
 	    throw new DomainException("error.accounting.Installment.paymentCondition.cannot.be.null");

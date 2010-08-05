@@ -27,4 +27,8 @@ public class FullGratuityPaymentPlanForFirstTimeInstitutionStudents extends
 	return Collections.singleton(PaymentPlanRuleFactory.create(FirstTimeInstitutionStudentsPaymentPlanRule.class));
     }
 
+    @Override
+    final public boolean isForFirstTimeInstitutionStudents() {
+        return true;
+    }
 }

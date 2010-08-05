@@ -2125,6 +2125,10 @@ class DomainObject {
                 Boolean penaltyAppliable;
                 BigDecimal ectsForAmount;
             }
+            
+            class accounting.installments.InstallmentForFirstTimeStudents extends accounting.installments.InstallmentWithMonthlyPenalty {
+            	Integer numberOfDaysToStartApplyingPenalty;
+            }
 
     class accounting.PaymentCode extends DomainObject {
         String code;

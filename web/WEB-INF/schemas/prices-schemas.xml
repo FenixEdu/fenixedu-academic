@@ -731,6 +731,7 @@
 	<slot name="montlyPenaltyPercentage" />
 	<slot name="whenToStartApplyPenalty" />
 	<slot name="maxMonthsToApplyPenalty" />
+	<slot name="numberOfDaysToStartApplyingPenalty" />
 </schema>
 
 <schema name="ExecutionSemester.view.name.only" type="net.sourceforge.fenixedu.domain.ExecutionSemester">
@@ -751,8 +752,8 @@
 	<slot name="montlyPenaltyPercentage" read-only="true"/>
 	<slot name="whenToStartApplyPenalty" read-only="true"/>
 	<slot name="maxMonthsToApplyPenalty" read-only="true"/>
+	<slot name="numberOfDaysToStartApplyingPenalty" read-only="true" />
 </schema>
-
 
 <schema name="CreateGratuityPostingRuleBean.edit" type="net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateGratuityPostingRuleBean"
 	bundle="APPLICATION_RESOURCES">

@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.dataTransferObject.accounting.paymentPlan.Paymen
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.Installment;
 import net.sourceforge.fenixedu.domain.accounting.PaymentPlan;
+import net.sourceforge.fenixedu.domain.accounting.installments.InstallmentForFirstTimeStudents;
 import net.sourceforge.fenixedu.domain.accounting.installments.InstallmentWithMonthlyPenalty;
 import net.sourceforge.fenixedu.domain.accounting.installments.PartialRegimeInstallment;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.FullGratuityPaymentPlan;
@@ -31,24 +32,24 @@ public class GratuityPaymentPlanManager {
 	    final DegreeCurricularPlan degreeCurricularPlan) {
 
 	if (paymentPlanBean.isForPartialRegime()) {
-	    
+
 	    if (paymentPlanBean.isForStudentEnroledOnSecondSemesterOnly()) {
-		
+
 		return new GratuityPaymentPlanForPartialRegimeEnroledOnlyInSecondSemester(paymentPlanBean.getExecutionYear(),
 			degreeCurricularPlan.getServiceAgreementTemplate(), paymentPlanBean.isMain());
 	    } else {
-		
+
 		return new FullGratuityPaymentPlanForPartialRegime(paymentPlanBean.getExecutionYear(), degreeCurricularPlan
 			.getServiceAgreementTemplate(), paymentPlanBean.isMain());
 	    }
 	} else {
 	    if (paymentPlanBean.isForStudentEnroledOnSecondSemesterOnly()) {
-		
+
 		return new GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester(paymentPlanBean.getExecutionYear(),
 			degreeCurricularPlan.getServiceAgreementTemplate(), paymentPlanBean.isMain());
-		
+
 	    } else if (paymentPlanBean.isForFirstTimeInstitutionStudents()) {
-		
+
 		return new FullGratuityPaymentPlanForFirstTimeInstitutionStudents(paymentPlanBean.getExecutionYear(),
 			degreeCurricularPlan.getServiceAgreementTemplate());
 
@@ -60,28 +61,34 @@ public class GratuityPaymentPlanManager {
     }
 
     private static void createInstallments(final PaymentPlan paymentPlan, final List<InstallmentBean> installmentsToCreate) {
-	
+
 	for (final InstallmentBean each : installmentsToCreate) {
-	
+
 	    if (paymentPlan.isForPartialRegime()) {
-		
+
 		if (each.isPenaltyAppliable()) {
 		    new PartialRegimeInstallment((FullGratuityPaymentPlanForPartialRegime) paymentPlan, each.getAmount(), each
 			    .getStartDate(), each.getEndDate(), each.getMontlyPenaltyPercentage(), each
 			    .getWhenToStartApplyPenalty(), each.getMaxMonthsToApplyPenalty(), each.getEctsForAmount(), each
 			    .getExecutionSemesters());
-		
+
 		} else {
 		    new PartialRegimeInstallment((FullGratuityPaymentPlanForPartialRegime) paymentPlan, each.getAmount(), each
 			    .getStartDate(), each.getEndDate(), each.getEctsForAmount(), each.getExecutionSemesters());
 		}
-		
+
+	    } else if (paymentPlan.isForFirstTimeInstitutionStudents() && each.isForFirstTimeInstitutionStudents()) {
+
+		new InstallmentForFirstTimeStudents(paymentPlan, each.getAmount(), each.getStartDate(), each.getEndDate(), each
+			.getMontlyPenaltyPercentage(), each.getMaxMonthsToApplyPenalty(), each
+			.getNumberOfDaysToStartApplyingPenalty());
+
 	    } else {
-		
+
 		if (each.isPenaltyAppliable()) {
 		    new InstallmentWithMonthlyPenalty(paymentPlan, each.getAmount(), each.getStartDate(), each.getEndDate(), each
 			    .getMontlyPenaltyPercentage(), each.getWhenToStartApplyPenalty(), each.getMaxMonthsToApplyPenalty());
-		
+
 		} else {
 		    new Installment(paymentPlan, each.getAmount(), each.getStartDate(), each.getEndDate());
 		}

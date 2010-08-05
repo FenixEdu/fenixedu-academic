@@ -66,13 +66,13 @@ public class InstallmentWithMonthlyPenalty extends InstallmentWithMonthlyPenalty
 	}
     }
 
-    private BigDecimal calculateMonthPenalty(Event event, BigDecimal discountPercentage) {
+    protected BigDecimal calculateMonthPenalty(Event event, BigDecimal discountPercentage) {
 	final BigDecimal amount = calculateAmountWithDiscount(event, discountPercentage).getAmount();
 	amount.setScale(10);
 	return amount.multiply(getPenaltyPercentage());
     }
 
-    private int getNumberOfMonthsToChargePenalty(DateTime when) {
+    protected int getNumberOfMonthsToChargePenalty(DateTime when) {
 	final int numberOfMonths = (new Period(getWhenStartToApplyPenalty().withDayOfMonth(1).toDateMidnight(), when
 		.toDateMidnight()).getMonths() + 1);
 	return numberOfMonths < getMaxMonthsToApplyPenalty() ? numberOfMonths : getMaxMonthsToApplyPenalty();

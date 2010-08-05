@@ -373,6 +373,10 @@ abstract public class PaymentPlan extends PaymentPlan_Base {
 	return false;
     }
 
+    public boolean isForFirstTimeInstitutionStudents() {
+	return false;
+    }
+
     public boolean hasSingleInstallment() {
 	return getInstallmentsCount() == 1;
     }

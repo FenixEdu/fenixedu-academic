@@ -12,10 +12,7 @@ import org.joda.time.YearMonthDay;
 
 public class InstallmentBean implements Serializable {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = -103744109361724129L;
+    static private final long serialVersionUID = -103744109361724129L;
 
     private boolean selected;
 
@@ -38,6 +35,8 @@ public class InstallmentBean implements Serializable {
     private Integer maxMonthsToApplyPenalty;
 
     private PaymentPlanBean paymentPlanBean;
+
+    private Integer numberOfDaysToStartApplyingPenalty = null;
 
     public InstallmentBean(PaymentPlanBean paymentPlanBean) {
 	setExecutionSemesters(new ArrayList<ExecutionSemester>());
@@ -154,4 +153,15 @@ public class InstallmentBean implements Serializable {
 	this.executionSemesters = result;
     }
 
+    public Integer getNumberOfDaysToStartApplyingPenalty() {
+	return numberOfDaysToStartApplyingPenalty;
+    }
+
+    public void setNumberOfDaysToStartApplyingPenalty(Integer numberOfDaysToStartApplyingPenalty) {
+	this.numberOfDaysToStartApplyingPenalty = numberOfDaysToStartApplyingPenalty;
+    }
+
+    public boolean isForFirstTimeInstitutionStudents() {
+	return getNumberOfDaysToStartApplyingPenalty() != null;
+    }
 }
