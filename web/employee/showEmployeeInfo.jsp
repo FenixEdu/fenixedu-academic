@@ -40,7 +40,12 @@
 			<logic:notEqual name="listSize" value="1">
 				<tr>
 					<th class="cornerleft2 width8em"></th>
-					<th colspan="5">
+					<logic:notEmpty name="employeeWorkScheduleBean" property="saturdaySchedule">
+						<th colspan="6">
+					</logic:notEmpty>
+					<logic:empty name="employeeWorkScheduleBean" property="saturdaySchedule">
+						<th colspan="5">
+					</logic:empty>
 						<bean:message key="label.week"/> <bean:write name="employeeWorkScheduleBean" property="workWeekNumber"/>
 					</th>
 				</tr>
@@ -52,6 +57,9 @@
 				<th><b><bean:message key="WEDNESDAY_ACRONYM" /></b></th>
 				<th><b><bean:message key="THURSDAY_ACRONYM" /></b></th>
 				<th><b><bean:message key="FRIDAY_ACRONYM" /></b></th>
+				<logic:notEmpty name="employeeWorkScheduleBean" property="saturdaySchedule">
+					<th><b><bean:message key="SATURDAY_ACRONYM" /></b></th>
+				</logic:notEmpty>
 			</tr>			
 			<tr>
 				<th style="text-align: right;"><bean:message key="label.acronym" />:</th>			
@@ -80,6 +88,11 @@
 						<bean:write name="employeeWorkScheduleBean" property="fridaySchedule.acronym" />
 					</logic:notEmpty>
 				</td>
+				<logic:notEmpty name="employeeWorkScheduleBean" property="saturdaySchedule">
+					<td class="acenter">
+						<bean:write name="employeeWorkScheduleBean" property="saturdaySchedule.acronym" />
+					</td>
+				</logic:notEmpty>
 			</tr>
 			<tr>
 				<th style="text-align: right;"><bean:message key="label.normalWorkPeriod" />:</th>
@@ -87,7 +100,10 @@
 				<td class="acenter"><bean:write name="employeeWorkScheduleBean" property="tuesdayNormalWorkPeriod" filter="false" /></td>
 				<td class="acenter"><bean:write name="employeeWorkScheduleBean" property="wednesdayNormalWorkPeriod" filter="false" /></td>
 				<td class="acenter"><bean:write name="employeeWorkScheduleBean" property="thursdayNormalWorkPeriod" filter="false" /></td>
-				<td class="acenter"><bean:write name="employeeWorkScheduleBean" property="fridayNormalWorkPeriod" filter="false" /></td>												
+				<td class="acenter"><bean:write name="employeeWorkScheduleBean" property="fridayNormalWorkPeriod" filter="false" /></td>	
+				<logic:notEmpty name="employeeWorkScheduleBean" property="saturdaySchedule">
+					<td class="acenter"><bean:write name="employeeWorkScheduleBean" property="saturdayNormalWorkPeriod" filter="false" /></td>
+				</logic:notEmpty>											
 			</tr>
 			<logic:equal name="employeeWorkScheduleBean" property="hasFixedPeriod" value="true">
 				<tr>
@@ -96,7 +112,10 @@
 					<td class="acenter"><bean:write name="employeeWorkScheduleBean" property="tuesdayFixedWorkPeriod" filter="false" /></td>
 					<td class="acenter"><bean:write name="employeeWorkScheduleBean" property="wednesdayFixedWorkPeriod" filter="false" /></td>
 					<td class="acenter"><bean:write name="employeeWorkScheduleBean" property="thursdayFixedWorkPeriod" filter="false" /></td>
-					<td class="acenter"><bean:write name="employeeWorkScheduleBean" property="fridayFixedWorkPeriod" filter="false" /></td>												
+					<td class="acenter"><bean:write name="employeeWorkScheduleBean" property="fridayFixedWorkPeriod" filter="false" /></td>
+					<logic:notEmpty name="employeeWorkScheduleBean" property="saturdaySchedule">
+						<td class="acenter"><bean:write name="employeeWorkScheduleBean" property="saturdayFixedWorkPeriod" filter="false" /></td>
+					</logic:notEmpty>													
 				</tr>
 			</logic:equal>
 			<logic:equal name="employeeWorkScheduleBean" property="hasMealPeriod" value="true">
@@ -116,7 +135,12 @@
 					</td>
 					<td class="acenter"><bean:write name="employeeWorkScheduleBean"	property="fridayMealPeriod" filter="false" /><br />
 						<p class="mvert05" style="color: #888;"><bean:write	name="employeeWorkScheduleBean" property="fridayMandatoryMealPeriods" filter="false" /></p>
-					</td>												
+					</td>						
+					<logic:notEmpty name="employeeWorkScheduleBean" property="saturdaySchedule">
+						<td class="acenter"><bean:write name="employeeWorkScheduleBean"	property="saturdayMealPeriod" filter="false" /><br />
+							<p class="mvert05" style="color: #888;"><bean:write	name="employeeWorkScheduleBean" property="saturdayMandatoryMealPeriods" filter="false" /></p>
+						</td>	
+					</logic:notEmpty>							
 				</tr>
 			</logic:equal>
 		</table>

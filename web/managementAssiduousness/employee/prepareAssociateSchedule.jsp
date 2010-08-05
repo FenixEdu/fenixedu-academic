@@ -29,7 +29,6 @@ function removeExistingWorkWeek(iter){
 }
 // -->
 </script>
-
 <em class="invisible"><bean:message key="title.assiduousness" /></em>
 <h2><bean:message key="title.associateSchedule" /></h2>
 
@@ -104,7 +103,7 @@ function removeExistingWorkWeek(iter){
 		<table class="tstyle1 thtop thlight printborder width600px">
 			<tr>
 				<th class="cornerleft2 width8em"></th>
-				<th colspan="5">
+				<th colspan="6">
 					<bean:message key="label.week"/> <bean:write name="employeeWorkScheduleBean" property="workWeekNumber"/>
 					<logic:equal name="employeeWorkScheduleBean" property="isEmptyWeek" value="true">
 						(<html:link href="javascript:removeWorkWeek()"><bean:message key="link.removeWorkWeek"/></html:link>)
@@ -121,6 +120,7 @@ function removeExistingWorkWeek(iter){
 				<th><b><bean:message key="WEDNESDAY_ACRONYM" /></b></th>
 				<th><b><bean:message key="THURSDAY_ACRONYM" /></b></th>
 				<th><b><bean:message key="FRIDAY_ACRONYM" /></b></th>
+				<th><b><bean:message key="SATURDAY_ACRONYM" /></b></th>
 			</tr>
 			<tr>
 				<th></th>			
@@ -129,6 +129,7 @@ function removeExistingWorkWeek(iter){
 				<td class="acenter"><fr:edit id="wednesday" name="employeeWorkScheduleBean" slot="chooseWednesday" /></td>
 				<td class="acenter"><fr:edit id="thursday" name="employeeWorkScheduleBean" slot="chooseThursday" /></td>
 				<td class="acenter"><fr:edit id="friday" name="employeeWorkScheduleBean" slot="chooseFriday" /></td>
+				<td class="acenter"><fr:edit id="friday" name="employeeWorkScheduleBean" slot="chooseSaturday" /></td>
 			</tr>
 			<tr>
 				<th style="text-align: right;"><bean:message key="label.acronym" />:</th>			
@@ -157,6 +158,11 @@ function removeExistingWorkWeek(iter){
 						<bean:write name="employeeWorkScheduleBean" property="fridaySchedule.acronym" />
 					</logic:notEmpty>
 				</td>
+				<td class="acenter">
+					<logic:notEmpty name="employeeWorkScheduleBean" property="saturdaySchedule">
+						<bean:write name="employeeWorkScheduleBean" property="saturdaySchedule.acronym" />
+					</logic:notEmpty>
+				</td>
 			</tr>
 			<tr>
 				<th style="text-align: right;"><bean:message key="label.normalWorkPeriod" />:</th>
@@ -165,6 +171,7 @@ function removeExistingWorkWeek(iter){
 				<td class="acenter"><bean:write name="employeeWorkScheduleBean" property="wednesdayNormalWorkPeriod" filter="false" /></td>
 				<td class="acenter"><bean:write name="employeeWorkScheduleBean" property="thursdayNormalWorkPeriod" filter="false" /></td>
 				<td class="acenter"><bean:write name="employeeWorkScheduleBean" property="fridayNormalWorkPeriod" filter="false" /></td>												
+				<td class="acenter"><bean:write name="employeeWorkScheduleBean" property="saturdayNormalWorkPeriod" filter="false" /></td>
 			</tr>
 			<logic:equal name="employeeWorkScheduleBean" property="hasFixedPeriod" value="true">
 				<tr>
@@ -174,6 +181,7 @@ function removeExistingWorkWeek(iter){
 					<td class="acenter"><bean:write name="employeeWorkScheduleBean" property="wednesdayFixedWorkPeriod" filter="false" /></td>
 					<td class="acenter"><bean:write name="employeeWorkScheduleBean" property="thursdayFixedWorkPeriod" filter="false" /></td>
 					<td class="acenter"><bean:write name="employeeWorkScheduleBean" property="fridayFixedWorkPeriod" filter="false" /></td>												
+					<td class="acenter"><bean:write name="employeeWorkScheduleBean" property="saturdayFixedWorkPeriod" filter="false" /></td>
 				</tr>
 			</logic:equal>
 			<logic:equal name="employeeWorkScheduleBean" property="hasMealPeriod" value="true">
@@ -193,6 +201,9 @@ function removeExistingWorkWeek(iter){
 					</td>
 					<td class="acenter"><bean:write name="employeeWorkScheduleBean"	property="fridayMealPeriod" filter="false" /><br />
 						<p class="mvert05" style="color: #888;"><bean:write	name="employeeWorkScheduleBean" property="fridayMandatoryMealPeriods" filter="false" /></p>
+					</td>	
+					<td class="acenter"><bean:write name="employeeWorkScheduleBean"	property="saturdayMealPeriod" filter="false" /><br />
+						<p class="mvert05" style="color: #888;"><bean:write	name="employeeWorkScheduleBean" property="saturdayMandatoryMealPeriods" filter="false" /></p>
 					</td>												
 				</tr>
 			</logic:equal>

@@ -29,6 +29,8 @@ public class EmployeeWorkWeekScheduleBean implements Serializable {
 
     Boolean chooseFriday;
 
+    Boolean chooseSaturday;
+
     WorkScheduleType mondaySchedule;
 
     WorkScheduleType tuesdaySchedule;
@@ -38,6 +40,8 @@ public class EmployeeWorkWeekScheduleBean implements Serializable {
     WorkScheduleType thursdaySchedule;
 
     WorkScheduleType fridaySchedule;
+
+    WorkScheduleType saturdaySchedule;
 
     Integer workWeekNumber;
 
@@ -64,7 +68,7 @@ public class EmployeeWorkWeekScheduleBean implements Serializable {
 
     public boolean getIsEmptyWeek() {
 	return getMondaySchedule() == null && getTuesdaySchedule() == null && getWednesdaySchedule() == null
-		&& getThursdaySchedule() == null && getFridaySchedule() == null;
+		&& getThursdaySchedule() == null && getFridaySchedule() == null && getSaturdaySchedule() == null;
     }
 
     public WorkWeek getWorkWeekByCheckedBox() {
@@ -83,6 +87,9 @@ public class EmployeeWorkWeekScheduleBean implements Serializable {
 	}
 	if (getChooseFriday()) {
 	    weekDays.add(WeekDay.FRIDAY);
+	}
+	if (getChooseSaturday()) {
+	    weekDays.add(WeekDay.SATURDAY);
 	}
 	if (weekDays.size() != 0) {
 	    WeekDay array[] = {};
@@ -138,6 +145,15 @@ public class EmployeeWorkWeekScheduleBean implements Serializable {
 	    WorkWeek workWeek = getWorkWeek(workScheduleType);
 	    workSchedules.add(new WorkSchedule(workScheduleType, workWeek, periodicity));
 	}
+	if ((getSaturdaySchedule() != null || getChooseSaturday())
+		&& !differentWorkScheduleTypes.contains(getChooseSaturday() ? getEmployeeScheduleFactory()
+			.getChoosenWorkSchedule() : getSaturdaySchedule())) {
+	    WorkScheduleType workScheduleType = getChooseSaturday() ? getEmployeeScheduleFactory().getChoosenWorkSchedule()
+		    : getSaturdaySchedule();
+	    differentWorkScheduleTypes.add(workScheduleType);
+	    WorkWeek workWeek = getWorkWeek(workScheduleType);
+	    workSchedules.add(new WorkSchedule(workScheduleType, workWeek, periodicity));
+	}
 	return workSchedules;
     }
 
@@ -162,6 +178,10 @@ public class EmployeeWorkWeekScheduleBean implements Serializable {
 	if ((!getChooseFriday() && getFridaySchedule() != null && getFridaySchedule() == workScheduleType)
 		|| (getChooseFriday() && getEmployeeScheduleFactory().getChoosenWorkSchedule() == workScheduleType)) {
 	    weekDays.add(WeekDay.FRIDAY);
+	}
+	if ((!getChooseSaturday() && getSaturdaySchedule() != null && getSaturdaySchedule() == workScheduleType)
+		|| (getChooseSaturday() && getEmployeeScheduleFactory().getChoosenWorkSchedule() == workScheduleType)) {
+	    weekDays.add(WeekDay.SATURDAY);
 	}
 	if (weekDays.size() != 0) {
 	    WeekDay array[] = {};
@@ -200,6 +220,11 @@ public class EmployeeWorkWeekScheduleBean implements Serializable {
 	    WorkWeek workWeek = getWorkWeekForNonDeletedDay(getFridaySchedule());
 	    workSchedules.add(new WorkSchedule(getFridaySchedule(), workWeek, periodicity));
 	}
+	if (getSaturdaySchedule() != null && !getChooseSaturday() && !differentWorkScheduleTypes.contains(getSaturdaySchedule())) {
+	    differentWorkScheduleTypes.add(getSaturdaySchedule());
+	    WorkWeek workWeek = getWorkWeekForNonDeletedDay(getSaturdaySchedule());
+	    workSchedules.add(new WorkSchedule(getSaturdaySchedule(), workWeek, periodicity));
+	}
 	return workSchedules;
     }
 
@@ -219,6 +244,9 @@ public class EmployeeWorkWeekScheduleBean implements Serializable {
 	}
 	if (getFridaySchedule() != null && getFridaySchedule() == workScheduleType && !getChooseFriday()) {
 	    weekDays.add(WeekDay.FRIDAY);
+	}
+	if (getSaturdaySchedule() != null && getSaturdaySchedule() == workScheduleType && !getChooseSaturday()) {
+	    weekDays.add(WeekDay.SATURDAY);
 	}
 	if (weekDays.size() != 0) {
 	    WeekDay array[] = {};
@@ -245,6 +273,9 @@ public class EmployeeWorkWeekScheduleBean implements Serializable {
 	case FRIDAY:
 	    setFridaySchedule(workScheduleType);
 	    break;
+	case SATURDAY:
+	    setSaturdaySchedule(workScheduleType);
+	    break;
 	default:
 	    throw new DomainException("error.workDay.cannotBe.weekEnd");
 	}
@@ -259,13 +290,15 @@ public class EmployeeWorkWeekScheduleBean implements Serializable {
     }
 
     public boolean isAnyDayChecked() {
-	return getChooseMonday() || getChooseTuesday() || getChooseWednesday() || getChooseThursday() || getChooseFriday();
+	return getChooseMonday() || getChooseTuesday() || getChooseWednesday() || getChooseThursday() || getChooseFriday()
+		|| getChooseSaturday();
     }
 
     public boolean isValidWeekChecked() {
 	if ((getMondaySchedule() != null && !getChooseMonday()) || (getTuesdaySchedule() != null && !getChooseTuesday())
 		|| (getWednesdaySchedule() != null && !getChooseWednesday())
-		|| (getThursdaySchedule() != null && !getChooseThursday()) || (getFridaySchedule() != null && !getChooseFriday())) {
+		|| (getThursdaySchedule() != null && !getChooseThursday()) || (getFridaySchedule() != null && !getChooseFriday())
+		|| (getSaturdaySchedule() != null && !getChooseSaturday())) {
 	    return false;
 	}
 	return true;
@@ -274,7 +307,8 @@ public class EmployeeWorkWeekScheduleBean implements Serializable {
     public boolean areSelectedDaysEmpty() {
 	if ((getChooseMonday() && getMondaySchedule() != null) || (getChooseTuesday() && getTuesdaySchedule() != null)
 		|| (getChooseWednesday() && getWednesdaySchedule() != null)
-		|| (getChooseThursday() && getThursdaySchedule() != null) || (getChooseFriday() && getFridaySchedule() != null)) {
+		|| (getChooseThursday() && getThursdaySchedule() != null) || (getChooseFriday() && getFridaySchedule() != null)
+		|| (getChooseSaturday() && getSaturdaySchedule() != null)) {
 	    return false;
 	}
 	return true;
@@ -283,7 +317,7 @@ public class EmployeeWorkWeekScheduleBean implements Serializable {
     public boolean getHasFixedPeriod() {
 	if (getMondayFixedWorkPeriod().equals("") && getTuesdayFixedWorkPeriod().equals("")
 		&& getWednesdayFixedWorkPeriod().equals("") && getThursdayFixedWorkPeriod().equals("")
-		&& getFridayFixedWorkPeriod().equals("")) {
+		&& getFridayFixedWorkPeriod().equals("") && getSaturdayFixedWorkPeriod().equals("")) {
 	    return false;
 	}
 	return true;
@@ -294,7 +328,8 @@ public class EmployeeWorkWeekScheduleBean implements Serializable {
 		&& getTuesdayMandatoryMealPeriods().equals("") && getWednesdayMealPeriod().equals("")
 		&& getWednesdayMandatoryMealPeriods().equals("") && getThursdayMealPeriod().equals("")
 		&& getThursdayMandatoryMealPeriods().equals("") && getFridayMealPeriod().equals("")
-		&& getFridayMandatoryMealPeriods().equals("")) {
+		&& getFridayMandatoryMealPeriods().equals("") && getSaturdayMealPeriod().equals("")
+		&& getSaturdayMandatoryMealPeriods().equals("")) {
 	    return false;
 	}
 	return true;
@@ -318,6 +353,10 @@ public class EmployeeWorkWeekScheduleBean implements Serializable {
 
     public String getFridayNormalWorkPeriod() {
 	return getNormalWorkPeriod(getFridaySchedule());
+    }
+
+    public String getSaturdayNormalWorkPeriod() {
+	return getNormalWorkPeriod(getSaturdaySchedule());
     }
 
     public String getNormalWorkPeriod(WorkScheduleType workScheduleType) {
@@ -357,6 +396,10 @@ public class EmployeeWorkWeekScheduleBean implements Serializable {
 	return getFixedWorkPeriod(getFridaySchedule());
     }
 
+    public String getSaturdayFixedWorkPeriod() {
+	return getFixedWorkPeriod(getSaturdaySchedule());
+    }
+
     public String getFixedWorkPeriod(WorkScheduleType workScheduleType) {
 	if (workScheduleType == null || workScheduleType.getFixedWorkPeriod() == null) {
 	    return "";
@@ -394,6 +437,10 @@ public class EmployeeWorkWeekScheduleBean implements Serializable {
 	return getMealPeriod(getFridaySchedule());
     }
 
+    public String getSaturdayMealPeriod() {
+	return getMealPeriod(getSaturdaySchedule());
+    }
+
     public String getMealPeriod(WorkScheduleType workScheduleType) {
 	if (workScheduleType == null || workScheduleType.getMeal() == null) {
 	    return "";
@@ -424,6 +471,10 @@ public class EmployeeWorkWeekScheduleBean implements Serializable {
 
     public String getFridayMandatoryMealPeriods() {
 	return getMandatoryMealPeriods(getFridaySchedule());
+    }
+
+    public String getSaturdayMandatoryMealPeriods() {
+	return getMandatoryMealPeriods(getSaturdaySchedule());
     }
 
     public String getMandatoryMealPeriods(WorkScheduleType workScheduleType) {
@@ -487,6 +538,22 @@ public class EmployeeWorkWeekScheduleBean implements Serializable {
 
     public void setChooseWednesday(Boolean chooseWednesday) {
 	this.chooseWednesday = chooseWednesday;
+    }
+
+    public Boolean getChooseSaturday() {
+	return chooseSaturday;
+    }
+
+    public void setChooseSaturday(Boolean chooseSaturday) {
+	this.chooseSaturday = chooseSaturday;
+    }
+
+    public WorkScheduleType getSaturdaySchedule() {
+	return saturdaySchedule;
+    }
+
+    public void setSaturdaySchedule(WorkScheduleType saturdaySchedule) {
+	this.saturdaySchedule = saturdaySchedule;
     }
 
     public WorkScheduleType getFridaySchedule() {
@@ -556,4 +623,5 @@ public class EmployeeWorkWeekScheduleBean implements Serializable {
     public void setEmployeeScheduleFactory(EmployeeScheduleFactory employeeScheduleFactory) {
 	this.employeeScheduleFactory = employeeScheduleFactory;
     }
+
 }
