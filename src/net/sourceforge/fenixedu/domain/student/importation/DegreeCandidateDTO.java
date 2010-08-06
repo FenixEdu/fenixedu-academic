@@ -6,12 +6,25 @@ package net.sourceforge.fenixedu.domain.student.importation;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Locale;
 
+import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
+import net.sourceforge.fenixedu.applicationTier.utils.GeneratePassword;
 import net.sourceforge.fenixedu.domain.EntryPhase;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
+import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
+import net.sourceforge.fenixedu.domain.contacts.Phone;
+import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
+import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType;
 import net.sourceforge.fenixedu.domain.person.Gender;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
+import net.sourceforge.fenixedu.domain.person.MaritalStatus;
+import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
@@ -316,4 +329,73 @@ public class DegreeCandidateDTO implements IFileLine {
 	this.istUniversity = istUniversity;
     }
 
+    public Person getMatchingPerson() throws MatchingPersonException {
+	Collection<Person> persons = Person.readByDocumentIdNumber(getDocumentIdNumber());
+
+	if (persons.isEmpty()) {
+	    throw new NotFoundPersonException();
+	}
+
+	if (persons.size() > 1) {
+	    throw new TooManyMatchedPersonsException();
+	}
+
+	final Person person = persons.iterator().next();
+
+	if (person.getDateOfBirthYearMonthDay() != null && person.getDateOfBirthYearMonthDay().equals(getDateOfBirth())) {
+	    return person;
+	}
+
+	if (person.getName().equals(getName())) {
+	    return person;
+	}
+
+	throw new NotFoundPersonException();
+    }
+
+    public Person createPerson() {
+	final Person person = new Person(getName(), getGender(), getDocumentIdNumber(), IDDocumentType.IDENTITY_CARD);
+
+	person.setPassword(PasswordEncryptor.encryptPassword(GeneratePassword.getInstance().generatePassword(person)));
+	person.setMaritalStatus(MaritalStatus.SINGLE);
+	person.setDateOfBirthYearMonthDay(getDateOfBirth());
+
+	PhysicalAddress.createPhysicalAddress(person, new PhysicalAddressData(getAddress(), getAreaCode(), getAreaOfAreaCode(),
+		null), PartyContactType.PERSONAL, true);
+
+	Phone.createPhone(person, getPhoneNumber(), PartyContactType.PERSONAL, true);
+
+	return person;
+    }
+
+    public ExecutionDegree getExecutionDegree(final ExecutionYear executionYear, final Campus campus) {
+	return ExecutionDegree.readByDegreeCodeAndExecutionYearAndCampus(getDegreeCode(), executionYear, campus);
+    }
+
+    public static abstract class MatchingPersonException extends Exception {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+    }
+
+    public static class NotFoundPersonException extends MatchingPersonException {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+    }
+
+    public static class TooManyMatchedPersonsException extends MatchingPersonException {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+    }
 }

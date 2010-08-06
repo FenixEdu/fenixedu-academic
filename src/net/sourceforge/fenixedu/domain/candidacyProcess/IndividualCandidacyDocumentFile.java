@@ -9,12 +9,12 @@ public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocument
     private static final String ROOT_DIR_DESCRIPTION = "Documents associated with an Individual Candidacy";
     private static final String ROOT_DIR = "IndividualCandidacyDocumentFile";
 
-    public IndividualCandidacyDocumentFile() {
+    protected IndividualCandidacyDocumentFile() {
 	super();
 	this.setCandidacyFileActive(Boolean.TRUE);
     }
 
-    public IndividualCandidacyDocumentFile(IndividualCandidacyDocumentFileType type, IndividualCandidacy candidacy,
+    protected IndividualCandidacyDocumentFile(IndividualCandidacyDocumentFileType type, IndividualCandidacy candidacy,
 	    byte[] contents, String filename) {
 	this();
 	this.setCandidacyFileActive(Boolean.TRUE);

@@ -42,3 +42,5 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Alter Table queue job and file table" alterTablesQueueJobAndFile.sql

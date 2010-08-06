@@ -7463,7 +7463,6 @@ class accounting.events.export.DebtsFile extends File {
 		DateTime lastSuccessfulSentPaymentFileDate;
 	} 
 
-
 class residence.StudentsPerformanceReport extends QueueJobWithFile {
 }
 
@@ -7474,6 +7473,17 @@ class alumni.AlumniReportFile extends QueueJobWithFile {
 
 
 class accounting.report.GratuityReportQueueJob extends QueueJobWithFile {
+}
+
+
+class student.importation.DgesBaseProcess extends QueueJobWithFile {
+}
+
+class student.importation.DgesStudentImportationProcess extends student.importation.DgesBaseProcess {
+	EntryPhase entryPhase;
+}
+
+class student.importation.DgesStudentImportationFile extends File {
 }
 
 /*
@@ -18454,3 +18464,21 @@ relation GratuityReportQueueJobExecutionYear {
 	}
 }
 
+relation DgesBaseProcessExecutionYear {
+	ExecutionYear playsRole executionYear;
+	student.importation.DgesBaseProcess playsRole DgesBaseProcess {
+		multiplicity *;
+	}
+}
+
+relation ImportCandidaciesFromDgesProcessDgesImportationStudentFile {
+	student.importation.DgesStudentImportationProcess playsRole dgesStudentImportationProcess;
+	student.importation.DgesStudentImportationFile playsRole dgesStudentImportationFile;
+}
+
+relation DgesStudentImportationProcessCampus {
+	space.Campus playsRole dgesStudentImportationForCampus;
+	student.importation.DgesStudentImportationProcess playsRole dgesStudentImportationProcess {
+		multiplicity*;
+	}
+}
