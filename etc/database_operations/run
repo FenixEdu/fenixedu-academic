@@ -42,5 +42,3 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
-
-execute "Alter table INSTALLMENT" alterTableInstallment.sql
