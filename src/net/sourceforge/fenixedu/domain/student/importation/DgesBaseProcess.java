@@ -9,6 +9,7 @@ import java.util.Map;
 import net.sourceforge.fenixedu.domain.EntryPhase;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
+import pt.utl.ist.fenix.tools.loaders.DataLoaderFromFile;
 
 /**
  * 
@@ -47,9 +48,8 @@ public abstract class DgesBaseProcess extends DgesBaseProcess_Base {
 
     protected List<DegreeCandidateDTO> parseDgesFile(byte[] contents, String university, EntryPhase entryPhase) {
 
-	final Collection<DegreeCandidateDTO> result = new ArrayList(); // new
-	// DataLoaderFromFile<DegreeCandidateDTO>().load(DegreeCandidateDTO.class,
-	// contents);
+	final Collection<DegreeCandidateDTO> result = new ArrayList();
+	new DataLoaderFromFile<DegreeCandidateDTO>().load(DegreeCandidateDTO.class, contents);
 	setConstantFields(university, entryPhase, result);
 	return (List<DegreeCandidateDTO>) result;
 

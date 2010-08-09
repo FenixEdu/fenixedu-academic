@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.student.importation;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Employee;
@@ -10,7 +11,9 @@ import net.sourceforge.fenixedu.domain.EntryPhase;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.QueueJob;
 import net.sourceforge.fenixedu.domain.QueueJobResult;
+import net.sourceforge.fenixedu.domain.accounting.report.GratuityReportQueueJob;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.IMDCandidacy;
@@ -22,7 +25,9 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.student.Student;
-import pt.ist.fenixWebFramework.services.Service;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 
 public class DgesStudentImportationProcess extends DgesStudentImportationProcess_Base {
 
@@ -215,9 +220,40 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
 	return getDgesStudentImportationForCampus().isCampusAlameda() ? ALAMEDA_UNIVERSITY : TAGUS_UNIVERSITY;
     }
     
-    @Service
-    public static DgesStudentImportationProcess lauchJob(final ExecutionYear executionYear, final Campus campus,
-	    final EntryPhase phase, DgesStudentImportationFile file) {
-	return new DgesStudentImportationProcess(executionYear, campus, phase, file);
+    public static boolean canRequestJob() {
+	return QueueJob.getUndoneJobsForClass(GratuityReportQueueJob.class).isEmpty();
     }
+
+    public static List<DgesStudentImportationProcess> readDoneJobs(final ExecutionYear executionYear) {
+	List<DgesStudentImportationProcess> jobList = new ArrayList<DgesStudentImportationProcess>();
+
+	CollectionUtils.select(executionYear.getDgesBaseProcess(), new Predicate() {
+
+	    @Override
+	    public boolean evaluate(Object arg0) {
+		return (arg0 instanceof DgesStudentImportationProcess) && ((QueueJob) arg0).getDone();
+	    }
+	}, jobList);
+
+	return jobList;
+    }
+
+    public static List<DgesStudentImportationProcess> readUndoneJobs(final ExecutionYear executionYear) {
+	return new ArrayList(CollectionUtils.subtract(executionYear.getDgesBaseProcess(), readDoneJobs(executionYear)));
+    }
+
+    public static List<DgesStudentImportationProcess> readPendingJobs(final ExecutionYear executionYear) {
+	List<DgesStudentImportationProcess> jobList = new ArrayList<DgesStudentImportationProcess>();
+
+	CollectionUtils.select(executionYear.getDgesBaseProcess(), new Predicate() {
+
+	    @Override
+	    public boolean evaluate(Object arg0) {
+		return (arg0 instanceof DgesStudentImportationProcess) && ((QueueJob) arg0).getIsNotDoneAndNotCancelled();
+	    }
+	}, jobList);
+
+	return jobList;
+    }
+
 }
