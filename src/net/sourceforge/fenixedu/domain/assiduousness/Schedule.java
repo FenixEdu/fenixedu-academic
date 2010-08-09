@@ -2,10 +2,8 @@ package net.sourceforge.fenixedu.domain.assiduousness;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExceptionScheduleBean;
@@ -505,27 +503,16 @@ public class Schedule extends Schedule_Base {
     }
 
     public Duration getAverageWorkPeriodDuration() {
-	Map<Integer, Duration> weekDurations = new HashMap<Integer, Duration>();
+	Duration periodDuration = Duration.ZERO;
+	int periodDays = 0;
 	for (WorkSchedule workSchedule : getWorkSchedules()) {
 	    Duration workScheduleTypeWorkDuration = workSchedule.getWorkScheduleType().getNormalWorkPeriod()
 		    .getWorkPeriodDuration();
-	    Duration weekDuration = weekDurations.get(workSchedule.getPeriodicity().getWorkWeekNumber());
-	    if (weekDuration != null) {
-		weekDuration = weekDuration.plus(workScheduleTypeWorkDuration.getMillis()
-			* workSchedule.getWorkWeek().getDays().size());
-		weekDurations.put(workSchedule.getPeriodicity().getWorkWeekNumber(), weekDuration);
-	    } else {
-		weekDurations.put(workSchedule.getPeriodicity().getWorkWeekNumber(), new Duration(workScheduleTypeWorkDuration
-			.getMillis()
-			* workSchedule.getWorkWeek().getDays().size()));
-	    }
+	    periodDuration = periodDuration.plus(workScheduleTypeWorkDuration.getMillis()
+		    * workSchedule.getWorkWeek().getDays().size());
+	    periodDays = periodDays + workSchedule.getWorkWeek().getDays().size();
 	}
-	long average = 0;
-	for (Duration weekDuration : weekDurations.values()) {
-	    if (average < weekDuration.getMillis() / 5) {
-		average = weekDuration.getMillis() / 5;
-	    }
-	}
+	long average = periodDuration.getMillis() / periodDays;
 	return new Duration(average);
     }
 
