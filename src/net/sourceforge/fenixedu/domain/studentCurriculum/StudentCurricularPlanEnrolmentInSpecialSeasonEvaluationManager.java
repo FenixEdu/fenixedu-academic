@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -17,6 +18,8 @@ import net.sourceforge.fenixedu.domain.enrolment.EnroledCurriculumModuleWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.StudentStatute;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolmentPreConditions.EnrolmentPreConditionResult;
@@ -53,15 +56,15 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
 	    return;
 	}
     }
-    
+
     @Override
     protected void assertStudentEnrolmentPreConditions() {
-	
-	if (!getResponsiblePerson().getStudent().getRegistrationsToEnrolByStudent().contains(getRegistration())) {
+
+	if (!getRegistrationsToEnrolByStudent(getResponsiblePerson().getStudent()).contains(getRegistration())) {
 	    throw new DomainException("error.StudentCurricularPlan.student.is.not.allowed.to.perform.enrol");
 	}
-	
-	if(!hasSpecialSeasonStatute()) {
+
+	if (!hasSpecialSeasonStatute()) {
 	    throw new DomainException("error.StudentCurricularPlan.student.has.no.special.season.statute");
 	}
 
@@ -69,12 +72,37 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
 	    throw new DomainException("error.StudentCurricularPlan.invalid.curricular.rule.level");
 	}
 
-	final EnrolmentPreConditionResult result = StudentCurricularPlanEnrolmentPreConditions.checkEnrolmentPeriodsForSpecialSeason(
-		getStudentCurricularPlan(), getExecutionSemester());
+	final EnrolmentPreConditionResult result = StudentCurricularPlanEnrolmentPreConditions
+		.checkEnrolmentPeriodsForSpecialSeason(getStudentCurricularPlan(), getExecutionSemester());
 
 	if (!result.isValid()) {
 	    throw new DomainException(result.message(), result.args());
 	}
+    }
+
+    private Collection<Registration> getRegistrationsToEnrolByStudent(final Student student) {
+	final Collection<Registration> registrations = new HashSet<Registration>();
+
+	for (final Registration registration : student.getRegistrations()) {
+	    if (isRegistrationEnrolmentByStudentAllowed(registration)) {
+
+		if (registration.isActive() || isRegistrationAvailableToEnrol(registration)) {
+		    registrations.add(registration);
+		}
+	    }
+	}
+
+	return registrations;
+    }
+
+    public boolean isRegistrationEnrolmentByStudentAllowed(final Registration registration) {
+	return registration.getRegistrationAgreement().isEnrolmentByStudentAllowed()
+		&& registration.getDegreeTypesToEnrolByStudent().contains(registration.getDegreeType());
+    }
+
+    private boolean isRegistrationAvailableToEnrol(final Registration registration) {
+	return registration.hasAnyEnrolmentsIn(getExecutionYear())
+		&& registration.getLastStudentCurricularPlan().hasExternalCycleCurriculumGroups();
     }
 
     @Override
@@ -148,11 +176,11 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
 	    }
 	}
     }
-    
+
     private boolean hasSpecialSeasonStatute() {
 	List<StudentStatute> statutes = getResponsiblePerson().getStudent().getStudentStatutes();
-	for(StudentStatute statute : statutes) {
-	    if(statute.getStatuteType().isSpecialSeasonGranted() && statute.isValidInExecutionPeriod(getExecutionSemester())) {
+	for (StudentStatute statute : statutes) {
+	    if (statute.getStatuteType().isSpecialSeasonGranted() && statute.isValidInExecutionPeriod(getExecutionSemester())) {
 		return true;
 	    }
 	}

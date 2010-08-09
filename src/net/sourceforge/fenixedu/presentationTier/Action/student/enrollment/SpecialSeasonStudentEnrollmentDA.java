@@ -54,8 +54,8 @@ public class SpecialSeasonStudentEnrollmentDA extends AcademicAdminOfficeSpecial
 	} else if (hasPendingDebts(student)) {
 	    addActionMessage("error", request, "error.special.season.cannot.enroll.due.to.pending.debts");
 	    request.setAttribute("disableContinue", true);
-	    
-	} else if(scps.isEmpty()) {
+
+	} else if (scps.isEmpty()) {
 	    request.setAttribute("disableContinue", true);
 	}
 
@@ -108,19 +108,28 @@ public class SpecialSeasonStudentEnrollmentDA extends AcademicAdminOfficeSpecial
 	return getLoggedPerson(request).getStudent();
     }
 
-    private final List<StudentCurricularPlan> generateSCPList(Student student) {
+    /*
+     * This method should receive ExecutionYear as parameter: refactor interface
+     * to select ExecutionPeriod first to allow generate scp list correctly
+     */
+    private final List<StudentCurricularPlan> generateSCPList(final Student student) {
 	final List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
-	List<Registration> regs = student.getActiveRegistrations();
-	for (Registration reg : regs) {
-	    result.addAll(reg.getStudentCurricularPlans());
+
+	for (final Registration registration : student.getRegistrations()) {
+	    if (registration.isActive() || registration.hasAnyEnrolmentsIn(ExecutionYear.readCurrentExecutionYear())) {
+		result.add(registration.getLastStudentCurricularPlan());
+	    }
 	}
+
 	return result;
     }
 
     private boolean enrollmentPeriodNotOpen(List<StudentCurricularPlan> scps) {
-	if (scps.isEmpty())
+	if (scps.isEmpty()) {
 	    return false;
-	StudentCurricularPlan scp = scps.get(0);
+	}
+
+	final StudentCurricularPlan scp = scps.get(0);
 	scps.remove(0);
 	// Any SpecialSeason enrollment period opened for this/last year will
 	// count.

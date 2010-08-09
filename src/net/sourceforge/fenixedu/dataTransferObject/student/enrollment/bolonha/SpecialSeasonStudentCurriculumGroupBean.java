@@ -67,11 +67,17 @@ public class SpecialSeasonStudentCurriculumGroupBean extends StudentCurriculumGr
 	    }
 	};
 
-	Map<CurricularCourse, Enrolment> enrolmentsMap = new HashMap<CurricularCourse, Enrolment>();
-	for (CurriculumModule curriculumModule : group.getCurriculumModules()) {
+	final Map<CurricularCourse, Enrolment> enrolmentsMap = new HashMap<CurricularCourse, Enrolment>();
+
+	for (final CurriculumModule curriculumModule : group.getCurriculumModules()) {
 	    if (curriculumModule.isEnrolment()) {
-		Enrolment enrolment = (Enrolment) curriculumModule;
-		if (enrolment.canBeSpecialSeasonEnroled(executionSemester) && !alreadyHasSpecialSeasonEnrolment.eval(enrolment)) {
+
+		final Enrolment enrolment = (Enrolment) curriculumModule;
+
+		if (!enrolment.getParentCycleCurriculumGroup().isConclusionProcessed()
+			&& enrolment.canBeSpecialSeasonEnroled(executionSemester)
+			&& !alreadyHasSpecialSeasonEnrolment.eval(enrolment)) {
+		    
 		    if (enrolmentsMap.get(enrolment.getCurricularCourse()) != null) {
 			Enrolment enrolmentMap = enrolmentsMap.get(enrolment.getCurricularCourse());
 			if (enrolment.getExecutionPeriod().isAfter(enrolmentMap.getExecutionPeriod())) {
@@ -80,6 +86,7 @@ public class SpecialSeasonStudentCurriculumGroupBean extends StudentCurriculumGr
 		    } else {
 			enrolmentsMap.put(enrolment.getCurricularCourse(), enrolment);
 		    }
+
 		}
 	    }
 	}
