@@ -56,6 +56,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class SummariesManagementDA extends FenixDispatchAction {
 
+    @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
@@ -348,7 +349,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	Professorship professorshipLogged = (Professorship) request.getAttribute("loggedTeacherProfessorship");
 	ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
 
-	final Object args[] = { executionCourse, summary, professorshipLogged.getTeacher() };
+	final Object args[] = { executionCourse, summary, professorshipLogged };
 	try {
 	    executeService("DeleteSummary", args);
 	} catch (DomainException e) {

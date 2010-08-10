@@ -9,8 +9,8 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Summary;
-import net.sourceforge.fenixedu.domain.Teacher;
 
 /**
  * @author João Mota
@@ -21,7 +21,8 @@ import net.sourceforge.fenixedu.domain.Teacher;
  */
 public class DeleteSummary extends FenixService {
 
-    public Boolean run(ExecutionCourse executionCourse, Summary summary, Teacher loggedTeacher) throws FenixServiceException {
+    public Boolean run(ExecutionCourse executionCourse, Summary summary, Professorship professorship)
+	    throws FenixServiceException {
 
 	if (summary == null)
 	    throw new InvalidArgumentsServiceException();
