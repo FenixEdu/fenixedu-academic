@@ -70,7 +70,7 @@ public enum StudentStatuteType {
     /**
      * Life condition imposed statutes.
      */
-    HANDICAPPED(false, false, true),
+    HANDICAPPED(false, true, true),
     
     PARTURIENT_OR_SPOUSE(true, true, true),
     
