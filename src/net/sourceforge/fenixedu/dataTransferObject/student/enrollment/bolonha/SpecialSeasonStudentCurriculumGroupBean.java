@@ -74,7 +74,8 @@ public class SpecialSeasonStudentCurriculumGroupBean extends StudentCurriculumGr
 
 		final Enrolment enrolment = (Enrolment) curriculumModule;
 
-		if (!enrolment.getParentCycleCurriculumGroup().isConclusionProcessed()
+		if (!enrolment.parentCurriculumGroupIsNoCourseGroupCurriculumGroup()
+			&& !enrolment.getParentCycleCurriculumGroup().isConclusionProcessed()
 			&& enrolment.canBeSpecialSeasonEnroled(executionSemester)
 			&& !alreadyHasSpecialSeasonEnrolment.eval(enrolment)) {
 		    
