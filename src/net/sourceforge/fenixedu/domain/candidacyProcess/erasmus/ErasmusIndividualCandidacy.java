@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 public class ErasmusIndividualCandidacy extends ErasmusIndividualCandidacy_Base {
@@ -132,6 +133,16 @@ public class ErasmusIndividualCandidacy extends ErasmusIndividualCandidacy_Base 
 	}
 
 	return !getMostRecentApprovedLearningAgreement().isApprovedLearningAgreementViewed();
+    }
+    
+    boolean hasProcessWithAcceptNotificationAtDate(final DateTime dateTime) {
+	for(ApprovedLearningAgreementDocumentFile approvedLearningAgreement : getApprovedLearningAgreements()) {
+	    if(approvedLearningAgreement.isBeenSentEmailAcceptedStudentActionAtDate(dateTime)) {
+		return true;
+	    }
+	}
+	
+	return false;
     }
 
 }

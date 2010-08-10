@@ -6897,6 +6897,16 @@ class candidacyProcess.erasmus.ExecutedAction extends DomainObject {
 	class candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessExecutedAction extends candidacyProcess.erasmus.ExecutedAction {
 	}
 	
+	class candidacyProcess.erasmus.ErasmusCandidacyProcessExecutedAction extends candidacyProcess.erasmus.ExecutedAction {
+	}
+	
+		class candidacyProcess.erasmus.ReceptionEmailExecutedAction extends candidacyProcess.erasmus.ErasmusCandidacyProcessExecutedAction {
+			String subject;
+			String body;
+			DateTime beginIntervalOfAcceptedStudents;
+			DateTime endIntervalOfAcceptedStudents;
+		}
+
 class candidacyProcess.CandidacyPrecedentDegreeInformation extends DomainObject {
     SchoolLevelType schoolLevel;
     String otherSchoolLevel;
@@ -18480,5 +18490,24 @@ relation DgesStudentImportationProcessCampus {
 	space.Campus playsRole dgesStudentImportationForCampus;
 	student.importation.DgesStudentImportationProcess playsRole dgesStudentImportationProcess {
 		multiplicity*;
+	}
+}
+
+
+relation ErasmusCandidacyProcessErasmusCandidacyProcessExecutedAction {
+	candidacyProcess.erasmus.ErasmusCandidacyProcess playsRole erasmusCandidacyProcess;
+	
+	candidacyProcess.erasmus.ErasmusCandidacyProcessExecutedAction playsRole erasmusCandidacyProcessExecutedAction {
+		multiplicity *;
+	}
+}
+
+relation ErasmusCandidacyExecutedActionErasmusIndividualProcess {
+	candidacyProcess.erasmus.ErasmusCandidacyProcessExecutedAction playsRole erasmusCandidacyProcessExecutedAction {
+		multiplicity *;
+	}
+
+	candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess playsRole subjectErasmusIndividualCandidacyProcess {
+		multiplicity *;
 	}
 }

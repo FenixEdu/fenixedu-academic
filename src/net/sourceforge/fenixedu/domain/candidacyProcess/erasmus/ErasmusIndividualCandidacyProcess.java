@@ -308,8 +308,21 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
     }
 
     public boolean isStudentAccepted() {
+	return isStudentAcceptedAtDate(new DateTime());
+    }
+
+    public boolean isStudentAcceptedAtDate(final DateTime dateTime) {
 	return getValidatedByErasmusCoordinator() && getValidatedByGri()
-		&& getCandidacy().getMostRecentApprovedLearningAgreement() != null;
+		&& getCandidacy().getMostRecentApprovedLearningAgreement() != null
+		&& getCandidacy().getMostRecentApprovedLearningAgreement().getUploadTime().isBefore(dateTime);
+    }
+
+    public boolean isStudentAcceptedAndNotifiedAtDate(final DateTime dateTime) {
+	return isStudentAcceptedAtDate(dateTime) && getCandidacy().hasProcessWithAcceptNotificationAtDate(dateTime);
+    }
+
+    public boolean isStudentAcceptedAndNotified() {
+	return isStudentAcceptedAndNotifiedAtDate(new DateTime());
     }
 
     @StartActivity
