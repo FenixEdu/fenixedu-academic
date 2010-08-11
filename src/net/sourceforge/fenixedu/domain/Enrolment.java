@@ -1294,13 +1294,14 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
 	    final DegreeCurricularPlan dcpOfStudent = getDegreeCurricularPlanOfStudent();
 	    if (dcpOfStudent.getDegreeType().isDegree()) {
-		if (isExecutionYearEnrolmentAfterOrEqualsExecutionYear0607()) {
-		    return getEctsCreditsForCurriculum();
-		}
-
+		
 		final Degree leicPb = Degree.readBySigla("LEIC-pB");
 		if (isStudentFromDegree(leicPb, dcpOfStudent)) {
 		    return getBaseWeigth();
+		}
+		
+		if (isExecutionYearEnrolmentAfterOrEqualsExecutionYear0607()) {
+		    return getEctsCreditsForCurriculum();
 		}
 
 		final Degree lmacPb = Degree.readBySigla("LMAC-pB");
@@ -1317,6 +1318,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 		if (isStudentFromDegree(lmacPb, dcpOfStudent)) {
 		    return LMAC_WEIGHT_BEFORE_0607_EXCEPT_LMAC_AND_LCI_DEGREE_MODULES;
 		}
+
 	    }
 	}
 
