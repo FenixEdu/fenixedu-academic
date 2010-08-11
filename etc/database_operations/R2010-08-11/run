@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Erasmus Candidacy process actions" addErasmusCandidacyProcessActionsData.sql
