@@ -135,14 +135,14 @@ public class ErasmusIndividualCandidacy extends ErasmusIndividualCandidacy_Base 
 	return !getMostRecentApprovedLearningAgreement().isApprovedLearningAgreementViewed();
     }
     
+    boolean hasProcessWithAcceptNotification() {
+	return hasProcessWithAcceptNotificationAtDate(new DateTime());
+    }
+
     boolean hasProcessWithAcceptNotificationAtDate(final DateTime dateTime) {
-	for(ApprovedLearningAgreementDocumentFile approvedLearningAgreement : getApprovedLearningAgreements()) {
-	    if(approvedLearningAgreement.isBeenSentEmailAcceptedStudentActionAtDate(dateTime)) {
-		return true;
-	    }
-	}
-	
-	return false;
+	return getMostRecentApprovedLearningAgreement().getMostRecentSentEmailAcceptedStudentAction() != null
+		&& getMostRecentApprovedLearningAgreement().getMostRecentSentEmailAcceptedStudentAction().getWhenOccured()
+			.isBefore(dateTime);
     }
 
 }

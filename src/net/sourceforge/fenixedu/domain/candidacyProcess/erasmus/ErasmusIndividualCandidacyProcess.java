@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.util.StringUtils;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
@@ -323,6 +324,31 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 
     public boolean isStudentAcceptedAndNotified() {
 	return isStudentAcceptedAndNotifiedAtDate(new DateTime());
+    }
+
+    public boolean isStudentNotifiedWithReceptionEmail() {
+	return !getAllReceptionEmailNotifications().isEmpty();
+    }
+
+    List<ReceptionEmailExecutedAction> getAllReceptionEmailNotifications() {
+	List<ReceptionEmailExecutedAction> list = new ArrayList<ReceptionEmailExecutedAction>();
+
+	for (ErasmusCandidacyProcessExecutedAction executedAction : ((ErasmusCandidacyProcess) getCandidacyProcess())
+		.getErasmusCandidacyProcessExecutedAction()) {
+	    if (executedAction.isReceptionEmailExecutedAction()
+		    && executedAction.getSubjectErasmusIndividualCandidacyProcess().contains(this)) {
+		list.add((ReceptionEmailExecutedAction) executedAction);
+	    }
+	}
+
+	Collections.sort(list, Collections.reverseOrder(new BeanComparator("whenOccured")));
+
+	return list;
+    }
+
+    public DateTime getLastReceptionEmailSent() {
+	List<ReceptionEmailExecutedAction> list = getAllReceptionEmailNotifications();
+	return list.isEmpty() ? null : list.get(0).getWhenOccured();
     }
 
     @StartActivity

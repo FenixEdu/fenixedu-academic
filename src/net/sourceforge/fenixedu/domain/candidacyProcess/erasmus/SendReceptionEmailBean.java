@@ -3,18 +3,15 @@
  */
 package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 
-import org.joda.time.DateTime;
-
 public class SendReceptionEmailBean implements java.io.Serializable {
 
-    private DateTime beginDate;
-    private DateTime endDate;
     private boolean includeOnlyProcessWithNoReceptionEmail;
-    private Set<IndividualCandidacyProcess> subjectProcesses;
+    private Set<ErasmusIndividualCandidacyProcess> subjectProcesses;
     private ErasmusCandidacyProcess erasmusCandidacyProcess;
 
     /**
@@ -24,6 +21,9 @@ public class SendReceptionEmailBean implements java.io.Serializable {
 
     public SendReceptionEmailBean(final ErasmusCandidacyProcess erasmusCandidacyProcess) {
         this.erasmusCandidacyProcess = erasmusCandidacyProcess;
+	this.includeOnlyProcessWithNoReceptionEmail = true;
+
+	retrieveProcesses();
     }
 
     public void removeProcess(ErasmusIndividualCandidacyProcess individualCandidacyProcess) {
@@ -34,24 +34,22 @@ public class SendReceptionEmailBean implements java.io.Serializable {
         this.subjectProcesses.add(individualCandidacyProcess);
     }
 
-    public void retrieveProcesses() {
+    private void retrieveProcesses() {
+	subjectProcesses = new HashSet<ErasmusIndividualCandidacyProcess>();
 
-    }
+	for (IndividualCandidacyProcess child : erasmusCandidacyProcess.getChildProcesses()) {
+	    ErasmusIndividualCandidacyProcess individualCandidacyProcess = (ErasmusIndividualCandidacyProcess) child;
 
-    public DateTime getBeginDate() {
-        return beginDate;
-    }
+	    if (!individualCandidacyProcess.isStudentAcceptedAndNotified()) {
+		continue;
+	    }
 
-    public void setBeginDate(DateTime beginDate) {
-        this.beginDate = beginDate;
-    }
+	    if (includeOnlyProcessWithNoReceptionEmail && individualCandidacyProcess.isStudentNotifiedWithReceptionEmail()) {
+		continue;
+	    }
 
-    public DateTime getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(DateTime endDate) {
-        this.endDate = endDate;
+	    subjectProcesses.add(individualCandidacyProcess);
+	}
     }
 
     public boolean isIncludeOnlyProcessWithNoReceptionEmail() {
@@ -62,11 +60,11 @@ public class SendReceptionEmailBean implements java.io.Serializable {
         this.includeOnlyProcessWithNoReceptionEmail = includeOnlyProcessWithNoReceptionEmail;
     }
 
-    public Set<IndividualCandidacyProcess> getSubjectProcesses() {
+    public Set<ErasmusIndividualCandidacyProcess> getSubjectProcesses() {
         return subjectProcesses;
     }
 
-    public void setSubjectProcesses(Set<IndividualCandidacyProcess> subjectProcesses) {
+    public void setSubjectProcesses(Set<ErasmusIndividualCandidacyProcess> subjectProcesses) {
         this.subjectProcesses = subjectProcesses;
     }
 

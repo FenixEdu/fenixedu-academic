@@ -22,5 +22,8 @@ public class ErasmusCandidacyProcessExecutedAction extends ErasmusCandidacyProce
 	setErasmusCandidacyProcess(candidacyProcess);
 	getSubjectErasmusIndividualCandidacyProcess().addAll(subjectCandidacyProcesses);
     }
-    
+
+    public boolean isReceptionEmailExecutedAction() {
+	return ExecutedActionType.SENT_RECEPTION_EMAIL.equals(getType());
+    }
 }

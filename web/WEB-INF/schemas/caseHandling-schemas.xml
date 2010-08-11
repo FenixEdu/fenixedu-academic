@@ -1904,6 +1904,8 @@
 	<slot name="candidacySelectedDegree" key="label.eramsus.candidacy.choosed.degree">
 		<property name="format" value="${presentationName} - ${sigla}" />
 	</slot>
+	<remove name="state" />
+	<remove name="candidacyState" />
 </schema>
 
 <schema name="ErasmusCandidacyProcessBean.candidacyDate" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">

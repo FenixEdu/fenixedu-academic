@@ -25,6 +25,10 @@
 	<slot name="number" />
 </schema>	
 
+<schema name="EditStudentNumberDomainObject" type="net.sourceforge.fenixedu.domain.student.Student" bundle="MANAGER_RESOURCES">
+	<slot name="number" />
+</schema>	
+
 <schema name="EditRegistrationDomainObject" type="net.sourceforge.fenixedu.domain.student.Registration" bundle="MANAGER_RESOURCES">
 	<slot name="number" />
 </schema>	

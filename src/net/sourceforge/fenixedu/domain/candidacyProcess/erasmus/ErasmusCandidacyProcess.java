@@ -55,6 +55,7 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 	activities.add(new ViewChildProcessWithMissingRequiredDocumentFiles());
 	activities.add(new SendEmailToMissingRequiredDocumentsProcesses());
 	activities.add(new EditCandidacyPeriod());
+	activities.add(new SendReceptionEmail());
     }
 
     public ErasmusCandidacyProcess() {
@@ -568,5 +569,45 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 	    return false;
 	}
 
+    }
+    
+    static private class SendReceptionEmail extends Activity<ErasmusCandidacyProcess> {
+	@Override
+	public void checkPreConditions(ErasmusCandidacyProcess process, IUserView userView) {
+	    if (isManager(userView)) {
+		return;
+	    }
+	    
+	    if (isGriOfficeEmployee(userView)) {
+		return;
+	    }
+
+	    throw new PreConditionNotValidException();
+	}
+
+	@Override
+	protected ErasmusCandidacyProcess executeActivity(ErasmusCandidacyProcess process, IUserView userView, Object object) {
+	    for (IndividualCandidacyProcess childProcess : process.getChildsWithMissingRequiredDocuments()) {
+		ErasmusIndividualCandidacyProcess erasmusChildProcess = (ErasmusIndividualCandidacyProcess) childProcess;
+		erasmusChildProcess.sendEmailForRequiredMissingDocuments();
+	    }
+
+	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return false;
+	}
+
+	@Override
+	public Boolean isVisibleForCoordinator() {
+	    return false;
+	}
+
+	@Override
+	public Boolean isVisibleForGriOffice() {
+	    return true;
+	}
     }
 }

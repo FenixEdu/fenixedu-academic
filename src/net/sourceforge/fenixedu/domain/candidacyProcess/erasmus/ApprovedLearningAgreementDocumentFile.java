@@ -165,16 +165,6 @@ public class ApprovedLearningAgreementDocumentFile extends ApprovedLearningAgree
 	return getMostRecentSentEmailAcceptedStudentAction().getWhenOccured();
     }
 
-    public boolean isBeenSentEmailAcceptedStudentActionAtDate(final DateTime dateTime) {
-	final ApprovedLearningAgreementExecutedAction mostRecent = getMostRecentSentEmailAcceptedStudentAction();
-
-	if (mostRecent == null) {
-	    return false;
-	}
-
-	return mostRecent.getWhenOccured().isBefore(dateTime);
-    }
-
     public boolean isMostRecent() {
 	return getErasmusIndividualCandidacy().getMostRecentApprovedLearningAgreement() == this;
     }
