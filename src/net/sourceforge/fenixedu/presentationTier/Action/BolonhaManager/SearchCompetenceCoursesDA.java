@@ -25,6 +25,15 @@ public class SearchCompetenceCoursesDA extends FenixDispatchAction {
 	private static final long serialVersionUID = 1L;
 
 	private String searchName = "";
+	private String searchCode = "";
+
+	public SearchCompetenceCourseBean() {
+	}
+
+	public SearchCompetenceCourseBean(String searchName, String searchCode) {
+	    setSearchName(searchName);
+	    setSearchCode(searchCode);
+	}
 
 	public String getSearchName() {
 	    return searchName;
@@ -33,14 +42,37 @@ public class SearchCompetenceCoursesDA extends FenixDispatchAction {
 	public void setSearchName(String searchName) {
 	    this.searchName = searchName;
 	}
+
+	public void setSearchCode(String searchCode) {
+	    this.searchCode = searchCode;
+	}
+
+	public String getSearchCode() {
+	    return searchCode;
+	}
     }
 
     public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	SearchCompetenceCourseBean searchBean = getOrCreateSearchBean(request);
-	if (!searchBean.getSearchName().isEmpty()) {
-	    request.setAttribute("searchResults", search(searchBean.getSearchName()));
+	String searchName = searchBean.getSearchName();
+	String searchCode = searchBean.getSearchCode();
+	if ((!searchName.isEmpty()) || (!searchCode.isEmpty())) {
+	    request.setAttribute("searchResults", search(searchName, searchCode));
 	}
 	request.setAttribute("searchBean", searchBean);
+	return mapping.findForward("searchCompetenceCourses");
+    }
+
+    public ActionForward sortSearch(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	String searchName = (String) getFromRequest(request, "searchName");
+	String searchCode = (String) getFromRequest(request, "searchCode");
+	if ((!searchName.isEmpty()) || (!searchCode.isEmpty())) {
+	    request.setAttribute("searchResults", search(searchName, searchCode));
+	}
+
+	request.setAttribute("sortBy", getFromRequest(request, "sortBy"));
+	request.setAttribute("searchBean", new SearchCompetenceCourseBean(searchName, searchCode));
 	return mapping.findForward("searchCompetenceCourses");
     }
 
@@ -52,7 +84,7 @@ public class SearchCompetenceCoursesDA extends FenixDispatchAction {
 	return searchBean;
     }
 
-    private static Collection<CompetenceCourse> search(String searchName) {
-	return CompetenceCourse.searchBolonhaCompetenceCoursesByName(searchName);
+    private static Collection<CompetenceCourse> search(String searchName, String searchCode) {
+	return CompetenceCourse.searchBolonhaCompetenceCourses(searchName, searchCode);
     }
 }

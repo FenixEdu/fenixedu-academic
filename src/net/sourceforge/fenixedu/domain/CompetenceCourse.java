@@ -1157,6 +1157,24 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	return information != null && information.getCompetenceCourseLoadsCount() == 1;
     }
 
+    public boolean matchesName(String name) {
+	name = StringNormalizer.normalizeAndReplaceNonAlphaNumeric(name, " ");
+	for (final CompetenceCourseInformation information : getCompetenceCourseInformations()) {
+	    if (StringNormalizer.normalize(information.getName()).matches(".*" + name.replaceAll(" ", ".*") + ".*")) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    public boolean matchesCode(String code) {
+	if (getCode() == null) {
+	    return false;
+	}
+	code = StringNormalizer.normalizeAndReplaceNonAlphaNumeric(code, " ");
+	return (StringNormalizer.normalize(getCode()).matches(".*" + code.replaceAll(" ", ".*") + ".*"));
+    }
+
     public ExecutionSemester getStartExecutionSemester() {
 	return getOldestCompetenceCourseInformation().getExecutionPeriod();
     }
@@ -1193,19 +1211,19 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	return result;
     }
 
-    static public Collection<CompetenceCourse> searchBolonhaCompetenceCoursesByName(String searchName) {
+    static public Collection<CompetenceCourse> searchBolonhaCompetenceCourses(String searchName, String searchCode) {
 	final Set<CompetenceCourse> result = new TreeSet<CompetenceCourse>(COMPETENCE_COURSE_COMPARATOR_BY_NAME);
-	searchName = StringNormalizer.normalizeAndReplaceNonAlphaNumeric(searchName, " ");
 	for (final CompetenceCourse competenceCourse : RootDomainObject.getInstance().getCompetenceCoursesSet()) {
 	    if (!competenceCourse.isBolonha()) {
 		continue;
 	    }
-	    for (final CompetenceCourseInformation information : competenceCourse.getCompetenceCourseInformations()) {
-		if (StringNormalizer.normalize(information.getName()).matches(".*" + searchName.replaceAll(" ", ".*") + ".*")) {
-		    result.add(competenceCourse);
-		    break;
-		}
+	    if ((!searchName.isEmpty()) && (!competenceCourse.matchesName(searchName))) {
+		continue;
 	    }
+	    if ((!searchCode.isEmpty()) && (!competenceCourse.matchesCode(searchCode))) {
+		continue;
+	    }
+	    result.add(competenceCourse);
 	}
 	return result;
     }
