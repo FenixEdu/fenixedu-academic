@@ -106,7 +106,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 
     protected void addChildCurriculumGroups(final CourseGroup courseGroup, final ExecutionSemester executionSemester) {
 	for (final CourseGroup childCourseGroup : courseGroup.getNotOptionalChildCourseGroups(executionSemester)) {
-	    new CurriculumGroup(this, childCourseGroup, executionSemester);
+	    CurriculumGroupFactory.createGroup(this, childCourseGroup, executionSemester);
 	}
     }
 
@@ -809,7 +809,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	}
 	return result;
     }
-    
+
     @Override
     public Collection<Enrolment> getSpecialSeasonEnrolments(final ExecutionSemester executionSemester) {
 	final Collection<Enrolment> result = new HashSet<Enrolment>();

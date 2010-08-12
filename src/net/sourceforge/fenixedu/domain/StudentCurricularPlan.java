@@ -60,6 +60,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.BranchCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Credits;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CreditsManager;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroupFactory;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
@@ -203,7 +204,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	final StudentCurricularPlan result = new StudentCurricularPlan(registration, degreeCurricularPlan, startDate);
 
 	if (degreeCurricularPlan.isBoxStructure()) {
-	    new RootCurriculumGroup(result, degreeCurricularPlan.getRoot(), null);
+	    CurriculumGroupFactory.createRoot(result, degreeCurricularPlan.getRoot(), null);
 	}
 
 	return result;
@@ -215,7 +216,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	final StudentCurricularPlan result = new StudentCurricularPlan(registration, degreeCurricularPlan, startDate);
 
 	if (degreeCurricularPlan.isBoxStructure()) {
-	    new RootCurriculumGroup(result, degreeCurricularPlan.getRoot(), cycleType);
+	    CurriculumGroupFactory.createRoot(result, degreeCurricularPlan.getRoot(), cycleType);
 	}
 
 	return result;
@@ -242,7 +243,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     private void createStructure(final ExecutionSemester executionSemester, CycleType cycleType) {
 	if (getDegreeCurricularPlan().isBoxStructure()) {
-	    new RootCurriculumGroup(this, getDegreeCurricularPlan().getRoot(), executionSemester, cycleType);
+	    CurriculumGroupFactory.createRoot(this, getDegreeCurricularPlan().getRoot(), executionSemester, cycleType);
 	}
     }
 
@@ -791,7 +792,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public Set<Enrolment> getDismissalApprovedEnrolments() {
 	Set<Enrolment> aprovedEnrolments = new HashSet<Enrolment>();
 	for (final Enrolment enrolment : getEnrolmentsSet()) {
-	    if (enrolment.canBeUsedAsCreditsSource() ) {
+	    if (enrolment.canBeUsedAsCreditsSource()) {
 		aprovedEnrolments.add(enrolment);
 	    }
 	}
@@ -2069,11 +2070,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     @Checked("StudentCurricularPlanPredicates.ENROL_IN_AFFINITY_CYCLE")
     public void enrolInAffinityCycle(final CycleCourseGroup cycleCourseGroup, final ExecutionSemester executionSemester) {
-	if (getDegreeCurricularPlan().getRoot().hasDegreeModule(cycleCourseGroup)) {
-	    new CycleCurriculumGroup(getRoot(), cycleCourseGroup, executionSemester);
-	} else {
-	    new ExternalCurriculumGroup(getRoot(), cycleCourseGroup, executionSemester);
-	}
+	CurriculumGroupFactory.createGroup(getRoot(), cycleCourseGroup, executionSemester);
     }
 
     final public String getName() {

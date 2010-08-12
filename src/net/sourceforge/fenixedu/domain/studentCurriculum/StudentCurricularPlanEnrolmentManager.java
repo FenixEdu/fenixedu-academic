@@ -126,12 +126,9 @@ public class StudentCurricularPlanEnrolmentManager extends StudentCurricularPlan
 				    getExecutionSemester(), getEnrolmentCondition(null, entry.getKey()), createdBy);
 			}
 
-		    } else if (degreeModule instanceof CycleCourseGroup) {
-			new CycleCurriculumGroup((RootCurriculumGroup) degreeModuleToEvaluate.getCurriculumGroup(),
-				(CycleCourseGroup) degreeModule, getExecutionSemester());
 		    } else {
-			new CurriculumGroup(degreeModuleToEvaluate.getCurriculumGroup(), (CourseGroup) degreeModule,
-				getExecutionSemester());
+			CurriculumGroupFactory.createGroup(degreeModuleToEvaluate.getCurriculumGroup(),
+				(CourseGroup) degreeModule, getExecutionSemester());
 		    }
 		}
 	    }

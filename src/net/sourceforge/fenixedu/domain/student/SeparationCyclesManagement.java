@@ -42,6 +42,7 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
 import net.sourceforge.fenixedu.domain.studentCurriculum.Credits;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CreditsDismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroupFactory;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
@@ -265,7 +266,7 @@ public class SeparationCyclesManagement {
 	if (parent.hasChildDegreeModule(source.getDegreeModule())) {
 	    destination = (CurriculumGroup) parent.getChildCurriculumModule(source.getDegreeModule());
 	} else {
-	    destination = new CurriculumGroup(parent, source.getDegreeModule());
+	    destination = CurriculumGroupFactory.createGroup(parent, source.getDegreeModule());
 	}
 
 	for (final CurriculumModule curriculumModule : source.getCurriculumModulesSet()) {

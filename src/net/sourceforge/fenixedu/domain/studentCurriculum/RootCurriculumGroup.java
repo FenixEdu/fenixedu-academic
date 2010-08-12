@@ -31,13 +31,13 @@ import org.joda.time.DateTime;
  */
 public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 
-    public RootCurriculumGroup() {
+    protected RootCurriculumGroup() {
 	super();
 	createExtraCurriculumGroup();
 	createPropaedeuticsCurriculumGroup();
     }
 
-    public RootCurriculumGroup(StudentCurricularPlan studentCurricularPlan, RootCourseGroup rootCourseGroup,
+    protected RootCurriculumGroup(StudentCurricularPlan studentCurricularPlan, RootCourseGroup rootCourseGroup,
 	    ExecutionSemester executionSemester, CycleType cycleType) {
 	this();
 	init(studentCurricularPlan, rootCourseGroup, executionSemester, cycleType);
@@ -64,7 +64,8 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 	}
     }
 
-    public RootCurriculumGroup(StudentCurricularPlan studentCurricularPlan, RootCourseGroup rootCourseGroup, CycleType cycleType) {
+    protected RootCurriculumGroup(StudentCurricularPlan studentCurricularPlan, RootCourseGroup rootCourseGroup,
+	    CycleType cycleType) {
 	this();
 	init(studentCurricularPlan, rootCourseGroup, cycleType);
 	createStandaloneCurriculumGroupIfNecessary();
@@ -109,11 +110,7 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 	    cycle = rootCourseGroup.getDegree().getDegreeType().getFirstOrderedCycleType();
 	}
 	if (cycle != null) {
-	    if (executionSemester != null) {
-		new CycleCurriculumGroup(this, rootCourseGroup.getCycleCourseGroup(cycle), executionSemester);
-	    } else {
-		new CycleCurriculumGroup(this, rootCourseGroup.getCycleCourseGroup(cycle));
-	    }
+	    CurriculumGroupFactory.createGroup(this, rootCourseGroup.getCycleCourseGroup(cycle), executionSemester);
 	}
     }
 

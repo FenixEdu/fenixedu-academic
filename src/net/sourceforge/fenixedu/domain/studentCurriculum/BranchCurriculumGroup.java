@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.studentCurriculum;
 import java.util.Collections;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degreeStructure.BranchCourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.BranchType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
@@ -18,6 +19,11 @@ public class BranchCurriculumGroup extends BranchCurriculumGroup_Base {
     public BranchCurriculumGroup(CurriculumGroup parentNode, BranchCourseGroup branch) {
 	this();
 	init(parentNode, branch);
+    }
+
+    public BranchCurriculumGroup(CurriculumGroup parentNode, BranchCourseGroup branch, ExecutionSemester executionSemester) {
+	super();
+	init(parentNode, branch, executionSemester);
     }
 
     @Override

@@ -315,7 +315,7 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 	final Set<BranchCurriculumGroup> groups = getBranchCurriculumGroups(branchType);
 	return groups.isEmpty() ? null : groups.iterator().next();
     }
-    
+
     public BranchCurriculumGroup getMajorBranchCurriculumGroup() {
 	return getBranchCurriculumGroup(BranchType.MAJOR);
     }
