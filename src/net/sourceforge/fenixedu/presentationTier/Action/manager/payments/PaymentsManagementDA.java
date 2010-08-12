@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.dataTransferObject.person.SimpleSearchPersonWith
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
+import net.sourceforge.fenixedu.domain.accounting.Discount;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeMapping;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
@@ -204,7 +205,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
     }
 
     private Event getEvent(HttpServletRequest request) {
-	return rootDomainObject.readEventByOID(getRequestParameterAsInteger(request, "eventId"));
+	return rootDomainObject.readEventByOID(getIntegerFromRequest(request, "eventId"));
     }
 
     public ActionForward prepareTransferPaymentsToOtherEventAndCancel(ActionMapping mapping, ActionForm form,
@@ -453,4 +454,20 @@ public class PaymentsManagementDA extends FenixDispatchAction {
 	request.setAttribute("event", getEvent(request));
 	return mapping.findForward("changePaymentPlan");
     }
+    
+    public ActionForward deleteDiscount(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final Discount discount = getDomainObject(request, "discountOid");
+	request.setAttribute("eventId", discount.getEvent().getIdInternal());
+	
+	try {
+	    discount.delete();
+	} catch (final DomainException e) {
+	    addActionMessage(request, e.getMessage(), e.getArgs());
+	}
+	
+	return showPaymentsForEvent(mapping, actionForm, request, response);
+    }
+    
 }

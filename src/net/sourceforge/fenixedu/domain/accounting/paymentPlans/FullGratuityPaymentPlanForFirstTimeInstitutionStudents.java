@@ -17,9 +17,9 @@ public class FullGratuityPaymentPlanForFirstTimeInstitutionStudents extends
     }
 
     public FullGratuityPaymentPlanForFirstTimeInstitutionStudents(final ExecutionYear executionYear,
-	    final DegreeCurricularPlanServiceAgreementTemplate serviceAgreementTemplate) {
+	    final DegreeCurricularPlanServiceAgreementTemplate serviceAgreementTemplate, final Boolean defaultPlan) {
 	this();
-	super.init(executionYear, serviceAgreementTemplate, false);
+	super.init(executionYear, serviceAgreementTemplate, defaultPlan);
     }
 
     @Override

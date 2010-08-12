@@ -1,9 +1,11 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-<html:xhtml />
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
+<%@page import="net.sourceforge.fenixedu.domain.accounting.Discount"%>
+
+<html:xhtml />
 
 <logic:present role="MANAGER">
 
@@ -134,6 +136,33 @@
 		</table>
 		</logic:iterate>
 
+	</logic:notEmpty>
+	
+	<br/><br/>
+	
+	<logic:notEmpty name="event" property="discounts">
+		<strong><bean:message key="label.event.discounts" bundle="MANAGER_RESOURCES" /></strong>
+		
+		<fr:view name="event" property="discounts">
+		
+			<fr:schema bundle="MANAGER_RESOURCES" type="<%= Discount.class.getName() %>">
+				<fr:slot name="whenCreated" />
+				<fr:slot name="amount" />
+				<fr:slot name="username" />
+			</fr:schema>
+		
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle1 thcenter tdcenter thlight mtop025" />
+				<fr:property name="columnClasses" value=",," />
+				
+				
+				<fr:link name="delete" label="label.delete,MANAGER_RESOURCES"
+						 confirmation="label.event.discount.confirm.delete,MANAGER_RESOURCES"
+						 link="/payments.do?method=deleteDiscount&discountOid=${externalId}" />
+				
+			</fr:layout>
+		</fr:view>
+	
 	</logic:notEmpty>
 	
 	<br/><br/>

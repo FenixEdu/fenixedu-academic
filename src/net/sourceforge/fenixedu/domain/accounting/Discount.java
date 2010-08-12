@@ -7,6 +7,8 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public class Discount extends Discount_Base {
 
     private Discount() {
@@ -30,6 +32,7 @@ public class Discount extends Discount_Base {
 	}
     }
 
+    @Service
     public void delete() {
 	removeEvent();
 	removeRootDomainObject();

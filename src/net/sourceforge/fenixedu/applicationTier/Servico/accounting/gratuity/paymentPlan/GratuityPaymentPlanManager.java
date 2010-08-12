@@ -51,7 +51,7 @@ public class GratuityPaymentPlanManager {
 	    } else if (paymentPlanBean.isForFirstTimeInstitutionStudents()) {
 
 		return new FullGratuityPaymentPlanForFirstTimeInstitutionStudents(paymentPlanBean.getExecutionYear(),
-			degreeCurricularPlan.getServiceAgreementTemplate());
+			degreeCurricularPlan.getServiceAgreementTemplate(), paymentPlanBean.isMain());
 
 	    } else {
 		return new FullGratuityPaymentPlan(paymentPlanBean.getExecutionYear(), degreeCurricularPlan
