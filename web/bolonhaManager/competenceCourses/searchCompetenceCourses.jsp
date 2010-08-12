@@ -24,9 +24,9 @@
 	</table>
 </fr:form>
 
-<bean:define id="searchName" name="searchBean" property="searchName"/>
-<bean:define id="searchCode" name="searchBean" property="searchCode"/>
 <logic:present name="searchResults">
+	<bean:define id="searchName" name="searchBean" property="searchName"/>
+	<bean:define id="searchCode" name="searchBean" property="searchCode"/>
 	<fr:view name="searchResults">
 		<fr:schema type="net.sourceforge.fenixedu.domain.CompetenceCourse" bundle="BOLONHA_MANAGER_RESOURCES">
 			<fr:slot name="name"/>

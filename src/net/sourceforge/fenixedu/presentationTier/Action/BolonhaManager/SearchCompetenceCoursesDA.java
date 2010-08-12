@@ -13,6 +13,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -78,6 +79,7 @@ public class SearchCompetenceCoursesDA extends FenixDispatchAction {
 
     private SearchCompetenceCourseBean getOrCreateSearchBean(HttpServletRequest request) {
 	SearchCompetenceCourseBean searchBean = (SearchCompetenceCourseBean) getRenderedObject("searchBean");
+	RenderUtils.invalidateViewState();
 	if (searchBean == null) {
 	    searchBean = new SearchCompetenceCourseBean();
 	}
