@@ -1153,4 +1153,13 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 		    new Integer(response.getStatus().getCode()).toString() });
 	}
     }
+
+    public DateTime getMostRecentSentEmailAcceptedStudentActionWhenOccured() {
+	if (getCandidacy().getMostRecentApprovedLearningAgreement() == null) {
+	    return null;
+	}
+
+	return getCandidacy().getMostRecentApprovedLearningAgreement().getMostRecentSentLearningAgreementActionWhenOccured();
+    }
+
 }

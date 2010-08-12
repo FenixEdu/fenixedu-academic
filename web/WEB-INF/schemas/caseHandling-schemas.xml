@@ -2471,3 +2471,23 @@
 	<slot name="mostRecentAlert.whenCreated" key="label.dateTime.submission" bundle="CANDIDATE_RESOURCES" />
 </schema>
 
+<schema name="SendReceptionEmail.processes.view" bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess">
+	<slot name="processCode" key="label.process.id" bundle="CANDIDATE_RESOURCES"/>
+	<slot name="personalDetails.name" key="label.name" bundle="CANDIDATE_RESOURCES"/>
+	<slot name="personalDetails.documentIdNumber" key="label.identificationNumber" bundle="CANDIDATE_RESOURCES"/>
+	<slot name="validatedByGri" key="label.erasmus.validated.by.gri" />
+	<slot name="validatedByErasmusCoordinator" key="label.erasmus.validated.by.coordinator" />
+	<slot name="mostRecentSentEmailAcceptedStudentActionWhenOccured" key="label.erasmus.last.sent.email.to.accepted.candidate" bundle="CANDIDATE_RESOURCES" layout="null-as-label"/>
+	<slot name="lastReceptionEmailSent" key="label.erasmus.last.sent.reception.email" layout="null-as-label" />
+</schema>
+
+<schema name="SendReceptionEmail.edit" bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.SendReceptionEmailBean">
+   	<slot name="subjectProcesses" layout="option-select" key="label.erasmus.send.reception.email.processes">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.internationalRelatOffice.candidacy.erasmus.ErasmusCandidacyProcessDA$ActiveErasmusIndividualCandidaciesForSendReceptionProvider" />
+        <property name="eachLayout" value="tabular" />
+        <property name="saveOptions" value="true" />
+        <property name="eachSchema" value="SendReceptionEmail.processes.view" />
+		<property name="classes" value="nobullet noindent"/>
+    </slot>
+</schema>
+

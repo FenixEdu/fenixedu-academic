@@ -167,7 +167,7 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
     }
 
     public boolean isDebtPayed() {
-	return hasEvent() && getEvent().isClosed();
+	return !hasEvent() || (hasEvent() && getEvent().isClosed());
     }
 
     public boolean isFor(final ExecutionInterval executionInterval) {

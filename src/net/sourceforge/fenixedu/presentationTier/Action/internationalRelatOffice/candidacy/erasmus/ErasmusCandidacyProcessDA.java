@@ -51,8 +51,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "view-erasmus-coordinators", path = "/candidacy/erasmus/viewErasmusCoordinators.jsp"),
 	@Forward(name = "assign-coordinator", path = "/candidacy/erasmus/assignCoordinator.jsp"),
 	@Forward(name = "send-reception-email-present-individual-processes", path = "/candidacy/erasmus/reception/sendReceptionEmailPresentIndividualProcesses.jsp"),
-	@Forward(name = "send-reception-email-prepare-add-individual-processes", path = "/candidacy/erasmus/reception/sendReceptionEmailPrepareAddIndividualProcesses.jsp"),
-	@Forward(name = "send-reception-email-prepare-remove-individual-processes", path = "/candidacy/erasmus/reception/sendReceptionEmailPrepareAddIndividualProcesses.jsp") })
+	@Forward(name = "send-reception-email-edit-individual-candidacies", path = "/candidacy/erasmus/reception/sendReceptionEmailEditIndividualCandidacies.jsp") })
 public class ErasmusCandidacyProcessDA extends net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusCandidacyProcessDA {
 
     @Override
@@ -242,6 +241,7 @@ public class ErasmusCandidacyProcessDA extends net.sourceforge.fenixedu.presenta
 
 	if (bean == null) {
 	    bean = new SendReceptionEmailBean(getProcess(request));
+	    bean.retrieveProcesses();
 	}
 
 	RenderUtils.invalidateViewState("send.reception.email.bean");
@@ -252,34 +252,67 @@ public class ErasmusCandidacyProcessDA extends net.sourceforge.fenixedu.presenta
 	return mapping.findForward("send-reception-email-present-individual-processes");
     }
 
-    public ActionForward sendReceptionEmailChooseIndividualProcesses(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-	SendReceptionEmailBean bean = getRenderedSendReceptionEmailBean();
-
-	RenderUtils.invalidateViewState("send.reception.email.bean");
-	RenderUtils.invalidateViewState("send.reception.email.bean.edit");
-
-	request.setAttribute("sendReceptionEmailBean", bean);
-
-	return mapping.findForward("send-reception-email-prepare-add-individual-processes");
-    }
-
-    public ActionForward sendReceptionEmailSetIndividualProcesses(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-	SendReceptionEmailBean bean = getRenderedSendReceptionEmailBean();
-	ErasmusIndividualCandidacyProcess individualCandidacyProcess = getDomainObject(request,
-		"erasmusIndividualCandidacyProcessId");
-	bean.addProcess(individualCandidacyProcess);
-
-	return prepareExecuteSendReceptionEmail(mapping, actionForm, request, response);
-    }
-
     public ActionForward sendReceptionEmail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	SendReceptionEmailBean bean = getRenderedSendReceptionEmailBean();
 	executeActivity(getProcess(request), "SendReceptionEmail", bean);
 
 	return listProcesses(mapping, actionForm, request, response);
+    }
+
+    public ActionForward sendReceptionEmailSetFilter(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	SendReceptionEmailBean bean = getRenderedSendReceptionEmailBean();
+	bean.retrieveProcesses();
+
+	return prepareExecuteSendReceptionEmail(mapping, actionForm, request, response);
+    }
+
+    public ActionForward sendReceptionEmailEditIndividualCandidacies(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	SendReceptionEmailBean bean = getRenderedSendReceptionEmailBean();
+
+	RenderUtils.invalidateViewState("send.reception.email.bean");
+	RenderUtils.invalidateViewState("send.reception.email.bean.edit");
+
+	request.setAttribute("validIndividualProcesses", getProcess(request).getValidErasmusIndividualCandidacies());
+	request.setAttribute("sendReceptionEmailBean", bean);
+
+	setSelectedIndividualProcesses((ErasmusCandidacyProcessForm) actionForm, bean);
+
+	return mapping.findForward("send-reception-email-edit-individual-candidacies");
+    }
+
+
+    public ActionForward sendReceptionEmailSetSelectedIndividualProcesses(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	SendReceptionEmailBean bean = getRenderedSendReceptionEmailBean();
+
+	List<ErasmusIndividualCandidacyProcess> selectedIndividual = retrieveSelectedProcesses((ErasmusCandidacyProcessForm) actionForm);
+
+	bean.setSubjectProcesses(selectedIndividual);
+
+	return prepareExecuteSendReceptionEmail(mapping, actionForm, request, response);
+    }
+
+    private void setSelectedIndividualProcesses(ErasmusCandidacyProcessForm actionForm, SendReceptionEmailBean bean) {
+	List<String> externalIdList = new ArrayList<String>();
+
+	for (ErasmusIndividualCandidacyProcess individualProcess : bean.getSubjectProcesses()) {
+	    externalIdList.add(individualProcess.getExternalId());
+	}
+
+	actionForm.setSelectedProcesses(externalIdList.toArray(new String[0]));
+    }
+
+    private List<ErasmusIndividualCandidacyProcess> retrieveSelectedProcesses(ErasmusCandidacyProcessForm actionForm) {
+	List<ErasmusIndividualCandidacyProcess> processList = new ArrayList<ErasmusIndividualCandidacyProcess>();
+
+	for (String externalId : actionForm.getSelectedProcesses()) {
+	    processList.add((ErasmusIndividualCandidacyProcess) ErasmusIndividualCandidacyProcess.fromExternalId(externalId));
+	}
+
+	return processList;
     }
 
     private SendReceptionEmailBean getRenderedSendReceptionEmailBean() {
@@ -309,6 +342,22 @@ public class ErasmusCandidacyProcessDA extends net.sourceforge.fenixedu.presenta
 	    Collections.sort(associatedUniversityUnits, new BeanComparator("nameI18n"));
 
 	    return associatedUniversityUnits;
+	}
+
+    }
+
+    public static class ActiveErasmusIndividualCandidaciesForSendReceptionProvider implements DataProvider {
+
+	@Override
+	public Converter getConverter() {
+	    return new DomainObjectKeyConverter();
+	}
+
+	@Override
+	public Object provide(Object source, Object currentValue) {
+	    SendReceptionEmailBean bean = (SendReceptionEmailBean) source;
+	    ErasmusCandidacyProcess candidacyProcess = bean.getErasmusCandidacyProcess();
+	    return null;
 	}
 
     }

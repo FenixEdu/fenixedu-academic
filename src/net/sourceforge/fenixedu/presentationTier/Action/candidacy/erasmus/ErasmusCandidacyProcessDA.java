@@ -38,12 +38,22 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
     static public class ErasmusCandidacyProcessForm extends CandidacyProcessForm {
 	private Integer selectedProcessId;
 
+	private String[] selectedProcesses;
+
 	public Integer getSelectedProcessId() {
 	    return selectedProcessId;
 	}
 
 	public void setSelectedProcessId(Integer selectedProcessId) {
 	    this.selectedProcessId = selectedProcessId;
+	}
+
+	public String[] getSelectedProcesses() {
+	    return selectedProcesses;
+	}
+
+	public void setSelectedProcesses(String[] selectedProcesses) {
+	    this.selectedProcesses = selectedProcesses;
 	}
     }
 

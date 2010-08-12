@@ -3,15 +3,15 @@
  */
 package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 
 public class SendReceptionEmailBean implements java.io.Serializable {
 
     private boolean includeOnlyProcessWithNoReceptionEmail;
-    private Set<ErasmusIndividualCandidacyProcess> subjectProcesses;
+    private List<ErasmusIndividualCandidacyProcess> subjectProcesses;
     private ErasmusCandidacyProcess erasmusCandidacyProcess;
 
     /**
@@ -22,8 +22,6 @@ public class SendReceptionEmailBean implements java.io.Serializable {
     public SendReceptionEmailBean(final ErasmusCandidacyProcess erasmusCandidacyProcess) {
         this.erasmusCandidacyProcess = erasmusCandidacyProcess;
 	this.includeOnlyProcessWithNoReceptionEmail = true;
-
-	retrieveProcesses();
     }
 
     public void removeProcess(ErasmusIndividualCandidacyProcess individualCandidacyProcess) {
@@ -34,9 +32,10 @@ public class SendReceptionEmailBean implements java.io.Serializable {
         this.subjectProcesses.add(individualCandidacyProcess);
     }
 
-    private void retrieveProcesses() {
-	subjectProcesses = new HashSet<ErasmusIndividualCandidacyProcess>();
+    public void retrieveProcesses() {
+	subjectProcesses = new ArrayList<ErasmusIndividualCandidacyProcess>();
 
+	int i = 0;
 	for (IndividualCandidacyProcess child : erasmusCandidacyProcess.getChildProcesses()) {
 	    ErasmusIndividualCandidacyProcess individualCandidacyProcess = (ErasmusIndividualCandidacyProcess) child;
 
@@ -60,11 +59,11 @@ public class SendReceptionEmailBean implements java.io.Serializable {
         this.includeOnlyProcessWithNoReceptionEmail = includeOnlyProcessWithNoReceptionEmail;
     }
 
-    public Set<ErasmusIndividualCandidacyProcess> getSubjectProcesses() {
+    public List<ErasmusIndividualCandidacyProcess> getSubjectProcesses() {
         return subjectProcesses;
     }
 
-    public void setSubjectProcesses(Set<ErasmusIndividualCandidacyProcess> subjectProcesses) {
+    public void setSubjectProcesses(List<ErasmusIndividualCandidacyProcess> subjectProcesses) {
         this.subjectProcesses = subjectProcesses;
     }
 

@@ -570,14 +570,14 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 	}
 
     }
-    
+
     static private class SendReceptionEmail extends Activity<ErasmusCandidacyProcess> {
 	@Override
 	public void checkPreConditions(ErasmusCandidacyProcess process, IUserView userView) {
 	    if (isManager(userView)) {
 		return;
 	    }
-	    
+
 	    if (isGriOfficeEmployee(userView)) {
 		return;
 	    }
@@ -587,11 +587,9 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 
 	@Override
 	protected ErasmusCandidacyProcess executeActivity(ErasmusCandidacyProcess process, IUserView userView, Object object) {
-	    for (IndividualCandidacyProcess childProcess : process.getChildsWithMissingRequiredDocuments()) {
-		ErasmusIndividualCandidacyProcess erasmusChildProcess = (ErasmusIndividualCandidacyProcess) childProcess;
-		erasmusChildProcess.sendEmailForRequiredMissingDocuments();
-	    }
-
+	    SendReceptionEmailBean sendBean = (SendReceptionEmailBean) object;
+	    ReceptionEmailExecutedAction.createAction(sendBean);
+	    
 	    return process;
 	}
 
