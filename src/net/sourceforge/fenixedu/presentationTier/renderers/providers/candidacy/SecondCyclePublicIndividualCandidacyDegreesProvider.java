@@ -15,6 +15,7 @@ public class SecondCyclePublicIndividualCandidacyDegreesProvider implements Data
     private static final String DEGREE_TO_REMOVE_TERRITORY_ACRONYM = "MET";
     private static final String DEGREE_TO_REMOVE_PHARMACEUTICAL_ACRONYM = "MEFarm";
     private static final String DEGREE_TO_REMOVE_MPOT_ACRONYM = "MPOT2010";
+    private static final String DEGREE_TO_REMOVE_ENV_ACRONYM = "MEAmb";
 
     public Object provide(Object source, Object currentValue) {
 	List<Degree> degrees = new ArrayList<Degree>(Degree.readAllByDegreeType(DegreeType.BOLONHA_MASTER_DEGREE,
@@ -30,6 +31,7 @@ public class SecondCyclePublicIndividualCandidacyDegreesProvider implements Data
 	degrees.remove(degreeToRemoveTerritory);
 	degrees.remove(degreeToPharmaceutical);
 	degrees.remove(degreeToRemoveMpot);
+	degrees.remove(Degree.readBySigla(DEGREE_TO_REMOVE_ENV_ACRONYM));
 
 	return degrees;
     }
