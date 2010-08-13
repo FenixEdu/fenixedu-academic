@@ -208,7 +208,7 @@ public class SIBSPaymentsDA extends FenixDispatchAction {
 
 	    for (final SibsIncommingPaymentFileDetailLine detailLine : sibsFile.getDetailLines()) {
 		try {
-		    processCode(detailLine, person.getIdInternal(), result);
+		    processCode(detailLine, person, result);
 		} catch (Exception e) {
 		    result.addError("error.manager.SIBS.processException", detailLine.getCode(), getMessage(e));
 		}
@@ -239,9 +239,9 @@ public class SIBSPaymentsDA extends FenixDispatchAction {
 	}
     }
 
-    private void processCode(SibsIncommingPaymentFileDetailLine detailLine, Integer personId, ProcessResult result)
+    private void processCode(SibsIncommingPaymentFileDetailLine detailLine, Person person, ProcessResult result)
 	    throws Exception {
-	final Person person = (Person) rootDomainObject.readPartyByOID(personId);
+
 	final PaymentCode paymentCode = getPaymentCode(detailLine, result);
 
 	if (paymentCode == null) {
@@ -275,10 +275,12 @@ public class SIBSPaymentsDA extends FenixDispatchAction {
     }
 
     private PaymentCode getPaymentCodeToProcess(final PaymentCode paymentCode, ExecutionYear executionYear, ProcessResult result) {
+	
 	final PaymentCodeMapping mapping = paymentCode.getOldPaymentCodeMapping(executionYear);
 
 	final PaymentCode codeToProcess;
 	if (mapping != null) {
+
 	    result.addMessage("warning.manager.SIBS.foundMapping", paymentCode.getCode(), mapping.getNewPaymentCode().getCode());
 	    result.addMessage("warning.manager.SIBS.invalidating", paymentCode.getCode());
 
@@ -288,6 +290,7 @@ public class SIBSPaymentsDA extends FenixDispatchAction {
 	} else {
 	    codeToProcess = paymentCode;
 	}
+	
 	return codeToProcess;
     }
 
