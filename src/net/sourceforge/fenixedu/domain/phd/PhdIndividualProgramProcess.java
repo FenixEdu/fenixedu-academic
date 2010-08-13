@@ -429,7 +429,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		RegistrationStateCreator.createState(process.getRegistration(), userView.getPerson(), new DateTime(),
 			RegistrationStateType.CANCELED);
 	    }
-	    
+
 	    if (process.getCandidacyProcess().hasCandidacy()) {
 		process.getCandidacyProcess().getCandidacy().cancelCandidacy();
 	    }
@@ -804,8 +804,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	@Override
 	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
 
-	    if (process.hasSeminarProcess() && !process.getSeminarProcess().isExempted()
-		    && !process.getSeminarProcess().isConcluded()) {
+	    if (!process.hasSeminarProcess()
+		    || (!process.getSeminarProcess().isExempted() && !process.getSeminarProcess().isConcluded())) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -816,6 +816,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
+
 	}
 
 	@Override
@@ -1331,7 +1332,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     public Set<Person> getResponsibleCoordinatorsFor(ExecutionYear executionYear) {
 	return getPhdProgram().getResponsibleCoordinatorsFor(executionYear);
     }
-    
+
     public boolean hasPhdPublicPresentationSeminarAlert() {
 	return hasPhdAlert(PhdPublicPresentationSeminarAlert.class);
     }
