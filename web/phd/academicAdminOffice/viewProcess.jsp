@@ -116,13 +116,14 @@
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.manage.states"/>
 				</html:link>
 			</li>
-			<%--
+			
+			<br />
+			
 			<li>
 				<html:link action="/phdAccountingEventsManagement.do?method=prepare" paramId="processId" paramName="process" paramProperty="externalId">
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.accounting.events.create"/>
 				</html:link>
 			</li>
-			--%>
 			<li>
 				<html:link action="/payments.do?method=showOperations" target="_blank" paramId="personId" paramName="process" paramProperty="person.idInternal">
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.payments"/>
@@ -146,8 +147,8 @@
 				</li>
 			</phd:activityAvailable>
 
-			<%-- 
-			<phd:activityAvailable process="<%= process %>" activity="<%= PhdIndividualProgramProcess.RequestPublicThesisPresentation.class %>">
+		 
+			<phd:activityAvailable process="<%= process %>" activity="<%= RequestPublicThesisPresentation.class %>">
 			
 				<li>
 					<html:link action="/phdIndividualProgramProcess.do?method=prepareRequestPublicThesisPresentation" paramId="processId" paramName="process" paramProperty="externalId">
@@ -156,7 +157,7 @@
 				</li>
 			
 			</phd:activityAvailable>
-			--%>
+		
 		</ul>
     </td>
   </tr>
