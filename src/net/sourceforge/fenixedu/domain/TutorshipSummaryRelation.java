@@ -19,6 +19,8 @@ public class TutorshipSummaryRelation extends TutorshipSummaryRelation_Base {
     @Service
     public void update(final TutorshipSummaryRelationBean bean) {
 	setParticipationType(bean.getParticipationType());
+	setWithoutEnrolments(bean.isWithoutEnrolments());
+	setHighPerformance(bean.isHighPerformance());
 	setHighPerformance(bean.isHighPerformance());
 	setLowPerformance(bean.isLowPerformance());
 	setOutOfTouch(bean.isOutOfTouch());
@@ -28,10 +30,11 @@ public class TutorshipSummaryRelation extends TutorshipSummaryRelation_Base {
 
     @Service
     static public TutorshipSummaryRelation create(final TutorshipSummaryRelationBean bean) {
-	TutorshipSummaryRelation tutorshipSummaryRelation = new TutorshipSummaryRelation(bean.getTutorship(), bean
-		.getTutorshipSummary());
+	TutorshipSummaryRelation tutorshipSummaryRelation = new TutorshipSummaryRelation(bean.getTutorship(),
+		bean.getTutorshipSummary());
 
 	tutorshipSummaryRelation.setParticipationType(bean.getParticipationType());
+	tutorshipSummaryRelation.setWithoutEnrolments(bean.isWithoutEnrolments());
 	tutorshipSummaryRelation.setHighPerformance(bean.isHighPerformance());
 	tutorshipSummaryRelation.setLowPerformance(bean.isLowPerformance());
 	tutorshipSummaryRelation.setOutOfTouch(bean.isOutOfTouch());

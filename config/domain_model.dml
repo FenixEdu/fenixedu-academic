@@ -1802,6 +1802,7 @@ class DomainObject {
     	Boolean outOfTouch;
     	Boolean highPerformance;
     	Boolean lowPerformance;
+    	Boolean withoutEnrolments;
 	}
     
     class TutorshipLog extends DomainObject {

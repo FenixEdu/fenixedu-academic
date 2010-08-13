@@ -674,7 +674,17 @@
 </schema>
 
 <schema name="tutorship.summary.search" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorSummaryBean">
-	<slot name="teacher" layout="menu-select" key="label.teacher">
+	<slot name="department" layout="menu-select-postback" key="label.teacher.department">
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Department" />
+		<property name="key" value="true" />
+		<property name="defaultText" value="label.dropDown.all" />
+		<property name="bundle" value="PEDAGOGICAL_COUNCIL" />
+		<property name="format" value="${nameI18n}" />
+		<property name="sortBy" value="name" />
+		<property name="destination" value="departmentPostBack" />
+	</slot>
+	<slot name="teacher" layout="menu-select-postback" key="label.teacher"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorSearchBean$DepartmentTeachersProvider" />
 		<property name="format" value="${teacherNumber} - ${employee.person.name}" />
@@ -807,13 +817,13 @@
 <schema name="tutorship.tutorate.viewSummaryRelation" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.TutorshipSummaryRelation">
 	<slot name="studentPlan.person.name" key="label.name" read-only="true" />
 	<slot name="studentPlan.registration.number" key="label.studentNumber" read-only="true" />
+	<slot name="withoutEnrolments" layout="boolean-icon" key="label.tutorshipSummary.form.withoutEnrolments" />
 	<slot name="participationType" key="label.tutorshipSummary.form.participationType" />
 	<slot name="participationRegularly" layout="boolean-icon" key="label.tutorshipSummary.form.participationRegularly" />
 	<slot name="participationNone" layout="boolean-icon" key="label.tutorshipSummary.form.participationNone" />
 	<slot name="outOfTouch" layout="boolean-icon" key="label.tutorshipSummary.form.outOfTouch" />
 	<slot name="highPerformance" layout="boolean-icon" key="label.tutorshipSummary.form.highPerformance" />
 	<slot name="lowPerformance" layout="boolean-icon" key="label.tutorshipSummary.form.lowPerformance" />
-	<slot name="withoutEnrolments" layout="boolean-icon" key="label.tutorshipSummary.form.withoutEnrolments" />
 </schema>
 
 <schema name="tutorship.summary.period" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorshipSummaryPeriodBean">

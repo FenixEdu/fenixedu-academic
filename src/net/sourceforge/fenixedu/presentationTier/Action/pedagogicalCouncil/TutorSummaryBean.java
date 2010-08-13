@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.TutorshipSummary;
 
@@ -72,25 +74,53 @@ public class TutorSummaryBean extends TutorSearchBean {
 
 	List<TutorshipSummary> result = new ArrayList<TutorshipSummary>();
 
-	if (getTeacher() != null && getExecutionSemester() != null) {
-	    for (TutorshipSummary ts : getTeacher().getTutorshipSummaries()) {
-		if ((!ts.isActive()) && ts.getSemester().equals(getExecutionSemester())) {
-		    result.add(ts);
+	if (getDepartment() != null && getTeacher() == null && getExecutionSemester() == null) {
+	    for (Employee employee : getDepartment().getAllCurrentActiveWorkingEmployees()) {
+		Teacher teacher = employee.getPerson().getTeacher();
+		if (teacher != null) {
+		    if (teacher.hasAnyTutorships()) {
+			for (TutorshipSummary ts : teacher.getTutorshipSummaries()) {
+			    if ((!ts.isActive())) {
+				result.add(ts);
+			    }
+			}
+		    }
+		}
+	    }
+	} else if (getDepartment() != null && getTeacher() == null && getExecutionSemester() != null) {
+	    for (Employee employee : getDepartment().getAllCurrentActiveWorkingEmployees()) {
+		Teacher teacher = employee.getPerson().getTeacher();
+		if (teacher != null) {
+		    if (teacher.hasAnyTutorships()) {
+			for (TutorshipSummary ts : teacher.getTutorshipSummaries()) {
+			    if ((!ts.isActive()) && ts.getSemester().equals(getExecutionSemester())) {
+				result.add(ts);
+			    }
+			}
+		    }
 		}
 	    }
 	} else {
-	    if (getTeacher() != null) {
+	    if (getTeacher() != null && getExecutionSemester() != null) {
 		for (TutorshipSummary ts : getTeacher().getTutorshipSummaries()) {
-		    if (!ts.isActive()) {
+		    if ((!ts.isActive()) && ts.getSemester().equals(getExecutionSemester())) {
 			result.add(ts);
 		    }
 		}
-
 	    } else {
-		if (getExecutionSemester() != null) {
-		    for (TutorshipSummary ts : getExecutionSemester().getTutorshipSummaries()) {
+		if (getTeacher() != null) {
+		    for (TutorshipSummary ts : getTeacher().getTutorshipSummaries()) {
 			if (!ts.isActive()) {
 			    result.add(ts);
+			}
+		    }
+
+		} else {
+		    if (getExecutionSemester() != null) {
+			for (TutorshipSummary ts : getExecutionSemester().getTutorshipSummaries()) {
+			    if (!ts.isActive()) {
+				result.add(ts);
+			    }
 			}
 		    }
 		}

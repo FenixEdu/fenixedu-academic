@@ -1,0 +1,2 @@
+alter table `TUTORSHIP_SUMMARY_RELATION` add `WITHOUT_ENROLMENTS` tinyint(1);
+

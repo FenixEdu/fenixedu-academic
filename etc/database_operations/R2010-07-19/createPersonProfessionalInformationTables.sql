@@ -18,11 +18,6 @@ create table `PERSON_CONTRACT_SITUATION` (
   `PROFESSIONAL_CATEGORY_GIAF_ID` longtext,
   `STEP` longtext,
   primary key (ID_INTERNAL),
-  index (OID),
-  index (OID_CONTRACT_SITUATION),
-  index (OID_PERSON_PROFESSIONAL_DATA),
-  index (OID_PROFESSIONAL_CATEGORY),
-  index (OID_ROOT_DOMAIN_OBJECT)
 ) type=InnoDB, character set latin1 ;
 
 create table `PERSON_FUNCTIONS_ACCUMULATION` (
@@ -42,11 +37,6 @@ create table `PERSON_FUNCTIONS_ACCUMULATION` (
   `OID_ROOT_DOMAIN_OBJECT` bigint(20),
   `PROFESSIONAL_REGIME_GIAF_ID` longtext,
   primary key (ID_INTERNAL),
-  index (OID),
-  index (OID_FUNCTIONS_ACCUMULATION),
-  index (OID_PERSON_PROFESSIONAL_DATA),
-  index (OID_PROFESSIONAL_REGIME),
-  index (OID_ROOT_DOMAIN_OBJECT)
 ) type=InnoDB, character set latin1 ;
 
 create table `PERSON_PROFESSIONAL_CATEGORY` (
@@ -70,11 +60,6 @@ create table `PERSON_PROFESSIONAL_CATEGORY` (
   `STEP` longtext,
   primary key (ID_INTERNAL),
   index (OID),
-  index (OID_PERSON_PROFESSIONAL_DATA),
-  index (OID_PROFESSIONAL_CATEGORY),
-  index (OID_PROFESSIONAL_REGIME),
-  index (OID_PROFESSIONAL_RELATION),
-  index (OID_ROOT_DOMAIN_OBJECT)
 ) type=InnoDB, character set latin1 ;
 
 create table `PERSON_PROFESSIONAL_CONTRACT` (
@@ -92,9 +77,6 @@ create table `PERSON_PROFESSIONAL_CONTRACT` (
   `OID_ROOT_DOMAIN_OBJECT` bigint(20),
   primary key (ID_INTERNAL),
   index (OID),
-  index (OID_CONTRACT_SITUATION),
-  index (OID_PERSON_PROFESSIONAL_DATA),
-  index (OID_ROOT_DOMAIN_OBJECT)
 ) type=InnoDB, character set latin1 ;
 
 create table `PERSON_PROFESSIONAL_DATA` (
@@ -121,13 +103,6 @@ create table `PERSON_PROFESSIONAL_DATA` (
   `PROFESSIONAL_RELATION_DATE` text,
   `PROFESSIONAL_RELATION_GIAF_ID` longtext,
   primary key (ID_INTERNAL),
-  index (OID),
-  index (OID_CONTRACT_SITUATION),
-  index (OID_PROFESSIONAL_CATEGORY),
-  index (OID_PROFESSIONAL_CONTRACT_TYPE),
-  index (OID_PROFESSIONAL_REGIME),
-  index (OID_PROFESSIONAL_RELATION),
-  index (OID_ROOT_DOMAIN_OBJECT)
 ) type=InnoDB, character set latin1 ;
 
 create table `PERSON_PROFESSIONAL_EXEMPTION` (
@@ -152,11 +127,6 @@ create table `PERSON_PROFESSIONAL_EXEMPTION` (
   `SERVICE_EXEMPTION_GIAF_ID` longtext,
   primary key (ID_INTERNAL),
   index (OID),
-  index (OID_COUNTRY),
-  index (OID_GRANT_OWNER_EQUIVALENT),
-  index (OID_PERSON_PROFESSIONAL_DATA),
-  index (OID_ROOT_DOMAIN_OBJECT),
-  index (OID_SERVICE_EXEMPTION)
 ) type=InnoDB, character set latin1 ;
 
 create table `PERSON_PROFESSIONAL_REGIME` (
@@ -174,9 +144,6 @@ create table `PERSON_PROFESSIONAL_REGIME` (
   `PROFESSIONAL_REGIME_GIAF_ID` longtext,
   primary key (ID_INTERNAL),
   index (OID),
-  index (OID_PERSON_PROFESSIONAL_DATA),
-  index (OID_PROFESSIONAL_REGIME),
-  index (OID_ROOT_DOMAIN_OBJECT)
 ) type=InnoDB, character set latin1 ;
 
 create table `PERSON_PROFESSIONAL_RELATION` (
@@ -196,9 +163,5 @@ create table `PERSON_PROFESSIONAL_RELATION` (
   `PROFESSIONAL_RELATION_GIAF_ID` longtext,
   primary key (ID_INTERNAL),
   index (OID),
-  index (OID_PERSON_PROFESSIONAL_DATA),
-  index (OID_PROFESSIONAL_CATEGORY),
-  index (OID_PROFESSIONAL_RELATION),
-  index (OID_ROOT_DOMAIN_OBJECT)
 ) type=InnoDB, character set latin1 ;
 

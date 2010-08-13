@@ -15,15 +15,20 @@ Definir Período de Preenchimento das Fichas
 <br />
 
 
-<fr:form action="/tutorshipSummary.do?method=searchTeacher">
+<fr:form action="/tutorshipSummary.do">
+	<html:hidden property="method" value="searchTeacher" />
+
     <fr:edit id="tutorateBean" name="tutorateBean" schema="tutorship.summary.search">
-        <fr:layout>
-            <fr:property name="classes" value="tstyle5 thlight thleft mtop0"/>
-            <fr:property name="columnClasses" value=",,tdclear tderror1"/>
-        </fr:layout>
+		<fr:layout>
+			<fr:property name="classes" value="tstyle5 thlight thleft mtop0"/>
+			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+		</fr:layout>
+		<fr:destination name="departmentPostBack" path="/tutorshipSummary.do?method=searchTeacher"/>
+        <fr:destination name="teacherSelection" path="/tutorshipSummary.do?method=searchTeacher"/>
     </fr:edit>
     
     <html:submit><bean:message key="button.filter" bundle="APPLICATION_RESOURCES" /></html:submit>
+    <html:submit onclick="this.form.method.value='exportSummaries';this.form.submit();">Exportar esta listagem (Excel)</html:submit>
 </fr:form>
 
 <br/>
