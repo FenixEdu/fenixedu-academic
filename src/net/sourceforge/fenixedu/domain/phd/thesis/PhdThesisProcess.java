@@ -11,8 +11,10 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdThesisRequestFee;
@@ -312,6 +314,23 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 
     public PhdProgramProcessDocument getJuryMeetingMinutesDocument() {
 	return getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.JURY_MEETING_MINUTES);
+    }
+
+    @Override
+    protected void addDocuments(final List<PhdProgramDocumentUploadBean> documents, final Person responsible) {
+	for (final PhdProgramDocumentUploadBean each : documents) {
+
+	    if (each.isRequired()) {
+		if (!each.hasAnyInformation()) {
+		    throw new DomainException("error.PhdThesisProcess.document.is.required.and.no.information.given", each
+			    .getType().getLocalizedName());
+		}
+	    }
+
+	    if (each.hasAnyInformation()) {
+		addDocument(each, responsible);
+	    }
+	}
     }
 
 }

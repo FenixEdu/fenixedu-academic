@@ -25,6 +25,8 @@ public class PhdProgramDocumentUploadBean implements Serializable {
 
     private PhdIndividualProgramProcess individualProgramProcess;
 
+    private boolean required = false;
+
     public PhdProgramDocumentUploadBean() {
 
     }
@@ -96,5 +98,14 @@ public class PhdProgramDocumentUploadBean implements Serializable {
 
     public void setIndividualProgramProcess(final PhdIndividualProgramProcess individualProgramProcess) {
 	this.individualProgramProcess = individualProgramProcess;
+    }
+
+    public boolean isRequired() {
+	return this.required;
+    }
+    
+    public PhdProgramDocumentUploadBean required() {
+	this.required = !this.required;
+	return this;
     }
 }
