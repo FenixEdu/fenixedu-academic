@@ -130,7 +130,7 @@
 	</logic:notEqual>
 </logic:iterate>
 
-<%-- <h3 class="separator2"><bean:message key="label.phd.thesis" bundle="PHD_RESOURCES"/></h3>
+<h3 class="separator2"><bean:message key="label.phd.thesis" bundle="PHD_RESOURCES"/></h3>
 
 <logic:iterate id="containerEnum" name="thesisCategory">
 	<phd:filterProcesses id="processList" predicateContainer="containerEnum" bean="searchProcessBean" />
@@ -162,9 +162,9 @@
 			</fr:layout>
 		</fr:view>
 	</logic:notEqual>
-</logic:iterate> --%>
+</logic:iterate>
 
-<%-- <h3 class="separator2"><bean:message key="label.phd.concluded" bundle="PHD_RESOURCES"/></h3>
+<h3 class="separator2"><bean:message key="label.phd.concluded" bundle="PHD_RESOURCES"/></h3>
 
 <bean:define id="concludedThisYearContainer" name="concludedThisYearContainer"/>
 <phd:filterProcesses id="processList" predicateContainer="concludedThisYearContainer" bean="searchProcessBean" />
@@ -195,4 +195,4 @@
 			<fr:link label="label.view,PHD_RESOURCES" name="view" link="/phdIndividualProgramProcess.do?method=viewProcess&processId=${externalId}"/>
 		</fr:layout>
 	</fr:view>
-</logic:notEqual> --%>
+</logic:notEqual>

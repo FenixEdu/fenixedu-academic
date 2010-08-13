@@ -53,7 +53,7 @@
 	</fr:view>
 </logic:notEqual>
 
-<%-- <bean:define id="concludedContainer" name="concludedContainer"/>
+<bean:define id="concludedContainer" name="concludedContainer"/>
 <phd:filterProcesses id="processList" predicateContainer="concludedContainer" bean="searchProcessBean" />
 <bean:size id="size" name="processList" />
 <h3 class="mbottom0"><strong><%= BundleUtil.getEnumName((Enum<?>) concludedContainer, "Phd") %> (<%= size %>)</strong></h3>
@@ -82,7 +82,7 @@
 			<fr:link label="label.view,PHD_RESOURCES" name="view" link="/phdIndividualProgramProcess.do?method=viewProcess&backMethod=viewInactiveProcesses&processId=${externalId}"/>
 		</fr:layout>
 	</fr:view>
-</logic:notEqual> --%>
+</logic:notEqual>
 
 <bean:define id="abolishedContainer" name="abolishedContainer"/>
 <phd:filterProcesses id="processList" predicateContainer="abolishedContainer" bean="searchProcessBean" />
