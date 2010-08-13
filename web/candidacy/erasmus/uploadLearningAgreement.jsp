@@ -46,7 +46,7 @@
 		<fr:slot name="uploadTime" key="label.dateTime.submission" />
 		<fr:slot name="filename" key="label.document.file.name" />
 		<fr:slot name="candidacyFileActive" key="label.document.file.active" />
-		<fr:slot name="self" key="label.erasmus.view.learning.agreement" layout="link"/>
+		<fr:slot name="this" key="label.erasmus.view.learning.agreement" layout="link"/>
 	</fr:schema>
 	
 	<fr:layout name="tabular">
