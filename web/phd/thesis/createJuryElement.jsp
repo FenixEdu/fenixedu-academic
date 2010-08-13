@@ -10,7 +10,8 @@
 <%@page import="net.sourceforge.fenixedu.domain.person.PersonName"%>
 <%@page import="net.sourceforge.fenixedu.presentationTier.Action.phd.thesis.academicAdminOffice.PhdThesisProcessDA"%>
 
-<html:xhtml/>
+
+<%@page import="pt.ist.fenixWebFramework.renderers.validators.EmailValidator"%><html:xhtml/>
 
 <%-- init values --%>
 <% 
@@ -36,7 +37,6 @@
 				<fr:property name="classes" value="liinline nobullet"/>
 				<fr:property name="bundle" value="PHD_RESOURCES" />
 			</fr:slot>
-			
 			
 			<%-- ################################################# --%>
 			<%-- ### Jury Type selected (NEW or EXISTING) ### --%>
@@ -74,7 +74,7 @@
 						<logic:equal name="thesisJuryElementBean" property="participantType.name" value="INTERNAL">
 							<fr:slot name="personName" layout="autoComplete" required="true">
 								<fr:property name="size" value="50"/>
-								<fr:property name="labelField" value="name"/>
+								<fr:property name="labelField" value="person.name"/>
 								<fr:property name="format" value="${person.name} (d${person.teacher.teacherNumber})" />
 								<fr:property name="indicatorShown" value="true"/>		
 								<fr:property name="serviceName" value="SearchInternalPersonsByNameHavingTeacher"/>
@@ -96,6 +96,7 @@
 								<fr:property name="size" value="50" />
 							</fr:slot>
 							<fr:slot name="email" required="true" >
+								<fr:validator name="<%= EmailValidator.class.getName() %>" />
 								<fr:property name="size" value="50" />
 							</fr:slot>
 							<fr:slot name="address" >

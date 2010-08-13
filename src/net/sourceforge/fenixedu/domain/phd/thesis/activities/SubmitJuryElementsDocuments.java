@@ -24,6 +24,10 @@ public class SubmitJuryElementsDocuments extends PhdThesisActivity {
 	if (PhdThesisProcess.isMasterDegreeAdministrativeOfficeEmployee(userView)) {
 	    return;
 	}
+	
+	if (!process.hasState(PhdThesisProcessStateType.WAITING_FOR_JURY_CONSTITUTION)) {
+	    throw new PreConditionNotValidException();
+	}
 
 	if (userView.getPerson() != null
 		&& process.getIndividualProgramProcess().isCoordinatorForPhdProgram(userView.getPerson())) {

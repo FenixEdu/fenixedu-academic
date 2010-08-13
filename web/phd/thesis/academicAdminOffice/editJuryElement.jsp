@@ -1,12 +1,14 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisJuryElementBean"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
+<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisJuryElementBean"%>
+<%@page import="pt.ist.fenixWebFramework.renderers.validators.EmailValidator"%>
+
+<html:xhtml/>
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 <bean:define id="processId" name="process" property="externalId" />
@@ -80,6 +82,7 @@
 					<fr:property name="size" value="50" />
 				</fr:slot>
 				<fr:slot name="email" required="true" >
+					<fr:validator name="<%= EmailValidator.class.getName() %>" />
 					<fr:property name="size" value="50" />
 				</fr:slot>
 				<fr:slot name="phone" >

@@ -137,7 +137,7 @@
 		<fr:link name="bottom" label="label.move.bottom,PHD_RESOURCES" order="4" condition="!bottomElement" 
 			link="<%= "/phdThesisProcess.do?method=moveBottom&juryElementId=${externalId}&processId=" + processId.toString() %>"/>
 		
-		<fr:link name="edit" label="label.edit,PHD_RESOURCES" order="5" 
+		<fr:link name="edit" label="label.edit,PHD_RESOURCES" order="5" condition="!juryValidated"
 			link="<%= "/phdThesisProcess.do?method=prepareEditJuryElement&juryElementId=${externalId}&processId=" + processId.toString() %>"/>
 		
 		<fr:link name="delete" label="label.delete,PHD_RESOURCES" order="6" confirmation="label.phd.thesis.process.remove.jury.element.confirmation,PHD_RESOURCES"

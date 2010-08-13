@@ -189,4 +189,8 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
 	setReporter(bean.isReporter());
     }
 
+    public boolean isJuryValidated() {
+	return getProcess().isJuryValidated();
+    }
+
 }

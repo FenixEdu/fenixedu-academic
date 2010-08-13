@@ -23,7 +23,7 @@ public class SubmitThesis extends PhdThesisActivity {
 	    throw new PreConditionNotValidException();
 	}
 	
-	if (process.getActiveState() != PhdThesisProcessStateType.THESIS_DISCUSSION_DATE_SCHECULED) {
+	if (!process.hasState(PhdThesisProcessStateType.THESIS_DISCUSSION_DATE_SCHECULED)) {
 	    throw new PreConditionNotValidException();
 	}
 	
