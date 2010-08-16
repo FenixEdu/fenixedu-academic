@@ -48,8 +48,8 @@ public abstract class DgesBaseProcess extends DgesBaseProcess_Base {
 
     protected List<DegreeCandidateDTO> parseDgesFile(byte[] contents, String university, EntryPhase entryPhase) {
 
-	final Collection<DegreeCandidateDTO> result = new ArrayList();
-	new DataLoaderFromFile<DegreeCandidateDTO>().load(DegreeCandidateDTO.class, contents);
+	final List<DegreeCandidateDTO> result = new ArrayList<DegreeCandidateDTO>();
+	result.addAll(new DataLoaderFromFile<DegreeCandidateDTO>().load(DegreeCandidateDTO.class, contents));
 	setConstantFields(university, entryPhase, result);
 	return (List<DegreeCandidateDTO>) result;
 

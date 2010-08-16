@@ -65,6 +65,8 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
 	queueJobResult.setContentType("text/csv");
 	stream.flush();
 
+	System.out.println(stream.toByteArray());
+
 	queueJobResult.setContent(stream.toByteArray());
 
 	System.out.println("Job " + getFilename() + " completed");

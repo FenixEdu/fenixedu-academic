@@ -48,8 +48,7 @@
 	<logic:empty name="process" property="candidacy.concludedFormationList">
 		<p><em><bean:message key="message.other.academic.titles.empty" bundle="CANDIDATE_RESOURCES"/>.</em></p>	
 	</logic:empty>
-	
-	
+
 	<logic:notEmpty name="process" property="candidacy.concludedFormationList">
 		<table class="tstyle2 thlight thcenter">
 		<tr>
@@ -86,7 +85,7 @@
 	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 		</fr:layout>
 	</fr:view>
-	
+
 	<%-- Observations --%>
 	<h2 style="margin-top: 1em;"><bean:message key="label.observations" bundle="CANDIDATE_RESOURCES"/>:</h2>
 	<fr:view name="process"

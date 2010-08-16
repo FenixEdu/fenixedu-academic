@@ -14,14 +14,25 @@
 	<h2><bean:write name="process" property="displayName" /> </h2>
 </logic:notEmpty>
 
+<logic:notPresent role="COORDINATOR"> 
 <html:link action='<%= "/caseHandling" + processName.toString() + ".do?method=listProcesses&amp;parentProcessId=" + parentProcessId.toString() %>'>
 	« <bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
 </html:link>
 <br/>
+</logic:notPresent>
+
+<logic:present role="COORDINATOR">
+<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID"/>
+<html:link href='<%= request.getContextPath() + "/coordinator/caseHandling" + processName.toString() + ".do?method=listProcesses&parentProcessId=" + parentProcessId.toString() + "&degreeCurricularPlanID=" + degreeCurricularPlanID.toString() %>'>
+	« <bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
+</html:link>
+</logic:present>
+
 
 <logic:notEmpty name="process">
 	<bean:define id="processId" name="process" property="idInternal" />
 	
+	<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 	<logic:notEmpty name="activities">
 		<%-- list process activities --%>
 		<ul>
@@ -35,6 +46,7 @@
 		</logic:iterate>
 		</ul>
 	</logic:notEmpty>
+	</logic:present>
 	
 	<%-- student information --%>
 	<logic:notEmpty name="process" property="personalDetails.student">
@@ -69,11 +81,23 @@
 	</fr:view>
 	</logic:present>
 
+	<h3 style="margin-top: 1em;"><bean:message key="title.public.candidacy.information.email" bundle="CANDIDATE_RESOURCES" />:</h3>
+	
+	<fr:view name="process" property="candidacyHashCode">
+		<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode">
+			<fr:slot name="email" key="label.email" />
+		</fr:schema>
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
+	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+		</fr:layout>	
+	</fr:view>
+
 	<h3><bean:message key="title.other.academic.titles" bundle="CANDIDATE_RESOURCES"/></h3>
 	<logic:empty name="process" property="candidacy.concludedFormationList">
 		<p><em><bean:message key="message.other.academic.titles.empty" bundle="CANDIDATE_RESOURCES"/>.</em></p>	
 	</logic:empty>
-		
+
 	<logic:notEmpty name="process" property="candidacy.concludedFormationList">
 		<table class="tstyle2 thlight thcenter">
 		<tr>
