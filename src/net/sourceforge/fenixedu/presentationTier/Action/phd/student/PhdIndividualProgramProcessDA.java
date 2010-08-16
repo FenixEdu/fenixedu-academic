@@ -9,12 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
-import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.CommonPhdIndividualProgramProcessDA;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdInactivePredicateContainer;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -53,38 +50,8 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 
     @Override
     protected PhdIndividualProgramProcess getProcess(HttpServletRequest request) {
-	return (PhdIndividualProgramProcess) super.getProcess(request);
+	return super.getProcess(request);
     }
-
-    // Alerts Management
-    public ActionForward viewAlertMessages(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	request.setAttribute("alertMessages", getLoggedPerson(request).getPhdAlertMessages());
-	return mapping.findForward("viewAlertMessages");
-    }
-
-    public ActionForward markAlertMessageAsReaded(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	getAlertMessage(request).markAsReaded(getLoggedPerson(request));
-	return globalMessagesView(request) ? viewAlertMessages(mapping, form, request, response) : viewProcessAlertMessages(
-		mapping, form, request, response);
-    }
-
-    private boolean globalMessagesView(HttpServletRequest request) {
-	return StringUtils.isEmpty(request.getParameter("global")) || request.getParameter("global").equals("true");
-    }
-
-    private PhdAlertMessage getAlertMessage(HttpServletRequest request) {
-	return getDomainObject(request, "alertMessageId");
-    }
-
-    public ActionForward viewProcessAlertMessages(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	request.setAttribute("alertMessages", getProcess(request).getAlertMessagesFor(getLoggedPerson(request)));
-	return mapping.findForward("viewProcessAlertMessages");
-    }
-
-    // End of Alerts Management
 
     @Override
     public ActionForward viewProcess(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

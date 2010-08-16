@@ -155,11 +155,12 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
 
 	getAlertMessage(request).markAsReaded(getLoggedPerson(request));
 
-	boolean globalMessagesView = StringUtils.isEmpty(request.getParameter("global"))
-		|| request.getParameter("global").equals("true");
+	return globalMessagesView(request) ? viewAlertMessages(mapping, form, request, response) : viewProcessAlertMessages(
+		mapping, form, request, response);
+    }
 
-	return globalMessagesView ? viewAlertMessages(mapping, form, request, response) : viewProcessAlertMessages(mapping, form,
-		request, response);
+    private boolean globalMessagesView(HttpServletRequest request) {
+	return StringUtils.isEmpty(request.getParameter("global")) || request.getParameter("global").equals("true");
     }
 
     private PhdAlertMessage getAlertMessage(HttpServletRequest request) {
