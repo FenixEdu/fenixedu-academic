@@ -2052,20 +2052,20 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     @Checked("StudentCurricularPlanPredicates.ENROL")
-    final public RuleResult enrol(final Person responsiblePerson, final ExecutionSemester executionSemester,
+    final public RuleResult enrol(final ExecutionSemester executionSemester,
 	    final Set<IDegreeModuleToEvaluate> degreeModulesToEnrol, final List<CurriculumModule> curriculumModulesToRemove,
 	    final CurricularRuleLevel curricularRuleLevel) {
 
-	final EnrolmentContext enrolmentContext = new EnrolmentContext(responsiblePerson, this, executionSemester,
+	final EnrolmentContext enrolmentContext = new EnrolmentContext(this, executionSemester,
 		degreeModulesToEnrol, curriculumModulesToRemove, curricularRuleLevel);
 
 	return net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolment.createManager(enrolmentContext)
 		.manage();
     }
 
-    final public RuleResult enrol(final Person responsiblePerson, final ExecutionSemester executionSemester,
+    final public RuleResult enrol(final ExecutionSemester executionSemester,
 	    final CurricularRuleLevel curricularRuleLevel) {
-	return enrol(responsiblePerson, executionSemester, Collections.EMPTY_SET, Collections.EMPTY_LIST, curricularRuleLevel);
+	return enrol(executionSemester, Collections.EMPTY_SET, Collections.EMPTY_LIST, curricularRuleLevel);
     }
 
     @Checked("StudentCurricularPlanPredicates.ENROL_IN_AFFINITY_CYCLE")
@@ -2115,15 +2115,15 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		.getUserView().getUtilizador(), optionalCurricularCourse);
     }
 
-    final public RuleResult createNoCourseGroupCurriculumGroupEnrolment(final NoCourseGroupEnrolmentBean bean, final Person person) {
+    final public RuleResult createNoCourseGroupCurriculumGroupEnrolment(final NoCourseGroupEnrolmentBean bean) {
 	return net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolment.createManager(
-		EnrolmentContext.createForNoCourseGroupCurriculumGroupEnrolment(person, this, bean)).manage();
+		EnrolmentContext.createForNoCourseGroupCurriculumGroupEnrolment(this, bean)).manage();
     }
 
     @Service
     public RuleResult removeCurriculumModulesFromNoCourseGroupCurriculumGroup(final List<CurriculumModule> curriculumModules,
-	    final ExecutionSemester executionSemester, final NoCourseGroupCurriculumGroupType groupType, final Person person) {
-	final EnrolmentContext context = new EnrolmentContext(person, this, executionSemester, Collections.EMPTY_SET,
+	    final ExecutionSemester executionSemester, final NoCourseGroupCurriculumGroupType groupType) {
+	final EnrolmentContext context = new EnrolmentContext(this, executionSemester, Collections.EMPTY_SET,
 		curriculumModules, groupType.getCurricularRuleLevel());
 	return net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolment.createManager(context).manage();
     }
@@ -2557,10 +2557,11 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     @Checked("StudentCurricularPlanPredicates.MOVE_CURRICULUM_LINES")
-    public void moveCurriculumLines(final Person responsiblePerson, final MoveCurriculumLinesBean moveCurriculumLinesBean) {
+    public void moveCurriculumLines(final MoveCurriculumLinesBean moveCurriculumLinesBean) {
 	boolean runRules = false;
+	Person responsible = AccessControl.getPerson();
 
-	final AdministrativeOfficePermission permission = getUpdateRegistrationAfterConclusionProcessPermission(responsiblePerson);
+	final AdministrativeOfficePermission permission = getUpdateRegistrationAfterConclusionProcessPermission(responsible);
 
 	for (final CurriculumLineLocationBean curriculumLineLocationBean : moveCurriculumLinesBean.getCurriculumLineLocations()) {
 	    final CurriculumGroup destination = curriculumLineLocationBean.getCurriculumGroup();
@@ -2568,7 +2569,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	    if (curriculumLine.getCurriculumGroup() != destination) {
 
-		checkPermission(responsiblePerson, permission, curriculumLineLocationBean);
+		checkPermission(responsible, permission, curriculumLineLocationBean);
 
 		if (!destination.canAdd(curriculumLine)) {
 		    throw new DomainException("error.StudentCurricularPlan.cannot.move.curriculum.line.to.curriculum.group",
@@ -2590,14 +2591,15 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    }
 
 	    // if curriculum line is moved then change created by
-	    curriculumLine.setCreatedBy(responsiblePerson != null ? responsiblePerson.getIstUsername() : curriculumLine
+	    
+	    curriculumLine.setCreatedBy(responsible != null ? responsible.getIstUsername() : curriculumLine
 		    .getCreatedBy());
 	}
 
 	runRules &= isBolonhaDegree();
 
 	if (runRules) {
-	    checkEnrolmentRules(responsiblePerson, moveCurriculumLinesBean.getIDegreeModulesToEvaluate(ExecutionSemester
+	    checkEnrolmentRules(moveCurriculumLinesBean.getIDegreeModulesToEvaluate(ExecutionSemester
 		    .readActualExecutionSemester()), ExecutionSemester.readActualExecutionSemester());
 	}
     }
@@ -2656,9 +2658,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     @SuppressWarnings("unchecked")
-    private void checkEnrolmentRules(final Person responsiblePerson, final Set<IDegreeModuleToEvaluate> degreeModuleToEvaluate,
+    private void checkEnrolmentRules(final Set<IDegreeModuleToEvaluate> degreeModuleToEvaluate,
 	    final ExecutionSemester executionSemester) {
-	enrol(responsiblePerson, executionSemester, degreeModuleToEvaluate, Collections.EMPTY_LIST,
+	enrol(executionSemester, degreeModuleToEvaluate, Collections.EMPTY_LIST,
 		CurricularRuleLevel.ENROLMENT_WITH_RULES);
     }
 

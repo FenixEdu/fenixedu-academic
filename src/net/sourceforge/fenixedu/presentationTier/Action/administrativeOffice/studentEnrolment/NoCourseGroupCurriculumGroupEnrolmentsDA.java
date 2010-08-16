@@ -134,7 +134,7 @@ abstract public class NoCourseGroupCurriculumGroupEnrolmentsDA extends FenixDisp
 
 	try {
 	    studentCurricularPlan.removeCurriculumModulesFromNoCourseGroupCurriculumGroup(Collections
-		    .<CurriculumModule> singletonList(enrolment), executionSemester, getGroupType(), AccessControl.getPerson());
+		    .<CurriculumModule> singletonList(enrolment), executionSemester, getGroupType());
 
 	} catch (final IllegalDataAccessException e) {
 	    addActionMessage("error", request, "error.notAuthorized");

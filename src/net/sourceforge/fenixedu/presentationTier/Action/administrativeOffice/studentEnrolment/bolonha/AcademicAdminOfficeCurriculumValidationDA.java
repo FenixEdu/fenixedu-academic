@@ -102,7 +102,7 @@ public class AcademicAdminOfficeCurriculumValidationDA extends FenixDispatchActi
 	final BolonhaStudentEnrollmentBean bolonhaStudentEnrollmentBean = getBolonhaStudentEnrollmentBeanFromViewState();
 	try {
 	    final RuleResult ruleResults = (RuleResult) executeService("EnrolBolonhaStudent", new Object[] {
-		    getLoggedPerson(request), bolonhaStudentEnrollmentBean.getStudentCurricularPlan(),
+		    bolonhaStudentEnrollmentBean.getStudentCurricularPlan(),
 		    bolonhaStudentEnrollmentBean.getExecutionPeriod(), bolonhaStudentEnrollmentBean.getDegreeModulesToEvaluate(),
 		    bolonhaStudentEnrollmentBean.getCurriculumModulesToRemove(),
 		    bolonhaStudentEnrollmentBean.getCurricularRuleLevel() });
@@ -266,7 +266,7 @@ public class AcademicAdminOfficeCurriculumValidationDA extends FenixDispatchActi
 
 	try {
 	    final RuleResult ruleResults = (RuleResult) executeService("EnrolBolonhaStudent", new Object[] {
-		    getLoggedPerson(request), readStudentCurricularPlan(request), enrolment.getExecutionPeriod(),
+		    readStudentCurricularPlan(request), enrolment.getExecutionPeriod(),
 		    new ArrayList<IDegreeModuleToEvaluate>(), Arrays.asList(new CurriculumModule[] { enrolment }),
 		    CurricularRuleLevel.ENROLMENT_NO_RULES });
 

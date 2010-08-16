@@ -896,7 +896,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	    final StudentCurricularPlan scp = process.getRegistration().getLastStudentCurricularPlan();
 	    final String mailBody = buildBody(bean);
 
-	    scp.enrol(userView.getPerson(), bean.getSemester(), Collections.EMPTY_SET, getCurriculumModules(bean
+	    scp.enrol(bean.getSemester(), Collections.EMPTY_SET, getCurriculumModules(bean
 		    .getEnrolmentsToValidate()), CurricularRuleLevel.ENROLMENT_WITH_RULES);
 
 	    AlertService.alertStudent(process, AlertMessage.create(bean.getMailSubject()).isKey(false), AlertMessage.create(

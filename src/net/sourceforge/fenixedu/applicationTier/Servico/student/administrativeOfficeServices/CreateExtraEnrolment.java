@@ -13,7 +13,7 @@ public class CreateExtraEnrolment {
     @Service
     public static RuleResult run(final NoCourseGroupEnrolmentBean bean) {
 	final StudentCurricularPlan studentCurricularPlan = bean.getStudentCurricularPlan();
-	return studentCurricularPlan.createNoCourseGroupCurriculumGroupEnrolment(bean, AccessControl.getPerson());
+	return studentCurricularPlan.createNoCourseGroupCurriculumGroupEnrolment(bean);
     }
 
 }

@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.NoCourseGroupEnrolmentBean;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
@@ -18,6 +19,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class EnrolmentContext {
 
@@ -31,13 +33,14 @@ public class EnrolmentContext {
 
     private CurricularRuleLevel curricularRuleLevel;
 
-    private Person responsiblePerson;
+    //private Person responsiblePerson;
+    private IUserView userView;
 
-    public EnrolmentContext(final Person responsiblePerson, final StudentCurricularPlan studentCurricularPlan,
+    public EnrolmentContext(final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionSemester executionSemester, final Set<IDegreeModuleToEvaluate> degreeModulesToEnrol,
 	    final List<CurriculumModule> curriculumModulesToRemove, final CurricularRuleLevel curricularRuleLevel) {
 
-	this.responsiblePerson = responsiblePerson;
+	this.userView = AccessControl.getUserView();
 	this.studentCurricularPlan = studentCurricularPlan;
 
 	this.degreeModulesToEvaluate = new HashSet<IDegreeModuleToEvaluate>();
@@ -112,11 +115,7 @@ public class EnrolmentContext {
     }
 
     public Person getResponsiblePerson() {
-	return responsiblePerson;
-    }
-
-    public void setResponsiblePerson(Person responsiblePerson) {
-	this.responsiblePerson = responsiblePerson;
+	return userView.getPerson();
     }
 
     public boolean hasResponsiblePerson() {
@@ -124,7 +123,7 @@ public class EnrolmentContext {
     }
     
     public boolean isResponsiblePersonStudent() {
-	return getResponsiblePerson().hasRole(RoleType.STUDENT);
+	return userView.hasRoleType(RoleType.STUDENT);
     }
 
     public boolean isNormal() {
@@ -161,28 +160,27 @@ public class EnrolmentContext {
     }
 
     @SuppressWarnings("unchecked")
-    static public EnrolmentContext createForVerifyWithRules(final Person person,
-	    final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester) {
-	return createForVerifyWithRules(person, studentCurricularPlan, executionSemester, Collections.EMPTY_SET);
+    static public EnrolmentContext createForVerifyWithRules(final StudentCurricularPlan studentCurricularPlan, 
+	    final ExecutionSemester executionSemester) {
+	return createForVerifyWithRules(studentCurricularPlan, executionSemester, Collections.EMPTY_SET);
     }
 
     @SuppressWarnings("unchecked")
-    static public EnrolmentContext createForVerifyWithRules(final Person person,
-	    final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester,
-	    final Set<IDegreeModuleToEvaluate> degreeModulesToEvaluate) {
-	return new EnrolmentContext(person, studentCurricularPlan, executionSemester, degreeModulesToEvaluate,
+    static public EnrolmentContext createForVerifyWithRules(final StudentCurricularPlan studentCurricularPlan, 
+	    final ExecutionSemester executionSemester, final Set<IDegreeModuleToEvaluate> degreeModulesToEvaluate) {
+	return new EnrolmentContext(studentCurricularPlan, executionSemester, degreeModulesToEvaluate,
 		Collections.EMPTY_LIST, CurricularRuleLevel.ENROLMENT_WITH_RULES);
     }
 
     @SuppressWarnings("unchecked")
-    static public EnrolmentContext createForNoCourseGroupCurriculumGroupEnrolment(final Person person,
+    static public EnrolmentContext createForNoCourseGroupCurriculumGroupEnrolment(
 	    final StudentCurricularPlan studentCurricularPlan, final NoCourseGroupEnrolmentBean bean) {
 
 	final IDegreeModuleToEvaluate moduleToEvaluate = new ExternalCurricularCourseToEnrol(
 		readOrCreateNoCourseGroupCurriculumGroup(studentCurricularPlan, bean.getGroupType()), bean
 			.getSelectedCurricularCourse(), bean.getExecutionPeriod());
 
-	return new EnrolmentContext(person, studentCurricularPlan, bean.getExecutionPeriod(), Collections
+	return new EnrolmentContext(studentCurricularPlan, bean.getExecutionPeriod(), Collections
 		.singleton(moduleToEvaluate), Collections.EMPTY_LIST, bean.getCurricularRuleLevel());
     }
 

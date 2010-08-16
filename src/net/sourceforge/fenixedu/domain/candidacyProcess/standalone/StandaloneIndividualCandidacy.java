@@ -178,13 +178,12 @@ public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy
 
     private void enrolInCurricularCourses(final Registration registration) {
 	final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
-	final Person person = AccessControl.getPerson();
 
 	for (final CurricularCourse curricularCourse : getCurricularCoursesSet()) {
 	    if (!studentCurricularPlan.isEnroledInExecutionPeriod(curricularCourse, getCandidacyExecutionInterval())) {
 
 		studentCurricularPlan.createNoCourseGroupCurriculumGroupEnrolment(createStudentStandaloneEnrolmentBean(
-			studentCurricularPlan, curricularCourse), person);
+			studentCurricularPlan, curricularCourse));
 
 	    }
 	}

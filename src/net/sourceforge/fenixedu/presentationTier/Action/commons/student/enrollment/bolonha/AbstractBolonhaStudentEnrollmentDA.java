@@ -81,7 +81,7 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 	final BolonhaStudentEnrollmentBean bolonhaStudentEnrollmentBean = getBolonhaStudentEnrollmentBeanFromViewState();
 	try {
 	    final RuleResult ruleResults = (RuleResult) executeService("EnrolBolonhaStudent", new Object[] {
-		    getLoggedPerson(request), bolonhaStudentEnrollmentBean.getStudentCurricularPlan(),
+		    bolonhaStudentEnrollmentBean.getStudentCurricularPlan(),
 		    bolonhaStudentEnrollmentBean.getExecutionPeriod(), bolonhaStudentEnrollmentBean.getDegreeModulesToEvaluate(),
 		    bolonhaStudentEnrollmentBean.getCurriculumModulesToRemove(),
 		    bolonhaStudentEnrollmentBean.getCurricularRuleLevel() });
@@ -149,7 +149,7 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 	final BolonhaStudentOptionalEnrollmentBean optionalStudentEnrollmentBean = getBolonhaStudentOptionalEnrollmentBeanFromViewState();
 	try {
 	    final RuleResult ruleResults = (RuleResult) executeService("EnrolBolonhaStudent", new Object[] {
-		    getLoggedPerson(request), optionalStudentEnrollmentBean.getStudentCurricularPlan(),
+		    optionalStudentEnrollmentBean.getStudentCurricularPlan(),
 		    optionalStudentEnrollmentBean.getExecutionPeriod(),
 		    buildOptionalDegreeModuleToEnrolList(optionalStudentEnrollmentBean), Collections.EMPTY_LIST,
 		    getCurricularRuleLevel(form) });
