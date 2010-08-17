@@ -108,10 +108,7 @@ public class SpecialSeasonStudentEnrollmentDA extends AcademicAdminOfficeSpecial
 	return getLoggedPerson(request).getStudent();
     }
 
-    /*
-     * This method should receive ExecutionYear as parameter: refactor interface
-     * to select ExecutionPeriod first to allow generate scp list correctly
-     */
+
     private final List<StudentCurricularPlan> generateSCPList(final Student student) {
 	final List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
 
