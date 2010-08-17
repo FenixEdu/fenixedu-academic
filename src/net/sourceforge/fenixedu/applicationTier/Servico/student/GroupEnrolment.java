@@ -32,7 +32,7 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class GroupEnrolment extends FenixService {
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Checked("RolePredicates.STUDENT_AND_TEACHER_PREDICATE")
     @Service
     public static Boolean run(Integer groupingID, Integer shiftID, Integer groupNumber, List studentUsernames,
 	    String studentUsername) throws FenixServiceException {

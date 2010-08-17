@@ -64,6 +64,7 @@ import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView
 import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.ImportContentBean;
 import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ShiftType;
@@ -1002,6 +1003,56 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	return mapping.findForward("insertGroupProperties");
     }
 
+    public ActionForward createGroupPropertiesPostBack(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
+	DynaActionForm groupPropertiesForm = setAutomaticEnrolmentFields(form, request, null);
+
+	return prepareCreateGroupProperties(mapping, groupPropertiesForm, request, response);
+    }
+
+    private DynaActionForm setAutomaticEnrolmentFields(ActionForm form, HttpServletRequest request,
+	    InfoGrouping infoGroupProperties) {
+	DynaActionForm groupPropertiesForm = (DynaActionForm) form;
+	Boolean automaticEnrolment = getAutomaticEnrolment(groupPropertiesForm);
+	if (automaticEnrolment) {
+	    Integer objectCode = getObjectCode(request);
+	    ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(objectCode);
+	    if (infoGroupProperties != null) {
+		infoGroupProperties.setMaximumCapacity(1);
+		infoGroupProperties.setMinimumCapacity(1);
+		infoGroupProperties.setIdealCapacity(1);
+		infoGroupProperties.setGroupMaximumNumber(executionCourse.getAttendsCount());
+		infoGroupProperties.setShiftType(null);
+		infoGroupProperties.setEnrolmentPolicy(new EnrolmentGroupPolicyType(2));
+		infoGroupProperties.setAutomaticEnrolment(Boolean.TRUE);
+	    }
+	    groupPropertiesForm.set("maximumCapacity", "1");
+	    groupPropertiesForm.set("minimumCapacity", "1");
+	    groupPropertiesForm.set("idealCapacity", "1");
+	    groupPropertiesForm.set("groupMaximumNumber", String.valueOf(executionCourse.getAttendsCount()));
+	    groupPropertiesForm.set("shiftType", "SEM TURNO");
+	    groupPropertiesForm.set("enrolmentPolicy", "false");
+	    request.setAttribute("automaticEnrolment", "true");
+	} else {
+	    if (infoGroupProperties != null) {
+		infoGroupProperties.setMaximumCapacity(null);
+		infoGroupProperties.setMinimumCapacity(null);
+		infoGroupProperties.setIdealCapacity(null);
+		infoGroupProperties.setGroupMaximumNumber(null);
+		infoGroupProperties.setShiftType(null);
+		infoGroupProperties.setEnrolmentPolicy(new EnrolmentGroupPolicyType(1));
+		infoGroupProperties.setAutomaticEnrolment(Boolean.FALSE);
+	    }
+	    groupPropertiesForm.set("maximumCapacity", StringUtils.EMPTY);
+	    groupPropertiesForm.set("minimumCapacity", StringUtils.EMPTY);
+	    groupPropertiesForm.set("idealCapacity", StringUtils.EMPTY);
+	    groupPropertiesForm.set("groupMaximumNumber", StringUtils.EMPTY);
+	    groupPropertiesForm.set("shiftType", StringUtils.EMPTY);
+	    groupPropertiesForm.set("enrolmentPolicy", StringUtils.EMPTY);
+	}
+	return groupPropertiesForm;
+    }
+
     public ActionForward createGroupProperties(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 	DynaActionForm insertGroupPropertiesForm = (DynaActionForm) form;
@@ -1017,12 +1068,12 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	String enrolmentEndHourString = (String) insertGroupPropertiesForm.get("enrolmentEndHour");
 	String shiftType = (String) insertGroupPropertiesForm.get("shiftType");
 	Boolean optional = new Boolean((String) insertGroupPropertiesForm.get("enrolmentPolicy"));
+	Boolean automaticEnrolment = getAutomaticEnrolment(insertGroupPropertiesForm);
 	InfoGrouping infoGroupProperties = new InfoGrouping();
 	infoGroupProperties.setName(name);
 	infoGroupProperties.setProjectDescription(projectDescription);
-	// if(!shiftType.equals("5")){
 
-	if (!shiftType.equals("Sem Turno") && !shiftType.equals("SEM TURNO")) {
+	if (!shiftType.equalsIgnoreCase("Sem Turno")) {
 	    infoGroupProperties.setShiftType(ShiftType.valueOf(shiftType));
 	}
 
@@ -1045,7 +1096,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		    actionErrors.add("error.groupProperties.minimum", error);
 		    saveErrors(request, actionErrors);
 		    return prepareCreateGroupProperties(mapping, form, request, response);
-
 		}
 	    infoGroupProperties.setMinimumCapacity(minimumCapacity);
 	}
@@ -1062,7 +1112,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		    actionErrors.add("error.groupProperties.ideal.minimum", error);
 		    saveErrors(request, actionErrors);
 		    return prepareCreateGroupProperties(mapping, form, request, response);
-
 		}
 	    }
 
@@ -1074,10 +1123,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		    actionErrors.add("error.groupProperties.ideal.maximum", error);
 		    saveErrors(request, actionErrors);
 		    return prepareCreateGroupProperties(mapping, form, request, response);
-
 		}
 	    }
-
 	    infoGroupProperties.setIdealCapacity(idealCapacity);
 	}
 
@@ -1085,11 +1132,13 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	    infoGroupProperties.setGroupMaximumNumber(new Integer(groupMaximumNumber));
 
 	EnrolmentGroupPolicyType enrolmentPolicy;
-	if (optional.booleanValue())
+	if (optional.booleanValue()) {
 	    enrolmentPolicy = new EnrolmentGroupPolicyType(1);
-	else
+	} else {
 	    enrolmentPolicy = new EnrolmentGroupPolicyType(2);
+	}
 	infoGroupProperties.setEnrolmentPolicy(enrolmentPolicy);
+	infoGroupProperties.setAutomaticEnrolment(automaticEnrolment);
 	Calendar enrolmentBeginDay = null;
 	if (!enrolmentBeginDayString.equals("")) {
 	    String[] beginDate = enrolmentBeginDayString.split("/");
@@ -1144,11 +1193,14 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
     public ActionForward prepareEditGroupProperties(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
-	Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
-	ISiteComponent viewGroupProperties = new InfoSiteGrouping();
-	SiteView siteView = readSiteView(request, viewGroupProperties, null, groupPropertiesCode, null);
-	if (((InfoSiteGrouping) siteView.getComponent()).getInfoGrouping() == null) {
+
+	InfoGrouping infoGroupProperties = getInfoGrouping(request);
+	Integer enrolmentPolicy = infoGroupProperties.getEnrolmentPolicy().getType();
+
+	request.setAttribute("infoGroupProperties", infoGroupProperties);
+	request.setAttribute("enrolmentPolicyValue", enrolmentPolicy);
+
+	if (infoGroupProperties == null) {
 	    ActionErrors actionErrors = new ActionErrors();
 	    ActionError error = null;
 	    error = new ActionError("error.noGroupProperties");
@@ -1167,19 +1219,47 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	enrolmentPolicyNames.add("Atómica");
 	enrolmentPolicyNames.add("Individual");
 
-	InfoGrouping infoGroupProperties = ((InfoSiteGrouping) siteView.getComponent()).getInfoGrouping();
-
-	Integer enrolmentPolicy = infoGroupProperties.getEnrolmentPolicy().getType();
 	enrolmentPolicyValues.remove(enrolmentPolicy.intValue() - 1);
 	String enrolmentPolicyName = enrolmentPolicyNames.remove(enrolmentPolicy.intValue() - 1).toString();
 
-	request.setAttribute("infoGroupProperties", infoGroupProperties);
 	request.setAttribute("enrolmentPolicyName", enrolmentPolicyName);
-	request.setAttribute("enrolmentPolicyValue", enrolmentPolicy);
 	request.setAttribute("enrolmentPolicyValues", enrolmentPolicyValues);
 	request.setAttribute("enrolmentPolicyNames", enrolmentPolicyNames);
 
+	final Grouping grouping = rootDomainObject.readGroupingByOID(infoGroupProperties.getIdInternal());
+	if (!grouping.getStudentGroups().isEmpty() && !grouping.getAutomaticEnrolment()) {
+	    request.setAttribute("automaticEnrolmentDisable", "true");
+	}
+	if (grouping.hasAnyStudentGroups() && grouping.getAutomaticEnrolment() && !infoGroupProperties.getAutomaticEnrolment()) {
+	    request.setAttribute("notPosibleToRevertChoice", "true");
+	}
+
 	return mapping.findForward("editGroupProperties");
+    }
+
+    private InfoGrouping getInfoGrouping(HttpServletRequest request) throws FenixActionException, FenixFilterException {
+
+	InfoGrouping infoGroupProperties = request.getAttribute("infoGroupProperties") != null ? (InfoGrouping) request
+		.getAttribute("infoGroupProperties") : null;
+
+	if (infoGroupProperties == null) {
+	    String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
+	    Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
+	    ISiteComponent viewGroupProperties = new InfoSiteGrouping();
+	    SiteView siteView = readSiteView(request, viewGroupProperties, null, groupPropertiesCode, null);
+	    infoGroupProperties = ((InfoSiteGrouping) siteView.getComponent()).getInfoGrouping();
+	}
+	return infoGroupProperties;
+    }
+
+    public ActionForward editGroupPropertiesPostBack(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
+	InfoGrouping infoGroupProperties = getInfoGrouping(request);
+	request.setAttribute("infoGroupProperties", infoGroupProperties);
+
+	DynaActionForm groupPropertiesForm = setAutomaticEnrolmentFields(form, request, infoGroupProperties);
+
+	return prepareEditGroupProperties(mapping, groupPropertiesForm, request, response);
     }
 
     public ActionForward editGroupProperties(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -1201,6 +1281,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	String enrolmentEndHourString = (String) editGroupPropertiesForm.get("enrolmentEndHourFormatted");
 	String shiftType = (String) editGroupPropertiesForm.get("shiftType");
 	String enrolmentPolicy = (String) editGroupPropertiesForm.get("enrolmentPolicy");
+	Boolean automaticEnrolment = getAutomaticEnrolment(editGroupPropertiesForm);
 
 	Calendar enrolmentBeginDay = null;
 	if (!enrolmentBeginDayString.equals("")) {
@@ -1237,6 +1318,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	infoGroupProperties.setEnrolmentBeginDay(enrolmentBeginDay);
 	infoGroupProperties.setEnrolmentEndDay(enrolmentEndDay);
 	infoGroupProperties.setEnrolmentPolicy(new EnrolmentGroupPolicyType(new Integer(enrolmentPolicy)));
+	infoGroupProperties.setAutomaticEnrolment(automaticEnrolment);
 	if (!groupMaximumNumber.equals(""))
 	    infoGroupProperties.setGroupMaximumNumber(new Integer(groupMaximumNumber));
 	Integer maximumCapacity = null;
@@ -1297,7 +1379,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	infoGroupProperties.setName(name);
 	infoGroupProperties.setProjectDescription(projectDescription);
 
-	if (!shiftType.equals("Sem Turno") && !shiftType.equals("SEM TURNO")) {
+	if (!shiftType.equalsIgnoreCase("Sem Turno")) {
 	    infoGroupProperties.setShiftType(ShiftType.valueOf(shiftType));
 	}
 	Integer objectCode = getObjectCode(request);
@@ -1352,6 +1434,14 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 	}
 	return prepareViewExecutionCourseProjects(mapping, form, request, response);
+    }
+
+    private Boolean getAutomaticEnrolment(DynaActionForm form) {
+	Boolean automaticEnrolment = (Boolean) form.get("automaticEnrolment");
+	if (automaticEnrolment == null) {
+	    return Boolean.FALSE;
+	}
+	return automaticEnrolment;
     }
 
     public ActionForward deleteGroupProperties(ActionMapping mapping, ActionForm form, HttpServletRequest request,

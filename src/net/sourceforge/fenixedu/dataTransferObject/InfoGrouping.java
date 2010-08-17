@@ -40,6 +40,8 @@ public class InfoGrouping extends InfoObject {
     private String projectDescription;
 
     private List infoAttends;
+    
+    private Boolean automaticEnrolment;
 
     /**
      * Construtor
@@ -53,7 +55,7 @@ public class InfoGrouping extends InfoObject {
      */
     public InfoGrouping(Integer maximumCapacity, Integer minimumCapacity, Integer idealCapacity,
 	    EnrolmentGroupPolicyType enrolmentPolicy, Integer groupMaximumNumber, List infoExportGroupings, String name,
-	    ShiftType shiftType, Calendar enrolmentBeginDay, Calendar enrolmentEndDay, String projectDescription) {
+	    ShiftType shiftType, Calendar enrolmentBeginDay, Calendar enrolmentEndDay, String projectDescription, Boolean automaticEnrolment) {
 
 	this.maximumCapacity = maximumCapacity;
 	this.minimumCapacity = minimumCapacity;
@@ -66,7 +68,7 @@ public class InfoGrouping extends InfoObject {
 	this.enrolmentBeginDay = enrolmentBeginDay;
 	this.enrolmentEndDay = enrolmentEndDay;
 	this.projectDescription = projectDescription;
-
+	this.automaticEnrolment = automaticEnrolment;
     }
 
     public String toString() {
@@ -280,6 +282,7 @@ public class InfoGrouping extends InfoObject {
 	    setMinimumCapacity(groupProperties.getMinimumCapacity());
 	    setEnrolmentBeginDay(groupProperties.getEnrolmentBeginDay());
 	    setEnrolmentEndDay(groupProperties.getEnrolmentEndDay());
+	    setAutomaticEnrolment(groupProperties.getAutomaticEnrolment());
 	}
     }
 
@@ -309,4 +312,11 @@ public class InfoGrouping extends InfoObject {
 	this.infoAttends = infoAttends;
     }
 
+    public Boolean getAutomaticEnrolment() {
+        return automaticEnrolment;
+    }
+
+    public void setAutomaticEnrolment(Boolean automaticEnrolment) {
+        this.automaticEnrolment = automaticEnrolment;
+    }
 }

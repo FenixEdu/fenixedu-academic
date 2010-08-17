@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.GroupEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseAttendsBean.StudentAttendsStateType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -31,6 +33,7 @@ import org.joda.time.PeriodType;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.services.Service;
+import dml.runtime.RelationAdapter;
 
 /**
  * 
@@ -38,6 +41,28 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class Attends extends Attends_Base {
 
+    static {
+	ExecutionCourseAttends.addListener(new RelationAdapter<Attends, ExecutionCourse>() {
+	    @Override
+	    public void afterAdd(Attends attends, ExecutionCourse executionCourse) {
+		for (Grouping grouping : executionCourse.getGroupings()) {
+		    if (grouping.getAutomaticEnrolment() && !grouping.getStudentGroups().isEmpty()) {
+			grouping.addAttends(attends);
+			int groupNumber = grouping.getStudentGroupsCount() + 1;
+			grouping.setGroupMaximumNumber(groupNumber);
+			try {			    
+			    GroupEnrolment.run(grouping.getIdInternal(), null, groupNumber,
+				    new ArrayList<String>(), attends.getRegistration().getStudent().getPerson().getUsername());
+			} catch (FenixServiceException e) {
+			    // TODO Auto-generated catch block
+			    e.printStackTrace();
+			}
+		    }
+		}
+	    }
+	});
+    }
+    
     public static final Comparator<Attends> COMPARATOR_BY_STUDENT_NUMBER = new Comparator<Attends>() {
 
 	@Override

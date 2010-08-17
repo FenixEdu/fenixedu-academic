@@ -173,7 +173,7 @@ public class Grouping extends Grouping_Base {
     public static Grouping create(String goupingName, Date enrolmentBeginDay, Date enrolmentEndDay,
 	    EnrolmentGroupPolicyType enrolmentGroupPolicyType, Integer groupMaximumNumber, Integer idealCapacity,
 	    Integer maximumCapacity, Integer minimumCapacity, String projectDescription, ShiftType shiftType,
-	    ExecutionCourse executionCourse) {
+	    Boolean automaticEnrolment, ExecutionCourse executionCourse) {
 
 	if (goupingName == null || enrolmentBeginDay == null || enrolmentEndDay == null || enrolmentGroupPolicyType == null) {
 	    throw new NullPointerException();
@@ -192,6 +192,7 @@ public class Grouping extends Grouping_Base {
 	grouping.setMinimumCapacity(minimumCapacity);
 	grouping.setProjectDescription(projectDescription);
 	grouping.setShiftType(shiftType);
+	grouping.setAutomaticEnrolment(automaticEnrolment);
 
 	ExportGrouping exportGrouping = new ExportGrouping(grouping, executionCourse);
 	exportGrouping.setProposalState(new ProposalState(ProposalState.CRIADOR));
@@ -216,7 +217,7 @@ public class Grouping extends Grouping_Base {
 
     public void edit(String goupingName, Date enrolmentBeginDay, Date enrolmentEndDay,
 	    EnrolmentGroupPolicyType enrolmentGroupPolicyType, Integer groupMaximumNumber, Integer idealCapacity,
-	    Integer maximumCapacity, Integer minimumCapacity, String projectDescription, ShiftType shiftType) {
+	    Integer maximumCapacity, Integer minimumCapacity, String projectDescription, ShiftType shiftType, Boolean automaticEnrolment) {
 
 	if (goupingName == null || enrolmentBeginDay == null || enrolmentEndDay == null || enrolmentGroupPolicyType == null) {
 	    throw new NullPointerException();
@@ -234,6 +235,7 @@ public class Grouping extends Grouping_Base {
 	setMinimumCapacity(minimumCapacity);
 	setProjectDescription(projectDescription);
 	setShiftType(shiftType);
+	setAutomaticEnrolment(automaticEnrolment);
 
 	if (shiftType == null) {
 	    unEnrollStudentGroups(this.getStudentGroups());

@@ -15,7 +15,6 @@
 		</div>
 	</logic:notEmpty>
 </logic:present>
-
 <h3 class="separator2 mtop2"><span style="font-weight: normal ;"><bean:message key="title.inquiries.separator.introduction" bundle="INQUIRIES_RESOURCES"/></span></h3>
 
 <html:messages id="message" message="true" bundle="INQUIRIES_RESOURCES">

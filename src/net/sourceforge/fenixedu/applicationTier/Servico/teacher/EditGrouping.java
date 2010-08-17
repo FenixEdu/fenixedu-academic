@@ -28,7 +28,7 @@ public class EditGrouping extends FenixService {
 		.getEnrolmentEndDay().getTime(), infoGroupProperties.getEnrolmentPolicy(), infoGroupProperties
 		.getGroupMaximumNumber(), infoGroupProperties.getIdealCapacity(), infoGroupProperties.getMaximumCapacity(),
 		infoGroupProperties.getMinimumCapacity(), infoGroupProperties.getProjectDescription(), infoGroupProperties
-			.getShiftType());
+			.getShiftType(), infoGroupProperties.getAutomaticEnrolment());
 
 	return findEditionErrors(grouping);
     }

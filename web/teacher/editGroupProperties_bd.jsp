@@ -15,49 +15,60 @@
 <div class="dinline forminline">
 
 <html:form action="/editGroupProperties">
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editGroupProperties"/>	
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.groupPropertiesCode"  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
+			
+	<div class="infoop2">
+		<bean:message key="label.teacher.editGroupProperties.description" />
+	</div>
+	
+	<logic:present name="notPosibleToRevertChoice">
+		<span class="infoop2">
+			<bean:message key="label.teacher.editGroupProperties.notPosibleToRevert" />
+		</span>
+	</logic:present>
+	<p>
+		<span class="error0"><!-- Error messages go here --><html:errors /></span>
+	</p>
+	
+	<br/>
 
-<div class="infoop2">
-	<bean:message key="label.teacher.editGroupProperties.description" />
-</div>
+	<bean:define id="isAutomaticEnrolment" value="false"/>
+	<logic:present name="automaticEnrolment">
+		<bean:define id="isAutomaticEnrolment" value="true"/>
+	</logic:present>
+	<logic:equal name="groupProperties" property="automaticEnrolment" value="true">
+		<bean:define id="isAutomaticEnrolment" value="true"/>
+	</logic:equal>
 
-
-<p>
-	<span class="error0"><!-- Error messages go here --><html:errors /></span>
-</p>
-
-<br/>
-
-<table class="tstyle5 thlight thright dinline">
+	<table class="tstyle5 thlight thright dinline">
 		<tr>
 			<th><bean:message key="message.groupPropertiesName"/>:</th>
 			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.name" size="40" name="groupProperties" property="name" /></td>
-		</tr>
-		
+		</tr>		
 		<tr>
 			<th><bean:message key="message.groupPropertiesProjectDescription"/>:</th>
 			<td><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.projectDescription" name="groupProperties" property="projectDescription" cols="50" rows="6"/></td>
 		</tr>
-		
 	    <tr>
 			<th><bean:message key="message.groupPropertiesEnrolmentBeginDay"/>:</th>
 			<td>
 				<logic:empty name="groupProperties" property="enrolmentBeginDayFormatted">
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.enrolmentBeginDayFormatted" size="10" property="enrolmentBeginDayFormatted"/>
-				<i><bean:message key="label.at" /></i>
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.enrolmentBeginHourFormatted" size="5" property="enrolmentBeginHourFormatted"/>
-				<i>(dd/mm/aaaa <bean:message key="label.at" /> hh:mm)</i><br />
-			</logic:empty>
-			
-			<logic:notEmpty name="groupProperties" property="enrolmentBeginDayFormatted">
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.enrolmentBeginDayFormatted" size="10" name="groupProperties" property="enrolmentBeginDayFormatted" />
-				<i><bean:message key="label.at" /></i>
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.enrolmentBeginHourFormatted" size="5" name="groupProperties" property="enrolmentBeginHourFormatted"/>
-				<i>(dd/mm/aaaa <bean:message key="label.at" /> hh:mm)</i><br />
-			</logic:notEmpty>
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.enrolmentBeginDayFormatted" size="10" property="enrolmentBeginDayFormatted"/>
+					<i><bean:message key="label.at" /></i>
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.enrolmentBeginHourFormatted" size="5" property="enrolmentBeginHourFormatted"/>
+					<i>(dd/mm/aaaa <bean:message key="label.at" /> hh:mm)</i><br />
+				</logic:empty>
+				<logic:notEmpty name="groupProperties" property="enrolmentBeginDayFormatted">
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.enrolmentBeginDayFormatted" size="10" name="groupProperties" property="enrolmentBeginDayFormatted" />
+					<i><bean:message key="label.at" /></i>
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.enrolmentBeginHourFormatted" size="5" name="groupProperties" property="enrolmentBeginHourFormatted"/>
+					<i>(dd/mm/aaaa <bean:message key="label.at" /> hh:mm)</i><br />
+				</logic:notEmpty>
 			</td>
 		</tr>
-	    
     	<tr>
 			<th><bean:message key="message.groupPropertiesEnrolmentEndDay"/>:</th>
 			<td>
@@ -75,45 +86,56 @@
 			</logic:notEmpty>
 			</td>
 		</tr>
-			
+		<tr>
+			<th><bean:message key="message.groupPropertiesAutomaticEnrolment"/>:</th>
+			<bean:define id="disableAutomaticEnrolment" value="false"/>
+			<logic:present name="automaticEnrolmentDisable">
+				<bean:define id="disableAutomaticEnrolment" value="true"/>
+			</logic:present>
+			<td>
+				<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.automaticEnrolment" name="groupProperties" disabled="<%= Boolean.valueOf(disableAutomaticEnrolment) %>"
+					property="automaticEnrolment" onclick="this.form.method.value='editGroupPropertiesPostBack';this.form.page.value='0';this.form.submit();"/>
+			</td>
+		</tr>			
 		<bean:define id="enrolmentPolicyValue" name="enrolmentPolicyValue"/>
 		<tr>
 			<th><bean:message key="message.groupPropertiesEnrolmentPolicy"/>:</th>
-			<td><html:select bundle="HTMLALT_RESOURCES" altKey="select.enrolmentPolicy" property="enrolmentPolicy">
-			<html:option value="<%= enrolmentPolicyValue.toString() %>"><bean:write name="enrolmentPolicyName"/></html:option>
-			<html:options name="enrolmentPolicyValues" labelName="enrolmentPolicyNames"/>
-			</html:select></td>			
+			<td>
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.enrolmentPolicy" 
+					property="enrolmentPolicy" disabled="<%= Boolean.valueOf(isAutomaticEnrolment) %>">
+					<html:option value="<%= enrolmentPolicyValue.toString() %>"><bean:write name="enrolmentPolicyName"/></html:option>
+					<html:options name="enrolmentPolicyValues" labelName="enrolmentPolicyNames"/>
+				</html:select>
+			</td>			
 		</tr>
-		
 		<bean:define id="shiftTypeValue" type="java.lang.Object" value="SEM TURNO"/>
 	    <logic:present 	name="groupProperties" property="shiftType">
 		 	<bean:define id="shiftTypeValue" name="groupProperties" property="shiftType"/>
 		</logic:present>
-		
 		<tr>
 			<th><bean:message key="message.groupPropertiesShiftType"/>:</th>
 			<td>
-				<html:select bundle="HTMLALT_RESOURCES" altKey="select.shiftType" property="shiftType" value="<%= shiftTypeValue.toString() %>">
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.shiftType" property="shiftType" 
+					value="<%= shiftTypeValue.toString() %>" disabled="<%= Boolean.valueOf(isAutomaticEnrolment) %>">
 					<html:options collection="shiftTypeValues" property="value" labelProperty="label"/>
 				</html:select>
 			</td>		
 		</tr>
-
 		<tr>
 			<th>
 				<bean:message key="message.groupPropertiesMaximumCapacity"/>:
 				<br/><bean:message key="label.teacher.insertGroupProperties.MaximumCapacityDescription"/>
 			</th>
-			
 			<td>
 				<logic:empty name="groupProperties" property="maximumCapacity">
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.maximumCapacity" size="5" property="maximumCapacity"/>
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.maximumCapacity" size="5" 
+							property="maximumCapacity" readonly="<%= Boolean.valueOf(isAutomaticEnrolment) %>"/>
 				</logic:empty>
 				<logic:notEmpty name="groupProperties" property="maximumCapacity">
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.maximumCapacity" size="5" name="groupProperties" property="maximumCapacity" />
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.maximumCapacity" size="5" name="groupProperties" 
+						property="maximumCapacity" readonly="<%= Boolean.valueOf(isAutomaticEnrolment) %>" />
 				</logic:notEmpty>
 			</td>
-			
 		</tr>	
     	<tr>
 			<th>
@@ -122,14 +144,15 @@
 			</th>
 			<td>
 				<logic:empty name="groupProperties" property="minimumCapacity">
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.minimumCapacity" size="5" property="minimumCapacity"/>
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.minimumCapacity" size="5" 
+						property="minimumCapacity" readonly="<%= Boolean.valueOf(isAutomaticEnrolment) %>"/>
 				</logic:empty>
 				<logic:notEmpty name="groupProperties" property="minimumCapacity">
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.minimumCapacity" size="5" name="groupProperties" property="minimumCapacity" />
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.minimumCapacity" size="5" name="groupProperties" 
+						property="minimumCapacity" readonly="<%= Boolean.valueOf(isAutomaticEnrolment) %>" />
 				</logic:notEmpty>
 			</td>
 		</tr>
-
 		<tr>
 			<th>
 				<bean:message key="message.groupPropertiesIdealCapacity"/>:
@@ -137,24 +160,27 @@
 			</th>
 			<td>
 				<logic:empty name="groupProperties" property="idealCapacity">
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.idealCapacity" size="5" property="idealCapacity"/>
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.idealCapacity" size="5" 
+						property="idealCapacity" readonly="<%= Boolean.valueOf(isAutomaticEnrolment) %>"/>
 				</logic:empty>
 				<logic:notEmpty name="groupProperties" property="idealCapacity">
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.idealCapacity" size="5" name="groupProperties" property="idealCapacity" />
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.idealCapacity" size="5" name="groupProperties" 
+						property="idealCapacity" readonly="<%= Boolean.valueOf(isAutomaticEnrolment) %>" />
 				</logic:notEmpty>
 			</td>
 		</tr>
-
 		<tr>
 			<th>
 				<bean:message key="message.groupPropertiesGroupMaximumNumber"/>:
 			</th>
 			<td>
 				<logic:empty name="groupProperties" property="groupMaximumNumber">
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.groupMaximumNumber" size="5" property="groupMaximumNumber"/>
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.groupMaximumNumber" size="5" 
+						property="groupMaximumNumber" readonly="<%= Boolean.valueOf(isAutomaticEnrolment) %>"/>
 				</logic:empty>
 				<logic:notEmpty name="groupProperties" property="groupMaximumNumber">
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.groupMaximumNumber" size="5" name="groupProperties" property="groupMaximumNumber" />
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.groupMaximumNumber" size="5" name="groupProperties" 
+						property="groupMaximumNumber" readonly="<%= Boolean.valueOf(isAutomaticEnrolment) %>" />
 				</logic:notEmpty>
 			</td>
 		</tr>
@@ -162,17 +188,14 @@
 
 	<br/><br/>
 	
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.save"/>                    		         	
-		</html:submit>
-		
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="setAutomaticValues(this.form);">
+		<bean:message key="button.save"/>                    		         	
+	</html:submit>
 
-		<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="inputbutton"><bean:message key="label.clear"/>
-		</html:reset>  
-
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editGroupProperties"/>	
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.groupPropertiesCode"  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
-	</html:form>
+	<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="inputbutton">
+		<bean:message key="label.clear"/>
+	</html:reset> 	
+</html:form>
 
 	
 	
@@ -194,3 +217,12 @@
 	<span class="warning0"><bean:message key="message.infoGroupProperties.not.available" /></span>
 </p>
 </logic:notPresent>
+
+<script language="javascript">
+	function setAutomaticValues(form) {
+		if(form.automaticEnrolment.checked){
+			form.enrolmentPolicy.disabled=false;
+			form.shiftType.disabled=false;
+		}
+	}
+</script>

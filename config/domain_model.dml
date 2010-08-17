@@ -1309,6 +1309,7 @@ class DomainObject {
         String name;
         String projectDescription;
         ShiftType shiftType;
+        Boolean automaticEnrolment;
     }
 
     class Guide extends DomainObject {
