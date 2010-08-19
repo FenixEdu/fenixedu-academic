@@ -45,24 +45,26 @@ public class Attends extends Attends_Base {
 	ExecutionCourseAttends.addListener(new RelationAdapter<Attends, ExecutionCourse>() {
 	    @Override
 	    public void afterAdd(Attends attends, ExecutionCourse executionCourse) {
-		for (Grouping grouping : executionCourse.getGroupings()) {
-		    if (grouping.getAutomaticEnrolment() && !grouping.getStudentGroups().isEmpty()) {
-			grouping.addAttends(attends);
-			int groupNumber = grouping.getStudentGroupsCount() + 1;
-			grouping.setGroupMaximumNumber(groupNumber);
-			try {			    
-			    GroupEnrolment.run(grouping.getIdInternal(), null, groupNumber,
-				    new ArrayList<String>(), attends.getRegistration().getStudent().getPerson().getUsername());
-			} catch (FenixServiceException e) {
-			    // TODO Auto-generated catch block
-			    e.printStackTrace();
+		if (executionCourse != null && attends != null) {
+		    for (Grouping grouping : executionCourse.getGroupings()) {
+			if (grouping.getAutomaticEnrolment() && !grouping.getStudentGroups().isEmpty()) {
+			    grouping.addAttends(attends);
+			    int groupNumber = grouping.getStudentGroupsCount() + 1;
+			    grouping.setGroupMaximumNumber(groupNumber);
+			    try {
+				GroupEnrolment.run(grouping.getIdInternal(), null, groupNumber, new ArrayList<String>(), attends
+					.getRegistration().getStudent().getPerson().getUsername());
+			    } catch (FenixServiceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			    }
 			}
 		    }
 		}
 	    }
 	});
     }
-    
+
     public static final Comparator<Attends> COMPARATOR_BY_STUDENT_NUMBER = new Comparator<Attends>() {
 
 	@Override
