@@ -8,13 +8,16 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.enrolment.EnroledCurriculumModuleWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.utl.ist.fenix.tools.predicates.InlinePredicate;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
 
@@ -68,17 +71,20 @@ public class SpecialSeasonStudentCurriculumGroupBean extends StudentCurriculumGr
 	};
 
 	final Map<CurricularCourse, Enrolment> enrolmentsMap = new HashMap<CurricularCourse, Enrolment>();
+	final Person person = AccessControl.getPerson();
+	final boolean isAcademicAdminOfficer = person.getEmployeeAdministrativeOffice() != null ? person.getEmployeeAdministrativeOffice().isDegree() : false;
 
 	for (final CurriculumModule curriculumModule : group.getCurriculumModules()) {
 	    if (curriculumModule.isEnrolment()) {
 
 		final Enrolment enrolment = (Enrolment) curriculumModule;
 
-		if (!enrolment.parentCurriculumGroupIsNoCourseGroupCurriculumGroup()
-			&& !enrolment.getParentCycleCurriculumGroup().isConclusionProcessed()
-			&& enrolment.canBeSpecialSeasonEnroled(executionSemester)
-			&& !alreadyHasSpecialSeasonEnrolment.eval(enrolment)) {
-		    
+		if (!considerThisEnrolmentGeneralRule(enrolment, executionSemester, alreadyHasSpecialSeasonEnrolment))
+		    continue;
+
+		if (considerThisEnrolmentNormalEnrolments(enrolment) || considerThisEnrolmentPropaedeuticEnrolments(enrolment, isAcademicAdminOfficer)
+			|| considerThisEnrolmentExtraCurricularEnrolments(enrolment, isAcademicAdminOfficer)) {
+
 		    if (enrolmentsMap.get(enrolment.getCurricularCourse()) != null) {
 			Enrolment enrolmentMap = enrolmentsMap.get(enrolment.getCurricularCourse());
 			if (enrolment.getExecutionPeriod().isAfter(enrolmentMap.getExecutionPeriod())) {
@@ -137,6 +143,24 @@ public class SpecialSeasonStudentCurriculumGroupBean extends StudentCurriculumGr
     @Override
     public boolean isToBeDisabled() {
 	return true;
+    }
+
+    private boolean considerThisEnrolmentGeneralRule(Enrolment enrolment, ExecutionSemester executionSemester,
+	    Predicate<Enrolment> alreadyHasSpecialSeasonEnrolment) {
+	return enrolment.canBeSpecialSeasonEnroled(executionSemester) && !alreadyHasSpecialSeasonEnrolment.eval(enrolment);
+    }
+
+    private boolean considerThisEnrolmentNormalEnrolments(Enrolment enrolment) {
+	return !enrolment.parentCurriculumGroupIsNoCourseGroupCurriculumGroup()
+		&& !enrolment.getParentCycleCurriculumGroup().isConclusionProcessed();
+    }
+
+    private boolean considerThisEnrolmentPropaedeuticEnrolments(Enrolment enrolment, boolean isAcademicAdminOfficer) {
+	return enrolment.isPropaedeutic() && isAcademicAdminOfficer;
+    }
+    
+    private boolean considerThisEnrolmentExtraCurricularEnrolments(Enrolment enrolment, boolean isAcademicAdminOfficer) {
+	return enrolment.isExtraCurricular() && isAcademicAdminOfficer;
     }
 
 }
