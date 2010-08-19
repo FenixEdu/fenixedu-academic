@@ -27,22 +27,24 @@ public class Project extends Project_Base {
 	ProjectGrouping.addListener(new RelationAdapter<Project, Grouping>() {
 	    @Override
 	    public void afterAdd(Project project, Grouping grouping) {
-		if (grouping.getAutomaticEnrolment() && grouping.getStudentGroups().isEmpty()) {
-		    int groupNumber = 1;
-		    Attends firstAttend = grouping.getAttends().get(0);
-		    List<Attends> attends = firstAttend.getExecutionCourse().getAttends();
-		    for (Attends attend : attends) {			
-			try {
-			    GroupEnrolment.run(grouping.getIdInternal(), null, groupNumber, new ArrayList<String>(), attend.getRegistration()
-			    	.getStudent().getPerson().getUsername());
-			} catch (FenixServiceException e) {
-			    // TODO Auto-generated catch block
-			    e.printStackTrace();
-			    groupNumber--;
+		if (project != null && grouping != null) {
+		    if (grouping.getAutomaticEnrolment() && grouping.getStudentGroups().isEmpty()) {
+			int groupNumber = 1;
+			Attends firstAttend = grouping.getAttends().get(0);
+			List<Attends> attends = firstAttend.getExecutionCourse().getAttends();
+			for (Attends attend : attends) {
+			    try {
+				GroupEnrolment.run(grouping.getIdInternal(), null, groupNumber, new ArrayList<String>(), attend
+					.getRegistration().getStudent().getPerson().getUsername());
+			    } catch (FenixServiceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				groupNumber--;
+			    }
+			    groupNumber++;
 			}
-			groupNumber++;
+			grouping.setGroupMaximumNumber(attends.size());
 		    }
-		    grouping.setGroupMaximumNumber(attends.size());
 		}
 	    }
 	});
