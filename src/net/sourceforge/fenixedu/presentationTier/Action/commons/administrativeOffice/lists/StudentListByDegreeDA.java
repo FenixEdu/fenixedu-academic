@@ -319,6 +319,9 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 
 		fillSpreadSheetPreBolonhaInfo(spreadsheet, registration);
 
+		spreadsheet.addCell(getResourceMessage(registration.getStudent().isSenior(executionYear) ? "label.yes"
+			: "label.no"));
+
 		final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
 
 		if (getAdministratedCycleTypes().contains(CycleType.FIRST_CYCLE)) {
@@ -441,6 +444,7 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 	    spreadsheet.addHeader(getResourceMessage("label.conclusionDate"));
 	    spreadsheet.addHeader(getResourceMessage("degree.average"));
 	    spreadsheet.addHeader(getResourceMessage("degree.hasConclusionProcess"));
+	    spreadsheet.addHeader(getResourceMessage("student.is.senior"));
 
 	    if (getAdministratedCycleTypes().contains(CycleType.FIRST_CYCLE)) {
 		spreadsheet.addHeader(getResourceMessage("label.firstCycle.concluded"));
