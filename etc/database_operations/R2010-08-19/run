@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Adds an attribute to say if enrolment is automatic or not in Groups" alterTableGrouping.sql IST
