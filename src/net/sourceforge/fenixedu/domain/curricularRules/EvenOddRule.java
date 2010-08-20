@@ -74,7 +74,7 @@ public class EvenOddRule extends EvenOddRule_Base {
     }
 
     private boolean appliesToPeriod(Context context) {
-	return context.getCurricularPeriod().hasCurricularPeriod(getAcademicPeriod(), getCurricularPeriodOrder());
+	return context == null || context.getCurricularPeriod().hasCurricularPeriod(getAcademicPeriod(), getCurricularPeriodOrder());
 
     }
 
