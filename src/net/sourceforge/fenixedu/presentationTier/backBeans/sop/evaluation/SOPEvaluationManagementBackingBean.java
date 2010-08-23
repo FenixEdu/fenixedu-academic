@@ -933,6 +933,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	result.add(new SelectItem("noSelection", this.chooseMessage));
 	result.add(new SelectItem(Season.SEASON1_STRING, messages.getMessage("property.exam.1stExam")));
 	result.add(new SelectItem(Season.SEASON2_STRING, messages.getMessage("property.exam.2stExam")));
+	result.add(new SelectItem(Season.SPECIAL_SEASON_STRING, messages.getMessage("property.exam.specialSeasonExam")));
 	return result;
     }
 
