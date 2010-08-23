@@ -6,6 +6,9 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
+import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryWithInstallmentDTO;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.EntryPhase;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -13,6 +16,12 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.QueueJob;
 import net.sourceforge.fenixedu.domain.QueueJobResult;
+import net.sourceforge.fenixedu.domain.accounting.EntryType;
+import net.sourceforge.fenixedu.domain.accounting.Installment;
+import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
+import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
+import net.sourceforge.fenixedu.domain.accounting.paymentCodes.InstallmentPaymentCode;
+import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.report.GratuityReportQueueJob;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy;
@@ -25,16 +34,19 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.util.Money;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.joda.time.YearMonthDay;
+
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class DgesStudentImportationProcess extends DgesStudentImportationProcess_Base {
 
     private static final String ALAMEDA_UNIVERSITY = "A";
     private static final String TAGUS_UNIVERSITY = "T";
-    
-    
+
     private transient PrintWriter LOG_WRITER = null;
 
     protected DgesStudentImportationProcess() {
@@ -63,6 +75,7 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
 
 	final QueueJobResult queueJobResult = new QueueJobResult();
 	queueJobResult.setContentType("text/csv");
+	LOG_WRITER.flush();
 	stream.flush();
 
 	System.out.println(stream.toByteArray());
@@ -86,7 +99,7 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
 		getUniversityAcronym(), getEntryPhase());
 
 	final Employee employee = Employee.readByNumber(4581);
-	
+
 	LOG_WRITER.println(String.format("DGES Entries for %s : %s", getDgesStudentImportationForCampus().getName(),
 		degreeCandidateDTOs.size()));
 
@@ -144,17 +157,53 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
 
 	    final StudentCandidacy studentCandidacy = createCandidacy(employee, degreeCandidateDTO, person);
 	    new StandByCandidacySituation(studentCandidacy, employee.getPerson());
+
+	    createAvailableAccountingEventsPaymentCodes(person, studentCandidacy);
 	}
+    }
+
+    private void createAvailableAccountingEventsPaymentCodes(final Person person, final StudentCandidacy studentCandidacy) {
+	ExecutionDegree executionDegree = studentCandidacy.getExecutionDegree();
+
+	GratuityPaymentPlan paymentPlan = getGratuityPaymentPlanForFirstTimeStudents(executionDegree);
+
+	Money totalAmount = Money.ZERO;
+	LabelFormatter descriptionForEntryType = getDescriptionForEntryType(executionDegree.getDegree(), EntryType.GRATUITY_FEE);
+	for (Installment installment : paymentPlan.getInstallmentsSortedByEndDate()) {
+	    EntryWithInstallmentDTO entryDTO = new EntryWithInstallmentDTO(EntryType.GRATUITY_FEE, null, installment.getAmount(),
+		    descriptionForEntryType, installment);
+	    studentCandidacy.addAvailablePaymentCodes(createInstallmentPaymentCode(entryDTO, person.getStudent()));
+	    totalAmount = totalAmount.add(installment.getAmount());
+	}
+
+	EntryDTO fullPaymentEntryDTO = new EntryDTO(EntryType.GRATUITY_FEE, null, totalAmount, Money.ZERO, Money.ZERO,
+		descriptionForEntryType, Money.ZERO);
+
+	studentCandidacy.addAvailablePaymentCodes(createAccountingEventPaymentCode(fullPaymentEntryDTO, person.getStudent(),
+		paymentPlan));
+    }
+
+    private GratuityPaymentPlan getGratuityPaymentPlanForFirstTimeStudents(final ExecutionDegree executionDegree) {
+	List<GratuityPaymentPlan> paymentPlanList = executionDegree.getDegreeCurricularPlan().getServiceAgreementTemplate()
+		.getGratuityPaymentPlansFor(getExecutionYear());
+
+	for (GratuityPaymentPlan paymentPlan : paymentPlanList) {
+	    if (paymentPlan.isForFirstTimeInstitutionStudents()) {
+		return paymentPlan;
+	    }
+	}
+
+	return null;
     }
 
     private void logCandidate(DegreeCandidateDTO degreeCandidateDTO) {
 	LOG_WRITER.println("Processing: " + degreeCandidateDTO.toString());
-
     }
 
     private StudentCandidacy createCandidacy(final Employee employee, final DegreeCandidateDTO degreeCandidateDTO,
 	    final Person person) {
-	final ExecutionDegree executionDegree = degreeCandidateDTO.getExecutionDegree(getExecutionYear(), getDgesStudentImportationForCampus());
+	final ExecutionDegree executionDegree = degreeCandidateDTO.getExecutionDegree(getExecutionYear(),
+		getDgesStudentImportationForCampus());
 	StudentCandidacy candidacy = null;
 
 	if (executionDegree.getDegree().getDegreeType() == DegreeType.BOLONHA_DEGREE) {
@@ -170,7 +219,7 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
 	} else {
 	    throw new RuntimeException("Unexpected degree type from DGES file");
 	}
-	
+
 	candidacy.setHighSchoolType(degreeCandidateDTO.getHighSchoolType());
 	candidacy.setFirstTimeCandidacy(true);
 	createPrecedentDegreeInformation(candidacy, degreeCandidateDTO);
@@ -224,7 +273,7 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
     private String getUniversityAcronym() {
 	return getDgesStudentImportationForCampus().isCampusAlameda() ? ALAMEDA_UNIVERSITY : TAGUS_UNIVERSITY;
     }
-    
+
     public static boolean canRequestJob() {
 	return QueueJob.getUndoneJobsForClass(GratuityReportQueueJob.class).isEmpty();
     }
@@ -259,6 +308,30 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
 	}, jobList);
 
 	return jobList;
+    }
+
+    public LabelFormatter getDescriptionForEntryType(final Degree degree, EntryType entryType) {
+	final LabelFormatter labelFormatter = new LabelFormatter();
+	labelFormatter.appendLabel(entryType.name(), "enum").appendLabel(" (").appendLabel(degree.getDegreeType().name(), "enum")
+		.appendLabel(" - ").appendLabel(degree.getNameFor(getExecutionYear()).getContent()).appendLabel(" - ")
+		.appendLabel(getExecutionYear().getYear()).appendLabel(")");
+
+	return labelFormatter;
+    }
+
+    private AccountingEventPaymentCode createAccountingEventPaymentCode(final EntryDTO entryDTO, final Student student,
+	    final GratuityPaymentPlan paymentPlan) {
+	return AccountingEventPaymentCode.create(PaymentCodeType.GRATUITY_FIRST_INSTALLMENT, new YearMonthDay(), paymentPlan
+		.getFirstInstallment().getEndDate(), null, entryDTO.getAmountToPay(), entryDTO.getAmountToPay(), student
+		.getPerson());
+    }
+
+    private InstallmentPaymentCode createInstallmentPaymentCode(final EntryWithInstallmentDTO entry, final Student student) {
+	final YearMonthDay installmentEndDate = entry.getInstallment().getEndDate();
+
+	return InstallmentPaymentCode.create(PaymentCodeType.GRATUITY_FIRST_INSTALLMENT, new YearMonthDay(), entry
+		.getInstallment().getEndDate(), null, entry.getInstallment(), entry.getAmountToPay(), entry.getAmountToPay(),
+		student);
     }
 
 }

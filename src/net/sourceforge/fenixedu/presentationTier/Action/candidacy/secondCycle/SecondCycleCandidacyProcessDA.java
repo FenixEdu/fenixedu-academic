@@ -46,7 +46,8 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 	@Forward(name = "introduce-candidacy-results", path = "/candidacy/secondCycle/introduceCandidacyResults.jsp"),
 	@Forward(name = "introduce-candidacy-results-for-degree", path = "/candidacy/secondCycle/introduceCandidacyResultsForDegree.jsp"),
 	@Forward(name = "send-to-scientificCouncil", path = "/candidacy/sendToScientificCouncil.jsp"),
-	@Forward(name = "create-registrations", path = "/candidacy/createRegistrations.jsp")
+	@Forward(name = "create-registrations", path = "/candidacy/createRegistrations.jsp"),
+	@Forward(name = "view-child-process-with-missing-required-documents", path = "/candidacy/secondCycle/viewChildProcessWithMissingRequiredDocuments.jsp")
 
 })
 public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
@@ -90,7 +91,7 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 	return super.execute(mapping, actionForm, request, response);
     }
 
-    private void setChooseDegreeBean(HttpServletRequest request) {
+    protected void setChooseDegreeBean(HttpServletRequest request) {
 	ChooseDegreeBean chooseDegreeBean = (ChooseDegreeBean) getObjectFromViewState("choose.degree.bean");
 
 	if (chooseDegreeBean == null) {
@@ -100,7 +101,7 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 	request.setAttribute("chooseDegreeBean", chooseDegreeBean);
     }
 
-    private ChooseDegreeBean getChooseDegreeBean(HttpServletRequest request) {
+    protected ChooseDegreeBean getChooseDegreeBean(HttpServletRequest request) {
 	return (ChooseDegreeBean) request.getAttribute("chooseDegreeBean");
     }
 
@@ -152,7 +153,7 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 	return ExecutionInterval.readExecutionIntervalsWithCandidacyPeriod(getCandidacyPeriodType());
     }
 
-    private List<SecondCycleCandidacyProcess> getCandidacyProcesses(final ExecutionInterval executionInterval) {
+    protected List<SecondCycleCandidacyProcess> getCandidacyProcesses(final ExecutionInterval executionInterval) {
 	final List<SecondCycleCandidacyProcess> result = new ArrayList<SecondCycleCandidacyProcess>();
 	for (final SecondCycleCandidacyPeriod period : executionInterval.getSecondCycleCandidacyPeriods()) {
 	    result.add(period.getSecondCycleCandidacyProcess());
@@ -169,7 +170,7 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 	return introForward(mapping);
     }
 
-    private void setCandidacyProcessInformation(final ActionForm actionForm, final SecondCycleCandidacyProcess process) {
+    protected void setCandidacyProcessInformation(final ActionForm actionForm, final SecondCycleCandidacyProcess process) {
 	final SecondCycleCandidacyProcessForm form = (SecondCycleCandidacyProcessForm) actionForm;
 	form.setSelectedProcessId(process.getIdInternal());
 	form.setExecutionIntervalId(process.getCandidacyExecutionInterval().getIdInternal());
@@ -410,6 +411,15 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 	}
 
 	return selectedDegreesIndividualCandidacyProcesses;
+    }
+
+    public ActionForward prepareExecuteViewChildProcessWithMissingRequiredDocumentFiles(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+	setCandidacyProcessInformation(request, getProcess(request));
+	setCandidacyProcessInformation(form, getProcess(request));
+	request.setAttribute("candidacyProcesses", getCandidacyProcesses(getProcess(request).getCandidacyExecutionInterval()));
+
+	return mapping.findForward("view-child-process-with-missing-required-documents");
     }
 
 }

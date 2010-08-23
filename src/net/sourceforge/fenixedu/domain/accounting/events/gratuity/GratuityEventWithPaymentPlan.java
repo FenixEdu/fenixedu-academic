@@ -262,7 +262,7 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
     }
 
     private AccountingEventPaymentCode createAccountingEventPaymentCode(final EntryDTO entryDTO, final Student student) {
-	return AccountingEventPaymentCode.create(PaymentCodeType.TOTAL_GRATUITY, new YearMonthDay(),
+	return AccountingEventPaymentCode.create(PaymentCodeType.GRATUITY_FIRST_INSTALLMENT, new YearMonthDay(),
 		calculateFullPaymentCodeEndDate(), this, entryDTO.getAmountToPay(), entryDTO.getAmountToPay(), student
 			.getPerson());
     }
@@ -274,14 +274,7 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
     }
 
     private PaymentCodeType getPaymentCodeTypeFor(Installment installment) {
-	if (installment.getOrder() == 1) {
-	    return PaymentCodeType.GRATUITY_FIRST_INSTALLMENT;
-	} else if (installment.getOrder() == 2) {
-	    return PaymentCodeType.GRATUITY_SECOND_INSTALLMENT;
-	} else {
-	    throw new DomainException("error.accounting.events.gratuity.GratuityEventWithPaymentPlan.invalid.installment.order");
-	}
-
+	return PaymentCodeType.GRATUITY_FIRST_INSTALLMENT;
     }
 
     private Installment getFirstInstallment() {

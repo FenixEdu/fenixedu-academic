@@ -18513,3 +18513,10 @@ relation ErasmusCandidacyExecutedActionErasmusIndividualProcess {
 		multiplicity *;
 	}
 }
+
+relation StudentCandidacyAvailablePaymentCodes {
+	candidacy.StudentCandidacy playsRole studentCandidacy;
+	accounting.PaymentCode playsRole availablePaymentCodes {
+		multiplicity *;
+	}
+}

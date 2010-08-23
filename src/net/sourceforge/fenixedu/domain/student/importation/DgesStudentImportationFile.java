@@ -9,12 +9,12 @@ import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 public class DgesStudentImportationFile extends DgesStudentImportationFile_Base {
-    
+
     private static final String ROOT_DIR_DESCRIPTION = "New students database from DGES";
     private static final String ROOT_DIR = "DgesStudentImportationFile";
 
     private DgesStudentImportationFile() {
-        super();
+	super();
     }
 
     protected DgesStudentImportationFile(byte[] contents, String filename, VirtualPath path) {
@@ -32,29 +32,23 @@ public class DgesStudentImportationFile extends DgesStudentImportationFile_Base 
 
 	return filePath;
     }
-    
+
     @Service
-    public static DgesStudentImportationFile create(byte[] contents,
-	    ExecutionYear executionYear, Campus campus, EntryPhase entryPhase) {
-	if(executionYear == null) {
+    public static DgesStudentImportationFile create(byte[] contents, String filename, ExecutionYear executionYear, Campus campus,
+	    EntryPhase entryPhase) {
+	if (executionYear == null) {
 	    throw new DomainException("error.DgesStudentImportationFile.execution.year.is.null");
 	}
-	
-	if(campus == null) {
+
+	if (campus == null) {
 	    throw new DomainException("error.error.DgesStudentImportationFile.campus.is.null");
 	}
-	
-	if(entryPhase == null) {
+
+	if (entryPhase == null) {
 	    throw new DomainException("error.error.DgesStudentImportationFile.entry.phase.is.null");
 	}
-	
-	String filename = obtainFilename(executionYear, campus, entryPhase);
 
 	return new DgesStudentImportationFile(contents, filename, obtainVirtualPath(executionYear, campus, entryPhase));
-    }
-
-    private static String obtainFilename(ExecutionYear executionYear, Campus campus, EntryPhase entryPhase) {
-	return String.format("%s_%s_%s_%s.csv", ROOT_DIR, executionYear.getName(), campus.getName(), entryPhase.name());
     }
 
 }

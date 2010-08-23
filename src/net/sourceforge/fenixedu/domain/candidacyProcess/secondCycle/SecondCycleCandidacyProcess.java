@@ -36,6 +36,7 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 	activities.add(new SendToScientificCouncil());
 	activities.add(new PublishCandidacyResults());
 	activities.add(new CreateRegistrations());
+	activities.add(new ViewChildProcessWithMissingRequiredDocumentFiles());
     }
 
     private SecondCycleCandidacyProcess() {
@@ -333,4 +334,33 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 	    return process;
 	}
     }
+
+    static private class ViewChildProcessWithMissingRequiredDocumentFiles extends Activity<SecondCycleCandidacyProcess> {
+	@Override
+	public void checkPreConditions(SecondCycleCandidacyProcess process, IUserView userView) {
+	}
+
+	@Override
+	protected SecondCycleCandidacyProcess executeActivity(SecondCycleCandidacyProcess process, IUserView userView,
+		Object object) {
+	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return true;
+	}
+
+	@Override
+	public Boolean isVisibleForCoordinator() {
+	    return false;
+	}
+
+	@Override
+	public Boolean isVisibleForGriOffice() {
+	    return false;
+	}
+
+    }
+
 }

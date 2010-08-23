@@ -63,6 +63,7 @@
 				<fr:slot name="jobStartTime" key="label.dges.importation.process.start.time" />
 				<fr:slot name="jobEndTime" key="label.dges.importation.process.end.time" />
 				<fr:slot name="isNotDoneAndCancelled" key="label.dges.importation.process.cancelled" />
+				<fr:slot name="dgesStudentImportationFile" key="label.dges.importation.process.importation.content" layout="link" />
 			</fr:schema>
 			
 			<fr:layout name="tabular">

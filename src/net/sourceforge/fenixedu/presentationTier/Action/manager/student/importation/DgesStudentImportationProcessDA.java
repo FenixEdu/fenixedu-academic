@@ -76,8 +76,8 @@ public class DgesStudentImportationProcessDA extends FenixDispatchAction {
 
 	byte[] contents = bean.consumeStream();
 
-	DgesStudentImportationFile file = DgesStudentImportationFile.create(contents, bean.getExecutionYear(), bean.getCampus(),
-		bean.getPhase());
+	DgesStudentImportationFile file = DgesStudentImportationFile.create(contents, bean.getFilename(),
+		bean.getExecutionYear(), bean.getCampus(), bean.getPhase());
 	DgesBaseProcessLauncher.launchImportation(bean.getExecutionYear(), bean.getCampus(), bean.getPhase(), file);
 
 	return list(mapping, form, request, response);
@@ -170,7 +170,7 @@ public class DgesStudentImportationProcessDA extends FenixDispatchAction {
 	    return data;
 	}
     }
-    
+
     public static class EntryPhaseProvider implements DataProvider {
 
 	@Override

@@ -18,7 +18,10 @@
 </html:link>
 <br/>
 
-
+<html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
+	<span class="error0"> <bean:write name="message" /> </span>
+	<br />
+</html:messages>
 
 <fr:form action='<%="/caseHandling" + processName + ".do?processId=" + processId.toString() %>' encoding="multipart/form-data" id="candidacyFormId">
 	<input type="hidden" name="method" id="methodId" value="uploadDocument"/>

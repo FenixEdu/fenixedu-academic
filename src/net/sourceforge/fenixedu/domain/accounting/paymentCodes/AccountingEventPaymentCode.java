@@ -70,10 +70,6 @@ public class AccountingEventPaymentCode extends AccountingEventPaymentCode_Base 
     }
 
     protected void checkParameters(Event event, final Person person) {
-	if (event == null) {
-	    throw new DomainException("error.accounting.paymentCodes.AccountingEventPaymentCode.event.cannot.be.null");
-	}
-
 	if (person == null || person.getStudent() == null) {
 	    throw new DomainException("error.accounting.paymentCodes.AccountingEventPaymentCode.student.cannot.be.null");
 	}
@@ -129,4 +125,17 @@ public class AccountingEventPaymentCode extends AccountingEventPaymentCode_Base 
     protected void _setPerson(Person person) {
 	super.setPerson(person);
     }
+
+    /**
+     * 
+     */
+    @Override
+    public Event getAccountingEvent() {
+	if (super.getAccountingEvent() == null) {
+	    throw new DomainException("error.AccountingEventPaymentCode.event.must.not.be.null");
+	}
+
+	return super.getAccountingEvent();
+    }
+
 }
