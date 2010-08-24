@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "StudentCandidacy and PaymentCode association" studentCandidacyPaymentCodeAssociation.sql
