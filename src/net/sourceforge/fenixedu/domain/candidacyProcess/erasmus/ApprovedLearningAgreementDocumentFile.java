@@ -16,7 +16,7 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 
 public class ApprovedLearningAgreementDocumentFile extends ApprovedLearningAgreementDocumentFile_Base {
-    
+
     public static final Comparator<ApprovedLearningAgreementDocumentFile> SUBMISSION_DATE_COMPARATOR = new Comparator<ApprovedLearningAgreementDocumentFile>() {
 
 	@Override
@@ -30,8 +30,7 @@ public class ApprovedLearningAgreementDocumentFile extends ApprovedLearningAgree
 	this.setCandidacyFileActive(Boolean.TRUE);
     }
 
-    public ApprovedLearningAgreementDocumentFile(IndividualCandidacy candidacy,
-	    byte[] contents, String filename) {
+    public ApprovedLearningAgreementDocumentFile(IndividualCandidacy candidacy, byte[] contents, String filename) {
 	this();
 	this.setCandidacyFileActive(Boolean.TRUE);
 	setIndividualCandidacy(candidacy);
@@ -39,8 +38,7 @@ public class ApprovedLearningAgreementDocumentFile extends ApprovedLearningAgree
 	init(getVirtualPath(), filename, filename, null, contents, null);
     }
 
-    protected ApprovedLearningAgreementDocumentFile(byte[] contents, String filename,
-	    VirtualPath path) {
+    protected ApprovedLearningAgreementDocumentFile(byte[] contents, String filename, VirtualPath path) {
 	this();
 	this.setCandidacyFileActive(Boolean.TRUE);
 	setCandidacyFileType(IndividualCandidacyDocumentFileType.APPROVED_LEARNING_AGREEMENT);
@@ -50,8 +48,7 @@ public class ApprovedLearningAgreementDocumentFile extends ApprovedLearningAgree
     @Service
     public static ApprovedLearningAgreementDocumentFile createCandidacyDocument(byte[] contents, String filename,
 	    String processName, String documentIdNumber) {
-	return new ApprovedLearningAgreementDocumentFile(contents, filename, obtainVirtualPath(processName,
-		documentIdNumber));
+	return new ApprovedLearningAgreementDocumentFile(contents, filename, obtainVirtualPath(processName, documentIdNumber));
     }
 
     @Service
@@ -74,21 +71,21 @@ public class ApprovedLearningAgreementDocumentFile extends ApprovedLearningAgree
 
     protected List<ApprovedLearningAgreementExecutedAction> getSentLearningAgreementActions() {
 	List<ApprovedLearningAgreementExecutedAction> executedActionList = new ArrayList<ApprovedLearningAgreementExecutedAction>();
-	
+
 	CollectionUtils.select(getExecutedActions(), new Predicate() {
-	    
+
 	    @Override
 	    public boolean evaluate(Object arg0) {
 		return ((ApprovedLearningAgreementExecutedAction) arg0).isSentLearningAgreementAction();
 	    };
-	    
+
 	}, executedActionList);
-	
+
 	Collections.sort(executedActionList, Collections.reverseOrder(ExecutedAction.WHEN_OCCURED_COMPARATOR));
 
 	return executedActionList;
     }
-    
+
     public ApprovedLearningAgreementExecutedAction getMostRecentSentLearningAgreementAction() {
 	List<ApprovedLearningAgreementExecutedAction> executedActionList = getSentLearningAgreementActions();
 
@@ -105,19 +102,19 @@ public class ApprovedLearningAgreementDocumentFile extends ApprovedLearningAgree
 
     protected List<ApprovedLearningAgreementExecutedAction> getViewedLearningAgreementActions() {
 	List<ApprovedLearningAgreementExecutedAction> executedActionList = new ArrayList<ApprovedLearningAgreementExecutedAction>();
-	
+
 	CollectionUtils.select(getExecutedActions(), new Predicate() {
-	    
+
 	    @Override
 	    public boolean evaluate(Object arg0) {
 		return ((ApprovedLearningAgreementExecutedAction) arg0).isViewedLearningAgreementAction();
 	    };
-	    
+
 	}, executedActionList);
-	
+
 	Collections.sort(executedActionList, Collections.reverseOrder(ExecutedAction.WHEN_OCCURED_COMPARATOR));
 
-	return executedActionList;	
+	return executedActionList;
     }
 
     public ApprovedLearningAgreementExecutedAction getMostRecentViewedLearningAgreementAction() {
@@ -174,6 +171,6 @@ public class ApprovedLearningAgreementDocumentFile extends ApprovedLearningAgree
     }
 
     public boolean isAbleToSendEmailToAcceptStudent() {
-	return getProcess().isStudentAccepted() && isMostRecent();
+	return getProcess().isStudentAccepted() && isMostRecent() && !getCandidacyFileActive();
     }
 }

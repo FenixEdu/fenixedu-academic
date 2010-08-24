@@ -125,7 +125,7 @@
 
 
 	<%-- show main process information --%>
-	<fr:view name="process" schema="CandidacyProcess.view">
+	<fr:view name="process" schema="ErasmusCandidacyProcess.view">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight thright mtop025"/>
 	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>

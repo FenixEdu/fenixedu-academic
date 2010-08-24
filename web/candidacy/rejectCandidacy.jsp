@@ -18,7 +18,7 @@
 <fr:form action='<%= "/caseHandling" + processName.toString() + ".do?processId=" + processId.toString() %>'>
  	<html:hidden property="method" value="executeRejectCandidacy" />
 
-	<strong><bean:message key="label.candidacy.cancel.confirm.message" bundle="APPLICATION_RESOURCES" />&nbsp;<bean:write name="process" property="displayName" />?</strong>
+	<strong><bean:message key="label.candidacy.reject.confirm.message" bundle="APPLICATION_RESOURCES" />&nbsp;<bean:write name="process" property="displayName" />?</strong>
 	<br/>
 	<br/>
 	<html:submit><bean:message key="label.yes.capitalized" bundle="APPLICATION_RESOURCES" /></html:submit>

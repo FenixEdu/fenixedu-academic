@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ApprovedLearningAgreementDocumentFile;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusAlert;
@@ -50,7 +51,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "edit-eidentifier", path = "/candidacy/erasmus/editEidentifier.jsp"),
 	@Forward(name = "cancel-candidacy", path = "/candidacy/cancelCandidacy.jsp"),
 	@Forward(name = "view-approved-learning-agreements", path = "/candidacy/erasmus/viewApprovedLearningAgreements.jsp"),
-	@Forward(name = "upload-learning-agreement", path = "/candidacy/erasmus/uploadLearningAgreement.jsp") })
+	@Forward(name = "upload-learning-agreement", path = "/candidacy/erasmus/uploadLearningAgreement.jsp"),
+	@Forward(name = "reject-candidacy", path = "/candidacy/rejectCandidacy.jsp") })
 public class ErasmusIndividualCandidacyProcessDA extends
 	net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusIndividualCandidacyProcessDA {
 
@@ -140,7 +142,7 @@ public class ErasmusIndividualCandidacyProcessDA extends
     public ActionForward prepareExecuteSetEIdentifierForTesting(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 	final ErasmusIndividualCandidacyProcessBean bean = new ErasmusIndividualCandidacyProcessBean(getProcess(request));
-	
+
 	bean.setPersonBean(new PersonBean(getProcess(request).getPersonalDetails()));
 
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
@@ -211,7 +213,7 @@ public class ErasmusIndividualCandidacyProcessDA extends
 	ApprovedLearningAgreementDocumentFile file = ApprovedLearningAgreementDocumentFile.fromExternalId(request
 		.getParameter("approvedLearningAgreementId"));
 	executeActivity(getProcess(request), "SendEmailToAcceptedStudent", null);
-	
+
 	return prepareExecuteViewApprovedLearningAgreements(mapping, actionForm, request, response);
     }
 
@@ -235,4 +237,15 @@ public class ErasmusIndividualCandidacyProcessDA extends
 	return mapping.findForward("");
     }
 
+    public ActionForward revokeApprovedLearningAgreement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	ApprovedLearningAgreementDocumentFile file = ApprovedLearningAgreementDocumentFile.fromExternalId(request
+		.getParameter("approvedLearningAgreementId"));
+	CandidacyProcessDocumentUploadBean documentBean = new CandidacyProcessDocumentUploadBean();
+	documentBean.setDocumentFile(file);
+
+	executeActivity(getProcess(request), "RevokeDocumentFile", documentBean);
+
+	return prepareExecuteViewApprovedLearningAgreements(mapping, form, request, response);
+    }
 }

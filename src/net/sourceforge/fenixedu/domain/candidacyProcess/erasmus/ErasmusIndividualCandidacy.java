@@ -12,6 +12,8 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
@@ -115,26 +117,27 @@ public class ErasmusIndividualCandidacy extends ErasmusIndividualCandidacy_Base 
     }
 
     public ApprovedLearningAgreementDocumentFile getMostRecentApprovedLearningAgreement() {
-	if(!hasAnyApprovedLearningAgreements()) {
+	if (!hasAnyActiveApprovedLearningAgreements()) {
 	    return null;
 	}
-	
+
 	List<ApprovedLearningAgreementDocumentFile> approvedLearningAgreement = new ArrayList<ApprovedLearningAgreementDocumentFile>(
-		getApprovedLearningAgreements());
-	
-	Collections.sort(approvedLearningAgreement, Collections.reverseOrder(ApprovedLearningAgreementDocumentFile.SUBMISSION_DATE_COMPARATOR));
-	
+		getActiveApprovedLearningAgreements());
+
+	Collections.sort(approvedLearningAgreement, Collections
+		.reverseOrder(ApprovedLearningAgreementDocumentFile.SUBMISSION_DATE_COMPARATOR));
+
 	return approvedLearningAgreement.get(0);
     }
 
     public boolean isMostRecentApprovedLearningAgreementNotViewed() {
-	if(!hasAnyApprovedLearningAgreements()) {
+	if (!hasAnyActiveApprovedLearningAgreements()) {
 	    return false;
 	}
 
 	return !getMostRecentApprovedLearningAgreement().isApprovedLearningAgreementViewed();
     }
-    
+
     boolean hasProcessWithAcceptNotification() {
 	return hasProcessWithAcceptNotificationAtDate(new DateTime());
     }
@@ -145,4 +148,22 @@ public class ErasmusIndividualCandidacy extends ErasmusIndividualCandidacy_Base 
 			.isBefore(dateTime);
     }
 
+    public List<ApprovedLearningAgreementDocumentFile> getActiveApprovedLearningAgreements() {
+	List<ApprovedLearningAgreementDocumentFile> activeDocuments = new ArrayList<ApprovedLearningAgreementDocumentFile>();
+	CollectionUtils.select(getApprovedLearningAgreements(), new Predicate() {
+
+	    @Override
+	    public boolean evaluate(Object arg0) {
+		ApprovedLearningAgreementDocumentFile document = (ApprovedLearningAgreementDocumentFile) arg0;
+		return document.getCandidacyFileActive();
+	    }
+
+	}, activeDocuments);
+
+	return activeDocuments;
+    }
+
+    public boolean hasAnyActiveApprovedLearningAgreements() {
+	return !getActiveApprovedLearningAgreements().isEmpty();
+    }
 }

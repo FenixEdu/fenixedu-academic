@@ -72,6 +72,8 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	activities.add(new SendEmailToAcceptedStudent());
 	activities.add(new SendEmailToCandidateForMissingDocuments());
 	activities.add(new RevokeDocumentFile());
+	activities.add(new RejectCandidacy());
+
     }
 
     public ErasmusIndividualCandidacyProcess() {
@@ -313,7 +315,7 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
     }
 
     public boolean isStudentAcceptedAtDate(final DateTime dateTime) {
-	return getValidatedByErasmusCoordinator() && getValidatedByGri()
+	return !isCandidacyCancelled() && !isCandidacyRejected() && getValidatedByErasmusCoordinator() && getValidatedByGri()
 		&& getCandidacy().getMostRecentApprovedLearningAgreement() != null
 		&& getCandidacy().getMostRecentApprovedLearningAgreement().getUploadTime().isBefore(dateTime);
     }
@@ -349,6 +351,24 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
     public DateTime getLastReceptionEmailSent() {
 	List<ReceptionEmailExecutedAction> list = getAllReceptionEmailNotifications();
 	return list.isEmpty() ? null : list.get(0).getWhenOccured();
+    }
+
+    public String getErasmusCandidacyStateDescription() {
+	ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
+
+	if (isCandidacyCancelled()) {
+	    return bundle.getString("label.erasmus.candidacy.state.description.cancelled");
+	}
+
+	if (isCandidacyRejected()) {
+	    return bundle.getString("label.erasmus.candidacy.state.description.rejected");
+	}
+
+	if (isCandidacyInStandBy() && isStudentAccepted()) {
+	    return bundle.getString("label.erasmus.candidacy.state.description.student.accepted");
+	}
+
+	return bundle.getString("label.erasmus.candidacy.state.description.student.pending");
     }
 
     @StartActivity
@@ -1094,6 +1114,33 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	@Override
 	public Boolean isVisibleForGriOffice() {
 	    return false;
+	}
+    }
+
+    static private class RejectCandidacy extends Activity<ErasmusIndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(ErasmusIndividualCandidacyProcess process, IUserView userView) {
+	    if (!process.isCandidacyInStandBy()) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (isGriOfficeEmployee(userView)) {
+		return;
+	    }
+
+	    if (isManager(userView)) {
+		return;
+	    }
+
+	    throw new PreConditionNotValidException();
+	}
+
+	@Override
+	protected ErasmusIndividualCandidacyProcess executeActivity(ErasmusIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    process.rejectCandidacy(userView.getPerson());
+	    return process;
 	}
     }
 

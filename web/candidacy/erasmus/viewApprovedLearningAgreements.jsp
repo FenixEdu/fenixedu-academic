@@ -54,6 +54,7 @@
 			<fr:property name="confirmationKey(markAsViewed)" value="label.erasmus.approved.learning.agreement.mark.as.viewed.confirm" />
 			<fr:property name="confirmationBundle(markAsViewed)" value="CANDIDATE_RESOURCES" />
 			<fr:property name="order(markAsViewed)" value="1" />
+			<fr:property name="visibleIf(markAsViewed)" value="candidacyFileActive" />
 
 			<fr:property name="linkFormat(markAsSent)" value='<%= "/caseHandlingErasmusIndividualCandidacyProcess.do?method=markApprovedLearningAgreementAsSent&amp;approvedLearningAgreementId=${externalId}&amp;processId=" + processId %>' />
 			<fr:property name="key(markAsSent)" value="label.erasmus.approved.learning.agreement.mark.as.sent"/>
@@ -61,6 +62,7 @@
 			<fr:property name="confirmationKey(markAsSent)" value="label.erasmus.approved.learning.agreement.mark.as.sent.confirm" />
 			<fr:property name="confirmationBundle(markAsSent)" value="CANDIDATE_RESOURCES" />
 			<fr:property name="order(markAsSent)" value="2" />
+			<fr:property name="visibleIf(markAsSent)" value="candidacyFileActive" />
 			
 			<fr:property name="linkFormat(sendEmailToAcceptedStudent)" value='<%= "/caseHandlingErasmusIndividualCandidacyProcess.do?method=sendEmailToAcceptedStudent&amp;approvedLearningAgreementId=${externalId}&amp;processId=" + processId %>' />
 			<fr:property name="key(sendEmailToAcceptedStudent)" value="label.erasmus.send.email.to.accepted.student" />
@@ -68,7 +70,13 @@
 			<fr:property name="confirmationKey(sendEmailToAcceptedStudent)" value="message.erasmus.send.email.to.accepted.student.confirm" />
 			<fr:property name="confirmationBundle(sendEmailToAcceptedStudent)" value="CANDIDATE_RESOURCES" />
 			<fr:property name="order(sendEmailToAcceptedStudent)" value="3" />
-			<fr:property name="visibleIf(sendEmailToAcceptedStudent)" value="ableToSendEmailToAcceptStudent" /> 
+			<fr:property name="visibleIf(sendEmailToAcceptedStudent)" value="ableToSendEmailToAcceptStudent" />
+			
+			<fr:link 	name="revokeLearningAgreementFile" 
+						confirmation="message.erasmus.revoke.approved.learning.agreement.file.confirm,ACADEMIC_OFFICE_RESOURCES" 
+						link="<%= "/caseHandlingErasmusIndividualCandidacyProcess.do?method=revokeApprovedLearningAgreement&amp;approvedLearningAgreementId=${externalId}&amp;processId=" + processId %>" 
+						label="label.erasmus.revoke.approved.learning.agreement.file,ACADEMIC_OFFICE_RESOURCES" 
+						condition="candidacyFileActive"/>
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>
