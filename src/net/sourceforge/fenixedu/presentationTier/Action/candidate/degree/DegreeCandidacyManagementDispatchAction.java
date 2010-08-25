@@ -9,6 +9,7 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.candidacy.ExecuteStateOperation;
@@ -159,6 +160,8 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 		request.setAttribute("executionYear", getCandidacy(request).getExecutionDegree().getExecutionYear());
 		request.setAttribute("person", getCandidacy(request).getRegistration().getPerson());
 		request.setAttribute("campus", getCandidacy(request).getRegistration().getCampus().getName());
+		request.setAttribute("paymentCodes", getCandidacy(request).getAvailablePaymentCodes());
+		request.setAttribute("sibsEntityCode", PropertiesManager.getProperty("sibs.entityCode"));
 
 		final List<InfoLesson> infoLessons = (List) ReadStudentTimeTable.run(getCandidacy(request).getRegistration());
 		request.setAttribute("infoLessons", infoLessons);
@@ -172,6 +175,15 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 	    } else if (candidacyOperation.getType() == CandidacyOperationType.FILL_PERSONAL_DATA) {
 		request.setAttribute("aditionalInformation", getResources(request).getMessage(
 			"label.candidacy.username.changed.message", userView.getPerson().getIstUsername()));
+	    } else if (candidacyOperation.getType() == CandidacyOperationType.PRINT_GRATUITY_PAYMENT_CODES) {
+		request.setAttribute("registration", getCandidacy(request).getRegistration());
+		request.setAttribute("paymentCodes", getCandidacy(request).getAvailablePaymentCodes());
+		request.setAttribute("sibsEntityCode", PropertiesManager.getProperty("sibs.entityCode"));
+		request.setAttribute("firstInstallmentEndDate", getCandidacy(request).getRegistration().getStartDate()
+			.toDateMidnight().plusDays(10));
+
+		return mapping.findForward("printGratuityPaymentCodes");
+
 	    }
 
 	    request.setAttribute("schemaSuffix", getSchemaSuffixForPerson(request));

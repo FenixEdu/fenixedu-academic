@@ -18,7 +18,9 @@ public enum CandidacyOperationType {
 
     PRINT_ALL_DOCUMENTS,
 
-    CANCEL;
+    CANCEL,
+
+    PRINT_GRATUITY_PAYMENT_CODES;
 
     public String getName() {
 	return name();

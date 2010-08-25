@@ -41,5 +41,9 @@
 </div>
 
 
+<div style="page-break-before: always;">
+	<jsp:include page="printGratuityPaymentCodes.jsp" />
+</div>
+
 </body>
 </html>
