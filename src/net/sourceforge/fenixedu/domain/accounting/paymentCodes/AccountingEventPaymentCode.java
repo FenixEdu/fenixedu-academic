@@ -126,16 +126,4 @@ public class AccountingEventPaymentCode extends AccountingEventPaymentCode_Base 
 	super.setPerson(person);
     }
 
-    /**
-     * 
-     */
-    @Override
-    public Event getAccountingEvent() {
-	if (super.getAccountingEvent() == null) {
-	    throw new DomainException("error.AccountingEventPaymentCode.event.must.not.be.null");
-	}
-
-	return super.getAccountingEvent();
-    }
-
 }
