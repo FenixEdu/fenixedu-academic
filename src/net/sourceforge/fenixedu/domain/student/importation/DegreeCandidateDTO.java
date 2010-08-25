@@ -174,7 +174,7 @@ public class DegreeCandidateDTO implements IFileLine {
 
     @Override
     public String getUniqueKey() {
-	return null;
+	return this.documentIdNumber;
     }
 
     public String getDegreeCode() {

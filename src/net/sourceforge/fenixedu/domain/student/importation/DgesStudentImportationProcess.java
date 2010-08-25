@@ -177,7 +177,7 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
 	}
 
 	EntryDTO fullPaymentEntryDTO = new EntryDTO(EntryType.GRATUITY_FEE, null, totalAmount, Money.ZERO, Money.ZERO,
-		descriptionForEntryType, Money.ZERO);
+		descriptionForEntryType, totalAmount);
 
 	studentCandidacy.addAvailablePaymentCodes(createAccountingEventPaymentCode(fullPaymentEntryDTO, person.getStudent(),
 		paymentPlan));
@@ -322,8 +322,8 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
     private AccountingEventPaymentCode createAccountingEventPaymentCode(final EntryDTO entryDTO, final Student student,
 	    final GratuityPaymentPlan paymentPlan) {
 	return AccountingEventPaymentCode.create(PaymentCodeType.GRATUITY_FIRST_INSTALLMENT, new YearMonthDay(), paymentPlan
-		.getFirstInstallment().getEndDate(), null, entryDTO.getAmountToPay(), entryDTO.getAmountToPay(), student
-		.getPerson());
+		.getFirstInstallment().getStartDate().plusMonths(1), null, entryDTO.getAmountToPay(), entryDTO.getAmountToPay(),
+		student.getPerson());
     }
 
     private InstallmentPaymentCode createInstallmentPaymentCode(final EntryWithInstallmentDTO entry, final Student student) {
