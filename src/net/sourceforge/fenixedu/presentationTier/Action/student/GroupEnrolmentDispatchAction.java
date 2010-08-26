@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NoChangeMadeS
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonValidChangeServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.applicationTier.Servico.student.GroupEnrolment;
+import net.sourceforge.fenixedu.domain.student.GroupEnrolment;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadExportGroupingsByGrouping;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentsWithoutGroup;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.VerifyStudentGroupAtributes;

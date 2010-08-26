@@ -2,7 +2,7 @@
  * Created on 28/Ago/2003
  *
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.student;
+package net.sourceforge.fenixedu.domain.student;
 
 import java.util.List;
 
@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategy
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -30,12 +31,13 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author asnr and scpo
  * 
  */
-public class GroupEnrolment extends FenixService {
+public class GroupEnrolment {
 
     @Checked("RolePredicates.STUDENT_AND_TEACHER_PREDICATE")
     @Service
     public static Boolean run(Integer groupingID, Integer shiftID, Integer groupNumber, List studentUsernames,
 	    String studentUsername) throws FenixServiceException {
+	final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
 	final Grouping grouping = rootDomainObject.readGroupingByOID(groupingID);
 	if (grouping == null) {
 	    throw new NonExistingServiceException();
