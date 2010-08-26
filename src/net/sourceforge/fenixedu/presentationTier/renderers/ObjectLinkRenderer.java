@@ -63,6 +63,22 @@ public class ObjectLinkRenderer extends OutputRenderer {
 
     private boolean hasChecksum = true;
 
+    private String format;
+
+    public String getFormat() {
+	return this.format;
+    }
+
+    /**
+     * This allows to specify a presentation format for each object. For more
+     * details about the format syntaxt check the {@see FormatRenderer}.
+     * 
+     * @property
+     */
+    public void setFormat(String format) {
+	this.format = format;
+    }
+
     public boolean isBlankTarget() {
 	return blankTarget;
     }
@@ -290,6 +306,8 @@ public class ObjectLinkRenderer extends OutputRenderer {
 		    String text = getLinkText();
 		    if (text != null) {
 			link.setText(text);
+		    } else if (getFormat() != null) {
+			link.setText(RenderUtils.getFormattedProperties(getFormat(), object));
 		    } else {
 			link.setBody(getLinkBody(object));
 		    }
