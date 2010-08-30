@@ -30,7 +30,6 @@ public class RegistrationAcademicServiceRequestCreator extends RegistrationAcade
 	final Object result;
 	switch (getAcademicServiceRequestType()) {
 	case REINGRESSION:
-	    this.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
 	    result = new StudentReingressionRequest(this);
 	    break;
 
@@ -56,7 +55,7 @@ public class RegistrationAcademicServiceRequestCreator extends RegistrationAcade
 	    this.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
 	    result = new FreeSolicitationAcademicRequest(this);
 	    break;
-	    
+
 	case SPECIAL_SEASON_REQUEST:
 	    result = new SpecialSeasonRequest(this);
 	    break;
