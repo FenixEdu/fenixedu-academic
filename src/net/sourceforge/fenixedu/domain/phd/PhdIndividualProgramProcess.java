@@ -58,6 +58,7 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -896,8 +897,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	    final StudentCurricularPlan scp = process.getRegistration().getLastStudentCurricularPlan();
 	    final String mailBody = buildBody(bean);
 
-	    scp.enrol(bean.getSemester(), Collections.EMPTY_SET, getCurriculumModules(bean
-		    .getEnrolmentsToValidate()), CurricularRuleLevel.ENROLMENT_WITH_RULES);
+	    scp.enrol(bean.getSemester(), Collections.EMPTY_SET, getCurriculumModules(bean.getEnrolmentsToValidate()),
+		    CurricularRuleLevel.ENROLMENT_WITH_RULES);
 
 	    AlertService.alertStudent(process, AlertMessage.create(bean.getMailSubject()).isKey(false), AlertMessage.create(
 		    mailBody).isKey(false));
@@ -1175,6 +1176,10 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return result;
     }
 
+    public Set<PhdAlertMessage> getUnreadAlertMessagesForLoggedPerson() {
+	return getUnreadedAlertMessagesFor(AccessControl.getPerson());
+    }
+
     public Set<PhdAlertMessage> getUnreadedAlertMessagesFor(final Person person) {
 	final Set<PhdAlertMessage> result = new HashSet<PhdAlertMessage>();
 
@@ -1185,6 +1190,10 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	}
 
 	return result;
+    }
+
+    public Set<PhdAlertMessage> getAlertMessagesForLoggedPerson() {
+	return getAlertMessagesFor(AccessControl.getPerson());
     }
 
     public Set<PhdAlertMessage> getAlertMessagesFor(Person person) {

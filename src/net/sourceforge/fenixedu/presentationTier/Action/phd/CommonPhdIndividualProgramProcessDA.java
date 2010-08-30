@@ -150,13 +150,15 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
 	return mapping.findForward("viewAlertMessages");
     }
 
-    public ActionForward markAlertMessageAsReaded(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward readAlertMessage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	getAlertMessage(request).markAsReaded(getLoggedPerson(request));
+	PhdAlertMessage alertMessage = getAlertMessage(request);
+	alertMessage.markAsReaded(getLoggedPerson(request));
+	request.setAttribute("global", getFromRequest(request, "global"));
+	request.setAttribute("alertMessage", alertMessage);
 
-	return globalMessagesView(request) ? viewAlertMessages(mapping, form, request, response) : viewProcessAlertMessages(
-		mapping, form, request, response);
+	return mapping.findForward("viewAlertMessage");
     }
 
     private boolean globalMessagesView(HttpServletRequest request) {

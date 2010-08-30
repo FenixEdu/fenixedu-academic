@@ -6,6 +6,19 @@
 <%@ taglib uri="/WEB-INF/phd.tld" prefix="phd" %>
 
 <%@page import="net.sourceforge.fenixedu.util.BundleUtil"%>
+<%@page import="net.sourceforge.fenixedu.domain.DomainObject"%>
+
+
+<style>
+.col1 {  }
+.col2 { width: 250px; }
+.col3 {  }
+.col4 {  }
+.col5 {  }
+.col6 { width: 200px; }
+.col7 {  }
+</style>
+
 
 <fr:form id="search" action="/phdIndividualProgramProcess.do?method=viewInactiveProcesses">
 	<fr:edit id="searchProcessBean" name="searchProcessBean">
@@ -32,25 +45,44 @@
 </logic:equal>
 	
 <logic:notEqual name="size" value="0">
-	<fr:view name="processList" schema="PhdIndividualProgramProcess.view.resume">
-		<fr:schema type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
-			<fr:slot name="phdIndividualProcessNumber">
-				<fr:property name="format" value="${number}/${year}" />
-			</fr:slot>
-			<fr:slot name="person.name" />
-			<fr:slot name="executionYear" layout="format">
-				<fr:property name="format" value="${year}" />
-			</fr:slot>
-			<fr:slot name="phdProgram" layout="null-as-label">
-				<fr:property name="subLayout" value="values" />
-				<fr:property name="subSchema" value="PhdProgram.name" />
-			</fr:slot>
-		</fr:schema>
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle2 thlight thleft" />
-			<fr:link label="label.view,PHD_RESOURCES" name="view" link="/phdIndividualProgramProcess.do?method=viewProcess&backMethod=viewInactiveProcesses&processId=${externalId}"/>
-		</fr:layout>
-	</fr:view>
+	<table class="tstyle2 thlight thleft">
+		<tr>
+			<th class="col1"><bean:message key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.phdIndividualProcessNumber" bundle="PHD_RESOURCES"/></th>
+			<th class="col2"><bean:message key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.person.name" bundle="PHD_RESOURCES"/></th>
+			<th class="col3"><bean:message key="label.phd.messages" bundle="PHD_RESOURCES"/></th>
+			<th class="col4"><bean:message key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.executionYear" bundle="PHD_RESOURCES"/></th>
+			<th class="col5"><bean:message key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.phdProgram" bundle="PHD_RESOURCES"/></th>
+			<th class="col7"></th>
+		</tr>
+		<logic:iterate id="process" name="processList">
+			<tr>
+				<td><bean:write name="process" property="phdIndividualProcessNumber.number"/>/<bean:write name="process" property="phdIndividualProcessNumber.year"/></td>
+				<td><bean:write name="process" property="person.name"/></td>
+				<bean:size id="messageSize" name="process" property="alertMessagesForLoggedPerson" />
+				<logic:equal name="messageSize" value="0"><td class="center">-</td></logic:equal>
+				<logic:notEqual name="messageSize" value="0">
+					<fr:form id="<%= "form" + ((DomainObject) process).getExternalId() %>" action="<%= "/phdIndividualProgramProcess.do?method=viewProcessAlertMessages&processId=" + ((DomainObject) process).getExternalId() %>" >
+					<td class="center" style="cursor: pointer;" onclick="<%="document.getElementById('form" + ((DomainObject) process).getExternalId() + "').submit()"%>" >
+						<html:link action="/phdIndividualProgramProcess.do?method=viewProcessAlertMessages" paramId="processId" paramName="process" paramProperty="externalId" >
+							<bean:write name="messageSize"/>
+						</html:link>
+						<bean:size id="unreadMessageSize" name="process" property="unreadAlertMessagesForLoggedPerson" />
+						<logic:notEqual name="unreadMessageSize" value="0">
+							<span class="color888">(<bean:message key="message.pending.phd.alert.messages.notification.short" bundle="PHD_RESOURCES" arg0="<%= unreadMessageSize.toString() %>"/>)</span>
+						</logic:notEqual>
+					</td>
+					</fr:form>
+				</logic:notEqual>
+				<td><bean:write name="process" property="executionYear.year"/></td>
+				<td><bean:write name="process" property="phdProgram.acronym"/></td>
+				<td>
+					<html:link action="/phdIndividualProgramProcess.do?method=viewProcess" paramId="processId" paramName="process" paramProperty="externalId" >
+						<bean:message key="label.view" bundle="PHD_RESOURCES"/>
+					</html:link>
+				</td>
+			</tr>
+		</logic:iterate>
+	</table>
 </logic:notEqual>
 
 <bean:define id="concludedContainer" name="concludedContainer"/>
@@ -63,25 +95,44 @@
 </logic:equal>
 	
 <logic:notEqual name="size" value="0">
-	<fr:view name="processList" schema="PhdIndividualProgramProcess.view.resume">
-		<fr:schema type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
-			<fr:slot name="phdIndividualProcessNumber">
-				<fr:property name="format" value="${number}/${year}" />
-			</fr:slot>
-			<fr:slot name="person.name" />
-			<fr:slot name="executionYear" layout="format">
-				<fr:property name="format" value="${year}" />
-			</fr:slot>
-			<fr:slot name="phdProgram" layout="null-as-label">
-				<fr:property name="subLayout" value="values" />
-				<fr:property name="subSchema" value="PhdProgram.name" />
-			</fr:slot>
-		</fr:schema>
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle2 thlight thleft" />
-			<fr:link label="label.view,PHD_RESOURCES" name="view" link="/phdIndividualProgramProcess.do?method=viewProcess&backMethod=viewInactiveProcesses&processId=${externalId}"/>
-		</fr:layout>
-	</fr:view>
+	<table class="tstyle2 thlight thleft">
+		<tr>
+			<th class="col1"><bean:message key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.phdIndividualProcessNumber" bundle="PHD_RESOURCES"/></th>
+			<th class="col2"><bean:message key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.person.name" bundle="PHD_RESOURCES"/></th>
+			<th class="col3"><bean:message key="label.phd.messages" bundle="PHD_RESOURCES"/></th>
+			<th class="col4"><bean:message key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.executionYear" bundle="PHD_RESOURCES"/></th>
+			<th class="col5"><bean:message key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.phdProgram" bundle="PHD_RESOURCES"/></th>
+			<th class="col7"></th>
+		</tr>
+		<logic:iterate id="process" name="processList">
+			<tr>
+				<td><bean:write name="process" property="phdIndividualProcessNumber.number"/>/<bean:write name="process" property="phdIndividualProcessNumber.year"/></td>
+				<td><bean:write name="process" property="person.name"/></td>
+				<bean:size id="messageSize" name="process" property="alertMessagesForLoggedPerson" />
+				<logic:equal name="messageSize" value="0"><td class="center">-</td></logic:equal>
+				<logic:notEqual name="messageSize" value="0">
+					<fr:form id="<%= "form" + ((DomainObject) process).getExternalId() %>" action="<%= "/phdIndividualProgramProcess.do?method=viewProcessAlertMessages&processId=" + ((DomainObject) process).getExternalId() %>" >
+					<td class="center" style="cursor: pointer;" onclick="<%="document.getElementById('form" + ((DomainObject) process).getExternalId() + "').submit()"%>" >
+						<html:link action="/phdIndividualProgramProcess.do?method=viewProcessAlertMessages" paramId="processId" paramName="process" paramProperty="externalId" >
+							<bean:write name="messageSize"/>
+						</html:link>
+						<bean:size id="unreadMessageSize" name="process" property="unreadAlertMessagesForLoggedPerson" />
+						<logic:notEqual name="unreadMessageSize" value="0">
+							<span class="color888">(<bean:message key="message.pending.phd.alert.messages.notification.short" bundle="PHD_RESOURCES" arg0="<%= unreadMessageSize.toString() %>"/>)</span>
+						</logic:notEqual>
+					</td>
+					</fr:form>
+				</logic:notEqual>
+				<td><bean:write name="process" property="executionYear.year"/></td>
+				<td><bean:write name="process" property="phdProgram.acronym"/></td>
+				<td>
+					<html:link action="/phdIndividualProgramProcess.do?method=viewProcess" paramId="processId" paramName="process" paramProperty="externalId" >
+						<bean:message key="label.view" bundle="PHD_RESOURCES"/>
+					</html:link>
+				</td>
+			</tr>
+		</logic:iterate>
+	</table>
 </logic:notEqual>
 
 <bean:define id="abolishedContainer" name="abolishedContainer"/>
@@ -94,26 +145,44 @@
 </logic:equal>
 	
 <logic:notEqual name="size" value="0">
-	<fr:view name="processList" schema="PhdIndividualProgramProcess.view.resume">
-		<fr:schema type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
-			<fr:slot name="phdIndividualProcessNumber">
-				<fr:property name="format" value="${number}/${year}" />
-			</fr:slot>
-			<fr:slot name="person.name" />
-			<fr:slot name="executionYear" layout="format">
-				<fr:property name="format" value="${year}" />
-			</fr:slot>
-			<fr:slot name="phdProgram" layout="null-as-label">
-				<fr:property name="subLayout" value="values" />
-				<fr:property name="subSchema" value="PhdProgram.name" />
-			</fr:slot>
-			<fr:slot name="activeState">
-				<fr:property name="bundle" value="PHD_RESOURCES" />
-			</fr:slot>
-		</fr:schema>
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle2 thlight thleft" />
-			<fr:link label="label.view,PHD_RESOURCES" name="view" link="/phdIndividualProgramProcess.do?method=viewProcess&backMethod=viewInactiveProcesses&processId=${externalId}"/>
-		</fr:layout>
-	</fr:view>
+	<table class="tstyle2 thlight thleft">
+		<tr>
+			<th class="col1"><bean:message key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.phdIndividualProcessNumber" bundle="PHD_RESOURCES"/></th>
+			<th class="col2"><bean:message key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.person.name" bundle="PHD_RESOURCES"/></th>
+			<th class="col3"><bean:message key="label.phd.messages" bundle="PHD_RESOURCES"/></th>
+			<th class="col4"><bean:message key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.executionYear" bundle="PHD_RESOURCES"/></th>
+			<th class="col5"><bean:message key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.phdProgram" bundle="PHD_RESOURCES"/></th>
+			<th class="col6"><bean:message key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.activeState" bundle="PHD_RESOURCES"/></th>
+			<th class="col7"></th>
+		</tr>
+		<logic:iterate id="process" name="processList">
+			<tr>
+				<td><bean:write name="process" property="phdIndividualProcessNumber.number"/>/<bean:write name="process" property="phdIndividualProcessNumber.year"/></td>
+				<td><bean:write name="process" property="person.name"/></td>
+				<bean:size id="messageSize" name="process" property="alertMessagesForLoggedPerson" />
+				<logic:equal name="messageSize" value="0"><td class="center">-</td></logic:equal>
+				<logic:notEqual name="messageSize" value="0">
+					<fr:form id="<%= "form" + ((DomainObject) process).getExternalId() %>" action="<%= "/phdIndividualProgramProcess.do?method=viewProcessAlertMessages&processId=" + ((DomainObject) process).getExternalId() %>" >
+					<td class="center" style="cursor: pointer;" onclick="<%="document.getElementById('form" + ((DomainObject) process).getExternalId() + "').submit()"%>" >
+						<html:link action="/phdIndividualProgramProcess.do?method=viewProcessAlertMessages" paramId="processId" paramName="process" paramProperty="externalId" >
+							<bean:write name="messageSize"/>
+						</html:link>
+						<bean:size id="unreadMessageSize" name="process" property="unreadAlertMessagesForLoggedPerson" />
+						<logic:notEqual name="unreadMessageSize" value="0">
+							<span class="color888">(<bean:message key="message.pending.phd.alert.messages.notification.short" bundle="PHD_RESOURCES" arg0="<%= unreadMessageSize.toString() %>"/>)</span>
+						</logic:notEqual>
+					</td>
+					</fr:form>
+				</logic:notEqual>
+				<td><bean:write name="process" property="executionYear.year"/></td>
+				<td><bean:write name="process" property="phdProgram.acronym"/></td>
+				<td><fr:view name="process" property="activeState" layout="phd-enum-renderer"/></td>
+				<td>
+					<html:link action="/phdIndividualProgramProcess.do?method=viewProcess" paramId="processId" paramName="process" paramProperty="externalId" >
+						<bean:message key="label.view" bundle="PHD_RESOURCES"/>
+					</html:link>
+				</td>
+			</tr>
+		</logic:iterate>
+	</table>
 </logic:notEqual>

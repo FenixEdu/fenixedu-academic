@@ -12,6 +12,10 @@
 <h2><bean:message key="label.phd.alertMessages" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 
+<html:link action="<%= "/phdIndividualProgramProcess.do?method=viewProcess" %>">
+	« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
+</html:link>
+
 <%--  ### Error Messages  ### --%>
 <jsp:include page="/phd/errorsAndMessages.jsp" />
 <%--  ### End of Error Messages  ### --%>

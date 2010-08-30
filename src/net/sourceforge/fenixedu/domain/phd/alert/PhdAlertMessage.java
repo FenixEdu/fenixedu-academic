@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.phd.alert;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -17,6 +18,13 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PhdAlertMessage extends PhdAlertMessage_Base {
+
+    static final public Comparator<PhdAlertMessage> COMPARATOR_BY_WHEN_CREATED_AND_ID = new Comparator<PhdAlertMessage>() {
+	public int compare(PhdAlertMessage m1, PhdAlertMessage m2) {
+	    int comp = m1.getWhenCreated().compareTo(m2.getWhenCreated());
+	    return (comp != 0) ? comp : COMPARATOR_BY_ID.compare(m1, m2);
+	}
+    };
 
     protected PhdAlertMessage() {
 	super();

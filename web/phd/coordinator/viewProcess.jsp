@@ -43,8 +43,6 @@
 <jsp:include page="/phd/errorsAndMessages.jsp" />
 <%--  ### End of Error Messages  ### --%>
 
-<jsp:include page="/phd/alertMessagesNotifier.jsp?global=false" />
-
 <%--  ### Context Information (e.g. Person Information, Registration Information)  ### --%>
 <strong><bean:message  key="label.phd.process" bundle="PHD_RESOURCES"/></strong>
 <table>
@@ -59,9 +57,7 @@
     <td style="vertical-align: top; padding-top: 1em;">
     	<ul class="operations">
 			<li>
-				<html:link action="/phdIndividualProgramProcess.do?method=viewProcessAlertMessages" paramId="processId" paramName="process" paramProperty="externalId">
-					<bean:message bundle="PHD_RESOURCES" key="label.phd.alertMessages"/>
-				</html:link>
+				<jsp:include page="/phd/alertMessagesNotifier.jsp?global=false" />
 			</li>
 		</ul>
     </td>

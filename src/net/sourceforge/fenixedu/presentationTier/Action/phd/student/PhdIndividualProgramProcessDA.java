@@ -28,6 +28,8 @@ import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
 
 @Forward(name = "viewAlertMessages", path = "/phd/student/viewAlertMessages.jsp"),
 
+@Forward(name = "viewAlertMessage", path = "/phd/student/viewAlertMessage.jsp"),
+
 @Forward(name = "viewProcessAlertMessages", path = "/phd/student/viewProcessAlertMessages.jsp"),
 
 @Forward(name = "choosePhdProcess", path = "/phd/student/choosePhdProcess.jsp")
@@ -50,7 +52,12 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 
     @Override
     protected PhdIndividualProgramProcess getProcess(HttpServletRequest request) {
-	return super.getProcess(request);
+	final Person person = getLoggedPerson(request);
+	PhdIndividualProgramProcess process = super.getProcess(request);
+	if ((process == null) && (person.getPhdIndividualProgramProcessesCount() == 1)) {
+	    process = person.getPhdIndividualProgramProcesses().get(0);
+	}
+	return process;
     }
 
     @Override
@@ -61,11 +68,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 
 	final PhdIndividualProgramProcess process = getProcess(request);
 	if (process != null) {
-	    return mapping.findForward("viewProcess");
-	}
-
-	if (person.getPhdIndividualProgramProcessesCount() == 1) {
-	    request.setAttribute("process", person.getPhdIndividualProgramProcesses().get(0));
+	    request.setAttribute("process", process);
 	    return mapping.findForward("viewProcess");
 	}
 

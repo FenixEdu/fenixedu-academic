@@ -29,7 +29,8 @@
 
 
 <%--  ### Context Information (e.g. Person Information, Registration Information)  ### --%>
-<jsp:include page="/phd/alertMessagesNotifier.jsp?global=true" />
+<ul>
+	<li><jsp:include page="/phd/alertMessagesNotifier.jsp?global=true" /></li>
 
 <%--  ### End Of Context Information  ### --%>
 
@@ -37,14 +38,11 @@
 
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 
-<p>
-	<html:link action="/phdIndividualProgramProcess.do?method=viewInactiveProcesses">
-		<bean:message bundle="PHD_RESOURCES" key="label.viewInactiveProcesses"/> »
-	</html:link>
-</p>
+	<li><html:link action="/phdIndividualProgramProcess.do?method=viewInactiveProcesses">
+		<bean:message bundle="PHD_RESOURCES" key="label.viewInactiveProcesses"/>
+	</html:link></li>
+</ul>
 
 <jsp:include page="/phd/common/manageProcesses.jsp"/>
 
 </logic:present>
-
-
