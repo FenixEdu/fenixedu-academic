@@ -215,6 +215,8 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
     public AndPredicate<PhdIndividualProgramProcess> getAndPredicate() {
 	final AndPredicate<PhdIndividualProgramProcess> result = new AndPredicate<PhdIndividualProgramProcess>();
 
+	result.add(getManagedPhdProgramsAndProcessesPredicate());
+
 	if (getExecutionYear() != null) {
 	    result.add(new InlinePredicate<PhdIndividualProgramProcess, ExecutionYear>(getExecutionYear()) {
 		@Override
@@ -232,8 +234,6 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
 		}
 	    });
 	}
-
-	result.add(getManagedPhdProgramsAndProcessesPredicate());
 
 	if (getCandidacyProcessState() != null) {
 	    result.add(new InlinePredicate<PhdIndividualProgramProcess, PhdProgramCandidacyProcessState>(
