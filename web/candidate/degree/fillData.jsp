@@ -59,8 +59,6 @@
 	
 	<fr:edit id="operation-view-state" visible="false" name="operation" />
 	
-	<p><%= formClass.toString() + schemaSuffix %></p>
-	
 	<logic:equal name="isInputForm" value="true">
 		<fr:edit id="<%=editViewStateId%>"
 			name="currentForm"

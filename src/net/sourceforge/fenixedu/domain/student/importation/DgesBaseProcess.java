@@ -18,6 +18,8 @@ import pt.utl.ist.fenix.tools.loaders.DataLoaderFromFile;
  */
 public abstract class DgesBaseProcess extends DgesBaseProcess_Base {
 
+    protected static final String ALAMEDA_UNIVERSITY = "A";
+    protected static final String TAGUS_UNIVERSITY = "T";
     static Map<String, Ingression> CONTINGENT_TO_INGRESSION_CONVERSION = new HashMap<String, Ingression>();
 
     static {
@@ -39,11 +41,12 @@ public abstract class DgesBaseProcess extends DgesBaseProcess_Base {
 	super();
     }
 
-    protected DgesBaseProcess(final ExecutionYear executionYear) {
-	this();
+    protected void init(final ExecutionYear executionYear, final EntryPhase entryPhase) {
+	check(executionYear, "error.DgesBaseProcess.execution.year.is.null", new String[0]);
+	check(entryPhase, "error.DgesBaseProcess.entry.phase.is.null", new String[0]);
 
-	check(executionYear, "error.DgesStudentImportationProcess.execution.year.is.null", new String[0]);
 	setExecutionYear(executionYear);
+	setEntryPhase(entryPhase);
     }
 
     protected List<DegreeCandidateDTO> parseDgesFile(byte[] contents, String university, EntryPhase entryPhase) {

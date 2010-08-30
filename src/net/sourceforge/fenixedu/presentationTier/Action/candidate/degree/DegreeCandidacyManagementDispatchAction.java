@@ -16,11 +16,15 @@ import net.sourceforge.fenixedu.applicationTier.Servico.candidacy.ExecuteStateOp
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentTimeTable;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
+import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
+import net.sourceforge.fenixedu.domain.accounting.installments.InstallmentForFirstTimeStudents;
+import net.sourceforge.fenixedu.domain.accounting.paymentCodes.InstallmentPaymentCode;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyOperationType;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.CandidacyOperation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.workflow.Form;
 import net.sourceforge.fenixedu.domain.util.workflow.Operation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -29,6 +33,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
@@ -161,6 +166,8 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 		request.setAttribute("person", getCandidacy(request).getRegistration().getPerson());
 		request.setAttribute("campus", getCandidacy(request).getRegistration().getCampus().getName());
 		request.setAttribute("paymentCodes", getCandidacy(request).getAvailablePaymentCodes());
+		request.setAttribute("firstInstallmentEndDate", calculateFirstInstallmentEndDate(getCandidacy(request)
+			.getRegistration(), getCandidacy(request).getAvailablePaymentCodes()));
 		request.setAttribute("sibsEntityCode", PropertiesManager.getProperty("sibs.entityCode"));
 
 		final List<InfoLesson> infoLessons = (List) ReadStudentTimeTable.run(getCandidacy(request).getRegistration());
@@ -179,8 +186,8 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 		request.setAttribute("registration", getCandidacy(request).getRegistration());
 		request.setAttribute("paymentCodes", getCandidacy(request).getAvailablePaymentCodes());
 		request.setAttribute("sibsEntityCode", PropertiesManager.getProperty("sibs.entityCode"));
-		request.setAttribute("firstInstallmentEndDate", getCandidacy(request).getRegistration().getStartDate()
-			.toDateMidnight().plusDays(10));
+		request.setAttribute("firstInstallmentEndDate", calculateFirstInstallmentEndDate(getCandidacy(request)
+			.getRegistration(), getCandidacy(request).getAvailablePaymentCodes()));
 
 		return mapping.findForward("printGratuityPaymentCodes");
 
@@ -196,6 +203,25 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 	    return showCurrentForm(mapping, form, request, response);
 	}
 
+    }
+
+    private YearMonthDay calculateFirstInstallmentEndDate(final Registration registration, List<PaymentCode> availablePaymentCodes) {
+	for (PaymentCode paymentCode : availablePaymentCodes) {
+	    if (!paymentCode.isInstallmentPaymentCode()) {
+		continue;
+	    }
+
+	    InstallmentPaymentCode installmentPaymentCode = (InstallmentPaymentCode) paymentCode;
+	    if (!installmentPaymentCode.getInstallment().isForFirstTimeStudents()) {
+		continue;
+	    }
+
+	    InstallmentForFirstTimeStudents firstInstallment = (InstallmentForFirstTimeStudents) installmentPaymentCode
+		    .getInstallment();
+	    return registration.getStartDate().plusDays(firstInstallment.getNumberOfDaysToStartApplyingPenalty());
+	}
+
+	return null;
     }
 
     public ActionForward showCurrentForm(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

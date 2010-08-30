@@ -7489,15 +7489,21 @@ class accounting.report.GratuityReportQueueJob extends QueueJobWithFile {
 
 
 class student.importation.DgesBaseProcess extends QueueJobWithFile {
-}
-
-class student.importation.DgesStudentImportationProcess extends student.importation.DgesBaseProcess {
 	EntryPhase entryPhase;
 }
 
-class student.importation.DgesStudentImportationFile extends File {
-}
+	class student.importation.DgesStudentImportationProcess extends student.importation.DgesBaseProcess {
+	}
 
+	class student.importation.DgesStudentImportationFile extends File {
+	}
+	
+	class student.importation.ExportDegreeCandidaciesByDegreeForPasswordGeneration extends student.importation.DgesBaseProcess {
+	}
+	
+	class student.importation.ExportExistingStudentsFromImportationProcess extends student.importation.DgesBaseProcess {
+	}
+	
 /*
  * Relations definitions
  * 
@@ -16906,11 +16912,22 @@ relation Over23IndividualCandidacyAcceptedDegree {
     }
 }
 
+/* This relation is temporary */
 relation SecondCycleIndividualCandidacySelectedDegree {
     Degree playsRole selectedDegree;
     candidacyProcess.secondCycle.SecondCycleIndividualCandidacy playsRole selectedSecondCycleIndividualCandidacies {
         multiplicity *;
     }
+}
+
+relation SecondCycleIndividualCandidacySelectedDegrees {
+    candidacyProcess.secondCycle.SecondCycleIndividualCandidacy playsRole selectionSecondCycleIndividualCandidacies {
+        multiplicity *;
+    }
+    
+	Degree playsRole selectedDegrees {
+		multiplicity *;
+	}	
 }
 
 relation DegreeCandidacyForGraduatedPersonSelectedDegree {
@@ -18517,6 +18534,13 @@ relation ErasmusCandidacyExecutedActionErasmusIndividualProcess {
 relation StudentCandidacyAvailablePaymentCodes {
 	candidacy.StudentCandidacy playsRole studentCandidacy;
 	accounting.PaymentCode playsRole availablePaymentCodes {
+		multiplicity *;
+	}
+}
+
+relation DgesStudentImportationProcessStudentCandidacy {
+	student.importation.DgesStudentImportationProcess playsRole dgesStudentImportationProcess;
+	candidacy.StudentCandidacy playsRole studentCandidacy {
 		multiplicity *;
 	}
 }

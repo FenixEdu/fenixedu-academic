@@ -102,4 +102,8 @@ public class InstallmentPaymentCode extends InstallmentPaymentCode_Base {
 
     }
 
+    @Override
+    public boolean isInstallmentPaymentCode() {
+	return true;
+    }
 }

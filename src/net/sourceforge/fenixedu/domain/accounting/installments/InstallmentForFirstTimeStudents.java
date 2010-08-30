@@ -99,4 +99,10 @@ public class InstallmentForFirstTimeStudents extends InstallmentForFirstTimeStud
 			.toString(), getNumberOfDaysToStartApplyingPenalty().toString());
 
     }
+
+    @Override
+    public boolean isForFirstTimeStudents() {
+	return true;
+    }
+
 }

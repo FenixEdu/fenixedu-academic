@@ -14,6 +14,8 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.importation.DgesBaseProcessLauncher;
 import net.sourceforge.fenixedu.domain.student.importation.DgesStudentImportationFile;
 import net.sourceforge.fenixedu.domain.student.importation.DgesStudentImportationProcess;
+import net.sourceforge.fenixedu.domain.student.importation.ExportDegreeCandidaciesByDegreeForPasswordGeneration;
+import net.sourceforge.fenixedu.domain.student.importation.ExportExistingStudentsFromImportationProcess;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -28,15 +30,17 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/dgesStudentImportationProcess", module = "manager")
-@Forwards( { @Forward(name = "list", path = "/manager/student/importation/list.jsp"),
-	@Forward(name = "prepare-create-new-process", path = "/manager/student/importation/prepareCreateNewProcess.jsp") })
+@Forwards( {
+	@Forward(name = "list", path = "/manager/student/importation/list.jsp"),
+	@Forward(name = "prepare-create-new-process", path = "/manager/student/importation/prepareCreateNewProcess.jsp"),
+	@Forward(name = "prepare-create-new-exportation-candidacies-for-password-generation-job", path = "/manager/student/importation/prepareCreateNewExportationForPasswordGeneration.jsp") })
 public class DgesStudentImportationProcessDA extends FenixDispatchAction {
 
     public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
-	DgesStudentImportationProcessBean bean = getRenderedBean();
+	DgesBaseProcessBean bean = getRenderedBean();
 	if (bean == null) {
-	    bean = new DgesStudentImportationProcessBean(ExecutionYear.readCurrentExecutionYear().getNextExecutionYear());
+	    bean = new DgesBaseProcessBean(ExecutionYear.readCurrentExecutionYear().getNextExecutionYear());
 	}
 
 	RenderUtils.invalidateViewState("importation.bean");
@@ -44,20 +48,33 @@ public class DgesStudentImportationProcessDA extends FenixDispatchAction {
 
 	request.setAttribute("importationJobsDone", DgesStudentImportationProcess.readDoneJobs(bean.getExecutionYear()));
 	request.setAttribute("importationJobsPending", DgesStudentImportationProcess.readUndoneJobs(bean.getExecutionYear()));
-	request.setAttribute("canRequestJob", DgesStudentImportationProcess.canRequestJob());
+	request.setAttribute("exportationPasswordsDone", ExportDegreeCandidaciesByDegreeForPasswordGeneration.readDoneJobs(bean
+		.getExecutionYear()));
+	request.setAttribute("exportationPasswordsPending", ExportDegreeCandidaciesByDegreeForPasswordGeneration
+		.readUndoneJobs(bean.getExecutionYear()));
+	request.setAttribute("exportationAlreadyStudentsDone", ExportExistingStudentsFromImportationProcess.readDoneJobs(bean
+		.getExecutionYear()));
+	request.setAttribute("exportionAlreadyStudentsPending", ExportExistingStudentsFromImportationProcess.readUndoneJobs(bean
+		.getExecutionYear()));
+
+	request.setAttribute("canRequestJobImportationProcess", DgesStudentImportationProcess.canRequestJob());
+	request.setAttribute("canRequestJobExportationPasswords", ExportDegreeCandidaciesByDegreeForPasswordGeneration
+		.canRequestJob());
+	request.setAttribute("canRequestJobExportationAlreadyStudents", ExportExistingStudentsFromImportationProcess
+		.canRequestJob());
 
 	return mapping.findForward("list");
     }
 
-    private DgesStudentImportationProcessBean getRenderedBean() {
-	return (DgesStudentImportationProcessBean) getRenderedObject("importation.bean");
+    private DgesBaseProcessBean getRenderedBean() {
+	return (DgesBaseProcessBean) getRenderedObject("importation.bean");
     }
 
     public ActionForward prepareCreateNewImportationProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	DgesStudentImportationProcessBean bean = getRenderedBean();
+	DgesBaseProcessBean bean = getRenderedBean();
 	if (bean == null) {
-	    bean = new DgesStudentImportationProcessBean(ExecutionYear.readCurrentExecutionYear().getNextExecutionYear());
+	    bean = new DgesBaseProcessBean(ExecutionYear.readCurrentExecutionYear().getNextExecutionYear());
 	}
 
 	RenderUtils.invalidateViewState("importation.bean");
@@ -70,7 +87,7 @@ public class DgesStudentImportationProcessDA extends FenixDispatchAction {
 
     public ActionForward createNewImportationProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	DgesStudentImportationProcessBean bean = getRenderedBean();
+	DgesBaseProcessBean bean = getRenderedBean();
 	RenderUtils.invalidateViewState("importation.bean");
 	RenderUtils.invalidateViewState("importation.bean.edit");
 
@@ -88,7 +105,7 @@ public class DgesStudentImportationProcessDA extends FenixDispatchAction {
 	return prepareCreateNewImportationProcess(mapping, form, request, response);
     }
 
-    public ActionForward cancelImportationProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward cancelJob(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	QueueJob job = getDomainObject(request, "queueJobId");
 	job.cancel();
@@ -96,7 +113,38 @@ public class DgesStudentImportationProcessDA extends FenixDispatchAction {
 	return list(mapping, form, request, response);
     }
 
-    public static class DgesStudentImportationProcessBean implements java.io.Serializable {
+    public ActionForward prepareCreateNewExportationCandidaciesForPasswordGenerationJob(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+	DgesBaseProcessBean bean = getRenderedBean();
+	if (bean == null) {
+	    bean = new DgesBaseProcessBean(ExecutionYear.readCurrentExecutionYear().getNextExecutionYear());
+	}
+
+	RenderUtils.invalidateViewState("importation.bean");
+	RenderUtils.invalidateViewState("importation.bean.edit");
+
+	request.setAttribute("importationBean", bean);
+
+	return mapping.findForward("prepare-create-new-exportation-candidacies-for-password-generation-job");
+    }
+
+    public ActionForward createNewExportationCandidaciesForPasswordGenerationProcess(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+	DgesBaseProcessBean bean = getRenderedBean();
+	RenderUtils.invalidateViewState("importation.bean");
+	RenderUtils.invalidateViewState("importation.bean.edit");
+
+	DgesBaseProcessLauncher.launchExportationCandidaciesForPasswordGeneration(bean.getExecutionYear(), bean.getPhase());
+
+	return list(mapping, form, request, response);
+    }
+
+    public ActionForward createNewExportationCandidaciesForPasswordGenerationProcessInvalid(ActionMapping mapping,
+	    ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+	return prepareCreateNewExportationCandidaciesForPasswordGenerationJob(mapping, form, request, response);
+    }
+
+    public static class DgesBaseProcessBean implements java.io.Serializable {
 	/**
 	 * 
 	 */
@@ -110,7 +158,7 @@ public class DgesStudentImportationProcessDA extends FenixDispatchAction {
 	private Campus campus;
 	private EntryPhase phase;
 
-	public DgesStudentImportationProcessBean(final ExecutionYear executionYear) {
+	public DgesBaseProcessBean(final ExecutionYear executionYear) {
 	    this.executionYear = executionYear;
 	}
 

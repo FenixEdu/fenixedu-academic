@@ -53,6 +53,8 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
 
 	buildReport().exportToCSV(byteArrayOS, ";");
 
+	byteArrayOS.close();
+
 	final QueueJobResult queueJobResult = new QueueJobResult();
 	queueJobResult.setContentType("text/csv");
 	queueJobResult.setContent(byteArrayOS.toByteArray());

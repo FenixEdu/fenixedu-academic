@@ -9,6 +9,8 @@ import java.util.Set;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryWithInstallmentDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.SibsTransactionDetailDTO;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -18,6 +20,7 @@ import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.accounting.Installment;
+import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeState;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.PaymentPlan;
@@ -30,6 +33,7 @@ import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.Gratuity
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreements.DegreeCurricularPlanServiceAgreement;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.Money;
@@ -262,19 +266,72 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
     }
 
     private AccountingEventPaymentCode createAccountingEventPaymentCode(final EntryDTO entryDTO, final Student student) {
+	AccountingEventPaymentCode accountingEventPaymentCode = findEquivalentPaymentCodeInStudentCandidacy(entryDTO,
+		AccountingEventPaymentCode.class, student);
+
+	if (accountingEventPaymentCode != null) {
+	    accountingEventPaymentCode.setAccountingEvent(this);
+	    return accountingEventPaymentCode;
+	}
+
 	return AccountingEventPaymentCode.create(PaymentCodeType.GRATUITY_FIRST_INSTALLMENT, new YearMonthDay(),
 		calculateFullPaymentCodeEndDate(), this, entryDTO.getAmountToPay(), entryDTO.getAmountToPay(), student
 			.getPerson());
     }
 
     private InstallmentPaymentCode createInstallmentPaymentCode(final EntryWithInstallmentDTO entry, final Student student) {
-	return InstallmentPaymentCode.create(getPaymentCodeTypeFor(entry.getInstallment()), new YearMonthDay(),
+	AccountingEventPaymentCode accountingEventPaymentCode = findEquivalentPaymentCodeInStudentCandidacy(entry,
+		InstallmentPaymentCode.class, student);
+
+	if (accountingEventPaymentCode != null) {
+	    accountingEventPaymentCode.setAccountingEvent(this);
+	    return (InstallmentPaymentCode) accountingEventPaymentCode;
+	}
+
+	return InstallmentPaymentCode.create(PaymentCodeType.GRATUITY_FIRST_INSTALLMENT, new YearMonthDay(),
 		calculateInstallmentPaymentCodeEndDate(entry.getInstallment()), this, entry.getInstallment(), entry
 			.getAmountToPay(), entry.getAmountToPay(), student);
     }
 
-    private PaymentCodeType getPaymentCodeTypeFor(Installment installment) {
-	return PaymentCodeType.GRATUITY_FIRST_INSTALLMENT;
+    private AccountingEventPaymentCode findEquivalentPaymentCodeInStudentCandidacy(final EntryDTO entry,
+	    final Class<? extends AccountingEventPaymentCode> whatForClazz, final Student student) {
+	DegreeCurricularPlan degreeCurricularPlan = this.getStudentCurricularPlan().getDegreeCurricularPlan();
+	ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByAcademicInterval(getExecutionYear()
+		.getAcademicInterval());
+	StudentCandidacy studentCandidacy = student.getPerson().getStudentCandidacyForExecutionDegree(executionDegree);
+
+	if (studentCandidacy == null) {
+	    return null;
+	}
+
+	for (PaymentCode paymentCode : studentCandidacy.getAvailablePaymentCodes()) {
+	    if (!paymentCode.isNew()) {
+		continue;
+	    }
+
+	    if (!whatForClazz.equals(paymentCode.getClass())) {
+		continue;
+	    }
+
+	    AccountingEventPaymentCode accountingEventPaymentCode = (AccountingEventPaymentCode) paymentCode;
+	    if (accountingEventPaymentCode.hasAccountingEvent()) {
+		continue;
+	    }
+
+	    if (accountingEventPaymentCode instanceof AccountingEventPaymentCode) {
+		return accountingEventPaymentCode;
+	    }
+
+	    InstallmentPaymentCode installmentPaymentCode = (InstallmentPaymentCode) accountingEventPaymentCode;
+	    EntryWithInstallmentDTO installmentEntryDTO = (EntryWithInstallmentDTO) entry;
+
+	    if (installmentPaymentCode.getInstallment() == installmentEntryDTO.getInstallment()) {
+		return installmentPaymentCode;
+	    }
+
+	}
+
+	return null;
     }
 
     private Installment getFirstInstallment() {

@@ -77,7 +77,10 @@ public class AccountingEventPaymentCode extends AccountingEventPaymentCode_Base 
 
     @Override
     public void setAccountingEvent(Event accountingEvent) {
-	throw new DomainException("error.accounting.paymentCodes.AccountingEventPaymentCode.cannot.modify.accountingEvent");
+	if (this.getAccountingEvent() != null || !this.isNew())
+	    throw new DomainException("error.accounting.paymentCodes.AccountingEventPaymentCode.cannot.modify.accountingEvent");
+
+	_setAccountingEvent(accountingEvent);
     }
 
     protected void _setAccountingEvent(Event accountingEvent) {
@@ -126,4 +129,8 @@ public class AccountingEventPaymentCode extends AccountingEventPaymentCode_Base 
 	super.setPerson(person);
     }
 
+    @Override
+    public boolean isAccountingEventPaymentCode() {
+	return true;
+    }
 }

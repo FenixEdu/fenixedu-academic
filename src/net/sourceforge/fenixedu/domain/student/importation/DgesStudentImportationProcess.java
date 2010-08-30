@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.InstallmentPaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlan;
-import net.sourceforge.fenixedu.domain.accounting.report.GratuityReportQueueJob;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.IMDCandidacy;
@@ -44,9 +43,6 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class DgesStudentImportationProcess extends DgesStudentImportationProcess_Base {
 
-    private static final String ALAMEDA_UNIVERSITY = "A";
-    private static final String TAGUS_UNIVERSITY = "T";
-
     private transient PrintWriter LOG_WRITER = null;
 
     protected DgesStudentImportationProcess() {
@@ -55,36 +51,41 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
 
     protected DgesStudentImportationProcess(final ExecutionYear executionYear, final Campus campus, final EntryPhase entryPhase,
 	    DgesStudentImportationFile dgesStudentImportationFile) {
-	check(executionYear, "error.DgesStudentImportationProcess.execution.year.is.null", new String[0]);
+	this();
+
+	init(executionYear, campus, entryPhase, dgesStudentImportationFile);
+    }
+
+    protected void init(final ExecutionYear executionYear, final Campus campus, final EntryPhase entryPhase,
+	    DgesStudentImportationFile dgesStudentImportationFile) {
+	super.init(executionYear, entryPhase);
+
 	check(campus, "error.DgesStudentImportationProcess.campus.is.null", new String[0]);
-	check(entryPhase, "error.DgesStudentImportationProcess.entry.phase.is.null", new String[0]);
 	check(dgesStudentImportationFile, "error.DgesStudentImportationProcess.importation.file.is.null");
 
-	setExecutionYear(executionYear);
 	setDgesStudentImportationForCampus(campus);
-	setEntryPhase(entryPhase);
 	setDgesStudentImportationFile(dgesStudentImportationFile);
     }
 
     @Override
     public QueueJobResult execute() throws Exception {
-	ByteArrayOutputStream stream = new ByteArrayOutputStream();
-	LOG_WRITER = new PrintWriter(new BufferedOutputStream(stream));
+	ByteArrayOutputStream stream = null;
+	try {
+	    stream = new ByteArrayOutputStream();
+	    LOG_WRITER = new PrintWriter(new BufferedOutputStream(stream));
 
-	importCandidates();
+	    importCandidates();
+	} finally {
+	    LOG_WRITER.close();
+	    stream.close();
+	}
 
 	final QueueJobResult queueJobResult = new QueueJobResult();
-	queueJobResult.setContentType("text/csv");
-	LOG_WRITER.flush();
-	stream.flush();
-
-	System.out.println(stream.toByteArray());
+	queueJobResult.setContentType("text/plain");
 
 	queueJobResult.setContent(stream.toByteArray());
 
-	System.out.println("Job " + getFilename() + " completed");
 	stream.close();
-
 	return queueJobResult;
     }
 
@@ -123,6 +124,7 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
 		person = degreeCandidateDTO.getMatchingPerson();
 	    } catch (DegreeCandidateDTO.NotFoundPersonException e) {
 		person = degreeCandidateDTO.createPerson();
+		logCreatedPerson(person);
 		personsCreated++;
 	    } catch (DegreeCandidateDTO.TooManyMatchedPersonsException e) {
 		logTooManyMatchsForCandidate(degreeCandidateDTO);
@@ -136,7 +138,7 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
 		continue;
 	    }
 
-	    if (person.hasTeacher()) {
+	    if (person.hasTeacher() || person.hasRole(RoleType.TEACHER)) {
 		logCandidateIsTeacher(degreeCandidateDTO, person);
 		continue;
 	    }
@@ -150,6 +152,7 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
 	    if (!person.hasStudent()) {
 		new Student(person);
 		person.setIstUsername();
+		logCreatedStudent(person.getStudent());
 	    }
 
 	    voidPreviousCandidacies(person, degreeCandidateDTO.getExecutionDegree(getExecutionYear(),
@@ -176,7 +179,7 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
 	    totalAmount = totalAmount.add(installment.getAmount());
 	}
 
-	EntryDTO fullPaymentEntryDTO = new EntryDTO(EntryType.GRATUITY_FEE, null, totalAmount, Money.ZERO, Money.ZERO,
+	EntryDTO fullPaymentEntryDTO = new EntryDTO(EntryType.GRATUITY_FEE, null, totalAmount, Money.ZERO, totalAmount,
 		descriptionForEntryType, totalAmount);
 
 	studentCandidacy.addAvailablePaymentCodes(createAccountingEventPaymentCode(fullPaymentEntryDTO, person.getStudent(),
@@ -196,7 +199,16 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
 	return null;
     }
 
+    private void logCreatedStudent(final Student student) {
+	LOG_WRITER.println("Created student");
+    }
+
+    private void logCreatedPerson(final Person person) {
+	LOG_WRITER.println("Created person");
+    }
+
     private void logCandidate(DegreeCandidateDTO degreeCandidateDTO) {
+	LOG_WRITER.println("-------------------------------------------------------------------");
 	LOG_WRITER.println("Processing: " + degreeCandidateDTO.toString());
     }
 
@@ -223,6 +235,7 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
 	candidacy.setHighSchoolType(degreeCandidateDTO.getHighSchoolType());
 	candidacy.setFirstTimeCandidacy(true);
 	createPrecedentDegreeInformation(candidacy, degreeCandidateDTO);
+	candidacy.setDgesStudentImportationProcess(this);
 
 	return candidacy;
     }
@@ -270,12 +283,26 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
 	LOG_WRITER.println(String.format("CANDIDATE WITH ID %s HAS MANY PERSONS", degreeCandidateDTO.getDocumentIdNumber()));
     }
 
-    private String getUniversityAcronym() {
+    String getUniversityAcronym() {
 	return getDgesStudentImportationForCampus().isCampusAlameda() ? ALAMEDA_UNIVERSITY : TAGUS_UNIVERSITY;
     }
 
     public static boolean canRequestJob() {
-	return QueueJob.getUndoneJobsForClass(GratuityReportQueueJob.class).isEmpty();
+	return QueueJob.getUndoneJobsForClass(DgesStudentImportationProcess.class).isEmpty();
+    }
+
+    public static List<DgesStudentImportationProcess> readAllJobs(final ExecutionYear executionYear) {
+	List<DgesStudentImportationProcess> jobList = new ArrayList<DgesStudentImportationProcess>();
+
+	CollectionUtils.select(executionYear.getDgesBaseProcess(), new Predicate() {
+
+	    @Override
+	    public boolean evaluate(Object arg0) {
+		return (arg0 instanceof DgesStudentImportationProcess);
+	    }
+	}, jobList);
+
+	return jobList;
     }
 
     public static List<DgesStudentImportationProcess> readDoneJobs(final ExecutionYear executionYear) {
@@ -293,7 +320,7 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
     }
 
     public static List<DgesStudentImportationProcess> readUndoneJobs(final ExecutionYear executionYear) {
-	return new ArrayList(CollectionUtils.subtract(executionYear.getDgesBaseProcess(), readDoneJobs(executionYear)));
+	return new ArrayList(CollectionUtils.subtract(readAllJobs(executionYear), readDoneJobs(executionYear)));
     }
 
     public static List<DgesStudentImportationProcess> readPendingJobs(final ExecutionYear executionYear) {

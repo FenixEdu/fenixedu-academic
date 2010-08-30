@@ -3,6 +3,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ page import="net.sourceforge.fenixedu.domain.accounting.installments.InstallmentForFirstTimeStudents" %>
+
 
 <html:xhtml/>
 
@@ -80,29 +82,34 @@ width: 1%;
 	
 	<p style="margin-top: 20px;">A data limite da primeira prestação e a totalidade da propina são de 10 dias a partir da data de inicio da matricula. Após a data limite é cobrado 1% sobre a propina da 1º prestação.</p>
 	
-	<logic:iterate id="paymentCode" name="paymentCodes" indexId="i" ></logic:iterate>
+	<bean:define id="firstInstallmentEndDate" name="firstInstallmentEndDate" type="org.joda.time.YearMonthDay" />
+	<logic:iterate id="paymentCode" name="paymentCodes" indexId="i" type="net.sourceforge.fenixedu.domain.accounting.PaymentCode">
 		<div class="box">
-			<bean:define id ="firstInstallmentEndDate" name="firstInstallmentEndDate" type="org.joda.time.YearMonthDay"/> 
-			
 			<p><span class="label">Entidade:</span> <span class="data"><bean:write name="sibsEntityCode" /></span></p>
 			<p><span class="label">Referência: </span> <span class="data"><bean:write name="paymentCode" property="code" /></span></p>
 			
-			<logic:equal name="paymentCode" property="class.name" value="net.sourceforge.fenixedu.domain.accounting.paymentCodes.InstallmentPaymentCode" >
-			<logic:equal name="i" value="0" >
-				<p><span class="label">Data limite:</span> <span class="data"> <%= firstInstallmentEndDate.toString("dd/MM/yyyy") %> </span></p>
+			<logic:equal name="paymentCode" property="installmentPaymentCode" value="true" >			
+			<logic:equal name="paymentCode" property="installment.forFirstTimeStudents" value="true">
+				<bean:define id="installmentPaymentCode" name="paymentCode" type="net.sourceforge.fenixedu.domain.accounting.paymentCodes.InstallmentPaymentCode" />
+				<p><span class="label">Data limite:</span> <span class="data"> <%= firstInstallmentEndDate.toString("dd-MM-yyyy") %> </span></p>
 			</logic:equal>
 			</logic:equal>
 			
-			<logic:equal name="paymentCode" property="class.name" value="net.sourceforge.fenixedu.domain.accounting.paymentCodes.InstallmentPaymentCode" >
-				<p><span class="label">Data limite:</span> <span class="data"> <%= firstInstallmentEndDate.toString("dd/MM/yyyy") %> </span></p>
+			<logic:equal name="paymentCode" property="accountingEventPaymentCode" value="true">
+			<logic:equal name="paymentCode" property="installmentPaymentCode" value="false" >
+				<p><span class="label">Data limite:</span> <span class="data"> <%= firstInstallmentEndDate.toString("dd-MM-yyyy") %> </span></p>
+			</logic:equal>
 			</logic:equal>
 			
-			<logic:equal name="paymentCode" property="class.name" value="net.sourceforge.fenixedu.domain.accounting.paymentCodes.InstallmentPaymentCode" >
-			<logic:greaterThan value="i" value="0">
+			<logic:equal name="paymentCode" property="installmentPaymentCode" value="true" >			
+			<logic:equal name="paymentCode" property="installment.forFirstTimeStudents" value="false">
 				<p><span class="label">Data limite:</span> <span class="data"> <bean:write name="paymentCode" property="endDate" /> </span></p>
-			</logic:greaterThan>
+			</logic:equal>
 			</logic:equal>
 
 			<p><span class="label">Valor:</span> <span class="data"><bean:write name="paymentCode" property="minAmount" /></span></p>
 		</div>
+	</logic:iterate>
 </div>
+
+</body>

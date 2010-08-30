@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create Second Cycle Individual Candidacy Degree association table" createSecondCycleIndividualCandidacyDegreeAssociation.sql
+execute "Student Candidacy Dges Importation Process association" studentCandidacyDgesImportationProcessAssociation.sql

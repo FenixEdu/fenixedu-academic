@@ -14,6 +14,8 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GrantOwnerType;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
+import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PHDProgramCandidacy;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
@@ -196,6 +198,14 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
     public boolean cancelCandidacy() {
 	if (!isConcluded()) {
 	    new CancelledCandidacySituation(this, this.getPerson());
+
+	    for (PaymentCode paymentCode : getAvailablePaymentCodes()) {
+		AccountingEventPaymentCode accountingEventPaymentCode = (AccountingEventPaymentCode) paymentCode;
+		if (accountingEventPaymentCode.isNew() && !accountingEventPaymentCode.hasAccountingEvent()) {
+		    accountingEventPaymentCode.cancel();
+		}
+	    }
+
 	    return true;
 	}
 	return false;

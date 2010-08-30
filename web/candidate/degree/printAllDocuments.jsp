@@ -40,7 +40,6 @@
 	<jsp:include page="/commons/student/timeTable/classTimeTable.jsp" />
 </div>
 
-
 <div style="page-break-before: always;">
 	<jsp:include page="printGratuityPaymentCodes.jsp" />
 </div>

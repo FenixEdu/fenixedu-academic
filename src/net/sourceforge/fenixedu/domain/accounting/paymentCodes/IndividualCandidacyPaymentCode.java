@@ -101,12 +101,4 @@ public class IndividualCandidacyPaymentCode extends IndividualCandidacyPaymentCo
 	super._setPerson(student);
     }
 
-    @Override
-    public void setAccountingEvent(Event accountingEvent) {
-	if (this.getAccountingEvent() != null || !this.isNew())
-	    throw new DomainException("error.accounting.paymentCodes.AccountingEventPaymentCode.cannot.modify.accountingEvent");
-
-	super._setAccountingEvent(accountingEvent);
-    }
-
 }

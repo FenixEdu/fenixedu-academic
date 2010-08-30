@@ -133,6 +133,10 @@ public class Installment extends Installment_Base {
 	return false;
     }
 
+    public boolean isForFirstTimeStudents() {
+	return false;
+    }
+
     public void delete() {
 	super.setPaymentPlan(null);
 	removeRootDomainObject();

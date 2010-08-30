@@ -258,4 +258,12 @@ public abstract class PaymentCode extends PaymentCode_Base {
 	    final Person person) {
 	return PaymentCodeGeneratorFactory.getGenerator(paymentCodeClass).canGenerateNewCode(paymentCodeType, person);
     }
+
+    public boolean isInstallmentPaymentCode() {
+	return false;
+    }
+
+    public boolean isAccountingEventPaymentCode() {
+	return false;
+    }
 }
