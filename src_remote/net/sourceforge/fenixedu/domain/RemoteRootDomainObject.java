@@ -1,9 +1,16 @@
 package net.sourceforge.fenixedu.domain;
 
+import pt.ist.fenixframework.plugins.remote.domain.RemoteHost;
+
 public class RemoteRootDomainObject extends RemoteRootDomainObject_Base {
     
-    public  RemoteRootDomainObject() {
+    public RemoteRootDomainObject() {
         super();
     }
-    
+
+    public static RemoteRootDomainObject getInstance(final RemoteHost remoteHost) {
+	final String remoteOid = remoteHost.readRemoteStaticMethod("net.sourceforge.fenixedu.domain.RootDomainObject", "getInstance");
+	return remoteOid == null ? null : (RemoteRootDomainObject) remoteHost.getRemoteDomainObject(remoteOid);
+    }
+
 }
