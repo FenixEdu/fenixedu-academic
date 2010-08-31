@@ -98,7 +98,7 @@ public class UploadStudentInquiriesResults extends FenixDispatchAction {
 	RenderUtils.invalidateViewState();
 
 	try {
-	    if(StudentInquiriesCourseResult.deleteCurricularCoursesResults(resultsBean)) {
+	    if(StudentInquiriesCourseResult.resetCourseAndTeachingResults(resultsBean)) {
 		addActionMessage(request, "message.StudentInquiriesResult.delete.sucess");
 	    } else {
 		addActionMessage(request, "message.StudentInquiriesResult.delete.dataNotFound");
@@ -115,7 +115,7 @@ public class UploadStudentInquiriesResults extends FenixDispatchAction {
 	RenderUtils.invalidateViewState();
 
 	try {
-	    if(StudentInquiriesTeachingResult.deleteTeachingResults(resultsBean)) {
+	    if(StudentInquiriesTeachingResult.resetTeachingResults(resultsBean)) {
 		addActionMessage(request, "message.StudentInquiriesResult.delete.sucess");
 	    } else {
 		addActionMessage(request, "message.StudentInquiriesResult.delete.dataNotFound");

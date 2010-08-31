@@ -674,14 +674,14 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
     }
     
     @Service
-    public static Boolean deleteTeachingResults(UploadStudentInquiriesTeachingResultsBean teachingBean) {
-	boolean deletedItems = false;
+    public static Boolean resetTeachingResults(UploadStudentInquiriesTeachingResultsBean teachingBean) {
+	boolean resetedItems = false;
 	for (StudentInquiriesTeachingResult teachingResult : RootDomainObject.getInstance()
 		.getStudentInquiriesTeachingResultsSet()) {
 	    if (StringUtils.isEmpty(teachingBean.getKeyExecutionCourseHeader())) {
 		if (teachingBean.getResultsDate().equals(teachingResult.getResultsDate())) {
-		    teachingResult.delete();
-		    deletedItems = true;
+		    teachingResult.resetValues();
+		    resetedItems = true;
 		}
 	    } else {
 		ExecutionCourse executionCourse = ExecutionCourse.fromExternalId(teachingBean.getKeyExecutionCourseHeader());
@@ -690,11 +690,143 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
 			    teachingBean.getKeyExecutionCourseHeader());
 		}
 		if (executionCourse != null && teachingResult.getProfessorship().getExecutionCourse() == executionCourse) {
-		    teachingResult.delete();
-		    deletedItems = true;
+		    teachingResult.resetValues();
+		    resetedItems = true;
 		}
 	    }
 	}
-	return deletedItems;
+	return resetedItems;
+    }
+    
+    public void resetValues() {
+	setAverage_P6_1(null);
+	setAverage_P6_2(null);
+	setAverage_P6_3(null);
+	setAverage_P7_1(null);
+	setAverage_P7_2(null);
+	setAverage_P7_3(null);
+	setAverage_P7_4(null);
+	setAverage_P8_1(null);
+	setAverage_P8_2(null);
+	setAverage_P9(null);
+	setNumber_P6_1(null);
+	setNumber_P6_1_values(null);
+	setNumber_P6_2(null);
+	setNumber_P6_3(null);
+	setNumber_P7_1(null);
+	setNumber_P7_2(null);
+	setNumber_P7_3(null);
+	setNumber_P7_4(null);
+	setNumber_P8_1(null);
+	setNumber_P8_2(null);
+	setNumber_P9(null);
+	setNumberOfAnswers(null);
+	setP6_1_1_a(null);
+	setP6_1_1_b(null);
+	setP6_1_1_c(null);
+	setP6_1_1_d(null);
+	setP6_1_1_e(null);
+	setP6_1_greater_3(null);
+	setPerc_P6_1_1(null);
+	setPerc_P6_1_2(null);
+	setPerc_P6_1_3(null);
+	setPerc_P6_1_4(null);
+	setPerc_P6_1_5(null);
+	setPerc_P6_1_6(null);
+	setPerc_P6_1_7(null);
+	setPerc_P6_1_a(null);
+	setPerc_P6_1_b(null);
+	setPerc_P6_1_c(null);
+	setPerc_P6_1_d(null);
+	setPerc_P6_1_e(null);
+	setPerc_P6_2_1(null);
+	setPerc_P6_2_2(null);
+	setPerc_P6_2_3(null);
+	setPerc_P6_2_4(null);
+	setPerc_P6_2_5(null);
+	setPerc_P6_2_6(null);
+	setPerc_P6_2_7(null);
+	setPerc_P6_2_8(null);
+	setPerc_P6_2_9(null);
+	setPerc_P6_3_1(null);
+	setPerc_P6_3_2(null);
+	setPerc_P6_3_3(null);
+	setPerc_P6_3_4(null);
+	setPerc_P6_3_5(null);
+	setPerc_P6_3_6(null);
+	setPerc_P6_3_7(null);
+	setPerc_P7_1_1(null);
+	setPerc_P7_1_2(null);
+	setPerc_P7_1_3(null);
+	setPerc_P7_1_4(null);
+	setPerc_P7_1_5(null);
+	setPerc_P7_1_6(null);
+	setPerc_P7_1_7(null);
+	setPerc_P7_1_8(null);
+	setPerc_P7_1_9(null);
+	setPerc_P7_2_1(null);
+	setPerc_P7_2_2(null);
+	setPerc_P7_2_3(null);
+	setPerc_P7_2_4(null);
+	setPerc_P7_2_5(null);
+	setPerc_P7_2_6(null);
+	setPerc_P7_2_7(null);
+	setPerc_P7_2_8(null);
+	setPerc_P7_2_9(null);
+	setPerc_P7_3_1(null);
+	setPerc_P7_3_2(null);
+	setPerc_P7_3_3(null);
+	setPerc_P7_3_4(null);
+	setPerc_P7_3_5(null);
+	setPerc_P7_3_6(null);
+	setPerc_P7_3_7(null);
+	setPerc_P7_3_8(null);
+	setPerc_P7_3_9(null);
+	setPerc_P7_4_1(null);
+	setPerc_P7_4_2(null);
+	setPerc_P7_4_3(null);
+	setPerc_P7_4_4(null);
+	setPerc_P7_4_5(null);
+	setPerc_P7_4_6(null);
+	setPerc_P7_4_7(null);
+	setPerc_P7_4_8(null);
+	setPerc_P7_4_9(null);
+	setPerc_P8_1_1(null);
+	setPerc_P8_1_2(null);
+	setPerc_P8_1_3(null);
+	setPerc_P8_1_4(null);
+	setPerc_P8_1_5(null);
+	setPerc_P8_1_6(null);
+	setPerc_P8_1_7(null);
+	setPerc_P8_1_8(null);
+	setPerc_P8_1_9(null);
+	setPerc_P8_2_1(null);
+	setPerc_P8_2_2(null);
+	setPerc_P8_2_3(null);
+	setPerc_P8_2_4(null);
+	setPerc_P8_2_5(null);
+	setPerc_P8_2_6(null);
+	setPerc_P8_2_7(null);
+	setPerc_P8_2_8(null);
+	setPerc_P8_2_9(null);
+	setPerc_P9_1(null);
+	setPerc_P9_2(null);
+	setPerc_P9_3(null);
+	setRawValues(null);
+	setStandardDeviation_P6_1(null);
+	setStandardDeviation_P6_2(null);
+	setStandardDeviation_P6_3(null);
+	setStandardDeviation_P7_1(null);
+	setStandardDeviation_P7_2(null);
+	setStandardDeviation_P7_3(null);
+	setStandardDeviation_P7_4(null);
+	setStandardDeviation_P8_1(null);
+	setStandardDeviation_P8_2(null);
+	setStandardDeviation_P9(null);
+	setUnsatisfactoryResultsAssiduity(false);
+	setUnsatisfactoryResultsAuditable(false);
+	setUnsatisfactoryResultsPedagogicalCapacity(false);
+	setUnsatisfactoryResultsPresencialLearning(false);
+	setUnsatisfactoryResultsStudentInteraction(false);
     }
 }
