@@ -106,13 +106,20 @@
 							</html:link>
 							<bean:size id="unreadMessageSize" name="process" property="unreadAlertMessagesForLoggedPerson" />
 							<logic:notEqual name="unreadMessageSize" value="0">
-								<span class="color888">(<bean:message key="message.pending.phd.alert.messages.notification.short" bundle="PHD_RESOURCES" arg0="<%= unreadMessageSize.toString() %>"/>)</span>
+								<span class="color888">
+									<logic:equal name="unreadMessageSize" value="1">
+										(<bean:message key="message.pending.phd.alert.messages.notification.short" bundle="PHD_RESOURCES"/>)
+									</logic:equal>
+									<logic:notEqual name="unreadMessageSize" value="1">
+										(<bean:message key="message.pending.phd.alert.messages.notification.short.plural" bundle="PHD_RESOURCES" arg0="<%= unreadMessageSize.toString() %>"/>)
+									</logic:notEqual>
+								</span>
 							</logic:notEqual>
 						</td>
 						</fr:form>
 					</logic:notEqual>
 					<td><bean:write name="process" property="executionYear.year"/></td>
-					<td><bean:write name="process" property="phdProgram.acronym"/></td>
+					<td><logic:present name="process" property="phdProgram"><bean:write name="process" property="phdProgram.acronym"/></logic:present></td>
 					<td>
 						<html:link action="/phdIndividualProgramProcess.do?method=viewProcess" paramId="processId" paramName="process" paramProperty="externalId" >
 							<bean:message key="label.view" bundle="PHD_RESOURCES"/>
@@ -161,13 +168,20 @@
 							</html:link>
 							<bean:size id="unreadMessageSize" name="process" property="unreadAlertMessagesForLoggedPerson" />
 							<logic:notEqual name="unreadMessageSize" value="0">
-								<span class="color888">(<bean:message key="message.pending.phd.alert.messages.notification.short" bundle="PHD_RESOURCES" arg0="<%= unreadMessageSize.toString() %>"/>)</span>
+								<span class="color888">
+									<logic:equal name="unreadMessageSize" value="1">
+										(<bean:message key="message.pending.phd.alert.messages.notification.short" bundle="PHD_RESOURCES"/>)
+									</logic:equal>
+									<logic:notEqual name="unreadMessageSize" value="1">
+										(<bean:message key="message.pending.phd.alert.messages.notification.short.plural" bundle="PHD_RESOURCES" arg0="<%= unreadMessageSize.toString() %>"/>)
+									</logic:notEqual>
+								</span>
 							</logic:notEqual>
 						</td>
 						</fr:form>
 					</logic:notEqual>
 					<td><bean:write name="process" property="executionYear.year"/></td>
-					<td><bean:write name="process" property="phdProgram.acronym"/></td>
+					<td><logic:present name="process" property="phdProgram"><bean:write name="process" property="phdProgram.acronym"/></logic:present></td>
 					<td><fr:view name="process" property="seminarProcess.activeState" layout="phd-enum-renderer"/></td>
 					<td>
 						<html:link action="/phdIndividualProgramProcess.do?method=viewProcess" paramId="processId" paramName="process" paramProperty="externalId" >
@@ -215,13 +229,20 @@
 							</html:link>
 							<bean:size id="unreadMessageSize" name="process" property="unreadAlertMessagesForLoggedPerson" />
 							<logic:notEqual name="unreadMessageSize" value="0">
-								<span class="color888">(<bean:message key="message.pending.phd.alert.messages.notification.short" bundle="PHD_RESOURCES" arg0="<%= unreadMessageSize.toString() %>"/>)</span>
+								<span class="color888">
+									<logic:equal name="unreadMessageSize" value="1">
+										(<bean:message key="message.pending.phd.alert.messages.notification.short" bundle="PHD_RESOURCES"/>)
+									</logic:equal>
+									<logic:notEqual name="unreadMessageSize" value="1">
+										(<bean:message key="message.pending.phd.alert.messages.notification.short.plural" bundle="PHD_RESOURCES" arg0="<%= unreadMessageSize.toString() %>"/>)
+									</logic:notEqual>
+								</span>
 							</logic:notEqual>
 						</td>
 						</fr:form>
 					</logic:notEqual>
 					<td><bean:write name="process" property="executionYear.year"/></td>
-					<td><bean:write name="process" property="phdProgram.acronym"/></td>
+					<td><logic:present name="process" property="phdProgram"><bean:write name="process" property="phdProgram.acronym"/></logic:present></td>
 					<td>
 						<html:link action="/phdIndividualProgramProcess.do?method=viewProcess" paramId="processId" paramName="process" paramProperty="externalId" >
 							<bean:message key="label.view" bundle="PHD_RESOURCES"/>
@@ -268,13 +289,20 @@
 						</html:link>
 						<bean:size id="unreadMessageSize" name="process" property="unreadAlertMessagesForLoggedPerson" />
 						<logic:notEqual name="unreadMessageSize" value="0">
-							<span class="color888">(<bean:message key="message.pending.phd.alert.messages.notification.short" bundle="PHD_RESOURCES" arg0="<%= unreadMessageSize.toString() %>"/>)</span>
+							<span class="color888">
+								<logic:equal name="unreadMessageSize" value="1">
+									(<bean:message key="message.pending.phd.alert.messages.notification.short" bundle="PHD_RESOURCES"/>)
+								</logic:equal>
+								<logic:notEqual name="unreadMessageSize" value="1">
+									(<bean:message key="message.pending.phd.alert.messages.notification.short.plural" bundle="PHD_RESOURCES" arg0="<%= unreadMessageSize.toString() %>"/>)
+								</logic:notEqual>
+							</span>
 						</logic:notEqual>
 					</td>
 					</fr:form>
 				</logic:notEqual>
 				<td><bean:write name="process" property="executionYear.year"/></td>
-				<td><bean:write name="process" property="phdProgram.acronym"/></td>
+				<td><logic:present name="process" property="phdProgram"><bean:write name="process" property="phdProgram.acronym"/></logic:present></td>
 				<td>
 					<html:link action="/phdIndividualProgramProcess.do?method=viewProcess" paramId="processId" paramName="process" paramProperty="externalId" >
 						<bean:message key="label.view" bundle="PHD_RESOURCES"/>
