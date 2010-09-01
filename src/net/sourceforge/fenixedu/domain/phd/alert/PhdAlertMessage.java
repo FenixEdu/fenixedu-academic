@@ -115,6 +115,12 @@ public class PhdAlertMessage extends PhdAlertMessage_Base {
 	super.setPersonWhoMarkedAsReaded(person);
     }
 
+    @Service
+    public void markAsUnread() {
+	super.setReaded(false);
+	removePersonWhoMarkedAsReaded();
+    }
+
     public boolean isReaded() {
 	return getReaded().booleanValue();
     }

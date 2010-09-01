@@ -7,6 +7,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.DomainObject"%>
 
 <bean:define id="global" name="global"/>
+<bean:define id="alertMessage" name="alertMessage"/>
 <bean:define id="process" name="alertMessage" property="process"/>
 
 <logic:equal name="global" value="true">
@@ -41,3 +42,9 @@
 		<fr:property name="classes" value="tstyle2 thlight mtop15"/>
 	</fr:layout>
 </fr:view>
+
+<br/>
+
+<html:link action="<%="/phdIndividualProgramProcess.do?method=markAlertMessageAsUnread&global=" + global.toString() + "&alertMessageId=" + ((DomainObject) alertMessage).getExternalId()%>">
+	<bean:message bundle="PHD_RESOURCES" key="label.phd.alertMessage.markAsUnread"/>
+</html:link>
