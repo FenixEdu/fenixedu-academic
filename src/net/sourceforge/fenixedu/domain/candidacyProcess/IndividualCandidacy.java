@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
@@ -290,12 +291,26 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	return person.hasStudent() ? person.getStudent().hasActiveRegistrationFor(selectedDegree) : false;
     }
 
+    protected boolean personHasOneOfDegrees(final Person person, final Set<Degree> selectedDegrees) {
+	if (!person.hasStudent()) {
+	    return false;
+	}
+
+	for (Degree degree : selectedDegrees) {
+	    if (person.getStudent().hasActiveRegistrationFor(degree)) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
     public CandidacyInformationBean getCandidacyInformationBean() {
 	final CandidacyInformationBean bean = new CandidacyInformationBean();
 
 	bean.setRegistration(getRegistration());
 	bean.setIndividualCandidacy(this);
-	
+
 	bean.setCountryOfResidence(getCountryOfResidence());
 	bean.setDistrictSubdivisionOfResidence(getDistrictSubdivisionOfResidence());
 	bean.setSchoolTimeDistrictSubdivisionOfResidence(getSchoolTimeDistrictSubDivisionOfResidence());

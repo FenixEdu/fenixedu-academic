@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
@@ -316,5 +317,39 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 		getProcess(request)));
 
 	return mapping.findForward("change-payment-checked-state");
+    }
+
+    public ActionForward addSelectedDegree(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	SecondCycleIndividualCandidacyProcessBean bean = (SecondCycleIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+
+	bean.addSelectedDegree(bean.getSelectedDegree());
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
+
+	if (getFromRequest(request, "userAction").equals("createCandidacy")) {
+	    return mapping.findForward("fill-candidacy-information");
+	} else if (getFromRequest(request, "userAction").equals("editCandidacyQualifications")) {
+	    return mapping.findForward("edit-candidacy-information");
+	}
+
+	return null;
+    }
+
+    public ActionForward removeSelectedDegree(ActionMapping mapping, ActionForm ActionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	SecondCycleIndividualCandidacyProcessBean bean = (SecondCycleIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	Degree selectedDegree = getDomainObject(request, "removeDegreeExternalId");
+
+	bean.removeSelectedDegree(selectedDegree);
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
+
+	if (getFromRequest(request, "userAction").equals("createCandidacy")) {
+	    return mapping.findForward("fill-candidacy-information");
+	} else if (getFromRequest(request, "userAction").equals("editCandidacyQualifications")) {
+	    return mapping.findForward("edit-candidacy-information");
+	}
+
+	return null;
+
     }
 }

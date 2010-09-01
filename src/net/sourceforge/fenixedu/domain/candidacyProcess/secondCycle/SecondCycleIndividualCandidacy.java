@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Formatter;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -38,7 +39,8 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 
 	Person person = init(bean, process);
 
-	setSelectedDegree(bean.getSelectedDegree());
+	getSelectedDegrees().addAll(bean.getSelectedDegreeList());
+
 	setProfessionalStatus(bean.getProfessionalStatus());
 	setOtherEducation(bean.getOtherEducation());
 
@@ -117,13 +119,18 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	return (SecondCycleIndividualCandidacyProcess) super.getCandidacyProcess();
     }
 
-    void editCandidacyInformation(final LocalDate candidacyDate, final Degree selectedDegree,
+    void editCandidacyInformation(final LocalDate candidacyDate, final Set<Degree> selectedDegrees,
 	    final CandidacyPrecedentDegreeInformationBean precedentDegreeInformation, final String professionalStatus,
 	    final String otherEducation) {
 
-	checkParameters(candidacyDate, selectedDegree, precedentDegreeInformation);
+	checkParameters(candidacyDate, selectedDegrees, precedentDegreeInformation);
 	setCandidacyDate(candidacyDate);
-	setSelectedDegree(selectedDegree);
+
+	while (!getSelectedDegrees().isEmpty()) {
+	    getSelectedDegrees().remove(getSelectedDegrees().iterator().next());
+	}
+
+	getSelectedDegrees().addAll(selectedDegrees);
 	setProfessionalStatus(professionalStatus);
 	setOtherEducation(otherEducation);
 	if (getPrecedentDegreeInformation().isExternal()) {
@@ -131,25 +138,27 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	}
     }
 
-    void editSelectedDegree(final Degree selectedDegree) {
-	setSelectedDegree(selectedDegree);
+    void editSelectedDegrees(final Set<Degree> selectedDegreeList) {
+	while (!getSelectedDegrees().isEmpty()) {
+	    getSelectedDegrees().remove(getSelectedDegrees().iterator().next());
+	}
+
+	getSelectedDegrees().addAll(selectedDegreeList);
     }
 
-    private void checkParameters(final LocalDate candidacyDate, final Degree selectedDegree,
+    private void checkParameters(final LocalDate candidacyDate, final Set<Degree> selectedDegrees,
 	    final CandidacyPrecedentDegreeInformationBean precedentDegreeInformation) {
 
 	checkParameters(getPersonalDetails().getPerson(), getCandidacyProcess(), candidacyDate);
 
-	if (selectedDegree == null) {
+	if (selectedDegrees == null || selectedDegrees.isEmpty()) {
 	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.degree");
 	}
 
 	if (isCandidacyInternal()) {
-	    if (personHasDegree(getPersonalDetails().getPerson(), selectedDegree)) {
-		throw new DomainException("error.SecondCycleIndividualCandidacy.existing.degree", selectedDegree.getNameFor(
-			getCandidacyExecutionInterval()).getContent());
+	    if (personHasOneOfDegrees(getPersonalDetails().getPerson(), selectedDegrees)) {
+		throw new DomainException("error.SecondCycleIndividualCandidacy.existing.degree");
 	    }
-
 	}
 
 	if (precedentDegreeInformation == null) {
@@ -269,6 +278,21 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
     @Override
     public String getDescription() {
 	return getCandidacyProcess().getDisplayName() + (hasSelectedDegree() ? ": " + getSelectedDegree().getNameI18N() : "");
+    }
+
+    @Override
+    public boolean hasSelectedDegree() {
+	throw new DomainException("error.second.cycle.individual.candidacy.relation.with.degree.obsolete");
+    }
+
+    @Override
+    public void setSelectedDegree(Degree selectedDegree) {
+	throw new DomainException("error.second.cycle.individual.candidacy.relation.with.degree.obsolete");
+    }
+
+    @Override
+    public void removeSelectedDegree() {
+	throw new DomainException("error.second.cycle.individual.candidacy.relation.with.degree.obsolete");
     }
 
 }

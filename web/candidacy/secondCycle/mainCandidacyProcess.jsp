@@ -3,6 +3,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA.HideCancelledCandidaciesBean" %>
+<%@ page import="net.sourceforge.fenixedu.injectionCode.AccessControl" %>
+<%@ page import="net.sourceforge.fenixedu.domain.person.RoleType" %>
 
 <html:xhtml/>
 
@@ -167,7 +169,6 @@
 	<%-- show child processes --%>
 	<logic:notEmpty name="childProcesses">
 		<br/>
-		
 		<fr:view name="childProcesses" schema="IndividualCandidacyProcess.list.processes">
 			<fr:layout name="tabular-sortable">
 				<fr:property name="classes" value="tstyle4 thcenter thcenter thcenter"/>

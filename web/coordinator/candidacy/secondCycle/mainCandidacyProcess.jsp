@@ -134,7 +134,7 @@
 	<logic:notEmpty name="childProcesses">
 		<br/>
 		
-		<fr:view name="childProcesses" schema="IndividualCandidacyProcess.list.processes">
+		<fr:view name="childProcesses" schema="IndividualCandidacyProcess.list.processes.coordinator">
 			<fr:layout name="tabular-sortable">
 				<fr:property name="classes" value="tstyle4 thcenter thcenter thcenter"/>
 				<fr:property name="columnClasses" value="tdcenter, tdcenter, tdcenter, "/>

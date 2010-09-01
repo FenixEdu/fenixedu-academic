@@ -70,6 +70,13 @@ public class PartialRegistrationRegimeRequest extends PartialRegistrationRegimeR
 	super.createAcademicServiceRequestSituations(academicServiceRequestBean);
 
 	if (academicServiceRequestBean.isToProcess() && !isFree()) {
+	    /*
+	     * For 2010/2011 partial registration is not charged
+	     */
+	    if (getExecutionYear().isAfterOrEquals(ExecutionYear.readExecutionYearByName("2010/2011"))) {
+		return;
+	    }
+
 	    new PartialRegistrationRegimeRequestEvent(getAdministrativeOffice(), getPerson(), this);
 
 	} else if (academicServiceRequestBean.isToConclude()) {
@@ -95,6 +102,13 @@ public class PartialRegistrationRegimeRequest extends PartialRegistrationRegimeR
 
     @Override
     public EventType getEventType() {
+	/*
+	 * For 2010/2011 partial registration is not charged
+	 */
+	if (getExecutionYear().isAfterOrEquals(ExecutionYear.readExecutionYearByName("2010/2011"))) {
+	    return null;
+	}
+
 	return EventType.PARTIAL_REGISTRATION_REGIME_REQUEST;
     }
 

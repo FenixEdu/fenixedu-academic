@@ -2,7 +2,9 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
@@ -29,6 +31,8 @@ public class SecondCycleIndividualCandidacyProcessBean extends IndividualCandida
     private CandidacyProcessDocumentUploadBean handicapProofDocument;
     private CandidacyProcessDocumentUploadBean curriculumVitaeDocument;
 
+    private Set<Degree> selectedDegreeList;
+
     public SecondCycleIndividualCandidacyProcessBean() {
 	setCandidacyDate(new LocalDate());
 	setFormationConcludedBeanList(new ArrayList<FormationBean>());
@@ -36,6 +40,8 @@ public class SecondCycleIndividualCandidacyProcessBean extends IndividualCandida
 	setObservations("");
 	setIstStudentNumber("");
 	setPrecedentDegreeType(PrecedentDegreeType.EXTERNAL_DEGREE);
+
+	this.selectedDegreeList = new HashSet<Degree>();
     }
 
     public SecondCycleIndividualCandidacyProcessBean(final SecondCycleIndividualCandidacyProcess process) {
@@ -53,6 +59,8 @@ public class SecondCycleIndividualCandidacyProcessBean extends IndividualCandida
 	setProcessChecked(process.getProcessChecked());
 	setPaymentChecked(process.getPaymentChecked());
 
+	this.selectedDegreeList = new HashSet<Degree>();
+	this.selectedDegreeList.addAll(process.getSelectedDegrees());
     }
 
     public SecondCycleCandidacyProcess getCandidacyProcess() {
@@ -185,4 +193,21 @@ public class SecondCycleIndividualCandidacyProcessBean extends IndividualCandida
 	this.curriculumVitaeDocument = new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.CV_DOCUMENT);
 	setPhotoDocument(new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.PHOTO));
     }
+
+    public Set<Degree> getSelectedDegreeList() {
+	return this.selectedDegreeList;
+    }
+
+    public void setSelectedDegreeList(final Set<Degree> selectedDegreeList) {
+	this.selectedDegreeList = selectedDegreeList;
+    }
+
+    public void addSelectedDegree(final Degree degree) {
+	this.selectedDegreeList.add(degree);
+    }
+
+    public void removeSelectedDegree(final Degree degree) {
+	this.selectedDegreeList.remove(degree);
+    }
+
 }

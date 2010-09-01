@@ -107,7 +107,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
     }
 
     private SecondCycleIndividualCandidacyProcess editCandidacyInformation(final SecondCycleIndividualCandidacyProcessBean bean) {
-	getCandidacy().editCandidacyInformation(bean.getCandidacyDate(), bean.getSelectedDegree(),
+	getCandidacy().editCandidacyInformation(bean.getCandidacyDate(), bean.getSelectedDegreeList(),
 		bean.getPrecedentDegreeInformation(), bean.getProfessionalStatus(), bean.getOtherEducation());
 	return this;
     }
@@ -116,8 +116,12 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	return getCandidacy().getSelectedDegree();
     }
 
+    public List<Degree> getSelectedDegrees() {
+	return getCandidacy().getSelectedDegrees();
+    }
+
     public boolean hasCandidacyForSelectedDegree(final Degree degree) {
-	return getCandidacySelectedDegree() == degree;
+	return getSelectedDegrees().contains(degree);
     }
 
     public String getCandidacyProfessionalStatus() {
@@ -429,7 +433,8 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	    process.editCommonCandidacyInformation(((SecondCycleIndividualCandidacyProcessBean) object)
 		    .getCandidacyInformationBean());
 	    process.editFormerIstStudentNumber((SecondCycleIndividualCandidacyProcessBean) object);
-	    process.getCandidacy().editSelectedDegree(((SecondCycleIndividualCandidacyProcessBean) object).getSelectedDegree());
+	    process.getCandidacy().editSelectedDegrees(
+		    ((SecondCycleIndividualCandidacyProcessBean) object).getSelectedDegreeList());
 	    process.getCandidacy().editObservations((SecondCycleIndividualCandidacyProcessBean) object);
 
 	    if (process.getCandidacy().getPrecedentDegreeInformation().isExternal()) {

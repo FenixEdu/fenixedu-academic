@@ -140,7 +140,7 @@
 	<fr:view name="process"
 		property="candidacy.observations">
 	</fr:view>
-
+	
 	<%-- Payment Code --%>
 	<logic:notEmpty name="individualCandidacyProcess" property="associatedPaymentCode">
 	<p><bean:message key="message.sibs.payment.code" bundle="CANDIDATE_RESOURCES"/></p>

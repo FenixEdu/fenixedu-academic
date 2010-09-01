@@ -68,7 +68,7 @@ public class FixedAmountPR extends FixedAmountPR_Base {
 	throw new DomainException("error.accounting.postingRules.FixedAmountPR.cannot.modify.fixedAmount");
     }
 
-    private void checkIfCanAddAmount(Money amountToPay, final Event event, final DateTime when) {
+    protected void checkIfCanAddAmount(Money amountToPay, final Event event, final DateTime when) {
 	if (amountToPay.compareTo(calculateTotalAmountToPay(event, when)) < 0) {
 	    throw new DomainExceptionWithLabelFormatter(
 		    "error.accounting.postingRules.FixedAmountPR.amount.being.payed.must.match.amount.to.pay", event

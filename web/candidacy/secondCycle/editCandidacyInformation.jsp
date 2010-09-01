@@ -22,12 +22,14 @@
 
 <bean:define id="processId" name="process" property="idInternal" />
 
+<script src="<%= request.getContextPath() + "/javaScript/jquery/jquery.js" %>" type="text/javascript" ></script>
+
 <fr:form action='<%="/caseHandlingSecondCycleIndividualCandidacyProcess.do?userAction=editCandidacyQualifications&processId=" + processId.toString() %>' id="secondCycleCandidacyForm">
 
 	<input type="hidden" id="methodId" name="method" value="executeEditCandidacyInformation"/>
 	<input type="hidden" id="removeIndexId" name="removeIndex" value=""/>
 	<input type="hidden" id="skipValidationId" name="skipValidation" value="false"/>
- 	
+ 	<input type="hidden" id="removeDegreeId" name="removeDegreeExternalId" />
 
 	<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
 	
@@ -52,8 +54,26 @@
 		</fr:edit>			
 	</div>
 
-
 	<h3 class="mtop15 mbottom025"><bean:message key="label.selectDegree" bundle="APPLICATION_RESOURCES"/>:</h3>
+	<table class="tstyle2 thlight thcenter">
+		<tr>
+			<th><bean:message key="label.name" /></th>
+			<th></th>
+		</tr>
+		
+		<logic:iterate id="degree" name="individualCandidacyProcessBean" property="selectedDegreeList">
+			<bean:define id="degreeExternalId" name="degree" property="externalId"></bean:define>
+			<tr>
+				<td><bean:write name="degree" property="nameI18N" /></td>
+				<td>
+					<html:link href="#" onclick="<%= String.format("jQuery('#methodId').attr('value', 'removeSelectedDegree'); jQuery('#removeDegreeId').attr('value', %s); jQuery('#skipValidationId').attr('value', 'true'); jQuery('#secondCycleCandidacyForm').submit();", degreeExternalId) %>">
+						<bean:message key="link.remove" />
+					</html:link>
+				</td>
+			</tr>
+		</logic:iterate>
+	</table>
+	
 	<fr:edit id="individualCandidacyProcessBean.degree"
 		name="individualCandidacyProcessBean"
 		schema="SecondCycleIndividualCandidacyProcessBean.selectDegree.manage">
@@ -63,6 +83,9 @@
 		</fr:layout>
 		<fr:destination name="invalid" path="<%= "/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=executeEditCandidacyInformationInvalid&amp;processId=" + processId.toString() %>" />
 	</fr:edit>
+	<html:link href="#" onclick="jQuery('#methodId').attr('value', 'addSelectedDegree'); jQuery('#skipValidationId').attr('value', 'true'); jQuery('#secondCycleCandidacyForm').submit();">
+		<bean:message key="button.add" />
+	</html:link>
 		
 	<h2 class="mtop1"><bean:message key="title.educational.background" bundle="CANDIDATE_RESOURCES"/></h2>
 	

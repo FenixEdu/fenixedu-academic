@@ -52,6 +52,7 @@
 	<table>
 		<tr>
 			<th class="listClasses-header">
+				
 			</th>
 			<td class="listClasses">
 				<e:labelValues id="degreeTypes"

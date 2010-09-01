@@ -315,6 +315,11 @@
 	<slot name="paymentChecked" key="label.candidacy.payment.checked" bundle="CANDIDATE_RESOURCES"/>
 </schema>
 
+<schema name="IndividualCandidacyProcess.list.processes.coordinator" type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess" bundle="APPLICATION_RESOURCES" extends="IndividualCandidacyProcess.list.processes">
+	<remove name="processChecked" />
+	<remove name="paymentChecked" />
+</schema>
+
 <schema name="IndividualCandidacyProcess.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess" bundle="APPLICATION_RESOURCES">
 	<slot name="candidacyExecutionInterval.name" key="label.candidacy">
 		<property name="classes" value="bold" />
@@ -644,8 +649,9 @@
 <schema name="SecondCycleIndividualCandidacyProcess.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcess" bundle="APPLICATION_RESOURCES"
 		extends="IndividualCandidacyProcess.view">
 	<slot name="processCode" layout="null-as-label" key="label.process.id" bundle="CANDIDATE_RESOURCES"/>
-	<slot name="candidacySelectedDegree" key="label.candidacy.choosed.degree">
-		<property name="format" value="${name} - ${sigla}" />
+	<slot name="selectedDegrees" key="label.candidacy.choosed.degree" layout="list">
+		<property name="eachLayout" value="values"/>
+		<property name="eachSchema" value="Degree.name.and.sigla" />
 	</slot>
 	<slot name="candidacyPrecedentDegreeInformation.degreeDesignation" key="label.candidacy.previous.degree" read-only="true" />
 	<slot name="candidacyPrecedentDegreeInformation.conclusionDate" key="label.conclusionDate" read-only="true" />
