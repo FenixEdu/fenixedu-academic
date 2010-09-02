@@ -382,7 +382,12 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 	row.setCell(secondCycleIndividualCandidacyProcess.getPersonalDetails().getName());
 	row.setCell(secondCycleIndividualCandidacyProcess.getPersonalDetails().getIdDocumentType().getLocalizedName());
 	row.setCell(secondCycleIndividualCandidacyProcess.getPersonalDetails().getDocumentIdNumber());
-	row.setCell(secondCycleIndividualCandidacyProcess.getPersonalDetails().getCountry().getCountryNationality().getContent());
+
+	row
+		.setCell(secondCycleIndividualCandidacyProcess.getPersonalDetails().getCountry() != null ? secondCycleIndividualCandidacyProcess
+			.getPersonalDetails().getCountry().getCountryNationality().getContent()
+			: "");
+
 	row.setCell(secondCycleIndividualCandidacyProcess.getCandidacyPrecedentDegreeInformation().getDegreeAndInstitutionName());
 	row.setCell(secondCycleIndividualCandidacyProcess.getCandidacyPrecedentDegreeInformation().getDegreeDesignation());
 	row
