@@ -10,7 +10,6 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationStateBean;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -225,7 +224,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 	return null;
     }
 
-    private RegistrationState getPrevious() {
+    public RegistrationState getPrevious() {
 	List<RegistrationState> sortedRegistrationsStates = new ArrayList<RegistrationState>(getRegistration()
 		.getRegistrationStates());
 	Collections.sort(sortedRegistrationsStates, DATE_COMPARATOR);

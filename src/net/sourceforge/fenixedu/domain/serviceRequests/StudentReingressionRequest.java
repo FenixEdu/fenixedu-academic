@@ -93,7 +93,7 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
     }
 
     private boolean hasInterruptedAtLeastThreeTimes(final Registration registration) {
-	return registration.getRegistrationStates(ALLOWED_TYPES).size() >= 3;
+	return registration.getRegistrationStates(RegistrationStateType.FLUNKED).size() >= 3;
     }
 
     private boolean isEnrolmentPeriodOpen(final Registration registration, final ExecutionYear executionYear,
