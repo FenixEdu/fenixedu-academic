@@ -86,8 +86,8 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
 	}
 
 	if (isToSendMail()) {
-	    new Message(getRootDomainObject().getSystemSender(), new Recipient(getTargetGroup().getElements()),
-		    buildMailSubject(), buildMailBody());
+	    final Recipient recipient = new Recipient(getTargetGroup().getElements());
+	    new Message(getRootDomainObject().getSystemSender(), recipient, buildMailSubject(), buildMailBody());
 
 	}
 
