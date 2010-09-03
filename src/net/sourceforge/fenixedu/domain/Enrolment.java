@@ -1294,12 +1294,12 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
 	    final DegreeCurricularPlan dcpOfStudent = getDegreeCurricularPlanOfStudent();
 	    if (dcpOfStudent.getDegreeType().isDegree()) {
-		
+
 		final Degree leicPb = Degree.readBySigla("LEIC-pB");
 		if (isStudentFromDegree(leicPb, dcpOfStudent)) {
 		    return getBaseWeigth();
 		}
-		
+
 		if (isExecutionYearEnrolmentAfterOrEqualsExecutionYear0607()) {
 		    return getEctsCreditsForCurriculum();
 		}
@@ -1755,6 +1755,10 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     private boolean parentIsInternalCreditsGroup() {
 	return getCurriculumGroup() instanceof InternalCreditsSourceCurriculumGroup;
+    }
+
+    public boolean isDissertation() {
+	return getCurricularCourse().isDissertation();
     }
 
 }

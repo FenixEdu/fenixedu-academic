@@ -51,6 +51,7 @@
 	<parameter name="path" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="bolonhaList" isForPrompting="false" class="java.util.ArrayList"/>
 	<parameter name="preBolonhaList" isForPrompting="false" class="java.util.ArrayList"/>
+	<parameter name="dissertationsList" isForPrompting="false" class="java.util.List"/>
 
 
 		<group  name="endLine" >
@@ -71,11 +72,11 @@
 			</band>
 			</groupHeader>
 			<groupFooter>
-			<band height="170"  isSplitAllowed="true" >
+			<band height="180"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
 						x="178"
-						y="105"
+						y="114"
 						width="239"
 						height="21"
 						key="staticText-24"/>
@@ -92,7 +93,7 @@
 				<line direction="TopDown">
 					<reportElement
 						x="131"
-						y="149"
+						y="158"
 						width="314"
 						height="0"
 						key="line-1"/>
@@ -101,7 +102,7 @@
 				<staticText>
 					<reportElement
 						x="59"
-						y="3"
+						y="12"
 						width="469"
 						height="27"
 						key="staticText-25"/>
@@ -118,7 +119,7 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="59"
-						y="54"
+						y="63"
 						width="469"
 						height="18"
 						key="textField-27"/>
@@ -135,7 +136,7 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="59"
-						y="154"
+						y="163"
 						width="469"
 						height="14"
 						key="textField-28"/>
@@ -152,7 +153,7 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="59"
-						y="37"
+						y="46"
 						width="469"
 						height="17"
 						key="textField-29"/>
@@ -221,7 +222,7 @@
 			</band>
 		</columnHeader>
 		<detail>
-			<band height="54"  isSplitAllowed="true" >
+			<band height="83"  isSplitAllowed="true" >
 				<subreport  isUsingCache="true">
 					<reportElement
 						x="0"
@@ -244,6 +245,20 @@
 						isPrintRepeatedValues="false"/>
 					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource((Collection) $P{preBolonhaList})]]></dataSourceExpression>
 					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "WEB-INF/classes/reports/documentRequests/courseLoadRequest/courseLoadPreBolonhaRequest.jasper"]]></subreportExpression>
+				</subreport>
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="0"
+						y="57"
+						width="595"
+						height="25"
+						key="subreport-3"
+						positionType="Float"
+						isPrintRepeatedValues="false">
+							<printWhenExpression><![CDATA[!$P{dissertationsList}.isEmpty()]]></printWhenExpression>
+						</reportElement>
+					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource((Collection) $P{dissertationsList})]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "WEB-INF/classes/reports/documentRequests/courseLoadRequest/courseLoadDissertationsList.jasper"]]></subreportExpression>
 				</subreport>
 			</band>
 		</detail>

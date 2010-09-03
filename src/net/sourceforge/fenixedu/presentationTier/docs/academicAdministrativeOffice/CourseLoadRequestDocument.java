@@ -80,19 +80,31 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
     private void createCourseLoadsList() {
 	final List<CourseLoadEntry> bolonha = new ArrayList<CourseLoadEntry>();
 	final List<CourseLoadEntry> preBolonha = new ArrayList<CourseLoadEntry>();
+	final List<CourseLoadEntry> dissertations = new ArrayList<CourseLoadEntry>();
 
 	addParameter("bolonhaList", bolonha);
 	addParameter("preBolonhaList", preBolonha);
+	addParameter("dissertationsList", dissertations);
 
 	for (final Enrolment enrolment : getDocumentRequest().getEnrolmentsSet()) {
+	    
 	    if (enrolment.isBolonhaDegree()) {
-		bolonha.add(new BolonhaCourseLoadEntry(enrolment));
+		
+		if (enrolment.isDissertation()) {
+		    dissertations.add(new BolonhaCourseLoadEntry(enrolment));
+		} else {
+		    bolonha.add(new BolonhaCourseLoadEntry(enrolment));
+		}
+		
 	    } else {
 		preBolonha.add(new PreBolonhaCourseLoadEntry(enrolment));
 	    }
+	    
 	}
+	
 	Collections.sort(bolonha);
 	Collections.sort(preBolonha);
+	Collections.sort(dissertations);
     }
 
     @Override
