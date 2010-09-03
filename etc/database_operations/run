@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create more tables and columns for remote communication plugin." updates.sql
