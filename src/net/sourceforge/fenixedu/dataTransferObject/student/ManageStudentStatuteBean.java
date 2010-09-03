@@ -4,8 +4,12 @@
 package net.sourceforge.fenixedu.dataTransferObject.student;
 
 import java.io.Serializable;
+import java.util.ResourceBundle;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
 
@@ -25,6 +29,8 @@ public class ManageStudentStatuteBean implements Serializable {
     private ExecutionSemester endExecutionPeriod;
 
     private Student student;
+
+    private Registration registration;
 
     public ManageStudentStatuteBean(Student student) {
 	super();
@@ -56,6 +62,10 @@ public class ManageStudentStatuteBean implements Serializable {
 	return student;
     }
 
+    public Registration getRegistration() {
+	return registration;
+    }
+
     public void setBeginExecutionPeriod(ExecutionSemester beginExecutionPeriod) {
 	this.beginExecutionPeriod = beginExecutionPeriod;
     }
@@ -70,6 +80,10 @@ public class ManageStudentStatuteBean implements Serializable {
 
     public void setStudent(Student student) {
 	this.student = student;
+    }
+
+    public void setRegistration(Registration registration) {
+	this.registration = registration;
     }
 
 }

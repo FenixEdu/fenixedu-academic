@@ -4,8 +4,12 @@
 package net.sourceforge.fenixedu.dataTransferObject.student;
 
 import java.io.Serializable;
+import java.util.ResourceBundle;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.student.SeniorStatute;
 import net.sourceforge.fenixedu.domain.student.StudentStatute;
 import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
 
@@ -60,6 +64,13 @@ public class StudentStatuteBean implements Serializable {
     public String getEndPeriodFormatted() {
 	return getStudentStatute() != null && getStudentStatute().hasEndExecutionPeriod() ? getStudentStatute()
 		.getEndExecutionPeriod().getQualifiedName() : " ... ";
+    }
+
+    public String getDescription() {
+	ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+	return bundle.getString(getStatuteType().getDeclaringClass().getSimpleName()+"."+getStatuteType().name())
+	+ (studentStatute instanceof SeniorStatute ? (" ("
+		+ ((SeniorStatute) studentStatute).getRegistration().getDegree().getPresentationName() + ") ") : "");
     }
 
 }

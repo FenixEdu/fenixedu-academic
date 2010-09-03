@@ -5278,6 +5278,9 @@ class DomainObject {
         StudentStatuteType statuteType;
         DateTime creationDate;
     }
+    
+    	class student.SeniorStatute extends student.StudentStatute {
+    	}
 
     class student.WeeklyWorkLoad extends DomainObject {
         Integer autonomousStudy;
@@ -15279,6 +15282,14 @@ relation StudentStatuteStudent {
         multiplicity *;
     }
 }
+
+relation SeniorStatuteRegistration {
+	student.SeniorStatute playsRole seniorStatute;
+	student.Registration playsRole registration {
+		multiplicity 1;
+	}
+}
+	
 
 relation StudentTestQuestions {
     onlineTests.Question playsRole question;

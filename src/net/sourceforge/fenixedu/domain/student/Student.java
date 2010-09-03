@@ -300,6 +300,15 @@ public class Student extends Student_Base {
 	}
 	return false;
     }
+    
+    public boolean hasSpecialSeasonEnrolments(ExecutionYear executionYear) {
+	for (Registration registration : getRegistrationsSet()) {
+	    if(registration.getStudentCurricularPlan(executionYear).isEnroledInSpecialSeason(executionYear)) {
+		return true;
+	    }
+	}
+	return false;
+    }
 
     public static Integer generateStudentNumber() {
 	int nextNumber = 0;

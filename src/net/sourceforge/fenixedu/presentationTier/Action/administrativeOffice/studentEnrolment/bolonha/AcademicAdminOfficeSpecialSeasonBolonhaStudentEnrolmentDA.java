@@ -112,14 +112,17 @@ public class AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA extends A
 
 	List<StudentStatute> statutes = studentCurricularPlan.getRegistration().getStudent().getStudentStatutes();
 	for (StudentStatute statute : statutes) {
-	    if (statute.getStatuteType().isSpecialSeasonGranted() && statute.isValidInExecutionPeriod(executionSemester)) {
-		request.setAttribute("action", getAction());
-		request.setAttribute("bolonhaStudentEnrollmentBean", new SpecialSeasonBolonhaStudentEnrolmentBean(
-			studentCurricularPlan, executionSemester));
+	    if (!statute.getStatuteType().isSpecialSeasonGranted() && !statute.hasSeniorStatuteForRegistration(studentCurricularPlan.getRegistration()))
+		continue;
+	    if (!statute.isValidInExecutionPeriod(executionSemester))
+		continue;
 
-		addDebtsWarningMessages(studentCurricularPlan.getRegistration().getStudent(), executionSemester, request);
-		return mapping.findForward("showDegreeModulesToEnrol");
-	    }
+	    request.setAttribute("action", getAction());
+	    request.setAttribute("bolonhaStudentEnrollmentBean", new SpecialSeasonBolonhaStudentEnrolmentBean(
+		    studentCurricularPlan, executionSemester));
+
+	    addDebtsWarningMessages(studentCurricularPlan.getRegistration().getStudent(), executionSemester, request);
+	    return mapping.findForward("showDegreeModulesToEnrol");
 	}
 	addActionMessage(request, "error.special.season.not.granted");
 	request.setAttribute("studentCurricularPlan", studentCurricularPlan);

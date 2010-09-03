@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.StudentStatute;
+import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
 import net.sourceforge.fenixedu.domain.student.StudentStatute.CreateStudentStatuteFactory;
 import net.sourceforge.fenixedu.domain.student.StudentStatute.DeleteStudentStatuteFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -16,9 +17,11 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -34,6 +37,38 @@ public class StudentStatutesDA extends FenixDispatchAction {
 	final Student student = rootDomainObject.readStudentByOID(getIntegerFromRequest(request, "studentId"));
 	request.setAttribute("student", student);
 	request.setAttribute("manageStatuteBean", new CreateStudentStatuteFactory(student));
+	request.setAttribute("schemaName", "student.createStatutes");
+
+	return mapping.findForward("manageStatutes");
+    }
+    
+    public ActionForward invalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+	final Student student = AbstractDomainObject.fromExternalId(request.getParameter("studentOID"));
+	request.setAttribute("student", student);
+	request.setAttribute("schemaName", request.getParameter("schemaName"));
+	request.setAttribute("manageStatuteBean", (CreateStudentStatuteFactory) getRenderedObject());
+	
+	return mapping.findForward("manageStatutes");
+    }
+
+    public ActionForward seniorStatutePostBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final CreateStudentStatuteFactory oldManageStatuteBean = (CreateStudentStatuteFactory) getRenderedObject();
+	final Student student = oldManageStatuteBean.getStudent();
+	final StudentStatuteType statuteType = oldManageStatuteBean.getStatuteType();
+	final CreateStudentStatuteFactory manageStatuteBean = new CreateStudentStatuteFactory(student);
+	manageStatuteBean.setStatuteType(statuteType);
+	
+	RenderUtils.invalidateViewState();
+	
+	request.setAttribute("student", student);
+	request.setAttribute("manageStatuteBean", manageStatuteBean);
+	
+	if (manageStatuteBean.getStatuteType() == StudentStatuteType.SENIOR)
+	    request.setAttribute("schemaName", "student.createSeniorStatute");
+	else 
+	    request.setAttribute("schemaName", "student.createStatutes");
 
 	return mapping.findForward("manageStatutes");
     }
@@ -51,6 +86,7 @@ public class StudentStatutesDA extends FenixDispatchAction {
 	final Student student = ((CreateStudentStatuteFactory) getRenderedObject()).getStudent();
 	request.setAttribute("student", student);
 	request.setAttribute("manageStatuteBean", new CreateStudentStatuteFactory(student));
+	request.setAttribute("schemaName", "student.createStatutes");
 
 	return mapping.findForward("manageStatutes");
 
@@ -72,6 +108,7 @@ public class StudentStatutesDA extends FenixDispatchAction {
 
 	request.setAttribute("student", student);
 	request.setAttribute("manageStatuteBean", new CreateStudentStatuteFactory(student));
+	request.setAttribute("schemaName", "student.createStatutes");
 
 	return mapping.findForward("manageStatutes");
 

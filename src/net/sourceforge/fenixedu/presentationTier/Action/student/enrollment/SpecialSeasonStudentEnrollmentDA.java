@@ -92,7 +92,7 @@ public class SpecialSeasonStudentEnrollmentDA extends AcademicAdminOfficeSpecial
 	    HttpServletResponse response) {
 	SpecialSeasonStudentEnrollmentBean bean = (SpecialSeasonStudentEnrollmentBean) getRenderedObject("bean");
 
-	if (!hasStatute(bean.getStudent(), bean.getExecutionSemester())) {
+	if (!hasStatute(bean.getStudent(), bean.getExecutionSemester(), bean.getScp().getRegistration())) {
 	    addActionMessage("error", request, "error.special.season.not.granted");
 	    request.setAttribute("bean", bean);
 	    return mapping.findForward("showPickSCPAndSemester");
@@ -107,7 +107,6 @@ public class SpecialSeasonStudentEnrollmentDA extends AcademicAdminOfficeSpecial
     private Student getLoggedStudent(final HttpServletRequest request) {
 	return getLoggedPerson(request).getStudent();
     }
-
 
     private final List<StudentCurricularPlan> generateSCPList(final Student student) {
 	final List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
@@ -152,12 +151,16 @@ public class SpecialSeasonStudentEnrollmentDA extends AcademicAdminOfficeSpecial
 		EnrolmentPeriodInSpecialSeasonEvaluations.COMPARATOR_BY_START);
     }
 
-    private boolean hasStatute(Student student, ExecutionSemester executionSemester) {
+    private boolean hasStatute(Student student, ExecutionSemester executionSemester, Registration registration) {
 	List<StudentStatute> statutes = student.getStudentStatutes();
 	for (StudentStatute statute : statutes) {
-	    if (statute.getStatuteType().isSpecialSeasonGranted() && statute.isValidInExecutionPeriod(executionSemester)) {
-		return true;
-	    }
+	    if (!statute.getStatuteType().isSpecialSeasonGranted() && !statute.hasSeniorStatuteForRegistration(registration))
+		continue;
+	    if (!statute.isValidInExecutionPeriod(executionSemester))
+		continue;
+
+	    return true;
+
 	}
 	return false;
     }

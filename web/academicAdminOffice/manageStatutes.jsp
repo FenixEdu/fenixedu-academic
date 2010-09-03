@@ -25,7 +25,7 @@
 				</fr:layout>
 			</fr:view>
 		</td>
-		<td>
+		<td style="vertical-align: top; padding-left: 10px;">
 			<bean:define id="personID" name="student" property="person.idInternal"/>
 			<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES"/>
 		</td>
@@ -54,12 +54,17 @@
 
 
 <bean:define id="studentID" name="student" property="idInternal" />
+<bean:define id="studentOID" name="student" property="externalId" />
+<bean:define id="schemaID" name="schemaName" />
 <h3 class="mtop15 mbottom025"><bean:message key="label.addNewStatute" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
-<fr:edit name="manageStatuteBean" schema="student.createStatutes" action="/studentStatutes.do?method=addNewStatute">
+<fr:edit name="manageStatuteBean" schema="<%= schemaID.toString() %>" action="/studentStatutes.do?method=addNewStatute">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4 thright thlight"/>
 		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 	</fr:layout>
+	<fr:hidden slot="student" name="student" />
+	<fr:destination name="seniorStatutePostBack" path="/studentStatutes.do?method=seniorStatutePostBack"/>
+	<fr:destination name="invalid" path="<%="/studentStatutes.do?method=invalid&studentOID=" + studentOID + "&schemaName=" + schemaID.toString()%>"/>
 	<fr:destination name="cancel" path="<%="/student.do?method=visualizeStudent&studentID=" + studentID%>" />
 </fr:edit>
 

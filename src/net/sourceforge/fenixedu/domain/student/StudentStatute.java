@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
  */
 public class StudentStatute extends StudentStatute_Base {
 
-    private StudentStatute() {
+    protected StudentStatute() {
 	super();
 	super.setRootDomainObject(RootDomainObject.getInstance());
 	setCreationDate(new DateTime());
@@ -94,7 +94,16 @@ public class StudentStatute extends StudentStatute_Base {
 	}
 
 	public Object execute() {
-	    return new StudentStatute(getStudent(), getStatuteType(), getBeginExecutionPeriod(), getEndExecutionPeriod());
+	    switch (getStatuteType()) {
+
+	    case SENIOR:
+		return new SeniorStatute(getStudent(), getRegistration(), getStatuteType(), getBeginExecutionPeriod(),
+			getEndExecutionPeriod());
+
+	    default:
+		return new StudentStatute(getStudent(), getStatuteType(), getBeginExecutionPeriod(), getEndExecutionPeriod());
+
+	    }
 	}
     }
 
@@ -163,29 +172,33 @@ public class StudentStatute extends StudentStatute_Base {
 	return (getBeginExecutionPeriod() != null ? getBeginExecutionPeriod().getQualifiedName() : " - ") + " ..... "
 		+ (getEndExecutionPeriod() != null ? getEndExecutionPeriod().getQualifiedName() : " - ");
     }
-    
+
     public void checkRules() {
-	if(hasSpecialSeasonEnrolments()) {
+	if (hasSpecialSeasonEnrolments()) {
 	    throw new DomainException("error.student.StudentStatute.has.special.season.enrolment");
 	}
     }
-    
+
     public boolean hasSpecialSeasonEnrolments() {
-	
+
 	ExecutionSemester lastSemester = getEndExecutionPeriod();
 
 	Set<Registration> registrations = getStudent().getRegistrationsSet();
-	for(Registration registration : registrations) {
+	for (Registration registration : registrations) {
 	    Set<StudentCurricularPlan> plans = registration.getStudentCurricularPlansSet();
-	    for(StudentCurricularPlan scp : plans) {
+	    for (StudentCurricularPlan scp : plans) {
 		ExecutionSemester semesterIterator = getBeginExecutionPeriod();
-		while(semesterIterator != null && semesterIterator.isBeforeOrEquals(lastSemester)) {
-		    if(scp.isEnroledInSpecialSeason(semesterIterator))
+		while (semesterIterator != null && semesterIterator.isBeforeOrEquals(lastSemester)) {
+		    if (scp.isEnroledInSpecialSeason(semesterIterator))
 			return true;
 		    semesterIterator = semesterIterator.getNextExecutionPeriod();
 		}
 	    }
 	}
+	return false;
+    }
+
+    public boolean hasSeniorStatuteForRegistration(Registration registration) {
 	return false;
     }
 
