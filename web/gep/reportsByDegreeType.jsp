@@ -23,7 +23,7 @@
 			<fr:property name="module(Download)" value=""/>
 			
 			<fr:property name="link(sendJob)" value="/gep/reportsByDegreeType.do?method=resendJob"/>
-			<fr:property name="param(sendJob)" value="idInternal/id"/>
+			<fr:property name="param(sendJob)" value="externalId/id"/>
 			<fr:property name="key(sendJob)" value="label.sendJob"/>
 			<fr:property name="bundle(sendJob)" value="GEP_RESOURCES"/>
 			<fr:property name="visibleIf(sendJob)" value="isNotDoneAndCancelled"/>
