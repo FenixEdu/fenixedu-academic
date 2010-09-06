@@ -206,7 +206,7 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 
     private YearMonthDay calculateInstallmentPaymentCodeEndDate(final Installment installment) {
 	final YearMonthDay today = new YearMonthDay();
-	final YearMonthDay installmentEndDate = installment.getEndDate();
+	final YearMonthDay installmentEndDate = new YearMonthDay(installment.getEndDate(this));
 	return today.isBefore(installmentEndDate) ? installmentEndDate : calculateNextEndDate(today);
     }
 

@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
@@ -141,6 +142,10 @@ public class Installment extends Installment_Base {
 	super.setPaymentPlan(null);
 	removeRootDomainObject();
 	super.deleteDomainObject();
+    }
+
+    public LocalDate getEndDate(final Event event) {
+	return super.getEndDate().toLocalDate();
     }
 
 }

@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.Period;
 import org.joda.time.YearMonthDay;
 
@@ -103,6 +104,14 @@ public class InstallmentForFirstTimeStudents extends InstallmentForFirstTimeStud
     @Override
     public boolean isForFirstTimeStudents() {
 	return true;
+    }
+
+    @Override
+    public LocalDate getEndDate(final Event event) {
+	final GratuityEvent gratuityEvent = (GratuityEvent) event;
+	final LocalDate startDate = gratuityEvent.getRegistration().getStartDate().toLocalDate();
+
+	return startDate.plusDays(getNumberOfDaysToStartApplyingPenalty());
     }
 
 }
