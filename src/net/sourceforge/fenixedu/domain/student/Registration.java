@@ -125,7 +125,8 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 public class Registration extends Registration_Base {
 
     static private final List<DegreeType> DEGREE_TYPES_TO_ENROL_BY_STUDENT = Arrays.asList(new DegreeType[] {
-	    DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE });
+	    DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE,
+	    DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA });
 
     static final public Comparator<Registration> NUMBER_COMPARATOR = new Comparator<Registration>() {
 	public int compare(Registration o1, Registration o2) {
