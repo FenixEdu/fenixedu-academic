@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriod;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses;
+import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCoursesSpecialSeason;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -49,6 +50,7 @@ public class ShowStudentPortalDA extends FenixDispatchAction {
 			degreeCurricularPlan));
 	    }
 	    genericDegreeWarnings.addAll(getEnrolmentPeriodCourses(degreeCurricularPlan));
+	    genericDegreeWarnings.addAll(getEnrolmentPeriodCoursesAfterSpecialSeason(degreeCurricularPlan));
 	    genericDegreeWarnings.addAll(getEnrolmentPeriodClasses(degreeCurricularPlan));
 	}
 
@@ -68,6 +70,25 @@ public class ShowStudentPortalDA extends FenixDispatchAction {
 		    ResourceBundle resource = ResourceBundle.getBundle("resources.StudentResources", Language.getLocale());
 		    warnings.add(degreeCurricularPlan.getDegree().getSigla() + ": "
 			    + resource.getString("message.out.degree.enrolment.period") + " "
+			    + YearMonthDay.fromDateFields(periodCourses.getStartDate()) + " "
+			    + resource.getString("message.out.until") + " "
+			    + YearMonthDay.fromDateFields(periodCourses.getEndDate()));
+		}
+	    }
+	}
+	return warnings;
+    }
+
+    private List<String> getEnrolmentPeriodCoursesAfterSpecialSeason(DegreeCurricularPlan degreeCurricularPlan) {
+	List<String> warnings = new ArrayList<String>();
+	EnrolmentPeriod periodCourses;
+	for (final EnrolmentPeriod enrolmentPeriod : degreeCurricularPlan.getEnrolmentPeriodsSet()) {
+	    if (enrolmentPeriod instanceof EnrolmentPeriodInCurricularCoursesSpecialSeason) {
+		periodCourses = enrolmentPeriod;
+		if (isBetweenWarnPeriod(periodCourses)) {
+		    ResourceBundle resource = ResourceBundle.getBundle("resources.StudentResources", Language.getLocale());
+		    warnings.add(degreeCurricularPlan.getDegree().getSigla() + ": "
+			    + resource.getString("message.out.degree.enrolment.period.after.special.season") + " "
 			    + YearMonthDay.fromDateFields(periodCourses.getStartDate()) + " "
 			    + resource.getString("message.out.until") + " "
 			    + YearMonthDay.fromDateFields(periodCourses.getEndDate()));
