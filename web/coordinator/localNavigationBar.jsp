@@ -15,9 +15,16 @@
 		<li>
 			<html:link page="/index.do"><bean:message  key="label.coordinator.degrees"/></html:link>
 		</li>
+		
+		<li class="navheader"><bean:message key="label.phds" bundle="PHD_RESOURCES"/></li>
 		<li>
 			<html:link page="/phdIndividualProgramProcess.do?method=manageProcesses">
 				<bean:message  key="label.coordinator.phdProcesses"/>
+			</html:link>
+		</li>
+		<li>
+			<html:link page="/phdEnrolmentsManagement.do?method=showPhdProgram">
+				Inscrições
 			</html:link>
 		</li>
 		
