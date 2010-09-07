@@ -83,7 +83,6 @@ public class PhdStudentEnrolmentDA extends BolonhaStudentEnrollmentDispatchActio
     public ActionForward showWelcome(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-
 	final Registration registration = (Registration) request.getAttribute("registration");
 	final ExecutionSemester semester = ExecutionSemester.readActualExecutionSemester();
 	final EnrolmentPeriodInCurricularCourses period = registration.getLastDegreeCurricularPlan()
