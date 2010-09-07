@@ -6,9 +6,13 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
+import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
@@ -93,6 +97,26 @@ public class Tutorship extends Tutorship_Base {
 	return false;
     }
 
+    public boolean isActive(AcademicInterval semester) {
+	if (getStudent().getStateInDate(semester.getEnd()).equals(RegistrationStateType.CANCELED)) {
+	    return false;
+	}
+	Interval semesterInterval = new Interval(semester.getStartMillis(), semester.getEndMillis());
+	DateTime start = getStartDate().toDateTime(new DateTime(0));
+	DateTime end = getEndDate().toDateTime(new DateTime(0));
+	if (end != null) {
+	    Interval tutorshipInterval = new Interval(start, end);
+	    if (tutorshipInterval.overlaps(semesterInterval)) {
+		return true;
+	    }
+	} else {
+	    if (start.isBefore(semesterInterval.getStart())) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
     public static int getLastPossibleTutorshipYear() {
 	YearMonthDay currentDate = new YearMonthDay();
 	return currentDate.getYear() + TUTORSHIP_MAX_PERIOD;
@@ -151,4 +175,5 @@ public class Tutorship extends Tutorship_Base {
 	DegreeCurricularPlan degreeCurricularPlan = getStudent().getLastDegreeCurricularPlan();
 	return !(degreeCurricularPlan == null || getTutorshipLog() == null);
     }
+
 }

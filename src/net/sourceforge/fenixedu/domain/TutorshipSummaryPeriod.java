@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorshipSummaryPeriodBean;
 
+import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.services.Service;
@@ -24,10 +25,15 @@ public class TutorshipSummaryPeriod extends TutorshipSummaryPeriod_Base {
 
     @Service
     public static TutorshipSummaryPeriod create(TutorshipSummaryPeriodBean bean) {
-	TutorshipSummaryPeriod tutorshipSummaryPeriod = new TutorshipSummaryPeriod(bean.getExecutionSemester(), bean
-		.getBeginDate(), bean.getEndDate());
+	TutorshipSummaryPeriod tutorshipSummaryPeriod = new TutorshipSummaryPeriod(bean.getExecutionSemester(),
+		bean.getBeginDate(), bean.getEndDate());
 
 	return tutorshipSummaryPeriod;
     }
 
+    public boolean isOpenNow() {
+	Interval interval = new Interval(getBeginDate().toDateTimeAtStartOfDay(), getBeginDate().plusDays(1)
+		.toDateTimeAtStartOfDay());
+	return interval.containsNow();
+    }
 }

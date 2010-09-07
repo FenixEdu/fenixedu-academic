@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.CreateSummaryBean;
 import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorshipSummaryRelationBean;
 
@@ -22,18 +25,6 @@ public class TutorshipSummary extends TutorshipSummary_Base {
 	LocalDate curDate = new LocalDate();
 	LocalDate beginDate = getSemester().getTutorshipSummaryPeriod().getBeginDate();
 	LocalDate endDate = getSemester().getTutorshipSummaryPeriod().getEndDate();
-
-	return !(curDate.isBefore(beginDate) || curDate.isAfter(endDate));
-    }
-
-    public static boolean canBeCreated() {
-	if (ExecutionSemester.readActualExecutionSemester().getTutorshipSummaryPeriod() == null) {
-	    return false;
-	}
-
-	LocalDate curDate = new LocalDate();
-	LocalDate beginDate = ExecutionSemester.readActualExecutionSemester().getTutorshipSummaryPeriod().getBeginDate();
-	LocalDate endDate = ExecutionSemester.readActualExecutionSemester().getTutorshipSummaryPeriod().getEndDate();
 
 	return !(curDate.isBefore(beginDate) || curDate.isAfter(endDate));
     }
@@ -101,4 +92,13 @@ public class TutorshipSummary extends TutorshipSummary_Base {
 	return tutorshipSummary;
     }
 
+    public static Set<ExecutionSemester> getActivePeriods() {
+	Set<ExecutionSemester> semesters = new HashSet<ExecutionSemester>();
+	for (TutorshipSummaryPeriod tutorshipPeriod : RootDomainObject.getInstance().getTutorshipSummaryPeriodsSet()) {
+	    if (tutorshipPeriod.isOpenNow()) {
+		semesters.add(tutorshipPeriod.getExecutionSemester());
+	    }
+	}
+	return semesters;
+    }
 }

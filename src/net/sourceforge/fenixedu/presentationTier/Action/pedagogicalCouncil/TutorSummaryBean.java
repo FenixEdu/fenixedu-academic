@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Employee;
@@ -45,23 +46,25 @@ public class TutorSummaryBean extends TutorSearchBean {
 	    }
 
 	    /* add - not created - available summaries */
-	    if (TutorshipSummary.canBeCreated()) {
-		for (Tutorship t : getTeacher().getActiveTutorships()) {
-		    boolean addDegree = true;
-		    Degree studentDegree = t.getStudent().getDegree();
+	    Set<ExecutionSemester> activePeriods = TutorshipSummary.getActivePeriods();
+	    for (Tutorship t : getTeacher().getTutorshipsSet()) {
+		boolean addDegree = true;
+		Degree studentDegree = t.getStudent().getDegree();
 
-		    /* check if degree is already added to the result */
-		    for (CreateSummaryBean createSummaryBean : result) {
-			if (createSummaryBean.getDegree().equals(studentDegree)) {
-			    addDegree = false;
-			    break;
-			}
+		/* check if degree is already added to the result */
+		for (CreateSummaryBean createSummaryBean : result) {
+		    if (createSummaryBean.getDegree().equals(studentDegree)) {
+			addDegree = false;
+			break;
 		    }
+		}
 
-		    if (addDegree) {
-			CreateSummaryBean createSummaryBean = new CreateSummaryBean(getTeacher(), getActiveSemester(),
-				studentDegree);
-			result.add(createSummaryBean);
+		if (addDegree) {
+		    for (ExecutionSemester semester : activePeriods) {
+			if (t.isActive(semester.getAcademicInterval())) {
+			    CreateSummaryBean createSummaryBean = new CreateSummaryBean(getTeacher(), semester, studentDegree);
+			    result.add(createSummaryBean);
+			}
 		    }
 		}
 	    }
