@@ -277,12 +277,13 @@ public class TutorshipSummaryDA extends ViewStudentsByTutorDispatchAction {
 	} else {
 	    String teacherId = (String) getFromRequest(request, "teacherId");
 	    String degreeId = (String) getFromRequest(request, "degreeId");
+	    String semesterId = (String) getFromRequest(request, "semesterId");
 
 	    Teacher teacher = AbstractDomainObject.fromExternalId(teacherId);
 	    Degree degree = AbstractDomainObject.fromExternalId(degreeId);
-	    ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
+	    ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(semesterId);
 
-	    if (teacher != null && degree != null) {
+	    if (teacher != null && degree != null && executionSemester != null) {
 		bean = new CreateSummaryBean(teacher, executionSemester, degree);
 	    }
 	}

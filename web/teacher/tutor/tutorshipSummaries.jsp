@@ -47,8 +47,9 @@
 			<logic:equal value="false" name="createSummaryBean" property="persisted">			
 				<bean:define id="teacherId" name="tutor" property="externalId" type="java.lang.String" />
 				<bean:define id="degreeId" name="createSummaryBean" property="degree.externalId" type="java.lang.String" />
+				<bean:define id="semesterId" name="createSummaryBean" property="executionSemester.externalId" type="java.lang.String" />
 				
-				<html:link page="<%= "/tutorshipSummary.do?method=createSummary&teacherId=" + teacherId + "&degreeId=" + degreeId %>">
+				<html:link page="<%= "/tutorshipSummary.do?method=createSummary&teacherId=" + teacherId + "&degreeId=" + degreeId  + "&semesterId=" + semesterId%>">
 					<bean:message key="label.curricular.course.semester" bundle="APPLICATION_RESOURCES" /> 
 					<strong><bean:write name="createSummaryBean" property="executionSemester.semester"/> - <bean:write name="createSummaryBean" property="executionSemester.executionYear.year"/></strong>,
 					<bean:message key="label.degree.name" bundle="APPLICATION_RESOURCES" />:

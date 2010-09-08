@@ -32,7 +32,7 @@ public class TutorshipSummaryPeriod extends TutorshipSummaryPeriod_Base {
     }
 
     public boolean isOpenNow() {
-	Interval interval = new Interval(getBeginDate().toDateTimeAtStartOfDay(), getBeginDate().plusDays(1)
+	Interval interval = new Interval(getBeginDate().toDateTimeAtStartOfDay(), getEndDate().plusDays(1)
 		.toDateTimeAtStartOfDay());
 	return interval.containsNow();
     }
