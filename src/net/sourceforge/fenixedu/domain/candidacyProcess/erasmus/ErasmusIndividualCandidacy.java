@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -8,9 +9,24 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
+import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
+import net.sourceforge.fenixedu.domain.degreeStructure.Context;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
+import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
+import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -25,12 +41,6 @@ public class ErasmusIndividualCandidacy extends ErasmusIndividualCandidacy_Base 
 
     ErasmusIndividualCandidacy(final ErasmusIndividualCandidacyProcess process, final ErasmusIndividualCandidacyProcessBean bean) {
 	this();
-
-	if ("Raul Gonzalez".equals(bean.getPersonBean().getName())) {
-	    bean.getPersonBean().setPerson(Person.readPersonByUsername("ist90427"));
-	} else if ("Javier Garcia".equals(bean.getPersonBean().getName())) {
-	    bean.getPersonBean().setPerson(Person.readPersonByUsername("ist90428"));
-	}
 
 	bean.getPersonBean().setCreateLoginIdentificationAndUserIfNecessary(false);
 
@@ -165,5 +175,89 @@ public class ErasmusIndividualCandidacy extends ErasmusIndividualCandidacy_Base 
 
     public boolean hasAnyActiveApprovedLearningAgreements() {
 	return !getActiveApprovedLearningAgreements().isEmpty();
+    }
+
+    @Override
+    public Registration createRegistration(final DegreeCurricularPlan degreeCurricularPlan, final CycleType cycleType,
+	    final Ingression ingression) {
+
+	if (hasRegistration()) {
+	    throw new DomainException("error.IndividualCandidacy.person.with.registration", degreeCurricularPlan
+		    .getPresentationName());
+	}
+
+	if (hasActiveRegistration(degreeCurricularPlan)) {
+	    final Registration registration = getStudent().getActiveRegistrationFor(degreeCurricularPlan);
+	    setRegistration(registration);
+	    return registration;
+	}
+
+	getPersonalDetails().ensurePersonInternalization();
+	return createRegistration(getPersonalDetails().getPerson(), degreeCurricularPlan, cycleType, ingression);
+    }
+
+    @Override
+    protected Registration createRegistration(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
+	    final CycleType cycleType, final Ingression ingression) {
+
+	final Registration registration = new Registration(person, degreeCurricularPlan, RegistrationAgreement.ERASMUS,
+		cycleType, ((ExecutionYear) getCandidacyExecutionInterval()));
+
+	registration.editStartDates(getStartDate(), registration.getHomologationDate(), registration.getStudiesStartDate());
+	setRegistration(registration);
+
+	person.addPersonRoleByRoleType(RoleType.PERSON);
+	person.addPersonRoleByRoleType(RoleType.STUDENT);
+
+	return registration;
+    }
+
+    void enrol() {
+	final Registration registration = getRegistration();
+	final ExecutionYear executionYear = (ExecutionYear) getCandidacyExecutionInterval();
+	final ExecutionSemester semesterToEnrol = executionYear.getFirstExecutionPeriod();
+
+	Set<IDegreeModuleToEvaluate> degreeModulesToEnrol = new HashSet<IDegreeModuleToEvaluate>();
+	degreeModulesToEnrol.addAll(getModulesToEnrolForFirstSemester());
+
+	registration.getActiveStudentCurricularPlan().enrol(semesterToEnrol, degreeModulesToEnrol, Collections.EMPTY_LIST,
+		CurricularRuleLevel.ENROLMENT_NO_RULES);
+    }
+
+    public Collection<DegreeModuleToEnrol> getModulesToEnrolForFirstSemester() {
+	final Registration registration = getRegistration();
+	final ExecutionYear executionYear = (ExecutionYear) getCandidacyExecutionInterval();
+	final ExecutionSemester semesterToEnrol = executionYear.getFirstExecutionPeriod();
+	final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
+	final DegreeCurricularPlan degreeCurricularPlan = registration.getLastDegreeCurricularPlan();
+
+	Set<DegreeModuleToEnrol> degreeModulesToEnrol = new HashSet<DegreeModuleToEnrol>();
+
+	for (CurricularCourse selectedCurricularCourse : getCurricularCourses()) {
+	    List<Context> contextList = selectedCurricularCourse.getParentContextsByExecutionSemester(semesterToEnrol);
+
+	    if (contextList.isEmpty()) {
+		continue;
+	    }
+
+	    Context selectedContext = contextList.get(0);
+
+	    CurriculumGroup curriculumGroup = null;
+	    if (selectedCurricularCourse.getDegreeCurricularPlan().equals(degreeCurricularPlan)) {
+		curriculumGroup = studentCurricularPlan.getRoot().findCurriculumGroupFor(selectedContext.getParentCourseGroup());
+	    } else {
+		// Enrol on extra curriculum group
+		curriculumGroup = studentCurricularPlan.getExtraCurriculumGroup();
+	    }
+
+	    if (curriculumGroup == null) {
+		continue;
+	    }
+
+	    DegreeModuleToEnrol toEnrol = new DegreeModuleToEnrol(curriculumGroup, selectedContext, semesterToEnrol);
+	    degreeModulesToEnrol.add(toEnrol);
+	}
+
+	return degreeModulesToEnrol;
     }
 }

@@ -589,7 +589,7 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 	protected ErasmusCandidacyProcess executeActivity(ErasmusCandidacyProcess process, IUserView userView, Object object) {
 	    SendReceptionEmailBean sendBean = (SendReceptionEmailBean) object;
 	    ReceptionEmailExecutedAction.createAction(sendBean);
-	    
+
 	    return process;
 	}
 
@@ -608,4 +608,5 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 	    return true;
 	}
     }
+
 }

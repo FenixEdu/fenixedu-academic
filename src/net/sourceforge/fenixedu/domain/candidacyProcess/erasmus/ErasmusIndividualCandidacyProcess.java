@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
@@ -21,6 +22,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocum
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -73,6 +75,8 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	activities.add(new SendEmailToCandidateForMissingDocuments());
 	activities.add(new RevokeDocumentFile());
 	activities.add(new RejectCandidacy());
+	activities.add(new CreateRegistration());
+	// activities.add(new EnrolOnFirstSemester());
 
     }
 
@@ -1142,6 +1146,80 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	    process.rejectCandidacy(userView.getPerson());
 	    return process;
 	}
+    }
+
+    static private class CreateRegistration extends Activity<ErasmusIndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(ErasmusIndividualCandidacyProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (process.getCandidacy().hasRegistration()) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (!process.isStudentAcceptedAndNotified()) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (!process.isStudentNotifiedWithReceptionEmail()) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected ErasmusIndividualCandidacyProcess executeActivity(ErasmusIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    process.createRegistration();
+
+	    return process;
+	}
+
+    }
+
+    static private class EnrolOnFirstSemester extends Activity<ErasmusIndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(ErasmusIndividualCandidacyProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (!process.getCandidacy().hasRegistration()) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (!process.isStudentAcceptedAndNotified()) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (!process.isStudentNotifiedWithReceptionEmail()) {
+		throw new PreConditionNotValidException();
+	    }
+
+	}
+
+	@Override
+	protected ErasmusIndividualCandidacyProcess executeActivity(ErasmusIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    process.enrol();
+	    return process;
+	}
+
+    }
+
+    private void createRegistration() {
+	getCandidacy().createRegistration(getDegreeCurricularPlan(this), CycleType.SECOND_CYCLE, null);
+    }
+
+    private DegreeCurricularPlan getDegreeCurricularPlan(final ErasmusIndividualCandidacyProcess candidacyProcess) {
+	return candidacyProcess.getCandidacySelectedDegree().getLastActiveDegreeCurricularPlan();
+    }
+
+    private void enrol() {
+	getCandidacy().enrol();
     }
 
     private String getMissingRequiredDocumentListText() {

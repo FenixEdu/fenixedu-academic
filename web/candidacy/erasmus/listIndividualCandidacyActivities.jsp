@@ -200,9 +200,22 @@
 		<fr:view name="individualCandidacyProcess" property="candidacy.approvedLearningAgreements" schema="IndividualCandidacyDocumentFile.view">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle1 thlight thright mtop025"/>
-			
 			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>
-
+	
+	<p><strong><bean:message key="label.erasmus.candidacy.registration" bundle="CANDIDATE_RESOURCES"/></strong></p>
+	
+	<logic:empty name="individualCandidacyProcess" property="candidacy.registration">
+		<bean:message key="message.erasmus.candidacy.candidate.is.not.registered" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+	</logic:empty>
+	
+	<logic:notEmpty name="individualCandidacyProcess" property="candidacy.registration">
+		<fr:view name="individualCandidacyProcess" property="candidacy.registration" schema="student.registrationsWithStartData">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle1 thlight thright mtop025"/>
+			</fr:layout>
+		</fr:view>
+	</logic:notEmpty>
+	
 </logic:notEmpty>

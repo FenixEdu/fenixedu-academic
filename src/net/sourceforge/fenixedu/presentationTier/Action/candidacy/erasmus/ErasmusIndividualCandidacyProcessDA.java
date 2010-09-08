@@ -46,7 +46,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "edit-degree-courses-information", path = "/candidacy/erasmus/editDegreeAndCoursesInformation.jsp"),
 	@Forward(name = "visualize-alerts", path = "/candidacy/erasmus/visualizeAlerts.jsp"),
 	@Forward(name = "prepare-edit-candidacy-documents", path = "/candidacy/erasmus/editCandidacyDocuments.jsp"),
-	@Forward(name = "cancel-candidacy", path = "/candidacy/cancelCandidacy.jsp") })
+	@Forward(name = "cancel-candidacy", path = "/candidacy/cancelCandidacy.jsp"),
+	@Forward(name = "prepare-create-registration", path = "/candidacy/erasmus/prepareCreateRegistration.jsp"),
+	@Forward(name = "view-registration", path = "/candidacy/erasmus/viewRegistrationData.jsp"),
+	@Forward(name = "prepare-enrol-on-modules", path = "/candidacy/erasmus/prepareEnrolOnModules.jsp") })
 public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProcessDA {
 
     @Override
@@ -348,4 +351,30 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
 	return prepareExecuteUploadApprovedLearningAgreement(mapping, form, request, response);
     }
 
+    public ActionForward prepareExecuteCreateRegistration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	return mapping.findForward("prepare-create-registration");
+    }
+
+    public ActionForward executeCreateRegistration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	ErasmusIndividualCandidacyProcess erasmusIndividualCandidacyProcess = (ErasmusIndividualCandidacyProcess) getProcess(request);
+	executeActivity(erasmusIndividualCandidacyProcess, "CreateRegistration");
+
+	return listProcessAllowedActivities(mapping, form, request, response);
+    }
+
+    public ActionForward prepareExecuteEnrolOnFirstSemester(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	return mapping.findForward("prepare-enrol-on-modules");
+    }
+
+    public ActionForward executeEnrolOnFirstSemester(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	ErasmusIndividualCandidacyProcess erasmusIndividualCandidacyProcess = (ErasmusIndividualCandidacyProcess) getProcess(request);
+	executeActivity(erasmusIndividualCandidacyProcess, "EnrolOnModules");
+
+	return listProcessAllowedActivities(mapping, form, request, response);
+    }
 }
