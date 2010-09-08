@@ -12,10 +12,13 @@ import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsurancePenaltyExemption;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class AdministrativeOfficeFeePR extends AdministrativeOfficeFeePR_Base {
 
@@ -67,12 +70,18 @@ public class AdministrativeOfficeFeePR extends AdministrativeOfficeFeePR_Base {
 	return result;
     }
 
-    @Override
-    public AdministrativeOfficeFeePR edit(Money fixedAmount, Money penaltyAmount, YearMonthDay whenToApplyFixedAmountPenalty) {
+    @Checked("PostingRulePredicates.editPredicate")
+    public AdministrativeOfficeFeePR edit(DateTime startDate, Money fixedAmount, Money penaltyAmount,
+	    YearMonthDay whenToApplyFixedAmountPenalty) {
 
-	deactivate();
+	if (!startDate.isAfter(getStartDate())) {
+	    throw new DomainException(
+		    "error.AdministrativeOfficeFeePR.startDate.is.before.then.start.date.of.previous.posting.rule");
+	}
 
-	return new AdministrativeOfficeFeePR(new DateTime().minus(1000), null, getServiceAgreementTemplate(), fixedAmount,
+	deactivate(startDate);
+
+	return new AdministrativeOfficeFeePR(startDate.minus(1000), null, getServiceAgreementTemplate(), fixedAmount,
 		penaltyAmount, whenToApplyFixedAmountPenalty);
     }
 

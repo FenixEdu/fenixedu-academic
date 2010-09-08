@@ -324,7 +324,9 @@
 <schema name="AdministrativeOfficeFeePR.edit"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.AdministrativeOfficeFeePR"
 	bundle="APPLICATION_RESOURCES" extends="FixedAmountWithPenaltyFromDatePR.edit">
+	<slot name="startDate" key="net.sourceforge.fenixedu.domain.accounting.postingRules.AdministrativeOfficeFeePR.startDate" />
 	
+	<setter signature="edit(startDate, fixedAmount,fixedAmountPenalty,whenToApplyFixedAmountPenalty)"/>
 </schema>
 
 <schema name="DFACandidacyPR.edit"
