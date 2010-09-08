@@ -360,19 +360,21 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
     public String getErasmusCandidacyStateDescription() {
 	ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
 
+	String registeredMessage = getCandidacy().hasRegistration() ? "/"
+		+ bundle.getString("label.erasmus.candidacy.state.registered") : "";
 	if (isCandidacyCancelled()) {
-	    return bundle.getString("label.erasmus.candidacy.state.description.cancelled");
+	    return bundle.getString("label.erasmus.candidacy.state.description.cancelled") + registeredMessage;
 	}
 
 	if (isCandidacyRejected()) {
-	    return bundle.getString("label.erasmus.candidacy.state.description.rejected");
+	    return bundle.getString("label.erasmus.candidacy.state.description.rejected") + registeredMessage;
 	}
 
 	if (isCandidacyInStandBy() && isStudentAccepted()) {
-	    return bundle.getString("label.erasmus.candidacy.state.description.student.accepted");
+	    return bundle.getString("label.erasmus.candidacy.state.description.student.accepted") + registeredMessage;
 	}
 
-	return bundle.getString("label.erasmus.candidacy.state.description.student.pending");
+	return bundle.getString("label.erasmus.candidacy.state.description.student.pending") + registeredMessage;
     }
 
     @StartActivity
