@@ -319,13 +319,17 @@ public class Proposal extends Proposal_Base {
 
     @Override
     public void setCoorientator(Person coorientator) {
-	checkPersonProposals(coorientator);
+	if (coorientator != getCoorientator()) {
+	    checkPersonProposals(coorientator);
+	}
 	super.setCoorientator(coorientator);
     }
 
     @Override
     public void setOrientator(Person orientator) {
-	checkPersonProposals(orientator);
+	if (orientator != getOrientator()) {
+	    checkPersonProposals(orientator);
+	}
 	super.setOrientator(orientator);
     }
 
