@@ -338,6 +338,9 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
     static private class ViewChildProcessWithMissingRequiredDocumentFiles extends Activity<SecondCycleCandidacyProcess> {
 	@Override
 	public void checkPreConditions(SecondCycleCandidacyProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
 	}
 
 	@Override
