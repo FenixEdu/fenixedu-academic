@@ -7,6 +7,8 @@ import net.sourceforge.fenixedu.domain.EnrolmentPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 
 public class StudentCurricularPlanEnrolmentPreConditions {
 
@@ -134,11 +136,11 @@ public class StudentCurricularPlanEnrolmentPreConditions {
 
 	return createTrue();
     }
-    
+
     static EnrolmentPreConditionResult checkEnrolmentPeriodsForSpecialSeason(StudentCurricularPlan scp, ExecutionSemester semester) {
-	if(!scp.getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(semester)) {
+	if (!scp.getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(semester)) {
 	    return outOfPeriodResult("specialSeason", scp.getDegreeCurricularPlan()
-			.getNextEnrolmentPeriodInCurricularCoursesSpecialSeason());
+		    .getNextEnrolmentPeriodInCurricularCoursesSpecialSeason());
 	}
 	return createTrue();
     }
@@ -148,8 +150,14 @@ public class StudentCurricularPlanEnrolmentPreConditions {
      * otherwise is not considered to be prescribed
      */
     private static boolean hasPrescribed(StudentCurricularPlan scp, ExecutionSemester semester) {
-	return scp.getRegistration().hasFlunkedState(semester.getExecutionYear())
-		&& scp.getRegistration().hasRegisteredActiveState();
+	for (RegistrationState state : scp.getRegistration().getRegistrationStates(semester.getExecutionYear())) {
+	    if (state.getExecutionYear().equals(semester.getExecutionYear())
+		    && RegistrationStateType.FLUNKED.equals(state.getStateType())) {
+		return scp.getRegistration().hasRegisteredActiveState();
+	    }
+	}
+
+	return false;
     }
 
 }
