@@ -44,3 +44,5 @@ function executeWithTempFile() {
 }
 
 
+execute "Create more tables and columns for remote communication plugin." updates.sql
+execute "Adding SeniorStatute modifications to STUDENT_STATUTE table." addedSeniorStatuteToStudentStatuteTable.sql
