@@ -45,6 +45,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -188,6 +189,11 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 	    IUserView userView = UserView.getUser();
 	    Object argsProposal[] = { infoFinalWorkProposal };
 	    ServiceUtils.executeService("SubmitFinalWorkProposal", argsProposal);
+	} catch (DomainException ex) {
+	    ActionErrors actionErrors = new ActionErrors();
+	    actionErrors.add("error.Scheduleing.maximumNumberOfProposalsPerPerson", new ActionError("error.Scheduleing.maximumNumberOfProposalsPerPerson"));
+	    saveErrors(request, actionErrors);
+	    return mapping.getInputForward();
 	} catch (NotAuthorizedFilterException nafe) {
 	    ActionErrors actionErrors = new ActionErrors();
 	    actionErrors.add("finalDegreeWorkProposal.ProposalPeriod.validator.OutOfPeriod", new ActionError(
