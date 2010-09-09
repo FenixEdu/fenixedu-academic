@@ -17,11 +17,14 @@ import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.cardGeneration.Category;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.util.StringUtils;
 import pt.utl.ist.fenix.tools.util.StringAppender;
@@ -208,6 +211,11 @@ public enum DegreeType {
 	    return cycleType == CycleType.SECOND_CYCLE;
 	}
 
+	@Override
+	public boolean hasSeniorEligibility(Registration registration, ExecutionYear executionYear) {
+	    return hasConditionsToFinishBachelorDegree(registration, executionYear);
+	}
+
     },
 
     BOLONHA_MASTER_DEGREE(GradeScale.TYPE20, AcademicPeriod.TWO_YEAR, true, // canCreateStudent
@@ -265,6 +273,11 @@ public enum DegreeType {
 	@Override
 	protected Collection<CycleType> supportedCyclesToEnrol() {
 	    return SECOND_CYCLE_TYPE;
+	}
+
+	@Override
+	public boolean hasSeniorEligibility(Registration registration, ExecutionYear executionYear) {
+	    return hasConditionsToFinishMasterDegree(registration, executionYear);
 	}
 
     },
@@ -345,6 +358,14 @@ public enum DegreeType {
 	    }
 
 	    return null;
+	}
+	
+	@Override
+	public boolean hasSeniorEligibility(Registration registration, ExecutionYear executionYear) {
+	    if(!isNotEnrolledInFirstCycleOrIsConcluded(registration, executionYear))
+		return false;
+	    
+	    return hasConditionsToFinishMasterDegree(registration, executionYear);
 	}
 
     },
@@ -909,6 +930,39 @@ public enum DegreeType {
 	TreeSet<CycleType> result = new TreeSet<CycleType>(CycleType.COMPARATOR_BY_LESS_WEIGHT);
 	result.addAll(cycleTypes());
 	return result;
+    }
+
+    public boolean hasSeniorEligibility(Registration registration, ExecutionYear executionYear) {
+	return false;
+    }
+    
+    protected boolean hasConditionsToFinishBachelorDegree(final Registration registration, final ExecutionYear executionYear) {
+	Double floor = new Double(165.00);
+	Double ceiling = new Double(180.00);
+	return registration.getStudentCurricularPlan(executionYear).getApprovedEctsCredits(CycleType.FIRST_CYCLE).compareTo(floor) >= 0
+		&& registration.getStudentCurricularPlan(executionYear).getApprovedEctsCredits(CycleType.FIRST_CYCLE).compareTo(
+			ceiling) < 0;
+    }
+    
+    protected boolean hasConditionsToFinishMasterDegree(final Registration registration, final ExecutionYear executionYear) {
+	Enrolment dissertationEnrolment = registration.getStudentCurricularPlan(executionYear).getLatestDissertationEnrolment();
+
+	if (dissertationEnrolment == null) {
+	    return false;
+	}
+
+	if (dissertationEnrolment.getExecutionYear() != executionYear && !dissertationEnrolment.isApproved()) {
+	    return false;
+	}
+
+	Double dissContrib = dissertationEnrolment.isApproved() ? 0.0 : dissertationEnrolment.getEctsCredits();
+	Double threshold = 120.00 - (15.00 + dissContrib);
+	return registration.getStudentCurricularPlan(executionYear).getApprovedEctsCredits(CycleType.SECOND_CYCLE) >= threshold;
+    }
+    
+    protected boolean isNotEnrolledInFirstCycleOrIsConcluded(final Registration registration, final ExecutionYear executionYear) {
+	return registration.getStudentCurricularPlan(executionYear).getFirstCycle() == null
+		|| registration.getStudentCurricularPlan(executionYear).getFirstCycle().isConcluded();
     }
 
     static public Set<DegreeType> getDegreeTypesFor(AdministrativeOfficeType administrativeOfficeType) {

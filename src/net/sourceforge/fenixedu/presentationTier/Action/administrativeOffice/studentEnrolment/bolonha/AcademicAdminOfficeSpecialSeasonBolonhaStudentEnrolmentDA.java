@@ -110,25 +110,38 @@ public class AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA extends A
 	StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(request);
 	ExecutionSemester executionSemester = getExecutionPeriod(request);
 
-	List<StudentStatute> statutes = studentCurricularPlan.getRegistration().getStudent().getStudentStatutes();
+	if (!hasStatute(studentCurricularPlan.getRegistration().getStudent(), executionSemester, studentCurricularPlan.getRegistration())) {
+	    if (!studentCurricularPlan.getRegistration().isSeniorStatuteApplicable(executionSemester.getExecutionYear())) {
+		addActionMessage(request, "error.special.season.not.granted");
+		request.setAttribute("studentCurricularPlan", studentCurricularPlan);
+		request.setAttribute("executionPeriod", executionSemester);
+
+		return mapping.findForward("showStudentEnrollmentMenu");
+	    }
+	    studentCurricularPlan.getRegistration().grantSeniorStatute(executionSemester.getExecutionYear());
+	}
+	
+	request.setAttribute("action", getAction());
+	request.setAttribute("bolonhaStudentEnrollmentBean", new SpecialSeasonBolonhaStudentEnrolmentBean(
+		studentCurricularPlan, executionSemester));
+
+	addDebtsWarningMessages(studentCurricularPlan.getRegistration().getStudent(), executionSemester, request);
+	return mapping.findForward("showDegreeModulesToEnrol");
+	
+    }
+
+    protected boolean hasStatute(Student student, ExecutionSemester executionSemester, Registration registration) {
+	List<StudentStatute> statutes = student.getStudentStatutes();
 	for (StudentStatute statute : statutes) {
-	    if (!statute.getStatuteType().isSpecialSeasonGranted() && !statute.hasSeniorStatuteForRegistration(studentCurricularPlan.getRegistration()))
+	    if (!statute.getStatuteType().isSpecialSeasonGranted() && !statute.hasSeniorStatuteForRegistration(registration))
 		continue;
 	    if (!statute.isValidInExecutionPeriod(executionSemester))
 		continue;
 
-	    request.setAttribute("action", getAction());
-	    request.setAttribute("bolonhaStudentEnrollmentBean", new SpecialSeasonBolonhaStudentEnrolmentBean(
-		    studentCurricularPlan, executionSemester));
+	    return true;
 
-	    addDebtsWarningMessages(studentCurricularPlan.getRegistration().getStudent(), executionSemester, request);
-	    return mapping.findForward("showDegreeModulesToEnrol");
 	}
-	addActionMessage(request, "error.special.season.not.granted");
-	request.setAttribute("studentCurricularPlan", studentCurricularPlan);
-	request.setAttribute("executionPeriod", executionSemester);
-
-	return mapping.findForward("showStudentEnrollmentMenu");
+	return false;
     }
 
 }

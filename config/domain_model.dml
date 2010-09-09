@@ -15284,7 +15284,9 @@ relation StudentStatuteStudent {
 }
 
 relation SeniorStatuteRegistration {
-	student.SeniorStatute playsRole seniorStatute;
+	student.SeniorStatute playsRole seniorStatute {
+		multiplicity *;
+	}
 	student.Registration playsRole registration {
 		multiplicity 1;
 	}

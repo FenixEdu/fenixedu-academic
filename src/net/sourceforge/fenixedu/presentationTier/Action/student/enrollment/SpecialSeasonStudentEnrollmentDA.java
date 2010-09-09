@@ -93,9 +93,14 @@ public class SpecialSeasonStudentEnrollmentDA extends AcademicAdminOfficeSpecial
 	SpecialSeasonStudentEnrollmentBean bean = (SpecialSeasonStudentEnrollmentBean) getRenderedObject("bean");
 
 	if (!hasStatute(bean.getStudent(), bean.getExecutionSemester(), bean.getScp().getRegistration())) {
-	    addActionMessage("error", request, "error.special.season.not.granted");
-	    request.setAttribute("bean", bean);
-	    return mapping.findForward("showPickSCPAndSemester");
+
+	    if (!(bean.getScp().getRegistration().isSeniorStatuteApplicable(bean.getExecutionSemester().getExecutionYear()))) {
+		addActionMessage("error", request, "error.special.season.not.granted");
+		request.setAttribute("bean", bean);
+		return mapping.findForward("showPickSCPAndSemester");
+	    }
+
+	    bean.getScp().getRegistration().grantSeniorStatute(bean.getExecutionSemester().getExecutionYear());
 	}
 
 	request.setAttribute("bolonhaStudentEnrollmentBean", new SpecialSeasonBolonhaStudentEnrolmentBean(bean.getScp(), bean
@@ -149,20 +154,6 @@ public class SpecialSeasonStudentEnrollmentDA extends AcademicAdminOfficeSpecial
 	}
 	return nextOpenPeriodsForEachSCP.isEmpty() ? null : Collections.min(nextOpenPeriodsForEachSCP,
 		EnrolmentPeriodInSpecialSeasonEvaluations.COMPARATOR_BY_START);
-    }
-
-    private boolean hasStatute(Student student, ExecutionSemester executionSemester, Registration registration) {
-	List<StudentStatute> statutes = student.getStudentStatutes();
-	for (StudentStatute statute : statutes) {
-	    if (!statute.getStatuteType().isSpecialSeasonGranted() && !statute.hasSeniorStatuteForRegistration(registration))
-		continue;
-	    if (!statute.isValidInExecutionPeriod(executionSemester))
-		continue;
-
-	    return true;
-
-	}
-	return false;
     }
 
     private boolean hasPendingDebts(Student student) {

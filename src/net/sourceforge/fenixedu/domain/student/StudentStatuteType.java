@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -23,14 +25,16 @@ public enum StudentStatuteType {
 	@Override
 	public StudentStatute createStudentStatute(Student student, ExecutionSemester beginExecutionPeriod,
 		ExecutionSemester endExecutionPeriod) {
+
 	    throw new DomainException("error.studentStatute.mustDefineValidRegistrationMatchingSeniorStatute");
 	}
 
+	@Override
 	public StudentStatute createStudentStatute(Student student, Registration registration,
 		ExecutionSemester beginExecutionPeriod, ExecutionSemester endExecutionPeriod) {
 	    return new SeniorStatute(student, registration, this, beginExecutionPeriod, endExecutionPeriod);
 	}
-	
+
     },
 
     WORKING_STUDENT(true, true, true),
@@ -137,9 +141,15 @@ public enum StudentStatuteType {
 	VISIBLE_STATUTES = Collections.unmodifiableList(result);
     }
 
+    @Service
     public StudentStatute createStudentStatute(Student student, ExecutionSemester beginExecutionPeriod,
 	    ExecutionSemester endExecutionPeriod) {
 	return new StudentStatute(student, this, beginExecutionPeriod, endExecutionPeriod);
+    }
+
+    public StudentStatute createStudentStatute(Student student, Registration registration,
+	    ExecutionSemester beginExecutionPeriod, ExecutionSemester endExecutionPeriod) {
+	throw new DomainException("error.studentStatute.RegistrationUnrelated");
     }
 
 }

@@ -373,8 +373,8 @@ public class Registration extends Registration_Base {
     }
 
     public List<StudentCurricularPlan> getSortedStudentCurricularPlans() {
-	final ArrayList<StudentCurricularPlan> sortedStudentCurricularPlans = new ArrayList<StudentCurricularPlan>(
-		super.getStudentCurricularPlans());
+	final ArrayList<StudentCurricularPlan> sortedStudentCurricularPlans = new ArrayList<StudentCurricularPlan>(super
+		.getStudentCurricularPlans());
 	Collections.sort(sortedStudentCurricularPlans, StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_START_DATE);
 	return sortedStudentCurricularPlans;
     }
@@ -1754,8 +1754,8 @@ public class Registration extends Registration_Base {
 	checkIfReachedAttendsLimit();
 
 	if (getStudent().readAttendByExecutionCourse(executionCourse) == null) {
-	    final Enrolment enrolment = findEnrolment(getActiveStudentCurricularPlan(), executionCourse,
-		    executionCourse.getExecutionPeriod());
+	    final Enrolment enrolment = findEnrolment(getActiveStudentCurricularPlan(), executionCourse, executionCourse
+		    .getExecutionPeriod());
 	    if (enrolment != null) {
 		enrolment.createAttends(this, executionCourse);
 	    } else {
@@ -1800,8 +1800,8 @@ public class Registration extends Registration_Base {
 	final IUserView userView = AccessControl.getUserView();
 	if (userView == null || !userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)) {
 	    if (readAttendsInCurrentExecutionPeriod().size() >= MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD) {
-		throw new DomainException("error.student.reached.attends.limit",
-			String.valueOf(MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD));
+		throw new DomainException("error.student.reached.attends.limit", String
+			.valueOf(MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD));
 	    }
 	}
     }
@@ -1870,7 +1870,8 @@ public class Registration extends Registration_Base {
 
     public PrecedentDegreeInformation getPrecedentDegreeInformation(final SchoolLevelType levelType) {
 	return (super.hasPrecedentDegreeInformation() && super.getPrecedentDegreeInformation().getSchoolLevel() == levelType) ? super
-		.getPrecedentDegreeInformation() : null;
+		.getPrecedentDegreeInformation()
+		: null;
     }
 
     public boolean isFirstCycleAtributionIngression() {
@@ -3617,6 +3618,58 @@ public class Registration extends Registration_Base {
 	check(year, "error.Registration.invalid.execution.year");
 	setRegistrationYear(year);
 
+    }
+
+    public boolean isSeniorStatuteApplicable(ExecutionYear executionYear) {
+	
+	if(hasAlreadySeniorStatute(executionYear))
+	    return false;
+
+	if(hasBeenSeniorForTheLastTwoConsecutiveYears(executionYear))
+	    return false;
+
+	return getDegreeType().hasSeniorEligibility(this, executionYear);
+    }
+    
+    private boolean hasAlreadySeniorStatute(ExecutionYear executionYear) {
+	for(SeniorStatute seniorStatute : getSeniorStatuteSet()) {
+	    if(seniorStatute.isValidOnAnyExecutionPeriodFor(executionYear))
+		return true;
+	}
+	return false;
+    }
+    
+    private boolean hasBeenSeniorForTheLastTwoConsecutiveYears(ExecutionYear executionYear) {
+	if(!isSeniorLastYear(executionYear))
+	    return false;
+	if(!isSeniorTwoYearsAgo(executionYear))
+	    return false;
+	
+	return true;
+    }
+    
+    private boolean isSeniorLastYear(ExecutionYear executionYear) {
+	for(SeniorStatute seniorStatute : getSeniorStatuteSet()) {
+	    if(seniorStatute.isValidOnAnyExecutionPeriodFor(executionYear.getPreviousExecutionYear()))
+		return true;
+	}
+	return false;
+    }
+    
+    private boolean isSeniorTwoYearsAgo(ExecutionYear executionYear) {
+	ExecutionYear previousYear = executionYear.getPreviousExecutionYear();
+
+	for(SeniorStatute seniorStatute : getSeniorStatuteSet()) {
+	    if(seniorStatute.isValidOnAnyExecutionPeriodFor(previousYear.getPreviousExecutionYear()))
+		return true;
+	}
+	return false;
+    }
+
+    @Service
+    public StudentStatute grantSeniorStatute(ExecutionYear executionYear) {
+	return StudentStatuteType.SENIOR.createStudentStatute(getStudent(), this, executionYear.getFirstExecutionPeriod(),
+		executionYear.getLastExecutionPeriod());
     }
 
     public void setHomologationDate(final LocalDate homologationDate) {
