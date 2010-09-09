@@ -122,12 +122,9 @@ public class StudentCurricularPlanEnrolmentPreConditions {
 
 	} else if (semester.isFirstOfYear() && hasPrescribed(scp, semester)) {
 
-	    // TODO: Should exist Prescribed period !!! Meanwhile use special
-	    // season period
-
-	    if (scp.getDegreeCurricularPlan().getActualEnrolmentPeriodInCurricularCoursesSpecialSeason() == null) {
+	    if (scp.getDegreeCurricularPlan().getActualEnrolmentPeriodInCurricularCoursesFlunkedSeason() == null) {
 		return outOfPeriodResult("flunked.students", scp.getDegreeCurricularPlan()
-			.getNextEnrolmentPeriodInCurricularCoursesSpecialSeason());
+			.getNextEnrolmentPeriodInCurricularCoursesFlunkedSeason());
 	    }
 
 	} else if (!scp.getDegreeCurricularPlan().hasActualEnrolmentPeriodInCurricularCourses()) {

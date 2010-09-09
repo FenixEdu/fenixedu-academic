@@ -291,8 +291,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	}
 	if (!notApprovedCompetenceCourses.isEmpty()) {
 	    final String[] result = new String[notApprovedCompetenceCourses.size()];
-	    throw new DomainException("error.not.all.competence.courses.are.approved", notApprovedCompetenceCourses
-		    .toArray(result));
+	    throw new DomainException("error.not.all.competence.courses.are.approved",
+		    notApprovedCompetenceCourses.toArray(result));
 	}
     }
 
@@ -631,7 +631,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 		positivesSet.add((EnrolmentPeriodInSpecialSeasonEvaluations) enrolmentPeriod);
 	    }
 	}
-	return positivesSet.isEmpty() ? null : Collections.min(positivesSet, EnrolmentPeriodInSpecialSeasonEvaluations.COMPARATOR_BY_START);
+	return positivesSet.isEmpty() ? null : Collections.min(positivesSet,
+		EnrolmentPeriodInSpecialSeasonEvaluations.COMPARATOR_BY_START);
     }
 
     public boolean hasOpenSpecialSeasonEnrolmentPeriod(ExecutionSemester executionSemester) {
@@ -664,6 +665,15 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	}
 
 	return false;
+    }
+
+    public EnrolmentPeriodInCurricularCoursesFlunkedSeason getActualEnrolmentPeriodInCurricularCoursesFlunkedSeason() {
+	for (final EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriods()) {
+	    if ((enrolmentPeriod instanceof EnrolmentPeriodInCurricularCoursesFlunkedSeason) && enrolmentPeriod.isValid()) {
+		return (EnrolmentPeriodInCurricularCoursesFlunkedSeason) enrolmentPeriod;
+	    }
+	}
+	return null;
     }
 
     public boolean hasOpenEnrolmentPeriodInCurricularCoursesFor(final ExecutionSemester executionSemester) {
@@ -706,6 +716,22 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	}
 	if (!result.isEmpty()) {
 	    Collections.sort(result, EnrolmentPeriodInCurricularCoursesSpecialSeason.COMPARATOR_BY_START);
+	    return result.get(0);
+	}
+	return null;
+    }
+
+    public EnrolmentPeriodInCurricularCoursesFlunkedSeason getNextEnrolmentPeriodInCurricularCoursesFlunkedSeason() {
+	final DateTime now = new DateTime();
+	final List<EnrolmentPeriodInCurricularCoursesFlunkedSeason> result = new ArrayList<EnrolmentPeriodInCurricularCoursesFlunkedSeason>();
+	for (EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriods()) {
+	    if ((enrolmentPeriod instanceof EnrolmentPeriodInCurricularCoursesFlunkedSeason)
+		    && enrolmentPeriod.getStartDateDateTime().isAfter(now)) {
+		result.add((EnrolmentPeriodInCurricularCoursesFlunkedSeason) enrolmentPeriod);
+	    }
+	}
+	if (!result.isEmpty()) {
+	    Collections.sort(result, EnrolmentPeriodInCurricularCoursesFlunkedSeason.COMPARATOR_BY_START);
 	    return result.get(0);
 	}
 	return null;
@@ -1973,5 +1999,4 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public ExecutionYear getLastExecutionYear() {
 	return Collections.max(getExecutionDegreesSet(), ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR).getExecutionYear();
     }
-
 }

@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.EnrolmentInstructions;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriod;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses;
+import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCoursesFlunkedSeason;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCoursesSpecialSeason;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInImprovementOfApprovedEnrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInSpecialSeasonEvaluations;
@@ -39,7 +40,7 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
 
     static List<Class<? extends EnrolmentPeriod>> VALID_ENROLMENT_PERIODS = Arrays.<Class<? extends EnrolmentPeriod>> asList(
 	    EnrolmentPeriodInCurricularCourses.class,
-	    
+
 	    EnrolmentPeriodInSpecialSeasonEvaluations.class,
 
 	    EnrolmentPeriodInClasses.class,
@@ -47,6 +48,8 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
 	    EnrolmentPeriodInImprovementOfApprovedEnrolment.class,
 
 	    EnrolmentPeriodInCurricularCoursesSpecialSeason.class,
+
+	    EnrolmentPeriodInCurricularCoursesFlunkedSeason.class,
 
 	    ReingressionPeriod.class);
 
@@ -57,7 +60,8 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
 
 	final String executionPeriodIDString = ((DynaActionForm) form).getString("executionPeriodID");
 	if (isValidObjectID(executionPeriodIDString)) {
-	    final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(new Integer(executionPeriodIDString));
+	    final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(new Integer(
+		    executionPeriodIDString));
 	    request.setAttribute("executionSemester", executionSemester);
 	    setEnrolmentPeriods(request, getExecutionSemester(executionPeriodIDString));
 	}
@@ -65,9 +69,8 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
 	return mapping.findForward("showEnrolementPeriods");
     }
 
-    
-    public ActionForward prepareEditEnrolmentInstructions(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-    	throws Exception {
+    public ActionForward prepareEditEnrolmentInstructions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	final ExecutionSemester executionSemester = getDomainObject(request, "executionSemesterOID");
 	EnrolmentInstructions.createIfNecessary(executionSemester);
@@ -110,8 +113,8 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
 
 	final DegreeType degreeType = degreeTypeString.length() == 0 ? null : DegreeType.valueOf(degreeTypeString);
 
-	CreateEnrolmentPeriods.run(Integer.valueOf(executionPeriodIDString), degreeType, enrolmentPeriodClassString, getDate(
-		startDateString, startTimeString), getDate(endDateString, endTimeString));
+	CreateEnrolmentPeriods.run(Integer.valueOf(executionPeriodIDString), degreeType, enrolmentPeriodClassString,
+		getDate(startDateString, startTimeString), getDate(endDateString, endTimeString));
 
 	return prepare(mapping, form, request, response);
     }
@@ -138,8 +141,8 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
     }
 
     private void setExecutionSemesters(final HttpServletRequest request) {
-	final List<ExecutionSemester> executionSemesters = new ArrayList<ExecutionSemester>(rootDomainObject
-		.getExecutionPeriods());
+	final List<ExecutionSemester> executionSemesters = new ArrayList<ExecutionSemester>(
+		rootDomainObject.getExecutionPeriods());
 	Collections.sort(executionSemesters, new ReverseComparator(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR));
 	request.setAttribute("executionSemesters", executionSemesters);
     }
@@ -157,8 +160,8 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
 	comparatorChain.addComparator(new Comparator<EnrolmentPeriod>() {
 	    @Override
 	    public int compare(EnrolmentPeriod o1, EnrolmentPeriod o2) {
-		return o1.getDegreeCurricularPlan().getDegree().getNameFor(executionSemester.getAcademicInterval()).compareTo(
-			o2.getDegreeCurricularPlan().getDegree().getNameFor(executionSemester.getAcademicInterval()));
+		return o1.getDegreeCurricularPlan().getDegree().getNameFor(executionSemester.getAcademicInterval())
+			.compareTo(o2.getDegreeCurricularPlan().getDegree().getNameFor(executionSemester.getAcademicInterval()));
 	    }
 	});
 

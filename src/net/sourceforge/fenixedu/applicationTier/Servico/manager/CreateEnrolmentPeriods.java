@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses;
+import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCoursesFlunkedSeason;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCoursesSpecialSeason;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInImprovementOfApprovedEnrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInSpecialSeasonEvaluations;
@@ -50,8 +51,8 @@ public class CreateEnrolmentPeriods {
 
     private static void createEnrolmentPeriodsForEmptyDegree(ExecutionSemester executionSemester,
 	    String enrolmentPeriodClassName, Date startDate, Date endDate) throws FenixServiceException {
-	createPeriod(enrolmentPeriodClassName, startDate, endDate, executionSemester, DegreeCurricularPlan
-		.readEmptyDegreeCurricularPlan());
+	createPeriod(enrolmentPeriodClassName, startDate, endDate, executionSemester,
+		DegreeCurricularPlan.readEmptyDegreeCurricularPlan());
     }
 
     private static void createEnrolmentPeriodsForBolonhaDegrees(final ExecutionSemester executionSemester,
@@ -86,6 +87,10 @@ public class CreateEnrolmentPeriods {
 	} else if (EnrolmentPeriodInCurricularCoursesSpecialSeason.class.getName().equals(enrolmentPeriodClassName)) {
 
 	    new EnrolmentPeriodInCurricularCoursesSpecialSeason(degreeCurricularPlan, executionSemester, startDate, endDate);
+
+	} else if (EnrolmentPeriodInCurricularCoursesFlunkedSeason.class.getName().equals(enrolmentPeriodClassName)) {
+
+	    new EnrolmentPeriodInCurricularCoursesFlunkedSeason(degreeCurricularPlan, executionSemester, startDate, endDate);
 
 	} else if (EnrolmentPeriodInImprovementOfApprovedEnrolment.class.getName().equals(enrolmentPeriodClassName)) {
 
