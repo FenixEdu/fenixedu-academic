@@ -42,6 +42,7 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
@@ -408,7 +409,7 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
     }
 
     private InstallmentPaymentCode createInstallmentPaymentCode(final EntryWithInstallmentDTO entry, final Student student) {
-	final YearMonthDay installmentEndDate = entry.getInstallment().getEndDate();
+	final YearMonthDay installmentEndDate = new DateTime().plusDays(20).toYearMonthDay();
 
 	return InstallmentPaymentCode.create(PaymentCodeType.GRATUITY_FIRST_INSTALLMENT, new YearMonthDay(), entry
 		.getInstallment().getEndDate(), null, entry.getInstallment(), entry.getAmountToPay(), entry.getAmountToPay(),

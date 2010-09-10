@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.candidate.degree;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +19,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentTimeTable;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
+import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.installments.InstallmentForFirstTimeStudents;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.InstallmentPaymentCode;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyOperationType;
@@ -30,6 +33,9 @@ import net.sourceforge.fenixedu.domain.util.workflow.Operation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -165,7 +171,12 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 		request.setAttribute("executionYear", getCandidacy(request).getExecutionDegree().getExecutionYear());
 		request.setAttribute("person", getCandidacy(request).getRegistration().getPerson());
 		request.setAttribute("campus", getCandidacy(request).getRegistration().getCampus().getName());
-		request.setAttribute("paymentCodes", getCandidacy(request).getAvailablePaymentCodes());
+		request.setAttribute("administrativeOfficeFeeAndInsurancePaymentCode",
+			administrativeOfficeFeeAndInsurancePaymentCode(getCandidacy(request).getAvailablePaymentCodes()));
+		request.setAttribute("installmentPaymentCodes", installmmentPaymentCodes(getCandidacy(request)
+			.getAvailablePaymentCodes()));
+		request.setAttribute("totalGratuityPaymentCode", totalGratuityPaymentCode(getCandidacy(request)
+			.getAvailablePaymentCodes()));
 		request.setAttribute("firstInstallmentEndDate", calculateFirstInstallmentEndDate(getCandidacy(request)
 			.getRegistration(), getCandidacy(request).getAvailablePaymentCodes()));
 		request.setAttribute("sibsEntityCode", PropertiesManager.getProperty("sibs.entityCode"));
@@ -186,6 +197,13 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 		request.setAttribute("registration", getCandidacy(request).getRegistration());
 		request.setAttribute("paymentCodes", getCandidacy(request).getAvailablePaymentCodes());
 		request.setAttribute("sibsEntityCode", PropertiesManager.getProperty("sibs.entityCode"));
+		request.setAttribute("administrativeOfficeFeeAndInsurancePaymentCode",
+			administrativeOfficeFeeAndInsurancePaymentCode(getCandidacy(request).getAvailablePaymentCodes()));
+		request.setAttribute("installmentPaymentCodes", installmmentPaymentCodes(getCandidacy(request)
+			.getAvailablePaymentCodes()));
+		request.setAttribute("totalGratuityPaymentCode", totalGratuityPaymentCode(getCandidacy(request)
+			.getAvailablePaymentCodes()));
+
 		request.setAttribute("firstInstallmentEndDate", calculateFirstInstallmentEndDate(getCandidacy(request)
 			.getRegistration(), getCandidacy(request).getAvailablePaymentCodes()));
 
@@ -203,6 +221,49 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 	    return showCurrentForm(mapping, form, request, response);
 	}
 
+    }
+
+    private Object totalGratuityPaymentCode(List<PaymentCode> availablePaymentCodes) {
+	for (PaymentCode paymentCode : availablePaymentCodes) {
+	    if (PaymentCodeType.GRATUITY_FIRST_INSTALLMENT.equals(paymentCode.getType())
+		    && !(paymentCode instanceof InstallmentPaymentCode)) {
+		return paymentCode;
+	    }
+	}
+
+	return null;
+    }
+
+    private Object installmmentPaymentCodes(List<PaymentCode> availablePaymentCodes) {
+	List<PaymentCode> installmentPaymentCodes = new ArrayList<PaymentCode>();
+
+	CollectionUtils.select(availablePaymentCodes, new Predicate() {
+
+	    @Override
+	    public boolean evaluate(Object arg0) {
+		PaymentCode paymentCode = (PaymentCode) arg0;
+
+		if (paymentCode instanceof InstallmentPaymentCode) {
+		    return true;
+		}
+
+		return false;
+	    }
+	}, installmentPaymentCodes);
+
+	Collections.sort(installmentPaymentCodes, new BeanComparator("code"));
+
+	return installmentPaymentCodes;
+    }
+
+    private Object administrativeOfficeFeeAndInsurancePaymentCode(List<PaymentCode> availablePaymentCodes) {
+	for (PaymentCode paymentCode : availablePaymentCodes) {
+	    if (PaymentCodeType.ADMINISTRATIVE_OFFICE_FEE_AND_INSURANCE.equals(paymentCode.getType())) {
+		return paymentCode;
+	    }
+	}
+
+	return null;
     }
 
     private YearMonthDay calculateFirstInstallmentEndDate(final Registration registration, List<PaymentCode> availablePaymentCodes) {

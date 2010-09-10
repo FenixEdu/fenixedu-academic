@@ -82,31 +82,40 @@ width: 1%;
 	
 	<p style="margin-top: 20px;">A data limite da primeira prestação e a totalidade da propina são de 10 dias a partir da data de inicio da matricula. Após a data limite é cobrado 1% sobre a propina da 1º prestação.</p>
 	
-	<bean:define id="firstInstallmentEndDate" name="firstInstallmentEndDate" type="org.joda.time.YearMonthDay" />
-	<logic:iterate id="paymentCode" name="paymentCodes" indexId="i" type="net.sourceforge.fenixedu.domain.accounting.PaymentCode">
+	<p style="margin-top: 20px;">Taxa de secretaria/Seguro Escolar</p>
+	<div class="box">
+		<bean:define id="administrativeOfficeFeeAndInsurancePaymentCode" name="administrativeOfficeFeeAndInsurancePaymentCode" />
+		<p><span class="label">Entidade: </span> <span class="data"><bean:write name="sibsEntityCode" /></span></p>
+		<p><span class="label">Referência: </span> <span class="data"><bean:write name="administrativeOfficeFeeAndInsurancePaymentCode" property="code" /></span></p>
+		<p><span class="label">Data limite:</span> <span class="data"> <bean:write name="administrativeOfficeFeeAndInsurancePaymentCode" property="endDate" /></span></p>
+		<p><span class="label">Valor:</span> <span class="data"><bean:write name="administrativeOfficeFeeAndInsurancePaymentCode" property="minAmount" /></span></p>
+	</div>
+	
+	<p style="margin-top: 20px;">Propina na totalidade</p>
+	<div class="box">
+		<bean:define id="totalGratuityPaymentCode" name="totalGratuityPaymentCode" />
+		<p><span class="label">Entidade: </span> <span class="data"><bean:write name="sibsEntityCode" /></span></p>
+		<p><span class="label">Referência: </span> <span class="data"><bean:write name="totalGratuityPaymentCode" property="code" /></span></p>
+		<p><span class="label">Data limite:</span> <span class="data"> <bean:write name="totalGratuityPaymentCode" property="endDate" /></span></p>
+		<p><span class="label">Valor:</span> <span class="data"><bean:write name="totalGratuityPaymentCode" property="minAmount" /></span></p>
+	</div>
+
+	<p style="margin-top: 20px;">Prestações da propina</p>
+	<bean:define id="firstInstallmentEndDate" name="firstInstallmentEndDate" />
+	<logic:iterate id="paymentCode" name="installmentPaymentCodes" indexId="i" type="net.sourceforge.fenixedu.domain.accounting.PaymentCode">
 		<div class="box">
-			<p><span class="label">Entidade:</span> <span class="data"><bean:write name="sibsEntityCode" /></span></p>
+			<p><span class="label"><%= (i + 1)  + "º prestação" %></span></p>
+			<p><span class="label">Entidade: </span> <span class="data"><bean:write name="sibsEntityCode" /></span></p>
 			<p><span class="label">Referência: </span> <span class="data"><bean:write name="paymentCode" property="code" /></span></p>
 			
-			<logic:equal name="paymentCode" property="installmentPaymentCode" value="true" >			
-			<logic:equal name="paymentCode" property="installment.forFirstTimeStudents" value="true">
-				<bean:define id="installmentPaymentCode" name="paymentCode" type="net.sourceforge.fenixedu.domain.accounting.paymentCodes.InstallmentPaymentCode" />
-				<p><span class="label">Data limite:</span> <span class="data"> <%= firstInstallmentEndDate.toString("dd-MM-yyyy") %> </span></p>
-			</logic:equal>
+			<logic:equal name="i" value="0">
+			<p><span class="label">Data limite:</span> <span class="data"> <bean:write name="firstInstallmentEndDate" /></span></p>
 			</logic:equal>
 			
-			<logic:equal name="paymentCode" property="accountingEventPaymentCode" value="true">
-			<logic:equal name="paymentCode" property="installmentPaymentCode" value="false" >
-				<p><span class="label">Data limite:</span> <span class="data"> <%= firstInstallmentEndDate.toString("dd-MM-yyyy") %> </span></p>
-			</logic:equal>
-			</logic:equal>
+			<logic:greaterThan name="i" value="0">
+			<p><span class="label">Data limite:</span> <span class="data"> <bean:write name="paymentCode" property="endDate" /></span></p>
+			</logic:greaterThan>
 			
-			<logic:equal name="paymentCode" property="installmentPaymentCode" value="true" >			
-			<logic:equal name="paymentCode" property="installment.forFirstTimeStudents" value="false">
-				<p><span class="label">Data limite:</span> <span class="data"> <bean:write name="paymentCode" property="endDate" /> </span></p>
-			</logic:equal>
-			</logic:equal>
-
 			<p><span class="label">Valor:</span> <span class="data"><bean:write name="paymentCode" property="minAmount" /></span></p>
 		</div>
 	</logic:iterate>

@@ -309,6 +309,10 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 		continue;
 	    }
 
+	    if (!PaymentCodeType.GRATUITY_FIRST_INSTALLMENT.equals(paymentCode.getType())) {
+		continue;
+	    }
+
 	    if (!whatForClazz.equals(paymentCode.getClass())) {
 		continue;
 	    }
