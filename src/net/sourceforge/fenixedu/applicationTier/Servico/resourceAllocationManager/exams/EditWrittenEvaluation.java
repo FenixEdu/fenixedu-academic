@@ -84,7 +84,7 @@ public class EditWrittenEvaluation extends FenixService {
 		    List<Interval> intervals = eventSpaceOccupation.getEventSpaceOccupationIntervals(beginDateTime, endDateTime);
 		    intervalCount += intervals.size();
 		    if(intervalCount > 1) {
-			throw new DomainException("error.noRoom");
+			throw new DomainException("error.noRoom", allocatableSpace.getName());
 		    }
 		}
 	    }
@@ -161,7 +161,7 @@ public class EditWrittenEvaluation extends FenixService {
 		    beginDateString, time });
 	    String body = String
 		    .format(
-			    "Caro Vigilante,\n\nA prova de avalição: %1$s %2$s - %3$s foi alterada para  %4$td-%4$tm-%4$tY - %5$tH:%5$tM.",
+			    "Caro Vigilante,\n\nA prova de avaliï¿½ï¿½o: %1$s %2$s - %3$s foi alterada para  %4$td-%4$tm-%4$tY - %5$tH:%5$tM.",
 			    new Object[] { writtenEvaluation.getName(), beginDateString, time, dayDate, beginDate });
 
 	    for (Vigilancy vigilancy : writtenEvaluation.getVigilancies()) {
