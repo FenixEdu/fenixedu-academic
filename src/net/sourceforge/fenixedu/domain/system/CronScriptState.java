@@ -103,9 +103,13 @@ public class CronScriptState extends CronScriptState_Base {
 	return context;
     }
 
-    public Class getCronScriptClass() throws ClassNotFoundException {
+    public Class getCronScriptClass() {
 	if (cronScriptClass == null) {
-	    cronScriptClass = Class.forName(getCronScriptClassname());
+	    try {
+		cronScriptClass = Class.forName(getCronScriptClassname());
+	    } catch (ClassNotFoundException e) {
+		cronScriptClass = null;
+	    }
 	}
 	return cronScriptClass;
     }
