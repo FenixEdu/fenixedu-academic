@@ -95,6 +95,11 @@ Documentation:
           syntax that allows you to choose how the information is presented. Read the renderer documentation for
           more details. -->
     <renderer type="java.lang.Object" layout="format" class="pt.ist.fenixWebFramework.renderers.FormatRenderer"/>
+
+    <!--@ Entering several conditional formats allows to present objects with different values in different ways.
+    	  A format property will only be used when it's condition is verified.
+    	  Read the renderer's comments for more details. -->
+    <renderer type="java.lang.Object" layout="conditionalFormats" class="pt.ist.fenixWebFramework.renderers.ConditionalFormatRenderer"/>
     
     <!--@ This layout is only to be used for slots of domain objects and never for the top level object that is 
           beeing presented. It generates a link for the object details. The action called is configurable. The 
