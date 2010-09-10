@@ -1776,6 +1776,24 @@ public class Person extends Person_Base {
 	return attends;
     }
 
+    public Set<Attends> getCurrentAttendsPlusSpecialSeason() {
+	final Set<Attends> attends = new HashSet<Attends>();
+	for (final Registration registration : getStudentsSet()) {
+	    for (final Attends attend : registration.getAssociatedAttendsSet()) {
+		final ExecutionCourse executionCourse = attend.getExecutionCourse();
+		final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
+		if (executionSemester.getState().equals(PeriodState.CURRENT)) {
+		    attends.add(attend);
+		} else if (attend.getEnrolment() != null && attend.getEnrolment().isSpecialSeason()) {
+		    if (executionSemester.getNextExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
+			attends.add(attend);
+		    }
+		}
+	    }
+	}
+	return attends;
+    }
+
     public boolean hasIstUsername() {
 	if (this.getIstUsername() != null) {
 	    return true;

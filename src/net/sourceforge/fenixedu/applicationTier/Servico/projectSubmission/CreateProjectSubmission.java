@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
-
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Attends;
@@ -67,7 +66,7 @@ public class CreateProjectSubmission extends FenixService {
     }
 
     private static void checkPermissions(Attends attends, Person person) throws FenixServiceException {
-	if (!person.getCurrentAttends().contains(attends)) {
+	if (!person.getCurrentAttendsPlusSpecialSeason().contains(attends)) {
 	    throw new FenixServiceException("error.NotAuthorized");
 	}
     }
