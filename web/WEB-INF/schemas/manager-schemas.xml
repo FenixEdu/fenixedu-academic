@@ -941,6 +941,6 @@
 <schema name="manager.list.queueJobs.undone" type="net.sourceforge.fenixedu.domain.QueueJob" bundle="MANAGER_RESOURCES">
 	<slot name="class.name" layout="null-as-label" key="label.queueJobs.list.listing"/>
 	<slot name="requestDate" key="label.queueJobs.list.date"/>
-	<slot name="person.name" key="label.queueJobs.list.person"/>
+	<slot name="person" schema="Person.name" layout="values" key="label.queueJobs.list.person"/>
 </schema>
 
