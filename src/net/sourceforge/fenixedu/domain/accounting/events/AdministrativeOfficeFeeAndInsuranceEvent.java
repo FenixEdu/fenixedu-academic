@@ -8,6 +8,8 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.SibsTransactionDetailDTO;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.User;
@@ -19,6 +21,7 @@ import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventState;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
+import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeState;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
@@ -27,7 +30,9 @@ import net.sourceforge.fenixedu.domain.accounting.postingRules.AdministrativeOff
 import net.sourceforge.fenixedu.domain.accounting.postingRules.AdministrativeOfficeFeePR;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
@@ -134,10 +139,65 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
 
     @Override
     protected List<AccountingEventPaymentCode> createPaymentCodes() {
+	AccountingEventPaymentCode paymentCode = findPaymentCodeInStudentCandidacy();
+
+	if (paymentCode != null) {
+	    return Collections.singletonList(paymentCode);
+
+	}
+
 	final Money totalAmount = calculateTotalAmount();
 	return Collections.singletonList(AccountingEventPaymentCode.create(
 		PaymentCodeType.ADMINISTRATIVE_OFFICE_FEE_AND_INSURANCE, new YearMonthDay(), calculatePaymentCodeEndDate(), this,
 		totalAmount, totalAmount, getPerson()));
+    }
+
+    private AccountingEventPaymentCode findPaymentCodeInStudentCandidacy() {
+	if (!getPerson().hasStudent()) {
+	    return null;
+	}
+
+	if (!getPerson().getStudent().getActiveRegistrationsIn(getExecutionYear().getFirstExecutionPeriod()).isEmpty()) {
+	    return null;
+	}
+
+	if (getPerson().getStudent().getActiveRegistrationsIn(getExecutionYear().getFirstExecutionPeriod()).size() != 1) {
+	    return null;
+	}
+
+	Registration registration = getPerson().getStudent().getActiveRegistrationsIn(
+		getExecutionYear().getFirstExecutionPeriod()).get(0);
+	DegreeCurricularPlan degreeCurricularPlan = registration.getActiveStudentCurricularPlan().getDegreeCurricularPlan();
+	ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByAcademicInterval(getExecutionYear()
+		.getAcademicInterval());
+	StudentCandidacy studentCandidacy = getPerson().getStudentCandidacyForExecutionDegree(executionDegree);
+
+	for (PaymentCode paymentCode : studentCandidacy.getAvailablePaymentCodes()) {
+	    if (!paymentCode.isNew()) {
+		continue;
+	    }
+
+	    if (!paymentCode.getClass().equals(AccountingEventPaymentCode.class)) {
+		continue;
+	    }
+
+	    AccountingEventPaymentCode accountingEventPaymentCode = (AccountingEventPaymentCode) paymentCode;
+	    if (accountingEventPaymentCode.hasAccountingEvent()) {
+		continue;
+	    }
+
+	    if (!PaymentCodeType.ADMINISTRATIVE_OFFICE_FEE_AND_INSURANCE.equals(accountingEventPaymentCode.getType())) {
+		continue;
+	    }
+
+	    if (!getExecutionYear().containsDate(accountingEventPaymentCode.getStartDate().toDateTimeAtMidnight())) {
+		continue;
+	    }
+
+	    return accountingEventPaymentCode;
+	}
+
+	return null;
     }
 
     @Override

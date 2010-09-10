@@ -33,7 +33,7 @@ public class MeasurementTest extends MeasurementTest_Base {
 
     public void assignToRoom(Registration registration) {
 	for (final MeasurementTestShift shift : getSortedShifts()) {
-	    if (shift.hasAvailableRoom()) {
+	    if (shift.hasForDegreeCurricularPlan(registration.getActiveDegreeCurricularPlan()) && shift.hasAvailableRoom()) {
 		shift.getAvailableRoom().addRegistrations(registration);
 
 		return;

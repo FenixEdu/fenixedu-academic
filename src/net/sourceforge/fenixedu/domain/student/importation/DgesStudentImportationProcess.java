@@ -9,6 +9,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryWithInstallmentDTO;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.EntryPhase;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -17,11 +18,15 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.QueueJob;
 import net.sourceforge.fenixedu.domain.QueueJobResult;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
+import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.Installment;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.InstallmentPaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlan;
+import net.sourceforge.fenixedu.domain.accounting.postingRules.AdministrativeOfficeFeeAndInsurancePR;
+import net.sourceforge.fenixedu.domain.accounting.postingRules.AdministrativeOfficeFeePR;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.IMDCandidacy;
@@ -69,13 +74,19 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
 
     @Override
     public QueueJobResult execute() throws Exception {
+
 	ByteArrayOutputStream stream = null;
 	try {
 	    stream = new ByteArrayOutputStream();
 	    LOG_WRITER = new PrintWriter(new BufferedOutputStream(stream));
 
 	    importCandidates();
-	} finally {
+	} catch (Throwable a) {
+	    a.printStackTrace();
+	    throw new RuntimeException(a);
+	}
+
+	finally {
 	    LOG_WRITER.close();
 	    stream.close();
 	}
@@ -94,7 +105,7 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
 	return "DgesStudentImportationProcess_result_" + getExecutionYear().getName().replaceAll("/", "-") + ".txt";
     }
 
-    private void importCandidates() {
+    public void importCandidates() {
 
 	final List<DegreeCandidateDTO> degreeCandidateDTOs = parseDgesFile(getDgesStudentImportationFile().getContents(),
 		getUniversityAcronym(), getEntryPhase());
@@ -162,7 +173,50 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
 	    new StandByCandidacySituation(studentCandidacy, employee.getPerson());
 
 	    createAvailableAccountingEventsPaymentCodes(person, studentCandidacy);
+	    createAdministrativeOfficeFeePaymentCode(person, studentCandidacy);
 	}
+    }
+
+    private void createAdministrativeOfficeFeePaymentCode(Person person, StudentCandidacy studentCandidacy) {
+	AdministrativeOffice office = getAdministrativeOffice(studentCandidacy.getDegreeCurricularPlan());
+	AdministrativeOfficeFeeAndInsurancePR administrativeOfficePostingRule = findAdministrativeOfficeFeeAndInsurancePostingRule(office);
+
+	studentCandidacy.addAvailablePaymentCodes(AccountingEventPaymentCode.create(
+		PaymentCodeType.ADMINISTRATIVE_OFFICE_FEE_AND_INSURANCE, new YearMonthDay(), administrativeOfficePostingRule
+			.getAdministrativeOfficeFeePaymentLimitDate(getExecutionYear().getBeginDateYearMonthDay()
+				.toDateTimeAtMidnight(), getExecutionYear().getEndDateYearMonthDay().toDateTimeAtMidnight()),
+		null, calculateAdministrativeOfficeFeeAndInsuranceAmount(office),
+		calculateAdministrativeOfficeFeeAndInsuranceAmount(office), person));
+    }
+
+    private Money calculateAdministrativeOfficeFeeAndInsuranceAmount(final AdministrativeOffice office) {
+	return calculateAdministrativeOfficeFeeAmount(office).add(calculateInsuranceAmount(office));
+    }
+
+    private Money calculateAdministrativeOfficeFeeAmount(AdministrativeOffice office) {
+	return findAdministrativeOfficeFeePostingRule(office).getFixedAmount();
+    }
+
+    private AdministrativeOfficeFeeAndInsurancePR findAdministrativeOfficeFeeAndInsurancePostingRule(AdministrativeOffice office) {
+	return (AdministrativeOfficeFeeAndInsurancePR) office.getServiceAgreementTemplate().findPostingRuleByEventType(
+		EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE);
+    }
+
+    private AdministrativeOfficeFeePR findAdministrativeOfficeFeePostingRule(AdministrativeOffice office) {
+	return (AdministrativeOfficeFeePR) office.getServiceAgreementTemplate().findPostingRuleByEventType(
+		EventType.ADMINISTRATIVE_OFFICE_FEE);
+    }
+
+    private Money calculateInsuranceAmount(AdministrativeOffice office) {
+	AdministrativeOfficeFeeAndInsurancePR feeAndInsurancePostingRule = findAdministrativeOfficeFeeAndInsurancePostingRule(office);
+	return feeAndInsurancePostingRule.getInsuranceAmount(
+		getExecutionYear().getBeginDateYearMonthDay().toDateTimeAtMidnight(), getExecutionYear().getEndDateYearMonthDay()
+			.toDateTimeAtMidnight());
+    }
+
+    private AdministrativeOffice getAdministrativeOffice(final DegreeCurricularPlan degreeCurricularPlan) {
+	return AdministrativeOffice.readByAdministrativeOfficeType(degreeCurricularPlan.getDegreeType()
+		.getAdministrativeOfficeType());
     }
 
     private void createAvailableAccountingEventsPaymentCodes(final Person person, final StudentCandidacy studentCandidacy) {

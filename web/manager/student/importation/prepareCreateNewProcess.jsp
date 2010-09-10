@@ -10,12 +10,12 @@
 	<h2><bean:message key="title.dges.importation.process" bundle="MANAGER_RESOURCES" /></h2>
 
 	<p class="mtop15 mbottom05"><strong><bean:message key="title.dges.importation.process.jobs.create" bundle="MANAGER_RESOURCES" /></strong></p>
-	
+
 	<fr:form action="/dgesStudentImportationProcess.do?method=createNewImportationProcess" encoding="multipart/form-data">
 		<fr:edit id="importation.bean" name="importationBean" visible="false" />
 		
 		<fr:edit id="importation.bean.edit" name="importationBean">
-			<fr:schema bundle="MANAGER_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.manager.student.importation.DgesStudentImportationProcessDA$DgesStudentImportationProcessBean">
+			<fr:schema bundle="MANAGER_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.manager.student.importation.DgesStudentImportationProcessDA$DgesBaseProcessBean">
 				<fr:slot name="executionYear" layout="menu-select" key="label.dges.importation.process.execution.year" required="true" >
 					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider"/>
 					<fr:property name="format" value="${name}" />

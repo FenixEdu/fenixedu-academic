@@ -7543,6 +7543,13 @@ relation RegistrationMeasurementTestRoom {
     }
 }
 
+relation MeasurementTestShiftDegreeCurricularPlan {
+	candidacy.MeasurementTestShift playsRole shift;
+	DegreeCurricularPlan playsRole forDegreeCurricularPlan {
+		multiplicity *;
+	}
+}
+
 relation MeasurementTestShiftMeasurementTestRoom {
     candidacy.MeasurementTestShift playsRole shift;
     

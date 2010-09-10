@@ -40,7 +40,7 @@ public class DgesStudentImportationProcessDA extends FenixDispatchAction {
 
 	DgesBaseProcessBean bean = getRenderedBean();
 	if (bean == null) {
-	    bean = new DgesBaseProcessBean(ExecutionYear.readCurrentExecutionYear().getNextExecutionYear());
+	    bean = new DgesBaseProcessBean(ExecutionYear.readCurrentExecutionYear());
 	}
 
 	RenderUtils.invalidateViewState("importation.bean");
@@ -74,7 +74,7 @@ public class DgesStudentImportationProcessDA extends FenixDispatchAction {
 	    HttpServletResponse response) {
 	DgesBaseProcessBean bean = getRenderedBean();
 	if (bean == null) {
-	    bean = new DgesBaseProcessBean(ExecutionYear.readCurrentExecutionYear().getNextExecutionYear());
+	    bean = new DgesBaseProcessBean(ExecutionYear.readCurrentExecutionYear());
 	}
 
 	RenderUtils.invalidateViewState("importation.bean");
@@ -117,7 +117,7 @@ public class DgesStudentImportationProcessDA extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) {
 	DgesBaseProcessBean bean = getRenderedBean();
 	if (bean == null) {
-	    bean = new DgesBaseProcessBean(ExecutionYear.readCurrentExecutionYear().getNextExecutionYear());
+	    bean = new DgesBaseProcessBean(ExecutionYear.readCurrentExecutionYear());
 	}
 
 	RenderUtils.invalidateViewState("importation.bean");

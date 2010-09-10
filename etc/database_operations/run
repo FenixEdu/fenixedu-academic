@@ -43,5 +43,6 @@ function executeWithTempFile() {
 	echo
 }
 
-
 execute "Correcting last update to STUDENT_STATUTE table. (Populating the 'OJB_CONCRETE_CLASS' column)" correctionToStudentStatuteTable.sql
+execute "Associate Measurement shifts with degree curricular plans" associateMeasurementShiftsAndDegreeCurricularPlans.sql
+ 
