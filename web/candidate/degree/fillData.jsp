@@ -15,11 +15,16 @@
 	<bean:message name="currentForm" property="formName" />
 </h3>
 
+
+
 <logic:notEmpty name="currentForm" property="formDescription">
 	<div class="mvert1">
 		<bean:message name="currentForm" property="formDescription" />
 	</div>
 </logic:notEmpty>
+
+
+
 
 <logic:present name="formMessages">
 	<ul>
@@ -28,7 +33,7 @@
 	</logic:iterate>
 	</ul>		
 </logic:present>
-	
+
 <logic:messagesPresent message="true">
 	<ul>
 		<html:messages id="messages" message="true">
@@ -64,8 +69,8 @@
 			name="currentForm"
 			schema="<%=formClass.toString() + schemaSuffix%>">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4 thright thlight" />
-				<fr:property name="columnClasses" value=",,tdclear tderror1" />
+				<fr:property name="classes" value="tstyle4 thright thlight thwidth" />
+				<fr:property name="columnClasses" value="width250px,,tdclear tderror1" />
 			</fr:layout>
 			<fr:destination name="invalid" path="<%="/degreeCandidacyManagement.do?method=showCurrentForm&currentFormPosition=" + currentFormPosition%>"/>
 			<fr:destination name="districtSelectionPostback" path="<%="/degreeCandidacyManagement.do?method=showCurrentForm&postback=true&currentFormPosition=" + currentFormPosition%>"/>
@@ -80,4 +85,8 @@
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" ><bean:message key="button.next" /></html:submit>
 	
 </fr:form>
+
+
+
+
 
