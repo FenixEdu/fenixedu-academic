@@ -403,13 +403,20 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
 
     private AccountingEventPaymentCode createAccountingEventPaymentCode(final EntryDTO entryDTO, final Student student,
 	    final GratuityPaymentPlan paymentPlan) {
-	return AccountingEventPaymentCode.create(PaymentCodeType.GRATUITY_FIRST_INSTALLMENT, new YearMonthDay(), paymentPlan
-		.getFirstInstallment().getStartDate().plusMonths(1), null, entryDTO.getAmountToPay(), entryDTO.getAmountToPay(),
-		student.getPerson());
+	final YearMonthDay installmentEndDate = new DateTime().plusDays(18).toYearMonthDay();
+
+	return AccountingEventPaymentCode.create(PaymentCodeType.GRATUITY_FIRST_INSTALLMENT, new YearMonthDay(),
+		installmentEndDate, null, entryDTO.getAmountToPay(), entryDTO.getAmountToPay(), student.getPerson());
     }
 
     private InstallmentPaymentCode createInstallmentPaymentCode(final EntryWithInstallmentDTO entry, final Student student) {
-	final YearMonthDay installmentEndDate = new DateTime().plusDays(20).toYearMonthDay();
+	final YearMonthDay installmentEndDate = new DateTime().plusDays(18).toYearMonthDay();
+
+	if (entry.getInstallment().getOrder() == 1) {
+	    return InstallmentPaymentCode.create(PaymentCodeType.GRATUITY_FIRST_INSTALLMENT, new YearMonthDay(),
+		    installmentEndDate, null, entry.getInstallment(), entry.getAmountToPay(), entry.getAmountToPay(), student);
+
+	}
 
 	return InstallmentPaymentCode.create(PaymentCodeType.GRATUITY_FIRST_INSTALLMENT, new YearMonthDay(), entry
 		.getInstallment().getEndDate(), null, entry.getInstallment(), entry.getAmountToPay(), entry.getAmountToPay(),
