@@ -191,12 +191,18 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 
 	    if (paymentCode instanceof InstallmentPaymentCode) {
 		final InstallmentPaymentCode installmentPaymentCode = (InstallmentPaymentCode) paymentCode;
-		paymentCode.update(new YearMonthDay(), calculateInstallmentPaymentCodeEndDate(installmentPaymentCode
-			.getInstallment()), entryDTO.getAmountToPay(), entryDTO.getAmountToPay());
+
+		if (!paymentCode.hasStudentCandidacy()) {
+		    paymentCode.update(new YearMonthDay(), calculateInstallmentPaymentCodeEndDate(installmentPaymentCode
+			    .getInstallment()), entryDTO.getAmountToPay(), entryDTO.getAmountToPay());
+		}
 		result.add(paymentCode);
 	    } else {
-		paymentCode.update(new YearMonthDay(), calculateFullPaymentCodeEndDate(), entryDTO.getAmountToPay(), entryDTO
-			.getAmountToPay());
+		if (!paymentCode.hasStudentCandidacy()) {
+		    paymentCode.update(new YearMonthDay(), calculateFullPaymentCodeEndDate(), entryDTO.getAmountToPay(), entryDTO
+			    .getAmountToPay());
+		}
+
 		result.add(paymentCode);
 	    }
 
