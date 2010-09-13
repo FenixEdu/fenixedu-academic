@@ -92,17 +92,17 @@ width: 1%;
 		<p style="margin: 0.25em 0;"><span class="label">Valor:</span> <span class="data"><bean:write name="administrativeOfficeFeeAndInsurancePaymentCode" property="minAmount" /></span></p>
 	</div>
 	
+	<bean:define id="firstInstallmentEndDate" name="firstInstallmentEndDate" />
 	<p style="margin-top: 20px;">Propina na totalidade</p>
 	<div class="box">
 		<bean:define id="totalGratuityPaymentCode" name="totalGratuityPaymentCode" />
 		<p style="margin: 0.25em 0;"><span class="label">Entidade: </span> <span class="data"><bean:write name="sibsEntityCode" /></span></p>
 		<p style="margin: 0.25em 0;"><span class="label">Referência: </span> <span class="data"><bean:write name="totalGratuityPaymentCode" property="code" /></span></p>
-		<p style="margin: 0.25em 0;"><span class="label">Data limite:</span> <span class="data"> <bean:write name="totalGratuityPaymentCode" property="endDate" /></span></p>
+		<p style="margin: 0.25em 0;"><span class="label">Data limite:</span> <span class="data"> <bean:write name="firstInstallmentEndDate" /></span></p>
 		<p style="margin: 0.25em 0;"><span class="label">Valor:</span> <span class="data"><bean:write name="totalGratuityPaymentCode" property="minAmount" /></span></p>
 	</div>
 
 	<p style="margin-top: 20px;">Propina em prestações</p>
-	<bean:define id="firstInstallmentEndDate" name="firstInstallmentEndDate" />
 	<logic:iterate id="paymentCode" name="installmentPaymentCodes" indexId="i" type="net.sourceforge.fenixedu.domain.accounting.PaymentCode">
 		<div class="box">
 			<p style="margin: 0.25em 0;"><span class="label"><%= (i + 1)  + "º prestação" %></span></p>
