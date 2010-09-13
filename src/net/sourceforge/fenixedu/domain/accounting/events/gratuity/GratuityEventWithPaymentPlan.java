@@ -39,6 +39,7 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -212,7 +213,9 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 
     private YearMonthDay calculateFullPaymentCodeEndDate() {
 	final YearMonthDay today = new YearMonthDay();
-	final YearMonthDay totalEndDate = getFirstInstallment().getEndDate();
+	final LocalDate endDate = getFirstInstallment().getEndDate(this);
+	final YearMonthDay totalEndDate = new YearMonthDay(getFirstInstallment().getEndDate(this).getYear(),
+		getFirstInstallment().getEndDate(this).getMonthOfYear(), getFirstInstallment().getEndDate(this).getDayOfMonth());
 	return today.isBefore(totalEndDate) ? totalEndDate : calculateNextEndDate(today);
     }
 
@@ -322,7 +325,7 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 		continue;
 	    }
 
-	    if (accountingEventPaymentCode instanceof AccountingEventPaymentCode) {
+	    if (!(accountingEventPaymentCode instanceof InstallmentPaymentCode)) {
 		return accountingEventPaymentCode;
 	    }
 
