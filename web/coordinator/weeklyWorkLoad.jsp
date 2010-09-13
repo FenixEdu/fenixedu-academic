@@ -38,7 +38,6 @@
 			</td>
 			<td>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.curricularYearID" property="curricularYearID" onchange="this.form.submit();">
-					<html:option value=""/>
 					<html:options collection="curricularYears" property="idInternal" labelProperty="year"/>
 				</html:select>
 				<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
@@ -131,6 +130,7 @@
 
 
 <logic:present name="selectedExecutionCourse">
+	<logic:present name="selectedExecutionCourse" property="weeklyWorkLoadView">
 	<bean:define id="weeklyWorkLoadView" name="selectedExecutionCourse" property="weeklyWorkLoadView"/>
 	<table class="tstyle3 tpadding01">
 		<tr>
@@ -249,4 +249,5 @@
 		<li><bean:message key="info.weekly.work.load.values.line.average"/></li>
 		</ol>
 
+</logic:present>
 </logic:present>
