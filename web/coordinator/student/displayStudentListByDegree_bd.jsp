@@ -6,8 +6,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
-<h2><bean:message key="link.coordinator.studentList.title"/></h2>
-
 <p>
 	<span class="error"><!-- Error messages go here --><html:errors /></span>
 </p>
