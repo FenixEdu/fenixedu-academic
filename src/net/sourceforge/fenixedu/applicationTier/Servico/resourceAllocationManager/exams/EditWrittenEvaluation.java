@@ -72,11 +72,11 @@ public class EditWrittenEvaluation extends FenixService {
 
 	for (final AllocatableSpace allocatableSpace : roomsToAssociate) {
 	    int intervalCount = 0;
-	    DateTime beginDateTime = new DateTime(writtenEvaluationStartTime.getTime());
-	    YearMonthDay beginYMD = beginDateTime.toYearMonthDay();
+	    DateTime beginDateTime = new DateTime(writtenEvaluationStartTime.getTime()).withSecondOfMinute(0).withMillisOfSecond(0);
+//	    YearMonthDay beginYMD = beginDateTime.toYearMonthDay();
 	    
-	    DateTime endDateTime = new DateTime(writtenEvaluationEndTime.getTime());
-	    YearMonthDay endYMD = endDateTime.toYearMonthDay();
+	    DateTime endDateTime = new DateTime(writtenEvaluationEndTime.getTime()).withSecondOfMinute(0).withMillisOfSecond(0);
+//	    YearMonthDay endYMD = endDateTime.toYearMonthDay();
 	    
 	    for(ResourceAllocation resource : allocatableSpace.getResourceAllocationsSet()) {
 		if (resource.isEventSpaceOccupation()) {
