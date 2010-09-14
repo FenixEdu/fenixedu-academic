@@ -86,40 +86,47 @@ width: 1%;
 	
 	<div class="box">
 		<bean:define id="administrativeOfficeFeeAndInsurancePaymentCode" name="administrativeOfficeFeeAndInsurancePaymentCode" />
-		<p style="margin: 0.15em 0;"><span class="label">Entidade: </span> <span class="data"><bean:write name="sibsEntityCode" /></span></p>
-		<p style="margin: 0.15em 0;"><span class="label">Referência: </span> <span class="data"><bean:write name="administrativeOfficeFeeAndInsurancePaymentCode" property="code" /></span></p>
-		<p style="margin: 0.15em 0;"><span class="label">Data limite:</span> <span class="data"> <bean:write name="administrativeOfficeFeeAndInsurancePaymentCode" property="endDate" /></span></p>
-		<p style="margin: 0.15em 0;"><span class="label">Valor:</span> <span class="data"><bean:write name="administrativeOfficeFeeAndInsurancePaymentCode" property="minAmount" /></span></p>
+		<p style="margin: 0.15em 0; width: auto;"><span class="label">Entidade: </span> <span class="data"><bean:write name="sibsEntityCode" /></span></p>
+		<p style="margin: 0.15em 0; width: auto;"><span class="label">Referência: </span> <span class="data"><bean:write name="administrativeOfficeFeeAndInsurancePaymentCode" property="code" /></span></p>
+		<p style="margin: 0.15em 0; width: auto;"><span class="label">Data limite:</span> <span class="data"> <bean:write name="administrativeOfficeFeeAndInsurancePaymentCode" property="endDate" /></span></p>
+		<p style="margin: 0.15em 0; width: auto;"><span class="label">Valor:</span> <span class="data"><bean:write name="administrativeOfficeFeeAndInsurancePaymentCode" property="minAmount" /></span></p>
 	</div>
 	
 	<bean:define id="firstInstallmentEndDate" name="firstInstallmentEndDate" />
 	<p style="margin-top: 20px;">Propina na totalidade</p>
 	<div class="box">
 		<bean:define id="totalGratuityPaymentCode" name="totalGratuityPaymentCode" />
-		<p style="margin: 0.15em 0;"><span class="label">Entidade: </span> <span class="data"><bean:write name="sibsEntityCode" /></span></p>
-		<p style="margin: 0.15em 0;"><span class="label">Referência: </span> <span class="data"><bean:write name="totalGratuityPaymentCode" property="code" /></span></p>
-		<p style="margin: 0.15em 0;"><span class="label">Data limite:</span> <span class="data"> <bean:write name="firstInstallmentEndDate" /></span></p>
-		<p style="margin: 0.15em 0;"><span class="label">Valor:</span> <span class="data"><bean:write name="totalGratuityPaymentCode" property="minAmount" /></span></p>
+		<p style="margin: 0.15em 0; width: auto;"><span class="label">Entidade: </span> <span class="data"><bean:write name="sibsEntityCode" /></span></p>
+		<p style="margin: 0.15em 0; width: auto;"><span class="label">Referência: </span> <span class="data"><bean:write name="totalGratuityPaymentCode" property="code" /></span></p>
+		<p style="margin: 0.15em 0; width: auto;"><span class="label">Data limite:</span> <span class="data"> <bean:write name="firstInstallmentEndDate" /></span></p>
+		<p style="margin: 0.15em 0; width: auto;"><span class="label">Valor:</span> <span class="data"><bean:write name="totalGratuityPaymentCode" property="minAmount" /></span></p>
 	</div>
 
 	<p style="margin-top: 20px;">Propina em prestações</p>
-	<logic:iterate id="paymentCode" name="installmentPaymentCodes" indexId="i" type="net.sourceforge.fenixedu.domain.accounting.PaymentCode">
-		<div class="box">
-			<p style="margin: 0.15em 0;"><span class="label"><%= (i + 1)  + "º prestação" %></span></p>
-			<p style="margin: 0.15em 0;"><span class="label">Entidade: </span> <span class="data"><bean:write name="sibsEntityCode" /></span></p>
-			<p style="margin: 0.15em 0;"><span class="label">Referência: </span> <span class="data"><bean:write name="paymentCode" property="code" /></span></p>
+	<div class="box">
+		<table>
+			<tr>
+		<logic:iterate id="paymentCode" name="installmentPaymentCodes" indexId="i" type="net.sourceforge.fenixedu.domain.accounting.PaymentCode">
+			<% final String style = i > 0 ? "padding-left: 20px; border-left-color: black; border-left-width: thin; border-left-style: solid;" : ""; %>
+				<td style="<%= style %>">
+			<p style="margin: 0.15em 0; width: auto;"><span class="label"><%= (i + 1)  + "º prestação" %></span></p>
+			<p style="margin: 0.15em 0; width: auto;"><span class="label">Entidade: </span> <span class="data"><bean:write name="sibsEntityCode" /></span></p>
+			<p style="margin: 0.15em 0; width: auto;"><span class="label">Referência: </span> <span class="data"><bean:write name="paymentCode" property="code" /></span></p>
 			
 			<logic:equal name="i" value="0">
-			<p style="margin: 0.15em 0;"><span class="label">Data limite:</span> <span class="data"> <bean:write name="firstInstallmentEndDate" /></span></p>
+			<p style="margin: 0.15em 0; width: auto;"><span class="label">Data limite:</span> <span class="data"> <bean:write name="firstInstallmentEndDate" /></span></p>
 			</logic:equal>
 			
 			<logic:greaterThan name="i" value="0">
-			<p style="margin: 0.15em 0;"><span class="label">Data limite:</span> <span class="data"> <bean:write name="paymentCode" property="endDate" /></span></p>
+			<p style="margin: 0.15em 0; width: auto;"><span class="label">Data limite:</span> <span class="data"> <bean:write name="paymentCode" property="endDate" /></span></p>
 			</logic:greaterThan>
 			
-			<p style="margin: 0.15em 0;"><span class="label">Valor:</span> <span class="data"><bean:write name="paymentCode" property="minAmount" /></span></p>
-		</div>
-	</logic:iterate>
+			<p style="margin: 0.15em 0; width: auto;"><span class="label">Valor:</span> <span class="data"><bean:write name="paymentCode" property="minAmount" /></span></p>
+				</td>
+		</logic:iterate>
+			</tr>
+		</table>
+	</div>
 </div>
 
 </body>
