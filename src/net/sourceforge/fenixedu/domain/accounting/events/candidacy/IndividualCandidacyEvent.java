@@ -39,8 +39,9 @@ public abstract class IndividualCandidacyEvent extends IndividualCandidacyEvent_
     }
 
     protected void attachAvailablePaymentCode(final Person person) {
+	YearMonthDay candidacyDate = getIndividualCandidacy().getCandidacyDate().toDateTimeAtStartOfDay().toYearMonthDay();
 	IndividualCandidacyPaymentCode paymentCode = IndividualCandidacyPaymentCode.getAvailablePaymentCodeAndUse(
-		getPaymentCodeType(), new YearMonthDay(), this, person);
+		getPaymentCodeType(), candidacyDate, this, person);
 	if (paymentCode == null) {
 	    throw new DomainException("error.IndividualCandidacyEvent.invalid.payment.code");
 	}
