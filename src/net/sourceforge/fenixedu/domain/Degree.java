@@ -741,6 +741,10 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     public DegreeCurricularPlan getFirstDegreeCurricularPlan() {
+	if (getDegreeCurricularPlans().isEmpty()) {
+	    return null;
+	}
+
 	DegreeCurricularPlan firstDCP = getDegreeCurricularPlans().get(0);
 	for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlans()) {
 	    if (degreeCurricularPlan.getInitialDateYearMonthDay() == null) {

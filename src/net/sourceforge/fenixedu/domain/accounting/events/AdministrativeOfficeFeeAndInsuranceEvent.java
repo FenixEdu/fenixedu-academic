@@ -142,6 +142,7 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
 	AccountingEventPaymentCode paymentCode = findPaymentCodeInStudentCandidacy();
 
 	if (paymentCode != null) {
+	    paymentCode.setAccountingEvent(this);
 	    return Collections.singletonList(paymentCode);
 
 	}
@@ -154,10 +155,6 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
 
     private AccountingEventPaymentCode findPaymentCodeInStudentCandidacy() {
 	if (!getPerson().hasStudent()) {
-	    return null;
-	}
-
-	if (!getPerson().getStudent().getActiveRegistrationsIn(getExecutionYear().getFirstExecutionPeriod()).isEmpty()) {
 	    return null;
 	}
 
