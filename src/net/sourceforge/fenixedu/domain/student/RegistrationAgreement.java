@@ -43,7 +43,9 @@ public enum RegistrationAgreement {
     
     ERASMUS_MUNDUS(false, false),
     
-    ALMEIDA_GARRETT(false, false);
+    ALMEIDA_GARRETT(false, false),
+    
+    INOV_IST(false, false);
 
     private boolean enrolmentByStudentAllowed;
 
