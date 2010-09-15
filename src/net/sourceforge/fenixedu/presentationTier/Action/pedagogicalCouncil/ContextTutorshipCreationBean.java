@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
@@ -32,7 +32,7 @@ public class ContextTutorshipCreationBean implements Serializable {
     private ExecutionDegree degree;
     private ExecutionSemester executionSemester;
     private ExecutionCourse executionCourse;
-    private Shift shift;
+    private SchoolClass schoolClass;
 
     public static class ContextDegreesProvider implements DataProvider {
 
@@ -55,7 +55,7 @@ public class ContextTutorshipCreationBean implements Serializable {
 	}
     }
 
-    public static class CoursesProvider implements DataProvider {
+    public static class SchoolClassesProvider implements DataProvider {
 	@Override
 	public Converter getConverter() {
 	    return new DomainObjectKeyConverter();
@@ -63,41 +63,20 @@ public class ContextTutorshipCreationBean implements Serializable {
 
 	@Override
 	public Object provide(Object source, Object current) {
-
 	    ContextTutorshipCreationBean bean = (ContextTutorshipCreationBean) source;
 	    ExecutionDegree executionDegree = bean.getExecutionDegree();
-
 	    ExecutionSemester executionSemester = bean.getExecutionSemester();
-	    Set<ExecutionCourse> courses = new HashSet<ExecutionCourse>();
-
 	    if (executionDegree != null && executionSemester != null) {
-		Degree degree = executionDegree.getDegree();
-		ExecutionYear executionYear = executionSemester.getExecutionYear();
-
-		for (ExecutionCourse executionCourse : getExecutionCourses(degree, executionYear, executionSemester)) {
-		    courses.add(executionCourse);
+		Set<SchoolClass> classes = new HashSet<SchoolClass>();
+		for (SchoolClass schoolClass : executionDegree.getSchoolClassesSet()) {
+		    if (executionSemester.getAcademicInterval().equals(schoolClass.getAcademicInterval())) {
+			classes.add(schoolClass);
+		    }
 		}
-	    }
-	    return courses;
-	}
-    }
-
-    public static class ShiftsProvider implements DataProvider {
-	@Override
-	public Converter getConverter() {
-	    return new DomainObjectKeyConverter();
-	}
-
-	@Override
-	public Object provide(Object source, Object current) {
-	    ContextTutorshipCreationBean bean = (ContextTutorshipCreationBean) source;
-	    ExecutionCourse executionCourse = bean.getExecutionCourse();
-	    if (executionCourse != null) {
-		Set<Shift> shifts = executionCourse.getAssociatedShifts();
-		return shifts;
+		return classes;
 	    } else {
-		Set<Shift> shifts = new HashSet<Shift>();
-		return shifts;
+		Set<SchoolClass> classes = new HashSet<SchoolClass>();
+		return classes;
 	    }
 	}
     }
@@ -126,12 +105,12 @@ public class ContextTutorshipCreationBean implements Serializable {
 	this.executionCourse = executionCourse;
     }
 
-    public Shift getShift() {
-	return shift;
+    public SchoolClass getSchoolClass() {
+	return schoolClass;
     }
 
-    public void setShift(Shift shift) {
-	this.shift = shift;
+    public void setSchoolClass(SchoolClass schoolClass) {
+	this.schoolClass = schoolClass;
     }
 
     /**

@@ -691,20 +691,12 @@
 		<property name="sortBy" value="presentationName" />
 		<property name="destination" value="degreePostBack" />
 	</slot>
-		<slot name="executionCourse" layout="menu-select-postback" key="label.tutorship.executionCourse"
-		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+	<slot name="schoolClass" layout="menu-select-postback"
+		key="label.tutorship.class" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
-			value="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.ContextTutorshipCreationBean$CoursesProvider" />
-		<property name="format" value="${name}" />
-		<property name="sortBy" value="name" />
-		<property name="destination" value="selectExecCourse" />
-	</slot>
-	<slot name="shift" layout="menu-select-postback"
-		key="label.tutorship.shift" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass"
-			value="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.ContextTutorshipCreationBean$ShiftsProvider" />
-		<property name="format" value="${presentationName}" />
-		<property name="sortBy" value="presentationName" />
+			value="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.ContextTutorshipCreationBean$SchoolClassesProvider" />
+		<property name="format" value="${nome}" />
+		<property name="sortBy" value="nome" />
 		<property name="destination" value="selectExecCourse" />
 	</slot>
 </schema>
