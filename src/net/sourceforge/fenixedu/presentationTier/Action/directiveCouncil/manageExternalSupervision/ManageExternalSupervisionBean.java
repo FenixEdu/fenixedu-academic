@@ -22,6 +22,7 @@ public class ManageExternalSupervisionBean implements Serializable {
     public ManageExternalSupervisionBean(RegistrationProtocol registrationProtocol){
 	this();
 	this.registrationProtocol = registrationProtocol;
+	this.registrationAgreement = registrationProtocol.getRegistrationAgreement();
     }
     
     public RegistrationProtocol getRegistrationProtocol() {
