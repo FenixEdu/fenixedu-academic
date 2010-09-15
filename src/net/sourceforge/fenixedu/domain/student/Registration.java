@@ -3853,7 +3853,7 @@ public class Registration extends Registration_Base {
     }
 
     public int getNumberEnroledCurricularCoursesInCurrentYear() {
-	return getLastStudentCurricularPlan().countEnrolments(ExecutionYear.readCurrentExecutionYear());
+	return getLastStudentCurricularPlan() == null ? 0 : getLastStudentCurricularPlan().countEnrolments(ExecutionYear.readCurrentExecutionYear());
     }
 
     @Service
