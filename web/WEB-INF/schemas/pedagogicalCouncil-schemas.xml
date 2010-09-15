@@ -673,6 +673,54 @@
 	</slot>
 </schema>
 
+<schema name="tutorship.student.list" bundle="PEDAGOGICAL_COUNCIL"
+	type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.ContextTutorshipCreationBean">
+	<slot name="executionSemester" layout="menu-select-postback" key="label.tutorship.executionSemester">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionSemestersProvider" />
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.ExecutionSemester" />
+		<property name="bundle" value="PEDAGOGICAL_COUNCIL" />
+		<property name="format" value="${semester} - ${executionYear.year}" />
+		<property name="destination" value="semesterPostBack" />
+	</slot>
+	<slot name="executionDegree" layout="menu-select-postback" key="label.degree">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.ContextTutorshipCreationBean$ContextDegreesProvider"/>
+		<property name="bundle" value="PEDAGOGICAL_COUNCIL" />
+		<property name="format" value="${presentationName}" />
+		<property name="sortBy" value="presentationName" />
+		<property name="destination" value="degreePostBack" />
+	</slot>
+		<slot name="executionCourse" layout="menu-select-postback" key="label.tutorship.executionCourse"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.ContextTutorshipCreationBean$CoursesProvider" />
+		<property name="format" value="${name}" />
+		<property name="sortBy" value="name" />
+		<property name="destination" value="selectExecCourse" />
+	</slot>
+	<slot name="shift" layout="menu-select-postback"
+		key="label.tutorship.shift" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.ContextTutorshipCreationBean$ShiftsProvider" />
+		<property name="format" value="${presentationName}" />
+		<property name="sortBy" value="presentationName" />
+		<property name="destination" value="selectExecCourse" />
+	</slot>
+</schema>
+
+<schema name="tutorship.tutor.list" bundle="PEDAGOGICAL_COUNCIL"
+	type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TeacherTutorshipCreationBean">
+	<slot name="teacher" layout="menu-select" key="label.tutorship.tutor"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TeacherTutorshipCreationBean$TutorsProvider" />
+		<property name="format" value="${teacher.teacherNumber} - ${name}" />
+		<property name="sortBy" value="teacher.teacherNumber" />
+	</slot>
+</schema>
+
+
 <schema name="tutorship.summary.search" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorSummaryBean">
 	<slot name="department" layout="menu-select-postback" key="label.teacher.department">
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Department" />
@@ -718,6 +766,14 @@
 
 <schema name="tutorship.tutorate.student" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.domain.Person">
 	<slot name="name" key="label.name" />
+	<slot name="documentIdNumber" key="label.documentId" />
+	<slot name="institutionalOrDefaultEmailAddressValue" key="label.email" />
+	<slot name="defaultMobilePhone.number" key="label.phone" />
+</schema>
+
+<schema name="tutorship.tutorate.student.create" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.domain.Person">
+	<slot name="name" key="label.name" />
+	<slot name="student.number" key="label.idNumber"/>
 	<slot name="documentIdNumber" key="label.documentId" />
 	<slot name="institutionalOrDefaultEmailAddressValue" key="label.email" />
 	<slot name="defaultMobilePhone.number" key="label.phone" />

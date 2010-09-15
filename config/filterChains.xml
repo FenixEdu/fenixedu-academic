@@ -119,6 +119,14 @@
     </filterChain>
 
     <filterChain>
+        <name>CoordinatorOfBolonhaOrLEECAuthorizationOrTutorshipAuthorization</name>
+        <expression>TutorshipAuthorization || (CoordinatorAuthorization &amp;&amp; BolonhaOrLEECCoordinatorAuthorizationFilter)</expression>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
+
+
+    <filterChain>
         <name>CoordinatorOrDepartmentAdminOfficeAuthorization</name>
         <expression>DepartmentAdministrativeOfficeAuthorization || CoordinatorAuthorization</expression>
         <invocationTiming>1</invocationTiming>

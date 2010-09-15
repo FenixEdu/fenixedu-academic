@@ -147,6 +147,9 @@
         <li>
             <html:link page="/studentTutorship.do?method=prepareStudentSearch"><bean:message key="link.teacher.tutorship.history" bundle="APPLICATION_RESOURCES"/></html:link>
         </li>
+		<li>
+            <html:link page="/createTutorships.do?method=prepareCreation"><bean:message key="link.tutorship.create" bundle="APPLICATION_RESOURCES"/></html:link>
+        </li>
         <li>
             <html:link page="/viewStudentsByTutor.do?method=prepareTutorSearch"><bean:message key="label.attends.shifts.tutorialorientation" bundle="APPLICATION_RESOURCES"/></html:link>
         </li>

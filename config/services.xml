@@ -2208,7 +2208,7 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.coordinator.tutor.InsertTutorship</implementationClass>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="CoordinatorOfBolonhaOrLEECAuthorization"/>
+            <chain name="CoordinatorOfBolonhaOrLEECAuthorizationOrTutorshipAuthorization"/>
         </filterChains>
     </service>
 

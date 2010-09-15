@@ -5,10 +5,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.Month;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class StudentsByEntryYearBean implements Serializable {
     private Integer teacherNumber;
@@ -155,6 +161,33 @@ public class StudentsByEntryYearBean implements Serializable {
 	// registration
 	// state
 	// type
+    }
+
+    /**
+     * Inserts students in bean
+     * 
+     * 
+     * @param personsExternalIds
+     * @param executionSemester
+     * @param executionDegree
+     * @return list of persons with no registration in execution course
+     */
+    public List<Person> receiveStudentsToCreateTutorshipList(String[] personsExternalIds, ExecutionSemester executionSemester,
+	    ExecutionDegree executionDegree) {
+	List<StudentCurricularPlan> students = new ArrayList<StudentCurricularPlan>();
+	List<Person> studentsNotRegistered = new ArrayList<Person>();
+	for (String studentIID : personsExternalIds) {
+	    Person person = AbstractDomainObject.fromExternalId(studentIID);
+	    Student student = person.getStudent();
+	    Registration registration = student.getActiveRegistrationFor(executionDegree.getDegree());
+	    if (registration != null) {
+		students.add(registration.getActiveStudentCurricularPlan());
+	    } else {
+		studentsNotRegistered.add(person);
+	    }
+	}
+	this.setStudentsToCreateTutorshipList(students);
+	return studentsNotRegistered;
     }
 
     public void clearSelectedStudentsToCreateTutorshipList() {
