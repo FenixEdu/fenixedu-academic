@@ -261,6 +261,9 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
     }
 
     private boolean isPeriodInExecutionYear(LocalDate beginLocalDate, LocalDate endLocalDate, ExecutionYear executionYear) {
+	if (beginLocalDate == null) {
+	    return false;
+	}
 	if (endLocalDate == null) {
 	    return !beginLocalDate.isAfter(executionYear.getEndDateYearMonthDay());
 	} else {
