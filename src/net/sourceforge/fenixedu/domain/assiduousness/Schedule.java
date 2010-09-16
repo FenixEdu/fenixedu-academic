@@ -221,8 +221,8 @@ public class Schedule extends Schedule_Base {
 	    endDate = endDate.plusDays(endDate.dayOfMonth().getMaximumValue()).minusDays(1);
 	    return closeScheduleAndMakeNew(employeeScheduleFactory, endDate, true);
 	} else {
-	    if (isCloseMonthInsideInterval(closedMonth, employeeScheduleFactory.getBeginDate(), employeeScheduleFactory
-		    .getEndDate())) {
+	    if (isCloseMonthInsideInterval(closedMonth, employeeScheduleFactory.getBeginDate(),
+		    employeeScheduleFactory.getEndDate())) {
 		Month month = Month.values()[closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear()) - 1];
 		throw new DomainException("error.schedule.monthClose", ResourceBundle.getBundle("resources.EnumerationResources",
 			Language.getLocale()).getString(month.name()), ((Integer) closedMonth.getClosedYearMonth().get(
@@ -278,8 +278,8 @@ public class Schedule extends Schedule_Base {
 	    endDate = endDate.plusDays(endDate.dayOfMonth().getMaximumValue()).minusDays(1);
 	    return closeScheduleAndMakeNew(employeeScheduleFactory, endDate, false);
 	} else {
-	    if (isCloseMonthInsideInterval(closedMonth, employeeScheduleFactory.getBeginDate(), employeeScheduleFactory
-		    .getEndDate())) {
+	    if (isCloseMonthInsideInterval(closedMonth, employeeScheduleFactory.getBeginDate(),
+		    employeeScheduleFactory.getEndDate())) {
 		Month month = Month.values()[closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear()) - 1];
 		throw new DomainException("error.schedule.monthClose", ResourceBundle.getBundle("resources.EnumerationResources",
 			Language.getLocale()).getString(month.name()), ((Integer) closedMonth.getClosedYearMonth().get(
@@ -455,7 +455,7 @@ public class Schedule extends Schedule_Base {
     // Returns the valid interval week number of a given YearMonthDay date
     public int getValidIntervalWeekNumberOfDate(LocalDate date) {
 	return new Interval(getBeginDate().toDateTimeAtStartOfDay(), date.plusDays(1).toDateTimeAtStartOfDay()).toPeriod(
-		PeriodType.weeks()).getWeeks();
+		PeriodType.weeks()).getWeeks() + 1;
     }
 
     // Returns the Employee's work schedule for a particular date
@@ -494,8 +494,8 @@ public class Schedule extends Schedule_Base {
 	for (WorkSchedule workSchedule : getWorkSchedules()) {
 	    if (workPeriodDuration.equals(Duration.ZERO)) {
 		workPeriodDuration = workSchedule.getWorkScheduleType().getNormalWorkPeriod().getWorkPeriodDuration();
-	    } else if (!workSchedule.getWorkScheduleType().getNormalWorkPeriod().getWorkPeriodDuration().equals(
-		    workPeriodDuration)) {
+	    } else if (!workSchedule.getWorkScheduleType().getNormalWorkPeriod().getWorkPeriodDuration()
+		    .equals(workPeriodDuration)) {
 		return Duration.ZERO;
 	    }
 	}
