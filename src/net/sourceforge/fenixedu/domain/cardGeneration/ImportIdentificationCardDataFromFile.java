@@ -195,7 +195,7 @@ public class ImportIdentificationCardDataFromFile {
 
     private boolean hasMatchingLine(final Person person, final String line) {
 	for (final CardGenerationEntry cardGenerationEntry : person.getCardGenerationEntriesSet()) {
-	    if (cardGenerationEntry.matches(line)) {
+	    if (cardGenerationEntry.matches(line) && isInValidTimeFrame(cardGenerationEntry)) {
 		return true;
 	    }
 	}
@@ -266,11 +266,31 @@ public class ImportIdentificationCardDataFromFile {
 
     private boolean alreadyHasLine(final Person person, final String line) {
 	for (final CardGenerationEntry cardGenerationEntry : person.getCardGenerationEntriesSet()) {
-	    final Category category = cardGenerationEntry.getCategory();
-	    return category == Category.CODE_73 || category == Category.CODE_83 || category == Category.CODE_96 || 
-	    		cardGenerationEntry.getLine().replace('.', ' ').substring(0, 262).equals(line.substring(0, 262));
+	    if (isInValidTimeFrame(cardGenerationEntry)) {
+		final Category category = cardGenerationEntry.getCategory();
+		return category == Category.CODE_73 || category == Category.CODE_83 || category == Category.CODE_96 || 
+	    			cardGenerationEntry.getLine().replace('.', ' ').substring(0, 262).equals(line.substring(0, 262));
+	    }
 	}
 	return false;
+    }
+
+    private boolean isInValidTimeFrame(final CardGenerationEntry cardGenerationEntry) {
+	final CardGenerationBatch cardGenerationBatch = cardGenerationEntry.getCardGenerationBatch();
+	final ExecutionYear executionYear = cardGenerationBatch.getExecutionYear();
+	return isInValidTimeFrame(executionYear);
+    }
+
+    private boolean isInValidTimeFrame(final ExecutionYear executionYear) {
+	return executionYear.isCurrent() || isInValidTimeFrameLevel1(executionYear.getNextExecutionYear());
+    }
+
+    private boolean isInValidTimeFrameLevel1(final ExecutionYear executionYear) {
+	return executionYear != null && (executionYear.isCurrent() || isInValidTimeFrameLevel2(executionYear.getNextExecutionYear()));
+    }
+
+    private boolean isInValidTimeFrameLevel2(final ExecutionYear executionYear) {
+	return executionYear != null && executionYear.isCurrent();
     }
 
     private Person findPerson(final String identificationId, final String line) {
