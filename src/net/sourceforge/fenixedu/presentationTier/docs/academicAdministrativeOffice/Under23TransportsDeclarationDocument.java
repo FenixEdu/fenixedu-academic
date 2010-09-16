@@ -36,7 +36,8 @@ public class Under23TransportsDeclarationDocument extends AdministrativeOfficeDo
 
 	addParameter("personName", person.getName());
 	addParameter("documentIdNumber", person.getDocumentIdNumber());
-	addParameter("emissionDate", person.getEmissionDateOfDocumentIdYearMonthDay().toString(DEFAULT_DATE_FORMAT));
+	addParameter("emissionDate", person.getEmissionDateOfDocumentIdYearMonthDay() == null ? "" : person
+		.getEmissionDateOfDocumentIdYearMonthDay().toString(DEFAULT_DATE_FORMAT));
 	addParameter("birthDate", person.getDateOfBirthYearMonthDay().toString(DEFAULT_DATE_FORMAT));
 
 	addParameter("executionYear", getExecutionYear().getQualifiedName());
