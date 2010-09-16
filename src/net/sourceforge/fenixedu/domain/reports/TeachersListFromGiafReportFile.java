@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalCategory;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalRegime;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalRelation;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
@@ -235,11 +236,14 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
 
     private PersonContractSituation getLastSituationFromOneTeacherAndExecutionYear(Teacher teacher, ExecutionYear executionYear) {
 	PersonContractSituation situation = null;
-	for (PersonContractSituation pcs : teacher.getPerson().getPersonProfessionalData().getPersonContractSituations()) {
-	    if (pcs.getContractSituation().getEndSituation() == false
-		    && isPeriodInExecutionYear(pcs.getBeginDate(), pcs.getEndDate(), executionYear)
-		    && ((situation == null) || (situation.getBeginDate().isBefore(pcs.getBeginDate())))) {
-		situation = pcs;
+	final PersonProfessionalData personProfessionalData = teacher.getPerson().getPersonProfessionalData();
+	if (personProfessionalData != null) {
+	    for (PersonContractSituation pcs : personProfessionalData.getPersonContractSituations()) {
+		if (pcs.getContractSituation().getEndSituation() == false
+			&& isPeriodInExecutionYear(pcs.getBeginDate(), pcs.getEndDate(), executionYear)
+			&& ((situation == null) || (situation.getBeginDate().isBefore(pcs.getBeginDate())))) {
+		    situation = pcs;
+		}
 	    }
 	}
 	return situation;
