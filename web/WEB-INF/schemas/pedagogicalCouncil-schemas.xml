@@ -771,7 +771,7 @@
 	<slot name="defaultMobilePhone.number" key="label.phone" />
 </schema>
 
-<schema name="tutorship.tutorate.student.create" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.StudentAndSchoolClassesBean">
+<schema name="tutorship.tutorate.student.create" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.domain.Person">
 	<slot name="name" key="label.name" />
 	<slot name="student.number" key="label.idNumber"/>
 	<slot name="documentIdNumber" key="label.documentId" />
