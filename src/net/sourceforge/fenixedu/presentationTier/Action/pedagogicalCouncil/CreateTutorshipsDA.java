@@ -1,9 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,9 +12,8 @@ import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipEr
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.tutor.TutorManagementDispatchAction;
@@ -55,19 +52,14 @@ public class CreateTutorshipsDA extends TutorManagementDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	ContextTutorshipCreationBean bean = (ContextTutorshipCreationBean) getRenderedObject("tutorateBean");
 	request.setAttribute("tutorateBean", bean);
-	if (bean.getSchoolClass() != null && bean.getExecutionDegree() != null && bean.getExecutionSemester() != null) {
+	if (bean.getShift() != null && bean.getExecutionCourse() != null && bean.getExecutionDegree() != null
+		&& bean.getExecutionSemester() != null) {
 	    // get all students from ExecCourse
 	    List<Person> students = new ArrayList<Person>();
-	    for (Shift shift : bean.getSchoolClass().getAssociatedShifts()) {
-		if (shift.containsType(ShiftType.TEORICA)
-			&& shift.getExecutionPeriod().compareTo(bean.getExecutionSemester()) == 0) {
-		    for (Registration registration : shift.getStudents()) {
-			Student student = registration.getStudent();
-			if (validForListing(registration, bean.getExecutionDegree())) {
-			    students.add(student.getPerson());
-			}
-
-		    }
+	    Shift shift = bean.getShift();
+	    for (Registration registration : shift.getStudents()) {
+		if (validForListing(registration, bean.getExecutionDegree())) {
+		    students.add(registration.getPerson());
 		}
 	    }
 	    RenderUtils.invalidateViewState();
@@ -82,31 +74,23 @@ public class CreateTutorshipsDA extends TutorManagementDispatchAction {
     }
 
     /**
-     * Iterate on all shifts of a registration and construct a set of the
-     * correspondent SchoolClasses
+     * Select people which have registrations in the choosen Degree and have
+     * never had a Tutor assigned
      * 
      * @param registration
-     * @param shift
+     * @param executionDegree
      * @return
      */
-    public Set<SchoolClass> findSchoolClassesSetForStudent(Registration registration) {
-	Set<SchoolClass> schoolClasses = new HashSet<SchoolClass>();
-	for (Shift shift : registration.getShifts()) {
-	    schoolClasses.addAll(shift.getAssociatedClassesSet());
-	}
-	return schoolClasses;
-    }
-
     public boolean validForListing(Registration registration, ExecutionDegree executionDegree) {
 	Student student = registration.getStudent();
-	// Only selects people which have registrations in
-	// the
-	// choosen
-	// Degree and no Tutor assigned
 
 	if (student.hasActiveRegistrationFor(executionDegree.getDegree())) {
 	    if (registration.getActiveTutorship() == null) {
-		return true;
+		for (StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlans()) {
+		    if (studentCurricularPlan.getTutorshipsCount() == 0) {
+			return true;
+		    }
+		}
 	    }
 	}
 	return false;

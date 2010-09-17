@@ -15,8 +15,13 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.SchoolClass;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
+
+import org.apache.commons.collections.comparators.ReverseComparator;
+
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
@@ -29,10 +34,37 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 public class ContextTutorshipCreationBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    private static final int YEAR = 1;
+    private static final int SEMESTER = 1;
     private ExecutionDegree degree;
     private ExecutionSemester executionSemester;
     private ExecutionCourse executionCourse;
-    private SchoolClass schoolClass;
+    private Shift shift;
+
+    /**
+     * Only provides the first semester of every year
+     * 
+     * @author jaime
+     * 
+     */
+    public static class ExecutionSemestersProvider implements DataProvider {
+	@Override
+	public Object provide(Object source, Object currentValue) {
+	    List<ExecutionSemester> executionSemesters = new ArrayList<ExecutionSemester>();
+	    for (ExecutionSemester executionSemester : RootDomainObject.getInstance().getExecutionPeriods()) {
+		if (executionSemester.isFor(SEMESTER)) {
+		    executionSemesters.add(executionSemester);
+		}
+	    }
+	    Collections.sort(executionSemesters, new ReverseComparator());
+	    return executionSemesters;
+	}
+
+	@Override
+	public Converter getConverter() {
+	    return new DomainObjectKeyConverter();
+	}
+    }
 
     public static class ContextDegreesProvider implements DataProvider {
 
@@ -48,14 +80,51 @@ public class ContextTutorshipCreationBean implements Serializable {
 	    final ExecutionSemester executionPeriod = bean.getExecutionSemester();
 	    if (executionPeriod != null) {
 		final ExecutionYear executionYear = executionPeriod.getExecutionYear();
-		executionDegrees.addAll(executionYear.getExecutionDegreesSet());
+		for (ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
+		    DegreeType degreeType = executionDegree.getDegreeType();
+		    if (degreeType.compareTo(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) == 0
+			    || degreeType.compareTo(DegreeType.BOLONHA_DEGREE) == 0) {
+			executionDegrees.add(executionDegree);
+		    }
+		}
+
 	    }
 	    Collections.sort(executionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
 	    return executionDegrees;
 	}
     }
 
-    public static class SchoolClassesProvider implements DataProvider {
+    /**
+     * Gets all the courses in the first curricular year of the degree
+     * 
+     * @author jaime
+     * 
+     */
+    public static class CoursesProvider implements DataProvider {
+	@Override
+	public Converter getConverter() {
+	    return new DomainObjectKeyConverter();
+	}
+
+	@Override
+	public Object provide(Object source, Object current) {
+
+	    ContextTutorshipCreationBean bean = (ContextTutorshipCreationBean) source;
+	    ExecutionDegree executionDegree = bean.getExecutionDegree();
+
+	    ExecutionSemester executionSemester = bean.getExecutionSemester();
+	    Set<ExecutionCourse> courses = new HashSet<ExecutionCourse>();
+
+	    if (executionDegree != null && executionSemester != null) {
+		Degree degree = executionDegree.getDegree();
+		ExecutionYear executionYear = executionSemester.getExecutionYear();
+		courses.addAll(getExecutionCourses(degree, executionYear, executionSemester));
+	    }
+	    return courses;
+	}
+    }
+
+    public static class ShiftsProvider implements DataProvider {
 	@Override
 	public Converter getConverter() {
 	    return new DomainObjectKeyConverter();
@@ -64,19 +133,13 @@ public class ContextTutorshipCreationBean implements Serializable {
 	@Override
 	public Object provide(Object source, Object current) {
 	    ContextTutorshipCreationBean bean = (ContextTutorshipCreationBean) source;
-	    ExecutionDegree executionDegree = bean.getExecutionDegree();
-	    ExecutionSemester executionSemester = bean.getExecutionSemester();
-	    if (executionDegree != null && executionSemester != null) {
-		Set<SchoolClass> classes = new HashSet<SchoolClass>();
-		for (SchoolClass schoolClass : executionDegree.getSchoolClassesSet()) {
-		    if (executionSemester.getAcademicInterval().equals(schoolClass.getAcademicInterval())) {
-			classes.add(schoolClass);
-		    }
-		}
-		return classes;
+	    ExecutionCourse executionCourse = bean.getExecutionCourse();
+	    if (executionCourse != null) {
+		Set<Shift> shifts = executionCourse.getAssociatedShifts();
+		return shifts;
 	    } else {
-		Set<SchoolClass> classes = new HashSet<SchoolClass>();
-		return classes;
+		Set<Shift> shifts = new HashSet<Shift>();
+		return shifts;
 	    }
 	}
     }
@@ -105,12 +168,12 @@ public class ContextTutorshipCreationBean implements Serializable {
 	this.executionCourse = executionCourse;
     }
 
-    public SchoolClass getSchoolClass() {
-	return schoolClass;
+    public Shift getShift() {
+	return shift;
     }
 
-    public void setSchoolClass(SchoolClass schoolClass) {
-	this.schoolClass = schoolClass;
+    public void setShift(Shift shift) {
+	this.shift = shift;
     }
 
     /**
@@ -130,12 +193,10 @@ public class ContextTutorshipCreationBean implements Serializable {
 		for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCourses()) {
 		    if (executionSemester == executionCourse.getExecutionPeriod()) {
 			for (final DegreeModuleScope scope : course.getDegreeModuleScopes()) {
-			    // #### / ####
-			    // Not so good looking hack
-			    // TODO: Recode
 			    String fields[] = execYear.getYear().split("/");
 			    if (scope.isActiveForExecutionPeriod(executionSemester) && scope.isActiveForExecutionYear(execYear)
-				    && scope.getCurricularSemester() == executionSemester.getSemester()) {
+				    && scope.getCurricularSemester() == executionSemester.getSemester()
+				    && scope.getCurricularYear() == YEAR) {
 				result.add(executionCourse);
 			    }
 			}
