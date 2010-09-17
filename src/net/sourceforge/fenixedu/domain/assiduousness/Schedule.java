@@ -454,8 +454,8 @@ public class Schedule extends Schedule_Base {
 
     // Returns the valid interval week number of a given YearMonthDay date
     public int getValidIntervalWeekNumberOfDate(LocalDate date) {
-	return new Interval(getBeginDate().toDateTimeAtStartOfDay(), date.plusDays(1).toDateTimeAtStartOfDay()).toPeriod(
-		PeriodType.weeks()).getWeeks() + 1;
+	return new Interval(getBeginDate().minusDays(getBeginDate().getDayOfWeek() - 1).toDateTimeAtStartOfDay(), date
+		.plusDays(1).toDateTimeAtStartOfDay()).toPeriod(PeriodType.weeks()).getWeeks() + 1;
     }
 
     // Returns the Employee's work schedule for a particular date
