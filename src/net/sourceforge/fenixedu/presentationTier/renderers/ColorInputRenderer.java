@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
+import org.apache.commons.collections.Predicate;
+
 import pt.ist.fenixWebFramework.renderers.StringInputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlContainer;
@@ -22,7 +24,14 @@ public class ColorInputRenderer extends StringInputRenderer {
 
     @Override
     protected HtmlComponent createTextField(Object object, Class type) {
-	HtmlTextInput input = (HtmlTextInput) super.createTextField(object, type);
+	HtmlTextInput input = (HtmlTextInput) super.createTextField(object, type).getChild(new Predicate() {
+
+	    @Override
+	    public boolean evaluate(Object arg0) {
+		return arg0 instanceof HtmlTextInput;
+	    }
+
+	});
 	input.setId(getContext().getMetaObject().getKey().toString());
 
 	HtmlLink link = new HtmlLink();
