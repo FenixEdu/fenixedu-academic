@@ -6,7 +6,9 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DeleteFileRequest;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeCoordinatorsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -50,8 +52,15 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
 	super.setDocumentType(documentType);
 	super.setRemarks(remarks);
 	super.setUploader(uploader);
-	super.init(getVirtualPath(), filename, filename, Collections.EMPTY_SET, content, new RoleGroup(
-		RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE));
+
+	final Group roleGroup = new RoleGroup(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);
+
+	final PhdIndividualProgramProcess individualProgramProcess = process.getIndividualProgramProcess();
+	final PhdProgram phdProgram = individualProgramProcess.getPhdProgram();
+	final Group coordinatorGroup = new CurrentDegreeCoordinatorsGroup(phdProgram.getDegree());
+
+	final Group group = new GroupUnion(roleGroup, coordinatorGroup);
+	super.init(getVirtualPath(), filename, filename, Collections.EMPTY_SET, content, group);
 	storeToContentManager();
     }
 
