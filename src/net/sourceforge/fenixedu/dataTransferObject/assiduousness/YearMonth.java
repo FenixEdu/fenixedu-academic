@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject.assiduousness;
 
 import java.io.Serializable;
 
+import net.sourceforge.fenixedu.dataTransferObject.alumni.formation.IFormation;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 import net.sourceforge.fenixedu.util.Month;
 
@@ -9,9 +10,11 @@ import org.joda.time.DateTimeFieldType;
 import org.joda.time.LocalDate;
 import org.joda.time.Partial;
 
-public class YearMonth implements Serializable {
+public class YearMonth implements Serializable, IFormation {
 
     Integer year;
+
+    Integer firstYear;
 
     Month month;
 
@@ -60,6 +63,23 @@ public class YearMonth implements Serializable {
 
     public void setYear(Integer year) {
 	this.year = year;
+    }
+
+    public String getYearString() {
+	return year.toString();
+    }
+
+    public void setYearString(String year) {
+	this.year = Integer.valueOf(year);
+    }
+
+    @Override
+    public int getFirstYear() {
+	return firstYear;
+    }
+
+    public void setFirstYear(int firstYear) {
+	this.firstYear = firstYear;
     }
 
     public boolean getIsThisYearMonthClosed() {

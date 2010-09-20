@@ -1,8 +1,10 @@
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-<html:xhtml/>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+
+<%@page import="net.sourceforge.fenixedu.util.BundleUtil"%>
+<%@page import="net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth"%>
 
 <style>
 .unreadSubject { font-weight: bold; background: #fafaea !important; }
@@ -11,7 +13,7 @@
 
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
-<html:link action="/phdIndividualProgramProcess.do?method=viewProcess" paramId="processId" paramName="process" paramProperty="externalId" >
+<html:link action="/phdIndividualProgramProcess.do?method=viewProcess" paramId="processId" paramName="process" paramProperty="externalId">
 	« <bean:message bundle="PHD_RESOURCES" key="label.back.to.process"/>
 </html:link>
 <br/><br/>
@@ -46,30 +48,44 @@
 
 <br/>
 
-<bean:define id="unread" name="unread" type="String"/>
-<bean:size id="size" name="alertMessages" />
-<logic:equal name="unread" value="true">
-	<h3 class="mtop15 mbottom05">
-		<bean:message key="label.phd.unreadAlertMessages" bundle="PHD_RESOURCES" />
-		<logic:greaterEqual name="size" value="1">(<%= size.toString() %>)</logic:greaterEqual>
-	</h3>
-</logic:equal>
+<strong><bean:message key="label.phd.archive" bundle="PHD_RESOURCES"/></strong>
 
-<logic:equal name="unread" value="false">
-	<h3 class="mtop15 mbottom05">
-		<logic:equal name="tooManyMessages" value="false">
-			<bean:message key="label.phd.messages" bundle="PHD_RESOURCES" />
-			<logic:greaterEqual name="size" value="1">(<%= size.toString() %>)</logic:greaterEqual>
-		</logic:equal>
-		<logic:equal name="tooManyMessages" value="true">
-			<bean:message key="label.phd.lastAlertMessages" arg0="<%= size.toString() %>" bundle="PHD_RESOURCES" />
-		</logic:equal>
-	</h3>
-</logic:equal>
+
+<bean:define id="yearMonthBean" name="yearMonthBean"/>
+<bean:define id="chosenYear" name="yearMonthBean" property="yearString" type="String" />
+<bean:define id="chosenMonth" value="" type="String"/>
+<logic:present name="yearMonthBean" property="month">
+	<% chosenMonth = String.valueOf(((YearMonth) yearMonthBean).getMonth().getNumberOfMonth()); %>
+</logic:present>
+<fr:form>
+	<fr:edit id="yearMonthBean" name="yearMonthBean">
+		<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth" bundle="PHD_RESOURCES">
+			<fr:slot name="yearString" key="label.year" bundle="PHD_RESOURCES" layout="menu-select-postback">
+				<fr:property name="nullOptionHidden" value="true" />
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CivilYearsProvider" />
+			</fr:slot>
+			<fr:slot name="month" key="label.month" layout="menu-postback">
+				<fr:property name="defaultText" value="<%="-- " + BundleUtil.getMessageFromModuleOrApplication("Phd", "label.all") + " --" %>" />
+			</fr:slot>
+		</fr:schema>
+		<fr:destination name="postBack" path="/phdIndividualProgramProcess.do?method=viewProcessAlertMessageArchive"/>
+		<fr:layout name="matrix">
+			<fr:property name="classes" value="tstyle5 thlight thright mtop05 mbottom05 thmiddle" />
+			<fr:property name="slot(yearString)" value="yearString"/>
+			<fr:property name="row(yearString)" value="0"/>
+			<fr:property name="column(yearString)" value="0"/>
+			<fr:property name="slot(month)" value="month"/>
+			<fr:property name="row(month)" value="0"/>
+			<fr:property name="column(month)" value="1"/>
+		</fr:layout>
+	</fr:edit>
+</fr:form>
+
+
 
 <logic:notEmpty name="alertMessages">
 	<fr:view name="alertMessages">
-		<fr:schema type="net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage" bundle="PHD_RESOURCES">
+		<fr:schema type="net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage" bundle="PHD_RESOURCES">	
 			<fr:slot name="whenCreated" layout="no-time" />
 			<fr:slot name="process" layout="link">
 				<fr:property name="contextRelative" value="true"/>
@@ -81,7 +97,7 @@
 				<fr:property name="contextRelative" value="true"/>
 				<fr:property name="moduleRelative" value="true"/>
 				<fr:property name="useParent" value="true"/>
-				<fr:property name="linkFormat" value="<%= "/phdIndividualProgramProcess.do?method=readAlertMessage&global=false&alertMessageId=${externalId}&unread=" + unread %>" />
+				<fr:property name="linkFormat" value="<%= "/phdIndividualProgramProcess.do?method=readAlertMessage&global=false&alertMessageId=${externalId}&unread=false&archive=true&year=" + chosenYear + "&month=" + chosenMonth %>" />
 			</fr:slot>
 			<fr:slot name="readed" />
 		</fr:schema>

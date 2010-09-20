@@ -28,9 +28,13 @@ import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
 
 @Forward(name = "viewAlertMessages", path = "/phd/student/viewAlertMessages.jsp"),
 
+@Forward(name = "viewAlertMessageArchive", path = "/phd/student/viewAlertMessageArchive.jsp"),
+
 @Forward(name = "viewAlertMessage", path = "/phd/student/viewAlertMessage.jsp"),
 
 @Forward(name = "viewProcessAlertMessages", path = "/phd/student/viewProcessAlertMessages.jsp"),
+
+@Forward(name = "viewProcessAlertMessageArchive", path = "/phd/student/viewProcessAlertMessageArchive.jsp"),
 
 @Forward(name = "choosePhdProcess", path = "/phd/student/choosePhdProcess.jsp")
 

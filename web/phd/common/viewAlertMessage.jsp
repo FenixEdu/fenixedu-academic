@@ -7,19 +7,51 @@
 <%@page import="net.sourceforge.fenixedu.domain.DomainObject"%>
 
 <bean:define id="global" name="global"/>
+<bean:define id="unread" name="unread"/>
+<bean:define id="archive" name="archive"/>
+<bean:define id="year" name="year"/>
+<bean:define id="month" name="month"/>
 <bean:define id="alertMessage" name="alertMessage"/>
 <bean:define id="process" name="alertMessage" property="process"/>
 
 <logic:equal name="global" value="true">
-	<html:link action="/phdIndividualProgramProcess.do?method=viewAlertMessages">
-		« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
-	</html:link>
+	<logic:equal name="unread" value="true">
+		<html:link action="/phdIndividualProgramProcess.do?method=viewUnreadAlertMessages">
+			« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
+		</html:link>
+	</logic:equal>
+	<logic:equal name="unread" value="false">
+		<logic:equal name="archive" value="true">
+			<html:link action="<%= "/phdIndividualProgramProcess.do?method=viewAlertMessageArchive&year=" + year + "&month=" + month %>">
+				« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
+			</html:link>
+		</logic:equal>
+		<logic:equal name="archive" value="false">
+			<html:link action="/phdIndividualProgramProcess.do?method=viewAlertMessages">
+				« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
+			</html:link>
+		</logic:equal>
+	</logic:equal>
 </logic:equal>
 
 <logic:equal name="global" value="false">
-	<html:link action="<%="/phdIndividualProgramProcess.do?method=viewProcessAlertMessages&processId=" + ((DomainObject) process).getExternalId()%>">
-		« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
-	</html:link>
+	<logic:equal name="unread" value="true">
+		<html:link action="<%="/phdIndividualProgramProcess.do?method=viewUnreadProcessAlertMessages&processId=" + ((DomainObject) process).getExternalId()%>">
+			« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
+		</html:link>
+	</logic:equal>
+	<logic:equal name="unread" value="false">
+		<logic:equal name="archive" value="true">
+			<html:link action="<%="/phdIndividualProgramProcess.do?method=viewProcessAlertMessageArchive&year=" + year + "&month=" + month + "&processId=" + ((DomainObject) process).getExternalId()%>">
+				« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
+			</html:link>
+		</logic:equal>
+		<logic:equal name="archive" value="false">
+			<html:link action="<%="/phdIndividualProgramProcess.do?method=viewProcessAlertMessages&processId=" + ((DomainObject) process).getExternalId()%>">
+				« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
+			</html:link>
+		</logic:equal>
+	</logic:equal>
 </logic:equal>
 
 <br/>
@@ -45,6 +77,6 @@
 
 <br/>
 
-<html:link action="<%="/phdIndividualProgramProcess.do?method=markAlertMessageAsUnread&global=" + global.toString() + "&alertMessageId=" + ((DomainObject) alertMessage).getExternalId()%>">
+<html:link action="<%="/phdIndividualProgramProcess.do?method=markAlertMessageAsUnread&global=" + global + "&unread=" + unread + "&archive=" + archive + "&year=" + year + "&month=" + month + "&alertMessageId=" + ((DomainObject) alertMessage).getExternalId() + "&processId=" + ((DomainObject) process).getExternalId()%>">
 	<bean:message bundle="PHD_RESOURCES" key="label.phd.alertMessage.markAsUnread"/>
 </html:link>

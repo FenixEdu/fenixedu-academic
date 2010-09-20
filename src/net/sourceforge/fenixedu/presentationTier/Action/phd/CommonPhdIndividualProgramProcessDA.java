@@ -1,12 +1,19 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
+import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
@@ -14,9 +21,11 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.ExemptPub
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RequestPublicPresentationSeminarComission;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.academicAdminOffice.PhdRegistrationConclusionBean;
+import net.sourceforge.fenixedu.util.Month;
+import net.sourceforge.fenixedu.util.StringUtils;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -25,6 +34,9 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
 
 abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
+
+    private static final int FIRST_YEAR_TO_SHOW_ARCHIVE_MESSAGES_FROM = 2002;
+    private static final int NUMBER_OF_LAST_MESSAGES = 100;
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -145,9 +157,154 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
     public ActionForward viewAlertMessages(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	request.setAttribute("alertMessages", getLoggedPerson(request).getPhdAlertMessages());
+	TreeSet<PhdAlertMessage> orderedMessages = new TreeSet<PhdAlertMessage>(Collections
+		.reverseOrder(PhdAlertMessage.COMPARATOR_BY_WHEN_CREATED_AND_ID));
+	orderedMessages.addAll(getLoggedPerson(request).getPhdAlertMessages());
+	ArrayList<PhdAlertMessage> lastMessages = new ArrayList<PhdAlertMessage>();
+	lastMessages.addAll(orderedMessages);
 
+	request.setAttribute("unread", "false");
+	request.setAttribute("alertMessages", lastMessages.subList(0, Math.min(lastMessages.size(), NUMBER_OF_LAST_MESSAGES)));
+	request.setAttribute("tooManyMessages", (lastMessages.size() > NUMBER_OF_LAST_MESSAGES) ? "true" : "false");
 	return mapping.findForward("viewAlertMessages");
+    }
+
+    public ActionForward viewUnreadAlertMessages(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	TreeSet<PhdAlertMessage> orderedMessages = new TreeSet<PhdAlertMessage>(Collections
+		.reverseOrder(PhdAlertMessage.COMPARATOR_BY_WHEN_CREATED_AND_ID));
+	orderedMessages.addAll(getLoggedPerson(request).getUnreadedPhdAlertMessages());
+
+	request.setAttribute("unread", "true");
+	request.setAttribute("alertMessages", orderedMessages);
+	return mapping.findForward("viewAlertMessages");
+    }
+
+    public ActionForward viewAlertMessageArchive(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	YearMonth yearMonthBean = getOrCreateBean(request);
+	return forwardToAlertMessageArchive(mapping, request, yearMonthBean);
+    }
+
+    private ActionForward forwardToAlertMessageArchive(ActionMapping mapping, HttpServletRequest request, YearMonth yearMonthBean) {
+	Integer year = yearMonthBean.getYear();
+	if (year == null) {
+	    year = Integer.valueOf(ExecutionYear.readCurrentExecutionYear().getYear());
+	}
+	Month month = yearMonthBean.getMonth();
+
+	TreeSet<PhdAlertMessage> orderedMessages = new TreeSet<PhdAlertMessage>(Collections
+		.reverseOrder(PhdAlertMessage.COMPARATOR_BY_WHEN_CREATED_AND_ID));
+	if (month == null) {
+	    for (PhdAlertMessage message : getLoggedPerson(request).getPhdAlertMessages()) {
+		if (year == message.getWhenCreated().getYear()) {
+		    orderedMessages.add(message);
+		}
+	    }
+	} else {
+	    for (PhdAlertMessage message : getLoggedPerson(request).getPhdAlertMessages()) {
+		if ((year == message.getWhenCreated().getYear())
+			&& (month.getNumberOfMonth() == message.getWhenCreated().getMonthOfYear())) {
+		    orderedMessages.add(message);
+		}
+	    }
+	}
+
+	request.setAttribute("yearMonthBean", yearMonthBean);
+	request.setAttribute("alertMessages", orderedMessages);
+	return mapping.findForward("viewAlertMessageArchive");
+    }
+
+    public YearMonth getOrCreateBean(HttpServletRequest request) {
+	YearMonth yearMonthBean = (YearMonth) getRenderedObject("yearMonthBean");
+	RenderUtils.invalidateViewState();
+
+	if (yearMonthBean == null) {
+	    yearMonthBean = createBeanFromRequest(request);
+	}
+	return yearMonthBean;
+    }
+
+    public YearMonth createBeanFromRequest(HttpServletRequest request) {
+	String year = (String) getFromRequest(request, "year");
+	String month = (String) getFromRequest(request, "month");
+	YearMonth yearMonthBean;
+	if (StringUtils.isEmpty(year)) {
+	    yearMonthBean = new YearMonth(Calendar.getInstance().get(Calendar.YEAR), null);
+	} else if (StringUtils.isEmpty(month)) {
+	    yearMonthBean = new YearMonth(Integer.valueOf(year), null);
+	} else {
+	    yearMonthBean = new YearMonth(Integer.valueOf(year), Integer.valueOf(month));
+	}
+	yearMonthBean.setFirstYear(FIRST_YEAR_TO_SHOW_ARCHIVE_MESSAGES_FROM);
+	return yearMonthBean;
+    }
+
+    public ActionForward viewProcessAlertMessages(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	TreeSet<PhdAlertMessage> orderedMessages = new TreeSet<PhdAlertMessage>(Collections
+		.reverseOrder(PhdAlertMessage.COMPARATOR_BY_WHEN_CREATED_AND_ID));
+	orderedMessages.addAll(getProcess(request).getAlertMessagesForLoggedPerson());
+	ArrayList<PhdAlertMessage> lastMessages = new ArrayList<PhdAlertMessage>();
+	lastMessages.addAll(orderedMessages);
+
+	request.setAttribute("unread", "false");
+	request.setAttribute("alertMessages", lastMessages.subList(0, Math.min(lastMessages.size(), NUMBER_OF_LAST_MESSAGES)));
+	request.setAttribute("tooManyMessages", (lastMessages.size() > NUMBER_OF_LAST_MESSAGES) ? "true" : "false");
+	return mapping.findForward("viewProcessAlertMessages");
+    }
+
+    public ActionForward viewUnreadProcessAlertMessages(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	TreeSet<PhdAlertMessage> orderedMessages = new TreeSet<PhdAlertMessage>(Collections
+		.reverseOrder(PhdAlertMessage.COMPARATOR_BY_WHEN_CREATED_AND_ID));
+	orderedMessages.addAll(getProcess(request).getUnreadAlertMessagesForLoggedPerson());
+
+	request.setAttribute("unread", "true");
+	request.setAttribute("alertMessages", orderedMessages);
+	return mapping.findForward("viewProcessAlertMessages");
+    }
+
+    public ActionForward viewProcessAlertMessageArchive(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	YearMonth yearMonthBean = getOrCreateBean(request);
+	return forwardToProcessAlertMessageArchive(mapping, request, yearMonthBean);
+    }
+
+    private ActionForward forwardToProcessAlertMessageArchive(ActionMapping mapping, HttpServletRequest request,
+	    YearMonth yearMonthBean) throws NumberFormatException {
+
+	Integer year = yearMonthBean.getYear();
+	if (year == null) {
+	    year = Integer.valueOf(ExecutionYear.readCurrentExecutionYear().getYear());
+	}
+	Month month = yearMonthBean.getMonth();
+
+	TreeSet<PhdAlertMessage> orderedMessages = new TreeSet<PhdAlertMessage>(Collections
+		.reverseOrder(PhdAlertMessage.COMPARATOR_BY_WHEN_CREATED_AND_ID));
+	if (month == null) {
+	    for (PhdAlertMessage message : getProcess(request).getAlertMessagesForLoggedPerson()) {
+		if (year == message.getWhenCreated().getYear()) {
+		    orderedMessages.add(message);
+		}
+	    }
+	} else {
+	    for (PhdAlertMessage message : getProcess(request).getAlertMessagesForLoggedPerson()) {
+		if ((year == message.getWhenCreated().getYear())
+			&& (month.getNumberOfMonth() == message.getWhenCreated().getMonthOfYear())) {
+		    orderedMessages.add(message);
+		}
+	    }
+	}
+
+	request.setAttribute("yearMonthBean", yearMonthBean);
+	request.setAttribute("alertMessages", orderedMessages);
+	return mapping.findForward("viewProcessAlertMessageArchive");
     }
 
     public ActionForward readAlertMessage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -155,43 +312,57 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
 
 	PhdAlertMessage alertMessage = getAlertMessage(request);
 	alertMessage.markAsReaded(getLoggedPerson(request));
-	request.setAttribute("global", getFromRequest(request, "global"));
+
+	// back information
+	String unread = (String) getFromRequest(request, "unread");
+	String global = (String) getFromRequest(request, "global");
+	String archive = (String) getFromRequest(request, "archive");
+	String year = (String) getFromRequest(request, "year");
+	String month = (String) getFromRequest(request, "month");
+	request.setAttribute("unread", (unread != null) ? unread : "false");
+	request.setAttribute("global", (global != null) ? global : "true");
+	request.setAttribute("archive", (archive != null) ? archive : "false");
+	request.setAttribute("year", (year != null) ? year : String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
+	request.setAttribute("month", (month != null) ? month : "");
 	request.setAttribute("alertMessage", alertMessage);
 
 	return mapping.findForward("viewAlertMessage");
     }
 
     public ActionForward markAlertMessageAsUnread(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+	    HttpServletResponse response) throws Exception {
 
 	PhdAlertMessage alertMessage = getAlertMessage(request);
 	alertMessage.markAsUnread();
 
+	Person loggedPerson = AccessControl.getPerson();
 	boolean global = Boolean.valueOf((String) getFromRequest(request, "global"));
+	boolean unread = Boolean.valueOf((String) getFromRequest(request, "unread"));
+	boolean archive = Boolean.valueOf((String) getFromRequest(request, "archive"));
 	request.setAttribute("global", global);
 	if (global) {
-	    request.setAttribute("alertMessages", getLoggedPerson(request).getPhdAlertMessages());
-	    return mapping.findForward("viewAlertMessages");
+	    request.setAttribute("alertMessagesToNotify", loggedPerson.getUnreadedPhdAlertMessages());
+	    if (unread) {
+		return viewUnreadAlertMessages(mapping, form, request, response);
+	    }
+	    if (archive) {
+		return forwardToAlertMessageArchive(mapping, request, createBeanFromRequest(request));
+	    }
+	    return viewAlertMessages(mapping, form, request, response);
 	}
-	request.setAttribute("process", alertMessage.getProcess());
-	request.setAttribute("alertMessages", alertMessage.getProcess().getAlertMessagesFor(getLoggedPerson(request)));
-	return mapping.findForward("viewProcessAlertMessages");
-    }
-
-    private boolean globalMessagesView(HttpServletRequest request) {
-	return StringUtils.isEmpty(request.getParameter("global")) || request.getParameter("global").equals("true");
+	request.setAttribute("processAlertMessagesToNotify", getProcess(request).getUnreadedAlertMessagesFor(
+		getLoggedPerson(request)));
+	if (unread) {
+	    return viewUnreadProcessAlertMessages(mapping, form, request, response);
+	}
+	if (archive) {
+	    return forwardToProcessAlertMessageArchive(mapping, request, createBeanFromRequest(request));
+	}
+	return viewProcessAlertMessages(mapping, form, request, response);
     }
 
     private PhdAlertMessage getAlertMessage(HttpServletRequest request) {
 	return getDomainObject(request, "alertMessageId");
-    }
-
-    public ActionForward viewProcessAlertMessages(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	request.setAttribute("alertMessages", getProcess(request).getAlertMessagesFor(getLoggedPerson(request)));
-
-	return mapping.findForward("viewProcessAlertMessages");
     }
 
     // End of Alerts Management
