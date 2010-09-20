@@ -24,10 +24,11 @@ public class PhdCandidacyFeedbackRequestDocument extends PhdCandidacyFeedbackReq
 	this();
 
 	// first set jury element and then init document
+	check(element.getProcess(), "error.phd.PhdProgramProcessDocument.candidacyProcess.cannot.be.null");
 	check(element, "error.PhdCandidacyFeedbackRequestDocument.invalid.element");
 	setElement(element);
 
-	init(null, PhdIndividualProgramDocumentType.CANDIDACY_FEEDBACK_DOCUMENT, remarks, content, filename, uploader);
+	init(element.getProcess(), PhdIndividualProgramDocumentType.CANDIDACY_FEEDBACK_DOCUMENT, remarks, content, filename, uploader);
     }
 
     @Override
