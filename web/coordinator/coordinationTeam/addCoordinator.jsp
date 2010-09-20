@@ -16,15 +16,30 @@
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID" value="<%= degreeCurricularPlanID.toString() %>"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />
 
+<p><html:link action="<%= "/viewCoordinationTeam.do?method=viewTeam&degreeCurricularPlanID=" + degreeCurricularPlanID.toString() + "&infoExecutionDegreeId=" + infoExecutionDegreeId.toString() %>">
+	<bean:message bundle="COORDINATOR_RESOURCES" key="link.back"/>
+</html:link></p>
+
 <table class="tstyle5 thlight">
 	<tr>
-		<td><bean:message key="label.teacherNumber"/></td>
-		<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.teacherNumber" property="teacherNumber" /></td>
+		<td><bean:message key="label.istId" bundle="COORDINATOR_RESOURCES"/></td>
+		<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.teacherNumber" property="newCoordinatorIstUsername" /></td>
 	</tr>
 </table>
 
+<style>
+	.subtitled_description{
+		margin: 5em;
+		margin-top: -1em;
+		margin-bottom: 2em;
+	}
+</style>
+<p class="subtitled_description">
+	<bean:message key="label.istIdUsageDescription" bundle="COORDINATOR_RESOURCES"/>
+</p>
+
 <p>
-	<html:submit><bean:message key="label.submit"/></html:submit>
+	<html:submit><bean:message key="label.add"/></html:submit>
 </p>
 
 

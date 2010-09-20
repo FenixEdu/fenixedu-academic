@@ -91,7 +91,7 @@
             </logic:messagesPresent>
             
             <fr:form action="<%= String.format("/scientificCommissionTeamDA.do?method=addMember&amp;degreeCurricularPlanID=%s&amp;executionDegreeID=%s", degreeCurricularPlanId, executionDegreeId) %>">
-                <fr:edit id="usernameChoice" name="usernameBean" schema="coordinator.commissionTeam.addMember">
+                <fr:edit id="usernameChoice" name="usernameBean" schema="coordinator.commissionTeam.addMemberByIstId">
                     <fr:layout name="tabular">
                         <fr:property name="classes" value="tstyle5 thlight thright thmiddle mvert05"/>
                         <fr:property name="columnClasses" value=",,tdclear tderror1"/>

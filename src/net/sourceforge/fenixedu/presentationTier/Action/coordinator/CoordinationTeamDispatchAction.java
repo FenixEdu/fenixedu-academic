@@ -133,11 +133,11 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 	IUserView userView = getUserView(request);
 	DynaActionForm teacherForm = (DynaActionForm) form;
-	Integer teacherNumber = new Integer((String) teacherForm.get("teacherNumber"));
+	String istUsername = new String((String) teacherForm.get("newCoordinatorIstUsername"));
 	String infoExecutionDegreeIdString = request.getParameter("infoExecutionDegreeId");
 	Integer infoExecutionDegreeId = new Integer(infoExecutionDegreeIdString);
 	request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeId);
-	Object[] args = { infoExecutionDegreeId, teacherNumber };
+	Object[] args = { infoExecutionDegreeId, istUsername };
 	try {
 	    ServiceUtils.executeService("AddCoordinator", args);
 	} catch (NonExistingServiceException e) {
@@ -154,7 +154,11 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
 	    return prepareAddCoordinator(mapping, form, request, response);
 	} catch (FenixServiceException e) {
 	    ActionErrors actionErrors = new ActionErrors();
-	    actionErrors.add("unknownTeacher", new ActionError(e.getMessage()));
+	    if (e.getMessage().equals("error.noEmployeeForIstUsername")) {
+		actionErrors.add("unknownTeacher", new ActionError(e.getMessage(), istUsername));
+	    } else {
+		actionErrors.add("unknownTeacher", new ActionError(e.getMessage()));
+	    }
 	    saveErrors(request, actionErrors);
 	    return prepareAddCoordinator(mapping, form, request, response);
 	    // throw new FenixActionException(e);

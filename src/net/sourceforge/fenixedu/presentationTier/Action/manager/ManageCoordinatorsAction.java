@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ResponsibleC
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCoordinator;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -148,9 +149,10 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 
 	DynaActionForm coordinatorForm = (DynaActionForm) actionForm;
 	Integer coordinatorNumber = new Integer((String) coordinatorForm.get("number"));
+	String istUsername = Employee.readByNumber(coordinatorNumber).getPerson().getIstUsername();
 
 	try {
-	    AddCoordinator.run(executionDegreeId, coordinatorNumber);
+	    AddCoordinator.run(executionDegreeId, istUsername);
 	} catch (FenixServiceException e) {
 	    e.printStackTrace();
 	    errors.add("impossibleInsertCoordinator", new ActionError("error.impossibleInsertCoordinator"));

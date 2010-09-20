@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -145,9 +146,10 @@ public class ScientificCommissionTeamDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	VariantBean bean = (VariantBean) getRenderedObject("usernameChoice");
 	if (bean != null) {
-	    Integer number = bean.getInteger();
+	    String istUsername = bean.getString();
 
-	    Employee employee = Employee.readByNumber(number);
+	    Person person = Person.readPersonByIstUsername(istUsername);
+	    Employee employee = person==null ? null : person.getEmployee();
 	    if (employee == null) {
 		addActionMessage("addError", request, "error.coordinator.scientificComission.employee.doesNotExist");
 	    } else {
