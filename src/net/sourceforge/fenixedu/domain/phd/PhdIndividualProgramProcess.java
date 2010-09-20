@@ -964,6 +964,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
 	setPhdProgramFocusArea(bean.getFocusArea());
 	setPhdProgram(bean.getProgram());
+	setExternalPhdProgram(bean.getExternalPhdProgram());
+
 	setExecutionYear(bean.getExecutionYear());
 
 	setCollaborationType(bean);

@@ -48,6 +48,7 @@ public class PhdIndividualProgramProcessBean implements Serializable {
     private PhdIndividualProgramProcess individualProgramProcess;
     private PhdProgram phdProgram;
     private PhdProgramFocusArea focusArea;
+    private ExternalPhdProgram externalPhdProgram;
 
     private QualificationExamsResult qualificationExamsRequired;
     private QualificationExamsResult qualificationExamsPerformed;
@@ -64,6 +65,7 @@ public class PhdIndividualProgramProcessBean implements Serializable {
 
 	setPhdProgram(process.getPhdProgram());
 	setFocusArea(process.getPhdProgramFocusArea());
+	setExternalPhdProgram(process.getExternalPhdProgram());
 
 	setThesisTitle(process.getThesisTitle());
 	setCollaborationType(process.getCollaborationType());
@@ -173,6 +175,14 @@ public class PhdIndividualProgramProcessBean implements Serializable {
 
     public void setProcessState(PhdIndividualProgramProcessState processState) {
 	this.processState = processState;
+    }
+
+    public ExternalPhdProgram getExternalPhdProgram() {
+	return this.externalPhdProgram;
+    }
+
+    public void setExternalPhdProgram(final ExternalPhdProgram externalPhdProgram) {
+	this.externalPhdProgram = externalPhdProgram;
     }
 
 }

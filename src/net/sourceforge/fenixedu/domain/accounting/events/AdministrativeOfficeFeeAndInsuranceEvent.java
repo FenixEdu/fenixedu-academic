@@ -8,8 +8,6 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.SibsTransactionDetailDTO;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.User;
@@ -30,6 +28,7 @@ import net.sourceforge.fenixedu.domain.accounting.postingRules.AdministrativeOff
 import net.sourceforge.fenixedu.domain.accounting.postingRules.AdministrativeOfficeFeePR;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -164,10 +163,11 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
 
 	Registration registration = getPerson().getStudent().getActiveRegistrationsIn(
 		getExecutionYear().getFirstExecutionPeriod()).get(0);
-	DegreeCurricularPlan degreeCurricularPlan = registration.getActiveStudentCurricularPlan().getDegreeCurricularPlan();
-	ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByAcademicInterval(getExecutionYear()
-		.getAcademicInterval());
-	StudentCandidacy studentCandidacy = getPerson().getStudentCandidacyForExecutionDegree(executionDegree);
+	StudentCandidacy studentCandidacy = getActiveDgesCandidacy(getPerson());
+
+	if (studentCandidacy == null) {
+	    return null;
+	}
 
 	for (PaymentCode paymentCode : studentCandidacy.getAvailablePaymentCodes()) {
 	    if (!paymentCode.isNew()) {
@@ -192,6 +192,27 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
 	    }
 
 	    return accountingEventPaymentCode;
+	}
+
+	return null;
+    }
+
+    private StudentCandidacy getActiveDgesCandidacy(Person person) {
+	for (Candidacy candidacy : person.getCandidacies()) {
+	    if (!candidacy.isActive()) {
+		continue;
+	    }
+
+	    if (!(candidacy instanceof StudentCandidacy)) {
+		continue;
+	    }
+
+	    StudentCandidacy studentCandidacy = (StudentCandidacy) candidacy;
+	    if (!studentCandidacy.hasDgesStudentImportationProcess()) {
+		continue;
+	    }
+
+	    return studentCandidacy;
 	}
 
 	return null;

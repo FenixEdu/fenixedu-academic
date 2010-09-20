@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.QualificationBean;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.phd.ExternalPhdProgram;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean;
@@ -79,6 +80,8 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
     private List<PhdProgramDocumentUploadBean> habilitationCertificateDocuments;
 
     private List<PhdProgramDocumentUploadBean> phdGuidingLetters;
+
+    private ExternalPhdProgram externalPhdProgram;
 
     public PhdProgramCandidacyProcessBean() {
 	setCandidacyDate(new LocalDate());
@@ -387,6 +390,14 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 
     public void setPhdGuidingLetters(List<PhdProgramDocumentUploadBean> phdGuidingLetters) {
 	this.phdGuidingLetters = phdGuidingLetters;
+    }
+
+    public ExternalPhdProgram getExternalPhdProgram() {
+	return this.externalPhdProgram;
+    }
+
+    public void setExternalPhdProgram(final ExternalPhdProgram externalPhdProgram) {
+	this.externalPhdProgram = externalPhdProgram;
     }
 
     public void removePhdGuidingLetters() {

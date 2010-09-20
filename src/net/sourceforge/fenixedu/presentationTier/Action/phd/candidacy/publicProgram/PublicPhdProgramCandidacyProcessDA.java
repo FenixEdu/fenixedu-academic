@@ -308,6 +308,28 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
     public ActionForward createCandidacyStepTwo(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
+	request.setAttribute("candidacyBean", getCandidacyBean());
+	RenderUtils.invalidateViewState();
+
+	return prepareCreateCandidacyStepTwo(mapping, actionForm, request, response);
+    }
+
+    public ActionForward prepareCreateCandidacyStepTwo(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	return mapping.findForward("createCandidacyStepTwo");
+    }
+
+    public ActionForward prepareCreateCandidacyStepTwoFocusAreaPostback(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("candidacyBean", getCandidacyBean());
+	RenderUtils.invalidateViewState();
+
+	return mapping.findForward("createCandidacyStepTwo");
+    }
+
+    public ActionForward createCandidacyStepThree(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 
 	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
 
@@ -355,6 +377,8 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
     public ActionForward createCandidacyStepTwoInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	request.setAttribute("candidacyBean", getRenderedObject("candidacyBean"));
+	RenderUtils.invalidateViewState();
+
 	return mapping.findForward("createCandidacyStepTwo");
     }
 
@@ -444,26 +468,28 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	return mapping.findForward("createCandidacyStepTwo");
     }
 
-    public ActionForward createCandidacyStepThree(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
-
-	bean.setCurriculumVitae(createDocumentBean(PhdIndividualProgramDocumentType.CV));
-	bean.setIdentificationDocument(createDocumentBean(PhdIndividualProgramDocumentType.ID_DOCUMENT));
-	bean.setMotivationLetter(createDocumentBean(PhdIndividualProgramDocumentType.MOTIVATION_LETTER));
-	bean.setSocialSecurityDocument(createDocumentBean(PhdIndividualProgramDocumentType.SOCIAL_SECURITY));
-	bean.setResearchPlan(createDocumentBean(PhdIndividualProgramDocumentType.RESEARCH_PLAN));
-	bean
-		.setDissertationOrFinalWorkDocument(createDocumentBean(PhdIndividualProgramDocumentType.DISSERTATION_OR_FINAL_WORK_DOCUMENT));
-	bean.setHabilitationCertificateDocuments(createHabilitationCertificateDocuments(bean));
-	bean.setPhdGuidingLetters(createPhdGuidingLetters(bean));
-
-	request.setAttribute("candidacyBean", bean);
-	RenderUtils.invalidateViewState();
-
-	return mapping.findForward("createCandidacyStepThree");
-    }
+    //	
+    // public ActionForward createCandidacyStepThree(ActionMapping mapping,
+    // ActionForm actionForm, HttpServletRequest request,
+    // HttpServletResponse response) {
+    //
+    // final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
+    //
+    // bean.setCurriculumVitae(createDocumentBean(PhdIndividualProgramDocumentType.CV));
+    // bean.setIdentificationDocument(createDocumentBean(PhdIndividualProgramDocumentType.ID_DOCUMENT));
+    // bean.setMotivationLetter(createDocumentBean(PhdIndividualProgramDocumentType.MOTIVATION_LETTER));
+    // bean.setSocialSecurityDocument(createDocumentBean(PhdIndividualProgramDocumentType.SOCIAL_SECURITY));
+    // bean.setResearchPlan(createDocumentBean(PhdIndividualProgramDocumentType.RESEARCH_PLAN));
+    // bean
+    // .setDissertationOrFinalWorkDocument(createDocumentBean(PhdIndividualProgramDocumentType.DISSERTATION_OR_FINAL_WORK_DOCUMENT));
+    // bean.setHabilitationCertificateDocuments(createHabilitationCertificateDocuments(bean));
+    // bean.setPhdGuidingLetters(createPhdGuidingLetters(bean));
+    //
+    // request.setAttribute("candidacyBean", bean);
+    // RenderUtils.invalidateViewState();
+    //
+    // return mapping.findForward("createCandidacyStepThree");
+    // }
 
     private PhdProgramDocumentUploadBean createDocumentBean(final PhdIndividualProgramDocumentType type) {
 	final PhdProgramDocumentUploadBean bean = new PhdProgramDocumentUploadBean();
@@ -786,6 +812,16 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	request.setAttribute("candidacyBean", candidacyBean);
 	request.setAttribute("individualProcessBean", new PhdIndividualProgramProcessBean(candidacyBean.getCandidacyHashCode()
 		.getIndividualProgramProcess()));
+
+	return mapping.findForward("editPhdIndividualProgramProcessInformation");
+    }
+
+    public ActionForward prepareEditPhdIndividualProgramProcessInformationFocusAreaPostback(ActionMapping mapping,
+	    ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("candidacyBean", getCandidacyBean());
+	request.setAttribute("individualProcessBean", getRenderedObject("individualProcessBean"));
+
+	RenderUtils.invalidateViewState();
 
 	return mapping.findForward("editPhdIndividualProgramProcessInformation");
     }

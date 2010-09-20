@@ -52,6 +52,7 @@
 					<fr:property name="requiredMarkShown" value="true" />
 				</fr:layout>
 				<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=editPhdIndividualProgramProcessInformationInvalid" />
+				<fr:destination name="focusAreaPostBack" path="/candidacies/phdProgramCandidacyProcess.do?method=prepareEditPhdIndividualProgramProcessInformationFocusAreaPostback" />
 			</fr:edit>
 			</fieldset>
 			</div>

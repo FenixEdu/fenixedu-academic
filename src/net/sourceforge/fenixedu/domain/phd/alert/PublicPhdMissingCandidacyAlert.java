@@ -5,6 +5,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.util.email.Message;
@@ -38,8 +39,10 @@ public class PublicPhdMissingCandidacyAlert extends PublicPhdMissingCandidacyAle
 
     private MultiLanguageString generateBody(final PhdProgramPublicCandidacyHashCode hashCode) {
 	// TODO: if collaboration type change, then message must be different
+	String submissionAccessURL = PropertiesManager.getProperty("phd.public.candidacy.submission.link");
 	final ResourceBundle bundle = getResourceBundle(Locale.ENGLISH);
-	final String body = String.format(bundle.getString("message.phd.email.body.missing.candidacy"), hashCode.getValue());
+	final String body = String.format(bundle.getString("message.phd.email.body.missing.candidacy"), submissionAccessURL,
+		hashCode.getValue());
 	return MultiLanguageString.i18n().add("en", body).finish();
     }
 

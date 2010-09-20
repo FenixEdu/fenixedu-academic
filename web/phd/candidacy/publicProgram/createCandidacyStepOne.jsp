@@ -16,9 +16,9 @@
 
 <%-- ### End of Title ### --%>
 
-<%--  ###  Return Links / Steps Information(for multistep forms)  ### 
+<%--  ###  Return Links / Steps Information(for multistep forms)  ### --%> 
 <jsp:include page="/phd/candidacy/publicProgram/createCandidacyStepsBreadcrumb.jsp?step=1"></jsp:include>
---%>
+
 <%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
 
 <%--  ### Error Messages  ### --%>
@@ -75,6 +75,6 @@
 		
 		<p>Note: all the information required for the application process will be shared by both <a href="http://www.ist.utl.pt/">IST</a> and <a href="http://www.epfl.ch/">EPFL</a>.</p>
 		
-		<p><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.submit"/></html:submit></p>
+		<p><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.continue"/></html:submit></p>
 	</fr:form>
 </logic:present>

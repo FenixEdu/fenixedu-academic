@@ -17,6 +17,10 @@
 	<slot name="name" />
 </schema>
 
+<schema name="ExternalPhdProgram.name" type="net.sourceforge.fenixedu.domain.phd.ExternalPhdProgram" bundle="PHD_PROGRAM">
+	<slot name="name" />
+</schema>
+
 <schema name="PhdIndividualProgramProcess.view" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
 	<slot name="processNumber" />
 	<slot name="person.name">
@@ -625,7 +629,7 @@
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.EmailValidator" />
 		<property name="size" value="40"/>
 	</slot>
-	<slot name="captcha" layout="captcha" />
+<!--  	<slot name="captcha" layout="captcha" /> -->
 </schema>
 
 <schema name="Public.PhdProgramCandidacyProcessBean.editPersonalInformation" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="PHD_RESOURCES">
@@ -701,10 +705,21 @@
 
 <schema name="Public.PhdProgramCandidacyProcessBean.focus.area" 
 		type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean" bundle="PHD_RESOURCES">
-	<slot name="focusArea" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">	
+	<slot name="focusArea" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">	
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProgramFocusAreasProvider" />
 		<property name="format" value="${name}" />
         <property name="sortBy" value="name"/>
+        <property name="destination" value="focusAreaPostBack" />
+	</slot>
+	<slot name="program" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram.PhdProgramsProviderForPublicCandidacy" />
+		<property name="format" value="${name}" />
+		<property name="sortBy" value="name" /> 
+	</slot>
+	<slot name="externalPhdProgram" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.epfl.phd.program">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram.ExternalPhdProgramsProviderForPublicCandidacies" />
+		<property name="format" value="${name}"/>
+		<property name="sortBy" value="name" />
 	</slot>
 </schema>
 
@@ -923,6 +938,14 @@
 		<property name="subLayout" value="values" />
 		<property name="subSchema" value="PhdProgramFocusArea.name" />
 	</slot>
+	<slot name="phdProgram" layout="null-as-label">
+		<property name="subLayout" value="values" />
+		<property name="subSchema" value="PhdProgram.name" />
+	</slot>
+	<slot name="externalPhdProgram" layout="null-as-label">
+		<property name="subLayout" value="values" />
+		<property name="subSchema" value="PhdProgram.name" />
+	</slot>
 	<slot name="thesisTitle" />
 	<slot name="collaborationTypeName" />
 	<slot name="executionYear" layout="format">
@@ -956,11 +979,23 @@
 </schema>
 
 <schema name="Public.PhdIndividualProgramProcessBean.editDetails" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean" bundle="PHD_RESOURCES">
-	<slot name="focusArea" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">	
+	<slot name="focusArea" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">	
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProgramFocusAreasProvider" />
 		<property name="format" value="${name}" />
         <property name="sortBy" value="name"/>
+        <property name="destination" value="focusAreaPostBack" />
 	</slot>
+	<slot name="phdProgram" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram.PhdProgramsProviderForPublicCandidacy" />
+		<property name="format" value="${name}" />
+		<property name="sortBy" value="name" /> 
+	</slot>
+	<slot name="externalPhdProgram" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.epfl.phd.program">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram.ExternalPhdProgramsProviderForPublicCandidacies" />
+		<property name="format" value="${name}"/>
+		<property name="sortBy" value="name" />
+	</slot>
+	
 	<slot name="thesisTitle">
 		<property name="size" value="80"/>
 	</slot>

@@ -7126,6 +7126,15 @@ class phd.PhdProgram extends DomainObject {
     String acronym;
 }
 
+class phd.ExternalPhdProgram extends DomainObject {
+	DateTime whenCreated;
+	
+	MultiLanguageString name;
+	String acronym;
+	
+	PhdIndividualProgramCollaborationType forCollaborationType;
+}
+
 class phd.PhdProgramFocusArea extends DomainObject {
     DateTime whenCreated;
     MultiLanguageString name;
@@ -7668,6 +7677,13 @@ relation PhdProgramPhdIndividualProgramProcess {
     phd.PhdIndividualProgramProcess playsRole individualProgramProcesses {
         multiplicity *;
     }
+}
+
+relation ExternalPhdProgramIndividualProgramProcess {
+	phd.ExternalPhdProgram playsRole externalPhdProgram;
+	phd.PhdIndividualProgramProcess playsRole individualProgramProcesses {
+	    multiplicity *;
+	}
 }
 
 relation PhdProgramFocusAreaPhdIndividualProgramProcess {
@@ -18566,4 +18582,20 @@ relation DgesStudentImportationProcessStudentCandidacy {
 	candidacy.StudentCandidacy playsRole studentCandidacy {
 		multiplicity *;
 	}
+}
+
+relation ExternalPhdProgramRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	phd.ExternalPhdProgram playsRole externalPhdPrograms {
+		multiplicity *;
+	}
+}
+
+relation ExternalPhdProgramPhdProgramFocusArea {
+    phd.ExternalPhdProgram playsRole externalPhdPrograms {
+        multiplicity *;
+    }
+    phd.PhdProgramFocusArea playsRole phdProgramFocusAreas {
+        multiplicity *;
+    }
 }

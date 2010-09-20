@@ -1,11 +1,15 @@
 package net.sourceforge.fenixedu.domain.phd;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -54,5 +58,33 @@ public class PhdProgramFocusArea extends PhdProgramFocusArea_Base {
 	    }
 	}
 	return false;
+    }
+
+    public List<ExternalPhdProgram> getAssociatedExternalPhdProgramsForCollaborationType(
+	    final PhdIndividualProgramCollaborationType type) {
+	List<ExternalPhdProgram> externalPhdProgramList = new ArrayList<ExternalPhdProgram>();
+
+	CollectionUtils.select(getExternalPhdPrograms(), new Predicate() {
+
+	    @Override
+	    public boolean evaluate(Object object) {
+		return ((ExternalPhdProgram) object).isForCollaborationType(type);
+	    }
+
+	}, externalPhdProgramList);
+
+	return externalPhdProgramList;
+    }
+
+    public static PhdProgramFocusArea readPhdProgramFocusAreaByName(final String name) {
+	return (PhdProgramFocusArea) CollectionUtils.find(RootDomainObject.getInstance().getPhdProgramFocusAreas(),
+		new Predicate() {
+
+		    @Override
+		    public boolean evaluate(Object arg0) {
+			return name.equals(((PhdProgramFocusArea) arg0).getName().getContent());
+		    }
+
+		});
     }
 }
