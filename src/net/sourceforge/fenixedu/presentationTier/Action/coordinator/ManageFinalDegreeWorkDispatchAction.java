@@ -1222,11 +1222,30 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	    groupsSpreadsheet.exportToXLSSheet(workbook, excelStyle.getHeaderStyle(), excelStyle.getStringStyle());
 
 	    final Scheduleing scheduleing = executionDegree.getScheduling();
+
+	    final Set<ExecutionDegree> allExecutionDegrees = new HashSet<ExecutionDegree>();
 	    for (final ExecutionDegree otherExecutionDegree : scheduleing.getExecutionDegreesSet()) {
+		for (final FinalDegreeWorkGroup group : otherExecutionDegree.getAssociatedFinalDegreeWorkGroupsSet()) {
+		    if (!group.getGroupProposalsSet().isEmpty()) {
+			for (final GroupStudent groupStudent : group.getGroupStudentsSet()) {
+			    final Registration registration = groupStudent.getRegistration();
+			    final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
+			    final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
+			    final ExecutionDegree executionDegreeByYear = degreeCurricularPlan.getExecutionDegreeByYear(otherExecutionDegree.getExecutionYear());
+			    if (executionDegreeByYear != null) {
+				allExecutionDegrees.add(executionDegreeByYear);
+			    }
+			}
+		    }
+		}
+	    }
+
+	    //for (final ExecutionDegree otherExecutionDegree : scheduleing.getExecutionDegreesSet()) {
+	    for (final ExecutionDegree otherExecutionDegree : allExecutionDegrees) {
 		final DegreeCurricularPlan degreeCurricularPlan = otherExecutionDegree.getDegreeCurricularPlan();
 		final Degree degree = degreeCurricularPlan.getDegree();
 		final Spreadsheet studentsSpreadsheet = new Spreadsheet("Alunos " + degree.getSigla() + " " + yearString);
-		fillStudentsSpreadSheet(otherExecutionDegree, studentsSpreadsheet);
+		fillStudentsSpreadSheet(otherExecutionDegree, scheduleing, studentsSpreadsheet);
 		studentsSpreadsheet.exportToXLSSheet(workbook, excelStyle.getHeaderStyle(), excelStyle.getStringStyle());
 	    }
 
@@ -1452,10 +1471,9 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	spreadsheet.setHeader("Proposta Atribuida");
     }
 
-    private void fillStudentsSpreadSheet(final ExecutionDegree executionDegree, final Spreadsheet spreadsheet) {
+    private void fillStudentsSpreadSheet(final ExecutionDegree executionDegree, final Scheduleing scheduleing, final Spreadsheet spreadsheet) {
 	final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 	final ExecutionYear executionYear = executionDegree.getExecutionYear();
-	final Scheduleing scheduleing = executionDegree.getScheduling();
 	final Integer maximumCurricularYearToCountCompletedCourses = scheduleing
 		.getMaximumCurricularYearToCountCompletedCourses();
 
