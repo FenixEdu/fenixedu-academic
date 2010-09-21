@@ -154,10 +154,11 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
     }
 
     public List<Interval> getEventSpaceOccupationIntervals(DateTime start, DateTime end) {
+	final Interval i = new Interval(start, end);
 	final List<Interval> intervals = getEventSpaceOccupationIntervals(start.toYearMonthDay(), end.toYearMonthDay());
 	for (final Iterator<Interval> iterator = intervals.iterator(); iterator.hasNext(); ) {
 	    final Interval interval = iterator.next();
-	    if (!interval.contains(start) && !interval.contains(end)) {
+	    if (!interval.overlaps(i)) {
 		iterator.remove();
 	    }
 	}
