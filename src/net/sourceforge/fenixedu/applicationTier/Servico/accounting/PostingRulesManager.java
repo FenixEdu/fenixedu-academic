@@ -34,8 +34,7 @@ public class PostingRulesManager {
 		new GratuityWithPaymentPlanPR(bean.getStartDate(), null, dcp.getServiceAgreementTemplate());
 	    }
 
-	}
-	if (bean.getRule() == PastDegreeGratuityPR.class) {
+	} else if (bean.getRule() == PastDegreeGratuityPR.class) {
 
 	    for (final DegreeCurricularPlan dcp : bean.getDegreeCurricularPlans()) {
 		if (!dcp.isPast()) {
