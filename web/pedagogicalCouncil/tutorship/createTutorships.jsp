@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+<%@ page import="java.util.List" %>
 
 
 
@@ -33,7 +34,9 @@
 		<fr:destination name="invalid" path="/createTutorships.do?method=prepareCreation"/>
 </fr:edit>
 	<logic:present name="students">
-
+	<bean:define id="students" name="students" scope="request"/>
+		
+	<%= ((List)students).size()%> <bean:message key="label.tutorship.students.number" bundle="PEDAGOGICAL_COUNCIL"/>
 	<fr:view name="students" layout="tabular" schema="tutorship.tutorate.student.create">
 			<fr:layout>
 				<fr:property name="classes" value="tstyle1 thlight tdcenter mtop05 mbottom05"/>

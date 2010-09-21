@@ -36,7 +36,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  */
 
 @Mapping(path = "/createTutorships", module = "pedagogicalCouncil")
-@Forwards( { @Forward(name = "prepareCreate", path = "/pedagogicalCouncil/tutorship/createTutorships.jsp") })
+@Forwards({ @Forward(name = "prepareCreate", path = "/pedagogicalCouncil/tutorship/createTutorships.jsp") })
 public class CreateTutorshipsDA extends TutorManagementDispatchAction {
 
     private static int TUTORSHIP_DURATION = 2;
@@ -56,6 +56,7 @@ public class CreateTutorshipsDA extends TutorManagementDispatchAction {
 		&& bean.getExecutionSemester() != null) {
 	    // get all students from ExecCourse
 	    List<Person> students = new ArrayList<Person>();
+
 	    Shift shift = bean.getShift();
 	    for (Registration registration : shift.getStudents()) {
 		if (validForListing(registration, bean.getExecutionDegree())) {
@@ -64,8 +65,8 @@ public class CreateTutorshipsDA extends TutorManagementDispatchAction {
 	    }
 	    RenderUtils.invalidateViewState();
 	    request.setAttribute("students", students);
-	    request.setAttribute("tutorBean", new TeacherTutorshipCreationBean(bean.getExecutionDegree(), bean
-		    .getExecutionSemester()));
+	    request.setAttribute("tutorBean",
+		    new TeacherTutorshipCreationBean(bean.getExecutionDegree(), bean.getExecutionSemester()));
 	    return mapping.findForward("prepareCreate");
 	} else {
 	    RenderUtils.invalidateViewState();

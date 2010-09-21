@@ -176,17 +176,19 @@ public class StudentsByEntryYearBean implements Serializable {
 	    ExecutionDegree executionDegree) {
 	List<StudentCurricularPlan> students = new ArrayList<StudentCurricularPlan>();
 	List<Person> studentsNotRegistered = new ArrayList<Person>();
-	for (String studentIID : personsExternalIds) {
-	    Person person = AbstractDomainObject.fromExternalId(studentIID);
-	    Student student = person.getStudent();
-	    Registration registration = student.getActiveRegistrationFor(executionDegree.getDegree());
-	    if (registration != null) {
-		students.add(registration.getActiveStudentCurricularPlan());
-	    } else {
-		studentsNotRegistered.add(person);
+	if (personsExternalIds != null) {
+	    for (String studentIID : personsExternalIds) {
+		Person person = AbstractDomainObject.fromExternalId(studentIID);
+		Student student = person.getStudent();
+		Registration registration = student.getActiveRegistrationFor(executionDegree.getDegree());
+		if (registration != null) {
+		    students.add(registration.getActiveStudentCurricularPlan());
+		} else {
+		    studentsNotRegistered.add(person);
+		}
 	    }
+	    this.setStudentsToCreateTutorshipList(students);
 	}
-	this.setStudentsToCreateTutorshipList(students);
 	return studentsNotRegistered;
     }
 

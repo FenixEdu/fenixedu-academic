@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
@@ -49,11 +48,8 @@ public class TeacherTutorshipCreationBean implements Serializable {
 	    List<Person> teachers = new ArrayList<Person>();
 	    if (bean.getExecutionDegree() != null) {
 		ExecutionDegree executionDegree = bean.getExecutionDegree();
-		List<Department> departments = executionDegree.getDegree().getDepartments();
-		for (final Department department : departments) {
-		    for (Teacher teacher : department.getAllTeachers()) {
-			teachers.add(teacher.getPerson());
-		    }
+		for (final Teacher teacher : executionDegree.getPossibleTutorsFromExecutionDegreeDepartments()) {
+		    teachers.add(teacher.getPerson());
 		}
 
 	    }
