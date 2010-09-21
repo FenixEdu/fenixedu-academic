@@ -42,15 +42,10 @@ public class ConvokeManagement extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 
 	String writtenEvaluationId = request.getParameter("writtenEvaluationId");
-	ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 	WrittenEvaluation writtenEvaluation = (WrittenEvaluation) RootDomainObject.readDomainObjectByOID(WrittenEvaluation.class,
 		Integer.valueOf(writtenEvaluationId));
 
-	if (currentExecutionYear != writtenEvaluation.getExecutionYear()) {
-	    request.setAttribute("permission", false);
-	} else {
-	    request.setAttribute("permission", true);
-	}
+	request.setAttribute("permission", true);
 	request.setAttribute("writtenEvaluation", writtenEvaluation);
 	return mapping.findForward("showReport");
     }

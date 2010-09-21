@@ -62,7 +62,10 @@ public abstract class Vigilancy extends Vigilancy_Base {
 
     @Override
     public void setStatus(AttendingStatus status) {
-	if (this.getExecutionYear() != ExecutionYear.readCurrentExecutionYear()) {
+	ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+	Person person = AccessControl.getPerson();
+	if (this.getExecutionYear() != currentExecutionYear
+		&& person.getExamCoordinatorForGivenExecutionYear(currentExecutionYear) == null) {
 	    throw new DomainException("vigilancy.error.notAuthorized");
 	} else {
 	    if (AttendingStatus.ATTENDED.equals(status)) {
