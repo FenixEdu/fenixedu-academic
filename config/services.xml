@@ -836,7 +836,6 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.thesis.CreateThesisProposalWithAssignment</implementationClass>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="ScientificCommissionAuthorization"/>
         </filterChains>
     </service>
 
