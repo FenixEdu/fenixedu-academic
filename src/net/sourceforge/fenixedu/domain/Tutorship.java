@@ -102,16 +102,18 @@ public class Tutorship extends Tutorship_Base {
 	    return false;
 	}
 	Interval semesterInterval = new Interval(semester.getStartMillis(), semester.getEndMillis());
-	DateTime start = getStartDate().toDateTime(new DateTime(0));
-	DateTime end = getEndDate().toDateTime(new DateTime(0));
-	if (end != null) {
-	    Interval tutorshipInterval = new Interval(start, end);
-	    if (tutorshipInterval.overlaps(semesterInterval)) {
-		return true;
-	    }
-	} else {
-	    if (start.isBefore(semesterInterval.getStart())) {
-		return true;
+	Partial start = getStartDate();
+	Partial end = getEndDate();
+	if (start != null) {
+	    if (end != null) {
+		Interval tutorshipInterval = new Interval(start.toDateTime(new DateTime(0)), end.toDateTime(new DateTime(0)));
+		if (tutorshipInterval.overlaps(semesterInterval)) {
+		    return true;
+		}
+	    } else {
+		if (start.toDateTime(new DateTime(0)).isBefore(semesterInterval.getStart())) {
+		    return true;
+		}
 	    }
 	}
 	return false;
