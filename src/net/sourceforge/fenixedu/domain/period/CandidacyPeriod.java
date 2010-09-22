@@ -64,4 +64,11 @@ abstract public class CandidacyPeriod extends CandidacyPeriod_Base {
 	return contains(start) || contains(end);
     }
 
+    public boolean isPhdCandidacyPeriod() {
+	return false;
+    }
+
+    public String getPresentationName() {
+	return getStart().toString("dd/MM/yyyy") + " - " + getEnd().toString("dd/MM/yyyy");
+    }
 }

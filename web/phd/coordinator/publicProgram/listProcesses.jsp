@@ -19,7 +19,24 @@
 
 <%--  ### Results  ### --%>
 
-<table >
+<fr:edit id="select-period-bean" name="selectPeriodBean">
+	<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.phd.coordinator.publicProgram.PublicPhdProgramCandidacyProcessDA$SelectPhdCandidacyPeriodBean" bundle="PHD_RESOURCES" >
+		<fr:slot name="phdCandidacyPeriod" key="net.sourceforge.fenixedu.presentationTier.Action.phd.coordinator.publicProgram.PublicPhdProgramCandidacyProcessDA$SelectPhdCandidacyPeriodBean.phdCandidacyPeriod" layout="menu-select-postback">
+			<fr:property name="destination" value="phdCandidacyPeriodSelectionPostback" />
+			<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.coordinator.publicProgram.PublicPhdProgramCandidacyProcessDA$PhdCandidacyPeriodDataProvider" />
+			<fr:property name="format" value="${presentationName}" />
+		</fr:slot>
+	</fr:schema>
+	
+	<fr:destination name="phdCandidacyPeriodSelectionPostback" path="/candidacies/phdProgramCandidacyProcess.do?method=listProcesses" />
+	
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle2 thlight" />
+	</fr:layout>	
+</fr:edit>
+
+
+<table>
 	<tr>
 		<td><bean:message key="label.phd.statistics.total.requests" bundle="PHD_RESOURCES" />: </td>
 		<td><bean:write name="statistics" property="totalRequests" /></td>

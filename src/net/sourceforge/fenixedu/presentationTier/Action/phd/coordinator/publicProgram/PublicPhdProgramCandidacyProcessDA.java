@@ -4,20 +4,24 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.academicAdminOffice.PhdProgramCandidacyProcessDA;
+import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDomainObjectProvider;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -38,20 +42,24 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
     public ActionForward listProcesses(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	/*
-	 * TODO:
-	 * 
-	 * - filter by collaboration - filter by candidacy period
-	 */
+	SelectPhdCandidacyPeriodBean selectPeriodBean = getSelectPhdCandidacyPeriodBean();
+
+	if (selectPeriodBean == null) {
+	    selectPeriodBean = new SelectPhdCandidacyPeriodBean(PhdCandidacyPeriod.getMostRecentCandidacyPeriod());
+	}
 
 	final Statistics statistics = new Statistics();
 
 	final List<PublicPhdCandidacyBean> candidacyHashCodes = new ArrayList<PublicPhdCandidacyBean>();
 	for (final PublicCandidacyHashCode hashCode : RootDomainObject.getInstance().getCandidacyHashCodesSet()) {
 	    if (hashCode.isFromPhdProgram()) {
+		final PhdProgramPublicCandidacyHashCode phdHashCode = (PhdProgramPublicCandidacyHashCode) hashCode;
+
+		if (!selectPeriodBean.getPhdCandidacyPeriod().contains(phdHashCode.getWhenCreated())) {
+		    continue;
+		}
 
 		statistics.plusTotalRequests();
-		final PhdProgramPublicCandidacyHashCode phdHashCode = (PhdProgramPublicCandidacyHashCode) hashCode;
 
 		if (phdHashCode.hasCandidacyProcess()) {
 		    statistics.plusTotalCandidates();
@@ -67,8 +75,15 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
 	request.setAttribute("candidacyHashCodes", candidacyHashCodes);
 	request.setAttribute("statistics", statistics);
+	request.setAttribute("selectPeriodBean", selectPeriodBean);
+
+	RenderUtils.invalidateViewState();
 
 	return mapping.findForward("listProcesses");
+    }
+
+    private SelectPhdCandidacyPeriodBean getSelectPhdCandidacyPeriodBean() {
+	return (SelectPhdCandidacyPeriodBean) getObjectFromViewState("select-period-bean");
     }
 
     public ActionForward viewProcess(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -82,6 +97,50 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	request.setAttribute("candidacyRefereeLetter", ((PhdCandidacyReferee) getDomainObject(request, "candidacyRefereeId"))
 		.getLetter());
 	return mapping.findForward("viewCandidacyRefereeLetter");
+    }
+
+    static public class SelectPhdCandidacyPeriodBean implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	private PhdCandidacyPeriod candidacyPeriod;
+
+	public PhdCandidacyPeriod getPhdCandidacyPeriod() {
+	    return this.candidacyPeriod;
+	}
+
+	public void setPhdCandidacyPeriod(final PhdCandidacyPeriod candidacyPeriod) {
+	    this.candidacyPeriod = candidacyPeriod;
+	}
+
+	public SelectPhdCandidacyPeriodBean(final PhdCandidacyPeriod candidacyPeriod) {
+	    this.candidacyPeriod = candidacyPeriod;
+	}
+
+    }
+
+    static public final class PhdCandidacyPeriodDataProvider extends AbstractDomainObjectProvider {
+
+	@Override
+	public Object provide(Object source, Object currentValue) {
+	    return getCandidacyPeriods();
+	}
+
+	private List<PhdCandidacyPeriod> getCandidacyPeriods() {
+	    List<PhdCandidacyPeriod> candidacyPeriodList = new ArrayList<PhdCandidacyPeriod>();
+
+	    CollectionUtils.select(RootDomainObject.getInstance().getCandidacyPeriods(), new Predicate() {
+
+		@Override
+		public boolean evaluate(Object arg0) {
+		    return arg0 instanceof PhdCandidacyPeriod;
+		}
+
+	    }, candidacyPeriodList);
+
+	    return candidacyPeriodList;
+	}
+
     }
 
     static public class Statistics implements Serializable {

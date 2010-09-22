@@ -33,7 +33,12 @@ public class PhdCandidacyPeriod extends PhdCandidacyPeriod_Base {
     }
 
     static private boolean isPhdCandidacyPeriod(final CandidacyPeriod period) {
-	return period.getClass().equals(PhdCandidacyPeriod.class);
+	return period.isPhdCandidacyPeriod();
+    }
+
+    @Override
+    public boolean isPhdCandidacyPeriod() {
+	return true;
     }
 
     static public PhdCandidacyPeriod getCandidacyPeriod(final DateTime date) {
@@ -43,5 +48,30 @@ public class PhdCandidacyPeriod extends PhdCandidacyPeriod_Base {
 	    }
 	}
 	return null;
+    }
+
+    static public PhdCandidacyPeriod getMostRecentCandidacyPeriod() {
+	PhdCandidacyPeriod mostRecentCandidacyPeriod = null;
+
+	for (CandidacyPeriod candidacyPeriod : RootDomainObject.getInstance().getCandidacyPeriods()) {
+	    if (!candidacyPeriod.isPhdCandidacyPeriod()) {
+		continue;
+	    }
+
+	    if (candidacyPeriod.getStart().isAfterNow()) {
+		continue;
+	    }
+
+	    if (mostRecentCandidacyPeriod == null) {
+		mostRecentCandidacyPeriod = (PhdCandidacyPeriod) candidacyPeriod;
+		continue;
+	    }
+
+	    if (candidacyPeriod.getStart().isAfter(mostRecentCandidacyPeriod.getStart())) {
+		mostRecentCandidacyPeriod = (PhdCandidacyPeriod) candidacyPeriod;
+	    }
+	}
+
+	return mostRecentCandidacyPeriod;
     }
 }
