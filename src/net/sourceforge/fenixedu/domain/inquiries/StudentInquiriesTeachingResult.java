@@ -15,10 +15,10 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
-import pt.ist.fenixWebFramework.services.Service;
-
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
+
+import pt.ist.fenixWebFramework.services.Service;
 
 public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResult_Base {
 
@@ -600,12 +600,12 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
 
 	int unsatisfactoryResultsAssiduityIndex = getHeaderIndex(resultsBean.getUnsatisfactoryResultsAssiduityHeader(),
 		headersSplitted);
-	int unsatisfactoryResultsPedagogicalCapacityIndex = getHeaderIndex(resultsBean
-		.getUnsatisfactoryResultsPedagogicalCapacityHeader(), headersSplitted);
-	int unsatisfactoryResultsPresencialLearningIndex = getHeaderIndex(resultsBean
-		.getUnsatisfactoryResultsPresencialLearningHeader(), headersSplitted);
-	int unsatisfactoryResultsStudentInteractionIndex = getHeaderIndex(resultsBean
-		.getUnsatisfactoryResultsStudentInteractionHeader(), headersSplitted);
+	int unsatisfactoryResultsPedagogicalCapacityIndex = getHeaderIndex(
+		resultsBean.getUnsatisfactoryResultsPedagogicalCapacityHeader(), headersSplitted);
+	int unsatisfactoryResultsPresencialLearningIndex = getHeaderIndex(
+		resultsBean.getUnsatisfactoryResultsPresencialLearningHeader(), headersSplitted);
+	int unsatisfactoryResultsStudentInteractionIndex = getHeaderIndex(
+		resultsBean.getUnsatisfactoryResultsStudentInteractionHeader(), headersSplitted);
 	int internalDegreeDisclosureIndex = getHeaderIndex(resultsBean.getInternalDegreeDisclosureHeader(), headersSplitted);
 
 	for (String row : values.split("\n")) {
@@ -672,7 +672,7 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
 	removeRootDomainObject();
 	super.deleteDomainObject();
     }
-    
+
     @Service
     public static Boolean resetTeachingResults(UploadStudentInquiriesTeachingResultsBean teachingBean) {
 	boolean resetedItems = false;
@@ -685,7 +685,7 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
 		}
 	    } else {
 		ExecutionCourse executionCourse = ExecutionCourse.fromExternalId(teachingBean.getKeyExecutionCourseHeader());
-		if(executionCourse == null) {
+		if (executionCourse == null) {
 		    throw new DomainException("error.StudentInquiriesCourseResult.executionCourseNotFound",
 			    teachingBean.getKeyExecutionCourseHeader());
 		}
@@ -697,8 +697,9 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
 	}
 	return resetedItems;
     }
-    
+
     public void resetValues() {
+	this.valuesMap = null;
 	setAverage_P6_1(null);
 	setAverage_P6_2(null);
 	setAverage_P6_3(null);

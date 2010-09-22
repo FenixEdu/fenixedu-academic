@@ -791,8 +791,7 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
     public static Boolean resetCourseAndTeachingResults(UploadStudentInquiriesCourseResultsBean coursesBean) {
 	boolean resetedItems = false;
 	Set<Professorship> professorships = new HashSet<Professorship>();
-	for (StudentInquiriesCourseResult courseResult : RootDomainObject.getInstance()
-		.getStudentInquiriesCourseResults()) {
+	for (StudentInquiriesCourseResult courseResult : RootDomainObject.getInstance().getStudentInquiriesCourseResults()) {
 	    if (StringUtils.isEmpty(coursesBean.getKeyExecutionCourseHeader())) {
 		if (coursesBean.getResultsDate().equals(courseResult.getResultsDate())) {
 		    professorships.addAll(courseResult.getExecutionCourse().getProfessorships());
@@ -801,7 +800,7 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
 		}
 	    } else {
 		ExecutionCourse executionCourse = DomainObject.fromExternalId(coursesBean.getKeyExecutionCourseHeader());
-		if(executionCourse == null) {
+		if (executionCourse == null) {
 		    throw new DomainException("error.StudentInquiriesCourseResult.executionCourseNotFound",
 			    coursesBean.getKeyExecutionCourseHeader());
 		}
@@ -812,14 +811,14 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
 		}
 	    }
 	}
-	for(Professorship professorship : professorships) {
-	    for(StudentInquiriesTeachingResult teachingResult : professorship.getStudentInquiriesTeachingResults()) {
+	for (Professorship professorship : professorships) {
+	    for (StudentInquiriesTeachingResult teachingResult : professorship.getStudentInquiriesTeachingResults()) {
 		teachingResult.resetValues();
 	    }
 	}
 	return resetedItems;
     }
-    
+
     @Service
     public void delete() {
 	if (hasCoordinatorComment()) {
@@ -837,8 +836,9 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
 	setCoordinatorComment(getExecutionDegree().getCoordinatorByTeacher(AccessControl.getPerson()));
 	setCourseResultsCoordinatorCommentDate(new DateTime());
     }
-    
+
     private void resetValues() {
+	this.valuesMap = null;
 	setApprovedRatio(null);
 	setAuditCU(false);
 	setAvailableToInquiry(false);
