@@ -6,6 +6,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 
@@ -98,7 +99,8 @@ public class Tutorship extends Tutorship_Base {
     }
 
     public boolean isActive(AcademicInterval semester) {
-	if (getStudent().getStateInDate(semester.getEnd()).equals(RegistrationStateType.CANCELED)) {
+	RegistrationState registrationState = getStudent().getStateInDate(semester.getEnd());
+	if (registrationState != null && registrationState.equals(RegistrationStateType.CANCELED)) {
 	    return false;
 	}
 	Interval semesterInterval = new Interval(semester.getStartMillis(), semester.getEndMillis());
