@@ -2,8 +2,9 @@ package net.sourceforge.fenixedu.presentationTier.Action.student;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-import java.util.ResourceBundle;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,18 +15,18 @@ import net.sourceforge.fenixedu.domain.EnrolmentPeriod;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCoursesSpecialSeason;
+import net.sourceforge.fenixedu.domain.EnrolmentPeriodInSpecialSeasonEvaluations;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.YearMonthDay;
-
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ShowStudentPortalDA extends FenixDispatchAction {
 
@@ -49,8 +50,12 @@ public class ShowStudentPortalDA extends FenixDispatchAction {
 		studentPortalBeans.add(new StudentPortalBean(registration.getDegree(), student, executionCourses,
 			degreeCurricularPlan));
 	    }
-	    genericDegreeWarnings.addAll(getEnrolmentPeriodCourses(degreeCurricularPlan));
-	    genericDegreeWarnings.addAll(getEnrolmentPeriodCoursesAfterSpecialSeason(degreeCurricularPlan));
+	    if (hasSpecialSeasonEnrolments(student)) {
+		genericDegreeWarnings.addAll(getEnrolmentPeriodCoursesAfterSpecialSeason(degreeCurricularPlan));
+	    } else {
+		genericDegreeWarnings.addAll(getEnrolmentPeriodCourses(degreeCurricularPlan));
+	    }
+	    genericDegreeWarnings.addAll(getEnrolmentPeriodInSpecialSeasonEvaluations(degreeCurricularPlan));
 	    genericDegreeWarnings.addAll(getEnrolmentPeriodClasses(degreeCurricularPlan));
 	}
 
@@ -62,17 +67,13 @@ public class ShowStudentPortalDA extends FenixDispatchAction {
 
     private List<String> getEnrolmentPeriodCourses(DegreeCurricularPlan degreeCurricularPlan) {
 	List<String> warnings = new ArrayList<String>();
-	EnrolmentPeriodInCurricularCourses periodCourses;
 	for (final EnrolmentPeriod enrolmentPeriod : degreeCurricularPlan.getEnrolmentPeriodsSet()) {
 	    if (enrolmentPeriod instanceof EnrolmentPeriodInCurricularCourses) {
-		periodCourses = (EnrolmentPeriodInCurricularCourses) enrolmentPeriod;
-		if (isBetweenWarnPeriod(periodCourses)) {
-		    ResourceBundle resource = ResourceBundle.getBundle("resources.StudentResources", Language.getLocale());
-		    warnings.add(degreeCurricularPlan.getDegree().getSigla() + ": "
-			    + resource.getString("message.out.degree.enrolment.period") + " "
-			    + YearMonthDay.fromDateFields(periodCourses.getStartDate()) + " "
-			    + resource.getString("message.out.until") + " "
-			    + YearMonthDay.fromDateFields(periodCourses.getEndDate()));
+		if (isBetweenWarnPeriod(enrolmentPeriod)) {
+		    warnings.add(BundleUtil.getMessageFromModuleOrApplication("Student", "message.out.degree.enrolment.period",
+			    degreeCurricularPlan.getDegree().getSigla(), YearMonthDay.fromDateFields(
+				    enrolmentPeriod.getStartDate()).toString(), YearMonthDay.fromDateFields(
+				    enrolmentPeriod.getEndDate()).toString()));
 		}
 	    }
 	}
@@ -81,18 +82,63 @@ public class ShowStudentPortalDA extends FenixDispatchAction {
 
     private List<String> getEnrolmentPeriodCoursesAfterSpecialSeason(DegreeCurricularPlan degreeCurricularPlan) {
 	List<String> warnings = new ArrayList<String>();
-	EnrolmentPeriod periodCourses;
 	for (final EnrolmentPeriod enrolmentPeriod : degreeCurricularPlan.getEnrolmentPeriodsSet()) {
 	    if (enrolmentPeriod instanceof EnrolmentPeriodInCurricularCoursesSpecialSeason) {
-		periodCourses = enrolmentPeriod;
-		if (isBetweenWarnPeriod(periodCourses)) {
-		    ResourceBundle resource = ResourceBundle.getBundle("resources.StudentResources", Language.getLocale());
-		    warnings.add(degreeCurricularPlan.getDegree().getSigla() + ": "
-			    + resource.getString("message.out.degree.enrolment.period.after.special.season") + " "
-			    + YearMonthDay.fromDateFields(periodCourses.getStartDate()) + " "
-			    + resource.getString("message.out.until") + " "
-			    + YearMonthDay.fromDateFields(periodCourses.getEndDate()));
+		if (isBetweenWarnPeriod(enrolmentPeriod)) {
+		    warnings.add(BundleUtil.getMessageFromModuleOrApplication("Student",
+			    "message.out.degree.enrolment.period.after.special.season", degreeCurricularPlan.getDegree()
+				    .getSigla(), YearMonthDay.fromDateFields(enrolmentPeriod.getStartDate()).toString(),
+			    YearMonthDay.fromDateFields(enrolmentPeriod.getEndDate()).toString()));
 		}
+	    }
+	}
+	return warnings;
+    }
+
+    private boolean hasSpecialSeasonEnrolments(Student student) {
+	ExecutionSemester actualSemester = ExecutionSemester.readActualExecutionSemester();
+	ExecutionSemester previousSemester = actualSemester.getPreviousExecutionPeriod();
+	ExecutionSemester previousPreviousSemester = previousSemester.getPreviousExecutionPeriod();
+	if (actualSemester.isFirstOfYear()) {
+	    return (student.hasSpecialSeasonEnrolments(previousSemester) || student
+		    .hasSpecialSeasonEnrolments(previousPreviousSemester));
+	}
+	return (student.hasSpecialSeasonEnrolments(actualSemester) || student.hasSpecialSeasonEnrolments(previousSemester));
+    }
+
+    private List<String> getEnrolmentPeriodInSpecialSeasonEvaluations(DegreeCurricularPlan degreeCurricularPlan) {
+	HashMap<String, TreeSet<EnrolmentPeriod>> enrolmentPeriodsByDate = new HashMap<String, TreeSet<EnrolmentPeriod>>();
+	List<String> warnings = new ArrayList<String>();
+	for (final EnrolmentPeriod enrolmentPeriod : degreeCurricularPlan.getEnrolmentPeriodsSet()) {
+	    if (enrolmentPeriod instanceof EnrolmentPeriodInSpecialSeasonEvaluations) {
+		if (isBetweenWarnPeriod(enrolmentPeriod)) {
+		    String dateKey = YearMonthDay.fromDateFields(enrolmentPeriod.getStartDate()).toString()
+			    + YearMonthDay.fromDateFields(enrolmentPeriod.getEndDate()).toString();
+
+		    if (enrolmentPeriodsByDate.get(dateKey) == null) {
+			enrolmentPeriodsByDate.put(dateKey, new TreeSet<EnrolmentPeriod>(
+				EnrolmentPeriod.COMPARATOR_BY_EXECUTION_SEMESTER));
+		    }
+
+		    enrolmentPeriodsByDate.get(dateKey).add(enrolmentPeriod);
+		}
+	    }
+	}
+
+	for (TreeSet<EnrolmentPeriod> periods : enrolmentPeriodsByDate.values()) {
+	    if (periods.size() == 1) {
+		EnrolmentPeriod enrolmentPeriod = periods.first();
+		warnings.add(BundleUtil.getMessageFromModuleOrApplication("Student",
+			"message.out.degree.enrolment.period.in.special.season.evaluations", degreeCurricularPlan.getDegree()
+				.getSigla(), enrolmentPeriod.getExecutionPeriod().getSemester().toString(), enrolmentPeriod
+				.getExecutionPeriod().getYear(), YearMonthDay.fromDateFields(enrolmentPeriod.getStartDate())
+				.toString(), YearMonthDay.fromDateFields(enrolmentPeriod.getEndDate()).toString()));
+	    } else {
+		EnrolmentPeriod enrolmentPeriod = periods.first();
+		warnings.add(BundleUtil.getMessageFromModuleOrApplication("Student",
+			"message.out.degree.enrolment.period.in.special.season.evaluations.simple", degreeCurricularPlan
+				.getDegree().getSigla(), YearMonthDay.fromDateFields(enrolmentPeriod.getStartDate()).toString(),
+			YearMonthDay.fromDateFields(enrolmentPeriod.getEndDate()).toString()));
 	    }
 	}
 	return warnings;
@@ -100,17 +146,13 @@ public class ShowStudentPortalDA extends FenixDispatchAction {
 
     private List<String> getEnrolmentPeriodClasses(DegreeCurricularPlan degreeCurricularPlan) {
 	List<String> warnings = new ArrayList<String>();
-	EnrolmentPeriodInClasses periodClasses;
 	for (final EnrolmentPeriod enrolmentPeriod : degreeCurricularPlan.getEnrolmentPeriodsSet()) {
 	    if (enrolmentPeriod instanceof EnrolmentPeriodInClasses) {
-		periodClasses = (EnrolmentPeriodInClasses) enrolmentPeriod;
-		if (isBetweenWarnPeriod(periodClasses)) {
-		    ResourceBundle resource = ResourceBundle.getBundle("resources.StudentResources", Language.getLocale());
-		    warnings.add(degreeCurricularPlan.getDegree().getSigla() + ": "
-			    + resource.getString("message.out.classes.enrolment.period") + " "
-			    + YearMonthDay.fromDateFields(periodClasses.getStartDate()) + " "
-			    + resource.getString("message.out.until") + " "
-			    + YearMonthDay.fromDateFields(periodClasses.getEndDate()));
+		if (isBetweenWarnPeriod(enrolmentPeriod)) {
+		    warnings.add(BundleUtil.getMessageFromModuleOrApplication("Student", "message.out.classes.enrolment.period",
+			    degreeCurricularPlan.getDegree().getSigla(), YearMonthDay.fromDateFields(
+				    enrolmentPeriod.getStartDate()).toString(), YearMonthDay.fromDateFields(
+				    enrolmentPeriod.getEndDate()).toString()));
 		}
 	    }
 	}

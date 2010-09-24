@@ -27,7 +27,18 @@ public abstract class EnrolmentPeriod extends EnrolmentPeriod_Base {
 	    final int dcp = DegreeCurricularPlan.COMPARATOR_BY_PRESENTATION_NAME.compare(dcp1, dcp2);
 	    return dcp == 0 ? o2.hashCode() - o1.hashCode() : dcp;
 	}
-	
+
+    };
+
+    public static final Comparator<EnrolmentPeriod> COMPARATOR_BY_EXECUTION_SEMESTER = new Comparator<EnrolmentPeriod>() {
+
+	@Override
+	public int compare(EnrolmentPeriod period1, EnrolmentPeriod period2) {
+	    final ExecutionSemester semester1 = period1.getExecutionPeriod();
+	    final ExecutionSemester semester2 = period2.getExecutionPeriod();
+	    return ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR.compare(semester1, semester2);
+	}
+
     };
 
     public EnrolmentPeriod() {
@@ -60,7 +71,7 @@ public abstract class EnrolmentPeriod extends EnrolmentPeriod_Base {
     public boolean isValid(final Date date) {
 	return containsDate(new DateTime(date));
     }
-    
+
     public boolean isUpcomingPeriod() {
 	return getStartDateDateTime().isAfterNow();
     }
@@ -72,7 +83,7 @@ public abstract class EnrolmentPeriod extends EnrolmentPeriod_Base {
     public boolean isFor(final ExecutionSemester executionSemester) {
 	return getExecutionPeriod() == executionSemester;
     }
-    
+
     public Degree getDegree() {
 	return getDegreeCurricularPlan().getDegree();
     }
