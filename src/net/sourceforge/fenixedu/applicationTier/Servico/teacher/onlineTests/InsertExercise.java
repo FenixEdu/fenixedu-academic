@@ -76,7 +76,11 @@ public class InsertExercise extends FenixService {
 		} catch (DomainException domainException) {
 		    throw domainException;
 		} catch (ParseQuestionException e) {
-		    badXmls.add(xmlFileName + e);
+		    if (e.getMessage() == null) {
+			metadatas.add(labelValueBean);
+		    } else {
+			badXmls.add(xmlFileName + e);
+		    }
 		}
 	    }
 
