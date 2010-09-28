@@ -45,7 +45,9 @@ public enum RegistrationAgreement {
     
     ALMEIDA_GARRETT(false, false),
     
-    INOV_IST(false, false);
+    INOV_IST(false, false),
+    
+    TECMIC(false, false);
 
     private boolean enrolmentByStudentAllowed;
 
