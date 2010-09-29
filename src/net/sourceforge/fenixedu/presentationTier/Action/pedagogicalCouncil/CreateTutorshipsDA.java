@@ -10,19 +10,16 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.StudentsByEntryYearBean;
 import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipErrorBean;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.tutor.TutorManagementDispatchAction;
-import net.sourceforge.fenixedu.util.Month;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -65,8 +62,7 @@ public class CreateTutorshipsDA extends TutorManagementDispatchAction {
 	    }
 	    RenderUtils.invalidateViewState();
 	    request.setAttribute("students", students);
-	    request.setAttribute("tutorBean",
-		    new TeacherTutorshipCreationBean(bean.getExecutionDegree(), bean.getExecutionSemester()));
+	    request.setAttribute("tutorBean", new TeacherTutorshipCreationBean(bean.getExecutionDegree()));
 	    return mapping.findForward("prepareCreate");
 	} else {
 	    RenderUtils.invalidateViewState();
@@ -114,7 +110,7 @@ public class CreateTutorshipsDA extends TutorManagementDispatchAction {
 	StudentsByEntryYearBean selectedStudentsAndTutorBean = new StudentsByEntryYearBean(contextBean.getExecutionSemester()
 		.getExecutionYear());
 	// Initialize Tutorship creation bean to use in InsertTutorship Service
-	initializeBean(selectedStudentsAndTutorBean, tutorBean, contextBean, selectedPersons);
+	BeanInitializer.initializeBean(selectedStudentsAndTutorBean, tutorBean, contextBean, selectedPersons, TUTORSHIP_DURATION);
 
 	Object[] args = new Object[] { contextBean.getExecutionDegree().getIdInternal(), selectedStudentsAndTutorBean };
 
@@ -142,26 +138,4 @@ public class CreateTutorshipsDA extends TutorManagementDispatchAction {
 	}
 	return prepareCreation(mapping, actionForm, request, response);
     }
-
-    /**
-     * Initializes Bean to insert in InsertTutorship service
-     * 
-     * @param studentsByEntryYearBean
-     * @param tutorBean
-     * @param contextBean
-     * @param selectedPersons
-     * @return list of students (Person) not registered in course
-     */
-    public void initializeBean(StudentsByEntryYearBean studentsByEntryYearBean, TeacherTutorshipCreationBean tutorBean,
-	    ContextTutorshipCreationBean contextBean, String[] selectedPersons) {
-	ExecutionSemester executionSemester = contextBean.getExecutionSemester();
-	ExecutionDegree executionDegree = contextBean.getExecutionDegree();
-	studentsByEntryYearBean.receiveStudentsToCreateTutorshipList(selectedPersons, executionSemester, executionDegree);
-	studentsByEntryYearBean.setTeacher(tutorBean.getTeacher().getTeacher());
-	DateTime today = new DateTime();
-	studentsByEntryYearBean.setTutorshipEndMonth(Month.fromDateTime(today));
-	studentsByEntryYearBean.setTutorshipEndYear(today.getYear() + TUTORSHIP_DURATION);
-
-    }
-
 }

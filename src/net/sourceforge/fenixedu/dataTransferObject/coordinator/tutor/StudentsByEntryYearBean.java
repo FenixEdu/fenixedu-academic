@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -172,8 +171,7 @@ public class StudentsByEntryYearBean implements Serializable {
      * @param executionDegree
      * @return list of persons with no registration in execution course
      */
-    public List<Person> receiveStudentsToCreateTutorshipList(String[] personsExternalIds, ExecutionSemester executionSemester,
-	    ExecutionDegree executionDegree) {
+    public List<Person> receiveStudentsToCreateTutorshipList(String[] personsExternalIds, ExecutionDegree executionDegree) {
 	List<StudentCurricularPlan> students = new ArrayList<StudentCurricularPlan>();
 	List<Person> studentsNotRegistered = new ArrayList<Person>();
 	if (personsExternalIds != null) {

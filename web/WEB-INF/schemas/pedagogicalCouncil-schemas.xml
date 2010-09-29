@@ -826,6 +826,15 @@
 		<property name="subLayout" value="values" />
 		<property name="subSchema" value="teacher.person.email" />
 	</slot>
+	<slot name="this" key="label.edit" layout="link">
+		<property name="contextRelative" value="true" />
+		<property name="moduleRelative" value="true" />
+		<property name="blankTarget" value="false" />
+		<property name="key" value="link.delegates.changeDelegate" />
+		<property name="bundle" value="PEDAGOGICAL_COUNCIL" />
+		<property name="linkFormat"
+			value="/viewTutorship.do?method=prepareTutorship&amp;tutorshipId=${idInternal}" />
+	</slot>
 </schema>
 
 <schema name="tutorship.tutorate.createSummary" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.CreateSummaryBean">

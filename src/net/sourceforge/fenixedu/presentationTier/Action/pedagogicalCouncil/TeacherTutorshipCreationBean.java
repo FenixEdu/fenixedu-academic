@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
@@ -26,11 +25,9 @@ public class TeacherTutorshipCreationBean implements Serializable {
     private static final long serialVersionUID = 1L;
     private Person teacher;
     private ExecutionDegree executionDegree;
-    private ExecutionSemester executionSemester;
 
-    public TeacherTutorshipCreationBean(ExecutionDegree executionDegree, ExecutionSemester executionSemester) {
+    public TeacherTutorshipCreationBean(ExecutionDegree executionDegree) {
 	this.executionDegree = executionDegree;
-	this.executionSemester = executionSemester;
     }
 
     public static class TutorsProvider implements DataProvider {
@@ -65,13 +62,6 @@ public class TeacherTutorshipCreationBean implements Serializable {
 	this.teacher = teacher;
     }
 
-    public ExecutionSemester getExecutionSemester() {
-	return executionSemester;
-    }
-
-    public void setExecutionSemester(ExecutionSemester executionSemester) {
-	this.executionSemester = executionSemester;
-    }
 
     public ExecutionDegree getExecutionDegree() {
 	return executionDegree;
