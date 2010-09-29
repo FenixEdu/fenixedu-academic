@@ -223,13 +223,13 @@ public class CourseStatistics extends FenixBackingBean {
 
     private String getFilename() {
 	final ResourceBundle bundle = getApplicationResources();
-	return String.format("%s_%s_%s.xls", new DateTime().toString("ddMMyyyyHHmm"), bundle.getString("label.students"),
+	return String.format("%s_%s_%s.xls", new DateTime().toString("dd-MM-yyyy_HH:mm"), bundle.getString("label.students"),
 		getCurricularCourseToExport().getName().replaceAll(" ", "_"));
     }
 
     private void exportToXls(String filename) throws IOException {
 	this.getResponse().setContentType("application/vnd.ms-excel");
-	this.getResponse().setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
+	this.getResponse().setHeader("Content-disposition", "attachment; filename=" + filename);
 	ServletOutputStream outputStream = this.getResponse().getOutputStream();
 
 	final Spreadsheet spreadsheet = createSpreadsheet();

@@ -24,7 +24,7 @@ public abstract class ComputeCourseStatistics extends FenixService {
 	super();
     }
 
-    protected void createCourseStatistics(CourseStatisticsDTO courseStatistics, List<Enrolment> enrollments) {
+    protected void createCourseStatistics(CourseStatisticsDTO courseStatistics, List<Enrolment> enrolments) {
 	int firstEnrolledCount = 0;
 	int firstApprovedCount = 0;
 	List<IGrade> firstApprovedGrades = new ArrayList<IGrade>();
@@ -37,15 +37,12 @@ public abstract class ComputeCourseStatistics extends FenixService {
 	int totalApprovedCount = 0;
 	List<IGrade> totalApprovedGrades = new ArrayList<IGrade>();
 
-	for (Enrolment enrollment : enrollments) {
-	    if (enrollment.isSpecialSeason()) {
-		continue;
-	    }
+	for (Enrolment enrolment : enrolments) {
 
 	    totalEnrolledCount++;
 
-	    EnrolmentEvaluation evaluation = getBestEnrollmentEvaluation(enrollment);
-	    if (enrollment.isFirstTime()) {
+	    EnrolmentEvaluation evaluation = getBestEnrollmentEvaluation(enrolment);
+	    if (enrolment.isFirstTime()) {
 		firstEnrolledCount++;
 
 		if (evaluation != null && evaluation.getEnrollmentStateByGrade() == EnrollmentState.APROVED) {

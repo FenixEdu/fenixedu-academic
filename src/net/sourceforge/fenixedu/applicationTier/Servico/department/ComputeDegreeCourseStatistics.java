@@ -32,7 +32,7 @@ public class ComputeDegreeCourseStatistics extends ComputeCourseStatistics {
 
 	    DegreeCourseStatisticsDTO degreeCourseStatistics = new DegreeCourseStatisticsDTO();
 	    degreeCourseStatistics.setIdInternal(degree.getIdInternal());
-	    degreeCourseStatistics.setName(degree.getNameFor(executionSemester.getExecutionYear()).getContent());
+	    degreeCourseStatistics.setName(degree.getSigla());
 	    createCourseStatistics(degreeCourseStatistics, enrollments);
 
 	    results.add(degreeCourseStatistics);
