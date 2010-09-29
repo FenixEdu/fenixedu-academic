@@ -60,4 +60,11 @@ public class PhdProgramProcessState extends PhdProgramProcessState_Base {
 	return result;
     }
 
+    public boolean isFlunked() {
+	return getType().equals(PhdIndividualProgramProcessState.FLUNKED);
+    }
+
+    public boolean isSuspended() {
+	return getType().equals(PhdIndividualProgramProcessState.SUSPENDED);
+    }
 }

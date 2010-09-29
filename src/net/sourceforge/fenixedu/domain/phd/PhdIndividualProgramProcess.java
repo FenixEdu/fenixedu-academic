@@ -1437,4 +1437,11 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return getStudyPlan().isExempted() || getStudyPlan().hasPropaeudeuticsOrExtraEntriesApproved();
     }
 
+    public boolean isFlunked() {
+	return getMostRecentState().isFlunked();
+    }
+
+    public boolean isSuspended() {
+	return getMostRecentState().isSuspended();
+    }
 }

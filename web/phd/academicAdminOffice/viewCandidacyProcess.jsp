@@ -66,12 +66,12 @@
 	</html:link>
 </li>
 
-<logic:equal name="process" property="activeState.active" value="true">
 		<li style="display: inline;">
 			<html:link action="/phdProgramCandidacyProcess.do?method=manageCandidacyDocuments" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
 				<bean:message bundle="PHD_RESOURCES" key="label.phd.manageCandidacyDocuments"/>
 			</html:link>
 		</li>
+<logic:equal name="process" property="activeState.active" value="true">
 		<li style="display: inline;">
 			<html:link action="/phdProgramCandidacyProcess.do?method=manageCandidacyReview" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
 				<bean:message bundle="PHD_RESOURCES" key="label.phd.candidacy.academicAdminOffice.manageCandidacyReview"/>

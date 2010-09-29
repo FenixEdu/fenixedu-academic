@@ -16,14 +16,14 @@ public enum AcademicServiceRequestType {
     COURSE_GROUP_CHANGE_REQUEST(true),
 
     FREE_SOLICITATION_ACADEMIC_REQUEST(true),
-    
+
     SPECIAL_SEASON_REQUEST(true),
 
     EXTRA_EXAM_REQUEST(true),
 
     PHOTOCOPY_REQUEST(true),
 
-    PARTIAL_REGIME_REQUEST(true);
+    PARTIAL_REGIME_REQUEST(true), PHD_STUDENT_REINGRESSION(true);
 
     private boolean isServiceRequest;
 

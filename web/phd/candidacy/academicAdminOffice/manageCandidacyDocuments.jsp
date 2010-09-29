@@ -107,6 +107,7 @@
 <br/><br/>
 
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
+<logic:equal name="process" property="individualProgramProcess.activeState.active" value="true">
 <fr:form action="/phdProgramCandidacyProcess.do?method=uploadDocuments" encoding="multipart/form-data">
   	<input type="hidden" name="method" value="" />
   	<input type="hidden" name="processId" value="<%= processId.toString()  %>" />
@@ -129,6 +130,7 @@
 <%--  ### End of Buttons (e.g. Submit)  ### --%>
 
 </fr:form>
+</logic:equal>
 
 <br/><br/>
 

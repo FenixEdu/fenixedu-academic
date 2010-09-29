@@ -394,7 +394,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	}
     }
 
-    final private boolean isAcceptedSituationType(final AcademicServiceRequestSituationType situationType) {
+    final protected boolean isAcceptedSituationType(final AcademicServiceRequestSituationType situationType) {
 	return getAcceptedSituationTypes(getAcademicServiceRequestSituationType()).contains(situationType);
     }
 

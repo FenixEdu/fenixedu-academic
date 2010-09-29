@@ -5128,6 +5128,12 @@ class DomainObject {
                         
         class serviceRequests.PersonAcademicServiceRequest extends serviceRequests.AcademicServiceRequest {
         }
+        
+        class phd.serviceRequests.PhdAcademicServiceRequest extends serviceRequests.AcademicServiceRequest {
+        }
+        
+        	class phd.serviceRequests.PhdStudentReingressionRequest extends phd.serviceRequests.PhdAcademicServiceRequest {
+        	}
     
     class space.Blueprint extends DomainObject {
         YearMonthDay validFrom;
@@ -7208,15 +7214,21 @@ class phd.PhdProgramProcessDocument extends File {
     Integer documentVersion;
 }
 
-class phd.PhdThesisReportFeedbackDocument extends phd.PhdProgramProcessDocument {
-}
+	class phd.PhdThesisReportFeedbackDocument extends phd.PhdProgramProcessDocument {
+	}
+	
+	class phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestDocument extends phd.PhdProgramProcessDocument {
+	}
+	
+	class phd.seminar.PublicPresentationSeminarProcess extends phd.PhdProgramProcess {
+	    LocalDate presentationDate;
+	}
+	
+	class phd.serviceRequests.PhdAcademicServiceRequestDocument extends phd.PhdProgramProcessDocument {
+	}
 
-class phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestDocument extends phd.PhdProgramProcessDocument {
-}
-
-class phd.seminar.PublicPresentationSeminarProcess extends phd.PhdProgramProcess {
-    LocalDate presentationDate;
-}
+		class phd.serviceRequests.PhdStudentReingressionRequestDocument extends phd.serviceRequests.PhdAcademicServiceRequestDocument {
+		}
 
 class phd.thesis.PhdThesisProcess extends phd.PhdProgramProcess {
 	LocalDate whenJuryValidated;
@@ -8074,6 +8086,17 @@ relation PhdParticipantPhdCandidacyFeedbackRequestElements {
     }
 }
 
+relation PhdAcademicServiceRequestPhdIndividualProgramProcess {
+	phd.PhdIndividualProgramProcess playsRole phdIndividualProgramProcess;
+	phd.serviceRequests.PhdAcademicServiceRequest playsRole phdAcademicServiceRequests {
+		multiplicity *;
+	}
+}
+
+relation PhdStudentReingressionRequestDocumentPhdStudentReingressionRequest {
+	phd.serviceRequests.PhdStudentReingressionRequest playsRole phdStudentReingressionRequest;
+	phd.serviceRequests.PhdStudentReingressionRequestDocument playsRole phdStudentReingressionRequestDocument;
+}
 
 /* End of Phd Module */
 
