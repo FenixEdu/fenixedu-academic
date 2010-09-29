@@ -25,14 +25,21 @@
 
 		<h:panelGrid columns="2" styleClass="infoop" columnClasses="aright,,"  rowClasses=",,,valigntop">
 			<h:outputText value="#{bundle['label.student.curricular.plan.state']}: " />
-			<h:selectOneMenu value="#{CoordinatorStudentsBackingBean.studentCurricularPlanStateString}">
-				<f:selectItem itemLabel="#{bundle['message.all']}" itemValue=""/>
-				<f:selectItem itemLabel="#{bundleEnum['ACTIVE']}" itemValue="ACTIVE"/>
-				<f:selectItem itemLabel="#{bundleEnum['CONCLUDED']}" itemValue="CONCLUDED"/>
-				<f:selectItem itemLabel="#{bundleEnum['INCOMPLETE']}" itemValue="INCOMPLETE"/>
-				<f:selectItem itemLabel="#{bundleEnum['SCHOOLPARTCONCLUDED']}" itemValue="SCHOOLPARTCONCLUDED"/>
-				<f:selectItem itemLabel="#{bundleEnum['INACTIVE']}" itemValue="INACTIVE"/>
-				<f:selectItem itemLabel="#{bundleEnum['PAST']}" itemValue="PAST"/>
+			<h:selectOneMenu id="registrationStateTypeString" value="#{CoordinatorStudentsBackingBean.registrationStateTypeString}">
+				<f:selectItem itemLabel="#{bundle['message.all']}" itemValue="SHOWALL"/>
+				<f:selectItem itemLabel="#{bundleEnum['RegistrationStateType.REGISTERED']}" itemValue="REGISTERED"/>
+				<f:selectItem itemLabel="#{bundleEnum['RegistrationStateType.MOBILITY']}" itemValue="MOBILITY"/>
+				<f:selectItem itemLabel="#{bundleEnum['RegistrationStateType.CANCELED']}" itemValue="CANCELED"/>
+				<f:selectItem itemLabel="#{bundleEnum['RegistrationStateType.CONCLUDED']}" itemValue="CONCLUDED"/>
+				<f:selectItem itemLabel="#{bundleEnum['RegistrationStateType.FLUNKED']}" itemValue="FLUNKED"/>
+				<f:selectItem itemLabel="#{bundleEnum['RegistrationStateType.INTERRUPTED']}" itemValue="INTERRUPTED"/>
+				<f:selectItem itemLabel="#{bundleEnum['RegistrationStateType.SCHOOLPARTCONCLUDED']}" itemValue="SCHOOLPARTCONCLUDED"/>
+				<f:selectItem itemLabel="#{bundleEnum['RegistrationStateType.INTERNAL_ABANDON']}" itemValue="INTERNAL_ABANDON"/>
+				<f:selectItem itemLabel="#{bundleEnum['RegistrationStateType.EXTERNAL_ABANDON']}" itemValue="EXTERNAL_ABANDON"/>
+				<f:selectItem itemLabel="#{bundleEnum['RegistrationStateType.TRANSITION']}" itemValue="TRANSITION"/>
+				<f:selectItem itemLabel="#{bundleEnum['RegistrationStateType.TRANSITED']}" itemValue="TRANSITED"/>
+				<f:selectItem itemLabel="#{bundleEnum['RegistrationStateType.STUDYPLANCONCLUDED']}" itemValue="STUDYPLANCONCLUDED"/>
+				<f:selectItem itemLabel="#{bundleEnum['RegistrationStateType.INACTIVE']}" itemValue="INACTIVE"/>
 			</h:selectOneMenu>
 
 			<h:outputText value="#{bundle['label.student.number']}: " />
@@ -81,7 +88,7 @@
 					<c:url value="students.faces" var="pageURL">
 						<c:param name="degreeCurricularPlanID" value="${CoordinatorStudentsBackingBean.degreeCurricularPlanID}"/>
 						<c:param name="sortBy" value="${CoordinatorStudentsBackingBean.sortBy}"/>
-						<c:param name="studentCurricularPlanStateString" value="${CoordinatorStudentsBackingBean.studentCurricularPlanStateString}"/>
+						<c:param name="registrationStateTypeString" value="${CoordinatorStudentsBackingBean.registrationStateTypeString}"/>
 						<c:param name="minGradeString" value="${CoordinatorStudentsBackingBean.minGradeString}"/>
 						<c:param name="maxGradeString" value="${CoordinatorStudentsBackingBean.maxGradeString}"/>
 						<c:param name="minNumberApprovedString" value="${CoordinatorStudentsBackingBean.minNumberApprovedString}"/>
@@ -105,7 +112,7 @@
 				<c:url value="students.faces" var="pageURL">
 					<c:param name="degreeCurricularPlanID" value="${CoordinatorStudentsBackingBean.degreeCurricularPlanID}"/>
 					<c:param name="sortBy" value="${CoordinatorStudentsBackingBean.sortBy}"/>
-					<c:param name="studentCurricularPlanStateString" value="${CoordinatorStudentsBackingBean.studentCurricularPlanStateString}"/>
+					<c:param name="registrationStateTypeString" value="${CoordinatorStudentsBackingBean.registrationStateTypeString}"/>
 					<c:param name="minGradeString" value="${CoordinatorStudentsBackingBean.minGradeString}"/>
 					<c:param name="maxGradeString" value="${CoordinatorStudentsBackingBean.maxGradeString}"/>
 					<c:param name="minNumberApprovedString" value="${CoordinatorStudentsBackingBean.minNumberApprovedString}"/>
@@ -128,7 +135,7 @@
 				<c:url value="students.faces" var="pageURL">
 					<c:param name="degreeCurricularPlanID" value="${CoordinatorStudentsBackingBean.degreeCurricularPlanID}"/>
 					<c:param name="sortBy" value="${CoordinatorStudentsBackingBean.sortBy}"/>
-					<c:param name="studentCurricularPlanStateString" value="${CoordinatorStudentsBackingBean.studentCurricularPlanStateString}"/>
+					<c:param name="registrationStateTypeString" value="${CoordinatorStudentsBackingBean.registrationStateTypeString}"/>
 					<c:param name="minGradeString" value="${CoordinatorStudentsBackingBean.minGradeString}"/>
 					<c:param name="maxGradeString" value="${CoordinatorStudentsBackingBean.maxGradeString}"/>
 					<c:param name="minNumberApprovedString" value="${CoordinatorStudentsBackingBean.minNumberApprovedString}"/>
@@ -151,76 +158,77 @@
 	</h:panelGroup>
 
 	<h:panelGroup>
-	<h:dataTable value="#{CoordinatorStudentsBackingBean.studentCurricularPlans}" var="studentCurricularPlan" cellpadding="0"
+	<h:dataTable value="#{CoordinatorStudentsBackingBean.studentCurricularPlans}" var="mapEntry" cellpadding="0"
 			headerClass="listClasses-header" columnClasses="listClasses">
 		<h:column>
 			<f:facet name="header">
-				<h:outputText value="<a href='#{CoordinatorStudentsBackingBean.contextPath}/coordinator/students.faces?degreeCurricularPlanID=#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}&amp;sortBy=registration.number&amp;studentCurricularPlanStateString=#{CoordinatorStudentsBackingBean.studentCurricularPlanStateString}&amp;studentNumber=#{studentCurricularPlan.registration.student.number}&amp;minGradeString=#{CoordinatorStudentsBackingBean.minGradeString}&amp;maxGradeString=#{CoordinatorStudentsBackingBean.maxGradeString}&amp;minNumberApprovedString=#{CoordinatorStudentsBackingBean.minNumberApprovedString}&amp;maxNumberApprovedString=#{CoordinatorStudentsBackingBean.maxNumberApprovedString}&amp;minStudentNumberString=#{CoordinatorStudentsBackingBean.minStudentNumberString}&amp;maxStudentNumberString=#{CoordinatorStudentsBackingBean.maxStudentNumberString}&amp;showPhoto=#{CoordinatorStudentsBackingBean.showPhoto}'>#{bundle['label.number']}</a>" escape="false"/>
+				<h:outputText value="<a href='#{CoordinatorStudentsBackingBean.contextPath}/coordinator/students.faces?degreeCurricularPlanID=#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}&amp;sortBy=student.number&amp;registrationStateTypeString=#{CoordinatorStudentsBackingBean.registrationStateTypeString}&amp;studentNumber=#{mapEntry.key.registration.student.number}&amp;minGradeString=#{CoordinatorStudentsBackingBean.minGradeString}&amp;maxGradeString=#{CoordinatorStudentsBackingBean.maxGradeString}&amp;minNumberApprovedString=#{CoordinatorStudentsBackingBean.minNumberApprovedString}&amp;maxNumberApprovedString=#{CoordinatorStudentsBackingBean.maxNumberApprovedString}&amp;minStudentNumberString=#{CoordinatorStudentsBackingBean.minStudentNumberString}&amp;maxStudentNumberString=#{CoordinatorStudentsBackingBean.maxStudentNumberString}&amp;showPhoto=#{CoordinatorStudentsBackingBean.showPhoto}'>#{bundle['label.number']}</a>" escape="false"/>
 			</f:facet>
-			<h:outputText value="<a href='#{CoordinatorStudentsBackingBean.contextPath}/coordinator/viewStudentCurriculumSearch.do?method=showStudentCurriculum&degreeCurricularPlanId=#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}&registrationOID=#{studentCurricularPlan.registration.idInternal}&studentNumber=#{studentCurricularPlan.registration.student.number}&executionDegreeId=#{CoordinatorStudentsBackingBean.executionDegreeId}'>" escape="false"/>
-				<h:outputText value="#{studentCurricularPlan.registration.number}"/>
+			<h:outputText value="<a href='#{CoordinatorStudentsBackingBean.contextPath}/coordinator/viewStudentCurriculumSearch.do?method=showStudentCurriculum&degreeCurricularPlanId=#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}&registrationOID=#{mapEntry.key.registration.idInternal}&studentNumber=#{mapEntry.key.registration.student.number}&executionDegreeId=#{CoordinatorStudentsBackingBean.executionDegreeId}'>" escape="false"/>
+				<h:outputText value="#{mapEntry.key.registration.number}"/>
 			<h:outputText value="</a>" escape="false"/>
 		</h:column>
 		<h:column>
 			<f:facet name="header">
-			<h:outputText value="<a href='#{CoordinatorStudentsBackingBean.contextPath}/coordinator/students.faces?degreeCurricularPlanID=#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}&amp;sortBy=registration.person.name&amp;studentCurricularPlanStateString=#{CoordinatorStudentsBackingBean.studentCurricularPlanStateString}&amp;studentNumber=#{studentCurricularPlan.registration.student.number}&amp;minGradeString=#{CoordinatorStudentsBackingBean.minGradeString}&amp;maxGradeString=#{CoordinatorStudentsBackingBean.maxGradeString}&amp;minNumberApprovedString=#{CoordinatorStudentsBackingBean.minNumberApprovedString}&amp;maxNumberApprovedString=#{CoordinatorStudentsBackingBean.maxNumberApprovedString}&amp;minStudentNumberString=#{CoordinatorStudentsBackingBean.minStudentNumberString}&amp;maxStudentNumberString=#{CoordinatorStudentsBackingBean.maxStudentNumberString}&amp;showPhoto=#{CoordinatorStudentsBackingBean.showPhoto}'>#{bundle['label.name']}</a>" escape="false"/>
+			<h:outputText value="<a href='#{CoordinatorStudentsBackingBean.contextPath}/coordinator/students.faces?degreeCurricularPlanID=#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}&amp;sortBy=registration.person.name&amp;registrationStateTypeString=#{CoordinatorStudentsBackingBean.registrationStateTypeString}&amp;studentNumber=#{mapEntry.key.registration.student.number}&amp;minGradeString=#{CoordinatorStudentsBackingBean.minGradeString}&amp;maxGradeString=#{CoordinatorStudentsBackingBean.maxGradeString}&amp;minNumberApprovedString=#{CoordinatorStudentsBackingBean.minNumberApprovedString}&amp;maxNumberApprovedString=#{CoordinatorStudentsBackingBean.maxNumberApprovedString}&amp;minStudentNumberString=#{CoordinatorStudentsBackingBean.minStudentNumberString}&amp;maxStudentNumberString=#{CoordinatorStudentsBackingBean.maxStudentNumberString}&amp;showPhoto=#{CoordinatorStudentsBackingBean.showPhoto}'>#{bundle['label.name']}</a>" escape="false"/>
 			</f:facet>
-			<h:outputText value="<a href='#{CoordinatorStudentsBackingBean.contextPath}/coordinator/viewStudentCurriculumSearch.do?method=showStudentCurriculum&degreeCurricularPlanId=#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}&registrationOID=#{studentCurricularPlan.registration.idInternal}&studentNumber=#{studentCurricularPlan.registration.student.number}&executionDegreeId=#{CoordinatorStudentsBackingBean.executionDegreeId}'>" escape="false"/>
-				<h:outputText value="#{studentCurricularPlan.registration.person.name}"/>
+			<h:outputText value="<a href='#{CoordinatorStudentsBackingBean.contextPath}/coordinator/viewStudentCurriculumSearch.do?method=showStudentCurriculum&degreeCurricularPlanId=#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}&registrationOID=#{mapEntry.key.registration.idInternal}&studentNumber=#{mapEntry.key.registration.student.number}&executionDegreeId=#{CoordinatorStudentsBackingBean.executionDegreeId}'>" escape="false"/>
+				<h:outputText value="#{mapEntry.key.registration.person.name}"/>
 			<h:outputText value="</a>" escape="false"/>
 		</h:column>
 		<h:column>
 			<f:facet name="header">
-				<h:outputText value="<a href='#{CoordinatorStudentsBackingBean.contextPath}/coordinator/students.faces?degreeCurricularPlanID=#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}&amp;sortBy=registration.person.email&amp;studentCurricularPlanStateString=#{CoordinatorStudentsBackingBean.studentCurricularPlanStateString}&amp;studentNumber=#{studentCurricularPlan.registration.student.number}&amp;minGradeString=#{CoordinatorStudentsBackingBean.minGradeString}&amp;maxGradeString=#{CoordinatorStudentsBackingBean.maxGradeString}&amp;minNumberApprovedString=#{CoordinatorStudentsBackingBean.minNumberApprovedString}&amp;maxNumberApprovedString=#{CoordinatorStudentsBackingBean.maxNumberApprovedString}&amp;minStudentNumberString=#{CoordinatorStudentsBackingBean.minStudentNumberString}&amp;maxStudentNumberString=#{CoordinatorStudentsBackingBean.maxStudentNumberString}&amp;showPhoto=#{CoordinatorStudentsBackingBean.showPhoto}'>#{bundle['label.email']}</a>" escape="false"/>
+				<h:outputText value="<a href='#{CoordinatorStudentsBackingBean.contextPath}/coordinator/students.faces?degreeCurricularPlanID=#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}&amp;sortBy=registration.person.email&amp;registrationStateTypeString=#{CoordinatorStudentsBackingBean.registrationStateTypeString}&amp;studentNumber=#{mapEntry.key.registration.student.number}&amp;minGradeString=#{CoordinatorStudentsBackingBean.minGradeString}&amp;maxGradeString=#{CoordinatorStudentsBackingBean.maxGradeString}&amp;minNumberApprovedString=#{CoordinatorStudentsBackingBean.minNumberApprovedString}&amp;maxNumberApprovedString=#{CoordinatorStudentsBackingBean.maxNumberApprovedString}&amp;minStudentNumberString=#{CoordinatorStudentsBackingBean.minStudentNumberString}&amp;maxStudentNumberString=#{CoordinatorStudentsBackingBean.maxStudentNumberString}&amp;showPhoto=#{CoordinatorStudentsBackingBean.showPhoto}'>#{bundle['label.email']}</a>" escape="false"/>
 			</f:facet>
-			<h:outputText value="<a href='mailto:#{studentCurricularPlan.registration.person.email}'>" escape="false"/>
-			<h:outputText value="#{studentCurricularPlan.registration.person.email}</a>" escape="false"/>
+			<h:outputText value="<a href='mailto:#{mapEntry.key.registration.person.email}'>" escape="false"/>
+			<h:outputText value="#{mapEntry.key.registration.person.email}</a>" escape="false"/>
 		</h:column>
 		<h:column>
 			<f:facet name="header">
-					<h:outputText value="<a href='#{CoordinatorStudentsBackingBean.contextPath}/coordinator/students.faces?degreeCurricularPlanID=#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}&amp;sortBy=currentState&amp;studentCurricularPlanStateString=#{CoordinatorStudentsBackingBean.studentCurricularPlanStateString}&amp;studentNumber=#{studentCurricularPlan.registration.student.number}&amp;minGradeString=#{CoordinatorStudentsBackingBean.minGradeString}&amp;maxGradeString=#{CoordinatorStudentsBackingBean.maxGradeString}&amp;minNumberApprovedString=#{CoordinatorStudentsBackingBean.minNumberApprovedString}&amp;maxNumberApprovedString=#{CoordinatorStudentsBackingBean.maxNumberApprovedString}&amp;minStudentNumberString=#{CoordinatorStudentsBackingBean.minStudentNumberString}&amp;maxStudentNumberString=#{CoordinatorStudentsBackingBean.maxStudentNumberString}&amp;showPhoto=#{CoordinatorStudentsBackingBean.showPhoto}'>#{bundle['label.student.curricular.plan.state']}</a>" escape="false"/>
+					<h:outputText value="<a href='#{CoordinatorStudentsBackingBean.contextPath}/coordinator/students.faces?degreeCurricularPlanID=#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}&amp;sortBy=currentState&amp;registrationStateTypeString=#{CoordinatorStudentsBackingBean.registrationStateTypeString}&amp;studentNumber=#{mapEntry.key.registration.student.number}&amp;minGradeString=#{CoordinatorStudentsBackingBean.minGradeString}&amp;maxGradeString=#{CoordinatorStudentsBackingBean.maxGradeString}&amp;minNumberApprovedString=#{CoordinatorStudentsBackingBean.minNumberApprovedString}&amp;maxNumberApprovedString=#{CoordinatorStudentsBackingBean.maxNumberApprovedString}&amp;minStudentNumberString=#{CoordinatorStudentsBackingBean.minStudentNumberString}&amp;maxStudentNumberString=#{CoordinatorStudentsBackingBean.maxStudentNumberString}&amp;showPhoto=#{CoordinatorStudentsBackingBean.showPhoto}'>#{bundle['label.student.curricular.plan.state']}</a>" escape="false"/>
 			</f:facet>
-			<h:outputText value="<a href='mailto:#{studentCurricularPlan.currentState}'>" escape="false"/>
-			<h:outputText value="#{bundleEnum[studentCurricularPlan.currentState]}</a>" escape="false"/>
+			<%-- Kept the mailto:REGISTRATION_TYPE for legacy purposes only. To Luis 'Goofy' Cruz just one word: LMAO! :P --%>
+			<h:outputText value="<a href='mailto:#{mapEntry.value}'>" escape="false"/>
+			<h:outputText value="#{bundleEnum[mapEntry.value.qualifiedName]}</a>" escape="false"/>
 		</h:column>
 		<h:column>
 			<f:facet name="header">
-				<h:outputText value="<a href='#{CoordinatorStudentsBackingBean.contextPath}/coordinator/students.faces?degreeCurricularPlanID=#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}&amp;sortBy=registration.numberOfCurriculumEntries&amp;studentCurricularPlanStateString=#{CoordinatorStudentsBackingBean.studentCurricularPlanStateString}&amp;studentNumber=#{studentCurricularPlan.registration.student.number}&amp;minGradeString=#{CoordinatorStudentsBackingBean.minGradeString}&amp;maxGradeString=#{CoordinatorStudentsBackingBean.maxGradeString}&amp;minNumberApprovedString=#{CoordinatorStudentsBackingBean.minNumberApprovedString}&amp;maxNumberApprovedString=#{CoordinatorStudentsBackingBean.maxNumberApprovedString}&amp;minStudentNumberString=#{CoordinatorStudentsBackingBean.minStudentNumberString}&amp;maxStudentNumberString=#{CoordinatorStudentsBackingBean.maxStudentNumberString}&amp;showPhoto=#{CoordinatorStudentsBackingBean.showPhoto}'>#{bundle['label.number.approved.curricular.courses']}</a>" escape="false"/>
+				<h:outputText value="<a href='#{CoordinatorStudentsBackingBean.contextPath}/coordinator/students.faces?degreeCurricularPlanID=#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}&amp;sortBy=registration.numberOfCurriculumEntries&amp;registrationStateTypeString=#{CoordinatorStudentsBackingBean.registrationStateTypeString}&amp;studentNumber=#{mapEntry.key.registration.student.number}&amp;minGradeString=#{CoordinatorStudentsBackingBean.minGradeString}&amp;maxGradeString=#{CoordinatorStudentsBackingBean.maxGradeString}&amp;minNumberApprovedString=#{CoordinatorStudentsBackingBean.minNumberApprovedString}&amp;maxNumberApprovedString=#{CoordinatorStudentsBackingBean.maxNumberApprovedString}&amp;minStudentNumberString=#{CoordinatorStudentsBackingBean.minStudentNumberString}&amp;maxStudentNumberString=#{CoordinatorStudentsBackingBean.maxStudentNumberString}&amp;showPhoto=#{CoordinatorStudentsBackingBean.showPhoto}'>#{bundle['label.number.approved.curricular.courses']}</a>" escape="false"/>
 			</f:facet>
-			<h:outputText value="#{studentCurricularPlan.registration.numberOfCurriculumEntries}"/>
+			<h:outputText value="#{mapEntry.key.registration.numberOfCurriculumEntries}"/>
 		</h:column>
 		<h:column>
 			<f:facet name="header">
-				<h:outputText value="<a href='#{CoordinatorStudentsBackingBean.contextPath}/coordinator/students.faces?degreeCurricularPlanID=#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}&amp;sortBy=registration.ectsCredits&amp;studentCurricularPlanStateString=#{CoordinatorStudentsBackingBean.studentCurricularPlanStateString}&amp;studentNumber=#{studentCurricularPlan.registration.student.number}&amp;minGradeString=#{CoordinatorStudentsBackingBean.minGradeString}&amp;maxGradeString=#{CoordinatorStudentsBackingBean.maxGradeString}&amp;minNumberApprovedString=#{CoordinatorStudentsBackingBean.minNumberApprovedString}&amp;maxNumberApprovedString=#{CoordinatorStudentsBackingBean.maxNumberApprovedString}&amp;minStudentNumberString=#{CoordinatorStudentsBackingBean.minStudentNumberString}&amp;maxStudentNumberString=#{CoordinatorStudentsBackingBean.maxStudentNumberString}&amp;showPhoto=#{CoordinatorStudentsBackingBean.showPhoto}'>#{bundle['label.ects']}</a>" escape="false"/>
+				<h:outputText value="<a href='#{CoordinatorStudentsBackingBean.contextPath}/coordinator/students.faces?degreeCurricularPlanID=#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}&amp;sortBy=registration.ectsCredits&amp;registrationStateTypeString=#{CoordinatorStudentsBackingBean.registrationStateTypeString}&amp;studentNumber=#{mapEntry.key.registration.student.number}&amp;minGradeString=#{CoordinatorStudentsBackingBean.minGradeString}&amp;maxGradeString=#{CoordinatorStudentsBackingBean.maxGradeString}&amp;minNumberApprovedString=#{CoordinatorStudentsBackingBean.minNumberApprovedString}&amp;maxNumberApprovedString=#{CoordinatorStudentsBackingBean.maxNumberApprovedString}&amp;minStudentNumberString=#{CoordinatorStudentsBackingBean.minStudentNumberString}&amp;maxStudentNumberString=#{CoordinatorStudentsBackingBean.maxStudentNumberString}&amp;showPhoto=#{CoordinatorStudentsBackingBean.showPhoto}'>#{bundle['label.ects']}</a>" escape="false"/>
 			</f:facet>
-			<h:outputText value="#{studentCurricularPlan.registration.ectsCredits}"/>
+			<h:outputText value="#{mapEntry.key.registration.ectsCredits}"/>
 		</h:column>
 		<h:column>
 			<f:facet name="header">
-					<h:outputText value="<a href='#{CoordinatorStudentsBackingBean.contextPath}/coordinator/students.faces?degreeCurricularPlanID=#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}&amp;sortBy=registration.average&amp;studentCurricularPlanStateString=#{CoordinatorStudentsBackingBean.studentCurricularPlanStateString}&amp;studentNumber=#{studentCurricularPlan.registration.student.number}&amp;minGradeString=#{CoordinatorStudentsBackingBean.minGradeString}&amp;maxGradeString=#{CoordinatorStudentsBackingBean.maxGradeString}&amp;minNumberApprovedString=#{CoordinatorStudentsBackingBean.minNumberApprovedString}&amp;maxNumberApprovedString=#{CoordinatorStudentsBackingBean.maxNumberApprovedString}&amp;minStudentNumberString=#{CoordinatorStudentsBackingBean.minStudentNumberString}&amp;maxStudentNumberString=#{CoordinatorStudentsBackingBean.maxStudentNumberString}&amp;showPhoto=#{CoordinatorStudentsBackingBean.showPhoto}'>#{bundle['label.average']}</a>" escape="false"/>
+					<h:outputText value="<a href='#{CoordinatorStudentsBackingBean.contextPath}/coordinator/students.faces?degreeCurricularPlanID=#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}&amp;sortBy=registration.average&amp;registrationStateTypeString=#{CoordinatorStudentsBackingBean.registrationStateTypeString}&amp;studentNumber=#{mapEntry.key.registration.student.number}&amp;minGradeString=#{CoordinatorStudentsBackingBean.minGradeString}&amp;maxGradeString=#{CoordinatorStudentsBackingBean.maxGradeString}&amp;minNumberApprovedString=#{CoordinatorStudentsBackingBean.minNumberApprovedString}&amp;maxNumberApprovedString=#{CoordinatorStudentsBackingBean.maxNumberApprovedString}&amp;minStudentNumberString=#{CoordinatorStudentsBackingBean.minStudentNumberString}&amp;maxStudentNumberString=#{CoordinatorStudentsBackingBean.maxStudentNumberString}&amp;showPhoto=#{CoordinatorStudentsBackingBean.showPhoto}'>#{bundle['label.average']}</a>" escape="false"/>
 			</f:facet>
-			<h:panelGroup rendered="#{studentCurricularPlan.registration.concluded}">
-				<h:outputText rendered="#{studentCurricularPlan.registration.registrationConclusionProcessed && (!studentCurricularPlan.registration.bolonha || (studentCurricularPlan.internalCycleCurriculumGroupsSize eq 1))}" value="#{studentCurricularPlan.registration.average}">
+			<h:panelGroup rendered="#{mapEntry.key.registration.concluded}">
+				<h:outputText rendered="#{mapEntry.key.registration.registrationConclusionProcessed && (!mapEntry.key.registration.bolonha || (mapEntry.key.internalCycleCurriculumGroupsSize eq 1))}" value="#{mapEntry.key.registration.average}">
 					<f:convertNumber maxFractionDigits="0" minIntegerDigits="1" maxIntegerDigits="2"/>
 				</h:outputText>
-				<h:outputText rendered="#{ ! studentCurricularPlan.registration.registrationConclusionProcessed}" value=" - "  />
+				<h:outputText rendered="#{ ! mapEntry.key.registration.registrationConclusionProcessed}" value=" - "  />
 			</h:panelGroup>
-			<h:panelGroup rendered="#{ ! studentCurricularPlan.registration.concluded}">
-				<h:outputText value="#{studentCurricularPlan.registration.average}">
+			<h:panelGroup rendered="#{ ! mapEntry.key.registration.concluded}">
+				<h:outputText value="#{mapEntry.key.registration.average}">
 					<f:convertNumber maxFractionDigits="2" minFractionDigits="2" minIntegerDigits="1" maxIntegerDigits="2" />
 				</h:outputText>
 			</h:panelGroup>
 		</h:column>
 		<h:column>
 			<f:facet name="header">
-				<h:outputText value="<a href='#{CoordinatorStudentsBackingBean.contextPath}/coordinator/students.faces?degreeCurricularPlanID=#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}&amp;sortBy=registration.curricularYear&amp;studentCurricularPlanStateString=#{CoordinatorStudentsBackingBean.studentCurricularPlanStateString}&amp;studentNumber=#{studentCurricularPlan.registration.student.number}&amp;minGradeString=#{CoordinatorStudentsBackingBean.minGradeString}&amp;maxGradeString=#{CoordinatorStudentsBackingBean.maxGradeString}&amp;minNumberApprovedString=#{CoordinatorStudentsBackingBean.minNumberApprovedString}&amp;maxNumberApprovedString=#{CoordinatorStudentsBackingBean.maxNumberApprovedString}&amp;minStudentNumberString=#{CoordinatorStudentsBackingBean.minStudentNumberString}&amp;maxStudentNumberString=#{CoordinatorStudentsBackingBean.maxStudentNumberString}&amp;showPhoto=#{CoordinatorStudentsBackingBean.showPhoto}'>#{bundle['label.student.curricular.year']}</a>" escape="false"/>
+				<h:outputText value="<a href='#{CoordinatorStudentsBackingBean.contextPath}/coordinator/students.faces?degreeCurricularPlanID=#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}&amp;sortBy=registration.curricularYear&amp;registrationStateTypeString=#{CoordinatorStudentsBackingBean.registrationStateTypeString}&amp;studentNumber=#{mapEntry.key.registration.student.number}&amp;minGradeString=#{CoordinatorStudentsBackingBean.minGradeString}&amp;maxGradeString=#{CoordinatorStudentsBackingBean.maxGradeString}&amp;minNumberApprovedString=#{CoordinatorStudentsBackingBean.minNumberApprovedString}&amp;maxNumberApprovedString=#{CoordinatorStudentsBackingBean.maxNumberApprovedString}&amp;minStudentNumberString=#{CoordinatorStudentsBackingBean.minStudentNumberString}&amp;maxStudentNumberString=#{CoordinatorStudentsBackingBean.maxStudentNumberString}&amp;showPhoto=#{CoordinatorStudentsBackingBean.showPhoto}'>#{bundle['label.student.curricular.year']}</a>" escape="false"/>
 			</f:facet>
-			<h:outputText value="#{studentCurricularPlan.registration.curricularYear}"/>
+			<h:outputText value="#{mapEntry.key.registration.curricularYear}"/>
 		</h:column>
 		<h:column>
 			<f:facet name="header">	
-				<c:if test="${studentCurricularPlan.activeTutorship != null}">
-					<h:outputText value="#{studentCurricularPlan.activeTutorship.teacher.person.name}"/>
+				<c:if test="${mapEntry.key.activeTutorship != null}">
+					<h:outputText value="#{mapEntry.key.activeTutorship.teacher.person.name}"/>
 				</c:if>
 			</f:facet>
 		</h:column>
@@ -230,7 +238,7 @@
 				<h:outputText value="#{bundle['label.person.photo']}" />
 			</f:facet>
 			<h:form>
-				<h:outputText value="<img src='#{CoordinatorStudentsBackingBean.contextPath}/person/retrievePersonalPhoto.do?method=retrieveByID&personCode=#{studentCurricularPlan.registration.person.idInternal}'/> alt='<bean:message key='personPhoto' bundle='IMAGE_RESOURCES' />'" escape="false"/>
+				<h:outputText value="<img src='#{CoordinatorStudentsBackingBean.contextPath}/person/retrievePersonalPhoto.do?method=retrieveByID&personCode=#{mapEntry.key.registration.person.idInternal}'/> alt='<bean:message key='personPhoto' bundle='IMAGE_RESOURCES' />'" escape="false"/>
 			</h:form>
 		</h:column>
 	</h:dataTable>
