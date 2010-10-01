@@ -829,6 +829,10 @@ class DomainObject {
        String officialReference (REQUIRED);
     }
 
+    class DegreeSpecializationArea extends DomainObject {
+       MultiLanguageString name (REQUIRED);
+    }
+
     class DegreeCurricularPlan extends DomainObject {
         String anotation;
         Group curricularPlanMembersGroup;
@@ -5128,7 +5132,7 @@ class DomainObject {
                         
         class serviceRequests.PersonAcademicServiceRequest extends serviceRequests.AcademicServiceRequest {
         }
-        
+    
         class phd.serviceRequests.PhdAcademicServiceRequest extends serviceRequests.AcademicServiceRequest {
         }
         
@@ -7214,16 +7218,16 @@ class phd.PhdProgramProcessDocument extends File {
     Integer documentVersion;
 }
 
-	class phd.PhdThesisReportFeedbackDocument extends phd.PhdProgramProcessDocument {
-	}
-	
-	class phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestDocument extends phd.PhdProgramProcessDocument {
-	}
-	
-	class phd.seminar.PublicPresentationSeminarProcess extends phd.PhdProgramProcess {
-	    LocalDate presentationDate;
-	}
-	
+class phd.PhdThesisReportFeedbackDocument extends phd.PhdProgramProcessDocument {
+}
+
+class phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestDocument extends phd.PhdProgramProcessDocument {
+}
+
+class phd.seminar.PublicPresentationSeminarProcess extends phd.PhdProgramProcess {
+    LocalDate presentationDate;
+}
+
 	class phd.serviceRequests.PhdAcademicServiceRequestDocument extends phd.PhdProgramProcessDocument {
 	}
 
@@ -18059,6 +18063,15 @@ relation DegreeOfficialPublication {
         multiplicity 1;
     }
     DegreeOfficialPublication playsRole officialPublication {
+        multiplicity *;
+    }
+}
+
+relation DegreeOfficialPublicationSpecializationAreas {
+    DegreeOfficialPublication playsRole officialPublication {
+        multiplicity 1;
+    }
+    DegreeSpecializationArea playsRole specializationArea {
         multiplicity *;
     }
 }
