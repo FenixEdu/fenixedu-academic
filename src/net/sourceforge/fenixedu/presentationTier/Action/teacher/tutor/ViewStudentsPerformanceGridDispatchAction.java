@@ -39,8 +39,9 @@ public class ViewStudentsPerformanceGridDispatchAction extends StudentsPerforman
     }
 
     protected void generateStudentsPerformanceBean(HttpServletRequest request, Person person) {
-	if (getRenderedObject("performanceGridFiltersBean") != null) {
-	    request.setAttribute("performanceGridFiltersBean", getRenderedObject("performanceGridFiltersBean"));
+	StudentsPerformanceInfoBean bean = (StudentsPerformanceInfoBean) getRenderedObject("performanceGridFiltersBean");
+	if ((bean != null) && (bean.getPerson() == person)) {
+	    request.setAttribute("performanceGridFiltersBean", bean);
 	    return;
 	}
 
@@ -48,7 +49,7 @@ public class ViewStudentsPerformanceGridDispatchAction extends StudentsPerforman
 	    return;
 	}
 
-	StudentsPerformanceInfoBean bean = StudentsPerformanceInfoBean.create(person);
+	bean = StudentsPerformanceInfoBean.create(person);
 	bean.setDegree(getFilteredDegree(bean));
 	bean.setStudentsEntryYear(TutorshipEntryExecutionYearProvider.getExecutionYears(bean).get(0));
 	bean.setCurrentMonitoringYear(TutorshipMonitoringExecutionYearProvider.getExecutionYears(bean).get(0));

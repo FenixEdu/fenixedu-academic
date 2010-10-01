@@ -86,7 +86,7 @@ height: 50px;
                 <fr:layout>
                     <fr:property name="classes" value="tstyle1 pgrid"/>
                     <fr:property name="columnClasses" value="<%= columnClasses %>" />
-                    <fr:property name="schema" value="teacher.tutor.performanceGrid.eachStudent" />
+                    <fr:property name="schema" value="tutorship.tutorate.student.performanceGrid" />
                     <fr:property name="numberOfFixedColumns" value="<%= numberOfFixedColumns.toString() %>" />
                 </fr:layout>
             </fr:view>
@@ -198,7 +198,7 @@ height: 50px;
                 </logic:notEmpty>
             </logic:present>
         </logic:present>
-        </div>
+
     </logic:present>
     <logic:notPresent name="performanceGridTable">
         <p class="mtop1">
