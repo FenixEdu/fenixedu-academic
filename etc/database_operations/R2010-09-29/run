@@ -44,4 +44,4 @@ function executeWithTempFile() {
 }
 
  
-execute "Add degree specialization areas" degreeSpecializationAreas.sql
+execute "Add associations on academic service request and file" addAssociationsOnAcademicServiceRequestAndFile.sql
