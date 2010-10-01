@@ -22,17 +22,22 @@
 
 <strong><bean:message key="label.phd.academic.service.requests" bundle="PHD_RESOURCES" /></strong>
 
-<fr:view name="phdIndividualProgramProcess.phdAcademicServiceRequests" >
-	<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest">
-		<fr:property name="serviceRequestNumberYear" />
-		<fr:property name="when" />
-		<fr:property name="academicServiceRequestType.localizedName" />
-		<fr:property name="requestDate" />
-		<fr:property name="activeSituation" />
-	</fr:schema>
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle2 thlight mtop15" />
-	</fr:layout>
-	
-	<fr:link name="view" link="/phdAcademicServiceRequestManagement.do?method=viewAcademicRequest&phdAcademicServiceRequestId=${externalId}" label="link.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest.view,PHD_RESOURCES"/>
-</fr:view>
+<logic:empty name="phdIndividualProgramProcess" property="phdAcademicServiceRequests" >
+	<bean:message key="label.phd.academic.service.requests.empty" bundle="PHD_RESOURCES" />
+</logic:empty>
+
+<logic:notEmpty name="phdIndividualProgramProcess" property="phdAcademicServiceRequests" >
+	<fr:view name="phdIndividualProgramProcess" property="phdAcademicServiceRequests" >
+		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest">
+			<fr:property name="serviceRequestNumberYear" />
+			<fr:property name="academicServiceRequestType.localizedName" />
+			<fr:property name="requestDate" />
+			<fr:property name="activeSituationType" />
+		</fr:schema>
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle2 thlight mtop15" />
+		</fr:layout>
+		
+		<fr:link name="view" link="/phdAcademicServiceRequestManagement.do?method=viewAcademicRequest&phdAcademicServiceRequestId=${externalId}" label="link.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest.view,PHD_RESOURCES"/>
+	</fr:view>
+</logic:notEmpty>

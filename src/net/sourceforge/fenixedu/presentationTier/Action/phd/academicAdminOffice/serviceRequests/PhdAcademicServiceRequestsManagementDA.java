@@ -29,6 +29,7 @@ public class PhdAcademicServiceRequestsManagementDA extends FenixDispatchAction 
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	request.setAttribute("phdIndividualProgramProcess", getPhdIndividualProgramProcess(request));
+	request.setAttribute("phdAademicServiceRequest", getPhdAcademicServiceRequest(request));
 
 	return super.execute(mapping, actionForm, request, response);
     }
@@ -43,8 +44,6 @@ public class PhdAcademicServiceRequestsManagementDA extends FenixDispatchAction 
 
     public ActionForward viewAcademicRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	PhdAcademicServiceRequest academicServiceRequest = getPhdAcademicServiceRequest(request);
-
 	return mapping.findForward("viewRequest");
     }
 
@@ -53,7 +52,7 @@ public class PhdAcademicServiceRequestsManagementDA extends FenixDispatchAction 
 	PhdIndividualProgramProcess process = getPhdIndividualProgramProcess(request);
 	PhdAcademicServiceRequestCreateBean academicServiceRequestCreateBean = new PhdAcademicServiceRequestCreateBean(process);
 
-	request.setAttribute("academicServiceRequestCreateBean", academicServiceRequestCreateBean);
+	request.setAttribute("phdAcademicServiceRequestCreateBean", academicServiceRequestCreateBean);
 
 	return mapping.findForward("prepareCreateNewRequest");
     }
@@ -123,14 +122,21 @@ public class PhdAcademicServiceRequestsManagementDA extends FenixDispatchAction 
 	PhdAcademicServiceRequest academicServiceRequest = getPhdAcademicServiceRequest(request);
 	PhdAcademicServiceRequestBean academicServiceRequestBean = new PhdAcademicServiceRequestBean(academicServiceRequest);
 
-	request.setAttribute("academicServiceRequestBean", academicServiceRequestBean);
-	request.setAttribute("newSituationType", situationType);
+	academicServiceRequestBean.setSituationType(situationType);
+	request.setAttribute("phdAcademicServiceRequestBean", academicServiceRequestBean);
 
 	return mapping.findForward("prepareProcessNewState");
     }
 
+    public ActionForward processNewState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("phdAcademicServiceRequestBean", getPhdAcademicServiceRequestBean());
+	return mapping.findForward("prepareProcessNewState");
+    }
+
     private PhdAcademicServiceRequestBean getPhdAcademicServiceRequestBean() {
-	return (PhdAcademicServiceRequestBean) getObjectFromViewState("academic-service-request-bean");
+	return (PhdAcademicServiceRequestBean) getObjectFromViewState("phd-academic-service-request-bean");
     }
 
     private PhdIndividualProgramProcess getPhdIndividualProgramProcess(final HttpServletRequest request) {
@@ -138,7 +144,7 @@ public class PhdAcademicServiceRequestsManagementDA extends FenixDispatchAction 
     }
 
     private PhdAcademicServiceRequestCreateBean getPhdAcademicServiceRequestCreateBean() {
-	return (PhdAcademicServiceRequestCreateBean) getObjectFromViewState("academic-service-request-create-bean");
+	return (PhdAcademicServiceRequestCreateBean) getObjectFromViewState("phd-academic-service-request-create-bean");
     }
 
     private PhdAcademicServiceRequest getPhdAcademicServiceRequest(final HttpServletRequest request) {

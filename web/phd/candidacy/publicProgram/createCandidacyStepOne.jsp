@@ -42,9 +42,10 @@
 		<fieldset style="display: block;">
 			<legend><bean:message key="title.public.phd.personal.data" bundle="PHD_RESOURCES"/></legend>
 			<p class="mvert05"><span><bean:message key="message.mandatory.fields" bundle="PHD_RESOURCES"/></span></p>
+			<p class="warning0"><span><bean:message key="message.EPFL.Public.PhdProgramCandidacyProcessBean.full.name.format" bundle="PHD_RESOURCES" /></span></p>
 			
 			<fr:edit id="candidacyBean.personBean" name="candidacyBean" property="personBean" 
-				schema="Public.PhdProgramCandidacyProcessBean.editPersonalInformation">
+				schema="EPFL.Public.PhdProgramCandidacyProcessBean.editPersonalInformation">
 				<fr:layout name="tabular">
 						<fr:property name="classes" value="thlight thleft thtop mtop05"/>
 				        <fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>

@@ -134,6 +134,11 @@
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.payments"/>
 				</html:link>
 			</li>
+			<li>
+				<html:link action="/phdAcademicServiceRequestManagement.do?method=listAcademicServiceRequests" paramId="phdIndividualProgramProcessId" paramName="process" paramProperty="externalId">
+					<bean:message bundle="PHD_RESOURCES" key="label.phd.academic.service.requests" />
+				</html:link>
+			</li>
 			
 			<br/>
 			
