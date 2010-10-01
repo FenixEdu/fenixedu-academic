@@ -44,3 +44,4 @@ function executeWithTempFile() {
 }
 
  
+execute "Add degree specialization areas" degreeSpecializationAreas.sql
