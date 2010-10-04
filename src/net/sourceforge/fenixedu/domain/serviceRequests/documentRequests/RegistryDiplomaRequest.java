@@ -41,7 +41,7 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base {
 
     @Override
     protected void checkParameters(DocumentRequestCreateBean bean) {
-	if (bean.getRequestedCycle() == null)
+	if (bean.getRegistration().isBolonha() && bean.getRequestedCycle() == null)
 	    throw new DomainException("error.registryDiploma.requestedCycleMustBeGiven");
 	if (!getDegreeType().getCycleTypes().contains(bean.getRequestedCycle()))
 	    throw new DomainException("error.registryDiploma.requestedCycleTypeIsNotAllowedForGivenStudentCurricularPlan");
@@ -56,8 +56,9 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base {
 	final DegreeType degreeType = getDegreeType();
 	final CycleType requestedCycle = getRequestedCycle();
 
-	return getDescription(getAcademicServiceRequestType(), getDocumentRequestType().getQualifiedName() + "."
-		+ degreeType.name() + (degreeType.isComposite() ? "." + requestedCycle.name() : ""));
+	return getDescription(getAcademicServiceRequestType(),
+		getDocumentRequestType().getQualifiedName() + "." + degreeType.name()
+			+ (degreeType.isComposite() ? "." + requestedCycle.name() : ""));
     }
 
     @Override
