@@ -295,10 +295,12 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 	    final Degree degree = registration.getDegree();
 	    spreadsheet.addCell(!(StringUtils.isEmpty(degree.getSigla())) ? degree.getSigla() : degree.getNameFor(executionYear)
 		    .toString());
+	    spreadsheet.addCell(degree.getFilteredName(executionYear));
 	    spreadsheet.addCell(registration.getNumber().toString());
 
 	    final Person person = registration.getPerson();
 	    spreadsheet.addCell(person.getName());
+	    spreadsheet.addCell(person.getDocumentIdNumber());
 
 	    final RegistrationState lastRegistrationState = registration.getLastRegistrationState(executionYear);
 	    spreadsheet.addCell(lastRegistrationState.getStateType().getDescription());
@@ -424,9 +426,11 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 
     private void setHeaders(final StyledExcelSpreadsheet spreadsheet, final boolean extendedInfo) {
 	spreadsheet.newHeaderRow();
-	spreadsheet.addHeader(getResourceMessage("label.degree"));
+	spreadsheet.addHeader(getResourceMessage("label.degree.acronym"));
+	spreadsheet.addHeader(getResourceMessage("label.degree.name"));
 	spreadsheet.addHeader(getResourceMessage("label.number"));
 	spreadsheet.addHeader(getResourceMessage("label.name"));
+	spreadsheet.addHeader(getResourceMessage("label.documentIdNumber"));
 	spreadsheet.addHeader(getResourceMessage("label.registration.state"));
 	spreadsheet.addHeader(getResourceMessage("label.registrationAgreement"));
 	if (extendedInfo) {
