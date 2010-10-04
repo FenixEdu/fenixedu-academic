@@ -97,7 +97,7 @@ public class RectorateSubmissionBatch extends RectorateSubmissionBatch_Base {
 	setSubmitter(AccessControl.getPerson().getEmployee());
 	Employee employee = AccessControl.getPerson().getEmployee();
 	for (DocumentRequest document : getDocumentRequestSet()) {
-	    if (document.isCancelled()) {
+	    if (document.isCancelled() || document.isRejected()) {
 		continue;
 	    }
 	    if (!document.isSendToExternalEntitySituationAccepted()) {

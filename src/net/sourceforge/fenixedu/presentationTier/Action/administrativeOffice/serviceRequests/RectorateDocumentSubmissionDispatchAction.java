@@ -40,7 +40,7 @@ import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Mapping(path = "/rectorateDocumentSubmission", module = "academicAdminOffice")
-@Forwards( { @Forward(name = "index", path = "/academicAdminOffice/rectorateDocumentSubmission/batchIndex.jsp"),
+@Forwards({ @Forward(name = "index", path = "/academicAdminOffice/rectorateDocumentSubmission/batchIndex.jsp"),
 	@Forward(name = "viewBatch", path = "/academicAdminOffice/rectorateDocumentSubmission/showBatch.jsp") })
 public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchAction {
     public ActionForward index(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -86,7 +86,7 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 	// Filter out canceled document requests, ticket: #248539
 	Set<DocumentRequest> requests = new HashSet<DocumentRequest>();
 	for (DocumentRequest docRequest : batch.getDocumentRequestSet()) {
-	    if (!docRequest.isCancelled()) {
+	    if (!docRequest.isCancelled() && !docRequest.isRejected()) {
 		requests.add(docRequest);
 	    }
 	}
@@ -126,7 +126,7 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 	Set<DocumentRequest> docs = new HashSet<DocumentRequest>();
 	for (DocumentRequest document : batch.getDocumentRequestSet()) {
 	    // Filter out canceled document requests, ticket: #248539
-	    if (!(document instanceof DiplomaRequest) && !document.isCancelled()) {
+	    if (!(document instanceof DiplomaRequest) && !document.isCancelled() && !document.isRejected()) {
 		docs.add(document);
 	    }
 	}
@@ -139,7 +139,7 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 	Set<DocumentRequest> docs = new HashSet<DocumentRequest>();
 	for (DocumentRequest document : batch.getDocumentRequestSet()) {
 	    // Filter out canceled document requests, ticket: #248539
-	    if (document instanceof DiplomaRequest && !document.isCancelled()) {
+	    if (document instanceof DiplomaRequest && !document.isCancelled() && !document.isRejected()) {
 		docs.add(document);
 	    }
 	}
@@ -216,7 +216,7 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 	    RectorateSubmissionBatch batch = getDomainObject(request, "batchOid");
 	    for (DocumentRequest document : batch.getDocumentRequestSet()) {
 		// Filter out canceled document requests, ticket: #248539
-		if (!(document instanceof DiplomaRequest) && !document.isCancelled()) {
+		if (!(document instanceof DiplomaRequest) && !document.isCancelled() && !document.isRejected()) {
 		    zip.putNextEntry(new ZipEntry(document.getLastGeneratedDocument().getFilename()));
 		    zip.write(document.getLastGeneratedDocument().getContents());
 		    zip.closeEntry();
