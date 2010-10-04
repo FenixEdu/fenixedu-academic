@@ -30,11 +30,11 @@ public enum DocumentRequestType {
 
     GENERIC_DECLARATION(false, true, DEGREE),
 
-    REGISTRY_DIPLOMA_REQUEST(true, false /*, DEGREE, MASTER_DEGREE */),
+    REGISTRY_DIPLOMA_REQUEST(true, false, DEGREE, MASTER_DEGREE),
 
     DIPLOMA_REQUEST(false, false, DEGREE, MASTER_DEGREE),
 
-    DIPLOMA_SUPPLEMENT_REQUEST(true, false, false, false, true /*, DEGREE, MASTER_DEGREE */),
+    DIPLOMA_SUPPLEMENT_REQUEST(true, false, false, false, true, DEGREE, MASTER_DEGREE),
 
     PAST_DIPLOMA_REQUEST(true, false, false, true, false, DEGREE/* , MASTER_DEGREE */),
 
