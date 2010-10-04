@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DegreeF
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.serviceRequests.RegistryCode;
 import net.sourceforge.fenixedu.domain.student.MobilityProgram;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -123,6 +124,15 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 		throw new DomainException("DegreeFinalizationCertificateRequest.registration.not.submited.to.conclusion.process");
 	    }
 
+	    final RegistryDiplomaRequest registryRequest = getRegistration().getRegistryDiplomaRequest(
+		    getWhatShouldBeRequestedCycle());
+	    if (registryRequest != null
+		    && registryRequest.getAcademicServiceRequestSituationType().compareTo(
+			    AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY) < 0) {
+		throw new DomainException(
+			"DegreeFinalizationCertificateRequest.registration.registryRequestIsNotSentToExternalEntity");
+	    }
+
 	    if (!getFreeProcessed()) {
 		if (hasCycleCurriculumGroup()) {
 		    assertPayedEvents(getCycleCurriculumGroup().getIEnrolmentsLastExecutionYear());
@@ -156,8 +166,9 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 	final DegreeType degreeType = getDegreeType();
 	final CycleType requestedCycle = getRequestedCycle();
 
-	return getDescription(getAcademicServiceRequestType(), getDocumentRequestType().getQualifiedName() + "."
-		+ degreeType.name() + (degreeType.isComposite() ? "." + requestedCycle.name() : ""));
+	return getDescription(getAcademicServiceRequestType(),
+		getDocumentRequestType().getQualifiedName() + "." + degreeType.name()
+			+ (degreeType.isComposite() ? "." + requestedCycle.name() : ""));
     }
 
     @Override
