@@ -11,22 +11,30 @@
 <h2><bean:message key="title.tutorship.student.performance.grid" bundle="PEDAGOGICAL_COUNCIL" /></h2>
 
 <fr:form action="/studentTutorship.do?method=showStudentPerformanceGrid">
-	<fr:edit id="filterForm" name="tutorateBean" schema="tutorship.student.number">
-		<fr:edit id="tutorateBean" name="tutorateBean" visible="false" />
-		<fr:layout>
-			<fr:property name="classes" value="tstyle5 thlight thleft mtop0"/>
-			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
-		</fr:layout>
-		<fr:destination name="invalid" path="/studentTutorship.do?method=prepareStudentSearch" />
-	</fr:edit>
-	<html:submit>
-		<bean:message key="label.submit" bundle="PEDAGOGICAL_COUNCIL" />
-	</html:submit>
+	<table>
+	<tr>
+		<td>
+			<fr:edit id="filterForm" name="tutorateBean" schema="tutorship.student.number">
+				<fr:edit id="tutorateBean" name="tutorateBean" visible="false" />
+				<fr:layout>
+					<fr:property name="classes" value="tstyle5 thlight thleft mtop0"/>
+					<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+				</fr:layout>
+				<fr:destination name="invalid" path="/studentTutorship.do?method=prepareStudentSearch" />
+			</fr:edit>
+		</td>
+		<td>
+		<html:submit>
+			<bean:message key="label.submit" bundle="PEDAGOGICAL_COUNCIL" />
+		</html:submit>
+		</td>
+	</tr>
+	</table>
 </fr:form>
 
 
 <html:messages id="message" message="true" bundle="PEDAGOGICAL_COUNCIL">
-<br/><span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>
+	<br/><span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>
 </html:messages>
 
 
@@ -39,39 +47,77 @@
 	</logic:notPresent>
 	
 	<logic:present name="performanceGridTable">
-		<fr:view name="student" schema="tutorship.tutorate.student">
-			<fr:layout name="tabular">
-		   	    <fr:property name="classes" value="tstyle2 thright thlight"/>
-		   	    <fr:property name="rowClasses" value="bold,,,"/>
-		    </fr:layout>
-		</fr:view>
-		<logic:notEmpty name="tutors">
-			<table class="tstyle4 tdcenter mtop15">
-				<tr>
-					<th colspan="2">
-						<bean:message key="label.tutors" bundle="PEDAGOGICAL_COUNCIL"/>
-					</th>
-				</tr>
-				<tr>
-					<th>
-						<bean:message key="label.tutor.number" bundle="PEDAGOGICAL_COUNCIL"/>
-					</th>
-					<th>
-						<bean:message key="label.tutor.name" bundle="PEDAGOGICAL_COUNCIL"/>
-					</th>
-				</tr>
-				<logic:iterate id="tutor" name="tutors">
-					<tr>
-						<td>
-							<bean:write name="tutor" property="teacherNumber"/>
-						</td>
-						<td>
-							<bean:write name="tutor" property="person.name"/>
-						</td>
-					</tr>
-				</logic:iterate>
-			</table>
-		</logic:notEmpty>
+		<table>
+		<tr>
+			<td>
+				<fr:view name="student" schema="tutorship.tutorate.student">
+					<fr:layout name="tabular">
+				   	    <fr:property name="classes" value="tstyle2 thright thlight mtop0"/>
+				   	    <fr:property name="rowClasses" value="bold,,,"/>
+				    </fr:layout>
+				</fr:view>
+			</td>
+			<td>
+				<logic:notEmpty name="tutors">
+					<table class="tstyle4 tdcenter mtop0">
+						<tr>
+							<th colspan="2">
+								<bean:message key="label.tutors" bundle="PEDAGOGICAL_COUNCIL"/>
+							</th>
+						</tr>
+						<tr>
+							<th>
+								<bean:message key="label.tutor.number" bundle="PEDAGOGICAL_COUNCIL"/>
+							</th>
+							<th>
+								<bean:message key="label.tutor.name" bundle="PEDAGOGICAL_COUNCIL"/>
+							</th>
+						</tr>
+						<logic:iterate id="tutor" name="tutors">
+							<tr>
+								<td>
+									<bean:write name="tutor" property="teacherNumber"/>
+								</td>
+								<td>
+									<bean:write name="tutor" property="person.name"/>
+								</td>
+							</tr>
+						</logic:iterate>
+					</table>
+				</logic:notEmpty>
+			</td>
+		</tr>
+		</table>
+		
+		<logic:present name="performanceGridFiltersBean">
+		<fr:form>
+		    <fr:edit id="performanceGridFiltersBean" name="performanceGridFiltersBean" layout="tabular-editable">
+				<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsPerformanceInfoBean">
+					<fr:slot name="studentsEntryYear" key="label.entryYear" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+						<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.teacher.TutorshipEntryExecutionYearProvider$TutorshipEntryExecutionYearProviderForSingleStudent"/> 
+						<fr:property name="format" value="${year}"/>
+						<fr:property name="sortBy" value="year"/>
+						<fr:property name="destination" value="post-back"/>
+						<fr:property name="nullOptionHidden" value="true"/>
+					</fr:slot>
+					<fr:slot name="currentMonitoringYear" key="label.monitoringYear" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+						<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.teacher.TutorshipMonitoringExecutionYearProvider"/> 
+						<fr:property name="format" value="${year}"/>
+						<fr:property name="sortBy" value="year"/>
+						<fr:property name="destination" value="post-back"/>
+						<fr:property name="nullOptionHidden" value="true"/>
+					</fr:slot>
+				</fr:schema>
+		        <fr:layout>
+		            <fr:property name="classes" value="tstyle5 thlight thleft mbottom12 mtop0"/>
+		            <fr:property name="columnClasses" value="width12em,width8em,tdclear tderror1"/>
+		        </fr:layout>
+		        <fr:destination name="invalid" path="/studentTutorship.do?method=showStudentPerformanceGrid" />
+		        <fr:destination name="post-back" path="/studentTutorship.do?method=showStudentPerformanceGrid" />
+		    </fr:edit>
+		</fr:form>
+    	</logic:present>
+    
 		<logic:notEmpty name="performanceGridTable" property="performanceGridTableLines">
 		
 		

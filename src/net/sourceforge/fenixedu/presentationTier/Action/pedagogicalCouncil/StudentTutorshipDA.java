@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.TutorateBean;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.PerformanceGridTableDTO;
+import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsPerformanceInfoBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.TutorshipSummary;
@@ -32,7 +34,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "chooseRegistration", path = "/pedagogicalCouncil/tutorship/chooseRegistration.jsp") })
 public class StudentTutorshipDA extends StudentsPerformanceGridDispatchAction {
 
-    @SuppressWarnings("unused")
     public ActionForward prepareStudentSearch(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
@@ -40,19 +41,30 @@ public class StudentTutorshipDA extends StudentsPerformanceGridDispatchAction {
 	return mapping.findForward("searchStudentTutorship");
     }
 
-    @SuppressWarnings("unused")
     public ActionForward showStudentPerformanceGrid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	TutorateBean bean = (TutorateBean) getRenderedObject("tutorateBean");
+	TutorateBean tutorateBean = (TutorateBean) getRenderedObject("tutorateBean");
 
-	Student student = Student.readStudentByNumber(bean.getPersonNumber());
+	Student student;
+	StudentsPerformanceInfoBean performanceBean;
+	if (tutorateBean != null) {
+	    student = Student.readStudentByNumber(tutorateBean.getPersonNumber());
+	} else {
+	    performanceBean = (StudentsPerformanceInfoBean) getRenderedObject("performanceGridFiltersBean");
+	    student = performanceBean.getPerson().getStudent();
+
+	    tutorateBean = new TutorateBean();
+	    tutorateBean.setPersonNumber(student.getNumber());
+	    request.setAttribute("tutorateBean", tutorateBean);
+	}
 	if (student != null) {
 	    List<Tutorship> tutorships = student.getActiveTutorships();
+	    performanceBean = getOrCreateStudentsPerformanceBean(request, student.getPerson());
 	    if (tutorships.size() > 0) {
 
-		PerformanceGridTableDTO performanceGridTable = createPerformanceGridTable(request, tutorships, student
-			.getFirstRegistrationExecutionYear(), ExecutionYear.readCurrentExecutionYear());
+		PerformanceGridTableDTO performanceGridTable = createPerformanceGridTable(request, tutorships, performanceBean
+			.getStudentsEntryYear(), performanceBean.getCurrentMonitoringYear());
 
 		getStatisticsAndPutInTheRequest(request, performanceGridTable);
 
@@ -81,17 +93,30 @@ public class StudentTutorshipDA extends StudentsPerformanceGridDispatchAction {
 		    }
 		}
 	    }
-
 	    request.setAttribute("pastSummaries", pastSummaries);
 
 	} else {
-	    studentErrorMessage(request, bean.getPersonNumber());
+	    studentErrorMessage(request, tutorateBean.getPersonNumber());
 	}
 
 	return mapping.findForward("showStudentPerformanceGrid");
     }
 
-    @SuppressWarnings("unused")
+    protected StudentsPerformanceInfoBean getOrCreateStudentsPerformanceBean(HttpServletRequest request, Person person) {
+	StudentsPerformanceInfoBean bean = (StudentsPerformanceInfoBean) getRenderedObject("performanceGridFiltersBean");
+	if ((bean != null) && (bean.getPerson() == person)) {
+	    request.setAttribute("performanceGridFiltersBean", bean);
+	    return bean;
+	}
+
+	bean = new StudentsPerformanceInfoBean();
+	bean.setPerson(person);
+	bean.setStudentsEntryYear(person.getStudent().getFirstRegistrationExecutionYear());
+	bean.setCurrentMonitoringYear(ExecutionYear.readCurrentExecutionYear());
+	request.setAttribute("performanceGridFiltersBean", bean);
+	return bean;
+    }
+
     public ActionForward prepareStudentCurriculum(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
@@ -99,7 +124,6 @@ public class StudentTutorshipDA extends StudentsPerformanceGridDispatchAction {
 	return mapping.findForward("showStudentCurriculum");
     }
 
-    @SuppressWarnings("unused")
     public ActionForward showStudentRegistration(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
@@ -109,7 +133,6 @@ public class StudentTutorshipDA extends StudentsPerformanceGridDispatchAction {
 	return showOrChoose(mapping, request);
     }
 
-    @SuppressWarnings("unused")
     public ActionForward showStudentCurriculum(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 

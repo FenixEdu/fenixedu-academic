@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
+import net.sourceforge.fenixedu.domain.student.Student;
 
 public class StudentsPerformanceInfoBean implements Serializable {
     private Person person;
@@ -19,7 +20,7 @@ public class StudentsPerformanceInfoBean implements Serializable {
     private Integer degreeCurricularPeriod = 5; // default
     private boolean activeTutorships;
 
-    private StudentsPerformanceInfoBean() {
+    public StudentsPerformanceInfoBean() {
 	setDegree(null);
 	setStudentsEntryYear(null);
 	setCurrentMonitoringYear(null);
@@ -101,6 +102,13 @@ public class StudentsPerformanceInfoBean implements Serializable {
 	List<Tutorship> result = new ArrayList<Tutorship>();
 	result.addAll(teacher.getActiveTutorships());
 	result.addAll(teacher.getPastTutorships());
+	return result;
+    }
+
+    public List<Tutorship> getTutorshipsFromStudent() {
+	Student student = getPerson().getStudent();
+	List<Tutorship> result = new ArrayList<Tutorship>();
+	result.addAll(student.getActiveTutorships());
 	return result;
     }
 
