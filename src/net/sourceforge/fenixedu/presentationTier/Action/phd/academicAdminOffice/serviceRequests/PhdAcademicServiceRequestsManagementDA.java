@@ -4,11 +4,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestCreateBean;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -20,16 +21,22 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/phdAcademicServiceRequestManagement", module = "academicAdminOffice")
 @Forwards( {
+	@Forward(name = "prepareCreateNewRequest", path = "/phd/academicAdminOffice/serviceRequests/prepareCreateNewRequest.jsp"),
 	@Forward(name = "listAcademicServiceRequests", path = "/phd/academicAdminOffice/serviceRequests/listAcademicServiceRequests.jsp"),
 	@Forward(name = "viewRequest", path = "/phd/academicAdminOffice/serviceRequests/viewRequest.jsp"),
 	@Forward(name = "prepareProcessNewState", path = "/phd/academicAdminOffice/serviceRequests/prepareProcessNewState.jsp") })
-public class PhdAcademicServiceRequestsManagementDA extends FenixDispatchAction {
+public class PhdAcademicServiceRequestsManagementDA extends PhdDA {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
+	request.setAttribute("phdAcademicServiceRequest", getPhdAcademicServiceRequest(request));
 	request.setAttribute("phdIndividualProgramProcess", getPhdIndividualProgramProcess(request));
-	request.setAttribute("phdAademicServiceRequest", getPhdAcademicServiceRequest(request));
+
+	if (getPhdAcademicServiceRequest(request) != null) {
+	    request.setAttribute("phdIndividualProgramProcess", getPhdAcademicServiceRequest(request)
+		    .getPhdIndividualProgramProcess());
+	}
 
 	return super.execute(mapping, actionForm, request, response);
     }
@@ -42,7 +49,7 @@ public class PhdAcademicServiceRequestsManagementDA extends FenixDispatchAction 
 	return mapping.findForward("listAcademicServiceRequests");
     }
 
-    public ActionForward viewAcademicRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward viewAcademicServiceRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	return mapping.findForward("viewRequest");
     }
@@ -59,10 +66,23 @@ public class PhdAcademicServiceRequestsManagementDA extends FenixDispatchAction 
 
     public ActionForward createNewRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	PhdAcademicServiceRequestCreateBean academicServiceRequestCreateBean = getPhdAcademicServiceRequestCreateBean();
-	academicServiceRequestCreateBean.createNewRequest();
+	try {
+	    PhdAcademicServiceRequestCreateBean academicServiceRequestCreateBean = getPhdAcademicServiceRequestCreateBean();
+	    academicServiceRequestCreateBean.createNewRequest();
+	} catch (PhdDomainOperationException exception) {
+	    addErrorMessage(request, exception.getMessage(), new String[0]);
+	    return prepareCreateNewRequest(mapping, form, request, response);
+	}
 
 	return listAcademicServiceRequests(mapping, form, request, response);
+    }
+
+    public ActionForward createNewRequestInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	PhdAcademicServiceRequestCreateBean academicServiceRequestCreateBean = getPhdAcademicServiceRequestCreateBean();
+	request.setAttribute("phdAcademicServiceRequestCreateBean", academicServiceRequestCreateBean);
+
+	return mapping.findForward("prepareCreateNewRequest");
     }
 
     public ActionForward prepareProcessServiceRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -73,9 +93,9 @@ public class PhdAcademicServiceRequestsManagementDA extends FenixDispatchAction 
     public ActionForward processServiceRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	PhdAcademicServiceRequestBean academicServiceRequestBean = getPhdAcademicServiceRequestBean();
-	academicServiceRequestBean.getAcademicServiceRequest().process();
+	academicServiceRequestBean.handleNewSituation();
 
-	return viewAcademicRequest(mapping, form, request, response);
+	return viewAcademicServiceRequest(mapping, form, request, response);
     }
 
     public ActionForward prepareCancelServiceRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -86,9 +106,9 @@ public class PhdAcademicServiceRequestsManagementDA extends FenixDispatchAction 
     public ActionForward cancelServiceRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	PhdAcademicServiceRequestBean academicServiceRequestBean = getPhdAcademicServiceRequestBean();
-	academicServiceRequestBean.getAcademicServiceRequest().cancel(academicServiceRequestBean.getJustification());
+	academicServiceRequestBean.handleNewSituation();
 
-	return viewAcademicRequest(mapping, form, request, response);
+	return viewAcademicServiceRequest(mapping, form, request, response);
     }
 
     public ActionForward prepareRejectServiceRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -99,22 +119,22 @@ public class PhdAcademicServiceRequestsManagementDA extends FenixDispatchAction 
     public ActionForward rejectServiceRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	PhdAcademicServiceRequestBean academicServiceRequestBean = getPhdAcademicServiceRequestBean();
-	academicServiceRequestBean.getAcademicServiceRequest().reject(academicServiceRequestBean.getJustification());
+	academicServiceRequestBean.handleNewSituation();
 
-	return viewAcademicRequest(mapping, form, request, response);
+	return viewAcademicServiceRequest(mapping, form, request, response);
     }
 
     public ActionForward prepareConcludeServiceRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	return prepareProcessNewState(mapping, form, request, response, AcademicServiceRequestSituationType.REJECTED);
+	return prepareProcessNewState(mapping, form, request, response, AcademicServiceRequestSituationType.CONCLUDED);
     }
 
     public ActionForward concludeServiceRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	PhdAcademicServiceRequestBean academicServiceRequestBean = getPhdAcademicServiceRequestBean();
-	academicServiceRequestBean.getAcademicServiceRequest().conclude();
+	academicServiceRequestBean.handleNewSituation();
 
-	return viewAcademicRequest(mapping, form, request, response);
+	return viewAcademicServiceRequest(mapping, form, request, response);
     }
 
     private ActionForward prepareProcessNewState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -140,7 +160,7 @@ public class PhdAcademicServiceRequestsManagementDA extends FenixDispatchAction 
     }
 
     private PhdIndividualProgramProcess getPhdIndividualProgramProcess(final HttpServletRequest request) {
-	return (PhdIndividualProgramProcess) getDomainObject(request, "phdIndividualCandidacyProcessId");
+	return (PhdIndividualProgramProcess) getDomainObject(request, "phdIndividualProgramProcessId");
     }
 
     private PhdAcademicServiceRequestCreateBean getPhdAcademicServiceRequestCreateBean() {

@@ -8,7 +8,7 @@
 <bean:define id="phdIndividualProgramProcess" name="phdIndividualProgramProcess" />
 <bean:define id="phdIndividualProgramProcessId" name="phdIndividualProgramProcess" property="externalId" /> 
 
-<html:link action="/phdIndividualProgramProcess.do?method=" paramId="processId" paramName="process" paramProperty="externalId">
+<html:link action="/phdIndividualProgramProcess.do?method=viewProcess" paramId="processId" paramName="phdIndividualProgramProcessId">
 	<bean:message bundle="PHD_RESOURCES" key="label.back"/>
 </html:link>
 <br/><br/>
@@ -20,24 +20,31 @@
 	</fr:layout>
 </fr:view>
 
-<strong><bean:message key="label.phd.academic.service.requests" bundle="PHD_RESOURCES" /></strong>
+<p><strong><bean:message key="label.phd.academic.service.requests" bundle="PHD_RESOURCES" /></strong></p>
 
 <logic:empty name="phdIndividualProgramProcess" property="phdAcademicServiceRequests" >
-	<bean:message key="label.phd.academic.service.requests.empty" bundle="PHD_RESOURCES" />
+	<p><bean:message key="label.phd.academic.service.requests.empty" bundle="PHD_RESOURCES" /></p>
 </logic:empty>
 
 <logic:notEmpty name="phdIndividualProgramProcess" property="phdAcademicServiceRequests" >
 	<fr:view name="phdIndividualProgramProcess" property="phdAcademicServiceRequests" >
 		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest">
-			<fr:property name="serviceRequestNumberYear" />
-			<fr:property name="academicServiceRequestType.localizedName" />
-			<fr:property name="requestDate" />
-			<fr:property name="activeSituationType" />
+			<fr:slot name="serviceRequestNumberYear" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest.serviceRequestNumberYear" />
+			<fr:slot name="academicServiceRequestType" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest.academicServiceRequestType" />
+			<fr:slot name="requestDate" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest.requestDate" />
+			<fr:slot name="activeSituation.academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest.activeSituation" />
 		</fr:schema>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight mtop15" />
+
+			<fr:link name="view" link="/phdAcademicServiceRequestManagement.do?method=viewAcademicServiceRequest&phdAcademicServiceRequestId=${externalId}" label="label.view,PHD_RESOURCES" />
 		</fr:layout>
 		
-		<fr:link name="view" link="/phdAcademicServiceRequestManagement.do?method=viewAcademicRequest&phdAcademicServiceRequestId=${externalId}" label="link.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest.view,PHD_RESOURCES"/>
 	</fr:view>
 </logic:notEmpty>
+
+<p>
+	<html:link action="/phdAcademicServiceRequestManagement.do?method=prepareCreateNewRequest" paramId="phdIndividualProgramProcessId" paramName="phdIndividualProgramProcessId">
+		<bean:message key="label.phd.academic.service.requests.create" bundle="PHD_RESOURCES" />
+	</html:link>
+</p>

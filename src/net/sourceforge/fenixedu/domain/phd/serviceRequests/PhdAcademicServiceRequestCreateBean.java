@@ -40,7 +40,7 @@ public class PhdAcademicServiceRequestCreateBean extends AcademicServiceRequestC
 
     @Override
     protected void setRegistration(final Registration registration) {
-	throw new DomainException("error.PhdAcademicServiceRequestCreateBean.set.registration.invalid");
+	// DO NOTHING
     }
 
     @Override

@@ -2,9 +2,12 @@ package net.sourceforge.fenixedu.domain.phd.serviceRequests;
 
 import java.io.Serializable;
 
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 
 import org.joda.time.DateTime;
+
+import pt.ist.fenixWebFramework.services.Service;
 
 public class PhdAcademicServiceRequestBean implements Serializable {
 
@@ -49,5 +52,26 @@ public class PhdAcademicServiceRequestBean implements Serializable {
 
     public void setJustification(final String justification) {
 	this.justification = justification;
+    }
+
+    @Service
+    public void handleNewSituation() {
+
+	switch (getSituationType()) {
+	case PROCESSING:
+	    getAcademicServiceRequest().process(getWhenNewSituationOccured().toYearMonthDay());
+	    break;
+	case CANCELLED:
+	    getAcademicServiceRequest().cancel(getJustification());
+	    break;
+	case CONCLUDED:
+	    getAcademicServiceRequest().conclude(getWhenNewSituationOccured().toYearMonthDay(), getJustification());
+	    break;
+	case REJECTED:
+	    getAcademicServiceRequest().reject(getJustification());
+	    break;
+	default:
+	    throw new DomainException("error.PhdAcademicServiceRequestBean.unknown.situation.type");
+	}
     }
 }

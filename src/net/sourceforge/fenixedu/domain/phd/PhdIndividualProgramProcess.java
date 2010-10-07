@@ -1444,4 +1444,27 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     public boolean isSuspended() {
 	return getMostRecentState().isSuspended();
     }
+
+    protected List<PhdProgramProcessState> getActiveStates() {
+	List<PhdProgramProcessState> result = new ArrayList<PhdProgramProcessState>();
+	org.apache.commons.collections.CollectionUtils.select(getStates(), new org.apache.commons.collections.Predicate() {
+
+	    @Override
+	    public boolean evaluate(Object arg0) {
+		return ((PhdProgramProcessState) arg0).getType().isActive();
+	    }
+
+	}, result);
+
+	return result;
+    }
+
+    protected boolean hasActiveStates() {
+	return !getActiveStates().isEmpty();
+    }
+
+    public PhdProgramProcessState getLastActiveState() {
+	return hasActiveStates() ? Collections.max(getActiveStates(), PhdProcessState.COMPARATOR_BY_DATE) : null;
+    }
+
 }

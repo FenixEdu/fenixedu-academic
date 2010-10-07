@@ -1,8 +1,13 @@
 package net.sourceforge.fenixedu.domain.phd.serviceRequests;
 
+import java.util.ResourceBundle;
+
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState;
 import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 
@@ -20,7 +25,7 @@ public class PhdStudentReingressionRequest extends PhdStudentReingressionRequest
 
     @Override
     protected void init(PhdAcademicServiceRequestCreateBean bean) {
-	if (bean.getRequestType().equals(getAcademicServiceRequestType())) {
+	if (!bean.getRequestType().equals(getAcademicServiceRequestType())) {
 	    throw new DomainException("error.PhdStudentReingressionRequest.type.not.supported");
 	}
 
@@ -78,6 +83,26 @@ public class PhdStudentReingressionRequest extends PhdStudentReingressionRequest
 
     public static PhdStudentReingressionRequest createRequest(
 	    final PhdAcademicServiceRequestCreateBean academicServiceRequestCreateBean) {
-	return PhdStudentReingressionRequest.createRequest(academicServiceRequestCreateBean);
+	return new PhdStudentReingressionRequest(academicServiceRequestCreateBean);
+    }
+
+    @Override
+    protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
+	super.internalChangeState(academicServiceRequestBean);
+
+	ResourceBundle phdBundle = ResourceBundle.getBundle("resources.PhdResources");
+
+	if (academicServiceRequestBean.isToConclude()) {
+	    PhdIndividualProgramProcess process = getPhdIndividualProgramProcess();
+	    PhdProgramProcessState lastActiveState = process.getLastActiveState();
+	    String remarks = String
+		    .format(
+			    phdBundle
+				    .getString("message.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdStudentReingressionRequest.conclusion.remark"),
+			    getServiceRequestNumberYear());
+
+	    process.addStates(new PhdProgramProcessState(getPhdIndividualProgramProcess(), lastActiveState.getType(),
+		    getEmployee().getPerson(), remarks));
+	}
     }
 }

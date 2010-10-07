@@ -98,7 +98,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return result == null ? new AcademicServiceRequestYear(getServiceRequestYear()) : result;
     }
 
-    private Employee getEmployee() {
+    protected Employee getEmployee() {
 	final Person person = AccessControl.getPerson();
 	return person == null ? null : person.getEmployee();
     }
@@ -208,6 +208,10 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     final public void process(final Employee employee, final YearMonthDay situationDate) throws DomainException {
 	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.PROCESSING, employee, situationDate, ""));
+    }
+
+    final public void process(final YearMonthDay situationDate) throws DomainException {
+	process(getEmployee(), situationDate);
     }
 
     final public void sendToExternalEntity(final YearMonthDay sendDate, final String description) {

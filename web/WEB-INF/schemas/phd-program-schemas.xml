@@ -1485,3 +1485,20 @@
 <schema name="PhdParticipant.view.name.with.title" type="net.sourceforge.fenixedu.domain.phd.PhdParticipant" bundle="PHD_RESOURCES">
 	<slot name="nameWithTitle" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.nameWithTitle"/>
 </schema>
+
+<schema name="PhdAcademicServiceRequest.new.situation-PROCESSING" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean">
+	<slot name="whenNewSituationOccured" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean.whenNewSituationOccured" />
+</schema>
+
+<schema name="PhdAcademicServiceRequest.new.situation-CANCELLED" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean">
+	<slot name="justification" required="true" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean.justification" />
+</schema>
+
+<schema name="PhdAcademicServiceRequest.new.situation-REJECTED" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean">
+	<slot name="justification" required="true" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean.justification" />
+</schema>
+
+<schema name="PhdAcademicServiceRequest.new.situation-CONCLUDED" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean">
+	<slot name="whenNewSituationOccured" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean.whenNewSituationOccured" />
+	<slot name="justification" required="true" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean.justification" />
+</schema>

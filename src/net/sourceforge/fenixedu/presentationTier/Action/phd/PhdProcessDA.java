@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -29,7 +28,7 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-abstract public class PhdProcessDA extends FenixDispatchAction {
+abstract public class PhdProcessDA extends PhdDA {
 
     static protected final Pattern AREA_CODE_REGEX = Pattern.compile("\\d{4}-\\d{3}");
     static protected final String PHD_RESOURCES = "resources.PhdResources";
@@ -86,18 +85,6 @@ abstract public class PhdProcessDA extends FenixDispatchAction {
 
 	    return mapping.findForward(errorForward);
 	}
-    }
-
-    protected void addErrorMessage(HttpServletRequest request, String key, String... args) {
-	addActionMessage("error", request, key, args);
-    }
-
-    protected void addSuccessMessage(HttpServletRequest request, String key, String... args) {
-	addActionMessage("success", request, key, args);
-    }
-
-    protected void addWarningMessage(HttpServletRequest request, String key, String... args) {
-	addActionMessage("warning", request, key, args);
     }
 
     protected boolean validateAreaCodeAndAreaOfAreaCode(HttpServletRequest request, final Person person, Country country,
