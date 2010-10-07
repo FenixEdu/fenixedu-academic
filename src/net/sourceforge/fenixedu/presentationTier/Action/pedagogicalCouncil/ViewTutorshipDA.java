@@ -38,7 +38,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/viewTutorship", module = "pedagogicalCouncil")
-@Forwards({ @Forward(name = "viewTutorship", path = "/pedagogicalCouncil/tutorship/viewTutorship.jsp") })
+@Forwards( { @Forward(name = "viewTutorship", path = "/pedagogicalCouncil/tutorship/viewTutorship.jsp") })
 public class ViewTutorshipDA extends FenixDispatchAction {
 
     private static int TUTORSHIP_DURATION = 2;
@@ -64,10 +64,13 @@ public class ViewTutorshipDA extends FenixDispatchAction {
     public ActionForward deleteTutorship(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	
-	TutorshipPeriodPartialBean tutorshipPeriodPartialBean = (TutorshipPeriodPartialBean) getRenderedObject("periodBean");
-	Tutorship tutorship = tutorshipPeriodPartialBean.getTutorship();
+	Integer tutorshipId = new Integer(request.getParameter("tutorshipID"));
+	Tutorship tutorship = rootDomainObject.readTutorshipByOID(tutorshipId);
+
 	ExecutionDegree executionDegree = getExecutionDegree(tutorship);
 	deleteTutor(tutorship, executionDegree, request, mapping);
+	RenderUtils.invalidateViewState();
+	request.setAttribute("successDelete", "successDelete");
 	return mapping.findForward("viewTutorship");
     }
 

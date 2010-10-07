@@ -25,6 +25,10 @@
 		<p><bean:message key="label.submit.success.date" bundle="PEDAGOGICAL_COUNCIL"/></p>
 </logic:present>
 
+<logic:present name="successDelete">
+		<p><bean:message key="label.submit.success.delete" bundle="PEDAGOGICAL_COUNCIL"/></p>
+</logic:present>
+
 <logic:present name="periodBean">
 
 	<bean:define id="periodBean" type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorshipPeriodPartialBean"name="periodBean" />
@@ -63,11 +67,15 @@
 				<fr:property name="columnClasses" value=",,tdclear tderror1" />
 			</fr:layout>
 		</fr:edit>
-		
+
+		<html:link action="/viewTutorship.do?method=deleteTutorship"
+			paramId="tutorshipID" paramName="periodBean" paramProperty="tutorship.idInternal">
+			<bean:message key="label.submit.delete" bundle="PEDAGOGICAL_COUNCIL" />
+		</html:link>
 		<p>
 			<html:submit property="create"><bean:message key="label.submit.edit" bundle="PEDAGOGICAL_COUNCIL"/></html:submit>
 		</p>
-
+		
 </fr:form>
 
 
