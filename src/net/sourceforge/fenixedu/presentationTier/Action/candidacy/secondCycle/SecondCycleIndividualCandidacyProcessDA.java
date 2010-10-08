@@ -298,6 +298,17 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 	    return mapping.findForward("fill-candidacy-information");
 	}
 
+	boolean hasSelectedDegrees = !bean.getSelectedDegreeList().isEmpty();
+	if (!hasSelectedDegrees) {
+	    invalidateDocumentFileRelatedViewStates();
+	    request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	    addActionMessage(request, "error.SecondCycleIndividualCandidacyProcessBean.must.select.at.least.one.degree");
+	    // addErrorMessage(request, "message",
+	    // "error.SecondCycleIndividualCandidacyProcessBean.must.select.at.least.one.degree",
+	    // new Object[0]);
+	    return mapping.findForward("fill-candidacy-information");
+	}
+
 	copyPrecedentBeanToCandidacyInformationBean(bean.getPrecedentDegreeInformation(), bean.getCandidacyInformationBean());
 
 	return super.createNewProcess(mapping, form, request, response);

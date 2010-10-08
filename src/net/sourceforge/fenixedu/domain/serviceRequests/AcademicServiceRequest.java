@@ -283,6 +283,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	}
 	super.setExecutionYear(null);
 	super.setRootDomainObject(null);
+	super.setAcademicServiceRequestYear(null);
     }
 
     protected void checkRulesToDelete() {

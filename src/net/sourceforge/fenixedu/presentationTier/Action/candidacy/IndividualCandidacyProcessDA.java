@@ -215,38 +215,38 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 	    bean.setPersonBean(new PersonBean(choosePersonBean.getName(), choosePersonBean.getIdentificationNumber(),
 		    choosePersonBean.getDocumentType(), choosePersonBean.getDateOfBirth()));
 
-	    //bean.getPersonBean().setAddress("Some address");
-	    //bean.getPersonBean().setArea("Some area");
-	    //bean.getPersonBean().setAreaOfAreaCode("2345-2341");
-	    ////bean.getPersonBean().setCountryOfBirth(Country.readByTwoLetterCode("AF"));
-	    //bean.getPersonBean().setCountryOfResidence(Country.readByTwoLetterCode("PT"));
-	    //bean.getPersonBean().setDistrictOfBirth("Some district of birth");
-	    //bean.getPersonBean().setDistrictOfResidence("Some district of residence");
-	    //bean.getPersonBean().setDistrictSubdivisionOfBirth("district subdivision of birth");
-	    //bean.getPersonBean().setDistrictSubdivisionOfResidence("district subdivision of residence");
-	    //bean.getPersonBean().setGender(Gender.MALE);
-	    //bean.getPersonBean().setPhone("12313234132");
-	    //bean.getPersonBean().setNationality(Country.readByTwoLetterCode("AF"));
-	    //bean.getPersonBean().setAreaCode("1223-123");
+	    // bean.getPersonBean().setAddress("Some address");
+	    // bean.getPersonBean().setArea("Some area");
+	    // bean.getPersonBean().setAreaOfAreaCode("2345-2341");
+	    // //bean.getPersonBean().setCountryOfBirth(Country.readByTwoLetterCode("AF"));
+	    // bean.getPersonBean().setCountryOfResidence(Country.readByTwoLetterCode("PT"));
+	    // bean.getPersonBean().setDistrictOfBirth("Some district of birth");
+	    // bean.getPersonBean().setDistrictOfResidence("Some district of residence");
+	    // bean.getPersonBean().setDistrictSubdivisionOfBirth("district subdivision of birth");
+	    // bean.getPersonBean().setDistrictSubdivisionOfResidence("district subdivision of residence");
+	    // bean.getPersonBean().setGender(Gender.MALE);
+	    // bean.getPersonBean().setPhone("12313234132");
+	    // bean.getPersonBean().setNationality(Country.readByTwoLetterCode("AF"));
+	    // bean.getPersonBean().setAreaCode("1223-123");
 
 	    return mapping.findForward("fill-personal-information");
 
 	} else {
 	    bean.setPersonBean(new PersonBean(bean.getChoosePersonBean().getPerson()));
 
-	    //bean.getPersonBean().setAddress("Some address");
-	    //bean.getPersonBean().setArea("Some area");
-	    //bean.getPersonBean().setAreaOfAreaCode("2345-2341");
-	    //bean.getPersonBean().setCountryOfBirth(Country.readByTwoLetterCode("AF"));
-	    //bean.getPersonBean().setCountryOfResidence(Country.readByTwoLetterCode("PT"));
-	    //bean.getPersonBean().setDistrictOfBirth("Some district of birth");
-	    //bean.getPersonBean().setDistrictOfResidence("Some district of residence");
-	    //bean.getPersonBean().setDistrictSubdivisionOfBirth("district subdivision of birth");
-	    //bean.getPersonBean().setDistrictSubdivisionOfResidence("district subdivision of residence");
-	    //bean.getPersonBean().setGender(Gender.MALE);
-	    //bean.getPersonBean().setPhone("12313234132");
-	    //bean.getPersonBean().setNationality(Country.readByTwoLetterCode("AF"));
-	    //bean.getPersonBean().setAreaCode("1223-123");
+	    // bean.getPersonBean().setAddress("Some address");
+	    // bean.getPersonBean().setArea("Some area");
+	    // bean.getPersonBean().setAreaOfAreaCode("2345-2341");
+	    // bean.getPersonBean().setCountryOfBirth(Country.readByTwoLetterCode("AF"));
+	    // bean.getPersonBean().setCountryOfResidence(Country.readByTwoLetterCode("PT"));
+	    // bean.getPersonBean().setDistrictOfBirth("Some district of birth");
+	    // bean.getPersonBean().setDistrictOfResidence("Some district of residence");
+	    // bean.getPersonBean().setDistrictSubdivisionOfBirth("district subdivision of birth");
+	    // bean.getPersonBean().setDistrictSubdivisionOfResidence("district subdivision of residence");
+	    // bean.getPersonBean().setGender(Gender.MALE);
+	    // bean.getPersonBean().setPhone("12313234132");
+	    // bean.getPersonBean().setNationality(Country.readByTwoLetterCode("AF"));
+	    // bean.getPersonBean().setAreaCode("1223-123");
 
 	    return mapping.findForward("fill-personal-information");
 	}
@@ -301,19 +301,19 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 	bean.setPersonBean(new PersonBean(choosePersonBean.getName(), choosePersonBean.getIdentificationNumber(),
 		choosePersonBean.getDocumentType(), choosePersonBean.getDateOfBirth()));
 
-	//bean.getPersonBean().setAddress("Some address");
-	//bean.getPersonBean().setArea("Some area");
-	//bean.getPersonBean().setAreaOfAreaCode("2345-2341");
-	//bean.getPersonBean().setCountryOfBirth(Country.readByTwoLetterCode("AF"));
-	//bean.getPersonBean().setCountryOfResidence(Country.readByTwoLetterCode("PT"));
-	//bean.getPersonBean().setDistrictOfBirth("Some district of birth");
-	//bean.getPersonBean().setDistrictOfResidence("Some district of residence");
-	//bean.getPersonBean().setDistrictSubdivisionOfBirth("district subdivision of birth");
-	//bean.getPersonBean().setDistrictSubdivisionOfResidence("district subdivision of residence");
-	//bean.getPersonBean().setGender(Gender.MALE);
-	//bean.getPersonBean().setPhone("12313234132");
-	//bean.getPersonBean().setNationality(Country.readByTwoLetterCode("AF"));
-	//bean.getPersonBean().setAreaCode("1223-123");
+	// bean.getPersonBean().setAddress("Some address");
+	// bean.getPersonBean().setArea("Some area");
+	// bean.getPersonBean().setAreaOfAreaCode("2345-2341");
+	// bean.getPersonBean().setCountryOfBirth(Country.readByTwoLetterCode("AF"));
+	// bean.getPersonBean().setCountryOfResidence(Country.readByTwoLetterCode("PT"));
+	// bean.getPersonBean().setDistrictOfBirth("Some district of birth");
+	// bean.getPersonBean().setDistrictOfResidence("Some district of residence");
+	// bean.getPersonBean().setDistrictSubdivisionOfBirth("district subdivision of birth");
+	// bean.getPersonBean().setDistrictSubdivisionOfResidence("district subdivision of residence");
+	// bean.getPersonBean().setGender(Gender.MALE);
+	// bean.getPersonBean().setPhone("12313234132");
+	// bean.getPersonBean().setNationality(Country.readByTwoLetterCode("AF"));
+	// bean.getPersonBean().setAreaCode("1223-123");
 
 	bean.removeChoosePersonBean();
 	return mapping.findForward("fill-personal-information");
@@ -367,18 +367,6 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 	    return mapping.findForward("fill-personal-information");
 	}
 
-	/*
-	 * 08/05/2009 - We wont validate candidacy information bean on candidacy
-	 * process creation
-	 */
-	/*
-	 * final Set<String> messages =
-	 * bean.getCandidacyInformationBean().validate(); if
-	 * (!messages.isEmpty()) { for (final String message : messages) {
-	 * addActionMessage(request, message); } return
-	 * mapping.findForward("fill-common-candidacy-information"); } else {
-	 * return mapping.findForward("fill-candidacy-information"); }
-	 */
 	return mapping.findForward("fill-candidacy-information");
     }
 
