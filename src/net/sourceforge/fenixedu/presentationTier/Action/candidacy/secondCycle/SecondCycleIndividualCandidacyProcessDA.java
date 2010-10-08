@@ -303,9 +303,6 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 	    invalidateDocumentFileRelatedViewStates();
 	    request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 	    addActionMessage(request, "error.SecondCycleIndividualCandidacyProcessBean.must.select.at.least.one.degree");
-	    // addErrorMessage(request, "message",
-	    // "error.SecondCycleIndividualCandidacyProcessBean.must.select.at.least.one.degree",
-	    // new Object[0]);
 	    return mapping.findForward("fill-candidacy-information");
 	}
 
