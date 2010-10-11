@@ -19,13 +19,12 @@ public class AttributesManagement {
 
     private Map<StorkAttributeType, Attribute> attributes;
 
-
     public static final String STORK_RETURN_CODE_OK = "OK";
 
     public AttributesManagement(Map<StorkAttributeType, Attribute> attributes) {
 	this.attributes = attributes;
     }
-    
+
     public AttributesManagement(String attrList) {
 	this.attributes = buildStorkAttributes(attrList);
     }
@@ -40,6 +39,42 @@ public class AttributesManagement {
 	}
 
 	return attribute.getSemanticValue();
+    }
+
+    public boolean hasCanonicalAddress() {
+	return getCanonicalAddress() != null;
+    }
+
+    public String getAddressCompound() {
+	if (!hasCanonicalAddress()) {
+	    return null;
+	}
+
+	return getCanonicalAddress().getAddress();
+    }
+
+    public String getZipCodeCompound() {
+	if (!hasCanonicalAddress()) {
+	    return null;
+	}
+
+	return getCanonicalAddress().getZipCode();
+    }
+
+    public String getCityCompound() {
+	if (!hasCanonicalAddress()) {
+	    return null;
+	}
+
+	return getCanonicalAddress().getCity();
+    }
+
+    public Country getResidenceCountryCompound() {
+	if (!hasCanonicalAddress()) {
+	    return null;
+	}
+
+	return getCanonicalAddress().getCountry();
     }
 
     /* END OF ADDRESS */
@@ -218,8 +253,13 @@ public class AttributesManagement {
 	    String attrName = params[0];
 	    String value = params[1].equals("null") ? null : params[1].substring(1, params[1].length() - 1);
 
-	    attributes.put(StorkAttributeType.getTypeFromStorkName(attrName), new Attribute(i++, StorkAttributeType
-		    .getTypeFromStorkName(attrName), false, value));
+	    if (StorkAttributeType.STORK_CANONICAL_ADDRESS.equals(StorkAttributeType.getTypeFromStorkName(attrName))) {
+		attributes.put(StorkAttributeType.getTypeFromStorkName(attrName), new CanonicalAddressAttribute(i++,
+			StorkAttributeType.getTypeFromStorkName(attrName), false, value));
+	    } else {
+		attributes.put(StorkAttributeType.getTypeFromStorkName(attrName), new Attribute(i++, StorkAttributeType
+			.getTypeFromStorkName(attrName), false, value));
+	    }
 	}
 
 	return attributes;
@@ -237,6 +277,10 @@ public class AttributesManagement {
 	}
 
 	return new StorkAttributesList(attrList);
+    }
+
+    private CanonicalAddressAttribute getCanonicalAddress() {
+	return (CanonicalAddressAttribute) attributes.get(StorkAttributeType.STORK_CANONICAL_ADDRESS);
     }
 
 }

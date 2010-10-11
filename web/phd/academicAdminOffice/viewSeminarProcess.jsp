@@ -72,6 +72,22 @@
 			<a href="<%= reportDocumentUrl.toString() %>"><bean:message  key="label.phd.public.presentation.seminar.report.document" bundle="PHD_RESOURCES"/></a>
 		</li>
 		</phd:activityAvailable>
+
+		<phd:activityAvailable process="<%= seminarProcess %>" activity="<%= PublicPresentationSeminarProcess.RevertToWaitingForComissionConstitution.class %>" >
+		<li style="display: inline;">
+			<html:link action="/publicPresentationSeminarProcess.do?method=revertToWaitingForComissionConstitution" paramId="processId" paramName="process" paramProperty="seminarProcess.externalId">
+				<bean:message bundle="PHD_RESOURCES" key="label.phd.revert.public.presentation.seminar.to.waiting.for.comission.constitution" />
+			</html:link>
+		</li>
+		</phd:activityAvailable>
+		
+		<phd:activityAvailable process="<%= seminarProcess %>" activity="<%= PublicPresentationSeminarProcess.RevertToWaitingComissionForValidation.class %>" >
+		<li style="display: inline;">
+			<html:link action="/publicPresentationSeminarProcess.do?method=revertToWaitingComissionValidation" paramId="processId" paramName="process" paramProperty="seminarProcess.externalId">
+				<bean:message bundle="PHD_RESOURCES" key="label.phd.revert.public.presentation.seminar.to.waiting.comission.for.validation" />
+			</html:link>
+		</li>		
+		</phd:activityAvailable>
 	
 	</ul>
 </logic:equal>

@@ -523,7 +523,7 @@
 		<property name="format" value="${year}" />
         <property name="saveOptions" value="true"/>
 	</slot>
-	<slot name="processState" >
+	<slot name="processState" layout="menu-select">
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState" />
 		<property name="format" value="${localizedName}" />
 	</slot>

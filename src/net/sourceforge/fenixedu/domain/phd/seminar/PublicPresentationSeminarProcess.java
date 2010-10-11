@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
@@ -372,6 +373,59 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 
     }
 
+    static public class RevertToWaitingForComissionConstitution extends PhdActivity {
+
+	@Override
+	public void activityPreConditions(PublicPresentationSeminarProcess process, IUserView userView) {
+	    if (!process.getActiveState().equals(PublicPresentationSeminarProcessStateType.COMMISSION_WAITING_FOR_VALIDATION)) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PublicPresentationSeminarProcess executeActivity(PublicPresentationSeminarProcess process, IUserView userView,
+		Object object) {
+	    if (!process.getActiveState().equals(PublicPresentationSeminarProcessStateType.COMMISSION_WAITING_FOR_VALIDATION)) {
+		throw new DomainException("error.PublicPresentationSeminarProcess.is.not.in.comission.waiting.for.validation");
+	    }
+
+	    process.createState(PublicPresentationSeminarProcessStateType.WAITING_FOR_COMISSION_CONSTITUTION, userView
+		    .getPerson(), "");
+	    return process;
+	}
+    }
+
+    static public class RevertToWaitingComissionForValidation extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PublicPresentationSeminarProcess process, IUserView userView) {
+	    if (!process.getActiveState().equals(PublicPresentationSeminarProcessStateType.COMMISSION_VALIDATED)) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PublicPresentationSeminarProcess executeActivity(PublicPresentationSeminarProcess process, IUserView userView,
+		Object object) {
+	    if (!process.getActiveState().equals(PublicPresentationSeminarProcessStateType.COMMISSION_VALIDATED)) {
+		throw new DomainException("error.PublicPresentationSeminarProcess.is.not.in.comission.validated.state");
+	    }
+
+	    process.createState(PublicPresentationSeminarProcessStateType.COMMISSION_WAITING_FOR_VALIDATION,
+		    userView.getPerson(), "");
+
+	    return process;
+	}
+    }
+
     static private List<Activity> activities = new ArrayList<Activity>();
 
     static {
@@ -384,6 +438,8 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 	activities.add(new RejectReport());
 	activities.add(new DownloadReportDocument());
 	activities.add(new DownloadComissionDocument());
+	activities.add(new RevertToWaitingForComissionConstitution());
+	activities.add(new RevertToWaitingComissionForValidation());
     }
 
     private PublicPresentationSeminarProcess() {

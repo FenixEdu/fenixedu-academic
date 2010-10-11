@@ -37,6 +37,7 @@ import net.sourceforge.fenixedu.util.StringUtils;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 import net.sourceforge.fenixedu.util.stork.AttributesManagement;
 import net.sourceforge.fenixedu.util.stork.SPUtil;
+import net.sourceforge.fenixedu.util.stork.StorkToPersonBeanTranslation;
 import net.spy.memcached.MemcachedClient;
 
 import org.apache.struts.action.ActionForm;
@@ -160,7 +161,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	if (candidacyHashCode == null) {
 	    return mapping.findForward("open-candidacy-processes-not-found");
 	}
-	
+
 	ErasmusIndividualCandidacyProcessBean bean = new ErasmusIndividualCandidacyProcessBean(candidacyProcess);
 	bean.setPersonBean(new PersonBean());
 	bean.getPersonBean().setIdDocumentType(IDDocumentType.FOREIGNER_IDENTITY_CARD);
@@ -465,20 +466,9 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
     private void setPersonalFieldsFromStork(AttributesManagement attrManagement, String eIdentifier,
 	    ErasmusIndividualCandidacyProcessBean bean) {
-
-	bean.getPersonBean().setIdDocumentType(IDDocumentType.FOREIGNER_IDENTITY_CARD);
-	bean.getPersonBean().setDocumentIdNumber(attrManagement.getIdentificationNumber());
-	bean.getPersonBean().setEmail(attrManagement.getEmail());
-	bean.getPersonBean().setName(attrManagement.getStorkFullname());
-	bean.getPersonBean().setDateOfBirth(attrManagement.getBirthDate());
-	bean.getPersonBean().setNationality(attrManagement.getStorkNationality());
-	bean.getPersonBean().setCountryOfBirth(attrManagement.getStorkCountryOfBirth());
-	bean.getPersonBean().setAddress(attrManagement.getTextAddress());
-	bean.getPersonBean().setGender(attrManagement.getGender());
+	StorkToPersonBeanTranslation.copyStorkAttributesToPersonBean(bean.getPersonBean(), attrManagement);
 	bean.getPersonBean().setEidentifier(eIdentifier);
-
 	bean.setPersonalFieldsFromStork(attrManagement.getStorkAttributesList());
-
 	bean.willAccessFenix();
     }
 
@@ -640,9 +630,6 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	request.setAttribute("individualCandidacyProcess", bean.getIndividualCandidacyProcess());
 	return backToViewCandidacyInternal(mapping, form, request, response);
     }
-
-
-
 
     private static final String f(String format, Object... args) {
 	return String.format(format, args);

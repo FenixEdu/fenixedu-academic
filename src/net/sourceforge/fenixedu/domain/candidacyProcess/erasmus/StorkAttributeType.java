@@ -16,6 +16,7 @@ public enum StorkAttributeType {
 
     STORK_RESIDENCE_ADDRESS("Morada"),
     STORK_TEXT_RESIDENCE_ADDRESS("TextoMorada"),
+    STORK_CANONICAL_ADDRESS("MoradaCanonica"),
 
     STORK_EMAIL("CorreioElectronico"),
     STORK_PHONE_CONTACT("Contactos"),
@@ -23,6 +24,7 @@ public enum StorkAttributeType {
     STORK_RETURN_CODE("returnCode"),
     STORK_ERROR_CODE("errorCode"),
     STORK_ERROR_MESSAGE("errorMessage");
+    
 
     private final String storkName;
     
