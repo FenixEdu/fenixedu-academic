@@ -251,6 +251,10 @@
 	<slot name="person.name" key="label.name"/>
 </schema>
 
+<schema name="candidacySituation.candidate.view" extends="candidacySituation.full" type="net.sourceforge.fenixedu.domain.candidacy.CandidacySituation">
+	<remove name="person.name" />
+</schema>
+
 <schema name="candidacyDocuments.full" type="net.sourceforge.fenixedu.dataTransferObject.candidacy.CandidacyDocumentUploadBean" bundle="CANDIDATE_RESOURCES">
 	<slot name="documentDescription" read-only="true" />
 	<slot name="actualFile" read-only="true" />
