@@ -18,11 +18,7 @@ public class TeacherDepartmentDegreesProvider implements DataProvider {
 	Set<Degree> degrees = new HashSet<Degree>();
 
 	StudentsPerformanceInfoBean bean = (StudentsPerformanceInfoBean) source;
-	List<Tutorship> tutorships = bean.getTeacher().getActiveTutorships();
-
-	if (tutorships.isEmpty()) {
-	    tutorships = bean.getTeacher().getPastTutorships();
-	}
+	List<Tutorship> tutorships = bean.getTutorships();
 
 	for (Tutorship tutorship : tutorships) {
 	    degrees.add(tutorship.getStudentCurricularPlan().getRegistration().getDegree());
