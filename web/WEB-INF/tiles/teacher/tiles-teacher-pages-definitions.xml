@@ -135,16 +135,6 @@
 		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp" />
 		<put name="body" value="/teacher/tutor/help.jsp" />
 	</definition>
-	
-	<definition name="studentsByTutor" extends="definition.teacher.two-column">
-		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp" />
-		<put name="body" value="/teacher/tutor/viewStudentsByTutor.jsp" />
-	</definition>
-	
-	<definition name="editStudent" extends="definition.teacher.two-column">
-		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp" />
-		<put name="body" value="/teacher/tutor/editStudent.jsp" />
-	</definition>
 
 	<definition name="studentsPerformanceGrid" extends="definition.teacher.two-column">
 		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp" />

@@ -17,10 +17,12 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/viewStudentsByTutor", module = "teacher")
-@Forwards( { @Forward(name = "viewStudentsByTutor", path = "studentsByTutor"),
-	@Forward(name = "editStudent", path = "editStudent") })
+@Forwards(tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp"), value = {
+	@Forward(name = "viewStudentsByTutor", path = "/teacher/tutor/viewStudentsByTutor.jsp"),
+	@Forward(name = "editStudent", path = "/teacher/tutor/editStudent.jsp") })
 public class ViewStudentsDispatchAction extends ViewStudentsByTutorDispatchAction {
 
     public ActionForward viewStudentsByTutor(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -43,6 +45,7 @@ public class ViewStudentsDispatchAction extends ViewStudentsByTutorDispatchActio
 		.valueOf(request.getParameter("registrationID")));
 	TutorshipLog tutorshipLog = registration.getActiveTutorship().getTutorshipLog();
 
+	request.setAttribute("tutor", getLoggedPerson(request));
 	request.setAttribute("student", student);
 	request.setAttribute("tutorshipLog", tutorshipLog);
 	return mapping.findForward("editStudent");
