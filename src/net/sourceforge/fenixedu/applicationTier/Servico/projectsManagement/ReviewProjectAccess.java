@@ -32,7 +32,7 @@ public class ReviewProjectAccess extends FenixService {
 		throw new FenixServiceException();
 	    }
 	    if ((new PersistentProject().countUserProject(personNumber, it) == 0)) {
-		cleanProjectsAccess(person, personNumber, role, false, false, it);
+		cleanProjectsAccess(person, role);
 	    }
 	}
 	role = Role.getRoleByRoleType(RoleType.INSTITUCIONAL_PROJECTS_MANAGER);
@@ -42,7 +42,7 @@ public class ReviewProjectAccess extends FenixService {
 		throw new FenixServiceException();
 	    }
 	    if ((new PersistentProjectUser().getInstitucionalProjectCoordId(personNumber, false).size() == 0)) {
-		cleanProjectsAccess(person, personNumber, role, true, false, false);
+		cleanProjectsAccess(person, role);
 	    }
 	}
     }
@@ -54,17 +54,13 @@ public class ReviewProjectAccess extends FenixService {
 	if (person.getEmployee() != null) {
 	    return person.getEmployee().getEmployeeNumber();
 	}
+	if (person.getGrantOwner() != null) {
+	    return person.getGrantOwner().getNumber();
+	}
 	return null;
     }
 
-    private void cleanProjectsAccess(Person person, Integer number, Role role, boolean isCostCenter, boolean limitDates,
-	    boolean it) throws FenixServiceException {
-	// List<ProjectAccess> accessesToDelete =
-	// ProjectAccess.getAllByPersonAndCostCenter(person, isCostCenter,
-	// limitDates, it);
-	// for (ProjectAccess access : accessesToDelete) {
-	// access.delete();
-	// }
+    private void cleanProjectsAccess(Person person, Role role) throws FenixServiceException {
 	person.removePersonRoles(role);
     }
 }

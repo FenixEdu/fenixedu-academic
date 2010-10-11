@@ -70,19 +70,20 @@ public class PersistentSummaryReport extends PersistentReport {
 	    String tableOrView = getTableOrViewName(p, reportType);
 	    StringBuilder queryBuffer = new StringBuilder();
 	    queryBuffer
-		    .append("select \"NºProj\", \"Acrónimo\", \"Unid Expl\", \"Tipo\", \"Orçamento\", \"Máximo Financiável\", \"Receita\", \"Despesa\", \"Adiantamentos por Justificar\" ,\"Saldo Tesouraria\", \"Cabimentos por Executar\", \"Saldo Orçamental\" from ");
+		    .append("select distinct \"NºProj\", \"Acrónimo\", \"Unid Expl\", \"Tipo\", \"Orçamento\", \"Máximo Financiável\", \"Receita\", \"Despesa\", \"Adiantamentos por Justificar\" ,\"Saldo Tesouraria\", \"Cabimentos por Executar\", \"Saldo Orçamental\" from ");
 	    queryBuffer.append(tableOrView);
-	    queryBuffer.append(" where IDCOORD='");
-	    queryBuffer.append(coordinatorCode);
-	    queryBuffer.append("'");
 	    if (projectCodes != null && projectCodes.size() != 0) {
-		queryBuffer.append(" and \"NºProj\" IN (");
+		queryBuffer.append(" where \"NºProj\" IN (");
 		for (int i = 0; i < projectCodes.size(); i++) {
 		    if (i != 0)
 			queryBuffer.append(", ");
 		    queryBuffer.append(projectCodes.get(i));
 		}
 		queryBuffer.append(")");
+	    } else {
+		queryBuffer.append(" where IDCOORD='");
+		queryBuffer.append(coordinatorCode);
+		queryBuffer.append("'");
 	    }
 	    queryBuffer.append(" order by \"NºProj\"");
 	    String query = queryBuffer.toString();

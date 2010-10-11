@@ -21,19 +21,21 @@ public class ReadPersonToDelegateAccess extends FenixService {
 	Person person = Person.readPersonByUsername(username);
 	if (person == null) {
 	    throw new ExcepcaoInexistente();
-	} else if (!isTeacherOrEmployee(person)) {
+	} else if (!isTeacherOrEmployeeOrGrantOwner(person)) {
 	    throw new InvalidArgumentsServiceException();
 	}
 	return InfoPerson.newInfoFromDomain(person);
     }
 
-    private boolean isTeacherOrEmployee(Person person) {
-	if (person.getTeacher() == null) {
-	    if (person.getEmployee() == null) {
-		return false;
-	    }
+    private boolean isTeacherOrEmployeeOrGrantOwner(Person person) {
+	return person.getTeacher() != null || person.getEmployee() != null || isActiveGrantOwner(person);
+    }
+
+    private boolean isActiveGrantOwner(Person person) {
+	if (person.getGrantOwner() != null) {
+	    return person.getGrantOwner().isActive();
 	}
-	return true;
+	return false;
     }
 
 }

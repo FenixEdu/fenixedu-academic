@@ -177,7 +177,7 @@ public class ProjectAccess extends ProjectAccess_Base {
 	return result.get(0);
     }
 
-    public static List<ProjectAccess> getAllByCoordinator(Integer coordinatorCode, boolean it) {
+    public static List<ProjectAccess> getAllByCoordinator(Integer coordinatorCode, boolean isCostCenter, boolean it) {
 	List<ProjectAccess> result = new ArrayList<ProjectAccess>();
 
 	Date currentDate = Calendar.getInstance().getTime();
@@ -189,8 +189,10 @@ public class ProjectAccess extends ProjectAccess_Base {
 	    if (access.getEnd().before(currentDate)) {
 		continue;
 	    }
-
 	    if (!access.getKeyProjectCoordinator().equals(coordinatorCode)) {
+		continue;
+	    }
+	    if (!new Boolean(isCostCenter).equals(access.getCostCenter())) {
 		continue;
 	    }
 

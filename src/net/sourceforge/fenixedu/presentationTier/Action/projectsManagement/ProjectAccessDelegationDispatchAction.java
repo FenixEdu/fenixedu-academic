@@ -174,10 +174,10 @@ public class ProjectAccessDelegationDispatchAction extends FenixDispatchAction {
 	getCostCenterName(request, costCenter, it);
 	final InfoProjectAccess infoProjectAccess = (InfoProjectAccess) ServiceManagerServiceFactory.executeService(
 		"ReadProjectAccesses", new Object[] { userView.getUtilizador(), costCenter, personCode, projectCode, it });
-	((DynaActionForm) form).set("beginDay", new Integer(infoProjectAccess.getBeginDate().get(Calendar.DAY_OF_MONTH))
-		.toString());
-	((DynaActionForm) form).set("beginMonth", new Integer(infoProjectAccess.getBeginDate().get(Calendar.MONTH) + 1)
-		.toString());
+	((DynaActionForm) form).set("beginDay",
+		new Integer(infoProjectAccess.getBeginDate().get(Calendar.DAY_OF_MONTH)).toString());
+	((DynaActionForm) form).set("beginMonth",
+		new Integer(infoProjectAccess.getBeginDate().get(Calendar.MONTH) + 1).toString());
 	((DynaActionForm) form).set("beginYear", new Integer(infoProjectAccess.getBeginDate().get(Calendar.YEAR)).toString());
 	((DynaActionForm) form).set("endDay", new Integer(infoProjectAccess.getEndDate().get(Calendar.DAY_OF_MONTH)).toString());
 	((DynaActionForm) form).set("endMonth", new Integer(infoProjectAccess.getEndDate().get(Calendar.MONTH) + 1).toString());
@@ -245,10 +245,11 @@ public class ProjectAccessDelegationDispatchAction extends FenixDispatchAction {
 
     private void getCostCenterName(HttpServletRequest request, String costCenter, Boolean it) throws FenixServiceException,
 	    FenixFilterException {
+	request.setAttribute("it", it);
 	if (costCenter != null && !costCenter.equals("")) {
 	    final IUserView userView = UserView.getUser();
-	    request.setAttribute("infoCostCenter", ServiceUtils.executeService("ReadCostCenter", new Object[] {
-		    userView.getUtilizador(), costCenter, it }));
+	    request.setAttribute("infoCostCenter",
+		    ServiceUtils.executeService("ReadCostCenter", new Object[] { userView.getUtilizador(), costCenter, it }));
 	}
     }
 }

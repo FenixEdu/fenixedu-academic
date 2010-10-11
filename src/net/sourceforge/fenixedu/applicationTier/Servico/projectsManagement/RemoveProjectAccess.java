@@ -8,14 +8,14 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentProject;
+
+import org.joda.time.DateTime;
 
 /**
  * @author Susana Fernandes
@@ -27,6 +27,9 @@ public class RemoveProjectAccess extends FenixService {
 	Person person = Person.readPersonByUsername(personUsername);
 
 	RoleType roleType = RoleType.PROJECTS_MANAGER;
+	if (it) {
+	    roleType = RoleType.IT_PROJECTS_MANAGER;
+	}
 	Boolean isCostCenter = false;
 	if (costCenter != null && !costCenter.equals("")) {
 	    roleType = RoleType.INSTITUCIONAL_PROJECTS_MANAGER;
@@ -47,21 +50,26 @@ public class RemoveProjectAccess extends FenixService {
 	    }
 	}
 
-	// ProjectAccess projectAccess =
-	// ProjectAccess.getByPersonAndProject(person, projectCode, it);
-	// projectAccess.delete();
+	ProjectAccess projectAccess = ProjectAccess.getByPersonAndProject(person, projectCode, it);
+	DateTime yesterday = new DateTime().minusDays(1);
+	if (yesterday.isAfter(projectAccess.getBeginDateTime())) {
+	    projectAccess.setEndDateTime(yesterday);
+	} else {
+	    projectAccess.delete();
+	}
+
     }
 
     private Integer getUserNumber(Person person) {
-	Integer userNumber = null;
-	Teacher teacher = person.getTeacher();
-	if (teacher != null)
-	    userNumber = teacher.getTeacherNumber();
-	else {
-	    Employee employee = person.getEmployee();
-	    if (employee != null)
-		userNumber = employee.getEmployeeNumber();
+	if (person.getTeacher() != null) {
+	    return person.getTeacher().getTeacherNumber();
 	}
-	return userNumber;
+	if (person.getEmployee() != null) {
+	    return person.getEmployee().getEmployeeNumber();
+	}
+	if (person.getGrantOwner() != null) {
+	    return person.getGrantOwner().getNumber();
+	}
+	return null;
     }
 }

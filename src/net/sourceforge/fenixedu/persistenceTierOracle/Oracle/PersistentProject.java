@@ -29,8 +29,7 @@ public class PersistentProject {
 	List<InfoProject> projects = new ArrayList<InfoProject>();
 
 	StringBuilder query = new StringBuilder();
-	query
-		.append("select p.projectCode, p.title, p.origem, p.tipo, p.custo, p.coordenacao, p.UNID_EXPLORACAO, p.gestor from  V_PROJECTOS p , web_user_projs up where up.login ='");
+	query.append("select p.projectCode, p.title, p.origem, p.tipo, p.custo, p.coordenacao, p.UNID_EXPLORACAO, p.gestor from  V_PROJECTOS p , web_user_projs up where up.login ='");
 	query.append(userLogin);
 	query.append("' and p.projectCode = up.id_proj order by p.projectCode");
 	// String query = " select p.projectCode, p.title, p.origem, p.tipo,

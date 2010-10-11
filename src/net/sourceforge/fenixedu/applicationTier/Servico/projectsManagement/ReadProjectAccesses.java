@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentProject;
+import net.sourceforge.fenixedu.util.StringUtils;
 
 /**
  * @author Susana Fernandes
@@ -27,7 +28,8 @@ public class ReadProjectAccesses extends FenixService {
 	if (persistentProject.countUserProject(new Integer(userNumber), it) == 0) {
 	    throw new InvalidArgumentsServiceException();
 	}
-	List<ProjectAccess> projectAcessesList = ProjectAccess.getAllByCoordinator(new Integer(userNumber), it);
+	List<ProjectAccess> projectAcessesList = ProjectAccess.getAllByCoordinator(new Integer(userNumber),
+		(!StringUtils.isEmpty(costCenter)), it);
 	List<InfoProjectAccess> infoProjectAcessesList = new ArrayList<InfoProjectAccess>();
 	for (ProjectAccess projectAccess : projectAcessesList) {
 	    InfoProjectAccess infoProjectAccess = InfoProjectAccess.newInfoFromDomain(projectAccess);

@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentProjectUser;
 import pt.utl.ist.berserk.ServiceRequest;
@@ -32,6 +33,7 @@ public class ProjectsManagerAuthorizationFilter extends AuthorizationByRoleFilte
 	return instance;
     }
 
+    @Override
     public void execute(ServiceRequest request, ServiceResponse response) throws FilterException, Exception {
 	roleToAuthorize.set(RoleType.PROJECTS_MANAGER);
 	final IUserView userView = getRemoteUser(request);
@@ -42,17 +44,7 @@ public class ProjectsManagerAuthorizationFilter extends AuthorizationByRoleFilte
 	if (parametersArray[parametersArray.length - 1] != null) {
 	    it = (Boolean) parametersArray[parametersArray.length - 1];
 	}
-
-	final Person person = userView.getPerson();
-	final Teacher teacher = person == null ? null : person.getTeacher();
-	Integer userNumber = null;
-	if (teacher != null)
-	    userNumber = teacher.getTeacherNumber();
-	else {
-	    Employee employee = userView.getPerson().getEmployee();
-	    if (employee != null)
-		userNumber = employee.getEmployeeNumber();
-	}
+	Integer userNumber = getUserNumber(userView.getPerson());
 	if (userNumber == null)
 	    throw new NotAuthorizedFilterException();
 	serviceParameters.addParameter("userNumber", userNumber.toString(), serviceParameters.parametersArray().length);
@@ -75,6 +67,22 @@ public class ProjectsManagerAuthorizationFilter extends AuthorizationByRoleFilte
 	request.setServiceParameters(serviceParameters);
     }
 
+    private Integer getUserNumber(final Person person) {
+	final Teacher teacher = person == null ? null : person.getTeacher();
+	final Employee employee = person == null ? null : person.getEmployee();
+	final GrantOwner grantOwner = person == null ? null : person.getGrantOwner();
+	Integer userNumber = null;
+	if (teacher != null) {
+	    userNumber = teacher.getTeacherNumber();
+	} else if (employee != null) {
+	    userNumber = employee.getEmployeeNumber();
+	} else if (grantOwner != null && grantOwner.isActive()) {
+	    userNumber = grantOwner.getNumber();
+	}
+	return userNumber;
+    }
+
+    @Override
     protected RoleType getRoleType() {
 	return roleToAuthorize.get();
     }
