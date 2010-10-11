@@ -2,16 +2,15 @@ package net.sourceforge.fenixedu.dataTransferObject.teacher.tutor;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.presentationTier.renderers.providers.teacher.TeacherDepartmentDegreesProvider;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.teacher.TutorshipEntryExecutionYearProvider;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.teacher.TutorshipMonitoringExecutionYearProvider;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.teacher.TutorshipEntryExecutionYearProvider.TutorshipEntryExecutionYearProviderForSingleStudent;
@@ -63,14 +62,14 @@ public class StudentsPerformanceInfoBean implements Serializable {
     }
 
     protected void refreshDegree() {
-	Set<Degree> degrees = getFilteredDegrees();
+	Set<Degree> degrees = TeacherDepartmentDegreesProvider.getDegrees(this);
 	if (!checkDegreeMatchesTeacher(getDegree())) {
 	    setDegree(degrees.iterator().next());
 	}
     }
 
     protected boolean checkDegreeMatchesTeacher(Degree degree) {
-	return ((degree != null) && (getFilteredDegrees().contains(degree)));
+	return ((degree != null) && (TeacherDepartmentDegreesProvider.getDegrees(this).contains(degree)));
     }
 
     public Degree getDegree() {
@@ -151,15 +150,6 @@ public class StudentsPerformanceInfoBean implements Serializable {
 	    return;
 	}
 	this.currentMonitoringYear = currentMonitoringYear;
-    }
-
-    private Set<Degree> getFilteredDegrees() {
-	Set<Degree> degrees = new HashSet<Degree>();
-	for (Tutorship tutorship : getTutorships()) {
-	    StudentCurricularPlan studentCurricularPlan = tutorship.getStudentCurricularPlan();
-	    degrees.add(studentCurricularPlan.getRegistration().getDegree());
-	}
-	return degrees;
     }
 
     public void setStudentsEntryYearFromList(List<ExecutionYear> studentsEntryYears) {

@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.providers.teacher;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsPerformanceInfoBean;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -15,15 +15,18 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 public class TeacherDepartmentDegreesProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-	Set<Degree> degrees = new HashSet<Degree>();
+	return getDegrees((StudentsPerformanceInfoBean) source);
+    }
 
-	StudentsPerformanceInfoBean bean = (StudentsPerformanceInfoBean) source;
+    static public Set<Degree> getDegrees(StudentsPerformanceInfoBean bean) {
+	Set<Degree> degrees = new TreeSet<Degree>(Collections.reverseOrder(Degree.COMPARATOR_BY_FIRST_ENROLMENTS_PERIOD_AND_ID));
+
 	List<Tutorship> tutorships = bean.getTutorships();
 
 	for (Tutorship tutorship : tutorships) {
 	    degrees.add(tutorship.getStudentCurricularPlan().getRegistration().getDegree());
 	}
-	return new ArrayList<Degree>(degrees);
+	return degrees;
     }
 
     public Converter getConverter() {
