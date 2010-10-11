@@ -3,10 +3,12 @@ package net.sourceforge.fenixedu.domain.inquiries;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.Collator;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -17,6 +19,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesTeachingResult;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.lang.StringUtils;
@@ -811,10 +814,14 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
 		}
 	    }
 	}
-	for (Professorship professorship : professorships) {
-	    for (StudentInquiriesTeachingResult teachingResult : professorship.getStudentInquiriesTeachingResults()) {
-		teachingResult.resetValues();
+	List<StudentInquiriesTeachingResult> toDelete = new ArrayList<StudentInquiriesTeachingResult>();
+	for(Professorship professorship : professorships) {
+	    for(StudentInquiriesTeachingResult teachingResult : professorship.getStudentInquiriesTeachingResults()) {
+		toDelete.add(teachingResult);		
 	    }
+	}
+	for(StudentInquiriesTeachingResult teachingResult : toDelete) {
+	    teachingResult.delete();
 	}
 	return resetedItems;
     }
