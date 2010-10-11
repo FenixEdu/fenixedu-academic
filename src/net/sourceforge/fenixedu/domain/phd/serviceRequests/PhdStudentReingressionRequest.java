@@ -10,6 +10,10 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState;
 import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
+
+import org.joda.time.DateTime;
 
 public class PhdStudentReingressionRequest extends PhdStudentReingressionRequest_Base {
 
@@ -101,8 +105,15 @@ public class PhdStudentReingressionRequest extends PhdStudentReingressionRequest
 				    .getString("message.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdStudentReingressionRequest.conclusion.remark"),
 			    getServiceRequestNumberYear());
 
-	    process.addStates(new PhdProgramProcessState(getPhdIndividualProgramProcess(), lastActiveState.getType(),
-		    getEmployee().getPerson(), remarks));
+	    process.createState(lastActiveState.getType(), getEmployee().getPerson(), remarks);
+
+	    if (process.hasRegistration() && !process.getRegistration().isActive()) {
+		RegistrationState registrationLastActiveState = process.getRegistration().getLastActiveState();
+
+		RegistrationStateCreator.createState(process.getRegistration(), getEmployee().getPerson(), new DateTime(),
+			registrationLastActiveState.getStateType());
+	    }
+
 	}
     }
 }

@@ -91,8 +91,8 @@ import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.RegistrationConclusionProcess;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
@@ -3621,46 +3621,46 @@ public class Registration extends Registration_Base {
     }
 
     public boolean isSeniorStatuteApplicable(ExecutionYear executionYear) {
-	
-	if(hasAlreadySeniorStatute(executionYear))
+
+	if (hasAlreadySeniorStatute(executionYear))
 	    return false;
 
-	if(hasBeenSeniorForTheLastTwoConsecutiveYears(executionYear))
+	if (hasBeenSeniorForTheLastTwoConsecutiveYears(executionYear))
 	    return false;
 
 	return getDegreeType().hasSeniorEligibility(this, executionYear);
     }
-    
+
     private boolean hasAlreadySeniorStatute(ExecutionYear executionYear) {
-	for(SeniorStatute seniorStatute : getSeniorStatuteSet()) {
-	    if(seniorStatute.isValidOnAnyExecutionPeriodFor(executionYear))
+	for (SeniorStatute seniorStatute : getSeniorStatuteSet()) {
+	    if (seniorStatute.isValidOnAnyExecutionPeriodFor(executionYear))
 		return true;
 	}
 	return false;
     }
-    
+
     private boolean hasBeenSeniorForTheLastTwoConsecutiveYears(ExecutionYear executionYear) {
-	if(!isSeniorLastYear(executionYear))
+	if (!isSeniorLastYear(executionYear))
 	    return false;
-	if(!isSeniorTwoYearsAgo(executionYear))
+	if (!isSeniorTwoYearsAgo(executionYear))
 	    return false;
-	
+
 	return true;
     }
-    
+
     private boolean isSeniorLastYear(ExecutionYear executionYear) {
-	for(SeniorStatute seniorStatute : getSeniorStatuteSet()) {
-	    if(seniorStatute.isValidOnAnyExecutionPeriodFor(executionYear.getPreviousExecutionYear()))
+	for (SeniorStatute seniorStatute : getSeniorStatuteSet()) {
+	    if (seniorStatute.isValidOnAnyExecutionPeriodFor(executionYear.getPreviousExecutionYear()))
 		return true;
 	}
 	return false;
     }
-    
+
     private boolean isSeniorTwoYearsAgo(ExecutionYear executionYear) {
 	ExecutionYear previousYear = executionYear.getPreviousExecutionYear();
 
-	for(SeniorStatute seniorStatute : getSeniorStatuteSet()) {
-	    if(seniorStatute.isValidOnAnyExecutionPeriodFor(previousYear.getPreviousExecutionYear()))
+	for (SeniorStatute seniorStatute : getSeniorStatuteSet()) {
+	    if (seniorStatute.isValidOnAnyExecutionPeriodFor(previousYear.getPreviousExecutionYear()))
 		return true;
 	}
 	return false;
@@ -3853,7 +3853,8 @@ public class Registration extends Registration_Base {
     }
 
     public int getNumberEnroledCurricularCoursesInCurrentYear() {
-	return getLastStudentCurricularPlan() == null ? 0 : getLastStudentCurricularPlan().countEnrolments(ExecutionYear.readCurrentExecutionYear());
+	return getLastStudentCurricularPlan() == null ? 0 : getLastStudentCurricularPlan().countEnrolments(
+		ExecutionYear.readCurrentExecutionYear());
     }
 
     @Service
@@ -3931,5 +3932,20 @@ public class Registration extends Registration_Base {
 	formatter.format("%s: %d\n", bundle.getString("label.studentNumber"), student.getNumber());
 	formatter.format("%s: %s\n", bundle.getString("label.Student.Person.name"), student.getPerson().getName());
 	formatter.format("%s: %s\n", bundle.getString("label.degree"), getDegree().getPresentationName());
+    }
+
+    public RegistrationState getLastActiveState() {
+	List<RegistrationState> activeStateList = new ArrayList<RegistrationState>();
+
+	CollectionUtils.select(getRegistrationStates(), new Predicate() {
+
+	    @Override
+	    public boolean evaluate(Object arg0) {
+		return ((RegistrationState) arg0).getStateType().isActive();
+	    }
+
+	}, activeStateList);
+
+	return !activeStateList.isEmpty() ? Collections.max(activeStateList, RegistrationState.DATE_COMPARATOR) : null;
     }
 }

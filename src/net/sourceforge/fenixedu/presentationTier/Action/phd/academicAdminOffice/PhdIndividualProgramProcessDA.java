@@ -35,6 +35,9 @@ import net.sourceforge.fenixedu.domain.phd.PhdStudyPlanBean;
 import net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntry;
 import net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntryBean;
 import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.ActivatePhdProgramProcessInCandidacyState;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.ActivatePhdProgramProcessInThesisDiscussionState;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.ActivatePhdProgramProcessInWorkDevelopmentState;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddAssistantGuidingInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddGuidingInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddJobInformation;
@@ -550,6 +553,21 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 
 	    case SUSPENDED:
 		ExecuteProcessActivity.run(getProcess(request), SuspendPhdProgramProcess.class.getSimpleName(), bean);
+		break;
+
+	    case CANDIDACY:
+		ExecuteProcessActivity.run(getProcess(request), ActivatePhdProgramProcessInCandidacyState.class.getSimpleName(),
+			bean);
+		break;
+
+	    case THESIS_DISCUSSION:
+		ExecuteProcessActivity.run(getProcess(request), ActivatePhdProgramProcessInThesisDiscussionState.class
+			.getSimpleName(), bean);
+		break;
+
+	    case WORK_DEVELOPMENT:
+		ExecuteProcessActivity.run(getProcess(request), ActivatePhdProgramProcessInWorkDevelopmentState.class
+			.getSimpleName(), bean);
 		break;
 
 	    default:

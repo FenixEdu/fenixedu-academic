@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.phd;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -53,6 +54,7 @@ import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProc
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
@@ -138,6 +140,10 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	activities.add(new RejectEnrolments());
 
 	activities.add(new EditWhenStartedStudies());
+
+	activities.add(new ActivatePhdProgramProcessInCandidacyState());
+	activities.add(new ActivatePhdProgramProcessInWorkDevelopmentState());
+	activities.add(new ActivatePhdProgramProcessInThesisDiscussionState());
     }
 
     @StartActivity
@@ -956,6 +962,149 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     }
 
+    static public class ActivatePhdProgramProcessInCandidacyState extends PhdActivity {
+
+	@Override
+	protected void processPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    // remove restrictions
+	}
+
+	@Override
+	public void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
+		Object object) {
+	    final PhdIndividualProgramProcessBean bean = (PhdIndividualProgramProcessBean) object;
+
+	    /*
+	     * 1 - Check if there's no registration 2 - Check if last active
+	     * state was candidacy
+	     */
+	    if (process.hasRegistration()) {
+		throw new DomainException("error.PhdIndividualProgramProcess.set.candidacy.state.has.registration");
+	    }
+
+	    if (!process.getLastActiveState().getType().equals(PhdIndividualProgramProcessState.CANDIDACY)) {
+		throw new DomainException(
+			"error.PhdIndividualProgramProcess.set.candidacy.state.previous.active.state.is.not.candidacy");
+	    }
+
+	    process.createState(process.getLastActiveState().getType(), userView.getPerson());
+
+	    return process;
+	}
+    }
+
+    static public class ActivatePhdProgramProcessInWorkDevelopmentState extends PhdActivity {
+	@Override
+	protected void processPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    // remove restrictions
+	}
+
+	@Override
+	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
+		Object object) {
+	    /*
+	     * Check is the last active state was work development state
+	     */
+	    if (!process.getLastActiveState().getType().equals(PhdIndividualProgramProcessState.WORK_DEVELOPMENT)) {
+		throw new DomainException(
+			"error.PhdIndividualProgramProcess.set.work.development.state.previous.active.state.is.not.work.development");
+	    }
+
+	    process.createState(process.getLastActiveState().getType(), userView.getPerson());
+
+	    /*
+	     * If it is associated to a registration we check that is not active
+	     * and try to reactivate it setting the last active state of the
+	     * registration
+	     */
+
+	    if (!process.hasRegistration()) {
+		return process;
+	    }
+
+	    /*
+	     * The registration is concluded so we skip
+	     */
+	    if (process.getRegistration().isConcluded()) {
+		return process;
+	    }
+
+	    if (process.getRegistration().isActive()) {
+		throw new DomainException("error.PhdIndividualProgramProcess.set.work.development.state.registration.is.active");
+	    }
+
+	    RegistrationState registrationLastActiveState = process.getRegistration().getLastActiveState();
+
+	    if (!registrationLastActiveState.isActive()) {
+		throw new DomainException(
+			"error.PhdIndividualProgramProcess.set.work.development.state.registration.last.state.is.not.active");
+	    }
+
+	    RegistrationStateCreator.createState(process.getRegistration(), userView.getPerson(), new DateTime(),
+		    registrationLastActiveState.getStateType());
+
+	    return process;
+	}
+    }
+
+    static public class ActivatePhdProgramProcessInThesisDiscussionState extends PhdActivity {
+	@Override
+	protected void processPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    // remove restrictions
+	}
+
+	@Override
+	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
+		Object object) {
+	    /*
+	     * Check if the last active state was thesis discussion
+	     */
+	    if (process.getLastActiveState().getType().equals(PhdIndividualProgramProcessState.THESIS_DISCUSSION)) {
+		throw new DomainException(
+			"error.PhdIndividualProgramProcess.set.thesis.discussion.state.previous.active.state.is.not.thesis.discussion");
+	    }
+
+	    process.createState(process.getLastActiveState().getType(), userView.getPerson());
+
+	    /*
+	     * If the program is associated to a registration we check if it is
+	     * concluded
+	     */
+
+	    if (!process.hasRegistration()) {
+		return process;
+	    }
+
+	    if (!process.getRegistration().isConcluded()) {
+		throw new DomainException(
+			"error.PhdIndividualProgramProcess.set.thesis.discussion.state.registration.is.not.concluded");
+	    }
+
+	    return process;
+	}
+    }
+
     private PhdIndividualProgramProcess(final PhdProgramCandidacyProcessBean bean, final Person person) {
 	super();
 
@@ -1467,4 +1616,24 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return hasActiveStates() ? Collections.max(getActiveStates(), PhdProcessState.COMPARATOR_BY_DATE) : null;
     }
 
+    public List<PhdIndividualProgramProcessState> getPossibleNextStates() {
+	PhdIndividualProgramProcessState activeState = getActiveState();
+	switch (activeState) {
+	case CANDIDACY:
+	case WORK_DEVELOPMENT:
+	case THESIS_DISCUSSION:
+	    return Arrays.asList(new PhdIndividualProgramProcessState[] { PhdIndividualProgramProcessState.NOT_ADMITTED,
+		    PhdIndividualProgramProcessState.SUSPENDED, PhdIndividualProgramProcessState.FLUNKED,
+		    PhdIndividualProgramProcessState.CANCELLED });
+	case NOT_ADMITTED:
+	case SUSPENDED:
+	case FLUNKED:
+	case CANCELLED:
+	    return Arrays.asList(new PhdIndividualProgramProcessState[] { getLastActiveState().getType() });
+	case CONCLUDED:
+	    return Collections.emptyList();
+	default:
+	    throw new DomainException("error.PhdIndividualProgramProcess.unknown.process.state.types");
+	}
+    }
 }

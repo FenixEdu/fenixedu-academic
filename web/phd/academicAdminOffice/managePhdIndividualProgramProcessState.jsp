@@ -43,24 +43,37 @@
 </fr:view>
 <%--  ### End Of Context Information  ### --%>
 
+
+<%-- ### List of Process States ### --%>
+<strong><bean:message key="label.phd.states" bundle="PHD_RESOURCES" /></strong>
+<fr:view name="process" property="states">
+	<fr:schema type="net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState" bundle="PHD_RESOURCES" >
+		<fr:slot name="whenCreated" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState.whenCreated" />
+		<fr:slot name="type.localizedName" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState.type" />
+		<fr:slot name="remarks" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState.remarks" />
+	</fr:schema>
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle2 thlight mtop15" />
+		<fr:property name="sortBy" value="whenCreated=desc" />
+	</fr:layout>
+</fr:view>
+
+<%-- ### End of List of Process States ### --%>
+
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 <p class="mtop15 mbottom05"><strong><bean:message  key="label.phd.modify.state" bundle="PHD_RESOURCES"/></strong></p>
 <fr:form action="/phdIndividualProgramProcess.do">
 
 	<input type="hidden" name="method" value="" />
 	<input type="hidden" name="processId" value="<%=processId.toString()%>" />
-	
-	<fr:edit id="processBean" name="processBean">
-
+	<fr:edit id="processBean" name="processBean" schema="PhdIndividualProgramProcess.modify.state">
 		<fr:schema type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean" bundle="PHD_RESOURCES">
-			<fr:slot name="processState" required="true">
-		        <fr:property name="includedValues" value="NOT_ADMITTED,CANCELLED,SUSPENDED,FLUNKED" /> 
-				<fr:property name="defaultText" value="dropDown.Default" />
-				<fr:property name="bundle" value="PHD_RESOURCES" />
-				<fr:property name="key" value="true" />
+			<fr:slot name="processState" required="true" layout="menu-select" >
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.providers.PhdIndividualProgramProcessStateProvider" />
+				<fr:property name="format" value="${localizedName}" />
 			</fr:slot>
 		</fr:schema>
-		
+	
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 			<fr:property name="columnClasses" value=",,tdclear tderror1" />

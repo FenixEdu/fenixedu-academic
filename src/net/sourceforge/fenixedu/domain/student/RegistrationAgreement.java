@@ -40,14 +40,14 @@ public enum RegistrationAgreement {
     SMILE(false, false),
 
     ANGOLA_TELECOM(false, true),
-    
+
     ERASMUS_MUNDUS(false, false),
-    
+
     ALMEIDA_GARRETT(false, false),
-    
+
     INOV_IST(false, false),
-    
-    TECMIC(false, false);
+
+    TECMIC(false, false), IST_UCP(false, false), CLUSTER(false, false);
 
     private boolean enrolmentByStudentAllowed;
 
@@ -109,7 +109,7 @@ public enum RegistrationAgreement {
     public String getQualifiedName() {
 	return getClass().getSimpleName() + "." + name();
     }
-    
+
     public String getDescription() {
 	return getDescription(Language.getLocale());
     }
