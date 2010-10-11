@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.TutorateBe
 import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.PerformanceGridTableDTO;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsPerformanceInfoBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.TutorshipSummary;
@@ -52,7 +51,7 @@ public class StudentTutorshipDA extends StudentsPerformanceGridDispatchAction {
 	    student = Student.readStudentByNumber(tutorateBean.getPersonNumber());
 	} else {
 	    performanceBean = (StudentsPerformanceInfoBean) getRenderedObject("performanceGridFiltersBean");
-	    student = performanceBean.getPerson().getStudent();
+	    student = performanceBean.getStudent();
 
 	    tutorateBean = new TutorateBean();
 	    tutorateBean.setPersonNumber(student.getNumber());
@@ -60,7 +59,7 @@ public class StudentTutorshipDA extends StudentsPerformanceGridDispatchAction {
 	}
 	if (student != null) {
 	    List<Tutorship> tutorships = student.getActiveTutorships();
-	    performanceBean = getOrCreateStudentsPerformanceBean(request, student.getPerson());
+	    performanceBean = getOrCreateStudentsPerformanceBean(request, student);
 	    if (tutorships.size() > 0) {
 
 		PerformanceGridTableDTO performanceGridTable = createPerformanceGridTable(request, tutorships, performanceBean
@@ -102,17 +101,15 @@ public class StudentTutorshipDA extends StudentsPerformanceGridDispatchAction {
 	return mapping.findForward("showStudentPerformanceGrid");
     }
 
-    protected StudentsPerformanceInfoBean getOrCreateStudentsPerformanceBean(HttpServletRequest request, Person person) {
+    protected StudentsPerformanceInfoBean getOrCreateStudentsPerformanceBean(HttpServletRequest request, Student student) {
 	StudentsPerformanceInfoBean bean = (StudentsPerformanceInfoBean) getRenderedObject("performanceGridFiltersBean");
-	if ((bean != null) && (bean.getPerson() == person)) {
+	if (bean != null) {
 	    request.setAttribute("performanceGridFiltersBean", bean);
 	    return bean;
 	}
 
 	bean = new StudentsPerformanceInfoBean();
-	bean.setPerson(person);
-	bean.setStudentsEntryYear(person.getStudent().getFirstRegistrationExecutionYear());
-	bean.setCurrentMonitoringYear(ExecutionYear.readCurrentExecutionYear());
+	bean.setStudent(student);
 	request.setAttribute("performanceGridFiltersBean", bean);
 	return bean;
     }

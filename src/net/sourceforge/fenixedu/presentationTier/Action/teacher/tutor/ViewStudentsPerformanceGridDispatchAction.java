@@ -2,16 +2,13 @@ package net.sourceforge.fenixedu.presentationTier.Action.teacher.tutor;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.PerformanceGridTableDTO;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsPerformanceInfoBean;
-import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -40,7 +37,7 @@ public class ViewStudentsPerformanceGridDispatchAction extends StudentsPerforman
 
     protected void generateStudentsPerformanceBean(HttpServletRequest request, Person person) {
 	StudentsPerformanceInfoBean bean = (StudentsPerformanceInfoBean) getRenderedObject("performanceGridFiltersBean");
-	if ((bean != null) && (bean.getPerson() == person)) {
+	if ((bean != null) && (bean.getTeacher() == person.getTeacher())) {
 	    request.setAttribute("performanceGridFiltersBean", bean);
 	    return;
 	}
@@ -49,10 +46,7 @@ public class ViewStudentsPerformanceGridDispatchAction extends StudentsPerforman
 	    return;
 	}
 
-	bean = StudentsPerformanceInfoBean.create(person);
-	bean.setDegree(getFilteredDegree(bean));
-	bean.setStudentsEntryYear(TutorshipEntryExecutionYearProvider.getExecutionYears(bean).get(0));
-	bean.setCurrentMonitoringYear(TutorshipMonitoringExecutionYearProvider.getExecutionYears(bean).get(0));
+	bean = StudentsPerformanceInfoBean.create(person.getTeacher());
 	request.setAttribute("performanceGridFiltersBean", bean);
     }
 
@@ -68,7 +62,7 @@ public class ViewStudentsPerformanceGridDispatchAction extends StudentsPerforman
     }
 
     protected StudentsPerformanceInfoBean generateStudentsPerformanceBeanFromRequest(HttpServletRequest request, Person person) {
-	StudentsPerformanceInfoBean bean = StudentsPerformanceInfoBean.create(person);
+	StudentsPerformanceInfoBean bean = StudentsPerformanceInfoBean.create(person.getTeacher());
 	bean.setDegree(rootDomainObject.readDegreeByOID(getIntegerFromRequest(request, "degreeOID")));
 	bean.setStudentsEntryYear(rootDomainObject.readExecutionYearByOID(getIntegerFromRequest(request, "entryYearOID")));
 	bean.setCurrentMonitoringYear(rootDomainObject
@@ -130,14 +124,5 @@ public class ViewStudentsPerformanceGridDispatchAction extends StudentsPerforman
 	    request.setAttribute("totalEntryStudents", students.size());
 	}
 	return prepareStudentsPerformanceGrid(mapping, actionForm, request, response, getLoggedPerson(request));
-    }
-
-    private Degree getFilteredDegree(StudentsPerformanceInfoBean bean) {
-	Set<Degree> degrees = new HashSet<Degree>();
-	for (Tutorship tutorship : bean.getTutorships()) {
-	    StudentCurricularPlan studentCurricularPlan = tutorship.getStudentCurricularPlan();
-	    degrees.add(studentCurricularPlan.getRegistration().getDegree());
-	}
-	return degrees.iterator().next();
     }
 }
