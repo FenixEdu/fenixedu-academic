@@ -242,8 +242,7 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 	for (Degree degree : Degree.readNotEmptyDegrees()) {
 	    final DegreeType degreeType = degree.getDegreeType();
 	    if (degreeType.getAdministrativeOfficeType().equals(this.getAdministrativeOfficeType())
-		    && !degreeType.equals(DegreeType.MASTER_DEGREE)
-		    && !degreeType.equals(DegreeType.BOLONHA_SPECIALIZATION_DEGREE)) {
+		    && !degreeType.equals(DegreeType.MASTER_DEGREE)) {
 		result.add(degree);
 	    }
 	}
