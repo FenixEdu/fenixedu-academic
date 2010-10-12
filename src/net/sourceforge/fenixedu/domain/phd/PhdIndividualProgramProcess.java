@@ -1255,6 +1255,11 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	setQualificationExamsRequired(bean.getQualificationExamsRequiredBooleanValue());
 	setQualificationExamsPerformed(bean.getQualificationExamsPerformedBooleanValue());
 
+	if (isRegistrationFormalized()) {
+	    getCandidacyProcess().setWhenRatified(bean.getWhenRatified());
+	    setWhenFormalizedRegistration(bean.getWhenFormalizedRegistration());
+	}
+
 	return this;
     }
 
@@ -1306,7 +1311,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	final Set<PhdIndividualProgramProcess> processesToSearch = new HashSet<PhdIndividualProgramProcess>();
 	for (final PhdIndividualProgramProcessNumber phdIndividualProgramProcessNumber : RootDomainObject.getInstance()
 		.getPhdIndividualProcessNumbers()) {
-	    if (year == null || phdIndividualProgramProcessNumber.belongsTo(year)) {
+	    if (year == null || phdIndividualProgramProcessNumber.belongsTo(year)
+		    || phdIndividualProgramProcessNumber.getProcess().getExecutionYear().equals(year)) {
 		processesToSearch.add(phdIndividualProgramProcessNumber.getProcess());
 	    }
 	}

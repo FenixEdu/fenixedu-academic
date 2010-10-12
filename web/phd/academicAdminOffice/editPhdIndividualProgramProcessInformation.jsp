@@ -52,7 +52,45 @@
 			<fr:destination name="editDetailsPostback" path="<%= "/phdIndividualProgramProcess.do?method=editPhdIndividualProgramProcessInformationPostback&amp;processId=" + processId %>" />
 			<fr:destination name="cancel" path="<%= "/phdIndividualProgramProcess.do?method=viewProcess&amp;processId=" + processId %>" />
 		</fr:edit>
+		
+		<logic:equal name="phdIndividualProgramProcessBean" property="individualProgramProcess.registrationFormalized" value="true">
 
+			<strong><bean:message key="label.phd.editPhdIndividualProgramProcessInformation.candidacy.details" bundle="PHD_RESOURCES" /></strong>
+			<fr:edit id="phdIndividualProgramProcessBean-candidacy-details" name="phdIndividualProgramProcessBean">
+				<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean">
+					<fr:slot name="whenRatified" required="true" />
+				</fr:schema>
+				<fr:layout name="tabular-editable">
+					<fr:property name="classes" value="tstyle2 thlight mtop15" />
+					<fr:property name="columnClasses" value=",,error0" />
+					<fr:property name="requiredMarkShown" value="true" />
+				</fr:layout>
+
+				<fr:destination name="invalid" path="<%= "/phdIndividualProgramProcess.do?method=editPhdIndividualProgramProcessInformationInvalid&amp;processId=" + processId %>" />
+				<fr:destination name="cancel" path="<%= "/phdIndividualProgramProcess.do?method=viewProcess&amp;processId=" + processId %>" />
+			</fr:edit>
+			
+			<strong><bean:message key="label.phd.editPhdIndividualProgramProcessInformation.phdIndividualProgramProcess.details" bundle="PHD_RESOURCES" /></strong>
+			<fr:edit id="phdIndividualProgramProcessBean-phdIndividualprogramProcess-details" name="phdIndividualProgramProcessBean">
+				<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean">
+					<fr:slot name="whenFormalizedRegistration" required="true" />
+				</fr:schema>
+
+				<fr:layout name="tabular-editable">
+					<fr:property name="classes" value="tstyle2 thlight mtop15" />
+					<fr:property name="columnClasses" value=",,error0" />
+					<fr:property name="requiredMarkShown" value="true" />
+				</fr:layout>
+
+				<fr:destination name="invalid" path="<%= "/phdIndividualProgramProcess.do?method=editPhdIndividualProgramProcessInformationInvalid&amp;processId=" + processId %>" />
+				<fr:destination name="cancel" path="<%= "/phdIndividualProgramProcess.do?method=viewProcess&amp;processId=" + processId %>" />
+			</fr:edit>
+		</logic:equal>
+
+		<logic:equal name="phdIndividualProgramProcessBean" property="individualProgramProcess.registrationFormalized" value="true">
+			
+		</logic:equal>
+		
 		<html:submit onclick="this.form.method.value='editPhdIndividualProgramProcessInformation'"><bean:message key="label.edit" bundle="PHD_RESOURCES" /></html:submit>
 		<html:cancel><bean:message key="label.cancel" bundle="PHD_RESOURCES" /></html:cancel>
 
