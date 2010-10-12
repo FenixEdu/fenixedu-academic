@@ -232,10 +232,10 @@ public class ExemptionsManagementDispatchAction extends AcademicAdminOfficePayme
 	    return mapping.findForward("showForSecondCycleIndividualCandidacyEvent");
 	} else if (event instanceof PhdRegistrationFee) {
 	    return mapping.findForward("showForPhdRegistrationFee");
-	} else if (event instanceof AcademicEvent) {
-	    return mapping.findForward("showForAcademicEvent");
 	} else if (event instanceof PhdEvent) {
 	    return mapping.findForward("showForPhdEvent");
+	} else if (event instanceof AcademicEvent) {
+	    return mapping.findForward("showForAcademicEvent");
 	} else {
 	    throw new UnsupportedOperationException();
 	}
@@ -353,10 +353,9 @@ public class ExemptionsManagementDispatchAction extends AcademicAdminOfficePayme
 	return showExemptions(mapping, form, request, response);
     }
 
-    public ActionForward prepareCreateAcademicEventExemption(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	request.setAttribute("exemptionBean", new AcademicEventExemptionBean(
-		(AcademicEvent) getEvent(request)));
+    public ActionForward prepareCreateAcademicEventExemption(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	request.setAttribute("exemptionBean", new AcademicEventExemptionBean((AcademicEvent) getEvent(request)));
 	return mapping.findForward("createAcademicEventExemption");
     }
 
@@ -366,8 +365,8 @@ public class ExemptionsManagementDispatchAction extends AcademicAdminOfficePayme
 	return mapping.findForward("createAcademicEventExemption");
     }
 
-    public ActionForward createAcademicEventExemption(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward createAcademicEventExemption(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	try {
 	    final AcademicEventExemptionBean bean = (AcademicEventExemptionBean) getRenderedObject("exemptionBean");
