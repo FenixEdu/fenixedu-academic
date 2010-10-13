@@ -105,12 +105,15 @@ public class AttributesManagement {
 	Attribute attr = attributes.get(StorkAttributeType.STORK_BIRTHDATE);
 	String birthDateText = attr != null ? attr.getSemanticValue() : null;
 
-	if (birthDateText == null || !birthDateText.matches("\\d{2}-\\d{2}-\\d{4}")) {
+	if (birthDateText == null || !birthDateText.matches("\\d{8}")) {
 	    return null;
 	}
 
-	String[] compounds = birthDateText.split("-");
-	return new YearMonthDay(Integer.valueOf(compounds[2]), Integer.valueOf(compounds[1]), Integer.valueOf(compounds[0]));
+	Integer day = Integer.valueOf(birthDateText.substring(6, 8));
+	Integer month = Integer.valueOf(birthDateText.substring(4, 6));
+	Integer year = Integer.valueOf(birthDateText.substring(0, 4));
+
+	return new YearMonthDay(day, month, year);
     }
 
     /* NAMES */

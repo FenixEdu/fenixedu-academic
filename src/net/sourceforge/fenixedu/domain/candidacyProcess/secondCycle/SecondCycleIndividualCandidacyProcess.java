@@ -354,17 +354,19 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	@Override
 	protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
 		IUserView userView, Object object) {
-	    createRegistration(process);
+	    final SecondCycleIndividualCandidacyProcessBean bean = (SecondCycleIndividualCandidacyProcessBean) object;
+	    createRegistration(process, bean);
 	    return process;
 	}
 
-	private void createRegistration(final SecondCycleIndividualCandidacyProcess candidacyProcess) {
-	    candidacyProcess.getCandidacy().createRegistration(getDegreeCurricularPlan(candidacyProcess), CycleType.SECOND_CYCLE,
+	private void createRegistration(final SecondCycleIndividualCandidacyProcess candidacyProcess,
+		final SecondCycleIndividualCandidacyProcessBean bean) {
+	    candidacyProcess.getCandidacy().createRegistration(getDegreeCurricularPlan(bean), CycleType.SECOND_CYCLE,
 		    Ingression.CIA2C);
 	}
 
-	private DegreeCurricularPlan getDegreeCurricularPlan(final SecondCycleIndividualCandidacyProcess candidacyProcess) {
-	    return candidacyProcess.getCandidacySelectedDegree().getLastActiveDegreeCurricularPlan();
+	private DegreeCurricularPlan getDegreeCurricularPlan(final SecondCycleIndividualCandidacyProcessBean bean) {
+	    return bean.getSelectedDegree().getLastActiveDegreeCurricularPlan();
 	}
     }
 

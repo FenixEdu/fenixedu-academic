@@ -18,8 +18,13 @@
 
 <fr:form action='<%= "/caseHandling" + processName.toString() + ".do?processId=" + processId.toString() %>'>
  	<html:hidden property="method" value="executeCreateRegistration" />
+
+ 	<fr:edit id="individualCandidacyProcessBean"
+ 		name="individualCandidacyProcessBean" 
+		type="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcessBean" 
+		visible="false" />
 	
-	<bean:define id="degreeName" name="degree" property="presentationName" />
+	<bean:define id="degreeName" name="individualCandidacyProcessBean" property="selectedDegree.presentationName" />
 	
 	<strong><bean:message key="label.candidacy.createRegistration.confirm.message" arg0="<%= degreeName.toString() %>" bundle="APPLICATION_RESOURCES" />?</strong>
 	<br/>

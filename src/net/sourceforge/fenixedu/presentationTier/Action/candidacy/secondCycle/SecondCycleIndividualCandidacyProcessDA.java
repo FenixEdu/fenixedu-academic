@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.IndividualCandidacyProcessDA;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
+import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDomainObjectProvider;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -51,7 +52,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "edit-personal-information-for-bind", path = "/candidacy/editPersonalInformationForCandidacyBind.jsp"),
 	@Forward(name = "change-process-checked-state", path = "/candidacy/changeProcessCheckedState.jsp"),
 	@Forward(name = "change-payment-checked-state", path = "/candidacy/changePaymentCheckedState.jsp"),
-	@Forward(name = "reject-candidacy", path = "/candidacy/rejectCandidacy.jsp") })
+	@Forward(name = "reject-candidacy", path = "/candidacy/rejectCandidacy.jsp"),
+	@Forward(name = "choose-degree-for-registration-creation", path = "/candidacy/chooseDegreeForRegistrationCreation.jsp") })
 public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacyProcessDA {
 
     @Override
@@ -252,16 +254,32 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 	return (SecondCycleIndividualCandidacyResultBean) getRenderedObject("secondCycleIndividualCandidacyResultBean");
     }
 
-    public ActionForward prepareExecuteCreateRegistration(ActionMapping mapping, ActionForm actionForm,
+    public ActionForward prepareExecuteCreateRegistration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), new SecondCycleIndividualCandidacyProcessBean(
+		getProcess(request)));
+
+	return mapping.findForward("choose-degree-for-registration-creation");
+    }
+
+    public ActionForward prepareExecuteCreateRegistrationInvalid(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+
+	return mapping.findForward("choose-degree-for-registration-creation");
+    }
+
+    public ActionForward continueExecuteCreateRegistration(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	request.setAttribute("degree", getProcess(request).getCandidacySelectedDegree());
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+
 	return mapping.findForward("create-registration");
     }
 
     public ActionForward executeCreateRegistration(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	try {
-	    executeActivity(getProcess(request), "CreateRegistration");
+	    executeActivity(getProcess(request), "CreateRegistration", getIndividualCandidacyProcessBean());
 	} catch (final DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
 	    request.setAttribute("degree", getProcess(request).getCandidacySelectedDegree());
@@ -358,6 +376,14 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 	}
 
 	return null;
+    }
+
+    public static class SelectedDegreesForRegistrationCreationProvider extends AbstractDomainObjectProvider {
+
+	@Override
+	public Object provide(Object source, Object currentValue) {
+	    return ((SecondCycleIndividualCandidacyProcessBean) source).getSelectedDegreeList();
+	}
 
     }
 }
