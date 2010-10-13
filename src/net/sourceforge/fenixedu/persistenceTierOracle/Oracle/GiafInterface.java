@@ -76,6 +76,7 @@ public class GiafInterface {
 	    stringBuilder
 		    .append("from sldempvenc a,sldempvenc b where b.emp_venc_dt > a.emp_venc_dt and a.emp_num = b.emp_num and nvl(a.tipo_alt,'@') != 'A' ");
 	    // and nvl(b.tipo_alt,'@') != 'A'
+	    stringBuilder.append("and nvl(b.tipo_alt,'@') != 'A'");
 	    stringBuilder
 		    .append("group by a.emp_num, a.emp_venc, a.emp_venc_dt union SELECT c.emp_num, c.emp_venc, c.emp_venc_dt, sysdate FROM sldemp04 c )where to_date('");
 	    stringBuilder.append(fmt.print(day));
@@ -133,8 +134,7 @@ public class GiafInterface {
 	    int paymentYear = extraWorkRequest.getHoursDoneInPartialDate().get(DateTimeFieldType.year());
 	    int paymentMonth = extraWorkRequest.getHoursDoneInPartialDate().get(DateTimeFieldType.monthOfYear());
 	    if (yearMonthPayingDate.getYear().equals(year) && yearMonthPayingDate.getNumberOfMonth() == month) {
-		query
-			.append("SELECT a.mov_cod, a.sal_val_brt, a.emp_ccusto FROM sldsalario a where extract(year from data_mov)=");
+		query.append("SELECT a.mov_cod, a.sal_val_brt, a.emp_ccusto FROM sldsalario a where extract(year from data_mov)=");
 		query.append(paymentYear);
 		query.append(" and extract(month from data_mov)=");
 		query.append(paymentMonth);
@@ -160,8 +160,8 @@ public class GiafInterface {
 	    query.append(") and a.emp_num =");
 	    query.append(extraWorkRequest.getAssiduousness().getEmployee().getEmployeeNumber());
 
-	    boolean hasMoreThanOneCostCenter = hasMoreThanOneCostCenter(extraWorkRequest.getAssiduousness(), extraWorkRequest
-		    .getPartialPayingDate());
+	    boolean hasMoreThanOneCostCenter = hasMoreThanOneCostCenter(extraWorkRequest.getAssiduousness(),
+		    extraWorkRequest.getPartialPayingDate());
 	    if (hasMoreThanOneCostCenter) {
 		query.append(" and emp_ccusto =");
 		query.append(extraWorkRequest.getUnit().getCostCenterCode());
@@ -367,8 +367,8 @@ public class GiafInterface {
 			    + lineTokens[line].trim());
 		    cs.close();
 		    persistentSuportOracle.cancelTransaction();
-		    throw new InvalidGiafCodeException("errors.exportToGiafException", new Integer(line + 1).toString(), cs
-			    .getString(13), lineTokens[line].trim());
+		    throw new InvalidGiafCodeException("errors.exportToGiafException", new Integer(line + 1).toString(),
+			    cs.getString(13), lineTokens[line].trim());
 		}
 	    } finally {
 		if (cs != null) {
@@ -413,8 +413,8 @@ public class GiafInterface {
 			    + lineTokens[line].trim());
 		    cs.close();
 		    persistentSuportOracle.cancelTransaction();
-		    throw new InvalidGiafCodeException("errors.exportToGiafException", new Integer(line + 1).toString(), cs
-			    .getString(6), lineTokens[line].trim());
+		    throw new InvalidGiafCodeException("errors.exportToGiafException", new Integer(line + 1).toString(),
+			    cs.getString(6), lineTokens[line].trim());
 		}
 	    } finally {
 		if (cs != null) {
