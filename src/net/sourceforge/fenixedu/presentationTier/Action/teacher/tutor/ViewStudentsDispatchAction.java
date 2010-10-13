@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.teacher.tutor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsPerformanceInfoBean.StudentsPerformanceInfoNullEntryYearBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TutorshipLog;
@@ -33,8 +34,18 @@ public class ViewStudentsDispatchAction extends ViewStudentsByTutorDispatchActio
 
 	getTutorships(request, teacher);
 
+	request.setAttribute("performanceBean", getOrCreateBean(teacher));
 	request.setAttribute("tutor", person);
 	return mapping.findForward("viewStudentsByTutor");
+    }
+
+    public StudentsPerformanceInfoNullEntryYearBean getOrCreateBean(Teacher teacher) {
+	StudentsPerformanceInfoNullEntryYearBean performanceBean = (StudentsPerformanceInfoNullEntryYearBean) getRenderedObject("performanceBean");
+	if (performanceBean == null) {
+	    performanceBean = StudentsPerformanceInfoNullEntryYearBean.create(teacher);
+	}
+
+	return performanceBean;
     }
 
     public ActionForward editStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

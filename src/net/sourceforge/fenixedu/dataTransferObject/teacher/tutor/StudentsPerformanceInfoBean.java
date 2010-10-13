@@ -13,16 +13,49 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.teacher.TeacherDepartmentDegreesProvider;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.teacher.TutorshipEntryExecutionYearProvider;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.teacher.TutorshipMonitoringExecutionYearProvider;
+import net.sourceforge.fenixedu.presentationTier.renderers.providers.teacher.TutorshipEntryExecutionYearProvider.TutorshipEntryExecutionYearProviderByTeacher;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.teacher.TutorshipEntryExecutionYearProvider.TutorshipEntryExecutionYearProviderForSingleStudent;
 
 public class StudentsPerformanceInfoBean implements Serializable {
-    private Teacher teacher;
-    private Student student;
-    private Degree degree;
-    private ExecutionYear studentsEntryYear;
-    private ExecutionYear currentMonitoringYear;
-    private Integer degreeCurricularPeriod = 5; // default
-    private boolean activeTutorships;
+    private static final long serialVersionUID = 1L;
+
+    public static class StudentsPerformanceInfoNullEntryYearBean extends StudentsPerformanceInfoBean {
+	private static final long serialVersionUID = 1L;
+
+	public static StudentsPerformanceInfoNullEntryYearBean create(Teacher teacher) {
+	    StudentsPerformanceInfoNullEntryYearBean bean = new StudentsPerformanceInfoNullEntryYearBean();
+	    bean.setTeacher(teacher);
+	    bean.setStudentsEntryYear(null);
+	    return bean;
+	}
+
+	@Override
+	public void setTeacher(Teacher teacher) {
+	    this.teacher = teacher;
+	}
+
+	@Override
+	public void setStudentsEntryYear(ExecutionYear studentsEntryYear) {
+	    if (!checkStudentsEntryYearMatchesTeacher(studentsEntryYear)) {
+		return;
+	    }
+	    this.studentsEntryYear = studentsEntryYear;
+	}
+
+	protected boolean checkStudentsEntryYearMatchesTeacher(ExecutionYear studentsEntryYear) {
+	    List<ExecutionYear> entryYears = TutorshipEntryExecutionYearProviderByTeacher.getExecutionYears(this);
+	    return ((studentsEntryYear == null) || entryYears.contains(studentsEntryYear));
+	}
+
+    }
+
+    protected Teacher teacher;
+    protected Student student;
+    protected Degree degree;
+    protected ExecutionYear studentsEntryYear;
+    protected ExecutionYear currentMonitoringYear;
+    protected Integer degreeCurricularPeriod = 5; // default
+    protected boolean activeTutorships;
 
     public StudentsPerformanceInfoBean() {
 	degree = null;

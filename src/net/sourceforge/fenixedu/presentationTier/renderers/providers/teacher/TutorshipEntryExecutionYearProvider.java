@@ -32,6 +32,24 @@ public class TutorshipEntryExecutionYearProvider implements DataProvider {
 	}
     }
 
+    public static class TutorshipEntryExecutionYearProviderByTeacher extends TutorshipEntryExecutionYearProvider {
+
+	@Override
+	public Object provide(Object source, Object currentValue) {
+	    StudentsPerformanceInfoBean bean = (StudentsPerformanceInfoBean) source;
+	    return getExecutionYears(bean);
+	}
+
+	public static List<ExecutionYear> getExecutionYears(StudentsPerformanceInfoBean bean) {
+	    Set<ExecutionYear> executionYears = new TreeSet<ExecutionYear>(ExecutionYear.REVERSE_COMPARATOR_BY_YEAR);
+	    for (Tutorship tutor : bean.getTutorships()) {
+		executionYears.add(ExecutionYear.getExecutionYearByDate(tutor.getStudentCurricularPlan().getRegistration()
+			.getStartDate()));
+	    }
+	    return new ArrayList<ExecutionYear>(executionYears);
+	}
+    }
+
     public Object provide(Object source, Object currentValue) {
 	StudentsPerformanceInfoBean bean = (StudentsPerformanceInfoBean) source;
 	return getExecutionYears(bean);
