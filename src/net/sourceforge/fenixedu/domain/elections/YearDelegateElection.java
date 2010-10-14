@@ -167,7 +167,8 @@ public class YearDelegateElection extends YearDelegateElection_Base {
 	    if (delegateElection instanceof YearDelegateElection) {
 		if (delegateElection.getDegree().equals(election.getDegree())
 			&& delegateElection.getExecutionYear().equals(election.getExecutionYear())
-			&& !delegateElection.getLastVotingPeriod().isPastPeriod()) {
+			&& (delegateElection.getLastVotingPeriod() != null && !delegateElection.getLastVotingPeriod()
+				.isPastPeriod())) {
 		    return true;
 		}
 	    }
