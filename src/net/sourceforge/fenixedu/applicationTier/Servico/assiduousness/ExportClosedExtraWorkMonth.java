@@ -104,10 +104,10 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 	emptyCodes.add("0");
 	emptyCodes.add("000");
 
-	LocalDate beginDate = new LocalDate().withField(DateTimeFieldType.year(),
-		closedMonth.getClosedYearMonth().get(DateTimeFieldType.year())).withField(DateTimeFieldType.monthOfYear(),
-		closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear())).withField(DateTimeFieldType.dayOfMonth(),
-		1);
+	LocalDate beginDate = new LocalDate()
+		.withField(DateTimeFieldType.year(), closedMonth.getClosedYearMonth().get(DateTimeFieldType.year()))
+		.withField(DateTimeFieldType.monthOfYear(), closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear()))
+		.withField(DateTimeFieldType.dayOfMonth(), 1);
 	LocalDate endDate = beginDate.withField(DateTimeFieldType.dayOfMonth(), beginDate.dayOfMonth().getMaximumValue());
 	LocalDate beginProcessingMonthDate = beginDate.plusMonths(1);
 	LocalDate endProcessingMonthDate = beginProcessingMonthDate.withField(DateTimeFieldType.dayOfMonth(),
@@ -137,8 +137,8 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 	for (AssiduousnessClosedMonth assiduousnessClosedMonth : closedMonth.getAssiduousnessClosedMonths()) {
 	    state.unjustifiedDays = new ArrayList<LocalDate>();
 	    if (getWorkAbsences) {
-		String lineResult = getAssiduousnessMonthBalance(assiduousnessClosedMonth, allLeaves.get(assiduousnessClosedMonth
-			.getAssiduousnessStatusHistory().getAssiduousness()), state);
+		String lineResult = getAssiduousnessMonthBalance(assiduousnessClosedMonth,
+			allLeaves.get(assiduousnessClosedMonth.getAssiduousnessStatusHistory().getAssiduousness()), state);
 
 		result.append(lineResult);
 		List<LeaveBean> leaveBeanList = allProcessingMonthLeaves.get(assiduousnessClosedMonth
@@ -228,8 +228,8 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 		    result.append(getExtraWorkMovement(assiduousnessClosedMonth.getAssiduousnessStatusHistory()
 			    .getAssiduousness(), assiduousnessClosedMonth.getBeginDate().plusMonths(1).getYear(),
 			    assiduousnessClosedMonth.getBeginDate().plusMonths(1).getMonthOfYear(), begin, end,
-			    extraWorkVacationDaysMovementCode, extraWorkRequest.getNightVacationsDays()
-				    + extraWorkRequest.getNormalVacationsDays()));
+			    extraWorkVacationDaysMovementCode,
+			    extraWorkRequest.getNightVacationsDays() + extraWorkRequest.getNormalVacationsDays()));
 		}
 		if (extraWorkRequest.getSaturdayHours() != null && extraWorkRequest.getSaturdayHours() != 0.0) {
 		    result.append(getExtraWorkMovement(assiduousnessClosedMonth.getAssiduousnessStatusHistory()
@@ -296,15 +296,15 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 	    Collections.sort(leavesBeans, LeaveBean.COMPARATOR_BY_DATE);
 	    for (LeaveBean leaveBean : leavesBeans) {
 		if (leaveBean.getLeave().getJustificationMotive().getJustificationType().equals(JustificationType.OCCURRENCE)
-			|| leaveBean.getLeave().getJustificationMotive().getJustificationType().equals(
-				JustificationType.MULTIPLE_MONTH_BALANCE)) {
+			|| leaveBean.getLeave().getJustificationMotive().getJustificationType()
+				.equals(JustificationType.MULTIPLE_MONTH_BALANCE)) {
 		    result.append(getLeaveLine(assiduousnessClosedMonth, leaveBean, state));
-		} else if (leaveBean.getLeave().getJustificationMotive().getJustificationType().equals(
-			JustificationType.HALF_OCCURRENCE_TIME)
-			|| leaveBean.getLeave().getJustificationMotive().getJustificationType().equals(
-				JustificationType.HALF_OCCURRENCE)
-			|| leaveBean.getLeave().getJustificationMotive().getJustificationType().equals(
-				JustificationType.HALF_MULTIPLE_MONTH_BALANCE)
+		} else if (leaveBean.getLeave().getJustificationMotive().getJustificationType()
+			.equals(JustificationType.HALF_OCCURRENCE_TIME)
+			|| leaveBean.getLeave().getJustificationMotive().getJustificationType()
+				.equals(JustificationType.HALF_OCCURRENCE)
+			|| leaveBean.getLeave().getJustificationMotive().getJustificationType()
+				.equals(JustificationType.HALF_MULTIPLE_MONTH_BALANCE)
 			|| (leaveBean.getLeave().getJustificationMotive().getJustificationType().equals(JustificationType.TIME) && !leaveBean
 				.getLeave().getJustificationMotive().getAccumulate())) {
 		    result.append(getHalfLeaveLine(assiduousnessClosedMonth, leaveBean.getLeave()));
@@ -327,15 +327,13 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 	int unjustifiedToDiscount = assiduousnessClosedMonth.getAccumulatedUnjustifiedDays();
 
 	if (A66ToDiscount != 0) {
-	    result
-		    .append(getLeaveLine(assiduousnessClosedMonth, state.a66JustificationMotive, A66ToDiscount, leavesBeans,
-			    state));
+	    result.append(getLeaveLine(assiduousnessClosedMonth, state.a66JustificationMotive, A66ToDiscount, leavesBeans, state));
 	}
 
 	for (AssiduousnessClosedDay assiduousnessClosedDay : assiduousnessClosedMonth.getAssiduousnessClosedDays()) {
 	    if (assiduousnessClosedDay.getUnjustifiedDay()) {
-		result.append(getLine(assiduousnessClosedMonth, state.unjustifiedJustificationMotive, assiduousnessClosedDay
-			.getDay()));
+		result.append(getLine(assiduousnessClosedMonth, state.unjustifiedJustificationMotive,
+			assiduousnessClosedDay.getDay()));
 		state.unjustifiedDays.add(assiduousnessClosedDay.getDay());
 	    }
 	}
@@ -400,10 +398,10 @@ public class ExportClosedExtraWorkMonth extends FenixService {
     private static boolean existAnyLeaveForThisDay(List<LeaveBean> leavesBeans, LocalDate day) {
 	if (leavesBeans != null) {
 	    for (LeaveBean leaveBean : leavesBeans) {
-		if (leaveBean.getLeave().getJustificationMotive().getJustificationType().equals(
-			JustificationType.MULTIPLE_MONTH_BALANCE)
-			|| leaveBean.getLeave().getJustificationMotive().getJustificationType().equals(
-				JustificationType.OCCURRENCE)) {
+		if (leaveBean.getLeave().getJustificationMotive().getJustificationType()
+			.equals(JustificationType.MULTIPLE_MONTH_BALANCE)
+			|| leaveBean.getLeave().getJustificationMotive().getJustificationType()
+				.equals(JustificationType.OCCURRENCE)) {
 		    if (leaveBean.getLeave().getTotalInterval().contains(day.toDateTimeAtStartOfDay())) {
 			return true;
 		    }
@@ -436,8 +434,8 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 		end = getPreviousWorkingDay(leaveBean.getLeave().getJustificationMotive(), leaveBean.getLeave()
 			.getAssiduousness(), leaveBean.getEndLocalDate(), false);
 	    }
-	    String code = leaveBean.getLeave().getJustificationMotive().getGiafCode(
-		    assiduousnessClosedMonth.getAssiduousnessStatusHistory());
+	    String code = leaveBean.getLeave().getJustificationMotive()
+		    .getGiafCode(assiduousnessClosedMonth.getAssiduousnessStatusHistory());
 
 	    if (!emptyCodes.contains(code)) {
 		if (leaveBean.getLeave().getJustificationMotive() == state.maternityJustificationMotive
@@ -477,8 +475,7 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 	    List<Campus> campus = leave.getAssiduousness().getCampusForInterval(day, day);
 	    WeekDay dayOfWeek = WeekDay.fromJodaTimeToWeekDay(day.toDateTimeAtStartOfDay());
 	    while (((campus.size() != 0 && Holiday.isHoliday(day, campus.get(0))) || (campus.size() == 0 && Holiday
-		    .isHoliday(day)))
-		    || dayOfWeek.equals(WeekDay.SATURDAY) || dayOfWeek.equals(WeekDay.SUNDAY)) {
+		    .isHoliday(day))) || dayOfWeek.equals(WeekDay.SATURDAY) || dayOfWeek.equals(WeekDay.SUNDAY)) {
 		day = day.plusDays(1);
 		dayOfWeek = WeekDay.fromJodaTimeToWeekDay(day.toDateTimeAtStartOfDay());
 	    }
@@ -492,8 +489,7 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 	    List<Campus> campus = assiduousness.getCampusForInterval(day, day);
 	    WeekDay dayOfWeek = WeekDay.fromJodaTimeToWeekDay(day.toDateTimeAtStartOfDay());
 	    while (((campus.size() != 0 && Holiday.isHoliday(day, campus.get(0))) || (campus.size() == 0 && Holiday
-		    .isHoliday(day)))
-		    || dayOfWeek.equals(WeekDay.SATURDAY) || dayOfWeek.equals(WeekDay.SUNDAY)) {
+		    .isHoliday(day))) || dayOfWeek.equals(WeekDay.SATURDAY) || dayOfWeek.equals(WeekDay.SUNDAY)) {
 		day = day.minusDays(1);
 		dayOfWeek = WeekDay.fromJodaTimeToWeekDay(day.toDateTimeAtStartOfDay());
 	    }
@@ -502,19 +498,23 @@ public class ExportClosedExtraWorkMonth extends FenixService {
     }
 
     private static StringBuilder getHalfLeaveLine(AssiduousnessClosedMonth assiduousnessClosedMonth, Leave leave) {
-	String code = leave.getJustificationMotive().getGiafCode(assiduousnessClosedMonth.getAssiduousnessStatusHistory());
 	StringBuilder line = new StringBuilder();
-	if (!emptyCodes.contains(code)) {
-	    LocalDate nextMontDate = assiduousnessClosedMonth.getBeginDate().plusMonths(1);
-	    line.append(nextMontDate.getYear()).append(fieldSeparator);
-	    line.append(monthFormat.format(nextMontDate.getMonthOfYear())).append(fieldSeparator);
-	    line.append(employeeNumberFormat.format(leave.getAssiduousness().getEmployee().getEmployeeNumber())).append(
-		    fieldSeparator);
-	    line.append("F").append(fieldSeparator);
-	    line.append(code).append(fieldSeparator);
-	    line.append(dateFormat.print(leave.getDate().toLocalDate())).append(fieldSeparator);
-	    line.append(dateFormat.print(leave.getDate().toLocalDate())).append(fieldSeparator);
-	    line.append("050").append(fieldSeparator).append("050\r\n");
+	Interval interval = new Interval(assiduousnessClosedMonth.getBeginDate().toDateTimeAtStartOfDay(),
+		assiduousnessClosedMonth.getEndDate().toDateTimeAtStartOfDay().plusDays(1));
+	if (interval.contains(leave.getDate())) {
+	    String code = leave.getJustificationMotive().getGiafCode(assiduousnessClosedMonth.getAssiduousnessStatusHistory());
+	    if (!emptyCodes.contains(code)) {
+		LocalDate nextMontDate = assiduousnessClosedMonth.getBeginDate().plusMonths(1);
+		line.append(nextMontDate.getYear()).append(fieldSeparator);
+		line.append(monthFormat.format(nextMontDate.getMonthOfYear())).append(fieldSeparator);
+		line.append(employeeNumberFormat.format(leave.getAssiduousness().getEmployee().getEmployeeNumber())).append(
+			fieldSeparator);
+		line.append("F").append(fieldSeparator);
+		line.append(code).append(fieldSeparator);
+		line.append(dateFormat.print(leave.getDate().toLocalDate())).append(fieldSeparator);
+		line.append(dateFormat.print(leave.getDate().toLocalDate())).append(fieldSeparator);
+		line.append("050").append(fieldSeparator).append("050\r\n");
+	    }
 	}
 	return line;
     }
