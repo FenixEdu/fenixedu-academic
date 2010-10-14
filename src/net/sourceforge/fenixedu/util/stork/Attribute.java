@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.util.stork;
 
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.StorkAttributeType;
 
+import org.apache.commons.lang.StringUtils;
+
 public class Attribute {
     Integer id;
     StorkAttributeType type;
@@ -55,6 +57,6 @@ public class Attribute {
     }
 
     public boolean isValueAssigned() {
-	return getValue() != null && !"null".equals(getValue());
+	return !StringUtils.isEmpty(getValue()) && !"null".equals(getValue());
     }
 }

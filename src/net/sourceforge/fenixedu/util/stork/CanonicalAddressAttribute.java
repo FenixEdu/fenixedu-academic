@@ -25,7 +25,9 @@ public class CanonicalAddressAttribute extends Attribute {
     public CanonicalAddressAttribute(Integer id, StorkAttributeType type, Boolean mandatory, String value) {
 	super(id, type, mandatory, value);
 
-	parseAddressCompounds();
+	if (getSemanticValue() != null) {
+	    parseAddressCompounds();
+	}
     }
 
     private void parseAddressCompounds() {

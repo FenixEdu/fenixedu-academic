@@ -709,9 +709,18 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
 	final List<Person> persons = new ArrayList<Person>(Person.readByDocumentIdNumber(personBean.getDocumentIdNumber()));
 
-	if (persons.size() > 0) {
+	if (persons.size() > 1) {
 	    addActionMessage("individualCandidacyMessages", request, "erasmus.error.person.with.same.identifier.exists");
 	    return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
+
+	} else if (persons.size() == 1) {
+	    Person person = persons.get(0);
+	    if (person.hasStudent() || person.hasEmployee()) {
+		addActionMessage("individualCandidacyMessages", request, "erasmus.error.person.with.same.identifier.exists");
+		return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
+	    }
+
+	    personBean.setPerson(person);
 	}
 
 	IndividualCandidacyDocumentFile photoDocumentFile = createIndividualCandidacyDocumentFile(bean.getPhotoDocument(), bean

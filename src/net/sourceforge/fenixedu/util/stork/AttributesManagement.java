@@ -113,7 +113,7 @@ public class AttributesManagement {
 	Integer month = Integer.valueOf(birthDateText.substring(4, 6));
 	Integer year = Integer.valueOf(birthDateText.substring(0, 4));
 
-	return new YearMonthDay(day, month, year);
+	return new YearMonthDay(year, month, day);
     }
 
     /* NAMES */
@@ -141,8 +141,6 @@ public class AttributesManagement {
     public String getStorkFullname() {
 	String name = getStorkName();
 	String surname = getStorkSurname();
-	String familyName = getStorkFamilyName();
-	String adoptedName = getStorkAdoptedName();
 
 	StringBuilder fullNameBuilder = new StringBuilder();
 
@@ -152,10 +150,6 @@ public class AttributesManagement {
 
 	if (!StringUtils.isEmpty(surname)) {
 	    fullNameBuilder.append(" ").append(surname);
-	} else if (!StringUtils.isEmpty(familyName)) {
-	    fullNameBuilder.append(" ").append(familyName);
-	} else if (!StringUtils.isEmpty(adoptedName)) {
-	    fullNameBuilder.append(" ").append(adoptedName);
 	}
 
 	return fullNameBuilder.toString().trim();
