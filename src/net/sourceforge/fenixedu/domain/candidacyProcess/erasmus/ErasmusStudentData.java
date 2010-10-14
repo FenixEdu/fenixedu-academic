@@ -9,7 +9,8 @@ public class ErasmusStudentData extends ErasmusStudentData_Base {
 	this.setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public ErasmusStudentData(ErasmusIndividualCandidacy erasmusIndividualCandidacy, ErasmusStudentDataBean erasmusStudentDataBean, ErasmusVacancy erasmusVacancy) {
+    public ErasmusStudentData(ErasmusIndividualCandidacy erasmusIndividualCandidacy,
+	    ErasmusStudentDataBean erasmusStudentDataBean, ErasmusVacancy erasmusVacancy) {
 	this.setDateOfArrival(erasmusStudentDataBean.getDateOfArrival());
 	this.setDateOfDeparture(erasmusStudentDataBean.getDateOfDeparture());
 	this.setDiplomaConclusionYear(erasmusStudentDataBean.getDiplomaConclusionYear());
@@ -37,8 +38,13 @@ public class ErasmusStudentData extends ErasmusStudentData_Base {
 	this.setEnAbleToFollowLectureWithExtraPreparation(erasmusStudentDataBean.getEnAbleToFollowLectureWithExtraPreparation());
 	this.setIntensivePortugueseCourseSeptember(erasmusStudentDataBean.getIntensivePortugueseCourseSeptember());
 	this.setIntensivePortugueseCourseFebruary(erasmusStudentDataBean.getIntensivePortugueseCourseFebruary());
-	this.setApplyFor(erasmusStudentDataBean.getApplyFor());
 
+	if (((ErasmusCandidacyProcess) erasmusIndividualCandidacy.getCandidacyProcess().getCandidacyProcess()).getForSemester()
+		.equals(ErasmusApplyForSemesterType.FIRST_SEMESTER)) {
+	    this.setApplyFor(erasmusStudentDataBean.getApplyFor());
+	} else {
+	    this.setApplyFor(ErasmusApplyForSemesterType.SECOND_SEMESTER);
+	}
     }
 
     public void edit(ErasmusStudentDataBean erasmusStudentDataBean) {

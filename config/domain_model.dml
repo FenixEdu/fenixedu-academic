@@ -6710,6 +6710,7 @@ class candidacyProcess.CandidacyProcess extends caseHandling.Process {
     }
     
     class candidacyProcess.erasmus.ErasmusCandidacyProcess extends candidacyProcess.CandidacyProcess {
+    	ErasmusApplyForSemesterType forSemester;
     }
     
     class candidacyProcess.erasmus.ErasmusVacancy extends DomainObject {

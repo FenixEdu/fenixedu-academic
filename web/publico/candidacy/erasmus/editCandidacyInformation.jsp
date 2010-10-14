@@ -7,7 +7,7 @@
 <%@ page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
 <%@page import="org.apache.struts.action.ActionMessages" %>
 <%@ page import="java.util.Locale"%>
-
+<%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusApplyForSemesterType"%>
 
 <%!
 	static String f(String value, Object ... args) {
@@ -100,7 +100,8 @@
 			</fr:layout>
 			<fr:destination name="invalid" path='<%= f("%s.do?method=editCandidacyInformationInvalid", mappingPath) %>'  />
 		</fr:edit>
-
+	
+		<logic:equal name="individualCandidacyProcessBean" property="candidacyProcess.forSemester" value="<%= ErasmusApplyForSemesterType.FIRST_SEMESTER.name() %>">
 		<h2 class="mtop15 mbottom05"><bean:message key="label.erasmus.applyForSemester" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
 		<p><em>Mark the semester's you're going to study at IST</em></p>
 		<fr:edit		id="erasmusStudentDataBean.applyForSemester.edit"
@@ -114,21 +115,42 @@
 			</fr:layout>
 			<fr:destination name="invalid" path='<%= f("%s.do?method=editCandidacyInformationInvalid", mappingPath) %>'  />
 		</fr:edit>
+		</logic:equal>
 
 		<h2 class="mtop15 mbottom05"><bean:message key="title.erasmus.language.competence" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
 		<p><em>Note: The master programmes are given in english</em></p>
 		
 		<p><strong>Do you intent to participate in the intensive Portuguese Language Course</strong></p>
-		<fr:edit	id="erasmusIndividualCandidacyProcessBean.language.intensive.course"
-					name="individualCandidacyProcessBean"
-					property="erasmusStudentDataBean"
-					schema="ErasmusStudentData.languageCompetence.intensive.portuguese.course">
-			<fr:layout name="tabular-editable">
-				<fr:property name="classes" value="tstyle5 thlight thleft mtop05"/>
-		        <fr:property name="columnClasses" value="width225px,,tdclear tderror1"/>
-		        <fr:property name="requiredMarkShown" value="true" />
-			</fr:layout>
-		</fr:edit>
+		<logic:equal name="individualCandidacyProcessBean" property="candidacyProcess.forSemester" value="<%= ErasmusApplyForSemesterType.FIRST_SEMESTER.name() %>">
+			<fr:edit	id="erasmusIndividualCandidacyProcessBean.language.intensive.course"
+						name="individualCandidacyProcessBean"
+						property="erasmusStudentDataBean"
+						schema="ErasmusStudentData.languageCompetence.intensive.portuguese.course">
+				<fr:layout name="tabular-editable">
+					<fr:property name="classes" value="tstyle5 thlight thleft mtop05"/>
+			        <fr:property name="columnClasses" value="width225px,,tdclear tderror1"/>
+			        <fr:property name="requiredMarkShown" value="true" />
+				</fr:layout>
+			</fr:edit>
+		</logic:equal>
+		
+		<logic:equal name="individualCandidacyProcessBean" property="candidacyProcess.forSemester" value="<%= ErasmusApplyForSemesterType.SECOND_SEMESTER.name() %>">
+			<fr:edit	id="erasmusIndividualCandidacyProcessBean.language.intensive.course"
+						name="individualCandidacyProcessBean"
+						property="erasmusStudentDataBean">
+				<fr:schema type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusStudentData" bundle="ACADEMIC_OFFICE_RESOURCES">
+					<fr:slot name="intensivePortugueseCourseFebruary" key="label.erasmus.language.competence.intensivePortugueseCourseFebruary" layout="radio"/>
+				</fr:schema>
+						
+				<fr:layout name="tabular-editable">
+					<fr:property name="classes" value="tstyle5 thlight thleft mtop05 ulnomargin inobullet"/>
+			        <fr:property name="columnClasses" value="width225px,,tdclear tderror1"/>
+			        <fr:property name="requiredMarkShown" value="true" />
+			        <fr:property name="requiredMessageShown" value="false" />
+				</fr:layout>
+			</fr:edit>
+		</logic:equal>
+		
 	
 	<p class="mtop15">	
 		<html:submit><bean:message key="button.submit" bundle="APPLICATION_RESOURCES" /></html:submit>

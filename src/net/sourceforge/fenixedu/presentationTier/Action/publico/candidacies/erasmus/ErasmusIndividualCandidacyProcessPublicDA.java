@@ -198,7 +198,8 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	}
 
 	request.setAttribute("degreeCourseInformationBean", new DegreeCourseInformationBean(
-		(ExecutionYear) getCurrentOpenParentProcess().getCandidacyExecutionInterval()));
+		(ExecutionYear) getCurrentOpenParentProcess().getCandidacyExecutionInterval(), (ErasmusCandidacyProcess) bean
+			.getCandidacyProcess()));
 
 	return mapping.findForward("fill-degree-and-courses-information");
     }
@@ -591,7 +592,8 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 	request.setAttribute("degreeCourseInformationBean", new DegreeCourseInformationBean(
-		(ExecutionYear) getCurrentOpenParentProcess().getCandidacyExecutionInterval()));
+		(ExecutionYear) getCurrentOpenParentProcess().getCandidacyExecutionInterval(),
+		(ErasmusCandidacyProcess) getIndividualCandidacyProcessBean().getCandidacyProcess()));
 
 	return mapping.findForward("edit-candidacy-degree-and-courses");
     }

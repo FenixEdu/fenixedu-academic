@@ -118,7 +118,8 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
 	    HttpServletResponse response) {
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 	request.setAttribute("degreeCourseInformationBean", new DegreeCourseInformationBean(
-		(ExecutionYear) getIndividualCandidacyProcessBean().getCandidacyProcess().getCandidacyExecutionInterval()));
+		(ExecutionYear) getIndividualCandidacyProcessBean().getCandidacyProcess().getCandidacyExecutionInterval(),
+		(ErasmusCandidacyProcess) getIndividualCandidacyProcessBean().getCandidacyProcess()));
 
 	return mapping.findForward("fill-degree-information");
     }
@@ -247,7 +248,7 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
 	    HttpServletRequest request, HttpServletResponse response) {
 	final ErasmusIndividualCandidacyProcessBean bean = new ErasmusIndividualCandidacyProcessBean(getProcess(request));
 	request.setAttribute("degreeCourseInformationBean", new DegreeCourseInformationBean((ExecutionYear) getProcess(request)
-		.getCandidacyProcess().getCandidacyExecutionInterval()));
+		.getCandidacyProcess().getCandidacyExecutionInterval(), (ErasmusCandidacyProcess) bean.getCandidacyProcess()));
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 	return mapping.findForward("edit-degree-courses-information");
     }
