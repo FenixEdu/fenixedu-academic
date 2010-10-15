@@ -55,18 +55,25 @@ public class SendEmailToTutoredStudents extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	RenderUtils.invalidateViewState();
 
 	final Teacher teacher = getTeacher(request);
 
 	if (!teacher.getActiveTutorships().isEmpty()) {
-	    StudentsByTutorBean bean = new StudentsByTutorBean(teacher);
-
-	    request.setAttribute("receiversBean", bean);
+	    request.setAttribute("receiversBean", getOrCreateBean(teacher));
 	}
 
 	request.setAttribute("tutor", teacher.getPerson());
 	return mapping.findForward("chooseReceivers");
+    }
+
+    public StudentsByTutorBean getOrCreateBean(Teacher teacher) {
+	StudentsByTutorBean receiversBean = (StudentsByTutorBean) getRenderedObject("receiversBean");
+	RenderUtils.invalidateViewState();
+	if (receiversBean == null) {
+	    receiversBean = new StudentsByTutorBean(teacher);
+	}
+
+	return receiversBean;
     }
 
     public ActionForward prepareCreateMail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

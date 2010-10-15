@@ -166,6 +166,9 @@
 		<slot name="studentCurricularPlan.registration.number" key="label.coordinator.studentNumber" />
 		<slot name="studentCurricularPlan.registration.person.name" key="label.coordinator.studentName"/>
 		<slot name="studentCurricularPlan.registration.degree.sigla" key="label.degreeCurricularPlan.degree.sigla"/>
+		<slot name="studentCurricularPlan.registration.ingressionYear" key="label.entryYear">
+			<property name="format" value="${year}"/>
+		</slot> 
 		<slot name="studentCurricularPlan.person.email" key="label.email"/>
 </schema>
 

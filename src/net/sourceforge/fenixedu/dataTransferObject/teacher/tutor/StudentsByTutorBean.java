@@ -10,12 +10,11 @@ import net.sourceforge.fenixedu.domain.Tutorship;
 
 public class StudentsByTutorBean implements Serializable {
     private Teacher teacher;
-    private ExecutionYear studentsEntryYear;
-    private List<Tutorship> studentsList;
+    private ExecutionYear studentsEntryYear = null;
+    private List<Tutorship> studentsList = new ArrayList<Tutorship>();
 
     public StudentsByTutorBean(Teacher teacher) {
 	setTeacher(teacher);
-	studentsList = new ArrayList<Tutorship>();
     }
 
     public StudentsByTutorBean(Teacher teacher, ExecutionYear studentsEntryYear, List<Tutorship> studentsList) {
@@ -25,7 +24,7 @@ public class StudentsByTutorBean implements Serializable {
     }
 
     public Teacher getTeacher() {
-	return (teacher);
+	return teacher;
     }
 
     public void setTeacher(Teacher teacher) {
@@ -33,7 +32,7 @@ public class StudentsByTutorBean implements Serializable {
     }
 
     public ExecutionYear getStudentsEntryYear() {
-	return (studentsEntryYear);
+	return studentsEntryYear;
     }
 
     public void setStudentsEntryYear(ExecutionYear studentsEntryYear) {
@@ -42,16 +41,24 @@ public class StudentsByTutorBean implements Serializable {
 
     public List<Tutorship> getStudentsList() {
 	List<Tutorship> students = new ArrayList<Tutorship>();
-	for (Tutorship tutor : this.studentsList) {
-	    students.add(tutor);
-	}
+	students.addAll(studentsList);
 	return students;
     }
 
-    public void setStudentsList(List<Tutorship> students) {
-	this.studentsList = new ArrayList<Tutorship>();
-	for (Tutorship tutor : students) {
-	    this.studentsList.add(tutor);
+    public List<Tutorship> getActiveTutorshipsMatchingEntryYear() {
+	List<Tutorship> matchingTutorships = new ArrayList<Tutorship>();
+	for (Tutorship tutorship : getTeacher().getActiveTutorships()) {
+	    if (getStudentsEntryYear() == null
+		    || (tutorship.getStudentCurricularPlan().getRegistration().getIngressionYear() == getStudentsEntryYear())) {
+		matchingTutorships.add(tutorship);
+	    }
 	}
+
+	return matchingTutorships;
+    }
+
+    public void setStudentsList(List<Tutorship> students) {
+	studentsList = new ArrayList<Tutorship>();
+	studentsList.addAll(students);
     }
 }

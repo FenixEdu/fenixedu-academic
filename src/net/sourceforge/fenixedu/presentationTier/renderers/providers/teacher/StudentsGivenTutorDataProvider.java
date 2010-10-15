@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsByTutorBean;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyArrayConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
@@ -16,9 +15,7 @@ public class StudentsGivenTutorDataProvider implements DataProvider {
     public Object provide(Object source, Object currentValue) {
 	StudentsByTutorBean bean = (StudentsByTutorBean) source;
 
-	final Teacher teacher = bean.getTeacher();
-
-	List<Tutorship> tutorships = new ArrayList<Tutorship>(teacher.getActiveTutorships());
+	List<Tutorship> tutorships = new ArrayList<Tutorship>(bean.getActiveTutorshipsMatchingEntryYear());
 	Collections.sort(tutorships, Tutorship.TUTORSHIP_COMPARATOR_BY_STUDENT_NUMBER);
 
 	return tutorships;

@@ -6,6 +6,8 @@
 
 <html:xhtml/>
 
+<%@page import="net.sourceforge.fenixedu.util.BundleUtil"%>
+
 <em><bean:message key="label.teacher.tutor.operations" /></em>
 <h2><bean:message key="title.sendEmail" bundle="APPLICATION_RESOURCES"/></h2>
 
@@ -48,10 +50,23 @@
 	<p>
 		<b><bean:message key="label.teacher.tutor.sendMail.chooseReceivers" bundle="APPLICATION_RESOURCES" /></b>
 	</p>
+	
+	<fr:form id="receiversBeanForm" action="/sendMailToTutoredStudents.do?method=prepare">
+		<fr:edit id="receiversBean" name="receiversBean">
+			<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsByTutorBean">
+				<fr:slot name="studentsEntryYear" key="label.studentsEntryYear" layout="menu-select-postback">
+					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.teacher.TutorshipEntryExecutionYearProvider$ActiveTutorshipEntryExecutionYearProviderByTeacher"/> 
+					<fr:property name="format" value="${year}"/>
+					<fr:property name="defaultText" value="<%= "-- " + BundleUtil.getMessageFromModuleOrApplication("application", "label.view.all") +  " --" %>"/>
+				</fr:slot>
+			</fr:schema>
+			<fr:destination name="postBack" path="/sendMailToTutoredStudents.do?method=prepare"/>
+		</fr:edit>
+	</fr:form>
 
 	<p class="color888 mvert05"><bean:message key="label.teacher.tutor.sendMail.chooseReceivers.help" bundle="APPLICATION_RESOURCES" /></p>
 
-	<fr:form action="/sendMailToTutoredStudents.do?method=prepareCreateMail">
+	<fr:form id="receiversForm" action="/sendMailToTutoredStudents.do?method=prepareCreateMail">
 		<fr:edit id="receivers" name="receiversBean" schema="teacher.tutor.chooseEmailReceivers">
 		    <fr:layout>
 				<fr:property name="displayLabel" value="false"/>
