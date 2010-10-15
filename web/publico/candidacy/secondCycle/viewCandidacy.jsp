@@ -307,7 +307,7 @@
 </fr:view></p>
 
 <%-- Observations --%>
-<h2 style="margin-top: 1em;"><bean:message key="label.observations" bundle="CANDIDATE_RESOURCES"/>:</h2>
+<h2 style="margin-top: 1em;"><bean:message key="label.observations" bundle="CANDIDATE_RESOURCES"/></h2>
 <fr:view name="individualCandidacyProcess"
 	property="candidacy.observations">
 </fr:view>

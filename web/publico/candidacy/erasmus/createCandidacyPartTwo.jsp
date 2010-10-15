@@ -173,6 +173,16 @@
 				</fr:layout>
 			</fr:edit>
 		</logic:equal>
+
+		<h2 class="mtop15 mbottom05"><bean:message key="label.observations" bundle="CANDIDATE_RESOURCES"/></h2>
+		<fr:edit id="individualCandidacyProcessBean.observations"
+			name="individualCandidacyProcessBean"
+			schema="PublicCandidacyProcessBean.observations">
+ 		  <fr:layout name="flow">
+		    <fr:property name="labelExcluded" value="true"/>
+		  </fr:layout>
+		</fr:edit>
+
 	</logic:notEmpty>
 	
 

@@ -238,15 +238,16 @@
 		</fr:layout>
 	</fr:view>
 
+	<%-- Observations --%>
+	<h2 style="margin-top: 1em;"><bean:message key="label.observations" bundle="CANDIDATE_RESOURCES"/></h2>
+	<fr:view name="individualCandidacyProcess"
+		property="candidacy.observations">
+	</fr:view>
 
 	<%-- show approved learning agreements--%>
 
 	<p><strong><bean:message key="label.erasmus.approved.learning.agreements" bundle="CANDIDATE_RESOURCES"/></strong></p> 
 	
-	<logic:equal name="individualCandidacyProcess" property="studentAccepted" value="false">
-		<p class="mbottom05"><em><bean:message key="label.erasmus.approved.learning.agreements.empty" bundle="ACADEMIC_OFFICE_RESOURCES" /></em></p>	
-	</logic:equal>
-
 	<logic:empty name="individualCandidacyProcess" property="candidacy.approvedLearningAgreements" >
 		<p class="mbottom05"><em><bean:message key="label.erasmus.approved.learning.agreements.empty" bundle="ACADEMIC_OFFICE_RESOURCES" /></em></p>
 	</logic:empty>

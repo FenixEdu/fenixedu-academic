@@ -71,6 +71,7 @@ public class ErasmusIndividualCandidacyProcessBean extends IndividualCandidacyPr
 	setSelectedCurricularCourses(new HashSet<CurricularCourse>(process.getCandidacy().getCurricularCoursesSet()));
 	setErasmusStudentDataBean(new ErasmusStudentDataBean(process.getCandidacy().getErasmusStudentData()));
 	setCandidacyDate(process.getCandidacyDate());
+	setObservations(process.getCandidacy().getObservations());
 
 	setValidatedByErasmusCoordinator(process.getValidatedByErasmusCoordinator());
 	setValidatedByGri(process.getValidatedByGri());
@@ -231,12 +232,12 @@ public class ErasmusIndividualCandidacyProcessBean extends IndividualCandidacyPr
     }
 
     public List<Degree> getPossibleDegreesFromSelectedUniversity() {
-	if(this.getErasmusStudentDataBean().getSelectedUniversity() == null) {
+	if (this.getErasmusStudentDataBean().getSelectedUniversity() == null) {
 	    return new ArrayList<Degree>();
 	}
-	
+
 	ErasmusCandidacyPeriod period = (ErasmusCandidacyPeriod) this.getCandidacyProcess().getCandidacyPeriod();
-	
+
 	return period.getPossibleDegreesAssociatedToUniversity(this.getErasmusStudentDataBean().getSelectedUniversity());
     }
 
