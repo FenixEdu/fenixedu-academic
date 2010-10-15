@@ -60,6 +60,7 @@ import net.sourceforge.fenixedu.domain.accessControl.PedagogicalCouncilMembersGr
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PersonsInFunctionGroup;
+import net.sourceforge.fenixedu.domain.accessControl.RegisteredAlumniGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ResearchUnitElementGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ResearchUnitMembersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ResearchersGroup;
@@ -266,7 +267,8 @@ public class GroupBuilderRegistry {
 		ScientificCouncilMembersGroup.class, AllTeachersGroup.class, AllEmployeesGroup.class, AllStudentsGroup.class,
 		AllResearchersGroup.class, InternalOrExternalTeacherGroup.class, AllSecondCycleStudentsGroup.class,
 		AllFirstCycleStudentsGroup.class, ActiveCoordinatorGroup.class, ActiveCoordinatorCycle1Group.class,
-		ActiveCoordinatorCycle2Group.class, ActiveCoordinatorCycle3Group.class, ActiveCoordinatorIntegradedMasterDegreeGroup.class };
+		ActiveCoordinatorCycle2Group.class, ActiveCoordinatorCycle3Group.class, ActiveCoordinatorIntegradedMasterDegreeGroup.class, 
+		RegisteredAlumniGroup.class };
 
 	for (Class groupClass : groups) {
 	    String className = groupClass.getSimpleName();
