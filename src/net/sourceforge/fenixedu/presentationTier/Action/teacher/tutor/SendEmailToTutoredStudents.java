@@ -22,7 +22,15 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(path = "/sendMailToTutoredStudents", module = "teacher")
+@Forwards(tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp"), value = {
+    @Forward(name = "chooseReceivers", path = "/teacher/tutor/chooseReceivers.jsp")
+ })
 public class SendEmailToTutoredStudents extends FenixDispatchAction {
 
     public Teacher getTeacher(HttpServletRequest request) {
@@ -58,7 +66,7 @@ public class SendEmailToTutoredStudents extends FenixDispatchAction {
 	}
 
 	request.setAttribute("tutor", teacher.getPerson());
-	return mapping.findForward("choose-receivers");
+	return mapping.findForward("chooseReceivers");
     }
 
     public ActionForward prepareCreateMail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -89,7 +97,7 @@ public class SendEmailToTutoredStudents extends FenixDispatchAction {
 	}
 
 	request.setAttribute("tutor", teacher.getPerson());
-	return mapping.findForward("choose-receivers");
+	return mapping.findForward("chooseReceivers");
     }
 
     public ActionForward createMail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
