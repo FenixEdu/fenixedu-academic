@@ -81,7 +81,7 @@ public class Tutorship extends Tutorship_Base {
     }
 
     public boolean isActive() {
-	if (getStudent().isCanceled()) {
+	if (!getStudent().isActive()) {
 	    return false;
 	}
 	if (!this.hasEndDate())
