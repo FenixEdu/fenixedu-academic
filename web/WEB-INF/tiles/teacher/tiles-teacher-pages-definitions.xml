@@ -136,11 +136,6 @@
 		<put name="body" value="/teacher/tutor/help.jsp" />
 	</definition>
 
-	<definition name="studentsPerformanceGrid" extends="definition.teacher.two-column">
-		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp" />
-		<put name="body" value="/teacher/tutor/viewStudentsPerformanceGrid.jsp" />
-	</definition>
-
 	<!-- ************************************** LEEC Enrollment **************************** -->
 	<definition name="df.page.prepareViewStudentCurriculumChooseStudent" 
 		extends="definition.teacher.two-column.extra-menu.tutor">
