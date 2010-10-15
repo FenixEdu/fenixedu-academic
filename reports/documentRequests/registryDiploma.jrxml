@@ -43,13 +43,14 @@
 	<parameter name="studentName" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="idNumber" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="parishOfBirth" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="degreeName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="degreeDescription" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="institution" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="conclusionDay" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="finalAverage" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="finalAverageQualified" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="date" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="graduateTitle" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="idHolder" isForPrompting="false" class="java.lang.String"/>
 
 		<background>
 			<band height="0"  isSplitAllowed="true" >
@@ -149,7 +150,7 @@
 					<textElement>
 						<font fontName="Garamond" pdfFontName="AGaramond.ttf" isPdfEmbedded ="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["portadora do bilhete de identidade nº " + $P{idNumber} + ", natural de " + $P{parishOfBirth} + " concluiu o " + $P{degreeName} + " no"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{idHolder} + " do bilhete de identidade nº " + $P{idNumber} + ", natural de " + $P{parishOfBirth} + " concluiu o " + $P{degreeDescription} + " no"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement

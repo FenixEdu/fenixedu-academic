@@ -8,10 +8,12 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
+import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.RegistryDiplomaRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.CycleConclusionProcess;
+import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.joda.time.LocalDate;
 
@@ -26,8 +28,6 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
     protected void fillReport() {
 	super.fillReport();
 	RegistryDiplomaRequest request = (RegistryDiplomaRequest) getDocumentRequest();
-	Degree degree = request.getDegree();
-	DegreeType degreeType = request.getDegreeType();
 	CycleType cycle = request.getRequestedCycle();
 	Person person = request.getPerson();
 	Registration registration = request.getRegistration();
@@ -40,23 +40,12 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
 	addParameter("principal", university.getInstitutionsUniversityPrincipal().getValidatedName());
 
 	addParameter("studentName", person.getValidatedName());
+	addParameter("idHolder", person.getGender() == Gender.MALE ? "portador" : "portadora");
 	addParameter("idNumber", person.getDocumentIdNumber());
 	addParameter("parishOfBirth", person.getParishOfBirth());
 
-	String degreeName = "";
-	if (degreeType.isComposite()) {
-	    degreeName = getEnumerationBundle().getString(cycle.getQualifiedName()) + " do ";
-	}
-	addParameter("degreeName", degreeName + "curso de " + degreeType.getFilteredName() + SINGLE_SPACE
-		+ getResourceBundle().getString("label.in") + SINGLE_SPACE
-		+ degree.getFilteredName(conclusion.getConclusionYear()));
 	addParameter("conclusionDay", verboseDate(conclusion.getConclusionDate()));
-	addParameter("graduateTitle", getEnumerationBundle().getString(
-		degreeType.getQualifiedName() + (degreeType.isComposite() ? "." + cycle.name() : "") + ".graduate.title")
-		+ SINGLE_SPACE
-		+ getResourceBundle().getString("label.in")
-		+ SINGLE_SPACE
-		+ degree.getFilteredName(conclusion.getConclusionYear()));
+	addParameter("graduateTitle", registration.getGraduateTitle(cycle, getLocale()));
 	Integer finalAverage = registration.getFinalAverage(cycle);
 	addParameter("finalAverage", getEnumerationBundle().getString(finalAverage.toString()));
 	String qualifiedAverageGrade;
@@ -69,13 +58,33 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
 	} else {
 	    qualifiedAverageGrade = "excelent";
 	}
-	addParameter("finalAverageQualified", getResourceBundle().getString(
-		"diploma.supplement.qualifiedgrade." + qualifiedAverageGrade));
-
-	// DateTimeFormatterBuilder formatter = new
-	// DateTimeFormatterBuilder().appendDayOfMonth(2).appendLiteral(" de ")
-	// .appendMonthOfYearText().appendLiteral(" de ").appendYear(4, 4);
+	addParameter("finalAverageQualified",
+		getResourceBundle().getString("diploma.supplement.qualifiedgrade." + qualifiedAverageGrade));
 	addParameter("date", new LocalDate().toString("dd 'de' MMMM 'de' yyyy", new Locale("pt")));
+    }
+
+    @Override
+    protected String getDegreeDescription() {
+	final StringBuilder res = new StringBuilder();
+
+	RegistryDiplomaRequest request = (RegistryDiplomaRequest) getDocumentRequest();
+	CycleType cycle = request.getRequestedCycle();
+	Degree degree = request.getDegree();
+	final DegreeType degreeType = request.getDegreeType();
+	res.append(cycle.getDescription(getLocale()));
+	res.append(StringUtils.SINGLE_SPACE).append(getResourceBundle().getString("label.of.the.male"))
+		.append(StringUtils.SINGLE_SPACE);
+
+	if (!degree.isEmpty()) {
+	    res.append(degreeType.getPrefix(getLocale()));
+	    res.append(degreeType.getFilteredName(getLocale()));
+	    res.append(StringUtils.SINGLE_SPACE).append(getResourceBundle().getString("label.in"))
+		    .append(StringUtils.SINGLE_SPACE);
+	}
+
+	res.append(degree.getFilteredName(getRegistration().getLastStudentCurricularPlan().getCycle(cycle).getConclusionYear(),
+		getLocale()));
+	return res.toString();
     }
 
     private String verboseDate(LocalDate date) {
