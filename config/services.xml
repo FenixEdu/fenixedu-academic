@@ -3748,6 +3748,13 @@
     </service>
 
     <service>
+        <name>SearchAllUnits</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.SearchAllUnits</implementationClass>
+        <isTransactional>true</isTransactional>
+        <filterChains />
+    </service>
+
+    <service>
         <name>SearchOtherFormationInstitutions</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.alumni.SearchOtherFormationInstitutions</implementationClass>
         <isTransactional>true</isTransactional>

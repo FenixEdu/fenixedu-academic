@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation.Res
 public class ResultUnitAssociationCreationBean implements Serializable {
     private ResearchResult result;
     private Unit unit;
-    private List<Unit> suggestedUnits;
+    private final List<Unit> suggestedUnits;
     private String role;
     private String unitName;
     private UnitType unitType;
@@ -60,7 +60,7 @@ public class ResultUnitAssociationCreationBean implements Serializable {
     }
 
     public static enum UnitType {
-	ACADEMIC_UNIT("Academic"), RESEARCH_UNIT("Research"), ORGANIZATIONAL_UNIT("Organizational");
+	ACADEMIC_UNIT("Academic"), RESEARCH_UNIT("Research"), ORGANIZATIONAL_UNIT("Organizational"), ANY_UNIT("Any");
 	private String type;
 
 	private UnitType(String type) {
