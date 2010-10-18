@@ -1,7 +1,10 @@
 package net.sourceforge.fenixedu.domain.elections;
 
-import java.util.LinkedList;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -12,6 +15,9 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
 
 import org.joda.time.YearMonthDay;
+
+import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class YearDelegateElection extends YearDelegateElection_Base {
 
@@ -126,7 +132,7 @@ public class YearDelegateElection extends YearDelegateElection_Base {
 		    curricularYear.getYear().toString(), previousElection.getLastVotingPeriod().getPeriod() });
 	}
 
-	if (previousElection != null && previousElection.getVotingPeriod() != null
+	if (previousElection != null && previousElection.getVotingPeriod() != null && previousElection.hasLastVotingPeriod()
 		&& !previousElection.getLastVotingPeriod().isPastPeriod()) {
 	    // future voting period (must be deleted)
 	    previousElection.getLastVotingPeriod().delete();
@@ -167,8 +173,7 @@ public class YearDelegateElection extends YearDelegateElection_Base {
 	    if (delegateElection instanceof YearDelegateElection) {
 		if (delegateElection.getDegree().equals(election.getDegree())
 			&& delegateElection.getExecutionYear().equals(election.getExecutionYear())
-			&& (delegateElection.getLastVotingPeriod() != null && !delegateElection.getLastVotingPeriod()
-				.isPastPeriod())) {
+			&& (delegateElection.hasLastVotingPeriod() && !delegateElection.getLastVotingPeriod().isPastPeriod())) {
 		    return true;
 		}
 	    }
@@ -264,22 +269,74 @@ public class YearDelegateElection extends YearDelegateElection_Base {
 	return null;
     }
 
-    @Override
-    public List<Student> getCandidates() {
-	if (!hasLastVotingPeriod() || getLastVotingPeriod().isFirstRoundElections()) {
-	    return super.getCandidates();
+    public static StyledExcelSpreadsheet exportToFile(List<Degree> degrees, ExecutionYear executionYear) throws IOException {
+	StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet();
+	final ResourceBundle BUNDLE = ResourceBundle.getBundle("resources.PedagogicalCouncilResources", Language
+		.getDefaultLocale());
+
+	for (Degree degree : degrees) {
+	    spreadsheet.getSheet(degree.getSigla());
+	    List<YearDelegateElection> elections = sortByYear(degree.getYearDelegateElectionsGivenExecutionYear(executionYear));
+	    for (YearDelegateElection election : elections) {
+		if (election.hasLastVotingPeriod()) {
+		    DelegateElectionVotingPeriod votingPeriod = election.getLastVotingPeriod();
+		    spreadsheet.newRow();
+		    spreadsheet.addCell(String.format("%s - %s - %s", BUNDLE.getObject("label.elections.excel.curricularYear"),
+			    election.getCurricularYear().getYear(), votingPeriod.getPeriod()));
+		    spreadsheet.newRow();
+
+		    spreadsheet.newRow();
+
+		    if (votingPeriod.getVotesCount() == 0) {
+			spreadsheet.addCell(BUNDLE.getObject("label.elections.excel.not.have.votes"));
+		    } else {
+
+			spreadsheet.addCell(BUNDLE.getObject("label.elections.excel.studentNumber"));
+			spreadsheet.addCell(BUNDLE.getObject("label.elections.excel.studentName"));
+			spreadsheet.addCell(BUNDLE.getObject("label.elections.excel.nrTotalVotes"));
+
+			List<DelegateElectionResultsByStudentDTO> resultsByStudent = sortByResults(votingPeriod
+				.getDelegateElectionResults());
+			for (DelegateElectionResultsByStudentDTO resultByStudent : resultsByStudent) {
+			    Student student = resultByStudent.getStudent();
+			    spreadsheet.addCell(student.getNumber());
+			    spreadsheet.addCell(student.getName());
+			    spreadsheet.addCell(resultByStudent.getVotesNumber());
+
+			}
+			spreadsheet.newRow();
+			spreadsheet.addCell(String.format("%s - %s", BUNDLE.getObject("label.elections.excel.nrBlankTotalVotes"),
+				votingPeriod.getBlankVotesElection()));
+		    }
+		}
+		spreadsheet.newRow();
+		spreadsheet.newRow();
+
+	    }
+
 	}
-	return getLastVotingPeriod().getCandidatesForNewRoundElections();
+	return spreadsheet;
 
     }
 
-    @Override
-    public List<Student> getNotCandidatedStudents() {
-	if (!hasLastVotingPeriod() || getLastVotingPeriod().isFirstRoundElections()) {
-	    return super.getNotCandidatedStudents();
-	}
-	// Don't have candidates
-	return new LinkedList<Student>();
+    private static List<DelegateElectionResultsByStudentDTO> sortByResults(
+	    List<DelegateElectionResultsByStudentDTO> resultsByStudent) {
+	Collections.sort(resultsByStudent, new Comparator<DelegateElectionResultsByStudentDTO>() {
+	    @Override
+	    public int compare(DelegateElectionResultsByStudentDTO o1, DelegateElectionResultsByStudentDTO o2) {
+		return o1.getVotesNumber() - o2.getVotesNumber();
+	    }
+	});
+	return resultsByStudent;
     }
 
+    private static List<YearDelegateElection> sortByYear(List<YearDelegateElection> elections) {
+	Collections.sort(elections, new Comparator<YearDelegateElection>() {
+	    @Override
+	    public int compare(YearDelegateElection o1, YearDelegateElection o2) {
+		return o1.getCurricularYear().getYear() - o2.getCurricularYear().getYear();
+	    }
+	});
+	return elections;
+    }
 }

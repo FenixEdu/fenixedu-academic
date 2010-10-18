@@ -484,7 +484,7 @@
 	<slot name="election.candidacyPeriod" layout="delegate-election-period" key="label.candidacyPeriod" read-only="true" >
 		<property name="dateHtmlSeparator" value=" - " />
 	</slot>
-	<slot name="election.votingPeriod" layout="delegate-election-period" key="label.votingPeriod" read-only="true" >
+	<slot name="election.lastVotingPeriod" layout="delegate-election-period" key="label.votingPeriod" read-only="true" >
 		<property name="dateHtmlSeparator" value=" - " />
 	</slot>
 	<slot name="election.electedStudent" key="label.electedDelegate" layout="null-as-label">
@@ -582,7 +582,7 @@
 	<slot name="election.candidacyPeriod" layout="delegate-election-period" key="label.candidacyPeriod" read-only="true" >
 		<property name="dateHtmlSeparator" value=" - " />
 	</slot>
-	<slot name="election.votingPeriod" layout="delegate-election-period" key="label.votingPeriod" read-only="true" >
+	<slot name="election.lastVotingPeriod" layout="delegate-election-period" key="label.votingPeriod" read-only="true" >
 		<property name="dateHtmlSeparator" value=" - " />
 	</slot>
 	<slot name="election.electedStudent" key="label.electedDelegate" layout="null-as-label">

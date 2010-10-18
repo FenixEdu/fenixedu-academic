@@ -30,7 +30,17 @@
 				<fr:destination name="invalid" path="<%="/electionsPeriodsManagement.do?method=prepare&forwardTo=" + forwardTo %>" />
 				<fr:destination name="post-back" path="<%="/electionsPeriodsManagement.do?method=selectDegreeType&forwardTo=" + forwardTo %>" />
 			</fr:edit>
+			
+
+			<bean:define id="degreeType" name="electionPeriodBean" property="degreeType"/>
+			<bean:define id="executionYearOID" name="electionPeriodBean" property="executionYear.externalId"/>
+		
+			<html:link page="<%=String.format("/electionsPeriodsManagement.do?method=exportResultsToFile&degreeType=%s&executionYearOID=%s",degreeType,executionYearOID )%>">
+					<bean:message key="label.elections.voting.exportTofile" bundle="PEDAGOGICAL_COUNCIL" />
+			</html:link>
+
 		</fr:form>
+		
 </logic:present>
 
 <logic:present name="electionsByDegreeBean" >
