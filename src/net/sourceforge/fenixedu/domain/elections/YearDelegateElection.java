@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
 
+import org.apache.poi.hssf.util.Region;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
@@ -271,8 +272,8 @@ public class YearDelegateElection extends YearDelegateElection_Base {
 
     public static StyledExcelSpreadsheet exportToFile(List<Degree> degrees, ExecutionYear executionYear) throws IOException {
 	StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet();
-	final ResourceBundle BUNDLE = ResourceBundle.getBundle("resources.PedagogicalCouncilResources", Language
-		.getDefaultLocale());
+	final ResourceBundle BUNDLE = ResourceBundle.getBundle("resources.PedagogicalCouncilResources",
+		Language.getDefaultLocale());
 
 	for (Degree degree : degrees) {
 	    spreadsheet.getSheet(degree.getSigla());
@@ -280,33 +281,33 @@ public class YearDelegateElection extends YearDelegateElection_Base {
 	    for (YearDelegateElection election : elections) {
 		if (election.hasLastVotingPeriod()) {
 		    DelegateElectionVotingPeriod votingPeriod = election.getLastVotingPeriod();
+		    spreadsheet.newHeaderRow();
+		    int fistHeaderRow = spreadsheet.getRow().getRowNum();
+		    spreadsheet.addHeader(String.format("%s - %s (%s)", BUNDLE.getString("label.elections.excel.curricularYear"),
+			    election.getCurricularYear().getYear(), votingPeriod.getPeriod()), 10000);
+		    spreadsheet.getSheet().addMergedRegion(new Region(fistHeaderRow, (short) 0, fistHeaderRow, (short) 2));
 		    spreadsheet.newRow();
-		    spreadsheet.addCell(String.format("%s - %s - %s", BUNDLE.getObject("label.elections.excel.curricularYear"),
-			    election.getCurricularYear().getYear(), votingPeriod.getPeriod()));
-		    spreadsheet.newRow();
-
-		    spreadsheet.newRow();
-
 		    if (votingPeriod.getVotesCount() == 0) {
-			spreadsheet.addCell(BUNDLE.getObject("label.elections.excel.not.have.votes"));
+			spreadsheet.addCell(BUNDLE.getString("label.elections.excel.not.have.votes"));
 		    } else {
-
-			spreadsheet.addCell(BUNDLE.getObject("label.elections.excel.studentNumber"));
-			spreadsheet.addCell(BUNDLE.getObject("label.elections.excel.studentName"));
-			spreadsheet.addCell(BUNDLE.getObject("label.elections.excel.nrTotalVotes"));
-
+			spreadsheet.addHeader(BUNDLE.getString("label.elections.excel.studentNumber"), 7000);
+			spreadsheet.addHeader(BUNDLE.getString("label.elections.excel.studentName"), 10000);
+			spreadsheet.addHeader(BUNDLE.getString("label.elections.excel.nrTotalVotes"), 5000);
 			List<DelegateElectionResultsByStudentDTO> resultsByStudent = sortByResults(votingPeriod
 				.getDelegateElectionResults());
 			for (DelegateElectionResultsByStudentDTO resultByStudent : resultsByStudent) {
+			    spreadsheet.newRow();
 			    Student student = resultByStudent.getStudent();
 			    spreadsheet.addCell(student.getNumber());
 			    spreadsheet.addCell(student.getName());
 			    spreadsheet.addCell(resultByStudent.getVotesNumber());
 
 			}
+			spreadsheet.setRegionBorder(fistHeaderRow, spreadsheet.getRow().getRowNum() + 1, 0, 2);
 			spreadsheet.newRow();
-			spreadsheet.addCell(String.format("%s - %s", BUNDLE.getObject("label.elections.excel.nrBlankTotalVotes"),
-				votingPeriod.getBlankVotesElection()));
+			spreadsheet.newRow();
+			spreadsheet.addCell(BUNDLE.getString("label.elections.excel.nrBlankTotalVotes"));
+			spreadsheet.addCell(votingPeriod.getBlankVotesElection(), spreadsheet.getExcelStyle().getValueStyle());
 		    }
 		}
 		spreadsheet.newRow();
@@ -324,7 +325,7 @@ public class YearDelegateElection extends YearDelegateElection_Base {
 	Collections.sort(resultsByStudent, new Comparator<DelegateElectionResultsByStudentDTO>() {
 	    @Override
 	    public int compare(DelegateElectionResultsByStudentDTO o1, DelegateElectionResultsByStudentDTO o2) {
-		return o1.getVotesNumber() - o2.getVotesNumber();
+		return o2.getVotesNumber() - o1.getVotesNumber();
 	    }
 	});
 	return resultsByStudent;
