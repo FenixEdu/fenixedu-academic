@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Associate Reports to Erasmus Candidacy Process" associateReportsToErasmusCandidacyProcess.sql
