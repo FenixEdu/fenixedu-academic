@@ -15,11 +15,13 @@ import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.QueueJob;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessState;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyPersonalDetails;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.reports.ErasmusCandidacyProcessReport;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
@@ -278,6 +280,42 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 	}, processList);
 
 	return processList;
+    }
+
+    public List<ErasmusCandidacyProcessReport> getDoneReports() {
+	List<ErasmusCandidacyProcessReport> jobList = new ArrayList<ErasmusCandidacyProcessReport>();
+
+	CollectionUtils.select(getErasmusCandidacyProcessReports(), new Predicate() {
+
+	    @Override
+	    public boolean evaluate(Object arg0) {
+		return ((QueueJob) arg0).getDone();
+	    }
+	}, jobList);
+
+	return jobList;
+    }
+
+    public List<ErasmusCandidacyProcessReport> getUndoneReports() {
+	return new ArrayList(CollectionUtils.subtract(getErasmusCandidacyProcessReports(), getDoneReports()));
+    }
+
+    public List<ErasmusCandidacyProcessReport> getPendingReports() {
+	List<ErasmusCandidacyProcessReport> jobList = new ArrayList<ErasmusCandidacyProcessReport>();
+
+	CollectionUtils.select(getErasmusCandidacyProcessReports(), new Predicate() {
+
+	    @Override
+	    public boolean evaluate(Object arg0) {
+		return ((QueueJob) arg0).getIsNotDoneAndNotCancelled();
+	    }
+	}, jobList);
+
+	return jobList;
+    }
+
+    public boolean isAbleToLaunchReportGenerationJob() {
+	return getPendingReports().isEmpty();
     }
 
     @StartActivity

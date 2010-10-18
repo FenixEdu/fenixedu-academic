@@ -159,6 +159,12 @@
 	</logic:notEmpty>
 	
 	<logic:present role="INTERNATIONAL_RELATION_OFFICE">
+		<html:link action="/erasmusCandidacyProcessReport.do?method=list" paramId="erasmusCandidacyProcessId" paramName="process" paramProperty="externalId">
+			<bean:message key="label.net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.reports.ErasmusCandidacyProcessReport" bundle="ACADEMIC_OFFICE_RESOURCES" />
+		</html:link>
+	</logic:present>
+	
+	<logic:present role="INTERNATIONAL_RELATION_OFFICE">
 		<%-- Show processes with not viewed learning agreements --%>
 		<p><strong><bean:message key="title.erasmus.not.viewed.approved.learning.agreements.list" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
 		<logic:empty name="process" property="processesWithNotViewedApprovedLearningAgreements">

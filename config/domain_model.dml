@@ -7062,6 +7062,9 @@ class TutorshipStudentLowPerformanceQueueJob extends QueueJobWithFile {
 	PrescriptionEnum prescriptionEnum;
 }
 
+class candidacyProcess.erasmus.reports.ErasmusCandidacyProcessReport extends QueueJobWithFile {
+}
+
 class student.Delegate extends DomainObject {
     
 }
@@ -18635,4 +18638,12 @@ relation ExternalPhdProgramPhdProgramFocusArea {
     phd.PhdProgramFocusArea playsRole phdProgramFocusAreas {
         multiplicity *;
     }
+}
+
+relation ErasmusCandidacyProcessErasmusCandidacyProcessReport {
+	candidacyProcess.erasmus.reports.ErasmusCandidacyProcessReport playsRole erasmusCandidacyProcessReports {
+		multiplicity *;
+	}
+	
+	candidacyProcess.erasmus.ErasmusCandidacyProcess playsRole erasmusCandidacyProcess;
 }
