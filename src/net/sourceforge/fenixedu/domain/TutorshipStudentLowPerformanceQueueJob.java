@@ -37,7 +37,7 @@ public class TutorshipStudentLowPerformanceQueueJob extends TutorshipStudentLowP
     public QueueJobResult execute() throws Exception {
 
 	final List<StudentLowPerformanceBean> studentLowPerformanceBeans = calcstudentsLowPerformanceBean(AbstractPrescriptionRule
-		.readPrescriptionRulesUntil2009_2010(getPrescriptionEnum()));
+		.readPrescriptionRules(getPrescriptionEnum()));
 
 	Spreadsheet spreadsheet = createSpreadsheet(studentLowPerformanceBeans);
 	ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();

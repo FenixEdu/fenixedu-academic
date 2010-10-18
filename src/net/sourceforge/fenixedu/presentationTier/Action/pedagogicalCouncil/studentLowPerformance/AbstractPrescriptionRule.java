@@ -86,23 +86,6 @@ public abstract class AbstractPrescriptionRule {
 		new PrescriptionRuleFiveEntries() };
     }
 
-    // valid until 2009_2010
-    public static List<AbstractPrescriptionRule> readPrescriptionRulesUntil2009_2010(PrescriptionEnum prescriptionEnum) {
-	List<AbstractPrescriptionRule> abstractPrescriptionRules = new LinkedList<AbstractPrescriptionRule>();
-	for (AbstractPrescriptionRule abstractPrescriptionRule : getPrescriptionRulesUntil2009_2010()) {
-	    if (abstractPrescriptionRule.contains(prescriptionEnum)) {
-		abstractPrescriptionRules.add(abstractPrescriptionRule);
-	    }
-	}
-	return abstractPrescriptionRules;
-    }
-
-    // valid until 2009_2010
-    private static AbstractPrescriptionRule[] getPrescriptionRulesUntil2009_2010() {
-	return new AbstractPrescriptionRule[] { new PrescriptionRuleMomentOne(), new PrescriptionRuleMomentTwo(),
-		new PrescriptionRuleMomentTree(), new PrescriptionRuleTreeEntries(), new PrescriptionRuleFourEntries() };
-    }
-
     public static List<AbstractPrescriptionRule> readProviderPrescriptionRules() {
 	List<AbstractPrescriptionRule> abstractPrescriptionRules = new LinkedList<AbstractPrescriptionRule>();
 	abstractPrescriptionRules.add(new PrescriptionRuleMomentOne());

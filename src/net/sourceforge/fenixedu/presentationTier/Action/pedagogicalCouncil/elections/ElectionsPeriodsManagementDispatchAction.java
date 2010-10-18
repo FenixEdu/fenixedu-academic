@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -27,6 +28,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 
 public class ElectionsPeriodsManagementDispatchAction extends FenixDispatchAction {
 
@@ -253,6 +255,26 @@ public class ElectionsPeriodsManagementDispatchAction extends FenixDispatchActio
 		secondRoundElectionsNotCandidatesBean);
 
 	return prepare(mapping, actionForm, request, response);
+    }
+
+    public ActionForward exportResultsToFile(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	String degreeTypeString = (String) getFromRequest(request, "degreeType");
+	DegreeType degreeType = DegreeType.valueOf(degreeTypeString);
+	ExecutionYear executionYear = getDomainObject(request, "executionYearOID");
+	StyledExcelSpreadsheet spreadsheet = YearDelegateElection.exportToFile(Degree.readAllByDegreeType(degreeType),
+		executionYear);
+
+	final ServletOutputStream writer = response.getOutputStream();
+	spreadsheet.getWorkbook().write(writer);
+	response.setContentType("application/txt");
+	String filename = String.format("electionsResults_%s_%s.xls", degreeType.getLocalizedName(), executionYear.getYear()
+		.replace("/", "-"));
+	response.addHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
+	writer.flush();
+	response.flushBuffer();
+	return null;
     }
 
     /*
