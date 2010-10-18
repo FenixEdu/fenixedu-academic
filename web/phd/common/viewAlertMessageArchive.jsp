@@ -43,7 +43,7 @@
 		<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth" bundle="PHD_RESOURCES">
 			<fr:slot name="yearString" key="label.year" bundle="PHD_RESOURCES" layout="menu-select-postback">
 				<fr:property name="nullOptionHidden" value="true" />
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CivilYearsProvider" />
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CivilYearsProvider$CivilYearsProviderDescendingOrder" />
 			</fr:slot>
 			<fr:slot name="month" key="label.month" layout="menu-postback">
 				<fr:property name="defaultText" value="<%="-- " + BundleUtil.getMessageFromModuleOrApplication("Phd", "label.all") + " --" %>" />
