@@ -220,22 +220,13 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 	if (!getRequestedCycle().equals(CycleType.SECOND_CYCLE)) {
 	    professionalStatus = getResourceBundle().getString("diploma.supplement.professionalstatus.notapplicable");
 	} else {
-	    if (degreeSigla.equals("MEFT")) {
-		professionalStatus = applyMessageArguments(
-			getResourceBundle().getString("diploma.supplement.professionalstatus.uncredited.engineer"), degreeName);
-	    } else if (degreeSigla.equals("MERC") || degreeSigla.equals("MEE")) {
-		professionalStatus = applyMessageArguments(
-			getResourceBundle().getString(
-				"diploma.supplement.professionalstatus.uncredited.underappreciation.engineer"), degreeName);
-	    } else if (degreeSigla.equals("MA")) {
-		professionalStatus = applyMessageArguments(
-			getResourceBundle().getString("diploma.supplement.professionalstatus.credited.arquitect.withintership"),
-			degreeName);
+	    if (degreeSigla.equals("MA")) {
+		professionalStatus = getResourceBundle().getString(
+			"diploma.supplement.professionalstatus.credited.arquitect.withintership");
 	    } else if (degreeSigla.equals("MMA") || degreeSigla.equals("MQ")) {
 		professionalStatus = getResourceBundle().getString("diploma.supplement.professionalstatus.notapplicable");
 	    } else {
-		professionalStatus = applyMessageArguments(
-			getResourceBundle().getString("diploma.supplement.professionalstatus.credited.engineer"), degreeName);
+		professionalStatus = getResourceBundle().getString("diploma.supplement.professionalstatus.credited.engineer");
 	    }
 	}
 	addParameter("professionalStatus", professionalStatus);
