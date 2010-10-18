@@ -145,6 +145,10 @@
 		<put name="body" value="/resourceAllocationManager/showAllLessonDates.jsp" />
 	</definition>
 
+	<definition name="df.page.showTimeTable" extends="definition.sop.periods" >
+		<put name="body" value="/resourceAllocationManager/showTimetable.jsp" />
+	</definition>
+
 	<!-- =================== Access Groups Management  =================== -->
 	<definition name="prepare-access-groups-management" extends="definition.resourceAllocationManager.otherResourcesManagement" >
 		<put name="body" value="/resourceAllocationManager/accessGroups/accessGroupsManagement.jsp" />

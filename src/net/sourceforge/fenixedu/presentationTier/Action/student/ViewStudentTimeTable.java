@@ -51,7 +51,7 @@ public class ViewStudentTimeTable extends FenixDispatchAction {
 	return forwardToShowTimeTable(registration, mapping, request);
     }
 
-    private ActionForward forwardToShowTimeTable(Registration registration, ActionMapping mapping, HttpServletRequest request)
+    public static ActionForward forwardToShowTimeTable(Registration registration, ActionMapping mapping, HttpServletRequest request)
 	    throws FenixActionException, FenixFilterException, FenixServiceException {
 
 	List<InfoLesson> infoLessons = (List) ReadStudentTimeTable.run(registration);
