@@ -18,6 +18,9 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.alumni.CerimonyInquiry;
 import net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryAnswer;
 import net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryPerson;
+import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
+import net.sourceforge.fenixedu.domain.contacts.PartyContact;
+import net.sourceforge.fenixedu.domain.contacts.Phone;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
@@ -227,6 +230,16 @@ public class AlumniCerimonyDA extends FenixDispatchAction {
 	    sheet.addCell(person.getUsername());
 	    sheet.addCell(person.getName());
 	    sheet.addCell(person.getEmail());
+	    final StringBuilder contacts = new StringBuilder();
+	    for (final PartyContact partyContact : person.getPartyContactsSet()) {
+		if (partyContact instanceof Phone || partyContact instanceof MobilePhone) {
+		    if (contacts.length() > 0) {
+			contacts.append(", ");
+		    }
+		    contacts.append(partyContact.getPresentationValue());
+		}
+	    }
+	    sheet.addCell(contacts.toString());
 	    sheet.addCell((inquiryAnswer != null? inquiryAnswer.getText():new String("-")));
 	    sheet.addCell(getDegrees(person));
 	}
@@ -256,6 +269,7 @@ public class AlumniCerimonyDA extends FenixDispatchAction {
 	spreadsheet.addHeader(getResourceMessage("label.username"));
 	spreadsheet.addHeader(getResourceMessage("label.name"));
 	spreadsheet.addHeader(getResourceMessage("label.email"));
+	spreadsheet.addHeader(getResourceMessage("label.phone"));
 	spreadsheet.addHeader(getResourceMessage("label.publicRelationOffice.alumniCerimony.inquiry.people.answer"));
 	spreadsheet.addHeader(getResourceMessage("label.degrees"));
 
