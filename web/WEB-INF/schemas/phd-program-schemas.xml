@@ -12,8 +12,6 @@
 	</slot>
 	<slot name="person.name" />
 	<slot name="student.number" />
-	<slot name="person.idDocumentType" />
-	<slot name="person.documentIdNumber" />
 </schema>
 
 <schema name="PhdProgram.name" type="net.sourceforge.fenixedu.domain.phd.PhdProgram" bundle="PHD_RESOURCES">
