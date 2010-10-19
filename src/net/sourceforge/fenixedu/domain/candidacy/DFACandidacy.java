@@ -150,4 +150,15 @@ public class DFACandidacy extends DFACandidacy_Base {
 	    return null;
 	}
     }
+
+    @Override
+    protected boolean checkIfDataIsFilled() {
+	Person person = getPerson();
+	return (person.getGender() != null && person.getExpirationDateOfDocumentIdYearMonthDay() != null
+		&& person.getProfession() != null && person.getMaritalStatus() != null
+		&& person.getDateOfBirthYearMonthDay() != null && person.getCountry() != null && person.getNameOfFather() != null
+		&& person.getNameOfMother() != null && person.hasDefaultPhysicalAddress() && person
+		.getInstitutionalOrDefaultEmailAddressValue() != null);
+    }
+
 }

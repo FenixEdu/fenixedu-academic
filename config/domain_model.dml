@@ -12977,7 +12977,7 @@ relation RootDomainObjectCronScriptState {
 
 relation RootDomainObjectCurricularCourseEquivalence {
     RootDomainObject playsRole rootDomainObject;
-    CurricularCourseEquivalence playsRole xptos {
+    CurricularCourseEquivalence playsRole curricularCourseEquivalences {
         multiplicity *;
     }
 }

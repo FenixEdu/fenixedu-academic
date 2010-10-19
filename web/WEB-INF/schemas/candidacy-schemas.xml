@@ -62,7 +62,7 @@
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="excludedValues" value="CITIZEN_CARD" />
 	</slot>
-	<slot name="contributorNumber" key="label.contributorNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>	
+	<slot name="contributorNumber" key="label.contributorNumber" />	
 	<slot name="candidacyDate" >
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.AdvancedDateValidator">
 			<property name="validationPeriod" value="pastOrToday" />

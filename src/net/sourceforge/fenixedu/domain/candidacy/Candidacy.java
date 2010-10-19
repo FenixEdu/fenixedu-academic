@@ -213,12 +213,15 @@ public abstract class Candidacy extends Candidacy_Base {
 		.getInstitution() != null);
     }
 
-    private boolean checkIfDataIsFilled() {
+    protected boolean checkIfDataIsFilled() {
 	Person person = getPerson();
-	return (person.getGender() != null && person.getExpirationDateOfDocumentIdYearMonthDay() != null
+	return (person.getGender() != null && person.getEmissionDateOfDocumentIdYearMonthDay() != null
+		&& person.getEmissionLocationOfDocumentId() != null && person.getExpirationDateOfDocumentIdYearMonthDay() != null
 		&& person.getSocialSecurityNumber() != null && person.getProfession() != null
 		&& person.getMaritalStatus() != null && person.getDateOfBirthYearMonthDay() != null
-		&& person.getCountry() != null && person.getNameOfFather() != null && person.getNameOfMother() != null
+		&& person.getCountry() != null && person.getParishOfBirth() != null
+		&& person.getDistrictSubdivisionOfBirth() != null && person.getDistrictOfBirth() != null
+		&& person.getCountryOfBirth() != null && person.getNameOfFather() != null && person.getNameOfMother() != null
 		&& person.hasDefaultPhysicalAddress() && person.getInstitutionalOrDefaultEmailAddressValue() != null);
     }
 
