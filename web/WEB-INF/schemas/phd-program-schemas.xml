@@ -11,7 +11,6 @@
 		<property name="format" value="${year}" />
 	</slot>
 	<slot name="person.name" />
-	<slot name="student.number" />
 </schema>
 
 <schema name="PhdProgram.name" type="net.sourceforge.fenixedu.domain.phd.PhdProgram" bundle="PHD_RESOURCES">
