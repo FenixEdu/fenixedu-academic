@@ -223,7 +223,8 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 	    if (degreeSigla.equals("MA")) {
 		professionalStatus = getResourceBundle().getString(
 			"diploma.supplement.professionalstatus.credited.arquitect.withintership");
-	    } else if (degreeSigla.equals("MMA") || degreeSigla.equals("MQ")) {
+	    } else if (degreeSigla.equals("MMA") || degreeSigla.equals("MQ") || degreeSigla.equals("MUOT")
+		    || degreeSigla.equals("MPOT") || degreeSigla.equals("MFarm")) {
 		professionalStatus = getResourceBundle().getString("diploma.supplement.professionalstatus.notapplicable");
 	    } else {
 		professionalStatus = getResourceBundle().getString("diploma.supplement.professionalstatus.credited.engineer");
