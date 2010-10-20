@@ -132,4 +132,8 @@ public class CanonicalAddressAttribute extends Attribute {
 
 	return zipCode;
     }
+
+    public boolean isValidCanonicalAddressAttribute() {
+	return getSemanticValue() != null;
+    }
 }

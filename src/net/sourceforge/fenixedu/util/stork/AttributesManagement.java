@@ -42,7 +42,7 @@ public class AttributesManagement {
     }
 
     public boolean hasCanonicalAddress() {
-	return getCanonicalAddress() != null;
+	return getCanonicalAddress() != null && getCanonicalAddress().isValidCanonicalAddressAttribute();
     }
 
     public String getAddressCompound() {

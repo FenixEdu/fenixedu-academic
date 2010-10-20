@@ -171,6 +171,6 @@ public class ApprovedLearningAgreementDocumentFile extends ApprovedLearningAgree
     }
 
     public boolean isAbleToSendEmailToAcceptStudent() {
-	return getProcess().isStudentAccepted() && isMostRecent() && !getCandidacyFileActive();
+	return getProcess().isStudentAccepted() && isMostRecent() && getCandidacyFileActive();
     }
 }
