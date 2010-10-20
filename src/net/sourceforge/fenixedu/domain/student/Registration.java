@@ -91,8 +91,8 @@ import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.RegistrationConclusionProcess;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
@@ -373,8 +373,8 @@ public class Registration extends Registration_Base {
     }
 
     public List<StudentCurricularPlan> getSortedStudentCurricularPlans() {
-	final ArrayList<StudentCurricularPlan> sortedStudentCurricularPlans = new ArrayList<StudentCurricularPlan>(super
-		.getStudentCurricularPlans());
+	final ArrayList<StudentCurricularPlan> sortedStudentCurricularPlans = new ArrayList<StudentCurricularPlan>(
+		super.getStudentCurricularPlans());
 	Collections.sort(sortedStudentCurricularPlans, StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_START_DATE);
 	return sortedStudentCurricularPlans;
     }
@@ -1754,8 +1754,8 @@ public class Registration extends Registration_Base {
 	checkIfReachedAttendsLimit();
 
 	if (getStudent().readAttendByExecutionCourse(executionCourse) == null) {
-	    final Enrolment enrolment = findEnrolment(getActiveStudentCurricularPlan(), executionCourse, executionCourse
-		    .getExecutionPeriod());
+	    final Enrolment enrolment = findEnrolment(getActiveStudentCurricularPlan(), executionCourse,
+		    executionCourse.getExecutionPeriod());
 	    if (enrolment != null) {
 		enrolment.createAttends(this, executionCourse);
 	    } else {
@@ -1800,8 +1800,8 @@ public class Registration extends Registration_Base {
 	final IUserView userView = AccessControl.getUserView();
 	if (userView == null || !userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)) {
 	    if (readAttendsInCurrentExecutionPeriod().size() >= MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD) {
-		throw new DomainException("error.student.reached.attends.limit", String
-			.valueOf(MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD));
+		throw new DomainException("error.student.reached.attends.limit",
+			String.valueOf(MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD));
 	    }
 	}
     }
@@ -1870,8 +1870,7 @@ public class Registration extends Registration_Base {
 
     public PrecedentDegreeInformation getPrecedentDegreeInformation(final SchoolLevelType levelType) {
 	return (super.hasPrecedentDegreeInformation() && super.getPrecedentDegreeInformation().getSchoolLevel() == levelType) ? super
-		.getPrecedentDegreeInformation()
-		: null;
+		.getPrecedentDegreeInformation() : null;
     }
 
     public boolean isFirstCycleAtributionIngression() {
@@ -3194,8 +3193,7 @@ public class Registration extends Registration_Base {
 	final Collection<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
 	for (final AcademicServiceRequest academicServiceRequest : getAcademicServiceRequestsSet()) {
 	    if (academicServiceRequest.isConcludedSituationAccepted()
-		    || (academicServiceRequest.isSentToExternalEntity() && academicServiceRequest.hasProcessed() && !academicServiceRequest
-			    .hasConcluded())) {
+		    || (academicServiceRequest.isSendToExternalEntitySituationAccepted())) {
 		result.add(academicServiceRequest);
 	    }
 	}
