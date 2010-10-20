@@ -21,7 +21,6 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base {
     public RegistryDiplomaRequest(final DocumentRequestCreateBean bean) {
 	this();
 	super.init(bean);
-	super.setRequestedCycle(bean.getRequestedCycle());
 	checkParameters(bean);
 	if (isPayedUponCreation() && !isFree()) {
 	    RegistryDiplomaRequestEvent.create(getAdministrativeOffice(), getRegistration().getPerson(), this);
@@ -41,10 +40,18 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base {
 
     @Override
     protected void checkParameters(DocumentRequestCreateBean bean) {
-	if (bean.getRegistration().isBolonha() && bean.getRequestedCycle() == null)
-	    throw new DomainException("error.registryDiploma.requestedCycleMustBeGiven");
-	if (!getDegreeType().getCycleTypes().contains(bean.getRequestedCycle()))
-	    throw new DomainException("error.registryDiploma.requestedCycleTypeIsNotAllowedForGivenStudentCurricularPlan");
+	if (bean.getHasCycleTypeDependency()) {
+	    if (bean.getRequestedCycle() == null) {
+		throw new DomainException("error.registryDiploma.requestedCycleMustBeGiven");
+	    } else if (!getDegreeType().getCycleTypes().contains(bean.getRequestedCycle())) {
+		throw new DomainException("error.registryDiploma.requestedCycleTypeIsNotAllowedForGivenStudentCurricularPlan");
+	    }
+	    super.setRequestedCycle(bean.getRequestedCycle());
+	} else {
+	    if (bean.getRegistration().getDegreeType().hasExactlyOneCycleType()) {
+		super.setRequestedCycle(bean.getRegistration().getDegreeType().getCycleType());
+	    }
+	}
 	if (getRegistration().getDiplomaRequest(bean.getRequestedCycle()) != null)
 	    throw new DomainException("error.registryDiploma.alreadyHasDiplomaRequest");
 	if (getRegistration().getRegistryDiplomaRequest(bean.getRequestedCycle()) != this)

@@ -138,8 +138,7 @@ public enum DocumentRequestType {
     }
 
     final public boolean getHasCycleTypeDependency(final DegreeType degreeType) {
-	return degreeType.isBolonhaType()
-		&& (this == DEGREE_FINALIZATION_CERTIFICATE || this == REGISTRY_DIPLOMA_REQUEST || this == DIPLOMA_REQUEST || this == DIPLOMA_SUPPLEMENT_REQUEST);
+	return degreeType.getCycleTypes().size() > 1;
     }
 
     public boolean isAllowedToQuickDeliver() {
