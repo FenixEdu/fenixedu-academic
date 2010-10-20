@@ -49,7 +49,8 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 	if (DocumentRequestType.REGISTRY_DIPLOMA_REQUEST.getAdministrativeOfficeTypes().contains(AdministrativeOfficeType.DEGREE)
 		|| DocumentRequestType.REGISTRY_DIPLOMA_REQUEST.getAdministrativeOfficeTypes().contains(
 			AdministrativeOfficeType.MASTER_DEGREE)) {
-	    if (getRegistration().isBolonha()) {
+	    if (getRegistration().isBolonha()
+		    && !getRegistration().getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)) {
 		final RegistryDiplomaRequest registryRequest = getRegistration().getRegistryDiplomaRequest(getRequestedCycle());
 		if (registryRequest == null) {
 		    throw new DomainException("DiplomaRequest.registration.withoutRegistryRequest");
@@ -80,8 +81,9 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 	final DegreeType degreeType = getDegreeType();
 	final CycleType requestedCycle = getRequestedCycle();
 
-	return getDescription(getAcademicServiceRequestType(), getDocumentRequestType().getQualifiedName() + "."
-		+ degreeType.name() + (degreeType.isComposite() ? "." + requestedCycle.name() : ""));
+	return getDescription(getAcademicServiceRequestType(),
+		getDocumentRequestType().getQualifiedName() + "." + degreeType.name()
+			+ (degreeType.isComposite() ? "." + requestedCycle.name() : ""));
     }
 
     @Override
