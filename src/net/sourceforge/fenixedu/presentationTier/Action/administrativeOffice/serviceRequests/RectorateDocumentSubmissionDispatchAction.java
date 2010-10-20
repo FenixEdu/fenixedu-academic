@@ -202,7 +202,7 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 	    writer.flush();
 	    response.flushBuffer();
 	} catch (IOException e) {
-	    throw new DomainException("error.rectorateSubmission.errorGeneratingMetadata");
+	    throw new DomainException("error.rectorateSubmission.errorGeneratingMetadata", e);
 	}
 
 	return null;
@@ -211,28 +211,38 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
     public ActionForward zipDocuments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	try {
-	    ByteArrayOutputStream bout = new ByteArrayOutputStream();
-	    ZipOutputStream zip = new ZipOutputStream(bout);
 	    RectorateSubmissionBatch batch = getDomainObject(request, "batchOid");
+	    Set<DocumentRequest> requestsToZip = new HashSet<DocumentRequest>();
 	    for (DocumentRequest document : batch.getDocumentRequestSet()) {
 		// Filter out canceled document requests, ticket: #248539
 		if (!(document instanceof DiplomaRequest) && !document.isCancelled() && !document.isRejected()) {
+		    requestsToZip.add(document);
+		}
+	    }
+	    if (!requestsToZip.isEmpty()) {
+		ByteArrayOutputStream bout = new ByteArrayOutputStream();
+		ZipOutputStream zip = new ZipOutputStream(bout);
+		for (DocumentRequest document : requestsToZip) {
 		    zip.putNextEntry(new ZipEntry(document.getLastGeneratedDocument().getFilename()));
 		    zip.write(document.getLastGeneratedDocument().getContents());
 		    zip.closeEntry();
 		}
+		zip.close();
+		response.setContentType("application/zip");
+		response.addHeader("Content-Disposition", "attachment; filename=documentos-" + batch.getRange() + ".zip");
+		ServletOutputStream writer = response.getOutputStream();
+		writer.write(bout.toByteArray());
+		writer.flush();
+		writer.close();
+		response.flushBuffer();
+		return null;
+	    } else {
+		addActionMessage(request, "error.rectorateSubmission.noDocumentsToZip");
+		request.setAttribute("batchOid", batch.getExternalId());
+		return viewBatch(mapping, actionForm, request, response);
 	    }
-	    zip.close();
-	    response.setContentType("application/zip");
-	    response.addHeader("Content-Disposition", "attachment; filename=documentos-" + batch.getRange() + ".zip");
-	    ServletOutputStream writer = response.getOutputStream();
-	    writer.write(bout.toByteArray());
-	    writer.flush();
-	    writer.close();
-	    response.flushBuffer();
-	    return null;
 	} catch (IOException e) {
-	    throw new DomainException("error.rectorateSubmission.errorGeneratingMetadata");
+	    throw new DomainException("error.rectorateSubmission.errorGeneratingMetadata", e);
 	}
     }
 
