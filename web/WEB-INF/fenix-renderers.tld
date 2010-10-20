@@ -312,7 +312,17 @@
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
       <description>
-            The name of the validator class.
+            **DEPRECATED** The name of the validator class. This attribute is deprecated, use class instead!
+      </description>
+    </attribute>
+    
+    
+    <attribute>
+      <name>class</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+            The name of the validator class. 
       </description>
     </attribute>
   </tag>
