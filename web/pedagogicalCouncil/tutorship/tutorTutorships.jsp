@@ -14,20 +14,39 @@ Definir Período de Preenchimento das Fichas
 
 <br />
 
-
 <fr:form action="/tutorshipSummary.do">
 	<html:hidden property="method" value="searchTeacher" />
 
-    <fr:edit id="tutorateBean" name="tutorateBean" schema="tutorship.summary.search">
+	<fr:edit id="tutorateBean" name="tutorateBean" schema="tutorship.summary.search" layout="tabular">
 		<fr:layout>
-			<fr:property name="classes" value="tstyle5 thlight thleft mtop0"/>
-			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+			<fr:property name="classes" value="tstyle5 thlight thright mbottom0 thmiddle"/>
+	        <fr:property name="columnClasses" value="width125px,,tderror1 tdclear"/>
 		</fr:layout>
-		<fr:destination name="departmentPostBack" path="/tutorshipSummary.do?method=searchTeacher"/>
-        <fr:destination name="teacherSelection" path="/tutorshipSummary.do?method=searchTeacher"/>
-    </fr:edit>
+        <fr:destination name="postback" path="/tutorshipSummary.do?method=postback"/>
+	</fr:edit>
+
+	<logic:notEmpty name="tutorateBean" property="searchType">
+		<logic:equal name="tutorateBean" property="searchType" value="true">
+			<fr:edit id="tutorateBeanDepartment" name="tutorateBean" schema="tutorship.summary.searchByDepartment">
+				<fr:layout>
+					<fr:property name="classes" value="tstyle5 thlight thright gluetop mtop0 mbottom05 thmiddle"/>
+			        <fr:property name="columnClasses" value="width125px,,tderror1 tdclear"/>
+				</fr:layout>
+		        <fr:destination name="postback" path="/tutorshipSummary.do?method=postback"/>
+			</fr:edit>
+		</logic:equal>
+		<logic:equal name="tutorateBean" property="searchType" value="false">
+			<fr:edit id="tutorateBeanDegree" name="tutorateBean" schema="tutorship.summary.searchByDegree">
+				<fr:layout>
+					<fr:property name="classes" value="tstyle5 thlight thright gluetop mtop0 mbottom05"/>
+			        <fr:property name="columnClasses" value="width125px,,tderror1 tdclear"/>
+				</fr:layout>
+		        <fr:destination name="postback" path="/tutorshipSummary.do?method=postback"/>
+			</fr:edit>
+		</logic:equal>
+	</logic:notEmpty>
     
-    <html:submit><bean:message key="button.filter" bundle="APPLICATION_RESOURCES" /></html:submit>
+    <!-- <html:submit><bean:message key="button.filter" bundle="APPLICATION_RESOURCES" /></html:submit> -->
     <html:submit onclick="this.form.method.value='exportSummaries';this.form.submit();">Exportar esta listagem (Excel)</html:submit>
 </fr:form>
 

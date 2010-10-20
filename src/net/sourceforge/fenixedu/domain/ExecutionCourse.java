@@ -29,8 +29,8 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
-import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
+import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.executionCourse.SummariesSearchBean;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
@@ -261,8 +261,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	for (final BibliographicReference bibliographicReference : executionCourseFrom.getAssociatedBibliographicReferences()) {
 	    if (canAddBibliographicReference(bibliographicReference)) {
 		this.createBibliographicReference(bibliographicReference.getTitle(), bibliographicReference.getAuthors(),
-			bibliographicReference.getReference(), bibliographicReference.getYear(), bibliographicReference
-				.getOptional());
+			bibliographicReference.getReference(), bibliographicReference.getYear(),
+			bibliographicReference.getOptional());
 	    } else {
 		notCopiedBibliographicReferences.add(bibliographicReference);
 	    }
@@ -1542,7 +1542,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	}
 	return super.getNome();
     }
-    
+
     public String getName() {
 	return getNome();
     }
@@ -2150,8 +2150,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	// ExecutionInterval
 	ExecutionSemester executionSemester = (ExecutionSemester) ExecutionInterval.getExecutionInterval(academicInterval);
 
-	return executionSemester.getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(executionDegree
-		.getDegreeCurricularPlan(), curricularYear, name);
+	return executionSemester.getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(
+		executionDegree.getDegreeCurricularPlan(), curricularYear, name);
     }
 
     public StudentInquiriesCourseResult getStudentInquiriesCourseResult(ExecutionDegree executionDegree) {

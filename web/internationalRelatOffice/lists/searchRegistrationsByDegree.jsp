@@ -26,7 +26,6 @@
 			<fr:property name="requiredMessageShown" value="false" />
 		</fr:layout>
 	</fr:edit>
-
 	<fr:edit id="chosenParameters" name="searchParametersBean" schema="SearchStudentsByDegreeParametersBean.edit.parameters">
 		<fr:layout name="tabular-row">
 			<fr:property name="classes" value="tdtop ulnomargin"/>

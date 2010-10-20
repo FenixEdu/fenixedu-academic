@@ -46,14 +46,24 @@ public class TutorshipSummaryDA extends ViewStudentsByTutorDispatchAction {
 	if (bean == null) {
 	    bean = new TutorSummaryBean();
 	} else {
-	    RenderUtils.invalidateViewState();
-
 	    if (bean.getTeacher() != null) {
 		getTutorships(request, bean.getTeacher());
 
 		request.setAttribute("tutor", bean.getTeacher());
 	    }
 	}
+	request.setAttribute("tutorateBean", bean);
+
+	return mapping.findForward("searchTeacher");
+    }
+
+    public ActionForward postback(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	TutorSummaryBean bean = (TutorSummaryBean) getRenderedObject("tutorateBean");
+
+	RenderUtils.invalidateViewState();
+
 	request.setAttribute("tutorateBean", bean);
 
 	return mapping.findForward("searchTeacher");

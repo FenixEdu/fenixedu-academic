@@ -32,23 +32,39 @@ public class TutorSearchBean implements Serializable {
 		    }
 		}
 	    } else {
+
 		for (Teacher teacher : RootDomainObject.getInstance().getTeachersSet()) {
 		    if (!bean.getOnlyTutors() || teacher.hasAnyTutorships()) {
 			teachers.add(teacher);
 		    }
 		}
+
 	    }
+
 	    return teachers;
 	}
     }
 
     private static final long serialVersionUID = 161580136110904806L;
 
+    private boolean searchType;
+
     private Department department;
 
     private Teacher teacher;
 
     private Boolean onlyTutors = Boolean.TRUE;
+
+    /**
+     * @return true if search is for department/teacher or false if for degree
+     */
+    public boolean isSearchType() {
+	return searchType;
+    }
+
+    public void setSearchType(boolean searchType) {
+	this.searchType = searchType;
+    }
 
     public Department getDepartment() {
 	return department;
