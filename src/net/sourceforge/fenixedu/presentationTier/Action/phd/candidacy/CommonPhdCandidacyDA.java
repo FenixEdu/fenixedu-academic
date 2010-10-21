@@ -80,7 +80,7 @@ abstract public class CommonPhdCandidacyDA extends PhdProcessDA {
     public ActionForward uploadCandidacyReview(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final PhdProgramDocumentUploadBean bean = (PhdProgramDocumentUploadBean) getRenderedObject("documentToUpload");
+	final PhdProgramDocumentUploadBean bean = getRenderedObject("documentToUpload");
 
 	if (!bean.hasAnyInformation()) {
 	    return uploadCandidacyReviewInvalid(mapping, actionForm, request, response);
@@ -112,7 +112,7 @@ abstract public class CommonPhdCandidacyDA extends PhdProcessDA {
 	    HttpServletResponse response) {
 
 	try {
-	    final PhdProgramCandidacyProcessStateBean bean = (PhdProgramCandidacyProcessStateBean) getRenderedObject("stateBean");
+	    final PhdProgramCandidacyProcessStateBean bean = getRenderedObject("stateBean");
 	    bean.setState(PhdProgramCandidacyProcessState.REJECTED);
 	    ExecuteProcessActivity.run(getProcess(request), RejectCandidacyProcess.class, bean);
 	} catch (final DomainException e) {

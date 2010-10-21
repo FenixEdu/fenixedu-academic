@@ -58,7 +58,7 @@ public class ExternalSupervisorViewYearDA extends FenixDispatchAction{
     }
     
     public ActionForward showStudents(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response){
-	ExternalSupervisorViewsBean bean = (ExternalSupervisorViewsBean) getRenderedObject("sessionBean");
+	ExternalSupervisorViewsBean bean = getRenderedObject("sessionBean");
 	RenderUtils.invalidateViewState();
 	
 	if(bean == null){
@@ -90,7 +90,7 @@ public class ExternalSupervisorViewYearDA extends FenixDispatchAction{
     
 
     public ActionForward exportXLS(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws IOException{
-	ExternalSupervisorViewsBean bean = (ExternalSupervisorViewsBean) getRenderedObject("sessionBean");
+	ExternalSupervisorViewsBean bean = getRenderedObject("sessionBean");
 	final Spreadsheet spreadsheet = generateSpreadsheet(bean);
 
 	response.setContentType("application/vnd.ms-excel");

@@ -134,7 +134,7 @@ public class StudentExternalEnrolmentsDA extends FenixDispatchAction {
     public ActionForward createExternalEnrolments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	final List<ExternalCurricularCourseEnrolmentBean> externalCurricularCourseEnrolmentBeans = (List<ExternalCurricularCourseEnrolmentBean>) getRenderedObject("externalCurricularCourseEnrolmentBeans");
+	final List<ExternalCurricularCourseEnrolmentBean> externalCurricularCourseEnrolmentBeans = getRenderedObject("externalCurricularCourseEnrolmentBeans");
 	final Registration registration = getRegistration(request, actionForm);
 
 	try {

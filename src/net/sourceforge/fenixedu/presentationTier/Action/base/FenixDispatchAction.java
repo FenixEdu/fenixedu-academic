@@ -80,12 +80,12 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	return ServiceUtils.executeService(serviceName, serviceArgs);
     }
 
-    @SuppressWarnings({ "static-access", "unchecked" })
+    @SuppressWarnings( { "static-access", "unchecked" })
     protected DomainObject readDomainObject(final HttpServletRequest request, final Class clazz, final Integer idInternal) {
 	return rootDomainObject.readDomainObjectByOID(clazz, idInternal);
     }
 
-    @SuppressWarnings({ "static-access", "unchecked" })
+    @SuppressWarnings( { "static-access", "unchecked" })
     protected Collection readAllDomainObjects(final HttpServletRequest request, final Class clazz) {
 	return rootDomainObject.readAllDomainObjects(clazz);
     }
@@ -233,8 +233,8 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	return getRenderedObject(id);
     }
 
-    protected Object getRenderedObject(String id) {
-	return getRenderedObjectFromViewState(RenderUtils.getViewState(id));
+    protected <RenderedObjectType> RenderedObjectType getRenderedObject(String id) {
+	return (RenderedObjectType) getRenderedObjectFromViewState(RenderUtils.getViewState(id));
     }
 
     private Object getRenderedObjectFromViewState(IViewState viewState) {

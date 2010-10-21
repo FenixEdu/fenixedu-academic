@@ -87,7 +87,7 @@ public class StudentInternalSubstitutionsDA extends StudentDismissalsDA {
     public ActionForward chooseEquivalents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final DismissalBean dismissalBean = (DismissalBean) getRenderedObject("dismissalBean");
+	final DismissalBean dismissalBean = getRenderedObject("dismissalBean");
 	if (!dismissalBean.hasAnySelectedIEnrolments()) {
 	    addActionMessage(request, "error.StudentInternalSubstitutionsDA.must.select.ienrolments");
 	    request.setAttribute("dismissalBean", dismissalBean);

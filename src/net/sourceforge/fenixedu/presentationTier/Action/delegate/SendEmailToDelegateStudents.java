@@ -86,7 +86,7 @@ public class SendEmailToDelegateStudents extends FenixDispatchAction {
 
     public ActionForward prepareSendEmail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	GroupsBean recipientsBean = (GroupsBean) getRenderedObject("recipientsBean");
+	GroupsBean recipientsBean = getRenderedObject("recipientsBean");
 	String year = request.getParameter("year");
 	ExecutionYear executionYear = year == null ? ExecutionYear.readCurrentExecutionYear() : (ExecutionYear) DomainObject
 		.fromExternalId(year);
@@ -258,14 +258,14 @@ public class SendEmailToDelegateStudents extends FenixDispatchAction {
 
     public ActionForward chooseExecutionYear(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	ExecutionYearBean executionYearBean = (ExecutionYearBean) getRenderedObject("chooseExecutionYear");
+	ExecutionYearBean executionYearBean = getRenderedObject("chooseExecutionYear");
 	RenderUtils.invalidateViewState();
 	return prepare(mapping, actionForm, request, response, executionYearBean.getExecutionYear());
     }
 
     public ActionForward chooseExecutionYearCurricularCourseList(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	ExecutionYearBean executionYearBean = (ExecutionYearBean) getRenderedObject("chooseExecutionYear");
+	ExecutionYearBean executionYearBean = getRenderedObject("chooseExecutionYear");
 	RenderUtils.invalidateViewState();
 	return prepareSendToStudentsFromSelectedCurricularCourses(mapping, actionForm, request, response, executionYearBean
 		.getExecutionYear());

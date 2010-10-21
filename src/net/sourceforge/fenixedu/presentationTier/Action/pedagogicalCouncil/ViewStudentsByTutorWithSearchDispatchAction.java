@@ -26,7 +26,7 @@ public class ViewStudentsByTutorWithSearchDispatchAction extends ViewStudentsByT
 
     public ActionForward viewStudentsByTutor(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	TutorSearchBean bean = (TutorSearchBean) getRenderedObject("tutorateBean");
+	TutorSearchBean bean = getRenderedObject("tutorateBean");
 	RenderUtils.invalidateViewState();
 	request.setAttribute("tutorateBean", bean);
 	if (bean.getTeacher() != null) {

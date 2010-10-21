@@ -72,7 +72,7 @@ public class PhdAccountingEventsManagementDA extends PhdProcessDA {
 
 	try {
 
-	    final AccountingEventCreateBean bean = (AccountingEventCreateBean) getRenderedObject("eventBean");
+	    final AccountingEventCreateBean bean = getRenderedObject("eventBean");
 	    final PhdIndividualProgramProcess process = getProcess(request);
 
 	    if (process.getExecutionYear().isAfter(bean.getExecutionYear())) {

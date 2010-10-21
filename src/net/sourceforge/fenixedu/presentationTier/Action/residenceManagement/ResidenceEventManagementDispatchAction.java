@@ -42,7 +42,7 @@ public class ResidenceEventManagementDispatchAction extends FenixDispatchAction 
     public ActionForward manageResidenceEvents(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	ImportResidenceEventBean importResidenceEventBean = (ImportResidenceEventBean) getRenderedObject("searchEventMonth");
+	ImportResidenceEventBean importResidenceEventBean = getRenderedObject("searchEventMonth");
 	if (importResidenceEventBean == null) {
 	    ResidenceMonth month = getResidenceMonth(request);
 	    importResidenceEventBean = month != null ? new ImportResidenceEventBean(month) : new ImportResidenceEventBean();
@@ -122,7 +122,7 @@ public class ResidenceEventManagementDispatchAction extends FenixDispatchAction 
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	ResidenceEvent residenceEvent = (ResidenceEvent) DomainObject.fromOID(Long.parseLong(request.getParameter("event")));
-	YearMonthDay date = (YearMonthDay) getRenderedObject("date");
+	YearMonthDay date = getRenderedObject("date");
 
 	try {
 	    PayResidenceEvent.run(getLoggedPerson(request).getUser(), residenceEvent, date);

@@ -223,7 +223,7 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
     public ActionForward editCandidacyInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final CandidacyInformationBean candidacyInformationBean = (CandidacyInformationBean) getRenderedObject("candidacyInformationBean");
+	final CandidacyInformationBean candidacyInformationBean = getRenderedObject("candidacyInformationBean");
 
 	final Set<String> messages = candidacyInformationBean.validate();
 	if (!messages.isEmpty()) {
@@ -358,7 +358,7 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
     public ActionForward ratifyCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final RatifyCandidacyBean bean = (RatifyCandidacyBean) getRenderedObject("ratifyCandidacyBean");
+	final RatifyCandidacyBean bean = getRenderedObject("ratifyCandidacyBean");
 	try {
 	    ExecuteProcessActivity.run(getProcess(request), RatifyCandidacy.class, bean);
 	    addSuccessMessage(request, "message.candidacy.ratified.successfuly");
@@ -403,7 +403,7 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
     public ActionForward createNotification(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final PhdNotificationBean bean = (PhdNotificationBean) getRenderedObject("notificationBean");
+	final PhdNotificationBean bean = getRenderedObject("notificationBean");
 
 	final ActionForward result = executeActivity(AddNotification.class, bean, request, mapping, "createNotification",
 		"manageNotifications", "message.notification.created.with.success");
@@ -496,7 +496,7 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 
 	try {
 
-	    final RegistrationFormalizationBean bean = (RegistrationFormalizationBean) getRenderedObject("registrationFormalizationBean");
+	    final RegistrationFormalizationBean bean = getRenderedObject("registrationFormalizationBean");
 
 	    if (!bean.hasRegistration() && mustSelectFirstAnyRegistratiom(request)) {
 		bean.setSelectRegistration(true);

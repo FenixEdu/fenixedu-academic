@@ -27,6 +27,7 @@ import pt.utl.ist.fenix.tools.file.FileManagerException;
 
 public class ResultsManagementAction extends FenixDispatchAction {
 
+    @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 	String unitId = request.getParameter("unitId");
@@ -70,7 +71,7 @@ public class ResultsManagementAction extends FenixDispatchAction {
     public ActionForward associatePrize(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final ResearchResult result = (ResearchResult) getResultByIdFromRequest(request);
+	final ResearchResult result = getResultByIdFromRequest(request);
 	request.setAttribute("publication", result);
 
 	return mapping.findForward("associatePrize");
@@ -145,19 +146,21 @@ public class ResultsManagementAction extends FenixDispatchAction {
 	return result;
     }
 
-    public Object getRenderedObject(String id) {
+    @Override
+    public <RenderedObjectType> RenderedObjectType getRenderedObject(String id) {
 	if (id == null || id.equals("")) {
 	    if (RenderUtils.getViewState() != null) {
-		return RenderUtils.getViewState().getMetaObject().getObject();
+		return (RenderedObjectType) RenderUtils.getViewState().getMetaObject().getObject();
 	    }
 	} else {
 	    if (RenderUtils.getViewState(id) != null) {
-		return RenderUtils.getViewState(id).getMetaObject().getObject();
+		return (RenderedObjectType) RenderUtils.getViewState(id).getMetaObject().getObject();
 	    }
 	}
 	return null;
     }
 
+    @Override
     public ActionForward processException(HttpServletRequest request, ActionMapping mapping, ActionForward input, Exception e) {
 	if (e instanceof DomainException) {
 	    final DomainException ex = (DomainException) e;

@@ -48,7 +48,7 @@ public class ManageExecutionCourseDA extends FenixExecutionCourseAndExecutionDeg
     public ActionForward preparePostBack(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	CourseLoadBean bean = (CourseLoadBean) getRenderedObject("courseLoadBeanID");
+	CourseLoadBean bean = getRenderedObject("courseLoadBeanID");
 	ShiftType type = bean.getType();
 	if (type != null) {
 	    CourseLoad courseLoad = bean.getExecutionCourse().getCourseLoadByShiftType(type);
@@ -70,7 +70,7 @@ public class ManageExecutionCourseDA extends FenixExecutionCourseAndExecutionDeg
     public ActionForward showCourseLoad(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	CourseLoadBean bean = (CourseLoadBean) getRenderedObject("courseLoadBeanID");
+	CourseLoadBean bean = getRenderedObject("courseLoadBeanID");
 	readAndSetExecutionCourseClasses(request, bean.getExecutionCourse());
 	request.setAttribute("courseLoadBean", bean);
 	return mapping.findForward("ManageExecutionCourse");
@@ -79,7 +79,7 @@ public class ManageExecutionCourseDA extends FenixExecutionCourseAndExecutionDeg
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 
-	CourseLoadBean bean = (CourseLoadBean) getRenderedObject("courseLoadBeanID");
+	CourseLoadBean bean = getRenderedObject("courseLoadBeanID");
 	try {
 	    EditExecutionCourse.run(bean);
 

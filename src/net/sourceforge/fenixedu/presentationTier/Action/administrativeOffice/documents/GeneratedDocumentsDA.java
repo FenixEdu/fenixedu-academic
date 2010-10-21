@@ -125,7 +125,7 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws JRException {
 
 	final Person person = getPerson(request);
-	final IRSDeclarationDTO declarationDTO = (IRSDeclarationDTO) getRenderedObject("declarationDTO");
+	final IRSDeclarationDTO declarationDTO = getRenderedObject("declarationDTO");
 
 	try {
 

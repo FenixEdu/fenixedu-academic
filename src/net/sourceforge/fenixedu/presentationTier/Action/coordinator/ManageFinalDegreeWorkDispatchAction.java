@@ -294,7 +294,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
 	ProposalsFilterBean filterBean;
 	if (request.getParameter("proposalStatusType") == null) {
-	    filterBean = (ProposalsFilterBean) getRenderedObject("filterBean");
+	    filterBean = getRenderedObject("filterBean");
 	    if (filterBean == null) {
 		filterBean = new ProposalsFilterBean(proposalsSummaryBean);
 	    }

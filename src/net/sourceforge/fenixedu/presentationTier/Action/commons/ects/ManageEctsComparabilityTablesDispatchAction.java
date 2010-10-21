@@ -126,7 +126,7 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
     }
 
     private EctsTableFilter readFilter(HttpServletRequest request) {
-	EctsTableFilter filter = (EctsTableFilter) getRenderedObject("filter");
+	EctsTableFilter filter = getRenderedObject("filter");
 	RenderUtils.invalidateViewState();
 	if (filter == null) {
 	    filter = new EctsTableFilter();

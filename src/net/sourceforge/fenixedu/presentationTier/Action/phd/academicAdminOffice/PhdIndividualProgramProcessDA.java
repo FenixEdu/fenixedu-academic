@@ -371,7 +371,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
     public ActionForward editPhdIndividualProgramProcessInformation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	final PhdIndividualProgramProcessBean bean = (PhdIndividualProgramProcessBean) getRenderedObject("phdIndividualProgramProcessBean");
+	final PhdIndividualProgramProcessBean bean = getRenderedObject("phdIndividualProgramProcessBean");
 	request.setAttribute("phdIndividualProgramProcessBean", bean);
 
 	if (!bean.isCollaborationInformationCorrect()) {
@@ -429,7 +429,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
     public ActionForward addGuidingInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final PhdParticipantBean bean = (PhdParticipantBean) getRenderedObject("guidingBean");
+	final PhdParticipantBean bean = getRenderedObject("guidingBean");
 	try {
 	    ExecuteProcessActivity.run(getProcess(request), AddGuidingInformation.class.getSimpleName(), bean);
 	    addSuccessMessage(request, "message.guiding.created.with.success");
@@ -484,7 +484,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
     public ActionForward addAssistantGuidingInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final PhdParticipantBean bean = (PhdParticipantBean) getRenderedObject("assistantGuidingBean");
+	final PhdParticipantBean bean = getRenderedObject("assistantGuidingBean");
 	try {
 	    ExecuteProcessActivity.run(getProcess(request), AddAssistantGuidingInformation.class.getSimpleName(), bean);
 	    addSuccessMessage(request, "message.assistant.guiding.created.with.success");
@@ -535,7 +535,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
     public ActionForward changePhdIndividualProgramProcessState(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
-	final PhdIndividualProgramProcessBean bean = (PhdIndividualProgramProcessBean) getRenderedObject("processBean");
+	final PhdIndividualProgramProcessBean bean = getRenderedObject("processBean");
 
 	try {
 	    switch (bean.getProcessState()) {
@@ -817,7 +817,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
     public ActionForward uploadPhoto(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
 
-	final PhotographUploadBean photo = (PhotographUploadBean) getRenderedObject("uploadPhotoBean");
+	final PhotographUploadBean photo = getRenderedObject("uploadPhotoBean");
 
 	if (!RenderUtils.getViewState("uploadPhotoBean").isValid()) {
 	    addErrorMessage(request, "error.photo.upload.invalid.information");
@@ -907,7 +907,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
     public ActionForward requestPublicThesisPresentation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final PhdThesisProcessBean bean = (PhdThesisProcessBean) getRenderedObject("requestPublicThesisPresentation");
+	final PhdThesisProcessBean bean = getRenderedObject("requestPublicThesisPresentation");
 	request.setAttribute("requestPublicThesisPresentation", bean);
 
 	RenderUtils.invalidateViewState("requestPublicThesisPresentation.edit.documents");
@@ -922,7 +922,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
     public ActionForward manageEnrolmentPeriods(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	ManageEnrolmentsBean bean = (ManageEnrolmentsBean) getRenderedObject("manageEnrolmentsBean");
+	ManageEnrolmentsBean bean = getRenderedObject("manageEnrolmentsBean");
 
 	if (bean == null) {
 	    bean = new ManageEnrolmentsBean();
@@ -973,7 +973,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 
 	try {
 
-	    final ManageEnrolmentsBean bean = (ManageEnrolmentsBean) getRenderedObject("createBean");
+	    final ManageEnrolmentsBean bean = getRenderedObject("createBean");
 	    CreateEnrolmentPeriods.create(bean.getDegreeCurricularPlans(), bean.getSemester(), bean.getStartDate(), bean
 		    .getEndDate());
 
@@ -1022,7 +1022,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 	    HttpServletResponse response) {
 
 	final PhdIndividualProgramProcess process = getProcess(request);
-	final RegistrationFormalizationBean bean = (RegistrationFormalizationBean) getRenderedObject("registrationFormalizationBean");
+	final RegistrationFormalizationBean bean = getRenderedObject("registrationFormalizationBean");
 
 	try {
 

@@ -29,7 +29,7 @@ public class ManageExternalSupervisionDA extends FenixDispatchAction {
     }
     
     public ActionForward showSupervisors(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	ManageExternalSupervisionBean bean = (ManageExternalSupervisionBean) getRenderedObject("sessionBean");
+	ManageExternalSupervisionBean bean = getRenderedObject("sessionBean");
 	RegistrationProtocol registrationProtocol = RegistrationProtocol.serveRegistrationProtocol(bean.getRegistrationAgreement());
 	bean.setRegistrationProtocol(registrationProtocol);
 	request.setAttribute("sessionBean", bean);
@@ -39,7 +39,7 @@ public class ManageExternalSupervisionDA extends FenixDispatchAction {
     
     public ActionForward addSupervisor(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	
-	ManageExternalSupervisionBean bean = (ManageExternalSupervisionBean) getRenderedObject("sessionBean");
+	ManageExternalSupervisionBean bean = getRenderedObject("sessionBean");
 	bean.addSupervisor();
 	bean.setNewSupervisor(null);
 	
@@ -51,7 +51,7 @@ public class ManageExternalSupervisionDA extends FenixDispatchAction {
     }
     
     public ActionForward invalidAddSupervisor(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	ManageExternalSupervisionBean bean = (ManageExternalSupervisionBean) getRenderedObject("sessionBean");
+	ManageExternalSupervisionBean bean = getRenderedObject("sessionBean");
 	bean.setNewSupervisor(null);
 	
 	request.setAttribute("sessionBean", bean);

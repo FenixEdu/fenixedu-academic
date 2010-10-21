@@ -475,7 +475,7 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
     public ActionForward requestScheduleThesisMeeting(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final PhdThesisProcessBean bean = (PhdThesisProcessBean) getRenderedObject("thesisProcessBean");
+	final PhdThesisProcessBean bean = getRenderedObject("thesisProcessBean");
 	try {
 	    ExecuteProcessActivity.run(getProcess(request), ScheduleThesisMeetingRequest.class, bean);
 

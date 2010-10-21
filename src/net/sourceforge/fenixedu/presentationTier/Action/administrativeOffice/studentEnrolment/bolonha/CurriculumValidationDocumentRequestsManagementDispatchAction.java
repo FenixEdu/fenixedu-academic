@@ -104,7 +104,7 @@ public class CurriculumValidationDocumentRequestsManagementDispatchAction extend
 	    final List<AdministrativeOfficeDocument> documents = (List<AdministrativeOfficeDocument>) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
 		    .create(documentRequest);
 
-	    DocumentFieldsCustomization customization = (DocumentFieldsCustomization) getRenderedObject("document.fields.customization");
+	    DocumentFieldsCustomization customization = getRenderedObject("document.fields.customization");
 
 	    DocumentPrintRequest.logRequest(customization.getConclusionDate(), customization.getDegreeDescription(),
 		    customization.getGraduatedTitle(), documentRequest);

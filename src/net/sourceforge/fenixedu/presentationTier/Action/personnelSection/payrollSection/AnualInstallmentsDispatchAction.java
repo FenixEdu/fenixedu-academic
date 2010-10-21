@@ -46,7 +46,7 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 
     public ActionForward showAnualInstallment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
-	AnualBonusInstallmentFactory anualBonusInstallmentFactory = (AnualBonusInstallmentFactory) getRenderedObject("anualBonusInstallmentFactory");
+	AnualBonusInstallmentFactory anualBonusInstallmentFactory = getRenderedObject("anualBonusInstallmentFactory");
 	if (anualBonusInstallmentFactory == null) {
 	    anualBonusInstallmentFactory = new AnualBonusInstallmentFactory();
 	} else {
@@ -69,7 +69,7 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 	if (isCancelled(request)) {
 	    return showAnualInstallment(mapping, form, request, response);
 	}
-	AnualBonusInstallmentFactory anualBonusInstallmentFactory = (AnualBonusInstallmentFactory) getRenderedObject("anualBonusInstallmentBean");
+	AnualBonusInstallmentFactory anualBonusInstallmentFactory = getRenderedObject("anualBonusInstallmentBean");
 	RenderUtils.invalidateViewState();
 	ActionMessages actionMessages = getMessages(request);
 	if (anualBonusInstallmentFactory == null) {

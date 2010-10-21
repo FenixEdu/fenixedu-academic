@@ -130,7 +130,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 	    HttpServletResponse response) {
 
 	final PhdIndividualProgramProcess process = getProcess(request);
-	ManageEnrolmentsBean bean = (ManageEnrolmentsBean) getRenderedObject("manageEnrolmentsBean");
+	ManageEnrolmentsBean bean = getRenderedObject("manageEnrolmentsBean");
 
 	if (bean == null) {
 	    bean = new ManageEnrolmentsBean();
@@ -176,7 +176,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 	    HttpServletResponse response) {
 
 	final PhdIndividualProgramProcess process = getProcess(request);
-	ManageEnrolmentsBean bean = (ManageEnrolmentsBean) getRenderedObject("manageEnrolmentsBean");
+	ManageEnrolmentsBean bean = getRenderedObject("manageEnrolmentsBean");
 
 	if (bean == null) {
 	    bean = new ManageEnrolmentsBean();
@@ -208,7 +208,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
     public ActionForward acceptEnrolments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final ManageEnrolmentsBean bean = (ManageEnrolmentsBean) getRenderedObject("manageEnrolmentsBean");
+	final ManageEnrolmentsBean bean = getRenderedObject("manageEnrolmentsBean");
 	request.setAttribute("manageEnrolmentsBean", bean);
 
 	try {
@@ -228,7 +228,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
     public ActionForward rejectEnrolments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final ManageEnrolmentsBean bean = (ManageEnrolmentsBean) getRenderedObject("manageEnrolmentsBean");
+	final ManageEnrolmentsBean bean = getRenderedObject("manageEnrolmentsBean");
 	request.setAttribute("manageEnrolmentsBean", bean);
 
 	try {

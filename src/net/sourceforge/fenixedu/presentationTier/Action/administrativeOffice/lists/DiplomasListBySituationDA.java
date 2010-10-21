@@ -67,7 +67,7 @@ public class DiplomasListBySituationDA extends FenixDispatchAction {
     }
 
     private SearchDiplomasBySituationParametersBean getOrCreateSearchParametersBean() {
-	SearchDiplomasBySituationParametersBean bean = (SearchDiplomasBySituationParametersBean) getRenderedObject("searchParametersBean");
+	SearchDiplomasBySituationParametersBean bean = getRenderedObject("searchParametersBean");
 	return (bean != null) ? bean : new SearchDiplomasBySituationParametersBean(AccessControl.getPerson().getEmployee());
     }
 

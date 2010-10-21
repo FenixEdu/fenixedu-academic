@@ -171,7 +171,7 @@ public class ThesisSubmissionDA extends AbstractManageThesisDA {
 	if (confirmation) {
 	    executeService("RejectThesisDeclaration", new Object[] { thesis });
 	} else {
-	    DeclarationBean bean = (DeclarationBean) getRenderedObject("declarationBean");
+	    DeclarationBean bean = getRenderedObject("declarationBean");
 
 	    boolean accepted = request.getParameter("accept") != null;
 	    if (accepted) {

@@ -22,7 +22,7 @@ public class PartyContactsManagementDispatchAction extends
     @Override
     public ActionForward backToShowInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	PartyContactBean contact = (PartyContactBean) getRenderedObject("edit-contact");
+	PartyContactBean contact = getRenderedObject("edit-contact");
 	if (contact != null) {
 	    request.setAttribute("person", contact.getParty());
 	} else {

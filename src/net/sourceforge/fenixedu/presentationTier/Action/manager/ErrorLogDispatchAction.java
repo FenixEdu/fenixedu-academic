@@ -276,8 +276,8 @@ public class ErrorLogDispatchAction extends FenixDispatchAction {
     public ActionForward filter(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws FenixActionException {
 
-	RequestLogDayBean requestLogFromBean = (RequestLogDayBean) getRenderedObject("from");
-	RequestLogDayBean requestLogToBean = (RequestLogDayBean) getRenderedObject("to");
+	RequestLogDayBean requestLogFromBean = getRenderedObject("from");
+	RequestLogDayBean requestLogToBean = getRenderedObject("to");
 
 	if (requestLogFromBean == null) {
 	    requestLogFromBean = new RequestLogDayBean();

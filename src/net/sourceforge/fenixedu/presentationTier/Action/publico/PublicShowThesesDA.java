@@ -72,7 +72,7 @@ public abstract class PublicShowThesesDA extends FenixDispatchAction {
     }
 
     protected ThesisFilterBean getFilterBean(HttpServletRequest request) throws Exception {
-	ThesisFilterBean bean = (ThesisFilterBean) getRenderedObject("filter");
+	ThesisFilterBean bean = getRenderedObject("filter");
 
 	if (bean == null) {
 	    bean = new ThesisFilterBean();

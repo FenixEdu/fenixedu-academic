@@ -37,7 +37,7 @@ public class ExportExtraWorkDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) {
 	request.setAttribute("action", getFromRequest(request, "action"));
 	request.setAttribute("chooseMonth", getFromRequest(request, "chooseMonth"));
-	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonth");
+	YearMonth yearMonth = getRenderedObject("yearMonth");
 	if (yearMonth == null) {
 	    yearMonth = getYearMonthToExport();
 	}
@@ -58,7 +58,7 @@ public class ExportExtraWorkDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	request.setAttribute("action", (String) getRenderedObject("action"));
 	request.setAttribute("chooseMonth", (String) getRenderedObject("chooseMonth"));
-	final YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonth");
+	final YearMonth yearMonth = getRenderedObject("yearMonth");
 	if (yearMonth == null) {
 	    return chooseYearMonth(mapping, actionForm, request, response);
 	}
@@ -103,7 +103,7 @@ public class ExportExtraWorkDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	request.setAttribute("action", (String) getRenderedObject("action"));
 	request.setAttribute("chooseMonth", (String) getRenderedObject("chooseMonth"));
-	final YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonth");
+	final YearMonth yearMonth = getRenderedObject("yearMonth");
 	if (yearMonth == null) {
 	    return chooseYearMonth(mapping, actionForm, request, response);
 	}

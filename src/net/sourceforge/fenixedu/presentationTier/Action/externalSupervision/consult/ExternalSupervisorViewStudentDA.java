@@ -60,7 +60,7 @@ public class ExternalSupervisorViewStudentDA extends FenixDispatchAction{
     
     public ActionForward showStats(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response){
 	
-	ExternalSupervisorViewsBean bean = (ExternalSupervisorViewsBean) getRenderedObject("sessionBean");
+	ExternalSupervisorViewsBean bean = getRenderedObject("sessionBean");
 	final IUserView userView = UserView.getUser();
 	final Person supervisor = userView.getPerson();
 	boolean isOmnipotent;
@@ -116,7 +116,7 @@ public class ExternalSupervisorViewStudentDA extends FenixDispatchAction{
     }
     
     public ActionForward invalidStudent(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response){
-	ExternalSupervisorViewsBean bean = (ExternalSupervisorViewsBean) getRenderedObject("sessionBean");
+	ExternalSupervisorViewsBean bean = getRenderedObject("sessionBean");
 	request.setAttribute("sessionBean", bean);
 	RenderUtils.invalidateViewState("sessionBean");
 	return mapping.findForward("selectStudent");

@@ -30,7 +30,7 @@ public class EditScientificJournalDA extends EditResearchActivityDA {
 
     public ActionForward prepareChooseJournalIssueToMerge(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	PageContainerBean pageContainerBean = (PageContainerBean) getRenderedObject("pageContainerBean");
+	PageContainerBean pageContainerBean = getRenderedObject("pageContainerBean");
 	RenderUtils.invalidateViewState();
 
 	MergeJournalIssuePageContainerBean mergeJournalIssuePageContainerBean = new MergeJournalIssuePageContainerBean(

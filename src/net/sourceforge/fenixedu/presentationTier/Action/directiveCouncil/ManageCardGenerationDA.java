@@ -414,7 +414,7 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
     }
 
     protected void setContext(final HttpServletRequest request) {
-	CardGenerationContext cardGenerationContext = (CardGenerationContext) getRenderedObject("cardGenerationContext");
+	CardGenerationContext cardGenerationContext = getRenderedObject("cardGenerationContext");
 	if (cardGenerationContext == null) {
 	    final ExecutionYear executionYear = getExecutionYear(request);
 	    cardGenerationContext = executionYear == null ? new CardGenerationContext()
@@ -470,7 +470,7 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 
     public ActionForward readCardInfo(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
 	    final HttpServletResponse response) {
-	UploadBean bean = (UploadBean) getRenderedObject("uploadBean");
+	UploadBean bean = getRenderedObject("uploadBean");
 	RenderUtils.invalidateViewState("uploadBean");
 	fixBadData();
 	try {

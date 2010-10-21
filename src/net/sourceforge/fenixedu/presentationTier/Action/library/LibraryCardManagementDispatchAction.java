@@ -81,7 +81,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
     public ActionForward showUsers(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	LibraryCardSearch libraryCardSearch = (LibraryCardSearch) getRenderedObject("libraryCardSearch");
+	LibraryCardSearch libraryCardSearch = getRenderedObject("libraryCardSearch");
 
 	if (libraryCardSearch == null) {
 	    PartyClassification partyClassification = null;
@@ -193,7 +193,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	    return showUsers(mapping, actionForm, request, response);
 	}
 
-	LibraryCardDTO libraryCardDTO = (LibraryCardDTO) getRenderedObject("libraryCardToCreate");
+	LibraryCardDTO libraryCardDTO = getRenderedObject("libraryCardToCreate");
 
 	if (!libraryCardDTO.getUnlimitedCard() && libraryCardDTO.getValidUntil() == null) {
 	    setError(request, "error.card.date.canNotBeNull");
@@ -221,7 +221,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	    return showUsers(mapping, actionForm, request, response);
 	}
 
-	LibraryCardDTO libraryCardDTO = (LibraryCardDTO) getRenderedObject("libraryCardDTO");
+	LibraryCardDTO libraryCardDTO = getRenderedObject("libraryCardDTO");
 
 	if (request.getParameter("modify") != null) {
 	    prepareEdit(request);			
@@ -257,7 +257,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
     }
 
     private void prepareEdit(HttpServletRequest request) {
-	LibraryCardDTO libraryCardDTO = (LibraryCardDTO) getRenderedObject("libraryCardDTO");
+	LibraryCardDTO libraryCardDTO = getRenderedObject("libraryCardDTO");
 	libraryCardDTO = getRenderedObject("libraryCardEdit") != null ? (LibraryCardDTO) getRenderedObject("libraryCardEdit")
 		: libraryCardDTO;
 	// TODO remove this condition, when user names that already exist
@@ -279,7 +279,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	    return showUsers(mapping, actionForm, request, response);
 	}
 
-	LibraryCardDTO libraryCardDTO = (LibraryCardDTO) getRenderedObject("libraryCardEdit");
+	LibraryCardDTO libraryCardDTO = getRenderedObject("libraryCardEdit");
 
 	boolean validationError = validateNamesMaxLength(request, libraryCardDTO);
 	if (validationError) {
@@ -490,7 +490,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	    return showUsers(mapping, actionForm, request, response);
 	}
 
-	ExternalPersonBean externalPersonBean = (ExternalPersonBean) getRenderedObject("createPerson");
+	ExternalPersonBean externalPersonBean = getRenderedObject("createPerson");
 	if (externalPersonBean == null) {
 	    externalPersonBean = (ExternalPersonBean) request.getAttribute("externalPersonBean");
 	}
@@ -517,7 +517,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
     public ActionForward createUnitPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	ExternalPersonBean externalPersonBean = (ExternalPersonBean) getRenderedObject("createUnitPerson");
+	ExternalPersonBean externalPersonBean = getRenderedObject("createUnitPerson");
 	RenderUtils.invalidateViewState();
 	request.setAttribute("externalPersonBean", externalPersonBean);
 
@@ -589,7 +589,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
     public ActionForward changeDateVisibility(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws JRException, IOException {
 
-	LibraryCardDTO libraryCardDTO = (LibraryCardDTO) getRenderedObject("validUntil");
+	LibraryCardDTO libraryCardDTO = getRenderedObject("validUntil");
 	if (libraryCardDTO.getPerson().getName().length() > maxUserNameLength) {
 	    addMessage(request, "message.card.userName.tooLong", libraryCardDTO.getPerson().getName().length(), maxUserNameLength);
 	}
@@ -612,7 +612,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	    return showUsers(mapping, actionForm, request, response);
 	}
 
-	LibraryCardDTO libraryCardDTO = (LibraryCardDTO) getRenderedObject("validUntil");
+	LibraryCardDTO libraryCardDTO = getRenderedObject("validUntil");
 	request.setAttribute("libraryCardDTO", libraryCardDTO);
 	request.setAttribute("libraryCardSearch", getRenderedObject("libraryCardSearch"));
 	request.setAttribute("presentDate", "presentDate");

@@ -94,7 +94,7 @@ public class PhdEnrolmentsManagementDA extends PhdProcessDA {
     public ActionForward changeDegreeCurricularPlanConfig(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	final DegreeCurricularPlanRendererConfig config = (DegreeCurricularPlanRendererConfig) getRenderedObject("rendererConfig");
+	final DegreeCurricularPlanRendererConfig config = getRenderedObject("rendererConfig");
 
 	request.setAttribute("rendererConfig", config);
 	request.setAttribute("phdProgram", config.getDegreeCurricularPlan().getDegree().getPhdProgram());
@@ -151,7 +151,7 @@ public class PhdEnrolmentsManagementDA extends PhdProcessDA {
     public ActionForward manageEnrolments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	ManageEnrolmentsBean bean = (ManageEnrolmentsBean) getRenderedObject("manageEnrolmentsBean");
+	ManageEnrolmentsBean bean = getRenderedObject("manageEnrolmentsBean");
 	if (bean == null) {
 	    bean = new ManageEnrolmentsBean();
 	    bean.setSemester(ExecutionSemester.readActualExecutionSemester());

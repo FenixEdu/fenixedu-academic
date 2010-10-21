@@ -43,7 +43,7 @@ public class ViewRoomFormActionPostBack extends FenixDispatchAction {
 
     public ActionForward academicIntervalPostBack(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException {
-	RoomOccupationWeekBean roomOccupationWeekBean = (RoomOccupationWeekBean) getRenderedObject("roomOccupationWeekBean");
+	RoomOccupationWeekBean roomOccupationWeekBean = getRenderedObject("roomOccupationWeekBean");
 	RenderUtils.invalidateViewState();
 	roomOccupationWeekBean.setWeekBean(null);
 	fillRequestData(roomOccupationWeekBean, request);
@@ -52,7 +52,7 @@ public class ViewRoomFormActionPostBack extends FenixDispatchAction {
 
     public ActionForward weekPostBack(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException {
-	RoomOccupationWeekBean roomOccupationWeekBean = (RoomOccupationWeekBean) getRenderedObject("roomOccupationWeekBean");
+	RoomOccupationWeekBean roomOccupationWeekBean = getRenderedObject("roomOccupationWeekBean");
 	RenderUtils.invalidateViewState();
 	fillRequestData(roomOccupationWeekBean, request);
 	return mapping.findForward("Sucess");

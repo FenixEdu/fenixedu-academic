@@ -55,7 +55,7 @@ public class ScientificCommissionTeamDA extends FenixDispatchAction {
     }
 
     private ExecutionDegree getExecutionDegree(HttpServletRequest request) {
-	ExecutionDegreeBean bean = (ExecutionDegreeBean) getRenderedObject("executionDegreeChoice");
+	ExecutionDegreeBean bean = getRenderedObject("executionDegreeChoice");
 	if (bean != null) {
 	    return bean.getExecutionDegree();
 	} else {
@@ -96,7 +96,7 @@ public class ScientificCommissionTeamDA extends FenixDispatchAction {
 	DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
 	ExecutionDegree executionDegree = getExecutionDegree(request);
 
-	ExecutionDegreeBean bean = (ExecutionDegreeBean) getRenderedObject("executionDegreeChoice");
+	ExecutionDegreeBean bean = getRenderedObject("executionDegreeChoice");
 	if (bean == null) {
 	    bean = new ExecutionDegreeBean(degreeCurricularPlan);
 	    bean.setExecutionDegree(executionDegree);
@@ -144,7 +144,7 @@ public class ScientificCommissionTeamDA extends FenixDispatchAction {
 
     public ActionForward addMember(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	VariantBean bean = (VariantBean) getRenderedObject("usernameChoice");
+	VariantBean bean = getRenderedObject("usernameChoice");
 	if (bean != null) {
 	    String istUsername = bean.getString();
 

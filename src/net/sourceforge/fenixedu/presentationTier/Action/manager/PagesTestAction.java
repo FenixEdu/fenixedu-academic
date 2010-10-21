@@ -17,7 +17,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 public class PagesTestAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	PageContainerBean pageContainerBean = (PageContainerBean) getRenderedObject("page");
+	PageContainerBean pageContainerBean = getRenderedObject("page");
 	if (pageContainerBean == null) {
 	    pageContainerBean = new PageContainerBean();
 	} else {
@@ -29,7 +29,7 @@ public class PagesTestAction extends FenixDispatchAction {
 
     public ActionForward doSomething(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	PageContainerBean pageContainerBean = (PageContainerBean) getRenderedObject("page");
+	PageContainerBean pageContainerBean = getRenderedObject("page");
 	pageContainerBean.setSelected(null);
 	RenderUtils.invalidateViewState();
 	return setObjects(mapping, form, request, response, pageContainerBean);

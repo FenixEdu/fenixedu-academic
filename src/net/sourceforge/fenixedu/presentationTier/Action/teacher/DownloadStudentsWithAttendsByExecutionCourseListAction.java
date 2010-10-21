@@ -89,7 +89,7 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws FenixActionException, FenixFilterException, FenixServiceException {
 
-	SearchExecutionCourseAttendsBean executionCourseAttendsBean = (SearchExecutionCourseAttendsBean) getRenderedObject("downloadViewState");
+	SearchExecutionCourseAttendsBean executionCourseAttendsBean = getRenderedObject("downloadViewState");
 	executionCourseAttendsBean.getExecutionCourse().searchAttends(executionCourseAttendsBean);
 
 	List<Attends> attendsResult = new ArrayList<Attends>(executionCourseAttendsBean.getAttendsResult());

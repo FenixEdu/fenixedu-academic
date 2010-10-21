@@ -30,7 +30,7 @@ public class MergeJournalIssuesDA extends MergeResearchActivityDA {
 
     public ActionForward chooseJournalIssue(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	MergeJournalIssuePageContainerBean researchActivityPageContainerBean = (MergeJournalIssuePageContainerBean) getRenderedObject("mergeList");
+	MergeJournalIssuePageContainerBean researchActivityPageContainerBean = getRenderedObject("mergeList");
 	JournalIssue journalIssue = (JournalIssue) researchActivityPageContainerBean.getSelected();
 	researchActivityPageContainerBean.setSelected(null);
 

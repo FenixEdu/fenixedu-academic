@@ -785,7 +785,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    return uploadDocumentsInvalid(mapping, form, request, response);
 	}
 
-	final PhdProgramDocumentUploadBean uploadBean = (PhdProgramDocumentUploadBean) getRenderedObject("documentByType");
+	final PhdProgramDocumentUploadBean uploadBean = getRenderedObject("documentByType");
 
 	if (!uploadBean.hasAnyInformation()) {
 	    addErrorMessage(request, "message.no.documents.to.upload");
@@ -838,7 +838,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
     public ActionForward editPhdIndividualProgramProcessInformation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	final PhdIndividualProgramProcessBean bean = (PhdIndividualProgramProcessBean) getRenderedObject("individualProcessBean");
+	final PhdIndividualProgramProcessBean bean = getRenderedObject("individualProcessBean");
 	try {
 	    ExecuteProcessActivity.run(createMockUserView(getCandidacyBean()), bean.getIndividualProgramProcess(),
 		    EditIndividualProcessInformation.class, bean);
@@ -1097,7 +1097,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
     public ActionForward createRefereeLetterInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	final PhdCandidacyRefereeLetterBean bean = (PhdCandidacyRefereeLetterBean) getRenderedObject("createRefereeLetterBean");
+	final PhdCandidacyRefereeLetterBean bean = getRenderedObject("createRefereeLetterBean");
 	request.setAttribute("createRefereeLetterBean", bean);
 	RenderUtils.invalidateViewState("createRefereeLetterBean.comments");
 	bean.removeFile();
@@ -1107,7 +1107,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
     public ActionForward createRefereeLetter(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final PhdCandidacyRefereeLetterBean bean = (PhdCandidacyRefereeLetterBean) getRenderedObject("createRefereeLetterBean");
+	final PhdCandidacyRefereeLetterBean bean = getRenderedObject("createRefereeLetterBean");
 
 	if (hasAnyRefereeLetterViewStateInvalid()) {
 	    return createRefereeLetterInvalid(mapping, actionForm, request, response);
@@ -1154,7 +1154,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    HttpServletResponse response) throws IOException {
 
 	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
-	final PhotographUploadBean photo = (PhotographUploadBean) getRenderedObject("uploadPhotoBean");
+	final PhotographUploadBean photo = getRenderedObject("uploadPhotoBean");
 
 	if (!RenderUtils.getViewState("uploadPhotoBean").isValid()) {
 	    addErrorMessage(request, "error.photo.upload.invalid.information");

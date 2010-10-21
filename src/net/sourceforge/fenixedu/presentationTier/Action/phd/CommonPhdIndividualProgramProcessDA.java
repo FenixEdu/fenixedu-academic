@@ -218,7 +218,7 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
     }
 
     public YearMonth getOrCreateBean(HttpServletRequest request) {
-	YearMonth yearMonthBean = (YearMonth) getRenderedObject("yearMonthBean");
+	YearMonth yearMonthBean = getRenderedObject("yearMonthBean");
 	RenderUtils.invalidateViewState();
 
 	if (yearMonthBean == null) {
@@ -390,7 +390,7 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
     public ActionForward requestPublicPresentationSeminarComission(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	final PublicPresentationSeminarProcessBean bean = (PublicPresentationSeminarProcessBean) getRenderedObject("requestPublicPresentationSeminarComissionBean");
+	final PublicPresentationSeminarProcessBean bean = getRenderedObject("requestPublicPresentationSeminarComissionBean");
 
 	request.setAttribute("requestPublicPresentationSeminarComissionBean", bean);
 

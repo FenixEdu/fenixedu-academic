@@ -55,7 +55,7 @@ public class UploadStudentInquiriesResults extends FenixDispatchAction {
     
     public ActionForward submitCourseFile(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	UploadStudentInquiriesCourseResultsBean resultsBean = (UploadStudentInquiriesCourseResultsBean) getRenderedObject("uploadCourseFileBean");
+	UploadStudentInquiriesCourseResultsBean resultsBean = getRenderedObject("uploadCourseFileBean");
 	RenderUtils.invalidateViewState("uploadCourseFileBean");
 
 	try {
@@ -77,7 +77,7 @@ public class UploadStudentInquiriesResults extends FenixDispatchAction {
     
     public ActionForward submitTeachingFile(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	UploadStudentInquiriesTeachingResultsBean resultsBean = (UploadStudentInquiriesTeachingResultsBean) getRenderedObject("uploadTeachingFileBean");
+	UploadStudentInquiriesTeachingResultsBean resultsBean = getRenderedObject("uploadTeachingFileBean");
 	RenderUtils.invalidateViewState("uploadTeachingFileBean");
 
 	try {
@@ -94,7 +94,7 @@ public class UploadStudentInquiriesResults extends FenixDispatchAction {
     
     public ActionForward deleteCurricularCoursesData(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	UploadStudentInquiriesCourseResultsBean resultsBean = (UploadStudentInquiriesCourseResultsBean) getRenderedObject("deleteCourseDataBean");
+	UploadStudentInquiriesCourseResultsBean resultsBean = getRenderedObject("deleteCourseDataBean");
 	RenderUtils.invalidateViewState();
 
 	try {
@@ -111,7 +111,7 @@ public class UploadStudentInquiriesResults extends FenixDispatchAction {
     
     public ActionForward deleteTeachingData(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	UploadStudentInquiriesTeachingResultsBean resultsBean = (UploadStudentInquiriesTeachingResultsBean) getRenderedObject("deleteTeachingDataBean");
+	UploadStudentInquiriesTeachingResultsBean resultsBean = getRenderedObject("deleteTeachingDataBean");
 	RenderUtils.invalidateViewState();
 
 	try {

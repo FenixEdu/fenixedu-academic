@@ -60,7 +60,7 @@ public class AnnouncementSwap extends FenixDispatchAction {
 
     public ActionForward swap(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
-	ExecutionCourseBean bean = (ExecutionCourseBean) getRenderedObject("executionCourseBean");
+	ExecutionCourseBean bean = getRenderedObject("executionCourseBean");
 
 	for (Announcement announcement : bean.getAnnouncements()) {
 	    announcement.swap(bean.getSourceExecutionCourse().getBoard(), bean.getDestinationExecutionCourse().getBoard());
@@ -75,7 +75,7 @@ public class AnnouncementSwap extends FenixDispatchAction {
 
     public ActionForward postBack(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
-	ExecutionCourseBean bean = (ExecutionCourseBean) getRenderedObject("executionCourseBean");
+	ExecutionCourseBean bean = getRenderedObject("executionCourseBean");
 
 	request.setAttribute("bean", bean);
 	RenderUtils.invalidateViewState("executionCourseBean");

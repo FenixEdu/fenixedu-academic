@@ -357,7 +357,7 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
 
 	ImportBibtexBean importBean = (ImportBibtexBean) RenderUtils.getViewState("importBibtexBean").getMetaObject().getObject();
 	ConferenceArticlesBean bean = (ConferenceArticlesBean) importBean.getCurrentPublicationBean();
-	ResultEventAssociationBean eventBean = (ResultEventAssociationBean) getRenderedObject("createEvent");
+	ResultEventAssociationBean eventBean = getRenderedObject("createEvent");
 	if (eventBean != null) {
 	    if (eventBean.getEvent() == null && eventBean.getEventName() != null) {
 		bean.setCreateEvent(true);
@@ -396,7 +396,7 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
 
 	ImportBibtexBean importBean = (ImportBibtexBean) RenderUtils.getViewState("importBibtexBean").getMetaObject().getObject();
 	ArticleBean bean = (ArticleBean) importBean.getCurrentPublicationBean();
-	CreateIssueBean issueBean = (CreateIssueBean) getRenderedObject("createMagazine");
+	CreateIssueBean issueBean = getRenderedObject("createMagazine");
 
 	if (issueBean != null) {
 	    if (issueBean.getJournal() == null && issueBean.getJournalName() != null) {
@@ -440,8 +440,8 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
     public ActionForward changeSpecialIssueInImport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	final ImportBibtexBean bean = (ImportBibtexBean) getRenderedObject("importBibtexBean");
-	CreateIssueBean issueBean = (CreateIssueBean) getRenderedObject("createMagazine");
+	final ImportBibtexBean bean = getRenderedObject("importBibtexBean");
+	CreateIssueBean issueBean = getRenderedObject("createMagazine");
 
 	request.setAttribute("issueBean", issueBean);
 	request.setAttribute("importBibtexBean", bean);

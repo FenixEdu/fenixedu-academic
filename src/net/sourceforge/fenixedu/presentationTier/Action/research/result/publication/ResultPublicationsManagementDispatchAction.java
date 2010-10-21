@@ -103,7 +103,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	if (getFromRequest(request, "new") != null) {
-	    ArticleBean bean = (ArticleBean) getRenderedObject("publicationBean");
+	    ArticleBean bean = getRenderedObject("publicationBean");
 	    if (bean.getScientificJournal() != null) {
 		addActionMessage(request, "label.doNotCreateJournalIsSelected");
 		request.setAttribute("publicationBean", bean);
@@ -111,7 +111,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 	    }
 	    return createJournalToAssociate(mapping, form, request, response);
 	} else {
-	    ResultPublicationBean publicationBean = (ResultPublicationBean) getRenderedObject("publicationBean");
+	    ResultPublicationBean publicationBean = getRenderedObject("publicationBean");
 	    request.setAttribute("publicationBean", publicationBean);
 	    RenderUtils.invalidateViewState();
 	    return mapping.findForward("editJournal");
@@ -120,7 +120,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 
     public ActionForward prepareSelectJournal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	ResultPublicationBean publicationBean = (ResultPublicationBean) getRenderedObject("publicationBean");
+	ResultPublicationBean publicationBean = getRenderedObject("publicationBean");
 
 	ArticleBean bean = (ArticleBean) publicationBean;
 	bean.setScientificJournal(null);
@@ -166,7 +166,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
     }
 
     public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	final ResultPublicationBean bean = (ResultPublicationBean) getRenderedObject("publicationBean");
+	final ResultPublicationBean bean = getRenderedObject("publicationBean");
 	ResearchResultPublication publication = null;
 
 	try {
@@ -215,8 +215,8 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 	    HttpServletResponse response, String forwardOnNextStep, String forwardOnFinish, String forwardOnError, String service)
 	    throws FenixFilterException, FenixServiceException {
 
-	final ArticleBean bean = (ArticleBean) getRenderedObject("publicationBean");
-	CreateIssueBean issueBean = (CreateIssueBean) getRenderedObject("createMagazine");
+	final ArticleBean bean = getRenderedObject("publicationBean");
+	CreateIssueBean issueBean = getRenderedObject("createMagazine");
 
 	if (issueBean != null) {
 	    if (issueBean.getJournal() == null && issueBean.getJournalName() != null) {
@@ -266,8 +266,8 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
     private ActionForward changeSpecialIssue(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response, String forwardTo) throws FenixFilterException, FenixServiceException {
 
-	final ArticleBean bean = (ArticleBean) getRenderedObject("publicationBean");
-	CreateIssueBean issueBean = (CreateIssueBean) getRenderedObject("createMagazine");
+	final ArticleBean bean = getRenderedObject("publicationBean");
+	CreateIssueBean issueBean = getRenderedObject("createMagazine");
 
 	request.setAttribute("issueBean", issueBean);
 	request.setAttribute("publicationBean", bean);
@@ -415,7 +415,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 
     public ActionForward changeType(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	ResultPublicationBean bean = (ResultPublicationBean) getRenderedObject("publicationBean");
+	ResultPublicationBean bean = getRenderedObject("publicationBean");
 
 	if (bean != null) {
 	    ResultPublicationType type = bean.getPublicationType();
@@ -450,8 +450,8 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 
     public ActionForward prepareCreateEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	ResultEventAssociationBean eventBean = (ResultEventAssociationBean) getRenderedObject("eventEditionBean");
-	ResultPublicationBean publicationBean = (ResultPublicationBean) getRenderedObject("publicationBean");
+	ResultEventAssociationBean eventBean = getRenderedObject("eventEditionBean");
+	ResultPublicationBean publicationBean = getRenderedObject("publicationBean");
 	request.setAttribute("eventEditionBean", eventBean);
 	request.setAttribute("publicationBean", publicationBean);
 	return mapping.findForward("PreparedToCreate");
@@ -459,9 +459,9 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 
     public ActionForward createEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	ResultEventAssociationBean eventBean = (ResultEventAssociationBean) getRenderedObject("eventEditionBean");
+	ResultEventAssociationBean eventBean = getRenderedObject("eventEditionBean");
 	RenderUtils.invalidateViewState("eventEditionBean");
-	ResultPublicationBean publicationBean = (ResultPublicationBean) getRenderedObject("publicationBean");
+	ResultPublicationBean publicationBean = getRenderedObject("publicationBean");
 
 	return createEventWorkFlow(mapping, form, request, response, eventBean, publicationBean, "PreparedToCreate",
 		"ViewEditPublication", "PreparedToCreate", "CreateResultPublication");
@@ -545,7 +545,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 
     public ActionForward prepareSelectEventToAssociate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	ResultPublicationBean publicationBean = (ResultPublicationBean) getRenderedObject("publicationBean");
+	ResultPublicationBean publicationBean = getRenderedObject("publicationBean");
 	((ConferenceArticlesBean) publicationBean).setEvent(null);
 	((ConferenceArticlesBean) publicationBean).setEventEdition(null);
 
@@ -556,8 +556,8 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 
     public ActionForward prepareCreateEventToAssociate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	ResultEventAssociationBean eventBean = (ResultEventAssociationBean) getRenderedObject("eventEditionBean");
-	ResultPublicationBean publicationBean = (ResultPublicationBean) getRenderedObject("publicationBean");
+	ResultEventAssociationBean eventBean = getRenderedObject("eventEditionBean");
+	ResultPublicationBean publicationBean = getRenderedObject("publicationBean");
 	request.setAttribute("eventEditionBean", eventBean);
 	request.setAttribute("publicationBean", publicationBean);
 	return mapping.findForward("editEvent");
@@ -565,8 +565,8 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 
     public ActionForward createEventToAssociate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	ResultPublicationBean publicationBean = (ResultPublicationBean) getRenderedObject("publicationBean");
-	ResultEventAssociationBean eventBean = (ResultEventAssociationBean) getRenderedObject("eventEditionBean");
+	ResultPublicationBean publicationBean = getRenderedObject("publicationBean");
+	ResultEventAssociationBean eventBean = getRenderedObject("eventEditionBean");
 	RenderUtils.invalidateViewState("eventEditionBean");
 
 	if (eventBean == null) {
@@ -715,7 +715,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 
     private void setRequestAttributesToList(HttpServletRequest request, Person person) {
 
-	ExecutionYearIntervalBean bean = (ExecutionYearIntervalBean) getRenderedObject("executionYearIntervalBean");
+	ExecutionYearIntervalBean bean = getRenderedObject("executionYearIntervalBean");
 
 	if (bean == null) {
 	    bean = new ExecutionYearIntervalBean();

@@ -96,8 +96,8 @@ public class StudentInquiryDA extends FenixDispatchAction {
 	ExecutionSemester executionSemester = InquiryResponsePeriod.readOpenPeriod(InquiryResponsePeriodType.STUDENT)
 		.getExecutionPeriod();
 
-	List<CurricularCourseInquiriesRegistryDTO> courses = (List<CurricularCourseInquiriesRegistryDTO>) getRenderedObject("hoursAndDaysByCourse");
-	VariantBean weeklySpentHours = (VariantBean) getRenderedObject("weeklySpentHours");
+	List<CurricularCourseInquiriesRegistryDTO> courses = getRenderedObject("hoursAndDaysByCourse");
+	VariantBean weeklySpentHours = getRenderedObject("weeklySpentHours");
 
 	try {
 	    SubmitStudentSpentTimeInPeriod.run(AccessControl.getPerson().getStudent(), courses, weeklySpentHours.getInteger(),
@@ -115,8 +115,8 @@ public class StudentInquiryDA extends FenixDispatchAction {
 	ExecutionSemester executionSemester = InquiryResponsePeriod.readOpenPeriod(InquiryResponsePeriodType.STUDENT)
 		.getExecutionPeriod();
 
-	List<CurricularCourseInquiriesRegistryDTO> courses = (List<CurricularCourseInquiriesRegistryDTO>) getRenderedObject("hoursAndDaysByCourse");
-	VariantBean weeklySpentHours = (VariantBean) getRenderedObject("weeklySpentHours");
+	List<CurricularCourseInquiriesRegistryDTO> courses = getRenderedObject("hoursAndDaysByCourse");
+	VariantBean weeklySpentHours = getRenderedObject("weeklySpentHours");
 
 	if (!SubmitStudentSpentTimeInPeriod.checkTotalPercentageDistribution(courses)) {
 	    addActionMessage(request, "error.weeklyHoursSpentPercentage.is.not.100.percent");
@@ -193,7 +193,7 @@ public class StudentInquiryDA extends FenixDispatchAction {
     public ActionForward showInquiries1stPage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	StudentInquiryDTO studentInquiry = (StudentInquiryDTO) getRenderedObject("studentInquiry");
+	StudentInquiryDTO studentInquiry = getRenderedObject("studentInquiry");
 	if (studentInquiry == null) {
 	    final InquiriesRegistry inquiriesRegistry = rootDomainObject.readInquiriesRegistryByOID(getIntegerFromRequest(
 		    request, "inquiriesRegistryID"));
@@ -211,7 +211,7 @@ public class StudentInquiryDA extends FenixDispatchAction {
 
     public ActionForward showInquiries2ndPage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	final StudentInquiryDTO studentInquiry = (StudentInquiryDTO) getRenderedObject("studentInquiry");
+	final StudentInquiryDTO studentInquiry = getRenderedObject("studentInquiry");
 	request.setAttribute("studentInquiry", studentInquiry);
 	RenderUtils.invalidateViewState();
 
@@ -226,7 +226,7 @@ public class StudentInquiryDA extends FenixDispatchAction {
 
     public ActionForward showTeachersToAnswer(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	final StudentInquiryDTO studentInquiry = (StudentInquiryDTO) getRenderedObject("studentInquiry");
+	final StudentInquiryDTO studentInquiry = getRenderedObject("studentInquiry");
 	request.setAttribute("studentInquiry", studentInquiry);
 	RenderUtils.invalidateViewState();
 
@@ -248,7 +248,7 @@ public class StudentInquiryDA extends FenixDispatchAction {
 
     public ActionForward fillTeacherInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	final TeacherInquiryDTO teacherInquiry = (TeacherInquiryDTO) getRenderedObject("teacherInquiry");
+	final TeacherInquiryDTO teacherInquiry = getRenderedObject("teacherInquiry");
 	request.setAttribute("studentInquiry", getRenderedObject("studentInquiry"));
 	RenderUtils.invalidateViewState();
 
@@ -274,7 +274,7 @@ public class StudentInquiryDA extends FenixDispatchAction {
 
     public ActionForward confirm(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	final StudentInquiryDTO studentInquiry = (StudentInquiryDTO) getRenderedObject("studentInquiry");
+	final StudentInquiryDTO studentInquiry = getRenderedObject("studentInquiry");
 	if (studentInquiry.getInquiriesRegistry().getState() == InquiriesRegistryState.ANSWER_LATER) {
 	    WriteStudentInquiry.run(studentInquiry);
 	}

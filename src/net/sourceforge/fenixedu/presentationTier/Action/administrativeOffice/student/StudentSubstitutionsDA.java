@@ -27,7 +27,7 @@ public class StudentSubstitutionsDA extends StudentDismissalsDA {
     @Override
     public ActionForward chooseEquivalents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	DismissalBean dismissalBean = (DismissalBean) getRenderedObject("dismissalBean");
+	DismissalBean dismissalBean = getRenderedObject("dismissalBean");
 	if (dismissalBean.getSelectedEnrolments().isEmpty()) {
 	    addActionMessage(request, "error.createSubstitution.origin.cannot.be.empty");
 	    return prepare(mapping, form, request, response);

@@ -17,7 +17,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 public abstract class EditResearchActivityDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	PageContainerBean pageContainerBean = (PageContainerBean) getRenderedObject("pageContainerBean");
+	PageContainerBean pageContainerBean = getRenderedObject("pageContainerBean");
 
 	if (pageContainerBean == null) {
 	    pageContainerBean = new PageContainerBean();
@@ -28,27 +28,27 @@ public abstract class EditResearchActivityDA extends FenixDispatchAction {
     }
 
     public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	PageContainerBean pageContainerBean = (PageContainerBean) getRenderedObject("pageContainerBean");
+	PageContainerBean pageContainerBean = getRenderedObject("pageContainerBean");
 	RenderUtils.invalidateViewState();
 	request.setAttribute("pageContainerBean", pageContainerBean);
 	return mapping.findForward("show-research-activity-edit");
     }
 
     public ActionForward goToPage(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	PageContainerBean pageContainerBean = (PageContainerBean) getRenderedObject("page");
+	PageContainerBean pageContainerBean = getRenderedObject("page");
 	RenderUtils.invalidateViewState();
 	return setObjects(mapping, form, request, response, pageContainerBean);
     }
 
     public ActionForward back(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	PageContainerBean pageContainerBean = (PageContainerBean) getRenderedObject("back");
+	PageContainerBean pageContainerBean = getRenderedObject("back");
 	pageContainerBean.setSelected(null);
 	RenderUtils.invalidateViewState();
 	return setObjects(mapping, form, request, response, pageContainerBean);
     }
 
     public ActionForward invalid(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	PageContainerBean pageContainerBean = (PageContainerBean) getRenderedObject("pageContainerBean");
+	PageContainerBean pageContainerBean = getRenderedObject("pageContainerBean");
 	request.setAttribute("pageContainerBean", pageContainerBean);
 	return mapping.findForward("show-research-activity-edit");
     }

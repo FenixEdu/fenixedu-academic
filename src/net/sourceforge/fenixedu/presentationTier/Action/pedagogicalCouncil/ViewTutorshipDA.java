@@ -84,7 +84,7 @@ public class ViewTutorshipDA extends FenixDispatchAction {
 
 
 	// TODO: What is tutor number?
-	TutorshipPeriodPartialBean tutorshipPeriodPartialBean = (TutorshipPeriodPartialBean) getRenderedObject("periodBean");
+	TutorshipPeriodPartialBean tutorshipPeriodPartialBean = getRenderedObject("periodBean");
 
 	Tutorship tutorship = tutorshipPeriodPartialBean.getTutorship();
 

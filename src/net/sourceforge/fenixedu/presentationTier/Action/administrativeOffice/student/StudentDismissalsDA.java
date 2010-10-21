@@ -104,7 +104,7 @@ public class StudentDismissalsDA extends FenixDispatchAction {
     public ActionForward chooseEquivalents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final DismissalBean dismissalBean = (DismissalBean) getRenderedObject("dismissalBean");
+	final DismissalBean dismissalBean = getRenderedObject("dismissalBean");
 	dismissalBean.setDismissalType(DismissalType.CURRICULAR_COURSE_CREDITS);
 
 	final DegreeCurricularPlan dcp = dismissalBean.getStudentCurricularPlan().getDegreeCurricularPlan();

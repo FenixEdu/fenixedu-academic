@@ -29,7 +29,7 @@ public class MergeEventEditionsDA extends MergeResearchActivityDA {
 
     public ActionForward chooseEventEdition(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	MergeEventEditionPageContainerBean researchActivityPageContainerBean = (MergeEventEditionPageContainerBean) getRenderedObject("mergeList");
+	MergeEventEditionPageContainerBean researchActivityPageContainerBean = getRenderedObject("mergeList");
 	EventEdition eventEdition = (EventEdition) researchActivityPageContainerBean.getSelected();
 	researchActivityPageContainerBean.setSelected(null);
 

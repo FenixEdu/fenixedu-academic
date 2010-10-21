@@ -70,7 +70,7 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
     public ActionForward viewAcademicCalendar(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	CalendarEntryBean bean = (CalendarEntryBean) getRenderedObject("datesToDisplayID");
+	CalendarEntryBean bean = getRenderedObject("datesToDisplayID");
 
 	YearMonthDay beginDate = bean.getBeginDateToDisplayInYearMonthDayFormat();
 	YearMonthDay endDate = bean.getEndDateToDisplayInYearMonthDayFormat();
@@ -113,9 +113,9 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
     public ActionForward chooseCalendarEntryTypePostBack(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	CalendarEntryBean bean = (CalendarEntryBean) getRenderedObject("calendarEntryBeanWithType");
+	CalendarEntryBean bean = getRenderedObject("calendarEntryBeanWithType");
 	if (bean == null) {
-	    bean = (CalendarEntryBean) getRenderedObject("createdEntryBeanID");
+	    bean = getRenderedObject("createdEntryBeanID");
 	}
 
 	request.setAttribute("parentEntryBean", bean);
@@ -140,7 +140,7 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
     public ActionForward createEntry(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	CalendarEntryBean bean = (CalendarEntryBean) getRenderedObject("createdEntryBeanID");
+	CalendarEntryBean bean = getRenderedObject("createdEntryBeanID");
 
 	AcademicCalendarEntry entry = null;
 	try {
@@ -174,7 +174,7 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
     public ActionForward editEntry(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	CalendarEntryBean bean = (CalendarEntryBean) getRenderedObject("editedEntryBeanID");
+	CalendarEntryBean bean = getRenderedObject("editedEntryBeanID");
 
 	AcademicCalendarEntry entry = null;
 	try {

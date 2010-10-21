@@ -201,7 +201,7 @@ public class PhdCandidacyFeedbackRequestDA extends CommonPhdCandidacyDA {
 
 	try {
 
-	    final PhdCandidacyFeedbackRequestElementBean bean = (PhdCandidacyFeedbackRequestElementBean) getRenderedObject("elementBean");
+	    final PhdCandidacyFeedbackRequestElementBean bean = getRenderedObject("elementBean");
 
 	    if (bean.isExistingElement() && !bean.hasAnyParticipants()) {
 		addErrorMessage(request, "label.phd.candidacy.feedback.must.select.elements");

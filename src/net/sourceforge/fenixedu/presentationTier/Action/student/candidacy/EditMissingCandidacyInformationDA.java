@@ -53,7 +53,7 @@ public class EditMissingCandidacyInformationDA extends FenixDispatchAction {
 
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
-	final CandidacyInformationBean candidacyInformationBean = (CandidacyInformationBean) getRenderedObject("candidacyInformationBean");
+	final CandidacyInformationBean candidacyInformationBean = getRenderedObject("candidacyInformationBean");
 
 	final Set<String> messages = candidacyInformationBean.validate();
 

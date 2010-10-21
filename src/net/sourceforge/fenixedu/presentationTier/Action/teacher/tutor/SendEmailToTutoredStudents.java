@@ -67,7 +67,7 @@ public class SendEmailToTutoredStudents extends FenixDispatchAction {
     }
 
     public StudentsByTutorBean getOrCreateBean(Teacher teacher) {
-	StudentsByTutorBean receiversBean = (StudentsByTutorBean) getRenderedObject("receiversBean");
+	StudentsByTutorBean receiversBean = getRenderedObject("receiversBean");
 	RenderUtils.invalidateViewState();
 	if (receiversBean == null) {
 	    receiversBean = new StudentsByTutorBean(teacher);

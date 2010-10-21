@@ -47,7 +47,7 @@ public class CreateTutorshipsDA extends TutorManagementDispatchAction {
 
     public ActionForward prepareViewCreateTutorship(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	ContextTutorshipCreationBean bean = (ContextTutorshipCreationBean) getRenderedObject("tutorateBean");
+	ContextTutorshipCreationBean bean = getRenderedObject("tutorateBean");
 	request.setAttribute("tutorateBean", bean);
 	if (bean.getShift() != null && bean.getExecutionCourse() != null && bean.getExecutionDegree() != null
 		&& bean.getExecutionSemester() != null) {
@@ -95,7 +95,7 @@ public class CreateTutorshipsDA extends TutorManagementDispatchAction {
 
     public ActionForward prepareStudentsAndTeachers(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	ContextTutorshipCreationBean bean = (ContextTutorshipCreationBean) getRenderedObject("tutorateBean");
+	ContextTutorshipCreationBean bean = getRenderedObject("tutorateBean");
 	request.setAttribute("tutorateBean", bean);
 	return mapping.findForward("prepareCreate");
     }
@@ -104,8 +104,8 @@ public class CreateTutorshipsDA extends TutorManagementDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	Boolean errorEncountered = false;
 	String[] selectedPersons = request.getParameterValues("selectedPersons");
-	TeacherTutorshipCreationBean tutorBean = (TeacherTutorshipCreationBean) getRenderedObject("tutorBean");
-	ContextTutorshipCreationBean contextBean = (ContextTutorshipCreationBean) getRenderedObject("tutorateBean");
+	TeacherTutorshipCreationBean tutorBean = getRenderedObject("tutorBean");
+	ContextTutorshipCreationBean contextBean = getRenderedObject("tutorateBean");
 
 	StudentsByEntryYearBean selectedStudentsAndTutorBean = new StudentsByEntryYearBean(contextBean.getExecutionSemester()
 		.getExecutionYear());

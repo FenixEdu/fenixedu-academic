@@ -65,7 +65,7 @@ public class InternshipCandidacyDA extends FenixDispatchAction {
 
     public ActionForward sessionPostback(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	CandidateSearchBean search = (CandidateSearchBean) getRenderedObject("search");
+	CandidateSearchBean search = getRenderedObject("search");
 	RenderUtils.invalidateViewState();
 	Interval interval = search.getSession().getCandidacyInterval();
 	if (search.getCutStart() == null || !interval.contains(search.getCutStart().toDateTimeAtStartOfDay())) {
@@ -83,7 +83,7 @@ public class InternshipCandidacyDA extends FenixDispatchAction {
 
     public ActionForward searchCandidates(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	CandidateSearchBean search = (CandidateSearchBean) getRenderedObject("search");
+	CandidateSearchBean search = getRenderedObject("search");
 	if (search.getCutStart() != null && search.getCutEnd() != null && search.getCutEnd().isBefore(search.getCutStart())) {
 	    addErrorMessage(request, "start", "error.internationalrelations.internship.candidacy.search.startafterend");
 	    return prepareCandidates(mapping, actionForm, request, response);
@@ -137,7 +137,7 @@ public class InternshipCandidacyDA extends FenixDispatchAction {
 
     public ActionForward exportToCandidatesToXls(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException {
-	CandidateSearchBean search = (CandidateSearchBean) getRenderedObject("search");
+	CandidateSearchBean search = getRenderedObject("search");
 	if (search.getCutEnd().isBefore(search.getCutStart())) {
 	    addErrorMessage(request, "start", "error.internationalrelations.internship.candidacy.search.startafterend");
 	    return prepareCandidates(mapping, actionForm, request, response);

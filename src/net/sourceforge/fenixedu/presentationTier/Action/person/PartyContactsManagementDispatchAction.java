@@ -28,7 +28,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward postbackSetPublic(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	PartyContactBean contact = (PartyContactBean) getRenderedObject("edit-contact");
+	PartyContactBean contact = getRenderedObject("edit-contact");
 	RenderUtils.invalidateViewState();
 	if (contact.getVisibleToPublic().booleanValue()) {
 	    contact.setVisibleToStudents(Boolean.TRUE);
@@ -44,7 +44,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward postbackSetElements(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	PartyContactBean contact = (PartyContactBean) getRenderedObject("edit-contact");
+	PartyContactBean contact = getRenderedObject("edit-contact");
 	RenderUtils.invalidateViewState();
 	if (contact.getVisibleToPublic().booleanValue())
 	    contact.setVisibleToPublic(new Boolean(contact.getVisibleToStudents().booleanValue()
@@ -127,7 +127,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
     public ActionForward createPartyContact(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	if (getRenderedObject() instanceof PartyContactBean) {
-	    PartyContactBean contact = (PartyContactBean) getRenderedObject("edit-contact");
+	    PartyContactBean contact = getRenderedObject("edit-contact");
 	    try {
 		executeService("CreatePartyContact", new Object[] { contact });
 	    } catch (DomainException e) {
@@ -159,7 +159,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
     public ActionForward editPartyContact(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	if (getRenderedObject() instanceof PartyContactBean) {
-	    PartyContactBean contact = (PartyContactBean) getRenderedObject("edit-contact");
+	    PartyContactBean contact = getRenderedObject("edit-contact");
 	    try {
 		executeService("EditPartyContact", new Object[] { contact });
 	    } catch (DomainException e) {

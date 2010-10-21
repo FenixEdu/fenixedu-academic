@@ -36,7 +36,7 @@ public class SearchThesesDA extends ThesisLibraryDA {
 
     public ActionForward search(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	final ThesisSearchBean search = (ThesisSearchBean) getRenderedObject("search");
+	final ThesisSearchBean search = getRenderedObject("search");
 	performSearch(request, search);
 	return mapping.findForward("search");
     }

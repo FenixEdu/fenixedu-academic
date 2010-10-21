@@ -571,7 +571,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	    return confirmCreateServiceRequest(mapping, actionForm, request, response);
 	}
 
-	final RegistrationAcademicServiceRequestCreator bean = (RegistrationAcademicServiceRequestCreator) getRenderedObject("academicServiceRequestCreateBean");
+	final RegistrationAcademicServiceRequestCreator bean = getRenderedObject("academicServiceRequestCreateBean");
 	request.setAttribute("registration", bean.getRegistration());
 	return mapping.findForward("viewRegistrationDetails");
     }

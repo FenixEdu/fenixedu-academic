@@ -72,7 +72,7 @@ public class ResidenceManagementDispatchAction extends FenixDispatchAction {
     
     public ActionForward importCurrentDebts(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	ImportResidenceEventBean bean = (ImportResidenceEventBean) getRenderedObject("importFile");
+	ImportResidenceEventBean bean = getRenderedObject("importFile");
 	if (bean == null) {
 	    ResidenceMonth month = getResidenceMonth(request);
 	    bean = month != null ? new ImportResidenceEventBean(month) : new ImportResidenceEventBean();
@@ -118,7 +118,7 @@ public class ResidenceManagementDispatchAction extends FenixDispatchAction {
     public ActionForward importData(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	ImportResidenceEventBean bean = (ImportResidenceEventBean) getRenderedObject("importFile");
+	ImportResidenceEventBean bean = getRenderedObject("importFile");
 	if (bean == null) {
 	    ResidenceMonth month = getResidenceMonth(request);
 	    bean = month != null ? new ImportResidenceEventBean(month) : new ImportResidenceEventBean();
@@ -162,7 +162,7 @@ public class ResidenceManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward invalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	ImportResidenceEventBean bean = (ImportResidenceEventBean) getRenderedObject("importFile");
+	ImportResidenceEventBean bean = getRenderedObject("importFile");
 	request.setAttribute("importFileBean", bean);
 	return mapping.findForward("importData");
     }
@@ -201,8 +201,8 @@ public class ResidenceManagementDispatchAction extends FenixDispatchAction {
     public ActionForward generateDebts(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	ResidentListsHolderBean listHolder = (ResidentListsHolderBean) getRenderedObject("importList");
-	ImportResidenceEventBean eventBean = (ImportResidenceEventBean) getRenderedObject("dateBean");
+	ResidentListsHolderBean listHolder = getRenderedObject("importList");
+	ImportResidenceEventBean eventBean = getRenderedObject("dateBean");
 	try {
 	    CreateResidenceEvents.run(listHolder.getSuccessfulEvents(), eventBean.getResidenceMonth());
 	} catch (Exception e) {
@@ -224,8 +224,8 @@ public class ResidenceManagementDispatchAction extends FenixDispatchAction {
     public ActionForward generatePayments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	ResidentListsHolderBean listHolder = (ResidentListsHolderBean) getRenderedObject("importList");
-	ImportResidenceEventBean eventBean = (ImportResidenceEventBean) getRenderedObject("dateBean");
+	ResidentListsHolderBean listHolder = getRenderedObject("importList");
+	ImportResidenceEventBean eventBean = getRenderedObject("dateBean");
 
 	try {
 	    makePayments(listHolder.getSuccessfulEvents(), request);

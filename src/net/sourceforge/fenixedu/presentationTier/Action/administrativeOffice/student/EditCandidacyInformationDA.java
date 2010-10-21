@@ -41,7 +41,7 @@ public class EditCandidacyInformationDA extends FenixDispatchAction {
 
     public ActionForward prepareEditInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	final CandidacyInformationBean candidacyInformationBean = (CandidacyInformationBean) getRenderedObject("candidacyInformationBean");
+	final CandidacyInformationBean candidacyInformationBean = getRenderedObject("candidacyInformationBean");
 	request.setAttribute("candidacyInformationBean", candidacyInformationBean);
 
 	return mapping.findForward("editCandidacyInformation");
@@ -49,7 +49,7 @@ public class EditCandidacyInformationDA extends FenixDispatchAction {
 
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
-	final CandidacyInformationBean candidacyInformationBean = (CandidacyInformationBean) getRenderedObject("candidacyInformationBean");
+	final CandidacyInformationBean candidacyInformationBean = getRenderedObject("candidacyInformationBean");
 
 	final Set<String> messages = candidacyInformationBean.validate();
 	if (!messages.isEmpty()) {

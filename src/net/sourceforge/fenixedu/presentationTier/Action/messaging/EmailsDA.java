@@ -50,7 +50,7 @@ public class EmailsDA extends FenixDispatchAction {
 
     public ActionForward newEmail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	EmailBean emailBean = (EmailBean) getRenderedObject("emailBean");
+	EmailBean emailBean = getRenderedObject("emailBean");
 
 	if (emailBean == null) {
 	    emailBean = (EmailBean) request.getAttribute("emailBean");
@@ -70,7 +70,7 @@ public class EmailsDA extends FenixDispatchAction {
 
     public ActionForward sendEmail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	EmailBean emailBean = (EmailBean) getRenderedObject("emailBean");
+	EmailBean emailBean = getRenderedObject("emailBean");
 	RenderUtils.invalidateViewState();
 	String validate = emailBean.validate();
 	if (validate != null) {

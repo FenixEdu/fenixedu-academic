@@ -90,7 +90,7 @@ public class SpecialSeasonStudentEnrollmentDA extends AcademicAdminOfficeSpecial
 
     public ActionForward showDegreeModules(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	SpecialSeasonStudentEnrollmentBean bean = (SpecialSeasonStudentEnrollmentBean) getRenderedObject("bean");
+	SpecialSeasonStudentEnrollmentBean bean = getRenderedObject("bean");
 
 	if (!hasStatute(bean.getStudent(), bean.getExecutionSemester(), bean.getScp().getRegistration())) {
 

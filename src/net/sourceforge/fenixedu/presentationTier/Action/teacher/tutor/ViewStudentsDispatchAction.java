@@ -40,7 +40,7 @@ public class ViewStudentsDispatchAction extends ViewStudentsByTutorDispatchActio
     }
 
     public StudentsPerformanceInfoNullEntryYearBean getOrCreateBean(Teacher teacher) {
-	StudentsPerformanceInfoNullEntryYearBean performanceBean = (StudentsPerformanceInfoNullEntryYearBean) getRenderedObject("performanceBean");
+	StudentsPerformanceInfoNullEntryYearBean performanceBean = getRenderedObject("performanceBean");
 	if (performanceBean == null) {
 	    performanceBean = StudentsPerformanceInfoNullEntryYearBean.create(teacher);
 	}

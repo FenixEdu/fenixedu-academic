@@ -67,7 +67,7 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 
     public ActionForward chooseAssiduousnessExportChoicesPostBack(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException, FenixFilterException {
-	AssiduousnessExportChoices assiduousnessExportChoices = (AssiduousnessExportChoices) getRenderedObject("assiduousnessExportChoices");
+	AssiduousnessExportChoices assiduousnessExportChoices = getRenderedObject("assiduousnessExportChoices");
 	RenderUtils.invalidateViewState();
 	request.setAttribute("action", assiduousnessExportChoices.getAction());
 	request.setAttribute("assiduousnessExportChoices", assiduousnessExportChoices);
@@ -76,7 +76,7 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 
     public ActionForward exportWorkSheets(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	AssiduousnessExportChoices assiduousnessExportChoices = (AssiduousnessExportChoices) getRenderedObject("assiduousnessExportChoices");
+	AssiduousnessExportChoices assiduousnessExportChoices = getRenderedObject("assiduousnessExportChoices");
 	if (!assiduousnessExportChoices.validDates()) {
 	    setError(request, assiduousnessExportChoices, "error.invalidDateInterval");
 	    request.setAttribute("action", "exportWorkSheets");
@@ -112,7 +112,7 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 
     public ActionForward exportMonthResume(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	AssiduousnessExportChoices assiduousnessExportChoices = (AssiduousnessExportChoices) getRenderedObject("assiduousnessExportChoices");
+	AssiduousnessExportChoices assiduousnessExportChoices = getRenderedObject("assiduousnessExportChoices");
 	assiduousnessExportChoices.setYearMonth();
 	List<AssiduousnessMonthlyResume> assiduousnessMonthlyResumeList = ReadMonthResume.run(assiduousnessExportChoices);
 	response.setContentType("text/plain");
@@ -132,7 +132,7 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 
     public ActionForward exportJustifications(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	AssiduousnessExportChoices assiduousnessExportChoices = (AssiduousnessExportChoices) getRenderedObject("assiduousnessExportChoices");
+	AssiduousnessExportChoices assiduousnessExportChoices = getRenderedObject("assiduousnessExportChoices");
 	assiduousnessExportChoices.setYearMonth();
 	StyledExcelSpreadsheet spreadsheet = ExportJustifications.run(assiduousnessExportChoices);
 	response.setContentType("text/plain");
@@ -181,7 +181,7 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
     public ActionForward exportEmployeesAnualInfo(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response, AssiduousnessStatus assiduousnessStatus, String fileName, String action)
 	    throws Exception {
-	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonth");
+	YearMonth yearMonth = getRenderedObject("yearMonth");
 
 	if (!isMonthClosed(yearMonth)) {
 	    addError(request, "error.monthNotClosed");
@@ -212,7 +212,7 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
     public ActionForward exportVacations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	AssiduousnessExportChoices assiduousnessExportChoices = (AssiduousnessExportChoices) getRenderedObject("assiduousnessExportChoices");
+	AssiduousnessExportChoices assiduousnessExportChoices = getRenderedObject("assiduousnessExportChoices");
 
 	List<AssiduousnessVacations> assiduousnessVacationsList = new ArrayList<AssiduousnessVacations>();
 	for (Assiduousness assiduousness : assiduousnessExportChoices.getAssiduousnesses()) {

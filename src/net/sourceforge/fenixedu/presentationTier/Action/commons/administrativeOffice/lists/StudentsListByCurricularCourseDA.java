@@ -73,7 +73,7 @@ public abstract class StudentsListByCurricularCourseDA extends FenixDispatchActi
     }
 
     private SearchStudentsByCurricularCourseParametersBean getOrCreateSearchBean() {
-	SearchStudentsByCurricularCourseParametersBean bean = (SearchStudentsByCurricularCourseParametersBean) getRenderedObject("searchBean");
+	SearchStudentsByCurricularCourseParametersBean bean = getRenderedObject("searchBean");
 	if (bean == null) {
 	    bean = new SearchStudentsByCurricularCourseParametersBean();
 	    bean.setAdministratedDegrees(getAdministratedDegrees());

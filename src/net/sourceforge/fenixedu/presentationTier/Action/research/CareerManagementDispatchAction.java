@@ -53,7 +53,7 @@ public class CareerManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward deleteCareer(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	Career career = (Career) getRenderedObject("deleteCareer");
+	Career career = getRenderedObject("deleteCareer");
 	career.delete();
 	return showCareer(mapping, actionForm, request, response);
     }

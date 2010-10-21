@@ -23,7 +23,7 @@ public class MergeScientificJournalDA extends MergeResearchActivityDA {
 
     public ActionForward chooseScientificJournal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	MergeScientificJournalPageContainerBean researchActivityPageContainerBean = (MergeScientificJournalPageContainerBean) getRenderedObject("mergeList");
+	MergeScientificJournalPageContainerBean researchActivityPageContainerBean = getRenderedObject("mergeList");
 	ScientificJournal scientificJournal = (ScientificJournal) researchActivityPageContainerBean.getSelected();
 	researchActivityPageContainerBean.setSelected(null);
 

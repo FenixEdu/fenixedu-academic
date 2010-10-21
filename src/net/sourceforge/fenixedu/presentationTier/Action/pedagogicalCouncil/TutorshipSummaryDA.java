@@ -41,7 +41,7 @@ public class TutorshipSummaryDA extends ViewStudentsByTutorDispatchAction {
     public ActionForward searchTeacher(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	TutorSummaryBean bean = (TutorSummaryBean) getRenderedObject("tutorateBean");
+	TutorSummaryBean bean = getRenderedObject("tutorateBean");
 
 	if (bean == null) {
 	    bean = new TutorSummaryBean();
@@ -60,7 +60,7 @@ public class TutorshipSummaryDA extends ViewStudentsByTutorDispatchAction {
     public ActionForward postback(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	TutorSummaryBean bean = (TutorSummaryBean) getRenderedObject("tutorateBean");
+	TutorSummaryBean bean = getRenderedObject("tutorateBean");
 
 	RenderUtils.invalidateViewState();
 
@@ -72,7 +72,7 @@ public class TutorshipSummaryDA extends ViewStudentsByTutorDispatchAction {
     public ActionForward exportSummaries(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	TutorSummaryBean bean = (TutorSummaryBean) getRenderedObject("tutorateBean");
+	TutorSummaryBean bean = getRenderedObject("tutorateBean");
 
 	if (bean == null) {
 	    return searchTeacher(mapping, actionForm, request, response);
@@ -256,7 +256,7 @@ public class TutorshipSummaryDA extends ViewStudentsByTutorDispatchAction {
     public ActionForward createSummary(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	CreateSummaryBean bean = (CreateSummaryBean) getRenderedObject("createSummaryBean");
+	CreateSummaryBean bean = getRenderedObject("createSummaryBean");
 
 	if (bean == null) {
 
@@ -304,7 +304,7 @@ public class TutorshipSummaryDA extends ViewStudentsByTutorDispatchAction {
     public ActionForward processCreateSummary(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	CreateSummaryBean bean = (CreateSummaryBean) getRenderedObject("createSummaryBean");
+	CreateSummaryBean bean = getRenderedObject("createSummaryBean");
 
 	if (bean == null) {
 	    return createSummary(mapping, actionForm, request, response);

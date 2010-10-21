@@ -80,7 +80,7 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
 	final String personId = request.getParameter("personId");
 	final Person personAdding = rootDomainObject.fromExternalId(personId);
 
-	ExecutionDegreeCoordinatorsBean coordsBean = (ExecutionDegreeCoordinatorsBean) getRenderedObject("coordsBean");
+	ExecutionDegreeCoordinatorsBean coordsBean = getRenderedObject("coordsBean");
 
 	Coordinator.makeCreation(personAdding, coordsBean.getExecutionDegree(), coordsBean.getNewCoordinator(), Boolean
 		.valueOf(false));
@@ -151,7 +151,7 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
     public ActionForward invalidAddCoordinator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	ExecutionDegreeCoordinatorsBean coordsBean = (ExecutionDegreeCoordinatorsBean) getRenderedObject("coordsBean");
+	ExecutionDegreeCoordinatorsBean coordsBean = getRenderedObject("coordsBean");
 	request.setAttribute("coordsBean", coordsBean);
 	RenderUtils.invalidateViewState("coordsBean");
 	request.setAttribute("startVisible", true);
@@ -162,7 +162,7 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
     public ActionForward editByYears(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	ExecutionDegreeCoordinatorsBean sessionBean = (ExecutionDegreeCoordinatorsBean) getRenderedObject("sessionBean");
+	ExecutionDegreeCoordinatorsBean sessionBean = getRenderedObject("sessionBean");
 	if (sessionBean == null) {
 	    sessionBean = new ExecutionDegreeCoordinatorsBean();
 	    final String executionYearId = String.valueOf(request.getParameter("executionYearId"));

@@ -55,7 +55,7 @@ public class IRSDeclarationAction extends FenixDispatchAction {
 
     public ActionForward editBean(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	final IRSDeclarationBean declarationBean = (IRSDeclarationBean) getRenderedObject("declarationBean");
+	final IRSDeclarationBean declarationBean = getRenderedObject("declarationBean");
 	IrsDeclarationLink.set(declarationBean.getTitle(), declarationBean.getAvailable(), declarationBean.getIrsLink());
 	return mapping.findForward("edit.IRSDeclaration.link");
     }

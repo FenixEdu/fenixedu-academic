@@ -149,7 +149,7 @@ public class AlumniInformationAction extends FenixDispatchAction {
 
     public ActionForward addRecipients(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	AlumniMailSendToBean alumniMailSendToBean = (AlumniMailSendToBean) getRenderedObject("createRecipient");
+	AlumniMailSendToBean alumniMailSendToBean = getRenderedObject("createRecipient");
 	Sender gepSender = getGEPSender(Sender.getAvailableSenders());
 	alumniMailSendToBean.createRecipientGroup(gepSender);
 
@@ -158,7 +158,7 @@ public class AlumniInformationAction extends FenixDispatchAction {
 
     public ActionForward addNotUpdatedInfoRecipients(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	AlumniInfoNotUpdatedBean alumniInfoNotUpdatedBean = (AlumniInfoNotUpdatedBean) getRenderedObject("notUpdatedInfoRecipient");
+	AlumniInfoNotUpdatedBean alumniInfoNotUpdatedBean = getRenderedObject("notUpdatedInfoRecipient");
 	if (!alumniInfoNotUpdatedBean.getFormationInfo() && !alumniInfoNotUpdatedBean.getProfessionalInfo()
 		&& !alumniInfoNotUpdatedBean.getPersonalDataInfo()) {
 	    RenderUtils.invalidateViewState();
@@ -272,7 +272,7 @@ public class AlumniInformationAction extends FenixDispatchAction {
 
     public ActionForward removeRecipients(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	EmailBean emailBean = (EmailBean) getRenderedObject("emailBean");
+	EmailBean emailBean = getRenderedObject("emailBean");
 	emailBean.removeRecipients();
 
 	return manageRecipients(mapping, actionForm, request, response);

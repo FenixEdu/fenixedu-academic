@@ -95,7 +95,7 @@ public class ViewStudentsDispatchAction extends FenixDispatchAction {
 
     public ActionForward chooseExecutionYear(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	VariantBean variantBean = (VariantBean) getRenderedObject("chooseExecutionYear");
+	VariantBean variantBean = getRenderedObject("chooseExecutionYear");
 	RenderUtils.invalidateViewState();
 	return prepareShowStudentsByCurricularCourse(mapping, actionForm, request, response, (ExecutionYear) variantBean
 		.getDomainObject());

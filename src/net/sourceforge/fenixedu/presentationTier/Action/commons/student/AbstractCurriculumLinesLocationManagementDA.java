@@ -68,7 +68,7 @@ abstract public class AbstractCurriculumLinesLocationManagementDA extends FenixD
     public ActionForward moveCurriculumLines(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	final MoveCurriculumLinesBean moveCurriculumLinesBean = (MoveCurriculumLinesBean) getRenderedObject("move-curriculum-lines-bean");
+	final MoveCurriculumLinesBean moveCurriculumLinesBean = getRenderedObject("move-curriculum-lines-bean");
 
 	if (!RenderUtils.getViewState("move-curriculum-lines-bean-entries").isValid()) {
 	    request.setAttribute("moveCurriculumLinesBean", moveCurriculumLinesBean);

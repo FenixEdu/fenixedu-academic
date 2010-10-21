@@ -39,12 +39,12 @@ public class VehicleManagementDA extends FenixDispatchAction {
 	VehicleBean bean;
 	List<Vehicle> result;
 
-	Vehicle vehicle = (Vehicle) getRenderedObject("vehicleEditID");
+	Vehicle vehicle = getRenderedObject("vehicleEditID");
 	if (vehicle != null) {
 	    bean = new VehicleBean();
 	    bean.setNumberPlate(vehicle.getNumberPlate());
 	} else {
-	    bean = (VehicleBean) getRenderedObject("vehicleBeanID");
+	    bean = getRenderedObject("vehicleBeanID");
 	    bean = bean != null ? bean : (VehicleBean) getRenderedObject("createVehicleBeanID");
 	    bean = bean != null ? bean : new VehicleBean();
 	}
@@ -93,7 +93,7 @@ public class VehicleManagementDA extends FenixDispatchAction {
     public ActionForward createVehicle(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws InvalidArgumentException, FenixFilterException, FenixServiceException {
 
-	VehicleBean bean = (VehicleBean) getRenderedObject("createVehicleBeanID");
+	VehicleBean bean = getRenderedObject("createVehicleBeanID");
 
 	try {
 	    CreateVehicle.run(bean.getNumberPlate(), bean.getMake(), bean.getModel(), bean.getAcquisition(), bean.getCease(),

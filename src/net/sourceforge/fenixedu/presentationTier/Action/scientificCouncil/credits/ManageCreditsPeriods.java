@@ -58,7 +58,7 @@ public class ManageCreditsPeriods extends FenixDispatchAction {
     public ActionForward editPeriod(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	TeacherCreditsPeriodBean bean = (TeacherCreditsPeriodBean) getRenderedObject("teacherCreditsBeanID");
+	TeacherCreditsPeriodBean bean = getRenderedObject("teacherCreditsBeanID");
 
 	try {
 	    CreateTeacherCreditsFillingPeriod.run(bean);
@@ -119,7 +119,7 @@ public class ManageCreditsPeriods extends FenixDispatchAction {
 
     private TeacherCreditsPeriodBean createBeanTeacherCreditsPeriodBean(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request) throws Exception {
-	TeacherCreditsPeriodBean bean = (TeacherCreditsPeriodBean) getRenderedObject("teacherCreditsBeanID");
+	TeacherCreditsPeriodBean bean = getRenderedObject("teacherCreditsBeanID");
 	if (bean == null) {
 	    ExecutionSemester executionSemester = getExecutionPeriodToEditPeriod(request);
 	    if (executionSemester == null) {

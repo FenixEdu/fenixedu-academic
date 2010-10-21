@@ -852,7 +852,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     @Service
     public ActionForward insertStudentInShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	PersonBean bean = (PersonBean) getRenderedObject("personBean");
+	PersonBean bean = getRenderedObject("personBean");
 	String id = bean.getUsername();
 	Student student = Student.readStudentByNumber(Integer.valueOf(id));
 	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(Integer.parseInt(request

@@ -77,7 +77,7 @@ public class ExportSibsPaymentsReport extends FenixDispatchAction {
     public ActionForward reportByYearAndMonth(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
 
-	final SibsPaymentsReportBean bean = (SibsPaymentsReportBean) getRenderedObject("reportBean");
+	final SibsPaymentsReportBean bean = getRenderedObject("reportBean");
 	request.setAttribute("reportBean", bean);
 	final SheetData<SibsPaymentFileProcessReport> spreadsheet = buildSpreadsheet(bean);
 

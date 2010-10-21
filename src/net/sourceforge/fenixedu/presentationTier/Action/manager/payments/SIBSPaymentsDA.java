@@ -95,7 +95,7 @@ public class SIBSPaymentsDA extends FenixDispatchAction {
     public ActionForward prepareUploadSIBSPaymentFiles(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	UploadBean bean = (UploadBean) getRenderedObject("uploadBean");
+	UploadBean bean = getRenderedObject("uploadBean");
 	RenderUtils.invalidateViewState("uploadBean");
 	if (bean == null) {
 	    bean = new UploadBean();
@@ -108,7 +108,7 @@ public class SIBSPaymentsDA extends FenixDispatchAction {
     public ActionForward uploadSIBSPaymentFiles(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
 
-	UploadBean bean = (UploadBean) getRenderedObject("uploadBean");
+	UploadBean bean = getRenderedObject("uploadBean");
 	RenderUtils.invalidateViewState("uploadBean");
 
 	if (bean == null) {

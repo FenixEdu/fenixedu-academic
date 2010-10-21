@@ -45,7 +45,7 @@ public class DegreeCurricularPlanExecutionYearDispacthAction extends FenixDispat
 
     public ActionForward chooseDegree(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
 	    final HttpServletResponse response) {
-	final ExecutionDegreeListBean executionDegreeBean = (ExecutionDegreeListBean) getRenderedObject("academicInterval");
+	final ExecutionDegreeListBean executionDegreeBean = getRenderedObject("academicInterval");
 	executionDegreeBean.setDegreeCurricularPlan(null);
 	executionDegreeBean.setAcademicInterval(null);
 	RenderUtils.invalidateViewState();
@@ -55,7 +55,7 @@ public class DegreeCurricularPlanExecutionYearDispacthAction extends FenixDispat
 
     public ActionForward chooseDegreeCurricularPlan(final ActionMapping mapping, final ActionForm form,
 	    final HttpServletRequest request, final HttpServletResponse response) {
-	final ExecutionDegreeListBean executionDegreeBean = (ExecutionDegreeListBean) getRenderedObject("academicInterval");
+	final ExecutionDegreeListBean executionDegreeBean = getRenderedObject("academicInterval");
 	executionDegreeBean.setAcademicInterval(null);
 	RenderUtils.invalidateViewState();
 	request.setAttribute("executionDegreeBean", executionDegreeBean);
@@ -66,7 +66,7 @@ public class DegreeCurricularPlanExecutionYearDispacthAction extends FenixDispat
     public ActionForward showActiveCurricularCourseScope(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
 
-	final ExecutionDegreeListBean executionDegreeBean = (ExecutionDegreeListBean) getRenderedObject("academicInterval");
+	final ExecutionDegreeListBean executionDegreeBean = getRenderedObject("academicInterval");
 
 	final Object[] args = { executionDegreeBean.getDegreeCurricularPlan().getIdInternal(),
 		executionDegreeBean.getAcademicInterval() };

@@ -251,7 +251,7 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
     public ActionForward associateExceptionWorkSchedule(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	EmployeeExceptionScheduleBean employeeExceptionScheduleBean = (EmployeeExceptionScheduleBean) getRenderedObject("employeeExceptionScheduleBean");
+	EmployeeExceptionScheduleBean employeeExceptionScheduleBean = getRenderedObject("employeeExceptionScheduleBean");
 	if (employeeExceptionScheduleBean.getEndDate() == null) {
 	    employeeExceptionScheduleBean.setEndDate(employeeExceptionScheduleBean.getBeginDate());
 	}
@@ -541,7 +541,7 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
     }
 
     private YearMonth getYearMonth(HttpServletRequest request, LocalDate date) {
-	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonth");
+	YearMonth yearMonth = getRenderedObject("yearMonth");
 	if (date == null) {
 	    if (yearMonth == null) {
 		yearMonth = new YearMonth();

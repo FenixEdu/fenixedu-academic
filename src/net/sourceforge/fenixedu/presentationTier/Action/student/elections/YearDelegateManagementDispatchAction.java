@@ -170,7 +170,7 @@ public class YearDelegateManagementDispatchAction extends FenixDispatchAction {
 	if (RenderUtils.getViewState("candidate") != null) {
 	    voteBean = (StudentVoteBean) RenderUtils.getViewState("candidate").getMetaObject().getObject();
 	} else if (RenderUtils.getViewState("otherStudentsBeanList") != null) {
-	    voteBean = (StudentVoteBean) getRenderedObject("otherStudentsBeanList");
+	    voteBean = getRenderedObject("otherStudentsBeanList");
 
 	}
 	voteBean = getStudentVoteOrBlankVote(voteBean);

@@ -35,7 +35,7 @@ public class ManageParkingPeriodsDA extends FenixDispatchAction {
 
 	ParkingCardSearchBean parkingCardSearchBean = null;
 	if (getRenderedObject("parkingCardSearchBean") != null) {
-	    parkingCardSearchBean = (ParkingCardSearchBean) getRenderedObject("parkingCardSearchBean");
+	    parkingCardSearchBean = getRenderedObject("parkingCardSearchBean");
 	} else {
 	    parkingCardSearchBean = new ParkingCardSearchBean();
 	}
@@ -49,7 +49,7 @@ public class ManageParkingPeriodsDA extends FenixDispatchAction {
 	if (request.getParameter("prepareRenewal") != null) {
 	    return prepareCardsRenewal(mapping, actionForm, request, response);
 	}
-	ParkingCardSearchBean parkingCardSearchBean = (ParkingCardSearchBean) getRenderedObject("parkingCardSearchBean");
+	ParkingCardSearchBean parkingCardSearchBean = getRenderedObject("parkingCardSearchBean");
 	RenderUtils.invalidateViewState();
 	if (parkingCardSearchBean == null) {
 	    parkingCardSearchBean = getSearchParameters(request);
@@ -85,7 +85,7 @@ public class ManageParkingPeriodsDA extends FenixDispatchAction {
     public ActionForward prepareCardsRenewal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	String[] selectedParkingCards = ((DynaActionForm) actionForm).getStrings("selectedParkingCards");
-	ParkingCardSearchBean parkingCardSearchBean = (ParkingCardSearchBean) getRenderedObject("parkingCardSearchBean");
+	ParkingCardSearchBean parkingCardSearchBean = getRenderedObject("parkingCardSearchBean");
 	RenderUtils.invalidateViewState();
 	parkingCardSearchBean.getSelectedParkingParties().clear();
 	for (int iter = 0; iter < selectedParkingCards.length; iter++) {
@@ -104,7 +104,7 @@ public class ManageParkingPeriodsDA extends FenixDispatchAction {
 
     public ActionForward renewParkingCards(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	ParkingCardSearchBean parkingCardSearchBean = (ParkingCardSearchBean) getRenderedObject("parkingCardSearchBean");
+	ParkingCardSearchBean parkingCardSearchBean = getRenderedObject("parkingCardSearchBean");
 	if (request.getParameter("cancel") != null) {
 	    return searchCards(mapping, actionForm, request, response);
 	}

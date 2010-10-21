@@ -163,9 +163,9 @@ public class StudentEquivalencyPlanDA extends FenixDispatchAction {
     }
 
     private Student getStudent(final HttpServletRequest request) {
-	StudentSearchBean studentSearchBean = (StudentSearchBean) getRenderedObject("net.sourceforge.fenixedu.domain.util.search.StudentSearchBeanWithDegreeCurricularPlan");
+	StudentSearchBean studentSearchBean = getRenderedObject("net.sourceforge.fenixedu.domain.util.search.StudentSearchBeanWithDegreeCurricularPlan");
 	if (studentSearchBean == null) {
-	    studentSearchBean = (StudentSearchBean) getRenderedObject("net.sourceforge.fenixedu.domain.util.search.StudentSearchBean");
+	    studentSearchBean = getRenderedObject("net.sourceforge.fenixedu.domain.util.search.StudentSearchBean");
 	}
 	if (studentSearchBean == null) {
 	    studentSearchBean = new StudentSearchBean();
@@ -205,7 +205,7 @@ public class StudentEquivalencyPlanDA extends FenixDispatchAction {
     }
 
     private DegreeCurricularPlan getSelectedDegreeCurricularPlan(final HttpServletRequest request) {
-	final StudentSearchBean studentSearchBean = ((StudentSearchBean) getRenderedObject("net.sourceforge.fenixedu.domain.util.search.StudentSearchBeanWithDegreeCurricularPlan"));
+	final StudentSearchBean studentSearchBean = getRenderedObject("net.sourceforge.fenixedu.domain.util.search.StudentSearchBeanWithDegreeCurricularPlan");
 	return studentSearchBean != null ? studentSearchBean.getDegreeCurricularPlan() : getDegreeCurricularPlan(request,
 		"selectedDegreeCurricularPlanID");
     }

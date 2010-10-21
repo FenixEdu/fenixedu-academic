@@ -36,7 +36,7 @@ public class StudentsPerformanceStudyDA extends FenixDispatchAction {
 
     public ActionForward listGeneratedReports(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	ExecutionSemesterBean executionSemesterBean = (ExecutionSemesterBean) getRenderedObject("execution.semester.bean");
+	ExecutionSemesterBean executionSemesterBean = getRenderedObject("execution.semester.bean");
 	RenderUtils.invalidateViewState("execution.semester.bean");
 
 	if (executionSemesterBean == null) {
@@ -66,7 +66,7 @@ public class StudentsPerformanceStudyDA extends FenixDispatchAction {
 
     public ActionForward uploadStudentNumbers(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	StudentsListBean studentsBean = (StudentsListBean) getRenderedObject("students.list.bean");
+	StudentsListBean studentsBean = getRenderedObject("students.list.bean");
 
 	try {
 	    process(studentsBean);
@@ -90,8 +90,8 @@ public class StudentsPerformanceStudyDA extends FenixDispatchAction {
 
     public ActionForward requestStudentsPerformanceStudy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	StudentsListBean studentsBean = (StudentsListBean) getRenderedObject("students.list.bean");
-	ExecutionSemesterBean executionSemesterBean = (ExecutionSemesterBean) getRenderedObject("execution.semester.bean");
+	StudentsListBean studentsBean = getRenderedObject("students.list.bean");
+	ExecutionSemesterBean executionSemesterBean = getRenderedObject("execution.semester.bean");
 
 	RenderUtils.invalidateViewState("students.list.bean");
 	RenderUtils.invalidateViewState("execution.semester.bean");
@@ -103,8 +103,8 @@ public class StudentsPerformanceStudyDA extends FenixDispatchAction {
 
     public ActionForward requestStudentsPerformanceStudyInvalid(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
-	StudentsListBean studentsBean = (StudentsListBean) getRenderedObject("students.list.bean");
-	ExecutionSemesterBean executionSemesterBean = (ExecutionSemesterBean) getRenderedObject("execution.semester.bean");
+	StudentsListBean studentsBean = getRenderedObject("students.list.bean");
+	ExecutionSemesterBean executionSemesterBean = getRenderedObject("execution.semester.bean");
 
 	RenderUtils.invalidateViewState("students.list.bean");
 	RenderUtils.invalidateViewState("execution.semester.bean");
@@ -117,7 +117,7 @@ public class StudentsPerformanceStudyDA extends FenixDispatchAction {
 
     public ActionForward addStudent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	StudentsListBean studentsListBean = (StudentsListBean) getRenderedObject("students.list.bean");
+	StudentsListBean studentsListBean = getRenderedObject("students.list.bean");
 	RenderUtils.invalidateViewState("students.list.bean");
 
 	try {
@@ -133,7 +133,7 @@ public class StudentsPerformanceStudyDA extends FenixDispatchAction {
 
     public ActionForward addStudentInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	StudentsListBean studentsListBean = (StudentsListBean) getRenderedObject("students.list.bean");
+	StudentsListBean studentsListBean = getRenderedObject("students.list.bean");
 	RenderUtils.invalidateViewState("students.list.bean");
 	request.setAttribute("studentsListBean", studentsListBean);
 

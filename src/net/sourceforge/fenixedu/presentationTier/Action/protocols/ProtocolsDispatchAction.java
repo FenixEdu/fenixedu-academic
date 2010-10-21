@@ -89,7 +89,7 @@ public class ProtocolsDispatchAction extends FenixDispatchAction {
 	if (isCancelled(request)) {
 	    return showProtocolAlerts(mapping, actionForm, request, response);
 	}
-	ProtocolHistoryRenewerFactory protocolHistoryFactory = (ProtocolHistoryRenewerFactory) getRenderedObject("protocolHistoryFactory");
+	ProtocolHistoryRenewerFactory protocolHistoryFactory = getRenderedObject("protocolHistoryFactory");
 	ActionMessage actionMessage = (ActionMessage) ExecuteFactoryMethod.run(protocolHistoryFactory);
 	if (actionMessage != null) {
 	    setError(request, "message", actionMessage);
@@ -114,7 +114,7 @@ public class ProtocolsDispatchAction extends FenixDispatchAction {
 	if (isCancelled(request)) {
 	    return showProtocolAlerts(mapping, actionForm, request, response);
 	}
-	ProtocolHistoryEditorFactory protocolHistoryFactory = (ProtocolHistoryEditorFactory) getRenderedObject("protocolHistoryFactory");
+	ProtocolHistoryEditorFactory protocolHistoryFactory = getRenderedObject("protocolHistoryFactory");
 	ActionMessage actionMessage = (ActionMessage) ExecuteFactoryMethod.run(protocolHistoryFactory);
 	if (actionMessage != null) {
 	    setError(request, "message", actionMessage);
@@ -127,7 +127,7 @@ public class ProtocolsDispatchAction extends FenixDispatchAction {
 
     public ActionForward searchProtocols(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	ProtocolSearch protocolSearch = (ProtocolSearch) getRenderedObject("protocolSearch");
+	ProtocolSearch protocolSearch = getRenderedObject("protocolSearch");
 	if (protocolSearch == null) {
 	    protocolSearch = new ProtocolSearch();
 	}

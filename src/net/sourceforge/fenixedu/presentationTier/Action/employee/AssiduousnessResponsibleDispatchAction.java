@@ -363,7 +363,7 @@ public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction 
     }
 
     private YearMonth getYearMonth(HttpServletRequest request) {
-	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonth");
+	YearMonth yearMonth = getRenderedObject("yearMonth");
 	if (yearMonth == null) {
 	    String year = request.getParameter("year");
 	    String month = request.getParameter("month");

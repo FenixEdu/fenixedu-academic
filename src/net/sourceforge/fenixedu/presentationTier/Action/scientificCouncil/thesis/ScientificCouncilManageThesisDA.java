@@ -243,7 +243,7 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 
     public ActionForward addScientificCommission(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	VariantBean bean = (VariantBean) getRenderedObject("usernameChoice");
+	VariantBean bean = getRenderedObject("usernameChoice");
 	if (bean != null) {
 	    ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(Integer.valueOf(request
 		    .getParameter("executionDegreeID")));
@@ -264,7 +264,7 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
     }
 
     private ThesisContextBean getContextBean(HttpServletRequest request) {
-	ThesisContextBean bean = (ThesisContextBean) getRenderedObject("contextBean");
+	ThesisContextBean bean = getRenderedObject("contextBean");
 	RenderUtils.invalidateViewState("contextBean");
 
 	if (bean != null) {
@@ -282,7 +282,7 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
     }
     
     private DissertationsContextBean getDissertationsContextBean(HttpServletRequest request) {
-	DissertationsContextBean bean = (DissertationsContextBean) getRenderedObject("dissertationsContextBean");
+	DissertationsContextBean bean = getRenderedObject("dissertationsContextBean");
 	RenderUtils.invalidateViewState("dissertationsContextBean");
 
 	if (bean != null) {
@@ -507,7 +507,7 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 
     private ThesisCreationPeriodFactoryExecutor getThesisCreationPeriodFactoryExecutor(final HttpServletRequest request,
 	    boolean invalidateViewState) {
-	ThesisCreationPeriodFactoryExecutor thesisCreationPeriodFactoryExecutor = (ThesisCreationPeriodFactoryExecutor) getRenderedObject("thesisCreationPeriodFactoryExecutor");
+	ThesisCreationPeriodFactoryExecutor thesisCreationPeriodFactoryExecutor = getRenderedObject("thesisCreationPeriodFactoryExecutor");
 	if (thesisCreationPeriodFactoryExecutor == null) {
 	    thesisCreationPeriodFactoryExecutor = new ThesisCreationPeriodFactoryExecutor();
 
@@ -850,7 +850,7 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 
     public ActionForward selectPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	ThesisBean bean = (ThesisBean) getRenderedObject("bean");
+	ThesisBean bean = getRenderedObject("bean");
 
 	if (bean == null) {
 	    return editProposal(mapping, actionForm, request, response);

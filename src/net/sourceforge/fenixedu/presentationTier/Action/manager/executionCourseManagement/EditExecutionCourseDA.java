@@ -32,7 +32,7 @@ public class EditExecutionCourseDA extends FenixDispatchAction {
     public ActionForward secondPrepareEditExecutionCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	ExecutionCourseBean bean = (ExecutionCourseBean) getRenderedObject("sessionBeanJSP");
+	ExecutionCourseBean bean = getRenderedObject("sessionBeanJSP");
 
 	/*
 	 * Se chooseNotLinked=checked, entao limpar as dropboxes do curso e ano
@@ -55,7 +55,7 @@ public class EditExecutionCourseDA extends FenixDispatchAction {
     public ActionForward listExecutionCourseActions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	ExecutionCourseBean bean = (ExecutionCourseBean) getRenderedObject("sessionBeanJSP");
+	ExecutionCourseBean bean = getRenderedObject("sessionBeanJSP");
 	request.setAttribute("sessionBean", bean);
 
 	return mapping.findForward("editExecutionCourse");

@@ -73,12 +73,12 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
     }
 
     private DegreeByExecutionYearBean getOrCreateDegreeSearchBean() {
-	DegreeByExecutionYearBean bean = (DegreeByExecutionYearBean) getRenderedObject("degreeByExecutionYearBean");
+	DegreeByExecutionYearBean bean = getRenderedObject("degreeByExecutionYearBean");
 	return (bean != null) ? bean : new DegreeByExecutionYearBean(getAdministratedDegreeTypes());
     }
 
     private DocumentRequestSearchBean getOrCreateRequestSearchBean() {
-	DocumentRequestSearchBean bean = (DocumentRequestSearchBean) getRenderedObject("documentRequestSearchBean");
+	DocumentRequestSearchBean bean = getRenderedObject("documentRequestSearchBean");
 	return (bean != null) ? bean : new DocumentRequestSearchBean();
     }
 

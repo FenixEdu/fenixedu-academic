@@ -216,7 +216,7 @@ public abstract class ReceiptsManagementDA extends PaymentsManagementDispatchAct
     public ActionForward printReceipt(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException, IOException, JRException {
 
-	final Receipt receipt = (Receipt) getRenderedObject("receipt");
+	final Receipt receipt = getRenderedObject("receipt");
 	try {
 
 	    final ReceiptDocument original = new ReceiptDocument(receipt, getMessageResourceProvider(request), true);

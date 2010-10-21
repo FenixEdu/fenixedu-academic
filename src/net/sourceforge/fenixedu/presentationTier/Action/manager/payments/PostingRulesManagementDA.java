@@ -420,7 +420,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
     public ActionForward createGraduationGratuityPR(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final CreateGratuityPostingRuleBean bean = (CreateGratuityPostingRuleBean) getRenderedObject("createPostingRuleBean");
+	final CreateGratuityPostingRuleBean bean = getRenderedObject("createPostingRuleBean");
 
 	try {
 	    PostingRulesManager.createGraduationGratuityPostingRule(bean);
@@ -492,7 +492,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
     public ActionForward createGraduationStandaloneEnrolmentGratuityPR(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	final CreateStandaloneEnrolmentGratuityPRBean bean = (CreateStandaloneEnrolmentGratuityPRBean) getRenderedObject("createPostingRuleBean");
+	final CreateStandaloneEnrolmentGratuityPRBean bean = getRenderedObject("createPostingRuleBean");
 
 	try {
 	    PostingRulesManager.createStandaloneGraduationGratuityPostingRule(bean);

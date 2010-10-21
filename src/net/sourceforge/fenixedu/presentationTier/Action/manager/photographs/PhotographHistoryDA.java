@@ -86,7 +86,7 @@ public class PhotographHistoryDA extends FenixDispatchAction {
 
     public ActionForward historyFilter(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	PhotographFilterBean filter = (PhotographFilterBean) getRenderedObject("historyFilter");
+	PhotographFilterBean filter = getRenderedObject("historyFilter");
 	Set<Photograph> photos = rootDomainObject.getPhotographsSet();
 	SortedMap<Person, UserHistory> history = new TreeMap<Person, UserHistory>();
 

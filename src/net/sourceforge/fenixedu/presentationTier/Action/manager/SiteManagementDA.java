@@ -457,7 +457,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 	}
 
 	bean.setAuthorsName(site.getAuthorName());
-	ScormCreationBean possibleBean = (ScormCreationBean) getRenderedObject("scormPackage");
+	ScormCreationBean possibleBean = getRenderedObject("scormPackage");
 	if (possibleBean != null) {
 	    bean.copyValuesFrom(possibleBean);
 	}
@@ -467,7 +467,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
     public ActionForward validateScormForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	ScormCreationBean bean = (ScormCreationBean) getRenderedObject("scormPackage");
+	ScormCreationBean bean = getRenderedObject("scormPackage");
 
 	if (bean.isValid() && validationErrors(bean).isEmpty()) {
 	    return createScormFile(mapping, form, request, response);
@@ -489,7 +489,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 	    throw new DomainException("site.scorm.notAccepted");
 	}
 
-	ScormCreationBean bean = (ScormCreationBean) getRenderedObject("scormPackage");
+	ScormCreationBean bean = getRenderedObject("scormPackage");
 
 	String displayName = bean.getDisplayName();
 	if (displayName == null || displayName.length() == 0 || displayName.trim().length() == 0) {

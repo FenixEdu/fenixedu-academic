@@ -30,7 +30,7 @@ public class EditEventDA extends EditResearchActivityDA {
 
     public ActionForward prepareChooseEventEditionToMerge(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	PageContainerBean pageContainerBean = (PageContainerBean) getRenderedObject("pageContainerBean");
+	PageContainerBean pageContainerBean = getRenderedObject("pageContainerBean");
 	RenderUtils.invalidateViewState();
 
 	MergeEventEditionPageContainerBean mergeEventEditionPageContainerBean = new MergeEventEditionPageContainerBean(

@@ -64,7 +64,7 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 
     public ActionForward selectEvaluationType(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	TeacherEvaluationTypeSelection selection = (TeacherEvaluationTypeSelection) getRenderedObject("process-selection");
+	TeacherEvaluationTypeSelection selection = getRenderedObject("process-selection");
 	selection.createEvaluation();
 	return viewAutoEvaluation(mapping, form, request, response);
     }
@@ -189,7 +189,7 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 
     public ActionForward uploadEvaluationFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	final FileUploadBean fileUploadBean = (FileUploadBean) getRenderedObject("fileUploadBean");
+	final FileUploadBean fileUploadBean = getRenderedObject("fileUploadBean");
 	fileUploadBean.consumeInputStream();
 	TeacherEvaluationFile.create(fileUploadBean, getLoggedPerson(request));
 	String backAction = request.getParameter("backAction");

@@ -363,7 +363,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
     public ActionForward depositAmount(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	final DepositAmountBean renderedObject = (DepositAmountBean) getRenderedObject("depositAmountBean");
+	final DepositAmountBean renderedObject = getRenderedObject("depositAmountBean");
 	try {
 	    DepositAmountOnEvent.run(renderedObject);
 	} catch (DomainException e) {
@@ -386,7 +386,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
     public ActionForward viewPaymentCodeMappings(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final PaymentCodeMappingBean bean = (PaymentCodeMappingBean) getRenderedObject("paymentCodeMappingBean");
+	final PaymentCodeMappingBean bean = getRenderedObject("paymentCodeMappingBean");
 	request.setAttribute("paymentCodeMappingBean", bean);
 
 	if (bean.hasExecutionInterval()) {
@@ -408,7 +408,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
     public ActionForward createPaymentCodeMapping(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final PaymentCodeMappingBean bean = (PaymentCodeMappingBean) getRenderedObject("paymentCodeMappingBean");
+	final PaymentCodeMappingBean bean = getRenderedObject("paymentCodeMappingBean");
 	request.setAttribute("paymentCodeMappingBean", bean);
 
 	try {

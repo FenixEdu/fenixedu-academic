@@ -43,14 +43,14 @@ public class StudentTutorshipDA extends StudentsPerformanceGridDispatchAction {
     public ActionForward showStudentPerformanceGrid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	TutorateBean tutorateBean = (TutorateBean) getRenderedObject("tutorateBean");
+	TutorateBean tutorateBean = getRenderedObject("tutorateBean");
 
 	Student student;
 	StudentsPerformanceInfoBean performanceBean;
 	if (tutorateBean != null) {
 	    student = Student.readStudentByNumber(tutorateBean.getPersonNumber());
 	} else {
-	    performanceBean = (StudentsPerformanceInfoBean) getRenderedObject("performanceGridFiltersBean");
+	    performanceBean = getRenderedObject("performanceGridFiltersBean");
 	    student = performanceBean.getStudent();
 
 	    tutorateBean = new TutorateBean();
@@ -102,7 +102,7 @@ public class StudentTutorshipDA extends StudentsPerformanceGridDispatchAction {
     }
 
     protected StudentsPerformanceInfoBean getOrCreateStudentsPerformanceBean(HttpServletRequest request, Student student) {
-	StudentsPerformanceInfoBean bean = (StudentsPerformanceInfoBean) getRenderedObject("performanceGridFiltersBean");
+	StudentsPerformanceInfoBean bean = getRenderedObject("performanceGridFiltersBean");
 	if (bean != null) {
 	    request.setAttribute("performanceGridFiltersBean", bean);
 	    return bean;

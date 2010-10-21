@@ -496,7 +496,7 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
     }
 
     private YearMonth getYearMonth(HttpServletRequest request, Employee employee) {
-	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonth");
+	YearMonth yearMonth = getRenderedObject("yearMonth");
 	if (yearMonth == null) {
 	    yearMonth = (YearMonth) request.getAttribute("yearMonth");
 	}

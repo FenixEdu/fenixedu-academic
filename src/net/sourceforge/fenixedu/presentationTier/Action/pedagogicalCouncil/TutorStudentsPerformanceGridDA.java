@@ -48,7 +48,7 @@ public class TutorStudentsPerformanceGridDA extends ViewStudentsPerformanceGridD
 
     public ActionForward viewStudentsPerformanceGrid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	TutorSearchBean bean = (TutorSearchBean) getRenderedObject("tutorateBean");
+	TutorSearchBean bean = getRenderedObject("tutorateBean");
 	request.setAttribute("tutorateBean", bean);
 	if (bean.getTeacher() != null) {
 	    Person person = bean.getTeacher().getPerson();

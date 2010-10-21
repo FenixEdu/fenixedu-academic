@@ -91,7 +91,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 
     public ActionForward closeMonth(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonth");
+	YearMonth yearMonth = getRenderedObject("yearMonth");
 	RenderUtils.invalidateViewState();
 	if (yearMonth != null && yearMonth.getCanCloseMonth()) {
 	    final LocalDate beginDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, 01);
@@ -148,7 +148,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 
     public ActionForward exportClosedMonth(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonthToExport");
+	YearMonth yearMonth = getRenderedObject("yearMonthToExport");
 	if (yearMonth != null && yearMonth.getIsThisYearMonthClosed()) {
 	    final LocalDate beginDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, 01);
 	    int endDay = beginDate.dayOfMonth().getMaximumValue();
@@ -175,7 +175,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 
     public ActionForward exportClosedMonthList(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonthToExportList");
+	YearMonth yearMonth = getRenderedObject("yearMonthToExportList");
 	if (yearMonth != null && yearMonth.getIsThisYearMonthClosed()) {
 	    final ClosedMonth closedMonth = ClosedMonth.getClosedMonthForBalance(yearMonth);
 	    StyledExcelSpreadsheet spreadsheet = getSpreadSheet(closedMonth);
@@ -387,7 +387,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 
     public ActionForward closeExtraWorkMonth(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	final YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonth");
+	final YearMonth yearMonth = getRenderedObject("yearMonth");
 	final ClosedMonth closedMonth = ClosedMonth.getClosedMonthForBalance(yearMonth);
 	if (yearMonth != null && !ClosedMonth.isMonthClosedForExtraWork(yearMonth.getPartial())) {
 	    ServiceUtils.executeService("CloseExtraWorkMonth", new Object[] { closedMonth });
@@ -398,7 +398,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 
     public ActionForward openMonth(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonthToOpen");
+	YearMonth yearMonth = getRenderedObject("yearMonthToOpen");
 	if (yearMonth != null && yearMonth.getIsThisYearMonthClosed()) {
 	    ServiceUtils.executeService("OpenClosedMonth", new Object[] { ClosedMonth.getClosedMonthForBalance(yearMonth) });
 	}
@@ -408,7 +408,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 
     public ActionForward openExtraWorkMonth(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonthToOpen");
+	YearMonth yearMonth = getRenderedObject("yearMonthToOpen");
 	if (yearMonth != null && yearMonth.getIsThisYearMonthClosedForExtraWork()) {
 	    ServiceUtils.executeService("OpenExtraWorkClosedMonth", new Object[] { ClosedMonth
 		    .getClosedMonthForBalance(yearMonth) });
@@ -419,7 +419,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 
     public ActionForward updateExtraWorkAmounts(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonthToUpdate");
+	YearMonth yearMonth = getRenderedObject("yearMonthToUpdate");
 	if (yearMonth != null && yearMonth.getIsThisYearMonthClosedForExtraWork()) {
 	    ActionMessage result = (ActionMessage) ServiceUtils.executeService("UpdateExtraWorkClosedMonth",
 		    new Object[] { ClosedMonth.getClosedMonthForBalance(yearMonth) });
@@ -477,7 +477,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	    actionForward = prepareToCloseExtraWorkMonth(mapping, actionForm, request, response);
 	}
 
-	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonthToExport");
+	YearMonth yearMonth = getRenderedObject("yearMonthToExport");
 	RenderUtils.invalidateViewState();
 	if (yearMonth == null) {
 	    return actionForward;
@@ -519,7 +519,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
     public ActionForward exportClosedMonthFile(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonthToOpen2");
+	YearMonth yearMonth = getRenderedObject("yearMonthToOpen2");
 	RenderUtils.invalidateViewState();
 	if (yearMonth == null) {
 	    return prepareToCloseMonth(mapping, actionForm, request, response);
@@ -557,7 +557,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
     public ActionForward exportExtraWorkClosedMonthFile(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonthToExport2");
+	YearMonth yearMonth = getRenderedObject("yearMonthToExport2");
 	RenderUtils.invalidateViewState();
 	if (yearMonth == null) {
 	    return prepareToCloseMonth(mapping, actionForm, request, response);
@@ -593,7 +593,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 
     public ActionForward showMonthCorrections(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonth");
+	YearMonth yearMonth = getRenderedObject("yearMonth");
 	ClosedMonth closedMonth = ClosedMonth.getClosedMonth(yearMonth);
 	StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("Correções");
 	ResourceBundle bundleAssiduousness = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());

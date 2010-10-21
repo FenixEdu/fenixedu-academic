@@ -79,7 +79,7 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
 
     public ActionForward createUnitAssociation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	final ResultUnitAssociationCreationBean bean = (ResultUnitAssociationCreationBean) getRenderedObject("unitBean");
+	final ResultUnitAssociationCreationBean bean = getRenderedObject("unitBean");
 	bean.setSuggestion(false);
 	try {
 

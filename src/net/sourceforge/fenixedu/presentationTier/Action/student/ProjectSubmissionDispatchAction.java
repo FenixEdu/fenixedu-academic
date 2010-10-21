@@ -46,7 +46,7 @@ public class ProjectSubmissionDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
 
 	Student student = getUserView(request).getPerson().getStudent();
-	ManageStudentStatuteBean bean = (ManageStudentStatuteBean) getRenderedObject("studentBean");
+	ManageStudentStatuteBean bean = getRenderedObject("studentBean");
 	if (bean == null) {
 	    bean = new ManageStudentStatuteBean(student);
 	}

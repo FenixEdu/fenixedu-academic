@@ -39,7 +39,7 @@ public class StudentLowPerformanceDA extends FenixDispatchAction {
     }
 
     private PrescriptionBean getContextBean(HttpServletRequest request) {
-	PrescriptionBean bean = (PrescriptionBean) getRenderedObject(PRESCRIPTION_BEAN);
+	PrescriptionBean bean = getRenderedObject(PRESCRIPTION_BEAN);
 	RenderUtils.invalidateViewState(PRESCRIPTION_BEAN);
 	if (bean == null) {
 	    return new PrescriptionBean(null);

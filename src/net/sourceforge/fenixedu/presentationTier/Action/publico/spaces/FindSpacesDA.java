@@ -44,7 +44,7 @@ public class FindSpacesDA extends FenixDispatchAction {
     public ActionForward prepareSearchSpacesPostBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	FindSpacesBean bean = (FindSpacesBean) getRenderedObject("beanWithLabelToSearchID");
+	FindSpacesBean bean = getRenderedObject("beanWithLabelToSearchID");
 	request.setAttribute("bean", bean);
 	RenderUtils.invalidateViewState("beanWithLabelToSearchID");
 	return mapping.findForward("listFoundSpaces");
@@ -53,7 +53,7 @@ public class FindSpacesDA extends FenixDispatchAction {
     public ActionForward search(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	FindSpacesBean bean = (FindSpacesBean) getRenderedObject("beanWithLabelToSearchID");
+	FindSpacesBean bean = getRenderedObject("beanWithLabelToSearchID");
 	if (bean != null) {
 
 	    String labelToSearch = bean.getLabelToSearch();
@@ -89,7 +89,7 @@ public class FindSpacesDA extends FenixDispatchAction {
     public ActionForward searchWithExtraOptions(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	FindSpacesBean bean = (FindSpacesBean) getRenderedObject("beanWithLabelToSearchID");
+	FindSpacesBean bean = getRenderedObject("beanWithLabelToSearchID");
 	bean.setExtraOptions(true);
 	request.setAttribute("bean", bean);
 	RenderUtils.invalidateViewState("beanWithLabelToSearchID");
@@ -99,7 +99,7 @@ public class FindSpacesDA extends FenixDispatchAction {
     public ActionForward searchWithoutExtraOptions(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	FindSpacesBean bean = (FindSpacesBean) getRenderedObject("beanWithLabelToSearchID");
+	FindSpacesBean bean = getRenderedObject("beanWithLabelToSearchID");
 	bean.setExtraOptions(false);
 	bean.setCampus(null);
 	bean.setBuilding(null);

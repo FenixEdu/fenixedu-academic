@@ -246,10 +246,10 @@ public class ElectionsPeriodsManagementDispatchAction extends FenixDispatchActio
 
     public ActionForward addCandidatesToSecondRoundElections(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	NewRoundElectionBean secondRoundElectionsCandidatesBean = (NewRoundElectionBean) getRenderedObject("secondRoundElectionsCandidatesBean");
-	NewRoundElectionBean secondRoundElectionsNotCandidatesBean = (NewRoundElectionBean) getRenderedObject("secondRoundElectionsNotCandidatesBean");
+	NewRoundElectionBean secondRoundElectionsCandidatesBean = getRenderedObject("secondRoundElectionsCandidatesBean");
+	NewRoundElectionBean secondRoundElectionsNotCandidatesBean = getRenderedObject("secondRoundElectionsNotCandidatesBean");
 
-	ElectionPeriodBean newElectionPeriodBean = (ElectionPeriodBean) getRenderedObject("newElectionPeriodBean");
+	ElectionPeriodBean newElectionPeriodBean = getRenderedObject("newElectionPeriodBean");
 
 	CreateDelegateVotingPeriod.run(newElectionPeriodBean, secondRoundElectionsCandidatesBean,
 		secondRoundElectionsNotCandidatesBean);

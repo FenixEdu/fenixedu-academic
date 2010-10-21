@@ -146,7 +146,7 @@ public class SearchExecutionCourseAttendsAction extends FenixDispatchAction {
     public ActionForward sendEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	SearchExecutionCourseAttendsBean bean = (SearchExecutionCourseAttendsBean) getRenderedObject("mailViewState");
+	SearchExecutionCourseAttendsBean bean = getRenderedObject("mailViewState");
 	ExecutionCourse executionCourse = bean.getExecutionCourse();
 	Group studentsGroup = bean.getAttendsGroup();
 	Recipient recipient = Recipient.newInstance(bean.getLabel(), studentsGroup);

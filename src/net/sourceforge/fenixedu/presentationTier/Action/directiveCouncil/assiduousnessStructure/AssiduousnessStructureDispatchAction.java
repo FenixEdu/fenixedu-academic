@@ -20,7 +20,7 @@ public class AssiduousnessStructureDispatchAction extends FenixDispatchAction {
 
     public ActionForward showAssiduousnessStructure(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	AssiduousnessStructureSearch assiduousnessStructureSearch = (AssiduousnessStructureSearch) getRenderedObject("assiduousnessStructureSearch");
+	AssiduousnessStructureSearch assiduousnessStructureSearch = getRenderedObject("assiduousnessStructureSearch");
 	if (assiduousnessStructureSearch == null) {
 	    assiduousnessStructureSearch = (AssiduousnessStructureSearch) request.getAttribute("assiduousnessStructureSearch");
 	}

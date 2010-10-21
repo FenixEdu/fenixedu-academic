@@ -35,7 +35,7 @@ public class GIAFInterfaceDispatchAction extends FenixDispatchAction {
 
     public ActionForward showEmployeeHourValue(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
-	GiafInterfaceBean giafInterfaceBean = (GiafInterfaceBean) getRenderedObject("giafInterfaceBean");
+	GiafInterfaceBean giafInterfaceBean = getRenderedObject("giafInterfaceBean");
 	if (giafInterfaceBean == null) {
 	    giafInterfaceBean = new GiafInterfaceBean();
 	} else {
@@ -58,7 +58,7 @@ public class GIAFInterfaceDispatchAction extends FenixDispatchAction {
 
     public ActionForward insertA17Vacations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
-	GiafInterfaceBean giafInterfaceBean = (GiafInterfaceBean) getRenderedObject("giafInterfaceBean");
+	GiafInterfaceBean giafInterfaceBean = getRenderedObject("giafInterfaceBean");
 	if (giafInterfaceBean == null) {
 	    giafInterfaceBean = new GiafInterfaceBean();
 	} else {

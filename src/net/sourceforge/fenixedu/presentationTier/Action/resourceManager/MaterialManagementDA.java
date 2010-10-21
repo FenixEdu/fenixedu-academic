@@ -41,12 +41,12 @@ public class MaterialManagementDA extends FenixDispatchAction {
 	MaterialType materialType = null;
 	String identification = null;
 
-	Material material = (Material) getRenderedObject("materialEditID");
+	Material material = getRenderedObject("materialEditID");
 	if (material != null) {
 	    bean = new MaterialBean(material.getIdentification(), MaterialType
 		    .getMaterialTypeByMaterialClass(material.getClass()));
 	} else {
-	    bean = (MaterialBean) getRenderedObject("materialBeanID");
+	    bean = getRenderedObject("materialBeanID");
 	    bean = bean != null ? bean : (MaterialBean) getRenderedObject("createMaterialBeanID");
 	    if (bean == null) {
 		materialType = getMaterialTypeFromParameter(request);
@@ -69,7 +69,7 @@ public class MaterialManagementDA extends FenixDispatchAction {
     public ActionForward prepareCreateMaterial(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws InvalidArgumentException {
 
-	MaterialBean bean = (MaterialBean) getRenderedObject("prepareCreateMaterialBeanID");
+	MaterialBean bean = getRenderedObject("prepareCreateMaterialBeanID");
 	bean = bean != null ? bean : (MaterialBean) getRenderedObject("createMaterialBeanID");
 
 	if (bean == null) {
@@ -83,7 +83,7 @@ public class MaterialManagementDA extends FenixDispatchAction {
     public ActionForward createMaterial(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws InvalidArgumentException, FenixFilterException, FenixServiceException {
 
-	MaterialBean bean = (MaterialBean) getRenderedObject("createMaterialBeanID");
+	MaterialBean bean = getRenderedObject("createMaterialBeanID");
 
 	try {
 	    CreateMaterial.run(bean);

@@ -29,7 +29,7 @@ public class ManageExtraWorkUnitAmountDispatchAction extends FenixDispatchAction
 
     public ActionForward chooseYear(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
-	YearMonth yearMonth = (YearMonth) getRenderedObject("year");
+	YearMonth yearMonth = getRenderedObject("year");
 	if (yearMonth == null) {
 	    yearMonth = new YearMonth();
 	    yearMonth.setYear(new YearMonthDay().getYear());
@@ -68,7 +68,7 @@ public class ManageExtraWorkUnitAmountDispatchAction extends FenixDispatchAction
 
     public ActionForward createUnitExtraWorkAmount(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
-	UnitExtraWorkAmountFactory unitExtraWorkAmountFactory = (UnitExtraWorkAmountFactory) getRenderedObject("createUnitExtraWorkAmount");
+	UnitExtraWorkAmountFactory unitExtraWorkAmountFactory = getRenderedObject("createUnitExtraWorkAmount");
 	if (Unit.readByCostCenterCode(unitExtraWorkAmountFactory.getCostCenterCode()) == null) {
 	    addActionMessage(request, "error.extraWorkAmount.inexistentCostCenter");
 	} else {
@@ -93,7 +93,7 @@ public class ManageExtraWorkUnitAmountDispatchAction extends FenixDispatchAction
 	}
 	UnitExtraWorkAmountFactory unitExtraWorkAmountFactory = null;
 	if (unitExtraWorkAmountID == null) {
-	    unitExtraWorkAmountFactory = (UnitExtraWorkAmountFactory) getRenderedObject("editMovement");
+	    unitExtraWorkAmountFactory = getRenderedObject("editMovement");
 	} else {
 	    UnitExtraWorkAmount unitExtraWorkAmount = (UnitExtraWorkAmount) RootDomainObject.readDomainObjectByOID(
 		    UnitExtraWorkAmount.class, unitExtraWorkAmountID);
@@ -105,7 +105,7 @@ public class ManageExtraWorkUnitAmountDispatchAction extends FenixDispatchAction
 
     public ActionForward insertNewAmount(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
-	UnitExtraWorkAmountFactory unitExtraWorkAmountFactory = (UnitExtraWorkAmountFactory) getRenderedObject("amountFactory");
+	UnitExtraWorkAmountFactory unitExtraWorkAmountFactory = getRenderedObject("amountFactory");
 	UnitExtraWorkAmount unitExtraWorkAmount = (UnitExtraWorkAmount) ExecuteFactoryMethod.run(unitExtraWorkAmountFactory);
 	request.setAttribute("unitExtraWorkAmountFactory", new UnitExtraWorkAmountFactory(unitExtraWorkAmount));
 	return mapping.findForward("show-unit-extra-work-movements");

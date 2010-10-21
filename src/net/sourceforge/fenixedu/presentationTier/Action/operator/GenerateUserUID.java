@@ -35,7 +35,7 @@ public class GenerateUserUID extends FenixDispatchAction {
     public ActionForward searchPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	PersonBean personBean = (PersonBean) getRenderedObject("personBeanID");
+	PersonBean personBean = getRenderedObject("personBeanID");
 	readAndSetResultPersons(request, personBean);
 	return mapping.findForward("prepareSearchPerson");
     }

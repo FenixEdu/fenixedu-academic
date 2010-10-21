@@ -226,7 +226,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
     public ActionForward updateBanner(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	UnitSite site = getSite(request);
-	BannerBean bean = (BannerBean) getRenderedObject("editBanner");
+	BannerBean bean = getRenderedObject("editBanner");
 
 	if (bean == null) {
 	    manageBanners(mapping, actionForm, request, response);
@@ -274,7 +274,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
     public ActionForward addBanner(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	UnitSite site = getSite(request);
-	BannerBean bean = (BannerBean) getRenderedObject("newBanner");
+	BannerBean bean = getRenderedObject("newBanner");
 
 	if (bean == null || bean.getMainImage().getFile() == null) {
 	    manageBanners(mapping, actionForm, request, response);
@@ -484,7 +484,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	    return (Person) RootDomainObject.getInstance().readPartyByOID(id);
 	}
 
-	VariantBean bean = (VariantBean) getRenderedObject("addUserBean");
+	VariantBean bean = getRenderedObject("addUserBean");
 	if (bean == null) {
 	    return null;
 	}
@@ -557,7 +557,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	UnitSite site = getSite(request);
 	Unit unit = getTargetUnit(request);
 
-	VariantBean bean = (VariantBean) getRenderedObject("create");
+	VariantBean bean = getRenderedObject("create");
 	if (bean != null) {
 	    executeService("CreateVirtualFunction", new Object[] { site, unit, bean.getMLString() });
 	}
@@ -587,7 +587,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	    HttpServletResponse response) throws Exception {
 	Function function = getTargetFunction(request);
 
-	VariantBean bean = (VariantBean) getRenderedObject("edit");
+	VariantBean bean = getRenderedObject("edit");
 	if (bean != null) {
 	    executeService("EditVirtualFunction", new Object[] { getSite(request), function, bean.getMLString() });
 	}
@@ -717,7 +717,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 
     public ActionForward addManager(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	UnitSiteManagerBean bean = (UnitSiteManagerBean) getRenderedObject("add");
+	UnitSiteManagerBean bean = getRenderedObject("add");
 
 	if (bean == null) {
 	    return chooseManagers(mapping, actionForm, request, response);

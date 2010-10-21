@@ -78,7 +78,7 @@ public class SearchCompetenceCoursesDA extends FenixDispatchAction {
     }
 
     private SearchCompetenceCourseBean getOrCreateSearchBean(HttpServletRequest request) {
-	SearchCompetenceCourseBean searchBean = (SearchCompetenceCourseBean) getRenderedObject("searchBean");
+	SearchCompetenceCourseBean searchBean = getRenderedObject("searchBean");
 	RenderUtils.invalidateViewState();
 	if (searchBean == null) {
 	    searchBean = new SearchCompetenceCourseBean();

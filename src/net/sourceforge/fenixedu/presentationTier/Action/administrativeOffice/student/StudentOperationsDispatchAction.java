@@ -265,7 +265,7 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 	request.setAttribute("originInformationBean", originInformation != null ? originInformation : new OriginInformationBean(
 		(PersonBean) personBean));
 
-	final PrecedentDegreeInformationBean precedentDegreeBean = (PrecedentDegreeInformationBean) getRenderedObject("precedentDegreeInformation");
+	final PrecedentDegreeInformationBean precedentDegreeBean = getRenderedObject("precedentDegreeInformation");
 	request.setAttribute("precedentDegreeInformationBean", precedentDegreeBean);
 
 	try {
@@ -296,7 +296,7 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 
 	request.setAttribute("executionDegreeBean", getRenderedObject("executionDegree"));
 	request.setAttribute("ingressionInformationBean", getRenderedObject("chooseIngression"));
-	PersonBean personBean = (PersonBean) getRenderedObject("person");
+	PersonBean personBean = getRenderedObject("person");
 	request.setAttribute("personBean", personBean);
 	request.setAttribute("precedentDegreeInformationBean", getRenderedObject("precedentDegreeInformation"));
 	request.setAttribute("originInformationBean", getRenderedObject("originInformation"));

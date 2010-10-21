@@ -120,7 +120,7 @@ public class ExemptionsManagementDispatchAction extends AcademicAdminOfficePayme
     public ActionForward createGratuityExemption(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	final CreateGratuityExemptionBean createGratuityExemptionBean = (CreateGratuityExemptionBean) getRenderedObject("createGratuityExemptionBean");
+	final CreateGratuityExemptionBean createGratuityExemptionBean = getRenderedObject("createGratuityExemptionBean");
 
 	if (!createGratuityExemptionBean.isPercentageExemption() && createGratuityExemptionBean.getAmount() == null) {
 	    return invalidCreateGratuityExemption(mapping, request, "context",
@@ -369,7 +369,7 @@ public class ExemptionsManagementDispatchAction extends AcademicAdminOfficePayme
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	try {
-	    final AcademicEventExemptionBean bean = (AcademicEventExemptionBean) getRenderedObject("exemptionBean");
+	    final AcademicEventExemptionBean bean = getRenderedObject("exemptionBean");
 	    AcademicEventExemption.create(getLoggedPerson(request).getEmployee(), bean.getEvent(), bean.getValue(), bean
 		    .getJustificationType(), bean.getDispatchDate(), bean.getReason());
 
@@ -401,7 +401,7 @@ public class ExemptionsManagementDispatchAction extends AcademicAdminOfficePayme
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	try {
-	    final PhdEventExemptionBean bean = (PhdEventExemptionBean) getRenderedObject("exemptionBean");
+	    final PhdEventExemptionBean bean = getRenderedObject("exemptionBean");
 	    PhdEventExemption.create(getLoggedPerson(request).getEmployee(), bean.getEvent(), bean.getValue(), bean
 		    .getJustificationType(), bean.getDispatchDate(), bean.getReason());
 
@@ -474,7 +474,7 @@ public class ExemptionsManagementDispatchAction extends AcademicAdminOfficePayme
     public ActionForward createPhdRegistrationFeePenaltyExemption(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	final CreatePhdRegistrationFeePenaltyExemptionBean penaltyExemptionBean = (CreatePhdRegistrationFeePenaltyExemptionBean) getRenderedObject("create-penalty-exemption-bean");
+	final CreatePhdRegistrationFeePenaltyExemptionBean penaltyExemptionBean = getRenderedObject("create-penalty-exemption-bean");
 	request.setAttribute("eventId", penaltyExemptionBean.getEvent().getIdInternal());
 
 	try {

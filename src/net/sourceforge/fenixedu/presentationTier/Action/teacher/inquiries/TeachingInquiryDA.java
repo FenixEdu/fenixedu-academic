@@ -100,7 +100,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
     public ActionForward showInquiries1stPage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	TeachingInquiryDTO teachingInquiry = (TeachingInquiryDTO) getRenderedObject("teachingInquiry");
+	TeachingInquiryDTO teachingInquiry = getRenderedObject("teachingInquiry");
 	if (teachingInquiry == null) {
 	    Professorship professorship = getProfessorship(readAndSaveExecutionCourse(request));
 
@@ -119,7 +119,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
     public ActionForward showInquiries2ndPage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	final TeachingInquiryDTO teachingInquiry = (TeachingInquiryDTO) getRenderedObject("teachingInquiry");
+	final TeachingInquiryDTO teachingInquiry = getRenderedObject("teachingInquiry");
 
 	request.setAttribute("teachingInquiry", teachingInquiry);
 	request.setAttribute("executionCourse", teachingInquiry.getProfessorship().getExecutionCourse());
@@ -144,7 +144,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 
     public ActionForward showInquiries3rdPage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	final TeachingInquiryDTO teachingInquiry = (TeachingInquiryDTO) getRenderedObject("teachingInquiry");
+	final TeachingInquiryDTO teachingInquiry = getRenderedObject("teachingInquiry");
 	request.setAttribute("teachingInquiry", teachingInquiry);
 	final ExecutionCourse executionCourse = teachingInquiry.getProfessorship().getExecutionCourse();
 	request.setAttribute("executionCourse", executionCourse);
@@ -189,7 +189,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 
     public ActionForward submitInquiries3rdPage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	final TeachingInquiryDTO teachingInquiry = (TeachingInquiryDTO) getRenderedObject("teachingInquiry");
+	final TeachingInquiryDTO teachingInquiry = getRenderedObject("teachingInquiry");
 	request.setAttribute("teachingInquiry", teachingInquiry);
 	request.setAttribute("executionCourse", teachingInquiry.getProfessorship().getExecutionCourse());
 	if (!teachingInquiry.getThirdPageNinthBlock().validate()) {
@@ -204,7 +204,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 
     public ActionForward backFromPrepareConfirm(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	final TeachingInquiryDTO teachingInquiry = (TeachingInquiryDTO) getRenderedObject("teachingInquiry");
+	final TeachingInquiryDTO teachingInquiry = getRenderedObject("teachingInquiry");
 	if (!teachingInquiry.getProfessorship().isResponsibleFor()) {
 	    return showInquiries1stPage(actionMapping, actionForm, request, response);
 	} else {
@@ -220,7 +220,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 
     private ActionForward forwardTo3rdPage(ActionMapping actionMapping, HttpServletRequest request,
 	    Collection<StudentInquiriesCourseResultBean> inquiriesCourseResults) {
-	final TeachingInquiryDTO teachingInquiry = (TeachingInquiryDTO) getRenderedObject("teachingInquiry");
+	final TeachingInquiryDTO teachingInquiry = getRenderedObject("teachingInquiry");
 	request.setAttribute("teachingInquiry", teachingInquiry);
 	request.setAttribute("executionCourse", teachingInquiry.getProfessorship().getExecutionCourse());
 	request.setAttribute("studentInquiriesCourseResults", inquiriesCourseResults);
@@ -230,7 +230,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 
     public ActionForward confirm(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	final TeachingInquiryDTO teachingInquiryDTO = (TeachingInquiryDTO) getRenderedObject("teachingInquiry");
+	final TeachingInquiryDTO teachingInquiryDTO = getRenderedObject("teachingInquiry");
 	TeachingInquiryServices.saveAnswers(teachingInquiryDTO);
 	request.setAttribute("executionCourse", teachingInquiryDTO.getProfessorship().getExecutionCourse());
 	request.setAttribute("executionCoursesToAnswer", AccessControl.getPerson().getExecutionCoursesWithTeachingInquiriesToAnswer());

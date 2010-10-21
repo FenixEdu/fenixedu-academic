@@ -55,7 +55,7 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 	request.setAttribute("student", getStudent(request));
 
 	final ExecutionYear executionYear;
-	final ThesisContextBean bean = (ThesisContextBean) getRenderedObject("contextBean");
+	final ThesisContextBean bean = getRenderedObject("contextBean");
 	if (bean == null) {
 	    executionYear = getExecutionYear(request);
 	} else {
@@ -120,7 +120,7 @@ public class ManageThesisDA extends AbstractManageThesisDA {
     }
 
     private ThesisContextBean getContextBean(HttpServletRequest request) {
-	ThesisContextBean bean = (ThesisContextBean) getRenderedObject("contextBean");
+	ThesisContextBean bean = getRenderedObject("contextBean");
 	RenderUtils.invalidateViewState("contextBean");
 
 	if (bean != null) {
@@ -163,7 +163,7 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 
     public ActionForward selectStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	ThesisBean bean = (ThesisBean) getRenderedObject("student");
+	ThesisBean bean = getRenderedObject("student");
 	if (bean == null) {
 	    return searchStudent(mapping, actionForm, request, response);
 	} else {
@@ -334,7 +334,7 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 	    HttpServletResponse response) throws Exception {
 	DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
 
-	ThesisBean bean = (ThesisBean) getRenderedObject("bean");
+	ThesisBean bean = getRenderedObject("bean");
 	RenderUtils.invalidateViewState("bean");
 
 	if (bean == null) {
@@ -547,7 +547,7 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 
     public ActionForward changePersonInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	ThesisBean bean = (ThesisBean) getRenderedObject("bean");
+	ThesisBean bean = getRenderedObject("bean");
 
 	if (bean == null) {
 	    return editProposal(mapping, actionForm, request, response);
@@ -559,7 +559,7 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 
     public ActionForward changePersonType(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	ThesisBean bean = (ThesisBean) getRenderedObject("bean");
+	ThesisBean bean = getRenderedObject("bean");
 	RenderUtils.invalidateViewState("bean");
 
 	if (bean == null) {
@@ -577,7 +577,7 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 
     public ActionForward selectPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	ThesisBean bean = (ThesisBean) getRenderedObject("bean");
+	ThesisBean bean = getRenderedObject("bean");
 
 	if (bean == null) {
 	    return editProposal(mapping, actionForm, request, response);
@@ -610,7 +610,7 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 
     public ActionForward selectPersonInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	ThesisBean bean = (ThesisBean) getRenderedObject("bean");
+	ThesisBean bean = getRenderedObject("bean");
 
 	if (bean == null) {
 	    return editProposal(mapping, actionForm, request, response);
@@ -622,7 +622,7 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 
     public ActionForward selectExternalPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	ThesisBean bean = (ThesisBean) getRenderedObject("bean");
+	ThesisBean bean = getRenderedObject("bean");
 	boolean create = request.getParameter("create") != null;
 
 	if (bean == null) {
@@ -657,7 +657,7 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 
     public ActionForward selectUnitInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	ThesisBean bean = (ThesisBean) getRenderedObject("bean");
+	ThesisBean bean = getRenderedObject("bean");
 
 	if (bean == null) {
 	    return searchStudent(mapping, actionForm, request, response);
@@ -669,7 +669,7 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 
     public ActionForward selectExternalUnit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	ThesisBean bean = (ThesisBean) getRenderedObject("bean");
+	ThesisBean bean = getRenderedObject("bean");
 	boolean create = request.getParameter("create") != null;
 
 	if (bean == null) {

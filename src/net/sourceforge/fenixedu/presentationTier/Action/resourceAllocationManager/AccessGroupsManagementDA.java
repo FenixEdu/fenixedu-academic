@@ -36,7 +36,7 @@ public class AccessGroupsManagementDA extends FenixDispatchAction {
     public ActionForward addPersonToAccessGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws InvalidArgumentException, FenixFilterException, FenixServiceException {
 
-	AccessGroupBean bean = (AccessGroupBean) getRenderedObject("PersonToAccessGroupBeanID");
+	AccessGroupBean bean = getRenderedObject("PersonToAccessGroupBeanID");
 	ResourceAllocationAccessGroupType accessGroupType = bean != null ? bean.getAccessGroupType() : null;
 	Person person = bean != null ? bean.getPerson() : null;
 	Role role = Role.getRoleByRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER);

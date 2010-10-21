@@ -420,7 +420,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
     private ActionForward returnToManageSpacePage(ActionMapping mapping, HttpServletRequest request,
 	    SpaceInformation spaceInformation) throws IOException {
 
-	MoveSpaceBean spaceBean = (MoveSpaceBean) getRenderedObject("subSpacesStateBeanID");
+	MoveSpaceBean spaceBean = getRenderedObject("subSpacesStateBeanID");
 	spaceBean = (spaceBean == null) ? new MoveSpaceBean(spaceInformation.getSpace()) : spaceBean;
 
 	Space space = spaceInformation.getSpace();

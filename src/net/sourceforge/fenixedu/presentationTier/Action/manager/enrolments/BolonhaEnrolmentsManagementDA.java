@@ -114,7 +114,7 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
     public ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	InfoExecutionPeriod executionPeriodBean = (InfoExecutionPeriod) getRenderedObject("infoExecutionPeriod");
+	InfoExecutionPeriod executionPeriodBean = getRenderedObject("infoExecutionPeriod");
 
 	request.setAttribute("bolonhaStudentEnrollmentBean", new BolonhaStudentEnrollmentBean(getStudentCurricularPlan(request),
 		executionPeriodBean.getExecutionPeriod(), getCurricularYearForCurricularCourses(), getCurricularRuleLevel(form)));
@@ -125,7 +125,7 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
     public ActionForward backToAllStudentCurricularPlans(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final BolonhaStudentEnrollmentBean bean = (BolonhaStudentEnrollmentBean) getRenderedObject("bolonhaStudentEnrolments");
+	final BolonhaStudentEnrollmentBean bean = getRenderedObject("bolonhaStudentEnrolments");
 	request.setAttribute("studentId", bean.getStudentCurricularPlan().getRegistration().getStudent().getIdInternal());
 	return showAllStudentCurricularPlans(mapping, form, request, response);
     }

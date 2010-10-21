@@ -75,7 +75,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
     public ActionForward showParkingRequests(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	// verificar autorização
-	ParkingRequestSearch parkingRequestSearch = (ParkingRequestSearch) getRenderedObject("parkingRequestSearch");
+	ParkingRequestSearch parkingRequestSearch = getRenderedObject("parkingRequestSearch");
 
 	if (parkingRequestSearch == null) {
 	    parkingRequestSearch = new ParkingRequestSearch();

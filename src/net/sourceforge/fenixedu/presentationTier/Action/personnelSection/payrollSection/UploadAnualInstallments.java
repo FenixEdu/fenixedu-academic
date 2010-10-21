@@ -56,7 +56,7 @@ public class UploadAnualInstallments extends FenixDispatchAction {
 
     public ActionForward chooseYear(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
-	BonusInstallmentFileBean bonusInstallmentFileBean = (BonusInstallmentFileBean) getRenderedObject("bonusInstallmentFileBeanYear");
+	BonusInstallmentFileBean bonusInstallmentFileBean = getRenderedObject("bonusInstallmentFileBeanYear");
 	request.setAttribute("bonusInstallmentFileBean", bonusInstallmentFileBean);
 	setBonusInstallmentList(request, bonusInstallmentFileBean);
 	return mapping.findForward("upload-bonus-file");
@@ -64,7 +64,7 @@ public class UploadAnualInstallments extends FenixDispatchAction {
 
     public ActionForward chooseInstallment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
-	BonusInstallmentFileBean bonusInstallmentFileBean = (BonusInstallmentFileBean) getRenderedObject("bonusInstallmentFileBean");
+	BonusInstallmentFileBean bonusInstallmentFileBean = getRenderedObject("bonusInstallmentFileBean");
 	RenderUtils.invalidateViewState();
 
 	setBonusInstallmentList(request, bonusInstallmentFileBean);

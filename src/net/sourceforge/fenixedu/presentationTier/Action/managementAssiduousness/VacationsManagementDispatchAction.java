@@ -39,7 +39,7 @@ public class VacationsManagementDispatchAction extends FenixDispatchAction {
     public ActionForward calculateA17AndA18(ActionMapping mapping, ActionForm actionFoautrm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	AssiduousnessExportChoices assiduousnessExportChoices = (AssiduousnessExportChoices) getRenderedObject("assiduousnessExportChoices");
+	AssiduousnessExportChoices assiduousnessExportChoices = getRenderedObject("assiduousnessExportChoices");
 
 	response.setContentType("text/plain");
 	StringBuilder fileName = new StringBuilder();

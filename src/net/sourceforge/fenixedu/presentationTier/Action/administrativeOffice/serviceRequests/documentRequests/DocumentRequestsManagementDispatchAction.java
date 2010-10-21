@@ -276,7 +276,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
     public ActionForward chooseExamsToCreateExamDateCertificateRequest(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	final DocumentRequestCreateBean requestCreateBean = (DocumentRequestCreateBean) getRenderedObject("documentRequestCreateBean");
+	final DocumentRequestCreateBean requestCreateBean = getRenderedObject("documentRequestCreateBean");
 	requestCreateBean.setExams(getSelectedExams(request));
 
 	setAdditionalInformationSchemaName(request, requestCreateBean);
