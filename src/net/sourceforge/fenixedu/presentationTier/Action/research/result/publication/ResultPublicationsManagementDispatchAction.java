@@ -144,7 +144,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 
     public ActionForward prepareCreate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	ResultPublicationBean publicationBean = (ResultPublicationBean) getRenderedObject(null);
+	ResultPublicationBean publicationBean = getRenderedObject(null);
 
 	if (publicationBean == null) {
 	    ResultPublicationType type = ResultPublicationType.getDefaultType();
@@ -336,7 +336,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
     public ActionForward prepareEditData(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	ResultPublicationBean bean = (ResultPublicationBean) getRenderedObject(null);
+	ResultPublicationBean bean = getRenderedObject(null);
 
 	if (bean == null) {
 	    ResearchResultPublication publication = (ResearchResultPublication) getResultFromRequest(request);
@@ -349,7 +349,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
     }
 
     public ActionForward editData(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	final ResultPublicationBean bean = (ResultPublicationBean) getRenderedObject(null);
+	final ResultPublicationBean bean = getRenderedObject(null);
 	ResearchResult publicationChanged = ResearchResult.readByOid(bean.getIdInternal());
 
 	if (getFromRequest(request, "confirm") != null) {
