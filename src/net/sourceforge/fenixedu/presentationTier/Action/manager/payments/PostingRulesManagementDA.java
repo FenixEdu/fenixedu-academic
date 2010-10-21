@@ -336,7 +336,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
     }
 
     private InstallmentBean getInstallment() {
-	return (InstallmentBean) getRenderedObject("installmentEditor");
+	return getRenderedObject("installmentEditor");
     }
 
     public ActionForward removeInstallments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -370,7 +370,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
     }
 
     private PaymentPlanBean getPaymentPlanBean() {
-	return (PaymentPlanBean) getRenderedObject("paymentPlanEditor");
+	return getRenderedObject("paymentPlanEditor");
     }
 
     private PaymentPlan getPaymentPlan(final HttpServletRequest request) {

@@ -99,7 +99,7 @@ abstract public class CommonPhdThesisProcessDA extends PhdProcessDA {
     }
 
     protected PhdThesisProcessBean getThesisProcessBean() {
-	return (PhdThesisProcessBean) getRenderedObject("thesisProcessBean");
+	return getRenderedObject("thesisProcessBean");
     }
 
     // end of jury report feedback operations

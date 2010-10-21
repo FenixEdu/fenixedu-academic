@@ -296,7 +296,7 @@ public class StandaloneIndividualCandidacyProcessDA extends IndividualCandidacyP
     }
 
     private StandaloneIndividualCandidacyResultBean getCandidacyResultBean() {
-	return (StandaloneIndividualCandidacyResultBean) getRenderedObject("standaloneIndividualCandidacyResultBean");
+	return getRenderedObject("standaloneIndividualCandidacyResultBean");
     }
 
     public ActionForward prepareExecuteCreateRegistration(ActionMapping mapping, ActionForm actionForm,

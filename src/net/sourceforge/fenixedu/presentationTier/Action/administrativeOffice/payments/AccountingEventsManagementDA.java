@@ -59,7 +59,7 @@ public class AccountingEventsManagementDA extends FenixDispatchAction {
     }
 
     private AccountingEventCreateBean getAccountingEventCreateBean() {
-	return (AccountingEventCreateBean) getRenderedObject("accountingEventCreateBean");
+	return getRenderedObject("accountingEventCreateBean");
     }
 
     public ActionForward chooseEventType(ActionMapping mapping, ActionForm form, HttpServletRequest request,

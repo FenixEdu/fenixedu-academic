@@ -86,7 +86,7 @@ abstract public class NoCourseGroupCurriculumGroupEnrolmentsDA extends FenixDisp
     }
 
     protected NoCourseGroupEnrolmentBean getNoCourseGroupEnrolmentBean() {
-	return (NoCourseGroupEnrolmentBean) getRenderedObject("enrolmentBean");
+	return getRenderedObject("enrolmentBean");
     }
 
     public ActionForward chooseCurricular(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

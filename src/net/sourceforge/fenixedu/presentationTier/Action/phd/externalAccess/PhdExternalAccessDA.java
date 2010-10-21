@@ -88,7 +88,7 @@ public class PhdExternalAccessDA extends PhdProcessDA {
     }
 
     private PhdExternalOperationBean getOperationBean() {
-	return (PhdExternalOperationBean) getRenderedObject("operationBean");
+	return getRenderedObject("operationBean");
     }
 
     private String getHash(HttpServletRequest request) {

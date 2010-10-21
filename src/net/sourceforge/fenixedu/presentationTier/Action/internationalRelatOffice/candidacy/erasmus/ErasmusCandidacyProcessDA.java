@@ -215,11 +215,11 @@ public class ErasmusCandidacyProcessDA extends net.sourceforge.fenixedu.presenta
     }
 
     private ErasmusCoordinatorBean getErasmusCoordinatorBean() {
-	return (ErasmusCoordinatorBean) getRenderedObject("erasmus.coordinator.bean");
+	return getRenderedObject("erasmus.coordinator.bean");
     }
 
     private ErasmusVacancyBean getErasmusVacancyBean() {
-	return (ErasmusVacancyBean) getRenderedObject("erasmus.vacancy.bean");
+	return getRenderedObject("erasmus.vacancy.bean");
     }
 
     protected List<Activity> getAllowedActivities(final CandidacyProcess process) {
@@ -316,7 +316,7 @@ public class ErasmusCandidacyProcessDA extends net.sourceforge.fenixedu.presenta
     }
 
     private SendReceptionEmailBean getRenderedSendReceptionEmailBean() {
-	return (SendReceptionEmailBean) getRenderedObject("send.reception.email.bean");
+	return getRenderedObject("send.reception.email.bean");
     }
 
     public static class UniversityUnitsProvider implements DataProvider {

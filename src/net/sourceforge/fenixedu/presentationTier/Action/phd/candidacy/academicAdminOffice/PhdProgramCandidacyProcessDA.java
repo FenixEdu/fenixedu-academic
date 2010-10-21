@@ -194,7 +194,7 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
     }
 
     private PhdProgramCandidacyProcessBean getCreateCandidacyProcessBean() {
-	return (PhdProgramCandidacyProcessBean) getRenderedObject("createCandidacyBean");
+	return getRenderedObject("createCandidacyBean");
     }
 
     public ActionForward cancelCreateCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,

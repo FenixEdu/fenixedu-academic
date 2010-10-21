@@ -110,7 +110,7 @@ public class ExportMasterAndPhdStudentDiplomaDA extends FenixDispatchAction {
     }
 
     public List<StudentDiplomaInformation> readStudentDiplomas(final HttpServletRequest request) {
-	return (List<StudentDiplomaInformation>) getRenderedObject("student.diplomas");
+	return getRenderedObject("student.diplomas");
     }
 
     private Integer readNumberOfBeans(HttpServletRequest request) {

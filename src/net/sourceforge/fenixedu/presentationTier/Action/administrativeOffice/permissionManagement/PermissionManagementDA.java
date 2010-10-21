@@ -101,7 +101,7 @@ public class PermissionManagementDA extends FenixDispatchAction {
 
     @SuppressWarnings("unchecked")
     private List<PermissionMemberBean> getPermissionMemberListFromViewState() {
-	return (List<PermissionMemberBean>) getRenderedObject("permissionMembers");
+	return getRenderedObject("permissionMembers");
     }
 
     public static class Member implements java.io.Serializable, Comparable<Member> {

@@ -145,7 +145,7 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
     }
 
     private DegreeCourseInformationBean readDegreeCourseInformationBean(HttpServletRequest request) {
-	return (DegreeCourseInformationBean) getRenderedObject("degree.course.information.bean");
+	return getRenderedObject("degree.course.information.bean");
     }
 
     public ActionForward addCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,

@@ -67,7 +67,7 @@ public class DgesStudentImportationProcessDA extends FenixDispatchAction {
     }
 
     private DgesBaseProcessBean getRenderedBean() {
-	return (DgesBaseProcessBean) getRenderedObject("importation.bean");
+	return getRenderedObject("importation.bean");
     }
 
     public ActionForward prepareCreateNewImportationProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,

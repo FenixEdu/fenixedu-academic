@@ -257,7 +257,7 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
     }
 
     private Over23IndividualCandidacyResultBean getCandidacyResultBean() {
-	return (Over23IndividualCandidacyResultBean) getRenderedObject("over23IndividualCandidacyResultBean");
+	return getRenderedObject("over23IndividualCandidacyResultBean");
     }
 
     public ActionForward prepareExecuteCreateRegistration(ActionMapping mapping, ActionForm actionForm,

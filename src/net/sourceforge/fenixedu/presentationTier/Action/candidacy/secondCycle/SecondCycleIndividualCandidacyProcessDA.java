@@ -251,7 +251,7 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
     }
 
     private SecondCycleIndividualCandidacyResultBean getCandidacyResultBean() {
-	return (SecondCycleIndividualCandidacyResultBean) getRenderedObject("secondCycleIndividualCandidacyResultBean");
+	return getRenderedObject("secondCycleIndividualCandidacyResultBean");
     }
 
     public ActionForward prepareExecuteCreateRegistration(ActionMapping mapping, ActionForm form, HttpServletRequest request,

@@ -252,7 +252,7 @@ public class DegreeTransferIndividualCandidacyProcessDA extends IndividualCandid
     }
 
     private DegreeTransferIndividualCandidacyResultBean getCandidacyResultBean() {
-	return (DegreeTransferIndividualCandidacyResultBean) getRenderedObject("individualCandidacyResultBean");
+	return getRenderedObject("individualCandidacyResultBean");
     }
 
     public ActionForward prepareExecuteCreateRegistration(ActionMapping mapping, ActionForm actionForm,

@@ -258,7 +258,7 @@ public class GenerateSiteArchive extends FenixDispatchAction {
     }
 
     private ArchiveOptions getOptions(HttpServletRequest request) {
-	return (ArchiveOptions) getRenderedObject("options");
+	return getRenderedObject("options");
     }
 
 }

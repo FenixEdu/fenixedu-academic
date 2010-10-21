@@ -52,7 +52,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 public class CreateGuideDispatchAction extends FenixDispatchAction {
 
     private CreateGuideBean getCreateGuideBean() {
-	return (CreateGuideBean) getRenderedObject("createGuideBean");
+	return getRenderedObject("createGuideBean");
     }
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

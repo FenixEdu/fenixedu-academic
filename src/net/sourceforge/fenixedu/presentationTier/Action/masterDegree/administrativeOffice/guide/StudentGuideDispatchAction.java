@@ -30,7 +30,7 @@ import org.apache.struts.action.DynaActionForm;
 public class StudentGuideDispatchAction extends FenixDispatchAction {
 
     private CreateGuideBean getCreateGuideBean() {
-	return (CreateGuideBean) getRenderedObject("createGuideBean");
+	return getRenderedObject("createGuideBean");
     }
 
     public ActionForward createReady(ActionMapping mapping, ActionForm form, HttpServletRequest request,

@@ -119,7 +119,7 @@ public class GratuityReportsDA extends FenixDispatchAction {
     }
 
     private GratuityReportParametersBean getGratuityReportParameters() {
-	return (GratuityReportParametersBean) getRenderedObject("reportParameters");
+	return getRenderedObject("reportParameters");
     }
 
 }

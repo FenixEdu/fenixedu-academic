@@ -30,7 +30,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcessDA extends net.so
 
 
     private DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean getCandidacyResultBean() {
-	return (DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean) getRenderedObject("individualCandidacyResultBean");
+	return getRenderedObject("individualCandidacyResultBean");
     }
 
     @Override

@@ -91,7 +91,7 @@ public abstract class AbstractOptionalCurricularCoursesLocationManagementDA exte
     }
 
     private OptionalCurricularCoursesLocationBean getBean() {
-	return (OptionalCurricularCoursesLocationBean) getRenderedObject("optionalCurricularCoursesLocationBean");
+	return getRenderedObject("optionalCurricularCoursesLocationBean");
     }
 
     private List<Enrolment> getEnrolments(final StudentCurricularPlan studentCurricularPlan, final String[] enrolmentIds) {

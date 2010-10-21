@@ -396,7 +396,7 @@ public class AcademicAdminOfficeCurriculumValidationDA extends FenixDispatchActi
     }
 
     private BolonhaStudentEnrollmentBean getBolonhaStudentEnrollmentBeanFromViewState() {
-	return (BolonhaStudentEnrollmentBean) getRenderedObject("bolonhaStudentEnrolments");
+	return getRenderedObject("bolonhaStudentEnrolments");
     }
 
     protected void addDebtsWarningMessages(final Student student, final ExecutionSemester executionSemester,

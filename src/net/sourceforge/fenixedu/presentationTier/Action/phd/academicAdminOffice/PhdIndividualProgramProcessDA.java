@@ -210,7 +210,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
     }
 
     private PersonBean getEditPersonalInformationBean() {
-	return (PersonBean) getRenderedObject("editPersonalInformationBean");
+	return getRenderedObject("editPersonalInformationBean");
     }
 
     public ActionForward editPersonalInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -644,7 +644,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
     }
 
     private PhdCustomAlertBean getCreateCustomAlertBean() {
-	return (PhdCustomAlertBean) getRenderedObject("createCustomAlertBean");
+	return getRenderedObject("createCustomAlertBean");
     }
 
     // Study plan management

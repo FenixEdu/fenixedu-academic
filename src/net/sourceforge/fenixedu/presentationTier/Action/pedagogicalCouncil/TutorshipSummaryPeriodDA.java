@@ -59,7 +59,7 @@ public class TutorshipSummaryPeriodDA extends FenixDispatchAction {
     }
 
     protected TutorshipSummaryPeriodBean getTutorshipSummaryPeriodBean() {
-	return (TutorshipSummaryPeriodBean) getRenderedObject("periodBean");
+	return getRenderedObject("periodBean");
     }
 
     protected void setTutorshipSummaryPeriodBean(HttpServletRequest request, TutorshipSummaryPeriodBean bean) {

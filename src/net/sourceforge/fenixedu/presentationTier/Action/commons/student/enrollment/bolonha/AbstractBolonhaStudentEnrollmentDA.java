@@ -119,7 +119,7 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
     }
 
     protected BolonhaStudentEnrollmentBean getBolonhaStudentEnrollmentBeanFromViewState() {
-	return (BolonhaStudentEnrollmentBean) getRenderedObject("bolonhaStudentEnrolments");
+	return getRenderedObject("bolonhaStudentEnrolments");
     }
 
     public ActionForward prepareChooseOptionalCurricularCourseToEnrol(ActionMapping mapping, ActionForm form,
@@ -198,7 +198,7 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
     }
 
     protected BolonhaStudentOptionalEnrollmentBean getBolonhaStudentOptionalEnrollmentBeanFromViewState() {
-	return (BolonhaStudentOptionalEnrollmentBean) getRenderedObject("optionalEnrolment");
+	return getRenderedObject("optionalEnrolment");
     }
 
     public ActionForward updateParametersToSearchOptionalCurricularCourses(ActionMapping mapping, ActionForm actionForm,
@@ -273,7 +273,7 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
     }
 
     private CycleEnrolmentBean getCycleEnrolmentBeanFromViewState() {
-	return (CycleEnrolmentBean) getRenderedObject("cycleEnrolmentBean");
+	return getRenderedObject("cycleEnrolmentBean");
     }
 
     abstract public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,

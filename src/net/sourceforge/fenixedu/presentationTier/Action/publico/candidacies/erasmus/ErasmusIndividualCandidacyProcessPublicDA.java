@@ -205,7 +205,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
     }
 
     private DegreeCourseInformationBean readDegreeCourseInformationBean(HttpServletRequest request) {
-	return (DegreeCourseInformationBean) getRenderedObject("degree.course.information.bean");
+	return getRenderedObject("degree.course.information.bean");
     }
 
     public ActionForward chooseDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,

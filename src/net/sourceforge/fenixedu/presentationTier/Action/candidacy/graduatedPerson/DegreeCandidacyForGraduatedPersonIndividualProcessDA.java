@@ -218,7 +218,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcessDA extends Indivi
     }
 
     private DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean getCandidacyResultBean() {
-	return (DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean) getRenderedObject("individualCandidacyResultBean");
+	return getRenderedObject("individualCandidacyResultBean");
     }
 
     public ActionForward prepareExecuteCreateRegistration(ActionMapping mapping, ActionForm actionForm,

@@ -45,7 +45,7 @@ public class GratuityReportsDA extends FenixDispatchAction {
     }
 
     private GratuityReportBean getGratuityReportBean() {
-	return (GratuityReportBean) getRenderedObject("gratuity.report.bean");
+	return getRenderedObject("gratuity.report.bean");
     }
 
     public ActionForward prepareGenerateReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
