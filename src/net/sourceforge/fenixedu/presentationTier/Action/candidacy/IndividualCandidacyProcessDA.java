@@ -157,7 +157,7 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
     }
 
     protected IndividualCandidacyProcessBean getIndividualCandidacyProcessBean() {
-	return (IndividualCandidacyProcessBean) getRenderedObject(getIndividualCandidacyProcessBeanName());
+	return getRenderedObject(getIndividualCandidacyProcessBeanName());
     }
 
     @Override
@@ -539,7 +539,7 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 
     public ActionForward prepareEditPersonalInformationForBindWithSelectedPerson(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
-	IndividualCandidacyProcessBean bean = (IndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	IndividualCandidacyProcessBean bean = getIndividualCandidacyProcessBean();
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 
 	if (bean.getChoosePersonBean().getPerson() == null) {
@@ -634,7 +634,7 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 
     public ActionForward addConcludedHabilitationsEntry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	IndividualCandidacyProcessBean bean = (IndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	IndividualCandidacyProcessBean bean = getIndividualCandidacyProcessBean();
 	bean.addConcludedFormationBean();
 
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
@@ -645,7 +645,7 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 
     public ActionForward removeConcludedHabilitationsEntry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	IndividualCandidacyProcessBean bean = (IndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	IndividualCandidacyProcessBean bean = getIndividualCandidacyProcessBean();
 	Integer index = getIntegerFromRequest(request, "removeIndex");
 	bean.removeFormationConcludedBean(index);
 
@@ -668,7 +668,7 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
     public ActionForward revokeDocumentFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	CandidacyProcessDocumentUploadBean uploadBean = (CandidacyProcessDocumentUploadBean) getObjectFromViewState("individualCandidacyProcessBean.document");
-	String documentExternalId = (String) request.getParameter("documentFileOid");
+	String documentExternalId = request.getParameter("documentFileOid");
 	IndividualCandidacyDocumentFile documentFile = IndividualCandidacyDocumentFile.fromExternalId(documentExternalId);
 	uploadBean.setDocumentFile(documentFile);
 
