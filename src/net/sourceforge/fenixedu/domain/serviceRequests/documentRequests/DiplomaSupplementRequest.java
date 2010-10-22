@@ -21,18 +21,24 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base {
 	this();
 	super.init(bean);
 	checkParameters(bean);
-	super.setRequestedCycle(bean.getRequestedCycle());
 	setGivenNames(bean.getGivenNames());
 	setFamilyNames(bean.getFamilyNames());
     }
 
     @Override
     protected void checkParameters(DocumentRequestCreateBean bean) {
-	if (bean.getRequestedCycle() == null) {
-	    throw new DomainException("error.diplomaSupplementRequest.requestedCycleMustBeGiven");
-	} else if (!getDegreeType().getCycleTypes().contains(bean.getRequestedCycle())) {
-	    throw new DomainException(
-		    "error.diplomaSupplementRequest.requestedDegreeTypeIsNotAllowedForGivenStudentCurricularPlan");
+	if (bean.getHasCycleTypeDependency()) {
+	    if (bean.getRequestedCycle() == null) {
+		throw new DomainException("error.diplomaSupplementRequest.requestedCycleMustBeGiven");
+	    } else if (!getDegreeType().getCycleTypes().contains(bean.getRequestedCycle())) {
+		throw new DomainException(
+			"error.diplomaSupplementRequest.requestedDegreeTypeIsNotAllowedForGivenStudentCurricularPlan");
+	    }
+	    super.setRequestedCycle(bean.getRequestedCycle());
+	} else {
+	    if (bean.getRegistration().getDegreeType().hasExactlyOneCycleType()) {
+		super.setRequestedCycle(bean.getRegistration().getDegreeType().getCycleType());
+	    }
 	}
 	if (!getRegistration().getStudent().getPerson().getName().equals(bean.getGivenNames() + " " + bean.getFamilyNames())) {
 	    throw new DomainException("error.diplomaSupplementRequest.splittedNamesDoNotMatch");
@@ -64,8 +70,9 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base {
 	final DegreeType degreeType = getDegreeType();
 	final CycleType requestedCycle = getRequestedCycle();
 
-	return getDescription(getAcademicServiceRequestType(), getDocumentRequestType().getQualifiedName() + "."
-		+ degreeType.name() + (degreeType.isComposite() ? "." + requestedCycle.name() : ""));
+	return getDescription(getAcademicServiceRequestType(),
+		getDocumentRequestType().getQualifiedName() + "." + degreeType.name()
+			+ (degreeType.isComposite() ? "." + requestedCycle.name() : ""));
     }
 
     @Override
