@@ -228,11 +228,6 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	return getRenderedObjectFromViewState(RenderUtils.getViewState());
     }
 
-    @Deprecated
-    protected Object getRendererObject(String id) {
-	return getRenderedObject(id);
-    }
-
     protected <RenderedObjectType> RenderedObjectType getRenderedObject(String id) {
 	return (RenderedObjectType) getRenderedObjectFromViewState(RenderUtils.getViewState(id));
     }
