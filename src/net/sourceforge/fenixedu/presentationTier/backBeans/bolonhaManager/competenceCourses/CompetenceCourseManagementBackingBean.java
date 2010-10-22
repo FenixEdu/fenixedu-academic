@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel;
@@ -43,7 +44,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseG
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
@@ -912,8 +912,11 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     private List<SelectItem> readDepartmentUnitLabels() {
 	final List<SelectItem> result = new ArrayList<SelectItem>();
-	for (final Unit unit : UnitUtils.readAllDepartmentUnits()) {
-	    result.add(new SelectItem(unit.getIdInternal(), unit.getName()));
+	for (final Object departmentObject : RootDomainObject.readAllDomainObjects(Department.class)) {
+	    DepartmentUnit departmentUnit = ((Department) departmentObject).getDepartmentUnit();
+	    if (departmentUnit.isActive(getExecutionSemester().getBeginDateYearMonthDay())) {
+		result.add(new SelectItem(departmentUnit.getIdInternal(), departmentUnit.getName()));
+	    }
 	}
 	Collections.sort(result, new BeanComparator("label"));
 	result.add(0, new SelectItem(this.NO_SELECTION, bolonhaResources.getString("choose")));
