@@ -56,7 +56,7 @@ public class AssiduousnessExtraWorkDispatchAction extends FenixDispatchAction {
     public ActionForward prepareExtraWorkAuthorizationsSearch(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	ExtraWorkAuthorizationSearchBean extraWorkAuthorizationSearchBean = (ExtraWorkAuthorizationSearchBean) getRenderedObject();
+	ExtraWorkAuthorizationSearchBean extraWorkAuthorizationSearchBean = getRenderedObject();
 	if (extraWorkAuthorizationSearchBean != null) {
 	    request.setAttribute("extraWorkAuthorizationSearchBean", extraWorkAuthorizationSearchBean);
 	} else {
@@ -68,7 +68,7 @@ public class AssiduousnessExtraWorkDispatchAction extends FenixDispatchAction {
     public ActionForward showExtraWorkAuthorizations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	ExtraWorkAuthorizationSearchBean extraWorkAuthorizationSearchBean = (ExtraWorkAuthorizationSearchBean) getRenderedObject();
+	ExtraWorkAuthorizationSearchBean extraWorkAuthorizationSearchBean = getRenderedObject();
 	extraWorkAuthorizationSearchBean.doSearch();
 	request.setAttribute("extraWorkAuthorizationSearchBean", extraWorkAuthorizationSearchBean);
 

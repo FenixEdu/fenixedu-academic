@@ -64,7 +64,7 @@ public class StudentDataByExecutionYearManagement extends FenixDispatchAction {
     public ActionForward create(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	final StudentDataByExecutionYearBean studentDataByExecutionYearBean = (StudentDataByExecutionYearBean) getRenderedObject();
+	final StudentDataByExecutionYearBean studentDataByExecutionYearBean = getRenderedObject();
 	try {
 	    CreateStudentDataByExecutionYear.run(studentDataByExecutionYearBean);
 	} catch (DomainException e) {

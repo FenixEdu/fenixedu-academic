@@ -45,7 +45,7 @@ public class SendMailMarkSheetDispatchAction extends MarkSheetDispatchAction {
     public ActionForward prepareSearchSendMailPostBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final MarkSheetSendMailBean bean = (MarkSheetSendMailBean) getRenderedObject();
+	final MarkSheetSendMailBean bean = getRenderedObject();
 	bean.setMarkSheetToConfirmSendMailBean(null);
 	bean.setGradesToSubmitExecutionCourseSendMailBean(null);
 	

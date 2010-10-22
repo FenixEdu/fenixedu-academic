@@ -221,11 +221,11 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     }
 
     protected FactoryExecutor getFactoryObject() {
-	return (FactoryExecutor) getRenderedObject();
+	return getRenderedObject();
     }
 
-    protected Object getRenderedObject() {
-	return getRenderedObjectFromViewState(RenderUtils.getViewState());
+    protected <RenderedObjectType> RenderedObjectType getRenderedObject() {
+	return (RenderedObjectType) getRenderedObjectFromViewState(RenderUtils.getViewState());
     }
 
     protected <RenderedObjectType> RenderedObjectType getRenderedObject(String id) {

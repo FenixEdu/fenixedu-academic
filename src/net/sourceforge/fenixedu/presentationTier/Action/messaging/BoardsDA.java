@@ -27,7 +27,7 @@ public class BoardsDA extends FenixDispatchAction {
     }
 
     private BoardSearchBean getBoardSearchBean(HttpServletRequest request) {
-	final BoardSearchBean boardSearchBean = (BoardSearchBean) getRenderedObject();
+	final BoardSearchBean boardSearchBean = getRenderedObject();
 	return boardSearchBean == null ? (BoardSearchBean) request.getAttribute("boardSearchBean") : boardSearchBean;
     }
 

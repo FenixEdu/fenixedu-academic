@@ -442,7 +442,7 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 
     public ActionForward substituteDocuments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	ThesisFileBean bean = (ThesisFileBean) getRenderedObject();
+	ThesisFileBean bean = getRenderedObject();
 	RenderUtils.invalidateViewState();
 
 	if (bean != null && bean.getFile() != null) {
@@ -464,7 +464,7 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 
     public ActionForward substituteExtendedAbstract(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	ThesisFileBean bean = (ThesisFileBean) getRenderedObject();
+	ThesisFileBean bean = getRenderedObject();
 	RenderUtils.invalidateViewState();
 
 	if (bean != null && bean.getFile() != null) {

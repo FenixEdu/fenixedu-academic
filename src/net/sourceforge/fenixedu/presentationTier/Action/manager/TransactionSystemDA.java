@@ -28,7 +28,7 @@ import pt.ist.fenixframework.pstm.TransactionReport;
 public class TransactionSystemDA extends FenixDispatchAction {
 
     private TransactionReport getTransactionReport(final HttpServletRequest request) {
-	TransactionReport transactionReport = (TransactionReport) getRenderedObject();
+	TransactionReport transactionReport = getRenderedObject();
 	if (transactionReport == null) {
 	    transactionReport = (TransactionReport) request.getAttribute("transactionReport");
 	    if (transactionReport == null) {

@@ -20,7 +20,7 @@ public class DepartmentDegreesDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws FenixActionException, FenixFilterException {
-	DepartmentDegreeBean departmentDegreeBean = (DepartmentDegreeBean) getRenderedObject();
+	DepartmentDegreeBean departmentDegreeBean = getRenderedObject();
 	if (departmentDegreeBean == null) {
 	    departmentDegreeBean = new DepartmentDegreeBean();
 	}

@@ -104,7 +104,7 @@ public class StudentEquivalencyPlanDA extends FenixDispatchAction {
 	final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) request
 		.getAttribute("selectedDegreeCurricularPlan");
 
-	StudentEquivalencyPlanEntryCreator studentEquivalencyPlanEntryCreator = (StudentEquivalencyPlanEntryCreator) getRenderedObject();
+	StudentEquivalencyPlanEntryCreator studentEquivalencyPlanEntryCreator = getRenderedObject();
 	if (studentEquivalencyPlanEntryCreator == null) {
 	    studentEquivalencyPlanEntryCreator = new StudentEquivalencyPlanEntryCreator(studentCurricularPlanEquivalencePlan,
 		    degreeCurricularPlan.getEquivalencePlan());

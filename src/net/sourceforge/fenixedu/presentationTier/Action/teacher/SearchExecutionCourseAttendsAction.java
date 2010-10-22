@@ -158,7 +158,7 @@ public class SearchExecutionCourseAttendsAction extends FenixDispatchAction {
 
 	request.setAttribute("objectCode", request.getAttribute("objectCode"));
 
-	SearchExecutionCourseAttendsBean bean = (SearchExecutionCourseAttendsBean) getRenderedObject();
+	SearchExecutionCourseAttendsBean bean = getRenderedObject();
 	RenderUtils.invalidateViewState();
 	bean.getExecutionCourse().searchAttends(bean);
 

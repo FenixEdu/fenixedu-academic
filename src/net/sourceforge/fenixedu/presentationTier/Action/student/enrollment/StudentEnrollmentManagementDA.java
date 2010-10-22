@@ -259,6 +259,6 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
     }
 
     private CycleEnrolmentBean getCycleEnrolmentBeanFromViewState() {
-	return (CycleEnrolmentBean) getRenderedObject();
+	return getRenderedObject();
     }
 }

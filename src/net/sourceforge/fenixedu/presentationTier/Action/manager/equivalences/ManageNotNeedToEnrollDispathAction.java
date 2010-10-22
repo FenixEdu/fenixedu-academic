@@ -46,7 +46,7 @@ public class ManageNotNeedToEnrollDispathAction extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 
-	ChooseStudentCurricularPlanBean bean = (ChooseStudentCurricularPlanBean) getRenderedObject();
+	ChooseStudentCurricularPlanBean bean = getRenderedObject();
 	request.setAttribute("chooseSCPBean", bean == null ? new ChooseStudentCurricularPlanBean() : bean);
 
 	if (bean != null && bean.getStudentCurricularPlan() != null) {
@@ -63,7 +63,7 @@ public class ManageNotNeedToEnrollDispathAction extends FenixDispatchAction {
     public ActionForward showNotNeedToEnroll(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	ChooseStudentCurricularPlanBean bean = (ChooseStudentCurricularPlanBean) getRenderedObject();
+	ChooseStudentCurricularPlanBean bean = getRenderedObject();
 
 	InfoStudentCurricularPlan infoSCP = readStudentCurricularPlan(bean.getStudentCurricularPlan());
 
@@ -114,7 +114,7 @@ public class ManageNotNeedToEnrollDispathAction extends FenixDispatchAction {
 	request.setAttribute("infoDegreeCurricularPlanCurricularCourses", curricularCourses);
 	notNeedToEnrollForm.set("studentCurricularPlanID", scpID);
 
-	ChooseStudentCurricularPlanBean bean = (ChooseStudentCurricularPlanBean) getRenderedObject();
+	ChooseStudentCurricularPlanBean bean = getRenderedObject();
 	request.setAttribute("chooseSCPBean", bean == null ? new ChooseStudentCurricularPlanBean(studentCurricularPlan) : bean);
 
 	return mapping.findForward("showNotNeedToEnroll");

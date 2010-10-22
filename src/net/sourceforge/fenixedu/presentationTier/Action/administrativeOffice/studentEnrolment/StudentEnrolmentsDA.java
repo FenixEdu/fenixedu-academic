@@ -83,7 +83,7 @@ public class StudentEnrolmentsDA extends FenixDispatchAction {
     public ActionForward postBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	StudentEnrolmentBean enrolmentBean = (StudentEnrolmentBean) getRenderedObject();
+	StudentEnrolmentBean enrolmentBean = getRenderedObject();
 	RenderUtils.invalidateViewState();
 
 	return showExecutionPeriodEnrolments(enrolmentBean, mapping, actionForm, request, response);
@@ -91,7 +91,7 @@ public class StudentEnrolmentsDA extends FenixDispatchAction {
 
     public ActionForward backViewRegistration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	final StudentEnrolmentBean studentEnrolmentBean = (StudentEnrolmentBean) getRenderedObject();
+	final StudentEnrolmentBean studentEnrolmentBean = getRenderedObject();
 	request.setAttribute("registrationId", studentEnrolmentBean.getStudentCurricularPlan().getRegistration().getIdInternal());
 	return mapping.findForward("visualizeRegistration");
     }

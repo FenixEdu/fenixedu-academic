@@ -65,7 +65,7 @@ public class SendEmailToStudents extends FenixDispatchAction {
 
     public ActionForward selectDegreeTypePostBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	ElectionPeriodBean periodBean = (ElectionPeriodBean) getRenderedObject();
+	ElectionPeriodBean periodBean = getRenderedObject();
 	RenderUtils.invalidateViewState();
 
 	return selectDegreeType(mapping, actionForm, request, response, periodBean);

@@ -153,7 +153,7 @@ public class EvaluationMethodControlDA extends FenixDispatchAction {
 
     private ExecutionCourseWithNoEvaluationMethodSearchBean getExecutionCourseWithNoEvaluationMethodSearchBean(
 	    final HttpServletRequest request) {
-	final ExecutionCourseWithNoEvaluationMethodSearchBean executionCourseWithNoEvaluationMethodSearchBean = (ExecutionCourseWithNoEvaluationMethodSearchBean) getRenderedObject();
+	final ExecutionCourseWithNoEvaluationMethodSearchBean executionCourseWithNoEvaluationMethodSearchBean = getRenderedObject();
 	return executionCourseWithNoEvaluationMethodSearchBean == null ? (ExecutionCourseWithNoEvaluationMethodSearchBean) request
 		.getAttribute("executionCourseWithNoEvaluationMethodSearchBean")
 		: executionCourseWithNoEvaluationMethodSearchBean;

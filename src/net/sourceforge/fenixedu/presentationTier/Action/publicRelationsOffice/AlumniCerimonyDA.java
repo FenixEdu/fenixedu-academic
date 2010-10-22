@@ -145,7 +145,7 @@ public class AlumniCerimonyDA extends FenixDispatchAction {
     public ActionForward addPeople(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 	final CerimonyInquiry cerimonyInquiry = getDomainObject(request, "cerimonyInquiryId");
-	final UsernameFileBean usernameFileBean = (UsernameFileBean) getRenderedObject();
+	final UsernameFileBean usernameFileBean = getRenderedObject();
 	final String contents = FileUtils.readFile(usernameFileBean.getInputStream());
 	final Set<String> usernames = findUsernames(contents);
 	cerimonyInquiry.addPeople(usernames);

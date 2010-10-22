@@ -116,7 +116,7 @@ public class PeriodsDA extends FenixDispatchAction {
     }
 
     public ActionForward firstPage(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) {
-	ContextBean contextBean = (ContextBean) getRenderedObject();
+	ContextBean contextBean = getRenderedObject();
 	if (contextBean == null) {
 	    contextBean = new ContextBean();
 	}

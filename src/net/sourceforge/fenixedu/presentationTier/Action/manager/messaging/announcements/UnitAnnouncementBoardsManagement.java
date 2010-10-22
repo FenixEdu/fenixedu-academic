@@ -213,7 +213,7 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
 	    saveErrors(request, actionMessages);
 	} else {
 
-	    Collection<AnnouncementBoardApproversBean> announcementApprovers = (Collection<AnnouncementBoardApproversBean>) getRenderedObject();
+	    Collection<AnnouncementBoardApproversBean> announcementApprovers = getRenderedObject();
 
 	    EditUnitAnnouncementBoardApprovers.run(board, announcementApprovers);
 

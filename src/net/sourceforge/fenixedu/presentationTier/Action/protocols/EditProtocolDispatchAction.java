@@ -54,7 +54,7 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
     public ActionForward editProtocolData(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
+	ProtocolFactory protocolFactory = getRenderedObject();
 	if (isCancelled(request)) {
 	    request.setAttribute("protocolFactory", protocolFactory);
 	    return mapping.findForward("view-protocol");
@@ -107,7 +107,7 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
 	    Protocol protocol = (Protocol) RootDomainObject.readDomainObjectByOID(Protocol.class, protocolID);
 	    protocolFactory = new ProtocolFactory(protocol);
 	} else {
-	    protocolFactory = (ProtocolFactory) getRenderedObject();
+	    protocolFactory = getRenderedObject();
 	}
 	RenderUtils.invalidateViewState();
 	protocolFactory.resetSearches();
@@ -118,7 +118,7 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
     public ActionForward editResponsibles(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
+	ProtocolFactory protocolFactory = getRenderedObject();
 	RenderUtils.invalidateViewState();
 	if (request.getParameter("back") != null) {
 	    request.setAttribute("protocolFactory", protocolFactory);
@@ -172,7 +172,7 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
 
     public ActionForward createExternalResponsible(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
+	ProtocolFactory protocolFactory = getRenderedObject();
 	if (request.getParameter("cancel") != null) {
 	    request.setAttribute("protocolFactory", protocolFactory);
 	    return mapping.findForward("edit-protocol-responsibles");
@@ -196,7 +196,7 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
 
     public ActionForward createExternalPersonAndUnit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
+	ProtocolFactory protocolFactory = getRenderedObject();
 	if (request.getParameter("cancel") != null) {
 	    request.setAttribute("protocolFactory", protocolFactory);
 	    request.setAttribute("createExternalPerson", "true");
@@ -223,7 +223,7 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
 	    Protocol protocol = (Protocol) RootDomainObject.readDomainObjectByOID(Protocol.class, protocolID);
 	    protocolFactory = new ProtocolFactory(protocol);
 	} else {
-	    protocolFactory = (ProtocolFactory) getRenderedObject();
+	    protocolFactory = getRenderedObject();
 	}
 	protocolFactory.resetSearches();
 	request.setAttribute("protocolFactory", protocolFactory);
@@ -233,7 +233,7 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
     public ActionForward editUnits(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
+	ProtocolFactory protocolFactory = getRenderedObject();
 	if (request.getParameter("back") != null) {
 	    request.setAttribute("protocolFactory", protocolFactory);
 	    return mapping.findForward("view-protocol");
@@ -273,7 +273,7 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
 
     public ActionForward createExternalUnit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
+	ProtocolFactory protocolFactory = getRenderedObject();
 	if (request.getParameter("cancel") != null) {
 	    request.setAttribute("protocolFactory", protocolFactory);
 	    return mapping.findForward("edit-protocol-units");
@@ -291,7 +291,7 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
 
     public ActionForward removeISTResponsible(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
+	ProtocolFactory protocolFactory = getRenderedObject();
 	if ((protocolFactory.getResponsibles() == null || protocolFactory.getResponsibles().size() == 1)
 		&& (protocolFactory.getResponsibleFunctions() == null || protocolFactory.getResponsibleFunctions().size() == 0)) {
 	    setError(request, "errorMessage", new ActionMessage("error.protocol.empty.istResponsibles"));
@@ -308,7 +308,7 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
 
     public ActionForward removeISTResponsibleFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
+	ProtocolFactory protocolFactory = getRenderedObject();
 	if ((protocolFactory.getResponsibleFunctions() == null || protocolFactory.getResponsibleFunctions().size() == 1)
 		&& (protocolFactory.getResponsibles() == null || protocolFactory.getResponsibles().size() == 0)) {
 	    setError(request, "errorMessage", new ActionMessage("error.protocol.empty.istResponsibles"));
@@ -325,7 +325,7 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
 
     public ActionForward removePartnerResponsible(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
+	ProtocolFactory protocolFactory = getRenderedObject();
 	protocolFactory = prepareRemoveResponsible((DynaActionForm) actionForm, protocolFactory);
 	protocolFactory.setIstResponsible(false);
 	Protocol protocol = (Protocol) ExecuteFactoryMethod.run(protocolFactory);
@@ -352,7 +352,7 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
 
     public ActionForward removeISTUnit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
+	ProtocolFactory protocolFactory = getRenderedObject();
 	if (protocolFactory.getUnits() == null || protocolFactory.getUnits().size() == 1) {
 	    setError(request, "errorMessage", new ActionMessage("error.protocol.empty.units"));
 	} else {
@@ -368,7 +368,7 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
 
     public ActionForward removePartnerUnit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
+	ProtocolFactory protocolFactory = getRenderedObject();
 	if (protocolFactory.getPartnerUnits() == null || protocolFactory.getPartnerUnits().size() == 1) {
 	    setError(request, "errorMessage", new ActionMessage("error.protocol.empty.partnerUnits"));
 	} else {
@@ -398,7 +398,7 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
 	    Protocol protocol = (Protocol) RootDomainObject.readDomainObjectByOID(Protocol.class, protocolID);
 	    protocolFactory = new ProtocolFactory(protocol);
 	} else {
-	    protocolFactory = (ProtocolFactory) getRenderedObject();
+	    protocolFactory = getRenderedObject();
 	}
 	protocolFactory.resetFile();
 	request.setAttribute("protocolFactory", protocolFactory);
@@ -407,7 +407,7 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
 
     public ActionForward addProtocolFile(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
+	ProtocolFactory protocolFactory = getRenderedObject();
 	if (request.getParameter("back") != null) {
 	    request.setAttribute("protocolFactory", protocolFactory);
 	    return mapping.findForward("view-protocol");
@@ -430,7 +430,7 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
 
 	Integer fileID = getIntegerFromRequest(request, "fileID");
 	ProtocolFile protocolFile = (ProtocolFile) RootDomainObject.readDomainObjectByOID(ProtocolFile.class, fileID);
-	ProtocolFactory protocolFactory = (ProtocolFactory) getRenderedObject();
+	ProtocolFactory protocolFactory = getRenderedObject();
 	protocolFactory.setFileToDelete(protocolFile);
 	protocolFactory.setEditProtocolAction(EditProtocolAction.DELETE_FILE);
 	Protocol protocol = (Protocol) ExecuteFactoryMethod.run(protocolFactory);

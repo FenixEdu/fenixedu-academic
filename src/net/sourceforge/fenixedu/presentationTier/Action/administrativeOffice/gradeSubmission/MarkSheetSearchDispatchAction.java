@@ -169,7 +169,7 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
 
     public ActionForward searchConfirmedMarkSheets(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException {
-	MarkSheetManagementSearchBean searchBean = (MarkSheetManagementSearchBean) getRenderedObject();
+	MarkSheetManagementSearchBean searchBean = getRenderedObject();
 
 	Collection<MarkSheet> result = new ArrayList<MarkSheet>();
 	for (MarkSheet markSheet : searchBean.getCurricularCourse().getMarkSheetsSet()) {

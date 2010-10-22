@@ -37,7 +37,7 @@ public class ProtocolsDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 
 	List<Protocol> protocolList = new ArrayList<Protocol>();
-	ProtocolSearch protocolSearch = (ProtocolSearch) getRenderedObject();
+	ProtocolSearch protocolSearch = getRenderedObject();
 	if (protocolSearch == null) {
 	    protocolSearch = new ProtocolSearch();
 	}

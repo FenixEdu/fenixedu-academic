@@ -34,7 +34,7 @@ public class DepartmentCreditsDA extends FenixDispatchAction {
 
     public ActionForward showEmployeesByDepartment(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	DepartmentCreditsBean departmentCreditsBean = (DepartmentCreditsBean) getRenderedObject();
+	DepartmentCreditsBean departmentCreditsBean = getRenderedObject();
 	if (departmentCreditsBean.getDepartment() == null) {
 	    return mapping.findForward("departmentCredits");
 	}
@@ -43,7 +43,7 @@ public class DepartmentCreditsDA extends FenixDispatchAction {
 
     public ActionForward addRoleDepartmentCredits(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	DepartmentCreditsBean departmentCreditsBean = (DepartmentCreditsBean) getRenderedObject();
+	DepartmentCreditsBean departmentCreditsBean = getRenderedObject();
 	Employee employee = getEmployeeFromBean(departmentCreditsBean);
 	if (employee == null) {
 	    request.setAttribute("success", false);

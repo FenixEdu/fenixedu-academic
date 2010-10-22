@@ -62,7 +62,7 @@ public class ResidenceRoleManagementDA extends FenixDispatchAction {
     }
 
     private ResidenceRoleManagementBean getResidenceRoleManagementBean() {
-	ResidenceRoleManagementBean residenceRoleManagementBean = (ResidenceRoleManagementBean) getRenderedObject();
+	ResidenceRoleManagementBean residenceRoleManagementBean = getRenderedObject();
 	if (residenceRoleManagementBean == null) {
 	    return new ResidenceRoleManagementBean();
 	}

@@ -66,7 +66,7 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 
     public ActionForward chooseStudent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	final StudentContextSelectionBean studentContextSelectionBean = (StudentContextSelectionBean) getRenderedObject();
+	final StudentContextSelectionBean studentContextSelectionBean = getRenderedObject();
 
 	final String number = studentContextSelectionBean.getNumber();
 	if (number != null && !number.isEmpty()) {

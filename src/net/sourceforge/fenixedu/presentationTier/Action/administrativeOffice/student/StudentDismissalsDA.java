@@ -121,7 +121,7 @@ public class StudentDismissalsDA extends FenixDispatchAction {
     public ActionForward dismissalTypePostBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final DismissalBean dismissalBean = (DismissalBean) getRenderedObject();
+	final DismissalBean dismissalBean = getRenderedObject();
 	dismissalBean.setCredits(null);
 	dismissalBean.setCourseGroup(null);
 	dismissalBean.setDismissals(null);
@@ -155,7 +155,7 @@ public class StudentDismissalsDA extends FenixDispatchAction {
     public ActionForward confirmCreateDismissals(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final DismissalBean dismissalBean = (DismissalBean) getRenderedObject();
+	final DismissalBean dismissalBean = getRenderedObject();
 	request.setAttribute("dismissalBean", dismissalBean);
 
 	try {
@@ -210,7 +210,7 @@ public class StudentDismissalsDA extends FenixDispatchAction {
     public ActionForward createDismissals(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	final DismissalBean dismissalBean = (DismissalBean) getRenderedObject();
+	final DismissalBean dismissalBean = getRenderedObject();
 
 	try {
 	    checkArguments(request, dismissalBean);

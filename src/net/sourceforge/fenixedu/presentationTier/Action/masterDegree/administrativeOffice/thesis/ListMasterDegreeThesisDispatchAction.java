@@ -33,7 +33,7 @@ public class ListMasterDegreeThesisDispatchAction extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws FenixFilterException, FenixServiceException, IOException {
 
-	ListMasterDegreeProofsBean bean = (ListMasterDegreeProofsBean) getRenderedObject();
+	ListMasterDegreeProofsBean bean = getRenderedObject();
 	if (bean == null) {
 	    bean = new ListMasterDegreeProofsBean();
 	} else {

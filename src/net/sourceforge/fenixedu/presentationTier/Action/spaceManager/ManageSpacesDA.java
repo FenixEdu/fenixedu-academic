@@ -379,7 +379,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
 
 	Space space = null;
 	YearMonthDay day = null;
-	ViewEventSpaceOccupationsBean bean = (ViewEventSpaceOccupationsBean) getRenderedObject();
+	ViewEventSpaceOccupationsBean bean = getRenderedObject();
 
 	if (bean != null) {
 

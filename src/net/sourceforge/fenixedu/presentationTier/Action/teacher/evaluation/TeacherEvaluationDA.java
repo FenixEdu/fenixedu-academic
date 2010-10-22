@@ -217,7 +217,7 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 
     public ActionForward createFacultyEvaluationProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	final FacultyEvaluationProcessBean facultyEvaluationProcessBean = (FacultyEvaluationProcessBean) getRenderedObject();
+	final FacultyEvaluationProcessBean facultyEvaluationProcessBean = getRenderedObject();
 	final FacultyEvaluationProcess facultyEvaluationProcess = facultyEvaluationProcessBean.create();
 	request.setAttribute("facultyEvaluationProcess", facultyEvaluationProcess);
 	return mapping.findForward("viewManagementInterface");
@@ -234,7 +234,7 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 
     public ActionForward editFacultyEvaluationProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	final FacultyEvaluationProcessBean facultyEvaluationProcessBean = (FacultyEvaluationProcessBean) getRenderedObject();
+	final FacultyEvaluationProcessBean facultyEvaluationProcessBean = getRenderedObject();
 	facultyEvaluationProcessBean.edit();
 	final FacultyEvaluationProcess facultyEvaluationProcess = facultyEvaluationProcessBean.getFacultyEvaluationProcess();
 	request.setAttribute("facultyEvaluationProcess", facultyEvaluationProcess);
@@ -265,7 +265,7 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 
     public ActionForward uploadEvaluators(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	final FileUploadBean fileUploadBean = (FileUploadBean) getRenderedObject();
+	final FileUploadBean fileUploadBean = getRenderedObject();
 	final FacultyEvaluationProcess facultyEvaluationProcess = fileUploadBean.getFacultyEvaluationProcess();
 	request.setAttribute("facultyEvaluationProcess", facultyEvaluationProcess);
 	fileUploadBean.consumeInputStream();

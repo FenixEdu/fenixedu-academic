@@ -206,7 +206,7 @@ public class ThesisSubmissionDA extends AbstractManageThesisDA {
 
     public ActionForward uploadDissertation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	ThesisFileBean bean = (ThesisFileBean) getRenderedObject();
+	ThesisFileBean bean = getRenderedObject();
 	RenderUtils.invalidateViewState();
 
 	if (bean != null && bean.getFile() != null) {
@@ -241,7 +241,7 @@ public class ThesisSubmissionDA extends AbstractManageThesisDA {
 
     public ActionForward uploadAbstract(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	ThesisFileBean bean = (ThesisFileBean) getRenderedObject();
+	ThesisFileBean bean = getRenderedObject();
 	RenderUtils.invalidateViewState();
 
 	if (bean != null && bean.getFile() != null) {

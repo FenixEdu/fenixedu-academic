@@ -34,7 +34,7 @@ public class UploadAnualInstallments extends FenixDispatchAction {
 	if (isCancelled(request)) {
 	    return prepareUploadAnualInstallment(mapping, form, request, response);
 	}
-	BonusInstallmentFileBean bonusInstallmentFileBean = (BonusInstallmentFileBean) getRenderedObject();
+	BonusInstallmentFileBean bonusInstallmentFileBean = getRenderedObject();
 	RenderUtils.invalidateViewState();
 	if (bonusInstallmentFileBean.isComplete()) {
 	    List<ActionMessage> actionMessageList = (List<ActionMessage>) ExecuteFactoryMethod.run(bonusInstallmentFileBean);

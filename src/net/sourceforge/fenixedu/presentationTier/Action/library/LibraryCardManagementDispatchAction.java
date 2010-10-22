@@ -86,7 +86,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	if (libraryCardSearch == null) {
 	    PartyClassification partyClassification = null;
 	    if (request.getAttribute("newUser") == null) {
-		libraryCardSearch = (LibraryCardSearch) getRenderedObject();
+		libraryCardSearch = getRenderedObject();
 		partyClassification = PartyClassification.TEACHER;
 	    } else {
 		partyClassification = PartyClassification.PERSON;

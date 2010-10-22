@@ -113,7 +113,7 @@ public class ErrorLogDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	RequestLogDayBean requestLogDayBean = (RequestLogDayBean) getRenderedObject();
+	RequestLogDayBean requestLogDayBean = getRenderedObject();
 	if (requestLogDayBean != null) {
 	    if (requestLogDayBean.getDay() != null && requestLogDayBean.getMonth() != null && requestLogDayBean.getYear() != null) {
 		getErrors(request, requestLogDayBean.getDay());

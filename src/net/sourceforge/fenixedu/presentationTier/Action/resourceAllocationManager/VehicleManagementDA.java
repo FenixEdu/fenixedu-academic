@@ -50,7 +50,7 @@ public class VehicleManagementDA extends FenixDispatchAction {
     public ActionForward prepareConfirmCreation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws InvalidArgumentException {
 
-	VehicleAllocationBean bean = (VehicleAllocationBean) getRenderedObject();
+	VehicleAllocationBean bean = getRenderedObject();
 	BigDecimal allocationCost = VehicleAllocation.getAllocationCost(bean.getVehicle(), bean.getDistance(), bean
 		.getBeginDateTime(), bean.getEndDateTime());
 	bean.setAmountCharged(allocationCost);
@@ -62,7 +62,7 @@ public class VehicleManagementDA extends FenixDispatchAction {
     public ActionForward createAllocation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws InvalidArgumentException, FenixFilterException, FenixServiceException {
 
-	VehicleAllocationBean bean = (VehicleAllocationBean) getRenderedObject();
+	VehicleAllocationBean bean = getRenderedObject();
 
 	try {
 	    CreateVehicleAllocation.run(bean);
@@ -100,7 +100,7 @@ public class VehicleManagementDA extends FenixDispatchAction {
     public ActionForward seeVehicleAllocationHistory(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws InvalidArgumentException {
 
-	VehicleAllocationHistoryBean bean = (VehicleAllocationHistoryBean) getRenderedObject();
+	VehicleAllocationHistoryBean bean = getRenderedObject();
 	if (bean == null) {
 	    bean = new VehicleAllocationHistoryBean();
 	}

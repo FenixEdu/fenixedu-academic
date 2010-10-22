@@ -32,7 +32,7 @@ public class StudentExtraCurricularActivitiesDA extends FenixDispatchAction {
 
     public ActionForward createActivity(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	ExtraCurricularActivity activity = (ExtraCurricularActivity) getRenderedObject();
+	ExtraCurricularActivity activity = getRenderedObject();
 	RenderUtils.invalidateViewState();
 	request.setAttribute("student", activity.getStudent());
 	return mapping.findForward("manageActivities");

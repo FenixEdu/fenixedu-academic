@@ -30,7 +30,7 @@ public class SearchStudentsDA extends FenixDispatchAction {
 
     public ActionForward search(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	SearchStudentsWithEnrolmentsByDepartment searchStudentsWithEnrolmentsByDepartment = (SearchStudentsWithEnrolmentsByDepartment) getRenderedObject();
+	SearchStudentsWithEnrolmentsByDepartment searchStudentsWithEnrolmentsByDepartment = getRenderedObject();
 	if (searchStudentsWithEnrolmentsByDepartment == null) {
 	    final Department department = getDepartment(request);
 	    searchStudentsWithEnrolmentsByDepartment = new SearchStudentsWithEnrolmentsByDepartment(department);
@@ -48,7 +48,7 @@ public class SearchStudentsDA extends FenixDispatchAction {
 	response.setContentType("text/plain");
 	response.setHeader("Content-disposition", "attachment; filename=students.xls");
 
-	final SearchStudentsWithEnrolmentsByDepartment searchStudentsWithEnrolmentsByDepartment = (SearchStudentsWithEnrolmentsByDepartment) getRenderedObject();
+	final SearchStudentsWithEnrolmentsByDepartment searchStudentsWithEnrolmentsByDepartment = getRenderedObject();
 	final Set<StudentCurricularPlan> studentCurricularPlans = searchStudentsWithEnrolmentsByDepartment.search();
 	final ExecutionYear executionYear = searchStudentsWithEnrolmentsByDepartment.getExecutionYear();
 	final Spreadsheet spreadsheet = getSpreadsheet(executionYear);

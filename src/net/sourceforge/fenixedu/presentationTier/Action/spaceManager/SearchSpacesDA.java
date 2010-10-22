@@ -22,7 +22,7 @@ public class SearchSpacesDA extends FenixDispatchAction {
     }
 
     public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	MoveSpaceBean bean = (MoveSpaceBean) getRenderedObject();
+	MoveSpaceBean bean = getRenderedObject();
 
 	List<Space> spaces = null;
 	if (bean != null) {

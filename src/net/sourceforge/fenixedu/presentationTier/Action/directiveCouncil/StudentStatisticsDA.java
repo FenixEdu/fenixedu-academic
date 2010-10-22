@@ -107,7 +107,7 @@ public class StudentStatisticsDA extends FenixDispatchAction {
 
     public ActionForward showStatistics(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	ContextBean contextBean = (ContextBean) getRenderedObject();
+	ContextBean contextBean = getRenderedObject();
 	if (contextBean == null) {
 	    contextBean = new ContextBean();
 	    contextBean.setExecutionYear(ExecutionYear.readCurrentExecutionYear());

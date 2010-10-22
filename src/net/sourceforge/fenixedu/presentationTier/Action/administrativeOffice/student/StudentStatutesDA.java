@@ -54,7 +54,7 @@ public class StudentStatutesDA extends FenixDispatchAction {
     public ActionForward seniorStatutePostBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final CreateStudentStatuteFactory oldManageStatuteBean = (CreateStudentStatuteFactory) getRenderedObject();
+	final CreateStudentStatuteFactory oldManageStatuteBean = getRenderedObject();
 	final Student student = oldManageStatuteBean.getStudent();
 	final StudentStatuteType statuteType = oldManageStatuteBean.getStatuteType();
 	final CreateStudentStatuteFactory manageStatuteBean = new CreateStudentStatuteFactory(student);

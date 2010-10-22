@@ -33,7 +33,7 @@ public class InternshipDA extends FenixDispatchAction {
 
     public ActionForward submitCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	InternshipCandidacyBean bean = (InternshipCandidacyBean) getRenderedObject();
+	InternshipCandidacyBean bean = getRenderedObject();
 	request.setAttribute("candidacy", bean);
 	return mapping.findForward("rules");
     }
@@ -41,7 +41,7 @@ public class InternshipDA extends FenixDispatchAction {
     public ActionForward confirmCandidacyRules(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	try {
-	    InternshipCandidacyBean bean = (InternshipCandidacyBean) getRenderedObject();
+	    InternshipCandidacyBean bean = getRenderedObject();
 	    request.setAttribute("candidacy", bean);
 	    Integer candidacyNumber = InternshipCandidacy.create(bean);
 	    request.setAttribute("candidacyNumber", candidacyNumber);
@@ -55,7 +55,7 @@ public class InternshipDA extends FenixDispatchAction {
 
     public ActionForward backToCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	InternshipCandidacyBean bean = (InternshipCandidacyBean) getRenderedObject();
+	InternshipCandidacyBean bean = getRenderedObject();
 	request.setAttribute("candidacy", bean);
 	return mapping.findForward("candidacy");
     }

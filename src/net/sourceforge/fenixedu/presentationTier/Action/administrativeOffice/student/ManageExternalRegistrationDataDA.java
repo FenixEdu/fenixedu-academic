@@ -33,7 +33,7 @@ public class ManageExternalRegistrationDataDA extends FenixDispatchAction {
 
 	final ExternalRegistrationDataEditor bean;
 	if (getRenderedObject() != null) {
-	    bean = (ExternalRegistrationDataEditor) getRenderedObject();
+	    bean = getRenderedObject();
 	    request.setAttribute("registration", bean.getExternalRegistrationData().getRegistration());
 	} else {
 	    bean = new ExternalRegistrationDataEditor(getAndTransportRegistration(request).getExternalRegistrationData());

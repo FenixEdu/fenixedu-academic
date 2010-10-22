@@ -21,7 +21,7 @@ public class ExecutionCourseInquiriesDA extends FenixDispatchAction {
 
     public ActionForward search(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	ExecutionCourseSearchBean executionCourseSearchBean = (ExecutionCourseSearchBean) getRenderedObject();
+	ExecutionCourseSearchBean executionCourseSearchBean = getRenderedObject();
 	if (executionCourseSearchBean == null) {
 	    executionCourseSearchBean = new ExecutionCourseSearchBean();
 	    final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
@@ -39,7 +39,7 @@ public class ExecutionCourseInquiriesDA extends FenixDispatchAction {
 
     public ActionForward selectAll(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	final ExecutionCourseSearchBean executionCourseSearchBean = (ExecutionCourseSearchBean) getRenderedObject();
+	final ExecutionCourseSearchBean executionCourseSearchBean = getRenderedObject();
 	SelectAllExecutionCoursesForInquiries.run(executionCourseSearchBean);
 	return search(mapping, actionForm, request, response);
     }

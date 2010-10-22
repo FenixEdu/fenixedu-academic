@@ -116,7 +116,7 @@ public class ManagePeople extends FenixDispatchAction {
 
     public ActionForward createNewPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	final InternalPersonBean bean = (InternalPersonBean) getRenderedObject();
+	final InternalPersonBean bean = getRenderedObject();
 	try {
 	    final Person person = CreateNewInternalPerson.run(bean);
 	    return viewPerson(person, mapping, request);
@@ -129,7 +129,7 @@ public class ManagePeople extends FenixDispatchAction {
 
     public ActionForward invalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	InternalPersonBean bean = (InternalPersonBean) getRenderedObject();
+	InternalPersonBean bean = getRenderedObject();
 	request.setAttribute("invitedPersonBean", bean);
 	return mapping.findForward("createPersonFillInfo");
     }

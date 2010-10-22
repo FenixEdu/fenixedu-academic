@@ -57,7 +57,7 @@ public class OldMarkSheetRectifyDispatchAction extends OldMarkSheetCreateDispatc
     public ActionForward rectifyMarkSheetStepOne(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	MarkSheetManagementCreateBean markSheetManagementCreateBean = (MarkSheetManagementCreateBean) getRenderedObject();
+	MarkSheetManagementCreateBean markSheetManagementCreateBean = getRenderedObject();
 	List<EnrolmentEvaluation> enrolmentEvaluations = markSheetManagementCreateBean.getCurricularCourse()
 		.getEnrolmentEvaluationsForOldMarkSheet(markSheetManagementCreateBean.getExecutionPeriod(),
 			markSheetManagementCreateBean.getMarkSheetType());

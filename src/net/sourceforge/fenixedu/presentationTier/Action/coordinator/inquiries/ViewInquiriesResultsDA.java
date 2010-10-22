@@ -182,7 +182,7 @@ abstract public class ViewInquiriesResultsDA extends FenixDispatchAction {
     public ActionForward selectExecutionCourse(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	StudentInquiriesCourseResult courseResult = (StudentInquiriesCourseResult) getRenderedObject();
+	StudentInquiriesCourseResult courseResult = getRenderedObject();
 
 	final ExecutionCourse executionCourse = courseResult == null ? (ExecutionCourse) DomainObject.fromOID(getLongFromRequest(
 		request, "executionCourseID")) : courseResult.getExecutionCourse();

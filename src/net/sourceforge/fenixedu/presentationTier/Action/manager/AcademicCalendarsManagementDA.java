@@ -91,7 +91,7 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
     public ActionForward gotBackToViewEntry(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	CalendarEntryBean bean = (CalendarEntryBean) getRenderedObject();
+	CalendarEntryBean bean = getRenderedObject();
 	return generateGanttDiagram(mapping, request, bean);
     }
 

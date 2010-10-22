@@ -51,7 +51,7 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
 
     public ActionForward mergeFilesAndExportToExcel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	OpenFileBean openFileBean = (OpenFileBean) getRenderedObject();
+	OpenFileBean openFileBean = getRenderedObject();
 	if (openFileBean != null) {
 
 	    File dbFile = FileUtils.copyToTemporaryFile(openFileBean.getInputStream());
@@ -287,7 +287,7 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
 
     public ActionForward mergeFilesAndExport(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	OpenFileBean openFileBean = (OpenFileBean) getRenderedObject();
+	OpenFileBean openFileBean = getRenderedObject();
 	if (openFileBean != null) {
 
 	    File dbFile = FileUtils.copyToTemporaryFile(openFileBean.getInputStream());

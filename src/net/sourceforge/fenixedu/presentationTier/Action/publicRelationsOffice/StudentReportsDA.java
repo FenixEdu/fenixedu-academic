@@ -33,7 +33,7 @@ public class StudentReportsDA extends FenixDispatchAction {
 
     public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
-	StudentReportPredicate studentReportPredicate = (StudentReportPredicate) getRenderedObject();
+	StudentReportPredicate studentReportPredicate = getRenderedObject();
 	if (studentReportPredicate == null) {
 	    if (request.getParameter("executionYearID") != null) {
 		studentReportPredicate = setBean(request);

@@ -70,7 +70,7 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
     public ActionForward search(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final ExternalUnitsSearchBean searchBean = (ExternalUnitsSearchBean) getRenderedObject();
+	final ExternalUnitsSearchBean searchBean = getRenderedObject();
 	request.setAttribute("searchBean", searchBean);
 
 	if (StringUtils.isEmpty(searchBean.getUnitName())) {
@@ -208,7 +208,7 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
     public ActionForward createExternalUnit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	final CreateExternalUnitBean externalUnitBean = (CreateExternalUnitBean) getRenderedObject();
+	final CreateExternalUnitBean externalUnitBean = getRenderedObject();
 
 	try {
 	    final Unit unit = CreateExternalUnit.run(externalUnitBean);
@@ -230,7 +230,7 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
     public ActionForward editExternalUnit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	final EditExternalUnitBean externalUnitBean = (EditExternalUnitBean) getRenderedObject();
+	final EditExternalUnitBean externalUnitBean = getRenderedObject();
 
 	try {
 	    EditExternalUnit.run(externalUnitBean);
@@ -308,7 +308,7 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
     public ActionForward createExternalCurricularCourse(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	final CreateExternalCurricularCourseBean externalCurricularCourseBean = (CreateExternalCurricularCourseBean) getRenderedObject();
+	final CreateExternalCurricularCourseBean externalCurricularCourseBean = getRenderedObject();
 
 	try {
 	    CreateExternalCurricularCourse.run(externalCurricularCourseBean);
@@ -361,7 +361,7 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
     public ActionForward editExternalCurricularCourse(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	final EditExternalCurricularCourseBean externalCurricularCourseBean = (EditExternalCurricularCourseBean) getRenderedObject();
+	final EditExternalCurricularCourseBean externalCurricularCourseBean = getRenderedObject();
 
 	try {
 	    EditExternalCurricularCourse.run(externalCurricularCourseBean);
@@ -407,7 +407,7 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
     public ActionForward editExternalEnrolment(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	final EditExternalEnrolmentBean externalEnrolmentBean = (EditExternalEnrolmentBean) getRenderedObject();
+	final EditExternalEnrolmentBean externalEnrolmentBean = getRenderedObject();
 	try {
 	    EditExternalEnrolment.run(externalEnrolmentBean, externalEnrolmentBean.getExternalEnrolment().getRegistration());
 

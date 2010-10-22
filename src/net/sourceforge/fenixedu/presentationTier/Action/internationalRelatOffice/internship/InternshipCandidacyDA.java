@@ -109,7 +109,7 @@ public class InternshipCandidacyDA extends FenixDispatchAction {
 
     public ActionForward candidateEdit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	InternshipCandidacyBean bean = (InternshipCandidacyBean) getRenderedObject();
+	InternshipCandidacyBean bean = getRenderedObject();
 	try {
 	    bean.getCandidacy().edit(bean);
 	} catch (DuplicateInternshipCandidacy e) {
@@ -129,7 +129,7 @@ public class InternshipCandidacyDA extends FenixDispatchAction {
 
     public ActionForward candidateDelete(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	InternshipCandidacyBean bean = (InternshipCandidacyBean) getRenderedObject();
+	InternshipCandidacyBean bean = getRenderedObject();
 	bean.getCandidacy().delete();
 	addActionMessage(request, "success.internationalrelations.internship.candidacy.delete");
 	return prepareCandidates(mapping, actionForm, request, response);

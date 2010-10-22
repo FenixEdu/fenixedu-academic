@@ -63,7 +63,7 @@ public class EquivalencyPlanDA extends FenixDispatchAction {
 
     public ActionForward prepareAddEquivalency(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	EquivalencePlanEntryCreator equivalencePlanEntryCreator = (EquivalencePlanEntryCreator) getRenderedObject();
+	EquivalencePlanEntryCreator equivalencePlanEntryCreator = getRenderedObject();
 	final EquivalencePlan equivalencePlan;
 	if (equivalencePlanEntryCreator == null) {
 	    equivalencePlan = getEquivalencePlan(request);

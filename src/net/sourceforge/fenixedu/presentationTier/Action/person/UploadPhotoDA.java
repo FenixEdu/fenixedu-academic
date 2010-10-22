@@ -39,7 +39,7 @@ public class UploadPhotoDA extends FenixDispatchAction {
 
     public ActionForward upload(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	PhotographUploadBean photo = (PhotographUploadBean) getRenderedObject();
+	PhotographUploadBean photo = getRenderedObject();
 	RenderUtils.invalidateViewState();
 
 	ActionMessages actionMessages = new ActionMessages();
@@ -89,7 +89,7 @@ public class UploadPhotoDA extends FenixDispatchAction {
 
     public ActionForward save(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	PhotographUploadBean photo = (PhotographUploadBean) getRenderedObject();
+	PhotographUploadBean photo = getRenderedObject();
 	RenderUtils.invalidateViewState();
 
 	UploadOwnPhoto.run(new ByteArray(photo.getFileInputStream()).getBytes(), new ByteArray(photo.getCompressedInputStream())

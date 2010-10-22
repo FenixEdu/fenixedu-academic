@@ -57,14 +57,14 @@ public class AssiduousnessStructureDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareCreateAssiduousnessPersonFunction(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	AssiduousnessPersonFunctionFactory assiduousnessPersonFunctionFactory = (AssiduousnessPersonFunctionFactory) getRenderedObject();
+	AssiduousnessPersonFunctionFactory assiduousnessPersonFunctionFactory = getRenderedObject();
 	request.setAttribute("assiduousnessPersonFunctionFactory", assiduousnessPersonFunctionFactory);
 	return mapping.findForward("create-assiduousness-person-function");
     }
 
     public ActionForward createAssiduousnessPersonFunction(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	AssiduousnessPersonFunctionFactory assiduousnessPersonFunctionFactory = (AssiduousnessPersonFunctionFactory) getRenderedObject();
+	AssiduousnessPersonFunctionFactory assiduousnessPersonFunctionFactory = getRenderedObject();
 	if (!isCancelled(request)) {
 	    Object result = ExecuteFactoryMethod.run(assiduousnessPersonFunctionFactory);
 	    if (result != null) {

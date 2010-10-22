@@ -77,7 +77,7 @@ public class UnitSiteManagementDA extends CustomUnitSiteManagementDA {
     }
 
     private VariantBean getMultiLanguageString() {
-	VariantBean variantBean = (VariantBean) getRenderedObject();
+	VariantBean variantBean = getRenderedObject();
 	if (variantBean == null) {
 	    variantBean = new VariantBean();
 	    variantBean.setMLString(new MultiLanguageString());

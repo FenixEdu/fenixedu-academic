@@ -33,7 +33,7 @@ public class ValidateEmailDA extends FenixDispatchAction {
 	final ActionForward actionForward = new ActionForward();
 	actionForward.setRedirect(true);
 
-	final ValidateEmailForm validateEmailForm = (ValidateEmailForm) getRenderedObject();
+	final ValidateEmailForm validateEmailForm = getRenderedObject();
 	if (validateEmailForm == null) {
 	    return prepare(mapping, actionForm, request, response);
 	}

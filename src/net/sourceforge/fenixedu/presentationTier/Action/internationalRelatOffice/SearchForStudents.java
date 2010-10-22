@@ -20,7 +20,7 @@ public class SearchForStudents extends FenixDispatchAction {
     public ActionForward prepareSearch(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	StudentsSearchBean studentsSearchBean = (StudentsSearchBean) getRenderedObject();
+	StudentsSearchBean studentsSearchBean = getRenderedObject();
 
 	if (studentsSearchBean == null) { // 1st time
 	    studentsSearchBean = new StudentsSearchBean();

@@ -228,7 +228,7 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 
     public ActionForward setPersonForCardGenerationEntry(final ActionMapping mapping, final ActionForm actionForm,
 	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {
-	final SetPersonForCardGenerationEntryBean bean = (SetPersonForCardGenerationEntryBean) getRenderedObject();
+	final SetPersonForCardGenerationEntryBean bean = getRenderedObject();
 	final CardGenerationProblem cardGenerationProblem = bean.getCardGenerationProblem();
 	final CardGenerationEntry cardGenerationEntry = getDomainObject(request, "cardGenerationEntryID");
 	final CardGenerationBatch cardGenerationBatch = cardGenerationEntry.getCardGenerationBatch();
@@ -644,7 +644,7 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 
     public ActionForward crossReferenceNewBatch(final ActionMapping mapping, final ActionForm actionForm,
 	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {
-	final CrossReferenceBean crossReferenceBean = (CrossReferenceBean) getRenderedObject();	
+	final CrossReferenceBean crossReferenceBean = getRenderedObject();	
 
 	final String description = crossReferenceBean.getDescription();
 	final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();

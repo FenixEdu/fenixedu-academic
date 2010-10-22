@@ -170,7 +170,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
     public ActionForward documentRequestTypeInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final DocumentRequestCreateBean requestCreateBean = (DocumentRequestCreateBean) getRenderedObject();
+	final DocumentRequestCreateBean requestCreateBean = getRenderedObject();
 
 	if (requestCreateBean.getChosenDocumentRequestType() != null) {
 	    getAndSetSpecialEnrolments(request, requestCreateBean);
@@ -303,7 +303,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
     public ActionForward create(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	final DocumentRequestCreateBean documentRequestCreateBean = (DocumentRequestCreateBean) getRenderedObject();
+	final DocumentRequestCreateBean documentRequestCreateBean = getRenderedObject();
 	final Registration registration = documentRequestCreateBean.getRegistration();
 	request.setAttribute("registration", registration);
 
@@ -337,7 +337,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
     public ActionForward useAllPostBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final DocumentRequestCreateBean documentRequestCreateBean = (DocumentRequestCreateBean) getRenderedObject();
+	final DocumentRequestCreateBean documentRequestCreateBean = getRenderedObject();
 	if (documentRequestCreateBean.isToUseAll()) {
 	    documentRequestCreateBean.setEnrolments(documentRequestCreateBean.getStudent().getApprovedEnrolments(
 		    getAdministrativeOffice()));

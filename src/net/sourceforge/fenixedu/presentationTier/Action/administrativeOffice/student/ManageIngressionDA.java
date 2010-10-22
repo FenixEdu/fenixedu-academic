@@ -35,7 +35,7 @@ public class ManageIngressionDA extends FenixDispatchAction {
     }
 
     private RegistrationIngressionEditor getRegistrationIngressionEditor() {
-	return (RegistrationIngressionEditor) getRenderedObject();
+	return getRenderedObject();
     }
 
     @Input

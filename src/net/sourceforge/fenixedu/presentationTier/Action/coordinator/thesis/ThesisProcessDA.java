@@ -27,7 +27,7 @@ public class ThesisProcessDA extends FenixDispatchAction {
     }
 
     private ManageThesisContext processContext(final HttpServletRequest request) {
-	ManageThesisContext manageThesisContext = (ManageThesisContext) getRenderedObject();
+	ManageThesisContext manageThesisContext = getRenderedObject();
 	if (manageThesisContext == null) {
 	    final ExecutionDegree executionDegree = guessExecutionDegree(request);
 	    if (executionDegree != null) {

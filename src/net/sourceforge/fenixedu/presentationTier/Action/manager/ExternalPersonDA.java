@@ -19,7 +19,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 public class ExternalPersonDA extends FenixDispatchAction {
 
     public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	AnyPersonSearchBean anyPersonSearchBean = (AnyPersonSearchBean) getRenderedObject();
+	AnyPersonSearchBean anyPersonSearchBean = getRenderedObject();
 	if (anyPersonSearchBean == null) {
 	    anyPersonSearchBean = new AnyPersonSearchBean();
 	}
@@ -34,7 +34,7 @@ public class ExternalPersonDA extends FenixDispatchAction {
 
     public ActionForward prepareCreate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	ExternalPersonBeanFactoryCreator externalPersonBean = (ExternalPersonBeanFactoryCreator) getRenderedObject();
+	ExternalPersonBeanFactoryCreator externalPersonBean = getRenderedObject();
 	if (externalPersonBean == null) {
 	    externalPersonBean = new ExternalPersonBeanFactoryCreator();
 	}

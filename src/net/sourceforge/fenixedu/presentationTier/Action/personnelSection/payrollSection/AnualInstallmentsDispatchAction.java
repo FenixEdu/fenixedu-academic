@@ -143,7 +143,7 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 	    request.setAttribute("bonusInstallment", new BonusInstallment());
 	    return mapping.findForward("show-bonus-installment");
 	}
-	BonusInstallment bonusInstallment = (BonusInstallment) getRenderedObject();
+	BonusInstallment bonusInstallment = getRenderedObject();
 	if (bonusInstallment == null) {
 	    bonusInstallment = new BonusInstallment();
 	}
@@ -154,7 +154,7 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 
     public ActionForward exportBonusInstallment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException, IOException {
-	BonusInstallment bonusInstallment = (BonusInstallment) getRenderedObject();
+	BonusInstallment bonusInstallment = getRenderedObject();
 	if (bonusInstallment == null) {
 	    bonusInstallment = new BonusInstallment();
 	}
@@ -186,7 +186,7 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 
     public ActionForward exportBonusInstallmentToGIAF(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException, IOException {
-	BonusInstallment bonusInstallment = (BonusInstallment) getRenderedObject();
+	BonusInstallment bonusInstallment = getRenderedObject();
 	if (bonusInstallment == null) {
 	    bonusInstallment = new BonusInstallment();
 	}

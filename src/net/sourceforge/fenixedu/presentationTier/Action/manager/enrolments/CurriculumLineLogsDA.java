@@ -51,7 +51,7 @@ public class CurriculumLineLogsDA extends FenixDispatchAction {
     public ActionForward viewCurriculumLineLogs(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final SearchCurriculumLineLog searchCurriculumLineLog = (SearchCurriculumLineLog) getRenderedObject();
+	final SearchCurriculumLineLog searchCurriculumLineLog = getRenderedObject();
 	request.setAttribute("bean", searchCurriculumLineLog);
 	Student student = Student.readStudentByNumber(searchCurriculumLineLog.getStudentNumber());
 

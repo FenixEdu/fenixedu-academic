@@ -48,7 +48,7 @@ public class NotNeedToEnrolEnrolmentsDA extends FenixDispatchAction {
 
     public ActionForward readNotNeedToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	NotNeedToEnrolEnrolmentsBean bean = (NotNeedToEnrolEnrolmentsBean) getRenderedObject();
+	NotNeedToEnrolEnrolmentsBean bean = getRenderedObject();
 	Student student = Student.readStudentByNumber(bean.getNumber());
 	if (student == null) {
 	    addActionMessage("error", request, "error.invalid.student.number", bean.getNumber().toString());
@@ -63,7 +63,7 @@ public class NotNeedToEnrolEnrolmentsDA extends FenixDispatchAction {
 
     public ActionForward chooseNotNeedToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	NotNeedToEnrolEnrolmentsBean bean = (NotNeedToEnrolEnrolmentsBean) getRenderedObject();
+	NotNeedToEnrolEnrolmentsBean bean = getRenderedObject();
 	NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse = (NotNeedToEnrollInCurricularCourse) bean
 		.getSelected();
 

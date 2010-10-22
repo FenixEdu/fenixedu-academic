@@ -159,7 +159,7 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.AlumniResources", Language.getLocale());
 
-	final AlumniErrorSendingMailBean alumniBean = (AlumniErrorSendingMailBean) getRenderedObject();
+	final AlumniErrorSendingMailBean alumniBean = getRenderedObject();
 	StringBuilder mailBody = new StringBuilder();
 	mailBody.append(resourceBundle.getString("message.alumni.mail.body.header"));
 	mailBody.append("'").append(resourceBundle.getString(alumniBean.getErrorMessage())).append("'\n\n");

@@ -50,7 +50,7 @@ public class ListExecutionCoursesDA extends FenixDispatchAction {
     public ActionForward selectExecutionPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	ContextSelectionBean contextSelectionBean = (ContextSelectionBean) getRenderedObject();
+	ContextSelectionBean contextSelectionBean = getRenderedObject();
 	RenderUtils.invalidateViewState();
 
 	if (contextSelectionBean == null)

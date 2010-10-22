@@ -99,7 +99,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
     @SuppressWarnings("unused")
     public ActionForward selectDegreeType(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	ReportBean reportBean = (ReportBean) getRenderedObject();
+	ReportBean reportBean = getRenderedObject();
 
 	DegreeType degreeType;
 	ExecutionYear executionYear;
@@ -503,7 +503,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 
     private void prepareNewJobResponse(HttpServletRequest request, GepReportFile job) {
 
-	ReportBean reportBean = (ReportBean) getRenderedObject();
+	ReportBean reportBean = getRenderedObject();
 	if (reportBean == null) {
 	    reportBean = new ReportBean();
 	    reportBean.setDegreeType(job.getDegreeType());

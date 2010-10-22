@@ -65,7 +65,7 @@ public class MergeExecutionCourseDispatchionAction extends FenixDispatchAction {
 	SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
 	degrees.addAll(Degree.readNotEmptyDegrees());
 
-	ContextSelectionBean contextSelectionBean = (ContextSelectionBean) getRenderedObject();
+	ContextSelectionBean contextSelectionBean = getRenderedObject();
 	RenderUtils.invalidateViewState();
 
 	request.setAttribute(PresentationConstants.ACADEMIC_INTERVAL, contextSelectionBean.getAcademicInterval());

@@ -79,7 +79,7 @@ public class SummariesControlAction extends FenixDispatchAction {
     public ActionForward listSummariesControl(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	DepartmentSummaryElement departmentSummaryElement = (DepartmentSummaryElement) getRenderedObject();
+	DepartmentSummaryElement departmentSummaryElement = getRenderedObject();
 	String executionSemesterID = null;
 	if (departmentSummaryElement != null) {
 	    executionSemesterID = departmentSummaryElement.getExecutionSemester().getExternalId();
@@ -97,7 +97,7 @@ public class SummariesControlAction extends FenixDispatchAction {
     public ActionForward listDepartmentSummariesControl(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	DepartmentSummaryElement departmentSummaryElement = (DepartmentSummaryElement) getRenderedObject();
+	DepartmentSummaryElement departmentSummaryElement = getRenderedObject();
 	SummaryControlCategory summaryControlCategory = departmentSummaryElement.getSummaryControlCategory();
 	departmentSummaryElement = getDepartmentSummaryResume(departmentSummaryElement.getExecutionSemester(),
 		departmentSummaryElement.getDepartment());

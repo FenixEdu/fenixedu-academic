@@ -23,7 +23,7 @@ public class CardGenerationSearchDA extends FenixDispatchAction {
     public ActionForward search(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
 	    final HttpServletResponse response) throws Exception {
 
-	SearchParameters searchParameters = (SearchParameters) getRenderedObject();
+	SearchParameters searchParameters = getRenderedObject();
 	if (searchParameters == null) {
 	    searchParameters = new SearchPerson.SearchParameters();
 	    final String name = request.getParameter("name");

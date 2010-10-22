@@ -40,7 +40,7 @@ public class ExportGrantsAction extends FenixDispatchAction {
 
     public ActionForward searchGrants(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	GrantSearch grantSearch = (GrantSearch) getRenderedObject();
+	GrantSearch grantSearch = getRenderedObject();
 	if (grantSearch == null) {
 	    grantSearch = new GrantSearch();
 	} else {
@@ -56,7 +56,7 @@ public class ExportGrantsAction extends FenixDispatchAction {
 
     public ActionForward choicesPostBack(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	GrantSearch grantSearch = (GrantSearch) getRenderedObject();
+	GrantSearch grantSearch = getRenderedObject();
 	RenderUtils.invalidateViewState();
 	request.setAttribute("grantSearch", grantSearch);
 	return mapping.findForward("search-grants");

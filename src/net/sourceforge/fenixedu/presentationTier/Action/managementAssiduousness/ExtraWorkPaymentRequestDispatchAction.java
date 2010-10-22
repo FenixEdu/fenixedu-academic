@@ -22,7 +22,7 @@ public class ExtraWorkPaymentRequestDispatchAction extends FenixDispatchAction {
 
     public ActionForward chooseUnitYearMonth(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
-	ExtraWorkRequestFactory extraWorkRequestFactory = (ExtraWorkRequestFactory) getRenderedObject();
+	ExtraWorkRequestFactory extraWorkRequestFactory = getRenderedObject();
 	if (extraWorkRequestFactory == null) {
 	    extraWorkRequestFactory = new ExtraWorkRequestFactory();
 	} else {
@@ -64,7 +64,7 @@ public class ExtraWorkPaymentRequestDispatchAction extends FenixDispatchAction {
     public ActionForward processPayments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
-	ExtraWorkRequestFactory extraWorkRequestFactory = (ExtraWorkRequestFactory) getRenderedObject();
+	ExtraWorkRequestFactory extraWorkRequestFactory = getRenderedObject();
 	if (request.getParameter("cancelPayment") != null) {
 	    extraWorkRequestFactory.setPerformPayment(false);
 	} else {
@@ -97,7 +97,7 @@ public class ExtraWorkPaymentRequestDispatchAction extends FenixDispatchAction {
     public ActionForward insertPaymentRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
-	EmployeeExtraWorkRequestFactory employeeExtraWorkRequestFactory = (EmployeeExtraWorkRequestFactory) getRenderedObject();
+	EmployeeExtraWorkRequestFactory employeeExtraWorkRequestFactory = getRenderedObject();
 	Object result = ExecuteFactoryMethod.run(employeeExtraWorkRequestFactory);
 
 	if (result != null) {

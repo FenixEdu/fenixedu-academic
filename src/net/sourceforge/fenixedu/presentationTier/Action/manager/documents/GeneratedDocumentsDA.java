@@ -43,7 +43,7 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
 
     public ActionForward search(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	DocumentSearchBean searchBean = (DocumentSearchBean) getRenderedObject();
+	DocumentSearchBean searchBean = getRenderedObject();
 	List<GeneratedDocument> documents = new ArrayList<GeneratedDocument>();
 	for (File file : rootDomainObject.getFilesSet()) {
 	    if (file instanceof GeneratedDocument) {
@@ -100,7 +100,7 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
 
     public ActionForward searchPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	PersonBean personBean = (PersonBean) getRenderedObject();
+	PersonBean personBean = getRenderedObject();
 	SearchPerson.SearchParameters parameters = new SearchParameters(personBean.getName(), null, personBean.getUsername(),
 		personBean.getDocumentIdNumber(), null, null, null, null, null, null, null, null);
 	SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(parameters);

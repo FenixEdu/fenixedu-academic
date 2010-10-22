@@ -72,7 +72,7 @@ public class StudentTestsAction extends FenixDispatchAction {
 	final Student student = userView.getPerson().getStudent();
 	RegistrationSelectExecutionYearBean registrationSelectExecutionYearBean = new RegistrationSelectExecutionYearBean(student
 		.getRegistrations().iterator().next());
-	ExecutionYear executionYear = (ExecutionYear) getRenderedObject();
+	ExecutionYear executionYear = getRenderedObject();
 
 	if (executionYear == null) {
 	    executionYear = ExecutionYear.readCurrentExecutionYear();
