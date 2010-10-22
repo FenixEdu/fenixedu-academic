@@ -1139,8 +1139,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     private TreeSet<ExecutionSemester> getOrderedCompetenceCourseExecutionSemesters() {
-	final TreeSet<ExecutionSemester> result = new TreeSet<ExecutionSemester>(
-		ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
+	final TreeSet<ExecutionSemester> result = new TreeSet<ExecutionSemester>(Collections
+		.reverseOrder(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR));
 	ExecutionSemester semester = getCompetenceCourse().getStartExecutionSemester();
 	result.add(semester);
 	while (semester.hasNextExecutionPeriod()) {
