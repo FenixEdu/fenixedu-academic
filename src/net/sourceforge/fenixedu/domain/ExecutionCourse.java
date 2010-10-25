@@ -29,8 +29,8 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
-import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
+import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.executionCourse.SummariesSearchBean;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
@@ -261,8 +261,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	for (final BibliographicReference bibliographicReference : executionCourseFrom.getAssociatedBibliographicReferences()) {
 	    if (canAddBibliographicReference(bibliographicReference)) {
 		this.createBibliographicReference(bibliographicReference.getTitle(), bibliographicReference.getAuthors(),
-			bibliographicReference.getReference(), bibliographicReference.getYear(),
-			bibliographicReference.getOptional());
+			bibliographicReference.getReference(), bibliographicReference.getYear(), bibliographicReference
+				.getOptional());
 	    } else {
 		notCopiedBibliographicReferences.add(bibliographicReference);
 	    }
@@ -2150,8 +2150,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	// ExecutionInterval
 	ExecutionSemester executionSemester = (ExecutionSemester) ExecutionInterval.getExecutionInterval(academicInterval);
 
-	return executionSemester.getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(
-		executionDegree.getDegreeCurricularPlan(), curricularYear, name);
+	return executionSemester.getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(executionDegree
+		.getDegreeCurricularPlan(), curricularYear, name);
     }
 
     public StudentInquiriesCourseResult getStudentInquiriesCourseResult(ExecutionDegree executionDegree) {
@@ -2206,4 +2206,52 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	return hasSender();
     }
 
+    /*
+     * This method returns the portuguese name and the english name with the
+     * rules implemented in getNome() method
+     */
+    public MultiLanguageString getNameI18N() {
+	MultiLanguageString nameI18N = new MultiLanguageString();
+	nameI18N.setContent(Language.pt, super.getNome());
+
+	final StringBuilder stringBuilder = new StringBuilder();
+
+	final Set<String> names = new HashSet<String>();
+
+	for (final CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
+	    if (!curricularCourse.getActiveDegreeModuleScopesInExecutionPeriod(getExecutionPeriod()).isEmpty()) {
+		final String name = curricularCourse.getNameEn();
+		if (!names.contains(name)) {
+		    names.add(name);
+		    if (stringBuilder.length() > 0) {
+			stringBuilder.append(" / ");
+		    }
+		    stringBuilder.append(name);
+		}
+	    }
+	}
+
+	if (stringBuilder.length() > 0) {
+	    nameI18N.setContent(Language.en, stringBuilder.toString());
+	    return nameI18N;
+	}
+
+	boolean unique = true;
+	final String nameEn = getAssociatedCurricularCourses().get(0).getNameEn();
+
+	for (final CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
+	    if (curricularCourse.getNameEn() == null || !curricularCourse.getNameEn().equals(nameEn)) {
+		unique = false;
+		break;
+	    }
+	}
+
+	if (unique) {
+	    nameI18N.setContent(Language.en, nameEn);
+	    return nameI18N;
+	} else {
+	    nameI18N.setContent(Language.en, super.getNome());
+	    return nameI18N;
+	}
+    }
 }
