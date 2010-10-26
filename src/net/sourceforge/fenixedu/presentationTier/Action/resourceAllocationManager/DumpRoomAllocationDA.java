@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManag
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map.Entry;
 
 import javax.servlet.ServletOutputStream;
@@ -82,6 +83,12 @@ public class DumpRoomAllocationDA extends FenixDispatchAction {
 	    return value;
 	}
 
+	public void register(final AllocatableSpace allocatableSpace) {
+	    if (allocatableSpace != null) {
+		get(allocatableSpace);
+	    }
+	}
+
 	public void register(final Lesson lesson) {
 	    final LessonSpaceOccupation lessonSpaceOccupation = lesson.getLessonSpaceOccupation();
 	    if (lessonSpaceOccupation != null) {
@@ -131,6 +138,14 @@ public class DumpRoomAllocationDA extends FenixDispatchAction {
 		+ executionYear.getYear().replace('/', '_') + "_" + executionSemester.getSemester() + ".xls");
 
 	final RoomMap occupationMap = new RoomMap();
+
+	final List<AllocatableSpace> activeRoomsForEducation = AllocatableSpace.getAllActiveAllocatableSpacesForEducationAndPunctualOccupations();
+	for (AllocatableSpace room : activeRoomsForEducation) {
+	    if (room.containsIdentification()) {
+		occupationMap.register(room);
+	    }
+	}
+
 	for (final ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCoursesSet()) {
 	    for (final CourseLoad courseLoad : executionCourse.getCourseLoadsSet()) {
 		for (final Shift shift : courseLoad.getShiftsSet()) {
