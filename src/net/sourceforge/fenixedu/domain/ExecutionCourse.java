@@ -2132,7 +2132,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	// ExecutionInterval
 	ExecutionSemester executionSemester = (ExecutionSemester) ExecutionInterval.getExecutionInterval(academicInterval);
 
-	return executionSemester.getAssociatedExecutionCourses();
+	return executionSemester == null ? Collections.EMPTY_LIST : executionSemester.getAssociatedExecutionCourses();
     }
 
     public static ExecutionCourse getExecutionCourseByInitials(AcademicInterval academicInterval, String courseInitials) {
