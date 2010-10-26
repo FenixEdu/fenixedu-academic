@@ -45,7 +45,11 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 	    return (degreeTypeComparison != 0) ? degreeTypeComparison : degree1.getNome().compareTo(degree2.getNome());
 	}
     };
-    
+
+    public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+    		throws Exception {
+	return prepare(mapping, form, request, response);
+    }
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
