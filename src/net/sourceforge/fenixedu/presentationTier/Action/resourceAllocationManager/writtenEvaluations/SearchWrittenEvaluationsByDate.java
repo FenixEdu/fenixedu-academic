@@ -89,10 +89,13 @@ public class SearchWrittenEvaluationsByDate extends FenixContextDispatchAction {
 	    for (final Evaluation evaluation : executionCourse.getAssociatedEvaluations()) {
 		if (evaluation instanceof WrittenEvaluation) {
 		    final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) evaluation;
-		    if (DateFormatUtil.equalDates("yyyy/MM/dd", day, writtenEvaluation.getDayDate())) {
-			if (begin == null || DateFormatUtil.equalDates("HH:mm", begin, writtenEvaluation.getBeginningDate())) {
-			    if (end == null || DateFormatUtil.equalDates("HH:mm", end, writtenEvaluation.getEndDate())) {
-				writtenEvaluations.add(writtenEvaluation);
+		    final Date evaluationDate = writtenEvaluation.getDayDate();
+		    if (evaluationDate != null) {
+			if (DateFormatUtil.equalDates("yyyy/MM/dd", day, evaluationDate)) {
+			    if (begin == null || DateFormatUtil.equalDates("HH:mm", begin, writtenEvaluation.getBeginningDate())) {
+				if (end == null || DateFormatUtil.equalDates("HH:mm", end, writtenEvaluation.getEndDate())) {
+				    writtenEvaluations.add(writtenEvaluation);
+				}
 			    }
 			}
 		    }
