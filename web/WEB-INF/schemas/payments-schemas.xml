@@ -556,6 +556,23 @@
 	<slot name="reason" key="label.net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceExemption.reason" />
 </schema>
 
+<schema name="InsuranceExemptionBean.edit" type="net.sourceforge.fenixedu.dataTransferObject.accounting.InsuranceExemptionBean" bundle="APPLICATION_RESOURCES">   
+    <slot name="justificationType" layout="radio-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
+    	key="label.net.sourceforge.fenixedu.dataTransferObject.accounting.InsuranceExemptionBean.justificationType">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.payments.InsuranceExemptionJustificationProvider" />
+        <property name="saveOptions" value="true"/>
+    </slot>
+        
+    <slot name="dispatchDate" key="label.net.sourceforge.fenixedu.dataTransferObject.accounting.InsuranceExemptionBean.dispatchDate"/>    
+    
+    <slot name="reason" layout="longText" key="label.net.sourceforge.fenixedu.dataTransferObject.accounting.InsuranceExemptionBean.reason"/>
+
+</schema>
+
+<schema name="InsuranceExemption.view" type="net.sourceforge.fenixedu.domain.accounting.events.InsuranceExemption" bundle="APPLICATION_RESOURCES">
+	<slot name="description" key="label.net.sourceforge.fenixedu.domain.accounting.events.InsuranceExemption.description" />
+	<slot name="reason" key="label.net.sourceforge.fenixedu.domain.accounting.events.InsuranceExemption.reason" />
+</schema>
 
 <schema name="GratuityReport.view" type="net.sourceforge.fenixedu.domain.accounting.report.GratuityReport" bundle="APPLICATION_RESOURCES">
 	<slot name="totalGratuityAmount"  />

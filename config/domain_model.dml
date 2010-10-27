@@ -71,6 +71,7 @@ enum net.sourceforge.fenixedu.domain.accounting.PaymentCodeType                 
 enum net.sourceforge.fenixedu.domain.accounting.PaymentMode                                                               as PaymentMode;
 enum net.sourceforge.fenixedu.domain.accounting.ReceiptState                                                              as ReceiptState;
 enum net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustificationType      as AdministrativeOfficeFeeAndInsuranceExemptionJustificationType;
+enum net.sourceforge.fenixedu.domain.accounting.events.InsuranceExemptionJustificationType      						  as InsuranceExemptionJustificationType;
 enum net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemptionJustificationType                                  as PenaltyExemptionJustificationType;
 enum net.sourceforge.fenixedu.domain.accounting.events.candidacy.CandidacyExemptionJustificationType                      as CandidacyExemptionJustificationType;
 enum net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemptionJustificationType                        as GratuityExemptionJustificationType;
@@ -2103,6 +2104,9 @@ class DomainObject {
         class accounting.events.AdministrativeOfficeFeeAndInsuranceExemption extends accounting.Exemption {
         }
         
+        class accounting.events.InsuranceExemption extends accounting.Exemption {
+        }
+        
         class accounting.events.AcademicEventExemption extends accounting.Exemption {
             Money value;
         }
@@ -2310,6 +2314,9 @@ class DomainObject {
 
 				class accounting.postingRules.candidacy.Over23IndividualCandidacyPR extends accounting.postingRules.FixedAmountPR {
 				}
+				
+				class accounting.postingRules.InsurancePR extends accounting.postingRules.FixedAmountPR {
+				}
 
             class accounting.postingRules.ImprovementOfApprovedEnrolmentPR extends accounting.postingRules.GenericSingleEntryTypePR {
                 Money fixedAmount;
@@ -2486,6 +2493,13 @@ class DomainObject {
             AdministrativeOfficeFeeAndInsuranceExemptionJustificationType justificationType;
         }
             class accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustificationByDispatch extends accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustification {
+                YearMonthDay dispatchDate;
+            }
+
+        class accounting.events.InsuranceExemptionJustification extends accounting.events.ExemptionJustification {
+            InsuranceExemptionJustificationType justificationType;
+        }
+            class accounting.events.InsuranceExemptionJustificationByDispatch extends accounting.events.InsuranceExemptionJustification {
                 YearMonthDay dispatchDate;
             }
             

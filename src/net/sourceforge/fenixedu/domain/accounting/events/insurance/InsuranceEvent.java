@@ -16,7 +16,9 @@ import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
+import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
+import net.sourceforge.fenixedu.domain.accounting.events.InsuranceExemption;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.UnitServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -130,6 +132,25 @@ public class InsuranceEvent extends InsuranceEvent_Base {
 	    SibsTransactionDetailDTO transactionDetail) {
 	return internalProcess(responsibleUser, Collections
 		.singletonList(new EntryDTO(EntryType.INSURANCE_FEE, this, amountToPay)), transactionDetail);
+    }
+
+    @Override
+    public boolean isExemptionAppliable() {
+	return true;
+    }
+
+    public boolean hasInsuranceExemption() {
+	return getInsuranceExemption() != null;
+    }
+
+    public InsuranceExemption getInsuranceExemption() {
+	for (final Exemption exemption : getExemptionsSet()) {
+	    if (exemption instanceof InsuranceExemption) {
+		return (InsuranceExemption) exemption;
+	    }
+	}
+
+	return null;
     }
 
 }

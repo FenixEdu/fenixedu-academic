@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.accounting.gratuity.Crea
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.AcademicEventExemptionBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.AdministrativeOfficeFeeAndInsuranceExemptionBean;
+import net.sourceforge.fenixedu.dataTransferObject.accounting.InsuranceExemptionBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.SecondCycleIndividualCandidacyExemptionBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.gratuityExemption.CreateGratuityExemptionBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreateAdministrativeOfficeFeeAndInsurancePenaltyExemptionBean;
@@ -31,6 +32,7 @@ import net.sourceforge.fenixedu.domain.accounting.events.ImprovementOfApprovedEn
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
+import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdEvent;
@@ -54,6 +56,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "showForGratuityEvent", path = "/academicAdminOffice/payments/exemptions/showForGratuityEvent.jsp"),
 	@Forward(name = "showForImprovementOfApprovedEnrolmentEvent", path = "/academicAdminOffice/payments/exemptions/showForImprovementOfApprovedEnrolmentEvent.jsp"),
 	@Forward(name = "showForAdministrativeOfficeFeeAndInsuranceEvent", path = "/academicAdminOffice/payments/exemptions/showForAdministrativeOfficeFeeAndInsuranceEvent.jsp"),
+	@Forward(name = "showForInsuranceEvent", path = "/academicAdminOffice/payments/exemptions/showForInsuranceEvent.jsp"),
 	@Forward(name = "showForSecondCycleIndividualCandidacyEvent", path = "/academicAdminOffice/payments/exemptions/showForSecondCycleIndividualCandidacyEvent.jsp"),
 	@Forward(name = "showForPhdRegistrationFee", path = "/phd/academicAdminOffice/payments/exemptions/showForPhdRegistrationFee.jsp"),
 	@Forward(name = "showForAcademicEvent", path = "/academicAdminOffice/payments/exemptions/showForAcademicEvent.jsp"),
@@ -63,6 +66,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "createImprovementOfApprovedEnrolmentPenaltyExemption", path = "/academicAdminOffice/payments/exemptions/penalty/createImprovementOfApprovedEnrolmentExemption.jsp"),
 	@Forward(name = "createAdministrativeOfficeFeeAndInsurancePenaltyExemption", path = "/academicAdminOffice/payments/exemptions/penalty/createAdministrativeOfficeFeeAndInsuranceExemption.jsp"),
 	@Forward(name = "createAdministrativeOfficeFeeAndInsuranceExemption", path = "/academicAdminOffice/payments/exemptions/payment/administrativeOfficeFeeAndInsurance/create.jsp"),
+	@Forward(name = "createInsuranceExemption", path = "/academicAdminOffice/payments/exemptions/payment/insurance/createInsuranceExemption.jsp"),
 	@Forward(name = "createSecondCycleIndividualCandidacyExemption", path = "/academicAdminOffice/payments/exemptions/createSecondCycleIndividualCandidacyExemption.jsp"),
 	@Forward(name = "createPhdRegistrationFeePenaltyExemption", path = "/phd/academicAdminOffice/payments/exemptions/createPhdRegistrationFeePenaltyExemption.jsp"),
 	@Forward(name = "createAcademicEventExemption", path = "/academicAdminOffice/payments/exemptions/createAcademicEventExemption.jsp"),
@@ -226,6 +230,8 @@ public class ExemptionsManagementDispatchAction extends AcademicAdminOfficePayme
 	    return mapping.findForward("showForGratuityEvent");
 	} else if (event instanceof AdministrativeOfficeFeeAndInsuranceEvent) {
 	    return mapping.findForward("showForAdministrativeOfficeFeeAndInsuranceEvent");
+	} else if (event instanceof InsuranceEvent) {
+	    return mapping.findForward("showForInsuranceEvent");
 	} else if (event instanceof ImprovementOfApprovedEnrolmentEvent) {
 	    return mapping.findForward("showForImprovementOfApprovedEnrolmentEvent");
 	} else if (event instanceof SecondCycleIndividualCandidacyEvent) {
@@ -482,6 +488,42 @@ public class ExemptionsManagementDispatchAction extends AcademicAdminOfficePayme
 	} catch (DomainException ex) {
 	    addActionMessage(request, ex.getKey(), ex.getArgs());
 	    return createPhdRegistrationFeePenaltyExemptionInvalid(mapping, form, request, response);
+	}
+
+	return showExemptions(mapping, form, request, response);
+    }
+
+    /* Insurance Exemption */
+    public ActionForward prepareCreateInsuranceExemption(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("createInsuranceExemptionBean", new InsuranceExemptionBean((InsuranceEvent) getEvent(request)));
+
+	return mapping.findForward("createInsuranceExemption");
+    }
+
+    public ActionForward prepareCreateInsuranceExemptionInvalid(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	request.setAttribute("createInsuranceExemptionBean", getRenderedObject("createInsuranceExemptionBean"));
+
+	return mapping.findForward("createInsuranceExemption");
+    }
+
+    public ActionForward createInsuranceExemption(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	try {
+	    ExemptionsManagement.createInsuranceExemption(getLoggedPerson(request).getEmployee(),
+		    (InsuranceExemptionBean) getRenderedObject("createInsuranceExemptionBean"));
+
+	} catch (DomainExceptionWithLabelFormatter ex) {
+	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
+	    return prepareCreateAdministrativeOfficeFeeAndInsuranceExemptionInvalid(mapping, form, request, response);
+
+	} catch (DomainException ex) {
+	    addActionMessage(request, ex.getKey(), ex.getArgs());
+	    return prepareCreateAdministrativeOfficeFeeAndInsuranceExemptionInvalid(mapping, form, request, response);
 	}
 
 	return showExemptions(mapping, form, request, response);
