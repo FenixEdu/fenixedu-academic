@@ -41,7 +41,7 @@ public class TutorshipSummaryDA extends ViewStudentsByTutorDispatchAction {
     public ActionForward searchTeacher(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	TutorSummaryBean bean = getRenderedObject("tutorateBean");
+	TutorSummaryBean bean = (TutorSummaryBean) getRenderedObject("tutorateBean");
 
 	if (bean == null) {
 	    bean = new TutorSummaryBean();
@@ -60,7 +60,7 @@ public class TutorshipSummaryDA extends ViewStudentsByTutorDispatchAction {
     public ActionForward postback(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	TutorSummaryBean bean = getRenderedObject("tutorateBean");
+	TutorSummaryBean bean = (TutorSummaryBean) getRenderedObject("tutorateBean");
 
 	RenderUtils.invalidateViewState();
 
@@ -72,7 +72,7 @@ public class TutorshipSummaryDA extends ViewStudentsByTutorDispatchAction {
     public ActionForward exportSummaries(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	TutorSummaryBean bean = getRenderedObject("tutorateBean");
+	TutorSummaryBean bean = (TutorSummaryBean) getRenderedObject("tutorateBean");
 
 	if (bean == null) {
 	    return searchTeacher(mapping, actionForm, request, response);
@@ -97,6 +97,9 @@ public class TutorshipSummaryDA extends ViewStudentsByTutorDispatchAction {
     }
 
     private String convertBoolean(Boolean bool) {
+	if (bool == null) {
+	    return "";
+	}
 	return bool ? "X" : "";
     }
 
@@ -191,7 +194,12 @@ public class TutorshipSummaryDA extends ViewStudentsByTutorDispatchAction {
 	    row.setCell(convertBoolean(summary.getGainsR10()));
 	    row.setCell(summary.getGainsOther());
 
-	    row.setCell(bundleEnum.getString(summary.getTutorshipSummaryProgramAssessment().getName()));
+	    if (summary.getTutorshipSummaryProgramAssessment() != null) {
+		row.setCell(bundleEnum.getString(summary.getTutorshipSummaryProgramAssessment().getName()));
+	    } else {
+		row.setCell("");
+	    }
+
 	    row.setCell(summary.getDifficulties());
 	    row.setCell(summary.getGains());
 	    row.setCell(summary.getSuggestions());
@@ -256,7 +264,7 @@ public class TutorshipSummaryDA extends ViewStudentsByTutorDispatchAction {
     public ActionForward createSummary(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	CreateSummaryBean bean = getRenderedObject("createSummaryBean");
+	CreateSummaryBean bean = (CreateSummaryBean) getRenderedObject("createSummaryBean");
 
 	if (bean == null) {
 
@@ -304,7 +312,7 @@ public class TutorshipSummaryDA extends ViewStudentsByTutorDispatchAction {
     public ActionForward processCreateSummary(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	CreateSummaryBean bean = getRenderedObject("createSummaryBean");
+	CreateSummaryBean bean = (CreateSummaryBean) getRenderedObject("createSummaryBean");
 
 	if (bean == null) {
 	    return createSummary(mapping, actionForm, request, response);

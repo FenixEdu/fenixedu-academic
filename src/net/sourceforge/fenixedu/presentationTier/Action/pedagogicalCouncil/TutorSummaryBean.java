@@ -54,6 +54,7 @@ public class TutorSummaryBean extends TutorSearchBean {
 
 	    /* add - not created - available summaries */
 	    Set<ExecutionSemester> activePeriods = TutorshipSummary.getActivePeriods();
+
 	    for (Tutorship t : getTeacher().getTutorshipsSet()) {
 		boolean addDegree = true;
 		Degree studentDegree = t.getStudent().getDegree();
@@ -68,7 +69,7 @@ public class TutorSummaryBean extends TutorSearchBean {
 
 		if (addDegree) {
 		    for (ExecutionSemester semester : activePeriods) {
-			if (t.isActive(semester.getAcademicInterval())) {
+			if (t.isActive()) {
 			    CreateSummaryBean createSummaryBean = new CreateSummaryBean(getTeacher(), semester, studentDegree);
 			    result.add(createSummaryBean);
 			}
