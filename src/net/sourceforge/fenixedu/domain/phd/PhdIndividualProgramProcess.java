@@ -69,7 +69,7 @@ import pt.utl.ist.fenix.tools.predicates.Predicate;
 
 public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Base {
 
-    static abstract private class PhdActivity extends Activity<PhdIndividualProgramProcess> {
+    static abstract protected class PhdActivity extends Activity<PhdIndividualProgramProcess> {
 
 	@Override
 	final public void checkPreConditions(final PhdIndividualProgramProcess process, final IUserView userView) {
@@ -91,7 +91,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	abstract protected void activityPreConditions(final PhdIndividualProgramProcess process, final IUserView userView);
     }
 
-    static private List<Activity> activities = new ArrayList<Activity>();
+    static protected List<Activity> activities = new ArrayList<Activity>();
     static {
 	activities.add(new EditPersonalInformation());
 
@@ -173,7 +173,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	    return createdProcess;
 	}
 
-	private Person getOrCreatePerson(final PhdProgramCandidacyProcessBean bean) {
+	protected Person getOrCreatePerson(final PhdProgramCandidacyProcessBean bean) {
 	    Person result;
 
 	    if (!bean.getPersonBean().hasPerson()) {
@@ -1641,5 +1641,48 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	default:
 	    throw new DomainException("error.PhdIndividualProgramProcess.unknown.process.state.types");
 	}
+    }
+
+    public static class PublicPhdIndividualProgramProcess extends PhdIndividualProgramProcess {
+	static {
+	    activities.add(new CreatePublicCandidacy());
+	}
+
+	// Prevent instantiation of this class
+	private PublicPhdIndividualProgramProcess() {
+	    super(null, null);
+	}
+
+	@StartActivity
+	static public class CreatePublicCandidacy extends CreateCandidacy {
+
+	    @Override
+	    protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+		// no precondition to check
+	    }
+
+	    @Override
+	    protected Person getOrCreatePerson(final PhdProgramCandidacyProcessBean bean) {
+		Person result;
+
+		if (!bean.getPersonBean().hasPerson()) {
+		    result = new Person(bean.getPersonBean());
+		} else {
+		    if (bean.getPersonBean().getPerson().hasRole(RoleType.EMPLOYEE)
+			    || bean.getPersonBean().getPerson().hasAnyPersonRoles() || bean.getPersonBean().getPerson().hasUser()
+			    || bean.getPersonBean().getPerson().hasStudent() || bean.hasInstitutionId()) {
+			result = bean.getPersonBean().getPerson();
+		    } else {
+			/*
+			 * if person never had any identity in the system then
+			 * let edit information
+			 */
+			result = bean.getPersonBean().getPerson().editByPublicCandidate(bean.getPersonBean());
+		    }
+		}
+		return result;
+	    }
+	}
+
     }
 }

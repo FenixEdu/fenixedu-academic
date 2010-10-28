@@ -41,6 +41,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteGui
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteQualification;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditIndividualProcessInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditPersonalInformation;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.PublicPhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.UploadDocuments;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.ValidatedByCandidate;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean.PhdParticipantType;
@@ -339,11 +340,12 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
 	// check if person already exists
 	if (person != null) {
-	    if (bean.hasInstitutionId() && bean.getInstitutionId().equals(person.getIstUsername())) {
-		if (person.getDateOfBirthYearMonthDay().equals(personBean.getDateOfBirth())) {
+	    if (person.getDateOfBirthYearMonthDay().equals(personBean.getDateOfBirth())) {
+		if (person.hasIstUsername() && person.getIstUsername().equals(bean.getInstitutionId())) {
+		    personBean.setPerson(person);
+		} else if (!person.hasIstUsername() && !bean.hasInstitutionId()) {
 		    personBean.setPerson(person);
 		} else {
-		    // found person with diff date of birth
 		    addErrorMessage(request, "error.phd.public.candidacy.fill.personal.information.and.institution.id");
 		    return createCandidacyStepOneInvalid(mapping, actionForm, request, response);
 		}
@@ -533,27 +535,8 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
 	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
 	try {
-
-	    // if (!hasMinimumDocuments(request)) {
-	    // clearDocumentsInformation(bean);
-	    // return createCandidacyStepThreeInvalid(mapping, form, request,
-	    // response);
-	    // }
-	    //
-	    // if (candidacyRefereesEmailsAreInvalid(bean)) {
-	    // addErrorMessage(request,
-	    // "error.candidacyBean.invalid.referee.emails");
-	    // clearDocumentsInformation(bean);
-	    // return createCandidacyStepThreeInvalid(mapping, form, request,
-	    // response);
-	    // }
-
-	    // CreateNewProcess.run(PhdIndividualProgramProcess.class, bean,
-	    // buildActivities(bean));
-	    CreateNewProcess.run(PhdIndividualProgramProcess.class, bean);
+	    CreateNewProcess.run(PublicPhdIndividualProgramProcess.class, bean);
 	    sendApplicationSuccessfullySubmitedEmail(bean.getCandidacyHashCode(), request);
-	    // sendCandidacyRefereesEmail(process, request);
-
 	} catch (final DomainException e) {
 	    addErrorMessage(request, e.getKey(), e.getArgs());
 	    bean.clearPerson();
