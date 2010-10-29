@@ -43,6 +43,8 @@ public class CreditLineDTO {
 
     private ExecutionSemester executionSemester;
 
+    private Teacher teacher;
+
     public CreditLineDTO(ExecutionSemester executionSemester, TeacherService teacherService, double managementCredits,
 	    double exemptionCredits, int lessonHours, Teacher teacher, double thesesCredits) throws ParseException {
 
@@ -61,10 +63,12 @@ public class CreditLineDTO {
 	setMandatoryLessonHours(lessonHours);
 	setManagementCredits(managementCredits);
 	setServiceExemptionCredits(exemptionCredits);
+	setTeacher(teacher);
     }
 
     public CreditLineDTO(ExecutionSemester executionSemester, TeacherCredits teacherCredits) {
 	setExecutionPeriod(executionSemester);
+	setTeacher(teacherCredits.getTeacher());
 	setTeachingDegreeCredits(teacherCredits.getTeachingDegreeCredits().doubleValue());
 	setSupportLessonHours(teacherCredits.getSupportLessonHours().doubleValue());
 	setMasterDegreeCredits(teacherCredits.getMasterDegreeCredits().doubleValue());
@@ -80,8 +84,11 @@ public class CreditLineDTO {
     }
 
     public double getTotalCredits() {
-	double totalCredits = getTeachingDegreeCredits() + getMasterDegreeCredits() + getTfcAdviseCredits() + getThesesCredits()
-		+ getOtherCredits() + getManagementCredits() + getServiceExemptionCredits();
+	double totalCredits = 0;
+	if (!getTeacher().isMonitor(executionSemester)) {
+	    totalCredits = getTeachingDegreeCredits() + getMasterDegreeCredits() + getTfcAdviseCredits() + getThesesCredits()
+		    + getOtherCredits() + getManagementCredits() + getServiceExemptionCredits();
+	}
 	return round(totalCredits);
     }
 
@@ -191,5 +198,13 @@ public class CreditLineDTO {
 
     public void setThesesCredits(double thesesCredits) {
 	this.thesesCredits = thesesCredits;
+    }
+
+    public Teacher getTeacher() {
+	return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+	this.teacher = teacher;
     }
 }

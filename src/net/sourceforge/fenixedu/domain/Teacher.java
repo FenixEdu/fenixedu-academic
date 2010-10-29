@@ -881,13 +881,15 @@ public class Teacher extends Teacher_Base {
 	ExecutionSemester executionPeriodAfterEnd = endExecutionPeriod.getNextExecutionPeriod();
 	while (startPeriod != executionPeriodAfterEnd) {
 	    TeacherService teacherService = getTeacherServiceByExecutionPeriod(startPeriod);
-	    if (teacherService != null) {
-		totalCredits += teacherService.getCredits();
+	    if (!isMonitor(startPeriod)) {
+		if (teacherService != null) {
+		    totalCredits += teacherService.getCredits();
+		}
+		totalCredits += getThesesCredits(startPeriod);
+		totalCredits += getManagementFunctionsCredits(startPeriod);
+		totalCredits += getServiceExemptionCredits(startPeriod);
+		totalCredits -= getMandatoryLessonHours(startPeriod);
 	    }
-	    totalCredits += getThesesCredits(startPeriod);
-	    totalCredits += getManagementFunctionsCredits(startPeriod);
-	    totalCredits += getServiceExemptionCredits(startPeriod);
-	    totalCredits -= getMandatoryLessonHours(startPeriod);
 	    startPeriod = startPeriod.getNextExecutionPeriod();
 	}
 	return totalCredits;
