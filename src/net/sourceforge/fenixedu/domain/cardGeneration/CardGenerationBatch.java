@@ -173,6 +173,9 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
 	final Set<StudentCurricularPlan> studentCurricularPlans = new HashSet<StudentCurricularPlan>();
 
 	for (final Registration registration : student.getRegistrationsSet()) {
+	    if (!registration.isActive()) {
+		continue;
+	    }
 	    final RegistrationAgreement registrationAgreement = registration.getRegistrationAgreement();
 	    if (registrationAgreement != RegistrationAgreement.NORMAL
 		    && registrationAgreement != RegistrationAgreement.TOTAL
