@@ -126,14 +126,14 @@ public class ImportIdentificationCardDataFromFile {
 				    if (category != Category.CODE_96) {
 					cardGenerationEntry.setCardGenerationBatch(cardGenerationBatchWithProblems);
 					new CardGenerationProblem(cardGenerationBatchWithProblems, "multiple.user.information.type.not.crossed", identificationId, person);
-				    } else if (hasMatchingLine(person, line)) {
+				    } else if (hasMatchingLine(person, line, cardGenerationEntry)) {
 					cardGenerationEntry.setCardGenerationBatch(cardGenerationBatchWithDuplicates);
 					new CardGenerationProblem(cardGenerationBatchWithDuplicates, "duplicate.line.from.previous.batch", identificationId, person);
 				    }
 				} else {
 				    final Category categoryForStudentLine = CardGenerationEntry.readCategory(studentLine);
 				    final String newLine = merge(line, categoryForLine, studentLine, categoryForStudentLine);
-				    if (hasMatchingLine(person, newLine)) {
+				    if (hasMatchingLine(person, newLine, cardGenerationEntry)) {
 					cardGenerationEntry.setCardGenerationBatch(cardGenerationBatchWithDuplicates);
 					new CardGenerationProblem(cardGenerationBatchWithDuplicates, "duplicate.line.from.previous.batch", identificationId, person);
 				    }
@@ -143,7 +143,7 @@ public class ImportIdentificationCardDataFromFile {
 				final Category categoryForLine = CardGenerationEntry.readCategory(line);
 				final String studentLine = createNewLine(person, cardGenerationBatch);
 				if (studentLine == null) {
-				    if (hasMatchingLine(person, line)) {
+				    if (hasMatchingLine(person, line, cardGenerationEntry)) {
 					cardGenerationEntry.setCardGenerationBatch(cardGenerationBatchWithDuplicates);
 					new CardGenerationProblem(cardGenerationBatchWithDuplicates, "duplicate.line.from.previous.batch", identificationId, person);
 				    }
@@ -152,14 +152,14 @@ public class ImportIdentificationCardDataFromFile {
 				} else {
 				    final Category categoryForStudentLine = CardGenerationEntry.readCategory(studentLine);
 				    final String newLine = merge(line, categoryForLine, studentLine, categoryForStudentLine);
-				    if (hasMatchingLine(person, newLine)) {
+				    if (hasMatchingLine(person, newLine, cardGenerationEntry)) {
 					cardGenerationEntry.setCardGenerationBatch(cardGenerationBatchWithDuplicates);
 					new CardGenerationProblem(cardGenerationBatchWithDuplicates, "duplicate.line.from.previous.batch", identificationId, person);
 				    }
 				    cardGenerationEntry.setLine(newLine);
 				}
 			    } else {
-				if (hasMatchingLine(person, line)) {
+				if (hasMatchingLine(person, line, cardGenerationEntry)) {
 				    cardGenerationEntry.setCardGenerationBatch(cardGenerationBatchWithDuplicates);
 				    new CardGenerationProblem(cardGenerationBatchWithDuplicates, "duplicate.line.from.previous.batch", identificationId, person);
 				}
@@ -193,9 +193,11 @@ public class ImportIdentificationCardDataFromFile {
 	return new CardGenerationBatch(description, executionYear, true);
     }
 
-    private boolean hasMatchingLine(final Person person, final String line) {
+    private boolean hasMatchingLine(final Person person, final String line, final CardGenerationEntry currentEntry) {
 	for (final CardGenerationEntry cardGenerationEntry : person.getCardGenerationEntriesSet()) {
-	    if (cardGenerationEntry.matches(line) && isInValidTimeFrame(cardGenerationEntry)) {
+	    if (currentEntry != cardGenerationEntry
+		    && cardGenerationEntry.matches(line)
+		    && isInValidTimeFrame(cardGenerationEntry)) {
 		return true;
 	    }
 	}
