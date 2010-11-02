@@ -24,10 +24,12 @@ public class InsurancePR extends InsurancePR_Base {
 
     @Override
     public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
-	InsuranceEvent insuranceEvent = (InsuranceEvent) event;
 
-	if (insuranceEvent.hasInsuranceExemption()) {
-	    return Money.ZERO;
+	if (event instanceof InsuranceEvent) {
+	    InsuranceEvent insuranceEvent = (InsuranceEvent) event;
+	    if (insuranceEvent.hasInsuranceExemption()) {
+		return Money.ZERO;
+	    }
 	}
 
 	return getFixedAmount();
