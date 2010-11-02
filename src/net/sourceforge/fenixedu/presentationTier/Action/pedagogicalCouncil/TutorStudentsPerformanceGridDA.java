@@ -9,7 +9,7 @@ import java.util.ResourceBundle;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.TutorateBean;
+import net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.NumberBean;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.PerformanceGridTableDTO;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsPerformanceInfoBean;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.PerformanceGridTableDTO.PerformanceGridLine;
@@ -48,7 +48,7 @@ public class TutorStudentsPerformanceGridDA extends ViewStudentsPerformanceGridD
 
     public ActionForward viewStudentsPerformanceGrid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	TutorSearchBean bean = getRenderedObject("tutorateBean");
+	TutorSearchBean bean = (TutorSearchBean) getRenderedObject("tutorateBean");
 	request.setAttribute("tutorateBean", bean);
 	if (bean.getTeacher() != null) {
 	    Person person = bean.getTeacher().getPerson();
@@ -66,7 +66,9 @@ public class TutorStudentsPerformanceGridDA extends ViewStudentsPerformanceGridD
 	    HttpServletResponse response) throws Exception {
 	String tutorId = request.getParameter("tutorOID");
 	Person person = (Person) rootDomainObject.readPartyByOID(Integer.parseInt(tutorId));
-	request.setAttribute("tutorateBean", new TutorateBean(person));
+	NumberBean numberBean = new NumberBean();
+	numberBean.setNumber(person.getTeacher().getTeacherNumber());
+	request.setAttribute("tutorateBean", numberBean);
 	generateStudentsPerformanceBeanFromRequest(request, person);
 	prepareStudentsPerformanceGrid(mapping, actionForm, request, response, person);
 	final PerformanceGridTableDTO performanceGridTable = (PerformanceGridTableDTO) request
@@ -146,7 +148,9 @@ public class TutorStudentsPerformanceGridDA extends ViewStudentsPerformanceGridD
 	    HttpServletResponse response) throws Exception {
 	String tutorId = request.getParameter("tutorOID");
 	Person person = (Person) rootDomainObject.readPartyByOID(Integer.parseInt(tutorId));
-	request.setAttribute("tutorateBean", new TutorateBean(person));
+	NumberBean numberBean = new NumberBean();
+	numberBean.setNumber(person.getTeacher().getTeacherNumber());
+	request.setAttribute("tutorateBean", numberBean);
 	StudentsPerformanceInfoBean bean = generateStudentsPerformanceBeanFromRequest(request, person);
 	if (!bean.getTutorships().isEmpty()) {
 

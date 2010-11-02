@@ -772,8 +772,8 @@
 	</slot>
 </schema>
 
-<schema name="tutorship.student.number" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.TutorateBean">
-	<slot name="personNumber" key="label.student.number">
+<schema name="tutorship.student.number" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.NumberBean">
+	<slot name="number" key="label.student.number">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator" />
 		<property name="size" value="5" />
@@ -781,8 +781,8 @@
 	</slot>
 </schema>
 
-<schema name="tutorship.tutor.number" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.TutorateBean">
-	<slot name="personNumber" key="label.tutor.number">
+<schema name="tutorship.tutor.number" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.NumberBean">
+	<slot name="number" key="label.tutor.number">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator" />
 		<property name="size" value="5" />
