@@ -1068,6 +1068,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
 	if (hashCode.hasLetter()) {
 	    request.setAttribute("has-letter", Boolean.TRUE);
+	    request.setAttribute("letter", hashCode.getLetter());
 	    return mapping.findForward("createRefereeLetterSuccess");
 	}
 

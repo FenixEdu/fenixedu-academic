@@ -21,7 +21,25 @@
 <%-- ### End of Title ### --%>
 
 <logic:present name="has-letter">
-	<p>You have already submitted the recommendation. Thank you for the time and effort you have taken in responding to this request. We greatly appreciate your opinion on this application. If you have any questions or require further information, please contact the <a href="http://ist.utl.pt">IST</a> doctoral program at ist-epfl@ist.utl.pt.</p>
+	<p>You have already submitted the recommendation shown below. Thank you for the time and effort you have taken in responding to this request. We greatly appreciate your opinion on this application. If you have any questions or require further information, please contact the <a href="http://ist.utl.pt">IST</a> doctoral program at ist-epfl@ist.utl.pt.</p>
+	
+	<fr:view name="letter">
+		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter">
+			<fr:slot name="howLongKnownApplicant" />
+			<fr:slot name="capacity" />
+			<fr:slot name="comparisonGroup" />
+			<fr:slot name="rankInClass" />
+			<fr:slot name="academicPerformance" />
+			<fr:slot name="socialAndCommunicationSkills" />
+			<fr:slot name="potencialToExcelPhd" />
+			<fr:slot name="file" layout="link" />
+			<fr:slot name="comments" />
+		</fr:schema>
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="thlight thleft"/>
+	        <fr:property name="columnClasses" value="width175px,,,,"/>		
+		</fr:layout>
+	</fr:view>
 </logic:present>
 
 <logic:present name="created-with-success">
