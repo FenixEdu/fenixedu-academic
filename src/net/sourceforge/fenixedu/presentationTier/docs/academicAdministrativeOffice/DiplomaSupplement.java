@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeOfficialPublication;
@@ -90,11 +91,11 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 	addParameter("registrationNumber", registration.getNumber());
 
 	// Group 2
-	String degreeDesignation = getDegreeDesignation(conclusion);
+	String degreeDesignation = getDegreeDesignation(conclusion, getLocale());
 
 	String graduateTitleNative = degreeType.getGraduateTitle(getRequestedCycle(), Language.getLocale());
 
-	addParameter("graduateTitle", degreeDesignation + ", " + graduateTitleNative);
+	addParameter("graduateTitle", getDegreeDesignation(conclusion, Language.getLocale()) + ", " + graduateTitleNative);
 	addParameter("prevailingScientificArea", degreeName);
 	addParameter("universityName", institutionsUniversityUnit.getName());
 	addParameter(
@@ -181,15 +182,16 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 	return ((DiplomaSupplementRequest) getDocumentRequest()).getRequestedCycle();
     }
 
-    private String getDegreeDesignation(ExecutionYear conclusion) {
+    private String getDegreeDesignation(ExecutionYear conclusion, Locale locale) {
 	CycleCourseGroup cycle = getRegistration().getLastStudentCurricularPlan().getCycleCourseGroup(getRequestedCycle());
-	String degreeName = getRegistration().getDegree().getFilteredName(conclusion, getLocale());
+	String degreeName = getRegistration().getDegree().getFilteredName(conclusion, locale);
 	StringBuilder designation = new StringBuilder();
-	designation.append(getEnumerationBundle().getString(getRequestedCycle().getQualifiedName() + GRADUATE_LEVEL_SUFFIX));
+	designation.append(ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(
+		getRequestedCycle().getQualifiedName() + GRADUATE_LEVEL_SUFFIX));
 	designation.append(SINGLE_SPACE);
-	designation.append(getResourceBundle().getString("label.in"));
+	designation.append(ResourceBundle.getBundle("resources.AcademicAdminOffice", locale).getString("label.in"));
 	final MultiLanguageString mls = cycle.getGraduateTitleSuffix();
-	final String suffix = mls == null ? null : mls.getContent(Language.valueOf(getLocale().getLanguage()));
+	final String suffix = mls == null ? null : mls.getContent(Language.valueOf(locale.getLanguage()));
 	if (!StringUtils.isEmpty(suffix) && !degreeName.contains(suffix.trim())) {
 	    designation.append(SINGLE_SPACE);
 	    designation.append(suffix);
