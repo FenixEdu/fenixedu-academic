@@ -177,7 +177,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	for (int i = 0; i < name.length(); i++) {
 	    char c = name.charAt(i);
 	    if (c != '\r' && c != '\n' && c != ' ' && !Character.isLetter(c) && c != '-' && c != '\'') {
-		registerProblem("person.has.unallowed.char.in.name");
+		registerProblem("person.has.unallowed.char.in.name", line);
 	    }
 	}
 
@@ -193,16 +193,16 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	sb.append(line.substring(178));
 
 	if (line.length() != 264 || sb.length() != 264) {
-	    registerProblem("line.has.incorrect.length");
+	    registerProblem("line.has.incorrect.length", line);
 	}
 
 	super.setLine(sb.toString());
     }
 
-    protected void registerProblem(final String message) {
+    protected void registerProblem(final String message, final String args) {
 	final CardGenerationBatch cardGenerationBatch = getCardGenerationBatch().getCardGenerationBatchProblems();
 	setCardGenerationBatch(cardGenerationBatch);
-	new CardGenerationProblem(cardGenerationBatch, message, "", getPerson());
+	new CardGenerationProblem(cardGenerationBatch, message, args, getPerson());
     }
 
     public static int translateDegreeType(final DegreeType degreeType) {
