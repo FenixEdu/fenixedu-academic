@@ -36,9 +36,7 @@ public enum ProfessionalSituationType {
 	    true, false), TEACHER_SERVICE_EXEMPTION_E_C_D_U(true, false), TEACHER_SERVICE_EXEMPTION_E_C_D_U_ART27(true, false), FUNCTIONS_MANAGEMENT_SERVICE_EXEMPTION(
 	    true, false), INCAPACITY_FOR_TOGETHER_DOCTOR_OF_THE_CGA(true, false), PUBLIC_MANAGER(true, false), DETACHED_TO(true,
 	    false), GOVERNMENT_MEMBER(true, false), SPECIAL_LICENSE_MACAU_TIMOR(true, false), NOMINATION_BY_RECLASSIFICATION(
-	    false, false), REQUESTED_FOR_EXTERNAL_ENTITY(false, false)
-
-    ;
+	    false, false), REQUESTED_FOR_EXTERNAL_ENTITY(false, false), MOBILITY_FOR_EXTERNAL_ENTITY(true, false);
 
     private boolean isServiceExemption;
 
