@@ -7444,6 +7444,10 @@ class phd.permissions.PhdPermission extends DomainObject {
     Group members;
 }
 
+class phd.PhdConfigurationIndividualProgramProcess extends DomainObject {
+	Boolean generateAlert;
+}
+
 /* End of Phd Module */
 
 class PendingRequest extends DomainObject{
@@ -8118,6 +8122,18 @@ relation PhdAcademicServiceRequestPhdIndividualProgramProcess {
 relation PhdStudentReingressionRequestDocumentPhdStudentReingressionRequest {
 	phd.serviceRequests.PhdStudentReingressionRequest playsRole phdStudentReingressionRequest;
 	phd.serviceRequests.PhdStudentReingressionRequestDocument playsRole phdStudentReingressionRequestDocument;
+}
+
+relation RootDomainObjectPhdConfigurationIndividualProgramProcess {
+	RootDomainObject playsRole rootDomainObject;
+	phd.PhdConfigurationIndividualProgramProcess playsRole phdConfigurationIndividualProgramProcess {
+		multiplicity *;
+	}
+}
+
+relation PhdIndividualProgramProcessPhdConfigurationIndividualProgramProcess {
+	phd.PhdIndividualProgramProcess playsRole phdIndividualProgramProcess;
+	phd.PhdConfigurationIndividualProgramProcess playsRole phdConfigurationIndividualProgramProcess;
 }
 
 /* End of Phd Module */

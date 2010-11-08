@@ -60,11 +60,25 @@ abstract public class CommonPhdCandidacyDA extends PhdProcessDA {
 	final PhdProgramDocumentUploadBean bean = new PhdProgramDocumentUploadBean();
 	bean.setType(PhdIndividualProgramDocumentType.CANDIDACY_REVIEW);
 
-	final PhdProgramCandidacyProcessStateBean stateBean = new PhdProgramCandidacyProcessStateBean();
+	final PhdProgramCandidacyProcessStateBean stateBean = new PhdProgramCandidacyProcessStateBean(getProcess(request)
+		.getIndividualProgramProcess());
 	stateBean.setState(PhdProgramCandidacyProcessState.WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION);
 
 	request.setAttribute("documentToUpload", bean);
 	request.setAttribute("stateBean", stateBean);
+
+	return mapping.findForward("manageCandidacyReview");
+    }
+
+    public ActionForward manageCandidacyReviewPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final PhdProgramDocumentUploadBean bean = new PhdProgramDocumentUploadBean();
+	bean.setType(PhdIndividualProgramDocumentType.CANDIDACY_REVIEW);
+
+	request.setAttribute("documentToUpload", bean);
+	request.setAttribute("stateBean", getRenderedObject("stateBean"));
+
+	RenderUtils.invalidateViewState();
 
 	return mapping.findForward("manageCandidacyReview");
     }

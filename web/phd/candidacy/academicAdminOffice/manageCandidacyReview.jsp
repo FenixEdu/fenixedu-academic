@@ -134,12 +134,31 @@
 	  	<fr:edit id="documentToUpload" name="documentToUpload" visible="false" />
 	
 		<strong><bean:message key="label.phd.request.ratify.candidacy.question" bundle="PHD_RESOURCES" /></strong>
-		<fr:edit id="stateBean" name="stateBean" schema="PhdProgramCandidacyProcessStateBean.edit">
+		
+		<fr:edit id="stateBean" name="stateBean" visible="false" />
+	  	<fr:edit id="stateBean-generateAlert" name="stateBean">
+	  		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessStateBean">
+	  			<fr:slot name="generateAlert" layout="radio-postback">
+	  				<fr:property name="destination" value="postback" />
+	  			</fr:slot>
+	  		</fr:schema>
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 				<fr:property name="columnClasses" value=",,tdclear tderror1" />
 			</fr:layout>
-		</fr:edit>
+			
+			<fr:destination name="postback" path="<%= "/phdProgramCandidacyProcess.do?method=manageCandidacyReviewPostback&amp;processId=" + processId.toString() %>"/>
+	  	</fr:edit>
+
+		<logic:equal name="stateBean" property="generateAlert" value="true">
+			<fr:edit id="stateBean" name="stateBean" schema="PhdProgramCandidacyProcessStateBean.edit">
+				<fr:layout name="tabular-editable">
+					<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
+					<fr:property name="columnClasses" value=",,tdclear tderror1" />
+				</fr:layout>
+			</fr:edit>
+			
+		</logic:equal>
 		<p>
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.phd.request.ratify.candidacy"/></html:submit>
 		</p>

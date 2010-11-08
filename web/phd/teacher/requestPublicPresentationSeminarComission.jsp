@@ -41,23 +41,21 @@
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 
 <fr:form action="<%="/phdIndividualProgramProcess.do?processId=" + processId.toString() %>">
-
-<input type="hidden" name="method" value="" />
-
-<fr:edit id="requestPublicPresentationSeminarComissionBean"
-	name="requestPublicPresentationSeminarComissionBean"
-	schema="PublicPresentationSeminarProcessBean.edit.remarks">
-
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
-		<fr:property name="columnClasses" value=",,tdclear tderror1" />
-		<fr:destination name="invalid" path="<%="/phdIndividualProgramProcess.do?method=prepareRequestPublicPresentationSeminarComissionInvalid&processId=" + processId.toString() %>" />
-	</fr:layout>
-</fr:edit>
-
-<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='requestPublicPresentationSeminarComission';"><bean:message bundle="PHD_RESOURCES" key="label.submit"/></html:submit>
-<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='viewProcess';"><bean:message bundle="PHD_RESOURCES" key="label.cancel"/></html:cancel>
-
+	<input type="hidden" name="method" value="" />
+	
+	<fr:edit id="requestPublicPresentationSeminarComissionBean"
+		name="requestPublicPresentationSeminarComissionBean"
+		schema="PublicPresentationSeminarProcessBean.edit.remarks">
+	
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
+			<fr:property name="columnClasses" value=",,tdclear tderror1" />
+			<fr:destination name="invalid" path="<%="/phdIndividualProgramProcess.do?method=prepareRequestPublicPresentationSeminarComissionInvalid&processId=" + processId.toString() %>" />
+		</fr:layout>
+	</fr:edit>
+	
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='requestPublicPresentationSeminarComission';"><bean:message bundle="PHD_RESOURCES" key="label.submit"/></html:submit>
+	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='viewProcess';"><bean:message bundle="PHD_RESOURCES" key="label.cancel"/></html:cancel>
 </fr:form>
 
 <%--  ### End of Operation Area  ### --%>

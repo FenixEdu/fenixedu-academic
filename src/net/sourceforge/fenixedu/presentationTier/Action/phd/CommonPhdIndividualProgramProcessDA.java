@@ -372,17 +372,26 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
     public ActionForward prepareRequestPublicPresentationSeminarComission(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	request.setAttribute("requestPublicPresentationSeminarComissionBean", new PublicPresentationSeminarProcessBean());
+	PhdIndividualProgramProcess process = getProcess(request);
+	request.setAttribute("requestPublicPresentationSeminarComissionBean", new PublicPresentationSeminarProcessBean(process));
 
 	return mapping.findForward("requestPublicPresentationSeminarComission");
 
     }
 
+    public ActionForward prepareRequestPublicPresentationSeminarComissionPostback(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("requestPublicPresentationSeminarComissionBean",
+		getRenderedObject("requestPublicPresentationSeminarComissionBean"));
+
+	RenderUtils.invalidateViewState();
+	return mapping.findForward("requestPublicPresentationSeminarComission");
+    }
+
     public ActionForward prepareRequestPublicPresentationSeminarComissionInvalid(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
-
 	request.setAttribute("requestPublicPresentationSeminarComission",
-		getRenderedObject("requestPublicPresentationComissionBean"));
+		getRenderedObject("requestPublicPresentationSeminarComissionBean"));
 
 	return mapping.findForward("requestPublicPresentationSeminarComission");
     }

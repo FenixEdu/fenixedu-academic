@@ -40,23 +40,40 @@
 
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 
-<fr:form action="<%="/phdIndividualProgramProcess.do?processId=" + processId.toString() %>">
+<fr:form action="<%="/phdIndividualProgramProcess.do?method=requestPublicPresentationSeminarComission&processId=" + processId.toString() %>">
+	<fr:edit id="requestPublicPresentationSeminarComissionBean" name="requestPublicPresentationSeminarComissionBean" visible="false" />
+	
+	<fr:edit id="requestPublicPresentationSeminarComissionBean-generateAlert" name="requestPublicPresentationSeminarComissionBean">
+		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean">
+			<fr:slot name="generateAlert" layout="radio-postback">
+				<fr:property name="destination" value="postback"/>
+			</fr:slot> 
+		</fr:schema>
 
-<input type="hidden" name="method" value="" />
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
+			<fr:property name="columnClasses" value=",,tdclear tderror1" />
+		</fr:layout>
+		
+		<fr:destination name="cancel" path="<%= "/phdIndividualProgramProcess.do?method=viewProcess&processId=" + processId.toString() %>" />
+		<fr:destination name="postback" path="<%= "/phdIndividualProgramProcess.do?method=prepareRequestPublicPresentationSeminarComissionPostback&processId=" + processId.toString() %>" />
+		<fr:destination name="invalid" path="<%= "/phdIndividualProgramProcess.do?method=prepareRequestPublicPresentationSeminarComissionInvalid&processId=" + processId.toString() %>" />
+	</fr:edit>
+	
+	<logic:equal name="requestPublicPresentationSeminarComissionBean" property="generateAlert" value="true">
+		<fr:edit id="requestPublicPresentationSeminarComissionBean-remarks"
+			name="requestPublicPresentationSeminarComissionBean"
+			schema="PublicPresentationSeminarProcessBean.edit.remarks">
+		
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
+				<fr:property name="columnClasses" value=",,tdclear tderror1" />
+			</fr:layout>
+		</fr:edit>
+	</logic:equal>
 
-<fr:edit id="requestPublicPresentationSeminarComissionBean"
-	name="requestPublicPresentationSeminarComissionBean"
-	schema="PublicPresentationSeminarProcessBean.edit.remarks">
-
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
-		<fr:property name="columnClasses" value=",,tdclear tderror1" />
-		<fr:destination name="invalid" path="<%="/phdIndividualProgramProcess.do?method=prepareRequestPublicPresentationSeminarComissionInvalid&processId=" + processId.toString() %>" />
-	</fr:layout>
-</fr:edit>
-
-<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='requestPublicPresentationSeminarComission';"><bean:message bundle="PHD_RESOURCES" key="label.submit"/></html:submit>
-<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='viewProcess';"><bean:message bundle="PHD_RESOURCES" key="label.cancel"/></html:cancel>
+<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.submit"/></html:submit>
+<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel"><bean:message bundle="PHD_RESOURCES" key="label.cancel"/></html:cancel>
 
 </fr:form>
 

@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.QualificationBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.ManageEnrolmentsBean;
+import net.sourceforge.fenixedu.domain.phd.PhdConfigurationIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
@@ -45,6 +46,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddQualif
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddStudyPlan;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddStudyPlanEntry;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.CancelPhdProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.ConfigurePhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteAssistantGuiding;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteGuiding;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteJobInformation;
@@ -138,7 +140,9 @@ import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
 
 	@Forward(name = "editEnrolmentPeriod", path = "/phd/academicAdminOffice/periods/editEnrolmentPeriod.jsp"),
 
-	@Forward(name = "editWhenStartedStudies", path = "/phd/academicAdminOffice/editWhenStartedStudies.jsp")
+	@Forward(name = "editWhenStartedStudies", path = "/phd/academicAdminOffice/editWhenStartedStudies.jsp"),
+
+	@Forward(name = "managePhdIndividualProcessConfiguration", path = "/phd/academicAdminOffice/configuration/managePhdIndividualProcessConfiguration.jsp")
 
 })
 public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramProcessDA {
@@ -1052,4 +1056,31 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
     }
 
     // End of Print school registration declaration
+
+    public ActionForward preparePhdConfigurationManagement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final PhdIndividualProgramProcess process = getProcess(request);
+	PhdConfigurationIndividualProgramProcessBean bean = new PhdConfigurationIndividualProgramProcessBean(process);
+	request.setAttribute("phdConfigurationIndividualProgramProcessBean", bean);
+	return mapping.findForward("managePhdIndividualProcessConfiguration");
+    }
+
+    public ActionForward savePhdConfiguration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final PhdIndividualProgramProcess process = getProcess(request);
+	PhdConfigurationIndividualProgramProcessBean bean = (PhdConfigurationIndividualProgramProcessBean) getObjectFromViewState("phdConfigurationIndividualProgramProcessBean");
+
+	ExecuteProcessActivity.run(process, ConfigurePhdIndividualProgramProcess.class, bean);
+	return viewProcess(mapping, form, request, response);
+    }
+
+    public ActionForward savePhdConfigurationInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final PhdIndividualProgramProcess process = getProcess(request);
+	PhdConfigurationIndividualProgramProcessBean bean = new PhdConfigurationIndividualProgramProcessBean(process);
+
+	request.setAttribute("phdConfigurationIndividualProgramProcessBean", bean);
+	return mapping.findForward("managePhdIndividualProcessConfiguration");
+    }
+
 }

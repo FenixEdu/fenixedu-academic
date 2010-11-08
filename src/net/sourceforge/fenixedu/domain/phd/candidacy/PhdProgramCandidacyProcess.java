@@ -202,8 +202,11 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	    process.createState(PhdProgramCandidacyProcessState.WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION,
 		    userView.getPerson(), bean.getRemarks());
 
-	    AlertService.alertAcademicOffice(process.getIndividualProgramProcess(), getCandidacyProcessManagementPermission(),
-		    "message.phd.alert.candidacy.request.ratify.subject", "message.phd.alert.candidacy.request.ratify.body");
+	    if (bean.getGenerateAlert()) {
+		AlertService.alertAcademicOffice(process.getIndividualProgramProcess(),
+			getCandidacyProcessManagementPermission(), "message.phd.alert.candidacy.request.ratify.subject",
+			"message.phd.alert.candidacy.request.ratify.body");
+	    }
 
 	    return process;
 	}
@@ -281,7 +284,9 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	    process.createState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION, userView.getPerson(), bean
 		    .getRemarks());
 
-	    AlertService.alertCoordinators(mainProcess, subject(), body(mainProcess));
+	    if (bean.getGenerateAlert()) {
+		AlertService.alertCoordinators(mainProcess, subject(), body(mainProcess));
+	    }
 
 	    return process;
 	}

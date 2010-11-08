@@ -50,6 +50,7 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessB
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.phd.candidacy.RegistrationFormalizationBean;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess;
+import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessStateType;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
@@ -144,6 +145,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	activities.add(new ActivatePhdProgramProcessInCandidacyState());
 	activities.add(new ActivatePhdProgramProcessInWorkDevelopmentState());
 	activities.add(new ActivatePhdProgramProcessInThesisDiscussionState());
+
+	activities.add(new ConfigurePhdIndividualProgramProcess());
     }
 
     @StartActivity
@@ -764,9 +767,12 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
 	    publicPresentationSeminarProcess.setIndividualProgramProcess(individualProcess);
 
-	    AlertService.alertCoordinators(individualProcess,
-		    "message.phd.alert.public.presentation.seminar.comission.definition.subject",
-		    "message.phd.alert.public.presentation.seminar.comission.definition.body");
+	    if (((PublicPresentationSeminarProcessBean) object).getGenerateAlert()) {
+		AlertService.alertCoordinators(individualProcess,
+			"message.phd.alert.public.presentation.seminar.comission.definition.subject",
+			"message.phd.alert.public.presentation.seminar.comission.definition.body");
+
+	    }
 
 	    return individualProcess;
 	}
@@ -1105,6 +1111,31 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	}
     }
 
+    static public class ConfigurePhdIndividualProgramProcess extends PhdActivity {
+
+	@Override
+	protected void processPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    // Turn off any preconditions
+	}
+
+	@Override
+	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
+		Object object) {
+	    PhdConfigurationIndividualProgramProcessBean bean = (PhdConfigurationIndividualProgramProcessBean) object;
+
+	    process.getPhdConfigurationIndividualProgramProcess().configure(bean);
+	    return process;
+	}
+
+    }
+
     private PhdIndividualProgramProcess(final PhdProgramCandidacyProcessBean bean, final Person person) {
 	super();
 
@@ -1122,6 +1153,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	setThesisTitle(bean.getThesisTitle());
 
 	setPhdIndividualProcessNumber(PhdIndividualProgramProcessNumber.generateNextForYear(bean.getCandidacyDate().getYear()));
+	setPhdConfigurationIndividualProgramProcess(PhdConfigurationIndividualProgramProcess.createDefault());
 
 	updatePhdParticipantsWithCoordinators();
     }

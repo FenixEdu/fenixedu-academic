@@ -238,8 +238,7 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 	try {
 	    candidacyInformationBean.updateCandidacyInformation();
 	    addSuccessMessage(request, "message.phd.candidacy.information.edit.with.success");
-	    
-	    
+
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
 	    return prepareEditCandidacyInformationInvalid(mapping, form, request, response);
@@ -309,9 +308,19 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 
     public ActionForward prepareRequestCandidacyReview(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	final PhdProgramCandidacyProcessStateBean bean = new PhdProgramCandidacyProcessStateBean();
+	final PhdProgramCandidacyProcess process = getProcess(request);
+	final PhdProgramCandidacyProcessStateBean bean = new PhdProgramCandidacyProcessStateBean(process
+		.getIndividualProgramProcess());
 	bean.setState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION);
 	request.setAttribute("stateBean", bean);
+	return mapping.findForward("requestCandidacyReview");
+    }
+
+    public ActionForward prepareRequestCandidacyReviewPostback(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("stateBean", getRenderedObject("stateBean"));
+
+	RenderUtils.invalidateViewState();
 	return mapping.findForward("requestCandidacyReview");
     }
 

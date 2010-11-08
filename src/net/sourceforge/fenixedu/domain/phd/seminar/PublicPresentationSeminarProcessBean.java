@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.phd.seminar;
 
 import java.io.Serializable;
 
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 
 import org.joda.time.LocalDate;
@@ -16,8 +17,15 @@ public class PublicPresentationSeminarProcessBean implements Serializable {
 
     private LocalDate presentationDate;
 
+    private Boolean generateAlert;
+
     public PublicPresentationSeminarProcessBean() {
 	this.document = new PhdProgramDocumentUploadBean();
+    }
+
+    public PublicPresentationSeminarProcessBean(final PhdIndividualProgramProcess process) {
+	this();
+	setGenerateAlert(process.getPhdConfigurationIndividualProgramProcess().getGenerateAlert());
     }
 
     public String getRemarks() {
@@ -44,4 +52,11 @@ public class PublicPresentationSeminarProcessBean implements Serializable {
 	this.presentationDate = presentationDate;
     }
 
+    public Boolean getGenerateAlert() {
+	return generateAlert;
+    }
+
+    public void setGenerateAlert(Boolean generateAlert) {
+	this.generateAlert = generateAlert;
+    }
 }

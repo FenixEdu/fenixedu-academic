@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
+import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.CommonPhdIndividualProgramProcessDA;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdCandidacyPredicateContainer;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdInactivePredicateContainer;
@@ -105,5 +106,17 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
     @Override
     protected List<PredicateContainer<?>> getCandidacyCategory() {
 	return Arrays.asList(CANDIDACY_CATEGORY);
+    }
+
+    @Override
+    public ActionForward prepareRequestPublicPresentationSeminarComission(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+	ActionForward forward = super.prepareRequestPublicPresentationSeminarComission(mapping, form, request, response);
+
+	PublicPresentationSeminarProcessBean bean = (PublicPresentationSeminarProcessBean) request
+		.getAttribute("requestPublicPresentationSeminarComissionBean");
+	bean.setGenerateAlert(true);
+
+	return forward;
     }
 }

@@ -10,7 +10,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RequestPublicPresentationSeminarComission"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RequestPublicThesisPresentation"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.ExemptPublicPresentationSeminarComission"%>
-
+<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.ConfigurePhdIndividualProgramProcess" %>
 
 <%-- ### Title #### --%>
 <em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
@@ -167,6 +167,16 @@
 					</html:link>
 				</li>
 			
+			</phd:activityAvailable>
+			
+			<br/>
+			
+			<phd:activityAvailable process="<%= process %>" activity="<%= ConfigurePhdIndividualProgramProcess.class %>">
+				<li>
+					<html:link action="/phdIndividualProgramProcess.do?method=preparePhdConfigurationManagement" paramId="processId" paramName="process" paramProperty="externalId">
+						<bean:message bundle="PHD_RESOURCES" key="label.phd.manage.configuration" />
+					</html:link>
+				</li>
 			</phd:activityAvailable>
 		
 		</ul>
