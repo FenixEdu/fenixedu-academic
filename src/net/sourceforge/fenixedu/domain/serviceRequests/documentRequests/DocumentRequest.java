@@ -21,7 +21,12 @@ import org.joda.time.DateTime;
 public abstract class DocumentRequest extends DocumentRequest_Base {
     public static Comparator<DocumentRequest> COMPARATOR_BY_REGISTRY_NUMBER = new Comparator<DocumentRequest>() {
 	public int compare(DocumentRequest o1, DocumentRequest o2) {
-	    return RegistryCode.COMPARATOR_BY_CODE.compare(o1.getRegistryCode(), o2.getRegistryCode());
+	    int codeCompare = RegistryCode.COMPARATOR_BY_CODE.compare(o1.getRegistryCode(), o2.getRegistryCode());
+	    if (codeCompare != 0) {
+		return codeCompare;
+	    } else {
+		return o1.getExternalId().compareTo(o2.getExternalId());
+	    }
 	}
     };
 
