@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeOfficialPublication;
@@ -20,7 +19,6 @@ import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.EctsGraduationGradeConversionTable;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -42,7 +40,6 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class DiplomaSupplement extends AdministrativeOfficeDocument {
 
@@ -91,11 +88,12 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 	addParameter("registrationNumber", registration.getNumber());
 
 	// Group 2
-	String degreeDesignation = getDegreeDesignation(conclusion, getLocale());
+	String degreeDesignation = getDegreeDesignation(getRequestedCycle(), getLocale());
 
 	String graduateTitleNative = degreeType.getGraduateTitle(getRequestedCycle(), Language.getLocale());
 
-	addParameter("graduateTitle", getDegreeDesignation(conclusion, Language.getLocale()) + ", " + graduateTitleNative);
+	addParameter("graduateTitle", getDegreeDesignation(getRequestedCycle(), Language.getLocale()) + ", "
+		+ graduateTitleNative);
 	addParameter("prevailingScientificArea", degreeName);
 	addParameter("universityName", institutionsUniversityUnit.getName());
 	addParameter(
@@ -182,26 +180,11 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 	return ((DiplomaSupplementRequest) getDocumentRequest()).getRequestedCycle();
     }
 
-    private String getDegreeDesignation(ExecutionYear conclusion, Locale locale) {
-	CycleCourseGroup cycle = getRegistration().getLastStudentCurricularPlan().getCycleCourseGroup(getRequestedCycle());
-	String degreeName = getRegistration().getDegree().getFilteredName(conclusion, locale);
-	StringBuilder designation = new StringBuilder();
-	designation.append(ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(
-		getRequestedCycle().getQualifiedName() + GRADUATE_LEVEL_SUFFIX));
-	designation.append(SINGLE_SPACE);
-	designation.append(ResourceBundle.getBundle("resources.AcademicAdminOffice", locale).getString("label.in"));
-	final MultiLanguageString mls = cycle.getGraduateTitleSuffix();
-	final String suffix = mls == null ? null : mls.getContent(Language.valueOf(locale.getLanguage()));
-	if (!StringUtils.isEmpty(suffix) && !degreeName.contains(suffix.trim())) {
-	    designation.append(SINGLE_SPACE);
-	    designation.append(suffix);
-	    designation.append(SINGLE_SPACE);
-	    designation.append("-");
-	}
-
-	designation.append(SINGLE_SPACE);
-	designation.append(degreeName);
-	return designation.toString();
+    private String getDegreeDesignation(CycleType cycle, Locale locale) {
+	String title = getRegistration().getGraduateTitle(cycle, locale);
+	title = title.replace("Licenciado", "Licanciatura");
+	title = title.replace("Graduated", "Graduation");
+	return title;
     }
 
     private void addProgrammeRequirements(Registration registration, ExecutionYear conclusion, String graduateDegree) {
