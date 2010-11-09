@@ -3,14 +3,19 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationDataByExecutionYear.EnrolmentModelFactoryEditor;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDomainObjectProvider;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -31,20 +36,52 @@ public class ManageEnrolmentModelDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-
-	EnrolmentModelFactoryEditor enrolmentModelFactoryEditor = null;
-
-	if (RenderUtils.getViewState() != null) {
-	    executeFactoryMethod();
-	    enrolmentModelFactoryEditor = (EnrolmentModelFactoryEditor) RenderUtils.getViewState().getMetaObject().getObject();
-	} else {
-	    Registration registration = rootDomainObject.readRegistrationByOID(getRequestParameterAsInteger(request,
-		    "registrationID"));
-	    enrolmentModelFactoryEditor = new EnrolmentModelFactoryEditor(registration);
-	}
+	Registration registration = rootDomainObject
+		.readRegistrationByOID(getRequestParameterAsInteger(request, "registrationID"));
+	EnrolmentModelFactoryEditor enrolmentModelFactoryEditor = new EnrolmentModelFactoryEditor(registration);
 
 	request.setAttribute("enrolmentModelBean", enrolmentModelFactoryEditor);
 	return mapping.findForward("showManageEnrolmentModel");
     }
 
+    public ActionForward setEnrolmentModel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	EnrolmentModelFactoryEditor enrolmentModelFactoryEditor = null;
+
+	if (RenderUtils.getViewState() != null) {
+	    executeFactoryMethod();
+	    enrolmentModelFactoryEditor = (EnrolmentModelFactoryEditor) RenderUtils.getViewState().getMetaObject().getObject();
+	}
+
+	return redirect("/student.do?method=visualizeRegistration&registrationID="
+		+ enrolmentModelFactoryEditor.getRegistration().getIdInternal(), request);
+    }
+
+    public ActionForward postback(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+	EnrolmentModelFactoryEditor enrolmentModelFactoryEditor = (EnrolmentModelFactoryEditor) getObjectFromViewState("enrolmentModelBean");
+	RenderUtils.invalidateViewState();
+
+	enrolmentModelFactoryEditor.setEnrolmentModel(enrolmentModelFactoryEditor.getRegistration()
+		.getEnrolmentModelForExecutionYear(enrolmentModelFactoryEditor.getExecutionYear()));
+
+	request.setAttribute("enrolmentModelBean", enrolmentModelFactoryEditor);
+	return mapping.findForward("showManageEnrolmentModel");
+    }
+
+    public static class ExecutionYearForRegistrationProvider extends AbstractDomainObjectProvider {
+
+	@Override
+	public Object provide(Object source, Object currentValue) {
+	    ((EnrolmentModelFactoryEditor) source).getRegistration().getStartExecutionYear();
+
+	    List<ExecutionYear> executionYearList = new ArrayList<ExecutionYear>();
+	    ExecutionYear iterator = ((EnrolmentModelFactoryEditor) source).getRegistration().getStartExecutionYear();
+	    while (ExecutionYear.readCurrentExecutionYear().getNextExecutionYear() != iterator) {
+		executionYearList.add(iterator);
+		iterator = iterator.getNextExecutionYear();
+	    }
+
+	    return executionYearList;
+	}
+    }
 }

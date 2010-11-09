@@ -612,7 +612,11 @@
 
 <schema name="student.manageEnrolmentModel" 
 	type="net.sourceforge.fenixedu.dataTransferObject.student.ManageEnrolmentModelBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="executionYear.year" key="label.executionYear" read-only="true" />
+	<slot name="executionYear" key="label.executionYear" layout="menu-select-postback">
+		<property name="destination" value="postback" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.ManageEnrolmentModelDA$ExecutionYearForRegistrationProvider" />
+		<property name="format" value="${year}" />
+	</slot>
 	<slot name="enrolmentModel" key="label.enrolmentModel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 </schema>
 
