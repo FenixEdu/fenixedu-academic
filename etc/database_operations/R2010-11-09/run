@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add Phd Individual Process Configuration Table" addPhdConfigurationIndividualProgramProcess.sql
