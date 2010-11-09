@@ -82,6 +82,8 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 			"DegreeFinalizationCertificateRequest.requested.degree.type.is.not.allowed.for.given.student.curricular.plan");
 	    }
 	    super.setRequestedCycle(bean.getRequestedCycle());
+	} else {
+	    super.setRequestedCycle(getRegistration().getDegree().getDegreeType().getCycleType());
 	}
 
 	checkSpecificConditions();
@@ -166,9 +168,8 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 	final DegreeType degreeType = getDegreeType();
 	final CycleType requestedCycle = getRequestedCycle();
 
-	return getDescription(getAcademicServiceRequestType(),
-		getDocumentRequestType().getQualifiedName() + "." + degreeType.name()
-			+ (degreeType.isComposite() ? "." + requestedCycle.name() : ""));
+	return getDescription(getAcademicServiceRequestType(), getDocumentRequestType().getQualifiedName() + "."
+		+ degreeType.name() + (degreeType.isComposite() ? "." + requestedCycle.name() : ""));
     }
 
     @Override
