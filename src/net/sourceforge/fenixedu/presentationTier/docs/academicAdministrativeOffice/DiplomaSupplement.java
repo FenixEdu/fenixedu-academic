@@ -182,7 +182,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 
     private String getDegreeDesignation(CycleType cycle, Locale locale) {
 	String title = getRegistration().getGraduateTitle(cycle, locale);
-	title = title.replace("Licenciado", "Licanciatura");
+	title = title.replace("Licenciado", "Licenciatura");
 	title = title.replace("Graduated", "Graduation");
 	return title;
     }
