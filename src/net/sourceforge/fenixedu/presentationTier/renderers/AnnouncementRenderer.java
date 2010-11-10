@@ -193,7 +193,7 @@ public class AnnouncementRenderer extends OutputRenderer {
 	    StringBuilder buffer = new StringBuilder();
 	    if (isCurrentAnnouncentAnEvent()) {
 		buffer.append(RenderUtils.getFormattedProperties(getDateFormat(), announcement.getReferedSubjectBegin()));
-		if (announcement.getReferedSubjectEnd() != null) {
+		if (announcement.getReferedSubjectBegin() != null && announcement.getReferedSubjectEnd() != null) {
 		    String fromLabel = RenderUtils.getResourceString(getBundle(), getFromLabel());
 		    buffer.insert(0, fromLabel);
 		    buffer.insert(fromLabel.length(), " ");
