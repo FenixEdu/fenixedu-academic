@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.alert.PublicPhdMissingCandidacyAlert;
 import net.sourceforge.fenixedu.util.StringUtils;
+import net.sourceforge.fenixedu.util.phd.PhdProperties;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class PhdProgramPublicCandidacyHashCode extends PhdProgramPublicCandidacyHashCode_Base {
@@ -63,6 +64,10 @@ public class PhdProgramPublicCandidacyHashCode extends PhdProgramPublicCandidacy
 
     public Person getPerson() {
 	return getPhdProgramCandidacyProcess().getPerson();
+    }
+
+    public String getAccessLink() {
+	return PhdProperties.getPublicCandidacyAccessLink() + getValue();
     }
 
 }
