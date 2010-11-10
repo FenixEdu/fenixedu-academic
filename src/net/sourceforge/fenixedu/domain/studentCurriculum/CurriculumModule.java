@@ -54,6 +54,14 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 	}
     };
 
+    static final public Comparator<CurriculumModule> COMPARATOR_BY_CREATION_DATE = new Comparator<CurriculumModule>() {
+
+	@Override
+	public int compare(CurriculumModule o1, CurriculumModule o2) {
+	    return o1.getCreationDateDateTime().compareTo(o2.getCreationDateDateTime());
+	}
+    };
+
     public CurriculumModule() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
@@ -83,11 +91,11 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
     public boolean isCycleCurriculumGroup() {
 	return false;
     }
-    
+
     public BranchCurriculumGroup getParentBranchCurriculumGroup() {
 	return hasCurriculumGroup() ? getCurriculumGroup().getParentBranchCurriculumGroup() : null;
     }
-    
+
     public boolean isBranchCurriculumGroup() {
 	return false;
     }
@@ -154,8 +162,8 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 	}
 	return multiLanguageString;
     }
-    
-    public MultiLanguageString getPresentationName()  {
+
+    public MultiLanguageString getPresentationName() {
 	return getName();
     }
 
@@ -330,7 +338,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
     abstract public Dismissal getDismissal(final CurricularCourse curricularCourse);
 
     abstract public Collection<Enrolment> getSpecialSeasonEnrolments(ExecutionYear executionYear);
-    
+
     abstract public Collection<Enrolment> getSpecialSeasonEnrolments(ExecutionSemester executionSemester);
 
     abstract public void collectDismissals(final List<Dismissal> result);

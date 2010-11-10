@@ -512,6 +512,10 @@ public abstract class Event extends Event_Base {
 	return getTotalAmountToPay(new DateTime());
     }
 
+    public Money getOriginalAmountToPay() {
+	return getTotalAmountToPay(getWhenOccured().plusSeconds(1));
+    }
+
     public List<EntryDTO> calculateEntries() {
 	return calculateEntries(new DateTime());
     }
