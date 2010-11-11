@@ -83,7 +83,9 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 	    }
 	    super.setRequestedCycle(bean.getRequestedCycle());
 	} else {
-	    super.setRequestedCycle(getRegistration().getDegree().getDegreeType().getCycleType());
+	    if (bean.getRegistration().getDegreeType().hasExactlyOneCycleType()) {
+		super.setRequestedCycle(getRegistration().getDegree().getDegreeType().getCycleType());
+	    }
 	}
 
 	checkSpecificConditions();
@@ -168,8 +170,9 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 	final DegreeType degreeType = getDegreeType();
 	final CycleType requestedCycle = getRequestedCycle();
 
-	return getDescription(getAcademicServiceRequestType(), getDocumentRequestType().getQualifiedName() + "."
-		+ degreeType.name() + (degreeType.isComposite() ? "." + requestedCycle.name() : ""));
+	return getDescription(getAcademicServiceRequestType(),
+		getDocumentRequestType().getQualifiedName() + "." + degreeType.name()
+			+ (degreeType.isComposite() ? "." + requestedCycle.name() : ""));
     }
 
     @Override

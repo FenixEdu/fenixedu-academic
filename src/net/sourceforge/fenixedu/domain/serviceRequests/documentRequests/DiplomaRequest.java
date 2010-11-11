@@ -44,6 +44,10 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 			"DiplomaRequest.diploma.requested.degree.type.is.not.allowed.for.given.student.curricular.plan");
 	    }
 	    super.setRequestedCycle(bean.getRequestedCycle());
+	} else {
+	    if (bean.getRegistration().getDegreeType().hasExactlyOneCycleType()) {
+		super.setRequestedCycle(getRegistration().getDegree().getDegreeType().getCycleType());
+	    }
 	}
 
 	if (DocumentRequestType.REGISTRY_DIPLOMA_REQUEST.getAdministrativeOfficeTypes().contains(AdministrativeOfficeType.DEGREE)

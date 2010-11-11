@@ -81,8 +81,10 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base {
     @Override
     public EventType getEventType() {
 	switch (getDegreeType()) {
+	case DEGREE:
 	case BOLONHA_DEGREE:
 	    return EventType.BOLONHA_DEGREE_REGISTRY_DIPLOMA_REQUEST;
+	case MASTER_DEGREE:
 	case BOLONHA_MASTER_DEGREE:
 	    return EventType.BOLONHA_MASTER_DEGREE_REGISTRY_DIPLOMA_REQUEST;
 	case BOLONHA_INTEGRATED_MASTER_DEGREE:
