@@ -848,7 +848,7 @@
 	<slot name="studentCurricularPlan.registration.startExecutionYear.year" key="label.entryYear" />
 	<slot name="studentCurricularPlan.registration.degree.sigla" key="label.degreeCurricularPlan.degree.sigla" />
 	<slot name="studentCurricularPlan.person" key="label.email" layout="link">
-		<property name="linkFormat" value="mailto:${email}"/>
+		<property name="linkFormat" value="mailto:${institutionalOrDefaultEmailAddressValue}"/>
 		<property name="subLayout" value="values" />
 		<property name="subSchema" value="teacher.person.email" />
 	</slot>
@@ -963,7 +963,7 @@
 	<slot name="degree.name" key="label.tutorship.lowPerformance.degreeName" bundle="PEDAGOGICAL_COUNCIL" />
 	<slot name="degree.degreeType" key="label.tutorship.lowPerformance.degreeType"  bundle="PEDAGOGICAL_COUNCIL" />
 	<slot name="sumEcts" key="label.tutorship.lowPerformance.sumEcts" bundle="PEDAGOGICAL_COUNCIL" />
-	<slot name="email" key="label.tutorship.lowPerformance.email"  bundle="PEDAGOGICAL_COUNCIL" />
+	<slot name="institutionalOrDefaultEmailAddressValue" key="label.tutorship.lowPerformance.email"  bundle="PEDAGOGICAL_COUNCIL" />
 	<slot name="regime" key="label.tutorship.lowPerformance.regime"  bundle="PEDAGOGICAL_COUNCIL" />
 	<slot name="numberOfEntriesStudentInSecretary" key="label.tutorship.lowPerformance.numberOfEntriesStudentInSecretary"  bundle="PEDAGOGICAL_COUNCIL" />
 	<slot name="registrationStart" key="label.tutorship.lowPerformance.registrationStart"  bundle="PEDAGOGICAL_COUNCIL" />

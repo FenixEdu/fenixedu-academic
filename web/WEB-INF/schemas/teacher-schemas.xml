@@ -108,14 +108,14 @@
 	<slot name="studentCurricularPlan.person.phone" key="label.phone" />
 	<slot name="studentCurricularPlan.registration.candidacyInformationBean.dislocatedFromPermanentResidence" key="label.dislocatedFromPermanentResidence" />
 	<slot name="studentCurricularPlan.person" key="label.email" layout="link">
-		<property name="linkFormat" value="mailto:${email}"/>
+		<property name="linkFormat" value="mailto:${institutionalOrDefaultEmailAddressValue}"/>
 		<property name="subLayout" value="values" />
 		<property name="subSchema" value="teacher.person.email" />
 	</slot>
 </schema>
 
 <schema name="teacher.person.email" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.Person">
-	<slot name="email" />
+	<slot name="institutionalOrDefaultEmailAddressValue" />
 </schema>
 
 <schema name="teacher.student.tutorship.log" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.TutorshipLog">
@@ -169,7 +169,7 @@
 		<slot name="studentCurricularPlan.registration.ingressionYear" key="label.entryYear">
 			<property name="format" value="${year}"/>
 		</slot> 
-		<slot name="studentCurricularPlan.person.email" key="label.email"/>
+		<slot name="studentCurricularPlan.person.institutionalOrDefaultEmailAddressValue" key="label.email"/>
 </schema>
 
 <schema name="teacher.thesis.table" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ThesisDocumentConfirmationDA$ThesisPresentationWrapper" bundle="SCIENTIFIC_COUNCIL_RESOURCES">

@@ -32,9 +32,9 @@
 			</tr><tr>
 				<th><bean:message bundle="APPLICATION_RESOURCES" key="label.email" /></th>
 				<td>
-					<bean:define id="mail" name="student" property="person.email"/>
+					<bean:define id="mail" name="student" property="person.institutionalOrDefaultEmailAddressValue"/>
 					<html:link href="<%= "mailto:"+ mail %>">
-						<bean:write name="student" property="person.email"/>
+						<bean:write name="student" property="person.institutionalOrDefaultEmailAddressValue"/>
 					</html:link>
 				</td>
 			</tr>
