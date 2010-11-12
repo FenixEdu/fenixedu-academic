@@ -86,11 +86,9 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 	    process.createState(PublicPresentationSeminarProcessStateType.COMMISSION_WAITING_FOR_VALIDATION,
 		    userView.getPerson(), bean.getRemarks());
 
-	    if (bean.getGenerateAlert()) {
-		AlertService.alertAcademicOffice(process.getIndividualProgramProcess(), getPublicPresentationSeminarPermission(),
-			"message.phd.alert.public.presentation.seminar.comission.validation.subject",
-			"message.phd.alert.public.presentation.seminar.comission.validation.body");
-	    }
+	    AlertService.alertAcademicOffice(process.getIndividualProgramProcess(), getPublicPresentationSeminarPermission(),
+		    "message.phd.alert.public.presentation.seminar.comission.validation.subject",
+		    "message.phd.alert.public.presentation.seminar.comission.validation.body");
 
 	    return process;
 	}
