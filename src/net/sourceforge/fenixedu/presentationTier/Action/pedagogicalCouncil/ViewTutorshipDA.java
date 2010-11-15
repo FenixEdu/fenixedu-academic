@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.ChangeTutorshipByEntryYearBean;
+import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.ChangeTutorshipByEntryYearBean.ChangeTutorshipBean;
 import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.StudentsByEntryYearBean;
 import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipErrorBean;
-import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.ChangeTutorshipByEntryYearBean.ChangeTutorshipBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -82,7 +82,7 @@ public class ViewTutorshipDA extends FenixDispatchAction {
      */
     private Tutorship provideTutorship(HttpServletRequest request) {
 	// If atribute "tutorshipId" is present
-	if (request.getAttribute("tutorshipId") != null) {
+	if (request.getParameter("tutorshipId") != null) {
 	    Integer tutorshipId = getIdInternal(request, "tutorshipId");
 	    Tutorship tutorship = RootDomainObject.getInstance().readTutorshipByOID(tutorshipId);
 	    return tutorship;
