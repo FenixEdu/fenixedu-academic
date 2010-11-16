@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaS
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.student.curriculum.CycleConclusionProcess;
 import net.sourceforge.fenixedu.domain.student.curriculum.ExtraCurricularActivity;
 import net.sourceforge.fenixedu.domain.student.curriculum.ExtraCurricularActivityType;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
@@ -122,12 +123,11 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 	addParameter("semesters", degreeType.getSemesters(getRequestedCycle()));
 	addParameter("weeksOfStudyPerYear",
 		getResourceBundle().getString("diploma.supplement.weeksOfStudyPerYear." + getRequestedCycle()));
-	// TODO: Confirmar com o João
 	addParameter("ectsCredits",
 		Math.round(registration.getLastStudentCurricularPlan().getCycle(getRequestedCycle()).getDefaultEcts(conclusion)));
 
 	// Group 4
-	addProgrammeRequirements(registration, conclusion, degreeDesignation);
+	addProgrammeRequirements(registration, degreeDesignation);
 	addEntriesParameters(registration);
 	addParameter(
 		"classificationSystem",
@@ -187,13 +187,15 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 	return title;
     }
 
-    private void addProgrammeRequirements(Registration registration, ExecutionYear conclusion, String graduateDegree) {
+    private void addProgrammeRequirements(Registration registration, String graduateDegree) {
 	String labelThe = getRequestedCycle().equals(CycleType.FIRST_CYCLE) ? getResourceBundle().getString("label.the.female")
 		: getResourceBundle().getString("label.the.male");
+	CycleConclusionProcess conclusionProcess = registration.getLastStudentCurricularPlan().getCycle(getRequestedCycle())
+		.getConclusionProcess();
 	long ectsCredits = Math.round(registration.getLastStudentCurricularPlan().getCycle(getRequestedCycle())
-		.getDefaultEcts(conclusion));
+		.getDefaultEcts(conclusionProcess.getConclusionYear()));
 	DegreeOfficialPublication dr = registration.getDegree().getOfficialPublication(
-		conclusion.getBeginDateYearMonthDay().toDateTimeAtCurrentTime());
+		conclusionProcess.getConclusionDate().toDateTimeAtStartOfDay());
 	if (dr == null) {
 	    throw new DomainException("error.DiplomaSupplement.degreeOfficialPublicationNotFound");
 	}
