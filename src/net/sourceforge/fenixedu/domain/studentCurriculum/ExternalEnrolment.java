@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
@@ -201,18 +202,22 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 		}
 	    }
 	}
-	if (dismissals.isEmpty()) {
-	    // If this happens you must be asking for ects grades in enrolments
-	    // not liked to the student's curricular plan.
-	    throw new DomainException("error.Enrolment.is.not.origin.in.any.equivalence");
-	} else if (dismissals.size() == 1) {
-	    Dismissal dismissal = dismissals.iterator().next();
-	    if (dismissal.getCurricularCourse() != null)
-		return dismissal.getCurricularCourse().convertGradeToEcts(dismissal, grade);
-	    else
+	Dismissal dismissal = dismissals.iterator().next();
+	if (dismissals.size() == 1) {
+	    if (dismissal instanceof OptionalDismissal || dismissal instanceof CreditsDismissal) {
 		return scp.getDegree().convertGradeToEcts(dismissal, grade);
+	    } else {
+		CurricularCourse curricularCourse = dismissal.getCurricularCourse();
+		if (curricularCourse != null) {
+		    return curricularCourse.convertGradeToEcts(dismissal, grade);
+		} else {
+		    return scp.getDegree().convertGradeToEcts(dismissal, grade);
+		}
+	    }
 	} else {
-	    Dismissal dismissal = dismissals.iterator().next();
+	    // if more than one exists we can't base the conversion on the
+	    // origin, so step up to the degree, on a context based on one
+	    // of the sources.
 	    return scp.getDegree().convertGradeToEcts(dismissal, grade);
 	}
     }
