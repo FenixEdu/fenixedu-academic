@@ -1047,6 +1047,21 @@ public class Thesis extends Thesis_Base {
 	}
     }
 
+    public void swapFilesVisibility() {
+	ThesisVisibilityType visibility = getVisibility();
+
+	if (visibility == null) {
+	    throw new DomainException("thesis.acceptDeclaration.visibility.required");
+	}
+
+	if (visibility.equals(ThesisVisibilityType.INTRANET)) {
+	    setVisibility(ThesisVisibilityType.PUBLIC);
+	} else {
+	    setVisibility(ThesisVisibilityType.INTRANET);
+	}
+
+    }
+
     public boolean isDraft() {
 	return getState() == ThesisState.DRAFT;
     }

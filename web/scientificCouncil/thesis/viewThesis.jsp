@@ -1,3 +1,4 @@
+<%@page import="net.sourceforge.fenixedu.domain.thesis.ThesisVisibilityType"%>
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -312,6 +313,21 @@
     <fr:view name="thesis" property="dissertation" layout="values" schema="coordinator.thesis.file"/>
     (<fr:view name="thesis" property="dissertation.size" layout="fileSize"/>)
 </logic:notEmpty>
+
+<logic:equal name="thesis" property="visibility" value="<%= net.sourceforge.fenixedu.domain.thesis.ThesisVisibilityType.INTRANET.toString() %>">
+	<p>
+		<html:link page="<%= String.format("/scientificCouncilManageThesis.do?method=changeThesisFilesVisibility&amp;&amp;thesisID=%s&amp;degreeID=%s&amp;executionYearID=%s", thesisId, degreeId, executionYearId) %>">
+			<bean:message key="link.coordinator.thesis.edit.changeVisibilityToPublic" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+   	    </html:link>
+	</p>
+</logic:equal>
+<logic:equal name="thesis" property="visibility" value="<%= net.sourceforge.fenixedu.domain.thesis.ThesisVisibilityType.PUBLIC.toString() %>">
+	<p>
+		<html:link page="<%= String.format("/scientificCouncilManageThesis.do?method=changeThesisFilesVisibility&amp;&amp;thesisID=%s&amp;degreeID=%s&amp;executionYearID=%s", thesisId, degreeId, executionYearId) %>">
+			<bean:message key="link.coordinator.thesis.edit.changeVisibilityToPrivate" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+   	    </html:link>
+	</p>
+</logic:equal>
 
 <h3 class="mtop15 mbottom05"><bean:message key="title.scientificCouncil.thesis.evaluation.gradeAndDate"/></h3>
 

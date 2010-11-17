@@ -1,3 +1,4 @@
+<%@page import="net.sourceforge.fenixedu.domain.thesis.ThesisVisibilityType"%>
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -52,6 +53,7 @@
 <logic:notEmpty name="thesis" property="publication">
 
 	<bean:define id="files" name="thesis" property="publication.resultDocumentFiles"/>
+	<bean:define id="extAbstract" name="thesis" property="extendedAbstract"/>
 
 	<fr:view name="thesis" property="publication.title"/>,
 	<fr:view name="thesis" property="publication.authorsNames"/>,
@@ -60,30 +62,48 @@
 
 	<bean:define id="thesis" name="thesis" type="net.sourceforge.fenixedu.domain.thesis.Thesis"/>
 	<bean:define id="publicationId" name="thesis" property="publication.idInternal"/>
+	<p>
 	<%
 		if (thesis.getDissertation().isPersonAllowedToAccess(AccessControl.getPerson())) {
 	%>
 		(<html:link target="_blank" page="<%="/bibtexExport.do?method=exportPublicationToBibtex&publicationId="+ publicationId %>">
 			<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.exportToBibTeX" />
-		</html:link><logic:iterate id="file" name="files" length="1">,
-	
-		<bean:define id="downloadUrl" name="file" property="downloadUrl" type="java.lang.String"/>	
-		<html:link href="<%= downloadUrl %>">
+		</html:link>,
+		
+		<bean:define id="extAbstractDownloadUrl" name="extAbstract" property="downloadUrl" type="java.lang.String"/>
+		<html:link href="<%= extAbstractDownloadUrl %>">
 			<html:img page="/images/icon_pdf.gif" module=""/>
-			<fr:view name="file" property="size" layout="fileSize"/>
-		</html:link></logic:iterate>)
+			<bean:message bundle="RESEARCHER_RESOURCES" key="link.dissertation.download.extendedAbstract"/>
+			<fr:view name="extAbstract" property="size" layout="fileSize"/>
+		</html:link>
+		
+		<logic:iterate id="file" name="files" length="1">,
+			<bean:define id="downloadUrl" name="file" property="downloadUrl" type="java.lang.String"/>	
+			<html:link href="<%= downloadUrl %>">
+				<html:img page="/images/icon_pdf.gif" module=""/>
+				<bean:message bundle="RESEARCHER_RESOURCES" key="link.dissertation.download.thesis"/>
+				<fr:view name="file" property="size" layout="fileSize"/>
+			</html:link>
+		</logic:iterate>)
 	<%
 		} else {
 	%>
-		(<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.exportToBibTeX" />
+		(<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.exportToBibTeX" />,
+		
+		<html:img page="/images/icon_pdf.gif" module=""/>
+		<bean:message bundle="RESEARCHER_RESOURCES" key="link.dissertation.download.extendedAbstract"/>
+		<fr:view name="extAbstract" property="size" layout="fileSize"/>
+		
 		<logic:iterate id="file" name="files" length="1">,
 		<bean:define id="downloadUrl" name="file" property="downloadUrl" type="java.lang.String"/>	
 			<html:img page="/images/icon_pdf.gif" module=""/>
+			<bean:message bundle="RESEARCHER_RESOURCES" key="link.dissertation.download.thesis"/>
 			<fr:view name="file" property="size" layout="fileSize"/>
 		</logic:iterate>)
 	<%
 		}
 	%>
+	</p>
 		
 </logic:notEmpty>
 
