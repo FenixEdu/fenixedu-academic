@@ -2314,7 +2314,7 @@ class DomainObject {
 
 				class accounting.postingRules.candidacy.Over23IndividualCandidacyPR extends accounting.postingRules.FixedAmountPR {
 				}
-				
+
 				class accounting.postingRules.InsurancePR extends accounting.postingRules.FixedAmountPR {
 				}
 
@@ -2495,7 +2495,7 @@ class DomainObject {
             class accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustificationByDispatch extends accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustification {
                 YearMonthDay dispatchDate;
             }
-
+            
         class accounting.events.InsuranceExemptionJustification extends accounting.events.ExemptionJustification {
             InsuranceExemptionJustificationType justificationType;
         }
@@ -4334,9 +4334,9 @@ class DomainObject {
     }
 
         class Person extends organizationalStructure.Party {
-            //Boolean availableEmail;
+        	String givenNames;
+        	String familyNames;
             Boolean availablePhoto;
-            //Boolean availableWebSite;
             YearMonthDay dateOfBirthYearMonthDay;
             String districtOfBirth;
             String districtSubdivisionOfBirth;
@@ -5099,13 +5099,11 @@ class DomainObject {
                 }
 
                 class serviceRequests.documentRequests.RegistryDiplomaRequest extends serviceRequests.documentRequests.DocumentRequest {
-                    CycleType requestedCycle (REQUIRED);
+                    CycleType requestedCycle;
                 }
 
                 class serviceRequests.documentRequests.DiplomaSupplementRequest extends serviceRequests.documentRequests.DocumentRequest {
                     CycleType requestedCycle (REQUIRED);
-                    String givenNames (REQUIRED);
-                    String familyNames (REQUIRED);
                 }
             
                 class serviceRequests.documentRequests.PhotocopyRequest extends serviceRequests.documentRequests.DocumentRequest {

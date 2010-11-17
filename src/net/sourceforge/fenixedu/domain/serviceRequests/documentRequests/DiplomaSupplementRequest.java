@@ -21,8 +21,6 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base {
 	this();
 	super.init(bean);
 	checkParameters(bean);
-	setGivenNames(bean.getGivenNames());
-	setFamilyNames(bean.getFamilyNames());
     }
 
     @Override
@@ -43,6 +41,8 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base {
 	if (!getRegistration().getStudent().getPerson().getName().equals(bean.getGivenNames() + " " + bean.getFamilyNames())) {
 	    throw new DomainException("error.diplomaSupplementRequest.splittedNamesDoNotMatch");
 	}
+	getRegistration().getPerson().setGivenNames(bean.getGivenNames());
+	getRegistration().getPerson().setFamilyNames(bean.getFamilyNames());
 	RegistryDiplomaRequest registry = getRegistration().getRegistryDiplomaRequest(bean.getRequestedCycle());
 	DiplomaRequest diploma = getRegistration().getDiplomaRequest(bean.getRequestedCycle());
 	if (registry == null && diploma == null) {
@@ -82,6 +82,14 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base {
 	    result += "." + getRequestedCycle().name();
 	}
 	return result;
+    }
+
+    public String getGivenNames() {
+	return getRegistration().getPerson().getGivenNames();
+    }
+
+    public String getFamilyNames() {
+	return getRegistration().getPerson().getFamilyNames();
     }
 
     @Override

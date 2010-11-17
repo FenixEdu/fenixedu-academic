@@ -70,8 +70,8 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 	addParameter("name", StringFormatter.prettyPrint(person.getName().trim()));
 
 	// Group 1
-	addParameter("familyName", ((DiplomaSupplementRequest) getDocumentRequest()).getFamilyNames());
-	addParameter("givenName", ((DiplomaSupplementRequest) getDocumentRequest()).getGivenNames());
+	addParameter("familyName", registration.getPerson().getFamilyNames());
+	addParameter("givenName", registration.getPerson().getGivenNames());
 	addParameter("birthDay", person.getDateOfBirthYearMonthDay().toString(DD_SLASH_MM_SLASH_YYYY, getLocale()));
 	addParameter("nationality",
 		StringFormatter.prettyPrint(person.getCountry().getCountryNationality().getContent(getLanguage())));

@@ -282,10 +282,15 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
     @Override
     protected void setRegistration(Registration registration) {
 	super.setRegistration(registration);
-	String[] parts = registration.getStudent().getPerson().getName().split("\\s+");
-	int split = parts.length > 3 ? 2 : 1;
-	setGivenNames(StringUtils.join(Arrays.copyOfRange(parts, 0, split), " "));
-	setFamilyNames(StringUtils.join(Arrays.copyOfRange(parts, split, parts.length), " "));
+	if (registration.getPerson().getGivenNames() == null) {
+	    String[] parts = registration.getStudent().getPerson().getName().split("\\s+");
+	    int split = parts.length > 3 ? 2 : 1;
+	    setGivenNames(StringUtils.join(Arrays.copyOfRange(parts, 0, split), " "));
+	    setFamilyNames(StringUtils.join(Arrays.copyOfRange(parts, split, parts.length), " "));
+	} else {
+	    setGivenNames(registration.getPerson().getGivenNames());
+	    setFamilyNames(registration.getPerson().getFamilyNames());
+	}
     }
 
     public void validateNames() {

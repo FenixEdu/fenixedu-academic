@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.person;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -20,6 +21,7 @@ import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
 /**
@@ -33,6 +35,10 @@ public class PersonBean implements Serializable {
 
     // personal information
     private String name; // read only
+
+    private String givenNames;
+
+    private String familyNames;
 
     private String username; // read only
 
@@ -214,6 +220,15 @@ public class PersonBean implements Serializable {
 
     private void initPerson(Person person) {
 	setName(person.getName());
+	if (person.getGivenNames() == null) {
+	    String[] parts = person.getName().split("\\s+");
+	    int split = parts.length > 3 ? 2 : 1;
+	    setGivenNames(StringUtils.join(Arrays.copyOfRange(parts, 0, split), " "));
+	    setFamilyNames(StringUtils.join(Arrays.copyOfRange(parts, split, parts.length), " "));
+	} else {
+	    setGivenNames(person.getGivenNames());
+	    setFamilyNames(person.getFamilyNames());
+	}
 	setUsername(person.getUsername());
 	setGender(person.getGender());
 	setMaritalStatus(person.getMaritalStatus());
@@ -486,6 +501,22 @@ public class PersonBean implements Serializable {
 
     public void setName(String name) {
 	this.name = name;
+    }
+
+    public String getGivenNames() {
+	return givenNames;
+    }
+
+    public void setGivenNames(String givenNames) {
+	this.givenNames = givenNames;
+    }
+
+    public String getFamilyNames() {
+	return familyNames;
+    }
+
+    public void setFamilyNames(String familyNames) {
+	this.familyNames = familyNames;
     }
 
     public Country getNationality() {

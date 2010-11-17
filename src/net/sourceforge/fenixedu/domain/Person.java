@@ -15,6 +15,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import jvstm.cps.ConsistencyPredicate;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.InvalidCategory;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
@@ -960,6 +961,8 @@ public class Person extends Person_Base {
     private void setProperties(final PersonBean personBean) {
 
 	setName(personBean.getName());
+	setGivenNames(personBean.getGivenNames());
+	setFamilyNames(personBean.getFamilyNames());
 	setGender(personBean.getGender());
 	setIdentification(personBean.getDocumentIdNumber(), personBean.getIdDocumentType());
 	setEmissionLocationOfDocumentId(personBean.getDocumentIdEmissionLocation());
@@ -1130,13 +1133,10 @@ public class Person extends Person_Base {
      * Filters all parent PersonFunction accountabilities and returns all the
      * PersonFunctions that selection indicated in the parameters.
      * 
-     * @param unit
-     *            filter all PersonFunctions to this unit, or <code>null</code>
+     * @param unit filter all PersonFunctions to this unit, or <code>null</code>
      *            for all PersonFunctions
-     * @param includeSubUnits
-     *            if even subunits of the given unit are considered
-     * @param active
-     *            the state of the function, <code>null</code> for all
+     * @param includeSubUnits if even subunits of the given unit are considered
+     * @param active the state of the function, <code>null</code> for all
      *            PersonFunctions
      */
     public List<PersonFunction> getPersonFunctions(Unit unit, boolean includeSubUnits, Boolean active, Boolean virtual,
@@ -3662,5 +3662,19 @@ public class Person extends Person_Base {
     @Deprecated
     public void setFiscalCode(String value) {
 	super.setFiscalCode(value);
+    }
+
+    @ConsistencyPredicate
+    public final boolean namesCorrectlyPartitioned() {
+	if (StringUtils.isEmpty(getGivenNames()) && StringUtils.isEmpty(getFamilyNames())) {
+	    return true;
+	}
+	if (StringUtils.isEmpty(getGivenNames())) {
+	    return false;
+	}
+	if (StringUtils.isEmpty(getFamilyNames())) {
+	    return false;
+	}
+	return (getGivenNames() + " " + getFamilyNames()).equals(getName());
     }
 }

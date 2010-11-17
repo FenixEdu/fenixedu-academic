@@ -31,11 +31,11 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base {
     }
 
     public String getFamilyNames() {
-	return getDiplomaSupplement().getFamilyNames();
+	return getRegistration().getPerson().getFamilyNames();
     }
 
     public String getGivenNames() {
-	return getDiplomaSupplement().getGivenNames();
+	return getRegistration().getPerson().getGivenNames();
     }
 
     @Override

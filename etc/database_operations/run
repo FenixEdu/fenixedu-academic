@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "update table structure for Person's name partition" personNameSplit.sql
+execute "move name partitions from DiplomaSupplement to Person" personNameMoveFromDiplomaSupplement.sql IST
