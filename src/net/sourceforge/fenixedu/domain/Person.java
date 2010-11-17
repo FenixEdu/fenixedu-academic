@@ -959,10 +959,13 @@ public class Person extends Person_Base {
     }
 
     private void setProperties(final PersonBean personBean) {
-
 	setName(personBean.getName());
 	setGivenNames(personBean.getGivenNames());
 	setFamilyNames(personBean.getFamilyNames());
+	if ((!StringUtils.isEmpty(getGivenNames()) || !StringUtils.isEmpty(getFamilyNames()))
+		&& !getName().equals(getGivenNames() + " " + getFamilyNames())) {
+	    throw new DomainException("error.person.splittedNamesDoNotMatch");
+	}
 	setGender(personBean.getGender());
 	setIdentification(personBean.getDocumentIdNumber(), personBean.getIdDocumentType());
 	setEmissionLocationOfDocumentId(personBean.getDocumentIdEmissionLocation());

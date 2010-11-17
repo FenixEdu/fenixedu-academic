@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject.person;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -21,7 +20,6 @@ import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 
-import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
 /**
@@ -220,15 +218,8 @@ public class PersonBean implements Serializable {
 
     private void initPerson(Person person) {
 	setName(person.getName());
-	if (person.getGivenNames() == null) {
-	    String[] parts = person.getName().split("\\s+");
-	    int split = parts.length > 3 ? 2 : 1;
-	    setGivenNames(StringUtils.join(Arrays.copyOfRange(parts, 0, split), " "));
-	    setFamilyNames(StringUtils.join(Arrays.copyOfRange(parts, split, parts.length), " "));
-	} else {
-	    setGivenNames(person.getGivenNames());
-	    setFamilyNames(person.getFamilyNames());
-	}
+	setGivenNames(person.getGivenNames());
+	setFamilyNames(person.getFamilyNames());
 	setUsername(person.getUsername());
 	setGender(person.getGender());
 	setMaritalStatus(person.getMaritalStatus());
