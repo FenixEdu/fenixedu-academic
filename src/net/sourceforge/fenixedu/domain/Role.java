@@ -5,13 +5,18 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.lang.ref.SoftReference;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 
 /**
@@ -20,6 +25,7 @@ import org.apache.commons.lang.StringUtils;
 public class Role extends Role_Base implements Comparable {
 
     static final protected Comparator<Role> COMPARATOR_BY_ROLE_TYPE = new Comparator<Role>() {
+	@Override
 	public int compare(Role r1, Role r2) {
 	    return r1.getRoleType().compareTo(r2.getRoleType());
 	}
@@ -104,6 +110,7 @@ public class Role extends Role_Base implements Comparable {
 	super.setPageNameProperty(pageNameProperty);
     }
 
+    @Override
     public int compareTo(Object o) {
 	return (o instanceof Role) ? compareTo((Role) o) : -1;
     }
@@ -115,4 +122,15 @@ public class Role extends Role_Base implements Comparable {
     public boolean isResourceAllocationRole() {
 	return false;
     }
+
+    public ArrayList<RoleOperationLog> getRoleOperationLogArrayListOrderedByDate() {
+	return orderRoleOperationLogSetByValue(this.getRoleOperationLogSet(), "logDate");
+    }
+
+    private ArrayList<RoleOperationLog> orderRoleOperationLogSetByValue(Set<RoleOperationLog> roleOperationLogSet, String value) {
+	ArrayList<RoleOperationLog> roleOperationLogList = new ArrayList<RoleOperationLog>(roleOperationLogSet);
+	Collections.sort(roleOperationLogList, new ReverseComparator(new BeanComparator(value)));
+	return roleOperationLogList;
+    }
+
 }

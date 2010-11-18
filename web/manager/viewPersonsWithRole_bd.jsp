@@ -34,7 +34,9 @@
 	</table>
 </logic:present>
 
+
 <logic:present name="persons" scope="request">
+	<html:link action="<%="/viewPersonsWithRole.do?method=showRoleOperationLogs&roleID=" + request.getParameter("roleID")%>"><bean:message bundle="MANAGER_RESOURCES" key="link.show.roleoperationlog"/></html:link>
 	<fr:view name="persons" schema="PersonNameAndUsername">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4" />

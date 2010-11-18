@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create RoleOperationLog Table" create-roleoperationlog-table.sql
+

@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -21,9 +22,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.Sear
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.RoleOperationLog;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -45,6 +48,30 @@ public class ManageRolesDA extends FenixDispatchAction {
 	    throws Exception {
 	return mapping.findForward("SelectUserPage");
     }
+
+    public ActionForward showRoleOperationLogs(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	final String username = (String) getFromRequest(request, "username");
+
+	final String pageNumberString = (String) getFromRequest(request, "pageNumber");
+	final Integer pageNumber = !StringUtils.isEmpty(pageNumberString) ? Integer.valueOf(pageNumberString) : Integer
+		.valueOf(1);
+
+	final Person person = Person.readPersonByUsername(username);
+
+	ArrayList<RoleOperationLog> listOfRoleOperationLog = person.getPersonRoleOperationLogArrayListOrderedByDate();
+	CollectionPager<RoleOperationLog> collectionPager = new CollectionPager<RoleOperationLog>(
+		listOfRoleOperationLog != null ? listOfRoleOperationLog : new ArrayList<RoleOperationLog>(), 25);
+	
+
+	request.setAttribute("pageNumber", pageNumber);
+	request.setAttribute("domainObjectActionLogs", collectionPager.getPage(pageNumber.intValue()));
+	request.setAttribute("numberOfPages", Integer.valueOf(collectionPager.getNumberOfPages()));
+
+	return mapping.findForward("ShowRoleOperationLogs");
+    }
+
+
 
     public ActionForward selectUser(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
@@ -75,6 +102,10 @@ public class ManageRolesDA extends FenixDispatchAction {
 	request.setAttribute("person", person);
 	request.setAttribute(PresentationConstants.USERNAME, username);
 	return prepareAddRoleToPerson(mapping, form, request, response);
+    }
+
+    private Person getPerson(final String username) throws FenixFilterException, FenixServiceException {
+	return getPerson(username, "");
     }
 
     private Person getPerson(final DynaActionForm dynaActionForm) throws FenixFilterException, FenixServiceException {

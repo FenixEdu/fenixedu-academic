@@ -23,7 +23,6 @@ package net.sourceforge.fenixedu.domain;
 /*
  * Enums first
  */
- 
 enum net.sourceforge.fenixedu.domain.AlumniRequestType                                                                    as AlumniRequestType;
 enum net.sourceforge.fenixedu.domain.CompetenceCourseType                                                                 as CompetenceCourseType;
 enum net.sourceforge.fenixedu.domain.ContractType                                                                         as ContractType;
@@ -51,6 +50,7 @@ enum net.sourceforge.fenixedu.domain.ProfessionalSituationConditionType         
 enum net.sourceforge.fenixedu.domain.ProfessionalSituationType                                                            as ProfessionalSituationType;
 enum net.sourceforge.fenixedu.domain.QualificationType                                                                    as QualificationType;
 enum net.sourceforge.fenixedu.domain.RequestState                                                                         as RequestState;
+enum net.sourceforge.fenixedu.domain.RoleOperationType																	  as RoleOperationType;
 enum net.sourceforge.fenixedu.domain.SalaryType                                                                           as SalaryType;
 enum net.sourceforge.fenixedu.domain.SchoolLevelType                                                                      as SchoolLevelType;
 enum net.sourceforge.fenixedu.domain.ShiftType                                                                            as ShiftType;
@@ -1614,7 +1614,14 @@ class DomainObject {
         String pageNameProperty;
         String portalSubApplication;
         RoleType roleType;
-    }   
+    } 
+    
+    class RoleOperationLog extends DomainObject {
+    	String istUsername;
+    	String whoGrantedIstUsername;
+    	DateTime logDate;
+    	RoleOperationType operationType;
+    }  
     
         class ResourceAllocationRole extends Role {
             Group schedulesAccessGroup;     
@@ -11752,6 +11759,28 @@ relation PersonRole {
         multiplicity *;
     }
 }
+
+relation RoleRoleOperationLog {
+	Role playsRole role;
+	RoleOperationLog playsRole roleOperationLog {
+		multiplicity *;
+	}
+}
+
+relation PersonRoleOperationLog {
+	Person playsRole person;
+	RoleOperationLog playsRole personRoleOperationLog {
+		multiplicity *;
+	}
+}
+
+relation PersonGivesRoleOperationLog {
+	Person playsRole personWhoGranted;
+	RoleOperationLog playsRole givenRoleOperationLog {
+		multiplicity *;
+	}
+}
+
 
 relation PersonTeacher {
     Teacher playsRole teacher;

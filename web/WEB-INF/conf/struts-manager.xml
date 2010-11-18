@@ -1553,6 +1553,7 @@
               >
           <forward name="SelectUserPage" path="df.page.manage-roles"/>
           <forward name="Manage" path="df.page.manage-roles"/>
+          <forward name="ShowRoleOperationLogs" path="df.page.show-roleoperationlogs"/>
       </action>
       
       <action path="/viewPersonsWithRole"
@@ -1564,12 +1565,12 @@
 				>
           <forward name="SelectRole" path="df.page.manage-persons-with-role"/>
           <forward name="ShowPersons" path="df.page.manage-persons-with-role"/>
+          <forward name="ShowRoleOperationLogs" path="df.page.show-roleoperationlogs"/>
       </action>
 
 	<action	path="/generateNewPassword" type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction" 
 		forward="show-generate-password-link"/>
 
-		
 		
 		<!-- ================== TEACHERS MANAGEMENT ======================-->
 		<action path="/teachersManagement"

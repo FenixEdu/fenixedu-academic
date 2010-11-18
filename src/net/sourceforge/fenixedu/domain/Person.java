@@ -130,8 +130,10 @@ import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.StringFormatter;
 import net.sourceforge.fenixedu.util.UsernameUtils;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
@@ -1243,6 +1245,9 @@ public class Person extends Person_Base {
 	    getHomepage().delete();
 	}
 
+	getPersonRoleOperationLog().clear();
+	getGivenRoleOperationLog().clear();
+
 	getPersonRoles().clear();
 	if (hasUser()) {
 	    getUser().delete();
@@ -1327,12 +1332,13 @@ public class Person extends Person_Base {
     public boolean hasExternalResearchContract() {
 	return getExternalResearchContract() != null;
     }
-
     private static class PersonRoleListener extends dml.runtime.RelationAdapter<Role, Person> {
 
 	@Override
 	public void beforeAdd(Role newRole, Person person) {
-	    // Do nothing!!
+	    if (newRole != null && person != null && !person.hasPersonRoles(newRole)) {
+		addRoleOperationLog(person, newRole, RoleOperationType.ADD);
+	    }
 	}
 
 	@Override
@@ -1348,6 +1354,7 @@ public class Person extends Person_Base {
 	public void beforeRemove(Role roleToBeRemoved, Person person) {
 	    if (person != null && roleToBeRemoved != null && person.hasRole(roleToBeRemoved.getRoleType())) {
 		removeDependencies(person, roleToBeRemoved);
+		addRoleOperationLog(person, roleToBeRemoved, RoleOperationType.REMOVE);
 	    }
 	}
 
@@ -1357,6 +1364,11 @@ public class Person extends Person_Base {
 		person.removeAlias(removedRole);
 		person.updateIstUsername();
 	    }
+	}
+
+	private void addRoleOperationLog(Person person, Role role, RoleOperationType operationType) {
+	    Person whoGranted = AccessControl.getPerson();
+	    new RoleOperationLog(role, person, whoGranted, operationType);
 	}
 
 	private void addDependencies(Role role, Person person) {
@@ -1818,6 +1830,7 @@ public class Person extends Person_Base {
 
 	transient Set<Person> people = null;
 
+	@Override
 	public FindPersonFactory execute() {
 	    people = Person.findPerson(this);
 	    return this;
@@ -2324,6 +2337,7 @@ public class Person extends Person_Base {
 	    super(person);
 	}
 
+	@Override
 	public Object execute() {
 	    getPerson().edit(this);
 	    return null;
@@ -2335,6 +2349,7 @@ public class Person extends Person_Base {
 	    super();
 	}
 
+	@Override
 	public Object execute() {
 	    final Person person = new Person(this, true);
 	    Unit unit = getUnit();
@@ -2784,6 +2799,7 @@ public class Person extends Person_Base {
 	Department department = hasTeacher() ? getTeacher().getCurrentWorkingDepartment() : null;
 	return department == null ? Collections.EMPTY_LIST : (List<TSDProcess>) CollectionUtils.select(
 		department.getTSDProcesses(), new Predicate() {
+		    @Override
 		    public boolean evaluate(Object arg0) {
 			TSDProcess tsd = (TSDProcess) arg0;
 			return tsd.hasAnyPermission(Person.this);
@@ -2795,6 +2811,7 @@ public class Person extends Person_Base {
 	Department department = hasTeacher() ? getTeacher().getCurrentWorkingDepartment() : null;
 	return department == null ? Collections.EMPTY_LIST : (List<TSDProcess>) CollectionUtils.select(
 		department.getTSDProcessesByExecutionPeriod(period), new Predicate() {
+		    @Override
 		    public boolean evaluate(Object arg0) {
 			TSDProcess tsd = (TSDProcess) arg0;
 			return tsd.hasAnyPermission(Person.this);
@@ -2806,6 +2823,7 @@ public class Person extends Person_Base {
 	Department department = hasTeacher() ? getTeacher().getCurrentWorkingDepartment() : null;
 	return department == null ? Collections.EMPTY_LIST : (List<TSDProcess>) CollectionUtils.select(
 		department.getTSDProcessesByExecutionYear(year), new Predicate() {
+		    @Override
 		    public boolean evaluate(Object arg0) {
 			TSDProcess tsd = (TSDProcess) arg0;
 			return tsd.hasAnyPermission(Person.this);
@@ -3364,6 +3382,7 @@ public class Person extends Person_Base {
 
     public Professorship getProfessorshipByExecutionCourse(final ExecutionCourse executionCourse) {
 	return (Professorship) CollectionUtils.find(getProfessorships(), new Predicate() {
+	    @Override
 	    public boolean evaluate(Object arg0) {
 		Professorship professorship = (Professorship) arg0;
 		return professorship.getExecutionCourse() == executionCourse;
@@ -3666,7 +3685,7 @@ public class Person extends Person_Base {
     public void setFiscalCode(String value) {
 	super.setFiscalCode(value);
     }
-
+    
     @ConsistencyPredicate
     public final boolean namesCorrectlyPartitioned() {
 	if (StringUtils.isEmpty(getGivenNames()) && StringUtils.isEmpty(getFamilyNames())) {
@@ -3679,5 +3698,19 @@ public class Person extends Person_Base {
 	    return false;
 	}
 	return (getGivenNames() + " " + getFamilyNames()).equals(getName());
+    }
+
+    public ArrayList<RoleOperationLog> getPersonRoleOperationLogArrayListOrderedByDate() {
+	return orderRoleOperationLogSetByValue(this.getPersonRoleOperationLogSet(), "logDate");
+    }
+
+    public ArrayList<RoleOperationLog> getGivenRoleOperationLogArrayListOrderedByDate() {
+	return orderRoleOperationLogSetByValue(this.getGivenRoleOperationLogSet(), "logDate");
+    }
+
+    private ArrayList<RoleOperationLog> orderRoleOperationLogSetByValue(Set<RoleOperationLog> roleOperationLogSet, String value) {
+	ArrayList<RoleOperationLog> roleOperationLogList = new ArrayList<RoleOperationLog>(roleOperationLogSet);
+	Collections.sort(roleOperationLogList, new ReverseComparator(new BeanComparator(value)));
+	return roleOperationLogList;
     }
 }

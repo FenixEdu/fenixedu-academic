@@ -944,3 +944,13 @@
 	<slot name="person" schema="Person.name" layout="values" key="label.queueJobs.list.person"/>
 </schema>
 
+
+<!-- RoleOperationLogs -->
+<schema name="ListRoleOperationLogs" type="net.sourceforge.fenixedu.domain.RoleOperationLog" bundle="MANAGER_RESOURCES">
+	<slot name="role.roleType" key="label.roleType"/>
+	<slot name="operationType" key="label.operation"/>
+	<slot name="logDate" key="label.date"/>
+	<slot name="istUsername" key="label.who.was.granted.role"/>
+	<slot name="whoGrantedIstUsername" key="label.who.granted.role"/>
+</schema>
+
