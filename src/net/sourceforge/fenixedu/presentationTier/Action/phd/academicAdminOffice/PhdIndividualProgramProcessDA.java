@@ -29,13 +29,6 @@ import net.sourceforge.fenixedu.domain.phd.ManageEnrolmentsBean;
 import net.sourceforge.fenixedu.domain.phd.PhdConfigurationIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
-import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
-import net.sourceforge.fenixedu.domain.phd.PhdStudyPlanBean;
-import net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntry;
-import net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntryBean;
-import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.ActivatePhdProgramProcessInCandidacyState;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.ActivatePhdProgramProcessInThesisDiscussionState;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.ActivatePhdProgramProcessInWorkDevelopmentState;
@@ -62,6 +55,13 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.FlunkedPh
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.NotAdmittedPhdProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RequestPublicThesisPresentation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.SuspendPhdProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
+import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
+import net.sourceforge.fenixedu.domain.phd.PhdStudyPlanBean;
+import net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntry;
+import net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntryBean;
+import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlert;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlertBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.RegistrationFormalizationBean;
@@ -874,6 +874,8 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.THESIS_ABSTRACT).required());
 	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.THESIS_REQUIREMENT));
 	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.CV));
+	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.CANDIDACY_REVIEW));
+	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.OTHER));
 
 	request.setAttribute("requestPublicThesisPresentation", bean);
 
