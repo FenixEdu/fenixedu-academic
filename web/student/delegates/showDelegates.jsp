@@ -7,15 +7,21 @@
 
 <h2><bean:message key="label.viewDelegates" bundle="DELEGATES_RESOURCES" /></h2>
 	
+<logic:present name="searchByDegreeBean" >
+	<fr:form action="/findDelegates.do?method=searchByDegree&amp;showBackLink=true">
+		<fr:edit id="searchByDegreeBean" name="searchByDegreeBean" layout="tabular-editable" schema="student.searchDelegates.selectDegreeTypeAndDegree">
+			<fr:layout>
+				<fr:property name="classes" value="tstyle5 thlight thright"/>
+			</fr:layout>
+			<fr:destination name="post-back-executionyear" path="/delegatesInfo.do?method=updateExecutionYear" />
+			<fr:destination name="post-back-degree" path="/delegatesInfo.do?method=updateDelegates" />
+			<fr:destination name="post-back-degree-type" path="/delegatesInfo.do?method=updateDegreeType" />
+		</fr:edit>
+	</fr:form>
+</logic:present>
+
 <!-- DEGREE DELEGATES -->
 <logic:present name="searchBean" >
-	<fr:view name="searchBean" layout="tabular" schema="delegates.selectedDegreeTypeAndDegree">
-		<fr:layout>
-			<fr:property name="classes" value="tstyle2 thlight thright tdleft mbottom05"/>
-			<fr:property name="rowClasses" value="bold,bold,"/>
-			<fr:property name="columnClasses" value="nowrap, width200px nowrap,"/>
-		</fr:layout>
-	</fr:view>
 	
 	<logic:present name="integratedMasterDegreeDelegate" >
 		<p class="mtop15 mbottom1">
@@ -102,3 +108,4 @@
 		</p>
 	</logic:notEmpty>
 </logic:present>
+

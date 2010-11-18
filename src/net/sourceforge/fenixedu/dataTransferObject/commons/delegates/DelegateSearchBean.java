@@ -1,20 +1,28 @@
 package net.sourceforge.fenixedu.dataTransferObject.commons.delegates;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.Set;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.YearMonthDay;
+
+import pt.ist.fenixWebFramework.renderers.DataProvider;
+import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DelegateSearchBean implements Serializable {
     private DegreeType degreeType;
@@ -90,6 +98,12 @@ public class DelegateSearchBean implements Serializable {
     public DelegateSearchBean(Person person, FunctionType functionType, CurricularYear curricularYear, ExecutionYear executionYear) {
 	this(person, functionType, executionYear);
 	setCurricularYear(curricularYear);
+    }
+
+    public DelegateSearchBean(ExecutionYear currentExecutionYear, Degree degree, DegreeType degreeType) {
+	setExecutionYear(currentExecutionYear);
+	setDegree(degree);
+	setDegreeType(degreeType);
     }
 
     public Degree getDegree() {
@@ -195,5 +209,61 @@ public class DelegateSearchBean implements Serializable {
 
     public String getDegreeName() {
 	return (getDegree() != null ? getDegree().getNameFor(getExecutionYear()).getContent() : null);
+    }
+    
+    public static class DegreesGivenDegreeType implements DataProvider {
+
+	@Override
+	public Object provide(Object source, Object currentValue) {
+	    final Set<Degree> degrees = new TreeSet<Degree>();
+	    final DelegateSearchBean bean = (DelegateSearchBean) source;
+	    final ExecutionYear executionPeriod = bean.getExecutionYear();
+	    final DegreeType type = bean.getDegreeType();
+
+	    if (type != null && executionPeriod != null) {
+		for (ExecutionDegree executionDegree : executionPeriod.getExecutionDegrees()) {
+		    if (executionDegree.getDegreeType().equals(type)) {
+			degrees.add(executionDegree.getDegree());
+		    }
+		}
+	    }
+
+	    // Collections.sort(degrees, Degree.COMPARATOR_BY_NAME);
+	    return degrees;
+	}
+
+	@Override
+	public Converter getConverter() {
+	    return new DomainObjectKeyConverter();
+	}
+
+    }
+
+    public static class DegreeTypesGivenExecutionYear implements DataProvider {
+
+	@Override
+	public Object provide(Object source, Object currentValue) {
+	    final DelegateSearchBean bean = (DelegateSearchBean) source;
+	    final ExecutionYear executionPeriod = bean.getExecutionYear();
+	    Set<DegreeType> degreeTypes = new TreeSet<DegreeType>();
+
+	    for (ExecutionDegree executionDegree : executionPeriod.getExecutionDegrees()) {
+		degreeTypes.add(executionDegree.getDegreeType());
+	    }
+
+	    return degreeTypes;
+	}
+
+	@Override
+	public Converter getConverter() {
+	    return new Converter() {
+
+		@Override
+		public Object convert(Class type, Object value) {
+		    return DegreeType.valueOf((String) value);
+		}
+
+	    };
+	}
     }
 }

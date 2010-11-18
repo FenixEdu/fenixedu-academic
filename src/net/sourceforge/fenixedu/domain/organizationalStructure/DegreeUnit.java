@@ -187,7 +187,7 @@ public class DegreeUnit extends DegreeUnit_Base {
     /* Return delegate function, of the given type, in the given execution year */
     public Function getDelegateFunctionByTypeAndExecutionYear(ExecutionYear executionYear, FunctionType functionType) {
 	for (Function function : getFunctions()) {
-	    if (function.getFunctionType().equals(functionType)
+	    if (function.getFunctionType() != null && function.getFunctionType().equals(functionType)
 		    && function.belongsToPeriod(executionYear.getBeginDateYearMonthDay(), executionYear.getEndDateYearMonthDay())) {
 		return function;
 	    }

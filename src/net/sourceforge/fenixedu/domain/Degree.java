@@ -65,12 +65,14 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     private static final Collator collator = Collator.getInstance();
 
     static final public Comparator<Degree> COMPARATOR_BY_NAME = new Comparator<Degree>() {
+	@Override
 	public int compare(final Degree o1, final Degree o2) {
 	    return collator.compare(o1.getName(), o2.getName());
 	}
     };
 
     static final public Comparator<Degree> COMPARATOR_BY_NAME_AND_ID = new Comparator<Degree>() {
+	@Override
 	public int compare(final Degree o1, final Degree o2) {
 	    final int nameResult = COMPARATOR_BY_NAME.compare(o1, o2);
 	    return nameResult == 0 ? COMPARATOR_BY_ID.compare(o1, o2) : nameResult;
@@ -78,12 +80,14 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     };
 
     static final private Comparator<Degree> COMPARATOR_BY_DEGREE_TYPE = new Comparator<Degree>() {
+	@Override
 	public int compare(final Degree o1, final Degree o2) {
 	    return collator.compare(o1.getDegreeType().getLocalizedName(), o2.getDegreeType().getLocalizedName());
 	}
     };
 
     static final public Comparator<Degree> COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID = new Comparator<Degree>() {
+	@Override
 	public int compare(final Degree o1, final Degree o2) {
 	    final int typeResult = COMPARATOR_BY_DEGREE_TYPE.compare(o1, o2);
 	    return typeResult == 0 ? COMPARATOR_BY_NAME_AND_ID.compare(o1, o2) : typeResult;
@@ -91,6 +95,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     };
 
     static final public Comparator<Degree> COMPARATOR_BY_FIRST_ENROLMENTS_PERIOD_AND_ID = new Comparator<Degree>() {
+	@Override
 	public int compare(final Degree degree1, final Degree degree2) {
 	    ExecutionSemester semester1 = degree1.getFirstDegreeCurricularPlan().getFirstExecutionPeriodEnrolments();
 	    ExecutionSemester semester2 = degree2.getFirstDegreeCurricularPlan().getFirstExecutionPeriodEnrolments();
@@ -99,6 +104,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	}
     };
 
+    @Override
     public int compareTo(final Degree o) {
 	return Degree.COMPARATOR_BY_NAME_AND_ID.compare(this, o);
     }
@@ -1325,16 +1331,22 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     public Student getActiveYearDelegateByCurricularYear(CurricularYear curricularYear) {
+	if (getUnit() == null) {
+	    return null;
+	}
+
 	final PersonFunction delegateFunction = getUnit().getActiveYearDelegatePersonFunctionByCurricularYear(curricularYear);
 	return (delegateFunction != null ? delegateFunction.getPerson().getStudent() : null);
     }
 
     public List<Student> getAllActiveDelegatesByFunctionType(FunctionType functionType, ExecutionYear executionYear) {
 	List<Student> result = new ArrayList<Student>();
-	final List<PersonFunction> delegateFunctions = getUnit().getAllActiveDelegatePersonFunctionsByFunctionType(functionType,
-		executionYear);
-	for (PersonFunction delegateFunction : delegateFunctions) {
-	    result.add(delegateFunction.getPerson().getStudent());
+	if (getUnit() != null) {
+	    final List<PersonFunction> delegateFunctions = getUnit().getAllActiveDelegatePersonFunctionsByFunctionType(
+		    functionType, executionYear);
+	    for (PersonFunction delegateFunction : delegateFunctions) {
+		result.add(delegateFunction.getPerson().getStudent());
+	    }
 	}
 	return result;
     }
@@ -1362,10 +1374,12 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     public PersonFunction getActiveDelegatePersonFunctionByStudentAndFunctionType(Student student, ExecutionYear executionYear,
 	    FunctionType functionType) {
-	for (PersonFunction personFunction : getUnit().getAllActiveDelegatePersonFunctionsByFunctionType(functionType,
-		executionYear)) {
-	    if (personFunction.getPerson().getStudent().equals(student)) {
-		return personFunction;
+	if (getUnit() == null) {
+	    for (PersonFunction personFunction : getUnit().getAllActiveDelegatePersonFunctionsByFunctionType(functionType,
+		    executionYear)) {
+		if (personFunction.getPerson().getStudent().equals(student)) {
+		    return personFunction;
+		}
 	    }
 	}
 	return null;
@@ -1375,6 +1389,10 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
      * DELEGATES FROM GIVEN EXECUTION YEAR (PAST DELEGATES)
      */
     public Student getYearDelegateByExecutionYearAndCurricularYear(ExecutionYear executionYear, CurricularYear curricularYear) {
+	if (getUnit() == null) {
+	    return null;
+	}
+
 	final PersonFunction delegateFunction = getUnit().getYearDelegatePersonFunctionByExecutionYearAndCurricularYear(
 		executionYear, curricularYear);
 	return (delegateFunction != null ? delegateFunction.getPerson().getStudent() : null);
@@ -1382,15 +1400,20 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     public List<Student> getAllDelegatesByExecutionYearAndFunctionType(ExecutionYear executionYear, FunctionType functionType) {
 	List<Student> result = new ArrayList<Student>();
-	final List<PersonFunction> delegateFunctions = getUnit().getAllDelegatePersonFunctionsByExecutionYearAndFunctionType(
-		executionYear, functionType);
-	for (PersonFunction delegateFunction : delegateFunctions) {
-	    result.add(delegateFunction.getPerson().getStudent());
+	if (getUnit() == null) {
+	    final List<PersonFunction> delegateFunctions = getUnit().getAllDelegatePersonFunctionsByExecutionYearAndFunctionType(
+		    executionYear, functionType);
+	    for (PersonFunction delegateFunction : delegateFunctions) {
+		result.add(delegateFunction.getPerson().getStudent());
+	    }
 	}
 	return result;
     }
 
     public List<PersonFunction> getAllDelegatePersonFunctionsByStudentAndFunctionType(Student student, FunctionType functionType) {
+	if (getUnit() == null) {
+	    return Collections.EMPTY_LIST;
+	}
 	return getUnit().getAllDelegatePersonFunctionsByFunctionType(functionType);
     }
 
