@@ -44,4 +44,4 @@ function executeWithTempFile() {
 }
 
 execute "Create RoleOperationLog Table" create-roleoperationlog-table.sql
-
+execute "Create new external user entity." updates.sql 

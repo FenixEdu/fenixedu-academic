@@ -19,6 +19,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionServlet;
 
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -81,7 +82,7 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
 	return null;
     }
 
-    protected void writePhoto(final HttpServletResponse response, final Photograph personalPhoto) {
+    public static void writePhoto(final HttpServletResponse response, final Photograph personalPhoto) {
 	try {
 	    response.setContentType(personalPhoto.getContentType().getMimeType());
 	    final DataOutputStream dos = new DataOutputStream(response.getOutputStream());
@@ -91,10 +92,14 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
 	}
     }
 
-    protected void writeUnavailablePhoto(HttpServletResponse response) {
+    public void writeUnavailablePhoto(HttpServletResponse response) {
+	writeUnavailablePhoto(response, getServlet());
+    }
+
+    public static void writeUnavailablePhoto(HttpServletResponse response, ActionServlet actionServlet) {
 	try {
 	    final DataOutputStream dos = new DataOutputStream(response.getOutputStream());
-	    final String path = getServlet().getServletContext().getRealPath(
+	    final String path = actionServlet.getServletContext().getRealPath(
 		    "/images/photo_placer01_" + Language.getDefaultLanguage().name() + ".gif");
 	    dos.write(FileUtils.readFileToByteArray(new File(path)));
 	    dos.close();

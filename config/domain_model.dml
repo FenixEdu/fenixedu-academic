@@ -7561,7 +7561,13 @@ class student.importation.DgesBaseProcess extends QueueJobWithFile {
 	
 	class student.importation.ExportExistingStudentsFromImportationProcess extends student.importation.DgesBaseProcess {
 	}
-	
+
+class ExternalUser extends DomainObject {
+	String username;
+	String passwordHash;
+}
+
+
 /*
  * Relations definitions
  * 
@@ -18703,4 +18709,11 @@ relation ErasmusCandidacyProcessErasmusCandidacyProcessReport {
 	}
 	
 	candidacyProcess.erasmus.ErasmusCandidacyProcess playsRole erasmusCandidacyProcess;
+}
+
+relation RootDomainObjectExternalUser {
+    RootDomainObject playsRole rootDomainObject;
+    ExternalUser playsRole externalUser {
+        multiplicity *;
+    }
 }

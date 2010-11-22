@@ -145,6 +145,11 @@
 				scope="request"
 				validate="false"
     	/>
+    	<action path="/epflCandidateInformation"
+				type="net.sourceforge.fenixedu.presentationTier.Action.externalServices.epfl.ExportPhdIndividualProgramProcessInformation"
+				scope="request"
+				validate="false"
+    	/>
 	</action-mappings>
   
   <!-- ========== Controller Configuration ================================ -->
