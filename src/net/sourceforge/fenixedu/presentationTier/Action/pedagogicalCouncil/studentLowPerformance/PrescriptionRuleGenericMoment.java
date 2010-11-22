@@ -42,10 +42,11 @@ class PrescriptionRuleGenericMoment extends AbstractPrescriptionRule {
     }
 
     protected boolean isForAdmission(Ingression ingression) {
-	return ingression != null && ingression.equals(Ingression.CNA01) && ingression.equals(Ingression.CNA02)
-		&& ingression.equals(Ingression.CNA03) && ingression.equals(Ingression.CNA04)
-		&& ingression.equals(Ingression.CNA05) && ingression.equals(Ingression.CNA06)
-		&& ingression.equals(Ingression.CNA07);
+	return ingression != null
+		&& (ingression.equals(Ingression.CNA01) || ingression.equals(Ingression.CNA02)
+			|| ingression.equals(Ingression.CNA03) || ingression.equals(Ingression.CNA04)
+			|| ingression.equals(Ingression.CNA05) || ingression.equals(Ingression.CNA06) || ingression
+			.equals(Ingression.CNA07));
     }
 
 }

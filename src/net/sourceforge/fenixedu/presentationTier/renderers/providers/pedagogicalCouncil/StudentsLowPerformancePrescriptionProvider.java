@@ -14,9 +14,9 @@ public class StudentsLowPerformancePrescriptionProvider implements DataProvider 
     public Object provide(Object source, Object currentValue) {
 	List<PrescriptionEnum> prescriptionBeans = new LinkedList<PrescriptionEnum>();
 	for (AbstractPrescriptionRule abstractPrescriptionRule : AbstractPrescriptionRule.readProviderPrescriptionRules()) {
-	    if (abstractPrescriptionRule.isOccurs()) {
-		prescriptionBeans.add(abstractPrescriptionRule.getPrescriptionEnum());
-	    }
+	    // if (abstractPrescriptionRule.isOccurs()) {
+	    prescriptionBeans.add(abstractPrescriptionRule.getPrescriptionEnum());
+	    // }
 	}
 	return prescriptionBeans;
     }
