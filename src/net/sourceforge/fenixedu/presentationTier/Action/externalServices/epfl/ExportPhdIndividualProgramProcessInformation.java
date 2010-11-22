@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.externalServices.epfl;
 
 import java.io.IOException;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -12,12 +13,15 @@ import net.sourceforge.fenixedu.domain.ExternalUser;
 import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessNumber;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.person.RetrievePersonalPhotoAction;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -52,27 +56,24 @@ public class ExportPhdIndividualProgramProcessInformation extends FenixAction {
 	return actionForward;
     }
 
-    private void displayPresentationPage(HttpServletRequest request, HttpServletResponse response)
-    		throws IOException {
+    private void displayPresentationPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
 	final byte[] presentationPage = ExportPhdIndividualProgramProcessesInHtml.exportPresentationPage();
 	writeResponse(response, presentationPage, "text/html");
     }
 
-    private void displayCandidatePage(HttpServletRequest request, HttpServletResponse response)
-    		throws IOException {
-	final String candidateOid = request.getParameter("candidateOid");
-	final PhdProgramPublicCandidacyHashCode code = AbstractDomainObject.fromExternalId(candidateOid);
+    private void displayCandidatePage(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	final String processNumber = request.getParameter("process");
+	final PhdProgramPublicCandidacyHashCode code = readProcessByNumber(2010, processNumber).getCandidacyProcessHashCode();
 	final byte[] candidatePage = ExportPhdIndividualProgramProcessesInHtml.drawCandidatePage(code);
 	writeResponse(response, candidatePage, "text/html");
     }
 
-    private void displayRefereePage(HttpServletRequest request, HttpServletResponse response)
-		throws IOException {
+    private void displayRefereePage(HttpServletRequest request, HttpServletResponse response) throws IOException {
 	final String refereeOid = request.getParameter("refereeOid");
 	final int count = Integer.parseInt(request.getParameter("count"));
 	final PhdCandidacyReferee referee = AbstractDomainObject.fromExternalId(refereeOid);
 	final byte[] refereePage = ExportPhdIndividualProgramProcessesInHtml.drawLetter(referee, count);
-	writeResponse(response, refereePage, "text/html");	
+	writeResponse(response, refereePage, "text/html");
     }
 
     private void downloadCandidateDocuments(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -103,14 +104,15 @@ public class ExportPhdIndividualProgramProcessInformation extends FenixAction {
     }
 
     private void writeResponse(HttpServletResponse response, final byte[] presentationPage, final String contentType)
-		throws IOException {
+	    throws IOException {
 	final ServletOutputStream outputStream = response.getOutputStream();
 	response.setContentType(contentType);
 	outputStream.write(presentationPage);
 	outputStream.close();
     }
 
-    private ActionForward checkPermissions(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
+    private ActionForward checkPermissions(final HttpServletRequest request, final HttpServletResponse response)
+	    throws IOException {
 	final IUserView userView = AccessControl.getUserView();
 	if (userView == null) {
 	    final String externalUser = (String) request.getSession().getAttribute(getClass().getName());
@@ -138,8 +140,7 @@ public class ExportPhdIndividualProgramProcessInformation extends FenixAction {
     }
 
     private boolean isValidExternalUser(final String username, final String password) {
-	return username != null && !username.isEmpty()
-		&& password != null && !password.isEmpty()
+	return !StringUtils.isEmpty(username) && !StringUtils.isEmpty(password)
 		&& isValidExternalUserPassword(username, password);
     }
 
@@ -152,14 +153,28 @@ public class ExportPhdIndividualProgramProcessInformation extends FenixAction {
 	return false;
     }
 
-    private ActionForward displayLoginPage(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
-	final String url = "/phdIndividualProgramProcess/loginPage.jsp";
-	return new ActionForward(url);
+    private ActionForward displayLoginPage(final HttpServletRequest request, final HttpServletResponse response)
+	    throws IOException {
+	final String url = "http://fenix.ist.utl.pt/phd/epfl/applications/login";
+	return new ActionForward(url, true);
     }
 
-    private ActionForward displayUnAuhtorizedPage(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
-	final String url = "/phdIndividualProgramProcess/notAuthorized.jsp";
-	return new ActionForward(url);
+    private ActionForward displayUnAuhtorizedPage(final HttpServletRequest request, final HttpServletResponse response)
+	    throws IOException {
+	final String url = "http://fenix.ist.utl.pt/phd/epfl/applications/notAuthorized";
+	return new ActionForward(url, true);
+    }
+
+    private PhdIndividualProgramProcess readProcessByNumber(int year, String number) {
+	Set<PhdIndividualProgramProcessNumber> processList = PhdIndividualProgramProcessNumber.readByYear(year);
+
+	for (PhdIndividualProgramProcessNumber process : processList) {
+	    if (process.getNumber().toString().equals(number)) {
+		return process.getProcess();
+	    }
+	}
+
+	return null;
     }
 
 }

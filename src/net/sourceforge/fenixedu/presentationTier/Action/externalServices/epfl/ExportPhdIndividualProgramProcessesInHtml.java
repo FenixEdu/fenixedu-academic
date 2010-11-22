@@ -8,10 +8,10 @@ import java.io.OutputStream;
 import java.util.Comparator;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.Map.Entry;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -33,8 +33,7 @@ import net.sourceforge.fenixedu.util.StringUtils;
 public class ExportPhdIndividualProgramProcessesInHtml {
     // TODO: IST-<Collaboration>: collaboration must be added as argument
     static final private String APPLICATION_NAME = "Application to the IST-EPFL Joint Doctoral Initiative";
-    static final private String APPLICATION_PREFIX_LINK = "/en/about-IST/global-cooperation/IST-EPFL/private/";
-    static final private String APPLICANTS_PREFIX_LINK = APPLICATION_PREFIX_LINK + "applicants/";
+    static final private String APPLICATION_PREFIX_LINK = "";
 
     static byte[] exportPresentationPage() throws IOException {
 	final Page page = new Page();
@@ -45,7 +44,8 @@ public class ExportPhdIndividualProgramProcessesInHtml {
 
 	    page.ulStart();
 	    for (final PhdProgramPublicCandidacyHashCode code : entry.getValue()) {
-		final String url = "epflCandidateInformation.do?method=displayCandidatePage&amp;candidateOid=" + code.getExternalId();
+		final String url = APPLICATION_PREFIX_LINK + "/phd/epfl/applications/show?process="
+			+ code.getIndividualProgramProcess().getPhdIndividualProcessNumber().getNumber();
 		page.liStart().link(url, code.getPerson().getName()).liEnd();
 	    }
 	    page.ulEnd();
@@ -58,10 +58,6 @@ public class ExportPhdIndividualProgramProcessesInHtml {
 
     private static String getFocusAreaTitle(final Entry<PhdProgramFocusArea, Set<PhdProgramPublicCandidacyHashCode>> entry) {
 	return entry.getKey().getName().getContent() + " (" + entry.getValue().size() + " applications)";
-    }
-
-    private static String buildPageLinkUrl(final String page) {
-	return APPLICATION_PREFIX_LINK + "index.php?page=" + page;
     }
 
     private static Map<PhdProgramFocusArea, Set<PhdProgramPublicCandidacyHashCode>> getApplicants() {
@@ -149,10 +145,10 @@ public class ExportPhdIndividualProgramProcessesInHtml {
 	page.tableEnd();
 
 	page.h(3, "Photo");
-	String photoUrl = "epflCandidateInformation.do?method=displayPhoto";
+	String photoUrl = APPLICATION_PREFIX_LINK + "/phd/epfl/applications/photo";
 	final Photograph photo = person.getPersonalPhotoEvenIfPending();
 	if (photo != null) {
-	    photoUrl += "&amp;photoOid=" + photo.getExternalId();
+	    photoUrl += "?photoOid=" + photo.getExternalId();
 	}
 	page.photo(photoUrl);
     }
@@ -172,7 +168,8 @@ public class ExportPhdIndividualProgramProcessesInHtml {
 	page.tableEnd();
     }
 
-    private static void drawDocuments(final Page page, final PhdProgramPublicCandidacyHashCode hashCode, final String folderName) throws IOException {
+    private static void drawDocuments(final Page page, final PhdProgramPublicCandidacyHashCode hashCode, final String folderName)
+	    throws IOException {
 
 	page.h(3, "Documents", "mtop2");
 
@@ -180,7 +177,8 @@ public class ExportPhdIndividualProgramProcessesInHtml {
 	if (!process.getCandidacyProcessDocuments().isEmpty()) {
 
 	    final String documentName = folderName + "-documents.zip";
-	    final String url = "epflCandidateInformation.do?method=downloadCandidateDocuments&amp;candidateOid=" + hashCode.getExternalId();
+	    final String url = APPLICATION_PREFIX_LINK + "/phd/epfl/applications/candidateDocuments?candidateOid="
+		    + hashCode.getExternalId();
 	    page.pStart("mbottom0").link(url, documentName).pEnd();
 
 	    page.tableStart("tstyle2 thwhite thnowrap thlight thleft thtop ulnomargin width100pc");
@@ -249,8 +247,9 @@ public class ExportPhdIndividualProgramProcessesInHtml {
 	}
     }
 
+    // "displayRefereePage"
     private static void drawReferee(final Page page, final PhdCandidacyReferee referee, final int count, final String folderName)
-    		throws IOException {
+	    throws IOException {
 
 	page.tableStart("tstyle2 thwhite thnowrap thlight thleft thtop ulnomargin width100pc");
 	page.rowStart().headerStartWithStyle("width: 125px;").write("Name:").headerEnd().column(referee.getName()).rowEnd();
@@ -259,10 +258,8 @@ public class ExportPhdIndividualProgramProcessesInHtml {
 
 	if (referee.isLetterAvailable()) {
 	    page.rowStart().header("Referee form submitted:");
-	    final String url = "epflCandidateInformation.do?method=displayRefereePage&amp;refereeOid="
-			+ referee.getExternalId()
-			+ "&amp;count="
-			+ count;
+	    final String url = APPLICATION_PREFIX_LINK + "/phd/epfl/applications/referee?refereeOid=" + referee.getExternalId()
+		    + "&amp;count=" + count;
 	    page.columnStart().link(url, "Yes").columnEnd().rowEnd();
 	} else {
 	    page.rowStart().header("Referee form submitted:").column("No").rowEnd();
@@ -411,6 +408,8 @@ public class ExportPhdIndividualProgramProcessesInHtml {
 	Page() throws IOException {
 	    write("<xhtml>");
 	    write("<head>");
+	    css(APPLICATION_PREFIX_LINK + "/CSS/iststyle.css");
+	    css(APPLICATION_PREFIX_LINK + "/CSS/webservice.css");
 	    write("</head>");
 	    write("<body>");
 	}
@@ -419,6 +418,10 @@ public class ExportPhdIndividualProgramProcessesInHtml {
 	    write("</body>");
 	    write("</xhtml>");
 	    return writer.toByteArray();
+	}
+
+	public Page css(final String url) throws IOException {
+	    return write(String.format("<link rel=\"stylesheet\" type=\"text/css\" media=\"screen\"  href=\"%s\" />", url));
 	}
 
 	public Page h2(final String body) throws IOException {
