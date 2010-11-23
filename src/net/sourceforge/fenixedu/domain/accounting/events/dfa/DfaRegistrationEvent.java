@@ -29,18 +29,31 @@ public class DfaRegistrationEvent extends DfaRegistrationEvent_Base {
 
     public DfaRegistrationEvent(AdministrativeOffice administrativeOffice, Person person, Registration registration) {
 	this();
-	init(administrativeOffice, person, registration);
+	ExecutionYear executionYear = registration.getStudentCandidacy().getExecutionDegree().getExecutionYear();
+	init(administrativeOffice, person, registration, executionYear);
     }
 
-    private void init(AdministrativeOffice administrativeOffice, Person person, Registration registration) {
+    public DfaRegistrationEvent(AdministrativeOffice administrativeOffice, Person person, Registration registration,
+	    ExecutionYear executionYear) {
+	this();
+	init(administrativeOffice, person, registration, executionYear);
+    }
+
+    private void init(AdministrativeOffice administrativeOffice, Person person, Registration registration,
+	    ExecutionYear executionYear) {
 	super.init(administrativeOffice, EventType.DFA_REGISTRATION, person);
-	checkParameters(registration);
+	checkParameters(registration, executionYear);
 	super.setRegistration(registration);
+	super.setExecutionYear(executionYear);
     }
 
-    private void checkParameters(Registration registration) {
+    private void checkParameters(Registration registration, ExecutionYear executionYear) {
 	if (registration == null) {
 	    throw new DomainException("error.accounting.events.dfa.DfaRegistrationEvent.registration.cannot.be.null");
+	}
+
+	if (executionYear == null) {
+	    throw new DomainException("error.accounting.events.dfa.DfaRegistrationEvent.execution.year.cannot.be.null");
 	}
     }
 
@@ -49,7 +62,7 @@ public class DfaRegistrationEvent extends DfaRegistrationEvent_Base {
 	final LabelFormatter labelFormatter = new LabelFormatter();
 	labelFormatter.appendLabel(entryType.name(), "enum").appendLabel(" (").appendLabel(getDegree().getDegreeType().name(),
 		"enum").appendLabel(" - ").appendLabel(getDegree().getNameFor(getExecutionYear()).getContent())
-		.appendLabel(" - ").appendLabel(getExecutionDegree().getExecutionYear().getYear()).appendLabel(")");
+		.appendLabel(" - ").appendLabel(getExecutionYear().getYear()).appendLabel(")");
 
 	return labelFormatter;
     }
@@ -98,10 +111,6 @@ public class DfaRegistrationEvent extends DfaRegistrationEvent_Base {
 	return getExecutionDegree().getDegreeCurricularPlan().hasRegistrationPeriodFor(getExecutionYear());
     }
 
-    private ExecutionYear getExecutionYear() {
-	return getExecutionDegree().getExecutionYear();
-    }
-
     public CandidacyPeriodInDegreeCurricularPlan getCandidacyPeriodInDegreeCurricularPlan() {
 	return getExecutionDegree().getDegreeCurricularPlan().getCandidacyPeriod(getExecutionYear());
     }
@@ -116,6 +125,10 @@ public class DfaRegistrationEvent extends DfaRegistrationEvent_Base {
 
     public DateTime getCandidacyDate() {
 	return getCandidacy().getCandidacyDate();
+    }
+
+    public ExecutionYear getObsoleteExecutionYear() {
+	return getExecutionDegree().getExecutionYear();
     }
 
     @Override

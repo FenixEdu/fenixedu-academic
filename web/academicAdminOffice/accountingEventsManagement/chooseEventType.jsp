@@ -1,7 +1,8 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@page import="net.sourceforge.fenixedu.domain.accounting.EventType"%>
 
-<%@page import="net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType"%><html:xhtml />
+<%@page import="net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType"%>
+<%@page import="net.sourceforge.fenixedu.domain.degree.DegreeType"%><html:xhtml />
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
@@ -68,6 +69,14 @@
 					<bean:message  key="label.accountingEvents.management.createEvents.createInsuranceEvent" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 				</html:link>
 			</li>
+			
+			<logic:equal name="studentCurricularPlan" property="degreeType.name" value="<%= DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA.name() %>">
+				<li>
+					<html:link action="<%= "/accountingEventsManagement.do?method=chooseEventType&amp;scpID=" + scpID.toString() + "&amp;eventType=" + EventType.DFA_REGISTRATION  %>">
+						<bean:message key="label.accountingEvents.management.createEvents.createDfaRegistration" bundle="ACADEMIC_OFFICE_RESOURCES" />
+					</html:link>
+				</li>
+			</logic:equal>
 		</logic:equal>
 		
 		<li>

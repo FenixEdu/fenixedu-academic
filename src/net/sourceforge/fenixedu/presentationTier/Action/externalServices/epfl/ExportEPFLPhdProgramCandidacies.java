@@ -40,12 +40,7 @@ public class ExportEPFLPhdProgramCandidacies {
 
 		    });
 	    for (PhdIndividualProgramProcess process : list) {
-		if (!"202/2010".equals(process.getProcessNumber())) {
-		    continue;
-		}
-
 		writePersonInfo(process, writer);
-		break;
 	    }
 
 	    writer.println("</data>");
@@ -65,10 +60,8 @@ public class ExportEPFLPhdProgramCandidacies {
     private static void writePersonInfo(PhdIndividualProgramProcess process, PrintWriter writer) {
 	writer.println(addTabs(1) + "<personne action=\"AUTO\">");
 	Person person = process.getPerson();
-	String[] names = person.getName().split(",");
-
-	writer.println(addTabs(2) + String.format("<nom>%s</nom>", names[0].trim()));
-	writer.println(addTabs(2) + String.format("<prenom>%s</prenom>", names[1].trim()));
+	writer.println(addTabs(2) + String.format("<nom>%s</nom>", person.getGivenNames()));
+	writer.println(addTabs(2) + String.format("<prenom>%s</prenom>", person.getFamilyNames()));
 	writer.println(addTabs(2)
 		+ String.format("<sexe>%s</sexe>", (Gender.MALE.compareTo(person.getGender()) == 0 ? "SEXH" : "SEXF")));
 	writer.println(addTabs(2)
@@ -115,7 +108,7 @@ public class ExportEPFLPhdProgramCandidacies {
 
 	writer.println(addTabs(3) + "</gps>");
 
-	writer.println(addTabs(3) + String.format(" <detail type=\"URL_IST-EPFL\"></detail>"));
+	writer.println(addTabs(3) + String.format(" <detail type=\"URL_IST-EPFL\">%s</detail>", getUrlForProcess(process)));
 
 	writer.println(addTabs(3)
 		+ String.format("<detail type=\"PRG_DOCT_EPFL\" format=\"COURTU\">%s</detail>", process.getExternalPhdProgram()
@@ -127,6 +120,11 @@ public class ExportEPFLPhdProgramCandidacies {
 	writer.println(addTabs(2) + "</inscription>");
 
 	writer.println(addTabs(1) + "</personne>");
+    }
+
+    private static String getUrlForProcess(PhdIndividualProgramProcess process) {
+	return String.format("https://fenix.ist.utl.pt/phd/epfl/applications/show?process=%s", process
+		.getPhdIndividualProcessNumber().getNumber());
     }
 
     private static String addTabs(int level) {

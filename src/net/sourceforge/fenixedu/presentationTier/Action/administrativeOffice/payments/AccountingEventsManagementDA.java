@@ -33,7 +33,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "createGratuityEvent", path = "/academicAdminOffice/accountingEventsManagement/createGratuityEvent.jsp"),
 	@Forward(name = "createAdministrativeOfficeFeeAndInsuranceEvent", path = "/academicAdminOffice/accountingEventsManagement/createAdministrativeOfficeFeeAndInsuranceEvent.jsp"),
 	@Forward(name = "createInsuranceEvent", path = "/academicAdminOffice/accountingEventsManagement/createInsuranceEvent.jsp"),
-	@Forward(name = "createEnrolmentOutOfPeriodEvent", path = "/academicAdminOffice/accountingEventsManagement/createEnrolmentOutOfPeriodEvent.jsp")
+	@Forward(name = "createEnrolmentOutOfPeriodEvent", path = "/academicAdminOffice/accountingEventsManagement/createEnrolmentOutOfPeriodEvent.jsp"),
+	@Forward(name = "createDfaRegistrationEvent", path = "/academicAdminOffice/accountingEventsManagement/createDfaRegistrationEvent.jsp")
 
 })
 public class AccountingEventsManagementDA extends FenixDispatchAction {
@@ -76,10 +77,47 @@ public class AccountingEventsManagementDA extends FenixDispatchAction {
 	    return prepareCreateEnrolmentOutOfPeriod(mapping, request);
 	case INSURANCE:
 	    return prepareCreateInsuranceEvent(mapping, request);
+	case DFA_REGISTRATION:
+	    return prepareCreateDfaRegistration(mapping, request);
 	default:
 	    throw new RuntimeException("Unknown event type");
 	}
 
+    }
+
+    private ActionForward prepareCreateDfaRegistration(ActionMapping mapping, HttpServletRequest request) {
+	request.setAttribute("accountingEventCreateBean", new AccountingEventCreateBean(getStudentCurricularPlan(request)));
+	return mapping.findForward("createDfaRegistrationEvent");
+    }
+
+    public ActionForward prepareCreateDfaRegistrationInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("accountingEventCreateBean", getAccountingEventCreateBean());
+	return mapping.findForward("createDfaRegistrationEvent");
+    }
+
+    public ActionForward createDfaRegistrationEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final AccountingEventCreateBean accountingEventCreateBean = getAccountingEventCreateBean();
+	try {
+	    AccountingEventsCreator.createDfaRegistrationEvent(accountingEventCreateBean.getStudentCurricularPlan(),
+		    accountingEventCreateBean.getExecutionYear());
+
+	    addActionMessage("success", request, "label.accountingEvents.management.createEvents.eventCreatedWithSucess");
+
+	    request.setAttribute("scpID", accountingEventCreateBean.getStudentCurricularPlan().getIdInternal());
+	    return prepare(mapping, form, request, response);
+
+	} catch (DomainExceptionWithInvocationResult e) {
+	    addActionMessages("error", request, e.getInvocationResult().getMessages());
+	} catch (DomainException e) {
+	    addActionMessage("error", request, e.getKey(), e.getArgs());
+	}
+
+	request.setAttribute("accountingEventCreateBean", accountingEventCreateBean);
+
+	return mapping.findForward("createDfaRegistrationEvent");
     }
 
     private ActionForward prepareCreateGratuityEvent(ActionMapping mapping, HttpServletRequest request) {

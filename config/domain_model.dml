@@ -9661,6 +9661,13 @@ relation DfaRegistrationEventRegistration {
     accounting.events.dfa.DfaRegistrationEvent playsRole dfaRegistrationEvent;
 }
 
+relation DfaRegistrationEventExecutionYear {
+	ExecutionYear playsRole executionYear;
+	accounting.events.dfa.DfaRegistrationEvent playsRole dfaRegistrationEvents {
+		multiplicity *;
+	}
+}
+
 relation DistributedTestQuestions {
     onlineTests.DistributedTest playsRole distributedTest;
     onlineTests.StudentTestQuestion playsRole distributedTestQuestions {
