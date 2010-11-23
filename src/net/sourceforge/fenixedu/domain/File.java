@@ -175,4 +175,11 @@ public abstract class File extends File_Base {
 	setUploadTime(new DateTime());
     }
 
+    @Override
+    public void setPermittedGroup(Group permittedGroup) {
+        super.setPermittedGroup(permittedGroup);
+        final boolean isPublic = permittedGroup == null || permittedGroup instanceof EveryoneGroup;
+	FileManagerFactory.getFactoryInstance().getContentFileManager().changeFilePermissions(getExternalStorageIdentification(), !isPublic);
+    }
+
 }
