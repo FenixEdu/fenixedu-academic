@@ -80,6 +80,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 	professorShip.setHours((hours == null) ? new Double(0.0) : hours);
 	professorShip.setExecutionCourse(executionCourse);
 	professorShip.setPerson(person);
+	professorShip.setPermissions(new ProfessorshipPermissions());
 
 	if (responsibleFor.booleanValue() && professorShip.getPerson().getTeacher() != null) {
 	    ResponsibleForValidator.getInstance().validateResponsibleForList(professorShip.getPerson().getTeacher(),
@@ -277,6 +278,22 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 
     public void removeTeacher() {
 	removePerson();
+    }
+    
+    @Service
+    private ProfessorshipPermissions lazyCreateProfessorshipPermissions(){
+	ProfessorshipPermissions professorshipPermissions = new ProfessorshipPermissions();
+	setPermissions(professorshipPermissions);
+	return professorshipPermissions;
+    }
+    
+    @Override
+    public ProfessorshipPermissions getPermissions() {
+        ProfessorshipPermissions proferssorshipPermissions = super.getPermissions();
+        if (proferssorshipPermissions == null){
+            proferssorshipPermissions = lazyCreateProfessorshipPermissions();
+        }
+        return proferssorshipPermissions; 
     }
 
 }

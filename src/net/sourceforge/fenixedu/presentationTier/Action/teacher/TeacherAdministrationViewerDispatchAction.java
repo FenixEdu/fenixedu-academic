@@ -394,6 +394,16 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	return mapping.findForward("viewTeachers");
     }
 
+    public ActionForward viewProfessorshipProperties(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
+	String username = getUsername(request);
+	ISiteComponent teachersComponent = new InfoSiteTeachers();
+	readSiteView(request, teachersComponent, null, null, username);
+	Professorship professorship = getDomainObject(request, "teacherOID");
+	request.setAttribute("professorship", professorship);
+	return mapping.findForward("professorshipProperties");
+    }
+
     private String getUsername(HttpServletRequest request) {
 	IUserView userView = getUserView(request);
 	String username = userView.getUtilizador();
@@ -1216,7 +1226,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	enrolmentPolicyValues.add(new Integer(2));
 
 	List enrolmentPolicyNames = new ArrayList();
-	enrolmentPolicyNames.add("Atómica");
+	enrolmentPolicyNames.add("Atï¿½mica");
 	enrolmentPolicyNames.add("Individual");
 
 	enrolmentPolicyValues.remove(enrolmentPolicy.intValue() - 1);

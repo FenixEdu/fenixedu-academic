@@ -711,6 +711,7 @@
             <set-property property="componentClassName" value="net.sourceforge.fenixedu.dataTransferObject.InfoSiteTeachers"/>
             <set-property property="inputForwardName" value="viewTeachers"/>           
             <forward name="viewTeachers" path="/viewTeachers.jsp"/>
+            <forward name="professorshipProperties" path="professorship-properties"/>
         </action>
         <action path="/teacherManagerDA" name="teacherForm" parameter="method" scope="request" 
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction" 

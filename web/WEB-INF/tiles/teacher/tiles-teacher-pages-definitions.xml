@@ -536,6 +536,14 @@
 	<definition name="manage-execution-course-createItem" extends="manage-execution-course-site-createSection">
 		<put name="body" value="/commons/sites/createItem.jsp" />
 	</definition>
+	
+	<definition name="professorship-properties" extends="execution-course-administration">
+		<put name="body" value="/teacher/viewProfessorshipProperties.jsp"></put>
+		<put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
+		<put name="executionCourseName" value="/teacher/executionCourseName.jsp" />
+		<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp" type="page"/>
+		<put name="footer" value="/copyright.jsp" />
+	</definition>
 
 	<definition name="manage-execution-course-editItem" extends="manage-execution-course-site-createSection">
 		<put name="body" value="/commons/sites/editItem.jsp" />

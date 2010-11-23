@@ -7546,6 +7546,27 @@ class accounting.report.GratuityReportQueueJob extends QueueJobWithFile {
 }
 
 
+class ProfessorshipPermissions extends DomainObject {
+	boolean personalization;
+	boolean siteArchive;
+	boolean announcements;
+	boolean sections;
+	boolean summaries;
+	boolean students;
+	boolean planning;
+	boolean evaluationSpecific;
+	boolean evaluationWorksheets;
+	boolean evaluationProject;
+	boolean evaluationTests;
+	boolean evaluationExams;
+	boolean evaluationFinal;
+	boolean worksheets;
+	boolean groups;
+	boolean shift;
+	boolean evaluationMethod;
+	boolean bibliografy;
+}
+
 class student.importation.DgesBaseProcess extends QueueJobWithFile {
 	EntryPhase entryPhase;
 }
@@ -18708,6 +18729,18 @@ relation ExternalPhdProgramPhdProgramFocusArea {
     phd.PhdProgramFocusArea playsRole phdProgramFocusAreas {
         multiplicity *;
     }
+}
+
+relation ProfessorshipPremissionsProfessorship {
+	Professorship playsRole professorship;
+	ProfessorshipPermissions playsRole permissions;
+}
+
+relation PremissionsProfessorshipRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	ProfessorshipPermissions playsRole professorshipPermissions {
+		multiplicity *;
+	}
 }
 
 relation ErasmusCandidacyProcessErasmusCandidacyProcessReport {

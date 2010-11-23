@@ -49,8 +49,8 @@
 			</td>
 			<td>
 				<bean:define id="teacherOID" name="professorship" property="externalId"/>		
-				<html:link page="<%= "/teachersManagerDA.do?method=removeTeacher&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;teacherOID=" + teacherOID %>">
-					<bean:message key="link.removeTeacher"/>
+				<html:link page="<%= "/teachersManagerDA.do?method=viewProfessorshipProperties&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;teacherOID=" + teacherOID %>">
+					Detalhes
 				</html:link>
 			</td>
 		</logic:equal>

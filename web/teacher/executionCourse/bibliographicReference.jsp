@@ -18,7 +18,10 @@
 </div>
 
 <logic:present name="executionCourse">
-
+	<bean:define id="professorship" name="executionCourse" property="professorshipForCurrentUser"/>
+	<bean:define id="professorshipPermissions" name="professorship" property="permissions"/>
+	
+	<logic:equal name="professorshipPermissions" property="bibliografy" value="true">
 	<p>
 		<div class="gen-button">
 			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
@@ -33,7 +36,7 @@
 			</html:link>
 		</div>
 	</p>
-
+	</logic:equal>
 
 	<h3 class="mtop2">
 		<bean:message key="message.recommendedBibliography"/>

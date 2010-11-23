@@ -20,7 +20,10 @@
 
 
 <logic:present name="executionCourse">
-
+	<bean:define id="professorship" name="executionCourse" property="professorshipForCurrentUser"/>
+	<bean:define id="professorshipPermissions" name="professorship" property="permissions"/>
+	
+	<logic:equal name="professorshipPermissions" property="evaluationMethod" value="true">
 	<ul class="mvert1">
 		<li>
 			<html:link page="/editEvaluationMethod.do?method=prepareEditEvaluationMethod" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
@@ -33,6 +36,7 @@
 			</html:link>
 		</li>
 	</ul>
+	</logic:equal>
 
 	<h3 class="mtop15">
 		<bean:message key="title.evaluationMethod"/>
