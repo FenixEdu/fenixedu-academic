@@ -178,8 +178,10 @@ public abstract class File extends File_Base {
     @Override
     public void setPermittedGroup(Group permittedGroup) {
         super.setPermittedGroup(permittedGroup);
-        final boolean isPublic = permittedGroup == null || permittedGroup instanceof EveryoneGroup;
-	FileManagerFactory.getFactoryInstance().getContentFileManager().changeFilePermissions(getExternalStorageIdentification(), !isPublic);
+        if (!hasLocalContent()) {
+            final boolean isPublic = permittedGroup == null || permittedGroup instanceof EveryoneGroup;
+            FileManagerFactory.getFactoryInstance().getContentFileManager().changeFilePermissions(getExternalStorageIdentification(), !isPublic);
+        }
     }
 
 }
