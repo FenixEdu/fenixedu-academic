@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create Professorship Permissoins" createProfessorshipPermissions.sql
