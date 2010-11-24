@@ -34,6 +34,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.PhdThesisActivity;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.PrintJuryElementsDocument;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RatifyFinalThesis;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RejectJuryElements;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.RejectJuryElementsDocuments;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryElements;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryReviews;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisDiscussion;
@@ -103,6 +104,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	activities.add(new ScheduleThesisDiscussion());
 	activities.add(new RatifyFinalThesis());
 	activities.add(new SetFinalGrade());
+	activities.add(new RejectJuryElementsDocuments());
     }
 
     private PhdThesisProcess() {
@@ -331,6 +333,19 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 		addDocument(each, responsible);
 	    }
 	}
+    }
+
+    public void rejectJuryElementsDocuments() {
+	getJuryElementsDocument().setDocumentAccepted(false);
+	getJuryPresidentDocument().setDocumentAccepted(false);
+    }
+
+    public void deleteLastState() {
+	if (getStates().size() <= 1) {
+	    throw new DomainException("error.PhdThesisProcess.states.size.is.one");
+	}
+
+	getMostRecentState().delete();
     }
 
 }

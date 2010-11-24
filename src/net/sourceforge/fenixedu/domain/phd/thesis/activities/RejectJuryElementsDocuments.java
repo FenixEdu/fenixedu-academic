@@ -1,0 +1,43 @@
+package net.sourceforge.fenixedu.domain.phd.thesis.activities;
+
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
+import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
+import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
+import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
+import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType;
+
+public class RejectJuryElementsDocuments extends PhdThesisActivity {
+
+    @Override
+    protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
+
+	if (!process.getJuryElementsDocument().getDocumentAccepted() && !process.getJuryPresidentDocument().getDocumentAccepted()) {
+	    throw new PreConditionNotValidException();
+	}
+
+	if (!process.getActiveState().equals(PhdThesisProcessStateType.JURY_WAITING_FOR_VALIDATION)) {
+	    throw new PreConditionNotValidException();
+	}
+
+    }
+
+    @Override
+    protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
+	final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
+
+	process.deleteLastState();
+
+	process.rejectJuryElementsDocuments();
+	
+	if(bean.isToNotify()) {
+	    AlertService.alertCoordinators(process.getIndividualProgramProcess(),
+		    "message.phd.alert.reject.jury.elements.documents.subject",
+		    "message.phd.alert.reject.jury.elements.documents.body");
+	}
+
+	return process;
+
+    }
+
+}

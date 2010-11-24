@@ -7239,6 +7239,7 @@ class phd.PhdProgramProcessDocument extends File {
     PhdIndividualProgramDocumentType documentType;  
     String remarks;
     Integer documentVersion;
+    Boolean documentAccepted;
 }
 
 class phd.PhdThesisReportFeedbackDocument extends phd.PhdProgramProcessDocument {

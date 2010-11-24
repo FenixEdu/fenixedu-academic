@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.EditJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.MoveJuryElementOrder;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RatifyFinalThesis;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RejectJuryElements;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.RejectJuryElementsDocuments;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryElements;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryReviews;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisDiscussion;
@@ -87,7 +88,9 @@ import pt.utl.ist.fenix.tools.util.Pair;
 
 @Forward(name = "ratifyFinalThesis", path = "/phd/thesis/academicAdminOffice/ratifyFinalThesis.jsp"),
 
-@Forward(name = "setFinalGrade", path = "/phd/thesis/academicAdminOffice/setFinalGrade.jsp")
+@Forward(name = "setFinalGrade", path = "/phd/thesis/academicAdminOffice/setFinalGrade.jsp"),
+
+@Forward(name = "rejectJuryElementsDocuments", path = "/phd/thesis/academicAdminOffice/rejectJuryElementsDocuments.jsp")
 
 })
 public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
@@ -711,4 +714,34 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
     }
 
     // End of set final grade
+
+    // Reject jury elements documents
+
+    public ActionForward prepareRejectJuryElementsDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final PhdThesisProcessBean bean = new PhdThesisProcessBean();
+	request.setAttribute("thesisProcessBean", bean);
+
+	return mapping.findForward("rejectJuryElementsDocuments");
+    }
+
+    public ActionForward rejectJuryElementsDocuments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	try {
+
+	    ExecuteProcessActivity.run(getProcess(request), RejectJuryElementsDocuments.class,
+		    getRenderedObject("thesisProcessBean"));
+	    addSuccessMessage(request, "message.thesis.jury.elements.documents.rejected.with.success");
+
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getMessage(), e.getArgs());
+	    request.setAttribute("thesisProcessBean", getRenderedObject("thesisProcessBean"));
+	    return mapping.findForward("rejectJuryElementsDocuments");
+	}
+
+	return viewIndividualProgramProcess(request, getProcess(request));
+    }
+
+    // End of reject jury elements document
+
 }

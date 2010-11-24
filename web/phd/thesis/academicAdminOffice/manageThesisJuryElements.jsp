@@ -81,6 +81,11 @@
 		<bean:write name="process" property="juryPresidentDocument.documentType.localizedName"/> 
 		(<bean:message  key="label.version" bundle="PHD_RESOURCES" /> <bean:write name="process" property="juryPresidentDocument.documentVersion"/>)
 	</a>
+	<logic:equal name="process" property="juryPresidentDocument.documentAccepted" value="false">
+		<span style="color:red"> 
+			<bean:message key="label.net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean.document.rejected" bundle="PHD_RESOURCES" />
+		</span>
+	</logic:equal>
 	<br/>
 </logic:notEmpty>
 
@@ -91,6 +96,11 @@
 		<bean:write name="process" property="juryElementsDocument.documentType.localizedName"/> 
 		(<bean:message  key="label.version" bundle="PHD_RESOURCES" /> <bean:write name="process" property="juryElementsDocument.documentVersion"/>)
 	</a>
+	<logic:equal name="process" property="juryElementsDocument.documentAccepted" value="false"> 
+		<span style="color:red">
+			<bean:message key="label.net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean.document.rejected" bundle="PHD_RESOURCES" />
+		</span>
+	</logic:equal>
 	<br/><br/>
 </logic:notEmpty>
 

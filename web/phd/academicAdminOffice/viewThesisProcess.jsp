@@ -16,6 +16,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisDiscussion"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.RatifyFinalThesis"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.SetFinalGrade"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.RejectJuryElementsDocuments"%>
 
 <logic:notEmpty name="process" property="thesisProcess">
 <logic:equal name="process" property="activeState.active" value="true">
@@ -84,6 +85,13 @@
 				<bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.jury.elements"/>
 			</html:link>
 		</li>
+		<phd:activityAvailable process="<%= thesisProcess %>" activity="<%= RejectJuryElementsDocuments.class %>">
+		<li style="display: inline;">
+			<html:link action="/phdThesisProcess.do?method=prepareRejectJuryElementsDocuments" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId" >
+				<bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.reject.jury.elements.documents" />
+			</html:link>
+		</li>
+		</phd:activityAvailable>
 	</logic:notEqual>
 	
 	<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= RequestJuryReviews.class %>">

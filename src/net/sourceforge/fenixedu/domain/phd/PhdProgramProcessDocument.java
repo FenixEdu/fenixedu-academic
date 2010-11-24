@@ -52,6 +52,7 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
 	super.setDocumentType(documentType);
 	super.setRemarks(remarks);
 	super.setUploader(uploader);
+	super.setDocumentAccepted(true);
 
 	final Group roleGroup = new RoleGroup(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);
 
