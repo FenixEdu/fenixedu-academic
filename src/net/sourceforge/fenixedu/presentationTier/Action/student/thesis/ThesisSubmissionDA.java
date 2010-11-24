@@ -200,7 +200,8 @@ public class ThesisSubmissionDA extends AbstractManageThesisDA {
 
     public ActionForward prepareUploadDissertation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	request.setAttribute("fileBean", new ThesisFileBean());
+	final Thesis thesis = getThesis(request);
+	request.setAttribute("fileBean", new ThesisFileBean(thesis));
 	return mapping.findForward("thesis-upload-dissertation");
     }
 

@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.student.thesis;
 import java.io.InputStream;
 import java.io.Serializable;
 
+import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ThesisFileBean implements Serializable {
@@ -19,6 +20,15 @@ public class ThesisFileBean implements Serializable {
     private Long fileSize;
 
     transient private InputStream file;
+
+    public ThesisFileBean() {
+    }
+
+    public ThesisFileBean(final Thesis thesis) {
+	title = thesis.getFinalTitle().getContent();
+	subTitle = thesis.getFinalSubtitle() != null ? thesis.getFinalSubtitle().getContent() : null;
+	language = thesis.getFinalFullTitle().getContentLanguage();
+    }
 
     public String getTitle() {
 	return this.title;
