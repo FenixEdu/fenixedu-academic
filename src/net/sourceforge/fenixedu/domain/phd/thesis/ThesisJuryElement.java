@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.phd.thesis;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -115,6 +116,20 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
 
     public String getNameWithTitle() {
 	return getParticipant().getNameWithTitle();
+    }
+
+    public String getNameWithTitleAndRoleOnProcess() {
+	StringBuilder stringBuilder = new StringBuilder(getNameWithTitle());
+	ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.PhdResources");
+	if (getProcess().getIndividualProgramProcess().isGuider(getParticipant())) {
+	    stringBuilder.append(" (").append(resourceBundle.getString("label.phd.guiding")).append(")");
+	}
+
+	if (getProcess().getIndividualProgramProcess().isAssistantGuider(getParticipant())) {
+	    stringBuilder.append(" (").append(resourceBundle.getString("label.phd.assistant.guiding")).append(")");
+	}
+
+	return stringBuilder.toString();
     }
 
     public String getQualification() {

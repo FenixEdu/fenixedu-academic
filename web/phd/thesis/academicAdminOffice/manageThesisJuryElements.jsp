@@ -122,7 +122,7 @@
 
 	<fr:schema bundle="PHD_RESOURCES" type="<%= ThesisJuryElement.class.getName() %>">
 		<fr:slot name="elementOrder" />
-		<fr:slot name="nameWithTitle" />
+		<fr:slot name="nameWithTitleAndRoleOnProcess" key="label.net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement.nameWithTitle"/>
 		<fr:slot name="category" />
 		<%-- 
 		<fr:slot name="workLocation" />
