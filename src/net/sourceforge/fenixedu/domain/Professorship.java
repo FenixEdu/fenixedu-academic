@@ -101,6 +101,11 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 	    removeExecutionCourse();
 	    removePerson();
 	    removeRootDomainObject();
+	    if (super.getPermissions() != null){
+		getPermissions().removeRootDomainObject();
+		getPermissions().removeProfessorship();
+		getPermissions().deleteDomainObject();
+	    }
 	    deleteDomainObject();
 	}
     }

@@ -726,6 +726,7 @@
                 handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler" />
             <forward name="viewTeachers" path="/viewTeachers.jsp"/>
             <forward name="associateTeacher" path="/associateTeacher.jsp"/>
+            <forward name="professorshipProperties" path="professorship-properties"/>
         </action>
         <action name="executionCourseCurriculumForm" parameter="method" scope="request" 
             input="/viewObjectives.jsp" path="/curriculumManagerDA" 

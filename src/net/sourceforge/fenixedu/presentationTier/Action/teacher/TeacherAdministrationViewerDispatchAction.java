@@ -437,9 +437,11 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		person = teacher == null ? null : teacher.getPerson();
 	    }
 	}
+	
 	if (person != null) {
 	    try {
-		Professorship.create(false, rootDomainObject.readExecutionCourseByOID(objectCode), person, 0.0);
+		Professorship professorship = Professorship.create(false, rootDomainObject.readExecutionCourseByOID(objectCode), person, 0.0);
+		request.setAttribute("teacherOID", professorship.getExternalId());
 	    } catch (FenixServiceException e) {
 		throw new FenixActionException(e);
 	    }
@@ -449,7 +451,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	    saveErrors(request, actionErrors);
 	    return prepareAssociateTeacher(mapping, teacherForm, request, response);
 	}
-	return viewTeachersByProfessorship(mapping, form, request, response);
+	return viewProfessorshipProperties(mapping, teacherForm, request, response);
     }
 
     public ActionForward removeTeacher(ActionMapping mapping, ActionForm form, HttpServletRequest request,
