@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Adding column for acceptance status to Phd documents" addPhdDocumentsAcceptanceStatus.sql
