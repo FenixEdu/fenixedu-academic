@@ -38,6 +38,10 @@ public class ExportEPFLPhdProgramCandidacies {
 				return false;
 			    }
 
+			    if (!t.getCandidacyProcess().getValidatedByCandidate()) {
+				return false;
+			    }
+
 			    return PhdProgramCandidacyProcessState.PRE_CANDIDATE.equals(t.getCandidacyProcess().getActiveState());
 			}
 
