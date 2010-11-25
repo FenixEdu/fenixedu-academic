@@ -98,9 +98,9 @@ public class ExportPhdIndividualProgramProcessInformation extends FenixAction {
 
     private void exportInformationXml(final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 	response.addHeader("Content-Disposition", "attachment; filename=epfl.xml");
-	response.setContentType("UTF-8");
+	response.setContentType("iso-8859-1");
 	final byte[] content = ExportEPFLPhdProgramCandidacies.run();
-	writeResponse(response, content, "application/zip");
+	writeResponse(response, content, "application/xml");
     }
 
     private void writeResponse(HttpServletResponse response, final byte[] presentationPage, final String contentType)

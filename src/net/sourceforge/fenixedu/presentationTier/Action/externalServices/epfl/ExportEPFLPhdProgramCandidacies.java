@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.externalServices.epfl;
 
 import java.io.ByteArrayOutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.List;
 
@@ -12,15 +13,17 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ExportEPFLPhdProgramCandidacies {
 
     public static byte[] run() throws Exception {
 	final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-	PrintWriter writer = new PrintWriter(outputStream);
+	OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream, "iso-8859-1");
+	PrintWriter writer = new PrintWriter(outputStreamWriter);
 
 	try {
-	    writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
+	    writer.println("<?xml version=\"1.0\" encoding=\"iso-8859-1\" ?>");
 	    writer.println("<data>");
 	    List<PhdIndividualProgramProcess> list = PhdIndividualProgramProcess.search(ExecutionYear.readCurrentExecutionYear(),
 		    new Predicate<PhdIndividualProgramProcess>() {
@@ -62,8 +65,7 @@ public class ExportEPFLPhdProgramCandidacies {
 	Person person = process.getPerson();
 	writer.println(addTabs(2) + String.format("<nom>%s</nom>", person.getGivenNames()));
 	writer.println(addTabs(2) + String.format("<prenom>%s</prenom>", person.getFamilyNames()));
-	writer.println(addTabs(2)
-		+ String.format("<sexe>%s</sexe>", (Gender.MALE.compareTo(person.getGender()) == 0 ? "SEXH" : "SEXF")));
+	writer.println(addTabs(2) + String.format("<sexe>%s</sexe>", Gender.MALE.equals(person.getGender()) ? "SEXH" : "SEXF"));
 	writer.println(addTabs(2)
 		+ String.format("<naissance>%s</naissance>", person.getDateOfBirthYearMonthDay().toString("dd.MM.yyyy")));
 
@@ -74,23 +76,42 @@ public class ExportEPFLPhdProgramCandidacies {
 		+ String.format("<datePersonne action=\"AUTO\" type=\"TYPE_DATE_ENTREE\">%s</datePersonne>", process
 			.getCandidacyProcess().getCandidacyDate().toString("dd.MM.yyyy")));
 
-	writer.println(addTabs(3)
-		+ String.format("<lieuPersonne action=\"AUTO\" " + "type=\"LIEUNAIETRA\" identificationLieu=\"ofs\" "
-			+ "ofs=\"\" typeLieu=\"LOCETRNONCON\">%s</lieuPersonne>", person.getDistrictSubdivisionOfBirth()));
+	writer
+		.println(addTabs(3)
+			+ String
+				.format(
+					"<lieuPersonne action=\"AUTO\" type=\"LIEUNAI\" identificationLieu=\"iso\" iso=\"%s\" typeLieu=\"PAYS\">%s</lieuPersonne>",
+					person.getCountry().getCode(), person.getCountry().getCountryNationality().getContent(
+						Language.en)));
 
 	writer.println(addTabs(3)
-		+ String.format("<lieuPersonne action=\"AUTO\" " + "type=\"LIEUORI\" identificationLieu=\"ofs\" "
-			+ "ofs=\"\" typeLieu=\"COMMUNE;PAYS\">%s</lieuPersonne>", person.getCountry().getCode()));
+		+ String.format("<lieuPersonne action=\"AUTO\" type=\"LIEUNAIETRA\" "
+			+ "typeLieu=\"LOCETRNONCON\" forceTo=\"LOCETRNONCON\">%s</lieuPersonne>", person
+			.getDistrictSubdivisionOfBirth()));
+
+	writer.println(addTabs(3)
+		+ String.format("<lieuPersonne action=\"AUTO\" type=\"LIEUORI\" identificationLieu=\"iso\" iso=\"%s\" "
+			+ "typeLieu=\"PAYS\">%s</lieuPersonne>", person.getCountry().getCode(), person.getCountry()
+			.getLocalizedName().getContent(Language.en)));
 
 	writer.println(addTabs(3) + "<adresse type=\"ADR_ECH\" action=\"AUTO\">");
 
 	writer.println(addTabs(4) + String.format("<ligne n=\"1\">%s</ligne>", person.getAddress()));
-	writer.println(addTabs(4)
-		+ String.format("<localite typeLieu=\"LOCALITE;LOCETRNONCON\">%s  %s</localite>", person.getAreaCode(), person
-			.getArea()));
-	writer.println(addTabs(4)
-		+ String.format("<pays>%s</pays>", (person.getCountryOfResidence() != null ? person.getCountryOfResidence()
-			.getCode() : "")));
+	writer
+		.println(addTabs(4)
+			+ String
+				.format(
+					"<localite typeLieu=\"LOCALITE;LOCETRNONCON\" identificationLieu=\"zip\" zip=\"%s\" b_returnfirst=\"1\">%s</localite>",
+					person.getAreaCode(), person.getArea()));
+
+	if (person.getCountryOfResidence() != null) {
+	    writer.println(addTabs(4)
+		    + String.format("<pays identificationLieu=\"iso\" iso=\"%s\" b_returnfirst=\"1\">%s</pays>", person
+			    .getCountryOfResidence().getCode(), person.getCountryOfResidence().getLocalizedName().getContent(
+			    Language.en)));
+	} else {
+	    writer.println(addTabs(4) + "<pays identificationLieu=\"iso\" iso=\"\" b_returnfirst=\"1\"></pays>");
+	}
 	writer.println(addTabs(4) + String.format("<moyen action=\"AUTO\" type=\"EMAIL\">%s</moyen>", person.getEmail()));
 	writer.println(addTabs(4) + String.format("<moyen action=\"AUTO\" type=\"PORTABLE\">%s</moyen>", person.getMobile()));
 
@@ -102,7 +123,7 @@ public class ExportEPFLPhdProgramCandidacies {
 	writer.println(addTabs(3) + "<gps domaine=\"DOMAINEACADEMIQUE\">");
 
 	writer.println(addTabs(4) + "<modelegps>CDOC</modelegps>");
-	writer.println(addTabs(4) + "<unité type=\"ACAD\" format=\"LIBELLE\">IST-EPFL</unité>");
+	writer.println(addTabs(4) + "<unite type=\"ACAD\" format=\"LIBELLE\">IST-EPFL</unite>");
 	writer.println(addTabs(4) + "<periode type=\"PEDAGO\" format=\"LIBCOU\">Eval sep</periode>");
 	writer.println(addTabs(4) + "<periode type=\"ACAD\">2010</periode>");
 
@@ -111,11 +132,12 @@ public class ExportEPFLPhdProgramCandidacies {
 	writer.println(addTabs(3) + String.format(" <detail type=\"URL_IST-EPFL\">%s</detail>", getUrlForProcess(process)));
 
 	writer.println(addTabs(3)
-		+ String.format("<detail type=\"PRG_DOCT_EPFL\" format=\"COURTU\">%s</detail>", process.getExternalPhdProgram()
+		+ String.format("<detail type=\"PDOC_AT_EPFL\" format=\"COURTU\">%s</detail>", process.getExternalPhdProgram()
 			.getAcronym()));
 
 	writer.println(addTabs(3)
-		+ String.format(" <detail type=\"GPSDOMFOCUS\">%s</detail> ", process.getPhdProgramFocusArea().getName()));
+		+ String.format(" <detail type=\"GPSDOMFOCUS\" conversion=\"IMPORT_IST:GPSDOMFOCUS\">%s</detail> ", process
+			.getPhdProgramFocusArea().getName()));
 
 	writer.println(addTabs(2) + "</inscription>");
 

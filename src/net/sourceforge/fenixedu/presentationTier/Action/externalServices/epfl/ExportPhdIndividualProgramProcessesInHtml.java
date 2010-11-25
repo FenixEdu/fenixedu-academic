@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 import net.sourceforge.fenixedu.util.StringUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ExportPhdIndividualProgramProcessesInHtml {
     // TODO: IST-<Collaboration>: collaboration must be added as argument
@@ -121,7 +122,7 @@ public class ExportPhdIndividualProgramProcessesInHtml {
 	final Person person = hashCode.getPerson();
 
 	page.h(3, "Personal Information", "mtop2");
-	page.tableStart("tstyle2 thwhite thnowrap thlight thleft thtop ulnomargin width100pc");
+	page.tableStart("tstyle2 thwhite thnowrap thlight thleft thtop ulnomargin ");
 
 	page.rowStart("tdbold").headerStartWithStyle("width: 125px;").write("Name:").headerEnd().column(person.getName())
 		.rowEnd();
@@ -158,10 +159,12 @@ public class ExportPhdIndividualProgramProcessesInHtml {
 	final PhdIndividualProgramProcess process = hashCode.getIndividualProgramProcess();
 
 	page.h(3, "Application information");
-	page.tableStart("tstyle2 thwhite thnowrap thlight thleft thtop ulnomargin width100pc");
+	page.tableStart("tstyle2 thwhite thnowrap thlight thleft thtop ulnomargin ");
 	page.rowStart().headerStartWithStyle("width: 125px;").write("Candidacy Date:").headerEnd().column(
 		process.getCandidacyDate().toString("dd/MM/yyyy")).rowEnd();
 	page.rowStart().header("Area:").column(process.getPhdProgramFocusArea().getName().getContent()).rowEnd();
+	page.rowStart().header("IST Phd Program:").column(process.getPhdProgram().getName().getContent(Language.en)).rowEnd();
+	page.rowStart().header("EPFL Phd Program:").column(process.getExternalPhdProgram().getName().getContent(Language.en));
 	page.rowStart().header("Title:").column(string(process.getThesisTitle())).rowEnd();
 	page.rowStart().header("Collaboration:").column(process.getCollaborationTypeName()).rowEnd();
 	page.rowStart().header("Year:").column(process.getExecutionYear().getYear()).rowEnd();
@@ -181,7 +184,7 @@ public class ExportPhdIndividualProgramProcessesInHtml {
 		    + hashCode.getExternalId();
 	    page.pStart("mbottom0").link(url, documentName).pEnd();
 
-	    page.tableStart("tstyle2 thwhite thnowrap thlight thleft thtop ulnomargin width100pc");
+	    page.tableStart("tstyle2 thwhite thnowrap thlight thleft thtop ulnomargin ");
 	    page.rowStart().header("Document type").header("Upload time").header("Filename").rowEnd();
 
 	    for (final PhdProgramProcessDocument document : process.getCandidacyProcessDocuments()) {
@@ -251,7 +254,7 @@ public class ExportPhdIndividualProgramProcessesInHtml {
     private static void drawReferee(final Page page, final PhdCandidacyReferee referee, final int count, final String folderName)
 	    throws IOException {
 
-	page.tableStart("tstyle2 thwhite thnowrap thlight thleft thtop ulnomargin width100pc");
+	page.tableStart("tstyle2 thwhite thnowrap thlight thleft thtop ulnomargin ");
 	page.rowStart().headerStartWithStyle("width: 125px;").write("Name:").headerEnd().column(referee.getName()).rowEnd();
 	page.rowStart().header("Email:").column(referee.getEmail()).rowEnd();
 	page.rowStart().header("Institution:").column(referee.getInstitution()).rowEnd();
@@ -286,7 +289,7 @@ public class ExportPhdIndividualProgramProcessesInHtml {
 	final PhdCandidacyRefereeLetter letter = referee.getLetter();
 
 	page.h(3, "Reference Letter", "mtop2");
-	page.tableStart("tstyle2 thwhite thnowrap thlight thleft thtop ulnomargin width100pc");
+	page.tableStart("tstyle2 thwhite thnowrap thlight thleft thtop ulnomargin");
 
 	page.rowStart().headerStartWithStyle("width: 200px;").write("How long have you known the applicant?").headerEnd().column(
 		string(letter.getHowLongKnownApplicant()) + " months").rowEnd();
@@ -323,7 +326,7 @@ public class ExportPhdIndividualProgramProcessesInHtml {
     }
 
     private static void candidateInformation(final PhdCandidacyReferee referee, final Page page) throws IOException {
-	page.tableStart("tstyle2 thwhite thnowrap thlight thleft thtop ulnomargin width100pc");
+	page.tableStart("tstyle2 thwhite thnowrap thlight thleft thtop ulnomargin ");
 	page.rowStart("tdbold").headerStartWithStyle("width: 200px;").write("Name: ").headerEnd().column(
 		referee.getPhdProgramCandidacyProcess().getPerson().getName()).rowEnd();
 	page.tableEnd();
@@ -346,7 +349,7 @@ public class ExportPhdIndividualProgramProcessesInHtml {
     }
 
     private static void drawQualification(final Page page, final Qualification qualification) throws IOException {
-	page.tableStart("tstyle2 thwhite thnowrap thlight thleft thtop ulnomargin width100pc");
+	page.tableStart("tstyle2 thwhite thnowrap thlight thleft thtop ulnomargin ");
 	page.rowStart().header("Type:").column(qualification.getType().getLocalizedName()).rowEnd();
 	page.rowStart().header("Scientific Field:").column(qualification.getDegree()).rowEnd();
 	page.rowStart().header("Institution:").column(qualification.getSchool()).rowEnd();
@@ -375,7 +378,7 @@ public class ExportPhdIndividualProgramProcessesInHtml {
     }
 
     private static void drawGuiding(final Page page, final PhdParticipant guiding) throws IOException {
-	page.tableStart("tstyle2 thwhite thnowrap thlight thleft thtop ulnomargin width100pc");
+	page.tableStart("tstyle2 thwhite thnowrap thlight thleft thtop ulnomargin ");
 	page.rowStart().headerStartWithStyle("width: 125px;").write("Name:").headerEnd().column(guiding.getName()).rowEnd();
 	page.rowStart().header("Affiliation:").column(guiding.getWorkLocation()).rowEnd();
 	page.rowStart().header("Email:").column(guiding.getEmail()).rowEnd();
