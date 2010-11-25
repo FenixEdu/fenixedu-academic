@@ -1,3 +1,5 @@
+<%@page import="net.sourceforge.fenixedu.domain.ExecutionCourse"%>
+<%@page import="net.sourceforge.fenixedu.domain.RootDomainObject"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
@@ -8,7 +10,11 @@
 		<bean:define id="executionCourseID" name="executionCourse" property="idInternal" />
 	</logic:present>
 	<logic:notPresent name="executionCourse">
-		<bean:define id="executionCourseID" name="executionCourseID" />
+		<bean:define id="executionCourseID" name="executionCourseID" type="java.lang.Integer"/>
+		<%
+			final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseID);
+			request.setAttribute("executionCourse", executionCourse);
+		%>
 	</logic:notPresent>
 	
 	<bean:define id="professorship" name="executionCourse" property="professorshipForCurrentUser"/>
@@ -40,7 +46,7 @@
 	</logic:equal>
 	
 	<logic:present role="TEACHER">
-		<logic:equal name="professorshipPermissions" property="link.finalEvaluation" value="true">
+		<logic:equal name="professorshipPermissions" property="evaluationFinal" value="true">
 		<li><html:link page="/evaluation/finalEvaluationIndex.faces" paramId="executionCourseID" paramName="executionCourseID"><bean:message key="link.finalEvaluation"/></html:link><br/></li>
 		</logic:equal>
 	</logic:present>

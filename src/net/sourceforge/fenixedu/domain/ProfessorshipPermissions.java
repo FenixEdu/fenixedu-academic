@@ -2,9 +2,14 @@ package net.sourceforge.fenixedu.domain;
 
 public class ProfessorshipPermissions extends ProfessorshipPermissions_Base {
     
-    public  ProfessorshipPermissions() {
+    public  ProfessorshipPermissions(final Professorship professorship) {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
+        if (professorship == null) {
+            throw new NullPointerException();
+        }
+        setProfessorship(professorship);
+
         setPersonalization(true);
 	setSiteArchive(true);
 	setAnnouncements(true);
@@ -26,8 +31,8 @@ public class ProfessorshipPermissions extends ProfessorshipPermissions_Base {
 	setBibliografy(true);
     }
     
-    public ProfessorshipPermissions copyPremissions(){
-	ProfessorshipPermissions p = new ProfessorshipPermissions();
+    public ProfessorshipPermissions copyPremissions(Professorship professorship){
+	ProfessorshipPermissions p = professorship.getPermissions();
         p.setPersonalization(getPersonalization());
         p.setSiteArchive(getSiteArchive());
         p.setAnnouncements(getAnnouncements());
@@ -47,6 +52,12 @@ public class ProfessorshipPermissions extends ProfessorshipPermissions_Base {
         p.setEvaluationMethod(getEvaluationMethod());
         p.setBibliografy(getBibliografy());
         return p;
+    }
+
+    public void delete() {
+	removeRootDomainObject();
+	removeProfessorship();
+	deleteDomainObject();
     }
     
 }
