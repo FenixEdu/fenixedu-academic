@@ -284,8 +284,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     public Grade convertGradeToEcts(CurriculumLine curriculumLine, Grade grade) {
 	ExecutionYear executionYear = curriculumLine.getExecutionYear();
-	CurricularYear curricularYear = CurricularYear.readByYear(curriculumLine.getParentCycleCurriculumGroup().getCurriculum(
-		executionYear).getCurricularYear());
+	CurricularYear curricularYear = CurricularYear.readByYear(curriculumLine.getParentCycleCurriculumGroup()
+		.getCurriculum(executionYear).getCurricularYear());
 	EctsDegreeByCurricularYearConversionTable table = getEctsCourseConversionTable(executionYear.getAcademicInterval(),
 		curricularYear);
 	if (table != null)
@@ -511,8 +511,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 		    xpto: for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCourses()) {
 			if (executionCourse.getExecutionPeriod().getExecutionYear().equals(executionYear)) {
 			    for (final CurricularCourseScope curricularCourseScope : course.getScopes()) {
-				if (curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().equals(
-					curricularYear)) {
+				if (curricularCourseScope.getCurricularSemester().getCurricularYear().getYear()
+					.equals(curricularYear)) {
 				    result.add(course);
 				    break xpto;
 				}
@@ -1374,7 +1374,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     public PersonFunction getActiveDelegatePersonFunctionByStudentAndFunctionType(Student student, ExecutionYear executionYear,
 	    FunctionType functionType) {
-	if (getUnit() == null) {
+	if (getUnit() != null) {
 	    for (PersonFunction personFunction : getUnit().getAllActiveDelegatePersonFunctionsByFunctionType(functionType,
 		    executionYear)) {
 		if (personFunction.getPerson().getStudent().equals(student)) {
@@ -1400,7 +1400,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     public List<Student> getAllDelegatesByExecutionYearAndFunctionType(ExecutionYear executionYear, FunctionType functionType) {
 	List<Student> result = new ArrayList<Student>();
-	if (getUnit() == null) {
+	if (getUnit() != null) {
 	    final List<PersonFunction> delegateFunctions = getUnit().getAllDelegatePersonFunctionsByExecutionYearAndFunctionType(
 		    executionYear, functionType);
 	    for (PersonFunction delegateFunction : delegateFunctions) {
