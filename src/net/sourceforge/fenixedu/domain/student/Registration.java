@@ -349,7 +349,7 @@ public class Registration extends Registration_Base {
     }
 
     private void checkRulesToDelete() {
-	if (hasDfaRegistrationEvent()) {
+	if (getDfaRegistrationEventsCount() > 0) {
 	    throw new DomainException("error.student.Registration.cannot.delete.because.is.associated.to.dfa.registration.event");
 	}
     }

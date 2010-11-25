@@ -9680,7 +9680,10 @@ relation DepartmentUnit {
 
 relation DfaRegistrationEventRegistration {
     student.Registration playsRole registration;
-    accounting.events.dfa.DfaRegistrationEvent playsRole dfaRegistrationEvent;
+    
+    accounting.events.dfa.DfaRegistrationEvent playsRole dfaRegistrationEvents {
+    	multiplicity *;
+    }
 }
 
 relation DfaRegistrationEventExecutionYear {
