@@ -196,28 +196,6 @@ public class Person extends Person_Base {
     }
 
     @Override
-    public void setGivenNames(String givenNames) {
-	if (givenNames == null || StringUtils.isEmpty(givenNames.trim())) {
-	    super.setGivenNames(givenNames);
-	    return;
-	}
-
-	String formattedNames = StringFormatter.prettyPrint(givenNames);
-	super.setGivenNames(formattedNames);
-    }
-
-    @Override
-    public void setFamilyNames(String familyNames) {
-	if (familyNames == null || StringUtils.isEmpty(familyNames.trim())) {
-	    super.setFamilyNames(familyNames);
-	    return;
-	}
-
-	String formattedNames = StringFormatter.prettyPrint(familyNames);
-	super.setFamilyNames(formattedNames);
-    }
-
-    @Override
     public void setDocumentIdNumber(String documentIdNumber) {
 	if (documentIdNumber == null || StringUtils.isEmpty(documentIdNumber.trim())) {
 	    throw new DomainException("error.person.empty.documentIdNumber");
