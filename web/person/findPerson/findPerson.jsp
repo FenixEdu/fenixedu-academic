@@ -258,6 +258,11 @@ function check(e,v){
                                 <fr:property name="classes" value="nobullet list6" />
                             </fr:layout>
                         </fr:view>
+                        <fr:view name="personalInfo" property="mobilePhones">
+                            <fr:layout name="contact-list">
+                                <fr:property name="classes" value="nobullet list6" />
+                            </fr:layout>
+                        </fr:view>
 					</td>
                     <td class="ppleft2" valign="top" style="text-align: right;">
                         <bean:message key="label.person.email" />
