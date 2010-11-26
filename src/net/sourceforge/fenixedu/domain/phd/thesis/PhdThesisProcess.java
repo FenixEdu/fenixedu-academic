@@ -214,8 +214,16 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	return getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.JURY_ELEMENTS);
     }
 
+    public Boolean hasJuryElementsDocument() {
+	return getJuryElementsDocument() != null;
+    }
+
     public PhdProgramProcessDocument getJuryPresidentDocument() {
 	return getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.JURY_PRESIDENT_ELEMENT);
+    }
+
+    public Boolean hasJuryPresidentDocument() {
+	return getJuryPresidentDocument() != null;
     }
 
     public DateTime getWhenRequestJury() {
@@ -336,8 +344,13 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
     }
 
     public void rejectJuryElementsDocuments() {
-	getJuryElementsDocument().setDocumentAccepted(false);
-	getJuryPresidentDocument().setDocumentAccepted(false);
+	if (hasJuryElementsDocument()) {
+	    getJuryElementsDocument().setDocumentAccepted(false);
+	}
+
+	if (hasJuryPresidentDocument()) {
+	    getJuryPresidentDocument().setDocumentAccepted(false);
+	}
     }
 
     public void deleteLastState() {

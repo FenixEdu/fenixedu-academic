@@ -219,6 +219,7 @@ public class Registration extends Registration_Base {
 
 	this(person, degreeCurricularPlan, agreement, cycleType, executionYear);
 	setStudentCandidacyInformation(studentCandidacy);
+	EventGenerator.generateNecessaryEvents(getLastStudentCurricularPlan(), person, executionYear);
     }
 
     private Registration(final Person person, final Integer registrationNumber, final RegistrationAgreement agreement,
@@ -276,7 +277,7 @@ public class Registration extends Registration_Base {
 
 	final StudentCurricularPlan scp = StudentCurricularPlan.createBolonhaStudentCurricularPlan(this, degreeCurricularPlan,
 		startDay, executionSemester, cycleType);
-	EventGenerator.generateNecessaryEvents(scp, person, executionYear);
+
     }
 
     private static DateTime calculateStartDate(final ExecutionYear executionYear) {
