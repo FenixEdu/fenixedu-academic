@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.domain.student;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
@@ -23,7 +22,6 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
-import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -36,6 +34,11 @@ public class GroupEnrolment {
     @Checked("RolePredicates.STUDENT_AND_TEACHER_PREDICATE")
     @Service
     public static Boolean run(Integer groupingID, Integer shiftID, Integer groupNumber, List studentUsernames,
+	    String studentUsername) throws FenixServiceException {
+	return enrole(groupingID, shiftID, groupNumber, studentUsernames, studentUsername);
+    }
+
+    public static Boolean enrole(Integer groupingID, Integer shiftID, Integer groupNumber, List studentUsernames,
 	    String studentUsername) throws FenixServiceException {
 	final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
 	final Grouping grouping = rootDomainObject.readGroupingByOID(groupingID);
