@@ -52,11 +52,10 @@ public class Attends extends Attends_Base {
 			    int groupNumber = grouping.getStudentGroupsCount() + 1;
 			    grouping.setGroupMaximumNumber(groupNumber);
 			    try {
-				GroupEnrolment.run(grouping.getIdInternal(), null, groupNumber, new ArrayList<String>(), attends
+				GroupEnrolment.enrole(grouping.getIdInternal(), null, groupNumber, new ArrayList<String>(), attends
 					.getRegistration().getStudent().getPerson().getUsername());
 			    } catch (FenixServiceException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new Error(e);
 			    }
 			}
 		    }
