@@ -97,6 +97,9 @@
 
 	<logic:equal name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee.unitCoordinator" value="true">
 		<ul>
+			<li class="navheader"><bean:message key="label.extraCurricularActivityTypes" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
+			<li><html:link page="/manageExtraCurricularActivities.do?method=list"><bean:message key="label.manage.extraCurricularActivityTypes" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link></li>
+
 			<li class="navheader"><bean:message key="label.permissions" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
 			<li><html:link page="/permissionManagement.do?method=showPermissions"><bean:message key="label.manage.permissions" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link></li>
 		</ul>

@@ -5227,7 +5227,7 @@ class DomainObject {
     }
 
     class student.curriculum.ExtraCurricularActivityType extends DomainObject {
-        MultiLanguageString name;
+        MultiLanguageString name (REQUIRED);
     }
 
     class student.ExternalRegistrationData extends DomainObject {
