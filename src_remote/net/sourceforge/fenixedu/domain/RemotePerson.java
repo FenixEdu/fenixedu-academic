@@ -1,34 +1,37 @@
 package net.sourceforge.fenixedu.domain;
 
-
 public class RemotePerson extends RemotePerson_Base {
-    
+
     public RemotePerson() {
-        super();
+	super();
+    }
+
+    public String getUserAliass() {
+	return readRemoteMethod("getUserAliass");
     }
 
     public String getEmailForSendingEmails() {
-	return (String) readRemoteMethod("getEmailForSendingEmails");
+	return readRemoteMethod("getEmailForSendingEmails");
     }
 
     public String getWorkingPlaceCostCenter() {
-	return (String) readRemoteMethod("getWorkingPlaceCostCenter");
+	return readRemoteMethod("getWorkingPlaceCostCenter");
     }
 
     public String getEmployeeRoleDescription() {
-	return (String) readRemoteMethod("getEmployeeRoleDescription");
+	return readRemoteMethod("getEmployeeRoleDescription");
     }
 
     public String readAllTeacherInformation() {
-	return (String) readRemoteMethod("readAllTeacherInformation");
+	return readRemoteMethod("readAllTeacherInformation");
     }
 
     public String readAllResearcherInformation() {
-	return (String) readRemoteMethod("readAllResearcherInformation");
+	return readRemoteMethod("readAllResearcherInformation");
     }
 
     public String readAllEmployeeInformation() {
-	return (String) readRemoteMethod("readAllEmployeeInformation");
+	return readRemoteMethod("readAllEmployeeInformation");
     }
 
 }
