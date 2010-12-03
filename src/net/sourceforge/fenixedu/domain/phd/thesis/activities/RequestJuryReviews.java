@@ -8,11 +8,16 @@ import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidExceptio
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessType;
+import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService.AlertMessage;
+import net.sourceforge.fenixedu.domain.phd.alert.PhdReporterReviewAlert;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType;
 import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
+
+import org.joda.time.Days;
+import org.joda.time.LocalDate;
 
 public class RequestJuryReviews extends PhdThesisActivity {
 
@@ -20,6 +25,10 @@ public class RequestJuryReviews extends PhdThesisActivity {
     protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
 
 	if (!process.isJuryValidated()) {
+	    throw new PreConditionNotValidException();
+	}
+
+	if (process.hasState(PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK)) {
 	    throw new PreConditionNotValidException();
 	}
 
@@ -36,7 +45,7 @@ public class RequestJuryReviews extends PhdThesisActivity {
 
 	if (bean.isToNotify()) {
 	    notifyJuryElements(process);
-	    sendEmailToJuryElement(process.getIndividualProgramProcess(), process.getPresidentJuryElement().getParticipant(),
+	    sendAlertToJuryElement(process.getIndividualProgramProcess(), process.getPresidentJuryElement().getParticipant(),
 		    "message.phd.request.jury.reviews.external.access.jury.president.body");
 	}
 
@@ -63,46 +72,57 @@ public class RequestJuryReviews extends PhdThesisActivity {
 	    final PhdParticipant participant = juryElement.getParticipant();
 
 	    if (juryElement.getReporter().booleanValue()) {
-		sendEmailToReporter(process.getIndividualProgramProcess(), participant);
-
-		// TODO:
-		// TODO: create alert to submit review?
-		// TODO:
-
+		sendInitialAlertToReporter(process.getIndividualProgramProcess(), participant);
 	    } else {
-		sendEmailToJuryElement(process.getIndividualProgramProcess(), participant,
+		sendAlertToJuryElement(process.getIndividualProgramProcess(), participant,
 			"message.phd.request.jury.reviews.external.access.jury.body");
 	    }
 	}
+
+	for (final ThesisJuryElement juryElement : process.getThesisJuryElements()) {
+	    final PhdParticipant participant = juryElement.getParticipant();
+	    if (!juryElement.getReporter().booleanValue()) {
+		continue;
+	    }
+
+	    new PhdReporterReviewAlert(process.getIndividualProgramProcess(), participant);
+	}
     }
 
-    private void sendEmailToReporter(PhdIndividualProgramProcess process, PhdParticipant participant) {
+    private void sendInitialAlertToReporter(PhdIndividualProgramProcess process, PhdParticipant participant) {
 
-	final String subject = AlertMessage.get("message.phd.request.jury.reviews.external.access.subject", process
-		.getPhdProgram().getName());
+	final AlertMessage subject = AlertMessage
+		.create(AlertMessage.get("message.phd.request.jury.reviews.external.access.subject", process.getPhdProgram()
+			.getName())).isKey(false).withPrefix(false);
 
-	final String body = AlertMessage.get("message.phd.request.jury.reviews.external.access.jury.body", process.getPerson()
+	final AlertMessage body = AlertMessage
+		.create(AlertMessage.get("message.phd.request.jury.reviews.external.access.jury.body", process.getPerson()
 		.getName(), process.getProcessNumber())
 		+ "\n\n"
-		+ AlertMessage.get("message.phd.request.jury.reviews.reporter.body")
+			+ AlertMessage.get("message.phd.request.jury.reviews.reporter.body",
+				getDaysLeftForReview(process.getThesisProcess()))
 		+ "\n\n"
 		+ getAccessInformation(process, participant, "message.phd.request.jury.reviews.coordinator.access",
-			"message.phd.request.jury.reviews.teacher.access");
+				"message.phd.request.jury.reviews.teacher.access")).isKey(false).withPrefix(false);
 
-	email(participant.getEmail(), subject, body);
+	AlertService.alertParticipants(process, subject, body, participant);
     }
+    
+    private void sendAlertToJuryElement(PhdIndividualProgramProcess process, PhdParticipant participant, String bodyMessage) {
+	final AlertMessage subject = AlertMessage
+		.create(AlertMessage.get("message.phd.request.jury.reviews.external.access.subject", process.getPhdProgram()
+			.getName())).isKey(false).withPrefix(false);
 
-    private void sendEmailToJuryElement(PhdIndividualProgramProcess process, PhdParticipant participant, String bodyMessage) {
-	final String subject = AlertMessage.get("message.phd.request.jury.reviews.external.access.subject", process
-		.getPhdProgram().getName());
-
-	final String body = AlertMessage.get(bodyMessage, process.getPerson().getName(), process.getProcessNumber())
+	final AlertMessage body = AlertMessage
+		.create(AlertMessage.get(bodyMessage, process.getPerson().getName(), process.getProcessNumber())
 		+ "\n\n"
 		+ getAccessInformation(process, participant, "message.phd.request.jury.reviews.coordinator.access",
 			"message.phd.request.jury.reviews.teacher.access") + "\n\n"
-		+ AlertMessage.get("message.phd.request.jury.external.access.reviews.body");
+			+ AlertMessage.get("message.phd.request.jury.external.access.reviews.body",
+				getDaysLeftForReview(process.getThesisProcess()))).isKey(false)
+		.withPrefix(false);
 
-	email(participant.getEmail(), subject, body);
+	AlertService.alertParticipants(process, subject, body, participant);
     }
 
     private void createExternalAccess(final ThesisJuryElement juryElement) {
@@ -113,6 +133,11 @@ public class RequestJuryReviews extends PhdThesisActivity {
 	if (juryElement.getReporter().booleanValue()) {
 	    participant.addAccessType(PhdProcessAccessType.JURY_REPORTER_FEEDBACK_UPLOAD);
 	}
+    }
+
+    private int getDaysLeftForReview(PhdThesisProcess process) {
+	return Days.daysBetween(process.getWhenJuryValidated().plusDays(PhdReporterReviewAlert.getReporterReviewDeadlineDays()),
+		new LocalDate()).getDays();
     }
 
 }

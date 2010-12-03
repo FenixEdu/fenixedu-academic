@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.MoveJuryElementOrde
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RatifyFinalThesis;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RejectJuryElements;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RejectJuryElementsDocuments;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.RemindJuryReviewToReporters;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryElements;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryReviews;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisDiscussion;
@@ -73,6 +74,8 @@ import pt.utl.ist.fenix.tools.util.Pair;
 @Forward(name = "submitThesis", path = "/phd/thesis/academicAdminOffice/submitThesis.jsp"),
 
 @Forward(name = "requestJuryReviews", path = "/phd/thesis/academicAdminOffice/requestJuryReviews.jsp"),
+
+@Forward(name = "remindJuryReviews", path = "/phd/thesis/academicAdminOffice/remindJuryReviews.jsp"),
 
 @Forward(name = "addPresidentJuryElement", path = "/phd/thesis/academicAdminOffice/addPresidentJuryElement.jsp"),
 
@@ -466,6 +469,36 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
     }
 
     // End of Request Jury Reviews
+
+    // Remind Jury Reviews
+    public ActionForward prepareRemindJuryReviews(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("remindJuryReviewsBean", new PhdThesisProcessBean());
+
+	return mapping.findForward("remindJuryReviews");
+    }
+
+    public ActionForward prepareRemindJuryReviewsInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	
+	request.setAttribute("remindJuryReviewsBean", getRenderedObject("remindJuryReviewsBean"));
+	
+	return mapping.findForward("remindJuryReviews");
+    }
+
+    public ActionForward remindJuryReviews(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+	try {
+	    ExecuteProcessActivity.run(getProcess(request), RemindJuryReviewToReporters.class, getRenderedObject("remindJuryReviewsBean"));
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getMessage(), e.getArgs());
+	    return prepareRemindJuryReviewsInvalid(mapping, form, request, response);
+	}
+
+	return viewIndividualProgramProcess(request, getProcess(request));
+    }
+
+    // end remind jury reviews
 
     // Schedule thesis meeting request
     public ActionForward prepareRequestScheduleThesisMeeting(ActionMapping mapping, ActionForm actionForm,

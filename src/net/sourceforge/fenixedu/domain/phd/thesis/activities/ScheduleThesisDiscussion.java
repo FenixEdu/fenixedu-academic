@@ -69,12 +69,15 @@ public class ScheduleThesisDiscussion extends PhdThesisActivity {
     private void notifyJuryElements(final PhdThesisProcess process, final PhdThesisProcessBean bean) {
 	for (final ThesisJuryElement juryElement : process.getThesisJuryElements()) {
 	    final PhdParticipant participant = juryElement.getParticipant();
-	    sendEmailToJuryElement(process.getIndividualProgramProcess(), participant, bean);
+	    sendAlertToJuryElement(process.getIndividualProgramProcess(), participant, bean);
 	}
     }
 
-    private void sendEmailToJuryElement(PhdIndividualProgramProcess process, PhdParticipant participant, PhdThesisProcessBean bean) {
-	email(participant.getEmail(), bean.getMailSubject(), buildBody(process, participant, bean));
+    private void sendAlertToJuryElement(PhdIndividualProgramProcess process, PhdParticipant participant, PhdThesisProcessBean bean) {
+	final AlertMessage subject = AlertMessage.create(bean.getMailSubject()).isKey(false).withPrefix(false);
+	final AlertMessage body = AlertMessage.create(buildBody(process, participant, bean)).isKey(false).withPrefix(false);
+
+	AlertService.alertParticipants(process, subject, body, participant);
     }
 
     private String buildBody(PhdIndividualProgramProcess process, PhdParticipant participant, PhdThesisProcessBean bean) {

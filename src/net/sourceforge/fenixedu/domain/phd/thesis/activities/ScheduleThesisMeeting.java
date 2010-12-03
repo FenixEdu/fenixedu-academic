@@ -84,7 +84,7 @@ public class ScheduleThesisMeeting extends PhdThesisActivity {
 	    }
 
 	    final PhdParticipant participant = juryElement.getParticipant();
-	    sendEmailToJuryElement(process.getIndividualProgramProcess(), participant, bean);
+	    sendAlertToJuryElement(process.getIndividualProgramProcess(), participant, bean);
 	}
     }
 
@@ -93,8 +93,11 @@ public class ScheduleThesisMeeting extends PhdThesisActivity {
 	participant.addAccessType(PhdProcessAccessType.JURY_REVIEW_DOCUMENTS_DOWNLOAD);
     }
 
-    private void sendEmailToJuryElement(PhdIndividualProgramProcess process, PhdParticipant participant, PhdThesisProcessBean bean) {
-	email(participant.getEmail(), bean.getMailSubject(), buildBody(process, participant, bean));
+    private void sendAlertToJuryElement(PhdIndividualProgramProcess process, PhdParticipant participant, PhdThesisProcessBean bean) {
+	final AlertMessage subject = AlertMessage.create(bean.getMailSubject()).isKey(false).withPrefix(false);
+	final AlertMessage body = AlertMessage.create(buildBody(process, participant, bean)).isKey(false).withPrefix(false);
+
+	AlertService.alertParticipants(process, subject, body, participant);
     }
 
     private String buildBody(PhdIndividualProgramProcess process, PhdParticipant participant, PhdThesisProcessBean bean) {

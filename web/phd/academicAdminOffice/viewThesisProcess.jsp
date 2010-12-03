@@ -9,6 +9,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.DownloadThesisRequirement"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryElements"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryReviews"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.RemindJuryReviewToReporters"%>
 <%@page import="net.sourceforge.fenixedu.applicationTier.Servico.thesis.SubmitThesis"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisMeetingRequest"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisMeeting"%>
@@ -98,6 +99,14 @@
 	<li style="display: inline;">
 		<html:link action="/phdThesisProcess.do?method=prepareRequestJuryReviews" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
 			<bean:message bundle="PHD_RESOURCES" key="label.phd.request.jury.reviews"/>
+		</html:link>
+	</li>
+	</phd:activityAvailable>
+	
+	<phd:activityAvailable process="<%= thesisProcess %>" activity="<%= RemindJuryReviewToReporters.class %>">
+	<li style="display: inline;">
+		<html:link action="/phdThesisProcess.do?method=prepareRemindJuryReviews" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
+			<bean:message bundle="PHD_RESOURCES" key="label.phd.remind.jury.reviews"/>
 		</html:link>
 	</li>
 	</phd:activityAvailable>

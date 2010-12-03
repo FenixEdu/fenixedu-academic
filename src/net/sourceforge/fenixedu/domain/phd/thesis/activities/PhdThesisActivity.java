@@ -34,7 +34,7 @@ abstract public class PhdThesisActivity extends Activity<PhdThesisProcess> {
 
     abstract protected void activityPreConditions(final PhdThesisProcess process, final IUserView userView);
 
-    protected String getAccessInformation(PhdIndividualProgramProcess process, PhdParticipant participant,
+    public static String getAccessInformation(PhdIndividualProgramProcess process, PhdParticipant participant,
 	    String coordinatorMessage, String teacherMessage) {
 
 	if (!participant.isInternal()) {

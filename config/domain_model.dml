@@ -7370,6 +7370,9 @@ class phd.alert.PhdAlert extends Alert {
         class phd.alert.PhdPublicPresentationSeminarAlert extends phd.alert.PhdAlert {
         }
         
+        class phd.alert.PhdReporterReviewAlert extends phd.alert.PhdAlert {
+        }
+        
     
 class phd.alert.PhdAlertMessage extends DomainObject {
     DateTime whenCreated;
@@ -8167,6 +8170,11 @@ relation RootDomainObjectPhdConfigurationIndividualProgramProcess {
 relation PhdIndividualProgramProcessPhdConfigurationIndividualProgramProcess {
 	phd.PhdIndividualProgramProcess playsRole phdIndividualProgramProcess;
 	phd.PhdConfigurationIndividualProgramProcess playsRole phdConfigurationIndividualProgramProcess;
+}
+
+relation PhdReporterReviewAlertPhdParticipant {
+	phd.alert.PhdReporterReviewAlert playsRole phdReporterReviewAlert;
+	phd.PhdParticipant playsRole phdParticipant;
 }
 
 /* End of Phd Module */

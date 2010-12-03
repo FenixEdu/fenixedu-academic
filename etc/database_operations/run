@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add a relation between PhdReporterReviewAlert and PhdParticipant" addReviewAlertRelationParticipant.sql
