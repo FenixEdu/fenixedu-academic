@@ -37,31 +37,28 @@
 	<property name="xfire" location="${config}/xfire" />
 	<property name="xfire.stubsTempDir" value="${basedir}/stubsTempDir" />
 	<property name="xfire.stubsTempDir.classes" value="${basedir}/stubsTempDir/classes" />
-	
+
 	<!-- Mime Types file-->
-	<property name="mime.types.file" value="${config}/mime.types"/>
-	
+	<property name="mime.types.file" value="${config}/mime.types" />
+
 	<!-- Compilation options -->
 	<property name="compile.debug" value="on" />
 	<property name="compile.deprecation" value="off" />
 	<property name="compile.optimize" value="on" />
 
-        <!-- set a different FenixDomainModel class until we don't need the ojbConcreteClass anylonger -->
-        <property name="fenix.framework.domainModelClass" value="pt.ist.fenixframework.pstm.dml.FenixDomainModelWithOCC"/>
-        <import file="dml-generate.xml"/>
+	<!-- set a different FenixDomainModel class until we don't need the ojbConcreteClass anylonger -->
+	<property name="fenix.framework.domainModelClass" value="pt.ist.fenixframework.pstm.dml.FenixDomainModelWithOCC" />
+	<import file="dml-generate.xml" />
 
-	<target name="set-properties-copy" if="institution.project"
-			description="Determine properties to use for build properties">
+	<target name="set-properties-copy" if="institution.project" description="Determine properties to use for build properties">
 		<property name="build.home" location="build" />
 	</target>
 
-	<target name="set-properties-inplace" unless="institution.project"
-			description="Determine properties to use for build properties">
+	<target name="set-properties-inplace" unless="institution.project" description="Determine properties to use for build properties">
 		<property name="build.home" location="web" />
 	</target>
 
-	<target name="set-properties" description="Determine properties to use for build properties"
-			depends="set-properties-copy, set-properties-inplace">
+	<target name="set-properties" description="Determine properties to use for build properties" depends="set-properties-copy, set-properties-inplace">
 		<property name="build.home.webinf" value="${build.home}/WEB-INF" />
 		<property name="build.home.webinf.classes" value="${build.home.webinf}/classes" />
 		<property name="build.home.webinf.classes.meta.inf" value="${build.home.webinf.classes}/META-INF" />
@@ -85,32 +82,28 @@
 			</fileset>
 		</path>
 	</target>
-	
-	<target name="set-properties-gwt" description="Sets additional properties for GWT specific build tasks"
-		depends="set-properties">
-		
-		<property name="build.gwtdestdir" location="${build.home}/gwt"/>
-		
+
+	<target name="set-properties-gwt" description="Sets additional properties for GWT specific build tasks" depends="set-properties">
+
+		<property name="build.gwtdestdir" location="${build.home}/gwt" />
+
 		<!-- Arguments to gwtc and devmode targets -->
 		<property name="gwt.args" value="" />
-		
+
 		<!-- Configure path to GWT SDK -->
 		<property name="gwt.sdk" value="${lib}" />
-		
+
 	</target>
 
-	<target name="clean-all-copy" if="institution.project"
-			description="Removes any generated files">
+	<target name="clean-all-copy" if="institution.project" description="Removes any generated files">
 		<delete dir="${build.home}" />
 	</target>
 
-	<target name="clean-all-inplace" unless="institution.project"
-			description="Removes any generated files">
+	<target name="clean-all-inplace" unless="institution.project" description="Removes any generated files">
 		<delete dir="${build.home.webinf.classes}" />
 	</target>
 
-	<target name="clean-all" depends="set-properties, set-properties-gwt, clean-all-copy, clean-all-inplace"
-			description="Removes any generated files">
+	<target name="clean-all" depends="set-properties, set-properties-gwt, clean-all-copy, clean-all-inplace" description="Removes any generated files">
 		<delete dir="${build.home.xfire}" />
 		<delete dir="${build.home}/images/logs" />
 		<delete dir="${deploy.home}" />
@@ -123,8 +116,7 @@
 		<uptodate property="dml.skip-compile" targetfile="${build.home.webinf.classes}/domain_model.dml" srcfile="${config}/domain_model.dml" />
 	</target>
 
-	<target name="prepare-copy" if="institution.project"
-			description="Copy configuration files to compile dir">
+	<target name="prepare-copy" if="institution.project" description="Copy configuration files to compile dir">
 		<mkdir dir="${build.home}" />
 		<copy encoding="${encoding}" todir="${build.home}">
 			<fileset dir="${web-content}">
@@ -134,13 +126,10 @@
 		</copy>
 	</target>
 
-	<target name="prepare-inline" unless="institution.project"
-			description="Copy configuration files to compile dir">
+	<target name="prepare-inline" unless="institution.project" description="Copy configuration files to compile dir">
 	</target>
 
-	<target name="prepare"
-			depends="set-properties, set-properties-gwt, check-dml-file, prepare-copy"
-			description="Copy configuration files to compile dir">
+	<target name="prepare" depends="set-properties, set-properties-gwt, check-dml-file, prepare-copy" description="Copy configuration files to compile dir">
 
 		<tstamp>
 			<format property="build.version" pattern="yyyy/MM/dd HH:mm:ss" />
@@ -163,11 +152,11 @@
 		<copy encoding="${encoding}" todir="${build.home.xfire}">
 			<fileset dir="${xfire}" />
 		</copy>
-		
+
 		<copy encoding="${encoding}" todir="${build.home.webinf.classes.meta.inf}" overwrite="true">
-			<fileset file="${mime.types.file}"/>
+			<fileset file="${mime.types.file}" />
 		</copy>
-		
+
 		<antcall target="prepare-institution" />
 
 		<!-- Replace tokens in configuration files with local config -->
@@ -238,21 +227,15 @@
 					<prefixlines prefix="${character.lessthan}echo " />
 					<tokenfilter>
 						<stringtokenizer delims="${line.seperator}" delimsaretokens="false" includeDelims="false" />
-						<replaceregex pattern="(.*)"
-    							flags="s"
-    							replace="\1@${allowed-roles.newline.instruction}${character.lessthan}/echo>"/>
+						<replaceregex pattern="(.*)" flags="s" replace="\1@${allowed-roles.newline.instruction}${character.lessthan}/echo>" />
 					</tokenfilter>
 					<tokenfilter>
 						<stringtokenizer delims="${line.seperator}" delimsaretokens="false" includeDelims="false" />
-						<replaceregex pattern="@(.*)@"
-    							flags="s"
-    							replace="\1=${character.dollar}{\1}"/>
+						<replaceregex pattern="@(.*)@" flags="s" replace="\1=${character.dollar}{\1}" />
 					</tokenfilter>
 					<tokenfilter>
 						<stringtokenizer delims="@@@@@@" delimsaretokens="false" includeDelims="false" />
-						<replaceregex pattern="(.*)"
-    							flags="s"
-    							replace="${allowed-roles.build.file.constructor.header}\1${allowed-roles.build.file.constructor.tail}"/>
+						<replaceregex pattern="(.*)" flags="s" replace="${allowed-roles.build.file.constructor.header}\1${allowed-roles.build.file.constructor.tail}" />
 					</tokenfilter>
 					<escapeunicode />
 				</filterchain>
@@ -292,18 +275,14 @@
 		</copy>
 	</target>
 
-	<target name="write-all-properties" 
-		depends="write-filter-hostnames-configuration-file,write-index-redirect-hostnames-configuration-file,write-login-redirect-hostnames-configuration-file,write-cas-serviceUrl-hostnames-configuration-file,write-path-access-control-configuration-file,printers-configuration-file">
+	<target name="write-all-properties" depends="write-filter-hostnames-configuration-file,write-index-redirect-hostnames-configuration-file,write-login-redirect-hostnames-configuration-file,write-cas-serviceUrl-hostnames-configuration-file,write-path-access-control-configuration-file,printers-configuration-file">
 	</target>
 
 	<target name="print-dml-message" if="dml.skip-compile">
 		<echo level="info">Dml file is up to date, code generation is not necessary.</echo>
 	</target>
 
-	<target name="generate" 
-			depends="check-dml-file, print-dml-message"
-			unless="dml.skip-compile"
-			description="Generate java code">
+	<target name="generate" depends="check-dml-file, print-dml-message" unless="dml.skip-compile" description="Generate java code">
 		<ant antfile="build_codeGenerator.xml" target="generate-domain" />
 		<ant antfile="build_codeGenerator.xml" target="update-RootDomainObject" />
 		<ant antfile="build_codeGenerator.xml" target="generateDeprecatedDateGettersAndSetters" />
@@ -313,8 +292,7 @@
 		<ant antfile="build_codeGenerator.xml" target="generate-groups-language" />
 	</target>
 
-	<target name="i18nDefault"
-    		depends="prepare">
+	<target name="i18nDefault" depends="prepare">
 		<copy encoding="${encoding}" todir="${build.home.webinf.classes}/resources">
 			<fileset dir="${build.home.webinf.classes}/resources">
 				<include name="*_pt.properties" />
@@ -323,16 +301,8 @@
 		</copy>
 	</target>
 
-	<target name="compile-domain" 
-          description="Compile application's domain"
-          depends="generate, generate-groups-language">
-		<javac destdir="${build.home.webinf.classes}"
-           debug="${compile.debug}"
-           optimize="${compile.optimize}"
-           deprecation="${compile.deprecation}"
-           encoding="${encoding}"
-           nowarn="true"
-  		   >
+	<target name="compile-domain" description="Compile application's domain" depends="generate, generate-groups-language">
+		<javac destdir="${build.home.webinf.classes}" debug="${compile.debug}" optimize="${compile.optimize}" deprecation="${compile.deprecation}" encoding="${encoding}" nowarn="true">
 			<compilerarg line="-processor pt.ist.fenixWebFramework.services.ServiceAnnotationProcessor,pt.ist.fenixWebFramework.security.accessControl.CheckedAnnotationProcessor" />
 			<classpath refid="class.path.lib.ref" />
 			<src path="${src_gen}" />
@@ -354,14 +324,14 @@
 	</target>
 
 	<target name="post-compile" description="Does some stuff after compile" depends="set-properties">
-          <post-process-domain dir="${build.home.webinf.classes}" dml="${dml.definition.file.completed}">
-            <classpath refid="class.path.lib.ref" />
-            <classpath>
-              <pathelement path="${build.home.webinf.classes}" />
-            </classpath>
-          </post-process-domain>
+		<post-process-domain dir="${build.home.webinf.classes}" dml="${dml.definition.file.completed}">
+			<classpath refid="class.path.lib.ref" />
+			<classpath>
+				<pathelement path="${build.home.webinf.classes}" />
+			</classpath>
+		</post-process-domain>
 		<copy file=".actionAnnotationLog" todir="${build.home.webinf.classes}" overwrite="true" failonerror="false" />
-		<java classname="pt.ist.fenixWebFramework.services.ServiceAnnotationInjector" failonerror="true" fork="true" >
+		<java classname="pt.ist.fenixWebFramework.services.ServiceAnnotationInjector" failonerror="true" fork="true">
 			<classpath refid="class.path.lib.ref" />
 			<classpath>
 				<pathelement path="${build.home.webinf.classes}" />
@@ -386,12 +356,7 @@
 				<wsgen outputDirectory="${xfire.stubsTempDir}" wsdl="@{url}" package="net.sourceforge.fenixedu.webServices.generatedStubs" overwrite="true" />
 			</sequential>
 		</for>
-		<javac srcdir="${xfire.stubsTempDir}" destdir="${xfire.stubsTempDir.classes}" 
-			   debug="${compile.debug}" 
-			   optimize="${compile.optimize}" 
-			   deprecation="${compile.deprecation}" 
-			   encoding="${encoding}" 
-			   nowarn="true">
+		<javac srcdir="${xfire.stubsTempDir}" destdir="${xfire.stubsTempDir.classes}" debug="${compile.debug}" optimize="${compile.optimize}" deprecation="${compile.deprecation}" encoding="${encoding}" nowarn="true">
 			<classpath refid="class.path.lib.ref" />
 			<exclude name="${xfire.stubsTempDir}/*.xml" />
 		</javac>
@@ -403,12 +368,11 @@
 	</target>
 
 	<target name="compile-base" description="Compile application" depends="i18nDefault, compile-domain, write-all-properties, generate, generate-groups-language, base-compile" />
-	
+
 	<target name="compile-base-withGWT" description="Compile application" depends="i18nDefault, compile-domain, write-all-properties, generate, generate-groups-language, base-compile, FenixGWT" />
 
-	<target name="compile" description="Compile application" depends="compile-base">
-		<java classname="pt.ist.fenixWebFramework.security.accessControl.CheckedAnnotationInjector" failonerror="true"
-				fork="true" maxmemory="1500m">
+	<target name="compile" description="Compile application" depends="compile-base-withGWT">
+		<java classname="pt.ist.fenixWebFramework.security.accessControl.CheckedAnnotationInjector" failonerror="true" fork="true" maxmemory="1500m">
 			<classpath refid="class.path.lib.ref" />
 			<classpath>
 				<pathelement path="${build.home.webinf.classes}" />
@@ -419,7 +383,7 @@
 			<arg value="${build.home.webinf.classes}" />
 			<!--<arg value="${build.home.webinf.libs}/dml-20091101.jar" />-->
 			<arg value="${build.home.webinf.libs}/jvstm.jar" />
-                        <!-- arg value="${build.home.webinf.libs}/fenix-framework.jar" / -->
+			<!-- arg value="${build.home.webinf.libs}/fenix-framework.jar" / -->
 			<arg value="${fenix.webframework}" />
 			<arg value="${build.home.webinf.libs}/joda-time-1.5.2.jar" />
 			<arg value="${build.home.webinf.libs}/struts.jar" />
@@ -431,36 +395,35 @@
 				<ant antfile="build_injectionCode.xml" target="inject-domainObjectActionLog-code" />
 			</sequential>
 		</parallel>
-		<antcall target="post-compile"/>
+		<antcall target="post-compile" />
 	</target>
-	
-	<target name="compile-with-gwtc" description="Compile application" depends="compile-base-withGWT">
-			<java classname="pt.ist.fenixWebFramework.security.accessControl.CheckedAnnotationInjector" failonerror="true"
-					fork="true" maxmemory="1500m">
-				<classpath refid="class.path.lib.ref" />
-				<classpath>
-					<pathelement path="${build.home.webinf.classes}" />
-				</classpath>
-				<arg value="net.sourceforge.fenixedu.injectionCode.AccessControl.check(this, net.sourceforge.fenixedu.predicates." />
-				<arg value="net.sourceforge.fenixedu.injectionCode.AccessControl.check(net.sourceforge.fenixedu.predicates." />
-				<arg value=");" />
-				<arg value="${build.home.webinf.classes}" />
-				<!--<arg value="${build.home.webinf.libs}/dml-20091101.jar" />-->
-				<arg value="${build.home.webinf.libs}/jvstm.jar" />
-	                        <!-- arg value="${build.home.webinf.libs}/fenix-framework.jar" / -->
-				<arg value="${fenix.webframework}" />
-				<arg value="${build.home.webinf.libs}/joda-time-1.5.2.jar" />
-				<arg value="${build.home.webinf.libs}/struts.jar" />
-				<arg value="lib/servlet-api-2.3.jar" />
-			</java>
-			<parallel threadsperprocessor="1" threadcount="2">
-				<antcall target="compile-reports" />
-				<sequential>
-					<ant antfile="build_injectionCode.xml" target="inject-domainObjectActionLog-code" />
-				</sequential>
-			</parallel>
-			<antcall target="post-compile"/>
-		</target>
+
+	<target name="compile-without-gwtc" description="Compile application" depends="compile-base">
+		<java classname="pt.ist.fenixWebFramework.security.accessControl.CheckedAnnotationInjector" failonerror="true" fork="true" maxmemory="1500m">
+			<classpath refid="class.path.lib.ref" />
+			<classpath>
+				<pathelement path="${build.home.webinf.classes}" />
+			</classpath>
+			<arg value="net.sourceforge.fenixedu.injectionCode.AccessControl.check(this, net.sourceforge.fenixedu.predicates." />
+			<arg value="net.sourceforge.fenixedu.injectionCode.AccessControl.check(net.sourceforge.fenixedu.predicates." />
+			<arg value=");" />
+			<arg value="${build.home.webinf.classes}" />
+			<!--<arg value="${build.home.webinf.libs}/dml-20091101.jar" />-->
+			<arg value="${build.home.webinf.libs}/jvstm.jar" />
+			<!-- arg value="${build.home.webinf.libs}/fenix-framework.jar" / -->
+			<arg value="${fenix.webframework}" />
+			<arg value="${build.home.webinf.libs}/joda-time-1.5.2.jar" />
+			<arg value="${build.home.webinf.libs}/struts.jar" />
+			<arg value="lib/servlet-api-2.3.jar" />
+		</java>
+		<parallel threadsperprocessor="1" threadcount="2">
+			<antcall target="compile-reports" />
+			<sequential>
+				<ant antfile="build_injectionCode.xml" target="inject-domainObjectActionLog-code" />
+			</sequential>
+		</parallel>
+		<antcall target="post-compile" />
+	</target>
 
 	<target name="compile-without-injectionCode" description="Compile application" depends="compile-base">
 		<parallel threadsperprocessor="1" threadcount="2">
@@ -469,11 +432,10 @@
 				<ant antfile="build_injectionCode.xml" target="domainObjectActionLog-void-inject" />
 			</sequential>
 		</parallel>
-		<antcall target="post-compile"/>
+		<antcall target="post-compile" />
 	</target>
 
-	<target name="deploy-linux" depends="set-properties"
-            description="Deploys standalone application to local web server">
+	<target name="deploy-linux" depends="set-properties" description="Deploys standalone application to local web server">
 		<exec executable="rm" failonerror="false" os="Linux">
 			<arg line="-rf" />
 			<arg line="${env.CATALINA_HOME}/webapps/${app.context}" />
@@ -485,15 +447,13 @@
 		</exec>
 	</target>
 
-	<target name="deploy-win" depends="set-properties"
-            description="Deploys standalone application to local web server">
+	<target name="deploy-win" depends="set-properties" description="Deploys standalone application to local web server">
 		<ant antfile="build_tomcat.xml" target="install">
 			<property name="webapp" value="${build.home}" />
 		</ant>
 	</target>
 
-	<target name="install-without-depends"
-            description="Deploys standalone application to web server">
+	<target name="install-without-depends" description="Deploys standalone application to web server">
 		<exec executable="ant.bat" failonerror="false" failifexecutionfails="false" os="Windows XP, Windows 2000, Windows 98, Windows NT, Windows 95">
 			<arg line="-f" />
 			<arg line="build_compile.xml" />
@@ -506,14 +466,11 @@
 		</exec>
 	</target>
 
-	<target name="install"
-    		depends="compile"
-            description="Deploys standalone application to web server">
+	<target name="install" depends="compile" description="Deploys standalone application to web server">
 		<antcall target="install-without-depends" inheritall="true" />
 	</target>
 
-	<target name="base-jar"
-            description="Generates a java archive applications 'core' (services and domain).">
+	<target name="base-jar" description="Generates a java archive applications 'core' (services and domain).">
 		<mkdir dir="${deploy.home}" />
 		<jar destfile="${deploy.home}/${app.name}.jar">
 			<fileset dir="${build.home.webinf.classes}">
@@ -547,17 +504,13 @@
 		</jar>
 	</target>
 
-	<target name="jar"
-    		depends="compile, compile-reports, base-jar"
-            description="Generates a java archive applications 'core' (services and domain)."/>
+	<target name="jar" depends="compile, compile-reports, base-jar" description="Generates a java archive applications 'core' (services and domain)." />
 
-	<target name="jar-without-injectionCode"
-    		depends="compile-without-injectionCode,compile-reports, base-jar"
-            description="Generates a java archive applications 'core' (services and domain), without code injection"/>
+	<target name="jar-without-injectionCode" depends="compile-without-injectionCode,compile-reports, base-jar" description="Generates a java archive applications 'core' (services and domain), without code injection" />
 
 	<target name="jar-remote" depends="set-properties" description="Generates a java archive for remote clientes.">
-		<mkdir dir="${src_remote}"/>
-		<mkdir dir="${src_gen_remote}"/>
+		<mkdir dir="${src_remote}" />
+		<mkdir dir="${src_gen_remote}" />
 		<java classname="pt.ist.fenixframework.plugins.remote.codeGenerator.RemoteDmlFileGenerator" fork="true">
 			<arg value="-d" />
 			<arg value="${src_remote}" />
@@ -592,23 +545,17 @@
 				<pathelement path="${build.home.webinf.classes}" />
 			</classpath>
 		</java>
-		<javac destdir="${src_gen_remote}"
-	           debug="${compile.debug}"
-    	       optimize="${compile.optimize}"
-	           deprecation="${compile.deprecation}"
-	           encoding="${encoding}"
-	           nowarn="true"
-	  		   >
+		<javac destdir="${src_gen_remote}" debug="${compile.debug}" optimize="${compile.optimize}" deprecation="${compile.deprecation}" encoding="${encoding}" nowarn="true">
 			<classpath refid="class.path.lib.ref" />
 			<src path="${src_remote}" />
 			<src path="${src_gen_remote}" />
 		</javac>
-        <post-process-domain dir="${src_gen_remote}" dml="${src_remote}/remote.dml">
-          <classpath refid="class.path.lib.ref" />
-          <classpath>
-            <pathelement path="${src_gen_remote}" />
-          </classpath>
-        </post-process-domain>
+		<post-process-domain dir="${src_gen_remote}" dml="${src_remote}/remote.dml">
+			<classpath refid="class.path.lib.ref" />
+			<classpath>
+				<pathelement path="${src_gen_remote}" />
+			</classpath>
+		</post-process-domain>
 		<mkdir dir="${deploy.home}" />
 		<jar destfile="${deploy.home}/fenix-remote.jar">
 			<fileset dir="${src_remote}">
@@ -620,9 +567,7 @@
 		</jar>
 	</target>
 
-	<target name="war"
-	    	depends="compile"
-            description="Generates a web archive of the application.">
+	<target name="war" depends="compile" description="Generates a web archive of the application.">
 		<mkdir dir="${deploy.home}" />
 		<war destfile="${deploy.home}/${app.name}.war" webxml="${build.home.webinf}/web.xml">
 			<fileset dir="${build.home}">
@@ -655,20 +600,9 @@
 			</classpath>
 		</taskdef>
 
-		<jasper2 validateXml="false" 
-	             uriroot="${build.home}" 	            
-	        	 webXmlFragment="${build.home.webinf}/generated_web.xml"
-	             outputDir="${build.home.jsp_gen_code}" />
+		<jasper2 validateXml="false" uriroot="${build.home}" webXmlFragment="${build.home.webinf}/generated_web.xml" outputDir="${build.home.jsp_gen_code}" />
 
-		<javac destdir="${build.home.webinf.classes}"
-			   failonerror="false"
-               debug="${compile.debug}"
-               optimize="${compile.optimize}"
-               deprecation="${compile.deprecation}"
-			   classpath="struts.jar"
-               encoding="${encoding}"
-			   nowarn="true"
-	  		   >
+		<javac destdir="${build.home.webinf.classes}" failonerror="false" debug="${compile.debug}" optimize="${compile.optimize}" deprecation="${compile.deprecation}" classpath="struts.jar" encoding="${encoding}" nowarn="true">
 			<classpath refid="class.path.lib.ref" />
 			<classpath>
 				<pathelement path="${build.home.webinf.classes};" />
@@ -690,11 +624,7 @@
 	</target>
 
 	<target name="fix">
-		<java classname="net.sourceforge.fenixedu.applicationTier.Servico.manager.semesterInitialization.FixRoomOccupations"
-				fork="true"
-				failonerror="true"
-				maxmemory="1024m"
-				>
+		<java classname="net.sourceforge.fenixedu.applicationTier.Servico.manager.semesterInitialization.FixRoomOccupations" fork="true" failonerror="true" maxmemory="1024m">
 			<classpath refid="class.path.lib.ref" />
 			<classpath>
 				<pathelement path="${build.home.webinf.classes}" />
@@ -704,8 +634,7 @@
 
 	<target name="compile-reports" depends="set-properties">
 		<mkdir dir="${build.home.reports}" />
-		<taskdef name="jrc" 
-		      classname="net.sf.jasperreports.ant.JRAntCompileTask">
+		<taskdef name="jrc" classname="net.sf.jasperreports.ant.JRAntCompileTask">
 			<classpath refid="class.path.lib.ref" />
 		</taskdef>
 		<jrc destdir="${build.home.reports}" srcdir="${reports}">
@@ -718,47 +647,34 @@
 	</target>
 
 	<target name="fix-html">
-		<java classname="pt.utl.ist.fenix.tools.html.JspHtmlValidator"
-				fork="true"
-				failonerror="true"
-				maxmemory="1024m"
-				>
+		<java classname="pt.utl.ist.fenix.tools.html.JspHtmlValidator" fork="true" failonerror="true" maxmemory="1024m">
 			<arg value="${basedir}" />
 			<classpath refid="class.path.lib.ref" />
 		</java>
 	</target>
 
 	<target name="x" description="Compile application">
-		<java classname="net.sourceforge.fenixedu.Xtest" 
-			dir="${build.home.webinf.classes}"
-			fork="true">
+		<java classname="net.sourceforge.fenixedu.Xtest" dir="${build.home.webinf.classes}" fork="true">
 			<classpath refid="class.path.lib.ref" />
 			<classpath>
 				<pathelement path="${build.home.webinf.classes}" />
 			</classpath>
 		</java>
 	</target>
-	
-	<target name="FenixGWT" depends="set-properties, set-properties-gwt"
-		description="Calls gwtc for each GWT module under Fenix scope (each module is defined by an unique *.gwt.xml).">
-		<java
-			classname="net.sourceforge.fenixedu.presentationTier.gwt.FenixGWTAntTasksCreator"
-			dir="${build.home.webinf.classes}"
-			failonerror="true"
-			fork="true"
-			
-		>
-			<arg value="${basedir}"/>
-			<arg value="${build.gwtdestdir}"/>
-			<arg value="${gwt.sdk}"/>
-			<arg value="${gwt.args}"/>
+
+	<target name="FenixGWT" depends="set-properties, set-properties-gwt" description="Calls gwtc for each GWT module under Fenix scope (each module is defined by an unique *.gwt.xml).">
+		<java classname="net.sourceforge.fenixedu.presentationTier.gwt.FenixGWTAntTasksCreator" dir="${build.home.webinf.classes}" failonerror="true" fork="true">
+			<arg value="${basedir}" />
+			<arg value="${build.gwtdestdir}" />
+			<arg value="${gwt.sdk}" />
+			<arg value="${gwt.args}" />
 		</java>
-		
-		<ant antfile="build_gwtautogentasks.xml" target="gwtc"/>
-		
+
+		<ant antfile="build_gwtautogentasks.xml" target="gwtc" />
+
 		<!--Comment line below to inspect autogenerated build file for GWT components -->
 		<delete file="build_gwtautogentasks.xml"/>
-		
-	</target>	
+
+	</target>
 
 </project>

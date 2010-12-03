@@ -32,6 +32,15 @@
     %>
 
 	<ul>
+	
+		<li class="navheader">
+			<bean:message key="label.coordinator.analyticTools"/>
+		</li>
+		<li>
+			<html:link page="<%= "/xYear.do?method=showDisclaimer&degreeCurricularPlanID=" + degreeCurricularPlanID.toString() %>" >
+				<bean:message key="link.coordinator.analyticTools.executionYear"/>
+			</html:link>
+		</li>
 
         <%--  start of isCoordinator logic, search for isCoordinator --%>
         <logic:present name="isCoordinator">

@@ -50,7 +50,7 @@ public class HelloWidget extends Composite{
 
     private final GreetingsServiceAsync service;
     private final DockPanel panel = new DockPanel();
-    private final Button button = new Button("Faz-me coceguinhas");
-    private final Label label = new Label("Parle 'a Fenix!");
+    private final Button button = new Button("Push me");
+    private final Label label = new Label("Gweetenix example:");
 }
 
