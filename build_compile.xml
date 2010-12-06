@@ -668,6 +668,10 @@
 			<arg value="${build.gwtdestdir}" />
 			<arg value="${gwt.sdk}" />
 			<arg value="${gwt.args}" />
+			<classpath refid="class.path.lib.ref" />
+			<classpath>
+				<pathelement path="${build.home.webinf.classes}" />
+			</classpath>
 		</java>
 
 		<ant antfile="build_gwtautogentasks.xml" target="gwtc" />
