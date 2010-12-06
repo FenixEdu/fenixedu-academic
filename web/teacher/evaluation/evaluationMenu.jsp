@@ -10,9 +10,9 @@
 		<bean:define id="executionCourseID" name="executionCourse" property="idInternal" />
 	</logic:present>
 	<logic:notPresent name="executionCourse">
-		<bean:define id="executionCourseID" name="executionCourseID" type="java.lang.Integer"/>
+		<bean:define id="executionCourseID" name="executionCourseID"/>
 		<%
-			final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseID);
+			final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(Integer.valueOf(executionCourseID.toString()));
 			request.setAttribute("executionCourse", executionCourse);
 		%>
 	</logic:notPresent>
