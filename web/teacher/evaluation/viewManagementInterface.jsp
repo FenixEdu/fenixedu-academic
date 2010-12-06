@@ -117,6 +117,11 @@
 				<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.upload" bundle="RESEARCHER_RESOURCES"/>
 			</html:link>
 		</li>
+		<li>
+			<html:link page="/teacherEvaluation.do?method=prepareUploadApprovedMarks" paramId="facultyEvaluationProcessOID" paramName="facultyEvaluationProcess" paramProperty="OID">
+				<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.load.approved.marks" bundle="RESEARCHER_RESOURCES"/>
+			</html:link>
+		</li>
 	</ul>
 	
 	
@@ -131,10 +136,29 @@
 		<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.teacherEvaluationProcess.autoEvaluation.locked.count" bundle="RESEARCHER_RESOURCES"/>:
 		<%= autoEvaluatedCount %>
 	</p>
-	<p class="mtop05 mbottom15">
+	<p class="mvert05">
 		<bean:define id="evaluatedCount" name="facultyEvaluationProcess" property="evaluatedCount"/>
 		<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.teacherEvaluationProcess.evaluation.locked.count" bundle="RESEARCHER_RESOURCES"/>:
 		<%= evaluatedCount %>
+	</p>
+	<p class="mvert05">
+		<bean:define id="approvedEvaluatedCount" name="facultyEvaluationProcess" property="approvedEvaluatedCount"/>
+		<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.teacherEvaluationProcess.evaluation.approved.count" bundle="RESEARCHER_RESOURCES"/>:
+		<%= approvedEvaluatedCount %>
+	</p>
+	<p class="mtop05 mbottom15">
+		<logic:equal name="facultyEvaluationProcess" property="areApprovedMarksPublished" value="true">
+			<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.areApprovedMarksPublished.yes" bundle="RESEARCHER_RESOURCES"/>
+			<html:link page="/teacherEvaluation.do?method=unPublish" paramId="facultyEvaluationProcessOID" paramName="facultyEvaluationProcess" paramProperty="OID">
+				<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.approved.marks.unPublish" bundle="RESEARCHER_RESOURCES"/>
+			</html:link>
+		</logic:equal>
+		<logic:notEqual name="facultyEvaluationProcess" property="areApprovedMarksPublished" value="true">
+			<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.areApprovedMarksPublished.no" bundle="RESEARCHER_RESOURCES"/>
+			<html:link page="/teacherEvaluation.do?method=publish" paramId="facultyEvaluationProcessOID" paramName="facultyEvaluationProcess" paramProperty="OID">
+				<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.approved.marks.publish" bundle="RESEARCHER_RESOURCES"/>
+			</html:link>
+		</logic:notEqual>
 	</p>
 	
 	
@@ -155,6 +179,9 @@
 				</th>
 				<th>
 					<bean:message key="label.teacher.evaluation.mark" bundle="RESEARCHER_RESOURCES"/>
+				</th>
+				<th>
+					<bean:message key="label.teacher.evaluation.mark.approved" bundle="RESEARCHER_RESOURCES"/>
 				</th>
 				<th>
 				</th>
@@ -179,6 +206,27 @@
 						<logic:present name="teacherEvaluationProcess" property="evaluationMark">
 							<fr:view name="teacherEvaluationProcess" property="evaluationMark" layout="null-as-label"/>
 						</logic:present>
+					</td>
+					<td>
+						<logic:iterate id="approvedTeacherEvaluationProcessMark" name="teacherEvaluationProcess" property="orderedApprovedTeacherEvaluationProcessMark" length="1">
+							<bean:write name="approvedTeacherEvaluationProcessMark" property="facultyEvaluationProcessYear.year"/>
+							<logic:present name="approvedTeacherEvaluationProcessMark" property="approvedEvaluationMark">
+								<fr:view name="approvedTeacherEvaluationProcessMark" property="approvedEvaluationMark" layout="null-as-label"/>
+							</logic:present>
+							<logic:notPresent name="approvedTeacherEvaluationProcessMark" property="approvedEvaluationMark">
+								N/A
+							</logic:notPresent>
+						</logic:iterate>
+						<logic:iterate id="approvedTeacherEvaluationProcessMark" name="teacherEvaluationProcess" property="orderedApprovedTeacherEvaluationProcessMark" offset="1">
+							<br/>
+							<bean:write name="approvedTeacherEvaluationProcessMark" property="facultyEvaluationProcessYear.year"/>
+							<logic:present name="approvedTeacherEvaluationProcessMark" property="approvedEvaluationMark">
+								<fr:view name="approvedTeacherEvaluationProcessMark" property="approvedEvaluationMark" layout="null-as-label"/>
+							</logic:present>
+							<logic:notPresent name="approvedTeacherEvaluationProcessMark" property="approvedEvaluationMark">
+								N/A
+							</logic:notPresent>
+						</logic:iterate>
 					</td>
 					<td>
 						<html:link page="/teacherEvaluation.do?method=viewEvaluationByCCAD" paramId="processId" paramName="teacherEvaluationProcess" paramProperty="externalId">
@@ -271,6 +319,29 @@
 	</p>
 	<bean:define id="urlUploadInvalid">/teacherEvaluation.do?method=viewFacultyEvaluationProcess&facultyEvaluationProcessOID=<bean:write name="fileUploadBean" property="facultyEvaluationProcess.externalId"/></bean:define>
 	<fr:edit id="fileUploadBean" name="fileUploadBean" action="/teacherEvaluation.do?method=uploadEvaluators">
+		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.teacher.evaluation.FileUploadBean">
+			<fr:slot name="inputStream" key="label.file" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+				<fr:property name="fileNameSlot" value="filename"/>
+				<fr:property name="size" value="30"/>
+			</fr:slot>
+		</fr:schema>
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle5 thlight thmiddle mtop05"/>
+			<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
+		</fr:layout>
+		<fr:destination name="cancel" path="<%= urlUploadInvalid %>"/>
+	</fr:edit>
+</logic:present>
+
+<logic:present name="fileUploadBeanForApprovedMarks">
+	<h3 class="mtop15 mbottom05">
+		<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.load.approved.marks" bundle="RESEARCHER_RESOURCES"/>
+	</h3>
+	<p class="mbottom1">
+		<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.load.approved.marks.instruction" bundle="RESEARCHER_RESOURCES"/>
+	</p>
+	<bean:define id="urlUploadInvalid">/teacherEvaluation.do?method=viewFacultyEvaluationProcess&facultyEvaluationProcessOID=<bean:write name="fileUploadBeanForApprovedMarks" property="facultyEvaluationProcess.externalId"/></bean:define>
+	<fr:edit id="fileUploadBeanForApprovedMarks" name="fileUploadBeanForApprovedMarks" action="/teacherEvaluation.do?method=uploadApprovedEvaluations">
 		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.teacher.evaluation.FileUploadBean">
 			<fr:slot name="inputStream" key="label.file" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 				<fr:property name="fileNameSlot" value="filename"/>

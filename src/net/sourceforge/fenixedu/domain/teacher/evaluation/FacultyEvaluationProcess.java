@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.Interval;
 
-import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base {
@@ -39,6 +38,7 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base {
     public FacultyEvaluationProcess() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
+	setAreApprovedMarksPublished(false);
     }
 
     public FacultyEvaluationProcess(final MultiLanguageString title, final Interval autoEvaluationInterval,
@@ -206,13 +206,114 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base {
 	return count;
     }
 
-    @Service
+    public void uploadApprovedEvaluations(byte[] bytes) {
+	final StringBuilder stringBuilder = new StringBuilder();
+
+	final String contents = new String(bytes);
+	final String[] lines = contents.split("\n");
+	int lineNumber = 0;
+
+	FacultyEvaluationProcessYear[] yearIndex = null;
+	for (final String line : lines) {
+	    lineNumber++;
+	    final String[] parts = line.split("\t");
+
+	    if (lineNumber == 1) {
+		yearIndex = new FacultyEvaluationProcessYear[parts.length - 2];
+		for (int i = 2; i < parts.length; i++) {
+		    final String year = parts[i];
+		    yearIndex[i - 2] = createFacultyEvaluationProcessYear(year);
+		}
+	    } else {
+		final String evaluee = parts[0];
+		final TeacherEvaluationProcess teacherEvaluationProcess = getTeacherEvaluationProcess(evaluee);
+		if (teacherEvaluationProcess != null) {
+		    for (int i = 2; i < parts.length; i++) {
+			final String mark = parts[i];
+			final FacultyEvaluationProcessYear facultyEvaluationProcessYear = yearIndex[i - 2];
+			final TeacherEvaluationMark teacherEvaluationMark = parseMark(mark);
+			teacherEvaluationProcess.setApprovedTeacherEvaluationProcessMark(facultyEvaluationProcessYear, teacherEvaluationMark);
+		    }
+		} else {
+		    final String message = BundleUtil.getStringFromResourceBundle("resources/ResearcherResources", "error.evaluee.has.no.process", evaluee);
+		    stringBuilder.append(message);
+		    stringBuilder.append('\n');
+		}
+	    }
+	}
+
+	if (stringBuilder.length() > 0) {
+	    throw new DomainException("error.invalid.file.contents", stringBuilder.toString());
+	}
+    }
+
+    private TeacherEvaluationMark parseMark(final String mark) {
+	if ("Excelente".equals(mark)) {
+	    return TeacherEvaluationMark.EXCELLENT;
+	}
+	if ("Muito Bom".equals(mark)) {
+	    return TeacherEvaluationMark.VERY_GOOD;
+	}
+	if ("Bom".equals(mark)) {
+	    return TeacherEvaluationMark.GOOD;
+	}
+	if ("N/A".equals(mark)) {
+	    return null;
+	}
+	if ("Inadequado".equals(mark)) {
+	    return TeacherEvaluationMark.INADEQUATE;
+	}
+	throw new DomainException("error.unknown.mark.value", mark);
+    }
+
+    private TeacherEvaluationProcess getTeacherEvaluationProcess(final String evaluee) {
+	for (final TeacherEvaluationProcess teacherEvaluationProcess : getTeacherEvaluationProcessSet()) {
+	    final Person person = teacherEvaluationProcess.getEvaluee();
+	    final String username = person.getUsername();
+	    if (username.equals(evaluee)) {
+		return teacherEvaluationProcess;
+	    }
+	    final Teacher teacher = person.getTeacher();
+	    if (teacher != null) {
+		final Integer number = teacher.getTeacherNumber();
+		if (number.toString().equals(evaluee)) {
+		    return teacherEvaluationProcess;
+		}
+	    }
+	}
+	return null;
+    }
+
+    private FacultyEvaluationProcessYear getFacultyEvaluationProcessYear(final String year) {
+	for (final FacultyEvaluationProcessYear facultyEvaluationProcessYear : getFacultyEvaluationProcessYearSet()) {
+	    if (facultyEvaluationProcessYear.getYear().equals(year)) {
+		return facultyEvaluationProcessYear;
+	    }
+	}
+	return null;
+    }
+
+    private FacultyEvaluationProcessYear createFacultyEvaluationProcessYear(final String year) {
+	final FacultyEvaluationProcessYear facultyEvaluationProcessYear = getFacultyEvaluationProcessYear(year);
+	return facultyEvaluationProcessYear == null ? new FacultyEvaluationProcessYear(this, year) : facultyEvaluationProcessYear;
+    }
+
     public void delete() {
 	for (final TeacherEvaluationProcess teacherEvaluationProcess : getTeacherEvaluationProcessSet()) {
 	    teacherEvaluationProcess.delete();
 	}
 	removeRootDomainObject();
 	deleteDomainObject();
+    }
+
+    public int getApprovedEvaluatedCount() {
+	int result = 0;
+	for (final TeacherEvaluationProcess teacherEvaluationProcess : getTeacherEvaluationProcessSet()) {
+	    if (teacherEvaluationProcess.hasAnyApprovedTeacherEvaluationProcessMark()) {
+		result++;
+	    }
+	}
+	return result;
     }
 
 }

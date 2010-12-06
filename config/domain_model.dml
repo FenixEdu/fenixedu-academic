@@ -1130,9 +1130,18 @@ class DomainObject {
 		Interval evaluationInterval;
 		boolean allowNoEval;
 		String suffix;
+		boolean areApprovedMarksPublished;
+	}
+
+	class teacher.evaluation.FacultyEvaluationProcessYear extends DomainObject {
+		String year;
 	}
 
 	class teacher.evaluation.TeacherEvaluationProcess extends DomainObject {
+		TeacherEvaluationMark approvedEvaluationMark;
+	}
+
+	class teacher.evaluation.ApprovedTeacherEvaluationProcessMark extends DomainObject {
 		TeacherEvaluationMark approvedEvaluationMark;
 	}
 
@@ -18464,6 +18473,41 @@ relation AccountabilityImportRegister {
 relation RootDomainObjectFacultyEvaluationProcess {
 	RootDomainObject playsRole rootDomainObject;
 	teacher.evaluation.FacultyEvaluationProcess playsRole facultyEvaluationProcess {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectFacultyEvaluationProcessYear {
+	RootDomainObject playsRole rootDomainObject;
+	teacher.evaluation.FacultyEvaluationProcessYear playsRole facultyEvaluationProcessYear {
+		multiplicity *;
+	}
+}
+
+relation FacultyEvaluationProcessFacultyEvaluationProcessYear {
+	teacher.evaluation.FacultyEvaluationProcess playsRole facultyEvaluationProcess;
+	teacher.evaluation.FacultyEvaluationProcessYear playsRole facultyEvaluationProcessYear {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectApprovedTeacherEvaluationProcessMark {
+	RootDomainObject playsRole rootDomainObject;
+	teacher.evaluation.ApprovedTeacherEvaluationProcessMark playsRole approvedTeacherEvaluationProcessMark {
+		multiplicity *;
+	}
+}
+
+relation FacultyEvaluationProcessYearpprovedTeacherEvaluationProcessMark {
+	teacher.evaluation.FacultyEvaluationProcessYear playsRole facultyEvaluationProcessYear;
+	teacher.evaluation.ApprovedTeacherEvaluationProcessMark playsRole approvedTeacherEvaluationProcessMark {
+		multiplicity *;
+	}
+}
+
+relation TeacherEvaluationProcessApprovedTeacherEvaluationProcessMark {
+	teacher.evaluation.TeacherEvaluationProcess playsRole teacherEvaluationProces;
+	teacher.evaluation.ApprovedTeacherEvaluationProcessMark playsRole approvedTeacherEvaluationProcessMark {
 		multiplicity *;
 	}
 }

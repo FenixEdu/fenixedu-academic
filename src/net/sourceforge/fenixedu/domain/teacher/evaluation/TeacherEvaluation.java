@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.teacher.evaluation;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
@@ -9,8 +8,6 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.util.EmailAddressList;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
-import net.sourceforge.fenixedu.domain.util.email.ReplyTo;
-import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.BundleUtil;

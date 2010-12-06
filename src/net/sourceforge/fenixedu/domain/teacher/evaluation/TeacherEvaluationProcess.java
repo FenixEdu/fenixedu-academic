@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
 
@@ -227,6 +228,56 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
 	}
 	removeRootDomainObject();
 	deleteDomainObject();
+    }
+
+    public void setApprovedTeacherEvaluationProcessMark(
+	    final FacultyEvaluationProcessYear facultyEvaluationProcessYear,
+	    final TeacherEvaluationMark teacherEvaluationMark) {
+	final ApprovedTeacherEvaluationProcessMark approvedTeacherEvaluationProcessMark = createApprovedTeacherEvaluationProcessMark(facultyEvaluationProcessYear);
+	approvedTeacherEvaluationProcessMark.setApprovedEvaluationMark(teacherEvaluationMark);
+    }
+
+    private ApprovedTeacherEvaluationProcessMark createApprovedTeacherEvaluationProcessMark(
+	    final FacultyEvaluationProcessYear facultyEvaluationProcessYear) {
+	for (final ApprovedTeacherEvaluationProcessMark approvedTeacherEvaluationProcessMark : getApprovedTeacherEvaluationProcessMarkSet()) {
+	    if (approvedTeacherEvaluationProcessMark.getFacultyEvaluationProcessYear() == facultyEvaluationProcessYear) {
+		return approvedTeacherEvaluationProcessMark;
+	    }
+	}
+	return new ApprovedTeacherEvaluationProcessMark(facultyEvaluationProcessYear, this);
+    }
+
+    public SortedSet<ApprovedTeacherEvaluationProcessMark> getOrderedApprovedTeacherEvaluationProcessMark() {
+	final SortedSet<ApprovedTeacherEvaluationProcessMark> result = new TreeSet<ApprovedTeacherEvaluationProcessMark>(ApprovedTeacherEvaluationProcessMark.COMPARATOR_BY_YEAR);
+	result.addAll(getApprovedTeacherEvaluationProcessMarkSet());
+	return result;
+    }
+
+    public String getApprovedEvaluationMarkAsStringForCCAD() {
+	final StringBuilder stringBuilder = new StringBuilder();
+	for (final ApprovedTeacherEvaluationProcessMark approvedTeacherEvaluationProcessMark : getOrderedApprovedTeacherEvaluationProcessMark()) {
+	    final FacultyEvaluationProcessYear facultyEvaluationProcessYear = approvedTeacherEvaluationProcessMark
+		    .getFacultyEvaluationProcessYear();
+	    final String year = facultyEvaluationProcessYear.getYear();
+	    final TeacherEvaluationMark approvedEvaluationMark = approvedTeacherEvaluationProcessMark.getApprovedEvaluationMark();
+	    if (stringBuilder.length() > 0) {
+		stringBuilder.append("\n");
+	    }
+	    stringBuilder.append(year);
+	    stringBuilder.append(" ");
+	    if (approvedEvaluationMark == null) {
+		stringBuilder.append("N/A");
+	    } else {
+		stringBuilder.append(BundleUtil.getEnumName(approvedEvaluationMark));
+	    }
+	}
+	return stringBuilder.length() == 0 ? null : stringBuilder.toString();
+    }
+
+    public String getApprovedEvaluationMarkAsString() {
+	final FacultyEvaluationProcess facultyEvaluationProcess = getFacultyEvaluationProcess();
+	return facultyEvaluationProcess.getAreApprovedMarksPublished() ?
+		getApprovedEvaluationMarkAsStringForCCAD() : null;
     }
 
 }

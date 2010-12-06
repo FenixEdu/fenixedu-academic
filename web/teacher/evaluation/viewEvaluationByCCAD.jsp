@@ -36,7 +36,7 @@
 		<logic:equal name="process" property="readyForCCADConsideration" value="true">
 			<fr:slot name="type" key="label.teacher.evaluation.type" layout="null-as-label" />
 			<fr:slot name="evaluationMark" key="label.teacher.evaluation.mark" layout="null-as-label" />
-			<fr:slot name="approvedEvaluationMark" key="label.teacher.evaluation.approvedMark" layout="null-as-label" />
+			<fr:slot name="approvedEvaluationMarkAsStringForCCAD" key="label.teacher.evaluation.approvedMark" layout="null-as-label" />
 		</logic:equal>
 	</fr:schema>
 	<fr:layout name="tabular">

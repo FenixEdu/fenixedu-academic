@@ -80,8 +80,13 @@ public class FileUploadBean implements Serializable {
     }
 
     @Service
-    public void upload() {
+    public void uploadEvaluators() {
 	facultyEvaluationProcess.uploadEvaluators(bytes);
+    }
+
+    @Service
+    public void uploadApprovedEvaluations() {
+	facultyEvaluationProcess.uploadApprovedEvaluations(bytes);
     }
 
     public TeacherEvaluationProcess getTeacherEvaluationProcess() {

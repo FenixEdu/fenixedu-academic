@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.FacultyEvaluationProcess;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.FacultyEvaluationProcessBean;
+import net.sourceforge.fenixedu.domain.teacher.evaluation.FacultyEvaluationProcessServices;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.FileUploadBean;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluation;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationFile;
@@ -270,7 +271,7 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 	request.setAttribute("facultyEvaluationProcess", facultyEvaluationProcess);
 	fileUploadBean.consumeInputStream();
 	try {
-	    fileUploadBean.upload();
+	    fileUploadBean.uploadEvaluators();
 	} catch (final DomainException ex) {
 	    addActionMessage(request, ex.getMessage(), ex.getArgs());
 	    RenderUtils.invalidateViewState();
@@ -375,6 +376,43 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 	    e.printStackTrace();
 	}
 	return null;
+    }
+
+    public ActionForward prepareUploadApprovedMarks(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	final FacultyEvaluationProcess facultyEvaluationProcess = getDomainObject(request, "facultyEvaluationProcessOID");
+	final FileUploadBean fileUploadBean = new FileUploadBean(facultyEvaluationProcess);
+	request.setAttribute("fileUploadBeanForApprovedMarks", fileUploadBean);
+	return mapping.findForward("viewManagementInterface");
+    }
+
+    public ActionForward uploadApprovedEvaluations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	final FileUploadBean fileUploadBean = getRenderedObject();
+	final FacultyEvaluationProcess facultyEvaluationProcess = fileUploadBean.getFacultyEvaluationProcess();
+	request.setAttribute("facultyEvaluationProcess", facultyEvaluationProcess);
+	fileUploadBean.consumeInputStream();
+	try {
+	    fileUploadBean.uploadApprovedEvaluations();
+	} catch (final DomainException ex) {
+	    addActionMessage(request, ex.getMessage(), ex.getArgs());
+	    RenderUtils.invalidateViewState();
+	}
+	return mapping.findForward("viewManagementInterface");
+    }
+
+    public ActionForward publish(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	final FacultyEvaluationProcess facultyEvaluationProcess = getDomainObject(request, "facultyEvaluationProcessOID");
+	FacultyEvaluationProcessServices.publish(facultyEvaluationProcess);
+	return viewFacultyEvaluationProcess(mapping, form, request, response);
+    }
+
+    public ActionForward unPublish(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	final FacultyEvaluationProcess facultyEvaluationProcess = getDomainObject(request, "facultyEvaluationProcessOID");
+	FacultyEvaluationProcessServices.unPublish(facultyEvaluationProcess);
+	return viewFacultyEvaluationProcess(mapping, form, request, response);
     }
 
 }
