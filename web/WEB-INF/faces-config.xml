@@ -1691,6 +1691,34 @@
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
+		<from-view-id>/scientificCouncil/curricularPlans/createDegreeOfficialPublication.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editDegree</from-outcome>
+			<to-view-id>/scientificCouncil/curricularPlans/editDegree.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/scientificCouncil/curricularPlans/editDegreeOfficialPublication.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editDegree</from-outcome>
+			<to-view-id>/scientificCouncil/curricularPlans/editDegree.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/scientificCouncil/curricularPlans/deleteDegreeOfficialPublication.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editDegree</from-outcome>
+			<to-view-id>/scientificCouncil/curricularPlans/editDegree.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/scientificCouncil/curricularPlans/deleteDegreeSpecializationArea.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editDegree</from-outcome>
+			<to-view-id>/scientificCouncil/curricularPlans/editDegreeOfficialPublication.jsp</to-view-id>
+	</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
 		<from-view-id>/scientificCouncil/curricularPlans/deleteDegree.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>curricularPlansManagement</from-outcome>

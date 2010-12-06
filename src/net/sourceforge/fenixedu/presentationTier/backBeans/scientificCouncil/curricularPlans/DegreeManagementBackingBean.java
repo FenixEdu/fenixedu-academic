@@ -11,12 +11,19 @@ import javax.faces.component.html.HtmlInputText;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans.ChangeDegreeOfficialPublicationReference;
 import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans.CreateDegree;
+import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans.CreateDegreeOfficialPublication;
+import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans.CreateDegreeSpecializationArea;
 import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans.DeleteDegree;
+import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans.DeleteDegreeSpecializationArea;
 import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans.EditDegree;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeInfo;
+import net.sourceforge.fenixedu.domain.DegreeOfficialPublication;
+import net.sourceforge.fenixedu.domain.DegreeSpecializationArea;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -26,8 +33,10 @@ import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class DegreeManagementBackingBean extends FenixBackingBean {
@@ -65,6 +74,8 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
     private HtmlInputText nameInputComponent;
 
     private HtmlInputText nameEnInputComponent;
+
+    private OfficialPublicationBean officialPublicationBean;
 
     public List<Degree> getBolonhaDegrees() {
 	final List<Degree> result = Degree.readBolonhaDegrees();
@@ -390,4 +401,211 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 	}
 	return false;
     }
+
+    
+    public OfficialPublicationBean getOfficialPublicationBean() {
+	if (this.officialPublicationBean == null) {
+	    this.officialPublicationBean = new OfficialPublicationBean(this);
+	}
+
+	return officialPublicationBean;
+    }
+
+    public class OfficialPublicationBean extends DegreeManagementBackingBean {
+
+	private String date;
+	private String officialReference;
+	private String officialPubId;
+	private DegreeOfficialPublication degreeOfficialPublication;
+	private String newOfficialReference;
+	private String newSpecializationArea;
+	private String newSpecializationAreaName;
+	private String specializationIdToDelete;
+	private DegreeSpecializationArea specializationAreaToDelete;
+	private DegreeOfficialPublication degreeOfficialPublicationGoBack;
+
+	private final DegreeManagementBackingBean degreeManagementBackingBean;
+
+
+	public OfficialPublicationBean(DegreeManagementBackingBean degreeManagementBackingBean) {
+	    this.degreeManagementBackingBean = degreeManagementBackingBean;
+	}
+
+	public String getDate() {
+	    return date;
+	}
+
+	public void setDate(String date) {
+	    this.date = date;
+	}
+	
+	public String getOfficialReference() {
+	    return officialReference;
+	}
+
+	public void setOfficialReference(String officialReference) {
+	    this.officialReference = officialReference;
+	}
+
+
+
+	public void makeAndInsertDegreeOfficialPublication() {
+	    
+	    // to remove
+	    if (date == null){
+		this.addErrorMessage("Date is required");
+		return;
+	    }
+	    String[] dateFields = date.split("/");
+	    
+	    if (dateFields.length != 3){
+		this.addErrorMessage("Date should have this format = \"dd/MM/YYYY\"");
+		return;
+	    }
+	    
+	    LocalDate localDate = new LocalDate(Integer.parseInt(dateFields[2]),
+		    Integer.parseInt(dateFields[1]),
+		    Integer.parseInt(dateFields[0]));
+	    
+	    Degree degree = getDegree();
+	    
+	    try {
+		CreateDegreeOfficialPublication.run(degree, localDate, officialReference);
+	    } catch (IllegalDataAccessException e) {
+		this.addErrorMessage(scouncilBundle.getString("error.notAuthorized"));
+		return;
+	    } catch (DomainException e) {
+		this.addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
+		return;
+	    } catch (FenixServiceException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	    }
+
+	    this.addInfoMessage(scouncilBundle.getString("degreeOfficialPublication.created"));
+	}
+
+	public String getOfficialPubId() {
+
+	    return (officialPubId == null) ? (officialPubId = getAndHoldStringParameter("officialPubId")) : officialPubId;
+	}
+
+	public void setOfficialPubId(String officialPubId) {
+	    this.officialPubId = officialPubId;
+	}
+
+	public DegreeOfficialPublication getDegreeOfficialPublication() {
+	    this.degreeOfficialPublication = (this.getOfficialPubId() == null ? null
+		    : (DegreeOfficialPublication) AbstractDomainObject
+		    .fromExternalId(getOfficialPubId()));
+
+	    return this.degreeOfficialPublication;
+	}
+
+	public void setDegreeOfficialPublication(DegreeOfficialPublication degreeOfficialPublication) {
+	    this.degreeOfficialPublication = degreeOfficialPublication;
+	}
+
+	public String getNewSpecializationArea() {
+	    return newSpecializationArea;
+	}
+
+	public void setNewSpecializationArea(String newSpecializationArea) {
+	    this.newSpecializationArea = newSpecializationArea;
+	}
+
+	public String getNewSpecializationAreaName() {
+	    return newSpecializationAreaName;
+	}
+
+	public void setNewSpecializationAreaName(String newSpecializationAreaName) {
+	    this.newSpecializationAreaName = newSpecializationAreaName;
+	}
+
+	/**
+	 * TODO: add error message
+	 */
+	public void addSpecializationArea() {
+
+	    try {
+		CreateDegreeSpecializationArea.run(this.getDegreeOfficialPublication(), this.getNewSpecializationArea(),
+			this.getNewSpecializationAreaName());
+	    } catch (FenixServiceException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	    }
+	}
+
+	public String getSpecializationIdToDelete() {
+	    return (specializationIdToDelete == null) ? (this.specializationIdToDelete = getAndHoldStringParameter("specializationId"))
+		    : specializationIdToDelete;
+	}
+
+	public void setSpecializationIdToDelete(String specializationIdToDelete) {
+	    this.specializationIdToDelete = specializationIdToDelete;
+	}
+
+	public DegreeSpecializationArea getSpecializationAreaToDelete() {
+	    this.specializationAreaToDelete = (DegreeSpecializationArea) (getSpecializationIdToDelete() == null ? null
+		    : AbstractDomainObject
+		    .fromExternalId(getSpecializationIdToDelete()));
+
+	    if (getDegreeOfficialPublicationGoBack() == null && this.specializationAreaToDelete != null) {
+		setDegreeOfficialPublicationGoBack(this.specializationAreaToDelete.getOfficialPublication());
+	    }
+	    return this.specializationAreaToDelete;
+	}
+
+	public void setSpecializationAreaToDelete(DegreeSpecializationArea specializationAreaToDelete) {
+	    this.specializationAreaToDelete = specializationAreaToDelete;
+	}
+
+	/**
+	 * TODO: add error message
+	 */
+	public void removeSpecializationAreaToDelete() {
+	    setDegreeOfficialPublicationGoBack(getSpecializationAreaToDelete().getOfficialPublication());
+	    try {
+		DeleteDegreeSpecializationArea.run(getSpecializationAreaToDelete().getOfficialPublication(), getSpecializationAreaToDelete());
+	    } catch (FenixServiceException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	    }
+	}
+
+	public DegreeOfficialPublication getDegreeOfficialPublicationGoBack() {
+	    return degreeOfficialPublicationGoBack;
+	}
+
+	public void setDegreeOfficialPublicationGoBack(DegreeOfficialPublication degreeOfficialPublicationGoBack) {
+	    this.degreeOfficialPublicationGoBack = degreeOfficialPublicationGoBack;
+	}
+
+	public String getNewOfficialReference() {
+	    return newOfficialReference;
+	}
+
+	public void setNewOfficialReference(String newOfficialReference) {
+	    this.newOfficialReference = newOfficialReference;
+	}
+
+	/**
+	 * TODO: CREATE SERVICE
+	 * 
+	 * 
+	 */
+	public void changeOfficialReference() {
+
+	    try {
+		ChangeDegreeOfficialPublicationReference.run(getDegreeOfficialPublication(), this.getNewOfficialReference());
+	    } catch (FenixServiceException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	    }
+	}
+
+
+
+    }
+
 }

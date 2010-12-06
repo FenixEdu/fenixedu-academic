@@ -1,16 +1,17 @@
 <%@ taglib uri="/WEB-INF/jsf_core.tld" prefix="f"%>
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
+<%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
 <ft:tilesView definition="scientificCouncil.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
-	
 
 	<h:outputText value="<em>#{scouncilBundle['scientificCouncil']}</em>" escape="false"/>
 	<h:outputFormat value="<h2>#{scouncilBundle['edit.param']}</h2>" escape="false">
 		<f:param value="#{scouncilBundle['degree']}" />
 	</h:outputFormat>
+
 	<h:form>
 		<h:outputText escape="false" value="<input alt='input.degreeId' id='degreeId' name='degreeId' type='hidden' value='#{DegreeManagement.degreeId}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.selectedExecutionYearId' id='selectedExecutionYearId' name='selectedExecutionYearId' type='hidden' value='#{DegreeManagement.selectedExecutionYearId}'/>"/>
@@ -97,15 +98,77 @@
 		<h:outputText value="<th></th><td><span class='smalltxt'>#{scouncilBundle['mandatory.fields']}</td>" escape="false"/>
 		<h:outputText value="</tr>" escape="false"/>
 
-		<h:outputText value="</table>" escape="false"/>
+		<h:outputText value="</table>" 
+			escape="false" />
 
+		<h:outputText
+			value="<p><strong>#{scouncilBundle['label.degree.officialPublications']}</strong></p>"
+			escape="false" />
+			
+		<h:outputText value="<table class='tstyle5 thlight thright'>"
+			escape="false" />
+			<h:outputText value="<tr>" escape="false" />
+			<h:outputText value="<th> Publicação Oficial</th>" escape="false" />
+			<h:outputText value="<th> Area de Especialização</th>" escape="false" />
+			<h:outputText value="</tr>" escape="false" />
+			
+		<fc:dataRepeater value="#{DegreeManagement.degree.officialPublication}"
+			var="publication"
+			rendered="#{!empty DegreeManagement.degree.officialPublication}" rowIndexVar="index">
+
+
+			<h:outputText value="<tr>" escape="false" />
+			<h:outputText value="<td> #{publication.officialReference}</td>" escape="false"/>
+			<h:outputText value="<td/>" escape="false" />
+			<h:outputText value="<td>" escape="false" />
+			<h:outputLink
+				value="#{DegreeManagement.request.contextPath}/scientificCouncil/curricularPlans/editDegreeOfficialPublication.faces">
+				<h:outputFormat value="#{scouncilBundle['edit']}" />
+				<f:param name="officialPubId" value="#{ publication.externalId}" />
+				<f:param name="degreeId" value="#{ DegreeManagement.degreeId}" />
+				<f:param name="selectedExecutionYearId" value="#{ DegreeManagement.selectedExecutionYearId}" />
+			</h:outputLink>
+			<h:outputText value="</td>" escape="false" />
+			<h:outputText value="</tr>" escape="false" />
+			<fc:dataRepeater
+				value="#{publication.specializationArea}"
+				var="specializationArea"
+				rendered="#{!empty publication.specializationArea}"
+				rowIndexVar="index">
+				<h:outputText value="<tr>" escape="false" />
+				<h:outputText value="<td/>" escape="false" />
+				<h:outputText value="<td> #{specializationArea.name}</td>" escape="false"/>
+				
+				<h:outputText value="<td>" escape="false" />
+				
+				<h:outputText value="</td>" escape="false" />
+				<h:outputText value="</tr>" escape="false" />
+			</fc:dataRepeater>
+			
+		</fc:dataRepeater>
+		
+
+		
+		<h:outputText value="</table>" escape="false"/>
+		
+<h:outputLink
+			value="#{DegreeManagement.request.contextPath}/scientificCouncil/curricularPlans/createDegreeOfficialPublication.faces">
+			<h:outputFormat value="#{scouncilBundle['label.create.officialPublication']}"/>
+				<f:param name="degreeId" value="#{DegreeManagement.degreeId}" />
+				<f:param name="selectedExecutionYearId" value="#{ DegreeManagement.selectedExecutionYearId}" />
+		</h:outputLink>	
 
 		<h:outputText value="<p>" escape="false"/>
+		<h:outputText value="<br/>" escape="false" />
 		<h:commandButton alt="#{htmlAltBundle['commandButton.save']}" styleClass="inputbutton" value="#{scouncilBundle['button.save']}"
-			action="#{DegreeManagement.editDegree}"/>
+			action="#{DegreeManagement.editDegree}" />
 		<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" immediate="true" styleClass="inputbutton" value="#{scouncilBundle['cancel']}"
 			action="curricularPlansManagement"/>
 		<h:outputText value="<p>" escape="false"/>
+
+		
+
+
 	</h:form>
 
 </ft:tilesView>
