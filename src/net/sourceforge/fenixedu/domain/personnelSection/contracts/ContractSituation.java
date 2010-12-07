@@ -6,23 +6,22 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ContractSituation extends ContractSituation_Base {
 
-    public ContractSituation(final String giafId, final MultiLanguageString name, final Boolean endSituation) {
+    public ContractSituation(final String giafId, final MultiLanguageString name, final Boolean endSituation,
+	    final Boolean serviceExemption, final Boolean medicalSituation) {
 	super();
-	check(giafId, "");
-	check(name, "");
-	check(endSituation, "");
 	setRootDomainObject(RootDomainObject.getInstance());
 	setGiafId(giafId);
 	setName(name);
 	setEndSituation(endSituation);
+	setServiceExemption(serviceExemption);
+	setMedicalSituation(medicalSituation);
     }
 
     @Service
-    public void edit(final MultiLanguageString name, final Boolean endSituation) {
-	check(name, "");
-	check(endSituation, "");
+    public void edit(final MultiLanguageString name, final Boolean endSituation, final Boolean serviceExemption) {
 	setName(name);
 	setEndSituation(endSituation);
+	setServiceExemption(serviceExemption);
     }
 
 }

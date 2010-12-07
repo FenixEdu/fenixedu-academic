@@ -6177,9 +6177,11 @@ class DomainObject {
 
 
 class personnelSection.contracts.ContractSituation extends DomainObject {
-    String giafId;
-    MultiLanguageString name;
-    Boolean endSituation;
+    String giafId (REQUIRED);
+    MultiLanguageString name  (REQUIRED);
+    Boolean endSituation  (REQUIRED);
+    Boolean serviceExemption  (REQUIRED);
+    Boolean medicalSituation  (REQUIRED);
 }
 
 class personnelSection.contracts.ProfessionalContractType extends DomainObject {

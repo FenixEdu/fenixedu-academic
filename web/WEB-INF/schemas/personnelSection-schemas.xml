@@ -1492,6 +1492,14 @@ constructor="description, state, modifiedBy">
 	<slot name="name" key="label.type" layout="null-as-label"/>
 </schema>
 
+<schema name="view.contractSituation" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.ContractSituation" bundle="CONTRACTS_RESOURCES">
+	<slot read-only="true" name="giafId" key="label.giafId" layout="null-as-label"/>
+	<slot read-only="true" name="name" key="label.situation" layout="null-as-label"/>
+	<slot read-only="true" name="endSituation" key="label.endSituation" layout="null-as-label"/>
+	<slot read-only="true" name="serviceExemption" key="label.serviceExemption" layout="null-as-label"/>
+	<slot name="medicalSituation" key="label.medicalSituation" layout="null-as-label"/>
+</schema>
+
 <schema name="view.contractSituation.name" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.ContractSituation" bundle="CONTRACTS_RESOURCES">
 	<slot name="name" key="label.situation" layout="null-as-label"/>
 </schema>
