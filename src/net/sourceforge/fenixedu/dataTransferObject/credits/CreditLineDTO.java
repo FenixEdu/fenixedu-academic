@@ -8,6 +8,7 @@ import java.text.ParseException;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TeacherCredits;
+import net.sourceforge.fenixedu.domain.TeacherCreditsDocument;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 
 /**
@@ -206,5 +207,15 @@ public class CreditLineDTO {
 
     public void setTeacher(Teacher teacher) {
 	this.teacher = teacher;
+    }
+
+    public boolean isTeacherCreditsClosed() {
+	TeacherCredits teacherCredits = TeacherCredits.readTeacherCredits(executionSemester, teacher);
+	return teacherCredits != null && teacherCredits.getTeacherCreditsState().isCloseState();
+    }
+
+    public TeacherCreditsDocument getTeacherCreditsDocument() {
+	TeacherCredits teacherCredits = TeacherCredits.readTeacherCredits(executionSemester, teacher);
+	return teacherCredits != null ? teacherCredits.getLastTeacherCreditsDocument() : null;
     }
 }

@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 
 <em><bean:message key="label.teacherServiceDistribution.department"/></em>
@@ -83,9 +84,22 @@
 			</logic:equal>
 			<logic:notEqual name="nrLine" value="0">
 				<td class="aleft">
-					<html:link title="Ver detalhes" page='<%= "/showFullTeacherCreditsSheet.do?method=showTeacherCredits&amp;teacherId=" + teacherID %>' paramId="executionPeriodId" paramName="executionPeriod" paramProperty="idInternal">
-						<bean:write name="executionPeriod" property="name"/> - <bean:write name="executionPeriod" property="executionYear.year"/>
-					</html:link>						
+					<bean:define id="executionPeriodName" name="executionPeriod" property="name"/>		
+					<bean:define id="executionPeriodYear" name="executionPeriod" property="executionYear.year"/>
+						
+					<bean:define id="isThesesCreditsClosed" name="creditLineDTO" property="teacherCreditsClosed"/>
+					<logic:equal name="isThesesCreditsClosed" value="true">	
+						<fr:view name="creditLineDTO" property="teacherCreditsDocument">
+							<fr:layout name="link">
+								<fr:property name="text" value="<%= executionPeriodName.toString()+" - "+executionPeriodYear.toString()%>"/>
+							</fr:layout>
+						</fr:view>
+					</logic:equal>
+					<logic:notEqual name="isThesesCreditsClosed" value="true">
+						<html:link title="Ver detalhes" page='<%= "/showFullTeacherCreditsSheet.do?method=showTeacherCredits&amp;teacherId=" + teacherID %>' paramId="executionPeriodId" paramName="executionPeriod" paramProperty="idInternal">
+							<bean:write name="executionPeriodName"/> - <bean:write name="executionPeriodYear"/>
+						</html:link>					
+					</logic:notEqual>						
 				</td>
 				<tiles:insert definition="creditsResumeTableLine" flush="false">
 					<tiles:put name="creditLineDTO" beanName="creditLineDTO"/>

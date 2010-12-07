@@ -3,11 +3,6 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.teacher.professorship;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 
 /**
@@ -31,15 +26,4 @@ public class ProfessorshipDTO {
 	this.professorship = professorship;
     }
 
-    public List<String> getDegreeSiglas() {
-	List<String> degreeSiglas = new ArrayList();
-	for (Iterator iter = getProfessorship().getExecutionCourse().getAssociatedCurricularCourses().iterator(); iter.hasNext();) {
-	    CurricularCourse curricularCourse = (CurricularCourse) iter.next();
-	    String degreeSigla = curricularCourse.getDegreeCurricularPlan().getDegree().getSigla();
-	    if (!degreeSiglas.contains(degreeSigla)) {
-		degreeSiglas.add(degreeSigla);
-	    }
-	}
-	return degreeSiglas;
-    }
 }

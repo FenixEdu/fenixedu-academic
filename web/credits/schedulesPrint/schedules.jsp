@@ -28,13 +28,7 @@
 		<bean:define id="professorship" name="professorshipDTO" property="professorship"/>
 		<p class="mbottom05"><strong>					
 			<bean:write name="professorship" property="executionCourse.nome"/>				
-			<bean:size id="degreeSiglasSizeList" name="professorshipDTO" property="degreeSiglas"/>
-			(<logic:iterate id="sigla" name="professorshipDTO" property="degreeSiglas" indexId="index">
-				<bean:write name="sigla" /> 
-				<logic:notEqual name="degreeSiglasSizeList" value="<%= String.valueOf(index.intValue() + 1) %>">
-				,
-				</logic:notEqual>
-			</logic:iterate>)
+			(<bean:write name="professorship" property="degreeSiglas"/>)
 		</strong></p>
 		
 		<bean:define id="professorshipID" name="professorship" property="idInternal"/>

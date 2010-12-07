@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.credits.CreditLineDTO;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.TeacherCredits;
 import net.sourceforge.fenixedu.presentationTier.Action.credits.ShowTeacherCreditsDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -49,18 +48,6 @@ public class ScientificCouncilShowTeacherCreditsDispatchAction extends ShowTeach
 	CreditLineDTO creditLineDTO = simulateCalcCreditLine(teacher, executionSemester);
 	request.setAttribute("simulateCalc", "false");
 	request.setAttribute("creditLineDTO", creditLineDTO);
-	return mapping.findForward("show-teacher-credits");
-    }
-
-    public ActionForward closeTeacherCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException,
-	    ParseException {
-	InfoTeacherCredits infoTeacherCredits = new InfoTeacherCredits(form, request);
-	Teacher teacher = infoTeacherCredits.getTeacher();
-	ExecutionSemester executionSemester = infoTeacherCredits.getExecutionSemester();
-	TeacherCredits.closeTeacherCredits(teacher, executionSemester);
-	getAllTeacherCredits(request, executionSemester, teacher);
-	request.setAttribute("simulateCalc", "true");
 	return mapping.findForward("show-teacher-credits");
     }
 

@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import net.sourceforge.fenixedu.applicationTier.Servico.credits.ReadAllTeacherCredits;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
 import net.sourceforge.fenixedu.dataTransferObject.credits.CreditLineDTO;
-import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.ProfessorshipDTO;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -33,7 +32,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
 /**
@@ -61,18 +59,9 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
 
 	List<Professorship> professorships = teacher.getDegreeProfessorshipsByExecutionPeriod(executionSemester);
 
-	List<ProfessorshipDTO> professorshipDTOs = (List<ProfessorshipDTO>) CollectionUtils.collect(professorships,
-		new Transformer() {
-		    public Object transform(Object arg0) {
-			Professorship professorship = (Professorship) arg0;
-			return new ProfessorshipDTO(professorship);
-		    }
-		});
-
-	if (!professorshipDTOs.isEmpty()) {
-	    BeanComparator comparator = new BeanComparator("professorship.executionCourse.nome");
-	    Iterator orderedProfessorshipsIter = new OrderedIterator(professorshipDTOs.iterator(), comparator);
-	    request.setAttribute("professorshipDTOs", orderedProfessorshipsIter);
+	if (!professorships.isEmpty()) {
+	    Collections.sort(professorships, new BeanComparator("executionCourse.nome"));
+	    request.setAttribute("professorships", professorships);
 	}
     }
 
@@ -92,13 +81,13 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
 
     private void setAdviseServices(HttpServletRequest request, TeacherService teacherService) {
 	if (!teacherService.getTeacherAdviseServices().isEmpty()) {
-	    List<TeacherAdviseService> tfcAdvises = (List<TeacherAdviseService>) CollectionUtils.select(teacherService
-		    .getTeacherAdviseServices(), new Predicate() {
-		public boolean evaluate(Object arg0) {
-		    TeacherAdviseService teacherAdviseService = (TeacherAdviseService) arg0;
-		    return teacherAdviseService.getAdvise().getAdviseType().equals(AdviseType.FINAL_WORK_DEGREE);
-		}
-	    });
+	    List<TeacherAdviseService> tfcAdvises = (List<TeacherAdviseService>) CollectionUtils.select(
+		    teacherService.getTeacherAdviseServices(), new Predicate() {
+			public boolean evaluate(Object arg0) {
+			    TeacherAdviseService teacherAdviseService = (TeacherAdviseService) arg0;
+			    return teacherAdviseService.getAdvise().getAdviseType().equals(AdviseType.FINAL_WORK_DEGREE);
+			}
+		    });
 	    Collections.sort(tfcAdvises, new BeanComparator("advise.student.number"));
 	    request.setAttribute("adviseServices", tfcAdvises);
 	}
@@ -131,8 +120,8 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
 	    request.setAttribute("teacherServiceNotes", teacherService.getTeacherServiceNotes());
 	}
 
-	List<TeacherServiceExemption> serviceExemptions = teacher.getServiceExemptionsWithoutMedicalSituations(executionSemester
-		.getBeginDateYearMonthDay(), executionSemester.getEndDateYearMonthDay());
+	List<TeacherServiceExemption> serviceExemptions = teacher.getServiceExemptionsWithoutMedicalSituations(
+		executionSemester.getBeginDateYearMonthDay(), executionSemester.getEndDateYearMonthDay());
 
 	if (!serviceExemptions.isEmpty()) {
 	    Iterator<TeacherServiceExemption> orderedServiceExemptions = new OrderedIterator<TeacherServiceExemption>(

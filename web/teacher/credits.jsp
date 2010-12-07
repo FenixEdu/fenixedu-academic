@@ -44,19 +44,12 @@
 
 <h3 class="mtop2"><span class="underline1">1) <bean:message key="label.teacherCreditsSheet.professorships" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
 
-<logic:notEmpty name="professorshipDTOs">
-	<logic:iterate id="professorshipDTO" name="professorshipDTOs">
-		<bean:define id="professorship" name="professorshipDTO" property="professorship"/>
+<logic:notEmpty name="professorships">
+	<logic:iterate id="professorship" name="professorships">
 		<h4 style="display:inline">
 			<span class="bluetxt">		
 				<bean:write name="professorship" property="executionCourse.nome"/>				
-				<bean:size id="degreeSiglasSizeList" name="professorshipDTO" property="degreeSiglas"/>
-				(<logic:iterate id="sigla" name="professorshipDTO" property="degreeSiglas" indexId="index">
-					<bean:write name="sigla" /> 
-					<logic:notEqual name="degreeSiglasSizeList" value="<%= String.valueOf(index.intValue() + 1) %>">
-					,
-					</logic:notEqual>
-				</logic:iterate>)
+				(<bean:write name="professorship" property="degreeSiglas"/>)
 			</span>
 		</h4>
 <%-- ========================= DEGREE TEACHING SERVICES ========================== --%>

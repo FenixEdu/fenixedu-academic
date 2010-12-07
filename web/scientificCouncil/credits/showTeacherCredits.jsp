@@ -80,21 +80,13 @@
 
 <h3 class="mtop1"><span class="underline1">1)  <bean:message key="label.teacherCreditsSheet.professorships.graduation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
 
-<logic:notEmpty name="professorshipDTOs">
-	<logic:iterate id="professorshipDTO" name="professorshipDTOs">
-		<bean:define id="professorship" name="professorshipDTO" property="professorship"/>
-		
+<logic:notEmpty name="professorships">
+	<logic:iterate id="professorship" name="professorships">
 		<p class="mtop1">
 			<h4 style="display:inline">
 				<span class="bluetxt">		
-					<bean:write name="professorship" property="executionCourse.nome"/>				
-					<bean:size id="degreeSiglasSizeList" name="professorshipDTO" property="degreeSiglas"/>
-					(<logic:iterate id="sigla" name="professorshipDTO" property="degreeSiglas" indexId="index">
-						<bean:write name="sigla" /> 
-						<logic:notEqual name="degreeSiglasSizeList" value="<%= String.valueOf(index.intValue() + 1) %>">
-						,
-						</logic:notEqual>
-					</logic:iterate>)
+					<bean:write name="professorship" property="executionCourse.nome"/>
+					(<bean:write name="professorship" property="degreeSiglas"/>)
 				</span>
 			</h4>
 		</p>

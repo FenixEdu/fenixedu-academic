@@ -1200,6 +1200,9 @@ class DomainObject {
 		class teacher.evaluation.TeacherEvaluationFile extends File {
 			TeacherEvaluationFileType teacherEvaluationFileType;
 		}
+		
+		class TeacherCreditsDocument extends File {
+    	}
 
     class FileLocalContent extends DomainObject {
        VirtualPath path;
@@ -18400,6 +18403,14 @@ relation TeacherCreditsPerson {
 		multiplicity *;
 	}
 }
+
+relation TeacherCreditsTeacherCreditsDocument {
+	TeacherCreditsDocument playsRole teacherCreditsDocument {
+		multiplicity *;
+	}
+	TeacherCredits playsRole teacherCredits;
+}
+
 relation TeacherCreditsQueueJobExecutionSemester {
 	ExecutionSemester playsRole executionSemester;
 	TeacherCreditsQueueJob playsRole teacherCreditsQueueJob{

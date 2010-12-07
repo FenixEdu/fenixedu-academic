@@ -30,38 +30,39 @@
 				</fr:layout>			
 			</fr:edit>
 	
-			<logic:notPresent name="closePeriodTeacherCredits"> 
-							<bean:message key="link.teacherCredits.closing"/>
-			</logic:notPresent>
-			
-			<logic:present name="closePeriodTeacherCredits">
-				<logic:equal name="closePeriodTeacherCredits"  value="false">	
-					<html:link page="/defineCreditsPeriods.do?method=closeAllPeriodsByExecutionSemester" paramName="teacherCreditsBean" paramProperty="executionPeriod.idInternal" paramId="executionPeriodId">
-						<bean:message key="link.teacherCredits.close"/>
-					</html:link>
-				<bean:message key="label.teacherCredits.close.message"/>
-			</logic:equal>
-			
-			<logic:equal name="closePeriodTeacherCredits" value="true">
-					<p class="mvert05">
-					<a href="#" onclick="check(document.getElementById('warning'));return false;"><bean:message key="link.teacherCredits.open"/></a>  
-					<bean:message key="label.teacherCredits.open.message"/>
-					</p>
-					
-					<div id="warning" class="dnone">
-						<div class="warning1">
-							<p class="mvert05"><b><bean:message key="label.teacherCredits.open.attention.message"/></b><bean:message key="label.teacherCredits.open.information.message"/></p>
-							<p class="mvert05"><bean:message key="label.teacherCredits.open.confirmation.message"/> </p>
-							<p class="mtop1 mbottom05">
-								<html:hidden name="form" property="method" value="openAllPeriodsByExecutionSemester"/>		
-								<html:hidden name="teacherCreditsBean" property="executionPeriod.idInternal" value="executionPeriodId"/>
-								<html:submit><bean:message key="button.open"/></html:submit>
-								<html:cancel onclick="check(document.getElementById('warning'));return false;"><bean:message key="button.cancel"/></html:cancel> 
-							</p>
+			<logic:present role="MANAGER">
+				<logic:notPresent name="closePeriodTeacherCredits"> 
+								<bean:message key="link.teacherCredits.closing"/>
+				</logic:notPresent>
+				
+				<logic:present name="closePeriodTeacherCredits">
+					<logic:equal name="closePeriodTeacherCredits"  value="false">	
+						<html:link page="/defineCreditsPeriods.do?method=closeAllPeriodsByExecutionSemester" paramName="teacherCreditsBean" paramProperty="executionPeriod.idInternal" paramId="executionPeriodId">
+							<bean:message key="link.teacherCredits.close"/>
+						</html:link>
+					<bean:message key="label.teacherCredits.close.message"/>
+				</logic:equal>
+				
+				<logic:equal name="closePeriodTeacherCredits" value="true">
+						<p class="mvert05">
+						<a href="#" onclick="check(document.getElementById('warning'));return false;"><bean:message key="link.teacherCredits.open"/></a>  
+						<bean:message key="label.teacherCredits.open.message"/>
+						</p>
+						
+						<div id="warning" class="dnone">
+							<div class="warning1">
+								<p class="mvert05"><b><bean:message key="label.teacherCredits.open.attention.message"/></b><bean:message key="label.teacherCredits.open.information.message"/></p>
+								<p class="mvert05"><bean:message key="label.teacherCredits.open.confirmation.message"/> </p>
+								<p class="mtop1 mbottom05">
+									<html:hidden name="form" property="method" value="openAllPeriodsByExecutionSemester"/>		
+									<html:hidden name="teacherCreditsBean" property="executionPeriod.idInternal" value="executionPeriodId"/>
+									<html:submit><bean:message key="button.open"/></html:submit>
+									<html:cancel onclick="check(document.getElementById('warning'));return false;"><bean:message key="button.cancel"/></html:cancel> 
+								</p>
+							</div>
 						</div>
-					</div>
-			</logic:equal>
-			
+				</logic:equal>
+			</logic:present>
 		</logic:present>
 		</fr:form>
 		<h3 class="mtop15 mbottom05"><bean:message key="label.teacher"/></h3>

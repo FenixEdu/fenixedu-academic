@@ -44,14 +44,7 @@
 						</html:link>
 					</td>
 					<td class="listClasses" style="text-align:left">
-						<bean:define id="degreeSiglas" name="professorshipDTO" property="degreeSiglas" />
-						<bean:size id="degreeSiglasSize" name="degreeSiglas"/>
-						<logic:iterate id="degreeSigla" name="degreeSiglas" indexId="index">
-							<bean:write name="degreeSigla" /> 
-							<logic:notEqual name="degreeSiglasSize" value="<%= String.valueOf(index.intValue() + 1) %>">
-							,
-							</logic:notEqual>
-						</logic:iterate>
+						(<bean:write name="professorship" property="degreeSiglas"/>)
 					</td>					
 					<td class="listClasses">
 						<logic:equal name="professorship" property="responsibleFor" value="true">

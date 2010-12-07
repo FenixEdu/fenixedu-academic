@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.inquiries.teacher.InquiryResponsePeriodTy
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.lang.StringUtils;
 
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -28,8 +29,8 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class Professorship extends Professorship_Base implements ICreditsEventOriginator {
 
-    public static final Comparator<Professorship> COMPARATOR_BY_PERSON_NAME = new BeanComparator("person.name", Collator
-	    .getInstance());
+    public static final Comparator<Professorship> COMPARATOR_BY_PERSON_NAME = new BeanComparator("person.name",
+	    Collator.getInstance());
 
     public Professorship() {
 	super();
@@ -218,7 +219,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 	degreeTeachingServices.addAll(getDegreeTeachingServicesSet());
 	return degreeTeachingServices;
     }
-    
+
     public DegreeTeachingService getDegreeTeachingServiceByShift(Shift shift) {
 	for (DegreeTeachingService degreeTeachingService : getDegreeTeachingServicesSet()) {
 	    if (degreeTeachingService.getShift() == shift) {
@@ -282,5 +283,21 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
     public void removeTeacher() {
 	removePerson();
     }
-    
+
+    public String getDegreeSiglas() {
+	Set<String> degreeSiglas = new HashSet<String>();
+	for (CurricularCourse curricularCourse : getExecutionCourse().getAssociatedCurricularCourses()) {
+	    degreeSiglas.add(curricularCourse.getDegreeCurricularPlan().getDegree().getSigla());
+	}
+	return StringUtils.join(degreeSiglas, ", ");
+    }
+
+    public String getDegreePlanNames() {
+	Set<String> degreeSiglas = new HashSet<String>();
+	for (CurricularCourse curricularCourse : getExecutionCourse().getAssociatedCurricularCourses()) {
+	    degreeSiglas.add(curricularCourse.getDegreeCurricularPlan().getName());
+	}
+	return StringUtils.join(degreeSiglas, ", ");
+    }
+
 }

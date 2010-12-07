@@ -3,6 +3,9 @@ package net.sourceforge.fenixedu.presentationTier.renderers;
 import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
+
+import org.apache.commons.lang.StringUtils;
+
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
@@ -23,6 +26,8 @@ public class FileLinkRenderer extends OutputRenderer {
     private String key;
 
     private String bundle;
+
+    private String text;
 
     @Override
     protected Layout getLayout(Object object, Class type) {
@@ -60,6 +65,9 @@ public class FileLinkRenderer extends OutputRenderer {
 		if (getKey() != null) {
 		    return RenderUtils.getResourceString(getBundle(), getKey());
 		}
+		if (!StringUtils.isEmpty(getText())) {
+		    return getText();
+		}
 		return file.getDisplayName();
 	    }
 	};
@@ -91,5 +99,13 @@ public class FileLinkRenderer extends OutputRenderer {
      */
     public void setBundle(String bundle) {
 	this.bundle = bundle;
+    }
+
+    public String getText() {
+	return text;
+    }
+
+    public void setText(String text) {
+	this.text = text;
     }
 }

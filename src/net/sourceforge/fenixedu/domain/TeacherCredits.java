@@ -35,47 +35,35 @@ public class TeacherCredits extends TeacherCredits_Base {
     @Service
     public static void closeAllTeacherCredits(ExecutionSemester executionSemester) throws ParseException {
 	List<Teacher> teachers = RootDomainObject.getInstance().getTeachers();
-	for (Teacher teacher : teachers) {
-	    closeTeacherCredits(teacher, executionSemester);
+	TeacherCreditsState teacherCreditsState = TeacherCreditsState.getTeacherCreditsState(executionSemester);
+	if (teacherCreditsState == null) {
+	    teacherCreditsState = new TeacherCreditsState(executionSemester);
 	}
+	for (Teacher teacher : teachers) {
+	    closeTeacherCredits(teacher, teacherCreditsState);
+	}
+	teacherCreditsState.setCloseState();
     }
 
     @Service
-    public static void closeTeacherCredits(Teacher teacher, ExecutionSemester executionSemester) throws ParseException {
-	if (teacher.hasTeacherCredits(executionSemester)
-		&& teacher.getTeacherCredits(executionSemester).getTeacherCreditsState().isOpenState()) {
-	    TeacherCredits teacherCredits = teacher.getTeacherCredits(executionSemester);
+    public static void closeTeacherCredits(Teacher teacher, TeacherCreditsState teacherCreditsState) throws ParseException {
+	TeacherCredits teacherCredits = teacher.getTeacherCredits(teacherCreditsState.getExecutionSemester());
+	if (teacherCredits == null) {
+	    new TeacherCredits(teacher, teacherCreditsState);
+	} else if (teacherCredits.getTeacherCreditsState().isOpenState()) {
 	    teacherCredits.saveTeacherCredits();
-	}
-	if (!teacher.hasTeacherCredits(executionSemester)) {
-	    new TeacherCredits(teacher, new TeacherCreditsState(executionSemester));
 	}
     }
 
     @Service
     public static void openAllTeacherCredits(ExecutionSemester executionSemester) throws ParseException {
-	List<Teacher> teachers = RootDomainObject.getInstance().getTeachers();
-	for (Teacher teacher : teachers) {
-	    if (teacher.getTeacherCredits(executionSemester).getTeacherCreditsState().isCloseState()) {
-		TeacherCredits teacherCredits = teacher.getTeacherCredits(executionSemester);
-		teacherCredits.openTeacherCredits(executionSemester);
-	    }
-	}
-    }
-
-    @Service
-    public void openTeacherCredits(ExecutionSemester executionSemester) throws ParseException {
-	Teacher teacher = getTeacher();
-	if (teacher.getTeacherCredits(executionSemester).getTeacherCreditsState().isCloseState()) {
-	    getTeacherCreditsState().setOpenState();
-	    setBasicOperations();
-	}
+	TeacherCreditsState teacherCreditsState = TeacherCreditsState.getTeacherCreditsState(executionSemester);
+	teacherCreditsState.setOpenState();
     }
 
     @Service
     public void editTeacherCredits(ExecutionSemester executionSemester) throws ParseException {
 	saveTeacherCredits();
-	setBasicOperations();
     }
 
     private void saveTeacherCredits() throws ParseException {
@@ -92,9 +80,8 @@ public class TeacherCredits extends TeacherCredits_Base {
 	setMandatoryLessonHours(new BigDecimal(mandatoryLessonHours));
 	setManagementCredits(new BigDecimal(managementCredits));
 	setServiceExemptionCredits(new BigDecimal(serviceExemptionsCredits));
-
+	addTeacherCreditsDocument(new TeacherCreditsDocument(teacher, executionSemester, teacherService));
 	setBasicOperations();
-	getTeacherCreditsState().setCloseState();
     }
 
     private void setBasicOperations() {
@@ -121,4 +108,16 @@ public class TeacherCredits extends TeacherCredits_Base {
 	    setPastServiceCredits(new BigDecimal(0));
 	}
     }
+
+    public TeacherCreditsDocument getLastTeacherCreditsDocument() {
+	TeacherCreditsDocument lastTeacherCreditsDocument = null;
+	for (TeacherCreditsDocument teacherCreditsDocument : getTeacherCreditsDocument()) {
+	    if (lastTeacherCreditsDocument == null
+		    || lastTeacherCreditsDocument.getUploadTime().isBefore(teacherCreditsDocument.getUploadTime())) {
+		lastTeacherCreditsDocument = teacherCreditsDocument;
+	    }
+	}
+	return lastTeacherCreditsDocument;
+    }
+
 }

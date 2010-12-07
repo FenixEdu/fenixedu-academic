@@ -37,4 +37,14 @@ public class TeacherCreditsState extends TeacherCreditsState_Base {
 	setPerson(AccessControl.getPerson());
 	setLastModifiedDate(new DateTime());
     }
+
+    public static TeacherCreditsState getTeacherCreditsState(ExecutionSemester executionSemester) {
+	for (TeacherCreditsState teacherCreditsState : RootDomainObject.getInstance().getTeacherCreditsStateSet()) {
+	    if (teacherCreditsState.getExecutionSemester().equals(executionSemester)) {
+		return teacherCreditsState;
+	    }
+	}
+	return null;
+    }
+
 }
