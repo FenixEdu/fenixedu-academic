@@ -155,8 +155,11 @@ public class DelegatesManagementDispatchAction extends FenixDispatchAction {
 		request.setAttribute("delegateBean", bean);
 		return prepareViewDelegates(mapping, actionForm, request, response);
 	    }
-
-	    AddNewDelegate.run(student, bean.getCurricularYear(), bean.getDegree());
+	    try {
+		AddNewDelegate.run(student, bean.getCurricularYear(), bean.getDegree());
+	    } catch (FenixServiceException ex) {
+		addActionMessage(request, ex.getMessage(), ex.getArgs());
+	    }
 	} else { /* From selected delegate election voting results */
 	    final Integer electionOID = Integer.parseInt(request.getParameter("selectedElection"));
 	    final YearDelegateElection election = (YearDelegateElection) rootDomainObject.readDelegateElectionByOID(electionOID);
@@ -164,7 +167,11 @@ public class DelegatesManagementDispatchAction extends FenixDispatchAction {
 	    final Student student = rootDomainObject.readStudentByOID(studentOID);
 
 	    bean = getInitializedBean(election.getDegree());
-	    AddNewDelegate.run(student, election);
+	    try {
+		AddNewDelegate.run(student, election);
+	    } catch (FenixServiceException ex) {
+		addActionMessage(request, ex.getMessage(), ex.getArgs());
+	    }
 	}
 	RenderUtils.invalidateViewState("delegateBean");
 	request.setAttribute("delegateBean", bean);
