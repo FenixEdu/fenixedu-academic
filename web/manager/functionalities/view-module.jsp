@@ -72,6 +72,21 @@
 </p>
 
 <!-- ======================
+         create links
+     ======================  -->
+<br><p>
+	<html:link page="<%= "/module/create.do?parent=" + thisModule %>">
+	    <bean:message key="link.module.create" bundle="FUNCTIONALITY_RESOURCES"/>
+	</html:link>,
+	<html:link page="<%= "/functionality/create.do?module=" + thisModule %>">
+	    <bean:message key="link.functionality.create" bundle="FUNCTIONALITY_RESOURCES"/>
+	</html:link>,
+	<html:link page="/module/uploadStructure.do" paramId="module" paramName="module" paramProperty="idInternal">
+	    <bean:message key="link.module.import" bundle="FUNCTIONALITY_RESOURCES"/>
+	</html:link>
+</p><br>
+
+<!-- ======================
              tree
      ======================  -->
 
@@ -139,18 +154,3 @@
 <logic:empty name="functionalities">
 	<p class="mvert1"><em><bean:message key="tree.unavailable" bundle="FUNCTIONALITY_RESOURCES"/></em></p>
 </logic:empty>
-
-<!-- ======================
-         create links
-     ======================  -->
-<p>
-	<html:link page="<%= "/module/create.do?parent=" + thisModule %>">
-	    <bean:message key="link.module.create" bundle="FUNCTIONALITY_RESOURCES"/>
-	</html:link>,
-	<html:link page="<%= "/functionality/create.do?module=" + thisModule %>">
-	    <bean:message key="link.functionality.create" bundle="FUNCTIONALITY_RESOURCES"/>
-	</html:link>,
-	<html:link page="/module/uploadStructure.do" paramId="module" paramName="module" paramProperty="idInternal">
-	    <bean:message key="link.module.import" bundle="FUNCTIONALITY_RESOURCES"/>
-	</html:link>
-</p>

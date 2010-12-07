@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaSupplementRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.RegistryDiplomaRequest;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -80,6 +81,18 @@ public class RectorateSubmissionBatch extends RectorateSubmissionBatch_Base {
 	} else {
 	    return "-";
 	}
+    }
+
+    public int getDiplomaDocumentRequestCount() {
+	int acc = 0;
+
+	for (DocumentRequest docRequest : getDocumentRequestSet()) {
+	    if ((docRequest instanceof RegistryDiplomaRequest) || (docRequest instanceof DiplomaSupplementRequest)) {
+		acc++;
+	    }
+	}
+
+	return acc;
     }
 
     public void closeBatch() {

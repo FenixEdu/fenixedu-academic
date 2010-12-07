@@ -111,8 +111,11 @@ public enum RoleType implements IPresentableEnum {
 
     NAPE("NAPE"),
 
-    RESIDENCE_MANAGER("Residence Manager");
+    RESIDENCE_MANAGER("Residence Manager"),
 
+    RECTORATE("Rectorate");
+
+    
     public String getName() {
 	return name();
     }
@@ -149,6 +152,7 @@ public enum RoleType implements IPresentableEnum {
 	this.defaultLabel = defaultLabel;
     }
 
+    @Override
     public String getLocalizedName() {
 	return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(name());
     }

@@ -37,8 +37,8 @@
 <schema name="functionalities.functionality.parameter.create"
         type="net.sourceforge.fenixedu.domain.functionalities.FunctionalityParameter"
         bundle="FUNCTIONALITY_RESOURCES" constructor="functionality, name">
-        <slot name="name"/>
-        <slot name="type" layout="menu-select">
+        <slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+        <slot name="type" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         	<property name="choiceType" value="net.sourceforge.fenixedu.domain.MetaDomainObject"/>
         	<property name="eachLayout" value="values"/>
         	<property name="eachSchema" value="meta.type"/>
