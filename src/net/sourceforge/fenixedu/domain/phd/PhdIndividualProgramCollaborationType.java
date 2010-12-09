@@ -19,6 +19,8 @@ public enum PhdIndividualProgramCollaborationType {
 
     WITH_SUPERVISION(true),
 
+    ERASMUS_MUNDUS(false),
+
     OTHER(true);
 
     private boolean needExtraInformation;
