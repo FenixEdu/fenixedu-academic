@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add TeacherCreditsFile" addTeacherCreditsFile.sql
+execute "Alter table ContractSituations" alterTableContractSituations.sql
