@@ -21,6 +21,8 @@ public class AddJuryElement extends PhdThesisActivity {
 
     @Override
     protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
+	process.checkJuryReporterNotGuider((PhdThesisJuryElementBean) object);
+
 	ThesisJuryElement.create(process, (PhdThesisJuryElementBean) object);
 	return process;
     }

@@ -25,7 +25,9 @@ public class AddPresidentJuryElement extends PhdThesisActivity {
 
     @Override
     protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
-	
+
+	process.checkJuryPresidentNotGuider((PhdThesisJuryElementBean) object);
+
 	if (process.hasPresidentJuryElement()) {
 	    process.getPresidentJuryElement().delete();
 	}

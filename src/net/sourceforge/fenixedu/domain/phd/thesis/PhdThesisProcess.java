@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcess;
@@ -361,6 +362,27 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	}
 
 	getMostRecentState().delete();
+    }
+
+    public void checkJuryPresidentNotGuider(final PhdThesisJuryElementBean bean) {
+	final PhdIndividualProgramProcess process = getIndividualProgramProcess();
+	final PhdParticipant participant = PhdParticipant.getUpdatedOrCreate(process, bean);
+	if (process.isGuider(participant) || process.isAssistantGuider(participant)) {
+	    throw new DomainException("error.PhdThesisProcess.president.cannot.be.guider.or.assistantguider");
+	}
+    }
+
+    public void checkJuryReporterNotGuider(final PhdThesisJuryElementBean bean) {
+
+	if (!bean.isReporter()) {
+	    return;
+	}
+
+	final PhdIndividualProgramProcess process = getIndividualProgramProcess();
+	final PhdParticipant participant = PhdParticipant.getUpdatedOrCreate(process, bean);
+	if (process.isGuider(participant) || process.isAssistantGuider(participant)) {
+	    throw new DomainException("error.PhdThesisProcess.reporter.cannot.be.guider.or.assistantguider");
+	}
     }
 
 }
