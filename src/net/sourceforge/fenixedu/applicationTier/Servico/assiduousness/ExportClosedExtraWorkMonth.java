@@ -434,37 +434,41 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 		end = getPreviousWorkingDay(leaveBean.getLeave().getJustificationMotive(), leaveBean.getLeave()
 			.getAssiduousness(), leaveBean.getEndLocalDate(), false);
 	    }
-	    String code = leaveBean.getLeave().getJustificationMotive()
-		    .getGiafCode(assiduousnessClosedMonth.getAssiduousnessStatusHistory());
+	    if (!end.isBefore(start)) {
+		String code = leaveBean.getLeave().getJustificationMotive()
+			.getGiafCode(assiduousnessClosedMonth.getAssiduousnessStatusHistory());
 
-	    if (!emptyCodes.contains(code)) {
-		if (leaveBean.getLeave().getJustificationMotive() == state.maternityJustificationMotive
-			&& endDate.getDayOfMonth() != 30 && Days.daysBetween(start, end).getDays() + 1 == endDate.getDayOfMonth()) {
-		    if (!state.maternityJustificationList.contains(leaveBean.getLeave().getAssiduousness())
-			    && !isContractedEmployee(leaveBean.getLeave().getAssiduousness(), start, end)) {
-			state.maternityJustificationList.add(leaveBean.getLeave().getAssiduousness());
+		if (!emptyCodes.contains(code)) {
+		    if (leaveBean.getLeave().getJustificationMotive() == state.maternityJustificationMotive
+			    && endDate.getDayOfMonth() != 30
+			    && Days.daysBetween(start, end).getDays() + 1 == endDate.getDayOfMonth()) {
+			if (!state.maternityJustificationList.contains(leaveBean.getLeave().getAssiduousness())
+				&& !isContractedEmployee(leaveBean.getLeave().getAssiduousness(), start, end)) {
+			    state.maternityJustificationList.add(leaveBean.getLeave().getAssiduousness());
+			}
 		    }
+		    if (paymentMonth == null) {
+			paymentMonth = start.plusMonths(1);
+		    }
+		    line.append(paymentMonth.getYear()).append(fieldSeparator);
+		    line.append(monthFormat.format(paymentMonth.getMonthOfYear())).append(fieldSeparator);
+		    line.append(
+			    employeeNumberFormat
+				    .format(leaveBean.getLeave().getAssiduousness().getEmployee().getEmployeeNumber())).append(
+			    fieldSeparator);
+		    line.append("F").append(fieldSeparator);
+		    line.append(code).append(fieldSeparator);
+		    line.append(dateFormat.print(start)).append(fieldSeparator);
+		    line.append(dateFormat.print(end)).append(fieldSeparator);
+		    int days = Days.daysBetween(start, end).getDays() + 1;
+		    line.append(days).append("00").append(fieldSeparator);
+		    interval = new Interval(start.toDateTimeAtStartOfDay().getMillis(), end.toDateTimeAtStartOfDay().getMillis());
+		    line.append(leaveBean.getLeave().getUtilDaysBetween(interval)).append("00");
+		    if (leaveBean.getLeave().getJustificationMotive().getHasReferenceDate()) {
+			line.append(fieldSeparator).append(dateFormat.print(leaveBean.getDate().toLocalDate()));
+		    }
+		    line.append("\r\n");
 		}
-		if (paymentMonth == null) {
-		    paymentMonth = start.plusMonths(1);
-		}
-		line.append(paymentMonth.getYear()).append(fieldSeparator);
-		line.append(monthFormat.format(paymentMonth.getMonthOfYear())).append(fieldSeparator);
-		line.append(
-			employeeNumberFormat.format(leaveBean.getLeave().getAssiduousness().getEmployee().getEmployeeNumber()))
-			.append(fieldSeparator);
-		line.append("F").append(fieldSeparator);
-		line.append(code).append(fieldSeparator);
-		line.append(dateFormat.print(start)).append(fieldSeparator);
-		line.append(dateFormat.print(end)).append(fieldSeparator);
-		int days = Days.daysBetween(start, end).getDays() + 1;
-		line.append(days).append("00").append(fieldSeparator);
-		interval = new Interval(start.toDateTimeAtStartOfDay().getMillis(), end.toDateTimeAtStartOfDay().getMillis());
-		line.append(leaveBean.getLeave().getUtilDaysBetween(interval)).append("00");
-		if (leaveBean.getLeave().getJustificationMotive().getHasReferenceDate()) {
-		    line.append(fieldSeparator).append(dateFormat.print(leaveBean.getDate().toLocalDate()));
-		}
-		line.append("\r\n");
 	    }
 	}
 	return line;
