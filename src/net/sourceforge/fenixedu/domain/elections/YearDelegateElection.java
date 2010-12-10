@@ -270,7 +270,7 @@ public class YearDelegateElection extends YearDelegateElection_Base {
 	return null;
     }
 
-    public static StyledExcelSpreadsheet exportToFile(List<Degree> degrees, ExecutionYear executionYear) throws IOException {
+    public static StyledExcelSpreadsheet exportElectionsResultsToFile(List<Degree> degrees, ExecutionYear executionYear) throws IOException {
 	StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet();
 	final ResourceBundle BUNDLE = ResourceBundle.getBundle("resources.PedagogicalCouncilResources",
 		Language.getDefaultLocale());

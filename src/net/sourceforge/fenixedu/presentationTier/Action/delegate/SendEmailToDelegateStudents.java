@@ -226,18 +226,21 @@ public class SendEmailToDelegateStudents extends FenixDispatchAction {
 	    for (ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
 		if (curricularCourse.hasAnyExecutionCourseIn(executionSemester)) {
 		    for (DegreeModuleScope scope : curricularCourse.getDegreeModuleScopes()) {
-			if (!scope.getCurricularSemester().equals(executionSemester.getSemester())) {
-			    continue;
-			}
+			if (scope.isActiveForAcademicInterval(executionSemester.getAcademicInterval())) {
+			    if (!scope.getCurricularSemester().equals(executionSemester.getSemester())) {
+				continue;
+			    }
 
-			if (delegateFunctionType.equals(FunctionType.DELEGATE_OF_YEAR)
-				&& !scopeBelongsToDelegateCurricularYear(scope, delegateFunction.getCurricularYear().getYear())) {
-			    continue;
+			    if (delegateFunctionType.equals(FunctionType.DELEGATE_OF_YEAR)
+				    && !scopeBelongsToDelegateCurricularYear(scope, delegateFunction.getCurricularYear()
+					    .getYear())) {
+				continue;
+			    }
+			    DelegateCurricularCourseBean bean = new DelegateCurricularCourseBean(curricularCourse, executionYear,
+				    scope.getCurricularYear(), executionSemester);
+			    bean.calculateEnrolledStudents();
+			    result.add(bean);
 			}
-			DelegateCurricularCourseBean bean = new DelegateCurricularCourseBean(curricularCourse, executionYear,
-				scope.getCurricularYear(), executionSemester);
-			bean.calculateEnrolledStudents();
-			result.add(bean);
 		    }
 		}
 

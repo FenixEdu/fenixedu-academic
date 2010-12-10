@@ -713,6 +713,10 @@ public class Student extends Student_Base {
 	return false;
     }
 
+    public boolean isSeniorForCurrentExecutionYear() {
+	return isSenior(ExecutionYear.readCurrentExecutionYear());
+    }
+
     public void addApprovedEnrolments(final Collection<Enrolment> enrolments) {
 	for (final Registration registration : getRegistrationsSet()) {
 	    registration.addApprovedEnrolments(enrolments);

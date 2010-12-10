@@ -263,14 +263,14 @@ public class ElectionsPeriodsManagementDispatchAction extends FenixDispatchActio
 	String degreeTypeString = (String) getFromRequest(request, "degreeType");
 	DegreeType degreeType = DegreeType.valueOf(degreeTypeString);
 	ExecutionYear executionYear = getDomainObject(request, "executionYearOID");
-	StyledExcelSpreadsheet spreadsheet = YearDelegateElection.exportToFile(Degree.readAllByDegreeType(degreeType),
-		executionYear);
+	StyledExcelSpreadsheet spreadsheet = YearDelegateElection.exportElectionsResultsToFile(Degree
+		.readAllByDegreeType(degreeType), executionYear);
 
 	final ServletOutputStream writer = response.getOutputStream();
 	spreadsheet.getWorkbook().write(writer);
 	response.setContentType("application/txt");
-	String filename = String.format("electionsResults_%s_%s.xls", degreeType.getLocalizedName(), executionYear.getYear()
-		.replace("/", "-"));
+	final String filename = String.format("electionsResults_%s_%s.xls", degreeType.getLocalizedName(), executionYear
+		.getYear().replace("/", "-"));
 	response.addHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
 	writer.flush();
 	response.flushBuffer();

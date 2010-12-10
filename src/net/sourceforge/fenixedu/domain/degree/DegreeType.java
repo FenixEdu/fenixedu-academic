@@ -359,12 +359,12 @@ public enum DegreeType {
 
 	    return null;
 	}
-	
+
 	@Override
 	public boolean hasSeniorEligibility(Registration registration, ExecutionYear executionYear) {
-	    if(!isNotEnrolledInFirstCycleOrIsConcluded(registration, executionYear))
+	    if (!isNotEnrolledInFirstCycleOrIsConcluded(registration, executionYear))
 		return false;
-	    
+
 	    return hasConditionsToFinishMasterDegree(registration, executionYear);
 	}
 
@@ -935,15 +935,16 @@ public enum DegreeType {
     public boolean hasSeniorEligibility(Registration registration, ExecutionYear executionYear) {
 	return false;
     }
-    
+
     protected boolean hasConditionsToFinishBachelorDegree(final Registration registration, final ExecutionYear executionYear) {
 	Double floor = new Double(165.00);
 	Double ceiling = new Double(180.00);
-	return registration.getStudentCurricularPlan(executionYear).getApprovedEctsCredits(CycleType.FIRST_CYCLE).compareTo(floor) >= 0
+	return registration.getStudentCurricularPlan(executionYear).getApprovedEctsCredits(CycleType.FIRST_CYCLE)
+		.compareTo(floor) >= 0
 		&& registration.getStudentCurricularPlan(executionYear).getApprovedEctsCredits(CycleType.FIRST_CYCLE).compareTo(
 			ceiling) < 0;
     }
-    
+
     protected boolean hasConditionsToFinishMasterDegree(final Registration registration, final ExecutionYear executionYear) {
 	Enrolment dissertationEnrolment = registration.getStudentCurricularPlan(executionYear).getLatestDissertationEnrolment();
 
@@ -959,7 +960,7 @@ public enum DegreeType {
 	Double threshold = 120.00 - (15.00 + dissContrib);
 	return registration.getStudentCurricularPlan(executionYear).getApprovedEctsCredits(CycleType.SECOND_CYCLE) >= threshold;
     }
-    
+
     protected boolean isNotEnrolledInFirstCycleOrIsConcluded(final Registration registration, final ExecutionYear executionYear) {
 	return registration.getStudentCurricularPlan(executionYear).getFirstCycle() == null
 		|| registration.getStudentCurricularPlan(executionYear).getFirstCycle().isConcluded();

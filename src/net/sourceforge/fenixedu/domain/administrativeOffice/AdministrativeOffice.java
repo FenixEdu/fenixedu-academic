@@ -199,6 +199,14 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 
     }
 
+    public static AdministrativeOffice readDegreeAdministrativeOffice() {
+	return readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE);
+    }
+
+    public static AdministrativeOffice readMasterDegreeAdministrativeOffice() {
+	return readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE);
+    }
+
     public static AdministrativeOffice getResponsibleAdministrativeOffice(Degree degree) {
 	return readByAdministrativeOfficeType(degree.getDegreeType().getAdministrativeOfficeType());
     }
