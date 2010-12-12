@@ -2336,6 +2336,9 @@ class DomainObject {
 
 				class accounting.postingRules.InsurancePR extends accounting.postingRules.FixedAmountPR {
 				}
+				
+				class accounting.postingRules.PartialRegistrationRegimeRequestPR extends accounting.postingRules.FixedAmountPR {
+				}
 
             class accounting.postingRules.ImprovementOfApprovedEnrolmentPR extends accounting.postingRules.GenericSingleEntryTypePR {
                 Money fixedAmount;
@@ -18825,4 +18828,11 @@ relation RootDomainObjectExternalUser {
     ExternalUser playsRole externalUser {
         multiplicity *;
     }
+}
+
+relation PartialRegistrationRegimeRequestExecutionYear {
+	ExecutionYear playsRole executionYear;
+	accounting.postingRules.PartialRegistrationRegimeRequestPR playsRole partialRegistrationRegimeRequestPostingRules {
+		multiplicity *;
+	}
 }

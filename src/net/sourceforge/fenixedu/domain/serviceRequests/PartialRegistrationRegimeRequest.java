@@ -7,12 +7,14 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.PartialRegistrationRegimeRequestEvent;
+import net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR;
 import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationRegime;
 import net.sourceforge.fenixedu.domain.student.RegistrationRegimeType;
+import net.sourceforge.fenixedu.util.Money;
 
 public class PartialRegistrationRegimeRequest extends PartialRegistrationRegimeRequest_Base {
 
@@ -72,17 +74,15 @@ public class PartialRegistrationRegimeRequest extends PartialRegistrationRegimeR
 	super.createAcademicServiceRequestSituations(academicServiceRequestBean);
 
 	if (academicServiceRequestBean.isToProcess() && !isFree()) {
-	    /*
-	     * For 2010/2011 partial registration is not charged
-	     */
-	    if (getExecutionYear().isAfterOrEquals(ExecutionYear.readExecutionYearByName("2010/2011"))) {
-		return;
+	    FixedAmountPR partialRegistrationPostingRule = (FixedAmountPR) getAdministrativeOffice()
+		    .getServiceAgreementTemplate().findPostingRuleByEventTypeAndDate(
+			    EventType.PARTIAL_REGISTRATION_REGIME_REQUEST,
+			    getExecutionYear().getBeginDateYearMonthDay().toDateTimeAtMidnight());
+
+	    if (partialRegistrationPostingRule.getFixedAmount().greaterThan(Money.ZERO)) {
+		new PartialRegistrationRegimeRequestEvent(getAdministrativeOffice(), getPerson(), this);
 	    }
-
-	    new PartialRegistrationRegimeRequestEvent(getAdministrativeOffice(), getPerson(), this);
-
 	} else if (academicServiceRequestBean.isToConclude()) {
-
 	    AcademicServiceRequestSituation.create(this, new AcademicServiceRequestBean(
 		    AcademicServiceRequestSituationType.DELIVERED, academicServiceRequestBean.getEmployee()));
 

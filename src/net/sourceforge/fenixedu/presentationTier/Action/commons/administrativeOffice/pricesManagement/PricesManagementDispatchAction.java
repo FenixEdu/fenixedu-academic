@@ -6,7 +6,9 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
+import net.sourceforge.fenixedu.domain.accounting.postingRules.PartialRegistrationRegimeRequestPR;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -29,11 +31,41 @@ public abstract class PricesManagementDispatchAction extends FenixDispatchAction
     public ActionForward prepareEditPrice(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
+	request.setAttribute("executionYearBean", new ExecutionYearBean(ExecutionYear.readCurrentExecutionYear()));
 	request.setAttribute("postingRule", rootDomainObject.readPostingRuleByOID(getRequestParameterAsInteger(request,
 		"postingRuleId")));
 	return mapping.findForward("editPrice");
     }
 
+    public ActionForward changeExecutionYearPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	ExecutionYearBean executionYearBean = (ExecutionYearBean) getObjectFromViewState("executionYearBean");
+
+	PostingRule postingRule = PartialRegistrationRegimeRequestPR.readMostRecentPostingRuleForExecutionYear(executionYearBean
+		.getExecutionYear());
+
+	request.setAttribute("postingRule", postingRule);
+	request.setAttribute("executionYearBean", executionYearBean);
+
+	return mapping.findForward("editPrice");
+    }
+
     abstract protected AdministrativeOffice getAdministrativeOffice(final HttpServletRequest request);
+
+    public static class ExecutionYearBean implements java.io.Serializable {
+	private ExecutionYear executionYear;
+
+	public ExecutionYearBean(ExecutionYear executionYear) {
+	    this.executionYear = executionYear;
+	}
+
+	public ExecutionYear getExecutionYear() {
+	    return executionYear;
+	}
+
+	public void setExecutionYear(ExecutionYear executionYear) {
+	    this.executionYear = executionYear;
+	}
+    }
 
 }

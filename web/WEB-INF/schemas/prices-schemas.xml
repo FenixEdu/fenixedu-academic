@@ -459,6 +459,12 @@
 	<slot name="fixedAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR.fixedAmount"  />
 </schema>
 
+<schema name="InsurancePR.view-student"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.InsurancePR"
+	extends="FixedAmountPR.view-student"
+	bundle="APPLICATION_RESOURCES">
+</schema>
+
 <schema name="DeclarationRequestPR.view-student" 
 		type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.DeclarationRequestPR" 
 		extends="FixedAmountPR.view-student" 
@@ -871,4 +877,21 @@
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ApprovementCertificateRequestPR"
 	bundle="APPLICATION_RESOURCES" extends="CertificateRequestPR.edit">
 	<setter signature="edit(baseAmount,amountPerUnit,amountPerPage, maximumAmount)"/>
+</schema>
+
+<schema name="PartialRegistrationRegimeRequestPR.view"
+		type="net.sourceforge.fenixedu.domain.accounting.postingRules.PartialRegistrationRegimeRequestPR" 
+		extends="FixedAmountPR.view" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="PartialRegistrationRegimeRequestPR.view-student"
+		type="net.sourceforge.fenixedu.domain.accounting.postingRules.PartialRegistrationRegimeRequestPR" 
+		extends="FixedAmountPR.view-student" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="PartialRegistrationRegimeRequestPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.PartialRegistrationRegimeRequestPR"
+	bundle="APPLICATION_RESOURCES">
+	<slot name="fixedAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR.fixedAmount" />
+	<setter signature="edit(fixedAmount)"/>
 </schema>
