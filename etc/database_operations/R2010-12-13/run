@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Associate ExecutionYear to PostingRule" associateExecutionYearToPostingRule.sql
+execute "Library Tables" alterLibraryTables.sql
