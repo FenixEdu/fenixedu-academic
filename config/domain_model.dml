@@ -6363,6 +6363,9 @@ class library.LibraryCard extends DomainObject {
     DateTime letterGenerationDate;
 }
 
+class library.LibraryDocument extends DomainObject {
+}
+
 class elections.DelegateElection extends DomainObject {
     Boolean sentResultsToCandidates;
 }
@@ -8874,6 +8877,23 @@ relation LibraryMissingLettersDocuments {
   documents.LibraryMissingLettersDocument playsRole letters {
     multiplicity *;
   }
+}
+
+relation RootDomainObjectLibraryDocument { 
+  library.LibraryDocument playsRole libraryDocument {
+    multiplicity *;
+  }
+  RootDomainObject playsRole rootDomainObject;
+}
+
+relation LibraryDocumentLibraryMissingCardsDocument { 
+  library.LibraryDocument playsRole libraryDocument;
+  documents.LibraryMissingCardsDocument playsRole cardDocument;
+}
+
+relation LibraryDocumentLibraryMissingLettersDocument { 
+  library.LibraryDocument playsRole libraryDocument;
+  documents.LibraryMissingLettersDocument playsRole letterDocument;
 }
 
 relation BlueprintBlueprintFile {

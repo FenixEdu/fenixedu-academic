@@ -5,6 +5,7 @@ import java.util.List;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.library.LibraryCard;
+import net.sourceforge.fenixedu.domain.library.LibraryDocument;
 
 import org.joda.time.DateTime;
 
@@ -16,6 +17,7 @@ public class LibraryMissingCardsDocument extends LibraryMissingCardsDocument_Bas
 	super();
 	for (LibraryCard card : source)
 	    addSource(card);
+	setLibraryDocument(new LibraryDocument());
 	init(GeneratedDocumentType.LIBRARY_MISSING_CARDS, operator, operator, filename, content);
     }
 

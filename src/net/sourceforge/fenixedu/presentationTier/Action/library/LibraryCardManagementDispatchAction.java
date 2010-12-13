@@ -26,11 +26,11 @@ import net.sourceforge.fenixedu.dataTransferObject.library.LibraryCardSearch;
 import net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean;
 import net.sourceforge.fenixedu.domain.PartyClassification;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.documents.GeneratedDocument;
 import net.sourceforge.fenixedu.domain.documents.GeneratedDocumentType;
 import net.sourceforge.fenixedu.domain.documents.LibraryMissingCardsDocument;
 import net.sourceforge.fenixedu.domain.documents.LibraryMissingLettersDocument;
 import net.sourceforge.fenixedu.domain.library.LibraryCard;
+import net.sourceforge.fenixedu.domain.library.LibraryDocument;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -224,8 +224,8 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	LibraryCardDTO libraryCardDTO = getRenderedObject("libraryCardDTO");
 
 	if (request.getParameter("modify") != null) {
-	    prepareEdit(request);			
-	    return mapping.findForward("edit-card");	   
+	    prepareEdit(request);
+	    return mapping.findForward("edit-card");
 	}
 
 	List<LibraryCardDTO> cardList = new ArrayList<LibraryCardDTO>();
@@ -251,7 +251,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
     public ActionForward postBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	prepareEdit(request);
-	
+
 	RenderUtils.invalidateViewState();
 	return mapping.findForward("edit-card");
     }
@@ -299,14 +299,14 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
     }
 
     private void generateMissingCardsDocuments(HttpServletRequest request) {
-	Person operator = AccessControl.getPerson();
 	List<LibraryMissingCardsDocument> docs = new ArrayList<LibraryMissingCardsDocument>();
 	Collections.sort(docs, LibraryMissingCardsDocument.COMPARATOR_BY_UPLOAD_TIME);
-	for (GeneratedDocument doc : operator.getProcessedDocument()) {
-	    if (doc instanceof LibraryMissingCardsDocument) {
-		docs.add((LibraryMissingCardsDocument) doc);
-		if (docs.size() == 5)
+	for (LibraryDocument libraryDocument : rootDomainObject.getLibraryDocumentSet()) {
+	    if (libraryDocument.getCardDocument() != null) {
+		docs.add(libraryDocument.getCardDocument());
+		if (docs.size() == 5) {
 		    break;
+		}
 	    }
 	}
 
@@ -391,14 +391,14 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
     }
 
     private void generateMissingLettersDocuments(GeneratedDocumentType type, HttpServletRequest request) {
-	Person operator = AccessControl.getPerson();
 	List<LibraryMissingLettersDocument> docs = new ArrayList<LibraryMissingLettersDocument>();
 	Collections.sort(docs, LibraryMissingLettersDocument.COMPARATOR_BY_UPLOAD_TIME);
-	for (GeneratedDocument doc : operator.getProcessedDocument()) {
-	    if (doc instanceof LibraryMissingLettersDocument && ((LibraryMissingLettersDocument) doc).getType().equals(type)) {
-		docs.add((LibraryMissingLettersDocument) doc);
-		if (docs.size() == 5)
+	for (LibraryDocument libraryDocument : rootDomainObject.getLibraryDocumentSet()) {
+	    if (libraryDocument.getLetterDocument() != null && libraryDocument.getLetterDocument().getType().equals(type)) {
+		docs.add(libraryDocument.getLetterDocument());
+		if (docs.size() == 5) {
 		    break;
+		}
 	    }
 	}
 	if (!docs.isEmpty())
