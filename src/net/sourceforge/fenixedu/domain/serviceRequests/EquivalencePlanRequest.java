@@ -79,6 +79,11 @@ public class EquivalencePlanRequest extends EquivalencePlanRequest_Base {
     }
 
     @Override
+    public boolean isManagedWithRectorateSubmissionBatch() {
+        return false;
+    }
+    
+    @Override
     public boolean isAvailableForTransitedRegistrations() {
 	return true;
     }

@@ -76,6 +76,11 @@ public class PhdStudentReingressionRequest extends PhdStudentReingressionRequest
     }
 
     @Override
+    public boolean isManagedWithRectorateSubmissionBatch() {
+        return false;
+    }
+    
+    @Override
     public boolean isToPrint() {
 	return false;
     }

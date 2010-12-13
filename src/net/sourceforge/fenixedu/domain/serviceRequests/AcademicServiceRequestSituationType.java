@@ -11,11 +11,11 @@ public enum AcademicServiceRequestSituationType {
 
     PROCESSING,
 
-    CONCLUDED,
-
     SENT_TO_EXTERNAL_ENTITY,
 
     RECEIVED_FROM_EXTERNAL_ENTITY,
+
+    CONCLUDED,
 
     DELIVERED,
 

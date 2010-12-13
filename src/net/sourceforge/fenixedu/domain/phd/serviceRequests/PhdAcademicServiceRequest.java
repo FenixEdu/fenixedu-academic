@@ -16,12 +16,4 @@ abstract public class PhdAcademicServiceRequest extends PhdAcademicServiceReques
 
 	setPhdIndividualProgramProcess(bean.getPhdIndividualProgramProcess());
     }
-
-    final public boolean isProcessingSituationAccepted() {
-	return isAcceptedSituationType(AcademicServiceRequestSituationType.PROCESSING);
-    }
-
-    final public boolean isRejectedSituationAccepted() {
-	return isAcceptedSituationType(AcademicServiceRequestSituationType.REJECTED);
-    }
 }

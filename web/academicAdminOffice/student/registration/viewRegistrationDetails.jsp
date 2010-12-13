@@ -257,185 +257,91 @@
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="requests.historic"/>
 		</html:link>	
 	</p>
-	
-	<p class="mtop2">
-		<b><bean:message key="new.requests" bundle="ACADEMIC_OFFICE_RESOURCES"/></b>
-		<bean:define id="newAcademicServiceRequests" name="registration" property="newAcademicServiceRequests"/>
-		<logic:notEmpty name="newAcademicServiceRequests">
-			<fr:view name="newAcademicServiceRequests" schema="AcademicServiceRequest.view">
-				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle4 thlight mtop0" />
-					<fr:property name="columnClasses" value="smalltxt acenter nowrap,smalltxt acenter nowrap,acenter,,acenter,tdhl1 nowrap,,,acenter nowrap,nowrap" />
-					
-					<fr:property name="linkFormat(view)" value="/academicServiceRequestsManagement.do?method=viewAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;backAction=student&amp;backMethod=visualizeRegistration"/>
-					<fr:property name="key(view)" value="view"/>
-					
-					<fr:property name="linkFormat(reject)" value="/academicServiceRequestsManagement.do?method=prepareRejectAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;registrationID=${registration.idInternal}"/>
-					<fr:property name="key(reject)" value="reject"/>
-                    <fr:property name="visibleIfNot(reject)" value="piggyBackedOnRegistry"/>
-	 				<%--<fr:property name="visibleIf(reject)" value="availableForEmployeeToActUpon"/>--%>
-	 				
-					<fr:property name="linkFormat(cancel)" value="/academicServiceRequestsManagement.do?method=prepareCancelAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;registrationID=${registration.idInternal}"/>
-					<fr:property name="key(cancel)" value="cancel"/>
-					<fr:property name="visibleIf(cancel)" value="loggedPersonCanCancel"/>
-                    <fr:property name="visibleIfNot(cancel)" value="piggyBackedOnRegistry"/>
-	 				
-	 				<fr:property name="linkFormat(payments)" value="<%="/payments.do?method=showOperations" + "&personId=${registration.person.idInternal}" %>"/>
-					<fr:property name="key(payments)" value="payments"/>
-					<fr:property name="visibleIfNot(payments)" value="isPayed"/>
-	 				
-					<fr:property name="linkFormat(processing)" value="/academicServiceRequestsManagement.do?method=processNewAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
-					<fr:property name="key(processing)" value="processing"/>
-                    <fr:property name="visibleIf(processing)" value="newRequest"/>
-                    <fr:property name="visibleIfNot(processing)" value="piggyBackedOnRegistry"/>
-					<%--<fr:property name="visibleIf(processing)" value="availableForEmployeeToActUpon"/>--%>
-					
-					<fr:property name="order(view)" value="1" />
-					<fr:property name="order(reject)" value="2" />
-					<fr:property name="order(cancel)" value="3" />
-					<fr:property name="order(payments)" value="4" />
-					<fr:property name="order(processing)" value="5" />
-					
-					<fr:property name="sortBy" value="requestDate=desc, activeSituation.situationDate=desc, urgentRequest=desc, description=asc"/>
-				</fr:layout>
-			</fr:view>
-		</logic:notEmpty>
-		<logic:empty name="newAcademicServiceRequests">
-			<p>
-				<em>
-					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="no.new.academic.service.requests"/>
-				</em>
-			</p>
-		</logic:empty>
-	</p>
-	
-	
-	<p class="mtop15">
-		<b><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="notConcluded.requests"/></b>
-		<bean:define id="processingAcademicServiceRequests" name="registration" property="toConcludeAcademicServiceRequests"/>
-		<logic:notEmpty name="processingAcademicServiceRequests">
-			<fr:view name="processingAcademicServiceRequests" schema="AcademicServiceRequest.view">
-				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle4 thlight mtop0" />
-					<fr:property name="columnClasses" value="smalltxt acenter nowrap,smalltxt acenter nowrap,acenter,,acenter,tdhl1 nowrap,,,acenter nowrap,nowrap" />
-					
-					<fr:property name="linkFormat(view)" value="/academicServiceRequestsManagement.do?method=viewAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;backAction=student&amp;backMethod=visualizeRegistration"/>
-					<fr:property name="key(view)" value="view"/>
-	
-					<fr:property name="linkFormat(reject)" value="/academicServiceRequestsManagement.do?method=prepareRejectAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;registrationID=${registration.idInternal}"/>
-					<fr:property name="key(reject)" value="reject"/>
-	                <fr:property name="visibleIfNot(reject)" value="piggyBackedOnRegistry"/>
+
+    <logic:iterate id="requestSelector"
+        collection="<%= java.util.Arrays.asList("newAcademicServiceRequests", "processingAcademicServiceRequests", "toDeliverAcademicServiceRequests") %>">
+        <p class="mtop2">
+    		<b><bean:message key="<%= requestSelector + ".title" %>" bundle="ACADEMIC_OFFICE_RESOURCES"/></b>
+            <bean:define id="requests" name="registration" property="<%= requestSelector.toString() %>"/>
+            <logic:notEmpty name="requests">
+                <fr:view name="requests" schema="AcademicServiceRequest.view">
+                    <fr:layout name="tabular">
+                        <fr:property name="classes" value="tstyle4 thlight mtop0" />
+                        <fr:property name="columnClasses" value="smalltxt acenter nowrap,smalltxt acenter nowrap,acenter,,acenter,tdhl1 nowrap,,,acenter nowrap,nowrap" />
+
+    					<fr:property name="linkFormat(view)" value="/academicServiceRequestsManagement.do?method=viewAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;backAction=student&amp;backMethod=visualizeRegistration"/>
+    					<fr:property name="key(view)" value="view"/>
+
+                        <fr:property name="linkFormat(reject)" value="/academicServiceRequestsManagement.do?method=prepareRejectAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;registrationID=${registration.idInternal}"/>
+                        <fr:property name="key(reject)" value="reject"/>
+                        <fr:property name="visibleIf(reject)" value="rejectedSituationAccepted" />
+                        <fr:property name="visibleIfNot(reject)" value="piggyBackedOnRegistry" />
+
+                        <fr:property name="linkFormat(cancel)" value="/academicServiceRequestsManagement.do?method=prepareCancelAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;registrationID=${registration.idInternal}"/>
+                        <fr:property name="key(cancel)" value="cancel"/>
+                        <fr:property name="visibleIf(cancel)" value="loggedPersonCanCancel"/>
+                        <fr:property name="visibleIfNot(cancel)" value="piggyBackedOnRegistry"/>
+
+                        <fr:property name="linkFormat(payments)" value="<%="/payments.do?method=showOperations" + "&personId=${registration.person.idInternal}" %>"/>
+                        <fr:property name="key(payments)" value="payments"/>
+                        <fr:property name="visibleIfNot(payments)" value="isPayed"/>
+
+                        <fr:property name="linkFormat(processing)" value="/academicServiceRequestsManagement.do?method=processNewAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
+                        <fr:property name="key(processing)" value="processing"/>
+                        <fr:property name="visibleIf(processing)" value="processingSituationAccepted"/>
+                        <fr:property name="visibleIfNot(processing)" value="piggyBackedOnRegistry"/>
+
+                        <fr:property name="linkFormat(send)" value="/academicServiceRequestsManagement.do?method=prepareSendAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
+                        <fr:property name="key(send)" value="label.send"/>
+                        <fr:property name="visibleIf(send)" value="sendToExternalEntitySituationAccepted"/>
+                        <fr:property name="visibleIfNot(send)" value="managedWithRectorateSubmissionBatch"/>
+
+                        <fr:property name="linkFormat(receiveFrom)" value="/academicServiceRequestsManagement.do?method=prepareReceiveAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
+                        <fr:property name="key(receiveFrom)" value="label.receiveFrom"/>
+                        <fr:property name="visibleIf(receiveFrom)" value="receivedSituationAccepted"/>
     
-					<fr:property name="linkFormat(cancel)" value="/academicServiceRequestsManagement.do?method=prepareCancelAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;registrationID=${registration.idInternal}"/>
-					<fr:property name="key(cancel)" value="cancel"/>
-					<fr:property name="visibleIf(cancel)" value="loggedPersonCanCancel"/>
-                    <fr:property name="visibleIfNot(cancel)" value="piggyBackedOnRegistry"/>
+                        <fr:property name="linkFormat(print)" value="/documentRequestsManagement.do?method=printDocument&amp;documentRequestId=${idInternal}&amp;"/>
+                        <fr:property name="key(print)" value="print"/>
+                        <fr:property name="visibleIf(print)" value="rePrintPossible"/>
+        
+                        <fr:property name="linkFormat(deliver)" value="/academicServiceRequestsManagement.do?method=deliveredAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
+                        <fr:property name="key(deliver)" value="deliver"/>
+                        <fr:property name="visibleIf(deliver)" value="deliveredSituationAccepted"/>
+    
+                        <fr:property name="linkFormat(code)" value="/academicServiceRequestsManagement.do?method=generateRegistryCode&amp;academicServiceRequestId=${idInternal}"/>
+                        <fr:property name="key(code)" value="label.generateRegistryCode"/>
+                        <fr:property name="visibleIf(code)" value="canGenerateRegistryCode"/>
+    
+                        <fr:property name="linkFormat(conclude)" value="/academicServiceRequestsManagement.do?method=prepareConcludeAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
+                        <fr:property name="key(conclude)" value="conclude"/>
+                        <fr:property name="visibleIf(conclude)" value="concludedSituationAccepted"/>
 
-					<fr:property name="linkFormat(payments)" value="<%="/payments.do?method=showOperations" + "&personId=${registration.person.idInternal}" %>"/>
-					<fr:property name="key(payments)" value="payments"/>
-					<fr:property name="visibleIfNot(payments)" value="isPayed"/>
-					
-					<fr:property name="linkFormat(send)" value="/academicServiceRequestsManagement.do?method=prepareSendAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
-					<fr:property name="key(send)" value="label.send"/>
-					<fr:property name="visibleIf(send)" value="requestAvailableToSendToExternalEntity"/>
-                    <fr:property name="visibleIfNot(send)" value="piggyBackedOnRegistry"/>
-					
-					<fr:property name="linkFormat(receiveFrom)" value="/academicServiceRequestsManagement.do?method=prepareReceiveAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
-					<fr:property name="key(receiveFrom)" value="label.receiveFrom"/>
-					<fr:property name="visibleIf(receiveFrom)" value="sentToExternalEntity"/>
-	 				
-					<fr:property name="linkFormat(conclude)" value="/academicServiceRequestsManagement.do?method=prepareConcludeAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
-					<fr:property name="key(conclude)" value="conclude"/>
-					<fr:property name="visibleIf(conclude)" value="concludedSituationAccepted"/>
-                    <fr:property name="visibleIfNot(conclude)" value="piggyBackedOnRegistry"/>
-	
-					<fr:property name="order(view)" 		value="1" />
-					<fr:property name="order(reject)" 		value="2" />
-					<fr:property name="order(cancel)"		value="3" />
-					<fr:property name="order(payments)"		value="4" />
-					<fr:property name="order(send)"			value="5" />
-					<fr:property name="order(receiveFrom)"	value="6" />
-					<fr:property name="order(conclude)"		value="7" />
-					
-					<fr:property name="sortBy" value="requestDate=desc, activeSituation.situationDate=desc, urgentRequest=desc, description=asc"/>
-				</fr:layout>
-			</fr:view>
-		</logic:notEmpty>
-		<logic:empty name="processingAcademicServiceRequests">
-			<p>
-				<em>
-					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="no.processing.academic.service.requests"/>
-				</em>
-			</p>
-		</logic:empty>
-	</p>
-	
-	
-	<p class="mtop15">
-		<b><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="notDelivered.requests"/></b>
-		<bean:define id="concludedAcademicServiceRequests" name="registration" property="toDeliverAcademicServiceRequests"/>
-		<logic:notEmpty name="concludedAcademicServiceRequests">
-			<fr:view name="concludedAcademicServiceRequests" schema="AcademicServiceRequest.view">
-				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle4 thlight mtop0" />
-					<fr:property name="columnClasses" value="smalltxt acenter nowrap,smalltxt acenter nowrap,acenter,,acenter,tdhl1 nowrap,,,acenter nowrap,nowrap" />
-	
-					<fr:property name="linkFormat(view)" value="/academicServiceRequestsManagement.do?method=viewAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;backAction=student&amp;backMethod=visualizeRegistration"/>
-					<fr:property name="key(view)" value="view"/>
-	
-					<fr:property name="linkFormat(cancel)" value="/academicServiceRequestsManagement.do?method=prepareCancelAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;registrationID=${registration.idInternal}"/>
-					<fr:property name="key(cancel)" value="cancel"/>
-					<fr:property name="visibleIf(cancel)" value="loggedPersonCanCancel"/>				
-                    <fr:property name="visibleIfNot(cancel)" value="piggyBackedOnRegistry"/>
-	 				
-					<fr:property name="linkFormat(payments)" value="<%="/payments.do?method=showOperations" + "&personId=${registration.person.idInternal}" %>"/>
-					<fr:property name="key(payments)" value="payments"/>
-					<fr:property name="visibleIfNot(payments)" value="isPayed"/>
+    					<fr:property name="order(view)" value="1" />
+                        <fr:property name="order(reject)" value="2" />
+                        <fr:property name="order(cancel)" value="3" />
+                        <fr:property name="order(payments)" value="4" />
+                        <fr:property name="order(processing)" value="5" />
+                        <fr:property name="order(send)" value="6" />
+                        <fr:property name="order(receiveFrom)" value="7" />
+                        <fr:property name="order(print)" value="8" />
+                        <fr:property name="order(deliver)" value="9" />
+                        <fr:property name="order(code)" value="10" />
+                        <fr:property name="order(conclude)" value="11" />
 
-					<fr:property name="linkFormat(send)" value="/academicServiceRequestsManagement.do?method=prepareSendAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
-					<fr:property name="key(send)" value="label.send"/>
-					<fr:property name="visibleIf(send)" value="requestAvailableToSendToExternalEntity"/>
-                    <fr:property name="visibleIfNot(send)" value="piggyBackedOnRegistry"/>
-					
-					<fr:property name="linkFormat(receiveFrom)" value="/academicServiceRequestsManagement.do?method=prepareReceiveAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
-					<fr:property name="key(receiveFrom)" value="label.receiveFrom"/>
-					<fr:property name="visibleIf(receiveFrom)" value="sentToExternalEntity"/>
+                        <fr:property name="sortBy" value="requestDate=desc, activeSituation.situationDate=desc, urgentRequest=desc, description=asc"/>
+                    </fr:layout>
+                </fr:view>
+            </logic:notEmpty>
+    		<logic:empty name="requests">
+    			<p>
+    				<em>
+    					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="<%= requestSelector + ".empty" %>"/>
+    				</em>
+    			</p>
+    		</logic:empty>
+        </p>
+    </logic:iterate>
 
-					<fr:property name="linkFormat(print)" value="/documentRequestsManagement.do?method=printDocument&amp;documentRequestId=${idInternal}&amp;"/>
-					<fr:property name="key(print)" value="print"/>
-					<fr:property name="visibleIf(print)" value="toPrint"/>
-	
-					<fr:property name="linkFormat(deliver)" value="/academicServiceRequestsManagement.do?method=deliveredAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
-					<fr:property name="key(deliver)" value="deliver"/>
-					<fr:property name="visibleIf(deliver)" value="deliveredSituationAccepted"/>
-
-                    <fr:property name="linkFormat(code)" value="/academicServiceRequestsManagement.do?method=generateRegistryCode&amp;academicServiceRequestId=${idInternal}"/>
-                    <fr:property name="key(code)" value="label.generateRegistryCode"/>
-                    <fr:property name="visibleIf(code)" value="canGenerateRegistryCode"/>
-
-					<fr:property name="order(view)" value="1"/>
-					<fr:property name="order(cancel)" value="2"/>
-					<fr:property name="order(payments)" value="3"/>
-					<fr:property name="order(send)" value="4"/>
-					<fr:property name="order(receiveFrom)" value="5"/>
-					<fr:property name="order(print)" value="6"/>
-					<fr:property name="order(deliver)" value="7"/>
-                    <fr:property name="order(code)" value="8"/>
-					
-					<fr:property name="sortBy" value="requestDate=desc, activeSituation.situationDate=desc, urgentRequest=desc, description=asc"/>
-				</fr:layout>
-			</fr:view>
-		</logic:notEmpty>
-		<logic:empty name="concludedAcademicServiceRequests">
-			<p>
-				<em>
-					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="no.concluded.academic.service.requests"/>
-				</em>
-			</p>
-		</logic:empty>
-	</p>
-	
-	
 	<%-- Precedence Info --%>
 	
 	<logic:present name="registration" property="studentCandidacy">

@@ -179,8 +179,8 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     abstract public boolean isPayedUponCreation();
 
     protected String getDescription(final AcademicServiceRequestType academicServiceRequestType, final String specificServiceType) {
-	final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", Language
-		.getLocale());
+	final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources",
+		Language.getLocale());
 	final StringBuilder result = new StringBuilder();
 	result.append(enumerationResources.getString(academicServiceRequestType.getQualifiedName()));
 	if (specificServiceType != null) {
@@ -407,8 +407,20 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return isAcceptedSituationType(AcademicServiceRequestSituationType.CANCELLED);
     }
 
+    final public boolean isRejectedSituationAccepted() {
+	return isAcceptedSituationType(AcademicServiceRequestSituationType.REJECTED);
+    }
+
+    final public boolean isProcessingSituationAccepted() {
+	return isAcceptedSituationType(AcademicServiceRequestSituationType.PROCESSING);
+    }
+
     final public boolean isSendToExternalEntitySituationAccepted() {
 	return isAcceptedSituationType(AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY);
+    }
+
+    final public boolean isReceivedSituationAccepted() {
+	return isAcceptedSituationType(AcademicServiceRequestSituationType.RECEIVED_FROM_EXTERNAL_ENTITY);
     }
 
     final public boolean isConcludedSituationAccepted() {
@@ -419,8 +431,8 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return isAcceptedSituationType(AcademicServiceRequestSituationType.DELIVERED);
     }
 
-    public boolean isCanGenerateRegistryCode() {
-	return false;
+    final public boolean isRePrintPossible() {
+	return finishedSuccessfully() && isToPrint();
     }
 
     private List<AcademicServiceRequestSituationType> getAcceptedSituationTypes(AcademicServiceRequestSituationType situationType) {
@@ -453,9 +465,13 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     protected List<AcademicServiceRequestSituationType> getProcessingSituationAcceptedSituationsTypes() {
-	return Collections.unmodifiableList(Arrays.asList(AcademicServiceRequestSituationType.CANCELLED,
-		AcademicServiceRequestSituationType.REJECTED, AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY,
-		AcademicServiceRequestSituationType.CONCLUDED));
+	if (isPossibleToSendToOtherEntity()) {
+	    return Collections.unmodifiableList(Arrays.asList(AcademicServiceRequestSituationType.CANCELLED,
+		    AcademicServiceRequestSituationType.REJECTED, AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY));
+	} else {
+	    return Collections.unmodifiableList(Arrays.asList(AcademicServiceRequestSituationType.CANCELLED,
+		    AcademicServiceRequestSituationType.REJECTED, AcademicServiceRequestSituationType.CONCLUDED));
+	}
     }
 
     protected List<AcademicServiceRequestSituationType> getSentToExternalEntitySituationAcceptedSituationsTypes() {
@@ -515,6 +531,10 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return (getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY);
     }
 
+    final public boolean isReceivedFromExternalEntity() {
+	return (getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.RECEIVED_FROM_EXTERNAL_ENTITY);
+    }
+
     final public boolean isConcluded() {
 	return (getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.CONCLUDED);
     }
@@ -560,15 +580,30 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
      */
     abstract public boolean isToPrint();
 
-    public boolean isRequestAvailableToSendToExternalEntity() {
-	return isPossibleToSendToOtherEntity() && isSendToExternalEntitySituationAccepted();
-    }
-
     /**
      * Indicates if is possible to AdministrativeOffice send this request to
      * another entity
      */
     abstract public boolean isPossibleToSendToOtherEntity();
+
+    /**
+     * Indicates that the document external shipping to rectorate is done using
+     * the rectorate batches. The
+     * {@link AcademicServiceRequestSituationType#SENT_TO_EXTERNAL_ENTITY} and
+     * {@link AcademicServiceRequestSituationType#RECEIVED_FROM_EXTERNAL_ENTITY}
+     * states are handled through this system.
+     * 
+     * @return true if managed by batch, false otherwise.
+     */
+    abstract public boolean isManagedWithRectorateSubmissionBatch();
+
+    /**
+     * Special condition for pre-existing documents that are able to consume a
+     * registry number.
+     */
+    public boolean isCanGenerateRegistryCode() {
+	return false;
+    }
 
     final public boolean createdByStudent() {
 	return !getCreationSituation().hasEmployee();

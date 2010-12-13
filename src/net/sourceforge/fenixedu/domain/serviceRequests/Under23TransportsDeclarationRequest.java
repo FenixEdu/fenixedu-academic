@@ -67,6 +67,11 @@ public class Under23TransportsDeclarationRequest extends Under23TransportsDeclar
     public boolean isPossibleToSendToOtherEntity() {
 	return false;
     }
+    
+    @Override
+    public boolean isManagedWithRectorateSubmissionBatch() {
+        return false;
+    }
 
     @Override
     public boolean isToPrint() {

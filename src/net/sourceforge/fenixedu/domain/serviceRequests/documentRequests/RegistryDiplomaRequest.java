@@ -1,8 +1,5 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
-import java.util.Collections;
-import java.util.List;
-
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
@@ -10,7 +7,6 @@ import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.Registr
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 
 public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base {
 
@@ -98,16 +94,6 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base {
     }
 
     @Override
-    protected List<AcademicServiceRequestSituationType> getConcludedSituationAcceptedSituationsTypes() {
-	return Collections.singletonList(AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY);
-    }
-
-    @Override
-    protected List<AcademicServiceRequestSituationType> getReceivedFromExternalEntitySituationAcceptedSituationsTypes() {
-	return Collections.singletonList(AcademicServiceRequestSituationType.DELIVERED);
-    }
-
-    @Override
     public boolean hasPersonalInfo() {
 	return true;
     }
@@ -170,6 +156,11 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base {
 
     @Override
     public boolean isPossibleToSendToOtherEntity() {
+	return true;
+    }
+
+    @Override
+    public boolean isManagedWithRectorateSubmissionBatch() {
 	return true;
     }
 

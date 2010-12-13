@@ -113,12 +113,6 @@ public class RectorateSubmissionBatch extends RectorateSubmissionBatch_Base {
 	    if (document.isCancelled() || document.isRejected()) {
 		continue;
 	    }
-	    if (!document.isSendToExternalEntitySituationAccepted()) {
-		if (document.getAcademicServiceRequestSituationType().equals(AcademicServiceRequestSituationType.PROCESSING)) {
-		    document.edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.CONCLUDED, employee,
-			    "Insert Template Text Here"));
-		}
-	    }
 	    document.edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY, employee,
 		    "Insert Template Text Here"));
 	}

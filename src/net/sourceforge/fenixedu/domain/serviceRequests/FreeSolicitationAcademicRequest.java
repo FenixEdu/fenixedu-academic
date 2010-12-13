@@ -69,6 +69,11 @@ public class FreeSolicitationAcademicRequest extends FreeSolicitationAcademicReq
     }
 
     @Override
+    public boolean isManagedWithRectorateSubmissionBatch() {
+        return false;
+    }
+    
+    @Override
     public boolean isAvailableForTransitedRegistrations() {
 	return false;
     }

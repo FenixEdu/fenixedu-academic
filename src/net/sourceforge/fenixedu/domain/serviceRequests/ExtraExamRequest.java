@@ -145,6 +145,11 @@ public class ExtraExamRequest extends ExtraExamRequest_Base {
     }
 
     @Override
+    public boolean isManagedWithRectorateSubmissionBatch() {
+        return false;
+    }
+    
+    @Override
     public boolean isAvailableForTransitedRegistrations() {
 	return false;
     }

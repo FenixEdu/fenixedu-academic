@@ -70,6 +70,11 @@ public class PhotocopyRequest extends PhotocopyRequest_Base {
     public boolean isPossibleToSendToOtherEntity() {
 	return false;
     }
+    
+    @Override
+    public boolean isManagedWithRectorateSubmissionBatch() {
+        return false;
+    }
 
     @Override
     public boolean isAvailableForTransitedRegistrations() {

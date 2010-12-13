@@ -107,6 +107,11 @@ public class SpecialSeasonRequest extends SpecialSeasonRequest_Base {
     }
 
     @Override
+    public boolean isManagedWithRectorateSubmissionBatch() {
+        return false;
+    }
+    
+    @Override
     public boolean isToPrint() {
 	return false;
     }

@@ -77,6 +77,11 @@ public class EquivalencePlanRevisionRequest extends EquivalencePlanRevisionReque
     public boolean isPossibleToSendToOtherEntity() {
 	return true;
     }
+    
+    @Override
+    public boolean isManagedWithRectorateSubmissionBatch() {
+        return false;
+    }
 
     @Override
     public boolean isAvailableForTransitedRegistrations() {

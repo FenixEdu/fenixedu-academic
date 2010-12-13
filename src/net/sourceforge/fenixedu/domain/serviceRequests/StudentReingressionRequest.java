@@ -179,6 +179,11 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
     }
 
     @Override
+    public boolean isManagedWithRectorateSubmissionBatch() {
+        return false;
+    }
+    
+    @Override
     public boolean isAvailableForTransitedRegistrations() {
 	return false;
     }
