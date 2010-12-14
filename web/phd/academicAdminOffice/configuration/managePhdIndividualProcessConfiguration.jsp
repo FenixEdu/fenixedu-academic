@@ -50,6 +50,7 @@
 		name="phdConfigurationIndividualProgramProcessBean">
 		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.PhdConfigurationIndividualProgramProcessBean">
 			<fr:slot name="generateAlerts" />
+			<fr:slot name="migratedProcess" />
 		</fr:schema>
 
 		<fr:layout name="tabular-editable">

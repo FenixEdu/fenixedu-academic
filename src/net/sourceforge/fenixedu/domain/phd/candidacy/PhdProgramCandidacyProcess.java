@@ -194,7 +194,8 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
 	    final PhdProgramCandidacyProcessStateBean bean = (PhdProgramCandidacyProcessStateBean) object;
 
-	    if (process.getCandidacyReviewDocuments().isEmpty()) {
+	    if (!process.getIndividualProgramProcess().getPhdConfigurationIndividualProgramProcess().isMigratedProcess()
+		    && process.getCandidacyReviewDocuments().isEmpty()) {
 		throw new DomainException(
 			"error.phd.candidacy.PhdProgramCandidacyProcess.RequestRatifyCandidacy.candidacy.review.document.is.required");
 	    }
@@ -592,14 +593,19 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
 	check(bean.getWhenRatified(), "error.phd.candidacy.PhdProgramCandidacyProcess.when.ratified.cannot.be.null");
 
-	if (!bean.getRatificationFile().hasAnyInformation()) {
+	if (!getIndividualProgramProcess().getPhdConfigurationIndividualProgramProcess().isMigratedProcess()
+		&& !bean.getRatificationFile().hasAnyInformation()) {
 	    throw new DomainException("error.phd.candidacy.PhdProgramCandidacyProcess.ratification.document.is.required");
 	}
 
 	setWhenRatified(bean.getWhenRatified());
-	addDocument(bean.getRatificationFile(), responsible);
 
-	if (!getIndividualProgramProcess().hasAnyRegistrationFormalizationActiveAlert()) {
+	if (bean.getRatificationFile().hasAnyInformation()) {
+	    addDocument(bean.getRatificationFile(), responsible);
+	}
+
+	if (!getIndividualProgramProcess().getPhdConfigurationIndividualProgramProcess().isMigratedProcess()
+		&& !getIndividualProgramProcess().hasAnyRegistrationFormalizationActiveAlert()) {
 	    new PhdRegistrationFormalizationAlert(getIndividualProgramProcess(), bean.getMaxDaysToFormalizeRegistration());
 	}
 
@@ -621,7 +627,9 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	getIndividualProgramProcess().setWhenStartedStudies(bean.getWhenStartedStudies());
 
 	assertPersonInformation();
-	assertStudyPlanInformation(bean);
+
+	final DegreeCurricularPlan dcp = getPhdProgramLastActiveDegreeCurricularPlan();
+	assertStudyPlanInformation(bean, dcp);
 	assertDebts(bean);
 	assertRegistrationFormalizationAlerts();
 
@@ -630,12 +638,12 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	return this;
     }
 
-    private void assertStudyPlanInformation(final RegistrationFormalizationBean bean) {
+    private void assertStudyPlanInformation(final RegistrationFormalizationBean bean,
+	    final DegreeCurricularPlan degreeCurricularPlan) {
 	final ExecutionYear executionYear = ExecutionYear.readByDateTime(bean.getWhenStartedStudies());
 	if (hasCurricularStudyPlan()) {
-	    final DegreeCurricularPlan dcp = getPhdProgramLastActiveDegreeCurricularPlan();
-	    assertCandidacy(dcp, executionYear);
-	    assertRegistration(bean, dcp, executionYear);
+	    assertCandidacy(degreeCurricularPlan, executionYear);
+	    assertRegistration(bean, degreeCurricularPlan, executionYear);
 	}
     }
 
@@ -646,7 +654,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 		    "error.phd.candidacy.PhdProgramCandidacyProcess.associateRegistration.study.plan.is.exempted");
 	}
 
-	assertStudyPlanInformation(bean);
+	assertStudyPlanInformation(bean, bean.getRegistration().getLastDegreeCurricularPlan());
 	assertDebts(bean);
 	assertRegistrationFormalizationAlerts();
 
@@ -699,6 +707,11 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	    final ExecutionYear executionYear) {
 
 	final Registration registration;
+	if (getIndividualProgramProcess().getPhdConfigurationIndividualProgramProcess().isMigratedProcess()
+		&& bean.hasRegistration()) {
+	    return bean.getRegistration();
+	}
+
 	if (hasActiveRegistrationFor(dcp)) {
 	    if (!bean.hasRegistration()) {
 		throw new DomainException("error.PhdProgramCandidacyProcess.regisration.formalization.already.has.registration");
@@ -733,7 +746,9 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	if (!getIndividualProgramProcess().hasPhdPublicPresentationSeminarAlert()) {
 	    new PhdPublicPresentationSeminarAlert(getIndividualProgramProcess());
 	}
-	if (!getIndividualProgramProcess().hasPhdFinalProofRequestAlert()) {
+
+	if (!getIndividualProgramProcess().getPhdConfigurationIndividualProgramProcess().isMigratedProcess()
+		&& !getIndividualProgramProcess().hasPhdFinalProofRequestAlert()) {
 	    new PhdFinalProofRequestAlert(getIndividualProgramProcess());
 	}
     }

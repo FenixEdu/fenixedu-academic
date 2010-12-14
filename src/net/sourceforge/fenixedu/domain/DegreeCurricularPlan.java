@@ -291,8 +291,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	}
 	if (!notApprovedCompetenceCourses.isEmpty()) {
 	    final String[] result = new String[notApprovedCompetenceCourses.size()];
-	    throw new DomainException("error.not.all.competence.courses.are.approved",
-		    notApprovedCompetenceCourses.toArray(result));
+	    throw new DomainException("error.not.all.competence.courses.are.approved", notApprovedCompetenceCourses
+		    .toArray(result));
 	}
     }
 
@@ -400,9 +400,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 		    if (executionDegree.getExecutionYear().getAcademicInterval().equals(year.getAcademicInterval()))
 			return executionDegree;
 		}
-	    } else
-		academicCalendarEntry = academicCalendarEntry.getParentEntry();
+	    }
+
+	    academicCalendarEntry = academicCalendarEntry.getParentEntry();
 	}
+
 	return null;
     }
 

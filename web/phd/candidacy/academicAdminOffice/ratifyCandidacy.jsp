@@ -82,18 +82,28 @@
 <%--  ### End Of Documents  ### --%>
 <br/><br/>
 
+<bean:define id="individualProgramProcess" name="process" property="individualProgramProcess" />
+<bean:define id="migratedProcess" name="individualProgramProcess" property="phdConfigurationIndividualProgramProcess.migratedProcess" type="Boolean"/>
+
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 <fr:form action="<%= "/phdProgramCandidacyProcess.do?method=ratifyCandidacy&processId=" + processId.toString() %>" encoding="multipart/form-data">
   	
 	<fr:edit id="ratifyCandidacyBean"
-	name="ratifyCandidacyBean"
-	schema="RatifyCandidacyBean.edit">
-
-	<fr:layout name="layout">
-		<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
-		<fr:property name="columnClasses" value=",,tdclear tderror1" />
-		<fr:destination name="invalid" path="/phdProgramCandidacyProcess.do?method=prepareRatifyCandidacyInvalid" />
-	</fr:layout>
+	name="ratifyCandidacyBean">
+		<fr:schema type="net.sourceforge.fenixedu.domain.phd.candidacy.RatifyCandidacyBean" bundle="PHD_RESOURCES">
+			<fr:slot name="whenRatified" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+			<fr:slot name="maxDaysToFormalizeRegistration" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+			<fr:slot name="ratificationFile.file" required="<%= !migratedProcess.booleanValue() %>">
+				<fr:property name="fileNameSlot" value="ratificationFile.filename"/>
+				<fr:property name="size" value="20"/>
+			</fr:slot>
+		</fr:schema>
+	
+		<fr:layout name="layout">
+			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
+			<fr:property name="columnClasses" value=",,tdclear tderror1" />
+			<fr:destination name="invalid" path="/phdProgramCandidacyProcess.do?method=prepareRatifyCandidacyInvalid" />
+		</fr:layout>
 </fr:edit>
 	
 <%--  ### Buttons (e.g. Submit)  ### --%>

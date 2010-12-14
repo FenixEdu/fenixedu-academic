@@ -7474,6 +7474,7 @@ class phd.permissions.PhdPermission extends DomainObject {
 }
 
 class phd.PhdConfigurationIndividualProgramProcess extends DomainObject {
+	Boolean migratedProcess;
 	Boolean generateAlert;
 }
 

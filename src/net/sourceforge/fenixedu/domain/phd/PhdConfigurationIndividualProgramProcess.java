@@ -8,6 +8,7 @@ public class PhdConfigurationIndividualProgramProcess extends PhdConfigurationIn
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setGenerateAlert(true);
+	setMigratedProcess(false);
     }
 
     public static PhdConfigurationIndividualProgramProcess createDefault() {
@@ -16,5 +17,10 @@ public class PhdConfigurationIndividualProgramProcess extends PhdConfigurationIn
 
     public void configure(PhdConfigurationIndividualProgramProcessBean bean) {
 	setGenerateAlert(bean.getGenerateAlerts());
+	setMigratedProcess(bean.getMigratedProcess());
+    }
+
+    public Boolean isMigratedProcess() {
+	return getMigratedProcess();
     }
 }

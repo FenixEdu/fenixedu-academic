@@ -4,12 +4,14 @@ import java.io.Serializable;
 
 public class PhdConfigurationIndividualProgramProcessBean implements Serializable {
     private Boolean generateAlerts;
+    private Boolean migratedProcess;
 
     public PhdConfigurationIndividualProgramProcessBean() {
     }
 
     public PhdConfigurationIndividualProgramProcessBean(final PhdIndividualProgramProcess process) {
 	setGenerateAlerts(process.getPhdConfigurationIndividualProgramProcess().getGenerateAlert());
+	setMigratedProcess(process.getPhdConfigurationIndividualProgramProcess().getMigratedProcess());
     }
 
     public Boolean getGenerateAlerts() {
@@ -18,5 +20,13 @@ public class PhdConfigurationIndividualProgramProcessBean implements Serializabl
 
     public void setGenerateAlerts(Boolean generateAlerts) {
 	this.generateAlerts = generateAlerts;
+    }
+
+    public Boolean getMigratedProcess() {
+	return migratedProcess;
+    }
+
+    public void setMigratedProcess(Boolean migratedProcess) {
+	this.migratedProcess = migratedProcess;
     }
 }
