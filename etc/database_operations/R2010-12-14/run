@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add migration property on phd configuration process" addMigrationToPhdConfiguration.sql
