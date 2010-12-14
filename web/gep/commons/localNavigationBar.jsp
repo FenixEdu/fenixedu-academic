@@ -35,6 +35,20 @@
             <bean:message key="link.ects.management" bundle="GEP_RESOURCES" />
         </html:link>
     </li>
+    
+    <li class="navheader">
+		<bean:message key="label.listings" bundle="GEP_RESOURCES"/>
+	</li>
+    <li>
+        <html:link page="/studentListByDegree.do?method=prepareByDegree">
+            <bean:message key="link.lists.by.degree" bundle="GEP_RESOURCES" />
+        </html:link>
+    </li>
+    <li>
+        <html:link page="/studentsListByCurricularCourse.do?method=prepareByCurricularCourse">
+            <bean:message key="link.lists.by.curricular.course" bundle="GEP_RESOURCES" />
+        </html:link>
+    </li>
 
 	<li class="navheader">
 		<bean:message key="label.inquiries" bundle="INQUIRIES_RESOURCES"/>

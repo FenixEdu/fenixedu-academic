@@ -111,5 +111,26 @@
     </definition>
     <definition name="alumni.recipients.remove" extends="definition.gep.two-column">
         <put name="body" value="/gep/alumni/removeRecipients.jsp"/>
-    </definition>        
+    </definition>
+    <definition name="student.viewRegistrationDetails" extends="definition.gep.two-column">
+        <put name="body" value="/internationalRelatOffice/viewRegistrationDetails.jsp"></put>
+    </definition>     
+    <definition name="student.showStudentCurriculum" extends="definition.gep.two-column" >
+		<put name="body" value="/internationalRelatOffice/displayStudentCurriculum_bd.jsp" />
+	</definition>     
+	<definition name="students.search" extends="definition.gep.two-column">
+        <put name="body" value="/internationalRelatOffice/searchStudents.jsp"></put>
+    </definition> 
+    <definition name="students.viewStudentDetails" extends="definition.gep.two-column">
+        <put name="body" value="/internationalRelatOffice/viewStudentDetails.jsp"></put>
+    </definition> 
+    <definition name="student.viewPersonalData" extends="definition.gep.two-column">
+        <put name="body" value="/internationalRelatOffice/viewPersonalData.jsp"></put>
+    </definition>
+    <definition name="chooseCycleForViewRegistrationCurriculum" extends="definition.gep.two-column">
+        <put name="body" value="/student/curriculum/chooseCycleForViewRegistrationCurriculum.jsp"></put>
+    </definition>
+    <definition name="view-registration-curriculum" extends="definition.gep.two-column">
+        <put name="body" value="/internationalRelatOffice/viewRegistrationCurriculum.jsp"></put>
+    </definition>
 </tiles-definitions>

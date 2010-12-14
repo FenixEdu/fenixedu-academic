@@ -75,6 +75,24 @@
 			<form-property name="registrationAgreement" type="java.lang.String"/>
 			<form-property name="method" type="java.lang.String"/>
 		</form-bean>	
+		
+		<form-bean name="studentManagementForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String" />
+			<form-property name="registrationID" type="java.lang.Integer" />
+	    </form-bean>
+	    
+	     <form-bean name="studentCurricularPlanAndEnrollmentsSelectionForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        	<form-property name="studentCPID" type="java.lang.String" />
+        	<form-property name="select" type="java.lang.String" />
+			<form-property name="studentNumber" type="java.lang.String"/>
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+			<form-property name="degreeCurricularPlanID" type="java.lang.Integer" initial="0"/>
+			<form-property name="organizedBy" type="java.lang.String" />
+			<form-property name="detailed" type="java.lang.Boolean" initial="false"/>
+			<form-property name="viewType" type="java.lang.String"/>
+		</form-bean>	
 
     </form-beans>
 
@@ -212,6 +230,41 @@
 		>
 			<forward name="chooseExecutionYear" path="chooseExecutionYear"/>
 		</action>
+		<action path="/students"
+				scope="request"		
+		        parameter="method"
+			    type="net.sourceforge.fenixedu.presentationTier.Action.internationalRelatOffice.SearchForStudents">
+			<forward name="search" path="students.search"/>
+			<forward name="viewStudentDetails" path="students.viewStudentDetails"/>
+		</action>   
+		<action path="/student"
+				name="studentManagementForm"
+				scope="request"		
+		        parameter="method"
+			    type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.StudentDA">
+			<forward name="viewPersonalData" path="student.viewPersonalData"/>
+			<forward name="viewStudentDetails" path="students.viewStudentDetails"/>
+			<forward name="viewRegistrationDetails" path="student.viewRegistrationDetails"/>
+		</action>     
+		<action path="/registration"
+				parameter="method"
+				type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.RegistrationDA"
+				scope="request">
+			<forward name="chooseCycleForViewRegistrationCurriculum" path="chooseCycleForViewRegistrationCurriculum"/>
+			<forward name="view-registration-curriculum" path="view-registration-curriculum"/>
+			<forward name="registrationConclusion" path="registrationConclusion"/>
+		</action>	
+		<action path="/viewCurriculum"
+		  	type="net.sourceforge.fenixedu.presentationTier.Action.commons.student.CurriculumDispatchAction"
+	        parameter="method"
+			name="studentCurricularPlanAndEnrollmentsSelectionForm"
+			scope="request"
+			validate="true"
+			input="/viewStudentCurriculum.do?method=prepareView&amp;page=0">
+	        	<forward name="ShowStudentCurriculum" path="student.showStudentCurriculum"/>
+	        	<forward name="ShowStudentCurricularPlans" path="df.page.showStudentCurricularPlans"/>
+	        	<forward name="NotAuthorized" path="df.page.notAuthorized"/>	
+	    </action>			
 
 	    <!-- ==================== View Curricular Course Historic ================== -->
        	<action path="/chooseExecutionYearAndDegreeCurricularPlan"
