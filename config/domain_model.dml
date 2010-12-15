@@ -18857,3 +18857,11 @@ relation PartialRegistrationRegimeRequestExecutionYear {
 		multiplicity *;
 	}
 }
+
+relation ProfessorshipUser {
+	Person playsRole creator;
+	Professorship playsRole professorshipCreated{
+		multiplicity *;
+	}
+}
+

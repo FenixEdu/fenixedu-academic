@@ -174,12 +174,10 @@
 		
 	</html:form>		 	
 </logic:notEmpty>
-<logic:present role="DEPARTMENT_CREDITS_MANAGER">
-	<logic:equal name="isDepartmentManager" value="true">
+
 		<br />
 		<br />
 		<html:link page="/createProfessorship.do?method=showExecutionYearExecutionPeriods&amp;page=0" paramId="teacherNumber" paramName="infoPerson" paramProperty="istUsername">
 			<bean:message key="link.professorship.addExecutionCourse"/>
 		</html:link>
-	</logic:equal>
-</logic:present>
+

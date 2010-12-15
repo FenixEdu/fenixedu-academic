@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesTeachingResult;
 import net.sourceforge.fenixedu.domain.inquiries.teacher.InquiryResponsePeriodType;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
@@ -58,7 +59,8 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 	professorShip.setHours((hours == null) ? new Double(0.0) : hours);
 	professorShip.setExecutionCourse(executionCourse);
 	professorShip.setPerson(teacher.getPerson());
-
+	professorShip.setCreator(AccessControl.getPerson());
+		
 	professorShip.setResponsibleFor(responsibleFor);
 	executionCourse.moveSummariesFromTeacherToProfessorship(teacher, professorShip);
 
@@ -82,6 +84,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 	professorShip.setHours((hours == null) ? new Double(0.0) : hours);
 	professorShip.setExecutionCourse(executionCourse);
 	professorShip.setPerson(person);
+	professorShip.setCreator(AccessControl.getPerson());
 
 	if (responsibleFor.booleanValue() && professorShip.getPerson().getTeacher() != null) {
 	    ResponsibleForValidator.getInstance().validateResponsibleForList(professorShip.getPerson().getTeacher(),
@@ -105,6 +108,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 		getPermissions().delete();
 	    }
 	    removeRootDomainObject();
+	    removeCreator();
 	    deleteDomainObject();
 	}
     }
