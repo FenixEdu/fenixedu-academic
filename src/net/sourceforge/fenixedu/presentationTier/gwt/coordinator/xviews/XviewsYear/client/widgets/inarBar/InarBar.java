@@ -28,6 +28,8 @@ public class InarBar extends Raphael {
     private int inarBarOY;
     private int cx;
     private int cy;
+    private int absoluteLeft;
+    private int absoluteTop;
 
     private Raphael.Rect outline;
     private BarSlice IBar;
@@ -90,6 +92,13 @@ public class InarBar extends Raphael {
 	    RBar.setBarHandlers();
 	}
     }
+    
+    public int getThisLeft() {
+	return this.getAbsoluteLeft();
+    }
+    public int getThisTop() {
+	return this.getAbsoluteTop();
+    }
 
     private class BarSlice extends Raphael.Rect implements HasClickHandlers {
 
@@ -104,6 +113,8 @@ public class InarBar extends Raphael {
 
 	private int flavour;
 	
+	private InarBar parent;
+	
 	private ClickableText nominalLabel;
 	private ClickableText percLabel;
 	
@@ -112,7 +123,7 @@ public class InarBar extends Raphael {
 	    super(x, y, w, h);
 	}
 
-	public BarSlice(double sliceOX, double sliceOY, double sliceWidth, double sliceHeight, int flavour) {
+	public BarSlice(double sliceOX, double sliceOY, double sliceWidth, double sliceHeight, int flavour, InarBar parent) {
 	    this(sliceOX, sliceOY, sliceWidth, sliceHeight);
 	    originX = sliceOX;
 	    originY = sliceOY;
@@ -123,6 +134,8 @@ public class InarBar extends Raphael {
 	    percCY = originY - (0.2 * thisHeight);
 
 	    this.flavour = flavour;
+	    
+	    this.parent = parent;
 
 	}
 
@@ -152,12 +165,19 @@ public class InarBar extends Raphael {
 	    percLabel.attr("cursor","pointer");
 	    
 	}
+	
+	public int getThisLeft() {
+	    return parent.getThisLeft()+((int)originX);
+	}
+	public int getThisTop() {
+	    return parent.getThisTop()+((int)originY);
+	}
 
 	public void setBarHandlers() {
 	    this.addClickHandler(new ClickHandler() {
 
 		public void onClick(ClickEvent event) {
-		    window.loadDetailedSlicePopup(getAbsoluteLeft()+(thisWidth / 2.0), getAbsoluteTop()+(thisHeight / 2.0), width, height, pickColor(flavour), pickULabel(flavour), pickLLabel(flavour));
+		    window.loadDetailedSlicePopup(getThisLeft()+(thisWidth / 2.0), getThisTop()+(thisHeight / 2.0), width, height, pickColor(flavour), pickULabel(flavour), pickLLabel(flavour));
 		    window.focus();
 		}
 
@@ -204,7 +224,7 @@ public class InarBar extends Raphael {
 
 	if (ianrt[0] != 0) {
 	    sliceWidth = (((ianrt[0] * 1.0) / (ianrt[4] * 1.0)) * innerRemainingW);
-	    IBar = new BarSlice(sliceOX, sliceOY, sliceWidth, sliceHeight, 0);
+	    IBar = new BarSlice(sliceOX, sliceOY, sliceWidth, sliceHeight, 0, this);
 	    IBar.attr("fill", "#1888B8");
 	    IBar.attr("stroke-width", 0);
 	    IBar.attr("cursor","pointer");
@@ -213,7 +233,7 @@ public class InarBar extends Raphael {
 
 	if (ianrt[1] != 0) {
 	    sliceWidth = (((ianrt[1] * 1.0) / (ianrt[4] * 1.0)) * innerRemainingW);
-	    ABar = new BarSlice(sliceOX, sliceOY, sliceWidth, sliceHeight, 1);
+	    ABar = new BarSlice(sliceOX, sliceOY, sliceWidth, sliceHeight, 1, this);
 	    ABar.attr("fill", "#39B54A");
 	    ABar.attr("stroke-width", 0);
 	    ABar.attr("cursor","pointer");
@@ -222,7 +242,7 @@ public class InarBar extends Raphael {
 
 	if (ianrt[2] != 0) {
 	    sliceWidth = (((ianrt[2] * 1.0) / (ianrt[4] * 1.0)) * innerRemainingW);
-	    NBar = new BarSlice(sliceOX, sliceOY, sliceWidth, sliceHeight, 2);
+	    NBar = new BarSlice(sliceOX, sliceOY, sliceWidth, sliceHeight, 2, this);
 	    NBar.attr("fill", "#FBB03B");
 	    NBar.attr("stroke-width", 0);
 	    NBar.attr("cursor","pointer");
@@ -231,7 +251,7 @@ public class InarBar extends Raphael {
 
 	if (ianrt[3] != 0) {
 	    sliceWidth = (((ianrt[3] * 1.0) / (ianrt[4] * 1.0)) * innerRemainingW);
-	    RBar = new BarSlice(sliceOX, sliceOY, sliceWidth, sliceHeight, 3);
+	    RBar = new BarSlice(sliceOX, sliceOY, sliceWidth, sliceHeight, 3, this);
 	    RBar.attr("fill", "#ED1C24");
 	    RBar.attr("stroke-width", 0);
 	    RBar.attr("cursor","pointer");

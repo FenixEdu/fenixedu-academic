@@ -32,8 +32,9 @@ public class InarByCurricularYears extends Raphael {
 	super(width, height);
     }
 
-    public InarByCurricularYears(XviewsYear window, int width, int height, int numberOfCurricularYears, int[][] inarData, String yearTag) {
-	this(width, height+50);
+    public InarByCurricularYears(XviewsYear window, int width, int height, int numberOfCurricularYears, int[][] inarData,
+	    String yearTag) {
+	this(width, height + 50);
 	this.window = window;
 	ox = 0.0;
 	oy = 0.0;
@@ -43,13 +44,13 @@ public class InarByCurricularYears extends Raphael {
 	this.inarData = inarData;
 	this.yearTag = yearTag;
 	titleSpacing = 50.0;
-	
-	//drawOutline();
+
+	// drawOutline();
 
 	textCoords = new double[numberOfCurricularYears][4];
 
 	double xRule = ox;
-	double yRule = oy+titleSpacing;
+	double yRule = oy + titleSpacing;
 	double segmentWidth = (width * 2.0) / 10.0;
 	double segmentHeight = height;
 	double paddingW = (width * 1.0) / 100.0;
@@ -66,22 +67,30 @@ public class InarByCurricularYears extends Raphael {
 
     }
 
+    public int getThisLeft() {
+	return this.getAbsoluteLeft();
+    }
+
+    public int getThisTop() {
+	return this.getAbsoluteTop();
+    }
+
     @Override
     public void onLoad() {
 	super.onLoad();
-	final Text title = new Text(110,25,"IANF per Curricular Year");
+	final Text title = new Text(110, 25, "IANF per Curricular Year");
 	title.attr("font-size", getFontSize(4) + "px");
 	title.attr("font-family", "sans-serif");
 	title.attr("fill", "#000000");
-	
+
 	if (1 <= numberOfCurricularYears) {
 	    final Text firstYear = new Text(textCoords[0][0], textCoords[0][1], "1st Year");
 	    firstYear.attr("font-size", getFontSize(3) + "px");
 	    firstYear.attr("font-weight", "bold");
 	    firstYear.attr("font-family", "sans-serif");
 	    firstYear.attr("fill", "#000000");
-	    
-	    final Text firstTotals = new Text(textCoords[0][2], textCoords[0][3], Double.toString(getTotalsForYear(1)));
+
+	    final Text firstTotals = new Text(textCoords[0][2], textCoords[0][3], Integer.toString(getTotalsForYear(1)));
 	    firstTotals.attr("font-size", getFontSize(3) + "px");
 	    firstTotals.attr("font-weight", "bold");
 	    firstTotals.attr("font-family", "sans-serif");
@@ -94,8 +103,8 @@ public class InarByCurricularYears extends Raphael {
 	    secondYear.attr("font-weight", "bold");
 	    secondYear.attr("font-family", "sans-serif");
 	    secondYear.attr("fill", "#000000");
-	    
-	    final Text secondTotals = new Text(textCoords[1][2], textCoords[1][3], Double.toString(getTotalsForYear(2)));
+
+	    final Text secondTotals = new Text(textCoords[1][2], textCoords[1][3], Integer.toString(getTotalsForYear(2)));
 	    secondTotals.attr("font-size", getFontSize(3) + "px");
 	    secondTotals.attr("font-weight", "bold");
 	    secondTotals.attr("font-family", "sans-serif");
@@ -108,8 +117,8 @@ public class InarByCurricularYears extends Raphael {
 	    thirdYear.attr("font-weight", "bold");
 	    thirdYear.attr("font-family", "sans-serif");
 	    thirdYear.attr("fill", "#000000");
-	    
-	    final Text thirdTotals = new Text(textCoords[2][2], textCoords[2][3], Double.toString(getTotalsForYear(3)));
+
+	    final Text thirdTotals = new Text(textCoords[2][2], textCoords[2][3], Integer.toString(getTotalsForYear(3)));
 	    thirdTotals.attr("font-size", getFontSize(3) + "px");
 	    thirdTotals.attr("font-weight", "bold");
 	    thirdTotals.attr("font-family", "sans-serif");
@@ -122,8 +131,8 @@ public class InarByCurricularYears extends Raphael {
 	    fourthYear.attr("font-weight", "bold");
 	    fourthYear.attr("font-family", "sans-serif");
 	    fourthYear.attr("fill", "#000000");
-	    
-	    final Text fourthTotals = new Text(textCoords[3][2], textCoords[3][3], Double.toString(getTotalsForYear(4)));
+
+	    final Text fourthTotals = new Text(textCoords[3][2], textCoords[3][3], Integer.toString(getTotalsForYear(4)));
 	    fourthTotals.attr("font-size", getFontSize(3) + "px");
 	    fourthTotals.attr("font-weight", "bold");
 	    fourthTotals.attr("font-family", "sans-serif");
@@ -136,8 +145,8 @@ public class InarByCurricularYears extends Raphael {
 	    fifthYear.attr("font-weight", "bold");
 	    fifthYear.attr("font-family", "sans-serif");
 	    fifthYear.attr("fill", "#000000");
-	    
-	    final Text fifthTotals = new Text(textCoords[4][2], textCoords[4][3], Double.toString(getTotalsForYear(5)));
+
+	    final Text fifthTotals = new Text(textCoords[4][2], textCoords[4][3], Integer.toString(getTotalsForYear(5)));
 	    fifthTotals.attr("font-size", getFontSize(3) + "px");
 	    fifthTotals.attr("font-weight", "bold");
 	    fifthTotals.attr("font-family", "sans-serif");
@@ -221,7 +230,8 @@ public class InarByCurricularYears extends Raphael {
 	double leftAlignment = xRule + (segmentWidth - labelWidth) / 2.0;
 
 	if (1 <= numberOfCurricularYears) {
-	    final ClickableBox firstYear = new ClickableBox(leftAlignment, topAligment, (labelWidth*0.8*getRelativeBarWidth(1)), labelHeight, (labelWidth*0.8));
+	    final ClickableBox firstYear = new ClickableBox(leftAlignment, topAligment,
+		    (labelWidth * 0.8 * getRelativeBarWidth(1)), labelHeight, (labelWidth * 0.8), this);
 	    firstYear.attr("stroke", "black");
 	    firstYear.attr("stroke-width", 2);
 	    ClickHandler clickHandler = new ClickHandler() {
@@ -231,10 +241,10 @@ public class InarByCurricularYears extends Raphael {
 		    window.loadDetailedInarPopup(firstYear.getPopupCx(), firstYear.getPopupCy(), yearTag, 1, inarData[0]);
 		    window.focus();
 		}
-		
+
 	    };
 	    firstYear.addClickHandler(clickHandler);
-	    
+
 	    drawSingleBar(leftAlignment, topAligment, labelWidth, labelHeight, inarData[0], clickHandler);
 	    textCoords[0][2] = (leftAlignment + (labelWidth * (getRelativeBarWidth(1) * 0.8)) + (labelWidth * 0.1));
 	    textCoords[0][3] = (topAligment + (labelHeight / 2.0));
@@ -242,7 +252,8 @@ public class InarByCurricularYears extends Raphael {
 
 	if (2 <= numberOfCurricularYears) {
 	    topAligment += bracketSize;
-	    final ClickableBox secondYear = new ClickableBox(leftAlignment, topAligment, (labelWidth*0.8*getRelativeBarWidth(2)), labelHeight, (labelWidth*0.8));
+	    final ClickableBox secondYear = new ClickableBox(leftAlignment, topAligment,
+		    (labelWidth * 0.8 * getRelativeBarWidth(2)), labelHeight, (labelWidth * 0.8), this);
 	    secondYear.attr("stroke", "black");
 	    secondYear.attr("stroke-width", 2);
 	    ClickHandler clickHandler = new ClickHandler() {
@@ -252,10 +263,10 @@ public class InarByCurricularYears extends Raphael {
 		    window.loadDetailedInarPopup(secondYear.getPopupCx(), secondYear.getPopupCy(), yearTag, 2, inarData[1]);
 		    window.focus();
 		}
-		
+
 	    };
 	    secondYear.addClickHandler(clickHandler);
-	    
+
 	    drawSingleBar(leftAlignment, topAligment, labelWidth, labelHeight, inarData[1], clickHandler);
 	    textCoords[1][2] = (leftAlignment + (labelWidth * (getRelativeBarWidth(2) * 0.8)) + (labelWidth * 0.1));
 	    textCoords[1][3] = (topAligment + (labelHeight / 2.0));
@@ -263,7 +274,8 @@ public class InarByCurricularYears extends Raphael {
 
 	if (3 <= numberOfCurricularYears) {
 	    topAligment += bracketSize;
-	    final ClickableBox thirdYear = new ClickableBox(leftAlignment, topAligment, (labelWidth*0.8*getRelativeBarWidth(3)), labelHeight, (labelWidth*0.8));
+	    final ClickableBox thirdYear = new ClickableBox(leftAlignment, topAligment,
+		    (labelWidth * 0.8 * getRelativeBarWidth(3)), labelHeight, (labelWidth * 0.8), this);
 	    thirdYear.attr("stroke", "black");
 	    thirdYear.attr("stroke-width", 2);
 	    ClickHandler clickHandler = new ClickHandler() {
@@ -273,10 +285,10 @@ public class InarByCurricularYears extends Raphael {
 		    window.loadDetailedInarPopup(thirdYear.getPopupCx(), thirdYear.getPopupCy(), yearTag, 3, inarData[2]);
 		    window.focus();
 		}
-		
+
 	    };
 	    thirdYear.addClickHandler(clickHandler);
-	    
+
 	    drawSingleBar(leftAlignment, topAligment, labelWidth, labelHeight, inarData[2], clickHandler);
 	    textCoords[2][2] = (leftAlignment + (labelWidth * (getRelativeBarWidth(3) * 0.8)) + (labelWidth * 0.1));
 	    textCoords[2][3] = (topAligment + (labelHeight / 2.0));
@@ -284,7 +296,8 @@ public class InarByCurricularYears extends Raphael {
 
 	if (4 <= numberOfCurricularYears) {
 	    topAligment += bracketSize;
-	    final ClickableBox fourthYear = new ClickableBox(leftAlignment, topAligment, (labelWidth*0.8*getRelativeBarWidth(4)), labelHeight, (labelWidth*0.8));
+	    final ClickableBox fourthYear = new ClickableBox(leftAlignment, topAligment,
+		    (labelWidth * 0.8 * getRelativeBarWidth(4)), labelHeight, (labelWidth * 0.8), this);
 	    fourthYear.attr("stroke", "black");
 	    fourthYear.attr("stroke-width", 2);
 	    ClickHandler clickHandler = new ClickHandler() {
@@ -294,10 +307,10 @@ public class InarByCurricularYears extends Raphael {
 		    window.loadDetailedInarPopup(fourthYear.getPopupCx(), fourthYear.getPopupCy(), yearTag, 4, inarData[3]);
 		    window.focus();
 		}
-		
+
 	    };
 	    fourthYear.addClickHandler(clickHandler);
-	    
+
 	    drawSingleBar(leftAlignment, topAligment, labelWidth, labelHeight, inarData[3], clickHandler);
 	    textCoords[3][2] = (leftAlignment + (labelWidth * (getRelativeBarWidth(4) * 0.8)) + (labelWidth * 0.1));
 	    textCoords[3][3] = (topAligment + (labelHeight / 2.0));
@@ -305,7 +318,8 @@ public class InarByCurricularYears extends Raphael {
 
 	if (5 <= numberOfCurricularYears) {
 	    topAligment += bracketSize;
-	    final ClickableBox fifthYear = new ClickableBox(leftAlignment, topAligment, (labelWidth*0.8*getRelativeBarWidth(5)), labelHeight, (labelWidth*0.8));
+	    final ClickableBox fifthYear = new ClickableBox(leftAlignment, topAligment,
+		    (labelWidth * 0.8 * getRelativeBarWidth(5)), labelHeight, (labelWidth * 0.8), this);
 	    fifthYear.attr("stroke", "black");
 	    fifthYear.attr("stroke-width", 2);
 	    ClickHandler clickHandler = new ClickHandler() {
@@ -315,17 +329,18 @@ public class InarByCurricularYears extends Raphael {
 		    window.loadDetailedInarPopup(fifthYear.getPopupCx(), fifthYear.getPopupCy(), yearTag, 5, inarData[4]);
 		    window.focus();
 		}
-		
+
 	    };
 	    fifthYear.addClickHandler(clickHandler);
-	    
+
 	    drawSingleBar(leftAlignment, topAligment, labelWidth, labelHeight, inarData[4], clickHandler);
 	    textCoords[4][2] = (leftAlignment + (labelWidth * (getRelativeBarWidth(5) * 0.8)) + (labelWidth * 0.1));
 	    textCoords[4][3] = (topAligment + (labelHeight / 2.0));
 	}
     }
 
-    private void drawSingleBar(double leftAlignment, double topAligment, double labelWidth, double labelHeight, int[] inar, ClickHandler clickHandler) {
+    private void drawSingleBar(double leftAlignment, double topAligment, double labelWidth, double labelHeight, int[] inar,
+	    ClickHandler clickHandler) {
 	double barWidth = labelWidth * 0.8;
 	double total = (inar[0] + inar[1] + inar[2] + inar[3]) * 1.0;
 	barWidth = barWidth * (total / getMaxBarWidth());
@@ -336,7 +351,7 @@ public class InarByCurricularYears extends Raphael {
 	iBar.attr("fill", "#1888B8");
 	iBar.attr("stroke-width", 0);
 	iBar.addClickHandler(clickHandler);
-	iBar.attr("cursor","pointer");
+	iBar.attr("cursor", "pointer");
 
 	xRule += iWidth;
 	double aWidth = ((inar[1] * 1.0) / (inar[4] * 1.0)) * barWidth;
@@ -344,7 +359,7 @@ public class InarByCurricularYears extends Raphael {
 	aBar.attr("fill", "#39B54A");
 	aBar.attr("stroke-width", 0);
 	aBar.addClickHandler(clickHandler);
-	aBar.attr("cursor","pointer");
+	aBar.attr("cursor", "pointer");
 
 	xRule += aWidth;
 	double nWidth = ((inar[2] * 1.0) / (inar[4] * 1.0)) * barWidth;
@@ -352,7 +367,7 @@ public class InarByCurricularYears extends Raphael {
 	nBar.attr("fill", "#FBB03B");
 	nBar.attr("stroke-width", 0);
 	nBar.addClickHandler(clickHandler);
-	nBar.attr("cursor","pointer");
+	nBar.attr("cursor", "pointer");
 
 	xRule += nWidth;
 	double rWidth = ((inar[3] * 1.0) / (inar[4] * 1.0)) * barWidth;
@@ -360,7 +375,7 @@ public class InarByCurricularYears extends Raphael {
 	rBar.attr("fill", "#ED1C24");
 	rBar.attr("stroke-width", 0);
 	rBar.addClickHandler(clickHandler);
-	rBar.attr("cursor","pointer");
+	rBar.attr("cursor", "pointer");
     }
 
     private double getMaxBarWidth() {
@@ -375,46 +390,48 @@ public class InarByCurricularYears extends Raphael {
 	return (max * 1.0);
     }
 
-    private double getTotalsForYear(int year) {
-	return ((inarData[year - 1][0] + inarData[year - 1][1] + inarData[year - 1][2] + inarData[year - 1][3]) * 1.0);
+    private int getTotalsForYear(int year) {
+	return (inarData[year - 1][0] + inarData[year - 1][1] + inarData[year - 1][2] + inarData[year - 1][3]);
     }
-    
+
     private double getRelativeBarWidth(int year) {
-	return (getTotalsForYear(year)/getMaxBarWidth());
+	return (getTotalsForYear(year) / getMaxBarWidth());
     }
-    
+
     private int getFontSize(int reference) {
 	return (int) (Math.sqrt((width * width) + (height * height)) * (reference * 1.0) / 100.0);
     }
-    
-    
+
     private class ClickableBox extends Raphael.Rect implements HasClickHandlers {
-	
+
 	private double popupCx;
 	private double popupCy;
-	
+	private InarByCurricularYears parent;
+
 	public ClickableBox(double x, double y, double w, double h) {
 	    super(x, y, w, h);
 	}
 
-	public ClickableBox(double x, double y, double w, double h, double labelWidth) {
+	public ClickableBox(double x, double y, double w, double h, double labelWidth, InarByCurricularYears parent) {
 	    super(x, y, w, h);
-	    popupCx = labelWidth/2.0;
-	    popupCy = h/2.0;
+	    popupCx = x + (labelWidth / 2.0);
+	    popupCy = y + (h / 2.0);
+	    this.parent = parent;
 	}
-	
+
 	public double getPopupCx() {
-	    return popupCx + ((double) getAbsoluteLeft());
+	    return popupCx + ((double) parent.getThisLeft());
 	}
+
 	public double getPopupCy() {
-	    return popupCy + ((double) getAbsoluteTop());
+	    return popupCy + ((double) parent.getThisTop());
 	}
 
 	@Override
 	public HandlerRegistration addClickHandler(ClickHandler handler) {
 	    return this.addDomHandler(handler, ClickEvent.getType());
 	}
-	
+
     }
 
 }
