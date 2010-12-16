@@ -72,7 +72,9 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	    result.setIndividualProgramProcess(bean.getProcess());
 	    result.addDocuments(bean.getDocuments(), userView.getPerson());
 
-	    new PhdThesisRequestFee(bean.getProcess());
+	    if (!result.getIndividualProgramProcess().isMigratedProcess()) {
+		new PhdThesisRequestFee(bean.getProcess());
+	    }
 
 	    return result;
 	}
@@ -366,9 +368,21 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 
     public void checkJuryPresidentNotGuider(final PhdThesisJuryElementBean bean) {
 	final PhdIndividualProgramProcess process = getIndividualProgramProcess();
-	final PhdParticipant participant = PhdParticipant.getUpdatedOrCreate(process, bean);
-	if (process.isGuider(participant) || process.isAssistantGuider(participant)) {
-	    throw new DomainException("error.PhdThesisProcess.president.cannot.be.guider.or.assistantguider");
+
+	for (PhdParticipant processParticipant : process.getParticipants()) {
+	    if (processParticipant == bean.getParticipant()) {
+		if (process.isGuider(processParticipant) || process.isAssistantGuider(processParticipant)) {
+		    throw new DomainException("error.PhdThesisProcess.president.cannot.be.guider.or.assistantguider");
+		}
+
+		break;
+	    }
+
+	    if (processParticipant.isFor(bean.getPerson())) {
+		if (process.isGuider(processParticipant) || process.isAssistantGuider(processParticipant)) {
+		    throw new DomainException("error.PhdThesisProcess.president.cannot.be.guider.or.assistantguider");
+		}
+	    }
 	}
     }
 
@@ -379,10 +393,23 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	}
 
 	final PhdIndividualProgramProcess process = getIndividualProgramProcess();
-	final PhdParticipant participant = PhdParticipant.getUpdatedOrCreate(process, bean);
-	if (process.isGuider(participant) || process.isAssistantGuider(participant)) {
-	    throw new DomainException("error.PhdThesisProcess.reporter.cannot.be.guider.or.assistantguider");
+
+	for (PhdParticipant processParticipant : process.getParticipants()) {
+	    if (processParticipant == bean.getParticipant()) {
+		if (process.isGuider(processParticipant) || process.isAssistantGuider(processParticipant)) {
+		    throw new DomainException("error.PhdThesisProcess.reporter.cannot.be.guider.or.assistantguider");
+		}
+
+		break;
+	    }
+
+	    if (processParticipant.isFor(bean.getPerson())) {
+		if (process.isGuider(processParticipant) || process.isAssistantGuider(processParticipant)) {
+		    throw new DomainException("error.PhdThesisProcess.reporter.cannot.be.guider.or.assistantguider");
+		}
+	    }
 	}
+
     }
 
 }

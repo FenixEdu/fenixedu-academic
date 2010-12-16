@@ -47,7 +47,7 @@ public enum RegistrationAgreement {
 
     INOV_IST(false, false),
 
-    TECMIC(false, false), IST_UCP(false, false), CLUSTER(false, false);
+    TECMIC(false, false), IST_UCP(false, false), CLUSTER(false, false), EUSYSBIO(false, false);
 
     private boolean enrolmentByStudentAllowed;
 

@@ -37,8 +37,16 @@ public class PhdThesisProcessBean implements Serializable {
     private PhdThesisFinalGrade finalGrade;
     private LocalDate conclusionDate;
 
+    private Boolean generateAlert;
+
     public PhdThesisProcessBean() {
 	this.documents = new ArrayList<PhdProgramDocumentUploadBean>();
+    }
+
+    public PhdThesisProcessBean(PhdIndividualProgramProcess process) {
+	this();
+
+	setGenerateAlert(process.getPhdConfigurationIndividualProgramProcess().getGenerateAlert());
     }
 
     public PhdIndividualProgramProcess getProcess() {
@@ -173,4 +181,11 @@ public class PhdThesisProcessBean implements Serializable {
 	this.conclusionDate = conclusionDate;
     }
 
+    public Boolean getGenerateAlert() {
+	return generateAlert;
+    }
+
+    public void setGenerateAlert(Boolean generateAlert) {
+	this.generateAlert = generateAlert;
+    }
 }

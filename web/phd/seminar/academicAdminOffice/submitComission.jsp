@@ -55,11 +55,22 @@
 
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 
-<fr:form action="<%="/publicPresentationSeminarProcess.do?processId=" + processId.toString() %>" encoding="multipart/form-data">
+<fr:form action="<%="/publicPresentationSeminarProcess.do?method=submitComission&processId=" + processId.toString() %>" encoding="multipart/form-data">
 
 	<input type="hidden" name="method" value="" />
 	
 	<fr:edit id="submitComissionBean" name="submitComissionBean" visible="false"/>
+	
+  	<fr:edit id="submitComissionBean.generateAlert" name="submitComissionBean">
+  		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean">
+  			<fr:slot name="generateAlert" layout="radio"/>
+  		</fr:schema>
+		<fr:layout name="tabular-editable">
+			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
+			<fr:property name="columnClasses" value=",,tdclear tderror1" />
+		</fr:layout>
+  	</fr:edit>
+	
 	
 	<fr:edit id="submitComissionBean.edit.document"
 		name="submitComissionBean"
@@ -68,13 +79,15 @@
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 			<fr:property name="columnClasses" value=",,tdclear tderror1" />
-			<fr:destination name="invalid" path="<%="/publicPresentationSeminarProcess.do?method=prepareSubmitComissionInvalid&processId=" + processId.toString() %>" />
 		</fr:layout>
+		
+		<fr:destination name="invalid" path="<%="/publicPresentationSeminarProcess.do?method=prepareSubmitComissionInvalid&processId=" + processId.toString() %>" />
+		<fr:destination name="cancel" path="<%="/publicPresentationSeminarProcess.do?method=viewIndividualProgramProcess&processId=" + processId.toString() %>" />
 	</fr:edit>
 	
 	
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='submitComission';"><bean:message bundle="PHD_RESOURCES" key="label.submit"/></html:submit>
-	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='viewIndividualProgramProcess';"><bean:message bundle="PHD_RESOURCES" key="label.cancel"/></html:cancel>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" ><bean:message bundle="PHD_RESOURCES" key="label.submit"/></html:submit>
+	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" ><bean:message bundle="PHD_RESOURCES" key="label.cancel"/></html:cancel>
 
 </fr:form>
 

@@ -103,7 +103,7 @@ public class PhdProgramDocumentUploadBean implements Serializable {
     public boolean isRequired() {
 	return this.required;
     }
-    
+
     public PhdProgramDocumentUploadBean required() {
 	this.required = !this.required;
 	return this;

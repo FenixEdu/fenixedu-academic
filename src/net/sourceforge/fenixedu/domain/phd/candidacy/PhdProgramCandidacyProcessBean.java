@@ -83,6 +83,8 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 
     private ExternalPhdProgram externalPhdProgram;
 
+    private Boolean migratedProcess;
+
     public PhdProgramCandidacyProcessBean() {
 	setCandidacyDate(new LocalDate());
     }
@@ -404,6 +406,14 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 	for (final PhdProgramDocumentUploadBean bean : getPhdGuidingLetters()) {
 	    bean.removeFile();
 	}
+    }
+
+    public Boolean getMigratedProcess() {
+	return migratedProcess;
+    }
+
+    public void setMigratedProcess(Boolean migratedProcess) {
+	this.migratedProcess = migratedProcess;
     }
 
     public List<PhdProgramDocumentUploadBean> getAllDocuments() {

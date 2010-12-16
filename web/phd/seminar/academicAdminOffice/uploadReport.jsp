@@ -60,6 +60,16 @@
 	<input type="hidden" name="method" value="" />
 	
 	<fr:edit id="uploadReportBean" name="uploadReportBean" visible="false"/>
+
+	<fr:edit id="uploadReportBean.generateAlert" name="uploadReportBean">
+  		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean">
+  			<fr:slot name="generateAlert" layout="radio" />
+  		</fr:schema>
+		<fr:layout name="tabular-editable">
+			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
+			<fr:property name="columnClasses" value=",,tdclear tderror1" />
+		</fr:layout>
+  	</fr:edit>
 	
 	<fr:edit id="uploadReportBean.edit.document"
 		name="uploadReportBean"
@@ -68,8 +78,9 @@
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 			<fr:property name="columnClasses" value=",,tdclear tderror1" />
-			<fr:destination name="invalid" path="<%="/publicPresentationSeminarProcess.do?method=prepareUploadReportInvalid&processId=" + processId.toString() %>" />
 		</fr:layout>
+		
+		<fr:destination name="invalid" path="<%="/publicPresentationSeminarProcess.do?method=prepareUploadReportInvalid&processId=" + processId.toString() %>" />
 	</fr:edit>
 	
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='uploadReport';"><bean:message bundle="PHD_RESOURCES" key="label.submit"/></html:submit>

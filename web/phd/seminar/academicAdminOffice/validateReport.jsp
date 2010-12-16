@@ -60,6 +60,16 @@
 	<input type="hidden" name="method" value="" />
 	
 	<fr:edit id="validateReportBean" name="validateReportBean" visible="false"/>
+
+	<fr:edit id="validateReportBean.generateAlert" name="validateReportBean">
+  		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean">
+  			<fr:slot name="generateAlert" layout="radio" />
+  		</fr:schema>
+		<fr:layout name="tabular-editable">
+			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
+			<fr:property name="columnClasses" value=",,tdclear tderror1" />
+		</fr:layout>
+  	</fr:edit>
 	
 	<fr:edit id="validateReportBean.edit.document"
 		name="validateReportBean"
@@ -68,8 +78,9 @@
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 			<fr:property name="columnClasses" value=",,tdclear tderror1" />
-			<fr:destination name="invalid" path="<%="/publicPresentationSeminarProcess.do?method=prepareValidateReportInvalid&processId=" + processId.toString() %>" />
 		</fr:layout>
+		
+		<fr:destination name="invalid" path="<%="/publicPresentationSeminarProcess.do?method=prepareValidateReportInvalid&processId=" + processId.toString() %>" />
 	</fr:edit>
 	
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='validateReport';"><bean:message bundle="PHD_RESOURCES" key="label.validate"/></html:submit>

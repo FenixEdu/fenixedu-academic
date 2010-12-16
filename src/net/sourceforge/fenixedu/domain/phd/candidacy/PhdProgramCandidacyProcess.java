@@ -79,7 +79,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	    final Object[] values = (Object[]) object;
 	    final PhdProgramCandidacyProcessBean bean = getBean(values);
 	    final Person person = getPerson(values);
-	    final PhdProgramCandidacyProcess result = new PhdProgramCandidacyProcess(bean, person);
+	    final PhdProgramCandidacyProcess result = new PhdProgramCandidacyProcess(bean, person, bean.getMigratedProcess());
 	    result.createState(bean.getState(), person);
 	    return result;
 	}
@@ -439,7 +439,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	activities.add(new AssociateRegistration());
     }
 
-    private PhdProgramCandidacyProcess(final PhdProgramCandidacyProcessBean bean, final Person person) {
+    private PhdProgramCandidacyProcess(final PhdProgramCandidacyProcessBean bean, final Person person, boolean isMigratedProcess) {
 	super();
 
 	checkCandidacyDate(bean.getExecutionYear(), bean.getCandidacyDate());
@@ -453,9 +453,12 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	    getCandidacy().setExecutionDegree(bean.getExecutionDegree());
 	}
 
-	if (!bean.hasCollaborationType() || bean.getCollaborationType().generateCandidacyDebt()) {
-	    new PhdProgramCandidacyEvent(person, this);
+	if (!isMigratedProcess) {
+	    if (!bean.hasCollaborationType() || bean.getCollaborationType().generateCandidacyDebt()) {
+		new PhdProgramCandidacyEvent(person, this);
+	    }
 	}
+
     }
 
     public boolean isPublicCandidacy() {
@@ -628,10 +631,12 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
 	assertPersonInformation();
 
-	final DegreeCurricularPlan dcp = getPhdProgramLastActiveDegreeCurricularPlan();
-	assertStudyPlanInformation(bean, dcp);
-	assertDebts(bean);
-	assertRegistrationFormalizationAlerts();
+	if (!getIndividualProgramProcess().getPhdConfigurationIndividualProgramProcess().isMigratedProcess()) {
+	    final DegreeCurricularPlan dcp = getPhdProgramLastActiveDegreeCurricularPlan();
+	    assertStudyPlanInformation(bean, dcp);
+	    assertDebts(bean);
+	    assertRegistrationFormalizationAlerts();
+	}
 
 	getIndividualProgramProcess().createState(PhdIndividualProgramProcessState.WORK_DEVELOPMENT, responsible);
 
@@ -655,8 +660,11 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	}
 
 	assertStudyPlanInformation(bean, bean.getRegistration().getLastDegreeCurricularPlan());
-	assertDebts(bean);
 	assertRegistrationFormalizationAlerts();
+
+	if (!getIndividualProgramProcess().getPhdConfigurationIndividualProgramProcess().isMigratedProcess()) {
+	    assertDebts(bean);
+	}
 
 	return this;
     }
@@ -743,7 +751,8 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     private void assertRegistrationFormalizationAlerts() {
-	if (!getIndividualProgramProcess().hasPhdPublicPresentationSeminarAlert()) {
+	if (!getIndividualProgramProcess().getPhdConfigurationIndividualProgramProcess().isMigratedProcess()
+		&& !getIndividualProgramProcess().hasPhdPublicPresentationSeminarAlert()) {
 	    new PhdPublicPresentationSeminarAlert(getIndividualProgramProcess());
 	}
 

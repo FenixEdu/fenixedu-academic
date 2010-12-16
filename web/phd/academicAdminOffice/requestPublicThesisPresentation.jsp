@@ -92,45 +92,54 @@
 
 <input type="hidden" name="method" value="" />
 
-<fr:edit id="requestPublicThesisPresentation" name="requestPublicThesisPresentation" visible="false" />
-
-<fr:edit id="requestPublicThesisPresentation.edit.documents" name="requestPublicThesisPresentation" property="documents">
+	<fr:edit id="requestPublicThesisPresentation" name="requestPublicThesisPresentation" visible="false" />
 	
-	<fr:schema type="<%= PhdProgramDocumentUploadBean.class.getName() %>" bundle="PHD_RESOURCES">
-		<fr:slot name="type" readOnly="true" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean.type" layout="phd-enum-renderer" />
-		<fr:slot name="file" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean.file">
-			<fr:property name="fileNameSlot" value="filename"/>
-			<fr:property name="size" value="20"/>
-		</fr:slot>
-	</fr:schema>
+	<fr:edit id="requestPublicThesisPresentation.edit.documents" name="requestPublicThesisPresentation" property="documents">
+		
+		<fr:schema type="<%= PhdProgramDocumentUploadBean.class.getName() %>" bundle="PHD_RESOURCES">
+			<fr:slot name="type" readOnly="true" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean.type" layout="phd-enum-renderer" />
+			<fr:slot name="file" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean.file">
+				<fr:property name="fileNameSlot" value="filename"/>
+				<fr:property name="size" value="20"/>
+			</fr:slot>
+		</fr:schema>
+		
+		<fr:layout name="tabular-editable">
+			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
+			<fr:property name="columnClasses" value=",,tdclear tderror1" />
+			<fr:destination name="invalid" path="<%="/phdIndividualProgramProcess.do?method=prepareRequestPublicThesisPresentationInvalid&processId=" + processId.toString() %>" />
+		</fr:layout>
+	</fr:edit>
 	
-	<fr:layout name="tabular-editable">
-		<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
-		<fr:property name="columnClasses" value=",,tdclear tderror1" />
+  	<fr:edit id="requestPublicThesisPresentation.generateAlert" name="requestPublicThesisPresentation">
+  		<fr:schema bundle="PHD_RESOURCES" type="<%= PhdThesisProcessBean.class.getName() %>">
+  			<fr:slot name="generateAlert" layout="radio" />
+  		</fr:schema>
+		<fr:layout name="tabular-editable">
+			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
+			<fr:property name="columnClasses" value=",,tdclear tderror1" />
+		</fr:layout>
+  	</fr:edit>
+	
+	<fr:edit id="requestPublicThesisPresentation.edit.remarks" name="requestPublicThesisPresentation">
+		
+		<fr:schema type="<%= PhdThesisProcessBean.class.getName() %>" bundle="PHD_RESOURCES">
+			<fr:slot name="remarks" layout="longText">
+				<fr:property name="columns" value="80"/>
+				<fr:property name="rows" value="8"/>
+			</fr:slot>
+		</fr:schema>
+		
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
+			<fr:property name="columnClasses" value=",,tdclear tderror1" />
+		</fr:layout>
+		
 		<fr:destination name="invalid" path="<%="/phdIndividualProgramProcess.do?method=prepareRequestPublicThesisPresentationInvalid&processId=" + processId.toString() %>" />
-	</fr:layout>
-</fr:edit>
+	</fr:edit>
 
-<fr:edit id="requestPublicThesisPresentation.edit.remarks" name="requestPublicThesisPresentation">
-	
-	<fr:schema type="<%= PhdThesisProcessBean.class.getName() %>" bundle="PHD_RESOURCES">
-		<fr:slot name="remarks" layout="longText">
-			<fr:property name="columns" value="80"/>
-			<fr:property name="rows" value="8"/>
-		</fr:slot>
-	</fr:schema>
-	
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
-		<fr:property name="columnClasses" value=",,tdclear tderror1" />
-		<fr:destination name="invalid" path="<%="/phdIndividualProgramProcess.do?method=prepareRequestPublicThesisPresentationInvalid&processId=" + processId.toString() %>" />
-	</fr:layout>
-</fr:edit>
-
-
-
-<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='requestPublicThesisPresentation';"><bean:message bundle="PHD_RESOURCES" key="label.submit"/></html:submit>
-<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='viewProcess';"><bean:message bundle="PHD_RESOURCES" key="label.cancel"/></html:cancel>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='requestPublicThesisPresentation';"><bean:message bundle="PHD_RESOURCES" key="label.submit"/></html:submit>
+	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='viewProcess';"><bean:message bundle="PHD_RESOURCES" key="label.cancel"/></html:cancel>
 
 </fr:form>
 

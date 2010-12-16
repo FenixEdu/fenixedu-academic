@@ -116,6 +116,7 @@
 		<property name="format" value="${year}" />
         <property name="saveOptions" value="true"/>
 	</slot>
+	<slot name="migratedProcess" />
 </schema>
 
 <schema name="PhdProgramCandidacyProcessBean.editPersonalInformation.simplified" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="PHD_RESOURCES">

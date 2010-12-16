@@ -11,8 +11,18 @@ public class PhdConfigurationIndividualProgramProcess extends PhdConfigurationIn
 	setMigratedProcess(false);
     }
 
+    private PhdConfigurationIndividualProgramProcess(boolean generateAlerts, boolean migratedProcess) {
+	this();
+	setGenerateAlert(generateAlerts);
+	setMigratedProcess(migratedProcess);
+    }
+
     public static PhdConfigurationIndividualProgramProcess createDefault() {
 	return new PhdConfigurationIndividualProgramProcess();
+    }
+
+    public static PhdConfigurationIndividualProgramProcess createMigratedProcessConfiguration() {
+	return new PhdConfigurationIndividualProgramProcess(false, true);
     }
 
     public void configure(PhdConfigurationIndividualProgramProcessBean bean) {

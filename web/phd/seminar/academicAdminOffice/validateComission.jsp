@@ -61,6 +61,16 @@
 	
 	<fr:edit id="validateComissionBean" name="validateComissionBean" visible="false"/>
 	
+  	<fr:edit id="validateComissionBean.generateAlert" name="validateComissionBean">
+  		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean">
+  			<fr:slot name="generateAlert" layout="radio" />
+  		</fr:schema>
+		<fr:layout name="tabular-editable">
+			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
+			<fr:property name="columnClasses" value=",,tdclear tderror1" />
+		</fr:layout>
+  	</fr:edit>
+		
 	<fr:edit id="validateComissionBean.edit.document"
 		name="validateComissionBean"
 		schema="PublicPresentationSeminarProcessBean.edit.document.and.remarks">
@@ -68,8 +78,9 @@
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 			<fr:property name="columnClasses" value=",,tdclear tderror1" />
-			<fr:destination name="invalid" path="<%="/publicPresentationSeminarProcess.do?method=prepareValidateComissionInvalid&processId=" + processId.toString() %>" />
 		</fr:layout>
+		
+		<fr:destination name="invalid" path="<%="/publicPresentationSeminarProcess.do?method=prepareValidateComissionInvalid&processId=" + processId.toString() %>" />
 	</fr:edit>
 	
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='validateComission';"><bean:message bundle="PHD_RESOURCES" key="label.validate"/></html:submit>

@@ -117,7 +117,8 @@ abstract public class CommonPhdCandidacyDA extends PhdProcessDA {
     public ActionForward prepareRejectCandidacyProcess(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final PhdProgramCandidacyProcessStateBean stateBean = new PhdProgramCandidacyProcessStateBean();
+	final PhdProgramCandidacyProcessStateBean stateBean = new PhdProgramCandidacyProcessStateBean(getProcess(request)
+		.getIndividualProgramProcess());
 	request.setAttribute("stateBean", stateBean);
 	return mapping.findForward("rejectCandidacyProcess");
     }

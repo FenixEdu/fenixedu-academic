@@ -44,7 +44,8 @@ abstract public class CommonPublicPresentationSeminarDA extends PhdProcessDA {
     public ActionForward prepareSubmitComission(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final PublicPresentationSeminarProcessBean submitComissionBean = new PublicPresentationSeminarProcessBean();
+	final PublicPresentationSeminarProcessBean submitComissionBean = new PublicPresentationSeminarProcessBean(getProcess(
+		request).getIndividualProgramProcess());
 	final PhdProgramDocumentUploadBean documentBean = new PhdProgramDocumentUploadBean(
 		PhdIndividualProgramDocumentType.PUBLIC_PRESENTATION_SEMINAR_COMISSION);
 	submitComissionBean.setDocument(documentBean);
@@ -86,7 +87,8 @@ abstract public class CommonPublicPresentationSeminarDA extends PhdProcessDA {
     public ActionForward prepareValidateComission(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final PublicPresentationSeminarProcessBean validateComissionBean = new PublicPresentationSeminarProcessBean();
+	final PublicPresentationSeminarProcessBean validateComissionBean = new PublicPresentationSeminarProcessBean(getProcess(
+		request).getIndividualProgramProcess());
 	final PhdProgramDocumentUploadBean documentBean = new PhdProgramDocumentUploadBean(
 		PhdIndividualProgramDocumentType.PUBLIC_PRESENTATION_SEMINAR_COMISSION);
 	validateComissionBean.setDocument(documentBean);
@@ -143,7 +145,8 @@ abstract public class CommonPublicPresentationSeminarDA extends PhdProcessDA {
     public ActionForward prepareSchedulePresentationDate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final PublicPresentationSeminarProcessBean schedulePresentationDateBean = new PublicPresentationSeminarProcessBean();
+	final PublicPresentationSeminarProcessBean schedulePresentationDateBean = new PublicPresentationSeminarProcessBean(
+		getProcess(request).getIndividualProgramProcess());
 
 	request.setAttribute("schedulePresentationDateBean", schedulePresentationDateBean);
 
@@ -183,7 +186,8 @@ abstract public class CommonPublicPresentationSeminarDA extends PhdProcessDA {
     public ActionForward prepareUploadReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final PublicPresentationSeminarProcessBean uploadReportBean = new PublicPresentationSeminarProcessBean();
+	final PublicPresentationSeminarProcessBean uploadReportBean = new PublicPresentationSeminarProcessBean(
+		getProcess(request).getIndividualProgramProcess());
 
 	request.setAttribute("uploadReportBean", uploadReportBean);
 
@@ -222,7 +226,8 @@ abstract public class CommonPublicPresentationSeminarDA extends PhdProcessDA {
     public ActionForward prepareValidateReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final PublicPresentationSeminarProcessBean validateReportBean = new PublicPresentationSeminarProcessBean();
+	final PublicPresentationSeminarProcessBean validateReportBean = new PublicPresentationSeminarProcessBean(getProcess(
+		request).getIndividualProgramProcess());
 
 	request.setAttribute("validateReportBean", validateReportBean);
 

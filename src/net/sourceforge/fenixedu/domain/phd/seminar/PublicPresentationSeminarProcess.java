@@ -82,13 +82,16 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 
 	    final PublicPresentationSeminarProcessBean bean = (PublicPresentationSeminarProcessBean) object;
 	    bean.getDocument().setType(PhdIndividualProgramDocumentType.PUBLIC_PRESENTATION_SEMINAR_COMISSION);
+
 	    process.addDocument(bean.getDocument(), userView.getPerson());
 	    process.createState(PublicPresentationSeminarProcessStateType.COMMISSION_WAITING_FOR_VALIDATION,
 		    userView.getPerson(), bean.getRemarks());
 
-	    AlertService.alertAcademicOffice(process.getIndividualProgramProcess(), getPublicPresentationSeminarPermission(),
-		    "message.phd.alert.public.presentation.seminar.comission.validation.subject",
-		    "message.phd.alert.public.presentation.seminar.comission.validation.body");
+	    if (bean.getGenerateAlert()) {
+		AlertService.alertAcademicOffice(process.getIndividualProgramProcess(), getPublicPresentationSeminarPermission(),
+			"message.phd.alert.public.presentation.seminar.comission.validation.subject",
+			"message.phd.alert.public.presentation.seminar.comission.validation.body");
+	    }
 
 	    return process;
 	}
@@ -122,13 +125,15 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 	    process.createState(PublicPresentationSeminarProcessStateType.COMMISSION_VALIDATED, userView.getPerson(), bean
 		    .getRemarks());
 
-	    AlertService.alertGuiders(process.getIndividualProgramProcess(),
-		    "message.phd.alert.public.presentation.seminar.comission.validated.subject",
-		    "message.phd.alert.public.presentation.seminar.comission.validated.body");
+	    if (bean.getGenerateAlert()) {
+		AlertService.alertGuiders(process.getIndividualProgramProcess(),
+			"message.phd.alert.public.presentation.seminar.comission.validated.subject",
+			"message.phd.alert.public.presentation.seminar.comission.validated.body");
 
-	    AlertService.alertStudent(process.getIndividualProgramProcess(),
-		    "message.phd.alert.public.presentation.seminar.comission.validated.subject",
-		    "message.phd.alert.public.presentation.seminar.comission.validated.body");
+		AlertService.alertStudent(process.getIndividualProgramProcess(),
+			"message.phd.alert.public.presentation.seminar.comission.validated.subject",
+			"message.phd.alert.public.presentation.seminar.comission.validated.body");
+	    }
 
 	    return process;
 	}
@@ -157,9 +162,11 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 	    process.createState(PublicPresentationSeminarProcessStateType.WAITING_FOR_COMISSION_CONSTITUTION, userView
 		    .getPerson(), bean.getRemarks());
 
-	    AlertService.alertCoordinators(process.getIndividualProgramProcess(),
-		    "message.phd.alert.public.presentation.seminar.comission.rejected.subject",
-		    "message.phd.alert.public.presentation.seminar.comission.rejected.body");
+	    if (bean.getGenerateAlert()) {
+		AlertService.alertCoordinators(process.getIndividualProgramProcess(),
+			"message.phd.alert.public.presentation.seminar.comission.rejected.subject",
+			"message.phd.alert.public.presentation.seminar.comission.rejected.body");
+	    }
 
 	    return process;
 	}
@@ -189,17 +196,19 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 	    process.createState(PublicPresentationSeminarProcessStateType.PUBLIC_PRESENTATION_DATE_SCHEDULED, userView
 		    .getPerson(), bean.getRemarks());
 
-	    AlertService.alertAcademicOffice(process.getIndividualProgramProcess(), getPublicPresentationSeminarPermission(),
-		    "message.phd.alert.public.presentation.seminar.scheduled.presentation.date.subject",
-		    "message.phd.alert.public.presentation.seminar.scheduled.presentation.date.body");
+	    if (bean.getGenerateAlert()) {
+		AlertService.alertAcademicOffice(process.getIndividualProgramProcess(), getPublicPresentationSeminarPermission(),
+			"message.phd.alert.public.presentation.seminar.scheduled.presentation.date.subject",
+			"message.phd.alert.public.presentation.seminar.scheduled.presentation.date.body");
 
-	    AlertService.alertGuiders(process.getIndividualProgramProcess(),
-		    "message.phd.alert.public.presentation.seminar.scheduled.presentation.date.subject",
-		    "message.phd.alert.public.presentation.seminar.scheduled.presentation.date.body");
+		AlertService.alertGuiders(process.getIndividualProgramProcess(),
+			"message.phd.alert.public.presentation.seminar.scheduled.presentation.date.subject",
+			"message.phd.alert.public.presentation.seminar.scheduled.presentation.date.body");
 
-	    AlertService.alertStudent(process.getIndividualProgramProcess(),
-		    "message.phd.alert.public.presentation.seminar.scheduled.presentation.date.subject",
-		    "message.phd.alert.public.presentation.seminar.scheduled.presentation.date.body");
+		AlertService.alertStudent(process.getIndividualProgramProcess(),
+			"message.phd.alert.public.presentation.seminar.scheduled.presentation.date.subject",
+			"message.phd.alert.public.presentation.seminar.scheduled.presentation.date.body");
+	    }
 
 	    return process;
 	}
@@ -228,9 +237,11 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 	    process.createState(PublicPresentationSeminarProcessStateType.REPORT_WAITING_FOR_VALIDATION, userView.getPerson(),
 		    bean.getRemarks());
 
-	    AlertService.alertAcademicOffice(process.getIndividualProgramProcess(), getPublicPresentationSeminarPermission(),
-		    "message.phd.alert.public.presentation.seminar.report.uploaded.subject",
-		    "message.phd.alert.public.presentation.seminar.report.uploaded.body");
+	    if (bean.getGenerateAlert()) {
+		AlertService.alertAcademicOffice(process.getIndividualProgramProcess(), getPublicPresentationSeminarPermission(),
+			"message.phd.alert.public.presentation.seminar.report.uploaded.subject",
+			"message.phd.alert.public.presentation.seminar.report.uploaded.body");
+	    }
 
 	    return process;
 	}
@@ -262,17 +273,19 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 	    process.createState(PublicPresentationSeminarProcessStateType.REPORT_VALIDATED, userView.getPerson(), bean
 		    .getRemarks());
 
-	    AlertService.alertCoordinators(process.getIndividualProgramProcess(),
-		    "message.phd.alert.public.presentation.seminar.report.validated.subject",
-		    "message.phd.alert.public.presentation.seminar.report.validated.body");
+	    if (bean.getGenerateAlert()) {
+		AlertService.alertCoordinators(process.getIndividualProgramProcess(),
+			"message.phd.alert.public.presentation.seminar.report.validated.subject",
+			"message.phd.alert.public.presentation.seminar.report.validated.body");
 
-	    AlertService.alertGuiders(process.getIndividualProgramProcess(),
-		    "message.phd.alert.public.presentation.seminar.report.validated.subject",
-		    "message.phd.alert.public.presentation.seminar.report.validated.body");
+		AlertService.alertGuiders(process.getIndividualProgramProcess(),
+			"message.phd.alert.public.presentation.seminar.report.validated.subject",
+			"message.phd.alert.public.presentation.seminar.report.validated.body");
 
-	    AlertService.alertStudent(process.getIndividualProgramProcess(),
-		    "message.phd.alert.public.presentation.seminar.report.validated.subject",
-		    "message.phd.alert.public.presentation.seminar.report.validated.body");
+		AlertService.alertStudent(process.getIndividualProgramProcess(),
+			"message.phd.alert.public.presentation.seminar.report.validated.subject",
+			"message.phd.alert.public.presentation.seminar.report.validated.body");
+	    }
 
 	    return process;
 	}
@@ -299,9 +312,11 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 	    process.createState(PublicPresentationSeminarProcessStateType.PUBLIC_PRESENTATION_DATE_SCHEDULED, userView
 		    .getPerson(), bean.getRemarks());
 
-	    AlertService.alertGuiders(process.getIndividualProgramProcess(),
-		    "message.phd.alert.public.presentation.seminar.report.rejected.subject",
-		    "message.phd.alert.public.presentation.seminar.report.rejected.body");
+	    if (bean.getGenerateAlert()) {
+		AlertService.alertGuiders(process.getIndividualProgramProcess(),
+			"message.phd.alert.public.presentation.seminar.report.rejected.subject",
+			"message.phd.alert.public.presentation.seminar.report.rejected.body");
+	    }
 
 	    return process;
 	}

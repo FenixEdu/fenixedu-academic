@@ -56,21 +56,38 @@
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 <bean:define id="processId" name="process" property="externalId" />
 
-<fr:form action="<%= "/phdProgramCandidacyProcess.do?processId=" + processId.toString()%>">
-	<input type="hidden" name="method" value="rejectCandidacyProcess" />
+<fr:form action="<%= "/phdProgramCandidacyProcess.do?method=rejectCandidacyProcess&processId=" + processId.toString()%>">
+  	
+  	<fr:edit id="stateBean" name="stateBean" visible="false" />
   	
   	<p><strong><bean:message key="label.phd.rejectCandidacyProcess.question" bundle="PHD_RESOURCES" /></strong></p>
-  	
-  	<fr:edit id="stateBean" name="stateBean" schema="PhdProgramCandidacyProcessStateBean.edit">
+
+  	<fr:edit id="stateBean-generateAlert" name="stateBean">
+  		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessStateBean">
+  			<fr:slot name="generateAlert" layout="radio-postback">
+  				<fr:property name="destination" value="postback" />
+  			</fr:slot>
+  		</fr:schema>
 		<fr:layout name="tabular-editable">
 			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 			<fr:property name="columnClasses" value=",,tdclear tderror1" />
 		</fr:layout>
+		
+		<fr:destination name="postback" path="<%= "/phdProgramCandidacyProcess.do?method=prepareRequestCandidacyReviewPostback&amp;processId=" + processId.toString() %>"/>
+  	</fr:edit>
+  	
+  	<fr:edit id="stateBean-edit" name="stateBean" schema="PhdProgramCandidacyProcessStateBean.edit">
+		<fr:layout name="tabular-editable">
+			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
+			<fr:property name="columnClasses" value=",,tdclear tderror1" />
+		</fr:layout>
+
+		<fr:destination name="cancel" path="<%= "/phdProgramCandidacyProcess.do?method=viewIndividualProgramProcess&processId=" + processId.toString()%>" />
 	</fr:edit>
   	
 	<%--  ### Buttons (e.g. Submit)  ### --%>
   	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" ><bean:message bundle="PHD_RESOURCES" key="label.phd.rejectCandidacyProcess"/></html:submit>
-  	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='viewIndividualProgramProcess';" ><bean:message bundle="PHD_RESOURCES" key="label.back"/></html:cancel>
+  	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" ><bean:message bundle="PHD_RESOURCES" key="label.back"/></html:cancel>
 	<%--  ### End of Buttons (e.g. Submit)  ### --%>
 
 </fr:form>
