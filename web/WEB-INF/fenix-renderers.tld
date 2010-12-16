@@ -1189,6 +1189,34 @@
 	        ]]>
 	    </description>
     </attribute>
+
+    <attribute>
+    	<name>contextRelative</name>
+    	<required>false</required>
+    	<rtexprvalue>false</rtexprvalue>
+    	<type>java.lang.String</type>
+	    <description>
+	      	<![CDATA[
+	        <pre>
+	        	Set if the link is context relative.
+	        </pre>
+	        ]]>
+	    </description>
+    </attribute>
+
+    <attribute>
+    	<name>hasContext</name>
+    	<required>false</required>
+    	<rtexprvalue>false</rtexprvalue>
+    	<type>java.lang.String</type>
+	    <description>
+	      	<![CDATA[
+	        <pre>
+	        	Set if the link will have a context.
+	        </pre>
+	        ]]>
+	    </description>
+    </attribute>
     
   </tag>
 

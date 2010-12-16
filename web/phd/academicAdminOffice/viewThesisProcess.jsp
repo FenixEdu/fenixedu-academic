@@ -11,9 +11,6 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryReviews"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.RemindJuryReviewToReporters"%>
 <%@page import="net.sourceforge.fenixedu.applicationTier.Servico.thesis.SubmitThesis"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisMeetingRequest"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisMeeting"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitThesisMeetingMinutes"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisDiscussion"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.RatifyFinalThesis"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.SetFinalGrade"%>
@@ -61,6 +58,16 @@
 				</a>
 			</li>
 			</phd:activityAvailable>
+			<logic:notEmpty name="thesisProcess" property="meetingProcess">
+				<li>
+					<html:link action="/phdThesisProcess.do?method=viewMeetingSchedulingProcess" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
+						<bean:message key="label.phd.thesis.meeting.scheduling" bundle="PHD_RESOURCES" />
+					</html:link>
+					<logic:equal value="true" name="thesisProcess" property="meetingProcess.anyMinutesDocumentMissing">
+							(<bean:message key="label.phd.meeting.missing.meeting.minutes" bundle="PHD_RESOURCES" />)
+					</logic:equal>
+				</li>
+			</logic:notEmpty>
 		</ul>
 	</td>
   </tr>
@@ -109,30 +116,6 @@
 			<bean:message bundle="PHD_RESOURCES" key="label.phd.remind.jury.reviews"/>
 		</html:link>
 	</li>
-	</phd:activityAvailable>
-	
-	<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= ScheduleThesisMeetingRequest.class %>">
-	<li style="display: inline;">
-		<html:link action="/phdThesisProcess.do?method=prepareRequestScheduleThesisMeeting" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
-			<bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.request.schedule.meeting"/>
-		</html:link>
-	</li>
-	</phd:activityAvailable>
-	
-	<phd:activityAvailable process="<%= thesisProcess %>" activity="<%= ScheduleThesisMeeting.class %>">
-		<li style="display: inline;">
-			<html:link action="/phdThesisProcess.do?method=prepareScheduleThesisMeeting" paramId="processId" paramName="thesisProcess" paramProperty="externalId">
-				<bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.schedule.thesis.meeting"/>
-			</html:link>
-		</li>
-	</phd:activityAvailable>
-	
-	<phd:activityAvailable process="<%= thesisProcess %>" activity="<%= SubmitThesisMeetingMinutes.class %>">
-		<li style="display: inline;">
-			<html:link action="/phdThesisProcess.do?method=prepareSubmitThesisMeetingMinutes" paramId="processId" paramName="thesisProcess" paramProperty="externalId">
-				<bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.submit.thesis.meeting.minutes"/>
-			</html:link>
-		</li>
 	</phd:activityAvailable>
 	
 	<phd:activityAvailable process="<%= thesisProcess %>" activity="<%= ScheduleThesisDiscussion.class %>">

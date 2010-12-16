@@ -97,8 +97,10 @@ public abstract class File extends File_Base {
      *         associated file from the external file storage
      */
     public String getDownloadUrl() {
-	if (hasLocalContent())
+	if (hasLocalContent()) {
 	    return FileDownload.ACTION_PATH + getIdInternal();
+	}
+
 	return FileManagerFactory.getFactoryInstance().getFileManager().formatDownloadUrl(getExternalStorageIdentification(),
 		getFilename());
     }

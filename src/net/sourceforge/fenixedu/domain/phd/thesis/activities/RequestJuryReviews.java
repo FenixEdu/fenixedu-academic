@@ -5,6 +5,7 @@ package net.sourceforge.fenixedu.domain.phd.thesis.activities;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
+import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessType;
@@ -15,6 +16,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType;
 import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
+import net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingSchedulingProcess;
 
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
@@ -52,6 +54,11 @@ public class RequestJuryReviews extends PhdThesisActivity {
 	if (process.getActiveState() != PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK) {
 	    process.createState(PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK, userView.getPerson(), bean
 		    .getRemarks());
+	}
+
+	bean.setThesisProcess(process);
+	if (!process.hasMeetingProcess()) {
+	    Process.createNewProcess(userView, PhdMeetingSchedulingProcess.class, bean);
 	}
 
 	return process;

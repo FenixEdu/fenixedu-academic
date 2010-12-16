@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add a PhdMeetingSchedulingProcess and StateType" addPhdMeetingSchedulingProcess.sql

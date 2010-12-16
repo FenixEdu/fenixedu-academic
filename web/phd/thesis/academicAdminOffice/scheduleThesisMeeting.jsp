@@ -7,6 +7,7 @@
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 
+<bean:define id="processId" name="process" property="externalId" />
 <bean:define id="individualProcessId" name="process" property="individualProgramProcess.externalId" />
 
 <%-- ### Title #### --%>
@@ -15,7 +16,7 @@
 <%-- ### End of Title ### --%>
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
-<html:link action="<%= "/phdIndividualProgramProcess.do?method=viewProcess&amp;processId=" + individualProcessId.toString() %>">
+<html:link action="<%= "/phdMeetingSchedulingProcess.do?method=viewMeetingSchedulingProcess&amp;processId=" + processId.toString() %>">
 	<bean:message bundle="PHD_RESOURCES" key="label.back"/>
 </html:link>
 <br/><br/>
@@ -44,6 +45,7 @@
 	<jsp:param name="submitMethod" value="scheduleThesisMeeting" />
 	<jsp:param name="invalidMethod" value="scheduleThesisMeetingInvalid" />
 	<jsp:param name="postBackMethod" value="scheduleThesisMeetingPostback" />
+	<jsp:param name="processName" value="phdMeetingSchedulingProcess" />
 </jsp:include>
 
 <%--  ### End of Operation Area  ### --%>

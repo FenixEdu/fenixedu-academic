@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.lang.StringUtils;
 
-import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
@@ -146,12 +145,6 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
     @Override
     public Group getPermittedGroup() {
 	throw new DomainException("error.phd.PhdProgramProcessDocument.use.isPersonAllowedToAccess.method.instead");
-    }
-
-    @Override
-    public String getDownloadUrl() {
-	return FileManagerFactory.getFactoryInstance().getFileManager().formatDownloadUrl(getExternalStorageIdentification(),
-		getFilename());
     }
 
 }

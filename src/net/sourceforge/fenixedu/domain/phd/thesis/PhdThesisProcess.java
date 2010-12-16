@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
@@ -40,14 +41,12 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.RemindJuryReviewToR
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryElements;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryReviews;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisDiscussion;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisMeeting;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisMeetingRequest;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SetFinalGrade;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitJuryElementsDocuments;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitThesis;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitThesisMeetingMinutes;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SwapJuryElementsOrder;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.ValidateJury;
+import net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingSchedulingProcessStateType;
 
 import org.joda.time.DateTime;
 
@@ -102,10 +101,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	activities.add(new JuryDocumentsDownload());
 	activities.add(new JuryReporterFeedbackUpload());
 	activities.add(new JuryReporterFeedbackExternalUpload());
-	activities.add(new ScheduleThesisMeetingRequest());
-	activities.add(new ScheduleThesisMeeting());
 	activities.add(new JuryReviewDocumentsDownload());
-	activities.add(new SubmitThesisMeetingMinutes());
 	activities.add(new ScheduleThesisDiscussion());
 	activities.add(new RatifyFinalThesis());
 	activities.add(new SetFinalGrade());
@@ -378,7 +374,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 		break;
 	    }
 
-	    if (processParticipant.isFor(bean.getPerson())) {
+	    if (processParticipant.isFor(retrievePersonFromParticipantBean(bean))) {
 		if (process.isGuider(processParticipant) || process.isAssistantGuider(processParticipant)) {
 		    throw new DomainException("error.PhdThesisProcess.president.cannot.be.guider.or.assistantguider");
 		}
@@ -402,14 +398,34 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 
 		break;
 	    }
-
-	    if (processParticipant.isFor(bean.getPerson())) {
+	    
+	    if (processParticipant.isFor(retrievePersonFromParticipantBean(bean))) {
 		if (process.isGuider(processParticipant) || process.isAssistantGuider(processParticipant)) {
 		    throw new DomainException("error.PhdThesisProcess.reporter.cannot.be.guider.or.assistantguider");
 		}
 	    }
 	}
+	
+    }
 
+    private Person retrievePersonFromParticipantBean(PhdThesisJuryElementBean participantBean) {
+	if (participantBean.getParticipant() == null && participantBean.getPersonName() != null) {
+	    return participantBean.getPerson();
+	}
+
+	if (participantBean.getParticipant().isInternal()) {
+	    return ((InternalPhdParticipant) participantBean.getParticipant()).getPerson();
+	}
+
+	return null;
+    }
+
+    public PhdMeetingSchedulingProcessStateType getPhdMeetingSchedulingActiveState() {
+	if (getMeetingProcess() == null) {
+	    return null;
+	}
+
+	return getMeetingProcess().getActiveState();
     }
 
 }

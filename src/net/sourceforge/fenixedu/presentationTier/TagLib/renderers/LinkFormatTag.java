@@ -28,6 +28,8 @@ public class LinkFormatTag extends TagSupport {
     private String order;
     private String target;
     private String module;
+    private String contextRelative;
+    private String hasContext;
 
     public LinkFormatTag() {
     }
@@ -119,6 +121,30 @@ public class LinkFormatTag extends TagSupport {
 	return this.module != null;
     }
 
+    public String getContextRelative() {
+	return contextRelative;
+    }
+
+    public void setContextRelative(String contextRelative) {
+	this.contextRelative = contextRelative;
+    }
+
+    public boolean hasContextRelative() {
+	return this.contextRelative != null;
+    }
+
+    public String getHasContext() {
+	return hasContext;
+    }
+
+    public void setHasContext(String hasContext) {
+	this.hasContext = hasContext;
+    }
+
+    public boolean hasContext() {
+	return this.hasContext != null;
+    }
+
     @Override
     public int doEndTag() throws JspException {
 	PropertyContainerTag parent = (PropertyContainerTag) findAncestorWithClass(this, PropertyContainerTag.class);
@@ -138,7 +164,7 @@ public class LinkFormatTag extends TagSupport {
 
     private void setProperties(final PropertyContainerTag parent) throws JspException {
 	setLink(parent).setLabel(parent).setCondition(parent).setConfirmation(parent).setOrder(parent).setTarget(parent)
-		.setModule(parent);
+		.setModule(parent).setContextRelative(parent).setHasContext(parent);
     }
 
     private LinkFormatTag setLink(final PropertyContainerTag parent) {
@@ -241,7 +267,7 @@ public class LinkFormatTag extends TagSupport {
      * must improve this solution
      */
     private String getLinkType() {
-	return getLink().matches(".*=\\$\\{.*\\}.*") ? "linkFormat" : "link";
+	return getLink().matches(".*\\$\\{.*\\}.*") ? "linkFormat" : "link";
     }
 
     /*
@@ -282,6 +308,24 @@ public class LinkFormatTag extends TagSupport {
 
 	if (hasModule()) {
 	    parent.addProperty(format("module(%s)", getName()), module);
+	}
+
+	return this;
+    }
+
+    private LinkFormatTag setContextRelative(final PropertyContainerTag parent) throws JspException {
+
+	if (hasContextRelative()) {
+	    parent.addProperty(format("contextRelative(%s)", getName()), contextRelative);
+	}
+
+	return this;
+    }
+
+    private LinkFormatTag setHasContext(final PropertyContainerTag parent) throws JspException {
+
+	if (hasContext()) {
+	    parent.addProperty(format("hasContext(%s)", getName()), hasContext);
 	}
 
 	return this;

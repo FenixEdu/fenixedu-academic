@@ -20,8 +20,8 @@ abstract public class PhdProgramProcess extends PhdProgramProcess_Base {
 	super();
     }
 
-    public void addDocument(PhdProgramDocumentUploadBean each, Person responsible) {
-	new PhdProgramProcessDocument(this, each.getType(), each.getRemarks(), each.getFileContent(), each.getFilename(),
+    public PhdProgramProcessDocument addDocument(PhdProgramDocumentUploadBean each, Person responsible) {
+	return new PhdProgramProcessDocument(this, each.getType(), each.getRemarks(), each.getFileContent(), each.getFilename(),
 		responsible);
     }
 

@@ -28,11 +28,9 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.RemindJuryReviewToR
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryElements;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryReviews;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisDiscussion;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisMeetingRequest;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SetFinalGrade;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitJuryElementsDocuments;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitThesis;
-import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitThesisMeetingMinutes;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SwapJuryElementsOrder;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.ValidateJury;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.thesis.CommonPhdThesisProcessDA;
@@ -81,20 +79,15 @@ import pt.utl.ist.fenix.tools.util.Pair;
 
 @Forward(name = "manageThesisDocuments", path = "/phd/thesis/academicAdminOffice/manageThesisDocuments.jsp"),
 
-@Forward(name = "requestScheduleThesisMeeting", path = "/phd/thesis/academicAdminOffice/requestScheduleThesisMeeting.jsp"),
-
-@Forward(name = "scheduleThesisMeeting", path = "/phd/thesis/academicAdminOffice/scheduleThesisMeeting.jsp"),
-
-@Forward(name = "submitThesisMeetingMinutes", path = "/phd/thesis/academicAdminOffice/submitThesisMeetingMinutes.jsp"),
-
 @Forward(name = "scheduleThesisDiscussion", path = "/phd/thesis/academicAdminOffice/scheduleThesisDiscussion.jsp"),
 
 @Forward(name = "ratifyFinalThesis", path = "/phd/thesis/academicAdminOffice/ratifyFinalThesis.jsp"),
 
 @Forward(name = "setFinalGrade", path = "/phd/thesis/academicAdminOffice/setFinalGrade.jsp"),
 
-@Forward(name = "rejectJuryElementsDocuments", path = "/phd/thesis/academicAdminOffice/rejectJuryElementsDocuments.jsp")
+@Forward(name = "rejectJuryElementsDocuments", path = "/phd/thesis/academicAdminOffice/rejectJuryElementsDocuments.jsp"),
 
+@Forward(name = "viewMeetingSchedulingProcess", path = "/phd/thesis/academicAdminOffice/viewMeetingSchedulingProcess.jsp")
 })
 public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
@@ -500,68 +493,6 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
     // end remind jury reviews
 
-    // Schedule thesis meeting request
-    public ActionForward prepareRequestScheduleThesisMeeting(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-
-	request.setAttribute("thesisProcessBean", new PhdThesisProcessBean());
-	return mapping.findForward("requestScheduleThesisMeeting");
-    }
-
-    public ActionForward requestScheduleThesisMeeting(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	final PhdThesisProcessBean bean = getRenderedObject("thesisProcessBean");
-	try {
-	    ExecuteProcessActivity.run(getProcess(request), ScheduleThesisMeetingRequest.class, bean);
-
-	} catch (final DomainException e) {
-	    addErrorMessage(request, e.getMessage(), e.getArgs());
-	    request.setAttribute("thesisProcessBean", bean);
-	    return mapping.findForward("requestScheduleThesisMeeting");
-	}
-
-	return viewIndividualProgramProcess(request, getProcess(request));
-
-    }
-
-    // End of schedule thesis meeting request
-
-    // Submit thesis meeting minutes
-
-    public ActionForward prepareSubmitThesisMeetingMinutes(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-
-	final PhdThesisProcessBean bean = new PhdThesisProcessBean();
-	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.JURY_MEETING_MINUTES));
-
-	request.setAttribute("thesisBean", bean);
-	return mapping.findForward("submitThesisMeetingMinutes");
-    }
-
-    public ActionForward prepareSubmitThesisMeetingMinutesInvalid(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
-
-	RenderUtils.invalidateViewState("thesisBean.edit.documents");
-	request.setAttribute("thesisBean", getRenderedObject("thesisBean"));
-
-	return mapping.findForward("submitThesisMeetingMinutes");
-    }
-
-    public ActionForward submitThesisMeetingMinutes(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	try {
-	    ExecuteProcessActivity.run(getProcess(request), SubmitThesisMeetingMinutes.class, getRenderedObject("thesisBean"));
-	} catch (final DomainException e) {
-	    addErrorMessage(request, e.getMessage(), e.getArgs());
-	    return prepareSubmitThesisMeetingMinutesInvalid(mapping, form, request, response);
-	}
-
-	return viewIndividualProgramProcess(request, getProcess(request));
-    }
-
-    // End submit thesis meeting minutes
 
     // Schedule thesis discussion
 
@@ -777,4 +708,14 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
     // End of reject jury elements document
 
+    // Manage phd thesis process meetings
+    public ActionForward viewMeetingSchedulingProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final PhdThesisProcessBean bean = new PhdThesisProcessBean();
+	request.setAttribute("thesisProcessBean", bean);
+
+	return mapping.findForward("viewMeetingSchedulingProcess");
+    }
+
+    // End of manage phd thesis process meetings
 }

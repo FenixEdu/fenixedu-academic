@@ -19,17 +19,25 @@
 	request.setAttribute("submitMethod", request.getParameter("submitMethod"));
 	request.setAttribute("invalidMethod", request.getParameter("invalidMethod"));
 	request.setAttribute("postBackMethod", request.getParameter("postBackMethod"));
+	
+	if(request.getParameter("processName") != null){
+	    request.setAttribute("processName", request.getParameter("processName"));
+	}
+	else{
+	    request.setAttribute("processName", "phdThesisProcess");
+	}
 %>
 
 <bean:define id="submitMethod" name="submitMethod" />
 <bean:define id="invalidMethod" name="invalidMethod" />
 <bean:define id="postBackMethod" name="postBackMethod" />
+<bean:define id="processName" name="processName" />
 
 <bean:define id="processId" name="process" property="externalId" />
 
 <!-- End of configuration -->
 
-<fr:form action="<%=String.format("/phdThesisProcess.do?processId=%s", processId) %>">
+<fr:form action="<%=String.format("/%s.do?processId=%s", processName, processId) %>">
 
 	<input type="hidden" name="method" value="" />
 	<fr:edit id="thesisProcessBean" name="thesisProcessBean" visible="false" />
@@ -44,8 +52,8 @@
 			<fr:property name="requiredMarkShown" value="true" />
 		</fr:layout>
 
-		<fr:destination name="invalid" path="<%= String.format("/phdThesisProcess.do?method=%s&processId=%s", invalidMethod ,processId) %>" />
-		<fr:destination name="postBack" path="<%= String.format("/phdThesisProcess.do?method=%s&processId=%s", postBackMethod, processId) %>"/>
+		<fr:destination name="invalid" path="<%= String.format("/%s.do?method=%s&processId=%s", processName, invalidMethod ,processId) %>" />
+		<fr:destination name="postBack" path="<%= String.format("/%s.do?method=%s&processId=%s", processName, postBackMethod, processId) %>"/>
 
 		<fr:schema bundle="PHD_RESOURCES" type="<%= PhdThesisProcessBean.class.getName() %>">
 
@@ -74,8 +82,8 @@
 				<fr:property name="requiredMarkShown" value="true" />
 			</fr:layout>
 	
-			<fr:destination name="invalid" path="<%= String.format("/phdThesisProcess.do?method=%s&processId=&s", invalidMethod ,processId) %>" />
-			<fr:destination name="postBack" path="<%= String.format("/phdThesisProcess.do?method=%s&processId=%s", postBackMethod, processId) %>"/>
+			<fr:destination name="invalid" path="<%= String.format("/%s.do?method=%s&processId=&s", processName, invalidMethod ,processId) %>" />
+			<fr:destination name="postBack" path="<%= String.format("/%s.do?method=%s&processId=%s", processName, postBackMethod, processId) %>"/>
 	
 			<fr:schema bundle="PHD_RESOURCES" type="<%= PhdThesisProcessBean.class.getName() %>">
 				<fr:slot name="mailSubject" required="true">

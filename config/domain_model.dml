@@ -193,7 +193,8 @@ enum net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationState      
 enum net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessType                                              		  as PhdProcessAccessType;
 enum net.sourceforge.fenixedu.domain.phd.permissions.PhdPermissionType													  as PhdPermissionType;
 enum net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackStateType						  as PhdCandidacyFeedbackStateType;
-enum net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisFinalGrade														  as PhdThesisFinalGrade; 
+enum net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisFinalGrade														  as PhdThesisFinalGrade;
+enum net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingSchedulingProcessStateType							  as PhdMeetingSchedulingProcessStateType;
 enum net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType                                 as IndividualCandidacyDocumentFileType;
 enum net.sourceforge.fenixedu.domain.accounting.events.DegreeFinalizationCertificateRequestJustificationType              as DegreeFinalizationCertificateRequestJustificationType;
 enum net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicEventJustificationType                     as AcademicEventJustificationType;
@@ -7220,6 +7221,10 @@ class phd.PhdProcessState extends DomainObject {
     class phd.candidacy.feedbackRequest.PhdCandidacyFeedbackState extends phd.PhdProcessState {
 		PhdCandidacyFeedbackStateType type;
     }
+    
+    class phd.thesis.meeting.PhdMeetingSchedulingProcessState extends phd.PhdProcessState {
+    	PhdMeetingSchedulingProcessStateType type;
+    }
 
 class phd.PhdProgramProcess extends caseHandling.Process {
 
@@ -7268,6 +7273,9 @@ class phd.PhdThesisReportFeedbackDocument extends phd.PhdProgramProcessDocument 
 class phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestDocument extends phd.PhdProgramProcessDocument {
 }
 
+class phd.thesis.meeting.PhdMeetingMinutesDocument extends phd.PhdProgramProcessDocument {
+}
+
 class phd.seminar.PublicPresentationSeminarProcess extends phd.PhdProgramProcess {
     LocalDate presentationDate;
 }
@@ -7292,6 +7300,14 @@ class phd.thesis.PhdThesisProcess extends phd.PhdProgramProcess {
 	
 	PhdThesisFinalGrade finalGrade;
 	LocalDate conclusionDate;
+}
+
+class phd.thesis.meeting.PhdMeetingSchedulingProcess extends phd.PhdProgramProcess {
+}
+
+class phd.thesis.meeting.PhdMeeting extends DomainObject {
+	DateTime meetingDate;
+	String meetingPlace;
 }
 
 class phd.thesis.ThesisJuryElement extends DomainObject {
@@ -7850,6 +7866,13 @@ relation PhdProgramProcessDocumentPhdProgramProcess {
     }
 }
 
+relation PhdMeetingPhdMeetingMinutesDocument {
+	phd.thesis.meeting.PhdMeeting playsRole phdMeeting;
+	phd.thesis.meeting.PhdMeetingMinutesDocument playsRole documents {
+		multiplicity *;
+	}	
+}
+
 relation ThesisJuryElementReportFeedbackDocuments {
 	phd.thesis.ThesisJuryElement playsRole juryElement;
 	phd.PhdThesisReportFeedbackDocument playsRole feedbackDocuments {
@@ -7951,6 +7974,20 @@ relation PhdThesisPhdProcessState {
     phd.thesis.PhdThesisProcessState playsRole states {
         multiplicity *;
     }
+}
+
+relation PhdMeetingSchedulingPhdProcessState {
+	phd.thesis.meeting.PhdMeetingSchedulingProcess playsRole meetingProcess;
+	phd.thesis.meeting.PhdMeetingSchedulingProcessState playsRole states {
+		multiplicity *;
+	}
+}
+
+relation PhdMeetingSchedulingPhdMeeting {
+	phd.thesis.meeting.PhdMeetingSchedulingProcess playsRole meetingProcess;
+	phd.thesis.meeting.PhdMeeting playsRole meetings {
+		multiplicity *;
+	}
 }
 
 relation PhdCandidacyFeedbackRequestProcessStates {
@@ -8129,6 +8166,13 @@ relation RootDomainObjectThesisJuryElement {
     }
 }
 
+relation RootDomainObjectPhdMeeting {
+	RootDomainObject playsRole rootDomainObject;
+	phd.thesis.meeting.PhdMeeting playsRole phdMeetings {
+		multiplicity *;
+	}
+}
+
 relation PhdThesisProcessThesisJuryElement {
     phd.thesis.PhdThesisProcess playsRole process;
     phd.thesis.ThesisJuryElement playsRole thesisJuryElements {
@@ -8139,6 +8183,11 @@ relation PhdThesisProcessThesisJuryElement {
 relation PhdThesisProcessPresidentThesisJuryElement {
     phd.thesis.PhdThesisProcess playsRole processForPresidentJuryElement;
     phd.thesis.ThesisJuryElement playsRole presidentJuryElement;
+}
+
+relation PhdThesisProcessPhdMeetingSchedulingProcess {
+	phd.thesis.PhdThesisProcess playsRole thesisProcess;
+	phd.thesis.meeting.PhdMeetingSchedulingProcess playsRole meetingProcess;
 }
 
 relation PhdParticipantThesisJuryElement {

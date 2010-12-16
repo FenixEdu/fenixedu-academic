@@ -1437,8 +1437,7 @@
 	<slot name="whenRequestJury" />
 	<slot name="whenReceivedJury" />
 	<slot name="whenJuryValidated" />
-	<slot name="meetingDate" />
-	<slot name="meetingPlace" />
+	<slot name="phdMeetingSchedulingActiveState" layout="phd-enum-renderer"/>
 	<slot name="discussionDate" />
 	<slot name="discussionPlace" />
 	<slot name="whenFinalThesisRatified" />
@@ -1458,6 +1457,17 @@
 	<slot name="discussionPlace" />
 	<slot name="whenFinalThesisRatified" />
 	<slot name="activeStateRemarks"/>
+</schema>
+
+<schema name="PhdMeetingSchedulingProcess.view.simple" type="net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingSchedulingProcess" bundle="PHD_RESOURCES">
+	<slot name="activeState" layout="phd-enum-renderer">
+		<property name="classes"/>
+	</slot>
+</schema>
+
+<schema name="PhdMeeting.view" type="net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeeting" bundle="PHD_RESOURCES">
+	<slot name="meetingDate" layout="year-month"/>
+	<slot name="meetingPlace" />
 </schema>
 
 <schema name="Registration.degreeNameWithDegreeCurricularPlanName" type="net.sourceforge.fenixedu.domain.student.Registration" bundle="PHD_RESOURCES">
