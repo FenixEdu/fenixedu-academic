@@ -50,7 +50,7 @@ public class PhdMeetingMinutesDocument extends PhdMeetingMinutesDocument_Base {
 
 	final Group group = new GroupUnion(roleGroup, coordinatorGroup);
 	super.init(getVirtualPath(), filename, filename, Collections.EMPTY_SET, content, group);
-	// storeToContentManager();
+	storeToContentManager();
     }
 
     protected void setDocumentVersion(PhdMeeting meeting, PhdIndividualProgramDocumentType documentType) {
