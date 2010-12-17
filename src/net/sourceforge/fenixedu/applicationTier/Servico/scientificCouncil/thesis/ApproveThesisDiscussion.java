@@ -32,6 +32,7 @@ import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.IFileManager;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
 
@@ -60,12 +61,15 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
 	FileDescriptor descriptor = fileManager.saveFile(getVirtualPath(thesis), dissertation.getFilename(), thesis
 		.getVisibility().equals(ThesisVisibilityType.INTRANET), getMetadata(thesis), stream);
 	net.sourceforge.fenixedu.domain.research.result.publication.Thesis publication = new net.sourceforge.fenixedu.domain.research.result.publication.Thesis(
-		author, ThesisType.Graduation_Thesis, thesis.getFinalFullTitle().getContent(thesis.getLanguage()), thesis
-			.getKeywords(), RootDomainObject.getInstance().getInstitutionUnit().getName(), thesis.getDiscussed()
-			.getYear(), // publication year
+		author,
+		ThesisType.Graduation_Thesis,
+		thesis.getFinalFullTitle().getContent(thesis.getLanguage()),
+		thesis.getKeywords(),
+		RootDomainObject.getInstance().getInstitutionUnit().getName(),
+		thesis.getDiscussed().getYear(), // publication year
 		getAddress(RootDomainObject.getInstance().getInstitutionUnit()), // address
 		thesis.getThesisAbstract(), null, // number of pages
-		RenderUtils.getEnumString(thesis.getLanguage()), // language
+		RenderUtils.getEnumString(thesis.getLanguage() == null ? Language.getDefaultLanguage() : thesis.getLanguage()), // language
 		getMonth(thesis), // publication month
 		null, // year begin
 		null, // month begin
