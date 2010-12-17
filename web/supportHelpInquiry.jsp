@@ -1,4 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<%@page import="pt.ist.fenixWebFramework.security.User"%>
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -9,6 +10,17 @@
 <%@page import="net.sourceforge.fenixedu.applicationTier.IUserView"%>
 <%@page import="net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean"%>
 <html:html xhtml="true">
+
+<%
+	try {
+		final HttpSession httpSession = request.getSession(false);
+		if (httpSession != null) {
+		    final User user = (User) httpSession.getAttribute(pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE);
+	    	if (user != null) {
+				UserView.setUser(user);
+	    	}
+		}
+%>
 
 <head>
 	<title>
@@ -50,64 +62,68 @@
 
 	<div class="form">
 
-		<fr:form id="supportForm" action="/exceptionHandlingAction.do?method=processSupportRequest" >
-
+		<fr:form id="supportForm" action="/exceptionHandlingAction.do">
+			<html:hidden property="method" value="processSupportRequest"/>
+<%--
 			<html:hidden property="userAgent" value="<%= request.getHeader("User-Agent") %>" />
+ --%>
 	
 			<bean:define id="schema" value="support.request.form" />
+			<logic:present name="requestBean">
+			<logic:notEmpty name="requestBean">
+				<fr:edit id="requestBean" name="requestBean" visible="false" />
 
-<logic:present name="requestBean">
-<logic:notEmpty name="requestBean">
-			<fr:edit id="requestBean" name="requestBean" visible="false" />
-			<logic:notPresent name="exceptionInfo">
-				<fr:edit id="view_state_id" name="requestBean" schema="<%= schema %>" >
-					<fr:layout name="tabular">
-						<fr:property name="classes" value="tform"/>
-						<fr:property name="columnClasses" value=",,tderror1"/>
-						<fr:property name="rowClasses" value="inputtext,select,select,inputtext inputw400,textarea textareaw400 textareah100,inobullet,,,"/>
-						<fr:property name="labelTerminator" value=""/>
-					</fr:layout>
-					<fr:destination name="invalid" path="/exceptionHandlingAction.do?method=supportFormFieldValidation" />
-				</fr:edit>
-			</logic:notPresent>
+				<logic:notPresent name="exceptionInfo">
+					<fr:edit id="view_state_id" name="requestBean" schema="<%= schema %>" >
+						<fr:layout name="tabular">
+							<fr:property name="classes" value="tform"/>
+							<fr:property name="columnClasses" value=",,tderror1"/>
+							<fr:property name="rowClasses" value="inputtext,select,select,inputtext inputw400,textarea textareaw400 textareah100,inobullet,,,"/>
+							<fr:property name="labelTerminator" value=""/>
+						</fr:layout>
+						<fr:destination name="invalid" path="/exceptionHandlingAction.do?method=supportFormFieldValidation" />
+					</fr:edit>
+				</logic:notPresent>
 
-			<logic:present name="exceptionInfo">
-				<bean:define id="exceptionInfo" name="exceptionInfo" type="java.lang.String"/>
-				<html:hidden property="exceptionInfo" value="<%= exceptionInfo %>"/>
+				<logic:present name="exceptionInfo">
+					<bean:define id="exceptionInfo" name="exceptionInfo" type="java.lang.String"/>
+<%--
+					<html:hidden property="exceptionInfo" value="<%= exceptionInfo %>"/>
+ --%>
 				
-				<bean:define id="schema" value="support.error.form" />
-				<logic:empty name="requestBean" property="responseEmail">
-					<bean:define id="schema" value="support.error.form.unknown.user"/>
-				</logic:empty>
+					<bean:define id="schema" value="support.error.form" />
+					<logic:empty name="requestBean" property="responseEmail">
+						<bean:define id="schema" value="support.error.form.unknown.user"/>
+					</logic:empty>
 
-				<fr:edit id="view_state_id" name="requestBean" schema="<%= schema %>" >
-					<fr:layout name="tabular">
-						<fr:property name="classes" value="tform"/>
-						<fr:property name="columnClasses" value=",,tderror1"/>
-						<fr:property name="rowClasses" value="inputtext,inputtext inputw400,textarea textareaw400 textareah100,,,,"/>
-						<fr:property name="labelTerminator" value=""/>
-					</fr:layout>
-					<fr:destination name="invalid" path="/exceptionHandlingAction.do?method=supportFormFieldValidation" />
-				</fr:edit>
+					<fr:edit id="view_state_id" name="requestBean" schema="<%= schema %>" >
+						<fr:layout name="tabular">
+							<fr:property name="classes" value="tform"/>
+							<fr:property name="columnClasses" value=",,tderror1"/>
+							<fr:property name="rowClasses" value="inputtext,inputtext inputw400,textarea textareaw400 textareah100,,,,"/>
+							<fr:property name="labelTerminator" value=""/>
+						</fr:layout>
+						<fr:destination name="invalid" path="/exceptionHandlingAction.do?method=supportFormFieldValidation" />
+					</fr:edit>
+				</logic:present>
+
+				<p>
+					<html:submit>
+						<bean:message key="label.submit.support.form" bundle="APPLICATION_RESOURCES" />
+					</html:submit>
+				</p>
+			</logic:notEmpty>
 			</logic:present>
-			<p>
-				<html:submit>
-					<bean:message key="label.submit.support.form" bundle="APPLICATION_RESOURCES" />
-				</html:submit>
-			</p>
-</logic:notEmpty>
-</logic:present>
-
-
 	
 		</fr:form>
 
 	</div> <!-- form -->
-	
+
 	<script type="text/javascript">
 	var focusControl = document.forms["authenticationForm"].elements["username"];
 	if (focusControl.type != "hidden" && !focusControl.disabled) { focusControl.focus(); }
 	</script>
+
 
 </div> <!-- container -->
 
@@ -116,4 +132,11 @@
 </table>
 
 </body>
+
+<%
+	} finally {
+	    UserView.setUser(null);
+	}
+%>
+
 </html:html>
