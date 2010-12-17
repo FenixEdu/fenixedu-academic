@@ -3573,25 +3573,21 @@ public class Person extends Person_Base {
     }
 
     public EmailAddress getEmailAddressForSendingEmails() {
-	EmailAddress emailAddress = null;
+	final EmailAddress defaultEmailAddress = getDefaultEmailAddress();
+	if (defaultEmailAddress != null) {
+	    return defaultEmailAddress;
+	}
+	final EmailAddress institutionalEmailAddress = getInstitutionalEmailAddress();
+	if (institutionalEmailAddress != null) {
+	    return institutionalEmailAddress;
+	}
 	for (final PartyContact partyContact : getPartyContactsSet()) {
 	    if (partyContact.isEmailAddress()) {
 		final EmailAddress otherEmailAddress = (EmailAddress) partyContact;
-		final String value = otherEmailAddress.getValue();
-		if (value != null && !value.isEmpty()) {
-		    if (otherEmailAddress.isInstitutionalType()) {
-			emailAddress = otherEmailAddress;
-			break;
-		    }
-		    if (otherEmailAddress.isDefault()) {
-			emailAddress = otherEmailAddress;
-		    } else if (emailAddress == null) {
-			emailAddress = otherEmailAddress;
-		    }
-		}
+		return otherEmailAddress;
 	    }
 	}
-	return emailAddress;
+	return null;
     }
 
     public String getEmailForSendingEmails() {
