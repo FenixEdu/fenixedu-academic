@@ -64,9 +64,8 @@
 
 		<fr:form id="supportForm" action="/exceptionHandlingAction.do">
 			<html:hidden property="method" value="processSupportRequest"/>
-<%--
+
 			<html:hidden property="userAgent" value="<%= request.getHeader("User-Agent") %>" />
- --%>
 	
 			<bean:define id="schema" value="support.request.form" />
 			<logic:present name="requestBean">
@@ -87,9 +86,8 @@
 
 				<logic:present name="exceptionInfo">
 					<bean:define id="exceptionInfo" name="exceptionInfo" type="java.lang.String"/>
-<%--
+
 					<html:hidden property="exceptionInfo" value="<%= exceptionInfo %>"/>
- --%>
 				
 					<bean:define id="schema" value="support.error.form" />
 					<logic:empty name="requestBean" property="responseEmail">
