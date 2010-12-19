@@ -7243,6 +7243,7 @@ class phd.PhdIndividualProgramProcess extends phd.PhdProgramProcess {
 class phd.PhdIndividualProgramProcessNumber  extends DomainObject {
     Integer year;
     Integer number;
+    Integer phdStudentNumber;
 }
 
 class phd.candidacy.PhdProgramCandidacyProcess extends phd.PhdProgramProcess {

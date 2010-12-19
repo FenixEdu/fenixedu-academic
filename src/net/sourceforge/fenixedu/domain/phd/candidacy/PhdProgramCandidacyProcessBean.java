@@ -85,6 +85,8 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 
     private Boolean migratedProcess;
 
+    private Integer phdStudentNumber;
+
     public PhdProgramCandidacyProcessBean() {
 	setCandidacyDate(new LocalDate());
     }
@@ -414,6 +416,18 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 
     public void setMigratedProcess(Boolean migratedProcess) {
 	this.migratedProcess = migratedProcess;
+    }
+
+    public Integer getPhdStudentNumber() {
+	return phdStudentNumber;
+    }
+
+    public void setPhdStudentNumber(Integer phdStudentNumber) {
+	this.phdStudentNumber = phdStudentNumber;
+    }
+
+    public boolean hasPhdStudentNumber() {
+	return getPhdStudentNumber() != null;
     }
 
     public List<PhdProgramDocumentUploadBean> getAllDocuments() {

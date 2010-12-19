@@ -1152,12 +1152,14 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	createState(PhdIndividualProgramProcessState.CANDIDACY, person);
 	setThesisTitle(bean.getThesisTitle());
 
-	setPhdIndividualProcessNumber(PhdIndividualProgramProcessNumber.generateNextForYear(bean.getCandidacyDate().getYear()));
-
 	if (bean.getMigratedProcess()) {
+	    setPhdIndividualProcessNumber(PhdIndividualProgramProcessNumber.generateNextForYear(
+		    bean.getCandidacyDate().getYear(), bean.getPhdStudentNumber()));
 	    setPhdConfigurationIndividualProgramProcess(PhdConfigurationIndividualProgramProcess
 		    .createMigratedProcessConfiguration());
 	} else {
+	    setPhdIndividualProcessNumber(PhdIndividualProgramProcessNumber.generateNextForYear(
+		    bean.getCandidacyDate().getYear(), null));
 	    setPhdConfigurationIndividualProgramProcess(PhdConfigurationIndividualProgramProcess.createDefault());
 	}
 
@@ -1297,6 +1299,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	    getCandidacyProcess().setWhenRatified(bean.getWhenRatified());
 	    setWhenFormalizedRegistration(bean.getWhenFormalizedRegistration());
 	}
+
+	getPhdIndividualProcessNumber().edit(bean);
 
 	return this;
     }
@@ -1670,6 +1674,10 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     public boolean isMigratedProcess() {
 	return getPhdConfigurationIndividualProgramProcess().isMigratedProcess();
+    }
+
+    public Integer getPhdStudentNumber() {
+	return getPhdIndividualProcessNumber().getPhdStudentNumber();
     }
 
     public List<PhdIndividualProgramProcessState> getPossibleNextStates() {

@@ -67,6 +67,7 @@
 		<property name="subSchema" value="PhdStudyPlan.description" />
 	</slot>
 	-->
+	<slot name="phdStudentNumber" layout="null-as-label" />
 	<slot name="whenFormalizedRegistration" />
 	<slot name="whenStartedStudies" />
 	<slot name="whenCreated" />
@@ -116,7 +117,9 @@
 		<property name="format" value="${year}" />
         <property name="saveOptions" value="true"/>
 	</slot>
-	<slot name="migratedProcess" />
+	<slot name="migratedProcess" layout="radio-postback">
+		<property name="destination" value="postback" />
+	</slot>
 </schema>
 
 <schema name="PhdProgramCandidacyProcessBean.editPersonalInformation.simplified" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="PHD_RESOURCES">
@@ -516,6 +519,7 @@
 	<slot name="otherCollaborationType">
 		<property name="size" value="40"/>
 	</slot>
+	<slot name="phdStudentNumber" />
 </schema>
 
 <schema name="SearchPhdIndividualProgramProcessBean.edit" type="net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean" bundle="PHD_RESOURCES">

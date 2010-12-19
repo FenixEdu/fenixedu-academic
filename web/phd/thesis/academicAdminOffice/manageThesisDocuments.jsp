@@ -77,6 +77,10 @@
 			<fr:property name="order(view)" value="0" />
 			<fr:property name="hasContext(view)" value="false" />
 			<fr:property name="contextRelative(view)" value="false" />
+			
+			<%-- 
+			<fr:link name="/phdThesisProcess.do?method=replaceThesisDocument?type=${documentType.name}&processId=${externalId}" link="label.replace" label="PHD_RESOURCES" />
+			--%>
 
 		<%-- To delete, we must have interface to add more ... 				
 			<fr:property name="linkFormat(delete)" value="/phdThesisProcess.do?method=deleteDocument&documentId=${externalId}&processId=${phdProgramProcess.externalId}"/>

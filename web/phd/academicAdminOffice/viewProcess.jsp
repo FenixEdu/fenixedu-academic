@@ -186,6 +186,8 @@
 
 <logic:notEmpty name="process" property="student">
 	<br/>
+	<bean:define id="studentId" name="process" property="student.idInternal" />
+	  
 	<strong><bean:message  key="label.phd.student.information" bundle="PHD_RESOURCES"/></strong>
 	<fr:view schema="AcademicAdminOffice.PhdIndividualProgramProcess.view.student.information" name="process">
 		<fr:layout name="tabular">
@@ -193,6 +195,10 @@
 		</fr:layout>
 	</fr:view>
 	<br/>
+	<html:link page="<%= "/student.do?method=visualizeStudent&studentID=" + studentId %>">
+		<bean:message key="label.phd.student.page" bundle="PHD_RESOURCES" />
+	</html:link>
+	<br />
 </logic:notEmpty>
 
 <%--Thesis --%>

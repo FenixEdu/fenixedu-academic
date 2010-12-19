@@ -165,6 +165,16 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 	return mapping.findForward("createCandidacy");
     }
 
+    public ActionForward createCandidacyPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("createCandidacyBean", getCreateCandidacyProcessBean());
+	setIsEmployeeAttributeAndMessage(request, getCreateCandidacyProcessBean().getChoosePersonBean().getPerson());
+
+	RenderUtils.invalidateViewState();
+
+	return mapping.findForward("createCandidacy");
+    }
+
     public ActionForward createCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 

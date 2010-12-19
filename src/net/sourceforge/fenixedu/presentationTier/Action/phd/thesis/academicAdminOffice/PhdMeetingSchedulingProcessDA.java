@@ -30,20 +30,19 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/phdMeetingSchedulingProcess", module = "academicAdminOffice")
-@Forwards({
+@Forwards( {
 
 	@Forward(name = "requestScheduleFirstThesisMeeting", path = "/phd/thesis/academicAdminOffice/requestScheduleFirstThesisMeeting.jsp"),
 
-@Forward(name = "scheduleFirstThesisMeeting", path = "/phd/thesis/academicAdminOffice/scheduleFirstThesisMeeting.jsp"),
+	@Forward(name = "scheduleFirstThesisMeeting", path = "/phd/thesis/academicAdminOffice/scheduleFirstThesisMeeting.jsp"),
 
-@Forward(name = "requestScheduleThesisMeeting", path = "/phd/thesis/academicAdminOffice/requestScheduleThesisMeeting.jsp"),
+	@Forward(name = "requestScheduleThesisMeeting", path = "/phd/thesis/academicAdminOffice/requestScheduleThesisMeeting.jsp"),
 
-@Forward(name = "scheduleThesisMeeting", path = "/phd/thesis/academicAdminOffice/scheduleThesisMeeting.jsp"),
+	@Forward(name = "scheduleThesisMeeting", path = "/phd/thesis/academicAdminOffice/scheduleThesisMeeting.jsp"),
 
-@Forward(name = "submitThesisMeetingMinutes", path = "/phd/thesis/academicAdminOffice/submitThesisMeetingMinutes.jsp"),
+	@Forward(name = "submitThesisMeetingMinutes", path = "/phd/thesis/academicAdminOffice/submitThesisMeetingMinutes.jsp"),
 
-@Forward(name = "viewMeetingSchedulingProcess", path = "/phd/thesis/academicAdminOffice/viewMeetingSchedulingProcess.jsp")
-})
+	@Forward(name = "viewMeetingSchedulingProcess", path = "/phd/thesis/academicAdminOffice/viewMeetingSchedulingProcess.jsp") })
 public class PhdMeetingSchedulingProcessDA extends CommonPhdThesisProcessDA {
 
     // Schedule first thesis meeting request
@@ -175,6 +174,7 @@ public class PhdMeetingSchedulingProcessDA extends CommonPhdThesisProcessDA {
 	    ExecuteProcessActivity.run(thesisProcess.getMeetingProcess(), ScheduleThesisMeeting.class, getThesisProcessBean());
 
 	} catch (final DomainException e) {
+	    e.printStackTrace();
 	    addErrorMessage(request, e.getKey(), e.getArgs());
 	    return scheduleThesisMeetingInvalid(mapping, actionForm, request, response);
 	}
@@ -223,22 +223,22 @@ public class PhdMeetingSchedulingProcessDA extends CommonPhdThesisProcessDA {
     }
 
     private ActionForward viewMeetingSchedulingProcess(HttpServletRequest request, final PhdThesisProcess process) {
-	return redirect(
-		String.format("/phdThesisProcess.do?method=viewMeetingSchedulingProcess&processId=%s", process.getExternalId()),
-		request);
+	return redirect(String.format("/phdThesisProcess.do?method=viewMeetingSchedulingProcess&processId=%s", process
+		.getExternalId()), request);
     }
 
     private PhdMeeting getPhdMeeting(HttpServletRequest request) {
 	return getDomainObject(request, "meetingId");
     }
+
     // End submit thesis meeting minutes
-    
+
     // Start of viewing Meeting Scheduling Process
-    
+
     public ActionForward viewMeetingSchedulingProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	return viewMeetingSchedulingProcess(request, getProcess(request));
     }
-    
+
     // End of viewing Meeting Scheduling Process
 }

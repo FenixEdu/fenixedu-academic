@@ -24,16 +24,16 @@ public class PhdIndividualProgramProcessNumber extends PhdIndividualProgramProce
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    protected PhdIndividualProgramProcessNumber(Integer number, Integer year) {
+    protected PhdIndividualProgramProcessNumber(Integer number, Integer year, Integer phdStudentNumber) {
 	this();
-	init(number, year);
+	init(number, year, phdStudentNumber);
     }
 
-    private void init(Integer number, Integer year) {
-	checkParameters(number, year);
+    private void init(Integer number, Integer year, Integer phdStudentNumber) {
+	checkParameters(number, year, phdStudentNumber);
 	super.setNumber(number);
 	super.setYear(year);
-
+	super.setPhdStudentNumber(phdStudentNumber);
     }
 
     @Override
@@ -48,16 +48,48 @@ public class PhdIndividualProgramProcessNumber extends PhdIndividualProgramProce
 		"error.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessNumber.cannot.modify.number");
     }
 
-    private void checkParameters(Integer number, Integer year) {
-	check(number, "error.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessNumber.number.cannot.be.null");
-	check(year, "error.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessNumber.year.cannot.be.null");
+    @Override
+    public void setPhdStudentNumber(Integer phdStudentNumber) {
+	throw new DomainException(
+		"error.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessNumber.cannot.modify.phdStudentNumber");
     }
 
-    static public PhdIndividualProgramProcessNumber generateNextForYear(final Integer year) {
+    private void checkParameters(Integer number, Integer year, Integer phdStudentNumber) {
+	check(number, "error.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessNumber.number.cannot.be.null");
+	check(year, "error.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessNumber.year.cannot.be.null");
+
+	if (phdStudentNumber != null && hasProcessWithPhdStudentNumber(phdStudentNumber)) {
+	    throw new DomainException(
+		    "error.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessNumber.phdStudentNumber.exists");
+	}
+    }
+
+    public void edit(PhdIndividualProgramProcessBean bean) {
+	if (bean.getPhdStudentNumber() == getPhdStudentNumber()) {
+	    return;
+	}
+
+	if (bean.getPhdStudentNumber() == null) {
+	    super.setPhdStudentNumber(null);
+	    return;
+	}
+
+	PhdIndividualProgramProcessNumber number = readByPhdStudentNumber(bean.getPhdStudentNumber());
+
+	if (number == null || number == this) {
+	    super.setPhdStudentNumber(bean.getPhdStudentNumber());
+	    return;
+	}
+
+	throw new DomainException(
+		"error.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessNumber.phdStudentNumber.exists");
+    }
+
+    static public PhdIndividualProgramProcessNumber generateNextForYear(final Integer year, final Integer phdStudentNumber) {
 	final PhdIndividualProgramProcessNumber maxByYear = readMaxByYear(year);
 	final Integer number = maxByYear != null ? maxByYear.getNumber() + 1 : 1;
 
-	return new PhdIndividualProgramProcessNumber(number, year);
+	return new PhdIndividualProgramProcessNumber(number, year, phdStudentNumber);
     }
 
     static public PhdIndividualProgramProcessNumber readMaxByYear(final Integer year) {
@@ -76,6 +108,20 @@ public class PhdIndividualProgramProcessNumber extends PhdIndividualProgramProce
 	}
 
 	return result;
+    }
+
+    static public PhdIndividualProgramProcessNumber readByPhdStudentNumber(Integer number) {
+	for (final PhdIndividualProgramProcessNumber each : RootDomainObject.getInstance().getPhdIndividualProcessNumbers()) {
+	    if (number.equals(each.getPhdStudentNumber())) {
+		return each;
+	    }
+	}
+
+	return null;
+    }
+
+    static public boolean hasProcessWithPhdStudentNumber(Integer number) {
+	return readByPhdStudentNumber(number) != null;
     }
 
     public String getFullProcessNumber() {

@@ -87,8 +87,7 @@ import pt.utl.ist.fenix.tools.util.Pair;
 
 @Forward(name = "rejectJuryElementsDocuments", path = "/phd/thesis/academicAdminOffice/rejectJuryElementsDocuments.jsp"),
 
-@Forward(name = "viewMeetingSchedulingProcess", path = "/phd/thesis/academicAdminOffice/viewMeetingSchedulingProcess.jsp")
-})
+@Forward(name = "viewMeetingSchedulingProcess", path = "/phd/thesis/academicAdminOffice/viewMeetingSchedulingProcess.jsp") })
 public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
     // Begin thesis jury elements management
@@ -474,15 +473,17 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
     public ActionForward prepareRemindJuryReviewsInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	
+
 	request.setAttribute("remindJuryReviewsBean", getRenderedObject("remindJuryReviewsBean"));
-	
+
 	return mapping.findForward("remindJuryReviews");
     }
 
-    public ActionForward remindJuryReviews(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward remindJuryReviews(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 	try {
-	    ExecuteProcessActivity.run(getProcess(request), RemindJuryReviewToReporters.class, getRenderedObject("remindJuryReviewsBean"));
+	    ExecuteProcessActivity.run(getProcess(request), RemindJuryReviewToReporters.class,
+		    getRenderedObject("remindJuryReviewsBean"));
 	} catch (final DomainException e) {
 	    addErrorMessage(request, e.getMessage(), e.getArgs());
 	    return prepareRemindJuryReviewsInvalid(mapping, form, request, response);
@@ -492,7 +493,6 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
     }
 
     // end remind jury reviews
-
 
     // Schedule thesis discussion
 
@@ -718,4 +718,14 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
     }
 
     // End of manage phd thesis process meetings
+
+    public ActionForward prepareReplaceThesisDocument(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final PhdThesisProcessBean bean = new PhdThesisProcessBean();
+	PhdIndividualProgramDocumentType type = PhdIndividualProgramDocumentType.valueOf(request.getParameter("type"));
+	bean.addDocument(new PhdProgramDocumentUploadBean(type));
+
+	request.setAttribute("thesisProcessBean", bean);
+	return mapping.findForward("replaceDocument");
+    }
 }
