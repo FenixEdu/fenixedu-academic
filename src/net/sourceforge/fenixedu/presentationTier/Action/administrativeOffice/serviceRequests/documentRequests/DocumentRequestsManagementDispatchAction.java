@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.documents.DocumentRequestGeneratedDocument;
+import net.sourceforge.fenixedu.domain.documents.GeneratedDocument;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
@@ -42,7 +43,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/documentRequestsManagement", module = "academicAdminOffice")
-@Forwards( {
+@Forwards({
 	@Forward(name = "printDocument", path = "/academicAdminOffice/serviceRequests/documentRequests/printDocument.jsp"),
 	@Forward(name = "createDocumentRequests", path = "/academicAdminOffice/serviceRequests/documentRequests/createDocumentRequests.jsp"),
 	@Forward(name = "viewDocumentRequestsToCreate", path = "/academicAdminOffice/serviceRequests/documentRequests/viewDocumentRequestsToCreate.jsp"),
@@ -67,6 +68,25 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 		.readAcademicServiceRequestByOID(academicServiceRequestId);
 	request.setAttribute("academicServiceRequest", academicServiceRequest);
 	return academicServiceRequest;
+    }
+
+    public ActionForward downloadDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws IOException {
+	final DocumentRequest documentRequest = getDocumentRequest(request);
+	GeneratedDocument doc = documentRequest.getLastGeneratedDocument();
+	if (doc != null) {
+	    final ServletOutputStream writer = response.getOutputStream();
+	    try {
+		response.setContentLength(doc.getSize());
+		response.setContentType("application/pdf");
+		response.addHeader("Content-Disposition", "attachment; filename=" + doc.getFilename());
+		writer.write(doc.getContents());
+		writer.flush();
+	    } finally {
+		writer.close();
+	    }
+	}
+	return null;
     }
 
     public ActionForward printDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -266,8 +286,8 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	final ExamDateCertificateExamSelectionBean examSelectionBean = ExamDateCertificateExamSelectionBean.buildFor(
 		requestCreateBean.getEnrolments(), requestCreateBean.getExecutionPeriod());
 	request.setAttribute("examSelectionBean", examSelectionBean);
-	request.setAttribute("enrolmentsWithoutExam", examSelectionBean.getEnrolmentsWithoutExam(requestCreateBean
-		.getEnrolments()));
+	request.setAttribute("enrolmentsWithoutExam",
+		examSelectionBean.getEnrolmentsWithoutExam(requestCreateBean.getEnrolments()));
 
 	return mapping.findForward("chooseExamsToCreateExamDateCertificateRequest");
 

@@ -299,10 +299,14 @@
                         <fr:property name="linkFormat(receiveFrom)" value="/academicServiceRequestsManagement.do?method=prepareReceiveAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
                         <fr:property name="key(receiveFrom)" value="label.receiveFrom"/>
                         <fr:property name="visibleIf(receiveFrom)" value="receivedSituationAccepted"/>
-    
-                        <fr:property name="linkFormat(print)" value="/documentRequestsManagement.do?method=printDocument&amp;documentRequestId=${idInternal}&amp;"/>
+
+                        <fr:property name="linkFormat(print)" value="/documentRequestsManagement.do?method=downloadDocument&amp;documentRequestId=${idInternal}&amp;"/>
                         <fr:property name="key(print)" value="print"/>
-                        <fr:property name="visibleIf(print)" value="rePrintPossible"/>
+                        <fr:property name="visibleIf(print)" value="downloadPossible"/>
+    
+                        <fr:property name="linkFormat(reprint)" value="/documentRequestsManagement.do?method=printDocument&amp;documentRequestId=${idInternal}&amp;"/>
+                        <fr:property name="key(reprint)" value="reprint"/>
+                        <fr:property name="visibleIf(reprint)" value="rePrintPossible"/>
         
                         <fr:property name="linkFormat(deliver)" value="/academicServiceRequestsManagement.do?method=deliveredAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
                         <fr:property name="key(deliver)" value="deliver"/>

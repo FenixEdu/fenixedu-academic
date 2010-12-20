@@ -37,12 +37,14 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     private static final String SERVICE_REQUEST_NUMBER_YEAR_SEPARATOR = "/";
 
     public static final Comparator<AcademicServiceRequest> COMPARATOR_BY_NUMBER = new Comparator<AcademicServiceRequest>() {
+	@Override
 	public int compare(AcademicServiceRequest o1, AcademicServiceRequest o2) {
 	    return o1.getServiceRequestNumber().compareTo(o2.getServiceRequestNumber());
 	}
     };
 
     public static final Comparator<AcademicServiceRequest> EXECUTION_YEAR_COMPARATOR = new Comparator<AcademicServiceRequest>() {
+	@Override
 	public int compare(AcademicServiceRequest o1, AcademicServiceRequest o2) {
 	    if (!o1.hasExecutionYear() && !o2.hasExecutionYear()) {
 		return 0;
@@ -57,6 +59,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     };
 
     public static final Comparator<AcademicServiceRequest> EXECUTION_YEAR_AND_OID_COMPARATOR = new Comparator<AcademicServiceRequest>() {
+	@Override
 	public int compare(AcademicServiceRequest o1, AcademicServiceRequest o2) {
 	    final ComparatorChain comparatorChain = new ComparatorChain();
 	    comparatorChain.addComparator(EXECUTION_YEAR_COMPARATOR);
@@ -429,6 +432,10 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     final public boolean isDeliveredSituationAccepted() {
 	return isAcceptedSituationType(AcademicServiceRequestSituationType.DELIVERED);
+    }
+
+    public boolean isDownloadPossible() {
+	return false;
     }
 
     final public boolean isRePrintPossible() {
