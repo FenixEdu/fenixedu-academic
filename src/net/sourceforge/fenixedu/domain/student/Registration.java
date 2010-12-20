@@ -3189,7 +3189,7 @@ public class Registration extends Registration_Base {
     final public Collection<AcademicServiceRequest> getProcessingAcademicServiceRequests() {
 	final Collection<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
 	for (final AcademicServiceRequest academicServiceRequest : getAcademicServiceRequestsSet()) {
-	    if (academicServiceRequest.hasProcessed() && !academicServiceRequest.hasConcluded() && !academicServiceRequest.finishedUnsuccessfully()) {
+	    if (academicServiceRequest.hasProcessed() && !academicServiceRequest.isConcluded() && !academicServiceRequest.isDelivered() && !academicServiceRequest.finishedUnsuccessfully()) {
 		result.add(academicServiceRequest);
 	    }
 	}
