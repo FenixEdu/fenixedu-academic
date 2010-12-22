@@ -308,6 +308,7 @@
 </schema>
 
 <schema name="student.thesisBean.upload.dissertation" type="net.sourceforge.fenixedu.presentationTier.Action.student.thesis.ThesisFileBean">
+<!-- 
     <slot name="title" key="label.thesis.title" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="60"/>
     </slot>
@@ -317,6 +318,7 @@
     <slot name="language" key="label.thesis.language" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="includedValues" value="pt, en"/>
     </slot>
+ -->
     <slot name="file" key="label.thesis.file">
         <validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
             <property name="required" value="true"/>

@@ -11,12 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.CancelSubmitThesis;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ChangeThesisPerson;
+import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ChangeThesisPerson.PersonChange;
+import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ChangeThesisPerson.PersonTarget;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.CreateThesisProposal;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.DeleteThesis;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ReviseThesis;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.SubmitThesis;
-import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ChangeThesisPerson.PersonChange;
-import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ChangeThesisPerson.PersonTarget;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -413,6 +413,17 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 	return mapping.findForward("edit-thesis");
     }
 
+    public ActionForward editProposalWithDocs(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	Thesis thesis = getThesis(request);
+
+	if (thesis == null) {
+	    return listThesis(mapping, actionForm, request, response);
+	}
+
+	return viewApproved(mapping, actionForm, request, response);
+    }
+
     public ActionForward editProposalDiscussion(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	request.setAttribute("changeDiscussion", true);
@@ -422,6 +433,11 @@ public class ManageThesisDA extends AbstractManageThesisDA {
     public ActionForward changeInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	return mapping.findForward("change-information");
+    }
+
+    public ActionForward changeInformationWithDocs(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	return mapping.findForward("change-information-with-docs");
     }
 
     public ActionForward changeCredits(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

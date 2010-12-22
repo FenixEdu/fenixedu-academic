@@ -882,6 +882,7 @@
 			<forward name="select-person" path="thesis-select-person" />
 			<forward name="select-unit" path="thesis-select-unit" />
 			<forward name="change-information" path="thesis-change-information" />
+			<forward name="change-information-with-docs" path="thesis-change-information-with-docs" />
 			<forward name="collect-basic-information" path="thesis-collect-basic-information" />
 			<forward name="edit-thesis" path="thesis-edit" />
 			<forward name="view-submitted" path="thesis-view-submitted" />

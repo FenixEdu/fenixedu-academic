@@ -319,6 +319,9 @@
     <definition name="thesis-change-information" extends="definition.coordinator.two-column">
         <put name="body" value="/coordinator/thesis/changeInformation.jsp"/>
     </definition>
+    <definition name="thesis-change-information-with-docs" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/thesis/changeInformationWithDocs.jsp"/>
+    </definition>
     <definition name="thesis-collect-basic-information" extends="definition.coordinator.two-column">
         <put name="body" value="/coordinator/thesis/collectBasicInformation.jsp"/>
     </definition>

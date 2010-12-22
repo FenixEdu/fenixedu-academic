@@ -171,6 +171,9 @@
     		<fr:property name="columnClasses" value="width12em,,"/>
     </fr:layout>
 </fr:view>
+<html:link page="<%= String.format("/scientificCouncilManageThesis.do?method=changeInformationWithDocs&amp;thesisID=%s&amp;degreeID=%s&amp;executionYearID=%s", thesisId, degreeId, executionYearId) %>">
+    <bean:message key="link.coordinator.thesis.edit.changeInformation"  bundle="APPLICATION_RESOURCES"/>
+</html:link>
 
 <%-- general process information --%>
 <div class="infoop2 mtop1">

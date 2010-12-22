@@ -71,7 +71,8 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 	@Forward(name = "viewOperationsThesis", path = "/student/thesis/viewOperationsThesis.jsp"),
 	@Forward(name = "showDissertationsInfo", path = "/scientificCouncil/thesis/showDissertationsInfo.jsp"),
 	@Forward(name = "editParticipant", path = "/scientificCouncil/thesis/editParticipant.jsp"),
-	@Forward(name = "select-person", path = "/scientificCouncil/thesis/selectPerson.jsp")
+	@Forward(name = "select-person", path = "/scientificCouncil/thesis/selectPerson.jsp"),
+	@Forward(name = "change-information-with-docs", path = "/scientificCouncil/thesis/changeInformationWithDocs.jsp")
 	})
 public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 
@@ -887,6 +888,22 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 
 	    return editProposal(mapping, actionForm, request, response);
 	}
+    }
+
+    public ActionForward changeInformationWithDocs(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	return mapping.findForward("change-information-with-docs");
+    }
+
+    public ActionForward editProposalWithDocs(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	Thesis thesis = getThesis(request);
+
+	if (thesis == null) {
+	    return listThesis(mapping, actionForm, request, response);
+	}
+
+	return viewThesis(mapping, actionForm, request, response);
     }
 
 }

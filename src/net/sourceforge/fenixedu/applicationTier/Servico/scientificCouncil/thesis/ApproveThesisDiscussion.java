@@ -33,6 +33,7 @@ import pt.utl.ist.fenix.tools.file.IFileManager;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
 
@@ -60,10 +61,15 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
 
 	FileDescriptor descriptor = fileManager.saveFile(getVirtualPath(thesis), dissertation.getFilename(), thesis
 		.getVisibility().equals(ThesisVisibilityType.INTRANET), getMetadata(thesis), stream);
+	final MultiLanguageString title = thesis.getFinalFullTitle();
+	String titleForFile = title.getContent(thesis.getLanguage());
+	if (titleForFile == null) {
+	    titleForFile = title.getContent();
+	}
 	net.sourceforge.fenixedu.domain.research.result.publication.Thesis publication = new net.sourceforge.fenixedu.domain.research.result.publication.Thesis(
 		author,
 		ThesisType.Graduation_Thesis,
-		thesis.getFinalFullTitle().getContent(thesis.getLanguage()),
+		titleForFile,
 		thesis.getKeywords(),
 		RootDomainObject.getInstance().getInstitutionUnit().getName(),
 		thesis.getDiscussed().getYear(), // publication year

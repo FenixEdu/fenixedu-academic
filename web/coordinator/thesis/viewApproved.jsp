@@ -39,6 +39,9 @@
 		<fr:property name="columnClasses" value="width12em,width35em,"/>
     </fr:layout>
 </fr:view>
+<html:link page="<%= String.format("/manageThesis.do?method=changeInformationWithDocs&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
+    <bean:message key="link.coordinator.thesis.edit.changeInformation"  bundle="APPLICATION_RESOURCES"/>
+</html:link>
 
 <%-- Discussion --%>
 <h3 class="mtop15 mbottom05"><bean:message key="title.coordinator.thesis.edit.discussion"/></h3>
