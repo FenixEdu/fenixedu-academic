@@ -44,13 +44,27 @@
 	</p>
 	<logic:greaterThan name="studentCurricularPlanListSize" value="0">
 		<p class="mtop15 mbottom15">
-		<a href="javascript:var form = document.getElementById('searchForm');form.extendedInfo.value='false';form.method.value='exportInfoToExcel';form.submit();form.method.value='searchByDegree'">
+		<a href="javascript:
+			var form = document.getElementById('searchForm');
+			var oldMethod = form.method.value;
+			form.extendedInfo.value='false';
+			form.method.value='exportInfoToExcel';
+			form.submit();
+			form.method.value=oldMethod">
+			
 			<html:image border="0" src="<%= request.getContextPath() + "/images/excel.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES"></html:image>
 			<bean:message key="link.lists.xlsFileToDownload" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 			</a>
 		</p>
 		<p class="mtop15 mbottom15">
-		<a href="javascript:var form = document.getElementById('searchForm');form.extendedInfo.value='true';form.method.value='exportInfoToExcel';form.submit();form.method.value='searchByDegree'">
+		<a href="javascript:
+			var form = document.getElementById('searchForm');
+			var oldMethod = form.method.value;
+			form.extendedInfo.value='true';
+			form.method.value='exportInfoToExcel';
+			form.submit();
+			form.method.value=oldMethod">
+			
 			<html:image border="0" src="<%= request.getContextPath() + "/images/excel.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES"></html:image>
 			<bean:message key="link.lists.xlsFileToDownload.extended.info" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 			</a>
