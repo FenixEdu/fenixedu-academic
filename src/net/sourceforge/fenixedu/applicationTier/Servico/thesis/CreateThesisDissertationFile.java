@@ -35,12 +35,12 @@ public class CreateThesisDissertationFile extends CreateThesisFile {
     @Override
     protected void updateThesis(Thesis thesis, ThesisFile file, String title, String subTitle, Language language,
 	    String fileName, File fileToUpload) throws FenixServiceException, IOException {
-	if (title == null || subTitle == null) {
+	if (title == null) {
 	    throw new DomainException("thesis.files.dissertation.title.required");
 	}
 
 	file.setTitle(title);
-	file.setSubTitle(subTitle);
+	file.setSubTitle(subTitle == null ? "" : subTitle);
 	file.setLanguage(language);
 
 	thesis.setDissertation(file);
