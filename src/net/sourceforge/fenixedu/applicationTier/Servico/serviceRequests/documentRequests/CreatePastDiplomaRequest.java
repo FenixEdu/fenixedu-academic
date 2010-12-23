@@ -60,14 +60,16 @@ public class CreatePastDiplomaRequest {
 	createPaymentSituation(diploma, bean);
 	process(diploma, bean.getPastRequestDate());
 	diploma.setNumberOfPages(1);
+	send(diploma, bean.getPastRequestDate());
+	receive(diploma, bean.getPastRequestDate());
 	conclude(diploma, bean.getPastEmissionDate());
 	delivered(diploma, bean.getPastDispatchDate());
     }
 
     private static void createPaymentSituation(DiplomaRequest diploma, DocumentRequestCreateBean bean) {
 	if (isPayed(bean)) {
-	    PastDegreeDiplomaRequestEvent event = new PastDegreeDiplomaRequestEvent(diploma.getAdministrativeOffice(), diploma
-		    .getPerson(), diploma, bean.getPastPaymentAmount());
+	    PastDegreeDiplomaRequestEvent event = new PastDegreeDiplomaRequestEvent(diploma.getAdministrativeOffice(),
+		    diploma.getPerson(), diploma, bean.getPastPaymentAmount());
 
 	    event.depositAmount(AccessControl.getPerson().getUser(), bean.getPastPaymentAmount(),
 		    createTransactionDetailDTO(bean));
@@ -87,14 +89,24 @@ public class CreatePastDiplomaRequest {
 		.plusMinutes(1));
     }
 
+    private static void send(DiplomaRequest diploma, LocalDate conclusionDate) {
+	editSituation(diploma, AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY, conclusionDate
+		.toDateTimeAtStartOfDay().plusMinutes(2));
+    }
+
+    private static void receive(DiplomaRequest diploma, LocalDate conclusionDate) {
+	editSituation(diploma, AcademicServiceRequestSituationType.RECEIVED_FROM_EXTERNAL_ENTITY, conclusionDate
+		.toDateTimeAtStartOfDay().plusMinutes(3));
+    }
+
     private static void conclude(DiplomaRequest diploma, LocalDate conclusionDate) {
 	editSituation(diploma, AcademicServiceRequestSituationType.CONCLUDED, conclusionDate.toDateTimeAtStartOfDay()
-		.plusMinutes(2));
+		.plusMinutes(4));
     }
 
     private static void delivered(DiplomaRequest diploma, LocalDate deliveryDate) {
 	editSituation(diploma, AcademicServiceRequestSituationType.DELIVERED, deliveryDate.toDateTimeAtStartOfDay()
-		.plusMinutes(3));
+		.plusMinutes(5));
     }
 
     private static void editSituation(DiplomaRequest diploma, AcademicServiceRequestSituationType situationType,
@@ -102,6 +114,7 @@ public class CreatePastDiplomaRequest {
 	final AcademicServiceRequestBean bean = new AcademicServiceRequestBean(situationType, AccessControl.getPerson()
 		.getEmployee());
 	bean.setFinalSituationDate(situationDate);
+	bean.setJustification("-");
 	diploma.edit(bean);
     }
 
