@@ -10,10 +10,10 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRoom;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesTeacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse;
-import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
-import net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom;
-import net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher;
+import net.sourceforge.fenixedu.domain.oldInquiries.InquiriesCourse;
+import net.sourceforge.fenixedu.domain.oldInquiries.InquiriesRegistry;
+import net.sourceforge.fenixedu.domain.oldInquiries.InquiriesRoom;
+import net.sourceforge.fenixedu.domain.oldInquiries.InquiriesTeacher;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.student.Registration;
 

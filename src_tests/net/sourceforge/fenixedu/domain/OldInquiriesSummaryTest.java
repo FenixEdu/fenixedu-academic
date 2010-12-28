@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
-import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary;
+import net.sourceforge.fenixedu.domain.oldInquiries.OldInquiriesSummary;
 
 public class OldInquiriesSummaryTest extends DomainTestBase {
 	

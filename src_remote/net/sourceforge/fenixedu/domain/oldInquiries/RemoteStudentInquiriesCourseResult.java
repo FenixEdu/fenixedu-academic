@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.domain.inquiries;
+package net.sourceforge.fenixedu.domain.oldInquiries;
 
 public class RemoteStudentInquiriesCourseResult extends RemoteStudentInquiriesCourseResult_Base {
     

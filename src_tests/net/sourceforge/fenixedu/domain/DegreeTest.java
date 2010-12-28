@@ -5,9 +5,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes;
-import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary;
-import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes;
+import net.sourceforge.fenixedu.domain.oldInquiries.OldInquiriesCoursesRes;
+import net.sourceforge.fenixedu.domain.oldInquiries.OldInquiriesSummary;
+import net.sourceforge.fenixedu.domain.oldInquiries.OldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.domain.student.Delegate;
 
 public class DegreeTest extends DomainTestBase {

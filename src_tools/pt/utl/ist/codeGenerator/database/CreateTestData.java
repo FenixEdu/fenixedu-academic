@@ -101,7 +101,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.RootCourseGroup;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod;
+import net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
