@@ -8,10 +8,10 @@ import java.lang.reflect.InvocationTargetException;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesCoursesRes;
+import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InfoOldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes;
+import net.sourceforge.fenixedu.domain.oldInquiries.OldInquiriesCoursesRes;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 

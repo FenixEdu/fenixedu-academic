@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRegistry;
+import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InfoInquiriesRegistry;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 /**

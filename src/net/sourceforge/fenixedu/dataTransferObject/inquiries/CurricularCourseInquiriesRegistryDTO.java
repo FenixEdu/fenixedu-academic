@@ -9,7 +9,7 @@ import java.math.RoundingMode;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
+import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryRegistry;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
  */
 public class CurricularCourseInquiriesRegistryDTO implements Serializable {
 
-    private InquiriesRegistry inquiriesRegistry;
+    private StudentInquiryRegistry inquiryRegistry;
 
     private Integer weeklyHoursSpentPercentage;
 
@@ -25,23 +25,18 @@ public class CurricularCourseInquiriesRegistryDTO implements Serializable {
 
     private Integer autonomousWorkHoursForSimulation;
 
-    public CurricularCourseInquiriesRegistryDTO(final InquiriesRegistry inquiriesRegistry) {
+    private Integer attendenceClassesPercentage;
+
+    public CurricularCourseInquiriesRegistryDTO(final StudentInquiryRegistry inquiryRegistry) {
 	super();
-	setInquiriesRegistry(inquiriesRegistry);
+	setInquiryRegistry(inquiryRegistry);
+	setWeeklyHoursSpentPercentage(inquiryRegistry.getWeeklyHoursSpentPercentage());
+	setStudyDaysSpentInExamsSeason(inquiryRegistry.getStudyDaysSpentInExamsSeason());
+	setAttendenceClassesPercentage(inquiryRegistry.getAttendenceClassesPercentage());
     }
 
     public CurricularCourse getCurricularCourse() {
-	return getInquiriesRegistry().getCurricularCourse();
-    }
-
-    public InquiriesRegistry getInquiriesRegistry() {
-	return inquiriesRegistry;
-    }
-
-    public void setInquiriesRegistry(InquiriesRegistry inquiriesRegistry) {
-	this.inquiriesRegistry = inquiriesRegistry;
-	setWeeklyHoursSpentPercentage(inquiriesRegistry.getWeeklyHoursSpentPercentage());
-	setStudyDaysSpentInExamsSeason(inquiriesRegistry.getStudyDaysSpentInExamsSeason());
+	return getInquiryRegistry().getCurricularCourse();
     }
 
     public Integer getWeeklyHoursSpentPercentage() {
@@ -66,8 +61,7 @@ public class CurricularCourseInquiriesRegistryDTO implements Serializable {
     }
 
     public Double getCalculatedECTSCredits() {
-	return calculateECTSCredits(getInquiriesRegistry().getInquiriesStudentExecutionPeriod()
-		.getWeeklyHoursSpentInClassesSeason());
+	return calculateECTSCredits(getInquiryRegistry().getStudentInquiryExecutionPeriod().getWeeklyHoursSpentInClassesSeason());
     }
 
     public Double getSimulatedECTSCredits() {
@@ -81,9 +75,17 @@ public class CurricularCourseInquiriesRegistryDTO implements Serializable {
 	    return 0d;
 	}
 
+	// a - weeklyHoursSpentInClassesSeason; b1 - attendenceClassesPercentage
+	// c - weeklyHoursSpentPercentage; d - studyHoursSpentInExamsSeason
+	final double result = ((weeklyHoursSpentInClassesSeason /* a */* (getWeeklyHoursSpentPercentage() / 100d) /* c */+ getWeeklyContactLoad() /* b */
+		* (getAttendenceClassesPercentage() / 100d) /* b1 */) * 14 + getStudyDaysSpentInExamsSeason() /* d */* 8) / 28;
+
 	// ((%*NHTA + NHC)*14+ NDE*8) / 28
-	final double result = (((getWeeklyHoursSpentPercentage() / 100d) * weeklyHoursSpentInClassesSeason * 14)
-		+ getCurricularCourse().getCompetenceCourse().getContactLoad(getExecutionSemester()) + getStudyDaysSpentInExamsSeason() * 8) / 28;
+	// ((a*c+b*b1)*14+d*8)/28
+	// (((getWeeklyHoursSpentPercentage() / 100d) *
+	// weeklyHoursSpentInClassesSeason * 14) +
+	// getCurricularCourse().getCompetenceCourse().getContactLoad(getExecutionSemester())
+	// + getStudyDaysSpentInExamsSeason() * 8) / 28;
 
 	return new BigDecimal(result).setScale(1, BigDecimal.ROUND_UP).doubleValue();
     }
@@ -94,7 +96,7 @@ public class CurricularCourseInquiriesRegistryDTO implements Serializable {
     }
 
     private ExecutionSemester getExecutionSemester() {
-	return getInquiriesRegistry().getExecutionPeriod();
+	return getInquiryRegistry().getExecutionCourse().getExecutionPeriod();
     }
 
     public Double getSimulatedSpentHours() {
@@ -114,4 +116,19 @@ public class CurricularCourseInquiriesRegistryDTO implements Serializable {
 	this.autonomousWorkHoursForSimulation = autonomousWorkHoursForSimulation;
     }
 
+    public StudentInquiryRegistry getInquiryRegistry() {
+	return inquiryRegistry;
+    }
+
+    public void setInquiryRegistry(StudentInquiryRegistry inquiryRegistry) {
+	this.inquiryRegistry = inquiryRegistry;
+    }
+
+    public Integer getAttendenceClassesPercentage() {
+	return attendenceClassesPercentage;
+    }
+
+    public void setAttendenceClassesPercentage(Integer attendenceClassesPercentage) {
+	this.attendenceClassesPercentage = attendenceClassesPercentage;
+    }
 }

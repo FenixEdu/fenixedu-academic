@@ -9,8 +9,8 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseInquiriesRegistryDTO;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
-import net.sourceforge.fenixedu.domain.inquiries.InquiriesStudentExecutionPeriod;
+import net.sourceforge.fenixedu.domain.oldInquiries.InquiriesRegistry;
+import net.sourceforge.fenixedu.domain.oldInquiries.InquiriesStudentExecutionPeriod;
 import net.sourceforge.fenixedu.domain.student.Student;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
@@ -42,9 +42,9 @@ public class SubmitStudentSpentTimeInPeriod extends FenixService {
 	inquiriesStudentExecutionPeriod.setWeeklyHoursSpentInClassesSeason(weeklySpentHours);
 
 	for (CurricularCourseInquiriesRegistryDTO curricularCourseInquiriesRegistryDTO : courses) {
-	    InquiriesRegistry inquiriesRegistry = curricularCourseInquiriesRegistryDTO.getInquiriesRegistry();
-	    inquiriesRegistry.setStudyDaysSpentInExamsSeason(curricularCourseInquiriesRegistryDTO
-		    .getStudyDaysSpentInExamsSeason());
+	    InquiriesRegistry inquiriesRegistry = null;//curricularCourseInquiriesRegistryDTO.getInquiriesRegistry();
+	    //	    inquiriesRegistry.setStudyDaysSpentInExamsSeason(curricularCourseInquiriesRegistryDTO
+	    //		    .getStudyDaysSpentInExamsSeason());
 	    inquiriesRegistry.setWeeklyHoursSpentPercentage(curricularCourseInquiriesRegistryDTO.getWeeklyHoursSpentPercentage());
 	}
 
@@ -62,7 +62,7 @@ public class SubmitStudentSpentTimeInPeriod extends FenixService {
     public static boolean checkTotalStudyDaysSpentInExamsSeason(List<CurricularCourseInquiriesRegistryDTO> courses) {
 	double totalDays = 0;
 	for (CurricularCourseInquiriesRegistryDTO curricularCourseInquiriesRegistryDTO : courses) {
-	    totalDays += curricularCourseInquiriesRegistryDTO.getStudyDaysSpentInExamsSeason();
+	    //totalDays += curricularCourseInquiriesRegistryDTO.getStudyDaysSpentInExamsSeason();
 	}
 
 	return totalDays <= 42;

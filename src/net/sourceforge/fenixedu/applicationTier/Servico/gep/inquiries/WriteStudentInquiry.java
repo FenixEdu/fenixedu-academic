@@ -4,8 +4,8 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.StudentInquiryDTO;
-import net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse;
+import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.StudentInquiryDTO;
+import net.sourceforge.fenixedu.domain.oldInquiries.InquiriesCourse;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 

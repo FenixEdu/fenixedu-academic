@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.inquiries.InquiriesStudentExecutionPeriod;
+import net.sourceforge.fenixedu.domain.oldInquiries.InquiriesStudentExecutionPeriod;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.PeriodState;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;

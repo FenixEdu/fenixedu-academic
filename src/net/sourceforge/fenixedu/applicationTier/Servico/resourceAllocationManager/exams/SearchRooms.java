@@ -6,7 +6,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoRoomWithInfoInquiriesRoom;
+import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InfoRoomWithInfoInquiriesRoom;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.RoomClassification;
 import pt.ist.fenixWebFramework.services.Service;

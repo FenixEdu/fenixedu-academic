@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.inquiries;
 
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeachingInquiryDTO;
-import net.sourceforge.fenixedu.domain.inquiries.teacher.TeachingInquiry;
+import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.TeachingInquiryDTO;
+import net.sourceforge.fenixedu.domain.oldInquiries.teacher.TeachingInquiry;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class TeachingInquiryServices {

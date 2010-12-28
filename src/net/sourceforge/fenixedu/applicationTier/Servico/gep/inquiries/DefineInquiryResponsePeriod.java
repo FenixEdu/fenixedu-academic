@@ -4,7 +4,7 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod;
+import net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 

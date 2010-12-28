@@ -6,9 +6,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRegistry;
+import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InfoInquiriesRegistry;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
+import net.sourceforge.fenixedu.domain.oldInquiries.InquiriesRegistry;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadInquiriesRegistriesByExecutionPeriod extends FenixService {
