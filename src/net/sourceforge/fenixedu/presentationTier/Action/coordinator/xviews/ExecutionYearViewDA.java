@@ -9,18 +9,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.CurricularYear;
@@ -32,14 +23,24 @@ import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.BranchCourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.BranchType;
-import net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesCourseResult;
-import net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesTeachingResult;
+import net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesCourseResult;
+import net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesTeachingResult;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 @Mapping(path = "/xYear", module = "coordinator")
 @Forwards( { @Forward(name = "xViewsDisclaimer", path = "/coordinator/xviews/xViewsDisclaimer.jsp"),
-    	@Forward(name = "xYearEntry", path = "/coordinator/xviews/xYearEntry.jsp"),
+	@Forward(name = "xYearEntry", path = "/coordinator/xviews/xYearEntry.jsp"),
 	@Forward(name = "xYearDisplay", path = "/coordinator/xviews/xYearDisplay.jsp") })
 public class ExecutionYearViewDA extends FenixDispatchAction {
 
@@ -49,12 +50,12 @@ public class ExecutionYearViewDA extends FenixDispatchAction {
 	CoordinatedDegreeInfo.setCoordinatorContext(request);
 	return super.execute(mapping, actionForm, request, response);
     }
-    
+
     public ActionForward showDisclaimer(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
 	request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
-	return mapping.findForward("xViewsDisclaimer");	
+	return mapping.findForward("xViewsDisclaimer");
     }
 
     public ActionForward showYearInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -79,7 +80,7 @@ public class ExecutionYearViewDA extends FenixDispatchAction {
 	    return mapping.findForward("xYearEntry");
 
 	}
-	
+
 	YearViewBean yearViewBean = new YearViewBean(searchFormBean.getDegreeCurricularPlan());
 	yearViewBean.setExecutionYear(searchFormBean.getExecutionYear());
 	yearViewBean.setEnrolments();

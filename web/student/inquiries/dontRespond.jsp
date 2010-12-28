@@ -11,11 +11,11 @@
 <table class="tstyle2 tdtop">
 	<tr>
 		<td><bean:message key="label.degree.name" bundle="INQUIRIES_RESOURCES"/>:</td>
-		<td><bean:write name="inquiriesRegistry" property="student.degree.name" /></td>
+		<td><bean:write name="inquiryRegistry" property="student.degree.name" /></td>
 	</tr>
 	<tr>
 		<td><bean:message key="label.curricularCourse.name" bundle="INQUIRIES_RESOURCES"/>:</td>
-		<td><bean:write name="inquiriesRegistry" property="executionCourse.nome" /></td>
+		<td><bean:write name="inquiryRegistry" property="executionCourse.nome" /></td>
 	</tr>
 </table>
 
@@ -33,7 +33,7 @@
 	<div class="relative">
 		<html:form action="/studentInquiry.do">
 			<html:hidden property="method" value="justifyNotAnswered"/>
-			<html:hidden property="inquiriesRegistryID" />
+			<html:hidden property="inquiryRegistryID" />
 			
 			<p class="mvert05"><html:radio property="notAnsweredJustification" value="UNIT_NOT_ATTENDED" /><strong><bean:message key="label.inquiries.notAnswer.reasons.unitNotAttended" bundle="INQUIRIES_RESOURCES"/></strong></p>
 			<p class="mvert05"><html:radio property="notAnsweredJustification" value="LOW_ASSIDUITY" /><strong><bean:message key="label.inquiries.notAnswer.reasons.lowAssiduity" bundle="INQUIRIES_RESOURCES"/></strong></p>

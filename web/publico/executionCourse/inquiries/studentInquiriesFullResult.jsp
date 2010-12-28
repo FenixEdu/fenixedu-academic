@@ -4,9 +4,9 @@
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.net.URLEncoder"%>
-<%@page import="net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod"%>
+<%@page import="net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod"%>
 <%@page import="net.sourceforge.fenixedu.domain.ExecutionSemester"%>
-<%@page import="net.sourceforge.fenixedu.domain.inquiries.teacher.InquiryResponsePeriodType"%>
+<%@page import="net.sourceforge.fenixedu.domain.oldInquiries.teacher.InquiryResponsePeriodType"%>
 <%@page import="net.sourceforge.fenixedu.domain.ExecutionYear"%>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -21,7 +21,7 @@
 	<bean:define id="executionCourse" name="executionCourse" type="net.sourceforge.fenixedu.domain.ExecutionCourse"/>
 	
 	<logic:notEmpty name="studentInquiriesCourseResults">
-		<logic:iterate id="courseResult" name="studentInquiriesCourseResults" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.StudentInquiriesCourseResultBean" >
+		<logic:iterate id="courseResult" name="studentInquiriesCourseResults" type="net.sourceforge.fenixedu.dataTransferObject.oldInquiries.StudentInquiriesCourseResultBean" >
 			<p class="mtop2">
 				<b><bean:message key="link.teachingInquiries.cuResults" bundle="INQUIRIES_RESOURCES"/></b> - 
 				<html:link page="<%= "/executionCourse.do?method=showInquiryCourseResult&resultId=" + courseResult.getStudentInquiriesCourseResult().getIdInternal() %>" target="_blank">
@@ -32,7 +32,7 @@
 	
 			<logic:notEmpty name="courseResult" property="studentInquiriesTeachingResults">
 				<ul>
-					<logic:iterate id="teachingResult" name="courseResult" property="studentInquiriesTeachingResults" type="net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesTeachingResult">
+					<logic:iterate id="teachingResult" name="courseResult" property="studentInquiriesTeachingResults" type="net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesTeachingResult">
 						<li>
 							<html:link page="<%= "/executionCourse.do?method=showInquiryTeachingResult&resultId=" + teachingResult.getIdInternal() %>" target="_blank">
 								<bean:write name="teachingResult" property="professorship.person.name" />

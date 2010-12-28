@@ -109,7 +109,7 @@ padding-right: 8px;
 
 <p class="mtop2"><strong><bean:message key="title.teachingInquiries.teachingAndLearningConditions" bundle="INQUIRIES_RESOURCES"/></strong></p>
 
-<bean:define id="teachingInquiry" name="teachingInquiry" type="net.sourceforge.fenixedu.domain.inquiries.teacher.TeachingInquiry"/> 
+<bean:define id="teachingInquiry" name="teachingInquiry" type="net.sourceforge.fenixedu.domain.oldInquiries.teacher.TeachingInquiry"/> 
 
 <table class="tstyle1 thlight thleft td50px tdcenter"> 
 	<tr> 

@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c" %>
 <%@ page import="net.sourceforge.fenixedu.util.InquiriesUtil" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesEmailReminderReport" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InfoInquiriesEmailReminderReport" %>
 <%@ page import="net.sourceforge.fenixedu.util.NumberUtils" %>
 
 
@@ -49,7 +49,7 @@
 			int totalNumberUnansweredInquiries = 0;
 			double globalTotalNumberInquiries = 0.0;
 			%>
-			<logic:iterate id="report" name='<%= InquiriesUtil.EMAIL_REMINDER_REPORTS_LIST %>' type="net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesEmailReminderReport">
+			<logic:iterate id="report" name='<%= InquiriesUtil.EMAIL_REMINDER_REPORTS_LIST %>' type="net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InfoInquiriesEmailReminderReport">
 				<tr>
 					<td class="listClasses">
 						<bean:write name="report" property="executionDegree.infoDegreeCurricularPlan.infoDegree.nome" />

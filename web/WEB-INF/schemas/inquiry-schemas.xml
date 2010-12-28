@@ -1,5 +1,5 @@
-<schema name="net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod.edit"
-		type="net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod" bundle="INQUIRIES_RESOURCES">
+<schema name="net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod.edit"
+		type="net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod" bundle="INQUIRIES_RESOURCES">
 	<slot name="begin"/>
 	<slot name="end"/>
 	<slot name="introduction" layout="rich-text">
@@ -9,8 +9,8 @@
    		<property name="config" value="advanced" />
 	</slot>
 </schema>
-<schema name="net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod.create"
-		type="net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod" bundle="INQUIRIES_RESOURCES">
+<schema name="net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod.create"
+		type="net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod" bundle="INQUIRIES_RESOURCES">
 	<slot name="executionPeriod" hidden="true"/>
 	<slot name="type" hidden="true"/>
 	<slot name="begin"/>
@@ -23,13 +23,18 @@
 	</slot>
 </schema>
 
+<schema name="inquiryQuestionDTO.answer"
+		type="net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiryQuestionDTO" >	
+	<slot name="responseValue" />
+</schema>
+
 <schema name="inquiriesQuestion.answer"
-		type="net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiriesQuestion" >
+		type="net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InquiriesQuestion" >
 	<slot name="value" />
 </schema>
 
 <schema name="InquiriesBlock.answer"
-		type="net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiriesBlock" >
+		type="net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InquiriesBlock" >
 	<slot name="questions" layout="tabular-editable">
 	</slot>
 </schema>
@@ -54,6 +59,9 @@
 	<slot name="courseEctsCredits" key="label.competenceCourse.ectsCredits" read-only="true"/>
 	<slot name="weeklyContactLoad" key="label.contactLoad.b" read-only="true">
 		<property name="headerToolTip" value="toolTip.studentInquiries.weeklyScheduleLoad" />
+	</slot>	
+	<slot name="attendenceClassesPercentage" key="label.attendenceClassesPercentage.b1" read-only="true">
+		<property name="headerToolTip" value="toolTip.studentInquiries.attendenceClassesPercentage" />
 	</slot>	
 	<slot name="weeklyHoursSpentPercentage" key="label.weeklyHoursSpentPercentage.c" read-only="true" >
 		<property name="headerToolTip" value="toolTip.studentInquiries.weeklyHoursSpentPercentage" />
@@ -83,6 +91,17 @@
             <property name="upperBound" value="100"/>
         </validator>
 	</slot>
+	<slot name="attendenceClassesPercentage" key="label.attendenceClassesPercentage.withBreaks">
+		<property name="headerToolTip" value="toolTip.studentInquiries.attendenceClassesPercentage" />
+		<property name="size" value="5" />
+		<property name="maxLength" value="3" />	
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
+        <validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
+            <property name="lowerBound" value="0"/>
+            <property name="upperBound" value="100"/>
+        </validator>
+	</slot>
 	<slot name="studyDaysSpentInExamsSeason" key="label.studyDaysSpentInExamsSeason.withBreaks">
 		<property name="size" value="5" />
 		<property name="maxLength" value="4" />
@@ -98,14 +117,14 @@
 </schema>
 
 <schema name="teacherInquiry.selectShiftTypes"
-		type="net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherInquiryDTO" bundle="INQUIRIES_RESOURCES">
+		type="net.sourceforge.fenixedu.dataTransferObject.oldInquiries.TeacherInquiryDTO" bundle="INQUIRIES_RESOURCES">
 	<slot name="selectedShifts" layout="option-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ShiftTypesProvider" />
 	</slot>
 </schema>
 
 <schema name="studentInquiry.uploadTeachingResults"
-		type="net.sourceforge.fenixedu.dataTransferObject.inquiries.UploadStudentInquiriesTeachingResultsBean" bundle="INQUIRIES_RESOURCES">
+		type="net.sourceforge.fenixedu.dataTransferObject.oldInquiries.UploadStudentInquiriesTeachingResultsBean" bundle="INQUIRIES_RESOURCES">
 	<slot name="file" key="label.studentInquiry.uploadTeachingResults.file" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="resultsDate" key="label.studentInquiry.uploadTeachingResults.resultsDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="picker"/>
 	<slot name="keyExecutionCourseHeader" key="label.studentInquiry.uploadTeachingResults.keyExecutionCourseHeader" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
@@ -120,13 +139,13 @@
 </schema>
 
 <schema name="studentInquiry.deleteTeachingResults"
-		type="net.sourceforge.fenixedu.dataTransferObject.inquiries.UploadStudentInquiriesTeachingResultsBean" bundle="INQUIRIES_RESOURCES">	
+		type="net.sourceforge.fenixedu.dataTransferObject.oldInquiries.UploadStudentInquiriesTeachingResultsBean" bundle="INQUIRIES_RESOURCES">	
 	<slot name="resultsDate" key="label.studentInquiry.uploadTeachingResults.resultsDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="picker"/>
 	<slot name="keyExecutionCourseHeader" key="label.studentInquiry.deleteResults.keyExecutionCourse"/>	
 </schema>
 
 <schema name="studentInquiry.uploadCourseResults"
-		type="net.sourceforge.fenixedu.dataTransferObject.inquiries.UploadStudentInquiriesCourseResultsBean" bundle="INQUIRIES_RESOURCES">
+		type="net.sourceforge.fenixedu.dataTransferObject.oldInquiries.UploadStudentInquiriesCourseResultsBean" bundle="INQUIRIES_RESOURCES">
 	<slot name="file" key="label.studentInquiry.uploadTeachingResults.file" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="resultsDate" key="label.studentInquiry.uploadTeachingResults.resultsDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="picker"/>
 	<slot name="keyExecutionCourseHeader" key="label.studentInquiry.uploadTeachingResults.keyExecutionCourseHeader" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
@@ -136,13 +155,13 @@
 </schema>
 
 <schema name="studentInquiry.deleteCourseResults"
-		type="net.sourceforge.fenixedu.dataTransferObject.inquiries.UploadStudentInquiriesCourseResultsBean" bundle="INQUIRIES_RESOURCES">	
+		type="net.sourceforge.fenixedu.dataTransferObject.oldInquiries.UploadStudentInquiriesCourseResultsBean" bundle="INQUIRIES_RESOURCES">	
 	<slot name="resultsDate" key="label.studentInquiry.uploadTeachingResults.resultsDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="picker"/>
 	<slot name="keyExecutionCourseHeader" key="label.studentInquiry.deleteResults.keyExecutionCourse"/>	
 </schema>
 
 <schema name="studentInquiriesCourseResult.courseResultsCoordinatorComment" 
-		type="net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesCourseResult" bundle="INQUIRIES_RESOURCES">
+		type="net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesCourseResult" bundle="INQUIRIES_RESOURCES">
     <slot name="courseResultsCoordinatorComment" key="label.inquiries.courseResults.coordinatorComments" layout="longText">
     	<property name="columns" value="50" />
     	<property name="rows" value="10" />

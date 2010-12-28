@@ -11,13 +11,13 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.SearchInquiriesResultPageDTO;
+import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.SearchInquiriesResultPageDTO;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesCourseResult;
-import net.sourceforge.fenixedu.domain.inquiries.teacher.InquiryResponsePeriodType;
-import net.sourceforge.fenixedu.domain.inquiries.teacher.TeachingInquiry;
+import net.sourceforge.fenixedu.domain.oldInquiries.teacher.InquiryResponsePeriodType;
+import net.sourceforge.fenixedu.domain.oldInquiries.teacher.TeachingInquiry;
+import net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesCourseResult;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.collections.comparators.ReverseComparator;

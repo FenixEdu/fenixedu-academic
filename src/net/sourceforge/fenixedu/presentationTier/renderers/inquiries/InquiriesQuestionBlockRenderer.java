@@ -7,12 +7,12 @@ import java.util.MissingResourceException;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.CheckBoxQuestion;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiriesBlock;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiriesQuestion;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.QuestionHeader;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.RadioGroupQuestion;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.TextBoxQuestion;
+import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.CheckBoxQuestion;
+import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InquiriesBlock;
+import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InquiriesQuestion;
+import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.QuestionHeader;
+import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.RadioGroupQuestion;
+import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.TextBoxQuestion;
 
 import org.apache.commons.lang.StringUtils;
 

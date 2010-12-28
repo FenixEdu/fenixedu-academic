@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiry" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InfoInquiry" %>
 <%@ page import="net.sourceforge.fenixedu.util.InquiriesUtil" %>
 <%@ page import="net.sourceforge.fenixedu.domain.ShiftType" %>
 
@@ -509,7 +509,7 @@
 
 					<p><bean:message key="title.inquiries.choose.teacher" bundle="INQUIRIES_RESOURCES"/></p>
 					<ul>
-						<logic:iterate id="attendingCourseTeacher" name='<%= InquiriesUtil.ATTENDING_COURSE_TEACHERS %>' type="net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes">
+						<logic:iterate id="attendingCourseTeacher" name='<%= InquiriesUtil.ATTENDING_COURSE_TEACHERS %>' type="net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes">
 							<logic:present name="attendingCourseTeacher" property="teacher">
 								<bean:define id="currentTeacherId" name="attendingCourseTeacher" property="idInternal"/>
 								<li class="border">									
@@ -546,7 +546,7 @@
 													<bean:message key="table.rowname.inquiries.teacher.form.evaluated.class.types" bundle="INQUIRIES_RESOURCES"/>
 												</bean:define>
 												
-												<logic:iterate id="selectedAttendingCourseTeacher" name='<%= InquiriesUtil.SELECTED_ATTENDING_COURSE_TEACHERS %>' indexId="teacherPosition" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesTeacher">
+												<logic:iterate id="selectedAttendingCourseTeacher" name='<%= InquiriesUtil.SELECTED_ATTENDING_COURSE_TEACHERS %>' indexId="teacherPosition" type="net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InfoInquiriesTeacher">
 													<bean:define id="selectedAttendingCourseTeacherId" name="selectedAttendingCourseTeacher" property="teacherOrNonAffiliatedTeacher.idInternal" />
 										
 													<%
@@ -678,7 +678,7 @@
 													<bean:message key="table.rowname.inquiries.teacher.form.evaluated.class.types" bundle="INQUIRIES_RESOURCES"/>
 												</bean:define>
 												
-												<logic:iterate id="selectedAttendingCourseTeacher" name='<%= InquiriesUtil.SELECTED_ATTENDING_COURSE_TEACHERS %>' indexId="teacherPosition" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesTeacher">
+												<logic:iterate id="selectedAttendingCourseTeacher" name='<%= InquiriesUtil.SELECTED_ATTENDING_COURSE_TEACHERS %>' indexId="teacherPosition" type="net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InfoInquiriesTeacher">
 													<bean:define id="selectedAttendingCourseTeacherId" name="selectedAttendingCourseTeacher" property="teacherOrNonAffiliatedTeacher.idInternal" />
 										
 													<%
@@ -781,7 +781,7 @@
 
 			<logic:present name='<%= InquiriesUtil.SELECTED_ATTENDING_COURSE_TEACHERS %>'>
 
-				<logic:iterate id="selectedAttendingCourseTeacher" name='<%= InquiriesUtil.SELECTED_ATTENDING_COURSE_TEACHERS %>' indexId="teacherPosition" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesTeacher">
+				<logic:iterate id="selectedAttendingCourseTeacher" name='<%= InquiriesUtil.SELECTED_ATTENDING_COURSE_TEACHERS %>' indexId="teacherPosition" type="net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InfoInquiriesTeacher">
 					<bean:define id="selectedAttendingCourseTeacherId" name="selectedAttendingCourseTeacher" property="teacherOrNonAffiliatedTeacher.idInternal" />
 
 								

@@ -8,12 +8,12 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.UploadStudentInquiriesCourseResultsBean;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.UploadStudentInquiriesResultsBean;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.UploadStudentInquiriesTeachingResultsBean;
+import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.UploadStudentInquiriesCourseResultsBean;
+import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.UploadStudentInquiriesResultsBean;
+import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.UploadStudentInquiriesTeachingResultsBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesCourseResult;
-import net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesTeachingResult;
+import net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesCourseResult;
+import net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesTeachingResult;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -115,7 +115,7 @@ public class UploadStudentInquiriesResults extends FenixDispatchAction {
 	RenderUtils.invalidateViewState();
 
 	try {
-	    if(StudentInquiriesTeachingResult.resetTeachingResults(resultsBean)) {
+	    if(StudentInquiriesTeachingResult.deleteTeachingResults(resultsBean)) {
 		addActionMessage(request, "message.StudentInquiriesResult.delete.sucess");
 	    } else {
 		addActionMessage(request, "message.StudentInquiriesResult.delete.dataNotFound");

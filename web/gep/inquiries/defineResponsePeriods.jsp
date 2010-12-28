@@ -21,7 +21,7 @@
 				<td>
 				</td>
 				<td>
-					<e:labelValues id="responsePeriodTypes"	enumeration="net.sourceforge.fenixedu.domain.inquiries.teacher.InquiryResponsePeriodType" bundle="ENUMERATION_RESOURCES" /> 
+					<e:labelValues id="responsePeriodTypes"	enumeration="net.sourceforge.fenixedu.domain.oldInquiries.teacher.InquiryResponsePeriodType" bundle="ENUMERATION_RESOURCES" /> 
 					<html:select property="periodType" onchange="this.form.submit()">
 						<html:options collection="responsePeriodTypes" property="value" labelProperty="label" />
 					</html:select>
@@ -56,7 +56,7 @@
 	<br/><br/>
 	<logic:present name="inquiryResponsePeriod" >
 		<fr:edit name="inquiryResponsePeriod" action="/defineResponsePeriods.do?method=prepare"
-				schema="net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod.edit">
+				schema="net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod.edit">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thmiddle thlight mtop05 mbottom1"/>
   				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
@@ -66,8 +66,8 @@
 	</logic:present>
 	<logic:notPresent name="inquiryResponsePeriod">
 		<fr:create action="/defineResponsePeriods.do?method=prepare"
-				type="net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod"
-				schema="net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod.create">
+				type="net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod"
+				schema="net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod.create">
 			<fr:hidden slot="executionPeriod" name="selectedExecutionPeriod"/>
 			<fr:hidden slot="type" name="periodType" />
 			<fr:layout name="tabular">

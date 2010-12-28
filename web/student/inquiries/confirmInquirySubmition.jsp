@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiry" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InfoInquiry" %>
 <%@ page import="net.sourceforge.fenixedu.util.InquiriesUtil" %>
 <%@ page import="net.sourceforge.fenixedu.domain.ShiftType" %>
 
@@ -49,7 +49,7 @@
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseQuestion28" property="executionCourseQuestion28" />
 
 		<logic:present name='<%= InquiriesUtil.INFO_ATTENDING_INQUIRIES_COURSE %>'>
-			<bean:define id="infoAttendingCourseInquiry" name='<%= InquiriesUtil.INFO_ATTENDING_INQUIRIES_COURSE %>' type="net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesCourse" />
+			<bean:define id="infoAttendingCourseInquiry" name='<%= InquiriesUtil.INFO_ATTENDING_INQUIRIES_COURSE %>' type="net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InfoInquiriesCourse" />
 		</logic:present>
 
 		<div id='<%= InquiriesUtil.STUDENT_FORM_ANCHOR %>' class="block">
@@ -431,7 +431,7 @@
 			<logic:present name='<%= InquiriesUtil.SELECTED_ATTENDING_COURSE_TEACHERS %>'>
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeacherFormPosition" property="selectedAttendingCourseTeacherFormPosition" />
 
-				<logic:iterate id="selectedAttendingCourseTeacher" name='<%= InquiriesUtil.SELECTED_ATTENDING_COURSE_TEACHERS %>' indexId="teacherPosition" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesTeacher">
+				<logic:iterate id="selectedAttendingCourseTeacher" name='<%= InquiriesUtil.SELECTED_ATTENDING_COURSE_TEACHERS %>' indexId="teacherPosition" type="net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InfoInquiriesTeacher">
 					<bean:define id="selectedAttendingCourseTeacherId" name="selectedAttendingCourseTeacher" property="teacherOrNonAffiliatedTeacher.idInternal" />
 
 					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseTeachersId" property="selectedAttendingCourseTeachersId" value='<%= selectedAttendingCourseTeacherId.toString() %>'/>
@@ -820,7 +820,7 @@
 				</logic:notEmpty>
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseRoomId" property="selectedAttendingCourseRoomId" />
 
-				<logic:iterate id="selectedAttendingCourseRoom" name='<%= InquiriesUtil.SELECTED_ATTENDING_COURSE_ROOMS %>' indexId="roomPosition" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRoom">
+				<logic:iterate id="selectedAttendingCourseRoom" name='<%= InquiriesUtil.SELECTED_ATTENDING_COURSE_ROOMS %>' indexId="roomPosition" type="net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InfoInquiriesRoom">
 					<bean:define id="selectedAttendingCourseRoomId" name="selectedAttendingCourseRoom" property="room.idInternal" />
 
 					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedAttendingCourseRoomsId" property="selectedAttendingCourseRoomsId" value='<%= selectedAttendingCourseRoomId.toString() %>'/>

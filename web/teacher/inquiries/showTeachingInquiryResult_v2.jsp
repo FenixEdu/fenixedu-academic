@@ -107,7 +107,7 @@ padding-right: 8px;
 
 <fmt:setBundle basename="resources.InquiriesResources" var="INQUIRIES_RESOURCES"/>
 
-<bean:define id="inquiryResult" name="inquiryResult" type="net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesTeachingResult"></bean:define>
+<bean:define id="inquiryResult" name="inquiryResult" type="net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesTeachingResult"></bean:define>
 
 <p class="mtop0" style="float: right;"><em>Informação do sistema, recolhida a <c:out value="${inquiryResult.resultsDate}" /></em></p>
 

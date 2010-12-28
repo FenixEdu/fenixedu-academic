@@ -3,8 +3,8 @@ package net.sourceforge.fenixedu.presentationTier.Action;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod;
-import net.sourceforge.fenixedu.domain.inquiries.teacher.InquiryResponsePeriodType;
+import net.sourceforge.fenixedu.domain.oldInquiries.teacher.InquiryResponsePeriodType;
+import net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
 

@@ -119,7 +119,7 @@ padding-right: 8px;
 	<p style="margin: 0.75em 0;">Unidade curricular: <bean:write name="inquiryResult" property="executionCourse.nome"/></p>
 </div>
 
-<bean:define id="result" name="inquiryResult" type="net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesCourseResult" />
+<bean:define id="result" name="inquiryResult" type="net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesCourseResult" />
 <table class="tstyle1 thlight thleft td50px thbgnone tdright">
 	<tr class="top">
 		<th>Nº de inscritos</th>

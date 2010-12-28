@@ -5,7 +5,7 @@ package net.sourceforge.fenixedu.presentationTier.renderers.inquiries;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.QuestionChoice;
+import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.QuestionChoice;
 import pt.ist.fenixWebFramework.renderers.InputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlRadioButton;

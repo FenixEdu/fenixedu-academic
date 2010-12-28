@@ -1,7 +1,7 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.domain.inquiries.teacher;
+package net.sourceforge.fenixedu.domain.oldInquiries.teacher;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)

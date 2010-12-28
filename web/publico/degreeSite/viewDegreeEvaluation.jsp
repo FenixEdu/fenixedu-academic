@@ -165,7 +165,7 @@
 
 			</tr>
 				
-			<logic:iterate id="inquirySummary" name="oldInquiriesSummaries" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesSummary">
+			<logic:iterate id="inquirySummary" name="oldInquiriesSummaries" type="net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InfoOldInquiriesSummary">
 
 				<bean:define id="gepCourseName" name="inquirySummary" property="gepCourseName" type="java.lang.String"/>
 

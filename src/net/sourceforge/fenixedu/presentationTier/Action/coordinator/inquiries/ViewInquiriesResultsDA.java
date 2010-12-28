@@ -8,10 +8,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.StudentInquiriesCourseResultBean;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeachingInquiryDTO;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.ViewInquiriesResultPageDTO;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.YearDelegateCourseInquiryDTO;
+import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.StudentInquiriesCourseResultBean;
+import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.TeachingInquiryDTO;
+import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.ViewInquiriesResultPageDTO;
+import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.YearDelegateCourseInquiryDTO;
 import net.sourceforge.fenixedu.domain.CoordinatorExecutionDegreeCoursesReport;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainObject;
@@ -22,9 +22,9 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesCourseResult;
-import net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesTeachingResult;
-import net.sourceforge.fenixedu.domain.inquiries.teacher.TeachingInquiry;
+import net.sourceforge.fenixedu.domain.oldInquiries.teacher.TeachingInquiry;
+import net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesCourseResult;
+import net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesTeachingResult;
 import net.sourceforge.fenixedu.domain.student.YearDelegateCourseInquiry;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 

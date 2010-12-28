@@ -21,44 +21,42 @@
 	<p><span class="error0"><!-- Error messages go here --><bean:write name="message" /></span></p>
 </html:messages>
 
-<c:if test="${student.weeklySpentHoursSubmittedForOpenInquiriesResponsePeriod}">
+<logic:equal name="student" property="weeklySpentHoursSubmittedForOpenInquiry" value="true">
 
-	<bean:message key="label.weeklySpentHours" bundle="INQUIRIES_RESOURCES"/>: <b><c:out value="${student.openInquiriesStudentExecutionPeriod.weeklyHoursSpentInClassesSeason}" /></b> <bean:message key="label.hoursPerWeek.a" bundle="INQUIRIES_RESOURCES"/>
+	<bean:message key="label.weeklySpentHours" bundle="INQUIRIES_RESOURCES"/>: <b><bean:write name="student" property="openStudentInquiryExecutionPeriod.weeklyHoursSpentInClassesSeason"/></b> <bean:message key="label.hoursPerWeek.a" bundle="INQUIRIES_RESOURCES"/>
 
 	<fr:view name="courses" schema="curricularCourseInquiriesRegistryDTO.submitHoursAndDays" >
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle1 thlight tdcenter tdwith90px"/>
-			<fr:property name="columnClasses" value="nowrap aleft,,,,,,acenter nowrap"/>
-			<fr:property name="suffixes" value=",,h,%,dias,,"/>
+			<fr:property name="columnClasses" value="nowrap aleft,,,,,,,acenter nowrap"/>
+			<fr:property name="suffixes" value=",,h,%,%,dias,,"/>
 			<fr:property name="linkGroupSeparator" value=" | "/>
 			
-			<fr:property name="linkFormat(answerNow)" value="/studentInquiry.do?method=showInquiries1stPage&amp;inquiriesRegistryID=${inquiriesRegistry.idInternal}" />
+			<fr:property name="linkFormat(answerNow)" value="/studentInquiry.do?method=showCurricularInquiry&amp;inquiryRegistryID=${inquiryRegistry.externalId}" />
 			<fr:property name="key(answerNow)" value="link.inquiries.answerNow"/>
 			<fr:property name="bundle(answerNow)" value="INQUIRIES_RESOURCES"/>
 			<fr:property name="contextRelative(answerNow)" value="true"/>      
 			<fr:property name="order(answerNow)" value="2"/>
-			<fr:property name="visibleIf(answerNow)" value="inquiriesRegistry.toAnswerLater"/>
-
-<%-- 
---%> 			
-			<fr:property name="linkFormat(dontRespond)" value="/studentInquiry.do?method=showJustifyNotAnswered&amp;inquiriesRegistryID=${inquiriesRegistry.idInternal}" />
+			<fr:property name="visibleIf(answerNow)" value="inquiryRegistry.toAnswerLater"/>
+			
+			<fr:property name="linkFormat(dontRespond)" value="/studentInquiry.do?method=showJustifyNotAnswered&amp;inquiryRegistryID=${inquiryRegistry.externalId}" />
 			<fr:property name="key(dontRespond)" value="link.inquiries.dontRespond"/>
 			<fr:property name="bundle(dontRespond)" value="INQUIRIES_RESOURCES"/>
 			<fr:property name="contextRelative(dontRespond)" value="true"/>      
 			<fr:property name="order(dontRespond)" value="1"/>
-			<fr:property name="visibleIf(dontRespond)" value="inquiriesRegistry.toAnswerLater"/>
+			<fr:property name="visibleIf(dontRespond)" value="inquiryRegistry.toAnswerLater"/>
 			
-			<fr:property name="visibleIf(notAnswered)" value="inquiriesRegistry.notAnswered"/>
+			<fr:property name="visibleIf(notAnswered)" value="inquiryRegistry.notAnswered"/>
 			<fr:property name="customLink(notAnswered)" >
 				<em><bean:message key="label.notAnswered" bundle="INQUIRIES_RESOURCES" /></em>
 			</fr:property>
 			
-			<fr:property name="visibleIf(answered)" value="inquiriesRegistry.answered"/>
+			<fr:property name="visibleIf(answered)" value="inquiryRegistry.answered"/>
 			<fr:property name="customLink(answered)" >
 				<span class="success0"><bean:message key="label.answered" bundle="INQUIRIES_RESOURCES" /></span>
 			</fr:property>
 			
-			<fr:property name="visibleIf(notAvailableToInquiries)" value="inquiriesRegistry.notAvailableToInquiries"/>
+			<fr:property name="visibleIfNot(notAvailableToInquiries)" value="inquiryRegistry.availableToInquiries"/>
 			<fr:property name="customLink(notAvailableToInquiries)" >
 				<em><bean:message key="label.notAvailableToInquiries" bundle="INQUIRIES_RESOURCES" /></em>
 			</fr:property>			
@@ -66,9 +64,9 @@
 		</fr:layout>
 	</fr:view>
 
-</c:if>
+</logic:equal>
 
-<c:if test="${!student.weeklySpentHoursSubmittedForOpenInquiriesResponsePeriod}">
+<logic:equal name="student" property="weeklySpentHoursSubmittedForOpenInquiry" value="false">
 
 <p>Considera-se como <b>trabalho autónomo</b> o tempo dedicado por um estudante na pesquisa, estudo, elaboração individual e colectiva de trabalhos (trabalho de
 campo, resolução de problemas, estudos de caso, desenvolvimento de projectos, etc.), ou seja, todo o trabalho desenvolvido pelo aluno no âmbito das unidades
@@ -92,7 +90,7 @@ curriculares em que se encontra inscrito no semestre fora das aulas (horas de co
 			<fr:layout name="tabular-editable" >
 				<fr:property name="classes" value="tstyle1 thlight tdcenter tdwith90px"/>
 				<fr:property name="columnClasses" value="nowrap aleft,,,,,"/>
-				<fr:property name="suffixes" value=",h,%,dias,h,,"/>
+				<fr:property name="suffixes" value=",h,%,%,dias,h,,"/>
 				<fr:property name="validatorClasses" value="error0"/>
 				<fr:property name="hideValidators" value="false"/>
 			</fr:layout>
@@ -104,4 +102,4 @@ curriculares em que se encontra inscrito no semestre fora das aulas (horas de co
 
 		<html:submit><bean:message key="button.submit" bundle="INQUIRIES_RESOURCES"/></html:submit>	
 	</fr:form>
-</c:if>
+</logic:equal>

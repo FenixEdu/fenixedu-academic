@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.renderers.providers;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherInquiryDTO;
+import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.TeacherInquiryDTO;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;

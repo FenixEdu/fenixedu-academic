@@ -1,9 +1,9 @@
-package net.sourceforge.fenixedu.domain.inquiries.teacher;
+package net.sourceforge.fenixedu.domain.oldInquiries.teacher;
 
 import java.util.Map;
 
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiriesQuestion;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeachingInquiryDTO;
+import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InquiriesQuestion;
+import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.TeachingInquiryDTO;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.joda.time.DateTime;

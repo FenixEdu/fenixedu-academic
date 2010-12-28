@@ -20,6 +20,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.utils.GeneratePasswordBase;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
+import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseInquiriesRegistryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.student.StudentStatuteBean;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -49,12 +50,15 @@ import net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod;
 import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithInvocationResult;
-import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
-import net.sourceforge.fenixedu.domain.inquiries.InquiriesStudentExecutionPeriod;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod;
-import net.sourceforge.fenixedu.domain.inquiries.teacher.InquiryResponsePeriodType;
+import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryExecutionPeriod;
+import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryRegistry;
+import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryTemplate;
 import net.sourceforge.fenixedu.domain.log.CurriculumLineLog;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
+import net.sourceforge.fenixedu.domain.oldInquiries.InquiriesRegistry;
+import net.sourceforge.fenixedu.domain.oldInquiries.InquiriesStudentExecutionPeriod;
+import net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod;
+import net.sourceforge.fenixedu.domain.oldInquiries.teacher.InquiryResponsePeriodType;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
@@ -901,15 +905,69 @@ public class Student extends Student_Base {
 	return false;
     }
 
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public void setSpentTimeInPeriodForInquiry(List<CurricularCourseInquiriesRegistryDTO> courses, Integer weeklySpentHours,
+	    ExecutionSemester executionSemester) {
+
+	if (!StudentInquiryRegistry.checkTotalPercentageDistribution(courses)) {
+	    throw new DomainException("error.weeklyHoursSpentPercentage.is.not.100.percent");
+	}
+	if (!StudentInquiryRegistry.checkTotalStudyDaysSpentInExamsSeason(courses)) {
+	    throw new DomainException("error.studyDaysSpentInExamsSeason.exceedsMaxDaysLimit");
+	}
+
+	StudentInquiryExecutionPeriod studentInquiryExecutionPeriod = getStudentInquiryExecutionPeriod(executionSemester);
+
+	if (studentInquiryExecutionPeriod == null) {
+	    studentInquiryExecutionPeriod = new StudentInquiryExecutionPeriod(this, executionSemester);
+	}
+	studentInquiryExecutionPeriod.setWeeklyHoursSpentInClassesSeason(weeklySpentHours);
+
+	for (CurricularCourseInquiriesRegistryDTO curricularCourseInquiriesRegistryDTO : courses) {
+	    StudentInquiryRegistry inquiryRegistry = curricularCourseInquiriesRegistryDTO.getInquiryRegistry();
+	    inquiryRegistry.setStudyDaysSpentInExamsSeason(curricularCourseInquiriesRegistryDTO.getStudyDaysSpentInExamsSeason());
+	    inquiryRegistry.setWeeklyHoursSpentPercentage(curricularCourseInquiriesRegistryDTO.getWeeklyHoursSpentPercentage());
+	    inquiryRegistry.setAttendenceClassesPercentage(curricularCourseInquiriesRegistryDTO.getAttendenceClassesPercentage());
+	    inquiryRegistry.setEstimatedECTS(curricularCourseInquiriesRegistryDTO.getCalculatedECTSCredits());
+	}
+    }
+
+    public StudentInquiryExecutionPeriod getStudentInquiryExecutionPeriod(ExecutionSemester executionSemester) {
+	for (final StudentInquiryExecutionPeriod studentInquiryExecutionPeriod : getStudentsInquiriesExecutionPeriodsSet()) {
+	    if (studentInquiryExecutionPeriod.getExecutionPeriod() == executionSemester) {
+		return studentInquiryExecutionPeriod;
+	    }
+	}
+	return null;
+    }
+
+    // TODO remove this method
     public boolean isWeeklySpentHoursSubmittedForCurrentPeriod() {
 	return isWeeklySpentHoursSubmittedForPeriod(ExecutionSemester.readActualExecutionSemester());
     }
 
+    public boolean isWeeklySpentHoursSubmittedForOpenInquiry() {
+	StudentInquiryTemplate inquiryTemplate = StudentInquiryTemplate.getCurrentTemplate();
+	return inquiryTemplate == null ? false : isWeeklySpentHoursSubmittedForOpenInquiry(inquiryTemplate.getExecutionPeriod());
+    }
+
+    public boolean isWeeklySpentHoursSubmittedForOpenInquiry(ExecutionSemester executionSemester) {
+	for (final StudentInquiryExecutionPeriod studentInquiryExecutionPeriod : getStudentsInquiriesExecutionPeriods()) {
+	    if (studentInquiryExecutionPeriod.getExecutionPeriod() == executionSemester) {
+		return studentInquiryExecutionPeriod.getWeeklyHoursSpentInClassesSeason() != null;
+	    }
+	}
+	return false;
+    }
+
+    // TODO remove this method
     public boolean isWeeklySpentHoursSubmittedForOpenInquiriesResponsePeriod() {
 	final InquiryResponsePeriod openPeriod = InquiryResponsePeriod.readOpenPeriod(InquiryResponsePeriodType.STUDENT);
 	return openPeriod == null ? false : isWeeklySpentHoursSubmittedForPeriod(openPeriod.getExecutionPeriod());
     }
 
+    // TODO remove this method
     public boolean isWeeklySpentHoursSubmittedForPeriod(ExecutionSemester executionSemester) {
 	for (final InquiriesStudentExecutionPeriod inquiriesStudentExecutionPeriod : getInquiriesStudentExecutionPeriodsSet()) {
 	    if (inquiriesStudentExecutionPeriod.getExecutionPeriod() == executionSemester) {
@@ -923,11 +981,18 @@ public class Student extends Student_Base {
 	return getInquiriesStudentExecutionPeriod(ExecutionSemester.readActualExecutionSemester());
     }
 
+    public StudentInquiryExecutionPeriod getOpenStudentInquiryExecutionPeriod() {
+	StudentInquiryTemplate inquiryTemplate = StudentInquiryTemplate.getCurrentTemplate();
+	return inquiryTemplate == null ? null : getStudentInquiryExecutionPeriod(inquiryTemplate.getExecutionPeriod());
+    }
+
+    // TODO remove this method
     public InquiriesStudentExecutionPeriod getOpenInquiriesStudentExecutionPeriod() {
 	final InquiryResponsePeriod openPeriod = InquiryResponsePeriod.readOpenPeriod(InquiryResponsePeriodType.STUDENT);
 	return openPeriod == null ? null : getInquiriesStudentExecutionPeriod(openPeriod.getExecutionPeriod());
     }
 
+    // TODO remove this method
     public InquiriesStudentExecutionPeriod getInquiriesStudentExecutionPeriod(ExecutionSemester executionSemester) {
 	for (final InquiriesStudentExecutionPeriod inquiriesStudentExecutionPeriod : getInquiriesStudentExecutionPeriodsSet()) {
 	    if (inquiriesStudentExecutionPeriod.getExecutionPeriod() == executionSemester) {
@@ -1447,12 +1512,50 @@ public class Student extends Student_Base {
 	return false;
     }
 
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public Collection<StudentInquiryRegistry> retrieveAndCreateMissingInquiryRegistriesForPeriod(
+	    ExecutionSemester executionSemester) {
+	final Map<ExecutionCourse, StudentInquiryRegistry> coursesToAnswer = new HashMap<ExecutionCourse, StudentInquiryRegistry>();
+
+	for (Registration registration : getRegistrations()) {
+	    if (!registration.isAvailableDegreeTypeForInquiries()) {
+		continue;
+	    }
+	    for (final StudentInquiryRegistry studentInquiryRegistry : registration.getStudentsInquiryRegistries()) {
+		if (studentInquiryRegistry.getExecutionPeriod() == executionSemester) {
+		    coursesToAnswer.put(studentInquiryRegistry.getExecutionCourse(), studentInquiryRegistry);
+		}
+	    }
+	    for (final Enrolment enrolment : registration.getEnrolments(executionSemester)) {
+		createMissingInquiryRegistry(executionSemester, coursesToAnswer, registration, enrolment);
+	    }
+	    for (final Enrolment enrolment : registration.getEnrolments(executionSemester.getPreviousExecutionPeriod())) {
+		if (enrolment.getCurricularCourse().isAnual()) {
+		    createMissingInquiryRegistry(executionSemester, coursesToAnswer, registration, enrolment);
+		}
+	    }
+	}
+	return coursesToAnswer.values();
+    }
+
+    private void createMissingInquiryRegistry(final ExecutionSemester executionSemester,
+	    final Map<ExecutionCourse, StudentInquiryRegistry> coursesToAnswer, Registration registration,
+	    final Enrolment enrolment) {
+	final ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(executionSemester);
+	if (executionCourse != null && !coursesToAnswer.containsKey(executionCourse)) {
+	    coursesToAnswer.put(executionCourse, new StudentInquiryRegistry(executionCourse, executionSemester, enrolment
+		    .getCurricularCourse(), registration));
+	}
+    }
+
+    // TODO remove this method
     public Collection<InquiriesRegistry> getOrCreateInquiriesRegistriesForPeriod(ExecutionSemester executionSemester) {
 	final Map<ExecutionCourse, InquiriesRegistry> coursesToAnswer = new HashMap<ExecutionCourse, InquiriesRegistry>();
 
 	for (Registration registration : getRegistrations()) {
 
-	    // TODO: Chack degree types and response period!
+	    // TODO: Check degree types and response period!
 	    if (!registration.isAvailableDegreeTypeForInquiries()) {
 		continue;
 	    }
@@ -1476,6 +1579,7 @@ public class Student extends Student_Base {
 	return coursesToAnswer.values();
     }
 
+    // TODO remove this method
     private void createNewInquiriesRegistryIfDoesntExist(ExecutionSemester executionSemester,
 	    final Map<ExecutionCourse, InquiriesRegistry> coursesToAnswer, Registration registration, final Enrolment enrolment) {
 	final ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(executionSemester);
@@ -1485,6 +1589,7 @@ public class Student extends Student_Base {
 	}
     }
 
+    // TODO remove this method
     public Collection<String> getInquiriesCoursesNamesToRespond(ExecutionSemester executionSemester) {
 	final Map<ExecutionCourse, String> coursesToAnswer = new HashMap<ExecutionCourse, String>();
 	final Set<ExecutionCourse> coursesAnswered = new HashSet<ExecutionCourse>();

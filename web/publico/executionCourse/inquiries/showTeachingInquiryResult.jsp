@@ -105,7 +105,7 @@ padding-right: 8px;
 }
 </style>
 
-<bean:define id="inquiryResult" name="inquiryResult" type="net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesTeachingResult"></bean:define>
+<bean:define id="inquiryResult" name="inquiryResult" type="net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesTeachingResult"></bean:define>
 
 <p class="mtop0" style="float: right;"><em>Informação do sistema, recolhida a 5 Novembro 2008</em></p>
 
