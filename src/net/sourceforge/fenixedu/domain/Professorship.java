@@ -14,9 +14,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.Re
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
 import net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod;
-import net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesTeachingResult;
-import net.sourceforge.fenixedu.domain.inquiries.teacher.InquiryResponsePeriodType;
+import net.sourceforge.fenixedu.domain.oldInquiries.teacher.InquiryResponsePeriodType;
+import net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod;
+import net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesTeachingResult;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 

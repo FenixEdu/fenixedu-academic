@@ -31,9 +31,9 @@ import net.sourceforge.fenixedu.domain.degreeStructure.EctsGraduationGradeConver
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
 import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes;
-import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary;
-import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes;
+import net.sourceforge.fenixedu.domain.oldInquiries.OldInquiriesCoursesRes;
+import net.sourceforge.fenixedu.domain.oldInquiries.OldInquiriesSummary;
+import net.sourceforge.fenixedu.domain.oldInquiries.OldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
