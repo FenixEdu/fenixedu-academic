@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "New QUC domain model" newInquiries.sql
