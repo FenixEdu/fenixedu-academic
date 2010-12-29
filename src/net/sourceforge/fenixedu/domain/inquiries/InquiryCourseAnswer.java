@@ -1,6 +1,9 @@
 package net.sourceforge.fenixedu.domain.inquiries;
 
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+
+import org.joda.time.DateTime;
+
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -34,6 +37,7 @@ public class InquiryCourseAnswer extends InquiryCourseAnswer_Base {
 	//courseAnswer.setWeeklyHoursSpentInClassesSeason(studentInquiryExecutionPeriod.getWeeklyHoursSpentInClassesSeason());
 	courseAnswer.setNotAnsweredJustification(justification);
 	courseAnswer.setNotAnsweredOtherJustification(otherJustification);
+	courseAnswer.setResponseDateTime(new DateTime());
 
 	inquiryRegistry.setState(InquiriesRegistryState.NOT_ANSWERED);
 
