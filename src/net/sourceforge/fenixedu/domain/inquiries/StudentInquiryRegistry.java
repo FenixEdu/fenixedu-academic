@@ -76,6 +76,6 @@ public class StudentInquiryRegistry extends StudentInquiryRegistry_Base {
 	for (CurricularCourseInquiriesRegistryDTO curricularCourseInquiriesRegistryDTO : courses) {
 	    totalHours += curricularCourseInquiriesRegistryDTO.getStudyDaysSpentInExamsSeason();
 	}
-	return totalHours <= 42 * 24 * 8; //42 days in exam period 
+	return totalHours <= 60 * 24 * 8; //60 days in exam period 
     }
 }

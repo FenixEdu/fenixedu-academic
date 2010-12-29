@@ -21,24 +21,7 @@ public class InquiryCheckBoxQuestionRenderer extends InputRenderer {
 
 	    @Override
 	    public HtmlComponent createComponent(Object object, Class type) {
-		//		InquiryQuestionDTO boxQuestion = (InquiryQuestionDTO) getContext().getProperties().get("checkBoxQuestion");
-		////		HtmlCheckBoxList checkBoxList = new HtmlCheckBoxList();
-		//		InquiryCheckBoxQuestion inquiryCheckBoxQuestion = (InquiryCheckBoxQuestion) boxQuestion.getInquiryQuestion();
-		////		for (InquiryQuestionChoice questionChoice : inquiryCheckBoxQuestion.getOrderedInquiryQuestionChoices()) {
-		//		    HtmlCheckBox option = new HtmlCheckBox(boxQuestion.getInquiryQuestion().getLabel().toString());
-		//		    option.setName(boxQuestion.getInquiryQuestion().getLabel().toString() + ":" + boxQuestion.getInquiryQuestion().getExternalId());
-		//		    option.setChecked(boxQuestion.getCheckboxResponses().contains(questionChoice.getLabel().toString()));
-		////		}
-		//		//checkBoxList.setConverter(new CheckboxConverter());
-		//		return checkBoxList;
-		//		final HtmlCheckBox htmlCheckBox = new HtmlCheckBox();
-		//		if (object != null && (Boolean.valueOf(object.toString()) || object.toString().equalsIgnoreCase("on"))) {
-		//		    htmlCheckBox.setChecked(true);
-		//		}
-		//		return htmlCheckBox;
-
 		final HtmlCheckBox htmlCheckBox = new HtmlCheckBox();
-		htmlCheckBox.setName("1");
 		if (object != null && (Boolean.valueOf(object.toString()) || object.toString().equalsIgnoreCase("on"))) {
 		    htmlCheckBox.setChecked(true);
 		}
