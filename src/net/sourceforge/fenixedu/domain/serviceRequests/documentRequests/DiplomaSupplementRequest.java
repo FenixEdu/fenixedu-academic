@@ -90,7 +90,7 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base {
 
     @Override
     public boolean isPagedDocument() {
-	return true;
+	return false;
     }
 
     @Override
@@ -125,7 +125,7 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base {
 
     @Override
     public boolean isToPrint() {
-	return !isDelivered();
+	return false;
     }
 
     @Override

@@ -228,7 +228,7 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 
     @Override
     public boolean isToPrint() {
-	return !isDelivered();
+	return false;
     }
 
     public void generateRegistryCode() {

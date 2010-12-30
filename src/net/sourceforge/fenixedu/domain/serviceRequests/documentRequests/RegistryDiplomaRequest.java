@@ -166,7 +166,7 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base {
 
     @Override
     public boolean isToPrint() {
-	return !isDelivered();
+	return false;
     }
 
     @Override
