@@ -7709,6 +7709,8 @@ class inquiries.QuestionCondition extends DomainObject {
 	}
 	
 	class inquiries.ECTSVisibleCondition extends inquiries.QuestionCondition {
+		Double ectsDifference;
+		Boolean workLoadExcessive;
 	}
 
 

@@ -7,6 +7,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.inquiries.InquiryBlock;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryGroupQuestion;
+import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryRegistry;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -15,18 +16,19 @@ public class InquiryBlockDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private StudentInquiryRegistry inquiryRegistry;
     private InquiryBlock inquiryBlock;
 
     private SortedSet<InquiryGroupQuestionBean> inquiryGroups;
 
-    public InquiryBlockDTO(InquiryBlock inquiryBlock) {
+    public InquiryBlockDTO(InquiryBlock inquiryBlock, StudentInquiryRegistry inquiryRegistry) {
 	setInquiryBlock(inquiryBlock);
 	ComparatorChain comparatorChain = new ComparatorChain();
 	comparatorChain.addComparator(new BeanComparator("inquiryGroupQuestion.groupOrder"));
 	comparatorChain.addComparator(new BeanComparator("order"));
 	setInquiryGroups(new TreeSet<InquiryGroupQuestionBean>(comparatorChain));
 	for (InquiryGroupQuestion inquiryGroupQuestion : inquiryBlock.getInquiryGroupsQuestionsSet()) {
-	    getInquiryGroups().add(new InquiryGroupQuestionBean(inquiryGroupQuestion, this));
+	    getInquiryGroups().add(new InquiryGroupQuestionBean(inquiryGroupQuestion, this, inquiryRegistry));
 	}
     }
 
@@ -46,13 +48,23 @@ public class InquiryBlockDTO implements Serializable {
 	return inquiryGroups;
     }
 
-    public boolean validate() {
+    public void setInquiryRegistry(StudentInquiryRegistry inquiryRegistry) {
+	this.inquiryRegistry = inquiryRegistry;
+    }
+
+    public StudentInquiryRegistry getInquiryRegistry() {
+	return inquiryRegistry;
+    }
+
+    public String validate() {
 	Set<InquiryGroupQuestionBean> groups = getInquiryGroups();
+	String validationResult = null;
 	for (InquiryGroupQuestionBean group : groups) {
-	    if (!group.validate()) {
-		return false;
+	    validationResult = group.validate();
+	    if (!Boolean.valueOf(validationResult)) {
+		return validationResult;
 	    }
 	}
-	return true;
+	return Boolean.toString(true);
     }
 }

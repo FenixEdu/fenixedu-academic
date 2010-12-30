@@ -204,12 +204,13 @@ public class StudentInquiryDA extends FenixDispatchAction {
 	StudentInquiryBean inquiryBean = getRenderedObject("inquiryBean");
 
 	if (inquiryBean == null) {
-	    Set<InquiryBlockDTO> inquiryBlocks = new TreeSet<InquiryBlockDTO>(new BeanComparator("inquiryBlock.blockOrder"));
-	    for (InquiryBlock inquiryBlock : studentInquiryTemplate.getInquiryBlocks()) {
-		inquiryBlocks.add(new InquiryBlockDTO(inquiryBlock));
-	    }
 	    String inquiryRegistryID = (String) getFromRequest(request, "inquiryRegistryID");
 	    StudentInquiryRegistry inquiryRegistry = AbstractDomainObject.fromExternalId(inquiryRegistryID);
+
+	    Set<InquiryBlockDTO> inquiryBlocks = new TreeSet<InquiryBlockDTO>(new BeanComparator("inquiryBlock.blockOrder"));
+	    for (InquiryBlock inquiryBlock : studentInquiryTemplate.getInquiryBlocks()) {
+		inquiryBlocks.add(new InquiryBlockDTO(inquiryBlock, inquiryRegistry));
+	    }
 
 	    inquiryBean = new StudentInquiryBean(StudentTeacherInquiryTemplate.getCurrentTemplate(), inquiryRegistry);
 	    inquiryBean.setCurricularCourseBlocks(inquiryBlocks);
@@ -226,8 +227,13 @@ public class StudentInquiryDA extends FenixDispatchAction {
 	StudentInquiryBean inquiryBean = getRenderedObject("inquiryBean");
 	RenderUtils.invalidateViewState();
 	request.setAttribute("inquiryBean", inquiryBean);
-	if (!inquiryBean.validateCurricularInquiry()) {
-	    addActionMessage(request, "error.inquiries.fillAllRequiredFields");
+	String validationResult = inquiryBean.validateCurricularInquiry();
+	if (!Boolean.valueOf(validationResult)) {
+	    if (!validationResult.equalsIgnoreCase("false")) {
+		addActionMessage(request, "error.inquiries.fillInQuestion", validationResult);
+	    } else {
+		addActionMessage(request, "error.inquiries.fillAllRequiredFields");
+	    }
 	    return actionMapping.findForward("showInquiry");
 	}
 
@@ -247,8 +253,13 @@ public class StudentInquiryDA extends FenixDispatchAction {
 	request.setAttribute("inquiryBean", getRenderedObject("inquiryBean"));
 	RenderUtils.invalidateViewState();
 
-	if (!teacherInquiry.validateTeacherInquiry()) {
-	    addActionMessage(request, "error.inquiries.fillInQuestion", "5.1.1");
+	String validationResult = teacherInquiry.validateTeacherInquiry();
+	if (!Boolean.valueOf(validationResult)) {
+	    if (!validationResult.equalsIgnoreCase("false")) {
+		addActionMessage(request, "error.inquiries.fillInQuestion", validationResult);
+	    } else {
+		addActionMessage(request, "error.inquiries.fillAllRequiredFields");
+	    }
 	    request.setAttribute("teacherInquiry", teacherInquiry);
 	    return actionMapping.findForward("showTeacherInquiry");
 	}

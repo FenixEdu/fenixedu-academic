@@ -1,0 +1,1 @@
+alter table `QUESTION_CONDITION` add `ECTS_DIFFERENCE` double, add `WORK_LOAD_EXCESSIVE` tinyint(1);

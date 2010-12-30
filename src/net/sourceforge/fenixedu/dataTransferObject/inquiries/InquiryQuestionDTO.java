@@ -5,16 +5,27 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryCheckBoxQuestion;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryTextBoxQuestion;
+import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryRegistry;
 
 public class InquiryQuestionDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private StudentInquiryRegistry studentInquiryRegistry;
     private InquiryQuestion inquiryQuestion;
     private String responseValue;
+    private boolean isVisible;
+    private String[] conditionValues;
 
-    public InquiryQuestionDTO(InquiryQuestion inquiryQuestion) {
+    public InquiryQuestionDTO(InquiryQuestion inquiryQuestion, StudentInquiryRegistry studentInquiryRegistry) {
 	setInquiryQuestion(inquiryQuestion);
+	setStudentInquiryRegistry(studentInquiryRegistry);
+	setConditionOptions(studentInquiryRegistry);
+    }
+
+    private void setConditionOptions(StudentInquiryRegistry studentInquiryRegistry) {
+	setVisible(getInquiryQuestion().isVisible(studentInquiryRegistry));
+	setConditionValues(getInquiryQuestion().getConditionValues(studentInquiryRegistry));
     }
 
     public void setInquiryQuestion(InquiryQuestion inquiryQuestion) {
@@ -46,5 +57,29 @@ public class InquiryQuestionDTO implements Serializable {
 	    }
 	}
 	return getResponseValue();
+    }
+
+    public void setVisible(boolean isVisible) {
+	this.isVisible = isVisible;
+    }
+
+    public boolean isVisible() {
+	return isVisible;
+    }
+
+    public void setConditionValues(String[] conditionValues) {
+	this.conditionValues = conditionValues;
+    }
+
+    public String[] getConditionValues() {
+	return conditionValues;
+    }
+
+    public void setStudentInquiryRegistry(StudentInquiryRegistry studentInquiryRegistry) {
+	this.studentInquiryRegistry = studentInquiryRegistry;
+    }
+
+    public StudentInquiryRegistry getStudentInquiryRegistry() {
+	return studentInquiryRegistry;
     }
 }

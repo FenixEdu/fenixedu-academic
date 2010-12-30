@@ -106,13 +106,15 @@ public class StudentInquiryBean implements Serializable {
 	}
     }
 
-    public boolean validateCurricularInquiry() {
+    public String validateCurricularInquiry() {
+	String validationResult = null;
 	for (InquiryBlockDTO inquiryBlockDTO : getCurricularCourseBlocks()) {
-	    if (!inquiryBlockDTO.validate()) {
-		return false;
+	    validationResult = inquiryBlockDTO.validate();
+	    if (!Boolean.valueOf(validationResult)) {
+		return validationResult;
 	    }
 	}
-	return true;
+	return Boolean.toString(true);
     }
 
     public Set<InquiryBlockDTO> getCurricularCourseBlocks() {

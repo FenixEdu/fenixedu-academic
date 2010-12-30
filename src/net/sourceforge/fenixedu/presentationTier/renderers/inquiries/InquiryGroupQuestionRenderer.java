@@ -8,6 +8,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiryGroupQuestionBean;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiryQuestionDTO;
+import net.sourceforge.fenixedu.domain.inquiries.ECTSVisibleCondition;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryCheckBoxQuestion;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestionHeader;
@@ -66,6 +67,12 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 	    final HtmlTable mainTable = new HtmlTable();
 	    InquiryGroupQuestionBean inquiryGroupQuestion = (InquiryGroupQuestionBean) getInputContext().getMetaObject()
 		    .getObject();
+
+	    if (!inquiryGroupQuestion.isVisible()) {
+		return mainTable;
+	    }
+	    String[] groupConditionValues = inquiryGroupQuestion.getConditionValues();
+
 	    MetaObject metaObject = MetaObjectFactory.createObject((Set) inquiryGroupQuestion.getInquiryQuestions(), RenderKit
 		    .getInstance().findSchema("inquiryQuestionDTO.answer"));
 
@@ -73,6 +80,11 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 	    for (MetaSlot metaSlot : metaObject.getAllSlots()) {
 
 		InquiryQuestionDTO inquiryQuestion = (InquiryQuestionDTO) metaSlot.getMetaObject().getObject();
+
+		if (!inquiryQuestion.isVisible()) {
+		    continue;
+		}
+		String[] questionConditionValues = inquiryQuestion.getConditionValues();
 
 		RenderKit kit = RenderKit.getInstance();
 		HtmlFormComponent formComponent = null;
@@ -90,15 +102,17 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 		}
 
 		if (groupHeader && inquiryQuestion.getInquiryQuestion().getQuestionOrder() == 1) {
-		    createHeaderRow(questionHeader, mainTable, inquiryGroupQuestion.getInquiryGroupQuestion().getRequired());
+		    createHeaderRow(questionHeader, mainTable, inquiryGroupQuestion.getInquiryGroupQuestion().getRequired(),
+			    groupConditionValues);
 		} else if (!groupHeader && questionHeader != null) {
-		    createHeaderRow(questionHeader, mainTable, false);
+		    createHeaderRow(questionHeader, mainTable, false, questionConditionValues);
 		}
 
 		HtmlTableRow questionRow = mainTable.createRow();
 		final HtmlTableCell labelCell = questionRow.createCell(CellType.HEADER);
 
-		labelCell.setBody(new HtmlText(inquiryQuestion.getInquiryQuestion().getLabel()
+		labelCell.setBody(new HtmlText(getFinalMLString(inquiryQuestion.getInquiryQuestion().getLabel(),
+			questionConditionValues)
 			+ getQuestionRequiredIndication(inquiryQuestion.getInquiryQuestion())
 			+ getQuestionToolTip(inquiryQuestion.getInquiryQuestion().getToolTip()), false));
 		labelCell.addClass("width300px brightccc");
@@ -138,19 +152,13 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 		} else if (inquiryQuestion.getInquiryQuestion() instanceof InquiryCheckBoxQuestion) {
 
 		    newContext.setLayout("inquiry-checkbox-question");
-		    // metaSlot.setLayout("inquiries-answer-checkbox");
-
 		    newContext.setProperties(metaSlot.getProperties());
 
 		    formComponent = (HtmlFormComponent) kit.render(newContext, metaSlot.getObject(), metaSlot.getType());
 
 		    final HtmlTableCell cell = questionRow.createCell();
-		    // cell.setColspan(block.getHeader().getScaleHeadersCount());
 		    cell.setBody(formComponent);
 		    cell.setClasses("aleft");
-		    //		if (scaleHeadersCount > 1 && inquiriesQuestion.getAutofit()) {
-		    //		    questionRow.createCell().setColspan(scaleHeadersCount - 1);
-		    //		}
 		}
 
 		formComponent.bind(metaSlot);
@@ -159,6 +167,17 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 
 	    getInputContext().getForm().getCancelButton().setVisible(false);
 	    return mainTable;
+	}
+
+	private String getFinalMLString(MultiLanguageString label, String[] conditionValues) {
+	    String text = label.toString();
+	    if (conditionValues != null) {
+		text = text.replace(ECTSVisibleCondition.UC_ECTS_MARKER,
+			conditionValues[ECTSVisibleCondition.UC_ECTS_MARKER_INDEX]);
+		text = text.replace(ECTSVisibleCondition.CALCULATED_ECTS_MARKER,
+			conditionValues[ECTSVisibleCondition.CALCULATED_ECTS_MARKER_INDEX]);
+	    }
+	    return text;
 	}
 
 	private void applyStyles(final HtmlTableRow questionRow) {
@@ -190,14 +209,14 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 	}
 
 	private void createHeaderRow(final InquiryQuestionHeader inquiryQuestionHeader, final HtmlTable mainTable,
-		boolean required) {
+		boolean required, String[] conditionValues) {
 	    final HtmlTableRow headerRow = mainTable.createRow();
 
 	    final HtmlTableCell firstHeaderCell = headerRow.createCell(CellType.HEADER);
 
 	    StringBuilder headerTitle = new StringBuilder();
 	    if (inquiryQuestionHeader.getTitle() != null) {
-		headerTitle.append(inquiryQuestionHeader.getTitle().toString());
+		headerTitle.append(getFinalMLString(inquiryQuestionHeader.getTitle(), conditionValues));
 		if (required) {
 		    headerTitle.append("<span class=\"required\"> *</span>");
 		}

@@ -27,20 +27,22 @@ public class StudentTeacherInquiryBean implements Serializable {
 	    final ShiftType shiftType, StudentInquiryTemplate studentTeacherInquiryTemplate) {
 	setTeacherInquiryBlocks(new TreeSet<InquiryBlockDTO>(new BeanComparator("inquiryBlock.blockOrder")));
 	for (InquiryBlock inquiryBlock : studentTeacherInquiryTemplate.getInquiryBlocksSet()) {
-	    getTeacherInquiryBlocks().add(new InquiryBlockDTO(inquiryBlock));
+	    getTeacherInquiryBlocks().add(new InquiryBlockDTO(inquiryBlock, null));
 	}
 	setExecutionCourse(executionCourse);
 	setShiftType(shiftType);
 	setTeacherDTO(teacherDTO);
     }
 
-    public boolean validateTeacherInquiry() {
+    public String validateTeacherInquiry() {
+	String validationResult = null;
 	for (InquiryBlockDTO inquiryBlockDTO : getTeacherInquiryBlocks()) {
-	    if (!inquiryBlockDTO.validate()) {
-		return false;
+	    validationResult = inquiryBlockDTO.validate();
+	    if (!Boolean.valueOf(validationResult)) {
+		return validationResult;
 	    }
 	}
-	return true;
+	return Boolean.toString(true);
     }
 
     public boolean isInquiryFilledIn() {
