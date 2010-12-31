@@ -8,8 +8,10 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.student.StudentDataByExecutionYear;
+import net.sourceforge.fenixedu.domain.student.StudentDataShareAuthorization;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
+
+import org.apache.commons.lang.StringUtils;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -18,9 +20,9 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
 @SuppressWarnings("serial")
 public class RegistrationWithStateForExecutionYearBean implements Serializable {
 
-    private Registration registration;
+    private final Registration registration;
 
-    private ExecutionYear executionYear;
+    private final ExecutionYear executionYear;
 
     private RegistrationStateType registrationState;
 
@@ -30,7 +32,8 @@ public class RegistrationWithStateForExecutionYearBean implements Serializable {
 	this.executionYear = executionYear;
     }
 
-    public RegistrationWithStateForExecutionYearBean(Registration registration, RegistrationStateType registrationState, ExecutionYear executionYear) {
+    public RegistrationWithStateForExecutionYearBean(Registration registration, RegistrationStateType registrationState,
+	    ExecutionYear executionYear) {
 	this.registration = registration;
 	this.registrationState = registrationState;
 	this.executionYear = executionYear;
@@ -54,9 +57,9 @@ public class RegistrationWithStateForExecutionYearBean implements Serializable {
     }
 
     public String getPersonalDataAuthorization() {
-	final StudentDataByExecutionYear info = getStudent().getStudentDataByExecutionYear(getExecutionYear());
-	return info != null && info.getPersonalDataAuthorization() != null ? info.getPersonalDataAuthorization().getDescription()
-		: "";
+	StudentDataShareAuthorization dataAccess = getStudent().getPersonalDataAuthorizationAt(
+		getExecutionYear().getEndDateYearMonthDay().toDateTimeAtMidnight());
+	return dataAccess != null ? dataAccess.getAuthorizationChoice().getDescription() : StringUtils.EMPTY;
     }
 
 }

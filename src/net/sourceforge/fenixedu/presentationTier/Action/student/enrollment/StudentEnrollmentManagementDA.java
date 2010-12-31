@@ -33,7 +33,7 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
 	final Student student = getLoggedStudent(request);
-	if (!student.hasPersonDataAuthorizationChoiseForCurrentExecutionYear()) {
+	if (!student.hasFilledAuthorizationInformationInCurrentExecutionYear()) {
 	    request.setAttribute("student", student);
 	    return mapping.findForward("choosePersonalDataAuthorizationChoice");
 	}
@@ -202,7 +202,7 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 	final CycleEnrolmentBean cycleEnrolmentBean = getCycleEnrolmentBeanFromViewState();
 
 	try {
-	    final Registration registration = (Registration) EnrolInAffinityCycle.run(getLoggedPerson(request),
+	    final Registration registration = EnrolInAffinityCycle.run(getLoggedPerson(request),
 		    cycleEnrolmentBean.getStudentCurricularPlan(), cycleEnrolmentBean.getCycleCourseGroupToEnrol(),
 		    cycleEnrolmentBean.getExecutionPeriod());
 

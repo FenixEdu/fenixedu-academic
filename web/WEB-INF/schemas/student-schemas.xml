@@ -177,10 +177,6 @@
 	</slot>
 </schema>
 
-<schema name="Student.editPersonalDataAuthorizationChoiceForCurrentExecutionYear" type="net.sourceforge.fenixedu.domain.student.Student" bundle="APPLICATION_RESOURCES">
-	<slot name="personalDataAuthorizationForCurrentExecutionYear" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-</schema>
-
 <schema name="student.thesis.details" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
     <slot name="title"/>
     <slot name="orientation" layout="flowLayout" key="label.thesis.orientation">

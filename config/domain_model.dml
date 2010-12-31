@@ -5325,8 +5325,12 @@ class DomainObject {
     }
 
     class student.StudentDataByExecutionYear extends DomainObject {
-        StudentPersonalDataAuthorizationChoice personalDataAuthorization;
         Boolean workingStudent;
+    }
+    
+    class student.StudentDataShareAuthorization {
+    	StudentPersonalDataAuthorizationChoice authorizationChoice (REQUIRED);
+    	DateTime since (REQUIRED);
     }
 
     class student.StudentStatute extends DomainObject {
@@ -15808,6 +15812,15 @@ relation StudentDataByExecutionYearStudent {
         multiplicity *;
     }
     student.Student playsRole student;
+}
+
+relation StudentDataShareAuthorizations {
+    student.StudentDataShareAuthorization playsRole studentDataShareAuthorization {
+        multiplicity *;
+    }
+    student.Student playsRole student {
+    	multiplicity 1;
+    }
 }
 
 relation StudentDistributedTestLogs {

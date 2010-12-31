@@ -79,6 +79,7 @@ import net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.Predicate;
+import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -369,19 +370,35 @@ public class Student extends Student_Base {
 	getActualExecutionYearStudentData().setWorkingStudent(true);
     }
 
-    public StudentPersonalDataAuthorizationChoice getPersonalDataAuthorizationForCurrentExecutionYear() {
-	return (getActualExecutionYearStudentData() == null) ? null : getActualExecutionYearStudentData()
-		.getPersonalDataAuthorization();
+    public StudentPersonalDataAuthorizationChoice getPersonalDataAuthorization() {
+	return getActivePersonalDataAuthorization() == null ? null : getActivePersonalDataAuthorization()
+		.getAuthorizationChoice();
     }
 
-    public boolean hasPersonDataAuthorizationChoiseForCurrentExecutionYear() {
-	return getPersonalDataAuthorizationForCurrentExecutionYear() != null;
+    public void setPersonalDataAuthorization(StudentPersonalDataAuthorizationChoice authorization) {
+	new StudentDataShareAuthorization(this, authorization);
     }
 
-    public void setPersonalDataAuthorizationForCurrentExecutionYear(
-	    final StudentPersonalDataAuthorizationChoice personalDataAuthorization) {
-	createCurrentYearStudentData();
-	getActualExecutionYearStudentData().setPersonalDataAuthorization(personalDataAuthorization);
+    public boolean hasFilledAuthorizationInformationInCurrentExecutionYear() {
+	return getActivePersonalDataAuthorization() != null
+		&& getActivePersonalDataAuthorization().getSince().isAfter(
+			ExecutionYear.readCurrentExecutionYear().getBeginDateYearMonthDay().toDateTimeAtMidnight());
+    }
+
+    public StudentDataShareAuthorization getActivePersonalDataAuthorization() {
+	return getPersonalDataAuthorizationAt(new DateTime());
+    }
+
+    public StudentDataShareAuthorization getPersonalDataAuthorizationAt(DateTime when) {
+	StudentDataShareAuthorization target = null;
+	for (StudentDataShareAuthorization authorization : getStudentDataShareAuthorizationSet()) {
+	    if (authorization.getSince().isBefore(when)) {
+		if (target == null || authorization.getSince().isAfter(target.getSince())) {
+		    target = authorization;
+		}
+	    }
+	}
+	return target;
     }
 
     private void createCurrentYearStudentData() {
@@ -785,8 +802,8 @@ public class Student extends Student_Base {
 	    for (StudentTestQuestion studentTestQuestion : registration.getStudentTestsQuestions()) {
 		if (studentTestQuestion.getDistributedTest().getTestScope().getClassName()
 			.equals(ExecutionCourse.class.getName())
-			&& studentTestQuestion.getDistributedTest().getTestScope().getKeyClass().equals(
-				executionCourse.getIdInternal())) {
+			&& studentTestQuestion.getDistributedTest().getTestScope().getKeyClass()
+				.equals(executionCourse.getIdInternal())) {
 		    Set<DistributedTest> tests = result.get(registration);
 		    if (tests == null) {
 			tests = new HashSet<DistributedTest>();
@@ -1074,8 +1091,8 @@ public class Student extends Student_Base {
 	final List<Registration> result = new ArrayList<Registration>();
 	for (final Registration registration : super.getRegistrations()) {
 	    if (registration.isTransition()
-		    && coordinator.isCoordinatorFor(registration.getLastDegreeCurricularPlan(), ExecutionYear
-			    .readCurrentExecutionYear())) {
+		    && coordinator.isCoordinatorFor(registration.getLastDegreeCurricularPlan(),
+			    ExecutionYear.readCurrentExecutionYear())) {
 		result.add(registration);
 	    }
 	}
@@ -1544,8 +1561,10 @@ public class Student extends Student_Base {
 	    final Enrolment enrolment) {
 	final ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(executionSemester);
 	if (executionCourse != null && !coursesToAnswer.containsKey(executionCourse)) {
-	    coursesToAnswer.put(executionCourse, new StudentInquiryRegistry(executionCourse, executionSemester, enrolment
-		    .getCurricularCourse(), registration));
+	    coursesToAnswer
+		    .put(executionCourse,
+			    new StudentInquiryRegistry(executionCourse, executionSemester, enrolment.getCurricularCourse(),
+				    registration));
 	}
     }
 
@@ -1769,8 +1788,8 @@ public class Student extends Student_Base {
 	    for (final Attends attends : registration.getAssociatedAttendsSet()) {
 		if (attends.isFor(executionCourse)) {
 		    if (result != null) {
-			throw new DomainException("error.found.multiple.attends.for.student.in.execution.course", executionCourse
-				.getNome(), executionCourse.getExecutionPeriod().getQualifiedName());
+			throw new DomainException("error.found.multiple.attends.for.student.in.execution.course",
+				executionCourse.getNome(), executionCourse.getExecutionPeriod().getQualifiedName());
 		    }
 		    result = attends;
 		}

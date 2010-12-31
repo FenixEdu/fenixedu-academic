@@ -5,7 +5,6 @@ import java.util.Comparator;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice;
 
 /**
  * 
@@ -15,6 +14,7 @@ import net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice;
 public class StudentDataByExecutionYear extends StudentDataByExecutionYear_Base {
 
     static final public Comparator<StudentDataByExecutionYear> COMPARATOR_BY_EXECUTION_YEAR = new Comparator<StudentDataByExecutionYear>() {
+	@Override
 	public int compare(StudentDataByExecutionYear o1, StudentDataByExecutionYear o2) {
 	    return o1.getExecutionYear().compareTo(o2.getExecutionYear());
 	}
@@ -45,12 +45,6 @@ public class StudentDataByExecutionYear extends StudentDataByExecutionYear_Base 
 
 	setStudent(student);
 	setExecutionYear(executionYear);
-    }
-
-    public StudentDataByExecutionYear(final Student student, final ExecutionYear executionYear,
-	    final StudentPersonalDataAuthorizationChoice choice) {
-	this(student, executionYear);
-	setPersonalDataAuthorization(choice);
     }
 
     private void checkParameters(final Student student, final ExecutionYear executionYear) {

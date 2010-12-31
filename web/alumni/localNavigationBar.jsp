@@ -21,6 +21,11 @@
 				<bean:message key="link.search.alumni" bundle="ALUMNI_RESOURCES" />
 			</html:link>
 		</li>
+        <li>
+            <html:link page="/studentDataShareAuthorization.do?method=manageAuthorizations">
+                <bean:message key="title.student.dataShareAuthorizations.short" bundle="STUDENT_RESOURCES" />
+            </html:link>
+        </li>
 
 
 		<li class="navheader">

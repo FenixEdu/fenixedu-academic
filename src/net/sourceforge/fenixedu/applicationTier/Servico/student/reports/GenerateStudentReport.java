@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.student.StudentDataByExecutionYear;
+import net.sourceforge.fenixedu.domain.student.StudentDataShareAuthorization;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice;
@@ -140,13 +140,9 @@ public class GenerateStudentReport implements Serializable {
 	final Person person = student.getPerson();
 	final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
 	final Degree degree = degreeCurricularPlan.getDegree();
-	final StudentDataByExecutionYear studentDataByExecutionYear = student.getStudentDataByExecutionYear(executionYear);
 	final Branch branch = studentCurricularPlan.getBranch();
-	final StudentPersonalDataAuthorizationChoice studentPersonalDataAuthorizationChoice = studentDataByExecutionYear == null ? null
-		: studentDataByExecutionYear.getPersonalDataAuthorization();
-	final String spdac = studentPersonalDataAuthorizationChoice == null ? StudentPersonalDataAuthorizationChoice.NO_END
-		.getQualifiedName() : studentPersonalDataAuthorizationChoice.getQualifiedName();
-
+	StudentDataShareAuthorization dataAccess = student.getPersonalDataAuthorizationAt(executionYear.getEndDateYearMonthDay()
+		.toDateTimeAtMidnight());
 	final Row row = spreadsheet.addRow();
 	row.setCell(student.getNumber().toString());
 	row.setCell(person.getName());
@@ -167,7 +163,8 @@ public class GenerateStudentReport implements Serializable {
 	row.setCell(person.getDefaultPhoneNumber());
 	row.setCell(person.getDefaultMobilePhoneNumber());
 	row.setCell(person.getEmail());
-	row.setCell(resourceBundle.getString(spdac));
+	row.setCell(dataAccess != null ? dataAccess.getAuthorizationChoice().getDescription()
+		: StudentPersonalDataAuthorizationChoice.NO_END.getDescription());
     }
 
 }

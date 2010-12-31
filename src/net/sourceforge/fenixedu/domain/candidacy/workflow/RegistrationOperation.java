@@ -113,8 +113,7 @@ public class RegistrationOperation extends CandidacyOperation {
     protected Registration createRegistration() {
 	final Registration registration = new Registration(getStudentCandidacy().getPerson(), getStudentCandidacy());
 
-	registration.getStudent().setPersonalDataAuthorizationForCurrentExecutionYear(
-		getStudentCandidacy().getStudentPersonalDataAuthorizationChoice());
+	registration.getStudent().setPersonalDataAuthorization(getStudentCandidacy().getStudentPersonalDataAuthorizationChoice());
 
 	if (getStudentCandidacy().getApplyForResidence()) {
 	    registration.getStudent().setResidenceCandidacyForCurrentExecutionYear(
