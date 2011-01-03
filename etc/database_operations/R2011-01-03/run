@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter table QuestionCondition" alterTableQuestionCondition.sql
+execute "StudentDataShareAuthorization " studentDataShareAuthorization.sql
