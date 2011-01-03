@@ -69,6 +69,9 @@ import net.sourceforge.fenixedu.domain.documents.AnnualIRSDeclarationDocument;
 import net.sourceforge.fenixedu.domain.documents.GeneratedDocument;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.homepage.Homepage;
 import net.sourceforge.fenixedu.domain.oldInquiries.teacher.InquiryResponsePeriodType;
@@ -3626,6 +3629,37 @@ public class Person extends Person_Base {
 
     public String readAllEmployeeInformation() {
 	return readAllInformation(RoleType.EMPLOYEE, RoleType.RESEARCHER, RoleType.TEACHER);
+    }
+
+    public String readAllGrantOwnerInformation() {
+	final StringBuilder result = new StringBuilder();
+	final YearMonthDay today = new YearMonthDay();
+	for (final GrantOwner grantOwner : RootDomainObject.getInstance().getGrantOwnersSet()) {
+	    for (final GrantContract grantContract : grantOwner.getGrantContracts()) {
+		for (final GrantContractRegime grantContractRegime : grantContract.getContractRegimes()) {
+		    if (!today.isBefore(grantContractRegime.getDateBeginContractYearMonthDay())
+			    && grantContractRegime.getDateEndContractYearMonthDay() != null
+			    && !today.isAfter(grantContractRegime.getDateEndContractYearMonthDay())) {
+			final GrantCostCenter grantCostCenter = grantContract.getGrantCostCenter();
+			final Person person = grantOwner.getPerson();
+			if (grantCostCenter != null && person != null) {
+			    final String costCenterDesignation = grantCostCenter.getNumber();
+			    if (costCenterDesignation != null && !costCenterDesignation.isEmpty()) {
+				if (result.length() > 0) {
+				    result.append('|');
+				}
+				result.append(person.getUsername());
+				result.append(':');
+				result.append(RoleType.GRANT_OWNER.name());
+				result.append(':');
+				result.append(costCenterDesignation);
+			    }
+			}
+		    }
+		}
+	    }
+	}
+	return result.toString();
     }
 
     protected static String readAllInformation(final RoleType roleType, final RoleType... exclusionRoleTypes) {
