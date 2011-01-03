@@ -1,10 +1,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
 import java.util.Collections;
+import java.util.Iterator;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.GenericEvent;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationComment;
 import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.util.email.Message;
@@ -43,7 +45,7 @@ public class ClosePunctualRoomsOccupationRequest extends FenixService {
 	    body += "\n\t" + genericEvent.getGanttDiagramEventPeriod() + genericEvent.getGanttDiagramEventObservations();
 	}
 	if (roomsReserveRequest.getGenericEvents().isEmpty()) {
-	    body += "\n-";
+	    body += "\n" + messages.getMessage("label.rooms.reserve.periods.none");
 	}
 	body += "\n\n" + messages.getMessage("message.room.reservation.description") + "\n";
 	if (roomsReserveRequest.getDescription() != null) {
@@ -51,8 +53,23 @@ public class ClosePunctualRoomsOccupationRequest extends FenixService {
 	} else {
 	    body += "-";
 	}
-	sendMessage(roomsReserveRequest.getRequestor().getDefaultEmailAddressValue(), messages
-		.getMessage("message.room.reservation"), body);
+	PunctualRoomsOccupationComment punctualRoomsOccupationComment = getLastComment(roomsReserveRequest);
+
+	body += "\n\n" + messages.getMessage("message.room.reservation.last.comment") + "\n";
+	
+	body += punctualRoomsOccupationComment.getDescription();
+
+	sendMessage(roomsReserveRequest.getRequestor().getDefaultEmailAddressValue(),
+		messages.getMessage("message.room.reservation"), body);
+    }
+
+    private static PunctualRoomsOccupationComment getLastComment(PunctualRoomsOccupationRequest roomsReserveRequest) {
+	PunctualRoomsOccupationComment last = null;
+	for (Iterator<PunctualRoomsOccupationComment> iterator = roomsReserveRequest.getCommentsWithoutFirstCommentOrderByDate()
+		.iterator(); iterator.hasNext();) {
+	    last = iterator.next();
+	}
+	return last;
     }
 
     @Service
