@@ -54,11 +54,15 @@ public class ClosePunctualRoomsOccupationRequest extends FenixService {
 	    body += "-";
 	}
 	PunctualRoomsOccupationComment punctualRoomsOccupationComment = getLastComment(roomsReserveRequest);
-
-	body += "\n\n" + messages.getMessage("message.room.reservation.last.comment") + "\n";
 	
-	body += punctualRoomsOccupationComment.getDescription();
+	body += "\n\n" + messages.getMessage("message.room.reservation.last.comment") + "\n";
 
+	if (punctualRoomsOccupationComment != null){
+	    body += punctualRoomsOccupationComment.getDescription();
+	}else{
+	    body += "-";
+	}
+	
 	sendMessage(roomsReserveRequest.getRequestor().getDefaultEmailAddressValue(),
 		messages.getMessage("message.room.reservation"), body);
     }
