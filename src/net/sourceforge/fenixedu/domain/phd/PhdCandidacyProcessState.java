@@ -61,4 +61,9 @@ public class PhdCandidacyProcessState extends PhdCandidacyProcessState_Base {
 	return result;
     }
 
+    @Override
+    public boolean isLast() {
+	return getProcess().getMostRecentState() == this;
+    }
+
 }

@@ -39,4 +39,6 @@ abstract public class PhdProcessState extends PhdProcessState_Base {
     }
 
     abstract public PhdProcessStateType getType();
+
+    abstract public boolean isLast();
 }

@@ -42,4 +42,9 @@ public class PublicPresentationSeminarState extends PublicPresentationSeminarSta
 	removeProcess();
 	super.disconnect();
     }
+
+    @Override
+    public boolean isLast() {
+	return getProcess().getMostRecentState() == this;
+    }
 }

@@ -36,4 +36,9 @@ public class PhdThesisProcessState extends PhdThesisProcessState_Base {
 	super.disconnect();
     }
 
+    @Override
+    public boolean isLast() {
+	return getProcess().getMostRecentState() == this;
+    }
+
 }

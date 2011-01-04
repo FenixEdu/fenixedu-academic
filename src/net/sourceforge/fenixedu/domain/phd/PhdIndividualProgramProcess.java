@@ -151,8 +151,9 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	activities.add(new ActivatePhdProgramProcessInThesisDiscussionState());
 
 	activities.add(new ConfigurePhdIndividualProgramProcess());
-
-	activities.add(new SendPhdEmail());
+	activities.add(new RemoveLastStateOnPhdIndividualProgramProcess());
+	
+	activities.add(new SendPhdEmail());	
     }
 
     @StartActivity
@@ -1141,7 +1142,6 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	}
 
     }
-
     static public class SendPhdEmail extends PhdActivity {
 
 	@Override
@@ -1183,6 +1183,29 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     }
 
+
+    static public class RemoveLastStateOnPhdIndividualProgramProcess extends PhdActivity {
+
+	@Override
+	public void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	protected void processPreConditions(final PhdIndividualProgramProcess process, final IUserView userView) {
+	}
+
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
+		Object object) {
+	    process.removeLastState();
+
+	    return process;
+	}
+
+    }
+
     private PhdIndividualProgramProcess(final PhdProgramCandidacyProcessBean bean, final Person person) {
 	super();
 
@@ -1211,6 +1234,14 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	}
 
 	updatePhdParticipantsWithCoordinators();
+    }
+
+    public void removeLastState() {
+	if (getStatesCount() == 1) {
+	    throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.has.only.one.state");
+	}
+
+	getMostRecentState().delete();
     }
 
     /*

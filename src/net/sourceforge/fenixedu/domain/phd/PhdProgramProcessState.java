@@ -67,4 +67,15 @@ public class PhdProgramProcessState extends PhdProgramProcessState_Base {
     public boolean isSuspended() {
 	return getType().equals(PhdIndividualProgramProcessState.SUSPENDED);
     }
+
+    @Override
+    public void delete() {
+	removeProcess();
+	super.delete();
+    }
+
+    @Override
+    public boolean isLast() {
+	return getProcess().getMostRecentState() == this;
+    }
 }

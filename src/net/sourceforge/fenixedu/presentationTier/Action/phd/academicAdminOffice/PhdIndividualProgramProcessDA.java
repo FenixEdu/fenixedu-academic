@@ -55,6 +55,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditStudy
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditWhenStartedStudies;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.FlunkedPhdProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.NotAdmittedPhdProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RemoveLastStateOnPhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RequestPublicThesisPresentation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.SendPhdEmail;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.SuspendPhdProgramProcess;
@@ -1198,4 +1199,12 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
     }
 
     // End of Phd Emails Management
+
+    public ActionForward removeLastState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final PhdIndividualProgramProcess process = getProcess(request);
+
+	ExecuteProcessActivity.run(process, RemoveLastStateOnPhdIndividualProgramProcess.class, null);
+	return managePhdIndividualProgramProcessState(mapping, form, request, response);
+    }
 }

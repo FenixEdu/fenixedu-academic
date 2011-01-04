@@ -55,6 +55,12 @@
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thlight mtop15" />
 		<fr:property name="sortBy" value="whenCreated=desc" />
+
+		<fr:link 	name="removeState" 
+					link="<%= String.format("/phdIndividualProgramProcess.do?method=removeLastState&processId=%s", processId)  %>" 
+					label="link.net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState.removeState,PHD_RESOURCES"
+					condition="last" 
+					confirmation="message.net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState.removeState,PHD_RESOURCES"/>
 	</fr:layout>
 </fr:view>
 

@@ -5,11 +5,11 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class PhdCandidacyFeedbackState extends PhdCandidacyFeedbackState_Base {
-    
+
     private PhdCandidacyFeedbackState() {
-        super();
+	super();
     }
-    
+
     public PhdCandidacyFeedbackState(final PhdCandidacyFeedbackRequestProcess process, final PhdCandidacyFeedbackStateType type,
 	    final Person person) {
 	this(process, type, person, null);
@@ -21,7 +21,8 @@ public class PhdCandidacyFeedbackState extends PhdCandidacyFeedbackState_Base {
 	init(process, type, person, remarks);
     }
 
-    private void init(PhdCandidacyFeedbackRequestProcess process, PhdCandidacyFeedbackStateType type, Person person, String remarks) {
+    private void init(PhdCandidacyFeedbackRequestProcess process, PhdCandidacyFeedbackStateType type, Person person,
+	    String remarks) {
 	super.init(person, remarks);
 
 	check(process, type);
@@ -60,4 +61,8 @@ public class PhdCandidacyFeedbackState extends PhdCandidacyFeedbackState_Base {
 	return result;
     }
 
+    @Override
+    public boolean isLast() {
+	return getProcess().getMostRecentState() == this;
+    }
 }

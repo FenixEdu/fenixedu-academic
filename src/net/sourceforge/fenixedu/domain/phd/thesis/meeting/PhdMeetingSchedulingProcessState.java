@@ -4,14 +4,13 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class PhdMeetingSchedulingProcessState extends PhdMeetingSchedulingProcessState_Base {
-    
-    public  PhdMeetingSchedulingProcessState() {
-        super();
+
+    public PhdMeetingSchedulingProcessState() {
+	super();
     }
-    
+
     PhdMeetingSchedulingProcessState(PhdMeetingSchedulingProcess process, PhdMeetingSchedulingProcessStateType type,
-	    Person person,
-	    String remarks) {
+	    Person person, String remarks) {
 	this();
 
 	super.init(person, remarks);
@@ -37,5 +36,10 @@ public class PhdMeetingSchedulingProcessState extends PhdMeetingSchedulingProces
 	removeMeetingProcess();
 	super.disconnect();
     }
-    
+
+    @Override
+    public boolean isLast() {
+	return false;
+    }
+
 }
