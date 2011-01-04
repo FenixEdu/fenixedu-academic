@@ -199,13 +199,29 @@ public class Announcement extends Announcement_Base {
     }
 
     private boolean checkPublicationDate(int year, int month) {
-	boolean result = true;
-	result = result
-		&& (!hasPublicationEnd() || (year <= getPublicationEnd().getYear() && month <= getPublicationEnd()
-			.getMonthOfYear()));
+	if (!hasPublicationBegin() && !hasPublicationEnd()) {
+	    return true;
+	}
 
-	result = result
-		&& (!hasPublicationBegin() || (getPublicationBegin().getYear() <= year && getPublicationBegin().getMonthOfYear() <= month));
+	int endYear = year;
+	int endMonth = month + 1;
+
+	if (endMonth == 12) {
+	    endYear = year + 1;
+	    endMonth = 1;
+	}
+
+	DateTime beginDateTime = new DateTime(year, month, 1, 0, 0, 0, 0);
+	DateTime endDateTime = new DateTime(endYear, endMonth, 1, 0, 0, 0, 0).minusSeconds(1);
+
+	boolean result = true;
+	if (hasPublicationBegin()) {
+	    result = result && !endDateTime.isBefore(getPublicationBegin());
+	}
+
+	if (hasPublicationEnd()) {
+	    result = result && !beginDateTime.isAfter(getPublicationEnd());
+	}
 
 	return result;
     }
