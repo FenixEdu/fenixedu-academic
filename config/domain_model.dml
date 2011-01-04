@@ -8153,6 +8153,13 @@ relation PhdIndividualProgramProcessPhdProcessState {
     }
 }
 
+relation PhdIndividualProgramProcessMessage {
+	phd.PhdIndividualProgramProcess playsRole process;
+	util.email.Message playsRole messages {
+		multiplicity *;
+	}
+}
+
 relation PhdProgramPhdProgramUnit {
     phd.PhdProgram playsRole phdProgram;
     phd.PhdProgramUnit playsRole phdProgramUnit;

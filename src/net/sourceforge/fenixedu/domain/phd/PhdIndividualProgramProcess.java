@@ -26,6 +26,8 @@ import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.QualificationBean;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
@@ -35,6 +37,7 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
+import net.sourceforge.fenixedu.domain.phd.alert.AlertService.AlertMessage;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlert;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlert;
@@ -43,7 +46,6 @@ import net.sourceforge.fenixedu.domain.phd.alert.PhdFinalProofRequestAlert;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdPublicPresentationSeminarAlert;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdRegistrationFormalizationAlert;
 import net.sourceforge.fenixedu.domain.phd.alert.PublicPhdMissingCandidacyValidationAlert;
-import net.sourceforge.fenixedu.domain.phd.alert.AlertService.AlertMessage;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
@@ -56,11 +58,13 @@ import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.util.email.Message;
+import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
+import net.sourceforge.fenixedu.domain.util.email.UnitBasedSender;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
@@ -147,6 +151,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	activities.add(new ActivatePhdProgramProcessInThesisDiscussionState());
 
 	activities.add(new ConfigurePhdIndividualProgramProcess());
+
+	activities.add(new SendPhdEmail());
     }
 
     @StartActivity
@@ -1131,6 +1137,47 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	    PhdConfigurationIndividualProgramProcessBean bean = (PhdConfigurationIndividualProgramProcessBean) object;
 
 	    process.getPhdConfigurationIndividualProgramProcess().configure(bean);
+	    return process;
+	}
+
+    }
+
+    static public class SendPhdEmail extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
+		Object object) {
+
+	    final PhdEmailBean bean = (PhdEmailBean) object;
+
+	    final Sender sender = Sender.fromExternalId("4264902527129");
+
+	    List<UnitBasedSender> listSenders = AdministrativeOffice
+		    .readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE).getUnit().getUnitBasedSender();
+
+	    for (Sender s : AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE).getUnit()
+		    .getUnitBasedSender()) {
+		s.getConcreteReplyTos();
+	    }
+
+	    bean.setSender(sender);
+
+	    String validate = bean.validate();
+	    if (validate != null) {
+		throw new DomainException(validate);
+	    }
+
+	    final Message email = bean.send(process);
+	    email.setProcess(process);
+	    email.setPerson(AccessControl.getPerson());
+
 	    return process;
 	}
 

@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add Message to a PhdIndividualProgramProcess" addMessageToPhdIndividualProgramProcess.sql

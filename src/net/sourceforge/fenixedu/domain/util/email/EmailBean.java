@@ -8,6 +8,9 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.util.StringUtils;
+
+import org.joda.time.DateTime;
+
 import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.EMail;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -19,8 +22,16 @@ public class EmailBean implements Serializable {
     private String tos, ccs, bccs;
     private String subject, message;
     private Set<ReplyTo> replyTos;
+    private DateTime createdDate;
 
     public EmailBean() {
+    }
+
+    public EmailBean(Message message) {
+	this.subject = message.getSubject();
+	this.message = message.getBody();
+	this.bccs = message.getBccs();
+	this.createdDate = message.getCreated();
     }
 
     public Sender getSender() {
@@ -142,6 +153,14 @@ public class EmailBean implements Serializable {
 	}
 
 	return null;
+    }
+
+    public DateTime getCreatedDate() {
+	return createdDate;
+    }
+
+    public void setCreatedDate(DateTime createdDate) {
+	this.createdDate = createdDate;
     }
 
     @Service

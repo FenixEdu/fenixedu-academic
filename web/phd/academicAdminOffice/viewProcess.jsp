@@ -169,6 +169,12 @@
 			
 			</phd:activityAvailable>
 			
+			<!--  <li>
+				<html:link action="/phdIndividualProgramProcess.do?method=preparePhdEmailsManagement" paramId="processId" paramName="process" paramProperty="externalId">
+					<bean:message bundle="PHD_RESOURCES" key="label.phd.manage.emails" />
+				</html:link>
+			</li>-->
+
 			<br/>
 			
 			<phd:activityAvailable process="<%= process %>" activity="<%= ConfigurePhdIndividualProgramProcess.class %>">

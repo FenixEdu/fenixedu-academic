@@ -27,15 +27,10 @@ import net.sourceforge.fenixedu.domain.QualificationBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.ManageEnrolmentsBean;
 import net.sourceforge.fenixedu.domain.phd.PhdConfigurationIndividualProgramProcessBean;
+import net.sourceforge.fenixedu.domain.phd.PhdEmailBean;
+import net.sourceforge.fenixedu.domain.phd.PhdEmailBean.PhdEmailParticipantsGroup;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
-import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
-import net.sourceforge.fenixedu.domain.phd.PhdStudyPlanBean;
-import net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntry;
-import net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntryBean;
-import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.ActivatePhdProgramProcessInCandidacyState;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.ActivatePhdProgramProcessInThesisDiscussionState;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.ActivatePhdProgramProcessInWorkDevelopmentState;
@@ -61,11 +56,20 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditWhenS
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.FlunkedPhdProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.NotAdmittedPhdProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RequestPublicThesisPresentation;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.SendPhdEmail;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.SuspendPhdProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
+import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
+import net.sourceforge.fenixedu.domain.phd.PhdStudyPlanBean;
+import net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntry;
+import net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntryBean;
+import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlert;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlertBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.RegistrationFormalizationBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
+import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.CommonPhdIndividualProgramProcessDA;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdInactivePredicateContainer;
@@ -142,7 +146,13 @@ import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
 
 	@Forward(name = "editWhenStartedStudies", path = "/phd/academicAdminOffice/editWhenStartedStudies.jsp"),
 
-	@Forward(name = "managePhdIndividualProcessConfiguration", path = "/phd/academicAdminOffice/configuration/managePhdIndividualProcessConfiguration.jsp")
+	@Forward(name = "managePhdIndividualProcessConfiguration", path = "/phd/academicAdminOffice/configuration/managePhdIndividualProcessConfiguration.jsp"),
+
+	@Forward(name = "managePhdIndividualProcessEmails", path = "/phd/academicAdminOffice/viewProcessEmails.jsp"),
+
+	@Forward(name = "sendPhdIndividualProcessEmail", path = "/phd/academicAdminOffice/sendPhdEmail.jsp"),
+
+	@Forward(name = "viewPhdIndividualProcessEmail", path = "/phd/academicAdminOffice/viewPhdEmail.jsp")
 
 })
 public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramProcessDA {
@@ -1059,6 +1069,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 
     // End of Print school registration declaration
 
+    // Phd Configuration Management
     public ActionForward preparePhdConfigurationManagement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	final PhdIndividualProgramProcess process = getProcess(request);
@@ -1085,4 +1096,106 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 	return mapping.findForward("managePhdIndividualProcessConfiguration");
     }
 
+    // End of Phd Configuration Management
+
+    // Phd Emails Management
+    public ActionForward preparePhdEmailsManagement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	return mapping.findForward("managePhdIndividualProcessEmails");
+    }
+
+    public ActionForward prepareSendPhdEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final PhdIndividualProgramProcess process = getProcess(request);
+	final PhdEmailBean emailBean = new PhdEmailBean();
+
+	emailBean.setProcess(process);
+
+	request.setAttribute("emailBean", emailBean);
+
+	return mapping.findForward("sendPhdIndividualProcessEmail");
+    }
+
+    public ActionForward sendPhdEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final PhdIndividualProgramProcess process = getProcess(request);
+	final PhdEmailBean bean = getRenderedObject("emailBean");
+
+	try {
+
+	    ExecuteProcessActivity.run(process, SendPhdEmail.class, bean);
+
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getMessage(), e.getArgs());
+	    return preparePhdEmailsManagement(mapping, form, request, response);
+	}
+
+	return preparePhdEmailsManagement(mapping, form, request, response);
+    }
+
+    public ActionForward sendEmailPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final PhdEmailBean emailBean = getRenderedObject("emailBean");
+
+	if (emailBean.getTemplate() != null) {
+	    emailBean.setSubject(emailBean.getTemplate().getTemplateSubject());
+	    emailBean.setMessage(emailBean.getTemplate().getTemplateBody());
+	}
+	request.setAttribute("emailBean", emailBean);
+
+	RenderUtils.invalidateViewState("emailBean.create");
+	for (PhdEmailParticipantsGroup group : emailBean.getPossibleParticipantsGroups()) {
+	    RenderUtils.invalidateViewState("emailBean.groups.edit." + group.toString());
+	}
+	RenderUtils.invalidateViewState("emailBean.individuals");
+	RenderUtils.invalidateViewState("emailBean.template");
+
+
+	return mapping.findForward("sendPhdIndividualProcessEmail");
+    }
+
+    public ActionForward checkAllParticipantsInGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final PhdEmailBean emailBean = getRenderedObject("emailBean");
+	// getObjectFromViewState
+
+	final String groupName = request.getParameter("groupName");
+	for (PhdEmailParticipantsGroup group : emailBean.getPossibleParticipantsGroups()) {
+	    if (group.getName().equals(groupName)) {
+		emailBean.getSelectedParticipants().addAll(group.getGroupParticipants(emailBean.getProcess()));
+		break;
+	    }
+	}
+
+	request.setAttribute("emailBean", emailBean);
+	RenderUtils.invalidateViewState("emailBean.create");
+	for (PhdEmailParticipantsGroup group : emailBean.getPossibleParticipantsGroups()) {
+	    RenderUtils.invalidateViewState("emailBean.groups.edit." + group.toString());
+	}
+	RenderUtils.invalidateViewState("emailBean.individuals");
+	RenderUtils.invalidateViewState("emailBean.template");
+
+	return mapping.findForward("sendPhdIndividualProcessEmail");
+    }
+    
+    public ActionForward viewPhdEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final PhdIndividualProgramProcess process = getProcess(request);
+	PhdEmailBean bean = new PhdEmailBean(getPhdEmail(request));
+	bean.setProcess(process);
+
+	request.setAttribute("emailBean", bean);
+
+	return mapping.findForward("viewPhdIndividualProcessEmail");
+    }
+
+    private Message getPhdEmail(HttpServletRequest request) {
+	return getDomainObject(request, "phdEmailId");
+    }
+
+    // End of Phd Emails Management
 }

@@ -1516,3 +1516,13 @@
 	<slot name="whenNewSituationOccured" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean.whenNewSituationOccured" />
 	<slot name="justification" required="true" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean.justification" />
 </schema>
+
+<schema name="PhdEmailBean.phdEmail.view" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.PhdEmailBean">
+	<slot name="creator.name" />
+	<slot name="createdDate" layout="year-month"/>
+	<slot name="bccsView" />
+	<slot name="subject">
+		<property name="classes" value="bold"/>
+	</slot>
+	<slot name="message" />
+</schema>
