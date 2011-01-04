@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
@@ -33,6 +34,7 @@ public class FlunkedReportFile extends FlunkedReportFile_Base {
     @Override
     public void renderReport(Spreadsheet spreadsheet) {
 	spreadsheet.setHeader("número aluno");
+	spreadsheet.setHeader("ciclo estudos");
 	setDegreeHeaders(spreadsheet);
 
 	for (final Degree degree : Degree.readNotEmptyDegrees()) {
@@ -51,6 +53,8 @@ public class FlunkedReportFile extends FlunkedReportFile_Base {
 		    if (!states.isEmpty() && states.getLast().getStateType().equals(RegistrationStateType.FLUNKED)) {
 			final Row row = spreadsheet.addRow();
 			row.setCell(registration.getNumber());
+			CycleType cycleType = registration.getCycleType(states.getLast().getExecutionYear());
+			row.setCell(cycleType != null ? cycleType.toString() : "");
 			setDegreeCells(row, degree);
 		    }
 		}
