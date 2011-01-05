@@ -64,7 +64,6 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
-import net.sourceforge.fenixedu.domain.util.email.UnitBasedSender;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
@@ -153,7 +152,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	activities.add(new ConfigurePhdIndividualProgramProcess());
 	activities.add(new RemoveLastStateOnPhdIndividualProgramProcess());
 	
-	activities.add(new SendPhdEmail());	
+	activities.add(new SendPhdEmail());
     }
 
     @StartActivity
@@ -1157,16 +1156,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
 	    final PhdEmailBean bean = (PhdEmailBean) object;
 
-	    final Sender sender = Sender.fromExternalId("4264902527129");
-
-	    List<UnitBasedSender> listSenders = AdministrativeOffice
-		    .readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE).getUnit().getUnitBasedSender();
-
-	    for (Sender s : AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE).getUnit()
-		    .getUnitBasedSender()) {
-		s.getConcreteReplyTos();
-	    }
-
+	    final Sender sender = AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE)
+		    .getUnit().getUnitBasedSender().get(0);
 	    bean.setSender(sender);
 
 	    String validate = bean.validate();
@@ -1182,7 +1173,6 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	}
 
     }
-
 
     static public class RemoveLastStateOnPhdIndividualProgramProcess extends PhdActivity {
 
@@ -1205,7 +1195,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	}
 
     }
-
+    
     private PhdIndividualProgramProcess(final PhdProgramCandidacyProcessBean bean, final Person person) {
 	super();
 
@@ -1243,7 +1233,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
 	getMostRecentState().delete();
     }
-
+    
     /*
      * 
      * TODO: Refactor -> Participants should be shared at PhdProcessesManager

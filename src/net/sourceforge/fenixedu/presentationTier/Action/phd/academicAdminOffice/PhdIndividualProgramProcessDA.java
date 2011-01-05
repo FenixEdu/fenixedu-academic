@@ -1145,6 +1145,11 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 	    emailBean.setSubject(emailBean.getTemplate().getTemplateSubject());
 	    emailBean.setMessage(emailBean.getTemplate().getTemplateBody());
 	}
+	else {
+	    emailBean.setSubject("");
+	    emailBean.setMessage("");
+	}
+
 	request.setAttribute("emailBean", emailBean);
 
 	RenderUtils.invalidateViewState("emailBean.create");

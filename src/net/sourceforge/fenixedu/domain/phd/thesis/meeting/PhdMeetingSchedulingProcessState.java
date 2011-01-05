@@ -39,7 +39,7 @@ public class PhdMeetingSchedulingProcessState extends PhdMeetingSchedulingProces
 
     @Override
     public boolean isLast() {
-	return false;
+	return getMeetingProcess().getMostRecentState() == this;
     }
 
 }
