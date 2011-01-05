@@ -208,6 +208,7 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	<slot name="antiquityDays" key="label.antiquityVacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="ageDays" key="label.ageVacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="accumulatedDays" key="label.accumulatedVacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="imprescriptibleAccumulatedDays" key="label.imprescriptibleAccumulatedDays" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="bonusDays" key="label.bonusVacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="lowTimeVacationsDays" key="label.lowTimeVacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="accumulatedArticle17Days" key="label.article17Vacations" bundle="ASSIDUOUSNESS_RESOURCES"/>

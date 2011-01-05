@@ -18,8 +18,9 @@ public class AssiduousnessVacations extends AssiduousnessVacations_Base {
     protected static final int ART_17_MAXIMUM = 12;
 
     public AssiduousnessVacations(Assiduousness assiduousness, Integer year, Double normalDays, Double normalWithLeavesDiscount,
-	    Double antiquityDays, Double ageDays, Double accumulatedDays, Double bonusDays, Double lowTimeVacationsDays,
-	    Double accumulatedArticle17Days, Double extraWorkDays, Double lastYearExtraWorkDays, DateTime lastModifiedDate) {
+	    Double antiquityDays, Double ageDays, Double accumulatedDays, Double imprescriptibleAccumulatedDays,
+	    Double bonusDays, Double lowTimeVacationsDays, Double accumulatedArticle17Days, Double extraWorkDays,
+	    Double lastYearExtraWorkDays, DateTime lastModifiedDate) {
 	setRootDomainObject(RootDomainObject.getInstance());
 	setAssiduousness(assiduousness);
 	setYear(year);
@@ -28,6 +29,7 @@ public class AssiduousnessVacations extends AssiduousnessVacations_Base {
 	setAntiquityDays(antiquityDays);
 	setAgeDays(ageDays);
 	setAccumulatedDays(accumulatedDays);
+	setImprescriptibleAccumulatedDays(imprescriptibleAccumulatedDays);
 	setBonusDays(bonusDays);
 	setLowTimeVacationsDays(lowTimeVacationsDays);
 	setAccumulatedArticle17Days(accumulatedArticle17Days);
@@ -38,18 +40,20 @@ public class AssiduousnessVacations extends AssiduousnessVacations_Base {
     }
 
     public Double getTotalDays() {
-	return getNormalWithLeavesDiscount() + getAntiquityDays() + getAgeDays() + getAccumulatedDays() + getBonusDays()
-		+ getLowTimeVacationsDays() + getAccumulatedArticle17Days() + getExtraWorkDays() + getLastYearExtraWorkDays();
+	return getNormalWithLeavesDiscount() + getAntiquityDays() + getAgeDays() + getAccumulatedDays()
+		+ getImprescriptibleAccumulatedDays() + getBonusDays() + getLowTimeVacationsDays()
+		+ getAccumulatedArticle17Days() + getExtraWorkDays() + getLastYearExtraWorkDays();
     }
 
     public void edit(Double normalDays, Double normalWithLeavesDiscount, Double antiquityDays, Double ageDays,
-	    Double accumulatedDays, Double bonusDays, Double lowTimeVacationsDays, Double accumulatedArticle17Days,
-	    Double extraWorkDays, Double lastYearExtraWorkDays, DateTime lastModifiedDate) {
+	    Double accumulatedDays, Double imprescriptibleAccumulatedDays, Double bonusDays, Double lowTimeVacationsDays,
+	    Double accumulatedArticle17Days, Double extraWorkDays, Double lastYearExtraWorkDays, DateTime lastModifiedDate) {
 	setNormalDays(normalDays);
 	setNormalWithLeavesDiscount(normalWithLeavesDiscount);
 	setAntiquityDays(antiquityDays);
 	setAgeDays(ageDays);
 	setAccumulatedDays(accumulatedDays);
+	setImprescriptibleAccumulatedDays(imprescriptibleAccumulatedDays);
 	setBonusDays(bonusDays);
 	setLowTimeVacationsDays(lowTimeVacationsDays);
 	setAccumulatedArticle17Days(accumulatedArticle17Days);
