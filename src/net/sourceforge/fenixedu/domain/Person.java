@@ -74,11 +74,11 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.homepage.Homepage;
-import net.sourceforge.fenixedu.domain.oldInquiries.teacher.InquiryResponsePeriodType;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.domain.messaging.ForumSubscription;
 import net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod;
+import net.sourceforge.fenixedu.domain.oldInquiries.teacher.InquiryResponsePeriodType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
@@ -1255,13 +1255,13 @@ public class Person extends Person_Base {
 	    getHomepage().delete();
 	}
 
-	getPersonRoleOperationLog().clear();
-	getGivenRoleOperationLog().clear();
-
 	getPersonRoles().clear();
 	if (hasUser()) {
 	    getUser().delete();
 	}
+
+	getPersonRoleOperationLog().clear();
+	getGivenRoleOperationLog().clear();
 
 	if (hasStudent()) {
 	    getStudent().delete();
@@ -1270,9 +1270,7 @@ public class Person extends Person_Base {
 	    getPersonName().delete();
 	}
 
-	getManageableDepartmentCredits().clear();
 	getBookmarkedBoards().clear();
-	getPersonRoles().clear();
 	getManageableDepartmentCredits().clear();
 	getThesisEvaluationParticipants().clear();
 
