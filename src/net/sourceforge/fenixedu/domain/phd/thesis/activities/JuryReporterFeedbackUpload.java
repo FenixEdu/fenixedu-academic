@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType;
 import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class JuryReporterFeedbackUpload extends PhdThesisActivity {
 
@@ -44,7 +45,7 @@ public class JuryReporterFeedbackUpload extends PhdThesisActivity {
 	for (final PhdProgramDocumentUploadBean documentBean : bean.getDocuments()) {
 	    if (documentBean.hasAnyInformation()) {
 		new PhdThesisReportFeedbackDocument(bean.getJuryElement(), documentBean.getRemarks(), documentBean
-			.getFileContent(), documentBean.getFilename(), null);
+			.getFileContent(), documentBean.getFilename(), AccessControl.getPerson());
 	    }
 	}
 

@@ -3,6 +3,10 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
+<%-- 
+<%@ page import="net.sourceforge.fenixedu.domain.accounting.report." %>
+--%>
+
 <html:xhtml />
 <logic:present role="MANAGER">
 
@@ -10,6 +14,21 @@
 
 	<fr:form action="/gratuityReports.do?method=generateReport">
 		<fr:edit id="gratuity.report.bean" name="gratuityReportBean" visible="false" />
+
+		<%-- 		
+		<fr:edit id="gratuity.report.bean.type" name="gratuityReportBean">
+			<fr:schema bundle="MANAGER_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.manager.accounting.reports.GratuityReportsDA$GratuityReportBean">
+				<fr:slot name="type" key="label.gratuity.report.type" layout="menu-select-postback">
+					<fr:property name="destination" value="postback" />
+				</fr:slot>
+			</fr:schema>
+			
+			<fr:destination name="postback" path="/gratuityReports.do?method=listReports" />
+		</fr:edit>
+		
+		<logic:equal name="" property="" value="<%=  %>">
+		</logic:equal>
+		--%>
 		
 		<fr:edit id="gratuity.report.bean.execution.year" name="gratuityReportBean">
 			<fr:schema bundle="MANAGER_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.manager.accounting.reports.GratuityReportsDA$GratuityReportBean">

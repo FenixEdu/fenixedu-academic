@@ -47,6 +47,9 @@ public class PhdThesisProcessBean implements Serializable {
 	this();
 
 	setGenerateAlert(process.getPhdConfigurationIndividualProgramProcess().getGenerateAlert());
+
+	this.process = process;
+	this.thesisProcess = process.getThesisProcess();
     }
 
     public PhdIndividualProgramProcess getProcess() {

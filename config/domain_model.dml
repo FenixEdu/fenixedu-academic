@@ -211,6 +211,8 @@ enum net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationMark   
 enum net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ExecutedActionType										  as ExecutedActionType;
 enum net.sourceforge.fenixedu.domain.OperationType																		  as OperationType;
 enum net.sourceforge.fenixedu.domain.inquiries.EntryGradesInterval														  as EntryGradesInterval;
+enum net.sourceforge.fenixedu.domain.accounting.report.GratuityReportQueueJobType                                         as GratuityReportQueueJobType;
+
 /*
  * Value types that need special externalization
  */
@@ -7597,6 +7599,7 @@ class alumni.AlumniReportFile extends QueueJobWithFile {
 
 
 class accounting.report.GratuityReportQueueJob extends QueueJobWithFile {
+	/* GratuityReportQueueJobType type; */
 }
 
 class ProfessorshipPermissions extends DomainObject {

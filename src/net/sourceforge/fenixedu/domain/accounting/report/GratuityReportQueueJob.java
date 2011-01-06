@@ -65,7 +65,7 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
     }
 
     private static final DateTime BEGIN_YEAR = new DateTime(2009, 01, 01, 0, 0, 0, 0);
-    private static final DateTime END_YEAR = new DateTime(2009, 12, 31, 23, 59, 59, 0);
+    private static final DateTime END_YEAR = new DateTime(2010, 12, 31, 23, 59, 59, 0);
 
     private Spreadsheet buildReport() {
 	final Spreadsheet spreadsheet = new Spreadsheet(getFilename());

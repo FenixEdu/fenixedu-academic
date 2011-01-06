@@ -7,7 +7,7 @@
 
 <logic:present role="MANAGER">
 
-	<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="title.gratuity.reports" /></h2>
+	<h2><bean:message bundle="MANAGER_RESOURCES" key="title.gratuity.reports" /></h2>
 
 
 	<fr:form action="/gratuityReports.do?method=listReports">

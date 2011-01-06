@@ -15,6 +15,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.RatifyFinalThesis"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.SetFinalGrade"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.RejectJuryElementsDocuments"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryReporterFeedbackUpload" %>
 
 <logic:notEmpty name="process" property="thesisProcess">
 <logic:equal name="process" property="activeState.active" value="true">
@@ -147,6 +148,14 @@
 	<li style="display: inline;">
 		<html:link action="/phdThesisProcess.do?method=prepareSetFinalGrade" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
 			<bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.set.final.grade"/>
+		</html:link>
+	</li>
+	</phd:activityAvailable>
+	
+	<phd:activityAvailable process="<%= thesisProcess %>" activity="<%=  JuryReporterFeedbackUpload.class %>">
+	<li style="display: inline;">
+		<html:link action="/phdThesisProcess.do?method=prepareJuryReportFeedbackUpload" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
+			<bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.report.feedback.upload"/>
 		</html:link>
 	</li>
 	</phd:activityAvailable>

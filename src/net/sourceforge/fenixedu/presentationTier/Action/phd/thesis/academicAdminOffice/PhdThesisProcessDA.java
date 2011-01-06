@@ -87,7 +87,9 @@ import pt.utl.ist.fenix.tools.util.Pair;
 
 @Forward(name = "rejectJuryElementsDocuments", path = "/phd/thesis/academicAdminOffice/rejectJuryElementsDocuments.jsp"),
 
-@Forward(name = "viewMeetingSchedulingProcess", path = "/phd/thesis/academicAdminOffice/viewMeetingSchedulingProcess.jsp") })
+@Forward(name = "viewMeetingSchedulingProcess", path = "/phd/thesis/academicAdminOffice/viewMeetingSchedulingProcess.jsp"),
+
+@Forward(name = "juryReporterFeedbackUpload", path = "/phd/thesis/teacher/juryReporterFeedbackUpload.jsp") })
 public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
     // Begin thesis jury elements management
@@ -728,4 +730,27 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 	request.setAttribute("thesisProcessBean", bean);
 	return mapping.findForward("replaceDocument");
     }
+
+    // jury report feedback operations
+
+    @Override
+    public ActionForward prepareJuryReportFeedbackUpload(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	final PhdThesisProcessBean bean = new PhdThesisProcessBean(getProcess(request).getIndividualProgramProcess());
+	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.JURY_REPORT_FEEDBACK));
+
+	request.setAttribute("thesisProcessBean", bean);
+	request.setAttribute("thesisDocuments", getProcess(request).getThesisDocumentsToFeedback());
+
+	return mapping.findForward("juryReporterFeedbackUpload");
+    }
+
+    public ActionForward juryReportFeedbackUploadPostback(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("thesisProcessBean", getThesisProcessBean());
+	request.setAttribute("thesisDocuments", getProcess(request).getThesisDocumentsToFeedback());
+	return mapping.findForward("juryReporterFeedbackUpload");
+    }
+
 }
