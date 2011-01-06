@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add Message to a PhdIndividualProgramProcess" addMessageToPhdIndividualProgramProcess.sql
+execute "Add new column to assiduousnessVacations" alterTableAssiduousnessVacations.sql
