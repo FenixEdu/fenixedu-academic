@@ -183,7 +183,7 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
 	    writer.flush();
 	    response.flushBuffer();
 	} catch (IOException e1) {
-	    throw new FenixActionException();
+	    throw new FenixActionException(e1);
 	}
 
 	return null;
