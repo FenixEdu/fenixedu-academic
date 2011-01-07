@@ -130,7 +130,20 @@
 	</target>
 
 	<target name="prepare" depends="set-properties, set-properties-gwt, check-dml-file, prepare-copy" description="Copy configuration files to compile dir">
+		<typedef resource="com/googlecode/svntask/svntask.xml">
+			<classpath>
+				<fileset dir="${lib}">
+					<include name="svnkit.jar" />
+					<include name="svntask.jar" />
+				</fileset>
+			</classpath>
+		</typedef>
 
+		<svn>
+			<info path="./" revisionProperty="revisionVersion" />
+		</svn>
+		<echo file="${build.home.webinf.classes}/.svn.version">${revisionVersion}</echo>
+		
 		<tstamp>
 			<format property="build.version" pattern="yyyy/MM/dd HH:mm:ss" />
 		</tstamp>
