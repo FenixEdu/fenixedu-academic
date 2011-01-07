@@ -142,7 +142,6 @@
 		<svn>
 			<info path="./" revisionProperty="revisionVersion" />
 		</svn>
-		<echo file="${build.home.webinf.classes}/.svn.version">${revisionVersion}</echo>
 		
 		<tstamp>
 			<format property="build.version" pattern="yyyy/MM/dd HH:mm:ss" />
@@ -152,6 +151,7 @@
 		<mkdir dir="${build.home.xfire}" />
 		<mkdir dir="${build.home}/images/logs" />
 		<mkdir dir="${build.gwtdestdir}" />
+		<echo file="${build.home.webinf.classes}/.svn.version">${revisionVersion}</echo>
 
 		<echo file="${build.home.webinf.classes}/.build.version">${build.version}</echo>
 
