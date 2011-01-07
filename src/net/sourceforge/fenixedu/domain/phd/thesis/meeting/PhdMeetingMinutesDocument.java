@@ -13,13 +13,14 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 
 public class PhdMeetingMinutesDocument extends PhdMeetingMinutesDocument_Base {
-    
-    public  PhdMeetingMinutesDocument() {
-        super();
+
+    public PhdMeetingMinutesDocument() {
+	super();
     }
-    
+
     public PhdMeetingMinutesDocument(PhdMeeting meeting, PhdIndividualProgramDocumentType documentType, String remarks,
 	    byte[] content, String filename, Person uploader) {
 	this();
@@ -67,4 +68,13 @@ public class PhdMeetingMinutesDocument extends PhdMeetingMinutesDocument_Base {
 	return getPhdMeeting().getMeetingProcess().getThesisProcess().getIndividualProgramProcess();
     }
 
+    @Override
+    public boolean isLast() {
+	return getPhdMeeting().getLatestDocumentVersion() == this;
+    }
+
+    @Override
+    public PhdProgramProcessDocument getLastVersion() {
+	return getPhdMeeting().getLatestDocumentVersion();
+    }
 }

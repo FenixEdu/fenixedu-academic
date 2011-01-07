@@ -78,4 +78,13 @@ public class PhdThesisReportFeedbackDocument extends PhdThesisReportFeedbackDocu
 	return hasPhdProgramProcess();
     }
 
+    @Override
+    public boolean isLast() {
+	return getJuryElement().getLastFeedbackDocument() == this;
+    }
+
+    @Override
+    public PhdProgramProcessDocument getLastVersion() {
+	return getJuryElement().getLastFeedbackDocument();
+    }
 }

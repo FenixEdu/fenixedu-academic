@@ -174,7 +174,6 @@ public class PhdMeetingSchedulingProcessDA extends CommonPhdThesisProcessDA {
 	    ExecuteProcessActivity.run(thesisProcess.getMeetingProcess(), ScheduleThesisMeeting.class, getThesisProcessBean());
 
 	} catch (final DomainException e) {
-	    e.printStackTrace();
 	    addErrorMessage(request, e.getKey(), e.getArgs());
 	    return scheduleThesisMeetingInvalid(mapping, actionForm, request, response);
 	}

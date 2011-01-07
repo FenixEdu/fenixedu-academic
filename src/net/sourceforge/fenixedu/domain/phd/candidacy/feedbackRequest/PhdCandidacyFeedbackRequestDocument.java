@@ -28,7 +28,8 @@ public class PhdCandidacyFeedbackRequestDocument extends PhdCandidacyFeedbackReq
 	check(element, "error.PhdCandidacyFeedbackRequestDocument.invalid.element");
 	setElement(element);
 
-	init(element.getProcess(), PhdIndividualProgramDocumentType.CANDIDACY_FEEDBACK_DOCUMENT, remarks, content, filename, uploader);
+	init(element.getProcess(), PhdIndividualProgramDocumentType.CANDIDACY_FEEDBACK_DOCUMENT, remarks, content, filename,
+		uploader);
     }
 
     @Override
@@ -68,5 +69,15 @@ public class PhdCandidacyFeedbackRequestDocument extends PhdCandidacyFeedbackReq
 	filePath.addNode(new VirtualPathNode(getElement().getProcess().getIndividualProgramProcess().getIdInternal().toString(),
 		getElement().getProcess().getIndividualProgramProcess().getIdInternal().toString()));
 	return filePath;
+    }
+
+    @Override
+    public boolean isLast() {
+	return getElement().getLastFeedbackDocument() == this;
+    }
+
+    @Override
+    public PhdProgramProcessDocument getLastVersion() {
+	return getElement().getLastFeedbackDocument();
     }
 }

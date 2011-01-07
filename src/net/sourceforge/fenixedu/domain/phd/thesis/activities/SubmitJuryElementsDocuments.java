@@ -16,15 +16,14 @@ public class SubmitJuryElementsDocuments extends PhdThesisActivity {
 
     @Override
     protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
+	if (PhdThesisProcess.isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	    return;
+	}
 
 	if (process.isJuryValidated()) {
 	    throw new PreConditionNotValidException();
 	}
 
-	if (PhdThesisProcess.isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-	    return;
-	}
-	
 	if (!process.hasState(PhdThesisProcessStateType.WAITING_FOR_JURY_CONSTITUTION)) {
 	    throw new PreConditionNotValidException();
 	}
@@ -47,7 +46,10 @@ public class SubmitJuryElementsDocuments extends PhdThesisActivity {
 	    if (each.hasAnyInformation()) {
 
 		process.addDocument(each, userView.getPerson());
-		alertIfNecessary(process, each, userView.getPerson());
+
+		if (bean.getGenerateAlert()) {
+		    alertIfNecessary(bean, process, each, userView.getPerson());
+		}
 
 		anyDocumentSubmitted = true;
 	    }
@@ -63,12 +65,16 @@ public class SubmitJuryElementsDocuments extends PhdThesisActivity {
 	return process;
     }
 
-    private void alertIfNecessary(PhdThesisProcess process, PhdProgramDocumentUploadBean each, Person person) {
+    private void alertIfNecessary(PhdThesisProcessBean bean, PhdThesisProcess process, PhdProgramDocumentUploadBean each,
+	    Person person) {
 
 	switch (each.getType()) {
 	case JURY_PRESIDENT_ELEMENT:
-	    AlertService.alertCoordinators(process.getIndividualProgramProcess(),
-		    "message.phd.alert.request.jury.president.subject", "message.phd.alert.request.jury.president.body");
+
+	    if (bean.getGenerateAlert()) {
+		AlertService.alertCoordinators(process.getIndividualProgramProcess(),
+			"message.phd.alert.request.jury.president.subject", "message.phd.alert.request.jury.president.body");
+	    }
 	    break;
 
 	case JURY_ELEMENTS:

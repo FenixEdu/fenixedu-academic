@@ -78,10 +78,21 @@
 <bean:define id="processId" name="process" property="externalId" />
 
 
-<fr:form action="<%= "/phdThesisProcess.do?processId=" + processId.toString() %>" encoding="multipart/form-data">
-	<input type="hidden" name="method" />
-	
+<fr:form action="<%= "/phdThesisProcess.do?method=submitJuryElementsDocument&processId=" + processId.toString() %>" encoding="multipart/form-data">
 	<fr:edit id="thesisProcessBean" name="thesisProcessBean" visible="false" />
+	
+	<fr:edit id="thesisProcessBean.edit.generateAlert" name="thesisProcessBean">
+		<fr:schema bundle="PHD_RESOURCES" type="<%= PhdThesisProcessBean.class.getName() %>">
+			<fr:slot name="generateAlert" layout="radio" required="true" />
+		</fr:schema>
+		
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
+			<fr:property name="columnClasses" value=",,tdclear tderror1" />
+		</fr:layout>
+		
+		<fr:destination name="invalid" path="<%= "/phdThesisProcess.do?method=submitJuryElementsDocumentInvalid&processId=" + processId.toString() %>"/>
+	</fr:edit>
 	
 	<fr:edit id="thesisProcessBean.edit.documents" name="thesisProcessBean" property="documents">
 		<fr:schema bundle="PHD_RESOURCES" type="<%= PhdThesisProcessBean.class.getName() %>">
@@ -99,15 +110,17 @@
 			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 			<fr:property name="columnClasses" value=",,tdclear tderror1" />
 		</fr:layout>
-
+		
+		<fr:destination name="invalid" path="<%= "/phdThesisProcess.do?method=submitJuryElementsDocumentInvalid&processId=" + processId.toString() %>"/>
+		<fr:destination name="cancel" path="<%= "/phdThesisProcess.do?method=viewIndividualProgramProcess&processId=" + processId.toString() %>" />
 	</fr:edit>
 
 	<em>(submeter apenas os documentos que pretende)</em>
 	<br/>
 	<br/>
 
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='submitJuryElementsDocument';"><bean:message bundle="PHD_RESOURCES" key="label.submit"/></html:submit>
-	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='viewIndividualProgramProcess';"><bean:message bundle="PHD_RESOURCES" key="label.cancel"/></html:cancel>	
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" ><bean:message bundle="PHD_RESOURCES" key="label.submit"/></html:submit>
+	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" ><bean:message bundle="PHD_RESOURCES" key="label.cancel"/></html:cancel>	
 </fr:form>
 <%--  ### End of Operation Area  ### --%>
 

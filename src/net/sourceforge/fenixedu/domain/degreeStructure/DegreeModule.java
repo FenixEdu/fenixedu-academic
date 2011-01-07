@@ -317,7 +317,7 @@ abstract public class DegreeModule extends DegreeModule_Base {
     public boolean isOptional() {
 	return false;
     }
-    
+
     public boolean isBranchCourseGroup() {
 	return false;
     }
@@ -424,8 +424,9 @@ abstract public class DegreeModule extends DegreeModule_Base {
 
 	if (curricularRules.isEmpty()) {
 	    return null;
+	}
 
-	} else if (executionYear == null) {
+	if (executionYear == null) {
 	    final ListIterator<ICurricularRule> iter = curricularRules.listIterator(curricularRules.size());
 	    while (iter.hasPrevious()) {
 		final ICurricularRule curricularRule = iter.previous();
@@ -433,25 +434,24 @@ abstract public class DegreeModule extends DegreeModule_Base {
 		    return curricularRule;
 		}
 	    }
+
 	    return null;
-
-	} else {
-	    ICurricularRule result = null;
-	    for (final ICurricularRule curricularRule : curricularRules) {
-		if (curricularRule.isValid(executionYear)) {
-		    if (result != null) {
-			// TODO: remove this throw when curricular rule ensures
-			// that it can be only one active for execution period
-			// and replace by: return curricularRule
-			throw new DomainException("error.degree.module.has.more.than.one.credits.limit.for.executionYear",
-				getName());
-		    }
-		    result = curricularRule;
-		}
-	    }
-
-	    return result;
 	}
+
+	ICurricularRule result = null;
+	for (final ICurricularRule curricularRule : curricularRules) {
+	    if (curricularRule.isValid(executionYear)) {
+		if (result != null) {
+		    // TODO: remove this throw when curricular rule ensures
+		    // that it can be only one active for execution period
+		    // and replace by: return curricularRule
+		    throw new DomainException("error.degree.module.has.more.than.one.credits.limit.for.executionYear", getName());
+		}
+		result = curricularRule;
+	    }
+	}
+
+	return result;
     }
 
     public ICurricularRule getMostRecentActiveCurricularRule(final CurricularRuleType ruleType,

@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.RatifyFinalThesis;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RejectJuryElements;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RejectJuryElementsDocuments;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RemindJuryReviewToReporters;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.ReplaceDocument;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryElements;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryReviews;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisDiscussion;
@@ -89,7 +90,9 @@ import pt.utl.ist.fenix.tools.util.Pair;
 
 @Forward(name = "viewMeetingSchedulingProcess", path = "/phd/thesis/academicAdminOffice/viewMeetingSchedulingProcess.jsp"),
 
-@Forward(name = "juryReporterFeedbackUpload", path = "/phd/thesis/teacher/juryReporterFeedbackUpload.jsp") })
+@Forward(name = "juryReporterFeedbackUpload", path = "/phd/thesis/academicAdminOffice/juryReporterFeedbackUpload.jsp"),
+
+@Forward(name = "replaceDocument", path = "/phd/thesis/academicAdminOffice/replaceDocument.jsp") })
 public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
     // Begin thesis jury elements management
@@ -120,7 +123,7 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
     public ActionForward prepareSubmitJuryElementsDocument(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	final PhdThesisProcessBean bean = new PhdThesisProcessBean();
+	final PhdThesisProcessBean bean = new PhdThesisProcessBean(getProcess(request).getIndividualProgramProcess());
 	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.JURY_ELEMENTS));
 	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.JURY_PRESIDENT_ELEMENT));
 	request.setAttribute("thesisProcessBean", bean);
@@ -721,13 +724,38 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
     // End of manage phd thesis process meetings
 
-    public ActionForward prepareReplaceThesisDocument(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward prepareReplaceDocument(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	final PhdThesisProcessBean bean = new PhdThesisProcessBean();
-	PhdIndividualProgramDocumentType type = PhdIndividualProgramDocumentType.valueOf(request.getParameter("type"));
-	bean.addDocument(new PhdProgramDocumentUploadBean(type));
+	final PhdProgramDocumentUploadBean bean = new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType
+		.valueOf(request.getParameter("type")));
 
-	request.setAttribute("thesisProcessBean", bean);
+	request.setAttribute("documentBean", bean);
+
+	return mapping.findForward("replaceDocument");
+    }
+
+    public ActionForward replaceDocument(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	try {
+
+	    final IViewState viewState = RenderUtils.getViewState("documentBean");
+	    if (!viewState.isValid()) {
+		return juryReportFeedbackUploadInvalid(mapping, form, request, response);
+	    }
+
+	    ExecuteProcessActivity.run(getProcess(request), ReplaceDocument.class, getRenderedObject("documentBean"));
+	    addSuccessMessage(request, "message.replace.document.done.with.success");
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getMessage(), e.getArgs());
+	    return replaceDocumentInvalid(mapping, form, request, response);
+	}
+
+	return manageThesisDocuments(mapping, form, request, response);
+    }
+
+    public ActionForward replaceDocumentInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("thesisProcessBean", getThesisProcessBean());
 	return mapping.findForward("replaceDocument");
     }
 

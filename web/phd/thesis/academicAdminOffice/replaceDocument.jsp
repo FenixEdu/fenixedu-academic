@@ -13,12 +13,12 @@
 <bean:define id="individualProcessId" name="process" property="individualProgramProcess.externalId" />
 
 <%-- ### Title #### --%>
-<em><bean:message  key="label.phd.coordinator.breadcrumb" bundle="PHD_RESOURCES"/></em>
-<h2><bean:message key="label.phd.replace.document" bundle="PHD_RESOURCES" /></h2>
+<em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
+<h2><bean:message key="label.phd.replaceDocument" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
-<html:link action="<%= "/phdIndividualProgramProcess.do?method=viewProcess&amp;processId=" + individualProcessId.toString() %>">
+<html:link action="<%= "/phdThesisProcess.do?method=manageThesisDocuments&processId=" + processId.toString() %>">
 	<bean:message bundle="PHD_RESOURCES" key="label.back"/>
 </html:link>
 <br/><br/>
@@ -41,20 +41,19 @@
 
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 
-<fr:form action="<%= "/phdThesisProcess.do?method=replace&processId=" + processId.toString() %>" encoding="multipart/form-data">
-	<input type="hidden" name="method" />
+<fr:form action="<%= "/phdThesisProcess.do?method=replaceDocument&processId=" + processId.toString() %>" encoding="multipart/form-data">
+	<fr:edit id="documentBean" name="documentBean" visible="false" />
 	
-	<fr:edit id="thesisProcessBean" name="thesisProcessBean" visible="false" />
-	
-	<fr:edit id="thesisProcessBean.edit.documents" name="thesisProcessBean" property="documents">
+	<fr:edit id="documentBean.replace" name="documentBean" >
 	
 		<fr:schema bundle="PHD_RESOURCES" type="<%= PhdProgramDocumentUploadBean.class.getName() %>">
-			<fr:slot name="type" readOnly="true" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean.type" layout="phd-enum-renderer" />
+			<fr:slot name="type" readOnly="true" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean.type" layout="phd-enum-renderer"/>
 			<fr:slot name="file" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean.file" required="true">
 				<fr:validator name="<%= FileValidator.class.getName() %>" />
 				<fr:property name="fileNameSlot" value="filename"/>
 				<fr:property name="size" value="20"/>
 			</fr:slot>
+			<fr:slot name="remarks" layout="longText" />
 		</fr:schema>
 	
 		<fr:layout name="tabular">
@@ -62,13 +61,12 @@
 			<fr:property name="columnClasses" value=",,tdclear tderror1" />
 		</fr:layout>
 		
-		<fr:destination name="invalid" path="<%= "/phdThesisProcess.do?method=ratifyFinalThesisInvalid&processId=" + processId.toString() %>" />
-		<fr:destination name="cancel" path="<%= "/phdThesisProcess.do?method=viewIndividualProgramProcess&processId=" + processId.toString() %>" />
-		
+		<fr:destination name="invalid" path="<%= "/phdThesisProcess.do?method=replaceDocumentInvalid&processId=" + processId.toString() %>" />
+		<fr:destination name="cancel" path="<%= "/phdThesisProcess.do?method=manageThesisDocuments&processId=" + processId.toString() %>" />
 	</fr:edit>
 
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" ><bean:message bundle="PHD_RESOURCES" key="label.submit"/></html:submit>
-	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" ><bean:message bundle="PHD_RESOURCES" key="label.cancel"/></html:cancel>	
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.submit"/></html:submit>
+	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel"><bean:message bundle="PHD_RESOURCES" key="label.cancel"/></html:cancel>	
 
 </fr:form>
 

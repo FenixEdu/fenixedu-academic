@@ -16,6 +16,10 @@ public class RejectJuryElementsDocuments extends PhdThesisActivity {
 	    throw new PreConditionNotValidException();
 	}
 
+	if (!PhdThesisProcess.isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	    throw new PreConditionNotValidException();
+	}
+
 	if (process.hasJuryElementsDocument() && process.getJuryElementsDocument().getDocumentAccepted()) {
 	    return;
 	}

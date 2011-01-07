@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -52,35 +51,19 @@ abstract public class PhdProgramProcess extends PhdProgramProcess_Base {
     }
 
     protected Set<PhdProgramProcessDocument> filterLatestDocumentVersions(Collection<PhdProgramProcessDocument> documentsToFilter) {
-	final Map<PhdIndividualProgramDocumentType, SortedSet<PhdProgramProcessDocument>> documentsByType = new java.util.HashMap<PhdIndividualProgramDocumentType, SortedSet<PhdProgramProcessDocument>>();
+	final Set<PhdProgramProcessDocument> result = new HashSet<PhdProgramProcessDocument>();
 
 	for (final PhdProgramProcessDocument document : documentsToFilter) {
-	    final SortedSet<PhdProgramProcessDocument> documents;
-	    if (!documentsByType.containsKey(document.getDocumentType())) {
-		documents = new TreeSet<PhdProgramProcessDocument>(PhdProgramProcessDocument.COMPARATOR_BY_UPLOAD_TIME);
-		documentsByType.put(document.getDocumentType(), documents);
-	    } else {
-		documents = documentsByType.get(document.getDocumentType());
-	    }
-
-	    documents.add(document);
-	}
-
-	final Set<PhdProgramProcessDocument> result = new HashSet<PhdProgramProcessDocument>();
-	for (final Map.Entry<PhdIndividualProgramDocumentType, SortedSet<PhdProgramProcessDocument>> entry : documentsByType
-		.entrySet()) {
-	    if (entry.getKey().isVersioned()) {
-		result.add(entry.getValue().last());
-	    } else {
-		result.addAll(entry.getValue());
-	    }
+	    result.add(document.getLastVersion());
 	}
 
 	return result;
     }
 
     public PhdProgramProcessDocument getLastestDocumentVersionFor(PhdIndividualProgramDocumentType type) {
-	final Collection<PhdProgramProcessDocument> documents = filterLatestDocumentVersions(getDocumentsByType(type));
+	final SortedSet<PhdProgramProcessDocument> documents = new TreeSet<PhdProgramProcessDocument>(
+		PhdProgramProcessDocument.COMPARATOR_BY_VERSION);
+	documents.addAll(getDocumentsByType(type));
 
 	return documents.isEmpty() ? null : documents.iterator().next();
     }

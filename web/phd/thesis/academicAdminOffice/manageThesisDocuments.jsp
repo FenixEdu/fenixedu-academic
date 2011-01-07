@@ -71,16 +71,13 @@
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight mtop15" />
 			
-			<fr:property name="linkFormat(view)" value="${downloadUrl}"/>
-			<fr:property name="key(view)" value="label.view"/>
-			<fr:property name="bundle(view)" value="PHD_RESOURCES"/>
-			<fr:property name="order(view)" value="0" />
-			<fr:property name="hasContext(view)" value="false" />
-			<fr:property name="contextRelative(view)" value="false" />
+			<fr:link 	name="view" link="${downloadUrl}" label="label.view,PHD_RESOURCES"
+						order="0" contextRelative="false" hasContext="false" />
 			
-			<%-- 
-			<fr:link name="/phdThesisProcess.do?method=replaceThesisDocument?type=${documentType.name}&processId=${externalId}" link="label.replace" label="PHD_RESOURCES" />
-			--%>
+			<fr:link 	name="replaceDocument" 
+						link="<%= "/phdThesisProcess.do?method=prepareReplaceDocument&type=${documentType}&processId=" + processId %>" 
+						label="link.net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean.replace,PHD_RESOURCES" order="1" 
+						condition="replaceable"/>
 
 		<%-- To delete, we must have interface to add more ... 				
 			<fr:property name="linkFormat(delete)" value="/phdThesisProcess.do?method=deleteDocument&documentId=${externalId}&processId=${phdProgramProcess.externalId}"/>

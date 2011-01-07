@@ -38,6 +38,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.RatifyFinalThesis;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RejectJuryElements;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RejectJuryElementsDocuments;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RemindJuryReviewToReporters;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.ReplaceDocument;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryElements;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryReviews;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisDiscussion;
@@ -106,6 +107,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	activities.add(new RatifyFinalThesis());
 	activities.add(new SetFinalGrade());
 	activities.add(new RejectJuryElementsDocuments());
+	activities.add(new ReplaceDocument());
     }
 
     private PhdThesisProcess() {
@@ -398,14 +400,14 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 
 		break;
 	    }
-	    
+
 	    if (processParticipant.isFor(retrievePersonFromParticipantBean(bean))) {
 		if (process.isGuider(processParticipant) || process.isAssistantGuider(processParticipant)) {
 		    throw new DomainException("error.PhdThesisProcess.reporter.cannot.be.guider.or.assistantguider");
 		}
 	    }
 	}
-	
+
     }
 
     private Person retrievePersonFromParticipantBean(PhdThesisJuryElementBean participantBean) {

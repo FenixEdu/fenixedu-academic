@@ -28,6 +28,15 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
 	}
     };
 
+    public static Comparator<PhdProgramProcessDocument> COMPARATOR_BY_VERSION = new Comparator<PhdProgramProcessDocument>() {
+
+	@Override
+	public int compare(PhdProgramProcessDocument left, PhdProgramProcessDocument right) {
+	    return left.getDocumentVersion().compareTo(right.getDocumentVersion()) * -1;
+	}
+
+    };
+
     protected PhdProgramProcessDocument() {
 	super();
     }
@@ -147,4 +156,36 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
 	throw new DomainException("error.phd.PhdProgramProcessDocument.use.isPersonAllowedToAccess.method.instead");
     }
 
+    public PhdProgramProcessDocument replaceDocument(PhdIndividualProgramDocumentType documentType, String remarks,
+	    byte[] content, String filename, Person uploader) {
+	if (!this.getClass().equals(PhdProgramProcessDocument.class)) {
+	    throw new DomainException("error.phd.PhdProgramProcessDocument.override.replaceDocument.method.on.this.class");
+	}
+
+	if (!getDocumentType().equals(documentType)) {
+	    throw new DomainException("error.phd.PhdProgramProcessDocument.type.must.be.equal");
+	}
+
+	return new PhdProgramProcessDocument(getPhdProgramProcess(), documentType, remarks, content, filename, uploader);
+    }
+
+    public boolean isReplaceable() {
+	return this.getClass().equals(PhdProgramProcessDocument.class);
+    }
+
+    public boolean isVersioned() {
+	return getDocumentType().isVersioned();
+    }
+
+    public boolean isLast() {
+	return !isVersioned() || getPhdProgramProcess().getLastestDocumentVersionFor(getDocumentType()) == this;
+    }
+
+    public PhdProgramProcessDocument getLastVersion() {
+	if (!isVersioned()) {
+	    return this;
+	}
+
+	return getPhdProgramProcess().getLastestDocumentVersionFor(getDocumentType());
+    }
 }
