@@ -176,6 +176,10 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 	getCandidacy().reject(person);
     }
 
+    protected void revertToStandBy(final Person person) {
+	getCandidacy().revertToStandBy(person);
+    }
+
     public IndividualCandidacyState getCandidacyState() {
 	return getCandidacy().getState();
     }

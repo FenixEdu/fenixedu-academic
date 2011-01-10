@@ -141,6 +141,11 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	setResponsible(person.getUsername());
     }
 
+    public void revertToStandBy(final Person person) {
+	setState(IndividualCandidacyState.STAND_BY);
+	setResponsible(person.getUsername());
+    }
+
     protected void checkRulesToCancel() {
 	if (hasEvent() && hasAnyPayment()) {
 	    throw new DomainException("error.IndividualCandidacy.cannot.cancel.candidacy.with.payments");

@@ -52,7 +52,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "cancel-candidacy", path = "/candidacy/cancelCandidacy.jsp"),
 	@Forward(name = "view-approved-learning-agreements", path = "/candidacy/erasmus/viewApprovedLearningAgreements.jsp"),
 	@Forward(name = "upload-learning-agreement", path = "/candidacy/erasmus/uploadLearningAgreement.jsp"),
-	@Forward(name = "reject-candidacy", path = "/candidacy/rejectCandidacy.jsp") })
+	@Forward(name = "reject-candidacy", path = "/candidacy/rejectCandidacy.jsp"),
+	@Forward(name = "revert-candidacy-to-standby", path = "/candidacy/erasmus/revertCandidacyToStandby.jsp") })
 public class ErasmusIndividualCandidacyProcessDA extends
 	net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusIndividualCandidacyProcessDA {
 
@@ -247,5 +248,23 @@ public class ErasmusIndividualCandidacyProcessDA extends
 	executeActivity(getProcess(request), "RevokeDocumentFile", documentBean);
 
 	return prepareExecuteViewApprovedLearningAgreements(mapping, form, request, response);
+    }
+
+    public ActionForward prepareExecuteRevertCandidacyToStandBy(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+
+	return mapping.findForward("revert-candidacy-to-standby");
+    }
+
+    public ActionForward executeRevertCandidacyToStandBy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	try {
+	    executeActivity(getProcess(request), "RevertCandidacyToStandBy", null);
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getMessage(), e.getArgs());
+	    return mapping.findForward("revert-candidacy-to-standby");
+	}
+	return listProcessAllowedActivities(mapping, form, request, response);
     }
 }

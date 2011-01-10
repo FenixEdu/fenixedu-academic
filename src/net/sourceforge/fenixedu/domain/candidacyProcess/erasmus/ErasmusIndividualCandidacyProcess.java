@@ -76,7 +76,7 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	activities.add(new RevokeDocumentFile());
 	activities.add(new RejectCandidacy());
 	activities.add(new CreateRegistration());
-	// activities.add(new EnrolOnFirstSemester());
+	activities.add(new RevertCandidacyToStandBy());
 
     }
 
@@ -1206,6 +1206,49 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	    return process;
 	}
 
+    }
+
+    static private class RevertCandidacyToStandBy extends Activity<ErasmusIndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(ErasmusIndividualCandidacyProcess process, IUserView userView) {
+	    if (!isGriOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (process.isCandidacyRejected()) {
+		return;
+	    }
+
+	    if (process.isCandidacyCancelled()) {
+		return;
+	    }
+
+	    throw new PreConditionNotValidException();
+	}
+
+	@Override
+	protected ErasmusIndividualCandidacyProcess executeActivity(ErasmusIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    process.revertToStandBy(userView.getPerson());
+
+	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return false;
+	}
+
+	@Override
+	public Boolean isVisibleForCoordinator() {
+	    return false;
+	}
+
+	@Override
+	public Boolean isVisibleForGriOffice() {
+	    return true;
+	}
     }
 
     private void createRegistration() {
