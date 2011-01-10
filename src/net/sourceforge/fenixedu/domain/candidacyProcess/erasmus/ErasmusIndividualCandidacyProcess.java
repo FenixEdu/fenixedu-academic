@@ -1165,10 +1165,6 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	    if (!process.isStudentAcceptedAndNotified()) {
 		throw new PreConditionNotValidException();
 	    }
-
-	    if (!process.isStudentNotifiedWithReceptionEmail()) {
-		throw new PreConditionNotValidException();
-	    }
 	}
 
 	@Override
