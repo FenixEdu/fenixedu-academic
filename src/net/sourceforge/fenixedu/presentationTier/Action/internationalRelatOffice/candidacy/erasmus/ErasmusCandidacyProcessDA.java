@@ -43,7 +43,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/caseHandlingErasmusCandidacyProcess", module = "internationalRelatOffice", formBeanClass = ErasmusCandidacyProcessDA.ErasmusCandidacyProcessForm.class)
-@Forwards( { @Forward(name = "intro", path = "/candidacy/erasmus/mainCandidacyProcess.jsp"),
+@Forwards( {
+	@Forward(name = "intro", path = "/candidacy/erasmus/mainCandidacyProcess.jsp"),
 	@Forward(name = "prepare-create-new-process", path = "/candidacy/createCandidacyPeriod.jsp"),
 	@Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp"),
 	@Forward(name = "view-university-agreements", path = "/candidacy/erasmus/viewErasmusVacancies.jsp"),
@@ -51,8 +52,12 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "view-erasmus-coordinators", path = "/candidacy/erasmus/viewErasmusCoordinators.jsp"),
 	@Forward(name = "assign-coordinator", path = "/candidacy/erasmus/assignCoordinator.jsp"),
 	@Forward(name = "send-reception-email-present-individual-processes", path = "/candidacy/erasmus/reception/sendReceptionEmailPresentIndividualProcesses.jsp"),
-	@Forward(name = "send-reception-email-edit-individual-candidacies", path = "/candidacy/erasmus/reception/sendReceptionEmailEditIndividualCandidacies.jsp") })
-public class ErasmusCandidacyProcessDA extends net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusCandidacyProcessDA {
+	@Forward(name = "send-reception-email-edit-individual-candidacies", path = "/candidacy/erasmus/reception/sendReceptionEmailEditIndividualCandidacies.jsp"),
+	@Forward(name = "edit-reception-email-message", path = "/candidacy/erasmus/reception/editReceptionEmailMessage.jsp"),
+	@Forward(name = "view-email-to-send", path = "/candidacy/erasmus/reception/viewEmailToSend.jsp"),
+	@Forward(name = "email-sent-with-success", path = "/candidacy/erasmus/reception/emailSentWithSuccess.jsp") })
+public class ErasmusCandidacyProcessDA extends
+	net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusCandidacyProcessDA {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -60,7 +65,6 @@ public class ErasmusCandidacyProcessDA extends net.sourceforge.fenixedu.presenta
 	I18NFilter.setLocale(request, request.getSession(true), Locale.ENGLISH);
 	return super.execute(mapping, actionForm, request, response);
     }
-    
 
     @Override
     protected ErasmusCandidacyProcess getProcess(HttpServletRequest request) {
@@ -92,10 +96,10 @@ public class ErasmusCandidacyProcessDA extends net.sourceforge.fenixedu.presenta
     public ActionForward prepareExecuteInsertErasmusVacancy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	request.setAttribute("erasmusVacancyBean", new ErasmusVacancyBean());
-	
+
 	return mapping.findForward("insert-university-agreement");
     }
-    
+
     public ActionForward prepareExecuteInsertErasmusVacancyInvalid(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 	return prepareExecuteInsertErasmusVacancy(mapping, form, request, response);
@@ -105,14 +109,14 @@ public class ErasmusCandidacyProcessDA extends net.sourceforge.fenixedu.presenta
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	ErasmusCandidacyProcess process = getProcess(request);
 	ErasmusVacancyBean bean = getErasmusVacancyBean();
-	
-	if(process.getCandidacyPeriod().existsFor(bean.getUniversity(), bean.getDegree())) {
+
+	if (process.getCandidacyPeriod().existsFor(bean.getUniversity(), bean.getDegree())) {
 	    addActionMessage(request, "error.erasmus.insert.vacancy.already.exists");
 	    return mapping.findForward("insert-university-agreement");
 	}
 
 	executeActivity(getProcess(request), "InsertErasmusVacancy", bean);
-	
+
 	return prepareExecuteViewErasmusVancacies(mapping, form, request, response);
     }
 
@@ -142,8 +146,7 @@ public class ErasmusCandidacyProcessDA extends net.sourceforge.fenixedu.presenta
     }
 
     public ActionForward prepareExecuteViewErasmusCoordinators(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request,
-	    HttpServletResponse response) {
+	    HttpServletRequest request, HttpServletResponse response) {
 
 	return mapping.findForward("view-erasmus-coordinators");
     }
@@ -151,14 +154,14 @@ public class ErasmusCandidacyProcessDA extends net.sourceforge.fenixedu.presenta
     public ActionForward prepareExecuteAssignCoordinator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	request.setAttribute("erasmusCoordinatorBean", new ErasmusCoordinatorBean());
-	
+
 	return mapping.findForward("assign-coordinator");
     }
 
     public ActionForward executeAssignCoordinator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	ErasmusCoordinatorBean bean = getErasmusCoordinatorBean();
-	
+
 	try {
 	    executeActivity(getProcess(request), "AssignCoordinator", bean);
 	} catch (DomainException e) {
@@ -166,7 +169,6 @@ public class ErasmusCandidacyProcessDA extends net.sourceforge.fenixedu.presenta
 
 	    return prepareExecuteAssignCoordinator(mapping, form, request, response);
 	}
-	
 
 	return prepareExecuteViewErasmusCoordinators(mapping, form, request, response);
     }
@@ -186,8 +188,7 @@ public class ErasmusCandidacyProcessDA extends net.sourceforge.fenixedu.presenta
     }
 
     public ActionForward executeRemoveTeacherFromCoordinatorsInvalid(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request,
-	    HttpServletResponse response) {
+	    HttpServletRequest request, HttpServletResponse response) {
 	return prepareExecuteViewErasmusCoordinators(mapping, form, request, response);
     }
 
@@ -198,7 +199,7 @@ public class ErasmusCandidacyProcessDA extends net.sourceforge.fenixedu.presenta
 
 	bean.setTeacher(teacher);
 	request.setAttribute("erasmusCoordinatorBean", bean);
-	
+
 	return mapping.findForward("assign-coordinator");
     }
 
@@ -252,12 +253,43 @@ public class ErasmusCandidacyProcessDA extends net.sourceforge.fenixedu.presenta
 	return mapping.findForward("send-reception-email-present-individual-processes");
     }
 
+    public ActionForward prepareEditReceptionEmailMessage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	SendReceptionEmailBean bean = getRenderedSendReceptionEmailBean();
+	request.setAttribute("sendReceptionEmailBean", bean);
+
+	return mapping.findForward("edit-reception-email-message");
+    }
+
+    public ActionForward editReceptionEmailMessage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	executeActivity(getProcess(request), "EditReceptionEmailMessage", getRenderedSendReceptionEmailBean());
+
+	return prepareExecuteSendReceptionEmail(mapping, form, request, response);
+    }
+
+    public ActionForward editReceptionEmailMessageInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	SendReceptionEmailBean bean = getRenderedSendReceptionEmailBean();
+	request.setAttribute("sendReceptionEmailBean", bean);
+
+	return mapping.findForward("edit-reception-email-message");
+    }
+
+    public ActionForward viewEmailToSend(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	SendReceptionEmailBean bean = getRenderedSendReceptionEmailBean();
+	request.setAttribute("sendReceptionEmailBean", bean);
+
+	return mapping.findForward("view-email-to-send");
+    }
+
     public ActionForward sendReceptionEmail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	SendReceptionEmailBean bean = getRenderedSendReceptionEmailBean();
 	executeActivity(getProcess(request), "SendReceptionEmail", bean);
 
-	return listProcesses(mapping, actionForm, request, response);
+	return mapping.findForward("email-sent-with-success");
     }
 
     public ActionForward sendReceptionEmailSetFilter(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -282,7 +314,6 @@ public class ErasmusCandidacyProcessDA extends net.sourceforge.fenixedu.presenta
 
 	return mapping.findForward("send-reception-email-edit-individual-candidacies");
     }
-
 
     public ActionForward sendReceptionEmailSetSelectedIndividualProcesses(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {

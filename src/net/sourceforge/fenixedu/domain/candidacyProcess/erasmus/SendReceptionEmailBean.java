@@ -14,22 +14,27 @@ public class SendReceptionEmailBean implements java.io.Serializable {
     private List<ErasmusIndividualCandidacyProcess> subjectProcesses;
     private ErasmusCandidacyProcess erasmusCandidacyProcess;
 
+    private String emailSubject;
+    private String emailBody;
+
     /**
      * 
      */
     private static final long serialVersionUID = 1L;
 
     public SendReceptionEmailBean(final ErasmusCandidacyProcess erasmusCandidacyProcess) {
-        this.erasmusCandidacyProcess = erasmusCandidacyProcess;
+	this.erasmusCandidacyProcess = erasmusCandidacyProcess;
 	this.includeOnlyProcessWithNoReceptionEmail = true;
+	this.emailSubject = erasmusCandidacyProcess.getReceptionEmailSubject();
+	this.emailBody = erasmusCandidacyProcess.getReceptionEmailBody();
     }
 
     public void removeProcess(ErasmusIndividualCandidacyProcess individualCandidacyProcess) {
-        this.subjectProcesses.remove(individualCandidacyProcess);
+	this.subjectProcesses.remove(individualCandidacyProcess);
     }
 
     public void addProcess(ErasmusIndividualCandidacyProcess individualCandidacyProcess) {
-        this.subjectProcesses.add(individualCandidacyProcess);
+	this.subjectProcesses.add(individualCandidacyProcess);
     }
 
     public void retrieveProcesses() {
@@ -52,27 +57,43 @@ public class SendReceptionEmailBean implements java.io.Serializable {
     }
 
     public boolean isIncludeOnlyProcessWithNoReceptionEmail() {
-        return includeOnlyProcessWithNoReceptionEmail;
+	return includeOnlyProcessWithNoReceptionEmail;
     }
 
     public void setIncludeOnlyProcessWithNoReceptionEmail(boolean includeOnlyProcessWithNoReceptionEmail) {
-        this.includeOnlyProcessWithNoReceptionEmail = includeOnlyProcessWithNoReceptionEmail;
+	this.includeOnlyProcessWithNoReceptionEmail = includeOnlyProcessWithNoReceptionEmail;
     }
 
     public List<ErasmusIndividualCandidacyProcess> getSubjectProcesses() {
-        return subjectProcesses;
+	return subjectProcesses;
     }
 
     public void setSubjectProcesses(List<ErasmusIndividualCandidacyProcess> subjectProcesses) {
-        this.subjectProcesses = subjectProcesses;
+	this.subjectProcesses = subjectProcesses;
     }
 
     public ErasmusCandidacyProcess getErasmusCandidacyProcess() {
-        return erasmusCandidacyProcess;
+	return erasmusCandidacyProcess;
     }
 
     public void setErasmusCandidacyProcess(ErasmusCandidacyProcess erasmusCandidacyProcess) {
-        this.erasmusCandidacyProcess = erasmusCandidacyProcess;
+	this.erasmusCandidacyProcess = erasmusCandidacyProcess;
+    }
+
+    public String getEmailSubject() {
+	return emailSubject;
+    }
+
+    public void setEmailSubject(String emailSubject) {
+	this.emailSubject = emailSubject;
+    }
+
+    public String getEmailBody() {
+	return emailBody;
+    }
+
+    public void setEmailBody(String emailBody) {
+	this.emailBody = emailBody;
     }
 
 }

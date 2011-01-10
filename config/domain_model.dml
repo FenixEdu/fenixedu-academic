@@ -6765,6 +6765,9 @@ class candidacyProcess.CandidacyProcess extends caseHandling.Process {
     
     class candidacyProcess.erasmus.ErasmusCandidacyProcess extends candidacyProcess.CandidacyProcess {
     	ErasmusApplyForSemesterType forSemester;
+    	String receptionEmailSubject;
+    	String receptionEmailBody;
+    	
     }
     
     class candidacyProcess.erasmus.ErasmusVacancy extends DomainObject {

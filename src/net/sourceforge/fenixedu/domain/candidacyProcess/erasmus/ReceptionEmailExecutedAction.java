@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -11,10 +10,8 @@ import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 
 import org.apache.commons.lang.StringUtils;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
-
 public class ReceptionEmailExecutedAction extends ReceptionEmailExecutedAction_Base {
-    
+
     protected ReceptionEmailExecutedAction() {
 	super();
     }
@@ -27,13 +24,12 @@ public class ReceptionEmailExecutedAction extends ReceptionEmailExecutedAction_B
 
 	sendEmails();
     }
-    
 
     protected void init(ExecutedActionType type, ErasmusCandidacyProcess candidacyProcess,
 	    List<ErasmusIndividualCandidacyProcess> subjectCandidacyProcesses, String subject, String body) {
 	super.init(type, candidacyProcess, subjectCandidacyProcesses);
-	
-	if(StringUtils.isEmpty(subject)) {
+
+	if (StringUtils.isEmpty(subject)) {
 	    throw new DomainException("error.reception.email.executed.action.subject.is.empty");
 	}
 
@@ -57,19 +53,15 @@ public class ReceptionEmailExecutedAction extends ReceptionEmailExecutedAction_B
 		    process.getCandidacyHashCode().getEmail());
 
     }
-    
+
     protected static ReceptionEmailExecutedAction createAction(ErasmusCandidacyProcess candidacyProcess,
 	    List<ErasmusIndividualCandidacyProcess> subjectCandidacyProcesses, String subject, String body) {
 	return new ReceptionEmailExecutedAction(ExecutedActionType.SENT_RECEPTION_EMAIL, candidacyProcess,
 		subjectCandidacyProcesses, subject, body);
     }
 
-    public static ReceptionEmailExecutedAction createAction(final SendReceptionEmailBean bean) {
-	String subject = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale()).getString(
-		"message.erasmus.reception.email.executed.action.subject");
-	String body = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale()).getString(
-		"message.erasmus.reception.email.executed.action.body");
-	
-	return createAction(bean.getErasmusCandidacyProcess(), bean.getSubjectProcesses(), subject, body);
+    public static ReceptionEmailExecutedAction createAction(ErasmusCandidacyProcess process, final SendReceptionEmailBean bean) {
+	return createAction(bean.getErasmusCandidacyProcess(), bean.getSubjectProcesses(), process.getReceptionEmailSubject(),
+		process.getReceptionEmailBody());
     }
 }

@@ -58,6 +58,7 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 	activities.add(new SendEmailToMissingRequiredDocumentsProcesses());
 	activities.add(new EditCandidacyPeriod());
 	activities.add(new SendReceptionEmail());
+	activities.add(new EditReceptionEmailMessage());
     }
 
     public ErasmusCandidacyProcess() {
@@ -626,7 +627,7 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 	@Override
 	protected ErasmusCandidacyProcess executeActivity(ErasmusCandidacyProcess process, IUserView userView, Object object) {
 	    SendReceptionEmailBean sendBean = (SendReceptionEmailBean) object;
-	    ReceptionEmailExecutedAction.createAction(sendBean);
+	    ReceptionEmailExecutedAction.createAction(process, sendBean);
 
 	    return process;
 	}
@@ -647,4 +648,56 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 	}
     }
 
+    static private class EditReceptionEmailMessage extends Activity<ErasmusCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(ErasmusCandidacyProcess process, IUserView userView) {
+	    if (isManager(userView)) {
+		return;
+	    }
+
+	    if (isGriOfficeEmployee(userView)) {
+		return;
+	    }
+
+	    throw new PreConditionNotValidException();
+	}
+
+	@Override
+	protected ErasmusCandidacyProcess executeActivity(ErasmusCandidacyProcess process, IUserView userView, Object object) {
+	    process.editReceptionEmailMessage((SendReceptionEmailBean) object);
+
+	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return false;
+	}
+
+	@Override
+	public Boolean isVisibleForCoordinator() {
+	    return false;
+	}
+
+	@Override
+	public Boolean isVisibleForGriOffice() {
+	    return false;
+	}
+
+    }
+
+    public void editReceptionEmailMessage(SendReceptionEmailBean sendReceptionEmailBean) {
+	if (StringUtils.isEmpty(sendReceptionEmailBean.getEmailSubject())
+		|| StringUtils.isEmpty(sendReceptionEmailBean.getEmailBody())) {
+	    throw new DomainException("error.reception.email.subject.and.body.must.not.be.empty");
+	}
+
+	setReceptionEmailSubject(sendReceptionEmailBean.getEmailSubject());
+	setReceptionEmailBody(sendReceptionEmailBean.getEmailBody());
+    }
+
+    public boolean isReceptionEmailMessageDefined() {
+	return !StringUtils.isEmpty(getReceptionEmailSubject()) && !StringUtils.isEmpty(getReceptionEmailBody());
+    }
 }

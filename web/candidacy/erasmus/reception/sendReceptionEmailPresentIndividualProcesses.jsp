@@ -45,13 +45,24 @@
 	</fr:form> 
 </p>
 <p>
-	<fr:form action='<%= "/caseHandlingErasmusCandidacyProcess.do?method=sendReceptionEmail&amp;processId=" + processId.toString() %>' id="send-form">
+	<fr:form action='<%= "/caseHandlingErasmusCandidacyProcess.do?method=prepareEditReceptionEmailMessage&amp;processId=" + processId.toString() %>' id="edit-message-form">
 		<fr:edit id="send.reception.email.bean" name="sendReceptionEmailBean" visible="false" />
-	
-		<html:link onclick="document.getElementById('send-form').submit()" href="#">
-			<bean:message key="label.erasmus.send.reception.email.action" bundle="ACADEMIC_OFFICE_RESOURCES" />
+		
+		<html:link onclick="document.getElementById('edit-message-form').submit()" href="#">
+			<bean:message key="link.erasmus.edit.reception.email.message" bundle="ACADEMIC_OFFICE_RESOURCES" />
 		</html:link>
 	</fr:form>
+</p>
+<p>
+	<logic:equal name="process" property="receptionEmailMessageDefined" value="true">
+		<fr:form action='<%= "/caseHandlingErasmusCandidacyProcess.do?method=viewEmailToSend&amp;processId=" + processId.toString() %>' id="send-form">
+			<fr:edit id="send.reception.email.bean" name="sendReceptionEmailBean" visible="false" />
+		
+			<html:link onclick="document.getElementById('send-form').submit()" href="#">
+				<bean:message key="label.erasmus.send.reception.email.action" bundle="ACADEMIC_OFFICE_RESOURCES" />
+			</html:link>
+		</fr:form>
+	</logic:equal>
 </p>
 <p>
 	<html:link action='<%= "/caseHandlingErasmusCandidacyProcess.do?method=listProcessAllowedActivities&amp;processId=" + processId.toString() %>'>

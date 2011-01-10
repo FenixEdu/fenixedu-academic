@@ -1,0 +1,1 @@
+alter table `PROCESS` add `RECEPTION_EMAIL_BODY` text, add `RECEPTION_EMAIL_SUBJECT` text;

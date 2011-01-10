@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add reception email fields to Erasmus Candidacy Process" addReceptionEmailFieldsToErasmusCandidacyProcess.sql
