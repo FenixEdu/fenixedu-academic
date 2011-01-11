@@ -2,39 +2,50 @@ package net.sourceforge.fenixedu.domain.personnelSection.contracts;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 
-import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 public class PersonProfessionalData extends PersonProfessionalData_Base {
 
-    public PersonProfessionalData(final Person person, final ContractSituation contractSituation,
-	    final String contractSituationGiafId, final LocalDate contractSituationDate,
-	    final ProfessionalRelation professionalRelation, final String professionalRelationGiafId,
-	    final LocalDate professionalRelationDate, final ProfessionalContractType professionalContractType,
-	    final String professionalContractTypeGiafId, final ProfessionalCategory professionalCategory,
-	    final String professionalCategoryGiafId, final LocalDate professionalCategoryDate,
-	    final ProfessionalRegime professionalRegime, final String professionalRegimeGiafId,
-	    final LocalDate professionalRegimeDate, final DateTime creationDate, final DateTime modifiedDate) {
+    public PersonProfessionalData(Person person) {
 	super();
-	setRootDomainObject(RootDomainObject.getInstance());
 	setPerson(person);
-	setContractSituation(contractSituation);
-	setContractSituationGiafId(contractSituationGiafId);
-	setContractSituationDate(contractSituationDate);
-	setProfessionalRelation(professionalRelation);
-	setProfessionalRelationGiafId(professionalRelationGiafId);
-	setProfessionalRelationDate(professionalRelationDate);
-	setProfessionalContractType(professionalContractType);
-	setProfessionalContractTypeGiafId(professionalContractTypeGiafId);
-	setProfessionalCategory(professionalCategory);
-	setProfessionalCategoryGiafId(professionalCategoryGiafId);
-	setProfessionalCategoryDate(professionalCategoryDate);
-	setProfessionalRegime(professionalRegime);
-	setProfessionalRegimeGiafId(professionalRegimeGiafId);
-	setProfessionalRegimeDate(professionalRegimeDate);
-	setCreationDate(creationDate);
-	setModifiedDate(modifiedDate);
-	setImportationDate(new DateTime());
     }
+
+    @Override
+    protected RootDomainObject getRootDomainObject() {
+	return getPerson().getRootDomainObject();
+    }
+
+    public GiafProfessionalData getGiafProfessionalDataByCategoryType(CategoryType categoryType) {
+	for (GiafProfessionalData giafProfessionalData : getGiafProfessionalDatasSet()) {
+	    if (giafProfessionalData.getProfessionalCategory().getCategoryType().equals(categoryType)) {
+		return giafProfessionalData;
+	    }
+	}
+	return null;
+    }
+
+    public GiafProfessionalData getGiafProfessionalDataByGiafPersonIdentification(String giafPersonIdentification) {
+	for (GiafProfessionalData giafProfessionalData : getGiafProfessionalDatasSet()) {
+	    if (giafProfessionalData.getGiafPersonIdentification().equalsIgnoreCase(giafPersonIdentification)) {
+		return giafProfessionalData;
+	    }
+	}
+	return null;
+    }
+
+    public String getProfessionalCategoryNameByCategoryType(CategoryType categoryType, LocalDate date) {
+	GiafProfessionalData giafProfessionalDataByCategoryType = getGiafProfessionalDataByCategoryType(categoryType);
+	if (giafProfessionalDataByCategoryType != null) {
+	    for (final PersonProfessionalCategory category : giafProfessionalDataByCategoryType.getPersonProfessionalCategories()) {
+		if (category.contains(date)) {
+		    return category.getProfessionalCategory().getName().getContent();
+		}
+	    }
+	}
+	return null;
+    }
+
 }

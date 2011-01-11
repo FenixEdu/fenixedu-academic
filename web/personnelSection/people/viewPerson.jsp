@@ -56,7 +56,7 @@
 
 	<p> 
 		<logic:notEmpty name="person" property="employee">
-	   		<html:link page="<%= "/professionalInformation.do?method=showSituations&personId="+ personID%>" titleKey="link.title.professionalInformation"  bundle="CONTRACTS_RESOURCES">
+	   		<html:link page="<%= "/professionalInformation.do?method=showProfessioanlData&personId="+ personID%>" titleKey="link.title.professionalInformation"  bundle="CONTRACTS_RESOURCES">
 	   			<bean:message key="link.title.professionalInformation" bundle="CONTRACTS_RESOURCES"/>
 	   		</html:link>
 	   		&nbsp;|&nbsp;

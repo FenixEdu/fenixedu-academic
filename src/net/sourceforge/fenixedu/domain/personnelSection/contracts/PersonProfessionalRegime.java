@@ -7,12 +7,12 @@ import org.joda.time.LocalDate;
 
 public class PersonProfessionalRegime extends PersonProfessionalRegime_Base {
 
-    public PersonProfessionalRegime(final PersonProfessionalData personProfessionalData, final LocalDate beginDate,
+    public PersonProfessionalRegime(final GiafProfessionalData giafProfessionalData, final LocalDate beginDate,
 	    final LocalDate endDate, final ProfessionalRegime professionalRegime, final String professionalRegimeGiafId,
 	    final DateTime creationDate, final DateTime modifiedDate) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
-	setPersonProfessionalData(personProfessionalData);
+	setGiafProfessionalData(giafProfessionalData);
 	setBeginDate(beginDate);
 	setEndDate(endDate);
 	setProfessionalRegime(professionalRegime);

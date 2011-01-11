@@ -20,7 +20,7 @@
 
 	<logic:notEmpty name="person" property="employee">
 	   <p> 
-	   	<html:link page="<%= "/professionalInformation.do?method=showSituations&personId="+ personID%>" titleKey="link.title.professionalInformation"  bundle="CONTRACTS_RESOURCES">
+	   	<html:link page="<%= "/professionalInformation.do?method=showProfessioanlData&personId="+ personID%>" titleKey="link.title.professionalInformation"  bundle="CONTRACTS_RESOURCES">
 	   		<bean:message key="link.title.professionalInformation" bundle="CONTRACTS_RESOURCES"/>
 	   	</html:link>
 	   	</p>

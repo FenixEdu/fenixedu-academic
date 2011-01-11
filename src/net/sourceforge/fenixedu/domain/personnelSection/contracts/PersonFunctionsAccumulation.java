@@ -9,13 +9,13 @@ import org.joda.time.LocalDate;
 
 public class PersonFunctionsAccumulation extends PersonFunctionsAccumulation_Base {
 
-    public PersonFunctionsAccumulation(final PersonProfessionalData personProfessionalData, final LocalDate beginDate,
+    public PersonFunctionsAccumulation(final GiafProfessionalData giafProfessionalData, final LocalDate beginDate,
 	    final LocalDate endDate, final BigDecimal hours, final FunctionsAccumulation functionsAccumulation,
 	    final String functionsAccumulationGiafId, final ProfessionalRegime professionalRegime,
 	    final String professionalRegimeGiafId, final DateTime creationDate, final DateTime modifiedDate) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
-	setPersonProfessionalData(personProfessionalData);
+	setGiafProfessionalData(giafProfessionalData);
 	setBeginDate(beginDate);
 	setEndDate(endDate);
 	setHours(hours);

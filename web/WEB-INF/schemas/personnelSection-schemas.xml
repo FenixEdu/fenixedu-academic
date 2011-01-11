@@ -1411,10 +1411,15 @@ constructor="description, state, modifiedBy">
 	<setter signature="editAssiduousnessStatus(description, state, modifiedBy)"/>
 </schema>
 
-<schema name="view.person.personProfessionalData" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData" bundle="CONTRACTS_RESOURCES">
+<schema name="view.person.personProfessionalData" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData" bundle="CONTRACTS_RESOURCES">
 	<slot name="professionalContractType" key="label.type" layout="values" schema="view.professionalContractType.name"/>
+	<slot name="giafPersonIdentification" key="label.giafPersonIdentification" layout="null-as-label"/>
 	<slot name="contractSituation" key="label.situation" layout="values" schema="view.contractSituation.name"/>
 	<slot name="contractSituationDate" key="label.date"/>
+	<slot name="contractSituation" key="label.situation" layout="values" schema="view.contractSituation.name"/>
+	<slot name="contractSituationDate" key="label.date"/>
+	<slot name="terminationSituation" key="label.terminationSituation" layout="values" schema="view.contractSituation.name"/>
+	<slot name="terminationSituationDate" key="label.date"/>
 	<slot name="professionalRelation" key="label.relation" layout="values" schema="view.professionalRelation.name"/>
 	<slot name="professionalRelationDate" key="label.date"/>
 	<slot name="professionalCategory" key="label.category" layout="values" schema="view.professionalCategory.name"/>

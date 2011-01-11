@@ -8,13 +8,13 @@ import org.joda.time.LocalDate;
 
 public class PersonGrantOwnerEquivalent extends PersonGrantOwnerEquivalent_Base {
 
-    public PersonGrantOwnerEquivalent(final PersonProfessionalData personProfessionalData, final LocalDate beginDate,
+    public PersonGrantOwnerEquivalent(final GiafProfessionalData giafProfessionalData, final LocalDate beginDate,
 	    final LocalDate endDate, final String motive, final String local, final String giafCountryName,
 	    final Country country, final GrantOwnerEquivalent grantOwnerEquivalent, final String grantOwnerEquivalentGiafId,
 	    final DateTime creationDate, final DateTime modifiedDate) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
-	setPersonProfessionalData(personProfessionalData);
+	setGiafProfessionalData(giafProfessionalData);
 	setBeginDate(beginDate);
 	setEndDate(endDate);
 	setMotive(motive);

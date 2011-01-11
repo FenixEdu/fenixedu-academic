@@ -7,13 +7,13 @@ import org.joda.time.LocalDate;
 
 public class PersonContractSituation extends PersonContractSituation_Base {
 
-    public PersonContractSituation(final PersonProfessionalData personProfessionalData, final LocalDate beginDate,
+    public PersonContractSituation(final GiafProfessionalData giafProfessionalData, final LocalDate beginDate,
 	    final LocalDate endDate, final String step, final ContractSituation contractSituation,
 	    final String contractSituationGiafId, final ProfessionalCategory professionalCategory,
 	    final String professionalCategoryGiafId, final DateTime creationDate, final DateTime modifiedDate) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
-	setPersonProfessionalData(personProfessionalData);
+	setGiafProfessionalData(giafProfessionalData);
 	setBeginDate(beginDate);
 	setEndDate(endDate);
 	setStep(step);

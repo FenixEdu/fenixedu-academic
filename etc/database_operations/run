@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Giaf Professional Data tables" giafProfessionalData.sql

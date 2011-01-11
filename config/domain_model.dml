@@ -6208,6 +6208,10 @@ class personnelSection.contracts.ProfessionalContractType extends DomainObject {
 }
 
 class personnelSection.contracts.PersonProfessionalData extends DomainObject {
+}
+
+class personnelSection.contracts.GiafProfessionalData extends DomainObject {
+	String giafPersonIdentification;
 	String contractSituationGiafId;
 	LocalDate contractSituationDate;
 	String professionalRelationGiafId;
@@ -6217,6 +6221,8 @@ class personnelSection.contracts.PersonProfessionalData extends DomainObject {
 	LocalDate professionalCategoryDate;
     String professionalRegimeGiafId;
     LocalDate professionalRegimeDate;
+    String terminationSituationGiafId;
+	LocalDate terminationSituationDate;
     DateTime creationDate;
     DateTime modifiedDate;
     DateTime importationDate;
@@ -16822,87 +16828,100 @@ relation PersonProfessionalDataPerson {
     personnelSection.contracts.PersonProfessionalData playsRole personProfessionalData;
 }
 
-
-relation PersonProfessionalContractPersonProfessionalData {
+relation GiafProfessionalDataPersonProfessionalData {
     personnelSection.contracts.PersonProfessionalData playsRole personProfessionalData;
+    personnelSection.contracts.GiafProfessionalData playsRole giafProfessionalDatas {
+        multiplicity *;
+    }
+}
+
+relation PersonProfessionalContractGiafProfessionalData {
+    personnelSection.contracts.GiafProfessionalData playsRole giafProfessionalData;
     personnelSection.contracts.PersonProfessionalContract playsRole personProfessionalContracts {
         multiplicity *;
     }
 }
 
 relation PersonProfessionalContractSituationPersonProfessionalContract {
-    personnelSection.contracts.PersonProfessionalData playsRole personProfessionalData;
+    personnelSection.contracts.GiafProfessionalData playsRole giafProfessionalData;
     personnelSection.contracts.PersonContractSituation playsRole personContractSituations {
         multiplicity *;
     }
 }
 
-relation PersonProfessionalCategoryPersonProfessionalData {
-    personnelSection.contracts.PersonProfessionalData playsRole personProfessionalData;
+relation PersonProfessionalCategoryGiafProfessionalData {
+    personnelSection.contracts.GiafProfessionalData playsRole giafProfessionalData;
     personnelSection.contracts.PersonProfessionalCategory playsRole personProfessionalCategories {
         multiplicity *;
     }
 }
 
-relation PersonProfessionalRegimePersonProfessionalData {
-    personnelSection.contracts.PersonProfessionalData playsRole personProfessionalData;
+relation PersonProfessionalRegimeGiafProfessionalData {
+    personnelSection.contracts.GiafProfessionalData playsRole giafProfessionalData;
     personnelSection.contracts.PersonProfessionalRegime playsRole personProfessionalRegimes {
         multiplicity *;
     }
 }
 
-relation PersonProfessionalRelationPersonProfessionalData {
-    personnelSection.contracts.PersonProfessionalData playsRole personProfessionalData;
+relation PersonProfessionalRelationGiafProfessionalData {
+    personnelSection.contracts.GiafProfessionalData playsRole giafProfessionalData;
     personnelSection.contracts.PersonProfessionalRelation playsRole personProfessionalRelations {
         multiplicity *;
     }
 }
 
-relation PersonProfessionalExemptionPersonProfessionalData {
-    personnelSection.contracts.PersonProfessionalData playsRole personProfessionalData;
+relation PersonProfessionalExemptionGiafProfessionalData {
+    personnelSection.contracts.GiafProfessionalData playsRole giafProfessionalData;
     personnelSection.contracts.PersonProfessionalExemption playsRole personProfessionalExemptions {
         multiplicity *;
     }
 }
 
-relation PersonFunctionsAccumulationPersonProfessionalData {
-    personnelSection.contracts.PersonProfessionalData playsRole personProfessionalData;
+relation PersonFunctionsAccumulationGiafProfessionalData {
+    personnelSection.contracts.GiafProfessionalData playsRole giafProfessionalData;
     personnelSection.contracts.PersonFunctionsAccumulation playsRole personFunctionsAccumulations {
         multiplicity *;
     }
 }
 
-relation PersonProfessionalDataContractSituation {
+relation GiafProfessionalDataContractSituation {
     personnelSection.contracts.ContractSituation playsRole contractSituation;
-    personnelSection.contracts.PersonProfessionalData playsRole personsProfessionalData {
+    personnelSection.contracts.GiafProfessionalData playsRole giafProfessionalData {
         multiplicity *;
     }
 }
 
-relation PersonProfessionalDataProfessionalRelation {
+relation GiafProfessionalDataTerminationSituation {
+    personnelSection.contracts.ContractSituation playsRole terminationSituation;
+    personnelSection.contracts.GiafProfessionalData playsRole giafProfessionalDataTerminationSituation {
+        multiplicity *;
+    }
+}
+
+relation GiafProfessionalDataProfessionalRelation {
     personnelSection.contracts.ProfessionalRelation playsRole professionalRelation;
-    personnelSection.contracts.PersonProfessionalData playsRole personsProfessionalData {
+    personnelSection.contracts.GiafProfessionalData playsRole giafProfessionalData {
         multiplicity *;
     }
 }
 
-relation PersonProfessionalDataProfessionalContractType {
+relation GiafProfessionalDataProfessionalContractType {
     personnelSection.contracts.ProfessionalContractType playsRole professionalContractType;
-    personnelSection.contracts.PersonProfessionalData playsRole personsProfessionalData {
+    personnelSection.contracts.GiafProfessionalData playsRole giafProfessionalData {
         multiplicity *;
     }
 }
 
-relation PersonProfessionalDataProfessionalCategory {
+relation GiafProfessionalDataProfessionalCategory {
     personnelSection.contracts.ProfessionalCategory playsRole professionalCategory;
-    personnelSection.contracts.PersonProfessionalData playsRole personsProfessionalData {
+    personnelSection.contracts.GiafProfessionalData playsRole giafProfessionalData {
         multiplicity *;
     }
 }
 
-relation PersonProfessionalDataProfessionalRegime {
+relation GiafProfessionalDataProfessionalRegime {
     personnelSection.contracts.ProfessionalRegime playsRole professionalRegime;
-    personnelSection.contracts.PersonProfessionalData playsRole personsProfessionalData {
+    personnelSection.contracts.GiafProfessionalData playsRole giafProfessionalData {
         multiplicity *;
     }
 }
@@ -18446,9 +18465,9 @@ relation FormationExecutionYear {
     }
 }
 
-relation PersonProfessionalDataRootDomainObject {
+relation GiafProfessionalDataRootDomainObject {
     RootDomainObject playsRole rootDomainObject;
-    personnelSection.contracts.PersonProfessionalData playsRole personsProfessionalData {
+    personnelSection.contracts.GiafProfessionalData playsRole giafProfessionalData {
         multiplicity *;
     }
 }
