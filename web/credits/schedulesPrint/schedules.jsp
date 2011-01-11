@@ -23,9 +23,9 @@
 </table>
 
 <h3><bean:message key="label.degree.professorships" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
-<logic:notEmpty name="professorshipDTOs">
-	<logic:iterate id="professorshipDTO" name="professorshipDTOs" indexId="indexProfessorship">
-		<bean:define id="professorship" name="professorshipDTO" property="professorship"/>
+<logic:notEmpty name="professorships">
+	<logic:iterate id="professorship" name="professorships" indexId="indexProfessorship">
+		
 		<p class="mbottom05"><strong>					
 			<bean:write name="professorship" property="executionCourse.nome"/>				
 			(<bean:write name="professorship" property="degreeSiglas"/>)
