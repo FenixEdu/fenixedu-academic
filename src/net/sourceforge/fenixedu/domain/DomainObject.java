@@ -4,6 +4,8 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Comparator;
 
@@ -11,8 +13,11 @@ import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.pstm.Transaction;
 import pt.utl.ist.fenix.tools.util.StringAppender;
+import dml.DomainClass;
+import dml.DomainModel;
 
 /**
  * @author jpvl
@@ -53,6 +58,7 @@ public abstract class DomainObject extends DomainObject_Base {
     protected final void deleteDomainObject() {
 	if (!checkDisconnected()) {
 	    if (ERROR_IF_DELETED_OBJECT_NOT_DISCONNECTED) {
+		displayConnectedRole();
 		throw new Error("Trying to delete a DomainObject that is still connected to other objects: " + this);
 	    } else {
 		System.err.println("WARNING: Deleting a DomainObject that is still connected to other objects: " + this);
@@ -60,6 +66,35 @@ public abstract class DomainObject extends DomainObject_Base {
 	}
 
 	Transaction.deleteObject(this);
+    }
+
+    /*
+     * This method is ugly but very useful when attempting to delete objects with allot of roles.
+     * If you have some free time on your hands think about doing this with the base code generator.
+     */
+    private void displayConnectedRole() {
+	final DomainModel domainModel = FenixFramework.getDomainModel();
+	final DomainClass domainClass = domainModel.findClass(getClass().getName());
+	for (final dml.Role role : domainClass.getRoleSlotsList()) {
+	    final String roleName = role.getName();
+	    try {
+		final Method method = getClass().getMethod("get" + Character.toUpperCase(roleName.charAt(0)) + roleName.substring(1));
+		final Object result = method.invoke(this);
+		if (result != null && (!(result instanceof Collection) || !((Collection) result).isEmpty())) {
+		    System.out.println("Still connected to " + roleName);
+		}
+	    } catch (SecurityException e) {
+		e.printStackTrace();
+	    } catch (NoSuchMethodException e) {
+		e.printStackTrace();
+	    } catch (IllegalArgumentException e) {
+		e.printStackTrace();
+	    } catch (IllegalAccessException e) {
+		e.printStackTrace();
+	    } catch (InvocationTargetException e) {
+		e.printStackTrace();
+	    }
+	}
     }
 
     protected String getCurrentUser() {
