@@ -1985,6 +1985,9 @@ class DomainObject {
                     Money pastDegreeGratuityAmount;
                 }
 
+                class accounting.events.gratuity.SpecializationDegreeGratuityEvent extends accounting.events.gratuity.GratuityEvent {
+                }
+
             class accounting.events.insurance.InsuranceEvent extends accounting.events.AnnualEvent {
             }
 
@@ -1993,8 +1996,11 @@ class DomainObject {
 
         class accounting.events.dfa.DFACandidacyEvent extends accounting.AcademicEvent {
         }
-
+        
         class accounting.events.dfa.DfaRegistrationEvent extends accounting.AcademicEvent {
+        }
+        
+        class accounting.events.specializationDegree.SpecializationDegreeRegistrationEvent extends accounting.AcademicEvent {
         }
 
         class accounting.events.serviceRequests.AcademicServiceRequestEvent extends accounting.AcademicEvent {
@@ -2332,6 +2338,9 @@ class DomainObject {
                     class accounting.postingRules.dfa.DfaRegistrationPR extends accounting.postingRules.FixedAmountWithPenaltyPR {
                     }
                     
+                    class accounting.postingRules.specializationDegree.SpecializationDegreeRegistrationPR extends accounting.postingRules.FixedAmountWithPenaltyPR {
+                    }
+                    
                 class accounting.postingRules.serviceRequests.DeclarationRequestPR extends accounting.postingRules.FixedAmountPR {
                 }
 
@@ -2365,6 +2374,15 @@ class DomainObject {
                 }
     
                 class accounting.postingRules.gratuity.DFAGratuityByNumberOfEnrolmentsPR extends accounting.postingRules.gratuity.DFAGratuityPR {
+                }
+            
+            class accounting.postingRules.gratuity.SpecializationDegreeGratuityPR extends accounting.postingRules.GenericSingleEntryTypePR {
+            	BigDecimal specializationDegreePartialAcceptedPercentage;
+            	Money specializationDegreeTotalAmount;
+            }
+
+                class accounting.postingRules.gratuity.SpecializationDegreeGratuityByAmountPerEctsPR extends accounting.postingRules.gratuity.SpecializationDegreeGratuityPR {
+                    Money specializationDegreeAmountPerEctsCredit;
                 }
     
             class accounting.postingRules.gratuity.GratuityWithPaymentPlanPR extends accounting.postingRules.GenericSingleEntryTypePR {
@@ -10186,6 +10204,11 @@ relation DfaRegistrationEventExecutionYear {
 	accounting.events.dfa.DfaRegistrationEvent playsRole dfaRegistrationEvents {
 		multiplicity *;
 	}
+}
+
+relation SpecializationDegreeRegistrationEventRegistration {
+	student.Registration playsRole registration;
+	accounting.events.specializationDegree.SpecializationDegreeRegistrationEvent playsRole specializationDegreeRegistrationEvent;
 }
 
 relation DistributedTestQuestions {

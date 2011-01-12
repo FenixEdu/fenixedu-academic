@@ -1,0 +1,116 @@
+package net.sourceforge.fenixedu.domain.accounting.events.gratuity;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+
+import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
+import net.sourceforge.fenixedu.dataTransferObject.accounting.SibsTransactionDetailDTO;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
+import net.sourceforge.fenixedu.domain.accounting.Entry;
+import net.sourceforge.fenixedu.domain.accounting.EntryType;
+import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
+import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.util.Money;
+
+import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
+
+public class SpecializationDegreeGratuityEvent extends SpecializationDegreeGratuityEvent_Base {
+
+    protected SpecializationDegreeGratuityEvent() {
+	super();
+    }
+
+    public SpecializationDegreeGratuityEvent(AdministrativeOffice administrativeOffice, Person person,
+	    StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
+	this();
+
+	checkRulesToCreate(studentCurricularPlan);
+
+	init(administrativeOffice, person, studentCurricularPlan, executionYear);
+    }
+
+    private void checkRulesToCreate(StudentCurricularPlan studentCurricularPlan) {
+	if (studentCurricularPlan.getDegreeType() != DegreeType.BOLONHA_SPECIALIZATION_DEGREE) {
+	    throw new DomainException(
+		    "error.net.sourceforge.fenixedu.domain.accounting.events.gratuity.SpecializationDegreeGratuityEvent.invalid.degreeType");
+	}
+    }
+
+    @Override
+    public boolean canApplyExemption(final GratuityExemptionJustificationType justificationType) {
+	if (isCustomEnrolmentModel()) {
+	    return justificationType == GratuityExemptionJustificationType.OTHER_INSTITUTION
+		    || justificationType == GratuityExemptionJustificationType.DIRECTIVE_COUNCIL_AUTHORIZATION;
+
+	}
+
+	return true;
+    }
+
+    @Override
+    protected List<AccountingEventPaymentCode> updatePaymentCodes() {
+	final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
+
+	if (!getNonProcessedPaymentCodes().isEmpty()) {
+	    getNonProcessedPaymentCodes().get(0).update(new YearMonthDay(), calculatePaymentCodeEndDate(),
+		    entryDTO.getAmountToPay(), entryDTO.getAmountToPay());
+	}
+
+	return getNonProcessedPaymentCodes();
+    }
+
+    @Override
+    protected List<AccountingEventPaymentCode> createPaymentCodes() {
+	final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
+
+	return Collections.singletonList(AccountingEventPaymentCode.create(PaymentCodeType.TOTAL_GRATUITY, new YearMonthDay(),
+		calculatePaymentCodeEndDate(), this, entryDTO.getAmountToPay(), entryDTO.getAmountToPay(), getStudent()
+			.getPerson()));
+    }
+
+    private Student getStudent() {
+	return getStudentCurricularPlan().getRegistration().getStudent();
+    }
+
+    private YearMonthDay calculatePaymentCodeEndDate() {
+	return calculateNextEndDate(new YearMonthDay());
+    }
+
+    @Override
+    public boolean isExemptionAppliable() {
+	return true;
+    }
+
+    @Override
+    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
+	    SibsTransactionDetailDTO transactionDetail) {
+	return internalProcess(responsibleUser, Collections
+		.singletonList(new EntryDTO(EntryType.GRATUITY_FEE, this, amountToPay)), transactionDetail);
+    }
+
+    @Override
+    public boolean isOtherPartiesPaymentsSupported() {
+	return true;
+    }
+
+    static public Set<AccountingTransaction> readPaymentsFor(final YearMonthDay startDate, final YearMonthDay endDate) {
+	return readPaymentsFor(SpecializationDegreeGratuityEvent.class, startDate, endDate);
+
+    }
+
+    @Override
+    public Set<EntryType> getPossibleEntryTypesForDeposit() {
+	return Collections.singleton(EntryType.GRATUITY_FEE);
+    }
+
+}

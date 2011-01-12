@@ -94,6 +94,11 @@
 	bundle="APPLICATION_RESOURCES" extends="FixedAmountWithPenaltyPR.view">
 </schema>
 
+<schema name="SpecializationDegreeRegistrationPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.specializationDegree.SpecializationDegreeRegistrationPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountWithPenaltyPR.view">
+</schema>
+
 <schema name="PhdRegistrationFeePR.view"
 	type="net.sourceforge.fenixedu.domain.phd.debts.PhdRegistrationFeePR"
 	bundle="APPLICATION_RESOURCES" extends="FixedAmountWithPenaltyPR.view">
@@ -133,6 +138,22 @@
 	</slot>
 </schema>
 
+<schema name="SpecializationDegreeGratuityPR.view" 
+		type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.SpecializationDegreeGratuityPR"  
+		extends="PostingRule.view" bundle="APPLICATION_RESOURCES">
+	<slot name="specializationDegreeTotalAmount" />
+	<slot name="specializationDegreePartialAcceptedPercentage" />
+</schema>
+
+<schema name="SpecializationDegreeGratuityByAmountPerEctsPR.view" 
+		type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.SpecializationDegreeGratuityByAmountPerEctsPR"  
+		extends="SpecializationDegreeGratuityPR.view" bundle="APPLICATION_RESOURCES">
+	<slot name="class.name" layout="slot-as-label" read-only="true">
+		<property name="bundle" value="APPLICATION_RESOURCES" />
+	</slot>
+	<slot name="specializationDegreeAmountPerEctsCredit" />
+</schema>
+
 <schema name="DFAGratuityPREditor.edit" 
 		type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityPR$DFAGratuityPREditor"
 		bundle="APPLICATION_RESOURCES">
@@ -167,6 +188,34 @@
 		bundle="APPLICATION_RESOURCES">
 	<slot name="dfaGratuityPR.class.name" layout="slot-as-label" read-only="true" key="label.class.name">
 		<property name="bundle" value="APPLICATION_RESOURCES" />
+	</slot>
+</schema>
+
+<schema name="SpecializationDegreeGratuityPREditor.edit" 
+		type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.SpecializationDegreeGratuityPR$SpecializationDegreeGratuityPREditor"
+		bundle="APPLICATION_RESOURCES">
+	<slot name="beginDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	
+	<slot name="specializationDegreeTotalAmount" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    	<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	<slot name="specializationDegreePartialAcceptedPercentage" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    	<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+</schema>
+
+<schema name="SpecializationDegreeGratuityByAmountPerEctsPREditor.edit" 
+		type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.SpecializationDegreeGratuityByAmountPerEctsPR$SpecializationDegreeGratuityByAmountPerEctsPREditor"
+		extends="SpecializationDegreeGratuityPREditor.edit"
+		bundle="APPLICATION_RESOURCES">
+	<slot name="specializationDegreeGratuityPR.class.name" layout="slot-as-label" read-only="true" key="label.class.name">
+		<property name="bundle" value="APPLICATION_RESOURCES" />
+	</slot>
+	<slot name="specializationDegreeAmountPerEctsCredit" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    	<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
 	</slot>
 </schema>
 
@@ -346,6 +395,11 @@
 	bundle="APPLICATION_RESOURCES" extends="FixedAmountWithPenaltyPR.edit">
 </schema>
 
+<schema name="SpecializationDegreeRegistrationPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.specializationDegree.SpecializationDegreeRegistrationPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountWithPenaltyPR.edit">
+</schema>
+
 <schema name="PhdRegistrationFeePR.edit"
 	type="net.sourceforge.fenixedu.domain.phd.debts.PhdRegistrationFeePR"
 	bundle="APPLICATION_RESOURCES" extends="FixedAmountWithPenaltyPR.edit">
@@ -497,7 +551,14 @@
 <schema name="DFACandidacyPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.dfa.DFACandidacyPR" extends="FixedAmountWithPenaltyPR.view-student" bundle="APPLICATION_RESOURCES">
 </schema>
 
-<schema name="DfaRegistrationPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.dfa.DfaRegistrationPR" extends="FixedAmountWithPenaltyPR.view-student" bundle="APPLICATION_RESOURCES">
+<schema name="DfaRegistrationPR.view-student" 
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.dfa.DfaRegistrationPR" 
+	extends="FixedAmountWithPenaltyPR.view-student" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="SpecializationDegreeRegistrationPR.view-student"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.specializationDegree.SpecializationDegreeRegistrationPR"
+	extends="FixedAmountWithPenaltyPR.view-student" bundle="APPLICATION_RESOURCES">
 </schema>
 
 <schema name="PhdRegistrationFeePR.view-student" type="net.sourceforge.fenixedu.domain.phd.debts.PhdRegistrationFeePR" extends="FixedAmountWithPenaltyPR.view-student" bundle="APPLICATION_RESOURCES">
@@ -615,6 +676,37 @@
 		type="net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateDFAGratuityPostingRuleBean" 
 		bundle="APPLICATION_RESOURCES"
 		extends="CreateDFAGratuityPostingRuleBean.edit-DFAGratuityByNumberOfEnrolmentsPR">
+	<slot name="amountPerEctsCredit" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    	<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+</schema>
+
+<schema name="CreateSpecializationDegreeGratuityPostingRuleBean.choose-type" 
+		type="net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateSpecializationDegreeGratuityPostingRuleBean" 
+		bundle="APPLICATION_RESOURCES">
+	<slot name="rule" layout="menu-select" key="label.class.name">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.accounting.postingRules.gratuity.SpecializationDegreeGratuityPRTypeProvider"/>
+		<property name="format" value="${name}"/>
+		<property name="eachSchema" value="ClassName.view.as.label"/>
+		<property name="eachLayout" value="values" />
+	</slot>
+</schema>
+
+<schema name="CreateSpecializationDegreeGratuityPostingRuleBean.edit-SpecializationDegreeGratuityByAmountPerEctsPR" 
+		type="net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateSpecializationDegreeGratuityPostingRuleBean" 
+		bundle="APPLICATION_RESOURCES">
+	<slot name="rule.name" layout="slot-as-label" read-only="true" key="label.class.name">
+		<property name="bundle" value="APPLICATION_RESOURCES" />
+	</slot>
+	<slot name="partialAcceptedPercentage" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    	<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	<slot name="totalAmount" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    	<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>		
 	<slot name="amountPerEctsCredit" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
     	<property name="size" value="10"/>
 		<property name="maxLength" value="10"/>

@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.payments;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,6 +17,7 @@ import net.sourceforge.fenixedu.dataTransferObject.accounting.paymentPlan.Instal
 import net.sourceforge.fenixedu.dataTransferObject.accounting.paymentPlan.PaymentPlanBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateDFAGratuityPostingRuleBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateGratuityPostingRuleBean;
+import net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateSpecializationDegreeGratuityPostingRuleBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateStandaloneEnrolmentGratuityPRBean;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -26,9 +28,12 @@ import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityByAmountPerEctsPR;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityByNumberOfEnrolmentsPR;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityPR;
+import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.SpecializationDegreeGratuityByAmountPerEctsPR;
+import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.SpecializationDegreeGratuityPR;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityByAmountPerEctsPR.DFAGratuityByAmountPerEctsPREditor;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityByNumberOfEnrolmentsPR.DFAGratuityByNumberOfEnrolmentsPREditor;
+import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.SpecializationDegreeGratuityByAmountPerEctsPR.SpecializationDegreeGratuityByAmountPerEctsPREditor;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
@@ -54,6 +59,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "viewPostingRuleDetails", path = "/manager/payments/postingRules/management/viewPostingRuleDetails.jsp"),
 	@Forward(name = "createDFAGratuityPR", path = "/manager/payments/postingRules/management/createDFAGratuityPR.jsp"),
 	@Forward(name = "editDFAGratuityPR", path = "/manager/payments/postingRules/management/editDFAGratuityPR.jsp"),
+	@Forward(name = "editSpecializationDegreeGratuityPR", path = "/manager/payments/postingRules/management/specializationDegree/editSpecializationDegreeGratuityPR.jsp"),
 	@Forward(name = "editDegreeCurricularPlanPostingRule", path = "/manager/payments/postingRules/management/editDegreeCurricularPlanPostingRule.jsp"),
 	@Forward(name = "showInsurancePostingRules", path = "/manager/payments/postingRules/management/showInsurancePostingRules.jsp"),
 	@Forward(name = "editInsurancePR", path = "/manager/payments/postingRules/management/editInsurancePR.jsp"),
@@ -62,7 +68,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "createPaymentPlan", path = "/manager/payments/postingRules/management/graduation/createPaymentPlan.jsp"),
 	@Forward(name = "createGraduationGratuityPR", path = "/manager/payments/postingRules/management/graduation/createGraduationGratuityPR.jsp"),
 	@Forward(name = "showGraduationDegreeCurricularPlanPostingRules", path = "/manager/payments/postingRules/management/graduation/showGraduationDegreeCurricularPlanPostingRules.jsp"),
-	@Forward(name = "createGraduationStandaloneEnrolmentGratuityPR", path = "/manager/payments/postingRules/management/graduation/createGraduationStandaloneEnrolmentGratuityPR.jsp")
+	@Forward(name = "createGraduationStandaloneEnrolmentGratuityPR", path = "/manager/payments/postingRules/management/graduation/createGraduationStandaloneEnrolmentGratuityPR.jsp"),
+	@Forward(name = "createSpecializationDegreeGratuityPR", path = "/manager/payments/postingRules/management/specializationDegree/createSpecializationDegreeGratuityPR.jsp")
 
 })
 public class PostingRulesManagementDA extends FenixDispatchAction {
@@ -90,9 +97,10 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
     public ActionForward managePostGraduationRules(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final Set<DegreeType> degreeTypes = new HashSet<DegreeType>(2);
+	final Set<DegreeType> degreeTypes = new HashSet<DegreeType>(3);
 	degreeTypes.add(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA);
 	degreeTypes.add(DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA);
+	degreeTypes.add(DegreeType.BOLONHA_SPECIALIZATION_DEGREE);
 
 	request.setAttribute("degreeCurricularPlans", DegreeCurricularPlan.readByDegreeTypesAndState(degreeTypes,
 		DegreeCurricularPlanState.ACTIVE));
@@ -124,6 +132,8 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
 
 	if (postingRule instanceof DFAGratuityPR) {
 	    return prepareEditDFAGratuityPR(mapping, form, request, response);
+	} else if (postingRule instanceof SpecializationDegreeGratuityPR) {
+	    return prepareEditSpecializationDegreeGratuityPR(mapping, form, request, response);
 	}
 
 	request.setAttribute("degreeCurricularPlan", getDegreeCurricularPlan(request));
@@ -169,6 +179,43 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward editDFAGratuityPR(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+	try {
+
+	    executeFactoryMethod((FactoryExecutor) getRenderedObject("postingRuleEditor"));
+	    request.setAttribute("degreeCurricularPlanId", getDegreeCurricularPlan(request).getIdInternal());
+
+	    return showPostGraduationDegreeCurricularPlanPostingRules(mapping, form, request, response);
+
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getKey(), e.getArgs());
+	    request.setAttribute("postingRuleEditor", getRenderedObject());
+	    return mapping.findForward("editDegreeCurricularPlanPostingRule");
+	}
+    }
+
+    public ActionForward prepareEditSpecializationDegreeGratuityPR(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("degreeCurricularPlan", getDegreeCurricularPlan(request));
+
+	final PostingRule rule = getPostingRule(request);
+	request.setAttribute("postingRuleEditor", SpecializationDegreeGratuityByAmountPerEctsPREditor
+		.buildFrom((SpecializationDegreeGratuityByAmountPerEctsPR) rule));
+
+	return mapping.findForward("editSpecializationDegreeGratuityPR");
+    }
+
+    public ActionForward prepareEditSpecializationDegreeGratuityPRInvalid(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	request.setAttribute("degreeCurricularPlan", getDegreeCurricularPlan(request));
+	request.setAttribute("postingRuleEditor", getRenderedObject("postingRuleEditor"));
+
+	return mapping.findForward("editSpecializationDegreeGratuityPR");
+    }
+
+    public ActionForward editSpecializationDegreeGratuityPR(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	try {
@@ -447,10 +494,15 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
 	return mapping.findForward("showPostGraduationDegreeCurricularPlanPostingRules");
     }
 
+    private static final List<DegreeType> CREATE_GRATUITIES_DEGREE_TYPES = Arrays.asList(new DegreeType[] {
+	    DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA, DegreeType.BOLONHA_SPECIALIZATION_DEGREE });
+
     private boolean allowCreateGratuityPR(final DegreeCurricularPlan degreeCurricularPlan) {
-	// TODO: temporay until DEAs support gratuity types
-	return degreeCurricularPlan.getDegreeType() == DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA
-		&& !degreeCurricularPlan.getServiceAgreementTemplate().hasActivePostingRuleFor(EventType.GRATUITY);
+	if (!CREATE_GRATUITIES_DEGREE_TYPES.contains(degreeCurricularPlan.getDegreeType())) {
+	    return false;
+	}
+
+	return !degreeCurricularPlan.getServiceAgreementTemplate().hasActivePostingRuleFor(EventType.GRATUITY);
     }
 
     public ActionForward showGraduationDegreeCurricularPlanPostingRules(ActionMapping mapping, ActionForm form,
@@ -524,6 +576,8 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
 	return showGraduationDegreeCurricularPlanPostingRules(mapping, form, request, response);
     }
 
+    /* DFA Gratuity Posting Rule */
+
     public ActionForward prepareCreateDFAGratuityPR(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
@@ -575,6 +629,62 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
 
     private CreateDFAGratuityPostingRuleBean getCreateDFAGratuityPostingRuleBeanFromRequest() {
 	return (CreateDFAGratuityPostingRuleBean) getObjectFromViewState("createDFAGratuityPostingRuleBean");
+    }
+
+    /* Specialization Degree Gratuity Posting Rule */
+
+    public ActionForward prepareCreateSpecializationDegreeGratuityPR(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
+
+	request.setAttribute("createSpecializationDegreeGratuityPostingRuleBean",
+		new CreateSpecializationDegreeGratuityPostingRuleBean(degreeCurricularPlan.getServiceAgreementTemplate()));
+
+	return mapping.findForward("createSpecializationDegreeGratuityPR");
+    }
+
+    public ActionForward prepareCreateSpecializationDegreeGratuityPRTypeChosen(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request
+		.setAttribute(
+			"createSpecializationDegreeGratuityPostingRuleBean",
+			(CreateSpecializationDegreeGratuityPostingRuleBean) getObjectFromViewState("createSpecializationDegreeGratuityPostingRuleBean.chooseType"));
+
+	RenderUtils.invalidateViewState();
+
+	return mapping.findForward("createSpecializationDegreeGratuityPR");
+    }
+
+    public ActionForward prepareCreateSpecializationDegreeGratuityPRInvalid(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("createSpecializationDegreeGratuityPostingRuleBean",
+		getCreateSpecializationDegreeGratuityPostingRuleBeanFromRequest());
+	return mapping.findForward("createSpecializationDegreeGratuityPR");
+    }
+
+    public ActionForward createSpecializationDegreeGratuityPR(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+	try {
+	    PostingRulesManager
+		    .createSpecializationDegreeGratuityPostingRule(getCreateSpecializationDegreeGratuityPostingRuleBeanFromRequest());
+	} catch (DomainException ex) {
+	    addActionMessage(request, ex.getKey(), ex.getArgs());
+
+	    request.setAttribute("createSpecializationDegreeGratuityPostingRuleBean",
+		    getCreateSpecializationDegreeGratuityPostingRuleBeanFromRequest());
+
+	    return mapping.findForward("createSpecializationDegreeGratuityPR");
+	}
+
+	request.setAttribute("degreeCurricularPlanId", getCreateSpecializationDegreeGratuityPostingRuleBeanFromRequest()
+		.getDegreeCurricularPlan().getIdInternal());
+
+	return showPostGraduationDegreeCurricularPlanPostingRules(mapping, form, request, response);
+    }
+
+    private CreateSpecializationDegreeGratuityPostingRuleBean getCreateSpecializationDegreeGratuityPostingRuleBeanFromRequest() {
+	return (CreateSpecializationDegreeGratuityPostingRuleBean) getObjectFromViewState("createSpecializationDegreeGratuityPostingRuleBean");
     }
 
 }

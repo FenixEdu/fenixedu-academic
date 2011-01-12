@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.DfaGratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
+import net.sourceforge.fenixedu.domain.accounting.events.gratuity.SpecializationDegreeGratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.StandaloneEnrolmentGratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
@@ -29,10 +30,10 @@ public class AccountingEventsManager {
 
     private final List<DegreeType> acceptedDegreeTypesForGratuityEvent = Arrays.asList(new DegreeType[] { DegreeType.DEGREE,
 	    DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE,
-	    DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA });
+	    DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA, DegreeType.BOLONHA_SPECIALIZATION_DEGREE });
 
-    private final List<DegreeType> acceptedDegreeTypesForInsuranceEvent = Arrays
-	    .asList(new DegreeType[] { DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA });
+    private final List<DegreeType> acceptedDegreeTypesForInsuranceEvent = Arrays.asList(new DegreeType[] {
+	    DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA, DegreeType.BOLONHA_SPECIALIZATION_DEGREE });
 
     public InvocationResult createStandaloneEnrolmentGratuityEvent(final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionYear executionYear) {
@@ -82,6 +83,8 @@ public class AccountingEventsManager {
 
 	if (studentCurricularPlan.getDegreeType() == DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA) {
 	    return createDfaGratuityEvent(studentCurricularPlan, executionYear, checkConditions);
+	} else if (studentCurricularPlan.getDegreeType() == DegreeType.BOLONHA_SPECIALIZATION_DEGREE) {
+	    return createSpecializationDegreeGratuityEvent(studentCurricularPlan, executionYear, checkConditions);
 	} else if (studentCurricularPlan.getDegreeType() == DegreeType.EMPTY) {
 	    return createStandaloneEnrolmentGratuityEvent(studentCurricularPlan, executionYear);
 	}
@@ -116,6 +119,30 @@ public class AccountingEventsManager {
 
 	return result;
 
+    }
+
+    private InvocationResult createSpecializationDegreeGratuityEvent(StudentCurricularPlan studentCurricularPlan,
+	    ExecutionYear executionYear, boolean checkConditions) {
+
+	final InvocationResult result = checkConditions ? verifyConditionsToCreateGratuityEvent(executionYear,
+		studentCurricularPlan) : InvocationResult.createSuccess();
+
+	if (result.isSuccess()) {
+	    if (studentCurricularPlan.getRegistration().hasGratuityEvent(executionYear, SpecializationDegreeGratuityEvent.class)) {
+		result.addMessage(LabelFormatter.APPLICATION_RESOURCES, studentCurricularPlan.getRegistration().getStudent()
+			.getNumber().toString(), studentCurricularPlan.getRegistration().getDegree().getPresentationName(),
+			executionYear.getYear());
+
+		result.setSuccess(false);
+
+		return result;
+	    }
+
+	    new SpecializationDegreeGratuityEvent(getAdministrativeOffice(studentCurricularPlan), studentCurricularPlan
+		    .getPerson(), studentCurricularPlan, executionYear);
+	}
+
+	return result;
     }
 
     private InvocationResult createGratuityEventWithPaymentPlan(final StudentCurricularPlan studentCurricularPlan,
@@ -359,5 +386,4 @@ public class AccountingEventsManager {
 
 	return result;
     }
-
 }

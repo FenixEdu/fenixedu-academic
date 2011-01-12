@@ -5,6 +5,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
+<%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %>
+
 <logic:present role="MANAGER">
 
 	<h2><bean:message key="label.payments.postingRules.degreeCurricularPlan.rulesFor"
@@ -60,13 +62,23 @@
 	<br />
 
 	<logic:equal name="allowCreateGratuityPR" value="true">
-		<html:link
-			action="<%="/postingRules.do?method=prepareCreateDFAGratuityPR&amp;degreeCurricularPlanId=" + degreeCurricularPlanId %>">
-			<bean:message key="label.payments.postingRules.createDFAGratuityPR"
-				bundle="MANAGER_RESOURCES" />
-		</html:link>
-		<br />
-		<br />
+		<logic:equal name="degreeCurricularPlan" property="degreeType" value="<%= DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA.name() %>">
+			<html:link
+				action="<%="/postingRules.do?method=prepareCreateDFAGratuityPR&amp;degreeCurricularPlanId=" + degreeCurricularPlanId %>">
+				<bean:message key="label.payments.postingRules.createDFAGratuityPR"
+					bundle="MANAGER_RESOURCES" />
+			</html:link>
+			<br />
+		</logic:equal>
+		
+		<logic:equal name="degreeCurricularPlan" property="degreeType" value="<%= DegreeType.BOLONHA_SPECIALIZATION_DEGREE.name() %>">
+			<html:link
+				action="<%="/postingRules.do?method=prepareCreateSpecializationDegreeGratuityPR&amp;degreeCurricularPlanId=" + degreeCurricularPlanId %>">
+				<bean:message key="label.payments.postingRules.createSpecializationDegreeGratuityPR"
+					bundle="MANAGER_RESOURCES" />
+			</html:link>
+			<br />		
+		</logic:equal>
 	</logic:equal>
 
 

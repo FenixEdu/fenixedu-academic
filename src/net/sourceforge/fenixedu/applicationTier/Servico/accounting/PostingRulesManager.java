@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.accounting;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateDFAGratuityPostingRuleBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateGratuityPostingRuleBean;
+import net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateSpecializationDegreeGratuityPostingRuleBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateStandaloneEnrolmentGratuityPRBean;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
@@ -11,6 +12,7 @@ import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratu
 import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityByNumberOfEnrolmentsPR;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.PastDegreeGratuityPR;
+import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.SpecializationDegreeGratuityByAmountPerEctsPR;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR;
 
 import org.joda.time.DateTime;
@@ -92,6 +94,17 @@ public class PostingRulesManager {
 		    .getTotalAmount(), bean.getPartialAcceptedPercentage());
 	} else {
 	    throw new RuntimeException("Unexpected rule type for DFA gratuity posting rule");
+	}
+    }
+
+    @Service
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    static public void createSpecializationDegreeGratuityPostingRule(final CreateSpecializationDegreeGratuityPostingRuleBean bean) {
+	if (bean.getRule() == SpecializationDegreeGratuityByAmountPerEctsPR.class) {
+	    new SpecializationDegreeGratuityByAmountPerEctsPR(bean.getStartDate(), null, bean.getServiceAgreementTemplate(), bean
+		    .getTotalAmount(), bean.getPartialAcceptedPercentage(), bean.getAmountPerEctsCredit());
+	} else {
+	    throw new RuntimeException("Unexpected rule type for Specialization Degree gratuity posting rule");
 	}
     }
 
