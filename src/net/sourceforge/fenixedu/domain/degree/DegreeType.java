@@ -537,12 +537,12 @@ public enum DegreeType {
 
 	@Override
 	protected Collection<CycleType> cycleTypes() {
-	    return Collections.emptySet();
+	    return SPECIALIZATION_CYCLE_TYPE;
 	}
 
 	@Override
 	protected Collection<CycleType> supportedCyclesToEnrol() {
-	    return Collections.emptySet();
+	    return SPECIALIZATION_CYCLE_TYPE;
 	}
 
     },
@@ -628,6 +628,8 @@ public enum DegreeType {
     private static final Set<CycleType> SECOND_CYCLE_TYPE = Collections.singleton(CycleType.SECOND_CYCLE);
 
     private static final Set<CycleType> THIRD_CYCLE_TYPE = Collections.singleton(CycleType.THIRD_CYCLE);
+
+    private static final Set<CycleType> SPECIALIZATION_CYCLE_TYPE = Collections.singleton(CycleType.SPECIALIZATION_CYCLE);
 
     private static final List<CycleType> FIRST_AND_SECOND_CYCLE_TYPE = Arrays.asList(new CycleType[] { CycleType.FIRST_CYCLE,
 	    CycleType.SECOND_CYCLE });
@@ -886,6 +888,10 @@ public enum DegreeType {
 
     public boolean isThirdCycle() {
 	return cycleTypes().contains(CycleType.THIRD_CYCLE);
+    }
+
+    public boolean isSpecializationCycle() {
+	return cycleTypes().contains(CycleType.SPECIALIZATION_CYCLE);
     }
 
     final public boolean hasAnyCycleTypes() {

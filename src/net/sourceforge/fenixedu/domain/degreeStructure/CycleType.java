@@ -19,7 +19,9 @@ public enum CycleType {
 
     SECOND_CYCLE(2, FIRST_CYCLE),
 
-    THIRD_CYCLE(3);
+    THIRD_CYCLE(3),
+
+    SPECIALIZATION_CYCLE(4);
 
     static final public Comparator<CycleType> COMPARATOR_BY_LESS_WEIGHT = new Comparator<CycleType>() {
 	public int compare(CycleType o1, CycleType o2) {

@@ -88,6 +88,10 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
 	return getCycleType() == CycleType.THIRD_CYCLE;
     }
 
+    public boolean isSpecializationCycle() {
+	return getCycleType() == CycleType.SPECIALIZATION_CYCLE;
+    }
+
     @Override
     public Collection<CycleCourseGroup> getParentCycleCourseGroups() {
 	return Collections.singletonList(this);

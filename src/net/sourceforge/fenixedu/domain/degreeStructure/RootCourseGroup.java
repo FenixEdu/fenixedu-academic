@@ -36,6 +36,11 @@ public class RootCourseGroup extends RootCourseGroup_Base {
 	    if (courseGroupType.isThirdCycle()) {
 		new CycleCourseGroup(this, "3º Ciclo", "Third Cycle", CycleType.THIRD_CYCLE, executionSemester, null);
 	    }
+
+	    if (courseGroupType.isSpecializationCycle()) {
+		new CycleCourseGroup(this, "Especialização", "Specialization", CycleType.SPECIALIZATION_CYCLE, executionSemester,
+			null);
+	    }
 	}
     }
 
