@@ -3681,6 +3681,37 @@ public class Person extends Person_Base {
 	return result.toString();
     }
 
+    protected static String readAllExternalResearcherInformation() {
+	final RoleType roleType = RoleType.RESEARCHER;
+	final RoleType[] exclusionRoleTypes = new RoleType[] { RoleType.TEACHER }; 
+
+	final Role role = Role.getRoleByRoleType(roleType);
+	final StringBuilder result = new StringBuilder();
+	for (final Person person : role.getAssociatedPersonsSet()) {
+	    if (!hasAnyRole(person, exclusionRoleTypes)) {
+		final Collection<? extends Accountability> accountabilities = person.getParentAccountabilities(AccountabilityTypeEnum.RESEARCH_CONTRACT);
+		final YearMonthDay currentDate = new YearMonthDay();
+		for (final Accountability accountability : accountabilities) {
+		    if (accountability.isActive(currentDate)) {
+			final Unit unit = (Unit) accountability.getParentParty();
+			final Integer costCenterCode = unit.getCostCenterCode();
+			if (costCenterCode != null) {
+			    if (result.length() > 0) {
+				result.append('|');
+			    }
+			    result.append(person.getUsername());
+			    result.append(':');
+			    result.append(roleType.name());
+			    result.append(':');
+			    result.append(costCenterCode);			    
+			}
+		    }
+		}
+	    }
+	}
+	return result.toString();
+    }
+
     private static boolean hasAnyRole(final Person person, final RoleType[] roleTypes) {
 	for (final RoleType roleType : roleTypes) {
 	    if (person.hasRole(roleType)) {
