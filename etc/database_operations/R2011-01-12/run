@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Giaf Professional Data tables" giafProfessionalData.sql
+execute "SpecializationDegree Events fields" addSpecializationDegreeEventFields.sql
