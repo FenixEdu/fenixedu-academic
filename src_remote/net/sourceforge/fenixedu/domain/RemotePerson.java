@@ -37,5 +37,9 @@ public class RemotePerson extends RemotePerson_Base {
     public String readAllGrantOwnerInformation() {
 	return readRemoteMethod("readAllGrantOwnerInformation");
     }
-    
+
+    public String readAllExternalResearcherInformation() {
+	return readRemoteMethod("readAllExternalResearcherInformation");
+    }
+
 }
