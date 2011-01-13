@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaSupplementRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.RegistryDiplomaRequest;
 
@@ -13,6 +14,7 @@ import org.joda.time.LocalDate;
 
 public class RegistryCode extends RegistryCode_Base {
     public static Comparator<RegistryCode> COMPARATOR_BY_CODE = new Comparator<RegistryCode>() {
+	@Override
 	public int compare(RegistryCode o1, RegistryCode o2) {
 	    if (o1.getCode().compareTo(o2.getCode()) != 0) {
 		return o1.getCode().compareTo(o2.getCode());
@@ -43,6 +45,10 @@ public class RegistryCode extends RegistryCode_Base {
     }
 
     protected RegistryCode(InstitutionRegistryCodeGenerator generator, RegistryDiplomaRequest request) {
+	this(generator, request, request.getRequestedCycle());
+    }
+
+    protected RegistryCode(InstitutionRegistryCodeGenerator generator, DiplomaSupplementRequest request) {
 	this(generator, request, request.getRequestedCycle());
     }
 

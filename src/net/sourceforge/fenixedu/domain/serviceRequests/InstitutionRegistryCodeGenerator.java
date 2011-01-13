@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaSupplementRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.RegistryDiplomaRequest;
 
 public class InstitutionRegistryCodeGenerator extends InstitutionRegistryCodeGenerator_Base {
@@ -29,6 +30,10 @@ public class InstitutionRegistryCodeGenerator extends InstitutionRegistryCodeGen
     }
 
     public RegistryCode createRegistryFor(RegistryDiplomaRequest request) {
+	return new RegistryCode(this, request);
+    }
+
+    public RegistryCode createRegistryFor(DiplomaSupplementRequest request) {
 	return new RegistryCode(this, request);
     }
 

@@ -145,11 +145,11 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base {
 		DiplomaRequest diploma = getRegistration().getDiplomaRequest(getRequestedCycle());
 		if (registryRequest != null) {
 		    registryRequest.getRegistryCode().addDocumentRequest(this);
-		} else if (diploma != null) {
+		} else if (diploma != null && diploma.hasRegistryCode()) {
 		    diploma.getRegistryCode().addDocumentRequest(this);
 		} else {
-		    throw new DomainException(
-			    "error.diplomaSupplement.registrationDoesNotHaveEitherRegistryDiplomaOrDiplomaRequest");
+		    getRootDomainObject().getInstitutionUnit().getRegistryCodeGenerator().createRegistryFor(this);
+		    getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
 		}
 		getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
 	    }
