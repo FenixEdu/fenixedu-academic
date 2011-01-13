@@ -1801,7 +1801,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 
 	MarkSheet rectificationMarkSheet = createRectificationMarkSheet(markSheet.getExecutionPeriod(), evaluationDate, markSheet
 		.getResponsibleTeacher(), markSheet.getMarkSheetType(), reason, new MarkSheetEnrolmentEvaluationBean(
-		enrolmentEvaluation.getEnrolment(), evaluationDate, grade), employee);
+			enrolmentEvaluation.getEnrolment(), evaluationDate, grade), employee);
 
 	// Rectification MarkSheet MUST have only ONE EnrolmentEvaluation
 	rectificationMarkSheet.getEnrolmentEvaluations().get(0).setRectified(enrolmentEvaluation);
@@ -2198,10 +2198,12 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public Grade convertGradeToEcts(CurriculumLine curriculumLine, Grade grade) {
-	EctsConversionTable table = getCompetenceCourse().getEctsCourseConversionTable(
-		curriculumLine.getExecutionYear().getAcademicInterval());
-	if (table != null)
-	    return table.convert(grade);
+	if (hasCompetenceCourse()) {
+	    EctsConversionTable table = getCompetenceCourse().getEctsCourseConversionTable(
+		    curriculumLine.getExecutionYear().getAcademicInterval());
+	    if (table != null)
+		return table.convert(grade);
+	}
 	return getDegree().convertGradeToEcts(curriculumLine, grade);
     }
 
