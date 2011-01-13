@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOff
 import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -12,7 +13,6 @@ import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.RegistryDiplomaRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.curriculum.CycleConclusionProcess;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.joda.time.LocalDate;
@@ -31,7 +31,6 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
 	CycleType cycle = request.getRequestedCycle();
 	Person person = request.getPerson();
 	Registration registration = request.getRegistration();
-	CycleConclusionProcess conclusion = registration.getLastStudentCurricularPlan().getCycle(cycle).getConclusionProcess();
 	addParameter("code", request.getRegistryCode().getCode());
 
 	final UniversityUnit university = UniversityUnit.getInstitutionsUniversityUnit();
@@ -44,7 +43,7 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
 	addParameter("idNumber", person.getDocumentIdNumber());
 	addParameter("parishOfBirth", person.getParishOfBirth());
 
-	addParameter("conclusionDay", verboseDate(conclusion.getConclusionDate()));
+	addParameter("conclusionDay", verboseDate(getConclusionDate(registration, cycle)));
 	addParameter("graduateTitle", registration.getGraduateTitle(cycle, getLocale()));
 	Integer finalAverage = registration.getFinalAverage(cycle);
 	addParameter("finalAverage", getEnumerationBundle().getString(finalAverage.toString()));
@@ -71,9 +70,11 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
 	CycleType cycle = request.getRequestedCycle();
 	Degree degree = request.getDegree();
 	final DegreeType degreeType = request.getDegreeType();
-	res.append(cycle.getDescription(getLocale()));
-	res.append(StringUtils.SINGLE_SPACE).append(getResourceBundle().getString("label.of.the.male"))
-		.append(StringUtils.SINGLE_SPACE);
+	if (degreeType.hasAnyCycleTypes()) {
+	    res.append(cycle.getDescription(getLocale()));
+	    res.append(StringUtils.SINGLE_SPACE).append(getResourceBundle().getString("label.of.the.male"))
+		    .append(StringUtils.SINGLE_SPACE);
+	}
 
 	if (!degree.isEmpty()) {
 	    res.append(degreeType.getPrefix(getLocale()));
@@ -82,9 +83,24 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
 		    .append(StringUtils.SINGLE_SPACE);
 	}
 
-	res.append(degree.getFilteredName(getRegistration().getLastStudentCurricularPlan().getCycle(cycle).getConclusionYear(),
-		getLocale()));
+	res.append(degree.getFilteredName(getConclusionYear(request.getRegistration(), cycle), getLocale()));
 	return res.toString();
+    }
+
+    private LocalDate getConclusionDate(Registration registration, CycleType cycle) {
+	if (registration.isBolonha()) {
+	    return registration.getLastStudentCurricularPlan().getCycle(cycle).getConclusionProcess().getConclusionDate();
+	} else {
+	    return registration.getConclusionProcess().getConclusionDate();
+	}
+    }
+
+    private ExecutionYear getConclusionYear(Registration registration, CycleType cycle) {
+	if (registration.isBolonha()) {
+	    return registration.getLastStudentCurricularPlan().getCycle(cycle).getConclusionProcess().getConclusionYear();
+	} else {
+	    return registration.getConclusionProcess().getConclusionYear();
+	}
     }
 
     private String verboseDate(LocalDate date) {

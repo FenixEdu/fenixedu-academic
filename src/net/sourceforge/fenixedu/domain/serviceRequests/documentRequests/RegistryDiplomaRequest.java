@@ -118,22 +118,24 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base {
 	    if (getLastGeneratedDocument() == null) {
 		generateDocument();
 	    }
-	    getDiplomaSupplement().process();
+	    if (getRegistration().isBolonha()) {
+		getDiplomaSupplement().process();
+	    }
 	} else if (academicServiceRequestBean.isToConclude()) {
 	    if (!isFree() && !hasEvent() && !isPayedUponCreation()) {
 		RegistryDiplomaRequestEvent.create(getAdministrativeOffice(), getRegistration().getPerson(), this);
 	    }
-	    if (getDiplomaSupplement().isConcludedSituationAccepted()) {
+	    if (getRegistration().isBolonha() && getDiplomaSupplement().isConcludedSituationAccepted()) {
 		getDiplomaSupplement().conclude();
 	    }
 	} else if (academicServiceRequestBean.isToCancelOrReject()) {
 	    if (hasEvent()) {
 		getEvent().cancel(academicServiceRequestBean.getEmployee());
 	    }
-	    if (academicServiceRequestBean.isToCancel()) {
+	    if (getRegistration().isBolonha() && academicServiceRequestBean.isToCancel()) {
 		getDiplomaSupplement().cancel(academicServiceRequestBean.getJustification());
 	    }
-	    if (academicServiceRequestBean.isToReject()) {
+	    if (getRegistration().isBolonha() && academicServiceRequestBean.isToReject()) {
 		getDiplomaSupplement().reject(academicServiceRequestBean.getJustification());
 	    }
 	}
