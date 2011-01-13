@@ -11,11 +11,27 @@
 
 	<br/>
 	<strong><bean:message  key="label.phd.publicPresentationSeminarProcess" bundle="PHD_RESOURCES"/></strong>
-	<fr:view schema="PublicPresentationSeminarProcess.view" name="process" property="seminarProcess">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle2 thlight mtop10" />
-		</fr:layout>
-	</fr:view>
+	<table>
+		<tr>
+		    <td>
+				<fr:view schema="PublicPresentationSeminarProcess.view" name="process" property="seminarProcess">
+					<fr:layout name="tabular">
+						<fr:property name="classes" value="tstyle2 thlight mtop10" />
+					</fr:layout>
+				</fr:view>
+			</td>
+			<td>
+				<ul class="operations" >
+					<li style="display: inline;">
+						<html:link action="/publicPresentationSeminarProcess.do?method=manageStates" paramId="processId" paramName="process" paramProperty="seminarProcess.externalId">
+							<bean:message bundle="PHD_RESOURCES" key="label.phd.manage.states"/>
+						</html:link>
+					</li>
+				</ul>
+			</td>
+		</tr>
+	</table>
+	
 	<bean:define id="seminarProcess" name="process" property="seminarProcess" />
 	<ul class="operations">
 		

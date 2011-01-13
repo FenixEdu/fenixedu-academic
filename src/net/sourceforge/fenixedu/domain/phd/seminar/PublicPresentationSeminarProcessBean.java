@@ -19,12 +19,17 @@ public class PublicPresentationSeminarProcessBean implements Serializable {
 
     private Boolean generateAlert;
 
+    private PublicPresentationSeminarProcess process;
+    
+    private PublicPresentationSeminarProcessStateType processState;
+
     public PublicPresentationSeminarProcessBean() {
 	this.document = new PhdProgramDocumentUploadBean();
     }
 
     public PublicPresentationSeminarProcessBean(final PhdIndividualProgramProcess process) {
 	this();
+	setProcess(process.getSeminarProcess());
 	setGenerateAlert(process.getPhdConfigurationIndividualProgramProcess().getGenerateAlert());
     }
 
@@ -58,5 +63,21 @@ public class PublicPresentationSeminarProcessBean implements Serializable {
 
     public void setGenerateAlert(Boolean generateAlert) {
 	this.generateAlert = generateAlert;
+    }
+
+    public PublicPresentationSeminarProcess getProcess() {
+	return process;
+    }
+
+    public void setProcess(PublicPresentationSeminarProcess process) {
+	this.process = process;
+    }
+
+    public PublicPresentationSeminarProcessStateType getProcessState() {
+	return processState;
+    }
+
+    public void setProcessState(PublicPresentationSeminarProcessStateType processState) {
+	this.processState = processState;
     }
 }

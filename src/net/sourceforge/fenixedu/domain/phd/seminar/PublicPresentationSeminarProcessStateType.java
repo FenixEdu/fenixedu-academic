@@ -3,8 +3,8 @@ package net.sourceforge.fenixedu.domain.phd.seminar;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.domain.phd.PhdProcessStateType;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public enum PublicPresentationSeminarProcessStateType implements PhdProcessStateType {
 
