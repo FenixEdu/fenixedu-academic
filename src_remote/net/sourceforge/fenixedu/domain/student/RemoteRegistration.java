@@ -1,8 +1,7 @@
 package net.sourceforge.fenixedu.domain.student;
 
+import net.sourceforge.fenixedu.domain.RemoteExecutionYear;
 import net.sourceforge.fenixedu.domain.RemoteStudentCurricularPlan;
-
-import org.joda.time.DateTime;
 
 public class RemoteRegistration extends RemoteRegistration_Base {
 
@@ -10,17 +9,20 @@ public class RemoteRegistration extends RemoteRegistration_Base {
 	super();
     }
 
-    public Boolean isConcluded() {
-	return toBoolean(readRemoteMethod("isConcluded"));
-    }
-
-    public DateTime getConclusionProcessCreationDateTime() {
-	return toDateTime(readRemoteMethod("getConclusionProcessCreationDateTime"));
-    }
-
     public RemoteStudentCurricularPlan getStudentCurricularPlanForCurrentExecutionYear() {
 	return (RemoteStudentCurricularPlan) readRemoteDomainObjectByMethod("getStudentCurricularPlanForCurrentExecutionYear");
+    }
 
+    public RemoteStudentCurricularPlan getLastStudentCurricularPlan() {
+	return (RemoteStudentCurricularPlan) readRemoteDomainObjectByMethod("getLastStudentCurricularPlan");
+    }
+
+    public RemoteExecutionYear getConclusionYear() {
+	return (RemoteExecutionYear) readRemoteDomainObjectByMethod("getConclusionYear");
+    }
+
+    public Boolean isRegistrationConclusionProcessed() {
+	return toBoolean(readRemoteMethod("isRegistrationConclusionProcessed"));
     }
 
 }
