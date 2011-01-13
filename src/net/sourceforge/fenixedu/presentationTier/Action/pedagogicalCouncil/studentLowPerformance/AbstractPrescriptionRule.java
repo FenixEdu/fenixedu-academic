@@ -10,53 +10,6 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public abstract class AbstractPrescriptionRule {
 
-    private ExecutionYear registrationStart;
-    private BigDecimal minimumEcts;
-    private int numberOfEntriesStudentInSecretary;
-    private PrescriptionEnum prescriptionEnum;
-
-    public PrescriptionEnum getPrescriptionEnum() {
-	return prescriptionEnum;
-    }
-
-    public void setPrescriptionEnum(PrescriptionEnum prescriptionEnum) {
-	this.prescriptionEnum = prescriptionEnum;
-    }
-
-    public AbstractPrescriptionRule() {
-
-    }
-
-    public AbstractPrescriptionRule(ExecutionYear registrationStart, BigDecimal minimumEcts, int numberOfEntriesStudentInSecretary) {
-	this.registrationStart = registrationStart;
-	this.minimumEcts = minimumEcts;
-	this.numberOfEntriesStudentInSecretary = numberOfEntriesStudentInSecretary;
-    }
-
-    public void setRegistrationStart(ExecutionYear registrationStart) {
-	this.registrationStart = registrationStart;
-    }
-
-    public ExecutionYear getRegistrationStart() {
-	return registrationStart;
-    }
-
-    public void setMinimumEcts(BigDecimal minimumEcts) {
-	this.minimumEcts = minimumEcts;
-    }
-
-    public BigDecimal getMinimumEcts() {
-	return minimumEcts;
-    }
-
-    public int getNumberOfEntriesStudentInSecretary() {
-	return numberOfEntriesStudentInSecretary;
-    }
-
-    public void setNumberOfEntriesStudentInSecretary(int numberOfEntriesStudentInSecretary) {
-	this.numberOfEntriesStudentInSecretary = numberOfEntriesStudentInSecretary;
-    }
-
     public boolean isOccurs() {
 	return true;
     }
@@ -94,4 +47,12 @@ public abstract class AbstractPrescriptionRule {
 	abstractPrescriptionRules.add(new PrescriptionRuleGeneric());
 	return abstractPrescriptionRules;
     }
+
+    public abstract PrescriptionEnum getPrescriptionEnum();
+
+    public abstract ExecutionYear getRegistrationStart();
+
+    public abstract BigDecimal getMinimumEcts();
+
+    public abstract int getNumberOfEntriesStudentInSecretary();
 }

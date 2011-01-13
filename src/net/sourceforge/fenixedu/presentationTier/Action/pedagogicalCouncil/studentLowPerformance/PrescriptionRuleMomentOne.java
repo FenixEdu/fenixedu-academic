@@ -9,17 +9,36 @@ class PrescriptionRuleMomentOne extends PrescriptionRuleGenericMoment {
 
     public PrescriptionRuleMomentOne() {
 	super();
-	setRegistrationStart(ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear());
-	setMinimumEcts(new BigDecimal(30));
-	setNumberOfEntriesStudentInSecretary(1);
-	setPrescriptionEnum(PrescriptionEnum.MOMENT1);
-	setMonth(9);
     }
 
-    public PrescriptionRuleMomentOne(ExecutionYear registrationStart, BigDecimal minimumEcts,
-	    int numberOfEntriesStudentInSecretary, int month) {
-	super(registrationStart, minimumEcts, numberOfEntriesStudentInSecretary, month);
+    @Override
+    public BigDecimal getMinimumEcts() {
+	return new BigDecimal(30);
+    }
 
+    @Override
+    public int getNumberOfEntriesStudentInSecretary() {
+	return 1;
+    }
+
+    @Override
+    public PrescriptionEnum getPrescriptionEnum() {
+	return PrescriptionEnum.MOMENT1;
+    }
+
+    @Override
+    public ExecutionYear getRegistrationStart() {
+	return ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear();
+    }
+
+    @Override
+    public int getMonthOcurrs() {
+	return 9;
+    }
+
+    @Override
+    public boolean isOccurs() {
+	return true;
     }
 
 }

@@ -8,15 +8,27 @@ import net.sourceforge.fenixedu.domain.PrescriptionEnum;
 class PrescriptionRuleGeneric extends AbstractPrescriptionRule {
 
     public PrescriptionRuleGeneric() {
-	setRegistrationStart(ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear().getPreviousExecutionYear()
-		.getPreviousExecutionYear());
-	setMinimumEcts(new BigDecimal(119.5));
-	setNumberOfEntriesStudentInSecretary(4);
-	setPrescriptionEnum(PrescriptionEnum.ALLPRESCRIPTION);
     }
 
-    public PrescriptionRuleGeneric(ExecutionYear registrationStart, BigDecimal minimumEcts, int numberOfEntriesStudentInSecretary) {
-	super(registrationStart, minimumEcts, numberOfEntriesStudentInSecretary);
-
+    @Override
+    public BigDecimal getMinimumEcts() {
+	return new BigDecimal(119.5);
     }
+
+    @Override
+    public int getNumberOfEntriesStudentInSecretary() {
+	return 4;
+    }
+
+    @Override
+    public PrescriptionEnum getPrescriptionEnum() {
+	return PrescriptionEnum.ALLPRESCRIPTION;
+    }
+
+    @Override
+    public ExecutionYear getRegistrationStart() {
+	return ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear().getPreviousExecutionYear()
+		.getPreviousExecutionYear();
+    }
+
 }

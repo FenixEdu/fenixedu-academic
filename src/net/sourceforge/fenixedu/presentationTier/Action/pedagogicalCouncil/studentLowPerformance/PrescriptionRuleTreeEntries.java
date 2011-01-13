@@ -3,20 +3,32 @@ package net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.stud
 import java.math.BigDecimal;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.PrescriptionEnum;
 
 class PrescriptionRuleTreeEntries extends PrescriptionRuleGeneric {
 
     public PrescriptionRuleTreeEntries() {
 	super();
-	setRegistrationStart(ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear().getPreviousExecutionYear());
-	setMinimumEcts(new BigDecimal(59.5));
-	setNumberOfEntriesStudentInSecretary(3);
     }
 
-    public PrescriptionRuleTreeEntries(ExecutionYear registrationStart, BigDecimal minimumEcts,
-	    int numberOfEntriesStudentInSecretary) {
-	super(registrationStart, minimumEcts, numberOfEntriesStudentInSecretary);
+    @Override
+    public BigDecimal getMinimumEcts() {
+	return new BigDecimal(59.5);
+    }
 
+    @Override
+    public int getNumberOfEntriesStudentInSecretary() {
+	return 3;
+    }
+
+    @Override
+    public PrescriptionEnum getPrescriptionEnum() {
+	return PrescriptionEnum.ALLPRESCRIPTION;
+    }
+
+    @Override
+    public ExecutionYear getRegistrationStart() {
+	return ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear().getPreviousExecutionYear();
     }
 
 }

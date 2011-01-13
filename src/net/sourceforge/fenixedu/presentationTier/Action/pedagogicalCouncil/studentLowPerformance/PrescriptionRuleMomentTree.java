@@ -10,17 +10,36 @@ class PrescriptionRuleMomentTree extends PrescriptionRuleGenericMoment {
 
     public PrescriptionRuleMomentTree() {
 	super();
-	setRegistrationStart(ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear().getPreviousExecutionYear());
-	setMinimumEcts(new BigDecimal(55));
-	setNumberOfEntriesStudentInSecretary(2);
-	setPrescriptionEnum(PrescriptionEnum.MOMENT3);
-	setMonth(9);
     }
 
-    public PrescriptionRuleMomentTree(ExecutionYear registrationStart, BigDecimal minimumEcts,
-	    int numberOfEntriesStudentInSecretary, int month) {
-	super(registrationStart, minimumEcts, numberOfEntriesStudentInSecretary, month);
+    @Override
+    public BigDecimal getMinimumEcts() {
+	return new BigDecimal(55);
+    }
 
+    @Override
+    public int getNumberOfEntriesStudentInSecretary() {
+	return 2;
+    }
+
+    @Override
+    public PrescriptionEnum getPrescriptionEnum() {
+	return PrescriptionEnum.MOMENT3;
+    }
+
+    @Override
+    public ExecutionYear getRegistrationStart() {
+	return ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear().getPreviousExecutionYear();
+    }
+
+    @Override
+    public int getMonthOcurrs() {
+	return 9;
+    }
+
+    @Override
+    public boolean isOccurs() {
+	return true;
     }
 
     @Override

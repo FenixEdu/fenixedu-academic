@@ -2056,15 +2056,14 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    final Set<IDegreeModuleToEvaluate> degreeModulesToEnrol, final List<CurriculumModule> curriculumModulesToRemove,
 	    final CurricularRuleLevel curricularRuleLevel) {
 
-	final EnrolmentContext enrolmentContext = new EnrolmentContext(this, executionSemester,
-		degreeModulesToEnrol, curriculumModulesToRemove, curricularRuleLevel);
+	final EnrolmentContext enrolmentContext = new EnrolmentContext(this, executionSemester, degreeModulesToEnrol,
+		curriculumModulesToRemove, curricularRuleLevel);
 
 	return net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolment.createManager(enrolmentContext)
 		.manage();
     }
 
-    final public RuleResult enrol(final ExecutionSemester executionSemester,
-	    final CurricularRuleLevel curricularRuleLevel) {
+    final public RuleResult enrol(final ExecutionSemester executionSemester, final CurricularRuleLevel curricularRuleLevel) {
 	return enrol(executionSemester, Collections.EMPTY_SET, Collections.EMPTY_LIST, curricularRuleLevel);
     }
 
@@ -2123,8 +2122,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     @Service
     public RuleResult removeCurriculumModulesFromNoCourseGroupCurriculumGroup(final List<CurriculumModule> curriculumModules,
 	    final ExecutionSemester executionSemester, final NoCourseGroupCurriculumGroupType groupType) {
-	final EnrolmentContext context = new EnrolmentContext(this, executionSemester, Collections.EMPTY_SET,
-		curriculumModules, groupType.getCurricularRuleLevel());
+	final EnrolmentContext context = new EnrolmentContext(this, executionSemester, Collections.EMPTY_SET, curriculumModules,
+		groupType.getCurricularRuleLevel());
 	return net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolment.createManager(context).manage();
     }
 
@@ -2591,9 +2590,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    }
 
 	    // if curriculum line is moved then change created by
-	    
-	    curriculumLine.setCreatedBy(responsible != null ? responsible.getIstUsername() : curriculumLine
-		    .getCreatedBy());
+
+	    curriculumLine.setCreatedBy(responsible != null ? responsible.getIstUsername() : curriculumLine.getCreatedBy());
 	}
 
 	runRules &= isBolonhaDegree();
@@ -2660,8 +2658,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     @SuppressWarnings("unchecked")
     private void checkEnrolmentRules(final Set<IDegreeModuleToEvaluate> degreeModuleToEvaluate,
 	    final ExecutionSemester executionSemester) {
-	enrol(executionSemester, degreeModuleToEvaluate, Collections.EMPTY_LIST,
-		CurricularRuleLevel.ENROLMENT_WITH_RULES);
+	enrol(executionSemester, degreeModuleToEvaluate, Collections.EMPTY_LIST, CurricularRuleLevel.ENROLMENT_WITH_RULES);
     }
 
     public AdministrativeOffice getAdministrativeOffice() {
@@ -2995,6 +2992,14 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public Double getApprovedEctsCredits(CycleType cycleType) {
 	CycleCurriculumGroup cycle = getCycle(cycleType);
 	return cycle != null ? cycle.getAprovedEctsCredits() : 0d;
+    }
+
+    public Double getApprovedEctsCreditsForFirstCycle(CycleType cycleType) {
+	return getApprovedEctsCredits(CycleType.FIRST_CYCLE);
+    }
+
+    public Double getApprovedEctsCreditsForSecondCycle(CycleType cycleType) {
+	return getApprovedEctsCredits(CycleType.SECOND_CYCLE);
     }
 
 }
