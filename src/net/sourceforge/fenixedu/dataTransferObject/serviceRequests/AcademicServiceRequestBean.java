@@ -129,7 +129,7 @@ public class AcademicServiceRequestBean implements Serializable {
 		&& getAcademicServiceRequest().isDocumentRequest() && ((DocumentRequest) getAcademicServiceRequest()).isDiploma()) {
 	    if (getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.CONCLUDED) {
 		return ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale()).getString(
-			"DiplomaRequest.diploma.printed");
+			"DiplomaRequest.diploma.concluded");
 	    }
 	    if (getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY) {
 		return ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale()).getString(
