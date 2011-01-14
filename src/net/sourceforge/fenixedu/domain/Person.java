@@ -3681,7 +3681,7 @@ public class Person extends Person_Base {
 	return result.toString();
     }
 
-    protected static String readAllExternalResearcherInformation() {
+    public static String readAllExternalResearcherInformation() {
 	final RoleType roleType = RoleType.RESEARCHER;
 	final RoleType[] exclusionRoleTypes = new RoleType[] { RoleType.TEACHER }; 
 
