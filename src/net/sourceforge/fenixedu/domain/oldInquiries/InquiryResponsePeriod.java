@@ -6,8 +6,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriodType;
 import net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod_Base;
-import net.sourceforge.fenixedu.domain.oldInquiries.teacher.InquiryResponsePeriodType;
 
 import org.joda.time.DateTime;
 

@@ -6,7 +6,7 @@
 <%@page import="java.net.URLEncoder"%>
 <%@page import="net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod"%>
 <%@page import="net.sourceforge.fenixedu.domain.ExecutionSemester"%>
-<%@page import="net.sourceforge.fenixedu.domain.oldInquiries.teacher.InquiryResponsePeriodType"%>
+<%@page import="net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriodType"%>
 <%@page import="net.sourceforge.fenixedu.domain.ExecutionYear"%>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>

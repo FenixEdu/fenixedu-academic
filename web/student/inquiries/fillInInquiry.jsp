@@ -26,7 +26,7 @@
 
 <h3 class="separator2 mtop2"><span style="font-weight: normal ;"><bean:message key="title.inquiries.separator.courses_1" bundle="INQUIRIES_RESOURCES"/></span></h3>
 
-<span class="success0"><bean:message key="message.inquiries.anonimousFromNow" bundle="INQUIRIES_RESOURCES"/></span>
+<p><span class="warning0"><bean:message key="message.inquiries.anonimousFromNow" bundle="INQUIRIES_RESOURCES"/></span></p>
 
 <div class="forminline dinline">
 	<div class="relative">
@@ -35,10 +35,7 @@
 				<logic:notEmpty name="inquiryBlockDTO" property="inquiryBlock.inquiryQuestionHeader">
 					<h4 class="mtop15 mbottom05"><fr:view name="inquiryBlockDTO" property="inquiryBlock.inquiryQuestionHeader.title"/></h4>
 				</logic:notEmpty>				
-				<logic:iterate id="inquiryGroup" name="inquiryBlockDTO" property="inquiryGroups"indexId="index">
-					<%--logic:iterate id="inquiryQuestion" name="inquiryGroup" property="inquiryQuestions"  indexId="index">
-						
-					</logic:iterate--%>
+				<logic:iterate id="inquiryGroup" name="inquiryBlockDTO" property="inquiryGroups"indexId="index">					
 					<fr:edit id="<%= "iter" + index --%>" name="inquiryGroup"/>
 				</logic:iterate>
 			</logic:iterate>
@@ -51,9 +48,33 @@
 		</fr:form>
 		
 		<fr:form action="/studentInquiry.do?method=showCoursesToAnswer">
-			<html:submit styleClass="bleft"><bean:message key="button.back" bundle="INQUIRIES_RESOURCES"/></html:submit>
+			<html:submit styleClass="bleft"><bean:message key="button.cancel"/></html:submit>
 		</fr:form>
 		
 		<br/>
 	</div>
 </div>	
+
+<style>
+.width300px {
+width: 300px !important;
+}
+.width6cols {
+width: 85px !important;
+}
+.width1col {
+width: 610px !important;
+}
+.width10cols {
+width: 38px !important;
+}
+.width9cols {
+width: 46px !important;
+}
+.width11cols {
+width: 31px !important;
+}
+
+input.bright { position: absolute; bottom: 0; left: 70px; }
+
+</style>

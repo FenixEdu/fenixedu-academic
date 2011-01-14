@@ -103,9 +103,10 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 
 		if (groupHeader && inquiryQuestion.getInquiryQuestion().getQuestionOrder() == 1) {
 		    createHeaderRow(questionHeader, mainTable, inquiryGroupQuestion.getInquiryGroupQuestion().getRequired(),
-			    groupConditionValues);
+			    groupConditionValues, inquiryQuestion.getInquiryQuestion());
 		} else if (!groupHeader && questionHeader != null) {
-		    createHeaderRow(questionHeader, mainTable, false, questionConditionValues);
+		    createHeaderRow(questionHeader, mainTable, false, questionConditionValues, inquiryQuestion
+			    .getInquiryQuestion());
 		}
 
 		HtmlTableRow questionRow = mainTable.createRow();
@@ -158,7 +159,7 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 
 		    final HtmlTableCell cell = questionRow.createCell();
 		    cell.setBody(formComponent);
-		    cell.setClasses("aleft");
+		    cell.setClasses("aleft width1col");
 		}
 
 		formComponent.bind(metaSlot);
@@ -209,7 +210,7 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 	}
 
 	private void createHeaderRow(final InquiryQuestionHeader inquiryQuestionHeader, final HtmlTable mainTable,
-		boolean required, String[] conditionValues) {
+		boolean required, String[] conditionValues, InquiryQuestion inquiryQuestion) {
 	    final HtmlTableRow headerRow = mainTable.createRow();
 
 	    final HtmlTableCell firstHeaderCell = headerRow.createCell(CellType.HEADER);
@@ -227,11 +228,14 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 	    firstHeaderCell.addClass("width300px");
 
 	    if (inquiryQuestionHeader.getScaleHeaders() != null && inquiryQuestionHeader.getScaleHeaders().getScaleLength() > 0) {
+		String finalCssClass = "width" + inquiryQuestionHeader.getScaleHeaders().getScaleLength() + "cols";
 		for (MultiLanguageString scale : inquiryQuestionHeader.getScaleHeaders().getScale()) {
 		    HtmlTableCell headerCell = headerRow.createCell(CellType.HEADER);
 		    headerCell.setBody(new HtmlText(scale.toString(), false));
-		    headerCell.addClass("acenter valignbottom");
+		    headerCell.addClass("acenter valignbottom " + finalCssClass);
 		}
+	    } else if (inquiryQuestion instanceof InquiryCheckBoxQuestion) {
+		firstHeaderCell.setColspan(2);
 	    } else {
 		headerRow.createCell(CellType.HEADER);
 	    }
@@ -239,7 +243,7 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 
 	@Override
 	public String getClasses() {
-	    return "tstyle2 thlight thleft tdcenter tdwith50px thpadding5px10px";
+	    return "tstyle2 thlight thleft tdcenter thpadding5px10px";
 	}
     }
 }

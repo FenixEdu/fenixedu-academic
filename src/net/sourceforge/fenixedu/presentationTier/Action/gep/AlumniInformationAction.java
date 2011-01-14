@@ -300,10 +300,10 @@ public class AlumniInformationAction extends FenixDispatchAction {
 	    HttpServletResponse response) {
 	QueueJob job = getDomainObject(request, "jobId");
 	job.cancel();
-	
+
 	return showAlumniStatistics(mapping, actionForm, request, response);
     }
-    
+
     public ActionForward searchAlumni(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 

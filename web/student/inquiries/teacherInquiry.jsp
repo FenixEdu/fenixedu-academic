@@ -37,9 +37,6 @@
 					<h4 class="mtop15 mbottom05"><fr:view name="inquiryBlockDTO" property="inquiryBlock.inquiryQuestionHeader.title"/></h4>
 				</logic:notEmpty>				
 				<logic:iterate id="inquiryGroup" name="inquiryBlockDTO" property="inquiryGroups"indexId="index">
-					<%--logic:iterate id="inquiryQuestion" name="inquiryGroup" property="inquiryQuestions"  indexId="index">
-						
-					</logic:iterate--%>
 					<fr:edit id="<%= "iter" + index --%>" name="inquiryGroup"/>
 				</logic:iterate>
 			</logic:iterate>
@@ -55,3 +52,27 @@
 		<br/>
 	</div>
 </div>
+
+<style>
+.width300px {
+width: 300px !important;
+}
+.width6cols {
+width: 85px !important;
+}
+.width1col {
+width: 610px !important;
+}
+.width10cols {
+width: 38px !important;
+}
+.width9cols {
+width: 46px !important;
+}
+.width11cols {
+width: 31px !important;
+}
+
+input.bright { position: absolute; bottom: 0; left: 70px; }
+
+</style>

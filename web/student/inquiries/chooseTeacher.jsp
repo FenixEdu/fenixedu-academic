@@ -21,7 +21,7 @@
 
 <h3 class="separator2 mtop2"><span style="font-weight: normal ;"><bean:message key="title.inquiries.separator.teachers" bundle="INQUIRIES_RESOURCES"/></span></h3>
 
-<bean:message key="message.inquiries.fillOnlyAttendedClasses" bundle="INQUIRIES_RESOURCES"/>
+<bean:message key="message.inquiries.fillOptionallyOnlyAttendedClasses" bundle="INQUIRIES_RESOURCES"/>
 
 <table class="tstyle1 thlight mtop05">
 	<tr>

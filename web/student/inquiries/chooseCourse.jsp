@@ -23,13 +23,18 @@
 
 <logic:equal name="student" property="weeklySpentHoursSubmittedForOpenInquiry" value="true">
 
-	<bean:message key="label.weeklySpentHours" bundle="INQUIRIES_RESOURCES"/>: <b><bean:write name="student" property="openStudentInquiryExecutionPeriod.weeklyHoursSpentInClassesSeason"/></b> <bean:message key="label.hoursPerWeek.a" bundle="INQUIRIES_RESOURCES"/>
-
+	<p>
+		<bean:message key="label.weeklySpentHours" bundle="INQUIRIES_RESOURCES"/>: 
+		<b><bean:write name="student" property="openStudentInquiryExecutionPeriod.weeklyHoursSpentInClassesSeason"/></b> 
+		<bean:message key="label.hoursPerWeek.a" bundle="INQUIRIES_RESOURCES"/>
+	</p>
+	<div class="inquiries-registry">
 	<fr:view name="courses" schema="curricularCourseInquiriesRegistryDTO.submitHoursAndDays" >
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle1 thlight tdcenter tdwith90px"/>
-			<fr:property name="columnClasses" value="nowrap aleft,,,,,,,acenter nowrap"/>
-			<fr:property name="suffixes" value=",,h,%,%,dias,,"/>
+			<fr:property name="columnClasses" value="col1,col2,col3,col4,col5,col6,col7,col8"/>
+			<fr:property name="headerClasses" value="col1,col2,col3,col4,col5,col6,col7,col8"/>
+			<fr:property name="suffixes" value=",%,dias,h,%,, ,"/>
 			<fr:property name="linkGroupSeparator" value=" | "/>
 			
 			<fr:property name="linkFormat(answerNow)" value="/studentInquiry.do?method=showCurricularInquiry&amp;inquiryRegistryID=${inquiryRegistry.externalId}" />
@@ -63,43 +68,102 @@
 			
 		</fr:layout>
 	</fr:view>
-
+	</div>
 </logic:equal>
 
 <logic:equal name="student" property="weeklySpentHoursSubmittedForOpenInquiry" value="false">
 
-<p>Considera-se como <b>trabalho autónomo</b> o tempo dedicado por um estudante na pesquisa, estudo, elaboração individual e colectiva de trabalhos (trabalho de
-campo, resolução de problemas, estudos de caso, desenvolvimento de projectos, etc.), ou seja, todo o trabalho desenvolvido pelo aluno no âmbito das unidades
-curriculares em que se encontra inscrito no semestre fora das aulas (horas de contacto).</p>
+<p>
+	Considera-se como <b>trabalho autónomo</b> o tempo dedicado por um estudante na pesquisa, estudo, elaboração individual e colectiva de trabalhos (trabalho de
+	campo, resolução de problemas, estudos de caso, desenvolvimento de projectos, etc.), ou seja, todo o trabalho desenvolvido pelo aluno no âmbito das unidades
+	curriculares em que se encontra inscrito no semestre fora das aulas (horas de contacto).
+</p>
 
-<p><b>NHTA = <span style="color: red">soma trabalho autónomo para todas as UC</span></b></p>
-
+<p><b>NHTA = soma trabalho autónomo para todas as UC</b></p>
+	
 	<fr:form action="/studentInquiry.do">
 		<html:hidden property="method" value="submitWeeklySpentHours"/>
 
-		<bean:message key="label.weeklySpentHours" bundle="INQUIRIES_RESOURCES"/>: 
-		<fr:edit id="weeklySpentHours" name="weeklySpentHours" schema="inquiriesStudentExecutionPeriod.submitWeeklySpentHours" type="net.sourceforge.fenixedu.dataTransferObject.VariantBean" >
-			<fr:layout name="flow">
-				<fr:property name="labelExcluded" value="true"/>
-				<fr:property name="validatorClasses" value="error0"/>
-			</fr:layout>
-		</fr:edit>			
-		 <bean:message key="label.hoursPerWeek" bundle="INQUIRIES_RESOURCES"/>
-
-		<fr:edit id="hoursAndDaysByCourse" name="courses" schema="curricularCourseInquiriesRegistryDTO.submitHoursAndDays.edit" >
-			<fr:layout name="tabular-editable" >
-				<fr:property name="classes" value="tstyle1 thlight tdcenter tdwith90px"/>
-				<fr:property name="columnClasses" value="nowrap aleft,,,,,"/>
-				<fr:property name="suffixes" value=",h,%,%,dias,h,,"/>
-				<fr:property name="validatorClasses" value="error0"/>
-				<fr:property name="hideValidators" value="false"/>
-			</fr:layout>
-		</fr:edit>
+		<p>
+			<bean:message key="label.weeklySpentHours" bundle="INQUIRIES_RESOURCES"/>: 
+			<fr:edit id="weeklySpentHours" name="weeklySpentHours" schema="inquiriesStudentExecutionPeriod.submitWeeklySpentHours" type="net.sourceforge.fenixedu.dataTransferObject.VariantBean" >
+				<fr:layout name="flow">
+					<fr:property name="labelExcluded" value="true"/>
+					<fr:property name="validatorClasses" value="error0"/>
+				</fr:layout>
+			</fr:edit>			
+			<bean:message key="label.hoursPerWeek" bundle="INQUIRIES_RESOURCES"/>
+		</p>
 		
-		<html:submit onclick="this.form.method.value='simulateAWH';"><bean:message key="button.simulateAWH" bundle="INQUIRIES_RESOURCES"/></html:submit>	
+		<div class="inquiries-registry">
+			<fr:edit id="hoursAndDaysByCourse" name="courses" schema="curricularCourseInquiriesRegistryDTO.submitHoursAndDays.edit" >
+				<fr:layout name="tabular-editable" >
+					<fr:property name="classes" value="tstyle1 thlight tdcenter"/>
+					<fr:property name="columnClasses" value="col1,col2,col3,col4,col5,col6"/>
+					<fr:property name="headerClasses" value="col1,col2,col3,col4,col5,col6"/>
+					<fr:property name="suffixes" value=",h,,%,dias,h"/>
+					<fr:property name="validatorClasses" value="error0"/>
+					<fr:property name="hideValidators" value="false"/>
+					<%--fr:property name="requiredMarkShown" value="false" />
+					<fr:property name="requiredMessageShown" value="false" /--%>
+				</fr:layout>
+			</fr:edit>
+		</div>		
+		<p>
+			<html:submit onclick="this.form.method.value='simulateAWH';"><bean:message key="button.simulateAWH" bundle="INQUIRIES_RESOURCES"/></html:submit>
+		</p>	
 		
-		<p><bean:message key="message.inquiries.estimatedECTS" bundle="INQUIRIES_RESOURCES"/></p><br/>
+		<p class="mvert1"><bean:message key="message.inquiries.estimatedECTS" bundle="INQUIRIES_RESOURCES"/></p>
 
-		<html:submit><bean:message key="button.submit" bundle="INQUIRIES_RESOURCES"/></html:submit>	
+		<p class="mtop15"><html:submit><bean:message key="button.submit" bundle="INQUIRIES_RESOURCES"/></html:submit></p>	
 	</fr:form>
 </logic:equal>
+
+<style>
+
+span.error {
+white-space: nowrap
+}
+
+th.empty, td.empty {
+background: none;
+border-top: none;
+border-bottom: none;
+width: 10px !important;
+padding: 0 !important;
+}
+
+th.col1 { }
+th.col2 { border-left: 4px solid #ccc;}
+th.col3 {  }
+th.col4 { border-left: 4px solid #ccc; }
+th.col5 { }
+th.col6 { border-left: 4px solid #ccc; }
+th.col7 { }
+th.col8 { border-left: 4px solid #ccc; }
+
+td.col1 { white-space: nowrap; text-align: left; }
+td.col2 { border-left: 4px solid #ccc; }
+td.col3 {  }
+td.col4 { border-left: 4px solid #ccc; }
+td.col5 { }
+td.col6 { border-left: 4px solid #ccc; }
+td.col7 { }
+td.col8 { border-left: 4px solid #ccc; white-space: nowrap; }
+
+div.inquiries-registry {
+background: #ccc;	
+padding: 3px;
+margin: 15px 0;
+}
+
+div.inquiries-registry table {
+width: 100%;
+margin: 0;
+}
+
+div.inquiries-registry table td {
+width: 90px;
+}
+
+</style>	

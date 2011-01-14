@@ -111,7 +111,7 @@ enum net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus                 
 enum net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType                                                             as SibsPaymentType;
 enum net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistryState                                                     as InquiriesRegistryState;
 enum net.sourceforge.fenixedu.domain.inquiries.InquiryNotAnsweredJustification                                            as InquiryNotAnsweredJustification;
-enum net.sourceforge.fenixedu.domain.oldInquiries.teacher.InquiryResponsePeriodType                                          as InquiryResponsePeriodType;
+enum net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriodType		                                          as InquiryResponsePeriodType;
 enum net.sourceforge.fenixedu.domain.internship.LanguageKnowledgeLevel                                                    as LanguageKnowledgeLevel;
 enum net.sourceforge.fenixedu.domain.masterDegree.GuideRequester                                                          as GuideRequester;
 enum net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification                                              as MasterDegreeClassification;
@@ -7677,7 +7677,7 @@ class ExternalUser extends DomainObject {
 class inquiries.InquiryTemplate extends DomainObject {
 	DateTime responsePeriodBegin;
 	DateTime responsePeriodEnd;
-	String inquiryMessage;
+	MultiLanguageString inquiryMessage;
 }
 
 	class inquiries.StudentInquiryTemplate extends inquiries.InquiryTemplate {

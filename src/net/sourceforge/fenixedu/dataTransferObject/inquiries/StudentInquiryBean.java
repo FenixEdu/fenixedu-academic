@@ -3,7 +3,9 @@ package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -22,6 +24,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.inquiries.EntryGradesInterval;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistryState;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryCourseAnswer;
@@ -30,6 +33,7 @@ import net.sourceforge.fenixedu.domain.inquiries.QuestionAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryRegistry;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.StudentTeacherInquiryTemplate;
+import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -44,7 +48,7 @@ public class StudentInquiryBean implements Serializable {
     private DateTime startedWhen;
     private Set<InquiryBlockDTO> curricularCourseBlocks;
     private StudentInquiryRegistry inquiryRegistry;
-    Map<TeacherDTO, Collection<? extends StudentTeacherInquiryBean>> teachersInquiries = new TreeMap<TeacherDTO, Collection<? extends StudentTeacherInquiryBean>>(
+    Map<TeacherDTO, List<? extends StudentTeacherInquiryBean>> teachersInquiries = new TreeMap<TeacherDTO, List<? extends StudentTeacherInquiryBean>>(
 	    new BeanComparator("name"));
 
     public StudentInquiryBean(StudentTeacherInquiryTemplate studentTeacherInquiryTemplate, StudentInquiryRegistry inquiryRegistry) {
@@ -61,11 +65,12 @@ public class StudentInquiryBean implements Serializable {
 	    final Set<ShiftType> shiftTypes, StudentInquiryTemplate studentTeacherInquiryTemplate) {
 	for (final NonAffiliatedTeacher nonAffiliatedTeacher : executionCourse.getNonAffiliatedTeachers()) {
 	    final NonAffiliatedTeacherDTO nonAffiliatedTeacherDTO = new NonAffiliatedTeacherDTO(nonAffiliatedTeacher);
-	    Collection<StudentTeacherInquiryBean> nonAffiliatedTeachers = new ArrayList<StudentTeacherInquiryBean>();
+	    List<StudentTeacherInquiryBean> nonAffiliatedTeachers = new ArrayList<StudentTeacherInquiryBean>();
 	    for (final ShiftType shiftType : shiftTypes) {
 		nonAffiliatedTeachers.add(new StudentTeacherInquiryBean(nonAffiliatedTeacherDTO, executionCourse, shiftType,
 			studentTeacherInquiryTemplate));
 	    }
+	    Collections.sort(nonAffiliatedTeachers, new BeanComparator("shiftType"));
 	    getTeachersInquiries().put(nonAffiliatedTeacherDTO, nonAffiliatedTeachers);
 	}
     }
@@ -83,26 +88,41 @@ public class StudentInquiryBean implements Serializable {
 	    final Map<ShiftType, StudentTeacherInquiryBean> teacherShift = teachersShifts.get(person);
 	    final TeacherDTO teacherDTO = new AffiliatedTeacherDTO(person);
 
+	    Teacher teacher = person.getTeacher();
+	    boolean mandatoryTeachingService = false;
+	    if (teacher != null) {
+		Category category = teacher.getCategoryForCreditsByPeriod(executionCourse.getExecutionPeriod());
+		if (category != null && category.isTeacherCareerCategory()) {
+		    mandatoryTeachingService = true;
+		}
+	    }
+
 	    for (DegreeTeachingService degreeTeachingService : professorship.getDegreeTeachingServices()) {
-		for (ShiftType shiftType : degreeTeachingService.getShift().getTypes()) {
-		    if (!teacherShift.containsKey(shiftType)) {
-			teacherShift.put(shiftType, new StudentTeacherInquiryBean(teacherDTO, executionCourse, shiftType,
-				studentTeacherInquiryTemplate));
+		if (degreeTeachingService.getPercentage() >= 20) {
+		    for (ShiftType shiftType : degreeTeachingService.getShift().getTypes()) {
+			if (!teacherShift.containsKey(shiftType)) {
+			    teacherShift.put(shiftType, new StudentTeacherInquiryBean(teacherDTO, executionCourse, shiftType,
+				    studentTeacherInquiryTemplate));
+			}
 		    }
 		}
 	    }
-	    if (teacherShift.isEmpty()) {
+	    if (teacherShift.isEmpty() && !mandatoryTeachingService) {
+		System.out.println("NAO TEM SERVIÇO DOCENTE");
 		for (final ShiftType shiftType : shiftTypes) {
 		    teacherShift.put(shiftType, new StudentTeacherInquiryBean(teacherDTO, executionCourse, shiftType,
 			    studentTeacherInquiryTemplate));
 		}
+	    } else {
+		System.out.println("PROF CARREIRA SEM SERVIÇO DOCENTE ACIMA DOS 20%");
 	    }
-
 	}
 
 	for (Entry<Person, Map<ShiftType, StudentTeacherInquiryBean>> entry : teachersShifts.entrySet()) {
-	    getTeachersInquiries().put(new AffiliatedTeacherDTO(entry.getKey()),
-		    new ArrayList<StudentTeacherInquiryBean>(entry.getValue().values()));
+	    ArrayList<StudentTeacherInquiryBean> studentTeachers = new ArrayList<StudentTeacherInquiryBean>(entry.getValue()
+		    .values());
+	    Collections.sort(studentTeachers, new BeanComparator("shiftType"));
+	    getTeachersInquiries().put(new AffiliatedTeacherDTO(entry.getKey()), studentTeachers);
 	}
     }
 
@@ -115,6 +135,10 @@ public class StudentInquiryBean implements Serializable {
 	    }
 	}
 	return Boolean.toString(true);
+    }
+
+    public Set getTeachers() {
+	return getTeachersInquiries().entrySet();
     }
 
     public Set<InquiryBlockDTO> getCurricularCourseBlocks() {
@@ -133,11 +157,11 @@ public class StudentInquiryBean implements Serializable {
 	this.inquiryRegistry = inquiryRegistry;
     }
 
-    public Map<TeacherDTO, Collection<? extends StudentTeacherInquiryBean>> getTeachersInquiries() {
+    public Map<TeacherDTO, List<? extends StudentTeacherInquiryBean>> getTeachersInquiries() {
 	return teachersInquiries;
     }
 
-    public void setTeachersInquiries(Map<TeacherDTO, Collection<? extends StudentTeacherInquiryBean>> teachersInquiries) {
+    public void setTeachersInquiries(Map<TeacherDTO, List<? extends StudentTeacherInquiryBean>> teachersInquiries) {
 	this.teachersInquiries = teachersInquiries;
     }
 

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.domain.oldInquiries.teacher;
+package net.sourceforge.fenixedu.domain.inquiries;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -9,7 +9,7 @@ package net.sourceforge.fenixedu.domain.oldInquiries.teacher;
  */
 public enum InquiryResponsePeriodType {
 
-    STUDENT, TEACHING, DELEGATE, COORDINATOR;
+    STUDENT, DELEGATE, TEACHING, COORDINATOR;
 
     public String getName() {
 	return name();
