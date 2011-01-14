@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:html xhtml="true">
 	<head>
 		<title>
@@ -20,7 +21,7 @@
 			<div id="txt">
 				<h1><bean:message key="message.inquiries.title" bundle="INQUIRIES_RESOURCES"/></h1>
 				<div class="mtop1">
-					<bean:write name="executionPeriod" property="inquiryResponsePeriod.introduction" filter="false"/>
+					<bean:write name="executionPeriod" property="inquiryTemplate.inquiryMessage" filter="false"/>
 				</div>
 			</div>
 			<br />
@@ -46,16 +47,6 @@
 								</html:submit>
 							</form>
 						</td>
-<!--
-						<td>
-							<form method="post" action="<%= request.getContextPath() %>/respondToInquiriesQuestion.do">
-								<html:hidden property="method" value="registerStudentResponseDontWantToRespond"/>
-								<html:submit bundle="HTMLALT_RESOURCES" altKey="inquiries.respond.dont.respond" property="ok">
-									<bean:message key="button.inquiries.respond.dont.respond" />
-								</html:submit>
-							</form>
-						</td>
--->
 					</tr>
 				</table>
 			</div>

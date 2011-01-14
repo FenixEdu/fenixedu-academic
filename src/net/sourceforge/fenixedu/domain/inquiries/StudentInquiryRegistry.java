@@ -46,6 +46,25 @@ public class StudentInquiryRegistry extends StudentInquiryRegistry_Base {
 	return getExecutionCourse().getAvailableForInquiries();
     }
 
+    public boolean isOpenToAnswer() {
+
+	if (isAnswered() || isNotAnswered()) {
+	    return false;
+	}
+	if (isCreatedAfterWeeklySpentHoursSubmission()) {
+	    return false;
+	}
+	if (getStudent().getStudent().isWeeklySpentHoursSubmittedForOpenInquiry() && !isAvailableToInquiries()) {
+	    return false;
+	}
+	return true;
+    }
+
+    public boolean isCreatedAfterWeeklySpentHoursSubmission() {
+	return getStudent().getStudent().isWeeklySpentHoursSubmittedForOpenInquiry()
+		&& (getWeeklyHoursSpentPercentage() == null || getStudyDaysSpentInExamsSeason() == null);
+    }
+
     public StudentInquiryExecutionPeriod getStudentInquiryExecutionPeriod() {
 	return getStudent().getStudent().getStudentInquiryExecutionPeriod(getExecutionPeriod());
     }
