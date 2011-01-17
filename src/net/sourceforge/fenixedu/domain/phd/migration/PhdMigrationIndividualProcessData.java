@@ -47,32 +47,26 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 	setNumber(processNumber);
     }
 
-    public boolean parse() {
+    public void parse() {
 	String[] fields = getData().split("\t");
 
-	try {
-	    processNumber = Integer.valueOf(fields[0].trim());
-	    phdProgram = PhdProgramTranslator.translate(fields[1].trim());
-	    title = fields[2].trim();
-	    guiderNumber = fields[3].trim();
-	    assistantGuiderNumber = fields[4].trim();
-	    startProcessDate = ConversionUtilities.parseDate(fields[5].trim());
-	    startDevelopmentDate = ConversionUtilities.parseDate(fields[6].trim());
-	    requirementDate = ConversionUtilities.parseDate(fields[7].trim());
-	    meetingDate = ConversionUtilities.parseDate(fields[8].trim());
-	    firstDiscussionDate = ConversionUtilities.parseDate(fields[9].trim());
-	    secondDiscussionDate = ConversionUtilities.parseDate(fields[10].trim());
-	    edictDate = ConversionUtilities.parseDate(fields[11].trim());
-	    classification = Integer.valueOf(fields[12].trim());
-	    probateDate = ConversionUtilities.parseDate(fields[13].trim());
-	    annulmentDate = ConversionUtilities.parseDate(fields[14].trim());
-	    limitToFinishDate = ConversionUtilities.parseDate(fields[15].trim());
-	    extensionToLimitToFnishDate = ConversionUtilities.parseDate(fields[16].trim());
-
-	    return true;
-	} catch (Exception e) {
-	    return false;
-	}
+	processNumber = Integer.valueOf(fields[0].trim());
+	phdProgram = PhdProgramTranslator.translate(fields[1].trim());
+	title = fields[2].trim();
+	guiderNumber = fields[3].trim();
+	assistantGuiderNumber = fields[4].trim();
+	startProcessDate = ConversionUtilities.parseDate(fields[5].trim());
+	startDevelopmentDate = ConversionUtilities.parseDate(fields[6].trim());
+	requirementDate = ConversionUtilities.parseDate(fields[7].trim());
+	meetingDate = ConversionUtilities.parseDate(fields[8].trim());
+	firstDiscussionDate = ConversionUtilities.parseDate(fields[9].trim());
+	secondDiscussionDate = ConversionUtilities.parseDate(fields[10].trim());
+	edictDate = ConversionUtilities.parseDate(fields[11].trim());
+	classification = Integer.valueOf(fields[12].trim());
+	probateDate = ConversionUtilities.parseDate(fields[13].trim());
+	annulmentDate = ConversionUtilities.parseDate(fields[14].trim());
+	limitToFinishDate = ConversionUtilities.parseDate(fields[15].trim());
+	extensionToLimitToFnishDate = ConversionUtilities.parseDate(fields[16].trim());
     }
 
 
