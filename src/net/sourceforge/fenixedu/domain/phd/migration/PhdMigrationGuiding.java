@@ -35,7 +35,7 @@ public class PhdMigrationGuiding extends PhdMigrationGuiding_Base {
 	parse();
 
 	setNumber(this.phdStudentNumber);
-	setInstitutionName(INSTITUTION_MAP.get(institutionCode));
+	setInstitution(INSTITUTION_MAP.get(institutionCode));
     }
 
     public boolean isExternal() {

@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.phd.migration;
 
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.HashMap;
@@ -48,8 +47,7 @@ public class PhdMigrationProcess extends PhdMigrationProcess_Base {
 	    try {
 		guiding.parseAndSetNumber(INSTITUTION_MAP);
 	    } catch (ParseException e) {
-		OutputStream
-		entry.setParseLog(getStackTrace(e));
+		guiding.setParseLog(getStackTrace(e));
 	    }
 	}
 
