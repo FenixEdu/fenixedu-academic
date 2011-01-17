@@ -1,12 +1,14 @@
 package net.sourceforge.fenixedu.domain.phd.migration;
 
 import java.util.Collection;
+import java.util.NoSuchElementException;
 
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.phd.migration.common.ConversionUtilities;
 import net.sourceforge.fenixedu.domain.phd.migration.common.NationalityTranslator;
+import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.IncompleteFieldsException;
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.MultiplePersonFoundException;
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.PersonNotFoundException;
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.PersonSearchByNameMismatchException;
@@ -55,7 +57,7 @@ public class PhdMigrationIndividualPersonalData extends PhdMigrationIndividualPe
 	setNumber(phdStudentNumber);
     }
 
-    public boolean parse() {
+    public void parse() {
 	String[] fields = getData().split("\t");
 
 	try {
@@ -82,9 +84,8 @@ public class PhdMigrationIndividualPersonalData extends PhdMigrationIndividualPe
 	    workPlace = fields[19].trim();
 	    email = fields[20].trim();
 
-	    return true;
-	} catch (Exception e) {
-	    return false;
+	} catch (NoSuchElementException e) {
+	    throw new IncompleteFieldsException();
 	}
     }
 

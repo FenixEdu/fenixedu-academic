@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.phd.migration;
 
+import java.util.NoSuchElementException;
+
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -8,13 +10,14 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessNumber;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.migration.common.ConversionUtilities;
 import net.sourceforge.fenixedu.domain.phd.migration.common.PhdProgramTranslator;
+import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.IncompleteFieldsException;
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.IndividualProcessNotFoundException;
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.PersonNotFoundException;
 
 import org.joda.time.LocalDate;
 
 public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualProcessData_Base {
-    
+
     private transient Integer processNumber;
     private transient PhdProgram phdProgram;
     private transient String title;
@@ -34,9 +37,9 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
     private transient LocalDate extensionToLimitToFnishDate;
 
     private PhdMigrationIndividualProcessData() {
-        super();
+	super();
     }
-    
+
     protected PhdMigrationIndividualProcessData(String data) {
 	setData(data);
     }
@@ -48,28 +51,30 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
     }
 
     public void parse() {
-	String[] fields = getData().split("\t");
+	try {
+	    String[] fields = getData().split("\t");
 
-	processNumber = Integer.valueOf(fields[0].trim());
-	phdProgram = PhdProgramTranslator.translate(fields[1].trim());
-	title = fields[2].trim();
-	guiderNumber = fields[3].trim();
-	assistantGuiderNumber = fields[4].trim();
-	startProcessDate = ConversionUtilities.parseDate(fields[5].trim());
-	startDevelopmentDate = ConversionUtilities.parseDate(fields[6].trim());
-	requirementDate = ConversionUtilities.parseDate(fields[7].trim());
-	meetingDate = ConversionUtilities.parseDate(fields[8].trim());
-	firstDiscussionDate = ConversionUtilities.parseDate(fields[9].trim());
-	secondDiscussionDate = ConversionUtilities.parseDate(fields[10].trim());
-	edictDate = ConversionUtilities.parseDate(fields[11].trim());
-	classification = Integer.valueOf(fields[12].trim());
-	probateDate = ConversionUtilities.parseDate(fields[13].trim());
-	annulmentDate = ConversionUtilities.parseDate(fields[14].trim());
-	limitToFinishDate = ConversionUtilities.parseDate(fields[15].trim());
-	extensionToLimitToFnishDate = ConversionUtilities.parseDate(fields[16].trim());
+	    processNumber = Integer.valueOf(fields[0].trim());
+	    phdProgram = PhdProgramTranslator.translate(fields[1].trim());
+	    title = fields[2].trim();
+	    guiderNumber = fields[3].trim();
+	    assistantGuiderNumber = fields[4].trim();
+	    startProcessDate = ConversionUtilities.parseDate(fields[5].trim());
+	    startDevelopmentDate = ConversionUtilities.parseDate(fields[6].trim());
+	    requirementDate = ConversionUtilities.parseDate(fields[7].trim());
+	    meetingDate = ConversionUtilities.parseDate(fields[8].trim());
+	    firstDiscussionDate = ConversionUtilities.parseDate(fields[9].trim());
+	    secondDiscussionDate = ConversionUtilities.parseDate(fields[10].trim());
+	    edictDate = ConversionUtilities.parseDate(fields[11].trim());
+	    classification = Integer.valueOf(fields[12].trim());
+	    probateDate = ConversionUtilities.parseDate(fields[13].trim());
+	    annulmentDate = ConversionUtilities.parseDate(fields[14].trim());
+	    limitToFinishDate = ConversionUtilities.parseDate(fields[15].trim());
+	    extensionToLimitToFnishDate = ConversionUtilities.parseDate(fields[16].trim());
+	} catch (NoSuchElementException e) {
+	    throw new IncompleteFieldsException();
+	}
     }
-
-
 
     public Person getGuidingPerson() {
 	if (guiderNumber.contains("E")) {
