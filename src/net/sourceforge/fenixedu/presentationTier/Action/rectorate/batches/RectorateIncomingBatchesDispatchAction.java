@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaS
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.RegistryDiplomaRequest;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.commons.excel.ExcelUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.commons.documentRequestExcel.DocumentRequestExcelUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.zip.ZipUtils;
 import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice.AdministrativeOfficeDocument;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
@@ -123,7 +123,7 @@ public class RectorateIncomingBatchesDispatchAction extends FenixDispatchAction 
 	    HttpServletResponse response) {
 	RectorateSubmissionBatch batch = getDomainObject(request, "batchOid");
 	Set<DocumentRequest> docs = getRelevantDocuments(batch.getDocumentRequestSet());
-	ExcelUtils excelUtils = new ExcelUtils(request, response);
+	DocumentRequestExcelUtils excelUtils = new DocumentRequestExcelUtils(request, response);
 	excelUtils.generateSortedExcel(docs, "registos-");
 	return null;
     }

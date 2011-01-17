@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.commons.excel;
+package net.sourceforge.fenixedu.presentationTier.Action.commons.documentRequestExcel;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -23,12 +23,12 @@ import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
 import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-public class ExcelUtils {
+public class DocumentRequestExcelUtils {
 
     HttpServletRequest request;
     HttpServletResponse response;
 
-    public ExcelUtils(HttpServletRequest request, HttpServletResponse response) {
+    public DocumentRequestExcelUtils(HttpServletRequest request, HttpServletResponse response) {
 	this.request = request;
 	this.response = response;
     }

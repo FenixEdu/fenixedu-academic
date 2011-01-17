@@ -1518,6 +1518,19 @@
 	</slot>	
 </schema>
 
+<schema name="student.list.searchByCurricularCourse.chooseDegree"
+	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.SearchStudentsByCurricularCourseParametersBean" 
+	bundle="ACADEMIC_OFFICE_RESOURCES" >
+	<slot name="executionYear" key="label.executionYear" 
+		layout="menu-select-postback"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OpenExecutionYearsProvider" />
+		<property name="format" value="${year}" />
+		<property name="destination" value="executionYearPostBack"/>
+	</slot>
+</schema>
+
 <schema name="academicAdminOffice.enrolmentStudentsList.view" type="net.sourceforge.fenixedu.domain.Enrolment" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="studentCurricularPlan.registration.number" key="label.number" read-only="true" layout="link">
 		<property name="linkFormat" value="/academicAdminOffice/viewCurriculum.do?method=prepare&amp;registrationOID=${studentCurricularPlan.registration.idInternal}"/>
@@ -1594,6 +1607,19 @@
 	type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" bundle="APPLICATION_RESOURCES" >
 	<slot name="degree.name"/>
 	<slot name="name" />
+</schema>
+
+<schema name="StudentDataByExecutionYear" type="net.sourceforge.fenixedu.domain.student.StudentDataByExecutionYear" bundle="APPLICATION_RESOURCES">
+	<slot name="executionYear.year" label="label.executionYear.year" />
+	<slot name="personalDataAuthorization" label="label.personalDataAuthorization" />
+</schema>
+
+<schema name="StudentDataByExecutionYearBean" type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.StudentDataByExecutionYearBean" bundle="APPLICATION_RESOURCES">
+	<slot name="executionYear" label="label.executionYear.year" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
+		<property name="format" value="${year}" />
+	</slot>
+	<slot name="choice" label="label.personalDataAuthorization" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 </schema>
 
 <schema name="IRegistrationBean.edit-cycleCurriculumGroup" type="net.sourceforge.fenixedu.dataTransferObject.student.IRegistrationBean" bundle="APPLICATION_RESOURCES">
