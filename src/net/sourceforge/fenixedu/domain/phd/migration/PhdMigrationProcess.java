@@ -1,29 +1,57 @@
 package net.sourceforge.fenixedu.domain.phd.migration;
 
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.HashMap;
+import java.util.Map;
+
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.ParseException;
 
 public class PhdMigrationProcess extends PhdMigrationProcess_Base {
+    
+    private transient Map<String, String> INSTITUTION_MAP = new HashMap<String, String>();
+    private transient Map<Integer, PhdMigrationIndividualPersonalData> PERSONAL_DATA_MAP = new HashMap<Integer, PhdMigrationIndividualPersonalData>();
     
     protected PhdMigrationProcess() {
         super();
 	setRootDomainObject(RootDomainObject.getInstance());
     }
     
-    protected PhdMigrationProcess(String[] processDataEntries, String[] personalDataEntries, String[] guidingEntries) {
+    protected PhdMigrationProcess(String[] institutionEntries, String[] processDataEntries, String[] personalDataEntries,
+	    String[] guidingEntries) {
 	super();
-	createProcessDataEntries(processDataEntries);
+
+	indexInstitutionEntries(institutionEntries);
 	createPersonalDataEntries(personalDataEntries);
+	createProcessDataEntries(processDataEntries);
 	createGuidingEntries(guidingEntries);
     }
 
-    static public PhdMigrationProcess createMigrationProcess(String[] processDataEntries, String[] personalDataEntries,
+    private void indexInstitutionEntries(String[] institutionEntries) {
+	for (String institutionEntry : institutionEntries) {
+	    String[] compounds = institutionEntry.split("\\t");
+	    INSTITUTION_MAP.put(compounds[0], compounds[1]);
+	}
+    }
+
+    static public PhdMigrationProcess createMigrationProcess(String[] institutionEntries, String[] processDataEntries,
+	    String[] personalDataEntries,
 	    String[] guidingEntries) {
-	return new PhdMigrationProcess(processDataEntries, personalDataEntries, guidingEntries);
+	return new PhdMigrationProcess(institutionEntries, processDataEntries, personalDataEntries, guidingEntries);
     }
 
     private void createGuidingEntries(String[] guidingEntries) {
-
+	for (String entry : guidingEntries) {
+	    PhdMigrationGuiding guiding = new PhdMigrationGuiding(entry);
+	    try {
+		guiding.parseAndSetNumber(INSTITUTION_MAP);
+	    } catch (ParseException e) {
+		OutputStream
+		entry.setParseLog(getStackTrace(e));
+	    }
+	}
 
     }
 
@@ -33,8 +61,24 @@ public class PhdMigrationProcess extends PhdMigrationProcess_Base {
 	    try {
 		personalData.parseAndSetNumber();
 	    } catch (ParseException e) {
-		// Save the stack
+		personalData.setParseLog(getStackTrace(e));
 	    }
+	}
+    }
+
+    private String getStackTrace(Exception e) {
+	try {
+	    StringWriter sw = new StringWriter();
+	    PrintWriter pw = new PrintWriter(sw);
+	    try {
+		e.printStackTrace(pw);
+		return sw.toString();
+	    } finally {
+		pw.close();
+		sw.close();
+	    }
+	} catch (Exception ex) {
+	    throw new RuntimeException(ex);
 	}
     }
 
