@@ -1,56 +1,72 @@
-package net.sourceforge.fenixedu.domain.phd.migration.common;
+package net.sourceforge.fenixedu.domain.phd.migration;
 
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.Gender;
+import net.sourceforge.fenixedu.domain.phd.migration.common.ConversionUtilities;
+import net.sourceforge.fenixedu.domain.phd.migration.common.NationalityTranslator;
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.MultiplePersonFoundException;
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.PersonNotFoundException;
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.PersonSearchByNameMismatchException;
+import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.SocialSecurityNumberMismatchException;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
-import org.joda.time.format.DateTimeFormat;
 
-import pt.utl.ist.fenix.tools.loaders.IFileLine;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
-public class PersonalData implements IFileLine {
+public class PhdMigrationIndividualPersonalData extends PhdMigrationIndividualPersonalData_Base {
 
-    private Integer administrativeStudentNumber;
-    private String identificationNumber;
-    private String socialSecurityNumber;
-    private String fullName;
-    private String familyName;
-    private LocalDate dateOfBirth;
-    private Gender gender;
-    private Country nationality;
-    private String subSubArea;
-    private String subArea;
-    private String area;
-    private String fatherName;
-    private String motherName;
-    private String address;
-    private String zipCode;
-    private String locality;
-    private String contactNumber;
-    private String otherContactNumber;
-    private String profession;
-    private String workPlace;
-    private String email;
+    private transient Integer phdStudentNumber;
+    private transient String identificationNumber;
+    private transient String socialSecurityNumber;
+    private transient String fullName;
+    private transient String familyName;
+    private transient LocalDate dateOfBirth;
+    private transient Gender gender;
+    private transient Country nationality;
+    private transient String subSubArea;
+    private transient String subArea;
+    private transient String area;
+    private transient String fatherName;
+    private transient String motherName;
+    private transient String address;
+    private transient String zipCode;
+    private transient String locality;
+    private transient String contactNumber;
+    private transient String otherContactNumber;
+    private transient String profession;
+    private transient String workPlace;
+    private transient String email;
+    
+    private PhdMigrationIndividualPersonalData() {
+        super();
+    }
+    
+    protected PhdMigrationIndividualPersonalData(String data) {
+	setData(data);
+    }
 
-    @Override
-    public boolean fillWithFileLineData(String data) {
-	String[] fields = data.split("\t");
+    public void parseAndSetNumber() {
+	parse();
+
+	setNumber(phdStudentNumber);
+    }
+
+    public boolean parse() {
+	String[] fields = getData().split("\t");
 
 	try {
-	    administrativeStudentNumber = Integer.valueOf(fields[0].trim());
+	    phdStudentNumber = Integer.valueOf(fields[0].trim());
+
 	    identificationNumber = fields[1].trim();
 	    socialSecurityNumber = fields[2].trim();
 	    fullName = fields[3].trim();
 	    familyName = fields[4].trim();
-	    dateOfBirth = parseDate(fields[5].trim());
-	    gender = parseGender(fields[6].trim());
+	    dateOfBirth = ConversionUtilities.parseLocalDate(fields[5].trim());
+	    gender = ConversionUtilities.parseGender(fields[6].trim());
 	    nationality = NationalityTranslator.translate(fields[7].trim());
 	    subSubArea = fields[8].trim();
 	    subArea = fields[9].trim();
@@ -72,27 +88,6 @@ public class PersonalData implements IFileLine {
 	}
     }
 
-    private static LocalDate parseDate(String value) {
-	return DateTimeFormat.forPattern("ddMMyyyy").parseDateTime(value).toLocalDate();
-    }
-
-    private static Gender parseGender(String value) {
-	if ("M".equals(value)) {
-	    return Gender.MALE;
-	}
-
-	if ("F".equals(value)) {
-	    return Gender.FEMALE;
-	}
-
-	return null;
-    }
-
-    @Override
-    public String getUniqueKey() {
-	return identificationNumber;
-    }
-
     public Person getPerson() {
 	// Get by identification number
 	Collection<Person> personSet = Person.readByDocumentIdNumber(identificationNumber);
@@ -109,6 +104,10 @@ public class PersonalData implements IFileLine {
 
 	if (Person.readPersonsByName(StringNormalizer.normalize(person.getName())).size() != 1) {
 	    throw new PersonSearchByNameMismatchException();
+	}
+
+	if (!StringUtils.isEmpty(socialSecurityNumber) && socialSecurityNumber.equals(person.getSocialSecurityNumber())) {
+	    throw new SocialSecurityNumberMismatchException();
 	}
 
 	return person;

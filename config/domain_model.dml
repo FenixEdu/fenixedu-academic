@@ -195,6 +195,7 @@ enum net.sourceforge.fenixedu.domain.phd.permissions.PhdPermissionType										
 enum net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackStateType						  as PhdCandidacyFeedbackStateType;
 enum net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisFinalGrade														  as PhdThesisFinalGrade;
 enum net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingSchedulingProcessStateType							  as PhdMeetingSchedulingProcessStateType;
+enum net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationFileType													  as PhdMigrationFileType;
 enum net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType                                 as IndividualCandidacyDocumentFileType;
 enum net.sourceforge.fenixedu.domain.accounting.events.DegreeFinalizationCertificateRequestJustificationType              as DegreeFinalizationCertificateRequestJustificationType;
 enum net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicEventJustificationType                     as AcademicEventJustificationType;
@@ -7536,6 +7537,30 @@ class phd.PhdConfigurationIndividualProgramProcess extends DomainObject {
 	Boolean generateAlert;
 }
 
+class phd.migration.PhdMigrationProcess extends DomainObject {
+	DateTime creationDate;
+	DateTime startTime;
+	DateTime endTime;
+}
+
+class phd.migration.PhdMigrationIndividualProcessData extends DomainObject {
+	Integer number; 
+	String data;
+	String parseLog;
+}
+
+class phd.migration.PhdMigrationIndividualPersonalData extends DomainObject {
+	Integer number;
+	String data;
+	String parseLog;
+}
+
+class phd.migration.PhdMigrationGuiding extends DomainObject {
+	String phdStudentNumber;
+	String data;
+	String parseLog;
+}
+
 /* End of Phd Module */
 
 class PendingRequest extends DomainObject{
@@ -8663,6 +8688,53 @@ relation PhdIndividualProgramProcessPhdConfigurationIndividualProgramProcess {
 relation PhdReporterReviewAlertPhdParticipant {
 	phd.alert.PhdReporterReviewAlert playsRole phdReporterReviewAlert;
 	phd.PhdParticipant playsRole phdParticipant;
+}
+
+relation PhdMigrationProcessRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	phd.migration.PhdMigrationProcess playsRole phdMigrationProcesses {
+		multiplicity *;
+	}
+}
+
+relation phd.migration.PhdIndividualProcessDataRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	phd.migration.PhdMigrationIndividualProcessData playsRole phdMigrationIndividualProcessData {
+		multiplicity *;
+	}
+}
+
+relation PhdIndividualPersonalDataRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	phd.migration.PhdMigrationIndividualPersonalData playsRole phdMigrationIndividualPersonalData {
+		multiplicity *;
+	}
+}
+
+relation phd.migration.PhdGuidingRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	phd.migration.PhdMigrationGuiding playsRole phdMigrationGuidings {
+		multiplicity *;
+	}
+}
+
+relation PhdIndividualProcessDataPhdIndividualProcessData {	
+	phd.migration.PhdMigrationIndividualProcessData playsRole phdMigrationIndividualProcessData;
+	phd.migration.PhdMigrationIndividualPersonalData playsRole phdMigrationIndividualPersonalData;
+} 
+
+relation PhdMigrationProcessPhdIndividualProcessData {
+	phd.migration.PhdMigrationProcess playsRole phdMigrationProcess;
+	phd.migration.PhdMigrationIndividualProcessData playsRole phdMigrationIndividualProcessData {
+		multiplicity *;
+	}
+}
+
+relation PhdMigrationProcessPhdGuiding {
+	phd.migration.PhdMigrationProcess playsRole phdMigrationProcess;
+	phd.migration.PhdMigrationGuiding playsRole phdMigrationGuiding {
+		multiplicity *;
+	}
 }
 
 /* End of Phd Module */
