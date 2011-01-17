@@ -492,9 +492,10 @@ public class PhdEmailBean implements Serializable {
 	final Set<PhdEmailParticipantsGroup> groups = new TreeSet<PhdEmailParticipantsGroup>(COMPARATOR_BY_NAME);
 
 	groups.add(new PhdEmailParticipantsCoordinatorsGroup());
-	groups.add(new PhdEmailParticipantsGuidersGroup());
+	if (getProcess().hasAnyGuidings()) {
+	    groups.add(new PhdEmailParticipantsGuidersGroup());
+	}
 	groups.add(new PhdEmailParticipantsAllGroup());
-
 	if (getProcess().hasThesisProcess()) {
 	    groups.add(new PhdEmailParticipantsJuryMembersGroup());
 	}

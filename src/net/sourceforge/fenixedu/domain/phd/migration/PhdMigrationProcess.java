@@ -39,7 +39,14 @@ public class PhdMigrationProcess extends PhdMigrationProcess_Base {
     }
 
     private void createProcessDataEntries(String[] processDataEntries) {
+	for (String entry : processDataEntries) {
+	    PhdMigrationIndividualProcessData processData = new PhdMigrationIndividualProcessData(entry);
+	    try {
+		processData.parseAndSetNumber();
+	    } catch (ParseException e) {
 
+	    }
+	}
     }
 
 }
