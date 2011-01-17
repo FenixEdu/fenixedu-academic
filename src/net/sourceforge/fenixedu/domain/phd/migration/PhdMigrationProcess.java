@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.MissingPersonalDataException;
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.ParseException;
 
 public class PhdMigrationProcess extends PhdMigrationProcess_Base {
@@ -85,8 +86,14 @@ public class PhdMigrationProcess extends PhdMigrationProcess_Base {
 	    PhdMigrationIndividualProcessData processData = new PhdMigrationIndividualProcessData(entry);
 	    try {
 		processData.parseAndSetNumber();
-	    } catch (ParseException e) {
+		PhdMigrationIndividualPersonalData personalData = PERSONAL_DATA_MAP.get(processData.getNumber());
+		if (personalData == null) {
+		    throw new MissingPersonalDataException();
+		}
 
+		processData.setPhdMigrationIndividualPersonalData(personalData);
+	    } catch (ParseException e) {
+		processData.setParseLog(getStackTrace(e));
 	    }
 	}
     }
