@@ -37,8 +37,7 @@ public class PhdMigrationProcess extends PhdMigrationProcess_Base {
     }
 
     static public PhdMigrationProcess createMigrationProcess(String[] institutionEntries, String[] processDataEntries,
-	    String[] personalDataEntries,
-	    String[] guidingEntries) {
+	    String[] personalDataEntries, String[] guidingEntries) {
 	return new PhdMigrationProcess(institutionEntries, processDataEntries, personalDataEntries, guidingEntries);
     }
 
@@ -59,6 +58,7 @@ public class PhdMigrationProcess extends PhdMigrationProcess_Base {
 	    PhdMigrationIndividualPersonalData personalData = new PhdMigrationIndividualPersonalData(entry);
 	    try {
 		personalData.parseAndSetNumber();
+		PERSONAL_DATA_MAP.put(personalData.getNumber(), personalData);
 	    } catch (ParseException e) {
 		personalData.setParseLog(getStackTrace(e));
 	    }

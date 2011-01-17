@@ -14,6 +14,10 @@ public class ConversionUtilities {
     static private String[] CORRECT_DATE_PATTERNS = { "ddMMyyyy", "MMyyyy" };
 
     static public LocalDate parseDate(String value) {
+	if (StringUtils.isEmpty(value)) {
+	    return null;
+	}
+
 	LocalDate result = null;
 	String normalizedValue = value;
 
@@ -32,7 +36,7 @@ public class ConversionUtilities {
 	    return result;
 	}
 
-	throw new IncorrectDateFormatException();
+	throw new IncorrectDateFormatException(value);
     }
 
     static public Gender parseGender(String value) {

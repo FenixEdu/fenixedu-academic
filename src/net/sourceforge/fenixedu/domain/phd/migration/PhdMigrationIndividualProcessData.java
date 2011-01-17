@@ -30,7 +30,8 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
     private transient LocalDate firstDiscussionDate;
     private transient LocalDate secondDiscussionDate;
     private transient LocalDate edictDate;
-    private transient Integer classification;
+    private transient String unknownNumber;
+    private transient String classification;
     private transient LocalDate probateDate;
     private transient LocalDate annulmentDate;
     private transient LocalDate limitToFinishDate;
@@ -54,8 +55,17 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 	try {
 	    String[] fields = getData().split("\t");
 
-	    processNumber = Integer.valueOf(fields[0].trim());
-	    phdProgram = PhdProgramTranslator.translate(fields[1].trim());
+	    try {
+		processNumber = Integer.valueOf(fields[0].trim());
+	    } catch (NumberFormatException e) {
+		throw new IncompleteFieldsException("processNumber");
+	    }
+
+	    try {
+		phdProgram = PhdProgramTranslator.translate(fields[1].trim());
+	    } catch (NumberFormatException e) {
+		throw new IncompleteFieldsException("phdProgram");
+	    }
 	    title = fields[2].trim();
 	    guiderNumber = fields[3].trim();
 	    assistantGuiderNumber = fields[4].trim();
@@ -66,13 +76,14 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 	    firstDiscussionDate = ConversionUtilities.parseDate(fields[9].trim());
 	    secondDiscussionDate = ConversionUtilities.parseDate(fields[10].trim());
 	    edictDate = ConversionUtilities.parseDate(fields[11].trim());
-	    classification = Integer.valueOf(fields[12].trim());
-	    probateDate = ConversionUtilities.parseDate(fields[13].trim());
-	    annulmentDate = ConversionUtilities.parseDate(fields[14].trim());
+	    unknownNumber = fields[12].trim();
+	    classification = fields[13].trim();
+	    probateDate = ConversionUtilities.parseDate(fields[14].trim());
+	    // annulmentDate = ConversionUtilities.parseDate(fields[14].trim());
 	    limitToFinishDate = ConversionUtilities.parseDate(fields[15].trim());
 	    extensionToLimitToFnishDate = ConversionUtilities.parseDate(fields[16].trim());
 	} catch (NoSuchElementException e) {
-	    throw new IncompleteFieldsException();
+	    throw new IncompleteFieldsException("Not enough fields");
 	}
     }
 

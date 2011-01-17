@@ -43,4 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Phd Migration Process" phdMigrationProcess.sql
 execute "Make all existing evaluations use TYPE20 grade scale" defaultExistingEvaluationsToTYPE20.sql
