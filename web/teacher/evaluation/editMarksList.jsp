@@ -18,8 +18,7 @@
 
 		<h:outputText styleClass="error" rendered="#{!empty evaluationManagementBackingBean.errorMessage}"
 			value="#{bundle[evaluationManagementBackingBean.errorMessage]}"/>
-
-
+			
 			<h:panelGroup rendered="#{evaluationManagementBackingBean.evaluation.class.name == 'net.sourceforge.fenixedu.domain.onlineTests.OnlineTest'}">
 				<h:outputText value="<b>#{bundle['lable.test']}:</b> " escape="false"/>
 				<h:outputText value="#{evaluationManagementBackingBean.evaluation.distributedTest.evaluationTitle}, "/>
@@ -72,6 +71,13 @@
 				<h:outputText value="<p>" escape="false"/>
 					<h:outputText value="#{bundle['label.marksOnline.instructions']}" escape="false"/>
 				<h:outputText value="</p>" escape="false"/>
+				
+				<h:panelGroup rendered="#{!empty evaluationManagementBackingBean.gradeScaleDescription}">
+					<h:outputText value="<p>" escape="false"/>
+						<h:outputText value="#{bundle['label.marksOnline.currentGradeScale']}" escape=""/>
+						<h:outputText value="#{evaluationManagementBackingBean.gradeScaleDescription}" escape="false"/>
+					<h:outputText value="</p>" escape="false"/>
+				</h:panelGroup>
 
 				<h:outputText value="<p>" escape="false"/>
 					<h:commandLink action="enterLoadMarks">
@@ -84,7 +90,9 @@
 				<h:outputText value="</p>" escape="false"/>
 			<h:outputText value="</div>" escape="false"/>
 
-
+			<h:outputText styleClass="warning0" rendered="#{evaluationManagementBackingBean.mixedGrades}"
+				value="#{bundle['message.teacher.edit.marks.mixedGrades']}" />
+	
 			<h:dataTable value="#{evaluationManagementBackingBean.executionCourseAttends}" var="attends" styleClass="tstyle4">
 				<h:column>
 					<f:facet name="header"><h:outputText value="#{bundle['label.number']}"/></f:facet>

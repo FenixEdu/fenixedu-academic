@@ -1001,7 +1001,7 @@ public class CreateTestData {
 	    final List<AllocatableSpace> rooms = new ArrayList<AllocatableSpace>();
 	    rooms.add(room);
 	    final WrittenTest writtenTest = new WrittenTest(startDateTime.toDate(), startDateTime.toDate(), endDateTime.toDate(),
-		    executionCourses, degreeModuleScopes, rooms, name);
+		    executionCourses, degreeModuleScopes, rooms, null, name);
 	    createWrittenEvaluationEnrolmentPeriodAndVigilancies(executionPeriod, writtenTest, executionCourse);
 	}
 
@@ -1023,7 +1023,7 @@ public class CreateTestData {
 	    final List<AllocatableSpace> rooms = new ArrayList<AllocatableSpace>();
 	    // rooms.add(room);
 	    final Exam exam = new Exam(startDateTime.toDate(), startDateTime.toDate(), endDateTime.toDate(), executionCourses,
-		    degreeModuleScopes, rooms, season);
+		    degreeModuleScopes, rooms, null, season);
 	    createWrittenEvaluationEnrolmentPeriodAndVigilancies(executionPeriod, exam, executionCourse);
 	}
     }

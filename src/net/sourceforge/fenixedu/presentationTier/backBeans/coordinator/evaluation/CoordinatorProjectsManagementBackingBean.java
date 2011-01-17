@@ -33,7 +33,7 @@ public class CoordinatorProjectsManagementBackingBean extends CoordinatorProject
 	try {
 	    final Object[] args = { getExecutionCourseID(), getName(),
 		    DateFormatUtil.parse("dd/MM/yyyy HH:mm", getBeginString()),
-		    DateFormatUtil.parse("dd/MM/yyyy HH:mm", getEndString()), getDescription() };
+		    DateFormatUtil.parse("dd/MM/yyyy HH:mm", getEndString()), getDescription(), null };
 	    ServiceUtils.executeService("CreateProject", args);
 	} catch (final FenixFilterException e) {
 	    return "";
@@ -51,7 +51,7 @@ public class CoordinatorProjectsManagementBackingBean extends CoordinatorProject
 	try {
 	    final Object[] args = { getExecutionCourseID(), getEvaluationID(), getName(),
 		    DateFormatUtil.parse("dd/MM/yyyy HH:mm", getBeginString()),
-		    DateFormatUtil.parse("dd/MM/yyyy HH:mm", getEndString()), getDescription() };
+		    DateFormatUtil.parse("dd/MM/yyyy HH:mm", getEndString()), getDescription(), null };
 	    ServiceUtils.executeService("EditProject", args);
 	} catch (final FenixFilterException e) {
 	} catch (final FenixServiceException e) {
@@ -75,6 +75,7 @@ public class CoordinatorProjectsManagementBackingBean extends CoordinatorProject
 	return this.showProjectsForExecutionCourses();
     }
 
+    @Override
     public Evaluation getEvaluation() {
 	try {
 	    if (this.evaluation == null && this.getEvaluationID() != null) {

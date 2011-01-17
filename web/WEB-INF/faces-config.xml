@@ -20,6 +20,12 @@
 		<converter-class>net.sourceforge.fenixedu.presentationTier.jsf.converter.SimpleRoundConverter</converter-class>
 	</converter>
 
+	<converter>
+		<converter-for-class>net.sourceforge.fenixedu.domain.GradeScale</converter-for-class>
+		<converter-class>net.sourceforge.fenixedu.presentationTier.jsf.converter.GradeScaleConverter</converter-class>
+	</converter>
+
+
 	<!-- MANAGED BEANS -->
 
 	<managed-bean>
@@ -917,6 +923,18 @@
  		<navigation-case>
 			<from-outcome>enterPublishMarks</from-outcome>
 			<to-view-id>/teacher/evaluation/publishMarks.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>enterEditExam</from-outcome>
+			<to-view-id>/teacher/evaluation/editExam.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/teacher/evaluation/editExam.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>Exam</from-outcome>
+			<to-view-id>/teacher/evaluation/examsIndex.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	

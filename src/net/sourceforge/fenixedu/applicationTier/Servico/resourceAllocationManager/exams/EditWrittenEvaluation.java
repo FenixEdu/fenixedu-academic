@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
@@ -30,14 +31,13 @@ import net.sourceforge.fenixedu.util.Season;
 
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
-import org.joda.time.YearMonthDay;
 
 public class EditWrittenEvaluation extends FenixService {
 
     public void run(Integer executionCourseID, Date writtenEvaluationDate, Date writtenEvaluationStartTime,
 	    Date writtenEvaluationEndTime, List<String> executionCourseIDs, List<String> degreeModuleScopeIDs,
-	    List<String> roomIDs, Integer writtenEvaluationOID, Season examSeason, String writtenTestDescription)
-	    throws FenixServiceException {
+	    List<String> roomIDs, Integer writtenEvaluationOID, Season examSeason, String writtenTestDescription,
+	    GradeScale gradeScale) throws FenixServiceException {
 
 	final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) rootDomainObject
 		.readEvaluationByOID(writtenEvaluationOID);
@@ -62,29 +62,35 @@ public class EditWrittenEvaluation extends FenixService {
 
 	if (examSeason != null) {
 	    ((Exam) writtenEvaluation).edit(writtenEvaluationDate, writtenEvaluationStartTime, writtenEvaluationEndTime,
-		    executionCoursesToAssociate, degreeModuleScopeToAssociate, roomsToAssociate, examSeason);
+		    executionCoursesToAssociate, degreeModuleScopeToAssociate, roomsToAssociate, gradeScale, examSeason);
 	} else if (writtenTestDescription != null) {
 	    ((WrittenTest) writtenEvaluation).edit(writtenEvaluationDate, writtenEvaluationStartTime, writtenEvaluationEndTime,
-		    executionCoursesToAssociate, degreeModuleScopeToAssociate, roomsToAssociate, writtenTestDescription);
+		    executionCoursesToAssociate, degreeModuleScopeToAssociate, roomsToAssociate, gradeScale,
+		    writtenTestDescription);
 	} else {
 	    throw new InvalidArgumentsServiceException();
 	}
 
-	for (final AllocatableSpace allocatableSpace : roomsToAssociate) {
-	    int intervalCount = 0;
-	    DateTime beginDateTime = new DateTime(writtenEvaluationStartTime.getTime()).withSecondOfMinute(0).withMillisOfSecond(0);
-//	    YearMonthDay beginYMD = beginDateTime.toYearMonthDay();
-	    
-	    DateTime endDateTime = new DateTime(writtenEvaluationEndTime.getTime()).withSecondOfMinute(0).withMillisOfSecond(0);
-//	    YearMonthDay endYMD = endDateTime.toYearMonthDay();
-	    
-	    for(ResourceAllocation resource : allocatableSpace.getResourceAllocationsSet()) {
-		if (resource.isEventSpaceOccupation()) {
-		    EventSpaceOccupation eventSpaceOccupation =  (EventSpaceOccupation) resource;
-		    List<Interval> intervals = eventSpaceOccupation.getEventSpaceOccupationIntervals(beginDateTime, endDateTime);
-		    intervalCount += intervals.size();
-		    if(intervalCount > 1) {
-			throw new DomainException("error.noRoom", allocatableSpace.getName());
+	if (roomsToAssociate != null) {
+	    for (final AllocatableSpace allocatableSpace : roomsToAssociate) {
+		int intervalCount = 0;
+		DateTime beginDateTime = new DateTime(writtenEvaluationStartTime.getTime()).withSecondOfMinute(0)
+			.withMillisOfSecond(0);
+		// YearMonthDay beginYMD = beginDateTime.toYearMonthDay();
+
+		DateTime endDateTime = new DateTime(writtenEvaluationEndTime.getTime()).withSecondOfMinute(0).withMillisOfSecond(
+			0);
+		// YearMonthDay endYMD = endDateTime.toYearMonthDay();
+
+		for (ResourceAllocation resource : allocatableSpace.getResourceAllocationsSet()) {
+		    if (resource.isEventSpaceOccupation()) {
+			EventSpaceOccupation eventSpaceOccupation = (EventSpaceOccupation) resource;
+			List<Interval> intervals = eventSpaceOccupation.getEventSpaceOccupationIntervals(beginDateTime,
+				endDateTime);
+			intervalCount += intervals.size();
+			if (intervalCount > 1) {
+			    throw new DomainException("error.noRoom", allocatableSpace.getName());
+			}
 		    }
 		}
 	    }

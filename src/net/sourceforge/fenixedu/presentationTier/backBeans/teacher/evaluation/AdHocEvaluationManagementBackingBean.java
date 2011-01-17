@@ -1,11 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
-
-import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -23,29 +20,10 @@ public class AdHocEvaluationManagementBackingBean extends EvaluationManagementBa
     protected String name;
     protected AdHocEvaluation adHocEvaluation;
     protected Integer adHocEvaluationID;
-    protected String gradeScaleString;
-    protected GradeScale gradeScale;
+
 
     public AdHocEvaluationManagementBackingBean() {
 	super();
-    }
-
-    public String getGradeScaleString() {
-	if (this.gradeScaleString == null && getAdHocEvaluation() != null) {
-	    return getAdHocEvaluation().getGradeScale().getName();
-	}
-	return this.gradeScaleString;
-    }
-
-    public void setGradeScaleString(String gradeScaleString) {
-	this.gradeScaleString = gradeScaleString;
-    }
-
-    private GradeScale getGradeScale() {
-	if (this.gradeScale == null && this.getGradeScaleString() != null) {
-	    this.gradeScale = GradeScale.valueOf(getGradeScaleString());
-	}
-	return this.gradeScale;
     }
 
     public String createAdHocEvaluation() {
@@ -137,12 +115,11 @@ public class AdHocEvaluationManagementBackingBean extends EvaluationManagementBa
 	this.adHocEvaluationID = adHocEvaluationID;
     }
 
-    public List<SelectItem> getGradeScales() {
-	List<SelectItem> res = new ArrayList<SelectItem>();
-	for (GradeScale gradeScale : GradeScale.getPublicGradeScales()) {
-	    res.add(new SelectItem(gradeScale.getName(), enumerationBundle.getString(gradeScale.getName())));
+    @Override
+    public GradeScale getGradeScale() {
+	if (gradeScale == null && this.getAdHocEvaluation() != null) {
+	    this.gradeScale = getAdHocEvaluation().getGradeScale();
 	}
-	return res;
+	return this.gradeScale;
     }
-
 }

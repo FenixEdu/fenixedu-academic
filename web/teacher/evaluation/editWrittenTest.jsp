@@ -1,3 +1,4 @@
+<%@page import="net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation.EvaluationManagementBackingBean"%>
 <%@ taglib uri="/WEB-INF/jsf_core.tld" prefix="f"%>
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
@@ -84,6 +85,18 @@
 				
 				<h:outputText value="<td>" escape="false"/>
 					<h:inputText alt="#{htmlAltBundle['inputText.description']}" required="true" maxlength="120" size="15" value="#{evaluationManagementBackingBean.description}"/>
+				<h:outputText value="</td>" escape="false"/>
+			<h:outputText value="</tr>" escape="false"/>
+			
+			<h:outputText value="<tr>" escape="false"/>
+				<h:outputText value="<th>" escape="false"/>
+					<h:outputText value="#{bundle['label.gradeScale']}:" escape="false"/>
+				<h:outputText value="</th>" escape="false"/>
+				
+				<h:outputText value="<td>" escape="false"/>
+					<h:selectOneMenu value="#{evaluationManagementBackingBean.gradeScale}">
+						<f:selectItems value="#{evaluationManagementBackingBean.gradeScaleOptions}"/>
+					</h:selectOneMenu>
 				<h:outputText value="</td>" escape="false"/>
 			<h:outputText value="</tr>" escape="false"/>
 			

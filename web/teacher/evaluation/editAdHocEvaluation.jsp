@@ -29,9 +29,9 @@
 					<h:outputText value="* " style="color: #c00"/>
 					<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.AdHocEvaluation.gradeScale']}:" escape="false"/>
 				</h:panelGroup>
-				<h:selectOneMenu value="#{adHocEvaluationManagementBackingBean.gradeScaleString}">
-					<f:selectItems value="#{adHocEvaluationManagementBackingBean.gradeScales}"/>
-				</h:selectOneMenu>				
+				<h:selectOneMenu value="#{adHocEvaluationManagementBackingBean.gradeScale}">
+					<f:selectItems value="#{adHocEvaluationManagementBackingBean.gradeScaleOptions}"/>
+				</h:selectOneMenu>
 				<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.AdHocEvaluation.description']}: " />
 				<h:inputTextarea rows="4" cols="40" value="#{adHocEvaluationManagementBackingBean.description}" />
 			</h:panelGrid>			

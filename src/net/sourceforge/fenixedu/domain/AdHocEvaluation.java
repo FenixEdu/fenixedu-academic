@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
 import org.joda.time.DateTime;
@@ -11,6 +10,7 @@ public class AdHocEvaluation extends AdHocEvaluation_Base {
 
     public static final Comparator<AdHocEvaluation> AD_HOC_EVALUATION_CREATION_DATE_COMPARATOR = new Comparator<AdHocEvaluation>() {
 
+	@Override
 	public int compare(AdHocEvaluation e1, AdHocEvaluation e2) {
 	    return e1.getCreationDateTime().compareTo(e2.getCreationDateTime());
 	}
@@ -49,9 +49,6 @@ public class AdHocEvaluation extends AdHocEvaluation_Base {
 	setDescription(description);
 
 	if (getGradeScale() != gradeScale) {
-	    if (!getMarks().isEmpty()) {
-		throw new DomainException("error.adHacEvaluation.already.has.associated.marks");
-	    }
 	    setGradeScale(gradeScale);
 	}
     }

@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.student.GroupEnrolment;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.GroupEnrolment;
 import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
@@ -69,12 +69,23 @@ public class Project extends Project_Base {
 	this.setEnd(end);
 	this.setDescription(description != null ? description : "");
 	this.addAssociatedExecutionCourses(executionCourse);
+	this.setGradeScale(GradeScale.TYPE20);
 
 	setOnlineSubmissionProperties(onlineSubmissionsAllowed, maxSubmissionsToKeep, grouping);
     }
 
+    public Project(String name, Date begin, Date end, String description, Boolean onlineSubmissionsAllowed,
+	    Integer maxSubmissionsToKeep, Grouping grouping, ExecutionCourse executionCourse, GradeScale gradeScale) {
+
+	this(name, begin, end, description, onlineSubmissionsAllowed, maxSubmissionsToKeep, grouping, executionCourse);
+
+	if (gradeScale != null) {
+	    this.setGradeScale(gradeScale);
+	}
+    }
+
     public void edit(String name, Date begin, Date end, String description, Boolean onlineSubmissionsAllowed,
-	    Integer maxSubmissionsToKeep, Grouping grouping) {
+	    Integer maxSubmissionsToKeep, Grouping grouping, GradeScale gradeScale) {
 	if (name == null || begin == null || end == null) {
 	    throw new NullPointerException();
 	}
@@ -84,6 +95,7 @@ public class Project extends Project_Base {
 	setName(name);
 	setBegin(begin);
 	setEnd(end);
+	setGradeScale(gradeScale);
 	setDescription((description != null) ? description : "");
 
 	if (!getProjectSubmissions().isEmpty()) {
@@ -115,6 +127,7 @@ public class Project extends Project_Base {
 	}
     }
 
+    @Override
     public EvaluationType getEvaluationType() {
 	return EvaluationType.PROJECT_TYPE;
     }

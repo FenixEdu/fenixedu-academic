@@ -13,10 +13,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
-import java.util.Map.Entry;
 
 import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.component.html.HtmlInputText;
@@ -44,6 +44,7 @@ import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.FinalEvaluation;
 import net.sourceforge.fenixedu.domain.FinalMark;
+import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
@@ -73,6 +74,8 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 public class EvaluationManagementBackingBean extends FenixBackingBean {
+
+    protected final ResourceBundle enumerationBundle = getResourceBundle("resources/EnumerationResources");
 
     protected Integer executionCourseID;
 
@@ -157,6 +160,8 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     protected Integer[] roomsToAssociate;
 
     protected Map<Integer, Boolean> canManageRoomsMap = new HashMap<Integer, Boolean>();
+
+    protected GradeScale gradeScale;
 
     public EvaluationManagementBackingBean() {
 	/*
@@ -625,7 +630,8 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
 	final Season season = (getSeason() != null) ? new Season(getSeason()) : null;
 	final Object[] args = { this.getExecutionCourseID(), this.getBegin().getTime(), this.getBegin().getTime(),
-		this.getEnd().getTime(), executionCourseIDs, degreeModuleScopesIDs, null, season, this.getDescription() };
+		this.getEnd().getTime(), executionCourseIDs, degreeModuleScopesIDs, null, this.getGradeScale(), season,
+		this.getDescription() };
 	try {
 	    ServiceUtils.executeService("CreateWrittenEvaluation", args);
 
@@ -764,8 +770,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
 	final Object[] args = { this.getExecutionCourseID(), this.getBegin().getTime(), this.getBegin().getTime(),
 		this.getEnd().getTime(), executionCourseIDs, degreeModuleScopesIDs, null, this.evaluationID, season,
-		this.getDescription() };
-
+		this.getDescription(), this.getGradeScale() };
 	try {
 	    ServiceUtils.executeService("EditWrittenEvaluation", args);
 	} catch (Exception e) {
@@ -1244,6 +1249,36 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 	this.canManageRoomsMap = canManageRoomsMap;
     }
 
+    public GradeScale getGradeScale() {
+	if (gradeScale == null && this.getEvaluation() != null) {
+	    this.gradeScale = getEvaluation().getGradeScale();
+	}
+	return this.gradeScale;
+    }
+
+    public void setGradeScale(GradeScale gradeScale) {
+	this.gradeScale = gradeScale;
+    }
+
+    public List<SelectItem> getGradeScaleOptions() {
+	List<GradeScale> scales = GradeScale.getPublicGradeScales();
+	List<SelectItem> items = new ArrayList<SelectItem>();
+
+	for (GradeScale s : scales) {
+	    items.add(new SelectItem(s, enumerationBundle.getString(s.getName())));
+	}
+
+	return items;
+    }
+
+    public String getGradeScaleDescription() {
+	GradeScale gradeScale = getGradeScale();
+	if (gradeScale != null) {
+	    return getGradeScale().getPossibleValueDescription(getEvaluation().isFinal());
+	}
+	return "";
+    }
+
     public void exportStudentsEnroledToExcel() throws FenixFilterException, FenixServiceException {
 	exportToExcel();
     }
@@ -1311,4 +1346,25 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 	}
     }
 
+    public boolean getMixedGrades() {
+	final Evaluation evaluation = getEvaluation();
+	final GradeScale gradeScale = getGradeScale();
+
+	if (gradeScale == null) {
+	    return false;
+	}
+
+	try {
+	    for (String mark : getMarks().values()) {
+		if (!gradeScale.isValid(mark, evaluation.getEvaluationType())) {
+		    return true;
+		}
+	    }
+	} catch (FenixFilterException e) {
+	    // nothing
+	} catch (FenixServiceException e) {
+	    // nothing
+	}
+	return false;
+    }
 }

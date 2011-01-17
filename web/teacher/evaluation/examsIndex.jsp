@@ -40,6 +40,12 @@
 						<h:panelGroup rendered="#{!empty exam.associatedRooms}">
 							<h:outputText value=" #{exam.associatedRoomsAsStringList}" escape="false"/>
 						</h:panelGroup>
+						
+						<h:outputText value=" | " escape="false"/>
+						<h:commandLink action="enterEditExam">
+							<f:param name="evaluationID" value="#{exam.idInternal}" />
+							<h:outputFormat value="#{bundle['link.edit']}" />
+						</h:commandLink>
 		
 						<h:outputText value="<p class='indent1 mvert05'>#{bundle['label.teacher.evaluation.enrolment.management']}: " escape="false"/>
 						<h:commandLink action="enterEditEnrolmentPeriod">

@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.util.Season;
@@ -18,7 +19,8 @@ public class CreateWrittenEvaluation extends FenixService {
 
     public void run(Integer executionCourseID, Date writtenEvaluationDate, Date writtenEvaluationStartTime,
 	    Date writtenEvaluationEndTime, List<String> executionCourseIDs, List<String> degreeModuleScopeIDs,
-	    List<String> roomIDs, Season examSeason, String writtenTestDescription) throws FenixServiceException {
+	    List<String> roomIDs, GradeScale gradeScale, Season examSeason, String writtenTestDescription)
+	    throws FenixServiceException {
 
 	final List<ExecutionCourse> executionCoursesToAssociate = readExecutionCourses(executionCourseIDs);
 	final List<DegreeModuleScope> degreeModuleScopesToAssociate = readCurricularCourseScopesAndContexts(degreeModuleScopeIDs);
@@ -32,10 +34,11 @@ public class CreateWrittenEvaluation extends FenixService {
 	// arguments
 	if (examSeason != null) {
 	    new Exam(writtenEvaluationDate, writtenEvaluationStartTime, writtenEvaluationEndTime, executionCoursesToAssociate,
-		    degreeModuleScopesToAssociate, roomsToAssociate, examSeason);
+		    degreeModuleScopesToAssociate, roomsToAssociate, gradeScale, examSeason);
 	} else if (writtenTestDescription != null) {
 	    new WrittenTest(writtenEvaluationDate, writtenEvaluationStartTime, writtenEvaluationEndTime,
-		    executionCoursesToAssociate, degreeModuleScopesToAssociate, roomsToAssociate, writtenTestDescription);
+		    executionCoursesToAssociate, degreeModuleScopesToAssociate, roomsToAssociate, gradeScale,
+		    writtenTestDescription);
 	} else {
 	    throw new InvalidArgumentsServiceException();
 	}

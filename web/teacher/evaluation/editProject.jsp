@@ -48,7 +48,13 @@
 					<h:inputText alt="#{htmlAltBundle['inputText.endProjectHour']}" id="endHour" required="true" maxlength="5" size="5" value="#{projectManagementBackingBean.endProjectHour}" />
 					<h:outputText value=" #{bundle['label.hour.instructions']}" />
 					<h:message for="endHour" styleClass="error"/>
-				</h:panelGroup>				
+				</h:panelGroup>
+				
+				<h:outputText value="#{bundle['label.gradeScale']}: " />
+				<h:selectOneMenu value="#{projectManagementBackingBean.gradeScale}">
+					<f:selectItems value="#{projectManagementBackingBean.gradeScaleOptions}"/>
+				</h:selectOneMenu>
+						
 				<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.description']}: " />
 				<h:inputTextarea rows="4" cols="40" value="#{projectManagementBackingBean.description}" />
 				

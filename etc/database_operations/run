@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Make all existing evaluations use TYPE20 grade scale" defaultExistingEvaluationsToTYPE20.sql

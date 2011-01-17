@@ -1038,6 +1038,7 @@ class DomainObject {
 
     class Evaluation extends DomainObject {
         String publishmentMessage;
+        GradeScale gradeScale;
     }
 
     class EvaluationMethod extends DomainObject {
@@ -1051,7 +1052,6 @@ class DomainObject {
             String description;
             String name;
             DateTime creationDateTime;
-            GradeScale gradeScale;
         }
 
         class Project extends Evaluation {

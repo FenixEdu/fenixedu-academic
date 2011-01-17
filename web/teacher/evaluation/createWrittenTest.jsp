@@ -88,6 +88,18 @@
 				<h:outputText value="</td>" escape="false"/>
 			
 			<h:outputText value="</tr>" escape="false"/>
+			
+			<h:outputText value="<tr>" escape="false"/>
+				<h:outputText value="<th>" escape="false"/>
+					<h:outputText value="#{bundle['label.gradeScale']}:" escape="false"/>
+				<h:outputText value="</th>" escape="false"/>
+				
+				<h:outputText value="<td>" escape="false"/>
+					<h:selectOneMenu value="#{evaluationManagementBackingBean.gradeScale}">
+						<f:selectItems value="#{evaluationManagementBackingBean.gradeScaleOptions}"/>
+					</h:selectOneMenu>
+				<h:outputText value="</td>" escape="false"/>
+			<h:outputText value="</tr>" escape="false"/>
 
 		<h:outputText value="</table>" escape="false"/>
 		

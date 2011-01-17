@@ -422,9 +422,19 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     protected void edit(Date day, Date beginning, Date end, List<ExecutionCourse> executionCoursesToAssociate,
-	    List<DegreeModuleScope> curricularCourseScopesToAssociate, List<AllocatableSpace> rooms) {
+	    List<DegreeModuleScope> curricularCourseScopesToAssociate, List<AllocatableSpace> rooms, GradeScale gradeScale) {
 
-	setAttributesAndAssociateRooms(day, beginning, end, executionCoursesToAssociate, curricularCourseScopesToAssociate, rooms);
+	setAttributesAndAssociateRooms(day, beginning, end, executionCoursesToAssociate, curricularCourseScopesToAssociate,
+		rooms);
+	
+	if (getGradeScale() != gradeScale) {
+	    if (gradeScale != null) {
+		setGradeScale(gradeScale);
+	    } else {
+		setGradeScale(GradeScale.TYPE20);
+	    }
+	}
+	
 	checkIntervalBetweenEvaluations();
     }
 

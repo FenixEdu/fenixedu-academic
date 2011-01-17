@@ -409,6 +409,9 @@ public enum GradeScale {
     public boolean isValid(final String value, final EvaluationType evaluationType) {
 	try {
 	    final Grade grade = Grade.createGrade(value, this);
+	    if (grade.isEmpty()) {
+		return false;
+	    }
 	    if (EvaluationType.FINAL_TYPE.equals(evaluationType)) {
 		return checkFinal(grade);
 	    } else {
@@ -467,6 +470,15 @@ public enum GradeScale {
 
     public String getDescription() {
 	return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(name());
+    }
+
+    public String getPossibleValueDescription(boolean isFinal) {
+	if (isFinal) {
+	    return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString("TYPE.final");
+	}
+
+	return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale())
+		.getString(name() + ".description");
     }
 
 }

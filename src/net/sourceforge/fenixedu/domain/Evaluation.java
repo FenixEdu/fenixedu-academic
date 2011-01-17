@@ -11,6 +11,7 @@ public abstract class Evaluation extends Evaluation_Base {
 
     public Evaluation() {
 	super();
+	setGradeScale(GradeScale.TYPE20);
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 

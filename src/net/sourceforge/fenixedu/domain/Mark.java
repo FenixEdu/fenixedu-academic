@@ -2,8 +2,8 @@ package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.InvalidMarkDomainException;
+import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.util.EvaluationType;
 
 public class Mark extends Mark_Base {
 
@@ -20,6 +20,7 @@ public class Mark extends Mark_Base {
 	setPublishedMark(null);
     }
 
+    @Override
     public void setMark(String mark) {
 	if (validateMark(mark)) {
 	    super.setMark(mark);
@@ -39,6 +40,10 @@ public class Mark extends Mark_Base {
 	GradeScale gradeScale;
 	if (getEvaluation() instanceof AdHocEvaluation) {
 	    gradeScale = ((AdHocEvaluation) getEvaluation()).getGradeScale();
+	} else if (getEvaluation() instanceof WrittenEvaluation) {
+	    gradeScale = ((WrittenEvaluation) getEvaluation()).getGradeScale();
+	} else if (getEvaluation() instanceof OnlineTest) {
+	    gradeScale = ((OnlineTest) getEvaluation()).getGradeScale();
 	} else {
 	    if (getAttend().getEnrolment() == null) {
 		final Registration registration = getAttend().getRegistration();
@@ -52,9 +57,6 @@ public class Mark extends Mark_Base {
 		}
 	    } else {
 		gradeScale = getAttend().getEnrolment().getCurricularCourse().getGradeScaleChain();
-	    }
-	    if (gradeScale == null && getEvaluation().getEvaluationType().getType() == EvaluationType.ONLINE_TEST) {
-		gradeScale = GradeScale.TYPE20;
 	    }
 	}
 	return gradeScale.isValid(mark, getEvaluation().getEvaluationType());

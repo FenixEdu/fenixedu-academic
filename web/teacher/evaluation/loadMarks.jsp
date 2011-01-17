@@ -57,8 +57,15 @@
 
 			<h:outputText value="<div class='infoop2 mvert15'>" escape="false"/>
 				<h:outputText value="#{bundle['label.fileUpload.information']}" escape="false"/>
+				
+				<h:panelGroup rendered="#{!empty evaluationManagementBackingBean.gradeScaleDescription}">
+					<h:outputText value="<p>" escape="false"/>
+						<h:outputText value="#{bundle['label.marksOnline.currentGradeScale']}" escape=""/>
+						<h:outputText value="#{evaluationManagementBackingBean.gradeScaleDescription}" escape="false"/>
+					<h:outputText value="</p>" escape="false"/>
+				</h:panelGroup>
 			<h:outputText value="</div>" escape="false"/>
-
+			
 
 			<h:outputText styleClass="error" rendered="#{!empty evaluationManagementBackingBean.errorMessage}"
 				value="#{bundle[evaluationManagementBackingBean.errorMessage]}"/>

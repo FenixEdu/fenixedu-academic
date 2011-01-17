@@ -14,6 +14,7 @@ import javax.faces.model.SelectItem;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -65,7 +66,7 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
 	    final Object[] args = { getExecutionCourseID(), getName(),
 		    DateFormatUtil.parse("dd/MM/yyyy HH:mm", getBeginString()),
 		    DateFormatUtil.parse("dd/MM/yyyy HH:mm", getEndString()), getDescription(), getOnlineSubmissionsAllowed(),
-		    getMaxSubmissionsToKeep(), getGroupingID() };
+		    getMaxSubmissionsToKeep(), getGroupingID(), getGradeScale() };
 	    ServiceUtils.executeService("CreateProject", args);
 	} catch (final FenixFilterException e) {
 	    return "";
@@ -87,7 +88,7 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
 	    final Object[] args = { getExecutionCourseID(), getProjectID(), getName(),
 		    DateFormatUtil.parse("dd/MM/yyyy HH:mm", getBeginString()),
 		    DateFormatUtil.parse("dd/MM/yyyy HH:mm", getEndString()), getDescription(), getOnlineSubmissionsAllowed(),
-		    getMaxSubmissionsToKeep(), getGroupingID() };
+		    getMaxSubmissionsToKeep(), getGroupingID(), getGradeScale() };
 	    ServiceUtils.executeService("EditProject", args);
 	    setAssociatedProjects(null);
 	} catch (final FenixFilterException e) {
@@ -171,6 +172,7 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
 	this.name = name;
     }
 
+    @Override
     public String getDescription() {
 	if (this.description == null && this.getProject() != null) {
 	    this.description = this.getProject().getDescription();
@@ -259,6 +261,14 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
 	}
 
 	return this.executionCourseGroupings;
+    }
+
+    @Override
+    public GradeScale getGradeScale() {
+	if (gradeScale == null && this.getProject() != null) {
+	    this.gradeScale = getProject().getGradeScale();
+	}
+	return this.gradeScale;
     }
 
 }

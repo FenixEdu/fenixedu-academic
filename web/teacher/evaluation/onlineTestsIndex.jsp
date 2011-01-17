@@ -31,7 +31,7 @@
 					<h:outputFormat value="{0, date, HH:mm}">
 						<f:param value="#{onlineTest.distributedTest.beginHourDate}"/>
 					</h:outputFormat>
-		
+					
 					<h:outputText value="<br/><ul class=\"links\"><li><b>#{bundle['label.students.listMarks']}:</b> " escape="false"/>
 					<h:commandLink action="enterShowMarksListOptions">
 						<f:param name="evaluationID" value="#{onlineTest.idInternal}" />

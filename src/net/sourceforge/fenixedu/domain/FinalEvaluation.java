@@ -15,6 +15,7 @@ public class FinalEvaluation extends FinalEvaluation_Base {
 
     public FinalEvaluation() {
 	super();
+	this.setGradeScale(GradeScale.TYPE20);
     }
 
     public Integer getGradesListVersion() {
@@ -39,6 +40,7 @@ public class FinalEvaluation extends FinalEvaluation_Base {
 	return new FinalMark(attends, this, markValue);
     }
 
+    @Override
     public EvaluationType getEvaluationType() {
 	return EvaluationType.FINAL_TYPE;
     }

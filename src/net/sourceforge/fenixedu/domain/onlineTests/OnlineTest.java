@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
@@ -23,15 +24,17 @@ public class OnlineTest extends OnlineTest_Base {
 
     public OnlineTest() {
 	super();
+	setGradeScale(GradeScale.TYPE20);
     }
 
+    @Override
     public EvaluationType getEvaluationType() {
 	return EvaluationType.ONLINE_TEST_TYPE;
     }
 
+    @Override
     public void delete() {
 	removeDistributedTest();
 	super.delete();
     }
-
 }

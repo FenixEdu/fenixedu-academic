@@ -16,7 +16,8 @@ import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 public class Exam extends Exam_Base {
 
     public Exam(Date examDay, Date examStartTime, Date examEndTime, List<ExecutionCourse> executionCoursesToAssociate,
-	    List<DegreeModuleScope> curricularCourseScopesToAssociate, List<AllocatableSpace> rooms, Season season) {
+	    List<DegreeModuleScope> curricularCourseScopesToAssociate, List<AllocatableSpace> rooms, GradeScale gradeScale,
+	    Season season) {
 
 	super();
 	checkScopeAndSeasonConstrains(executionCoursesToAssociate, curricularCourseScopesToAssociate, season);
@@ -25,11 +26,17 @@ public class Exam extends Exam_Base {
 		curricularCourseScopesToAssociate, rooms);
 
 	this.setSeason(season);
+	if (gradeScale == null) {
+	    this.setGradeScale(GradeScale.TYPE20);
+	} else {
+	    this.setGradeScale(gradeScale);
+	}
 	checkIntervalBetweenEvaluations();
     }
 
     public void edit(Date examDay, Date examStartTime, Date examEndTime, List<ExecutionCourse> executionCoursesToAssociate,
-	    List<DegreeModuleScope> curricularCourseScopesToAssociate, List<AllocatableSpace> rooms, Season season) {
+	    List<DegreeModuleScope> curricularCourseScopesToAssociate, List<AllocatableSpace> rooms, GradeScale gradeScale,
+	    Season season) {
 
 	// It's necessary to remove this associations before check some
 	// constrains
@@ -39,7 +46,8 @@ public class Exam extends Exam_Base {
 
 	checkScopeAndSeasonConstrains(executionCoursesToAssociate, curricularCourseScopesToAssociate, season);
 
-	super.edit(examDay, examStartTime, examEndTime, executionCoursesToAssociate, curricularCourseScopesToAssociate, rooms);
+	super.edit(examDay, examStartTime, examEndTime, executionCoursesToAssociate, curricularCourseScopesToAssociate, rooms,
+		gradeScale);
 	this.setSeason(season);
 	checkIntervalBetweenEvaluations();
     }
@@ -93,7 +101,7 @@ public class Exam extends Exam_Base {
 
 	outter: for (Exam exam : Exam.readExams()) {
 	    for (WrittenEvaluationSpaceOccupation occupation : exam.getWrittenEvaluationSpaceOccupations()) {
-		if (!((AllocatableSpace) occupation.getRoom()).getNome().equals(room)) {
+		if (!(occupation.getRoom()).getNome().equals(room)) {
 		    continue outter;
 		}
 	    }
@@ -166,6 +174,7 @@ public class Exam extends Exam_Base {
 		getBeginningDateHourMinuteSecond(), getEndDateHourMinuteSecond(), getDayOfWeek(), null, null, null);
     }
 
+    @Override
     public List<EventBean> getAllEvents(Registration registration, String scheme, String serverName, int serverPort) {
 	return getAllEvents("Exame (" + this.getSeason() + ")", registration, scheme, serverName, serverPort);
     }

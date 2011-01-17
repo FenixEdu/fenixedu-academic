@@ -32,7 +32,8 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 public class WrittenTest extends WrittenTest_Base {
 
     public WrittenTest(Date testDate, Date testStartTime, Date testEndTime, List<ExecutionCourse> executionCoursesToAssociate,
-	    List<DegreeModuleScope> curricularCourseScopesToAssociate, List<AllocatableSpace> rooms, String description) {
+	    List<DegreeModuleScope> curricularCourseScopesToAssociate, List<AllocatableSpace> rooms, GradeScale gradeScale,
+	    String description) {
 
 	super();
 	checkEvaluationDate(testDate, executionCoursesToAssociate);
@@ -40,11 +41,17 @@ public class WrittenTest extends WrittenTest_Base {
 		curricularCourseScopesToAssociate, rooms);
 
 	this.setDescription(description);
+	if (gradeScale == null) {
+	    this.setGradeScale(GradeScale.TYPE20);
+	} else {
+	    this.setGradeScale(gradeScale);
+	}
 	checkIntervalBetweenEvaluations();
     }
 
     public void edit(Date testDate, Date testStartTime, Date testEndTime, List<ExecutionCourse> executionCoursesToAssociate,
-	    List<DegreeModuleScope> curricularCourseScopesToAssociate, List<AllocatableSpace> rooms, String description) {
+	    List<DegreeModuleScope> curricularCourseScopesToAssociate, List<AllocatableSpace> rooms, GradeScale gradeScale,
+	    String description) {
 
 	checkEvaluationDate(testDate, executionCoursesToAssociate);
 
@@ -56,6 +63,11 @@ public class WrittenTest extends WrittenTest_Base {
 		curricularCourseScopesToAssociate, rooms);
 
 	this.setDescription(description);
+	if (gradeScale == null) {
+	    this.setGradeScale(GradeScale.TYPE20);
+	} else {
+	    this.setGradeScale(gradeScale);
+	}
 	checkIntervalBetweenEvaluations();
     }
 
@@ -144,6 +156,7 @@ public class WrittenTest extends WrittenTest_Base {
 	return requestor.hasRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER);
     }
 
+    @Override
     public EvaluationType getEvaluationType() {
 	return EvaluationType.TEST_TYPE;
     }
@@ -235,6 +248,7 @@ public class WrittenTest extends WrittenTest_Base {
 	return false;
     }
 
+    @Override
     public List<EventBean> getAllEvents(Registration registration, String scheme, String serverName, int serverPort) {
 	return getAllEvents(this.getDescription(), registration, scheme, serverName, serverPort);
     }

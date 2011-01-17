@@ -31,6 +31,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope.DegreeModuleScopeCurricularCourseScope;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Evaluation;
@@ -39,7 +40,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
-import net.sourceforge.fenixedu.domain.CurricularCourseScope.DegreeModuleScopeCurricularCourseScope;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context.DegreeModuleScopeContext;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -1101,7 +1101,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
 	final Season season = (getSeason() != null) ? new Season(getSeason()) : null;
 	final Object[] args = { null, this.getBegin().getTime(), this.getBegin().getTime(), this.getEnd().getTime(),
-		executionCourseIDs, degreeModuleScopeIDs, roomsIDs, season, this.getDescription() };
+		executionCourseIDs, degreeModuleScopeIDs, roomsIDs, null, season, this.getDescription() };
 	try {
 	    ServiceUtils.executeService("CreateWrittenEvaluation", args);
 

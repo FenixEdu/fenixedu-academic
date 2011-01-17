@@ -227,6 +227,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
     }
 
     private static final Comparator evaluationComparator = new Comparator() {
+	@Override
 	public int compare(Object o1, Object o2) {
 	    if (o1.getClass() != o2.getClass()) {
 		return o1.getClass().getName().compareTo(o2.getClass().getName());
@@ -488,7 +489,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
 	try {
 	    final Object[] args = { getExecutionCourseID(), getName(), DateFormatUtil.parse("dd/MM/yyyy HH:mm", getBegin()),
 		    DateFormatUtil.parse("dd/MM/yyyy HH:mm", getEnd()), getDescription(), getOnlineSubmissionsAllowed(),
-		    getMaxSubmissionsToKeep(), getGroupingID() };
+		    getMaxSubmissionsToKeep(), getGroupingID(), null };
 	    ServiceUtils.executeService("CreateProject", args);
 	} catch (final ParseException e) {
 	    setErrorMessage("error.invalidDate");
@@ -511,7 +512,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
 	try {
 	    final Object[] args = { getExecutionCourseID(), DateFormatUtil.parse("dd/MM/yyyy", getDate()),
 		    DateFormatUtil.parse("HH:mm", getBeginTime()), DateFormatUtil.parse("HH:mm", getEndTime()),
-		    executionCourseIDs, degreeModuleScopeIDs, null, null, getDescription() };
+		    executionCourseIDs, degreeModuleScopeIDs, null, null, null, getDescription() };
 
 	    ServiceUtils.executeService("CreateWrittenEvaluation", args);
 
@@ -553,7 +554,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
 	try {
 	    final Object[] args = { getExecutionCourseID(), getEvaluationID(), getName(),
 		    DateFormatUtil.parse("dd/MM/yyyy HH:mm", getBegin()), DateFormatUtil.parse("dd/MM/yyyy HH:mm", getEnd()),
-		    getDescription(), getOnlineSubmissionsAllowed(), getMaxSubmissionsToKeep(), getGroupingID() };
+		    getDescription(), getOnlineSubmissionsAllowed(), getMaxSubmissionsToKeep(), getGroupingID(), null };
 	    ServiceUtils.executeService("EditProject", args);
 	} catch (ParseException ex) {
 	    setErrorMessage("error.invalid.date");
