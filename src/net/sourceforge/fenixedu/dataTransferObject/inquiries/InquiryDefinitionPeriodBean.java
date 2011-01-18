@@ -6,8 +6,10 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.inquiries.CurricularCourseInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriodType;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryTemplate;
+import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryTemplate;
 
 import org.joda.time.DateTime;
 
@@ -157,8 +159,16 @@ public class InquiryDefinitionPeriodBean implements Serializable {
 	if (!getEnd().isAfter(getBegin())) {
 	    throw new DomainException("error.inquiry.endDateMustBeAfterBeginDate");
 	}
-	getInquiryTemplate().setResponsePeriodBegin(getBegin());
-	getInquiryTemplate().setResponsePeriodEnd(getEnd());
+	if (getInquiryTemplate() instanceof CurricularCourseInquiryTemplate) {
+	    for (StudentInquiryTemplate studentInquiryTemplate : StudentInquiryTemplate
+		    .getInquiryTemplatesByExecutionPeriod(getInquiryTemplate().getExecutionPeriod())) {
+		studentInquiryTemplate.setResponsePeriodBegin(getBegin());
+		studentInquiryTemplate.setResponsePeriodEnd(getEnd());
+	    }
+	} else {
+	    getInquiryTemplate().setResponsePeriodBegin(getBegin());
+	    getInquiryTemplate().setResponsePeriodEnd(getEnd());
+	}
 	getInquiryTemplate().setInquiryMessage(getMessage());
     }
 }
