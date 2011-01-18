@@ -1404,7 +1404,10 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	    final List<PersonFunction> delegateFunctions = getUnit().getAllDelegatePersonFunctionsByExecutionYearAndFunctionType(
 		    executionYear, functionType);
 	    for (PersonFunction delegateFunction : delegateFunctions) {
+		if (delegateFunction.belongsToPeriod(executionYear.getBeginDateYearMonthDay(),
+				executionYear.getEndDateYearMonthDay())) {
 		result.add(delegateFunction.getPerson().getStudent());
+		}
 	    }
 	}
 	return result;

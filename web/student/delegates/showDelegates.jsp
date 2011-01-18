@@ -8,7 +8,7 @@
 <h2><bean:message key="label.viewDelegates" bundle="DELEGATES_RESOURCES" /></h2>
 	
 <logic:present name="searchByDegreeBean" >
-	<fr:form action="/findDelegates.do?method=searchByDegree&amp;showBackLink=true">
+	<fr:form action="/delegatesInfo.do?method=showAll&amp;showBackLink=true">
 		<fr:edit id="searchByDegreeBean" name="searchByDegreeBean" layout="tabular-editable" schema="student.searchDelegates.selectDegreeTypeAndDegree">
 			<fr:layout>
 				<fr:property name="classes" value="tstyle5 thlight thright"/>
