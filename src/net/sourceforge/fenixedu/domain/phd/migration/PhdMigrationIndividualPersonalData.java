@@ -61,13 +61,17 @@ public class PhdMigrationIndividualPersonalData extends PhdMigrationIndividualPe
 	String[] fields = getData().split("\t");
 
 	try {
-	    phdStudentNumber = Integer.valueOf(fields[0].trim());
+	    try {
+		phdStudentNumber = Integer.valueOf(fields[0].trim());
+	    } catch (NumberFormatException e) {
+		throw new IncompleteFieldsException("processNumber");
+	    }
 
 	    identificationNumber = fields[1].trim();
 	    socialSecurityNumber = fields[2].trim();
 	    fullName = fields[3].trim();
 	    familyName = fields[4].trim();
-	    dateOfBirth = ConversionUtilities.parseLocalDate(fields[5].trim());
+	    dateOfBirth = ConversionUtilities.parseDate(fields[5].trim());
 	    gender = ConversionUtilities.parseGender(fields[6].trim());
 	    nationality = NationalityTranslator.translate(fields[7].trim());
 	    subSubArea = fields[8].trim();
@@ -85,7 +89,7 @@ public class PhdMigrationIndividualPersonalData extends PhdMigrationIndividualPe
 	    email = fields[20].trim();
 
 	} catch (NoSuchElementException e) {
-	    throw new IncompleteFieldsException();
+	    throw new IncompleteFieldsException("Not enough fields");
 	}
     }
 

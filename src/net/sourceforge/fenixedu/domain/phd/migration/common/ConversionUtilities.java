@@ -55,10 +55,6 @@ public class ConversionUtilities {
 	throw new InvalidGenderValueException();
     }
 
-    static public LocalDate parseLocalDate(String value) {
-	return null;
-    }
-
     static public Country translateNationality(String value) {
 	return NationalityTranslator.translate(value);
     }
