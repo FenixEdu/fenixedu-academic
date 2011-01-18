@@ -2,16 +2,20 @@ package net.sourceforge.fenixedu.domain.phd.migration;
 
 import java.util.NoSuchElementException;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewProcess;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessNumber;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.phd.migration.common.ConversionUtilities;
 import net.sourceforge.fenixedu.domain.phd.migration.common.PhdProgramTranslator;
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.IncompleteFieldsException;
-import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.IndividualProcessNotFoundException;
+import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.MissingPersonalDataException;
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.PersonNotFoundException;
 
 import org.joda.time.LocalDate;
@@ -30,12 +34,11 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
     private transient LocalDate firstDiscussionDate;
     private transient LocalDate secondDiscussionDate;
     private transient LocalDate edictDate;
-    private transient String unknownNumber;
+
     private transient String classification;
     private transient LocalDate probateDate;
     private transient LocalDate annulmentDate;
     private transient LocalDate limitToFinishDate;
-    private transient LocalDate extensionToLimitToFnishDate;
 
     private PhdMigrationIndividualProcessData() {
 	super();
@@ -43,6 +46,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 
     protected PhdMigrationIndividualProcessData(String data) {
 	setData(data);
+	setMigrationStatus(PhdMigrationProcessStateType.NOT_MIGRATED);
     }
 
     public void parseAndSetNumber() {
@@ -76,12 +80,12 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 	    firstDiscussionDate = ConversionUtilities.parseDate(fields[9].trim());
 	    secondDiscussionDate = ConversionUtilities.parseDate(fields[10].trim());
 	    edictDate = ConversionUtilities.parseDate(fields[11].trim());
-	    unknownNumber = fields[12].trim();
+
 	    classification = fields[13].trim();
 	    probateDate = ConversionUtilities.parseDate(fields[14].trim());
-	    // annulmentDate = ConversionUtilities.parseDate(fields[14].trim());
-	    limitToFinishDate = ConversionUtilities.parseDate(fields[15].trim());
-	    extensionToLimitToFnishDate = ConversionUtilities.parseDate(fields[16].trim());
+	    annulmentDate = ConversionUtilities.parseDate(fields[15].trim());
+	    limitToFinishDate = ConversionUtilities.parseDate(fields[16].trim());
+
 	} catch (NoSuchElementException e) {
 	    throw new IncompleteFieldsException("Not enough fields");
 	}
@@ -113,16 +117,73 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 	return teacher.getPerson();
     }
 
-    public PhdIndividualProgramProcess getIndividualProgramProcess() {
-	for (PhdIndividualProgramProcessNumber phdNumber : RootDomainObject.getInstance().getPhdIndividualProcessNumbers()) {
-	    if (phdNumber.getNumber() != processNumber) {
-		continue;
-	    }
+    public boolean hasExistingIndividualProgramProcess() {
+	return getPhdIndividualProgramProcess() != null;
+    }
 
-	    return phdNumber.getProcess();
+    public PhdIndividualProgramProcess getPhdIndividualProgramProcess() {
+	final PhdMigrationIndividualPersonalData personalData = getPhdMigrationIndividualPersonalData();
+
+	if (personalData == null) {
+	    return null;
 	}
 
-	throw new IndividualProcessNotFoundException();
+	if (!personalData.isPersonRegisteredOnFenix()) {
+	    return null;
+	}
+
+	final Person student = personalData.getPerson();
+
+	if (student.hasAnyPhdIndividualProgramProcesses()) {
+	    return student.getPhdIndividualProgramProcesses().get(0);
+	}
+
+	return null;
+    }
+
+    private LocalDate retrieveDateForExecutionYear() {
+	if (startDevelopmentDate != null) {
+	    return startDevelopmentDate;
+	}
+	if (probateDate != null) {
+	    return probateDate;
+	}
+	if (startProcessDate != null) {
+	    return startProcessDate;
+	}
+	return null;
+    }
+
+    public void createCandidacyProcess(IUserView userView) {
+	if (!hasPhdMigrationIndividualPersonalData()) {
+	    throw new MissingPersonalDataException();
+	}
+
+	getPhdMigrationIndividualPersonalData().parse();
+
+	if (hasExistingIndividualProgramProcess()) {
+	    return;
+	}
+
+	final PhdProgramCandidacyProcessBean candidacyBean = new PhdProgramCandidacyProcessBean();
+
+	candidacyBean.setCandidacyDate(this.startProcessDate);
+	candidacyBean.setState(PhdProgramCandidacyProcessState.STAND_BY_WITH_COMPLETE_INFORMATION);
+
+	candidacyBean.setPersonBean(getPhdMigrationIndividualPersonalData().getPersonBean());
+	candidacyBean.setMigratedProcess(true);
+	candidacyBean.setProgram(this.phdProgram);
+	candidacyBean.setThesisTitle(this.title);
+	candidacyBean.setPhdStudentNumber(getPhdMigrationIndividualPersonalData().getNumber());
+	candidacyBean.setCollaborationType(PhdIndividualProgramCollaborationType.NONE);
+	candidacyBean.setExecutionYear(ExecutionYear.readByDateTime(retrieveDateForExecutionYear()));
+
+	candidacyBean.setFocusArea((phdProgram.getPhdProgramFocusAreasCount() == 1) ? phdProgram.getPhdProgramFocusAreas().get(0)
+		: null);
+
+	final PhdIndividualProgramProcess individualProcess = (PhdIndividualProgramProcess) CreateNewProcess.run(
+		PhdIndividualProgramProcess.class, candidacyBean);
+
     }
 
 }

@@ -26,12 +26,12 @@ public class PhdMigrationGuiding extends PhdMigrationGuiding_Base {
 
     private void parse() {
 	try {
-	String[] compounds = getData().split("\\t");
+	    String[] compounds = getData().split("\\t");
 	
-	this.phdStudentNumber = Integer.parseInt(compounds[0].trim());
-	this.institutionCode = compounds[2].trim();
-	this.teacherCode = compounds[3].trim();
-	this.name = compounds[4].trim();
+	    this.phdStudentNumber = Integer.parseInt(compounds[0].trim());
+	    this.teacherCode = compounds[2].trim();
+	    this.institutionCode = compounds[3].trim();
+	    this.name = compounds[4].trim();
 	} catch (NoSuchElementException e) {
 	    throw new IncompleteFieldsException();
 	}

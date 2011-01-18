@@ -45,3 +45,4 @@ function executeWithTempFile() {
 
 execute "Phd Migration Process" phdMigrationProcess.sql
 execute "Make all existing evaluations use TYPE20 grade scale" defaultExistingEvaluationsToTYPE20.sql
+execute "Add logging data of the migration process to the PhdMigrationIndividualProcessData" addPhdMigrationLogging.sql

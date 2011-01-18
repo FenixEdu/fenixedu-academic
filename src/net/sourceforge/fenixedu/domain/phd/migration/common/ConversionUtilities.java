@@ -32,8 +32,10 @@ public class ConversionUtilities {
 		continue;
 	    }
 
-	    // might want to validate its time frame
-	    return result;
+	    if (result.isAfter(DateTimeFormat.forPattern("yyyy").parseDateTime("1920").toLocalDate())
+		    && result.isBefore(DateTimeFormat.forPattern("yyy").parseDateTime("2020").toLocalDate())) {
+		return result;
+	    }
 	}
 
 	throw new IncorrectDateFormatException(value);

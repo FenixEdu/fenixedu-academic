@@ -22,6 +22,7 @@ public class PhdMigrationProcess extends PhdMigrationProcess_Base {
     protected PhdMigrationProcess(String[] institutionEntries, String[] processDataEntries, String[] personalDataEntries,
 	    String[] guidingEntries) {
 	super();
+	setRootDomainObject(RootDomainObject.getInstance());
 
 	indexInstitutionEntries(institutionEntries);
 	createPersonalDataEntries(personalDataEntries);
@@ -46,6 +47,7 @@ public class PhdMigrationProcess extends PhdMigrationProcess_Base {
 	    PhdMigrationGuiding guiding = new PhdMigrationGuiding(entry);
 	    try {
 		guiding.parseAndSetNumber(INSTITUTION_MAP);
+		guiding.setPhdMigrationProcess(this);
 	    } catch (ParseException e) {
 		guiding.setParseLog(getStackTrace(e));
 	    }
@@ -92,6 +94,7 @@ public class PhdMigrationProcess extends PhdMigrationProcess_Base {
 		}
 
 		processData.setPhdMigrationIndividualPersonalData(personalData);
+		processData.setPhdMigrationProcess(this);
 	    } catch (ParseException e) {
 		processData.setParseLog(getStackTrace(e));
 	    }

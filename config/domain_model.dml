@@ -195,6 +195,7 @@ enum net.sourceforge.fenixedu.domain.phd.permissions.PhdPermissionType										
 enum net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackStateType						  as PhdCandidacyFeedbackStateType;
 enum net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisFinalGrade														  as PhdThesisFinalGrade;
 enum net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingSchedulingProcessStateType							  as PhdMeetingSchedulingProcessStateType;
+enum net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationProcessStateType											  as PhdMigrationProcessStateType;
 enum net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType                                 as IndividualCandidacyDocumentFileType;
 enum net.sourceforge.fenixedu.domain.accounting.events.DegreeFinalizationCertificateRequestJustificationType              as DegreeFinalizationCertificateRequestJustificationType;
 enum net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicEventJustificationType                     as AcademicEventJustificationType;
@@ -7546,6 +7547,8 @@ class phd.migration.PhdMigrationIndividualProcessData extends DomainObject {
 	Integer number; 
 	String data;
 	String parseLog;
+	PhdMigrationProcessStateType migrationStatus;
+    String migrationParseLog;
 }
 
 class phd.migration.PhdMigrationIndividualPersonalData extends DomainObject {
