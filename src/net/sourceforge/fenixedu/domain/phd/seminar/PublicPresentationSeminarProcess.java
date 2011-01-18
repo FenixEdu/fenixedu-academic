@@ -567,7 +567,11 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 
     public List<PublicPresentationSeminarProcessStateType> getPossibleNextStates() {
 	PublicPresentationSeminarProcessStateType activeState = getActiveState();
-
+	
+	if(activeState == null) {
+	    return Collections.singletonList(PublicPresentationSeminarProcessStateType.WAITING_FOR_COMISSION_CONSTITUTION);
+	}
+	
 	switch (activeState) {
 	case WAITING_FOR_COMISSION_CONSTITUTION:
 	    return Collections.singletonList(PublicPresentationSeminarProcessStateType.COMMISSION_WAITING_FOR_VALIDATION);
