@@ -1,23 +1,43 @@
 package net.sourceforge.fenixedu.domain.phd.migration;
 
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewProcess;
+import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
+import net.sourceforge.fenixedu.applicationTier.utils.MockUserView;
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddStudyPlan;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditQualificationExams;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean.QualificationExamsResult;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
+import net.sourceforge.fenixedu.domain.phd.PhdStudyPlanBean;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RatifyCandidacy;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RequestCandidacyReview;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RequestRatifyCandidacy;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessStateBean;
+import net.sourceforge.fenixedu.domain.phd.candidacy.RatifyCandidacyBean;
 import net.sourceforge.fenixedu.domain.phd.migration.common.ConversionUtilities;
+import net.sourceforge.fenixedu.domain.phd.migration.common.FinalGradeTranslator;
 import net.sourceforge.fenixedu.domain.phd.migration.common.PhdProgramTranslator;
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.IncompleteFieldsException;
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.PersonNotFoundException;
+import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisFinalGrade;
 
 import org.joda.time.LocalDate;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualProcessData_Base {
 
@@ -34,8 +54,8 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
     private transient LocalDate secondDiscussionDate;
     private transient LocalDate edictDate;
 
-    private transient String classification;
-    private transient LocalDate probateDate;
+    private transient PhdThesisFinalGrade classification;
+    private transient LocalDate ratificationDate;
     private transient LocalDate annulmentDate;
     private transient LocalDate limitToFinishDate;
 
@@ -80,8 +100,8 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 	    secondDiscussionDate = ConversionUtilities.parseDate(fields[10].trim());
 	    edictDate = ConversionUtilities.parseDate(fields[11].trim());
 
-	    classification = fields[13].trim();
-	    probateDate = ConversionUtilities.parseDate(fields[14].trim());
+	    classification = FinalGradeTranslator.translate(fields[13].trim());
+	    ratificationDate = ConversionUtilities.parseDate(fields[14].trim());
 	    annulmentDate = ConversionUtilities.parseDate(fields[15].trim());
 	    limitToFinishDate = ConversionUtilities.parseDate(fields[16].trim());
 
@@ -144,8 +164,8 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 	if (startDevelopmentDate != null) {
 	    return startDevelopmentDate;
 	}
-	if (probateDate != null) {
-	    return probateDate;
+	if (ratificationDate != null) {
+	    return ratificationDate;
 	}
 	if (startProcessDate != null) {
 	    return startProcessDate;
@@ -153,7 +173,158 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 	return null;
     }
 
-    public void createCandidacyProcess(IUserView userView) {
+    // startProcessDate; - começo do processo
+    // startDevelopmentDate; - desenvolvimento de trabalho (alternativa é data
+    // de homolgação)
+    // requirementDate; - marcação das discussões
+    // meetingDate; - data da reunião
+    // firstDiscussionDate; - data da 1ª discussão
+    // secondDiscussionDate; - data da 2ª discussão (usar esta
+    // preferencialmente)
+    // edictDate; - data da conclusão do process
+    // classification -
+    // ratificationDate; - data da homolgação da candidatura
+    // annulmentDate; - data da anulação do processo
+    // limitToFinishDate; - data limite para conclusão
+    public PhdMigrationProcessStateType estimatedFinalMigrationStatus() {
+	if (edictDate != null || classification != null) {
+	    return PhdMigrationProcessStateType.CONCLUDED;
+	}
+
+	if (firstDiscussionDate != null || secondDiscussionDate != null) {
+	    return PhdMigrationProcessStateType.COMPLETED_THESIS_DISCUSSION;
+	}
+
+	if (requirementDate != null) {
+	    return PhdMigrationProcessStateType.REQUESTED_THESIS_DISCUSSION;
+	}
+
+	if (startDevelopmentDate != null) {
+	    return PhdMigrationProcessStateType.WORK_DEVELOPMENT;
+	}
+
+	if (ratificationDate != null) {
+	    return PhdMigrationProcessStateType.CANDIDACY_RATIFIED;
+	}
+
+	if (startProcessDate != null) {
+	    return PhdMigrationProcessStateType.CANDIDACY_CREATED;
+	}
+
+	return PhdMigrationProcessStateType.NOT_MIGRATED;
+    }
+
+    public boolean possibleToCompleteNextState() {
+	final PhdMigrationProcessStateType activeState = getMigrationStatus();
+	
+	if(activeState.equals(PhdMigrationProcessStateType.CANCELED) || activeState.equals(PhdMigrationProcessStateType.CONCLUDED)) {
+	    return false;
+	}
+	
+	if (classification != null) {
+	    return true;
+	}
+
+	if (activeState.equals(PhdMigrationProcessStateType.COMPLETED_THESIS_DISCUSSION)) {
+	    if (edictDate != null) {
+		return true;
+	    }
+	}
+
+	if (activeState.equals(PhdMigrationProcessStateType.REQUESTED_THESIS_DISCUSSION)) {
+	    if (firstDiscussionDate != null || secondDiscussionDate != null) {
+		return true;
+	    }
+	}
+	
+	if(activeState.equals(PhdMigrationProcessStateType.WORK_DEVELOPMENT)) {
+	    if (requirementDate != null) {
+		return true;
+	    }
+	}
+	
+	if (activeState.equals(PhdMigrationProcessStateType.CANDIDACY_RATIFIED)) {
+	    if (startDevelopmentDate != null) {
+		return true;
+	    }
+	}
+
+	if(activeState.equals(PhdMigrationProcessStateType.CANDIDACY_CREATED)) {
+	    if (ratificationDate != null) {
+		return true;
+	    }
+	}
+	
+	if(activeState.equals(PhdMigrationProcessStateType.NOT_MIGRATED)) {
+	    if (startProcessDate != null) {
+		return true;
+	    }
+	}
+	
+	return false;
+    }
+
+    private boolean isProcessCanceled() {
+	return annulmentDate != null;
+    }
+
+    public void proceedWithMigration() {
+	final Person manager = Employee.readByNumber(4972).getPerson();
+	final IUserView userView = new MockUserView(manager.getUsername(), new ArrayList<Role>(), manager);
+	UserView.setUser(userView);
+
+	PhdMigrationProcessStateType activeState;
+	PhdIndividualProgramProcess individualProcess = null;
+
+	while (possibleToCompleteNextState()) {
+	    activeState = getMigrationStatus();
+
+	    if (activeState.equals(PhdMigrationProcessStateType.NOT_MIGRATED)) {
+		// criar candidatura
+		individualProcess = createCandidacyProcess(userView);
+
+		// enviar para coordenador e submeter o parecer
+		sendCandidacyToCoordinator(userView, individualProcess);
+
+		setMigrationStatus(PhdMigrationProcessStateType.CANDIDACY_CREATED);
+		continue;
+	    }
+
+	    if (activeState.equals(PhdMigrationProcessStateType.CANDIDACY_CREATED)) {
+		// homolgar candidatura
+		ratifyCandidacyProcess(userView, individualProcess);
+
+		setMigrationStatus(PhdMigrationProcessStateType.CANDIDACY_RATIFIED);
+		continue;
+	    }
+
+	    if (activeState.equals(PhdMigrationProcessStateType.CANDIDACY_RATIFIED)) {
+		// formalizar candidatura;
+		formalizeRegistration(userView, individualProcess);
+
+		setMigrationStatus(PhdMigrationProcessStateType.WORK_DEVELOPMENT);
+	    }
+
+	    if (activeState.equals(PhdMigrationProcessStateType.WORK_DEVELOPMENT)) {
+
+		continue;
+	    }
+
+	    if (activeState.equals(PhdMigrationProcessStateType.REQUESTED_THESIS_DISCUSSION)) {
+
+		continue;
+	    }
+
+	    if (activeState.equals(PhdMigrationProcessStateType.COMPLETED_THESIS_DISCUSSION)) {
+
+		continue;
+	    }
+
+	    return;
+	}
+    }
+
+    private PhdIndividualProgramProcess createCandidacyProcess(final IUserView userView) {
 	final PhdProgramCandidacyProcessBean candidacyBean = new PhdProgramCandidacyProcessBean();
 
 	candidacyBean.setCandidacyDate(this.startProcessDate);
@@ -173,6 +344,42 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 	final PhdIndividualProgramProcess individualProcess = (PhdIndividualProgramProcess) CreateNewProcess.run(
 		PhdIndividualProgramProcess.class, candidacyBean);
 
+	return individualProcess;
+    }
+
+    private void sendCandidacyToCoordinator(final IUserView userView, final PhdIndividualProgramProcess individualProcess) {
+	final PhdProgramCandidacyProcess candidacyProcess = individualProcess.getCandidacyProcess();
+
+	final PhdProgramCandidacyProcessStateBean reviewBean = new PhdProgramCandidacyProcessStateBean(
+		candidacyProcess.getIndividualProgramProcess());
+	reviewBean.setState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION);
+	reviewBean.setGenerateAlert(false);
+	ExecuteProcessActivity.run(candidacyProcess, RequestCandidacyReview.class.getSimpleName(), reviewBean);
+
+	final PhdProgramCandidacyProcessStateBean requestRatifyBean = new PhdProgramCandidacyProcessStateBean(individualProcess);
+	requestRatifyBean.setGenerateAlert(false);
+	requestRatifyBean.setState(PhdProgramCandidacyProcessState.WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION);
+	ExecuteProcessActivity.run(candidacyProcess, RequestRatifyCandidacy.class.getSimpleName(), requestRatifyBean);
+    }
+
+    private void ratifyCandidacyProcess(final IUserView userView, final PhdIndividualProgramProcess individualProcess) {
+	final PhdProgramCandidacyProcess candidacyProcess = individualProcess.getCandidacyProcess();
+	final RatifyCandidacyBean ratifyBean = new RatifyCandidacyBean(candidacyProcess);
+	ratifyBean.setWhenRatified(ratificationDate);
+	ExecuteProcessActivity.run(candidacyProcess, RatifyCandidacy.class.getSimpleName(), ratifyBean);
+    }
+
+    private void formalizeRegistration(final IUserView userView, final PhdIndividualProgramProcess individualProcess) {
+	final PhdIndividualProgramProcessBean individualProcessBean = new PhdIndividualProgramProcessBean(individualProcess);
+	individualProcessBean.setQualificationExamsPerformed(QualificationExamsResult.NO);
+	individualProcessBean.setQualificationExamsRequired(QualificationExamsResult.NO);
+	ExecuteProcessActivity.run(individualProcess, EditQualificationExams.class.getSimpleName(), individualProcessBean);
+
+	final PhdStudyPlanBean planBean = new PhdStudyPlanBean(individualProcess);
+	planBean.setExempted(true);
+	ExecuteProcessActivity.run(individualProcess, AddStudyPlan.class.getSimpleName(), planBean);
+
+	// TODO finish registration formalization in the candidacy
     }
 
 }
