@@ -42,39 +42,13 @@
 </fr:view>
 <%--  ### End Of Context Information  ### --%>
 
-
-<%-- ### List of Process States ### --%>
-<strong><bean:message key="label.phd.states" bundle="PHD_RESOURCES" /></strong>
-<fr:view name="process" property="states">
-	<fr:schema type="net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState" bundle="PHD_RESOURCES" >
-		<fr:slot name="whenCreated" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState.whenCreated" />
-		<fr:slot name="type.localizedName" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState.type" />
-		<fr:slot name="remarks" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState.remarks" />
-	</fr:schema>
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle2 thlight mtop15" />
-		<fr:property name="sortBy" value="whenCreated=desc" />
-
-		<fr:link 	name="removeState" 
-					link="<%= String.format("/publicPresentationSeminarProcess.do?method=removeLastState&processId=%s", processId)  %>" 
-					label="link.net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState.removeState,PHD_RESOURCES"
-					condition="last" 
-					confirmation="message.net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState.removeState.confirmation,PHD_RESOURCES"/>
-	</fr:layout>
-</fr:view>
-
-<%-- ### End of List of Process States ### --%>
-
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
-<p class="mtop15 mbottom05"><strong><bean:message  key="label.phd.modify.state" bundle="PHD_RESOURCES"/></strong></p>
-<fr:form action="<%= "/publicPresentationSeminarProcess.do?method=addState&processId=" + processId %>">
+<p class="mtop15 mbottom05"><strong><bean:message  key="label.phd.edit.attributes" bundle="PHD_RESOURCES"/></strong></p>
+<fr:form action="<%= "/publicPresentationSeminarProcess.do?method=editProcessAttributes&processId=" + processId %>">
 
 	<fr:edit id="processBean" name="processBean" >
 		<fr:schema type="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean" bundle="PHD_RESOURCES">
-			<fr:slot name="processState" required="true" layout="menu-select" >
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.providers.PublicPresentationSeminarStateProvider" />
-				<fr:property name="format" value="${localizedName}" />
-			</fr:slot>
+			<fr:slot name="presentationDate" required="true" />
 		</fr:schema>
 	
 		<fr:layout name="tabular">
@@ -82,7 +56,7 @@
 			<fr:property name="columnClasses" value=",,tdclear tderror1" />
 		</fr:layout>
 		
-		<fr:destination name="invalid" path="<%= "/publicPresentationSeminarProcess.do?method=addStateInvalid&processId=" + processId %>" />
+		<fr:destination name="invalid" path="<%= "/publicPresentationSeminarProcess.do?method=editProcessAttributesInvalid&processId=" + processId %>" />
 		<fr:destination name="cancel" path="<%= "/publicPresentationSeminarProcess.do?method=viewIndividualProgramProcess&processId=" + processId %>" />
 	</fr:edit>
 	

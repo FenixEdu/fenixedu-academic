@@ -69,6 +69,11 @@
 					</logic:equal>
 				</li>
 			</logic:notEmpty>
+			<li>
+				<html:link action="/phdThesisProcess.do?method=manageStates" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
+					<bean:message bundle="PHD_RESOURCES" key="label.phd.manage.states" />
+				</html:link>
+			</li>
 		</ul>
 	</td>
   </tr>

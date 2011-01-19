@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.phd.thesis;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -22,6 +23,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdThesisRequestFee;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.AddJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.AddPresidentJuryElement;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.AddState;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.DeleteJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.DownloadFinalThesisDocument;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.DownloadProvisionalThesisDocument;
@@ -38,6 +40,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.RatifyFinalThesis;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RejectJuryElements;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RejectJuryElementsDocuments;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RemindJuryReviewToReporters;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.RemoveLastState;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.ReplaceDocument;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryElements;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryReviews;
@@ -108,6 +111,8 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	activities.add(new SetFinalGrade());
 	activities.add(new RejectJuryElementsDocuments());
 	activities.add(new ReplaceDocument());
+	activities.add(new AddState());
+	activities.add(new RemoveLastState());
     }
 
     private PhdThesisProcess() {
@@ -150,6 +155,11 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
     }
 
     public void createState(PhdThesisProcessStateType type, Person person, String remarks) {
+
+	if (!getPossibleNextStates().contains(type)) {
+	    throw new DomainException("phd.thesis.PhdThesisProcess.invalid.next.state");
+	}
+
 	new PhdThesisProcessState(this, type, person, remarks);
     }
 
@@ -428,6 +438,47 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	}
 
 	return getMeetingProcess().getActiveState();
+    }
+
+    public List<PhdThesisProcessStateType> getPossibleNextStates() {
+	PhdThesisProcessStateType currentState = getActiveState();
+	
+	if(currentState == null) {
+	    return Collections.singletonList(PhdThesisProcessStateType.NEW);
+	}
+	
+	switch(currentState) {
+	case NEW:
+	    return Collections.singletonList(PhdThesisProcessStateType.WAITING_FOR_JURY_CONSTITUTION);
+	case WAITING_FOR_JURY_CONSTITUTION:
+	    return Collections.singletonList(PhdThesisProcessStateType.JURY_WAITING_FOR_VALIDATION);
+	case JURY_WAITING_FOR_VALIDATION:
+	    return Collections.singletonList(PhdThesisProcessStateType.JURY_VALIDATED);
+	case JURY_VALIDATED:
+	    return Collections.singletonList(PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK);
+	case WAITING_FOR_JURY_REPORTER_FEEDBACK:
+	    return Collections.singletonList(PhdThesisProcessStateType.WAITING_FOR_THESIS_MEETING_SCHEDULING);
+	case WAITING_FOR_THESIS_MEETING_SCHEDULING:
+	    return Collections.singletonList(PhdThesisProcessStateType.WAITING_FOR_THESIS_DISCUSSION_DATE_SCHEDULING);
+	case WAITING_FOR_THESIS_DISCUSSION_DATE_SCHEDULING:
+	    return Collections.singletonList(PhdThesisProcessStateType.THESIS_DISCUSSION_DATE_SCHECULED);
+	case THESIS_DISCUSSION_DATE_SCHECULED:
+	    return Collections.singletonList(PhdThesisProcessStateType.WAITING_FOR_THESIS_RATIFICATION);
+	case WAITING_FOR_THESIS_RATIFICATION:
+	    return Collections.singletonList(PhdThesisProcessStateType.WAITING_FOR_FINAL_GRADE);
+	case WAITING_FOR_FINAL_GRADE:
+	    return Collections.singletonList(PhdThesisProcessStateType.CONCLUDED);
+	}
+	
+	return Collections.EMPTY_LIST;
+    }
+
+    public void removeLastState() {
+	if (getStatesCount() <= 1) {
+	    throw new DomainException("phd.thesis.PhdThesisProcess.cannot.remove.state");
+	}
+
+	getMostRecentState().delete();
     }
 
 }

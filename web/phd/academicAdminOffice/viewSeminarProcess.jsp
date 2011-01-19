@@ -8,6 +8,7 @@
 
 <logic:notEmpty name="process" property="seminarProcess">
 <logic:equal name="process" property="activeState.active" value="true">
+	<bean:define id="seminarProcess" name="process" property="seminarProcess" />
 
 	<br/>
 	<strong><bean:message  key="label.phd.publicPresentationSeminarProcess" bundle="PHD_RESOURCES"/></strong>
@@ -22,17 +23,23 @@
 			</td>
 			<td>
 				<ul class="operations" >
-					<li style="display: inline;">
+					<li >
 						<html:link action="/publicPresentationSeminarProcess.do?method=manageStates" paramId="processId" paramName="process" paramProperty="seminarProcess.externalId">
 							<bean:message bundle="PHD_RESOURCES" key="label.phd.manage.states"/>
 						</html:link>
 					</li>
+				<phd:activityAvailable process="<%= seminarProcess  %>" activity="<%= PublicPresentationSeminarProcess.EditProcessAttributes.class %>">
+					<li >
+						<html:link action="/publicPresentationSeminarProcess.do?method=prepareEditProcessAttributes" paramId="processId" paramName="process" paramProperty="seminarProcess.externalId">
+							<bean:message bundle="PHD_RESOURCES" key="label.phd.edit.attributes"/>
+						</html:link>
+					</li>
+				</phd:activityAvailable>	
 				</ul>
 			</td>
 		</tr>
 	</table>
 	
-	<bean:define id="seminarProcess" name="process" property="seminarProcess" />
 	<ul class="operations">
 		
 		<phd:activityAvailable process="<%= seminarProcess  %>" activity="<%= PublicPresentationSeminarProcess.SubmitComission.class %>">

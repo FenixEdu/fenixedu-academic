@@ -485,6 +485,30 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 	}
     }
 
+    static public class EditProcessAttributes extends PhdActivity {
+
+	@Override
+	protected void processPreConditions(PublicPresentationSeminarProcess process, IUserView userView) {
+	}
+
+	@Override
+	protected void activityPreConditions(PublicPresentationSeminarProcess process, IUserView userView) {
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PublicPresentationSeminarProcess executeActivity(PublicPresentationSeminarProcess process, IUserView userView,
+		Object object) {
+	    PublicPresentationSeminarProcessBean bean = (PublicPresentationSeminarProcessBean) object;
+
+	    process.setPresentationDate(bean.getPresentationDate());
+
+	    return process;
+	}
+    }
+
     static private List<Activity> activities = new ArrayList<Activity>();
 
     static {
@@ -501,6 +525,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 	activities.add(new RevertToWaitingComissionForValidation());
 	activities.add(new AddState());
 	activities.add(new RemoveLastState());
+	activities.add(new EditProcessAttributes());
     }
 
     private PublicPresentationSeminarProcess() {

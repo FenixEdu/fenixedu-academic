@@ -39,6 +39,8 @@ public class PhdThesisProcessBean implements Serializable {
 
     private Boolean generateAlert;
 
+    private PhdThesisProcessStateType processState;
+
     public PhdThesisProcessBean() {
 	this.documents = new ArrayList<PhdProgramDocumentUploadBean>();
     }
@@ -190,5 +192,13 @@ public class PhdThesisProcessBean implements Serializable {
 
     public void setGenerateAlert(Boolean generateAlert) {
 	this.generateAlert = generateAlert;
+    }
+
+    public PhdThesisProcessStateType getProcessState() {
+	return processState;
+    }
+
+    public void setProcessState(PhdThesisProcessStateType processState) {
+	this.processState = processState;
     }
 }

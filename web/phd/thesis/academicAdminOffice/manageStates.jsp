@@ -21,7 +21,7 @@
 	<span>Step N: Step name </span>
 </div>
 --%>
-<html:link action="<%= "/publicPresentationSeminarProcess.do?method=viewIndividualProgramProcess&processId=" + processId %>">
+<html:link action="<%= "/phdThesisProcess.do?method=viewIndividualProgramProcess&processId=" + processId %>">
 	<bean:message bundle="PHD_RESOURCES" key="label.back"/>
 </html:link>
 <br/><br/>
@@ -34,8 +34,8 @@
 
 
 <%--  ### Context Information (e.g. Person Information, Registration Information)  ### --%>
-<strong><bean:message  key="label.phd.publicPresentationSeminarProcess" bundle="PHD_RESOURCES"/></strong>
-<fr:view schema="PublicPresentationSeminarProcess.view" name="process">
+<strong><bean:message  key="label.phd.thesisProcess" bundle="PHD_RESOURCES"/></strong>
+<fr:view schema="PhdThesisProcess.view" name="process">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thlight mtop10" />
 	</fr:layout>
@@ -56,7 +56,7 @@
 		<fr:property name="sortBy" value="whenCreated=desc" />
 
 		<fr:link 	name="removeState" 
-					link="<%= String.format("/publicPresentationSeminarProcess.do?method=removeLastState&processId=%s", processId)  %>" 
+					link="<%= String.format("/phdThesisProcess.do?method=removeLastState&processId=%s", processId)  %>" 
 					label="link.net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState.removeState,PHD_RESOURCES"
 					condition="last" 
 					confirmation="message.net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState.removeState.confirmation,PHD_RESOURCES"/>
@@ -67,12 +67,12 @@
 
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 <p class="mtop15 mbottom05"><strong><bean:message  key="label.phd.modify.state" bundle="PHD_RESOURCES"/></strong></p>
-<fr:form action="<%= "/publicPresentationSeminarProcess.do?method=addState&processId=" + processId %>">
+<fr:form action="<%= "/phdThesisProcess.do?method=addState&processId=" + processId %>">
 
-	<fr:edit id="processBean" name="processBean" >
-		<fr:schema type="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean" bundle="PHD_RESOURCES">
+	<fr:edit id="thesisProcessBean" name="thesisProcessBean" >
+		<fr:schema type="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean" bundle="PHD_RESOURCES">
 			<fr:slot name="processState" required="true" layout="menu-select" >
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.providers.PublicPresentationSeminarStateProvider" />
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.providers.PhdThesisProcessStateProvider" />
 				<fr:property name="format" value="${localizedName}" />
 			</fr:slot>
 		</fr:schema>
@@ -82,8 +82,8 @@
 			<fr:property name="columnClasses" value=",,tdclear tderror1" />
 		</fr:layout>
 		
-		<fr:destination name="invalid" path="<%= "/publicPresentationSeminarProcess.do?method=addStateInvalid&processId=" + processId %>" />
-		<fr:destination name="cancel" path="<%= "/publicPresentationSeminarProcess.do?method=viewIndividualProgramProcess&processId=" + processId %>" />
+		<fr:destination name="invalid" path="<%= "/phdThesisProcess.do?method=addStateInvalid&processId=" + processId %>" />
+		<fr:destination name="cancel" path="<%= "/phdThesisProcess.do?method=viewIndividualProgramProcess&processId=" + processId %>" />
 	</fr:edit>
 	
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" ><bean:message bundle="PHD_RESOURCES" key="label.submit"/></html:submit>

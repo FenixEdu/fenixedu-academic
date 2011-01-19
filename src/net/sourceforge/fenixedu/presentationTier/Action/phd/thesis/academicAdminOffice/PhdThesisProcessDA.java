@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.AddJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.AddPresidentJuryElement;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.AddState;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.DeleteJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.EditJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.MoveJuryElementOrder;
@@ -25,6 +26,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.RatifyFinalThesis;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RejectJuryElements;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RejectJuryElementsDocuments;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RemindJuryReviewToReporters;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.RemoveLastState;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.ReplaceDocument;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryElements;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryReviews;
@@ -92,7 +94,11 @@ import pt.utl.ist.fenix.tools.util.Pair;
 
 @Forward(name = "juryReporterFeedbackUpload", path = "/phd/thesis/academicAdminOffice/juryReporterFeedbackUpload.jsp"),
 
-@Forward(name = "replaceDocument", path = "/phd/thesis/academicAdminOffice/replaceDocument.jsp") })
+@Forward(name = "replaceDocument", path = "/phd/thesis/academicAdminOffice/replaceDocument.jsp"),
+
+@Forward(name = "manageStates", path = "/phd/thesis/academicAdminOffice/manageStates.jsp")
+
+})
 public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
     // Begin thesis jury elements management
@@ -779,6 +785,39 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 	request.setAttribute("thesisProcessBean", getThesisProcessBean());
 	request.setAttribute("thesisDocuments", getProcess(request).getThesisDocumentsToFeedback());
 	return mapping.findForward("juryReporterFeedbackUpload");
+    }
+
+    public ActionForward manageStates(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final PhdThesisProcessBean bean = new PhdThesisProcessBean(getProcess(request).getIndividualProgramProcess());
+	request.setAttribute("thesisProcessBean", bean);
+
+	return mapping.findForward("manageStates");
+    }
+
+    public ActionForward addState(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+
+	PhdThesisProcessBean bean = getRenderedObject("thesisProcessBean");
+
+	ExecuteProcessActivity.run(getProcess(request), AddState.class, bean);
+
+	return viewIndividualProgramProcess(mapping, form, request, response);
+    }
+
+    public ActionForward addStateInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	PhdThesisProcessBean bean = getRenderedObject("thesisProcessBean");
+
+	request.setAttribute("thesisProcessBean", bean);
+
+	return mapping.findForward("manageStates");
+    }
+
+    public ActionForward removeLastState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	ExecuteProcessActivity.run(getProcess(request), RemoveLastState.class, null);
+
+	return manageStates(mapping, form, request, response);
     }
 
 }

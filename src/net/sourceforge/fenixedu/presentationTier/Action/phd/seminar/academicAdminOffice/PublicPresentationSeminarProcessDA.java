@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess.AddState;
+import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess.EditProcessAttributes;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess.RemoveLastState;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess.RevertToWaitingComissionForValidation;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess.RevertToWaitingForComissionConstitution;
@@ -33,7 +34,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 	@Forward(name = "validateReport", path = "/phd/seminar/academicAdminOffice/validateReport.jsp"),
 
-@Forward(name = "manageStates", path = "/phd/seminar/academicAdminOffice/manageStates.jsp")
+@Forward(name = "manageStates", path = "/phd/seminar/academicAdminOffice/manageStates.jsp"),
+
+@Forward(name = "editProcessAttributes", path = "/phd/seminar/academicAdminOffice/editProcessAttributes.jsp")
 
 })
 public class PublicPresentationSeminarProcessDA extends CommonPublicPresentationSeminarDA {
@@ -109,6 +112,29 @@ public class PublicPresentationSeminarProcessDA extends CommonPublicPresentation
 
 	ExecuteProcessActivity.run(getProcess(request), RemoveLastState.class, null);
 	return manageStates(mapping, form, request, response);
+    }
+
+    public ActionForward prepareEditProcessAttributes(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+	PublicPresentationSeminarProcessBean bean = new PublicPresentationSeminarProcessBean(getProcess(request)
+		.getIndividualProgramProcess());
+	request.setAttribute("processBean", bean);
+
+	return mapping.findForward("editProcessAttributes");
+    }
+
+    public ActionForward editProcessAttributesInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("processBean", getRenderedObject("processBean"));
+	return mapping.findForward("editProcessAttributes");
+    }
+
+    public ActionForward editProcessAttributes(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	PublicPresentationSeminarProcessBean bean = getRenderedObject("processBean");
+
+	ExecuteProcessActivity.run(getProcess(request), EditProcessAttributes.class, bean);
+	
+	return viewIndividualProgramProcess(mapping, form, request, response);
     }
 
 }
