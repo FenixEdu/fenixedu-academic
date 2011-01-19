@@ -138,6 +138,15 @@
 	</slot>
 </schema>
 
+<schema name="DFAGratuityByEnrolmentsPR.view" 
+		type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityByEnrolmentsPR"  
+		extends="DFAGratuityPR.view" bundle="APPLICATION_RESOURCES">
+	<slot name="class.name" layout="slot-as-label" read-only="true">
+		<property name="bundle" value="APPLICATION_RESOURCES" />
+	</slot>
+	<slot name="dfaAmountPerEnrolment" />
+</schema>
+
 <schema name="SpecializationDegreeGratuityPR.view" 
 		type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.SpecializationDegreeGratuityPR"  
 		extends="PostingRule.view" bundle="APPLICATION_RESOURCES">
@@ -189,6 +198,16 @@
 	<slot name="dfaGratuityPR.class.name" layout="slot-as-label" read-only="true" key="label.class.name">
 		<property name="bundle" value="APPLICATION_RESOURCES" />
 	</slot>
+</schema>
+
+<schema name="DFAGratuityByEnrolmentsPREditor.edit" 
+		type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityByEnrolmentsPR$DFAGratuityByEnrolmentsPREditor"
+		extends="DFAGratuityPREditor.edit"
+		bundle="APPLICATION_RESOURCES">
+	<slot name="dfaGratuityPR.class.name" layout="slot-as-label" read-only="true" key="label.class.name">
+		<property name="bundle" value="APPLICATION_RESOURCES" />
+	</slot>
+	<slot name="dfaAmountPerEnrolment" /> 
 </schema>
 
 <schema name="SpecializationDegreeGratuityPREditor.edit" 

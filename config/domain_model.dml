@@ -2376,6 +2376,10 @@ class DomainObject {
     
                 class accounting.postingRules.gratuity.DFAGratuityByNumberOfEnrolmentsPR extends accounting.postingRules.gratuity.DFAGratuityPR {
                 }
+                
+                class accounting.postingRules.gratuity.DFAGratuityByEnrolmentsPR extends accounting.postingRules.gratuity.DFAGratuityPR {
+                	Money dfaAmountPerEnrolment;
+                }
             
             class accounting.postingRules.gratuity.SpecializationDegreeGratuityPR extends accounting.postingRules.GenericSingleEntryTypePR {
             	BigDecimal specializationDegreePartialAcceptedPercentage;
@@ -7282,7 +7286,7 @@ class phd.PhdIndividualProgramProcess extends phd.PhdProgramProcess {
     LocalDate whenStartedStudies;
 }
 
-class phd.PhdIndividualProgramProcessNumber  extends DomainObject {
+class phd.PhdIndividualProgramProcessNumber extends DomainObject {
     Integer year;
     Integer number;
     Integer phdStudentNumber;
