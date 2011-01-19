@@ -10,6 +10,8 @@ public enum PhdMigrationProcessStateType {
 
     THESIS_DISCUSSION,
 
+    CANCELED,
+
     CONCLUDED;
 
 }

@@ -14,10 +14,8 @@ import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.Incomplet
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.MultiplePersonFoundException;
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.PersonNotFoundException;
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.PersonSearchByNameMismatchException;
-import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.SocialSecurityNumberMismatchException;
 import net.sourceforge.fenixedu.util.StringFormatter;
 
-import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
@@ -114,25 +112,28 @@ public class PhdMigrationIndividualPersonalData extends PhdMigrationIndividualPe
 
     public Person getPerson() {
 	// Get by identification number
-	Collection<Person> personSet = Person.readByDocumentIdNumber(identificationNumber);
+	final Collection<Person> personSet = Person.readByDocumentIdNumber(identificationNumber);
+	final Collection<Person> personNamesSet = Person.readPersonsByName(StringNormalizer.normalize(fullName));
 
-	if (personSet.isEmpty()) {
+	if (personSet.isEmpty() && personNamesSet.isEmpty()) {
 	    throw new PersonNotFoundException();
 	}
 
-	if (personSet.size() > 1) {
+	if (personSet.size() > 1 || personNamesSet.size() > 1) {
 	    throw new MultiplePersonFoundException();
 	}
 
-	Person person = personSet.iterator().next();
-
-	if (Person.readPersonsByName(StringNormalizer.normalize(person.getName())).size() != 1) {
+	if (personSet.iterator().next() != personNamesSet.iterator().next()) {
 	    throw new PersonSearchByNameMismatchException();
 	}
 
-	if (!StringUtils.isEmpty(socialSecurityNumber) && socialSecurityNumber.equals(person.getSocialSecurityNumber())) {
-	    throw new SocialSecurityNumberMismatchException();
-	}
+	final Person person = personSet.iterator().next();
+
+	/*
+	 * if (!StringUtils.isEmpty(socialSecurityNumber) &&
+	 * !socialSecurityNumber.equals(person.getSocialSecurityNumber())) {
+	 * throw new SocialSecurityNumberMismatchException(); }
+	 */
 
 	return person;
     }
@@ -140,7 +141,7 @@ public class PhdMigrationIndividualPersonalData extends PhdMigrationIndividualPe
     public boolean isPersonRegisteredOnFenix() {
 	try {
 	    return getPerson() != null;
-	} catch (Exception e) {
+	} catch (PersonNotFoundException e) {
 	    return false;
 	}
     }

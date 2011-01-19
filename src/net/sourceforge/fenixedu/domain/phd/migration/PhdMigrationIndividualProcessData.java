@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessB
 import net.sourceforge.fenixedu.domain.phd.migration.common.ConversionUtilities;
 import net.sourceforge.fenixedu.domain.phd.migration.common.PhdProgramTranslator;
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.IncompleteFieldsException;
-import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.MissingPersonalDataException;
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.PersonNotFoundException;
 
 import org.joda.time.LocalDate;
@@ -155,16 +154,6 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
     }
 
     public void createCandidacyProcess(IUserView userView) {
-	if (!hasPhdMigrationIndividualPersonalData()) {
-	    throw new MissingPersonalDataException();
-	}
-
-	getPhdMigrationIndividualPersonalData().parse();
-
-	if (hasExistingIndividualProgramProcess()) {
-	    return;
-	}
-
 	final PhdProgramCandidacyProcessBean candidacyBean = new PhdProgramCandidacyProcessBean();
 
 	candidacyBean.setCandidacyDate(this.startProcessDate);

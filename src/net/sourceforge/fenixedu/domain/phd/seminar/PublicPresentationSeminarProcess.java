@@ -465,6 +465,11 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
     static public class RemoveLastState extends PhdActivity {
 
 	@Override
+	protected void processPreConditions(PublicPresentationSeminarProcess process, IUserView userView) {
+	    // no pre-conditions
+	}
+
+	@Override
 	protected void activityPreConditions(PublicPresentationSeminarProcess process, IUserView userView) {
 	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
@@ -571,10 +576,13 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 	if(activeState == null) {
 	    return Collections.singletonList(PublicPresentationSeminarProcessStateType.WAITING_FOR_COMISSION_CONSTITUTION);
 	}
-	
+
 	switch (activeState) {
 	case WAITING_FOR_COMISSION_CONSTITUTION:
-	    return Collections.singletonList(PublicPresentationSeminarProcessStateType.COMMISSION_WAITING_FOR_VALIDATION);
+	    final List<PublicPresentationSeminarProcessStateType> result = new ArrayList<PublicPresentationSeminarProcessStateType>();
+	    result.add(PublicPresentationSeminarProcessStateType.COMMISSION_WAITING_FOR_VALIDATION);
+	    result.add(PublicPresentationSeminarProcessStateType.EXEMPTED);
+	    return result;
 	case COMMISSION_WAITING_FOR_VALIDATION:
 	    return Collections.singletonList(PublicPresentationSeminarProcessStateType.COMMISSION_VALIDATED);
 	case COMMISSION_VALIDATED:
