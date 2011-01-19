@@ -28,7 +28,7 @@
 		<b><bean:write name="student" property="openStudentInquiryExecutionPeriod.weeklyHoursSpentInClassesSeason"/></b> 
 		<bean:message key="label.hoursPerWeek.a" bundle="INQUIRIES_RESOURCES"/>
 	</p>
-	<div class="inquiries-registry">
+	<div class="inquiries-registry" style="width: 1000px;">
 	<fr:view name="courses" schema="curricularCourseInquiriesRegistryDTO.submitHoursAndDays" >
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle1 thlight tdcenter tdwith90px"/>
@@ -95,7 +95,7 @@
 			<bean:message key="label.hoursPerWeek" bundle="INQUIRIES_RESOURCES"/>
 		</p>
 		
-		<div class="inquiries-registry">
+		<div class="inquiries-registry" style="width: 900px;">
 			<fr:edit id="hoursAndDaysByCourse" name="courses" schema="curricularCourseInquiriesRegistryDTO.submitHoursAndDays.edit" >
 				<fr:layout name="tabular-editable" >
 					<fr:property name="classes" value="tstyle1 thlight tdcenter"/>
@@ -158,7 +158,6 @@ margin: 15px 0;
 }
 
 div.inquiries-registry table {
-width: 100%;
 margin: 0;
 }
 

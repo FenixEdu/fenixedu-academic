@@ -54,25 +54,47 @@
 </div>
 
 <style>
-.width300px {
-width: 300px !important;
-}
-.width6cols {
-width: 85px !important;
-}
-.width1col {
-width: 610px !important;
-}
-.width10cols {
-width: 38px !important;
-}
-.width9cols {
-width: 46px !important;
-}
-.width11cols {
-width: 31px !important;
-}
 
 input.bright { position: absolute; bottom: 0; left: 70px; }
+
+.question {
+border-collapse: collapse;
+margin: 10px 0;
+width: 900px;
+}
+.question th {
+padding: 5px 10px;
+font-weight: normal;
+text-align: left;
+border: none;
+border-top: 1px solid #ccc;
+border-bottom: 1px solid #ccc;
+background: #f5f5f5;
+vertical-align: bottom;
+}
+.question td {
+padding: 5px;
+text-align: center;
+border: none;
+border-bottom: 1px solid #ccc;
+border-top: 1px solid #ccc;
+background-color: #fff;
+}
+
+th.firstcol {
+width: 300px;
+text-align: left;
+}
+
+.q1col td { text-align: left; }
+
+.q9col .col1, .q9col .col9  { width: 30px; }
+.q10col .col1, .q10col .col2, .q10col .col10  { width: 20px; }
+.q11col .col1, .q11col .col2, .q11col .col3, .q11col .col11  { width: 20px; }
+
+
+th.col1, th.col2, th.col3, th.col4, th.col5, th.col6, th.col7, th.col8, th.col9, th.col10, th.col11 {
+text-align: center !important;
+}
 
 </style>

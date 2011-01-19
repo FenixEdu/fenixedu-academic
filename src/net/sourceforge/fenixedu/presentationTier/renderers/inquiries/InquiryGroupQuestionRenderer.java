@@ -61,6 +61,8 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 	public InquiryQuestionLayout(Object object) {
 	}
 
+	private int colNumber;
+
 	@Override
 	public HtmlComponent createComponent(Object object, Class type) {
 
@@ -116,7 +118,7 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 			questionConditionValues)
 			+ getQuestionRequiredIndication(inquiryQuestion.getInquiryQuestion())
 			+ getQuestionToolTip(inquiryQuestion.getInquiryQuestion().getToolTip()), false));
-		labelCell.addClass("width300px brightccc");
+		labelCell.addClass("firstcol");
 
 		int scaleHeadersCount = 0;
 
@@ -133,7 +135,8 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 		    final HtmlTableCell cell = questionRow.createCell();
 		    cell.setColspan(textBoxQuestion.getAutofit() ? scaleHeadersCount : 1);
 		    cell.setBody(formComponent);
-		    cell.setClasses("aleft");
+
+		    setColNumber(1);
 
 		} else if (inquiryQuestion.getInquiryQuestion() instanceof InquiryRadioGroupQuestion) {
 
@@ -145,10 +148,13 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 
 		    formComponent = (HtmlFormComponent) kit.render(newContext, metaSlot.getObject(), metaSlot.getType());
 
+		    int iter = 0;
 		    for (HtmlRadioButton htmlRadioButton : ((HtmlRadioButtonGroup) formComponent).getRadioButtons()) {
 			htmlRadioButton.bind(metaSlot);
 			questionRow.createCell().setBody(htmlRadioButton);
+			iter++;
 		    }
+		    setColNumber(iter);
 
 		} else if (inquiryQuestion.getInquiryQuestion() instanceof InquiryCheckBoxQuestion) {
 
@@ -159,7 +165,7 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 
 		    final HtmlTableCell cell = questionRow.createCell();
 		    cell.setBody(formComponent);
-		    cell.setClasses("aleft width1col");
+		    setColNumber(1);
 		}
 
 		formComponent.bind(metaSlot);
@@ -205,7 +211,7 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 	}
 
 	private String getQuestionRequiredIndication(final InquiryQuestion inquiryQuestion) {
-	    return inquiryQuestion.getRequired() && inquiryQuestion.getShowRequiredMark() ? "<span class=\"required\"> *</span>"
+	    return inquiryQuestion.getRequired() && inquiryQuestion.getShowRequiredMark() ? "<span class=\"required\"> * </span>"
 		    : StringUtils.EMPTY;
 	}
 
@@ -219,20 +225,22 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 	    if (inquiryQuestionHeader.getTitle() != null) {
 		headerTitle.append(getFinalMLString(inquiryQuestionHeader.getTitle(), conditionValues));
 		if (required) {
-		    headerTitle.append("<span class=\"required\"> *</span>");
+		    headerTitle.append("<span class=\"required\"> * </span>");
 		}
 	    }
 	    headerTitle.append(getQuestionToolTip(inquiryQuestionHeader.getToolTip()));
 
 	    firstHeaderCell.setBody(new HtmlText(headerTitle.toString(), false));
-	    firstHeaderCell.addClass("width300px");
+	    firstHeaderCell.addClass("firstcol");
 
 	    if (inquiryQuestionHeader.getScaleHeaders() != null && inquiryQuestionHeader.getScaleHeaders().getScaleLength() > 0) {
-		String finalCssClass = "width" + inquiryQuestionHeader.getScaleHeaders().getScaleLength() + "cols";
+		String cssClass = "col";
+		int iter = 1;
 		for (MultiLanguageString scale : inquiryQuestionHeader.getScaleHeaders().getScale()) {
 		    HtmlTableCell headerCell = headerRow.createCell(CellType.HEADER);
 		    headerCell.setBody(new HtmlText(scale.toString(), false));
-		    headerCell.addClass("acenter valignbottom " + finalCssClass);
+		    headerCell.addClass(cssClass + iter);
+		    iter++;
 		}
 	    } else if (inquiryQuestion instanceof InquiryCheckBoxQuestion) {
 		firstHeaderCell.setColspan(2);
@@ -243,7 +251,15 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 
 	@Override
 	public String getClasses() {
-	    return "tstyle2 thlight thleft tdcenter thpadding5px10px";
+	    return "question " + "q" + getColNumber() + "col";
+	}
+
+	public void setColNumber(int colNumber) {
+	    this.colNumber = colNumber;
+	}
+
+	public int getColNumber() {
+	    return colNumber;
 	}
     }
 }
