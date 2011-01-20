@@ -881,8 +881,17 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 	    HttpServletRequest request, HttpServletResponse response) {
 
 	final PhdThesisProcessBean bean = new PhdThesisProcessBean(getProcess(request));
-	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.PROVISIONAL_THESIS).required());
-	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.THESIS_ABSTRACT).required());
+
+	final PhdIndividualProgramProcess individualProcess = getProcess(request);
+
+	if (individualProcess.isMigratedProcess()) {
+	    bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.PROVISIONAL_THESIS));
+	    bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.THESIS_ABSTRACT));
+	} else {
+	    bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.PROVISIONAL_THESIS).required());
+	    bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.THESIS_ABSTRACT).required());
+	}
+
 	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.THESIS_REQUIREMENT));
 	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.CV));
 	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.CANDIDACY_REVIEW));
@@ -890,7 +899,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 
 	request.setAttribute("requestPublicThesisPresentation", bean);
 
-	addThesisPreConditionsInformation(request, getProcess(request));
+	addThesisPreConditionsInformation(request, individualProcess);
 
 	return mapping.findForward("requestPublicThesisPresentation");
     }

@@ -7334,6 +7334,8 @@ class phd.seminar.PublicPresentationSeminarProcess extends phd.PhdProgramProcess
 		}
 
 class phd.thesis.PhdThesisProcess extends phd.PhdProgramProcess {
+	LocalDate whenThesisDiscussionRequired;
+
 	LocalDate whenJuryValidated;
 	LocalDate whenJuryDesignated;
 	

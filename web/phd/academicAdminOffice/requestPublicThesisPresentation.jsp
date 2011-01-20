@@ -120,10 +120,11 @@
 			<fr:property name="columnClasses" value=",,tdclear tderror1" />
 		</fr:layout>
   	</fr:edit>
-	
+  	
 	<fr:edit id="requestPublicThesisPresentation.edit.remarks" name="requestPublicThesisPresentation">
 		
 		<fr:schema type="<%= PhdThesisProcessBean.class.getName() %>" bundle="PHD_RESOURCES">
+			<fr:slot name="whenThesisDiscussionRequired" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 			<fr:slot name="remarks" layout="longText">
 				<fr:property name="columns" value="80"/>
 				<fr:property name="rows" value="8"/>

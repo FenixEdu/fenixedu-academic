@@ -14,26 +14,39 @@ import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddAssistantGuidingInformation;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddGuidingInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddStudyPlan;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditQualificationExams;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.ExemptPublicPresentationSeminarComission;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RequestPublicThesisPresentation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean.QualificationExamsResult;
+import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdStudyPlanBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RatifyCandidacy;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RegistrationFormalization;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RequestCandidacyReview;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RequestRatifyCandidacy;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessStateBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.RatifyCandidacyBean;
+import net.sourceforge.fenixedu.domain.phd.candidacy.RegistrationFormalizationBean;
+import net.sourceforge.fenixedu.domain.phd.migration.activities.SkipThesisJuryActivities;
 import net.sourceforge.fenixedu.domain.phd.migration.common.ConversionUtilities;
 import net.sourceforge.fenixedu.domain.phd.migration.common.FinalGradeTranslator;
 import net.sourceforge.fenixedu.domain.phd.migration.common.PhdProgramTranslator;
+import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.FinalEstimatedStateNotReachedException;
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.IncompleteFieldsException;
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.PersonNotFoundException;
+import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.PhdMigrationGuidingNotFoundException;
+import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisFinalGrade;
+import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
+import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.joda.time.LocalDate;
 
@@ -280,33 +293,27 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 	    activeState = getMigrationStatus();
 
 	    if (activeState.equals(PhdMigrationProcessStateType.NOT_MIGRATED)) {
-		// criar candidatura
 		individualProcess = createCandidacyProcess(userView);
-
-		// enviar para coordenador e submeter o parecer
 		sendCandidacyToCoordinator(userView, individualProcess);
-
 		setMigrationStatus(PhdMigrationProcessStateType.CANDIDACY_CREATED);
 		continue;
 	    }
 
 	    if (activeState.equals(PhdMigrationProcessStateType.CANDIDACY_CREATED)) {
-		// homolgar candidatura
 		ratifyCandidacyProcess(userView, individualProcess);
-
 		setMigrationStatus(PhdMigrationProcessStateType.CANDIDACY_RATIFIED);
 		continue;
 	    }
 
 	    if (activeState.equals(PhdMigrationProcessStateType.CANDIDACY_RATIFIED)) {
-		// formalizar candidatura;
 		formalizeRegistration(userView, individualProcess);
-
 		setMigrationStatus(PhdMigrationProcessStateType.WORK_DEVELOPMENT);
+		continue;
 	    }
 
 	    if (activeState.equals(PhdMigrationProcessStateType.WORK_DEVELOPMENT)) {
-
+		requirePublicThesisPresentation(userView, individualProcess);
+		setMigrationStatus(PhdMigrationProcessStateType.REQUESTED_THESIS_DISCUSSION);
 		continue;
 	    }
 
@@ -322,6 +329,11 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 
 	    return;
 	}
+
+	activeState = getMigrationStatus();
+	if (!activeState.equals(estimatedFinalMigrationStatus())) {
+	    throw new FinalEstimatedStateNotReachedException();
+	}
     }
 
     private PhdIndividualProgramProcess createCandidacyProcess(final IUserView userView) {
@@ -329,7 +341,6 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 
 	candidacyBean.setCandidacyDate(this.startProcessDate);
 	candidacyBean.setState(PhdProgramCandidacyProcessState.STAND_BY_WITH_COMPLETE_INFORMATION);
-
 	candidacyBean.setPersonBean(getPhdMigrationIndividualPersonalData().getPersonBean());
 	candidacyBean.setMigratedProcess(true);
 	candidacyBean.setProgram(this.phdProgram);
@@ -337,7 +348,6 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 	candidacyBean.setPhdStudentNumber(getPhdMigrationIndividualPersonalData().getNumber());
 	candidacyBean.setCollaborationType(PhdIndividualProgramCollaborationType.NONE);
 	candidacyBean.setExecutionYear(ExecutionYear.readByDateTime(retrieveDateForExecutionYear()));
-
 	candidacyBean.setFocusArea((phdProgram.getPhdProgramFocusAreasCount() == 1) ? phdProgram.getPhdProgramFocusAreas().get(0)
 		: null);
 
@@ -379,7 +389,50 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 	planBean.setExempted(true);
 	ExecuteProcessActivity.run(individualProcess, AddStudyPlan.class.getSimpleName(), planBean);
 
-	// TODO finish registration formalization in the candidacy
+	final PhdProgramCandidacyProcess candidacyProcess = individualProcess.getCandidacyProcess();
+	final RegistrationFormalizationBean formalizationBean = new RegistrationFormalizationBean(candidacyProcess);
+	formalizationBean.setWhenStartedStudies(startDevelopmentDate);
+	formalizationBean.setSelectRegistration(false);
+	ExecuteProcessActivity.run(candidacyProcess, RegistrationFormalization.class.getSimpleName(), formalizationBean);
+    }
+
+    private void requirePublicThesisPresentation(final IUserView userView, final PhdIndividualProgramProcess individualProcess) {
+	ExecuteProcessActivity.run(individualProcess, ExemptPublicPresentationSeminarComission.class.getSimpleName(),
+		new PublicPresentationSeminarProcessBean());
+
+	if (!StringUtils.isEmpty(guiderNumber)) {
+	    final PhdMigrationGuiding migrationGuiding = getGuiding(guiderNumber);
+	    final PhdParticipantBean guidingBean = migrationGuiding.getPhdParticipantBean(individualProcess);
+	    ExecuteProcessActivity.run(individualProcess, AddGuidingInformation.class.getSimpleName(), guidingBean);
+	}
+
+	if (!StringUtils.isEmpty(assistantGuiderNumber)) {
+	    final PhdMigrationGuiding migrationAssistantGuiding = getGuiding(assistantGuiderNumber);
+	    final PhdParticipantBean assistantGuidingBean = migrationAssistantGuiding.getPhdParticipantBean(individualProcess);
+	    ExecuteProcessActivity.run(individualProcess, AddAssistantGuidingInformation.class.getSimpleName(),
+		    assistantGuidingBean);
+	}
+
+	final PhdThesisProcessBean thesisBean = new PhdThesisProcessBean(individualProcess);
+	thesisBean.setWhenThesisDiscussionRequired(requirementDate);
+	thesisBean.setGenerateAlert(false);
+	thesisBean.setToNotify(false);
+	ExecuteProcessActivity.run(individualProcess, RequestPublicThesisPresentation.class.getSimpleName(), thesisBean);
+    }
+
+    private PhdMigrationGuiding getGuiding(String guidingNumber) {
+	for (PhdMigrationGuiding migrationGuiding : getPhdMigrationProcess().getPhdMigrationGuiding()) {
+	    if (guidingNumber.equals(migrationGuiding.getNumber())) {
+		return migrationGuiding;
+	    }
+	}
+
+	throw new PhdMigrationGuidingNotFoundException();
+    }
+
+    private void skipThesisJuryConstitutionActivities(final IUserView userView,
+	    final PhdIndividualProgramProcess individualProcess) {
+	ExecuteProcessActivity.run(individualProcess.getThesisProcess(), SkipThesisJuryActivities.class.getSimpleName(), null);
     }
 
 }

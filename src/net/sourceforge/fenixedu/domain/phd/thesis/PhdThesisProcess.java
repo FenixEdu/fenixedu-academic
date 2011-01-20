@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdThesisRequestFee;
+import net.sourceforge.fenixedu.domain.phd.migration.activities.SkipThesisJuryActivities;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.AddJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.AddPresidentJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.AddState;
@@ -115,6 +116,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	activities.add(new ReplaceDocument());
 	activities.add(new AddState());
 	activities.add(new RemoveLastState());
+	activities.add(new SkipThesisJuryActivities());
     }
 
     private PhdThesisProcess() {

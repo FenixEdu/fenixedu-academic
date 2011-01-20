@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add thesis discussion date" addThesisDiscussionRequirementDate.sql

@@ -23,6 +23,8 @@ public class PhdThesisProcessBean implements Serializable {
     private LocalDate whenJuryValidated;
     private LocalDate whenJuryDesignated;
 
+    private LocalDate whenThesisDiscussionRequired;
+
     private List<PhdProgramDocumentUploadBean> documents;
 
     private ThesisJuryElement juryElement;
@@ -200,5 +202,13 @@ public class PhdThesisProcessBean implements Serializable {
 
     public void setProcessState(PhdThesisProcessStateType processState) {
 	this.processState = processState;
+    }
+
+    public LocalDate getWhenThesisDiscussionRequired() {
+	return whenThesisDiscussionRequired;
+    }
+
+    public void setWhenThesisDiscussionRequired(LocalDate whenThesisDiscussionRequired) {
+	this.whenThesisDiscussionRequired = whenThesisDiscussionRequired;
     }
 }
