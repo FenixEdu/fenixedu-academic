@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="src_remote"/>
 	<classpathentry kind="src" path="src_gen"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/javassist.jar"/>
@@ -133,11 +132,12 @@
 	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/gwt-servlet.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/commons-io-1.4.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-r48143.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-r48143.jar" sourcepath="/fenix-framework"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/rssutils.jar"/>
 	<classpathentry kind="lib" path="lib/gwt-dev.jar"/>
 	<classpathentry kind="lib" path="lib/gwt-user.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/commons-pool-1.5.4.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-r50143.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/json_simple-1.1.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-r50351.jar" sourcepath="/fenix-web-framework"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

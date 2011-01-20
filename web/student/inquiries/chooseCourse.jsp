@@ -73,17 +73,12 @@
 
 <logic:equal name="student" property="weeklySpentHoursSubmittedForOpenInquiry" value="false">
 
-<p>
-	Considera-se como <b>trabalho autónomo</b> o tempo dedicado por um estudante na pesquisa, estudo, elaboração individual e colectiva de trabalhos (trabalho de
-	campo, resolução de problemas, estudos de caso, desenvolvimento de projectos, etc.), ou seja, todo o trabalho desenvolvido pelo aluno no âmbito das unidades
-	curriculares em que se encontra inscrito no semestre fora das aulas (horas de contacto).
-</p>
+<p><bean:message key="message.inquiries.nhta.definition" bundle="INQUIRIES_RESOURCES"/></p>
 
-<p><b>NHTA = soma trabalho autónomo para todas as UC</b></p>
+<p><b><bean:message key="message.inquiries.nhta.total" bundle="INQUIRIES_RESOURCES"/></b></p>
 	
 	<fr:form action="/studentInquiry.do">
 		<html:hidden property="method" value="submitWeeklySpentHours"/>
-
 		<p>
 			<bean:message key="label.weeklySpentHours" bundle="INQUIRIES_RESOURCES"/>: 
 			<fr:edit id="weeklySpentHours" name="weeklySpentHours" schema="inquiriesStudentExecutionPeriod.submitWeeklySpentHours" type="net.sourceforge.fenixedu.dataTransferObject.VariantBean" >
@@ -94,7 +89,7 @@
 			</fr:edit>			
 			<bean:message key="label.hoursPerWeek" bundle="INQUIRIES_RESOURCES"/>
 		</p>
-		
+
 		<div class="inquiries-registry" style="width: 900px;">
 			<fr:edit id="hoursAndDaysByCourse" name="courses" schema="curricularCourseInquiriesRegistryDTO.submitHoursAndDays.edit" >
 				<fr:layout name="tabular-editable" >
@@ -104,8 +99,7 @@
 					<fr:property name="suffixes" value=",h,,%,dias,h"/>
 					<fr:property name="validatorClasses" value="error0"/>
 					<fr:property name="hideValidators" value="false"/>
-					<%--fr:property name="requiredMarkShown" value="false" />
-					<fr:property name="requiredMessageShown" value="false" /--%>
+					<fr:property name="allValidatorsInline" value="true" />
 				</fr:layout>
 			</fr:edit>
 		</div>		
@@ -114,7 +108,7 @@
 		</p>	
 		
 		<p class="mvert1"><bean:message key="message.inquiries.estimatedECTS" bundle="INQUIRIES_RESOURCES"/></p>
-
+		
 		<p class="mtop15"><html:submit><bean:message key="button.submit" bundle="INQUIRIES_RESOURCES"/></html:submit></p>	
 	</fr:form>
 </logic:equal>
