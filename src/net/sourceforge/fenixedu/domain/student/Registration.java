@@ -117,6 +117,8 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.ReadableInstant;
 import org.joda.time.YearMonthDay;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
@@ -2449,7 +2451,7 @@ public class Registration extends Registration_Base {
     public ExecutionYear getConclusionYear() {
 	return isRegistrationConclusionProcessed() ? getConclusionProcess().getConclusionYear() : null;
     }
-
+    
     public ExecutionYear calculateConclusionYear() {
 	ExecutionYear result = getLastApprovementExecutionYear();
 
@@ -3945,4 +3947,37 @@ public class Registration extends Registration_Base {
 
 	return !activeStateList.isEmpty() ? Collections.max(activeStateList, RegistrationState.DATE_COMPARATOR) : null;
     }
+    
+    @SuppressWarnings("unchecked")
+    public static String readAllStudentInfo() {
+	int i = 0;
+	JSONArray infos = new JSONArray();
+	for(Registration registration : RootDomainObject.getInstance().getRegistrations()) {
+	    ExecutionYear conclusionYear = registration.calculateConclusionYear();
+	    if (conclusionYear != null) {
+		if (i > 10) break;
+		String endDate = Integer.toString(conclusionYear.getEndDateYearMonthDay().getYear());
+		String startDate = Integer.toString(registration.getStartDate().getYear());
+		String studentName = registration.getName();
+		String email = registration.getEmail();
+		String number = Integer.toString(registration.getNumber());
+		String degreeRemoteOid = Long.toString(registration.getDegree().getOID());
+		String username = registration.getPerson().getUsername();
+		JSONObject studentInfo = new JSONObject();
+		studentInfo.put("username",username);
+		studentInfo.put("studentName",studentName);
+		studentInfo.put("email",email);
+		studentInfo.put("number",number);
+		studentInfo.put("endDate",endDate);
+		studentInfo.put("startDate",startDate);
+		studentInfo.put("degreeRemoteOid",degreeRemoteOid);
+		infos.add(studentInfo);
+		i++;
+	    }
+	}
+	final String jsonString = infos.toJSONString();
+	return jsonString;
+    }
+    
 }
+

@@ -4,6 +4,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 
 import org.joda.time.YearMonthDay;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -258,5 +260,17 @@ public class DegreeInfo extends DegreeInfo_Base {
     public AcademicInterval getAcademicInterval() {
 	return getExecutionYear().getAcademicInterval();
     }
-
+    
+    @SuppressWarnings("unchecked")
+    public static String readAllDegreeInfos() {
+	JSONArray infos = new JSONArray();
+	for(DegreeInfo degreeInfo : RootDomainObject.getInstance().getDegreeInfos()) {
+	    JSONObject obj = new JSONObject();
+	    obj.put("degreeOid", Long.toString(degreeInfo.getDegree().getOID()));
+	    obj.put("degreeType", JSONObject.escape(degreeInfo.getDegree().getDegreeType().toString()));
+	    obj.put("degreeName" , JSONObject.escape(degreeInfo.getName().getContent()));
+	    infos.add(obj);
+	}
+	return infos.toJSONString();
+    }
 }

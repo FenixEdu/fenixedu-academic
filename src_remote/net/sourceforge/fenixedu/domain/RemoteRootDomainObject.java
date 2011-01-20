@@ -12,5 +12,5 @@ public class RemoteRootDomainObject extends RemoteRootDomainObject_Base {
 	final String remoteOid = remoteHost.readRemoteStaticMethod("net.sourceforge.fenixedu.domain.RootDomainObject", "getInstance");
 	return remoteOid == null ? null : (RemoteRootDomainObject) remoteHost.getRemoteDomainObject(remoteOid);
     }
-
+    
 }
