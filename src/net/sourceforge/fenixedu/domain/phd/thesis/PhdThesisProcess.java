@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.phd.thesis;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -74,6 +75,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	    result.createState(PhdThesisProcessStateType.NEW, userView.getPerson(), bean.getRemarks());
 	    result.setIndividualProgramProcess(bean.getProcess());
 	    result.addDocuments(bean.getDocuments(), userView.getPerson());
+	    result.setWhenThesisDiscussionRequired(bean.getWhenThesisDiscussionRequired());
 
 	    if (!result.getIndividualProgramProcess().isMigratedProcess()) {
 		new PhdThesisRequestFee(bean.getProcess());
@@ -449,9 +451,11 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	
 	switch(currentState) {
 	case NEW:
-	    return Collections.singletonList(PhdThesisProcessStateType.WAITING_FOR_JURY_CONSTITUTION);
+	    return Arrays.asList(PhdThesisProcessStateType.WAITING_FOR_JURY_CONSTITUTION,
+		    PhdThesisProcessStateType.WAITING_FOR_THESIS_MEETING_SCHEDULING);
 	case WAITING_FOR_JURY_CONSTITUTION:
-	    return Collections.singletonList(PhdThesisProcessStateType.JURY_WAITING_FOR_VALIDATION);
+	    return Arrays.asList(PhdThesisProcessStateType.JURY_WAITING_FOR_VALIDATION, PhdThesisProcessStateType.JURY_VALIDATED,
+		    PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK);
 	case JURY_WAITING_FOR_VALIDATION:
 	    return Collections.singletonList(PhdThesisProcessStateType.JURY_VALIDATED);
 	case JURY_VALIDATED:
