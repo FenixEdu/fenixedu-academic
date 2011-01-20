@@ -320,6 +320,7 @@
 			<classpath refid="class.path.lib.ref" />
 			<src path="${src_gen}" />
 			<src path="${src}" />
+			<include name="net/sourceforge/fenixedu/applicationTier/Servico/caseHandling/**" />
 			<include name="net/sourceforge/fenixedu/applicationTier/Servico/commons/ExecuteFactoryMethod.java" />
 			<include name="net/sourceforge/fenixedu/tools/**" />
 			<include name="net/sourceforge/fenixedu/domain/**" />
