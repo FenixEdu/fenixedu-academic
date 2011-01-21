@@ -174,7 +174,9 @@ public class AssiduousnessMonthlyResume implements Serializable {
 	}
 	for (ExtraWorkRequest extraWorkRequest : employee.getAssiduousness().getExtraWorkRequests()) {
 	    if ((thisExtraWorkRequest == null || (!thisExtraWorkRequest.equals(extraWorkRequest)))
-		    && extraWorkRequest.getHoursDoneInPartialDate().equals(closedMonth.getClosedYearMonth())) {
+		    && extraWorkRequest.getHoursDoneInPartialDate().equals(closedMonth.getClosedYearMonth())
+		    && (extraWorkRequest.getApproved() || extraWorkRequest.getPartialPayingDate().equals(
+			    closedMonth.getClosedYearMonth()))) {
 		addPayedSaturdaysBalance(extraWorkRequest.getSaturdayHours() == null ? 0 : extraWorkRequest.getSaturdayHours());
 		addPayedSundaysBalance(extraWorkRequest.getSundayHours() == null ? 0 : extraWorkRequest.getSundayHours());
 		addPayedHolidayBalance(extraWorkRequest.getHolidayHours() == null ? 0 : extraWorkRequest.getHolidayHours());
