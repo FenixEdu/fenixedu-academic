@@ -6,10 +6,16 @@ package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryRegistry;
+import pt.ist.fenixWebFramework.renderers.DataProvider;
+import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
+import pt.ist.fenixWebFramework.renderers.converters.IntegerNumberConverter;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -80,13 +86,6 @@ public class CurricularCourseInquiriesRegistryDTO implements Serializable {
 	final double result = ((weeklyHoursSpentInClassesSeason /* a */* (getWeeklyHoursSpentPercentage() / 100d) /* c */+ getWeeklyContactLoad() /* b */
 		* (getAttendenceClassesPercentage() / 100d) /* b1 */) * 14 + getStudyDaysSpentInExamsSeason() /* d */* 8) / 28;
 
-	// ((%*NHTA + NHC)*14+ NDE*8) / 28
-	// ((a*c+b*b1)*14+d*8)/28
-	// (((getWeeklyHoursSpentPercentage() / 100d) *
-	// weeklyHoursSpentInClassesSeason * 14) +
-	// getCurricularCourse().getCompetenceCourse().getContactLoad(getExecutionSemester())
-	// + getStudyDaysSpentInExamsSeason() * 8) / 28;
-
 	return new BigDecimal(result).setScale(1, BigDecimal.ROUND_UP).doubleValue();
     }
 
@@ -130,5 +129,23 @@ public class CurricularCourseInquiriesRegistryDTO implements Serializable {
 
     public void setAttendenceClassesPercentage(Integer attendenceClassesPercentage) {
 	this.attendenceClassesPercentage = attendenceClassesPercentage;
+    }
+
+    public static class NumbersToHundred5To5 implements DataProvider {
+
+	@Override
+	public Object provide(Object source, Object currentValue) {
+	    List<Integer> numbers = new ArrayList<Integer>();
+	    for (int iter = 0; iter <= 100; iter += 5) {
+		numbers.add(iter);
+	    }
+	    Collections.sort(numbers);
+	    return numbers;
+	}
+
+	@Override
+	public Converter getConverter() {
+	    return new IntegerNumberConverter();
+	}
     }
 }
