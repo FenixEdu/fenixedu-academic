@@ -43,8 +43,8 @@
 <jsp:include page="/phd/thesis/common/scheduleThesisEvent.jsp">
 	<jsp:param name="notifyElements" value="true" />
 	<jsp:param name="submitMethod" value="scheduleFirstThesisMeeting" />
-	<jsp:param name="invalidMethod" value="scheduleThesisMeetingInvalid" />
-	<jsp:param name="postBackMethod" value="scheduleThesisMeetingPostback" />
+	<jsp:param name="invalidMethod" value="scheduleFirstThesisMeetingInvalid" />
+	<jsp:param name="postBackMethod" value="scheduleFirstThesisMeetingPostback" />
 	<jsp:param name="processName" value="phdMeetingSchedulingProcess" />
 </jsp:include>
 

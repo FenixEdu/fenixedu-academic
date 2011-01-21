@@ -85,6 +85,19 @@ public class PhdMeetingSchedulingProcessDA extends CommonPhdThesisProcessDA {
 	return mapping.findForward("scheduleFirstThesisMeeting");
     }
 
+    public ActionForward scheduleFirstThesisMeetingInvalid(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("thesisProcessBean", getThesisProcessBean());
+	return mapping.findForward("scheduleFirstThesisMeeting");
+    }
+
+    public ActionForward scheduleFirstThesisMeetingPostback(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("thesisProcessBean", getThesisProcessBean());
+	RenderUtils.invalidateViewState();
+	return mapping.findForward("scheduleFirstThesisMeeting");
+    }
+
     public ActionForward scheduleFirstThesisMeeting(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 

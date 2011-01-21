@@ -51,7 +51,6 @@ public class ScheduleFirstThesisMeeting extends PhdMeetingSchedulingActivity {
 
 	checkMeetingInformation(bean);
 
-	// TODO remove this data from the Thesis Process
 	thesisProcess.setMeetingDate(bean.getScheduledDate());
 	thesisProcess.setMeetingPlace(bean.getScheduledPlace());
 	thesisProcess.createState(PhdThesisProcessStateType.WAITING_FOR_THESIS_DISCUSSION_DATE_SCHEDULING, userView.getPerson(),
