@@ -5,12 +5,16 @@
 <html:xhtml />
 
 <em><bean:message key="title.studentPortal" bundle="INQUIRIES_RESOURCES"/></em>
-<h2><bean:message key="title.inquiries" bundle="INQUIRIES_RESOURCES"/></h2>
+<h2><bean:message key="title.inquiries.student" bundle="INQUIRIES_RESOURCES"/></h2>
 
-<table class="tstyle2 tdtop">
+<table class="tstyle2 tdtop mvert15">
 	<tr>
 		<td><bean:message key="label.teacher" bundle="INQUIRIES_RESOURCES"/>:</td>
-		<td><bean:write name="teacherInquiry" property="teacherDTO.name" /></td>		
+		<td><b><bean:write name="teacherInquiry" property="teacherDTO.name" /></b></td>		
+	</tr>
+	<tr>
+		<td><bean:message key="header.inquiries.course.form" bundle="INQUIRIES_RESOURCES"/>:</td>
+		<td><bean:write name="inquiryBean" property="inquiryRegistry.executionCourse.nome" /></td>		
 	</tr>
 	<tr>
 		<td><bean:message key="label.typeOfClass" bundle="INQUIRIES_RESOURCES"/>:</td>
@@ -22,7 +26,9 @@
 	<p><span class="error0"><!-- Error messages go here --><bean:write name="message" /></span></p>
 </html:messages>
 
-<h3 class="separator2 mtop2"><span style="font-weight: normal ;"><bean:message key="title.inquiries.separator.teachers_1" bundle="INQUIRIES_RESOURCES"/></span></h3>
+<h3 class="separator2 mvert1"><span style="font-weight: normal ;"><bean:message key="title.inquiries.separator.teachers_1" bundle="INQUIRIES_RESOURCES"/></span></h3>
+
+<p class="mvert2"><em><bean:message key="message.inquiries.requiredFieldsMarkedWithAsterisk" bundle="INQUIRIES_RESOURCES"/></em></p>
 
 <div class="forminline dinline">
 	<div class="relative">
@@ -40,8 +46,7 @@
 					<fr:edit id="<%= "iter" + index --%>" name="inquiryGroup"/>
 				</logic:iterate>
 			</logic:iterate>
-									
-			<p class="mtop025 mbottom15"><em><bean:message key="message.inquiries.requiredFieldsMarkedWithAsterisk" bundle="INQUIRIES_RESOURCES"/></em></p>
+			<br/>							
 			<html:submit styleClass="bright"><bean:message key="button.continue" bundle="INQUIRIES_RESOURCES"/></html:submit>
 		</fr:form>
 		

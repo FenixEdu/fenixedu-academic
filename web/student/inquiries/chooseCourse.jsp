@@ -6,7 +6,7 @@
 <html:xhtml />
 
 <em><bean:message key="title.studentPortal" bundle="INQUIRIES_RESOURCES"/></em>
-<h2><bean:message key="title.inquiries" bundle="INQUIRIES_RESOURCES"/></h2>
+<h2><bean:message key="title.inquiries.student" bundle="INQUIRIES_RESOURCES"/></h2>
 
 <logic:present name="executionSemester" property="inquiryResponsePeriod">
 	<logic:notEmpty name="executionSemester" property="inquiryResponsePeriod.introduction">	
@@ -128,26 +128,26 @@ padding: 0 !important;
 }
 
 th.col1 { }
-th.col2 { border-left: 4px solid #ccc;}
+th.col2 { border-left: 6px solid #ccc;}
 th.col3 {  }
-th.col4 { border-left: 4px solid #ccc; }
+th.col4 { border-left: 6px solid #ccc; }
 th.col5 { }
-th.col6 { border-left: 4px solid #ccc; }
+th.col6 { border-left: 6px solid #ccc; }
 th.col7 { }
-th.col8 { border-left: 4px solid #ccc; }
+th.col8 { border-left: 6px solid #ccc; }
 
 td.col1 { white-space: nowrap; text-align: left; }
-td.col2 { border-left: 4px solid #ccc; }
+td.col2 { border-left: 6px solid #ccc; }
 td.col3 {  }
-td.col4 { border-left: 4px solid #ccc; }
+td.col4 { border-left: 6px solid #ccc; }
 td.col5 { }
-td.col6 { border-left: 4px solid #ccc; }
+td.col6 { border-left: 6px solid #ccc; }
 td.col7 { }
-td.col8 { border-left: 4px solid #ccc; white-space: nowrap; }
+td.col8 { border-left: 6px solid #ccc; white-space: nowrap; }
 
 div.inquiries-registry {
 background: #ccc;	
-padding: 3px;
+padding: 4px;
 margin: 15px 0;
 }
 

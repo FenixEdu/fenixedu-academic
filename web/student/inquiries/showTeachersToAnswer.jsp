@@ -6,20 +6,12 @@
 <html:xhtml />
 
 <em><bean:message key="title.studentPortal" bundle="INQUIRIES_RESOURCES"/></em>
-<h2><bean:message key="title.inquiries" bundle="INQUIRIES_RESOURCES"/></h2>
+<h2><bean:message key="title.inquiries.student" bundle="INQUIRIES_RESOURCES"/></h2>
 
-<table class="tstyle2 tdtop">
-	<tr>
-		<td><bean:message key="label.degree.name" bundle="INQUIRIES_RESOURCES"/>:</td>
-		<td><bean:write name="inquiryBean" property="inquiryRegistry.student.degree.name" /></td>
-	</tr>
-	<tr>
-		<td><bean:message key="label.curricularCourse.name" bundle="INQUIRIES_RESOURCES"/>:</td>
-		<td><bean:write name="inquiryBean" property="inquiryRegistry.executionCourse.nome" /></td>
-	</tr>
-</table>
-
-<h3 class="separator2 mtop2"><span style="font-weight: normal ;"><bean:message key="title.inquiries.separator.teachers" bundle="INQUIRIES_RESOURCES"/></span></h3>
+<h3 class="separator2 mtop2">
+	<span style="font-weight: normal ;"><bean:message key="title.inquiries.separator.teachers" bundle="INQUIRIES_RESOURCES"/>:</span>
+	<b><bean:write name="inquiryBean" property="inquiryRegistry.executionCourse.nome" /></b>
+</h3>
 
 <p class="mtop2"><bean:message key="message.inquiries.atentionBeforeFillInTeachers" bundle="INQUIRIES_RESOURCES"/>:</p>
 <ul class="mbottom15">
