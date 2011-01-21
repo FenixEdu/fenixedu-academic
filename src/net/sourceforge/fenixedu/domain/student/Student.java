@@ -1628,6 +1628,12 @@ public class Student extends Student_Base {
 	    }
 
 	    for (final Enrolment enrolment : registration.getEnrolments(executionSemester)) {
+		if (enrolment.getCurricularCourse().isAnual()) {
+		    ExecutionSemester previousExecutionPeriod = executionSemester.getPreviousExecutionPeriod();
+		    if (previousExecutionPeriod.getExecutionYear() != executionSemester.getExecutionYear()) {
+			continue;
+		    }
+		}
 		final ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(executionSemester);
 		if (executionCourse != null && !coursesAnswered.contains(executionCourse)) {
 		    coursesToAnswer.put(executionCourse, enrolment.getCurricularCourse().getName());
