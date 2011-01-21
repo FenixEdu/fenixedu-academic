@@ -1614,14 +1614,6 @@
 	<slot name="personalDataAuthorization" label="label.personalDataAuthorization" />
 </schema>
 
-<schema name="StudentDataByExecutionYearBean" type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.StudentDataByExecutionYearBean" bundle="APPLICATION_RESOURCES">
-	<slot name="executionYear" label="label.executionYear.year" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
-		<property name="format" value="${year}" />
-	</slot>
-	<slot name="choice" label="label.personalDataAuthorization" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-</schema>
-
 <schema name="IRegistrationBean.edit-cycleCurriculumGroup" type="net.sourceforge.fenixedu.dataTransferObject.student.IRegistrationBean" bundle="APPLICATION_RESOURCES">
 	<slot name="cycleCurriculumGroup" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.student.RegistrationInternalCycleCurriculumGroupsProvider" />
