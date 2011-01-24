@@ -535,7 +535,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
 	try {
 	    final Object[] args = { executionCourse.getIdInternal(), DateFormatUtil.parse("dd/MM/yyyy", getDate()),
 		    DateFormatUtil.parse("HH:mm", getBeginTime()), DateFormatUtil.parse("HH:mm", getEndTime()),
-		    executionCourseIDs, degreeModuleScopeIDs, null, getEvaluationID(), null, getDescription() };
+		    executionCourseIDs, degreeModuleScopeIDs, null, getEvaluationID(), null, getDescription(), null };
 
 	    ServiceUtils.executeService("EditWrittenEvaluation", args);
 

@@ -535,7 +535,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 	List<String> roomIDs = Arrays.asList((String[]) createExamForm.get("rooms"));
 
 	Object argsEditExam[] = { null, examDate.getTime(), examStartTime.getTime(), examEndTime.getTime(), executionCourseIDs,
-		scopeIDs, contextIDs, roomIDs, infoExamID, season, null };
+		scopeIDs, contextIDs, roomIDs, infoExamID, season, null, null};
 	try {
 	    ServiceUtils.executeService("EditWrittenEvaluation", argsEditExam);
 	} catch (FenixServiceException ex) {

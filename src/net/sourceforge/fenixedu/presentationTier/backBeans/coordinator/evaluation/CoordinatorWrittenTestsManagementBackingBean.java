@@ -64,7 +64,7 @@ public class CoordinatorWrittenTestsManagementBackingBean extends CoordinatorWri
 
 	    final Object[] args = { executionCourse.getIdInternal(), this.getBegin().getTime(), this.getBegin().getTime(),
 		    this.getEnd().getTime(), executionCourseIDs, degreeModuleScopeIDs, null, this.getEvaluationID(), null,
-		    this.getDescription() };
+		    this.getDescription(), null };
 
 	    ServiceUtils.executeService("EditWrittenEvaluation", args);
 

@@ -1163,7 +1163,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
 	final Season season = (getSeason() != null) ? new Season(getSeason()) : null;
 	final Object[] args = { null, this.getBegin().getTime(), this.getBegin().getTime(), this.getEnd().getTime(),
-		executionCourseIDs, degreeModuleScopeIDs, roomsIDs, this.evaluationID, season, this.getDescription() };
+		executionCourseIDs, degreeModuleScopeIDs, roomsIDs, this.evaluationID, season, this.getDescription(), null };
 	try {
 	    ServiceUtils.executeService("EditWrittenEvaluation", args);
 
