@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.inquiries;
 
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 
 import org.joda.time.DateTime;
 
@@ -32,15 +33,26 @@ public class InquiryCourseAnswer extends InquiryCourseAnswer_Base {
     public static InquiryCourseAnswer createNotAnsweredInquiryCourse(final StudentInquiryRegistry inquiryRegistry,
 	    final InquiryNotAnsweredJustification justification, final String otherJustification) {
 	final InquiryCourseAnswer courseAnswer = new InquiryCourseAnswer(inquiryRegistry);
-	//	final StudentInquiryExecutionPeriod studentInquiryExecutionPeriod = inquiryRegistry.getStudent().getStudent()
-	//		.getStudentInquiryExecutionPeriod(inquiryRegistry.getExecutionPeriod());
-	//courseAnswer.setWeeklyHoursSpentInClassesSeason(studentInquiryExecutionPeriod.getWeeklyHoursSpentInClassesSeason());
+	final StudentInquiryExecutionPeriod studentInquiryExecutionPeriod = inquiryRegistry.getStudent().getStudent()
+		.getStudentInquiryExecutionPeriod(inquiryRegistry.getExecutionPeriod());
+	courseAnswer.setWeeklyHoursSpentInAutonomousWork(studentInquiryExecutionPeriod.getWeeklyHoursSpentInClassesSeason());
 	courseAnswer.setNotAnsweredJustification(justification);
 	courseAnswer.setNotAnsweredOtherJustification(otherJustification);
 	courseAnswer.setResponseDateTime(new DateTime());
 
+	courseAnswer.setNumberOfEnrolments(getNumberOfEnrolments(inquiryRegistry));
+	courseAnswer.setCommittedFraud(Boolean.FALSE);//TODO actualmente não existe registo desta info no fenix
+	courseAnswer.setStudentType(inquiryRegistry.getStudent().getRegistrationAgreement());
+
 	inquiryRegistry.setState(InquiriesRegistryState.NOT_ANSWERED);
 
 	return courseAnswer;
+    }
+
+    public static int getNumberOfEnrolments(final StudentInquiryRegistry inquiryRegistry) {
+	final StudentCurricularPlan studentCurricularPlan = inquiryRegistry.getStudent().getStudentCurricularPlan(
+		inquiryRegistry.getExecutionPeriod().getExecutionYear());
+	final int numberOfEnrolments = studentCurricularPlan.getEnrolments(inquiryRegistry.getCurricularCourse()).size();
+	return numberOfEnrolments;
     }
 }

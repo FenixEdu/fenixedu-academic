@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add NHTA field to InquiryAnswer" alterTableInquiryAnswer.sql

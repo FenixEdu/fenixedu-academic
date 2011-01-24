@@ -7,14 +7,23 @@ package net.sourceforge.fenixedu.domain.inquiries;
  * @author - Ricardo Rodrigues (ricardo.rodrigues@ist.utl.pt)
  * 
  */
-public enum EntryGradesInterval {
+public enum InquiryGradesInterval {
 
     //intervals are in the form of [x, y[, [y, z[
-    FROM_120_TO_130, FROM_130_TO_140, FROM_140_TO_150, FROM_150_TO_160, FROM_160_TO_170, FROM_170_TO_180, FROM_180_TO_200;
+    DONT_KNOW, NOT_EVALUATED, FLUNKED, FROM_100_TO_110, FROM_110_TO_120, FROM_120_TO_130, FROM_130_TO_140, FROM_140_TO_150, FROM_150_TO_160, FROM_160_TO_170, FROM_170_TO_180, FROM_180_TO_200;
 
-    final static public EntryGradesInterval getInterval(Double grade) {
-	if (grade == null || grade < 120 || grade > 200) {
-	    return null;
+    final static public InquiryGradesInterval getInterval(Double grade) {
+	if (grade == null) {
+	    return DONT_KNOW;
+	}
+	if (grade < 100) {
+	    return FLUNKED;
+	}
+	if (grade >= 100 && grade < 110) {
+	    return FROM_100_TO_110;
+	}
+	if (grade >= 110 && grade < 120) {
+	    return FROM_110_TO_120;
 	}
 	if (grade >= 120 && grade < 130) {
 	    return FROM_120_TO_130;

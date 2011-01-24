@@ -140,6 +140,7 @@ public class CurricularCourseInquiriesRegistryDTO implements Serializable {
 		numbers.add(iter);
 	    }
 	    Collections.sort(numbers);
+	    Collections.reverse(numbers);
 	    return numbers;
 	}
 

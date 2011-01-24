@@ -14,7 +14,7 @@ public abstract class InquiryTemplate extends InquiryTemplate_Base {
     }
 
     public boolean isOpen() {
-	return getResponsePeriodBegin().isBeforeNow() && getResponsePeriodEnd().isAfterNow();
+	return !getResponsePeriodBegin().isAfterNow() && !getResponsePeriodEnd().isBeforeNow();
     }
 
     public static InquiryTemplate getInquiryTemplateByTypAndExecutionSemester(ExecutionSemester executionSemester,

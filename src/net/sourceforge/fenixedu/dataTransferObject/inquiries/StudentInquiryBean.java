@@ -23,13 +23,13 @@ import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.inquiries.EntryGradesInterval;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistryState;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryCourseAnswer;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryGradesInterval;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryTeacherAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.QuestionAnswer;
+import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryExecutionPeriod;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryRegistry;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.StudentTeacherInquiryTemplate;
@@ -108,13 +108,14 @@ public class StudentInquiryBean implements Serializable {
 		}
 	    }
 	    if (teacherShift.isEmpty() && !mandatoryTeachingService) {
-		System.out.println("NAO TEM SERVIÇO DOCENTE");
+		System.out.println("NAO TEM SERVIÇO DOCENTE- " + teacher != null ? teacher.getTeacherNumber() : ""); //TODO remove this, just for tests purpose
 		for (final ShiftType shiftType : shiftTypes) {
 		    teacherShift.put(shiftType, new StudentTeacherInquiryBean(teacherDTO, executionCourse, shiftType,
 			    studentTeacherInquiryTemplate));
 		}
-	    } else {
-		System.out.println("PROF CARREIRA SEM SERVIÇO DOCENTE ACIMA DOS 20%");
+	    } else { //TODO remove this, just for tests purpose
+		System.out.println("PROF CARREIRA SEM SERVIÇO DOCENTE ACIMA DOS 20% - " + teacher != null ? teacher
+			.getTeacherNumber() : "");
 	    }
 	}
 
@@ -122,7 +123,9 @@ public class StudentInquiryBean implements Serializable {
 	    ArrayList<StudentTeacherInquiryBean> studentTeachers = new ArrayList<StudentTeacherInquiryBean>(entry.getValue()
 		    .values());
 	    Collections.sort(studentTeachers, new BeanComparator("shiftType"));
-	    getTeachersInquiries().put(new AffiliatedTeacherDTO(entry.getKey()), studentTeachers);
+	    if (!studentTeachers.isEmpty()) {
+		getTeachersInquiries().put(new AffiliatedTeacherDTO(entry.getKey()), studentTeachers);
+	    }
 	}
     }
 
@@ -179,8 +182,8 @@ public class StudentInquiryBean implements Serializable {
 	DateTime endTime = new DateTime();
 	inquiryCourseAnswer.setAnswerDuration(endTime.minus(getStartedWhen().getMillis()).getMillis());
 	inquiryCourseAnswer.setAttendenceClassesPercentage(getInquiryRegistry().getAttendenceClassesPercentage());
-	inquiryCourseAnswer.setCommittedFraud(Boolean.FALSE);//TODO ver como ir buscar isto
-	inquiryCourseAnswer.setEntryGrade(EntryGradesInterval.getInterval(getInquiryRegistry().getStudent().getEntryGrade()));
+	inquiryCourseAnswer.setCommittedFraud(Boolean.FALSE);//TODO actualmente não existe registo desta info no fenix
+	inquiryCourseAnswer.setEntryGrade(InquiryGradesInterval.getInterval(getInquiryRegistry().getStudent().getEntryGrade()));
 	inquiryCourseAnswer.setExecutionCourse(getInquiryRegistry().getExecutionCourse());
 	inquiryCourseAnswer.setExecutionDegreeStudent(getInquiryRegistry().getStudent().getLastStudentCurricularPlan()
 		.getDegreeCurricularPlan().getMostRecentExecutionDegree());
@@ -189,15 +192,18 @@ public class StudentInquiryBean implements Serializable {
 	inquiryCourseAnswer.setExecutionDegreeCourse(executionDegreeCourse);
 	inquiryCourseAnswer.setExecutionPeriod(getInquiryRegistry().getExecutionPeriod());
 
-	inquiryCourseAnswer.setGrade(getGrade(getInquiryRegistry()));
-	inquiryCourseAnswer.setNumberOfEnrolments(getNumberOfEnrolments());
+	Grade grade = getGrade(getInquiryRegistry());
+	if (grade != null) {
+	    inquiryCourseAnswer.setGrade(InquiryGradesInterval.getInterval(Double.valueOf(grade.getIntegerValue())));
+	}
+	inquiryCourseAnswer.setNumberOfEnrolments(InquiryCourseAnswer.getNumberOfEnrolments(getInquiryRegistry()));
 	inquiryCourseAnswer.setResponseDateTime(endTime);
 	inquiryCourseAnswer.setStudentType(getInquiryRegistry().getStudent().getRegistrationAgreement());
 	inquiryCourseAnswer.setStudyDaysSpentInExamsSeason(getInquiryRegistry().getStudyDaysSpentInExamsSeason());
-	//	final StudentInquiryExecutionPeriod studentInquiryExecutionPeriod = getInquiryRegistry().getStudent().getStudent()
-	//		.getStudentInquiryExecutionPeriod(getInquiryRegistry().getExecutionPeriod());
-	//	inquiryCourseAnswer
-	//		.setWeeklyHoursSpentInClassesSeason(studentInquiryExecutionPeriod.getWeeklyHoursSpentInClassesSeason());
+	final StudentInquiryExecutionPeriod studentInquiryExecutionPeriod = getInquiryRegistry().getStudent().getStudent()
+		.getStudentInquiryExecutionPeriod(getInquiryRegistry().getExecutionPeriod());
+	inquiryCourseAnswer.setWeeklyHoursSpentInAutonomousWork(studentInquiryExecutionPeriod
+		.getWeeklyHoursSpentInClassesSeason());
 	inquiryCourseAnswer.setWeeklyHoursSpentPercentage(getInquiryRegistry().getWeeklyHoursSpentPercentage());
 
 	for (InquiryBlockDTO inquiryBlockDTO : getCurricularCourseBlocks()) {
@@ -237,12 +243,6 @@ public class StudentInquiryBean implements Serializable {
 	    }
 	}
 	getInquiryRegistry().setState(InquiriesRegistryState.ANSWERED);
-    }
-
-    private int getNumberOfEnrolments() {
-	final StudentCurricularPlan studentCurricularPlan = getInquiryRegistry().getStudent().getStudentCurricularPlan(
-		getInquiryRegistry().getExecutionPeriod().getExecutionYear());
-	return studentCurricularPlan.getEnrolments(getInquiryRegistry().getCurricularCourse()).size();
     }
 
     private Grade getGrade(StudentInquiryRegistry inquiryRegistry) {

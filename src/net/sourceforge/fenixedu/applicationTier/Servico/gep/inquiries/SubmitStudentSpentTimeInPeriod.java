@@ -34,8 +34,8 @@ public class SubmitStudentSpentTimeInPeriod extends FenixService {
 	    throw new DomainException("error.studyDaysSpentInExamsSeason.exceedsMaxDaysLimit");
 	}
 
-	InquiriesStudentExecutionPeriod inquiriesStudentExecutionPeriod = student
-		.getInquiriesStudentExecutionPeriod(executionSemester);
+	//TODO remove this classes at the end of the new QUC model implementation
+	InquiriesStudentExecutionPeriod inquiriesStudentExecutionPeriod = null;//student.getInquiriesStudentExecutionPeriod(executionSemester);
 	if (inquiriesStudentExecutionPeriod == null) {
 	    inquiriesStudentExecutionPeriod = new InquiriesStudentExecutionPeriod(student, executionSemester);
 	}
