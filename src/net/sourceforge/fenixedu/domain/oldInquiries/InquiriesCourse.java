@@ -124,9 +124,9 @@ public class InquiriesCourse extends InquiriesCourse_Base {
 
 	InquiriesCourse inquiriesCourse = new InquiriesCourse(inquiriesRegistry);
 	inquiriesCourse.setAnswerDuration(inquiryDTO.getAnswerDuration());
+	//TODO remove this classes at the end of the new QUC model implementation
+	final InquiriesStudentExecutionPeriod inquiriesStudentExecutionPeriod = null; //inquiriesRegistry.getStudent().getStudent().getInquiriesStudentExecutionPeriod(inquiriesRegistry.getExecutionPeriod());
 
-	final InquiriesStudentExecutionPeriod inquiriesStudentExecutionPeriod = inquiriesRegistry.getStudent().getStudent()
-		.getInquiriesStudentExecutionPeriod(inquiriesRegistry.getExecutionPeriod());
 	inquiriesCourse.setWeeklyHoursSpentInClassesSeason(inquiriesStudentExecutionPeriod.getWeeklyHoursSpentInClassesSeason());
 
 	setAnswers(inquiryDTO, inquiriesCourse);
@@ -148,8 +148,8 @@ public class InquiriesCourse extends InquiriesCourse_Base {
     public static InquiriesCourse makeNewNotAnswered(final InquiriesRegistry inquiriesRegistry,
 	    final InquiryNotAnsweredJustification justification, final String otherJustification) {
 	final InquiriesCourse inquiriesCourse = new InquiriesCourse(inquiriesRegistry);
-	final InquiriesStudentExecutionPeriod inquiriesStudentExecutionPeriod = inquiriesRegistry.getStudent().getStudent()
-		.getInquiriesStudentExecutionPeriod(inquiriesRegistry.getExecutionPeriod());
+	//TODO remove this classes at the end of the new QUC model implementation
+	final InquiriesStudentExecutionPeriod inquiriesStudentExecutionPeriod = null; //inquiriesRegistry.getStudent().getStudent().getInquiriesStudentExecutionPeriod(inquiriesRegistry.getExecutionPeriod());
 	inquiriesCourse.setWeeklyHoursSpentInClassesSeason(inquiriesStudentExecutionPeriod.getWeeklyHoursSpentInClassesSeason());
 	inquiriesRegistry.setState(InquiriesRegistryState.NOT_ANSWERED);
 

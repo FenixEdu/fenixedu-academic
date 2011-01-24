@@ -87,16 +87,19 @@ public class InquiriesRegistry extends InquiriesRegistry_Base {
 	    return false;
 	}
 
-	if (getStudent().getStudent().isWeeklySpentHoursSubmittedForOpenInquiriesResponsePeriod() && isNotAvailableToInquiries()) {
-	    return false;
-	}
+	//TODO remove this classes at the end of the new QUC model implementation
+	//	if (getStudent().getStudent().isWeeklySpentHoursSubmittedForOpenInquiriesResponsePeriod() && isNotAvailableToInquiries()) {
+	//	    return false;
+	//	}
 
 	return true;
     }
 
     public boolean isCreatedAfterWeeklySpentHoursSubmission() {
-	return getStudent().getStudent().isWeeklySpentHoursSubmittedForOpenInquiriesResponsePeriod()
-		&& (getWeeklyHoursSpentPercentage() == null || getStudyDaysSpentInExamsSeason() == null);
+	//TODO remove this classes at the end of the new QUC model implementation
+	//	return getStudent().getStudent().isWeeklySpentHoursSubmittedForOpenInquiriesResponsePeriod()
+	//		&& (getWeeklyHoursSpentPercentage() == null || getStudyDaysSpentInExamsSeason() == null);
+	return false;
     }
 
     public ExecutionDegree getExecutionDegree() {
@@ -116,7 +119,9 @@ public class InquiriesRegistry extends InquiriesRegistry_Base {
     }
 
     public InquiriesStudentExecutionPeriod getInquiriesStudentExecutionPeriod() {
-	return getStudent().getStudent().getInquiriesStudentExecutionPeriod(getExecutionPeriod());
+	return null;
+	//TODO remove this classes at the end of the new QUC model implementation
+	//	return getStudent().getStudent().getInquiriesStudentExecutionPeriod(getExecutionPeriod());
     }
 
 }
