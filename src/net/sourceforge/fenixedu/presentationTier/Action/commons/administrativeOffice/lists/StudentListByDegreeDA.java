@@ -149,6 +149,29 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 		continue;
 	    }
 
+	    if (searchBean.isConcludedInChosenYear()) {
+		CycleType cycleType;
+		if (searchBean.getDegreeType() != null) {
+		    cycleType = searchBean.getDegreeType().getCycleType();
+		} else {
+		    cycleType = registration.getCycleType(executionYear);
+		}
+
+		RegistrationConclusionBean conclusionBean;
+		if (registration.isBolonha()) {
+		    conclusionBean = new RegistrationConclusionBean(registration, cycleType);
+		} else {
+		    conclusionBean = new RegistrationConclusionBean(registration);
+		}
+
+		if (!conclusionBean.isConcluded()) {
+		    continue;
+		}
+		if (conclusionBean.getConclusionYear() != executionYear) {
+		    continue;
+		}
+	    }
+
 	    if (searchBean.getActiveEnrolments() && !registration.hasAnyEnrolmentsIn(executionYear)) {
 		continue;
 	    }
@@ -234,6 +257,10 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 	spreadsheet.newHeaderRow();
 	if (searchBean.isIngressedInChosenYear()) {
 	    spreadsheet.addHeader(getResourceMessage("label.ingressedInChosenYear"));
+	}
+	spreadsheet.newHeaderRow();
+	if (searchBean.isConcludedInChosenYear()) {
+	    spreadsheet.addHeader(getResourceMessage("label.concludedInChosenYear"));
 	}
 	spreadsheet.newHeaderRow();
 	if (searchBean.getActiveEnrolments()) {

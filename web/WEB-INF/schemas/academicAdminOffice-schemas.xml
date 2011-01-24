@@ -1424,6 +1424,7 @@
 		<property name="eachLayout" value="" />
 	</slot>
 	<slot name="ingressedInChosenYear" key="label.ingressedInChosenYear"/>
+	<slot name="concludedInChosenYear" key="label.concludedInChosenYear"/>
 	<slot name="activeEnrolments" key="label.activeEnrolments.capitalized" />
 	<slot name="standaloneEnrolments" key="label.withStandaloneEnrolments" />
 </schema>

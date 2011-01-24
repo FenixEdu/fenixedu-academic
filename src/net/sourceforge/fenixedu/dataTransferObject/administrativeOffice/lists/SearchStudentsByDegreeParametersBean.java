@@ -30,6 +30,8 @@ public class SearchStudentsByDegreeParametersBean extends DegreeByExecutionYearB
 
     private boolean ingressedInChosenYear = false;
 
+    private boolean concludedInChosenYear = false;
+
     private boolean activeEnrolments = false;
 
     private boolean standaloneEnrolments = false;
@@ -126,6 +128,14 @@ public class SearchStudentsByDegreeParametersBean extends DegreeByExecutionYearB
 
     public boolean isIngressedInChosenYear() {
 	return ingressedInChosenYear;
+    }
+
+    public void setConcludedInChosenYear(boolean concludedInChosenYear) {
+	this.concludedInChosenYear = concludedInChosenYear;
+    }
+
+    public boolean isConcludedInChosenYear() {
+	return concludedInChosenYear;
     }
 
 }
