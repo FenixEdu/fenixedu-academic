@@ -211,7 +211,10 @@ enum net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationFileTyp
 enum net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationMark                                             as TeacherEvaluationMark;
 enum net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ExecutedActionType										  as ExecutedActionType;
 enum net.sourceforge.fenixedu.domain.OperationType																		  as OperationType;
-enum net.sourceforge.fenixedu.domain.inquiries.EntryGradesInterval														  as EntryGradesInterval;
+enum net.sourceforge.fenixedu.domain.inquiries.InquiryGradesInterval													  as InquiryGradesInterval;
+enum net.sourceforge.fenixedu.domain.inquiries.InquiryResultType														  as InquiryResultType;
+enum net.sourceforge.fenixedu.domain.inquiries.InquiryConnectionType													  as InquiryConnectionType;
+enum net.sourceforge.fenixedu.domain.inquiries.ResultClassification														  as ResultClassification;
 enum net.sourceforge.fenixedu.domain.accounting.report.GratuityReportQueueJobType                                         as GratuityReportQueueJobType;
 
 /*
@@ -7733,6 +7736,9 @@ class inquiries.InquiryTemplate extends DomainObject {
 	class inquiries.DelegateInquiryTemplate extends inquiries.InquiryTemplate {
 	}
 
+	class inquiries.ResultsInquiryTemplate extends inquiries.InquiryTemplate {
+	}
+	
 class inquiries.InquiryBlock extends DomainObject {	
 	Integer blockOrder;
 }
@@ -7800,13 +7806,14 @@ class inquiries.InquiryAnswer extends DomainObject {
 }
 	class inquiries.InquiryCourseAnswer extends inquiries.InquiryAnswer {
 		Integer weeklyHoursSpentPercentage;
+		Integer weeklyHoursSpentInAutonomousWork;
         Double studyDaysSpentInExamsSeason;
         Integer attendenceClassesPercentage;
         Integer numberOfEnrolments;
         Boolean committedFraud;
-        Grade grade;
+        InquiryGradesInterval grade;
         RegistrationAgreement studentType;
-        EntryGradesInterval entryGrade;
+        InquiryGradesInterval entryGrade;
         Long answerDuration;
         DateTime responseDateTime;      
         InquiryNotAnsweredJustification notAnsweredJustification;
@@ -7822,6 +7829,17 @@ class inquiries.InquiryAnswer extends DomainObject {
 
 class inquiries.QuestionAnswer extends DomainObject {
 	String answer;    
+}
+
+class inquiries.InquiryResult extends DomainObject {
+	InquiryResultType resultType;
+	InquiryConnectionType connectionType;
+	String value;
+	ResultClassification resultClassification;
+	ShiftType shiftType;
+	String label;
+	Integer order;
+	Integer resultBlockNumber;
 }
 
 /* End of Inquiries */
@@ -7900,6 +7918,13 @@ relation RootDomainObjectQuestionAnswer {
 relation RootDomainObjectStudentInquiryExecutionPeriod {
 	RootDomainObject playsRole rootDomainObject;
 	inquiries.StudentInquiryExecutionPeriod playsRole studentsInquiriesExecutionPeriod {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectInquiryResult {
+	RootDomainObject playsRole rootDomainObject;
+	inquiries.InquiryResult playsRole inquiriyResults {
 		multiplicity *;
 	}
 }
@@ -8076,6 +8101,55 @@ relation QuestionAnswerQuestion {
 		multiplicity *;
 	}
 	inquiries.InquiryQuestion playsRole inquiryQuestion; 
+}
+
+relation InquiryResultInquiryQuestion {
+	inquiries.InquiryQuestion playsRole inquiryQuestion;
+	inquiries.InquiryResult playsRole inquiriyResults {
+		multiplicity *;
+	}
+}
+
+relation InquiryResultInquiryGroupQuestion {
+	inquiries.InquiryGroupQuestion playsRole inquiryGroupQuestion;
+	inquiries.InquiryResult playsRole inquiriyResults {
+		multiplicity *;
+	}
+}
+
+relation InquiryResultInquiryBlock {
+	inquiries.InquiryBlock playsRole inquiryBlock;
+	inquiries.InquiryResult playsRole inquiriyResults {
+		multiplicity *;
+	}
+}
+
+relation InquiryResultProfessorship {
+	Professorship playsRole professorship;
+	inquiries.InquiryResult playsRole inquiriyResults {
+		multiplicity *;
+	}
+}
+
+relation InquiryResultExecutionPeriod {
+	ExecutionSemester playsRole executionPeriod;
+	inquiries.InquiryResult playsRole inquiriyResults {
+		multiplicity *;
+	}
+}
+
+relation InquiryResultExecutionCourse {
+	ExecutionCourse playsRole executionCourse;
+	inquiries.InquiryResult playsRole inquiriyResults {
+		multiplicity *;
+	}
+}
+
+relation InquiryResultExecutionDegree {
+	ExecutionDegree playsRole executionDegree;
+	inquiries.InquiryResult playsRole inquiriyResults {
+		multiplicity *;
+	}
 }
 
 /* End of Inquiries */
