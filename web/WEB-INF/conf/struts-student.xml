@@ -875,21 +875,6 @@
 		</action>
   
   		<!-- =================== Fill Inquiries ============== -->
-  		<!--
-		<action path="/fillInquiries"
-			type="net.sourceforge.fenixedu.presentationTier.Action.student.inquiries.FillInquiryAction"
-			name = "fillInquiriesForm"
-			scope="request"
-			input="/fillInquiries.do?method=prepare&amp;page=0"
-			parameter="method">
-
-			<forward name="inquiryIntroduction" path="inquiry-introduction"/>
-			<forward name="fillInquiry" path="fill-inquiry" />
-			<forward name="confirmInquirySubmition" path="confirm-inquiry-submition"/>
-			<forward name="inquirySubmitionResult" path="inquiry-submition-result"/>
-			<forward name="unavailableInquiry" path="unavailable-inquiry"/>
-		</action>
-  		-->
 
   		<action path="/weeklyWorkLoad"
   			type="net.sourceforge.fenixedu.presentationTier.Action.student.WeeklyWorkLoadDA"
