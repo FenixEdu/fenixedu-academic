@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.SearchStudentsByDegreeParametersBean;
-import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.SearchStudentsByDegreeParametersBean.ParticipationType;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationWithStateForExecutionYearBean;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -138,9 +137,15 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 	    }
 
 	    final RegistrationState lastRegistrationState = registration.getLastRegistrationState(executionYear);
-	    if (lastRegistrationState == null
-		    || (searchBean.hasAnyRegistrationStateTypes() && !searchBean.getRegistrationStateTypes().contains(
-			    lastRegistrationState.getStateType()))) {
+	    if (lastRegistrationState == null) {
+		continue;
+	    }
+	    if (searchBean.hasAnyRegistrationStateTypes()
+		    && !searchBean.getRegistrationStateTypes().contains(lastRegistrationState.getStateType())) {
+		continue;
+	    }
+
+	    if ((searchBean.isIngressedInChosenYear()) && (registration.getIngressionYear() != executionYear)) {
 		continue;
 	    }
 
@@ -164,21 +169,16 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 		continue;
 	    }
 
-	    if ((searchBean.getParticipationType() == ParticipationType.INGRESSED)
-		    && (registration.getIngressionYear() != executionYear)) {
-		continue;
-	    }
-
 	    result.add(new RegistrationWithStateForExecutionYearBean(registration, lastRegistrationState.getStateType(),
 		    executionYear));
 	}
 	return result;
     }
 
-    static private boolean hasStudentStatuteType(final SearchStudentsByDegreeParametersBean searchbean,
+    static private boolean hasStudentStatuteType(final SearchStudentsByDegreeParametersBean searchBean,
 	    final Registration registration) {
-	return CollectionUtils.containsAny(searchbean.getStudentStatuteTypes(), registration.getStudent()
-		.getStatutesTypesValidOnAnyExecutionSemesterFor(searchbean.getExecutionYear()));
+	return CollectionUtils.containsAny(searchBean.getStudentStatuteTypes(), registration.getStudent()
+		.getStatutesTypesValidOnAnyExecutionSemesterFor(searchBean.getExecutionYear()));
     }
 
     public ActionForward exportInfoToExcel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -232,12 +232,16 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 
     private void fillSpreadSheetFilters(SearchStudentsByDegreeParametersBean searchBean, final StyledExcelSpreadsheet spreadsheet) {
 	spreadsheet.newHeaderRow();
+	if (searchBean.isIngressedInChosenYear()) {
+	    spreadsheet.addHeader(getResourceMessage("label.ingressedInChosenYear"));
+	}
+	spreadsheet.newHeaderRow();
 	if (searchBean.getActiveEnrolments()) {
 	    spreadsheet.addHeader(getResourceMessage("label.activeEnrolments.capitalized"));
 	}
 	spreadsheet.newHeaderRow();
 	if (searchBean.getStandaloneEnrolments()) {
-	    spreadsheet.addHeader(getResourceMessage("label.withStandaloneEnrolments.capitalized"));
+	    spreadsheet.addHeader(getResourceMessage("label.withStandaloneEnrolments"));
 	}
 	spreadsheet.newHeaderRow();
 	if (searchBean.getRegime() != null) {
@@ -253,9 +257,6 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 	    spreadsheet.addHeader(getResourceMessage("label.ingression.short") + ": "
 		    + BundleUtil.getEnumName(searchBean.getIngression()));
 	}
-	spreadsheet.newHeaderRow();
-	spreadsheet.addHeader(getResourceMessage("lists.participationType") + ": "
-		+ BundleUtil.getEnumName(searchBean.getParticipationType()));
 
 	spreadsheet.newHeaderRow();
 	if (searchBean.hasAnyRegistrationAgreements()) {

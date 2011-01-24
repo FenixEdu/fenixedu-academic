@@ -1423,11 +1423,9 @@
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.candidacy.Ingression"/>
 		<property name="eachLayout" value="" />
 	</slot>
-	<slot name="participationType" layout="radio-select" key="lists.participationType">
-		<property name="providerClass" value="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.SearchStudentsByDegreeParametersBean$ParticipationTypeProvider"/>
-	</slot>
+	<slot name="ingressedInChosenYear" key="label.ingressedInChosenYear"/>
 	<slot name="activeEnrolments" key="label.activeEnrolments.capitalized" />
-	<slot name="standaloneEnrolments" key="label.withStandaloneEnrolments.capitalized" />
+	<slot name="standaloneEnrolments" key="label.withStandaloneEnrolments" />
 </schema>
 
 <schema name="SearchStudentsByDegreeParametersBean.edit.parameters" bundle="ACADEMIC_OFFICE_RESOURCES" 
