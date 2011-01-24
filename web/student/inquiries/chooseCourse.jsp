@@ -167,6 +167,12 @@ div.inquiries-registry1 td.col4 { width: 80px !important; border-left: 5px solid
 div.inquiries-registry1 td.col5 { width: 100px !important; }
 div.inquiries-registry1 td.col6 { width: 80px !important; border-left: 5px solid #ccc; }
  
+div.inquiries-registry-empty td.col1 { text-align: left; }
+div.inquiries-registry-empty td.col2 { width: 80px !important; border-left: 5px solid #ccc; background: #f5f5f5; }
+div.inquiries-registry-empty td.col3 { width: 80px !important; background: #f5f5f5; }
+div.inquiries-registry-empty td.col4 { width: 80px !important; border-left: 5px solid #ccc; }
+div.inquiries-registry-empty td.col5 { width: 100px !important; }
+div.inquiries-registry-empty td.col6 { width: 80px !important; border-left: 5px solid #ccc; }
 
 div.inquiries-registry2 th.col1 { }
 div.inquiries-registry2 th.col2 { border-left: 5px solid #ccc; }
