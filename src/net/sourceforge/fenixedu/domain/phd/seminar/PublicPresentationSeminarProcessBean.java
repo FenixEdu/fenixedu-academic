@@ -32,7 +32,7 @@ public class PublicPresentationSeminarProcessBean implements Serializable {
 	setProcess(process.getSeminarProcess());
 	setGenerateAlert(process.getPhdConfigurationIndividualProgramProcess().getGenerateAlert());
 
-	setPresentationDate(process.getSeminarProcess().getPresentationDate());
+	setPresentationDate(process.getSeminarProcess() != null ? process.getSeminarProcess().getPresentationDate() : null);
     }
 
     public String getRemarks() {
