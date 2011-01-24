@@ -13,55 +13,66 @@
 	<b><bean:write name="inquiryBean" property="inquiryRegistry.executionCourse.nome" /></b>
 </h3>
 
-<p class="mtop2"><bean:message key="message.inquiries.atentionBeforeFillInTeachers" bundle="INQUIRIES_RESOURCES"/>:</p>
-<ul class="mbottom15">
-	<li><bean:message key="message.inquiries.theFillingIsOptional" bundle="INQUIRIES_RESOURCES"/></li>
-	<li><bean:message key="message.inquiries.fillOnlyIfAttendedEnoughClasses" bundle="INQUIRIES_RESOURCES"/></li>
-</ul>
+<logic:notEmpty name="inquiryBean" property="teachersInquiries">
+	<p class="mtop2"><bean:message key="message.inquiries.atentionBeforeFillInTeachers" bundle="INQUIRIES_RESOURCES"/>:</p>
+	<ul class="mbottom15">
+		<li><bean:message key="message.inquiries.theFillingIsOptional" bundle="INQUIRIES_RESOURCES"/></li>
+		<li><bean:message key="message.inquiries.fillOnlyIfAttendedEnoughClasses" bundle="INQUIRIES_RESOURCES"/></li>
+	</ul>
+	
+	<table class="tstyle1 thlight mtop05">
+		<tr>
+			<th></th>
+			<th><bean:message key="label.teacher" bundle="INQUIRIES_RESOURCES"/></th>	
+			<th><bean:message key="label.typeOfClass" bundle="INQUIRIES_RESOURCES"/></th>
+		</tr>
+		<logic:iterate id="teacherInquiry" name="inquiryBean" property="teachersInquiries">
+				<tr>
+					<td class="acenter">
+						<logic:present name="teacherInquiry" property="key.personID">
+							<bean:define id="personID" name="teacherInquiry" property="key.personID"/>
+							<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
+						</logic:present>					
+					</td>
+					<td>				
+						<bean:write name="teacherInquiry" property="key.name"/>
+					</td>
+					<td>
+						<table class="tstyle2 thwhite thleft tdleft width100">					
+							<logic:iterate id="teacherInquiryByShift" name="teacherInquiry" property="value">
+								<tr>
+									<th style="width: 80px;">
+										<bean:message name="teacherInquiryByShift" property="shiftType.name" bundle="ENUMERATION_RESOURCES"/>
+									</th>
+									<td>
+										<fr:form action="/studentInquiry.do?method=showTeacherInquiry">
+											<fr:edit name="teacherInquiryByShift" id="teacherInquiry" visible="false"/>
+											<fr:edit name="inquiryBean" id="inquiryBean" visible="false"/>
+											<html:submit><bean:message key="link.inquiries.answer" bundle="INQUIRIES_RESOURCES"/></html:submit>
+										</fr:form>								
+									</td>
+									<td>
+										<c:if test="${teacherInquiryByShift.filled}"><span class="success0 smalltxt"><bean:message key="label.filled" bundle="INQUIRIES_RESOURCES"/></span></c:if>
+									</td>
+								</tr>
+							</logic:iterate>
+						</table>
+					</td>
+				</tr>
+		</logic:iterate>
+	</table>
+	
+	<p class="mtop2"><bean:message key="message.inquiries.submitInquiryWhenFinnish" bundle="INQUIRIES_RESOURCES"/></p>
+</logic:notEmpty>
 
-<table class="tstyle1 thlight mtop05">
-	<tr>
-		<th></th>
-		<th><bean:message key="label.teacher" bundle="INQUIRIES_RESOURCES"/></th>	
-		<th><bean:message key="label.typeOfClass" bundle="INQUIRIES_RESOURCES"/></th>
-	</tr>
-	<logic:iterate id="teacherInquiry" name="inquiryBean" property="teachersInquiries">
-			<tr>
-				<td class="acenter">
-					<logic:present name="teacherInquiry" property="key.personID">
-						<bean:define id="personID" name="teacherInquiry" property="key.personID"/>
-						<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
-					</logic:present>					
-				</td>
-				<td>				
-					<bean:write name="teacherInquiry" property="key.name"/>
-				</td>
-				<td>
-					<table class="tstyle2 thwhite thleft tdleft width100">					
-						<logic:iterate id="teacherInquiryByShift" name="teacherInquiry" property="value">
-							<tr>
-								<th style="width: 80px;">
-									<bean:message name="teacherInquiryByShift" property="shiftType.name" bundle="ENUMERATION_RESOURCES"/>
-								</th>
-								<td>
-									<fr:form action="/studentInquiry.do?method=showTeacherInquiry">
-										<fr:edit name="teacherInquiryByShift" id="teacherInquiry" visible="false"/>
-										<fr:edit name="inquiryBean" id="inquiryBean" visible="false"/>
-										<html:submit><bean:message key="link.inquiries.answer" bundle="INQUIRIES_RESOURCES"/></html:submit>
-									</fr:form>								
-								</td>
-								<td>
-									<c:if test="${teacherInquiryByShift.filled}"><span class="success0 smalltxt"><bean:message key="label.filled" bundle="INQUIRIES_RESOURCES"/></span></c:if>
-								</td>
-							</tr>
-						</logic:iterate>
-					</table>
-				</td>
-			</tr>
-	</logic:iterate>
-</table>
-
-<p class="mtop2"><bean:message key="message.inquiries.submitInquiryWhenFinnish" bundle="INQUIRIES_RESOURCES"/></p>
+<logic:empty name="inquiryBean" property="teachersInquiries">
+	<p class="mvert15"> 
+		[Frase a explicar porque não aparecem docentes]
+	</p>
+	<p class="mtop1 mbottom2"> 
+		Após a submissão não será possível alterar as respostas. As respostas submetidas serão guardadas sem qualquer ligação à identificação do aluno.
+	</p> 
+</logic:empty>
 
 <p class="mbottom0">
 	<div class="forminline dinline">

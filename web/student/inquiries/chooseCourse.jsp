@@ -28,10 +28,11 @@
 		<b><bean:write name="student" property="openStudentInquiryExecutionPeriod.weeklyHoursSpentInClassesSeason"/></b> 
 		<bean:message key="label.hoursPerWeek.a" bundle="INQUIRIES_RESOURCES"/>
 	</p>
-	<div class="inquiries-registry" style="width: 1000px;">
+	<div class="inquiries-registry2" style="width: 930px;">
 	<fr:view name="courses" schema="curricularCourseInquiriesRegistryDTO.submitHoursAndDays" >
 		<fr:layout name="tabular" >
-			<fr:property name="classes" value="tstyle1 thlight tdcenter tdwith90px"/>
+			<fr:property name="classes" value="tstyle1 thlight tdcenter"/>
+			<fr:property name="style" value="width: 100%;"/>
 			<fr:property name="columnClasses" value="col1,col2,col3,col4,col5,col6,col7,col8"/>
 			<fr:property name="headerClasses" value="col1,col2,col3,col4,col5,col6,col7,col8"/>
 			<fr:property name="suffixes" value=",%,dias,h,%,, ,"/>
@@ -80,7 +81,7 @@
 	<fr:form action="/studentInquiry.do">
 		<html:hidden property="method" value="submitWeeklySpentHours"/>
 		<p>
-			<bean:message key="label.weeklySpentHours" bundle="INQUIRIES_RESOURCES"/>: 
+			<bean:message key="label.weeklySpentHours.edit" bundle="INQUIRIES_RESOURCES"/>: 
 			<fr:edit id="weeklySpentHours" name="weeklySpentHours" schema="inquiriesStudentExecutionPeriod.submitWeeklySpentHours" type="net.sourceforge.fenixedu.dataTransferObject.VariantBean" >
 				<fr:layout name="flow">
 					<fr:property name="labelExcluded" value="true"/>
@@ -90,10 +91,11 @@
 			<bean:message key="label.hoursPerWeek" bundle="INQUIRIES_RESOURCES"/>
 		</p>
 
-		<div class="inquiries-registry" style="width: 900px;">
+ 		<div class="inquiries-registry1" style="width: 800px; margin-bottom: 0;">
 			<fr:edit id="hoursAndDaysByCourse" name="courses" schema="curricularCourseInquiriesRegistryDTO.submitHoursAndDays.edit" >
 				<fr:layout name="tabular-editable" >
 					<fr:property name="classes" value="tstyle1 thlight tdcenter"/>
+					<fr:property name="style" value="width: 100%; margin-bottom: 0;"/>
 					<fr:property name="columnClasses" value="col1,col2,col3,col4,col5,col6"/>
 					<fr:property name="headerClasses" value="col1,col2,col3,col4,col5,col6"/>
 					<fr:property name="suffixes" value=",h,,%,dias,h"/>
@@ -102,7 +104,25 @@
 					<fr:property name="allValidatorsInline" value="true" />
 				</fr:layout>
 			</fr:edit>
-		</div>		
+		</div>
+		
+		<div class="inquiries-registry-empty" style="width: 800px;"> 
+			<table class="tstyle1 tempty thlight tdcenter" style="width: 100%; margin: 0;"> 
+				<tr> 
+					<td class="col1"></td>							
+					<td class="col2"></td> 
+					<td class="col3"></td> 
+					<td class="col4">Total 100%</td> 
+					<td class="col5"></td> 
+					<td class="col6"></td> 
+				</tr> 
+			</table> 
+		</div>
+		
+		
+		
+				
+		
 		<p>
 			<html:submit onclick="this.form.method.value='simulateAWH';"><bean:message key="button.simulateAWH" bundle="INQUIRIES_RESOURCES"/></html:submit>
 		</p>	
@@ -113,12 +133,15 @@
 	</fr:form>
 </logic:equal>
 
-<style>
 
+
+
+<style>
+ 
 span.error {
 white-space: nowrap
 }
-
+ 
 th.empty, td.empty {
 background: none;
 border-top: none;
@@ -126,37 +149,68 @@ border-bottom: none;
 width: 10px !important;
 padding: 0 !important;
 }
+ 
+ 
+div.inquiries-registry1 th.col1 { }
+div.inquiries-registry1 th.col2 { border-left: 5px solid #ccc; }
+div.inquiries-registry1 th.col3 { }
+div.inquiries-registry1 th.col4 { border-left: 5px solid #ccc; }
+div.inquiries-registry1 th.col5 { }
+div.inquiries-registry1 th.col6 { border-left: 5px solid #ccc; }
+div.inquiries-registry1 th.col7 { }
+div.inquiries-registry1 th.col8 { border-left: 5px solid #ccc; }
+ 
+div.inquiries-registry1 td.col1 { text-align: left; }
+div.inquiries-registry1 td.col2 { width: 80px !important; border-left: 5px solid #ccc; background: #f5f5f5; }
+div.inquiries-registry1 td.col3 { width: 80px !important; background: #f5f5f5; }
+div.inquiries-registry1 td.col4 { width: 80px !important; border-left: 5px solid #ccc; }
+div.inquiries-registry1 td.col5 { width: 100px !important; }
+div.inquiries-registry1 td.col6 { width: 80px !important; border-left: 5px solid #ccc; }
+ 
 
-th.col1 { }
-th.col2 { border-left: 6px solid #ccc;}
-th.col3 {  }
-th.col4 { border-left: 6px solid #ccc; }
-th.col5 { }
-th.col6 { border-left: 6px solid #ccc; }
-th.col7 { }
-th.col8 { border-left: 6px solid #ccc; }
+div.inquiries-registry2 th.col1 { }
+div.inquiries-registry2 th.col2 { border-left: 5px solid #ccc; }
+div.inquiries-registry2 th.col3 { }
+div.inquiries-registry2 th.col4 { border-left: 5px solid #ccc; }
+div.inquiries-registry2 th.col5 { }
+div.inquiries-registry2 th.col6 { border-left: 5px solid #ccc; }
+div.inquiries-registry2 th.col7 { }
+div.inquiries-registry2 th.col8 { border-left: 5px solid #ccc; }
+ 
+div.inquiries-registry2 td.col1 { text-align: left; }
+div.inquiries-registry2 td.col2 { width: 70px !important; border-left: 5px solid #ccc; background: #f5f5f5; }
+div.inquiries-registry2 td.col3 { width: 70px !important; background: #f5f5f5; }
+div.inquiries-registry2 td.col4 { width: 70px !important; border-left: 5px solid #ccc; }
+div.inquiries-registry2 td.col5 { width: 70px !important; }
+div.inquiries-registry2 td.col6 { width: 50px !important; border-left: 5px solid #ccc; }
+ 
+div.inquiries-registry2 td.col7 { width: 50px !important; }
+div.inquiries-registry2 td.col8 { width: 80px !important; border-left: 5px solid #ccc; white-space: nowrap; }
+ 
 
-td.col1 { white-space: nowrap; text-align: left; }
-td.col2 { border-left: 6px solid #ccc; }
-td.col3 {  }
-td.col4 { border-left: 6px solid #ccc; }
-td.col5 { }
-td.col6 { border-left: 6px solid #ccc; }
-td.col7 { }
-td.col8 { border-left: 6px solid #ccc; white-space: nowrap; }
-
-div.inquiries-registry {
-background: #ccc;	
-padding: 4px;
+ 
+div.inquiries-registry1, div.inquiries-registry2 {
+background: #ccc;    
+padding: 3px;
 margin: 15px 0;
 }
-
-div.inquiries-registry table {
+ 
+div.inquiries-registry1 table, div.inquiries-registry2 table {
 margin: 0;
 }
-
-div.inquiries-registry table td {
-width: 90px;
+ 
+ 
+div.inquiries-registry-empty {
+background: #f5f5f5;
+padding: 0 3px 3px 3px;
+margin: 0 0 15px 0 !important;
+}
+div.inquiries-registry-emtpy table {
+background: none;
+}
+table.tempty th, table.tempty td {
+border-color: #f5f5f5 !important;
+background: #f5f5f5;
 }
 
 </style>	
