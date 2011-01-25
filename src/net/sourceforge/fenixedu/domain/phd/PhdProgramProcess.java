@@ -134,4 +134,20 @@ abstract public class PhdProgramProcess extends PhdProgramProcess_Base {
 
     abstract protected Person getPerson();
 
+    public boolean isProcessCandidacy() {
+	return false;
+    }
+
+    public boolean isProcessIndividualProgram() {
+	return false;
+    }
+
+    public boolean isProcessThesis() {
+	return false;
+    }
+
+    public boolean isProcessPublicPresentationSeminar() {
+	return false;
+    }
+
 }

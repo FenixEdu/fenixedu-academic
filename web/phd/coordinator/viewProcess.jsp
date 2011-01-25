@@ -13,7 +13,6 @@
 <h2><bean:message key="label.phd.viewProcess" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 
-
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
 <%--
 <div class="breadcumbs">
@@ -21,6 +20,8 @@
 	<span>Step N: Step name </span>
 </div>
 --%>
+
+<bean:define id="process" name="process" />
 
 <logic:present name="backMethod">
 	<bean:define id="backMethod" name="backMethod"/>
@@ -43,6 +44,7 @@
 <jsp:include page="/phd/errorsAndMessages.jsp" />
 <%--  ### End of Error Messages  ### --%>
 
+
 <%--  ### Context Information (e.g. Person Information, Registration Information)  ### --%>
 <strong><bean:message  key="label.phd.process" bundle="PHD_RESOURCES"/></strong>
 <table>
@@ -59,6 +61,11 @@
 			<li>
 				<jsp:include page="/phd/alertMessagesNotifier.jsp?global=false" />
 			</li>
+			<li>
+				<html:link action="/phdIndividualProgramProcess.do?method=manageGuidanceDocuments" paramId="processId" paramName="process" paramProperty="externalId">
+					<bean:message key="link.phd.guidance.documents.management" bundle="PHD_RESOURCES" />
+				</html:link>
+			</li>
 		</ul>
     </td>
   </tr>
@@ -72,6 +79,7 @@
 
 <%-- School part --%>
 <jsp:include page="/phd/coordinator/viewSchoolPart.jsp" />
+
 
 <%--Candidacy --%>
 <jsp:include page="/phd/candidacy/coordinator/viewCandidacyProcess.jsp" />

@@ -7336,6 +7336,9 @@ class phd.seminar.PublicPresentationSeminarProcess extends phd.PhdProgramProcess
 		class phd.serviceRequests.PhdStudentReingressionRequestDocument extends phd.serviceRequests.PhdAcademicServiceRequestDocument {
 		}
 
+class phd.guidance.PhdGuidanceDocument extends phd.PhdProgramProcessDocument {
+}
+
 class phd.thesis.PhdThesisProcess extends phd.PhdProgramProcess {
 	LocalDate whenThesisDiscussionRequired;
 

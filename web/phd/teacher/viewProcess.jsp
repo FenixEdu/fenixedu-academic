@@ -73,6 +73,11 @@
 				</html:link>
 			</li>
 			</phd:activityAvailable>
+			<li>
+				<html:link action="/phdIndividualProgramProcess.do?method=manageGuidanceDocuments" paramId="processId" paramName="process" paramProperty="externalId">
+					<bean:message key="link.phd.guidance.documents.management" bundle="PHD_RESOURCES" />
+				</html:link>
+			</li>			
 		</ul>
     </td>
   </tr>

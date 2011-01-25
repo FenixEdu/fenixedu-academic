@@ -69,23 +69,35 @@ public enum PhdIndividualProgramDocumentType {
     
     CONCLUSION_DOCUMENT(true, false),
     
-    OTHER(false, false);
+    OTHER(false, false),
+
+    FEEDBACK_REPORT(false, false, true),
+
+    GUIDANCE_OTHER(false, false, true);
 
     private boolean isVersioned;
 
     private boolean isAutomaticallyVisibleToStudent;
     
+    private boolean isForGuidance;
+
     private PhdIndividualProgramDocumentType() {
-	this(true, true);
+	this(true, true, false);
     }
 
     private PhdIndividualProgramDocumentType(boolean isVersioned) {
-	this(isVersioned, true);
+	this(isVersioned, true, false);
     }
 
     private PhdIndividualProgramDocumentType(boolean isVersioned, boolean isAutomaticallyVisibleToStudent) {
+	this(isVersioned, isAutomaticallyVisibleToStudent, false);
+    }
+
+    private PhdIndividualProgramDocumentType(boolean isVersioned, boolean isAutomaticallyVisibleToStudent,
+ boolean isForGuidance) {
 	this.isVersioned = isVersioned;
 	this.isAutomaticallyVisibleToStudent = isAutomaticallyVisibleToStudent;
+	this.isForGuidance = isForGuidance;
     }
     
     public String getLocalizedName() {
@@ -114,6 +126,10 @@ public enum PhdIndividualProgramDocumentType {
 	}
 	
 	return result;
+    }
+
+    public boolean isForGuidance() {
+	return isForGuidance;
     }
 
 }

@@ -50,7 +50,11 @@ import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
 
 	@Forward(name = "requestPublicPresentationSeminarComission", path = "/phd/teacher/requestPublicPresentationSeminarComission.jsp"),
 
-	@Forward(name = "exemptPublicPresentationSeminarComission", path = "/phd/teacher/exemptPublicPresentationSeminarComission.jsp")
+	@Forward(name = "exemptPublicPresentationSeminarComission", path = "/phd/teacher/exemptPublicPresentationSeminarComission.jsp"),
+
+	@Forward(name = "manageGuidanceDocuments", path = "/phd/teacher/manageGuidanceDocuments.jsp"),
+
+	@Forward(name = "uploadGuidanceDocument", path = "/phd/teacher/uploadGuidanceDocument.jsp")
 
 })
 public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramProcessDA {

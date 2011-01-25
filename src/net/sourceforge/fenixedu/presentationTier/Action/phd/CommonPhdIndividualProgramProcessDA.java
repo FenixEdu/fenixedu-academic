@@ -16,9 +16,11 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.ExemptPublicPresentationSeminarComission;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RequestPublicPresentationSeminarComission;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.UploadGuidanceDocument;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
+import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -446,4 +448,50 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
     }
 
     // End of view curriculum
+
+    /* Phd guidance documents */
+    public ActionForward manageGuidanceDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	return mapping.findForward("manageGuidanceDocuments");
+    }
+
+    public ActionForward prepareUploadGuidanceDocument(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	PhdProgramDocumentUploadBean bean = new PhdProgramDocumentUploadBean();
+
+	request.setAttribute("documentBean", bean);
+	return mapping.findForward("uploadGuidanceDocument");
+    }
+
+    public ActionForward uploadGuidanceDocumentInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	PhdProgramDocumentUploadBean bean = (PhdProgramDocumentUploadBean) getRenderedObject("documentBean");
+
+	request.setAttribute("documentBean", bean);
+	return mapping.findForward("uploadGuidanceDocument");
+    }
+
+    public ActionForward uploadGuidanceDocument(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	PhdProgramDocumentUploadBean bean = (PhdProgramDocumentUploadBean) getRenderedObject("documentBean");
+
+	ExecuteProcessActivity.run(getProcess(request), UploadGuidanceDocument.class, bean);
+	return manageGuidanceDocuments(mapping, form, request, response);
+    }
+
+    public ActionForward downloadGuidanceDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	writeFile(response, getGuidanceDocumentsFilename(request), PhdDocumentsZip.ZIP_MIME_TYPE,
+		createGuidanceDocumentsZip(request));
+	return null;
+    }
+
+    protected String getGuidanceDocumentsFilename(HttpServletRequest request) {
+	final PhdIndividualProgramProcess process = getProcess(request);
+	return String.format("%s-%s.zip", process.getProcessNumber().replace("/", "-"),
+		getMessageFromResource("label.phd.guidance.documents").replace(" ", "_"));
+    }
+
+    /* End of phd guidance documents */
+
 }

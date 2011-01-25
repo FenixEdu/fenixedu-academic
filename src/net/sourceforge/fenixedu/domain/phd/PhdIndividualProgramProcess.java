@@ -51,6 +51,7 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.phd.candidacy.RegistrationFormalizationBean;
+import net.sourceforge.fenixedu.domain.phd.guidance.PhdGuidanceDocument;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessStateType;
@@ -153,6 +154,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	activities.add(new RemoveLastStateOnPhdIndividualProgramProcess());
 	
 	activities.add(new SendPhdEmail());
+
+	activities.add(new UploadGuidanceDocument());
     }
 
     @StartActivity
@@ -1141,6 +1144,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	}
 
     }
+
     static public class SendPhdEmail extends PhdActivity {
 
 	@Override
@@ -1195,7 +1199,35 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	}
 
     }
-    
+
+    static public class UploadGuidanceDocument extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    if (process.isGuiderOrAssistentGuider(userView.getPerson())) {
+		return;
+	    }
+
+	    if (process.isCoordinatorForPhdProgram(userView.getPerson())) {
+		return;
+	    }
+
+	    throw new PreConditionNotValidException();
+	}
+
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
+		Object object) {
+	    PhdProgramDocumentUploadBean bean = (PhdProgramDocumentUploadBean) object;
+
+	    new PhdGuidanceDocument(process, bean.getType(), bean.getRemarks(),
+		    bean.getFileContent(), bean.getFilename(), userView.getPerson());
+
+	    return process;
+	}
+
+    }
+
     private PhdIndividualProgramProcess(final PhdProgramCandidacyProcessBean bean, final Person person) {
 	super();
 
@@ -1767,6 +1799,27 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	default:
 	    throw new DomainException("error.PhdIndividualProgramProcess.unknown.process.state.types");
 	}
+    }
+
+    @Override
+    public boolean isProcessIndividualProgram() {
+	return true;
+    }
+    
+    public Set<PhdGuidanceDocument> getLatestGuidanceDocumentVersions() {
+	Set<PhdGuidanceDocument> documents = new HashSet<PhdGuidanceDocument>();
+	
+	org.apache.commons.collections.CollectionUtils.select(getLatestDocumentVersions(),
+		new org.apache.commons.collections.Predicate() {
+
+	    @Override
+		    public boolean evaluate(Object arg0) {
+		return ((PhdProgramProcessDocument) arg0).getDocumentType().isForGuidance();
+	    }
+	    
+	}, documents);
+
+	return documents;
     }
 
     public static class PublicPhdIndividualProgramProcess extends PhdIndividualProgramProcess {

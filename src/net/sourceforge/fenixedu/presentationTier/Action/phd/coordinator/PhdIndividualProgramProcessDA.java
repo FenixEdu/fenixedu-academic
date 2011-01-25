@@ -20,10 +20,10 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.ManageEnrolmentsBean;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdProgram;
-import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AcceptEnrolments;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RejectEnrolments;
+import net.sourceforge.fenixedu.domain.phd.PhdProgram;
+import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.CommonPhdIndividualProgramProcessDA;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdCandidacyPredicateContainer;
@@ -67,8 +67,11 @@ import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
 
 @Forward(name = "manageEnrolments", path = "/phd/coordinator/enrolments/manageEnrolments.jsp"),
 
-@Forward(name = "validateEnrolments", path = "/phd/coordinator/enrolments/validateEnrolments.jsp")
+@Forward(name = "validateEnrolments", path = "/phd/coordinator/enrolments/validateEnrolments.jsp"),
 
+@Forward(name = "manageGuidanceDocuments", path = "/phd/coordinator/manageGuidanceDocuments.jsp"),
+
+@Forward(name = "uploadGuidanceDocument", path = "/phd/coordinator/uploadGuidanceDocument.jsp")
 })
 public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramProcessDA {
 
@@ -247,4 +250,5 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
     }
 
     // end of manage enrolments
+
 }

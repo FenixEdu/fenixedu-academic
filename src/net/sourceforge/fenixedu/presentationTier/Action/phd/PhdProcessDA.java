@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.phd;
 
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
@@ -132,6 +133,11 @@ abstract public class PhdProcessDA extends PhdDA {
 
     protected byte[] createZip(HttpServletRequest request) throws IOException {
 	return PhdDocumentsZip.zip(getProcess(request).getLatestDocumentVersions());
+    }
+
+    protected byte[] createGuidanceDocumentsZip(HttpServletRequest request) throws IOException {
+	return PhdDocumentsZip.zip(new ArrayList<PhdProgramProcessDocument>(((PhdIndividualProgramProcess) getProcess(request))
+		.getLatestGuidanceDocumentVersions()));
     }
 
 }

@@ -416,6 +416,10 @@
 	<slot name="documentVersion"/>
 </schema>
 
+<schema name="PhdGuidanceDocument.view" type="net.sourceforge.fenixedu.domain.phd.guidance.PhdGuidanceDocument" bundle="PHD_RESOURCES" extends="PhdProgramProcessDocument.view">
+	<remove name="documentVersion" />
+</schema>
+
 <schema name="Person.name" type="net.sourceforge.fenixedu.domain.Person" bundle="PHD_RESOURCES">
 	<slot name="name" />
 </schema>
