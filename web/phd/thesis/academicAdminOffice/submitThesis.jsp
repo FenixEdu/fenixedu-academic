@@ -53,7 +53,7 @@
 	
 		<fr:schema bundle="PHD_RESOURCES" type="<%= PhdProgramDocumentUploadBean.class.getName() %>">
 			<fr:slot name="type" readOnly="true" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean.type" layout="phd-enum-renderer" />
-			<fr:slot name="file" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean.file" required="true">
+			<fr:slot name="file" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean.file">
 				<fr:validator name="<%= FileValidator.class.getName() %>" />
 				<fr:property name="fileNameSlot" value="filename"/>
 				<fr:property name="size" value="20"/>

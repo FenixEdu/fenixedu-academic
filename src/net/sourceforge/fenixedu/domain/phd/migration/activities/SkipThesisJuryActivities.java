@@ -2,9 +2,12 @@ package net.sourceforge.fenixedu.domain.phd.migration.activities;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
+import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
+import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.PhdThesisActivity;
+import net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingSchedulingProcess;
 
 public class SkipThesisJuryActivities extends PhdThesisActivity {
 
@@ -22,7 +25,17 @@ public class SkipThesisJuryActivities extends PhdThesisActivity {
     @Override
     protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
 
-	process.createState(PhdThesisProcessStateType.WAITING_FOR_THESIS_MEETING_SCHEDULING, userView.getPerson(), "");
+	final PhdThesisProcessBean thesisBean = (PhdThesisProcessBean) object;
+
+	process.setWhenJuryDesignated(process.getIndividualProgramProcess().getCandidacyDate());
+	process.setWhenJuryValidated(process.getIndividualProgramProcess().getCandidacyDate());
+
+	process.createState(PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK, userView.getPerson(),
+		thesisBean.getRemarks());
+
+	if (!process.hasMeetingProcess()) {
+	    Process.createNewProcess(userView, PhdMeetingSchedulingProcess.class, thesisBean);
+	}
 
 	return process;
     }

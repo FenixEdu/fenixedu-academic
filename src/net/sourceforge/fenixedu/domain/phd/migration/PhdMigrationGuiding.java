@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.Incomplet
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.PhdMigrationGuidingNotFoundException;
 
 public class PhdMigrationGuiding extends PhdMigrationGuiding_Base {
-    public static final String IST_INSTITUTION_CODE = "807";
+    public static final String IST_INSTITUTION_CODE = "0807";
     
     private transient Integer phdStudentNumber;
     private transient String institutionCode;
@@ -33,7 +33,7 @@ public class PhdMigrationGuiding extends PhdMigrationGuiding_Base {
 	setData(data);
     }
 
-    private void parse() {
+    public void parse() {
 	try {
 	    String[] compounds = getData().split("\\t");
 	
@@ -49,7 +49,7 @@ public class PhdMigrationGuiding extends PhdMigrationGuiding_Base {
     public void parseAndSetNumber(Map<String, String> INSTITUTION_MAP) {
 	parse();
 
-	setNumber(this.phdStudentNumber);
+	setTeacherNumber(this.teacherCode);
 	setInstitution(INSTITUTION_MAP.get(institutionCode));
     }
 
@@ -88,7 +88,7 @@ public class PhdMigrationGuiding extends PhdMigrationGuiding_Base {
 	    throw new PhdMigrationGuidingNotFoundException("The guiding is not present in the system as a teacher");
 	}
 
-	for (PhdParticipant existingParticipant : individualProcess.getGuidingsAndAssistantGuidings()) {
+	for (PhdParticipant existingParticipant : individualProcess.getParticipants()) {
 	    if (!existingParticipant.isInternal()) {
 		continue;
 	    }

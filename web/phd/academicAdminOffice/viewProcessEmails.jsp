@@ -18,10 +18,11 @@
 <bean:define id="process" name="process" />
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
-<html:link action="<%= "/phdIndividualProgramProcess.do?method=viewProcess&amp;processId=" + processId %>">
-	« <bean:message key="label.back" bundle="PHD_RESOURCES" />
-</html:link>
-<br/><br/>
+<p>
+	<html:link action="<%= "/phdIndividualProgramProcess.do?method=viewProcess&amp;processId=" + processId %>">
+		« <bean:message key="label.back" bundle="PHD_RESOURCES" />
+	</html:link>
+</p>
 
 <%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
 
@@ -41,8 +42,9 @@
 
 <%-- ### History Area ### --%>
 <logic:empty name="process" property="messages">
-<br/><br/>
-	<b><bean:message key="message.phd.email.do.not.exist" bundle="PHD_RESOURCES" /></b>
+	<p>
+		<em><bean:message key="message.phd.email.do.not.exist" bundle="PHD_RESOURCES" />.</em>
+	</p>
 </logic:empty>
 
 <logic:notEmpty name="process" property="messages">

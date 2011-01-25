@@ -1139,7 +1139,8 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 
 	} catch (final DomainException e) {
 	    addErrorMessage(request, e.getMessage(), e.getArgs());
-	    return preparePhdEmailsManagement(mapping, form, request, response);
+	    request.setAttribute("emailBean", bean);
+	    return mapping.findForward("sendPhdIndividualProcessEmail");
 	}
 
 	return preparePhdEmailsManagement(mapping, form, request, response);

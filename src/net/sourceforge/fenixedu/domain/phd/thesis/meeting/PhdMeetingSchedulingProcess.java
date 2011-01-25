@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.ScheduleFir
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.ScheduleFirstThesisMeetingRequest;
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.ScheduleThesisMeeting;
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.ScheduleThesisMeetingRequest;
+import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.SkipScheduleFirstThesisMeeting;
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.SubmitThesisMeetingMinutes;
 
 public class PhdMeetingSchedulingProcess extends PhdMeetingSchedulingProcess_Base {
@@ -51,6 +52,8 @@ public class PhdMeetingSchedulingProcess extends PhdMeetingSchedulingProcess_Bas
 	activities.add(new ScheduleThesisMeetingRequest());
 	activities.add(new ScheduleThesisMeeting());
 	activities.add(new SubmitThesisMeetingMinutes());
+
+	activities.add(new SkipScheduleFirstThesisMeeting());
     }
 
     public PhdMeetingSchedulingProcess(PhdThesisProcess process) {

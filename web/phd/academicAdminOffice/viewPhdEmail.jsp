@@ -16,10 +16,11 @@
 <bean:define id="processId" name="process" property="externalId" />
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
-<html:link action="<%= "/phdIndividualProgramProcess.do?method=preparePhdEmailsManagement&amp;processId=" + processId.toString() %>">
-	« <bean:message key="label.back" bundle="PHD_RESOURCES" />
-</html:link>
-<br/><br/>
+<p>
+	<html:link action="<%= "/phdIndividualProgramProcess.do?method=preparePhdEmailsManagement&amp;processId=" + processId.toString() %>">
+		« <bean:message key="label.back" bundle="PHD_RESOURCES" />
+	</html:link>
+</p>
 
 <%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
 
@@ -32,7 +33,7 @@
 <fr:view name="emailBean" schema="PhdEmailBean.phdEmail.view">
 
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle2 thlight mtop15" />
+		<fr:property name="classes" value="tstyle2 thlight mtop1" />
 	</fr:layout>
 	
 </fr:view>

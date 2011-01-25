@@ -42,9 +42,6 @@ public class ConversionUtilities {
     }
 
     static public Gender parseGender(String value) {
-	if (StringUtils.isEmpty(value)) {
-	    return null;
-	}
 
 	if ("M".equals(value)) {
 	    return Gender.MALE;

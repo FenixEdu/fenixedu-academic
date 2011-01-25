@@ -29,7 +29,7 @@
     <td>
 	<fr:view schema="PhdThesisProcess.view" name="process" property="thesisProcess">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle2 thlight mtop10" />
+			<fr:property name="classes" value="tstyle2 thlight mtop10 thleft" />
 		</fr:layout>
 	</fr:view>
 	</td>

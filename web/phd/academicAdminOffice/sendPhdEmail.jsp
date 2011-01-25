@@ -21,10 +21,12 @@
 <bean:define id="processId" name="process" property="externalId" />
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
-<html:link action="<%= "/phdIndividualProgramProcess.do?method=preparePhdEmailsManagement&amp;processId=" + processId.toString() %>">
-	« <bean:message key="label.back" bundle="PHD_RESOURCES" />
-</html:link>
-<br/><br/>
+
+<p>
+	<html:link action="<%= "/phdIndividualProgramProcess.do?method=preparePhdEmailsManagement&amp;processId=" + processId.toString() %>">
+		« <bean:message key="label.back" bundle="PHD_RESOURCES" />
+	</html:link>
+</p>
 
 <%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
 
@@ -44,12 +46,9 @@
 	<strong><bean:message key="label.phd.email.to.send" bundle="PHD_RESOURCES" />:</strong>
 	-->
 	
-	
-	
 	<fr:edit id="emailBean" name="emailBean" visible="false" />
 
 <style>
-
 
 
 ul ul {
@@ -57,8 +56,10 @@ margin-bottom: 5px !important;
 margin-left: 20px !important;
 }
 
+/*
 div.compose-email table th { width: 150px; }
 div.compose-email table td { width: 700px; }
+*/
 
 .hide-theader th {
 display: none;
@@ -71,11 +72,15 @@ width: auto !important;
 }
 
 
-.xpto div {
+.recipients div {
 float: left;
 width: 325px;
 margin: 5px 0 10px 0;
 }
+
+div.compose-email table .col1 { width: 150px; }
+div.compose-email table .col2 { width: 700px; }
+
 
 </style>
 
@@ -86,12 +91,10 @@ margin: 5px 0 10px 0;
 <div class="compose-email">
 	<table class="tstyle5 thlight thright mtop05 mbottom0 ulnomargin ">
 		<tr>
-			<th>Destinatários (grupos):</th>
-			<td class="xpto">
+			<th class="col1">Destinatários (grupos):</th>
+			<td class="col2 recipients">
 			
-			
-
-	
+				
 				<logic:iterate id="group" name="emailBean" property="possibleParticipantsGroups" indexId="i">
 					
 				
@@ -120,7 +123,7 @@ margin: 5px 0 10px 0;
 							
 							<fr:layout name="list">
 								<fr:property name="classes" value="participant-groups"/>
-								<fr:property name="columnClasses" value=",,tdclear"/>
+								<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 								<fr:property name="nullLabel" value="" />
 							</fr:layout>
 						
@@ -160,6 +163,7 @@ margin: 5px 0 10px 0;
 		
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright mvert0 tgluetop"/>
+			<fr:property name="columnClasses" value="col1,col2,tdclear tderror1"/>
 		</fr:layout>
 	</fr:edit>
 	
@@ -172,7 +176,8 @@ margin: 5px 0 10px 0;
 		</fr:schema>
 		
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle5 thlight thright mtop0 tgluetop"/>
+			<fr:property name="classes" value="tstyle5 thlight thright mvert0 tgluetop"/>
+			<fr:property name="columnClasses" value="col1,col2,tdclear tderror1"/>
 		</fr:layout>
 		
 		<fr:destination name="template-postBack" path='<%="/phdIndividualProgramProcess.do?method=sendEmailPostback&processId=" + processId.toString() %>' />
@@ -192,18 +197,15 @@ margin: 5px 0 10px 0;
 		
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright mtop0 tgluetop"/>
+			<fr:property name="columnClasses" value="col1,col2,tdclear tderror1"/>
 			<fr:property name="requiredMarkShown" value="true" />
 		</fr:layout>
 			
 	</fr:edit>
 
 </div> <!-- compose-email -->
-
-
   	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.submit"/></html:submit>	
-
 </fr:form>
-
 
 
 </logic:present>

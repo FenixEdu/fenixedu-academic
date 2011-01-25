@@ -1,7 +1,9 @@
 package net.sourceforge.fenixedu.domain.phd.migration;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Country;
@@ -10,11 +12,15 @@ import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.phd.migration.common.ConversionUtilities;
 import net.sourceforge.fenixedu.domain.phd.migration.common.NationalityTranslator;
+import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.BirthdayMismatchException;
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.IncompleteFieldsException;
-import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.MultiplePersonFoundException;
+import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.MultiplePersonFoundByDocumentIdException;
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.PersonNotFoundException;
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.PersonSearchByNameMismatchException;
+import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.PossiblePersonCandidatesException;
+import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.SocialSecurityNumberMismatchException;
 import net.sourceforge.fenixedu.util.StringFormatter;
+import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
@@ -67,6 +73,14 @@ public class PhdMigrationIndividualPersonalData extends PhdMigrationIndividualPe
 	setNumber(phdStudentNumber);
     }
 
+    private String parseSocialSecurityNumber(String socialSecurityNumber) {
+	if (socialSecurityNumber.matches("/--+|0+/")) {
+	    return null;
+	}
+
+	return socialSecurityNumber;
+    }
+
     public void parse() {
 	String[] fields = getData().split("\t");
 
@@ -77,7 +91,7 @@ public class PhdMigrationIndividualPersonalData extends PhdMigrationIndividualPe
 		throw new IncompleteFieldsException("processNumber");
 	    }
 	    identificationNumber = fields[1].trim();
-	    socialSecurityNumber = fields[2].trim();
+	    socialSecurityNumber = parseSocialSecurityNumber(fields[2].trim());
 	    fullName = StringFormatter.prettyPrint(fields[3].trim());
 	    familyName = StringFormatter.prettyPrint(fields[4].trim());
 	    dateOfBirth = ConversionUtilities.parseDate(fields[5].trim());
@@ -119,23 +133,61 @@ public class PhdMigrationIndividualPersonalData extends PhdMigrationIndividualPe
 	    throw new PersonNotFoundException();
 	}
 
-	if (personSet.size() > 1 || personNamesSet.size() > 1) {
-	    throw new MultiplePersonFoundException();
+	if (personSet.size() > 1) {
+	    throw new MultiplePersonFoundByDocumentIdException(identificationNumber);
 	}
 
-	if (personSet.iterator().next() != personNamesSet.iterator().next()) {
-	    throw new PersonSearchByNameMismatchException();
+	if (personSet.isEmpty()) {
+	    checkPossibleCandidates(personNamesSet);
 	}
+	
+	checkPersonByIdDocument(personSet, personNamesSet);
 
-	final Person person = personSet.iterator().next();
-
-	/*
-	 * if (!StringUtils.isEmpty(socialSecurityNumber) &&
-	 * !socialSecurityNumber.equals(person.getSocialSecurityNumber())) {
-	 * throw new SocialSecurityNumberMismatchException(); }
-	 */
+	Person person = personSet.iterator().next();
+	if ((StringUtils.isEmpty(socialSecurityNumber) || person.getSocialSecurityNumber() == null)
+		&& !person.getDateOfBirthYearMonthDay().isEqual(dateOfBirth)) {
+	    throw new BirthdayMismatchException("Original: " + dateOfBirth + " Differs from: "
+		    + person.getDateOfBirthYearMonthDay());
+	} else if (!StringUtils.isEmpty(socialSecurityNumber) && !socialSecurityNumber.equals(person.getSocialSecurityNumber())) {
+	    throw new SocialSecurityNumberMismatchException("Original: " + socialSecurityNumber + " Differs from: "
+		    + person.getSocialSecurityNumber());
+	}
 
 	return person;
+    }
+
+    private Person checkPersonByIdDocument(final Collection<Person> personSet, final Collection<Person> personNamesSet) {
+	Person possiblePerson = personSet.iterator().next();
+
+	for (Person person : personNamesSet) {
+	    if (person == possiblePerson) {
+		return possiblePerson;
+	    }
+	}
+
+	throw new PersonSearchByNameMismatchException(new HashSet<Person>(personNamesSet));
+    }
+
+    private void checkPossibleCandidates(final Collection<Person> personNamesSet) {
+	Set<Person> possiblePersonSet = new HashSet<Person>();
+	for(Person person : personNamesSet) {
+
+	    if(!person.getSocialSecurityNumber().equals(socialSecurityNumber)) {
+		continue;
+	    }
+	    
+	    if (!person.getDateOfBirthYearMonthDay().isEqual(dateOfBirth)) {
+		continue;
+	    }
+
+	    possiblePersonSet.add(person);
+	}
+	
+	if (!possiblePersonSet.isEmpty()) {
+	    throw new PossiblePersonCandidatesException(possiblePersonSet);
+	}
+
+	throw new PersonNotFoundException();
     }
 
     public boolean isPersonRegisteredOnFenix() {

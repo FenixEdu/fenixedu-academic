@@ -48,6 +48,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryElements
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryReviews;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisDiscussion;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SetFinalGrade;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.SkipScheduleThesisDiscussion;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitJuryElementsDocuments;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitThesis;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SwapJuryElementsOrder;
@@ -117,6 +118,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	activities.add(new AddState());
 	activities.add(new RemoveLastState());
 	activities.add(new SkipThesisJuryActivities());
+	activities.add(new SkipScheduleThesisDiscussion());
     }
 
     private PhdThesisProcess() {
@@ -454,7 +456,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	switch(currentState) {
 	case NEW:
 	    return Arrays.asList(PhdThesisProcessStateType.WAITING_FOR_JURY_CONSTITUTION,
-		    PhdThesisProcessStateType.WAITING_FOR_THESIS_MEETING_SCHEDULING);
+		    PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK);
 	case WAITING_FOR_JURY_CONSTITUTION:
 	    return Arrays.asList(PhdThesisProcessStateType.JURY_WAITING_FOR_VALIDATION, PhdThesisProcessStateType.JURY_VALIDATED,
 		    PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK);

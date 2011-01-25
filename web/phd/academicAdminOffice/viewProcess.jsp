@@ -28,18 +28,21 @@
 
 <logic:present name="backMethod">
 	<bean:define id="backMethod" name="backMethod"/>
-	<html:link action="<%="/phdIndividualProgramProcess.do?method=" + backMethod %>">
-		« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
-	</html:link>
+	<p>
+		<html:link action="<%="/phdIndividualProgramProcess.do?method=" + backMethod %>">
+			« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
+		</html:link>
+	</p>
 </logic:present>
 
 <logic:notPresent name="backMethod">
+<p>
 	<html:link action="/phdIndividualProgramProcess.do?method=manageProcesses">
 		« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
 	</html:link>
+</p>
 </logic:notPresent>
 
-<br/><br/>
 
 <%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
 
@@ -55,13 +58,14 @@
 	</div>
 </logic:notEmpty>
  
-<strong><bean:message  key="label.phd.process" bundle="PHD_RESOURCES"/></strong>
+<p><strong><bean:message  key="label.phd.process" bundle="PHD_RESOURCES"/></strong></p>
+
 <table>
   <tr>
     <td>
 		<fr:view schema="AcademicAdminOffice.PhdIndividualProgramProcess.view" name="process">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle2 thlight mtop15" />
+				<fr:property name="classes" value="tstyle2 thlight mtop15 thleft" />
 			</fr:layout>
 		</fr:view>
 	</td>
@@ -169,11 +173,11 @@
 			
 			</phd:activityAvailable>
 			
-			<%--<li>
+			<li>
 				<html:link action="/phdIndividualProgramProcess.do?method=preparePhdEmailsManagement" paramId="processId" paramName="process" paramProperty="externalId">
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.manage.emails" />
 				</html:link>
-			</li> --%>
+			</li> 
 
 			<br/>
 			
@@ -197,14 +201,14 @@
 	<strong><bean:message  key="label.phd.student.information" bundle="PHD_RESOURCES"/></strong>
 	<fr:view schema="AcademicAdminOffice.PhdIndividualProgramProcess.view.student.information" name="process">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle2 thlight mtop10" />
+			<fr:property name="classes" value="tstyle2 thlight mtop10 thleft" />
 		</fr:layout>
 	</fr:view>
-	<br/>
+	<p>
 	<html:link page="<%= "/student.do?method=visualizeStudent&studentID=" + studentId %>">
 		<bean:message key="label.phd.student.page" bundle="PHD_RESOURCES" />
 	</html:link>
-	<br />
+	</p>
 </logic:notEmpty>
 
 <%--Thesis --%>

@@ -12,11 +12,13 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddAssistantGuidingInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddGuidingInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddStudyPlan;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.CancelPhdProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditQualificationExams;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.ExemptPublicPresentationSeminarComission;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RequestPublicThesisPresentation;
@@ -42,12 +44,20 @@ import net.sourceforge.fenixedu.domain.phd.migration.common.PhdProgramTranslator
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.FinalEstimatedStateNotReachedException;
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.IncompleteFieldsException;
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.PersonNotFoundException;
-import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.PhdMigrationGuidingNotFoundException;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisFinalGrade;
+import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.RatifyFinalThesis;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.SetFinalGrade;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.SkipScheduleThesisDiscussion;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitThesis;
+import net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingSchedulingProcess;
+import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.ScheduleFirstThesisMeetingRequest;
+import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.SkipScheduleFirstThesisMeeting;
 import net.sourceforge.fenixedu.util.StringUtils;
 
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.security.UserView;
@@ -200,6 +210,10 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
     // annulmentDate; - data da anulação do processo
     // limitToFinishDate; - data limite para conclusão
     public PhdMigrationProcessStateType estimatedFinalMigrationStatus() {
+	if (isProcessCanceled()) {
+	    return PhdMigrationProcessStateType.CANCELED;
+	}
+
 	if (edictDate != null || classification != null) {
 	    return PhdMigrationProcessStateType.CONCLUDED;
 	}
@@ -212,7 +226,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 	    return PhdMigrationProcessStateType.REQUESTED_THESIS_DISCUSSION;
 	}
 
-	if (startDevelopmentDate != null) {
+	if (startDevelopmentDate != null || ratificationDate != null) {
 	    return PhdMigrationProcessStateType.WORK_DEVELOPMENT;
 	}
 
@@ -257,7 +271,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 	}
 	
 	if (activeState.equals(PhdMigrationProcessStateType.CANDIDACY_RATIFIED)) {
-	    if (startDevelopmentDate != null) {
+	    if (startDevelopmentDate != null || ratificationDate != null) {
 		return true;
 	    }
 	}
@@ -281,16 +295,26 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 	return annulmentDate != null;
     }
 
-    public void proceedWithMigration() {
-	final Person manager = Employee.readByNumber(4972).getPerson();
-	final IUserView userView = new MockUserView(manager.getUsername(), new ArrayList<Role>(), manager);
+    public boolean proceedWithMigration() {
+	final Person manager = Employee.readByNumber(3068).getPerson();
+	final IUserView userView = new MockUserView(manager.getUsername(), new ArrayList<Role>(), manager) {
+
+	    @Override
+	    public boolean hasRoleType(final RoleType roleType) {
+		return getPerson().hasRole(roleType);
+	    }
+	};
 	UserView.setUser(userView);
 
 	PhdMigrationProcessStateType activeState;
 	PhdIndividualProgramProcess individualProcess = null;
 
+	boolean returnVal = false;
+
 	while (possibleToCompleteNextState()) {
 	    activeState = getMigrationStatus();
+
+	    returnVal = true;
 
 	    if (activeState.equals(PhdMigrationProcessStateType.NOT_MIGRATED)) {
 		individualProcess = createCandidacyProcess(userView);
@@ -318,22 +342,33 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 	    }
 
 	    if (activeState.equals(PhdMigrationProcessStateType.REQUESTED_THESIS_DISCUSSION)) {
-
+		skipJuryActivities(userView, individualProcess);
+		manageMeetingsAndFinalThesis(userView, individualProcess);
+		setMigrationStatus(PhdMigrationProcessStateType.COMPLETED_THESIS_DISCUSSION);
 		continue;
 	    }
 
 	    if (activeState.equals(PhdMigrationProcessStateType.COMPLETED_THESIS_DISCUSSION)) {
-
+		ratifyFinalThesis(userView, individualProcess);
+		setMigrationStatus(PhdMigrationProcessStateType.CONCLUDED);
 		continue;
 	    }
 
-	    return;
+	    break;
+	}
+
+	if (isProcessCanceled()) {
+	    cancelPhdProgram(userView, individualProcess);
+	    setMigrationStatus(PhdMigrationProcessStateType.CANCELED);
 	}
 
 	activeState = getMigrationStatus();
 	if (!activeState.equals(estimatedFinalMigrationStatus())) {
-	    throw new FinalEstimatedStateNotReachedException();
+	    throw new FinalEstimatedStateNotReachedException("Estimated: " + estimatedFinalMigrationStatus() + "\treached: "
+		    + activeState);
 	}
+
+	return returnVal;
     }
 
     private PhdIndividualProgramProcess createCandidacyProcess(final IUserView userView) {
@@ -391,9 +426,17 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 
 	final PhdProgramCandidacyProcess candidacyProcess = individualProcess.getCandidacyProcess();
 	final RegistrationFormalizationBean formalizationBean = new RegistrationFormalizationBean(candidacyProcess);
-	formalizationBean.setWhenStartedStudies(startDevelopmentDate);
+	formalizationBean.setWhenStartedStudies(getMostAccurateStartDevelopmentDate());
 	formalizationBean.setSelectRegistration(false);
 	ExecuteProcessActivity.run(candidacyProcess, RegistrationFormalization.class.getSimpleName(), formalizationBean);
+    }
+
+    private LocalDate getMostAccurateStartDevelopmentDate() {
+	if (startDevelopmentDate != null) {
+	    return startDevelopmentDate;
+	} else {
+	    return ratificationDate;
+	}
     }
 
     private void requirePublicThesisPresentation(final IUserView userView, final PhdIndividualProgramProcess individualProcess) {
@@ -402,15 +445,22 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 
 	if (!StringUtils.isEmpty(guiderNumber)) {
 	    final PhdMigrationGuiding migrationGuiding = getGuiding(guiderNumber);
-	    final PhdParticipantBean guidingBean = migrationGuiding.getPhdParticipantBean(individualProcess);
-	    ExecuteProcessActivity.run(individualProcess, AddGuidingInformation.class.getSimpleName(), guidingBean);
+	    if (migrationGuiding != null) {
+		migrationGuiding.parse();
+		final PhdParticipantBean guidingBean = migrationGuiding.getPhdParticipantBean(individualProcess);
+		ExecuteProcessActivity.run(individualProcess, AddGuidingInformation.class.getSimpleName(), guidingBean);
+	    }
 	}
 
 	if (!StringUtils.isEmpty(assistantGuiderNumber)) {
 	    final PhdMigrationGuiding migrationAssistantGuiding = getGuiding(assistantGuiderNumber);
-	    final PhdParticipantBean assistantGuidingBean = migrationAssistantGuiding.getPhdParticipantBean(individualProcess);
-	    ExecuteProcessActivity.run(individualProcess, AddAssistantGuidingInformation.class.getSimpleName(),
-		    assistantGuidingBean);
+	    if (migrationAssistantGuiding != null) {
+		migrationAssistantGuiding.parse();
+		final PhdParticipantBean assistantGuidingBean = migrationAssistantGuiding
+			.getPhdParticipantBean(individualProcess);
+		ExecuteProcessActivity.run(individualProcess, AddAssistantGuidingInformation.class.getSimpleName(),
+			assistantGuidingBean);
+	    }
 	}
 
 	final PhdThesisProcessBean thesisBean = new PhdThesisProcessBean(individualProcess);
@@ -421,18 +471,86 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
     }
 
     private PhdMigrationGuiding getGuiding(String guidingNumber) {
+	String alternativeGuidingNumber = "0".concat(guidingNumber);
 	for (PhdMigrationGuiding migrationGuiding : getPhdMigrationProcess().getPhdMigrationGuiding()) {
-	    if (guidingNumber.equals(migrationGuiding.getNumber())) {
+	    if (guidingNumber.equals(migrationGuiding.getTeacherNumber())
+		    || alternativeGuidingNumber.equals(migrationGuiding.getTeacherNumber())) {
 		return migrationGuiding;
 	    }
 	}
 
-	throw new PhdMigrationGuidingNotFoundException();
+	return null;
+	// throw new
+	// PhdMigrationGuidingNotFoundException("Did not find guiding with code: "
+	// + guidingNumber);
     }
 
-    private void skipThesisJuryConstitutionActivities(final IUserView userView,
+    private void skipJuryActivities(final IUserView userView,
 	    final PhdIndividualProgramProcess individualProcess) {
-	ExecuteProcessActivity.run(individualProcess.getThesisProcess(), SkipThesisJuryActivities.class.getSimpleName(), null);
+	final PhdThesisProcess thesisProcess = individualProcess.getThesisProcess();
+	final PhdThesisProcessBean thesisBean = new PhdThesisProcessBean();
+	thesisBean.setThesisProcess(thesisProcess);
+	thesisBean.setToNotify(false);
+	thesisBean.setGenerateAlert(false);
+	ExecuteProcessActivity.run(individualProcess.getThesisProcess(), SkipThesisJuryActivities.class.getSimpleName(),
+		thesisBean);
+    }
+
+    private void manageMeetingsAndFinalThesis(final IUserView userView, final PhdIndividualProgramProcess individualProcess) {
+	final PhdThesisProcess thesisProcess = individualProcess.getThesisProcess();
+	final PhdThesisProcessBean thesisBean = new PhdThesisProcessBean();
+	thesisBean.setThesisProcess(thesisProcess);
+	thesisBean.setToNotify(false);
+	thesisBean.setGenerateAlert(false);
+	final PhdMeetingSchedulingProcess meetingProcess = thesisProcess.getMeetingProcess();
+	ExecuteProcessActivity.run(meetingProcess, ScheduleFirstThesisMeetingRequest.class, thesisBean);
+
+	thesisBean.setScheduledDate(getMeetingDate());
+	thesisBean.setScheduledPlace("");
+	ExecuteProcessActivity.run(meetingProcess, SkipScheduleFirstThesisMeeting.class, thesisBean);
+	
+	thesisBean.setScheduledDate(getMostAccurateDiscussionDateTime());
+	thesisBean.setScheduledPlace("");
+	ExecuteProcessActivity.run(thesisProcess, SkipScheduleThesisDiscussion.class, thesisBean);
+
+	ExecuteProcessActivity.run(thesisProcess, SubmitThesis.class, thesisBean);
+    }
+
+    private DateTime getMostAccurateDiscussionDateTime() {
+	if (secondDiscussionDate != null) {
+	    return secondDiscussionDate.toDateTimeAtCurrentTime();
+	} else if (firstDiscussionDate != null) {
+	    return firstDiscussionDate.toDateTimeAtCurrentTime();
+	}
+
+	return null;
+    }
+
+    private DateTime getMeetingDate() {
+	if (meetingDate != null) {
+	    return meetingDate.toDateTimeAtCurrentTime();
+	} else {
+	    return null;
+	}
+    }
+
+    private void ratifyFinalThesis(final IUserView userView, final PhdIndividualProgramProcess individualProcess) {
+	final PhdThesisProcess thesisProcess = individualProcess.getThesisProcess();
+	final PhdThesisProcessBean thesisBean = new PhdThesisProcessBean();
+	thesisBean.setThesisProcess(thesisProcess);
+	thesisBean.setToNotify(false);
+	thesisBean.setGenerateAlert(false);
+	thesisBean.setWhenFinalThesisRatified(edictDate);
+	ExecuteProcessActivity.run(thesisProcess, RatifyFinalThesis.class, thesisBean);
+
+	thesisBean.setConclusionDate(edictDate);
+	thesisBean.setFinalGrade(classification);
+	ExecuteProcessActivity.run(thesisProcess, SetFinalGrade.class, thesisBean);
+    }
+
+    private void cancelPhdProgram(final IUserView userView, final PhdIndividualProgramProcess individualProcess) {
+	final PhdIndividualProgramProcessBean processBean = new PhdIndividualProgramProcessBean(individualProcess);
+	ExecuteProcessActivity.run(individualProcess, CancelPhdProgramProcess.class.getSimpleName(), processBean);
     }
 
 }

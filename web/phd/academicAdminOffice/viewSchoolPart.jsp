@@ -16,7 +16,7 @@
 			<td>
 				<fr:view schema="PhdIndividualProgramProcess.view.registration.conclusion.bean" name="registrationConclusionBean">
 					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle2 thlight mtop10" />
+						<fr:property name="classes" value="tstyle2 thlight mtop10 thlef" />
 					</fr:layout>
 				</fr:view>
 			</td>

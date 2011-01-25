@@ -7570,7 +7570,7 @@ class phd.migration.PhdMigrationIndividualPersonalData extends DomainObject {
 }
 
 class phd.migration.PhdMigrationGuiding extends DomainObject {
-	Integer number;
+	String teacherNumber;
 	String data;
 	String institution;
 	String parseLog;

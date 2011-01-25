@@ -4,9 +4,9 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
 
-public class PersonSearchByNameMismatchException extends RuntimeException {
+public class PossiblePersonCandidatesException extends ParseException {
 
-    public PersonSearchByNameMismatchException(Set<Person> possibleCandidates) {
+    public PossiblePersonCandidatesException(Set<Person> possibleCandidates) {
 	super(getPersonNames(possibleCandidates));
     }
 
@@ -19,5 +19,4 @@ public class PersonSearchByNameMismatchException extends RuntimeException {
 
 	return builder.toString();
     }
-
 }
