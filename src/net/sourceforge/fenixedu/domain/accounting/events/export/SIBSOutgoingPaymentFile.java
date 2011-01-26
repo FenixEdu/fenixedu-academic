@@ -6,8 +6,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -101,14 +101,13 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
 		    && paymentCode.getPerson() == null) {
 		addPaymentCode(sibsFile, paymentCode, errorsBuilder);
 	    }
-
 	}
     }
 
     protected void addPaymentCode(final SibsOutgoingPaymentFile file, final PaymentCode paymentCode, StringBuilder errorsBuilder) {
 	try {
-	    file.addLine(paymentCode.getCode(), paymentCode.getMinAmount(), paymentCode.getMaxAmount(), paymentCode
-		    .getStartDate(), paymentCode.getEndDate());
+	    file.addLine(paymentCode.getCode(), paymentCode.getMinAmount(), paymentCode.getMaxAmount(),
+		    paymentCode.getStartDate(), paymentCode.getEndDate());
 	} catch (Throwable e) {
 	    appendToErrors(errorsBuilder, paymentCode.getExternalId(), e);
 	}
@@ -117,10 +116,9 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
     protected void addCalculatedPaymentCodesFromEvent(final SibsOutgoingPaymentFile file, final Event event,
 	    StringBuilder errorsBuilder) {
 	try {
-	    for (final AccountingEventPaymentCode paymentCode : event.calculatePaymentCodes()) {
-		file.addLine(paymentCode.getCode(), paymentCode.getMinAmount(), paymentCode.getMaxAmount(), paymentCode
-			.getStartDate(), paymentCode.getEndDate());
-	    }
+	    CalculatePaymentCodes thread = new CalculatePaymentCodes(event.getExternalId(), errorsBuilder, file);
+	    thread.start();
+	    thread.join();
 	} catch (Throwable e) {
 	    appendToErrors(errorsBuilder, event.getExternalId(), e);
 	}
@@ -141,7 +139,7 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
 	return ExecutionYear.readCurrentExecutionYear();
     }
 
-    private static String outgoingFilename() {
+    private String outgoingFilename() {
 	return String.format("SIBS-%s.txt", new DateTime().toString("dd-MM-yyyy_H_m_s"));
     }
 
@@ -184,5 +182,41 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
     @Service
     public void markAsSuccessfulSent(DateTime dateTime) {
 	setSuccessfulSentDate(dateTime);
+    }
+
+    private class CalculatePaymentCodes extends Thread {
+	private String eventExternalId;
+	private StringBuilder errorsBuilder;
+	private SibsOutgoingPaymentFile sibsFile;
+
+	public CalculatePaymentCodes(String eventExternalId, StringBuilder errorsBuilder, SibsOutgoingPaymentFile sibsFile) {
+	    this.eventExternalId = eventExternalId;
+	    this.errorsBuilder = errorsBuilder;
+	    this.sibsFile = sibsFile;
+	}
+
+	@Override
+	public void run() {
+	    try {
+		pt.ist.fenixWebFramework.services.ServiceManager.enterAnnotationService();
+
+		pt.ist.fenixframework.pstm.Transaction.withTransaction(new jvstm.TransactionalCommand() {
+
+		    @Override
+		    public void doIt() {
+			Event event = Event.fromExternalId(eventExternalId);
+
+			for (final AccountingEventPaymentCode paymentCode : event.calculatePaymentCodes()) {
+			    sibsFile.addLine(paymentCode.getCode(), paymentCode.getMinAmount(), paymentCode.getMaxAmount(),
+				    paymentCode.getStartDate(), paymentCode.getEndDate());
+			}
+		    }
+		});
+	    } catch (Throwable e) {
+		appendToErrors(errorsBuilder, eventExternalId, e);
+	    } finally {
+		pt.ist.fenixWebFramework.services.ServiceManager.exitAnnotationService();
+	    }
+	}
     }
 }
