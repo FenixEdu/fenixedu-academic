@@ -2288,7 +2288,7 @@ public class Person extends Person_Base {
 	}
 	final Employee employee = getEmployee();
 	if (employee != null && employee.getAssiduousness() != null && employee.getAssiduousness().getCurrentStatus() != null
-		&& employee.getAssiduousness().getCurrentStatus().getState() == AssiduousnessState.ACTIVE && teacher == null) {
+		&& employee.getAssiduousness().getCurrentStatus().getState() == AssiduousnessState.ACTIVE) {
 	    return PartyClassification.EMPLOYEE;
 	}
 	final GrantOwner grantOwner = getGrantOwner();
@@ -3683,13 +3683,14 @@ public class Person extends Person_Base {
 
     public static String readAllExternalResearcherInformation() {
 	final RoleType roleType = RoleType.RESEARCHER;
-	final RoleType[] exclusionRoleTypes = new RoleType[] { RoleType.TEACHER }; 
+	final RoleType[] exclusionRoleTypes = new RoleType[] { RoleType.TEACHER };
 
 	final Role role = Role.getRoleByRoleType(roleType);
 	final StringBuilder result = new StringBuilder();
 	for (final Person person : role.getAssociatedPersonsSet()) {
 	    if (!hasAnyRole(person, exclusionRoleTypes)) {
-		final Collection<? extends Accountability> accountabilities = person.getParentAccountabilities(AccountabilityTypeEnum.RESEARCH_CONTRACT);
+		final Collection<? extends Accountability> accountabilities = person
+			.getParentAccountabilities(AccountabilityTypeEnum.RESEARCH_CONTRACT);
 		final YearMonthDay currentDate = new YearMonthDay();
 		for (final Accountability accountability : accountabilities) {
 		    if (accountability.isActive(currentDate)) {
@@ -3703,7 +3704,7 @@ public class Person extends Person_Base {
 			    result.append(':');
 			    result.append(roleType.name());
 			    result.append(':');
-			    result.append(costCenterCode);			    
+			    result.append(costCenterCode);
 			}
 		    }
 		}
