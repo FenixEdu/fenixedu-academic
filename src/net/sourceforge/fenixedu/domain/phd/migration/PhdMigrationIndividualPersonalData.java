@@ -58,11 +58,11 @@ public class PhdMigrationIndividualPersonalData extends PhdMigrationIndividualPe
     private transient String profession;
     private transient String workPlace;
     private transient String email;
-    
+
     private PhdMigrationIndividualPersonalData() {
-        super();
+	super();
     }
-    
+
     protected PhdMigrationIndividualPersonalData(String data) {
 	setData(data);
     }
@@ -140,17 +140,23 @@ public class PhdMigrationIndividualPersonalData extends PhdMigrationIndividualPe
 	if (personSet.isEmpty()) {
 	    checkPossibleCandidates(personNamesSet);
 	}
-	
+
 	checkPersonByIdDocument(personSet, personNamesSet);
 
 	Person person = personSet.iterator().next();
-	if ((StringUtils.isEmpty(socialSecurityNumber) || person.getSocialSecurityNumber() == null)
-		&& !person.getDateOfBirthYearMonthDay().isEqual(dateOfBirth)) {
-	    throw new BirthdayMismatchException("Original: " + dateOfBirth + " Differs from: "
-		    + person.getDateOfBirthYearMonthDay());
-	} else if (!StringUtils.isEmpty(socialSecurityNumber) && !socialSecurityNumber.equals(person.getSocialSecurityNumber())) {
+	if (!StringUtils.isEmpty(socialSecurityNumber) && !StringUtils.isEmpty(person.getSocialSecurityNumber())
+		&& socialSecurityNumber.equals(person.getSocialSecurityNumber())) {
+	    return person;
+	}
+
+	if (!StringUtils.isEmpty(socialSecurityNumber) && !StringUtils.isEmpty(person.getSocialSecurityNumber())) {
 	    throw new SocialSecurityNumberMismatchException("Original: " + socialSecurityNumber + " Differs from: "
 		    + person.getSocialSecurityNumber());
+	}
+
+	if (!person.getDateOfBirthYearMonthDay().isEqual(dateOfBirth)) {
+	    throw new BirthdayMismatchException("Original: " + dateOfBirth + " Differs from: "
+		    + person.getDateOfBirthYearMonthDay());
 	}
 
 	return person;
@@ -170,19 +176,19 @@ public class PhdMigrationIndividualPersonalData extends PhdMigrationIndividualPe
 
     private void checkPossibleCandidates(final Collection<Person> personNamesSet) {
 	Set<Person> possiblePersonSet = new HashSet<Person>();
-	for(Person person : personNamesSet) {
+	for (Person person : personNamesSet) {
 
-	    if(!person.getSocialSecurityNumber().equals(socialSecurityNumber)) {
+	    if (!person.getSocialSecurityNumber().equals(socialSecurityNumber)) {
 		continue;
 	    }
-	    
+
 	    if (!person.getDateOfBirthYearMonthDay().isEqual(dateOfBirth)) {
 		continue;
 	    }
 
 	    possiblePersonSet.add(person);
 	}
-	
+
 	if (!possiblePersonSet.isEmpty()) {
 	    throw new PossiblePersonCandidatesException(possiblePersonSet);
 	}
@@ -231,7 +237,7 @@ public class PhdMigrationIndividualPersonalData extends PhdMigrationIndividualPe
 	bean.setIdDocumentType(IDDocumentType.OTHER);
 	bean.setDocumentIdNumber(identificationNumber);
 	bean.setSocialSecurityNumber(socialSecurityNumber);
-	
+
 	bean.setGivenNames(readGivenName(fullName, familyName));
 	bean.setName(fullName);
 	bean.setFamilyNames(familyName);
@@ -239,7 +245,7 @@ public class PhdMigrationIndividualPersonalData extends PhdMigrationIndividualPe
 	bean.setDateOfBirth(new YearMonthDay(dateOfBirth.getYear(), dateOfBirth.getMonthOfYear(), dateOfBirth.getDayOfMonth()));
 	bean.setGender(gender);
 	bean.setNationality(nationality);
-	
+
 	return bean;
     }
 
