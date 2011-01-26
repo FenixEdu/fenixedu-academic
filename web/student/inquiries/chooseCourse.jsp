@@ -118,11 +118,6 @@
 				</tr> 
 			</table> 
 		</div>
-		
-		
-		
-				
-		
 		<p>
 			<html:submit onclick="this.form.method.value='simulateAWH';"><bean:message key="button.simulateAWH" bundle="INQUIRIES_RESOURCES"/></html:submit>
 		</p>	
@@ -132,8 +127,6 @@
 		<p class="mtop15"><html:submit><bean:message key="button.submit" bundle="INQUIRIES_RESOURCES"/></html:submit></p>	
 	</fr:form>
 </logic:equal>
-
-
 
 
 <style>
@@ -149,7 +142,6 @@ border-bottom: none;
 width: 10px !important;
 padding: 0 !important;
 }
- 
  
 div.inquiries-registry1 th.col1 { }
 div.inquiries-registry1 th.col2 { border-left: 5px solid #ccc; }
@@ -189,11 +181,8 @@ div.inquiries-registry2 td.col3 { width: 70px !important; background: #f5f5f5; }
 div.inquiries-registry2 td.col4 { width: 70px !important; border-left: 5px solid #ccc; }
 div.inquiries-registry2 td.col5 { width: 70px !important; }
 div.inquiries-registry2 td.col6 { width: 50px !important; border-left: 5px solid #ccc; }
- 
 div.inquiries-registry2 td.col7 { width: 50px !important; }
 div.inquiries-registry2 td.col8 { width: 80px !important; border-left: 5px solid #ccc; white-space: nowrap; }
- 
-
  
 div.inquiries-registry1, div.inquiries-registry2 {
 background: #ccc;    
@@ -204,7 +193,6 @@ margin: 15px 0;
 div.inquiries-registry1 table, div.inquiries-registry2 table {
 margin: 0;
 }
- 
  
 div.inquiries-registry-empty {
 background: #f5f5f5;
