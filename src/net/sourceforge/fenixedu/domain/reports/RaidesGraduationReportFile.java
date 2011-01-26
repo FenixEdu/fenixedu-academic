@@ -95,7 +95,7 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 				    registrationConclusionBean.getConclusionDate(), registrationConclusionBean.getAverage());
 			} else if ((lastState.isActive() || lastState == RegistrationStateType.CONCLUDED)
 				&& registration.getLastDegreeCurricularPlan().hasExecutionDegreeFor(executionYear)) {
-			    reportRaidesGraduate(spreadsheet, registration, executionYear, cycleType, false, null, null);
+			    reportRaidesGraduate(spreadsheet, registration, executionYear, cycleType, false, null, registrationConclusionBean.getAverage());
 			}
 		    }
 		}
@@ -236,7 +236,7 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	row.setCell(String.valueOf(concluded));
 
 	// Média do Ciclo
-	row.setCell(concluded ? printBigDecimal(average) : "n/a");
+	row.setCell(concluded ? printBigDecimal(average.setScale(0, BigDecimal.ROUND_HALF_EVEN)) : printBigDecimal(average));
 
 	// Data de Conclusão
 	row.setCell(conclusionDate != null ? conclusionDate.toString("dd-MM-yyyy") : "");
