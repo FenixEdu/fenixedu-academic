@@ -13,9 +13,6 @@ public enum InquiryGradesInterval {
     DONT_KNOW, NOT_EVALUATED, FLUNKED, FROM_100_TO_110, FROM_110_TO_120, FROM_120_TO_130, FROM_130_TO_140, FROM_140_TO_150, FROM_150_TO_160, FROM_160_TO_170, FROM_170_TO_180, FROM_180_TO_200;
 
     final static public InquiryGradesInterval getInterval(Double grade) {
-	if (grade == null) {
-	    return DONT_KNOW;
-	}
 	if (grade < 100) {
 	    return FLUNKED;
 	}
