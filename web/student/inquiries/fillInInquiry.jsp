@@ -25,24 +25,28 @@
 
 <div class="forminline dinline">
 	<div class="relative">
-		<fr:form action="/studentInquiry.do?method=showTeachersToAnswer">			
-			<logic:iterate id="inquiryBlockDTO" name="inquiryBean" property="curricularCourseBlocks">
-				<logic:notEmpty name="inquiryBlockDTO" property="inquiryBlock.inquiryQuestionHeader">
-					<h4 class="mtop15 mbottom05"><fr:view name="inquiryBlockDTO" property="inquiryBlock.inquiryQuestionHeader.title"/></h4>
-				</logic:notEmpty>				
-				<logic:iterate id="inquiryGroup" name="inquiryBlockDTO" property="inquiryGroups"indexId="index">					
-					<fr:edit id="<%= "iter" + index --%>" name="inquiryGroup"/>
+	
+		<div class="inquiries-container">
+			<fr:form action="/studentInquiry.do?method=showTeachersToAnswer">			
+				<logic:iterate id="inquiryBlockDTO" name="inquiryBean" property="curricularCourseBlocks">
+					<logic:notEmpty name="inquiryBlockDTO" property="inquiryBlock.inquiryQuestionHeader">
+						<h4 class="mtop15 mbottom05"><fr:view name="inquiryBlockDTO" property="inquiryBlock.inquiryQuestionHeader.title"/></h4>
+					</logic:notEmpty>				
+					<logic:iterate id="inquiryGroup" name="inquiryBlockDTO" property="inquiryGroups"indexId="index">					
+						<fr:edit id="<%= "iter" + index --%>" name="inquiryGroup"/>
+					</logic:iterate>
 				</logic:iterate>
-			</logic:iterate>
+				
+				<fr:edit name="inquiryBean" id="inquiryBean" visible="false"/>
+				<br/>		
+				<html:submit styleClass="bright"><bean:message key="button.continue" bundle="INQUIRIES_RESOURCES"/></html:submit>
+			</fr:form>
 			
-			<fr:edit name="inquiryBean" id="inquiryBean" visible="false"/>
-			<br/>		
-			<html:submit styleClass="bright"><bean:message key="button.continue" bundle="INQUIRIES_RESOURCES"/></html:submit>
-		</fr:form>
-		
-		<fr:form action="/studentInquiry.do?method=showCoursesToAnswer">
-			<html:submit styleClass="bleft"><bean:message key="button.cancel"/></html:submit>
-		</fr:form>
+			
+			<fr:form action="/studentInquiry.do?method=showCoursesToAnswer">
+				<html:submit styleClass="bleft"><bean:message key="button.cancel"/></html:submit>
+			</fr:form>
+		</div>
 		
 		<br/>
 	</div>
@@ -50,12 +54,16 @@
 
 <style>
 
-input.bright { position: absolute; bottom: 0; left: 70px; }
+input.bright { position: absolute; bottom: 0; left: 75px; }
+
+div.inquiries-container {
+max-width: 900px;
+}
 
 .question {
 border-collapse: collapse;
 margin: 10px 0;
-width: 900px;
+width: 100%;
 }
 .question th {
 padding: 5px 10px;

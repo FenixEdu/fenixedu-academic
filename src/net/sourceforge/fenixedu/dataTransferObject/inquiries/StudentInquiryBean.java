@@ -107,15 +107,11 @@ public class StudentInquiryBean implements Serializable {
 		    }
 		}
 	    }
-	    String teacherNumber = teacher != null ? teacher.getTeacherNumber().toString() : "";
 	    if (teacherShift.isEmpty() && !mandatoryTeachingService) {
-		System.out.println("NAO TEM SERVIÇO DOCENTE - " + teacherNumber); //TODO remove this, just for tests purpose
 		for (final ShiftType shiftType : shiftTypes) {
 		    teacherShift.put(shiftType, new StudentTeacherInquiryBean(teacherDTO, executionCourse, shiftType,
 			    studentTeacherInquiryTemplate));
 		}
-	    } else { //TODO remove this, just for tests purpose
-		System.out.println("PROF CARREIRA SEM SERVIÇO DOCENTE ACIMA DOS 20% - " + teacherNumber);
 	    }
 	}
 

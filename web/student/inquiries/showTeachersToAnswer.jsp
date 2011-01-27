@@ -1,7 +1,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-<%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml />
 
@@ -22,19 +21,16 @@
 	
 	<table class="tstyle1 thlight mtop05">
 		<tr>
-			<th></th>
 			<th><bean:message key="label.teacher" bundle="INQUIRIES_RESOURCES"/></th>	
 			<th><bean:message key="label.typeOfClass" bundle="INQUIRIES_RESOURCES"/></th>
 		</tr>
 		<logic:iterate id="teacherInquiry" name="inquiryBean" property="teachersInquiries">
 				<tr>
-					<td class="acenter">
+					<td class="aleft">
 						<logic:present name="teacherInquiry" property="key.personID">
 							<bean:define id="personID" name="teacherInquiry" property="key.personID"/>
 							<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
-						</logic:present>					
-					</td>
-					<td>				
+						</logic:present>												
 						<bean:write name="teacherInquiry" property="key.name"/>
 					</td>
 					<td>
@@ -48,11 +44,18 @@
 										<fr:form action="/studentInquiry.do?method=showTeacherInquiry">
 											<fr:edit name="teacherInquiryByShift" id="teacherInquiry" visible="false"/>
 											<fr:edit name="inquiryBean" id="inquiryBean" visible="false"/>
-											<html:submit><bean:message key="link.inquiries.answer" bundle="INQUIRIES_RESOURCES"/></html:submit>
+											<logic:equal name="teacherInquiryByShift" property="filled" value="true">
+												<html:submit><bean:message key="button.inquiries.edit.evaluation" bundle="INQUIRIES_RESOURCES"/></html:submit>
+											</logic:equal>
+											<logic:equal name="teacherInquiryByShift" property="filled" value="false">
+												<html:submit><bean:message key="link.inquiries.answer" bundle="INQUIRIES_RESOURCES"/></html:submit>
+											</logic:equal>
 										</fr:form>								
 									</td>
 									<td>
-										<c:if test="${teacherInquiryByShift.filled}"><span class="success0 smalltxt"><bean:message key="label.filled" bundle="INQUIRIES_RESOURCES"/></span></c:if>
+										<logic:equal name="teacherInquiryByShift" property="filled" value="true">
+											<span class="success0 smalltxt"><bean:message key="label.filled" bundle="INQUIRIES_RESOURCES"/></span>
+										</logic:equal>
 									</td>
 								</tr>
 							</logic:iterate>
