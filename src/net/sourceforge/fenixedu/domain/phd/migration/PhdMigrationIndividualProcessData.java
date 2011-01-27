@@ -133,6 +133,36 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 	}
     }
 
+    public boolean hasMigrationParseLog() {
+	return !StringUtils.isEmpty(getMigrationParseLog());
+    }
+
+    public String getMigrationException() {
+	if (!hasMigrationParseLog()) {
+	    return null;
+	}
+
+	String exceptionLine = getMigrationParseLog();
+	int messageStartIdx = exceptionLine.indexOf(" ");
+	if (messageStartIdx == -1) {
+	    return exceptionLine;
+	}
+	return exceptionLine.substring(0, exceptionLine.indexOf(" ") - 1);
+    }
+
+    public String getMigrationExceptionMessage() {
+	if (!hasMigrationParseLog()) {
+	    return null;
+	}
+
+	String exceptionLine = getMigrationParseLog();
+	int messageStartIdx = exceptionLine.indexOf(" ");
+	if (messageStartIdx == -1) {
+	    return null;
+	}
+	return exceptionLine.substring(exceptionLine.indexOf(" "));
+    }
+
     public Person getGuidingPerson() {
 	if (guiderNumber.contains("E")) {
 	    throw new PersonNotFoundException();

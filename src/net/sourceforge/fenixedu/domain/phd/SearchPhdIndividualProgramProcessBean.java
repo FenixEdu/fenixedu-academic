@@ -20,7 +20,7 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
     static private final long serialVersionUID = -5653277152319382139L;
 
     public static enum SearchCriterion {
-	PROCESS_NUMBER, STUDENT_NUMBER, NAME
+	PROCESS_NUMBER, STUDENT_NUMBER, NAME, PHD_STUDENT_NUMBER
     }
 
     private SearchCriterion searchCriterion = SearchCriterion.PROCESS_NUMBER;
@@ -34,6 +34,8 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
     private String processNumber;
 
     private Integer studentNumber;
+
+    private Integer phdStudentNumber;
 
     private List<PhdProgram> phdPrograms;
 
@@ -172,6 +174,8 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
 	    String searchValue = getSearchValue().trim();
 	    setProcessNumber((getSearchCriterion() == SearchCriterion.PROCESS_NUMBER) ? searchValue : null);
 	    setStudentNumber((getSearchCriterion() == SearchCriterion.STUDENT_NUMBER) ? Integer.valueOf(searchValue) : null);
+	    setPhdStudentNumber((getSearchCriterion() == SearchCriterion.PHD_STUDENT_NUMBER) ? Integer.valueOf(searchValue)
+		    : null);
 	    setName((getSearchCriterion() == SearchCriterion.NAME) ? searchValue : null);
 	}
 
@@ -194,6 +198,16 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
 		@Override
 		public boolean eval(PhdIndividualProgramProcess toEval) {
 		    return toEval.getProcessNumber().equals(getValue());
+		}
+	    });
+	    return result;
+	}
+
+	if (getPhdStudentNumber() != null) {
+	    result.add(new InlinePredicate<PhdIndividualProgramProcess, Integer>(getPhdStudentNumber()) {
+		@Override
+		public boolean eval(PhdIndividualProgramProcess toEval) {
+		    return toEval.getPhdStudentNumber() != null && toEval.getPhdStudentNumber().compareTo(getValue()) == 0;
 		}
 	    });
 	    return result;
@@ -277,5 +291,13 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
 	    });
 	}
 	return result;
+    }
+
+    public Integer getPhdStudentNumber() {
+	return phdStudentNumber;
+    }
+
+    public void setPhdStudentNumber(Integer phdStudentNumber) {
+	this.phdStudentNumber = phdStudentNumber;
     }
 }

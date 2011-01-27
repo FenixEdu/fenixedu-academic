@@ -49,7 +49,7 @@ public class PhdMigrationProcess extends PhdMigrationProcess_Base {
 		guiding.parseAndSetNumber(INSTITUTION_MAP);
 		guiding.setPhdMigrationProcess(this);
 	    } catch (ParseException e) {
-		guiding.setParseLog(getStackTrace(e));
+		guiding.setParseLog(pruneStackTrace(getStackTrace(e)));
 	    }
 	}
 
@@ -62,7 +62,7 @@ public class PhdMigrationProcess extends PhdMigrationProcess_Base {
 		personalData.parseAndSetNumber();
 		PERSONAL_DATA_MAP.put(personalData.getNumber(), personalData);
 	    } catch (ParseException e) {
-		personalData.setParseLog(getStackTrace(e));
+		personalData.setParseLog(pruneStackTrace(getStackTrace(e)));
 	    }
 	}
     }
@@ -83,6 +83,12 @@ public class PhdMigrationProcess extends PhdMigrationProcess_Base {
 	}
     }
 
+    private String pruneStackTrace(String stackTrace) {
+	String firstLine = stackTrace.substring(0, stackTrace.indexOf('\n'));
+	String exceptionStr = firstLine.substring(firstLine.indexOf("\" ") + 1);
+	return exceptionStr;
+    }
+
     private void createProcessDataEntries(String[] processDataEntries) {
 	for (String entry : processDataEntries) {
 	    PhdMigrationIndividualProcessData processData = new PhdMigrationIndividualProcessData(entry);
@@ -96,7 +102,7 @@ public class PhdMigrationProcess extends PhdMigrationProcess_Base {
 		processData.setPhdMigrationIndividualPersonalData(personalData);
 		processData.setPhdMigrationProcess(this);
 	    } catch (ParseException e) {
-		processData.setParseLog(getStackTrace(e));
+		processData.setParseLog(pruneStackTrace(getStackTrace(e)));
 	    }
 	}
     }

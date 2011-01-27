@@ -542,6 +542,7 @@
 	</slot>
 	<slot name="processNumber" />
 	<slot name="studentNumber" />
+	<slot name="phdStudentNumber" />
 	<slot name="name" />
 </schema>
 
