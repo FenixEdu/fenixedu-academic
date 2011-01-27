@@ -35,7 +35,7 @@
 			<fr:property name="style" value="width: 100%;"/>
 			<fr:property name="columnClasses" value="col1,col2,col3,col4,col5,col6,col7,col8"/>
 			<fr:property name="headerClasses" value="col1,col2,col3,col4,col5,col6,col7,col8"/>
-			<fr:property name="suffixes" value=",%,dias,h,%,, ,"/>
+			<fr:property name="suffixes" value=",h,%,%,dias,, ,"/>
 			<fr:property name="linkGroupSeparator" value=" | "/>
 			
 			<fr:property name="linkFormat(answerNow)" value="/studentInquiry.do?method=showCurricularInquiry&amp;inquiryRegistryID=${inquiryRegistry.externalId}" />
@@ -176,10 +176,10 @@ div.inquiries-registry2 th.col7 { }
 div.inquiries-registry2 th.col8 { border-left: 5px solid #ccc; }
  
 div.inquiries-registry2 td.col1 { text-align: left; }
-div.inquiries-registry2 td.col2 { width: 70px !important; border-left: 5px solid #ccc; background: #f5f5f5; }
-div.inquiries-registry2 td.col3 { width: 70px !important; background: #f5f5f5; }
-div.inquiries-registry2 td.col4 { width: 70px !important; border-left: 5px solid #ccc; }
-div.inquiries-registry2 td.col5 { width: 70px !important; }
+div.inquiries-registry2 td.col2 { width: 70px !important; border-left: 5px solid #ccc; }
+div.inquiries-registry2 td.col3 { width: 70px !important; }
+div.inquiries-registry2 td.col4 { width: 70px !important; border-left: 5px solid #ccc; background: #f5f5f5; }
+div.inquiries-registry2 td.col5 { width: 70px !important; background: #f5f5f5; }
 div.inquiries-registry2 td.col6 { width: 50px !important; border-left: 5px solid #ccc; }
 div.inquiries-registry2 td.col7 { width: 50px !important; }
 div.inquiries-registry2 td.col8 { width: 80px !important; border-left: 5px solid #ccc; white-space: nowrap; }

@@ -87,19 +87,19 @@
 
 <schema name="curricularCourseInquiriesRegistryDTO.submitHoursAndDays"
 		type="net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseInquiriesRegistryDTO" bundle="INQUIRIES_RESOURCES">
-	<slot name="curricularCourse.name" key="label.curricularCourse.name" read-only="true"/>		
+	<slot name="curricularCourse.name" key="label.curricularCourse.name" read-only="true"/>			
+	<slot name="weeklyContactLoad" key="label.contactLoad.b" read-only="true">
+		<property name="headerToolTip" value="toolTip.studentInquiries.weeklyScheduleLoad" />
+	</slot>	
+	<slot name="attendenceClassesPercentage" key="label.attendenceClassesPercentage.b1" read-only="true">
+		<property name="headerToolTip" value="toolTip.studentInquiries.attendenceClassesPercentage" />
+	</slot>
 	<slot name="weeklyHoursSpentPercentage" key="label.weeklyHoursSpentPercentage.c" read-only="true" >
 		<property name="headerToolTip" value="toolTip.studentInquiries.weeklyHoursSpentPercentage" />
 	</slot>
 	<slot name="studyDaysSpentInExamsSeason" key="label.studyDaysSpentInExamsSeason.d" >
 		<property name="headerToolTip" value="toolTip.studentInquiries.studyDaysSpentInExamsSeason" />
 	</slot>
-	<slot name="weeklyContactLoad" key="label.contactLoad.b" read-only="true">
-		<property name="headerToolTip" value="toolTip.studentInquiries.weeklyScheduleLoad" />
-	</slot>	
-	<slot name="attendenceClassesPercentage" key="label.attendenceClassesPercentage.b1" read-only="true">
-		<property name="headerToolTip" value="toolTip.studentInquiries.attendenceClassesPercentage" />
-	</slot>	
 	<slot name="courseEctsCredits" key="label.competenceCourse.ectsCredits" read-only="true"/>
 	<slot name="calculatedECTSCredits" key="label.calculatedEctsCredits" read-only="true">
 		<property name="headerToolTip" value="toolTip.studentInquiries.calculatedEctsCredits" />

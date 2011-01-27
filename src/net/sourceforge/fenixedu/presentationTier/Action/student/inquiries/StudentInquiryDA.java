@@ -65,7 +65,7 @@ public class StudentInquiryDA extends FenixDispatchAction {
 	    return actionMapping.findForward("inquiriesClosed");
 	}
 
-	ExecutionSemester executionSemester = studentInquiryTemplate.getExecutionPeriod(); // ExecutionSemester.readActualExecutionSemester().getPreviousExecutionPeriod();
+	ExecutionSemester executionSemester = studentInquiryTemplate.getExecutionPeriod();
 
 	final Student student = AccessControl.getPerson().getStudent();
 	final Collection<StudentInquiryRegistry> coursesToAnswer = student

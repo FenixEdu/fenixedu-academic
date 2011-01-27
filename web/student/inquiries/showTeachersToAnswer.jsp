@@ -66,11 +66,11 @@
 </logic:notEmpty>
 
 <logic:empty name="inquiryBean" property="teachersInquiries">
-	<p class="mvert15"> 
-		[Frase a explicar porque não aparecem docentes]
+	<p class="mvert15">
+		<bean:message key="message.inquiries.noTeachersToAnswer" bundle="INQUIRIES_RESOURCES"/>		
 	</p>
-	<p class="mtop1 mbottom2"> 
-		Após a submissão não será possível alterar as respostas. As respostas submetidas serão guardadas sem qualquer ligação à identificação do aluno.
+	<p class="mtop1 mbottom2">
+		<bean:message key="message.inquiries.answersNotLinkedToStudent" bundle="INQUIRIES_RESOURCES"/>		
 	</p> 
 </logic:empty>
 

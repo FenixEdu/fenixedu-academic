@@ -26,8 +26,15 @@ public class StudentInquiryRegistry extends StudentInquiryRegistry_Base {
 	setExecutionPeriod(executionPeriod);
 	setCurricularCourse(curricularCourse);
 	setStudent(registration);
+
 	setState(executionCourse.getAvailableForInquiries() ? InquiriesRegistryState.ANSWER_LATER
 		: InquiriesRegistryState.UNAVAILABLE);
+	if (curricularCourse.isAnual()) {
+	    ExecutionSemester previousExecutionPeriod = executionPeriod.getPreviousExecutionPeriod();
+	    if (previousExecutionPeriod.getExecutionYear() != executionPeriod.getExecutionYear()) {
+		setState(InquiriesRegistryState.UNAVAILABLE);
+	    }
+	}
     }
 
     public boolean isAnswered() {
@@ -42,8 +49,12 @@ public class StudentInquiryRegistry extends StudentInquiryRegistry_Base {
 	return isAvailableToInquiries() && getState() == InquiriesRegistryState.ANSWER_LATER;
     }
 
+    public boolean isUnavailable() {
+	return getState() == InquiriesRegistryState.UNAVAILABLE;
+    }
+
     public boolean isAvailableToInquiries() {
-	return getExecutionCourse().getAvailableForInquiries();
+	return getExecutionCourse().getAvailableForInquiries() && !isUnavailable();
     }
 
     public boolean isOpenToAnswer() {

@@ -981,17 +981,13 @@ public class Student extends Student_Base {
 		}
 	    }
 	    for (final Enrolment enrolment : registration.getEnrolments(executionSemester)) {
-		if (enrolment.getCurricularCourse().isAnual()) {
-		    ExecutionSemester previousExecutionPeriod = executionSemester.getPreviousExecutionPeriod();
-		    if (previousExecutionPeriod.getExecutionYear() != executionSemester.getExecutionYear()) {
-			continue;
-		    }
-		}
 		createMissingInquiryRegistry(executionSemester, coursesToAnswer, registration, enrolment, false);
 	    }
-	    for (final Enrolment enrolment : registration.getEnrolments(executionSemester.getPreviousExecutionPeriod())) {
-		if (enrolment.getCurricularCourse().isAnual()) {
-		    createMissingInquiryRegistry(executionSemester, coursesToAnswer, registration, enrolment, true);
+	    if (executionSemester.getPreviousExecutionPeriod().getExecutionYear() == executionSemester.getExecutionYear()) {
+		for (final Enrolment enrolment : registration.getEnrolments(executionSemester.getPreviousExecutionPeriod())) {
+		    if (enrolment.getCurricularCourse().isAnual()) {
+			createMissingInquiryRegistry(executionSemester, coursesToAnswer, registration, enrolment, true);
+		    }
 		}
 	    }
 	}
@@ -1002,8 +998,8 @@ public class Student extends Student_Base {
 	    final Map<ExecutionCourse, StudentInquiryRegistry> coursesToAnswer, Registration registration,
 	    final Enrolment enrolment, boolean isAnnual) {
 	ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(executionSemester);
-	if (isAnnual && executionCourse == null) { //some annual courses only have one execution in the 1st semester
-	    executionCourse = enrolment.getExecutionCourseFor(executionSemester.getPreviousExecutionPeriod());
+	if (isAnnual) {
+	    executionCourse = getQUCExecutionCourseForAnnualCC(executionSemester, enrolment);
 	}
 	if (executionCourse != null && !coursesToAnswer.containsKey(executionCourse)) {
 	    coursesToAnswer.put(executionCourse, new StudentInquiryRegistry(executionCourse, executionSemester, enrolment
@@ -1031,12 +1027,6 @@ public class Student extends Student_Base {
 		}
 	    }
 	    for (final Enrolment enrolment : registration.getEnrolments(executionSemester)) {
-		if (enrolment.getCurricularCourse().isAnual()) {
-		    ExecutionSemester previousExecutionPeriod = executionSemester.getPreviousExecutionPeriod();
-		    if (previousExecutionPeriod.getExecutionYear() != executionSemester.getExecutionYear()) {
-			continue;
-		    }
-		}
 		final ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(executionSemester);
 		if (executionCourse != null && !coursesAnswered.contains(executionCourse)) {
 		    coursesToAnswer.put(executionCourse, enrolment.getCurricularCourse().getName());
@@ -1044,10 +1034,7 @@ public class Student extends Student_Base {
 	    }
 	    for (final Enrolment enrolment : registration.getEnrolments(executionSemester.getPreviousExecutionPeriod())) {
 		if (enrolment.getCurricularCourse().isAnual()) {
-		    ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(executionSemester);
-		    if (executionCourse == null) { //some annual courses only have one execution in the 1st semester
-			executionCourse = enrolment.getExecutionCourseFor(executionSemester.getPreviousExecutionPeriod());
-		    }
+		    ExecutionCourse executionCourse = getQUCExecutionCourseForAnnualCC(executionSemester, enrolment);
 		    if (executionCourse != null && !coursesAnswered.contains(executionCourse)) {
 			coursesToAnswer.put(executionCourse, enrolment.getCurricularCourse().getName());
 		    }
@@ -1090,10 +1077,7 @@ public class Student extends Student_Base {
 
 	    for (final Enrolment enrolment : registration.getEnrolments(executionSemester.getPreviousExecutionPeriod())) {
 		if (enrolment.getCurricularCourse().isAnual()) {
-		    ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(executionSemester);
-		    if (executionCourse == null) { //some annual courses only have one execution in the 1st semester
-			executionCourse = enrolment.getExecutionCourseFor(executionSemester.getPreviousExecutionPeriod());
-		    }
+		    ExecutionCourse executionCourse = getQUCExecutionCourseForAnnualCC(executionSemester, enrolment);
 		    if (executionCourse != null && !inquiryCurricularCourses.contains(enrolment.getCurricularCourse())) {
 			return true;
 		    }
@@ -1101,6 +1085,14 @@ public class Student extends Student_Base {
 	    }
 	}
 	return false;
+    }
+
+    private ExecutionCourse getQUCExecutionCourseForAnnualCC(final ExecutionSemester executionSemester, final Enrolment enrolment) {
+	ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(executionSemester);
+	if (executionCourse == null) { //some annual courses only have one execution in the 1st semester
+	    executionCourse = enrolment.getExecutionCourseFor(executionSemester.getPreviousExecutionPeriod());
+	}
+	return executionCourse;
     }
 
     public boolean hasYearDelegateInquiriesToAnswer() {
