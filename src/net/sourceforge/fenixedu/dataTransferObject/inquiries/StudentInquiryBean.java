@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.AffiliatedTeacherDTO;
@@ -114,7 +115,6 @@ public class StudentInquiryBean implements Serializable {
 		}
 	    }
 	}
-
 	for (Entry<Person, Map<ShiftType, StudentTeacherInquiryBean>> entry : teachersShifts.entrySet()) {
 	    ArrayList<StudentTeacherInquiryBean> studentTeachers = new ArrayList<StudentTeacherInquiryBean>(entry.getValue()
 		    .values());
@@ -123,6 +123,39 @@ public class StudentInquiryBean implements Serializable {
 		getTeachersInquiries().put(new AffiliatedTeacherDTO(entry.getKey()), studentTeachers);
 	    }
 	}
+    }
+
+    public List<TeacherDTO> getOrderedTeachers() {
+	List<TeacherDTO> finalResult = new ArrayList<TeacherDTO>();
+	Set<TeacherDTO> theoricalShiftType = new TreeSet<TeacherDTO>(new BeanComparator("name"));
+	Set<TeacherDTO> praticalShiftType = new TreeSet<TeacherDTO>(new BeanComparator("name"));
+	Set<TeacherDTO> laboratoryShiftType = new TreeSet<TeacherDTO>(new BeanComparator("name"));
+	Set<TeacherDTO> otherShiftTypes = new TreeSet<TeacherDTO>(new BeanComparator("name"));
+	for (TeacherDTO teacherDTO : getTeachersInquiries().keySet()) {
+	    if (containsShiftType(teacherDTO, ShiftType.TEORICA)) {
+		theoricalShiftType.add(teacherDTO);
+	    } else if (containsShiftType(teacherDTO, ShiftType.PRATICA)) {
+		praticalShiftType.add(teacherDTO);
+	    } else if (containsShiftType(teacherDTO, ShiftType.LABORATORIAL)) {
+		laboratoryShiftType.add(teacherDTO);
+	    } else {
+		otherShiftTypes.add(teacherDTO);
+	    }
+	}
+	finalResult.addAll(theoricalShiftType);
+	finalResult.addAll(praticalShiftType);
+	finalResult.addAll(laboratoryShiftType);
+	finalResult.addAll(otherShiftTypes);
+	return finalResult;
+    }
+
+    private boolean containsShiftType(TeacherDTO teacherDTO, ShiftType shiftType) {
+	for (StudentTeacherInquiryBean studentTeacherInquiryBean : getTeachersInquiries().get(teacherDTO)) {
+	    if (studentTeacherInquiryBean.getShiftType() == shiftType) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     public String validateCurricularInquiry() {
@@ -176,7 +209,7 @@ public class StudentInquiryBean implements Serializable {
     public void setAnsweredInquiry() {
 	InquiryCourseAnswer inquiryCourseAnswer = new InquiryCourseAnswer();
 	DateTime endTime = new DateTime();
-	inquiryCourseAnswer.setAnswerDuration(endTime.minus(getStartedWhen().getMillis()).getMillis());
+	inquiryCourseAnswer.setAnswerDuration(endTime.getMillis() - getStartedWhen().getMillis());
 	inquiryCourseAnswer.setAttendenceClassesPercentage(getInquiryRegistry().getAttendenceClassesPercentage());
 	inquiryCourseAnswer.setCommittedFraud(Boolean.FALSE);//TODO actualmente não existe registo desta info no fenix
 	inquiryCourseAnswer.setEntryGrade(InquiryGradesInterval.getInterval(getInquiryRegistry().getStudent().getEntryGrade()));

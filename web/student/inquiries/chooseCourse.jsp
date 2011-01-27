@@ -98,7 +98,7 @@
 					<fr:property name="style" value="width: 100%; margin-bottom: 0;"/>
 					<fr:property name="columnClasses" value="col1,col2,col3,col4,col5,col6"/>
 					<fr:property name="headerClasses" value="col1,col2,col3,col4,col5,col6"/>
-					<fr:property name="suffixes" value=",h,,%,dias,h"/>
+					<fr:property name="suffixes" value=",h,,%,h,dias"/>
 					<fr:property name="validatorClasses" value="error0"/>
 					<fr:property name="hideValidators" value="false"/>
 					<fr:property name="allValidatorsInline" value="true" />
@@ -148,23 +148,21 @@ div.inquiries-registry1 th.col2 { border-left: 5px solid #ccc; }
 div.inquiries-registry1 th.col3 { }
 div.inquiries-registry1 th.col4 { border-left: 5px solid #ccc; }
 div.inquiries-registry1 th.col5 { }
-div.inquiries-registry1 th.col6 { border-left: 5px solid #ccc; }
-div.inquiries-registry1 th.col7 { }
-div.inquiries-registry1 th.col8 { border-left: 5px solid #ccc; }
- 
+div.inquiries-registry1 th.col6 { }
+
 div.inquiries-registry1 td.col1 { text-align: left; }
 div.inquiries-registry1 td.col2 { width: 80px !important; border-left: 5px solid #ccc; background: #f5f5f5; }
 div.inquiries-registry1 td.col3 { width: 80px !important; background: #f5f5f5; }
 div.inquiries-registry1 td.col4 { width: 80px !important; border-left: 5px solid #ccc; }
-div.inquiries-registry1 td.col5 { width: 100px !important; }
-div.inquiries-registry1 td.col6 { width: 80px !important; border-left: 5px solid #ccc; }
+div.inquiries-registry1 td.col5 { width: 75px !important; }
+div.inquiries-registry1 td.col6 { width: 100px !important; }
  
 div.inquiries-registry-empty td.col1 { text-align: left; }
 div.inquiries-registry-empty td.col2 { width: 80px !important; border-left: 5px solid #ccc; background: #f5f5f5; }
 div.inquiries-registry-empty td.col3 { width: 80px !important; background: #f5f5f5; }
 div.inquiries-registry-empty td.col4 { width: 80px !important; border-left: 5px solid #ccc; }
-div.inquiries-registry-empty td.col5 { width: 100px !important; }
-div.inquiries-registry-empty td.col6 { width: 80px !important; border-left: 5px solid #ccc; }
+div.inquiries-registry-empty td.col5 { width: 75px !important; }
+div.inquiries-registry-empty td.col6 { width: 100px !important; }
 
 div.inquiries-registry2 th.col1 { }
 div.inquiries-registry2 th.col2 { border-left: 5px solid #ccc; }
