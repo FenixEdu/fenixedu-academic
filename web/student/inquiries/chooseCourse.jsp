@@ -28,7 +28,7 @@
 		<b><bean:write name="student" property="openStudentInquiryExecutionPeriod.weeklyHoursSpentInClassesSeason"/></b> 
 		<bean:message key="label.hoursPerWeek.a" bundle="INQUIRIES_RESOURCES"/>
 	</p>
-	<div class="inquiries-registry2" style="max-width: 930px;">
+	<div class="inquiries-registry2" style="max-width: 900px;">
 	<fr:view name="courses" schema="curricularCourseInquiriesRegistryDTO.submitHoursAndDays" >
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle1 thlight tdcenter"/>
@@ -42,14 +42,14 @@
 			<fr:property name="key(answerNow)" value="link.inquiries.answerNow"/>
 			<fr:property name="bundle(answerNow)" value="INQUIRIES_RESOURCES"/>
 			<fr:property name="contextRelative(answerNow)" value="true"/>      
-			<fr:property name="order(answerNow)" value="2"/>
+			<fr:property name="order(answerNow)" value="1"/>
 			<fr:property name="visibleIf(answerNow)" value="inquiryRegistry.toAnswerLater"/>
 			
 			<fr:property name="linkFormat(dontRespond)" value="/studentInquiry.do?method=showJustifyNotAnswered&amp;inquiryRegistryID=${inquiryRegistry.externalId}" />
 			<fr:property name="key(dontRespond)" value="link.inquiries.dontRespond"/>
 			<fr:property name="bundle(dontRespond)" value="INQUIRIES_RESOURCES"/>
 			<fr:property name="contextRelative(dontRespond)" value="true"/>      
-			<fr:property name="order(dontRespond)" value="1"/>
+			<fr:property name="order(dontRespond)" value="2"/>
 			<fr:property name="visibleIf(dontRespond)" value="inquiryRegistry.toAnswerLater"/>
 			
 			<fr:property name="visibleIf(notAnswered)" value="inquiryRegistry.notAnswered"/>
@@ -91,7 +91,7 @@
 			<bean:message key="label.hoursPerWeek" bundle="INQUIRIES_RESOURCES"/>
 		</p>
 
- 		<div class="inquiries-registry1" style="max-width: 800px; margin-bottom: 0;">
+ 		<div class="inquiries-registry1" style="max-width: 770px; margin-bottom: 0;">
 			<fr:edit id="hoursAndDaysByCourse" name="courses" schema="curricularCourseInquiriesRegistryDTO.submitHoursAndDays.edit" >
 				<fr:layout name="tabular-editable" >
 					<fr:property name="classes" value="tstyle1 thlight tdcenter"/>
@@ -106,13 +106,13 @@
 			</fr:edit>
 		</div>
 		
-		<div class="inquiries-registry-empty" style="max-width: 800px;"> 
+		<div class="inquiries-registry-empty" style="max-width: 770px;"> 
 			<table class="tstyle1 tempty thlight tdcenter" style="width: 100%; margin: 0;"> 
 				<tr> 
 					<td class="col1"></td>							
 					<td class="col2"></td> 
 					<td class="col3"></td> 
-					<td class="col4">Total 100%</td> 
+					<td class="col4"><b><bean:message key="label.inquiries.columnTotal.100" bundle="INQUIRIES_RESOURCES"/></b></td> 
 					<td class="col5"></td> 
 					<td class="col6"></td> 
 				</tr> 

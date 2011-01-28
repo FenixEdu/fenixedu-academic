@@ -31,7 +31,7 @@
 				request.setAttribute("shifts",inquiryBean.getTeachersInquiries().get(teacherDto));
 			%>
 			<tr>
-				<td class="aleft">
+				<td class="aleft nowrap">
 					<logic:present name="teacherDto" property="personID">
 						<bean:define id="personID" name="teacherDto" property="personID"/>
 						<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
