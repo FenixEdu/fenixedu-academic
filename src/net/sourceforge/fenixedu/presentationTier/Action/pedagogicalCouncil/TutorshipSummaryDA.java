@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TutorshipSummary;
 import net.sourceforge.fenixedu.domain.TutorshipSummaryRelation;
-import net.sourceforge.fenixedu.presentationTier.Action.commons.tutorship.ViewStudentsByTutorDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -37,36 +37,16 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 	@Forward(name = "processCreateSummary", path = "/pedagogicalCouncil/tutorship/processCreateSummary.jsp"),
 	@Forward(name = "confirmCreateSummary", path = "/pedagogicalCouncil/tutorship/confirmCreateSummary.jsp"),
 	@Forward(name = "viewSummary", path = "/pedagogicalCouncil/tutorship/viewSummary.jsp") })
-public class TutorshipSummaryDA extends ViewStudentsByTutorDispatchAction {
+public class TutorshipSummaryDA extends FenixDispatchAction {
 
     public ActionForward searchTeacher(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-
 	TutorSummaryBean bean = (TutorSummaryBean) getRenderedObject("tutorateBean");
-
 	if (bean == null) {
 	    bean = new TutorSummaryBean();
-	} else {
-	    if (bean.getTeacher() != null) {
-		getTutorships(request, bean.getTeacher());
-
-		request.setAttribute("tutor", bean.getTeacher());
-	    }
 	}
-	request.setAttribute("tutorateBean", bean);
-
-	return mapping.findForward("searchTeacher");
-    }
-
-    public ActionForward postback(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	TutorSummaryBean bean = (TutorSummaryBean) getRenderedObject("tutorateBean");
-
 	RenderUtils.invalidateViewState();
-
 	request.setAttribute("tutorateBean", bean);
-
 	return mapping.findForward("searchTeacher");
     }
 
