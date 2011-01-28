@@ -767,7 +767,6 @@
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorSummaryBean$DegreesProvider" />
 		<property name="format" value="${presentationName}" />
-		<property name="sortBy" value="name" />
 		<property name="destination" value="postback" />
 	</slot>
 </schema>
