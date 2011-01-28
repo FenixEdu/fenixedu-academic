@@ -225,7 +225,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	return getThesisRequirementDocument() != null;
     }
 
-    boolean isConcluded() {
+    public boolean isConcluded() {
 	return getActiveState() == PhdThesisProcessStateType.CONCLUDED;
     }
 

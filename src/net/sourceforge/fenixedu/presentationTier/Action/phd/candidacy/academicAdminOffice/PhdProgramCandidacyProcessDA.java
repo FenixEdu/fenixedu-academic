@@ -26,16 +26,19 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.AddNotification;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.AddState;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.AssociateRegistration;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.DeleteDocument;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.EditProcessAttributes;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RatifyCandidacy;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RegistrationFormalization;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RemoveLastState;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RequestCandidacyReview;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessStateBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.RatifyCandidacyBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.RegistrationFormalizationBean;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.AddNotification;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.AssociateRegistration;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.DeleteDocument;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RatifyCandidacy;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RegistrationFormalization;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RequestCandidacyReview;
 import net.sourceforge.fenixedu.domain.phd.notification.PhdNotification;
 import net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationBean;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.CommonPhdCandidacyDA;
@@ -85,7 +88,11 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Forward(name = "registrationFormalization", path = "/phd/candidacy/academicAdminOffice/registrationFormalization.jsp"),
 
-@Forward(name = "associateRegistration", path = "/phd/candidacy/academicAdminOffice/associateRegistration.jsp")
+@Forward(name = "associateRegistration", path = "/phd/candidacy/academicAdminOffice/associateRegistration.jsp"),
+
+@Forward(name = "manageStates", path = "/phd/candidacy/academicAdminOffice/manageStates.jsp"),
+
+@Forward(name = "editProcessAttributes", path = "/phd/candidacy/academicAdminOffice/editProcessAttributes.jsp")
 
 })
 public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
@@ -591,5 +598,55 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 	}
 
 	return viewIndividualProgramProcess(request, getProcess(request));
+    }
+
+    public ActionForward manageStates(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	PhdProgramCandidacyProcessBean bean = new PhdProgramCandidacyProcessBean(getProcess(request));
+	request.setAttribute("processBean", bean);
+
+	return mapping.findForward("manageStates");
+    }
+
+    public ActionForward addState(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+	PhdProgramCandidacyProcessBean bean = getRenderedObject("processBean");
+	ExecuteProcessActivity.run(getProcess(request), AddState.class, bean);
+
+	RenderUtils.invalidateViewState();
+
+	return manageStates(mapping, form, request, response);
+    }
+
+    public ActionForward removeLastState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	PhdProgramCandidacyProcessBean bean = getRenderedObject("processBean");
+	ExecuteProcessActivity.run(getProcess(request), RemoveLastState.class, bean);
+
+	RenderUtils.invalidateViewState();
+
+	return manageStates(mapping, form, request, response);
+    }
+
+    public ActionForward prepareEditProcessAttributes(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	PhdProgramCandidacyProcessBean bean = new PhdProgramCandidacyProcessBean(getProcess(request));
+	request.setAttribute("processBean", bean);
+
+	return mapping.findForward("editProcessAttributes");
+    }
+
+    public ActionForward editProcessAttributesInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("processBean", getRenderedObject("processBean"));
+
+	return mapping.findForward("editProcessAttributes");
+    }
+
+    public ActionForward editProcessAttributes(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	PhdProgramCandidacyProcessBean bean = getRenderedObject("processBean");
+	ExecuteProcessActivity.run(getProcess(request), EditProcessAttributes.class, bean);
+
+	return viewIndividualProgramProcess(mapping, form, request, response);
     }
 }

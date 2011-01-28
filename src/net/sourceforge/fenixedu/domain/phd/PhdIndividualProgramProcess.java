@@ -55,6 +55,7 @@ import net.sourceforge.fenixedu.domain.phd.guidance.PhdGuidanceDocument;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessStateType;
+import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisFinalGrade;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -1806,6 +1807,18 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return true;
     }
     
+    public boolean isConcluded() {
+	return hasThesisProcess() && getThesisProcess().isConcluded();
+    }
+
+    public PhdThesisFinalGrade getFinalGrade() {
+	if (!isConcluded()) {
+	    return null;
+	}
+
+	return getThesisProcess().getFinalGrade();
+    }
+
     public Set<PhdGuidanceDocument> getLatestGuidanceDocumentVersions() {
 	Set<PhdGuidanceDocument> documents = new HashSet<PhdGuidanceDocument>();
 	

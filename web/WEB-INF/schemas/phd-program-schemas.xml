@@ -88,6 +88,7 @@
 	<slot name="createdBy" />
 	<slot name="whenUpdated" />
 	<slot name="updatedBy" />
+	<slot name="candidacyDate" />
 	<slot name="whenRatified" />	
 	<slot name="activeStateRemarks"/>
 </schema>

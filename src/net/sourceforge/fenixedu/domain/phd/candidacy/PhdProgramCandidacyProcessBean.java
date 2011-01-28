@@ -87,8 +87,19 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 
     private Integer phdStudentNumber;
 
+    private LocalDate whenRatified;
+
+    private PhdProgramCandidacyProcess process;
+
     public PhdProgramCandidacyProcessBean() {
 	setCandidacyDate(new LocalDate());
+    }
+
+    public PhdProgramCandidacyProcessBean(PhdProgramCandidacyProcess process) {
+	setCandidacyDate(process.getCandidacyDate());
+	setWhenRatified(process.getWhenRatified());
+
+	this.process = process;
     }
 
     public LocalDate getCandidacyDate() {
@@ -462,6 +473,22 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 	}
 
 	return result;
+    }
+
+    public LocalDate getWhenRatified() {
+	return whenRatified;
+    }
+
+    public void setWhenRatified(LocalDate whenRatified) {
+	this.whenRatified = whenRatified;
+    }
+
+    public PhdProgramCandidacyProcess getProcess() {
+	return process;
+    }
+
+    public void setProcess(PhdProgramCandidacyProcess process) {
+	this.process = process;
     }
 
 }

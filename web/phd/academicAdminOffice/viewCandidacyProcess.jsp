@@ -5,12 +5,14 @@
 <%@ taglib uri="/WEB-INF/phd.tld" prefix="phd" %>
 
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RequestCandidacyReview"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RejectCandidacyProcess"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RatifyCandidacy"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RegistrationFormalization"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.AssociateRegistration"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess" %>
+<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RequestCandidacyReview" %>
+<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RejectCandidacyProcess" %>
+<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RatifyCandidacy" %>
+<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RegistrationFormalization" %>
+<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.AssociateRegistration" %>
+<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.AddState" %>
+<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RemoveLastState" %>
 
 
 <%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess"%><strong><bean:message  key="label.phd.candidacyProcess" bundle="PHD_RESOURCES"/></strong>
@@ -34,6 +36,21 @@
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.notifications"/>
 				</html:link>
 			</li>
+		<phd:activityAvailable process="<%= candidacyProcess %>" activity="<%= AddState.class %>">
+			<li>
+				<html:link action="/phdProgramCandidacyProcess.do?method=manageStates" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
+					<bean:message bundle="PHD_RESOURCES" key="label.phd.manage.states" />
+				</html:link>
+			</li>		
+		</phd:activityAvailable>
+		<phd:activityAvailable process="<%= candidacyProcess %>" activity="<%= RemoveLastState.class %>" >
+			<li>
+				<html:link action="/phdProgramCandidacyProcess.do?method=prepareEditProcessAttributes" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
+					<bean:message bundle="PHD_RESOURCES" key="label.phd.edit.attributes" />
+				</html:link>
+			</li>
+		</phd:activityAvailable>		
+			
 			<logic:notEmpty name="candidacyProcess" property="individualProgramProcess.phdProgram">
 				<li>
 					<html:link action="/phdProgramCandidacyProcess.do?method=printCandidacyDeclaration&language=pt" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
@@ -60,17 +77,18 @@
 
 <ul class="operations">
 
-<li style="display: inline;">
-	<html:link action="/phdProgramCandidacyProcess.do?method=prepareEditCandidacyInformation" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
-		<bean:message bundle="PHD_RESOURCES" key="label.phd.edit.candidacy.information"/>
-	</html:link>
-</li>
+		<li style="display: inline;">
+			<html:link action="/phdProgramCandidacyProcess.do?method=prepareEditCandidacyInformation" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
+				<bean:message bundle="PHD_RESOURCES" key="label.phd.edit.candidacy.information"/>
+			</html:link>
+		</li>
 
 		<li style="display: inline;">
 			<html:link action="/phdProgramCandidacyProcess.do?method=manageCandidacyDocuments" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
 				<bean:message bundle="PHD_RESOURCES" key="label.phd.manageCandidacyDocuments"/>
 			</html:link>
 		</li>
+
 <logic:equal name="process" property="activeState.active" value="true">
 		<li style="display: inline;">
 			<html:link action="/phdProgramCandidacyProcess.do?method=manageCandidacyReview" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
@@ -107,7 +125,7 @@
 		</phd:activityAvailable>
 		<phd:activityAvailable process="<%= candidacyProcess %>" activity="<%= PhdProgramCandidacyProcess.AssociateRegistration.class %>">
 			<li style="display: inline;">
-				<html:link action="/phdProgramCandidacyProcess.do?method=prepareAssociateRegistration&language=en" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
+				<html:link action="/phdProgramCandidacyProcess.do?method=prepareAssociateRegistration" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.registrationFormalization.associate.registration"/>
 				</html:link>
 			</li>
