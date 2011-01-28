@@ -65,19 +65,22 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     static final public Comparator<Enrolment> REVERSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_ID = new Comparator<Enrolment>() {
+	@Override
 	public int compare(Enrolment o1, Enrolment o2) {
 	    return -COMPARATOR_BY_EXECUTION_PERIOD_AND_ID.compare(o1, o2);
 	}
     };
 
     static final private Comparator<Enrolment> COMPARATOR_BY_LATEST_ENROLMENT_EVALUATION = new Comparator<Enrolment>() {
+	@Override
 	final public int compare(Enrolment o1, Enrolment o2) {
-	    return EnrolmentEvaluation.COMPARATOR_BY_EXAM_DATE.compare(o1.getLatestEnrolmentEvaluation(), o2
-		    .getLatestEnrolmentEvaluation());
+	    return EnrolmentEvaluation.COMPARATOR_BY_EXAM_DATE.compare(o1.getLatestEnrolmentEvaluation(),
+		    o2.getLatestEnrolmentEvaluation());
 	}
     };
 
     static final public Comparator<Enrolment> COMPARATOR_BY_LATEST_ENROLMENT_EVALUATION_AND_ID = new Comparator<Enrolment>() {
+	@Override
 	final public int compare(Enrolment o1, Enrolment o2) {
 	    final ComparatorChain comparatorChain = new ComparatorChain();
 	    comparatorChain.addComparator(Enrolment.COMPARATOR_BY_LATEST_ENROLMENT_EVALUATION);
@@ -114,6 +117,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return false;
     }
 
+    @Override
     final public boolean isExternalEnrolment() {
 	return false;
     }
@@ -374,6 +378,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
 	return (EnrolmentEvaluation) CollectionUtils.find(getEvaluationsSet(), new Predicate() {
 
+	    @Override
 	    final public boolean evaluate(Object o) {
 		EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) o;
 		Grade evaluationGrade = enrolmentEvaluation.getGrade();
@@ -388,6 +393,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	    final EnrolmentEvaluationState state, final EnrolmentEvaluationType type) {
 	return (EnrolmentEvaluation) CollectionUtils.find(getEvaluationsSet(), new Predicate() {
 
+	    @Override
 	    final public boolean evaluate(Object o) {
 		EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) o;
 		return (enrolmentEvaluation.getEnrolmentEvaluationState().equals(state) && enrolmentEvaluation
@@ -555,6 +561,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	ExecutionCourse currentExecutionCourse = (ExecutionCourse) CollectionUtils.find(getCurricularCourse()
 		.getAssociatedExecutionCourses(), new Predicate() {
 
+	    @Override
 	    final public boolean evaluate(Object arg0) {
 		ExecutionCourse executionCourse = (ExecutionCourse) arg0;
 		if (executionCourse.getExecutionPeriod().equals(executionSemester)
@@ -570,6 +577,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	    List attends = currentExecutionCourse.getAttends();
 	    Attends attend = (Attends) CollectionUtils.find(attends, new Predicate() {
 
+		@Override
 		public boolean evaluate(Object arg0) {
 		    Attends attend = (Attends) arg0;
 		    if (attend.getRegistration().equals(registration))
@@ -779,18 +787,20 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     final public Curriculum getCurriculum(final DateTime when, final ExecutionYear year) {
 	if (wasCreated(when) && (year == null || getExecutionYear().isBefore(year)) && isApproved() && !isPropaedeutic()
 		&& !isExtraCurricular()) {
-	    return new Curriculum(this, year, Collections.singleton((ICurriculumEntry) this), Collections.EMPTY_SET, Collections
-		    .singleton((ICurriculumEntry) this));
+	    return new Curriculum(this, year, Collections.singleton((ICurriculumEntry) this), Collections.EMPTY_SET,
+		    Collections.singleton((ICurriculumEntry) this));
 	}
 
 	return Curriculum.createEmpty(this, year);
     }
 
+    @Override
     final public Grade getGrade() {
 	final EnrolmentEvaluation enrolmentEvaluation = getLatestEnrolmentEvaluation();
 	return enrolmentEvaluation == null ? Grade.createEmptyGrade() : enrolmentEvaluation.getGrade();
     }
 
+    @Override
     final public String getGradeValue() {
 	return getGrade().getValue();
     }
@@ -807,8 +817,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 		    }
 		}
 	    }
-	    Dismissal dismissal = dismissals.iterator().next();
 	    if (dismissals.size() == 1) {
+		Dismissal dismissal = dismissals.iterator().next();
 		if (dismissal instanceof OptionalDismissal || dismissal instanceof CreditsDismissal) {
 		    return scp.getDegree().convertGradeToEcts(dismissal, grade);
 		} else {
@@ -820,17 +830,18 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 		    }
 		    return curricularCourse.convertGradeToEcts(dismissal, grade);
 		}
-	    } else {
+	    } else if (dismissals.size() > 1) {
 		// if more than one exists we can't base the conversion on the
 		// origin, so step up to the degree, on a context based on one
 		// of the sources.
+		Dismissal dismissal = dismissals.iterator().next();
 		return scp.getDegree().convertGradeToEcts(dismissal, grade);
 	    }
-	} else {
-	    return getCurricularCourse().convertGradeToEcts(this, grade);
 	}
+	return getCurricularCourse().convertGradeToEcts(this, grade);
     }
 
+    @Override
     final public Integer getFinalGrade() {
 	return getGrade().getIntegerValue();
     }
@@ -843,10 +854,12 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return this.getGradeScaleChain();
     }
 
+    @Override
     public BigDecimal getWeigthTimesGrade() {
 	return getGrade().isNumeric() ? getWeigthForCurriculum().multiply(getGrade().getNumericValue()) : null;
     }
 
+    @Override
     final public boolean isEnroled() {
 	return this.getEnrollmentState() == EnrollmentState.ENROLLED;
     }
@@ -1247,6 +1260,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	    this.enrolment = enrolment;
 	}
 
+	@Override
 	public Object execute() {
 	    enrolment.delete();
 	    return null;
@@ -1289,6 +1303,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return isExtraCurricular() || isPropaedeutic() ? Double.valueOf(0) : getWeigthForCurriculum().doubleValue();
     }
 
+    @Override
     final public BigDecimal getWeigthForCurriculum() {
 	if (!isBolonhaDegree()) {
 
@@ -1479,6 +1494,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return Collections.emptySet();
     }
 
+    @Override
     final public String getDescription() {
 	return getStudentCurricularPlan().getDegree().getPresentationName(getExecutionYear()) + " > " + getName().getContent();
     }
@@ -1490,6 +1506,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
      * This method assumes that each Student has at most one non evaluated
      * Thesis and no more that two Thesis.
      */
+    @Override
     final public Thesis getThesis() {
 	List<Thesis> theses = getTheses();
 
@@ -1500,6 +1517,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	    return theses.iterator().next();
 	default:
 	    SortedSet<Thesis> sortedTheses = new TreeSet<Thesis>(new Comparator<Thesis>() {
+		@Override
 		public int compare(Thesis o1, Thesis o2) {
 		    return o2.getCreation().compareTo(o1.getCreation());
 		}
@@ -1553,7 +1571,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return (thesis == null && getDissertationProposal() == null) ? getPreviousYearThesis() : thesis;
     }
 
-    // 
+    //
     public MultiLanguageString getPossibleDissertationTitle() {
 	Thesis thesis = getThesis();
 	if (thesis == null) {
@@ -1566,10 +1584,12 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return thesis == null ? new MultiLanguageString("-") : thesis.getTitle();
     }
 
+    @Override
     final public Unit getAcademicUnit() {
 	return RootDomainObject.getInstance().getInstitutionUnit();
     }
 
+    @Override
     final public String getCode() {
 	if (hasDegreeModule()) {
 	    return getDegreeModule().getCode();
