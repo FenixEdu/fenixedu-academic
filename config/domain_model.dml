@@ -7840,9 +7840,7 @@ class inquiries.InquiryResult extends DomainObject {
 	String value;
 	ResultClassification resultClassification;
 	ShiftType shiftType;
-	String label;
-	Integer order;
-	Integer resultBlockNumber;
+	DateTime lastUpdate;
 }
 
 /* End of Inquiries */

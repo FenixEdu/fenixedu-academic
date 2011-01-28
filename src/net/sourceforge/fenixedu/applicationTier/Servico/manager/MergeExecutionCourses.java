@@ -40,6 +40,9 @@ import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode;
 import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.functionalities.GroupAvailability;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryCourseAnswer;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
+import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryRegistry;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.ConversationThread;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseAnnouncementBoard;
@@ -151,6 +154,16 @@ public class MergeExecutionCourses extends FenixService {
 	}
 	for (final InquiriesRegistry inquiriesRegistry : executionCourseFrom.getAssociatedInquiriesRegistries()) {
 	    inquiriesRegistry.setExecutionCourse(executionCourseTo);
+	}
+	//new QUC model
+	for (final StudentInquiryRegistry studentInquiryRegistry : executionCourseFrom.getStudentsInquiryRegistriesSet()) {
+	    studentInquiryRegistry.setExecutionCourse(executionCourseTo);
+	}
+	for (final InquiryResult inquiryResult : executionCourseFrom.getInquiriyResultsSet()) {
+	    inquiryResult.setExecutionCourse(executionCourseTo);
+	}
+	for (final InquiryCourseAnswer inquiryCourseAnswer : executionCourseFrom.getInquiryCourseAnswersSet()) {
+	    inquiryCourseAnswer.setExecutionCourse(executionCourseTo);
 	}
     }
 
