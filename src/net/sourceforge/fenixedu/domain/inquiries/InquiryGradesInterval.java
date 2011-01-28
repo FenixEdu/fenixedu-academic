@@ -37,8 +37,11 @@ public enum InquiryGradesInterval {
 	if (grade >= 150 && grade < 160) {
 	    return FROM_150_TO_160;
 	}
+	if (grade >= 160 && grade < 170) {
+	    return FROM_160_TO_170;
+	}
 	if (grade >= 170 && grade < 180) {
-	    return FROM_120_TO_130;
+	    return FROM_170_TO_180;
 	}
 	if (grade >= 180) {
 	    return FROM_180_TO_200;
