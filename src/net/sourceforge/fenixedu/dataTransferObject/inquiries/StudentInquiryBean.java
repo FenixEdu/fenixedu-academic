@@ -223,8 +223,13 @@ public class StudentInquiryBean implements Serializable {
 	inquiryCourseAnswer.setExecutionPeriod(getInquiryRegistry().getExecutionPeriod());
 
 	Grade grade = getGrade(getInquiryRegistry());
-	if (grade != null && grade.getIntegerValue() != null && grade.getGradeScale() == GradeScale.TYPE20) {
-	    inquiryCourseAnswer.setGrade(InquiryGradesInterval.getInterval(Double.valueOf(grade.getIntegerValue()) * 10));
+	if (grade != null && grade.getGradeScale() == GradeScale.TYPE20) {
+	    int gradeValue = 0;
+	    if (grade.isApproved()) {
+		gradeValue = grade.getIntegerValue();
+
+	    }
+	    inquiryCourseAnswer.setGrade(InquiryGradesInterval.getInterval(Double.valueOf(gradeValue) * 10));
 	}
 	inquiryCourseAnswer.setNumberOfEnrolments(InquiryCourseAnswer.getNumberOfEnrolments(getInquiryRegistry()));
 	inquiryCourseAnswer.setResponseDateTime(endTime);
