@@ -43,6 +43,8 @@ public class InquiryCourseAnswer extends InquiryCourseAnswer_Base {
 	courseAnswer.setNumberOfEnrolments(getNumberOfEnrolments(inquiryRegistry));
 	courseAnswer.setCommittedFraud(Boolean.FALSE);//TODO actualmente não existe registo desta info no fenix
 	courseAnswer.setStudentType(inquiryRegistry.getStudent().getRegistrationAgreement());
+	courseAnswer.setEntryGrade(InquiryGradesInterval.getInterval(inquiryRegistry.getStudent().getEntryGrade()));
+	courseAnswer.setGrade(inquiryRegistry.getLastGradeInterval());
 
 	inquiryRegistry.setState(InquiriesRegistryState.NOT_ANSWERED);
 

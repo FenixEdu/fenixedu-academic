@@ -1,13 +1,18 @@
 package net.sourceforge.fenixedu.domain.inquiries;
 
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseInquiriesRegistryDTO;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.Grade;
+import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -69,6 +74,28 @@ public class StudentInquiryRegistry extends StudentInquiryRegistry_Base {
 	    return false;
 	}
 	return true;
+    }
+
+    public InquiryGradesInterval getLastGradeInterval() {
+	Collection<Enrolment> enrolments = getStudent().getEnrolments(getExecutionPeriod());
+	Grade grade = null;
+	for (Enrolment enrolment : enrolments) {
+	    if (getExecutionCourse() == enrolment.getExecutionCourseFor(getExecutionPeriod())) {
+		final EnrolmentEvaluation enrolmentEvaluation = enrolment.getLatestEnrolmentEvaluation();
+		if (enrolmentEvaluation != null && (enrolmentEvaluation.isTemporary() || enrolmentEvaluation.isFinal())) {
+		    grade = enrolmentEvaluation.getGrade();
+		    break;
+		}
+	    }
+	}
+	if (grade != null && grade.getGradeScale() == GradeScale.TYPE20) {
+	    int gradeValue = 0;
+	    if (grade.isApproved()) {
+		gradeValue = grade.getIntegerValue();
+	    }
+	    return InquiryGradesInterval.getInterval(Double.valueOf(gradeValue) * 10);
+	}
+	return null;
     }
 
     public boolean isCreatedAfterWeeklySpentHoursSubmission() {

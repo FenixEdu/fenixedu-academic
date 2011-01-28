@@ -430,10 +430,10 @@ public class Student extends Student_Base {
     }
 
     public DegreeType getMostSignificantDegreeType() {
-//	if (isStudentOfDegreeType(DegreeType.MASTER_DEGREE))
-//	    return DegreeType.MASTER_DEGREE;
-//	if (isStudentOfDegreeType(DegreeType.DEGREE))
-//	    return DegreeType.DEGREE;
+	//	if (isStudentOfDegreeType(DegreeType.MASTER_DEGREE))
+	//	    return DegreeType.MASTER_DEGREE;
+	//	if (isStudentOfDegreeType(DegreeType.DEGREE))
+	//	    return DegreeType.DEGREE;
 	if (isStudentOfDegreeType(DegreeType.BOLONHA_SPECIALIZATION_DEGREE))
 	    return DegreeType.BOLONHA_SPECIALIZATION_DEGREE;
 	if (isStudentOfDegreeType(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA))
@@ -922,6 +922,9 @@ public class Student extends Student_Base {
 	}
 
 	StudentInquiryExecutionPeriod studentInquiryExecutionPeriod = getStudentInquiryExecutionPeriod(executionSemester);
+	if (studentInquiryExecutionPeriod != null && studentInquiryExecutionPeriod.getWeeklyHoursSpentInClassesSeason() != 0) {
+	    return;
+	}
 
 	if (studentInquiryExecutionPeriod == null) {
 	    studentInquiryExecutionPeriod = new StudentInquiryExecutionPeriod(this, executionSemester);

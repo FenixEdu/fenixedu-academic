@@ -43,6 +43,6 @@ public enum InquiryGradesInterval {
 	if (grade >= 180) {
 	    return FROM_180_TO_200;
 	}
-	return DONT_KNOW;
+	return null;
     }
 }

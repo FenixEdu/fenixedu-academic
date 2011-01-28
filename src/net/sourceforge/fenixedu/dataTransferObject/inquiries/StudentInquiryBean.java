@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -15,12 +14,8 @@ import java.util.Map.Entry;
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.AffiliatedTeacherDTO;
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.NonAffiliatedTeacherDTO;
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.TeacherDTO;
-import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.Grade;
-import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
@@ -208,6 +203,9 @@ public class StudentInquiryBean implements Serializable {
 
     @Service
     public void setAnsweredInquiry() {
+	if (getInquiryRegistry().getState() == InquiriesRegistryState.ANSWERED) {
+	    return;
+	}
 	InquiryCourseAnswer inquiryCourseAnswer = new InquiryCourseAnswer();
 	DateTime endTime = new DateTime();
 	inquiryCourseAnswer.setAnswerDuration(endTime.getMillis() - getStartedWhen().getMillis());
@@ -222,15 +220,7 @@ public class StudentInquiryBean implements Serializable {
 	inquiryCourseAnswer.setExecutionDegreeCourse(executionDegreeCourse);
 	inquiryCourseAnswer.setExecutionPeriod(getInquiryRegistry().getExecutionPeriod());
 
-	Grade grade = getGrade(getInquiryRegistry());
-	if (grade != null && grade.getGradeScale() == GradeScale.TYPE20) {
-	    int gradeValue = 0;
-	    if (grade.isApproved()) {
-		gradeValue = grade.getIntegerValue();
-
-	    }
-	    inquiryCourseAnswer.setGrade(InquiryGradesInterval.getInterval(Double.valueOf(gradeValue) * 10));
-	}
+	inquiryCourseAnswer.setGrade(getInquiryRegistry().getLastGradeInterval());
 	inquiryCourseAnswer.setNumberOfEnrolments(InquiryCourseAnswer.getNumberOfEnrolments(getInquiryRegistry()));
 	inquiryCourseAnswer.setResponseDateTime(endTime);
 	inquiryCourseAnswer.setStudentType(getInquiryRegistry().getStudent().getRegistrationAgreement());
@@ -278,21 +268,5 @@ public class StudentInquiryBean implements Serializable {
 	    }
 	}
 	getInquiryRegistry().setState(InquiriesRegistryState.ANSWERED);
-    }
-
-    private Grade getGrade(StudentInquiryRegistry inquiryRegistry) {
-	Collection<Enrolment> enrolments = inquiryRegistry.getStudent().getEnrolments(getInquiryRegistry().getExecutionPeriod());
-	Grade grade = null;
-	for (Enrolment enrolment : enrolments) {
-	    if (getInquiryRegistry().getExecutionCourse() == enrolment.getExecutionCourseFor(getInquiryRegistry()
-		    .getExecutionPeriod())) {
-		final EnrolmentEvaluation enrolmentEvaluation = enrolment.getLatestEnrolmentEvaluation();
-		if (enrolmentEvaluation != null && (enrolmentEvaluation.isTemporary() || enrolmentEvaluation.isFinal())) {
-		    grade = enrolmentEvaluation.getGrade();
-		    break;
-		}
-	    }
-	}
-	return grade;
     }
 }
