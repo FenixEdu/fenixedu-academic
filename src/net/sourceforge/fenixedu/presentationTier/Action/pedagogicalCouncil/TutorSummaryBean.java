@@ -181,6 +181,7 @@ public class TutorSummaryBean extends TutorSearchBean {
 
     public static class DegreesProvider implements DataProvider {
 
+	@Override
 	public Object provide(Object source, Object currentValue) {
 
 	    final SortedSet<Degree> result = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
@@ -189,7 +190,9 @@ public class TutorSummaryBean extends TutorSearchBean {
 	    if (chooseDegreeBean.getExecutionSemester() != null) {
 		for (final ExecutionDegree executionDegree : chooseDegreeBean.getExecutionSemester().getExecutionYear()
 			.getExecutionDegrees()) {
-		    result.add(executionDegree.getDegree());
+		    if (executionDegree.getDegreeType().isFirstCycle()) {
+			result.add(executionDegree.getDegree());
+		    }
 		}
 	    }
 
@@ -197,6 +200,7 @@ public class TutorSummaryBean extends TutorSearchBean {
 
 	}
 
+	@Override
 	public Converter getConverter() {
 	    return new DomainObjectKeyConverter();
 	}

@@ -24,9 +24,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
-import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
-import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
-import pt.utl.ist.fenix.tools.util.excel.SpreadsheetXLSExporter;
+import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
+import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
+import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
+import pt.utl.ist.fenix.tools.util.Pair;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Mapping(path = "/tutorshipSummary", module = "pedagogicalCouncil")
@@ -71,6 +72,8 @@ public class TutorshipSummaryDA extends ViewStudentsByTutorDispatchAction {
 
     public ActionForward exportSummaries(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale());
+	final ResourceBundle bundleEnum = ResourceBundle.getBundle("resources/EnumerationResources", Language.getLocale());
 
 	TutorSummaryBean bean = (TutorSummaryBean) getRenderedObject("tutorateBean");
 
@@ -83,12 +86,99 @@ public class TutorshipSummaryDA extends ViewStudentsByTutorDispatchAction {
 
 	final ServletOutputStream writer = response.getOutputStream();
 
-	final List<Spreadsheet> spreadsheets = new ArrayList<Spreadsheet>();
+	SheetData<TutorshipSummary> generalSheet = new SheetData<TutorshipSummary>(bean.getPastSummaries()) {
 
-	spreadsheets.add(generateGeneralSheet(bean.getPastSummaries()));
-	spreadsheets.add(generateDetailedSheet(bean.getPastSummaries()));
+	    @Override
+	    protected void makeLine(TutorshipSummary summary) {
+		addCell("Docente", summary.getTeacher().getPerson().getName());
+		addCell("Semestre", summary.getSemester().getSemester() + " - "
+			+ summary.getSemester().getExecutionYear().getYear());
+		addCell("Curso", summary.getDegree().getSigla());
+		addCell(bundle.getString("label.tutorshipSummary.form.relationsSize"),
+			summary.getTutorshipSummaryRelationsCount());
+		addCell(bundle.getString("label.tutorshipSummary.form.howManyReunionsGroup"), summary.getHowManyReunionsGroup());
+		addCell(bundle.getString("label.tutorshipSummary.form.howManyReunionsIndividual"),
+			summary.getHowManyReunionsIndividual());
+		addCell(bundle.getString("label.tutorshipSummary.form.howManyContactsPhone"), summary.getHowManyContactsPhone());
+		addCell(bundle.getString("label.tutorshipSummary.form.howManyContactsEmail"), summary.getHowManyContactsEmail());
 
-	new SpreadsheetXLSExporter().exportToXLSSheets(writer, spreadsheets);
+		addCell("Problemas:", "");
+		addCell("Horários/Inscrições", convertBoolean(summary.getProblemsR1()));
+		addCell("Métodos de Estudo", convertBoolean(summary.getProblemsR2()));
+		addCell("Gestão de Tempo/Volume de Trabalho", convertBoolean(summary.getProblemsR3()));
+		addCell("Acesso a Informação (ex.:aspectos administrativos; ERASMUS; etc.)",
+			convertBoolean(summary.getProblemsR4()));
+		addCell("Transição Ensino Secundário/Ensino Superior", convertBoolean(summary.getProblemsR5()));
+		addCell("Problemas Vocacionais", convertBoolean(summary.getProblemsR6()));
+		addCell("Relação Professor - Aluno", convertBoolean(summary.getProblemsR7()));
+		addCell("Desempenho Académico (ex.: taxas de aprovação)", convertBoolean(summary.getProblemsR8()));
+		addCell("Avaliação (ex.: metodologia, datas de exames; etc.)", convertBoolean(summary.getProblemsR9()));
+		addCell("Adaptação ao IST", convertBoolean(summary.getProblemsR10()));
+		addCell("Outro", summary.getProblemsOther());
+
+		addCell("Ganhos:", "");
+		addCell("Maior responsabilização/autonomização do Aluno", convertBoolean(summary.getGainsR1()));
+		addCell("Alteração dos métodos de estudo", convertBoolean(summary.getGainsR2()));
+		addCell("Planeamento do semestre/Avaliação", convertBoolean(summary.getGainsR3()));
+		addCell("Acompanhamento mais individualizado", convertBoolean(summary.getGainsR4()));
+		addCell("Maior motivação para o curso", convertBoolean(summary.getGainsR5()));
+		addCell("Melhor desempenho académico", convertBoolean(summary.getGainsR6()));
+		addCell("Maior proximidade Professor-Aluno", convertBoolean(summary.getGainsR7()));
+		addCell("Transição do Ensino Secundário para o Ensino Superior mais fácil", convertBoolean(summary.getGainsR8()));
+		addCell("Melhor adaptação ao IST", convertBoolean(summary.getGainsR9()));
+		addCell("Apoio na tomada de decisões/Resolução de problemas", convertBoolean(summary.getGainsR10()));
+		addCell("Outro", summary.getGainsOther());
+
+		if (summary.getTutorshipSummaryProgramAssessment() != null) {
+		    addCell("Apreciação Global", bundleEnum.getString(summary.getTutorshipSummaryProgramAssessment().getName()));
+		} else {
+		    addCell("Apreciação Global", "");
+		}
+		addCell("Dificuldades", summary.getDifficulties());
+		addCell("Ganhos", summary.getGains());
+		addCell("Sugestões", summary.getSuggestions());
+	    }
+	};
+
+	List<Pair<TutorshipSummary, TutorshipSummaryRelation>> relations = new ArrayList<Pair<TutorshipSummary, TutorshipSummaryRelation>>();
+	for (TutorshipSummary summary : bean.getPastSummaries()) {
+	    for (TutorshipSummaryRelation relation : summary.getTutorshipSummaryRelationsSet()) {
+		relations.add(new Pair<TutorshipSummary, TutorshipSummaryRelation>(summary, relation));
+	    }
+	}
+	SheetData<Pair<TutorshipSummary, TutorshipSummaryRelation>> detailedSheet = new SheetData<Pair<TutorshipSummary, TutorshipSummaryRelation>>(
+		relations) {
+	    @Override
+	    protected void makeLine(Pair<TutorshipSummary, TutorshipSummaryRelation> line) {
+		addCell("Docente", line.getKey().getTeacher().getPerson().getName());
+		addCell("Semestre", line.getKey().getSemester().getSemester() + " - "
+			+ line.getKey().getSemester().getExecutionYear().getYear());
+		addCell("Curso", line.getKey().getDegree().getSigla());
+		addCell("Aluno", line.getValue().getTutorship().getStudent().getName() + "("
+			+ line.getValue().getTutorship().getStudent().getNumber() + ")");
+		addCell(bundle.getString("label.tutorshipSummary.form.withoutEnrolments"), convertBoolean(line.getValue()
+			.getWithoutEnrolments()));
+		if (line.getValue().getParticipationType() == null) {
+		    addCell(bundle.getString("label.tutorshipSummary.form.participationType"), "");
+		} else {
+		    addCell(bundle.getString("label.tutorshipSummary.form.participationType"),
+			    bundleEnum.getString(line.getValue().getParticipationType().getName()));
+		}
+		addCell(bundle.getString("label.tutorshipSummary.form.participationRegularly"), convertBoolean(line.getValue()
+			.getParticipationRegularly()));
+		addCell(bundle.getString("label.tutorshipSummary.form.participationNone"), convertBoolean(line.getValue()
+			.getParticipationNone()));
+		addCell(bundle.getString("label.tutorshipSummary.form.outOfTouch"), convertBoolean(line.getValue()
+			.getOutOfTouch()));
+		addCell(bundle.getString("label.tutorshipSummary.form.highPerformance"), convertBoolean(line.getValue()
+			.getHighPerformance()));
+		addCell(bundle.getString("label.tutorshipSummary.form.lowPerformance"), convertBoolean(line.getValue()
+			.getLowPerformance()));
+	    }
+	};
+
+	new SpreadsheetBuilder().addSheet("Fichas do Tutor (geral)", generalSheet)
+		.addSheet("Fichas do Tutor (tutorandos)", detailedSheet).build(WorkbookExportFormat.EXCEL, writer);
 
 	writer.flush();
 	response.flushBuffer();
@@ -101,164 +191,6 @@ public class TutorshipSummaryDA extends ViewStudentsByTutorDispatchAction {
 	    return "";
 	}
 	return bool ? "X" : "";
-    }
-
-    private List<Object> getSheetHeader() {
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale());
-	final List<Object> result = new ArrayList<Object>();
-
-	result.add("Docente");
-	result.add("Semestre");
-	result.add("Curso");
-	result.add(bundle.getString("label.tutorshipSummary.form.relationsSize"));
-	result.add(bundle.getString("label.tutorshipSummary.form.howManyReunionsGroup"));
-	result.add(bundle.getString("label.tutorshipSummary.form.howManyReunionsIndividual"));
-	result.add(bundle.getString("label.tutorshipSummary.form.howManyContactsPhone"));
-	result.add(bundle.getString("label.tutorshipSummary.form.howManyContactsEmail"));
-
-	result.add("Problemas:");
-	result.add("Horários/Inscrições");
-	result.add("Métodos de Estudo");
-	result.add("Gestão de Tempo/Volume de Trabalho");
-	result.add("Acesso a Informação (ex.:aspectos administrativos; ERASMUS; etc.)");
-	result.add("Transição Ensino Secundário/Ensino Superior");
-	result.add("Problemas Vocacionais");
-	result.add("Relação Professor - Aluno");
-	result.add("Desempenho Académico (ex.: taxas de aprovação)");
-	result.add("Avaliação (ex.: metodologia, datas de exames; etc.)");
-	result.add("Adaptação ao IST");
-	result.add("Outro");
-
-	result.add("Ganhos:");
-	result.add("Maior responsabilização/autonomização do Aluno");
-	result.add("Alteração dos métodos de estudo");
-	result.add("Planeamento do semestre/Avaliação");
-	result.add("Acompanhamento mais individualizado");
-	result.add("Maior motivação para o curso");
-	result.add("Melhor desempenho académico");
-	result.add("Maior proximidade Professor-Aluno");
-	result.add("Transição do Ensino Secundário para o Ensino Superior mais fácil");
-	result.add("Melhor adaptação ao IST");
-	result.add("Apoio na tomada de decisões/Resolução de problemas");
-	result.add("Outro");
-
-	result.add("Apreciação Global");
-	result.add("Dificuldades");
-	result.add("Ganhos");
-	result.add("Sugestões");
-
-	return result;
-    }
-
-    private Spreadsheet generateGeneralSheet(List<TutorshipSummary> summaries) {
-
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale());
-	final ResourceBundle bundleEnum = ResourceBundle.getBundle("resources/EnumerationResources", Language.getLocale());
-	final Spreadsheet spreadsheet = new Spreadsheet("Fichas do Tutor (geral)", getSheetHeader());
-
-	for (TutorshipSummary summary : summaries) {
-	    final Row row = spreadsheet.addRow();
-
-	    row.setCell(summary.getTeacher().getPerson().getName());
-	    row.setCell(summary.getSemester().getSemester() + " - " + summary.getSemester().getExecutionYear().getYear());
-	    row.setCell(summary.getDegree().getSigla());
-	    row.setCell(summary.getTutorshipSummaryRelationsCount());
-	    row.setCell(summary.getHowManyReunionsGroup());
-	    row.setCell(summary.getHowManyReunionsIndividual());
-	    row.setCell(summary.getHowManyContactsPhone());
-	    row.setCell(summary.getHowManyContactsEmail());
-
-	    row.setCell("");
-	    row.setCell(convertBoolean(summary.getProblemsR1()));
-	    row.setCell(convertBoolean(summary.getProblemsR2()));
-	    row.setCell(convertBoolean(summary.getProblemsR3()));
-	    row.setCell(convertBoolean(summary.getProblemsR4()));
-	    row.setCell(convertBoolean(summary.getProblemsR5()));
-	    row.setCell(convertBoolean(summary.getProblemsR6()));
-	    row.setCell(convertBoolean(summary.getProblemsR7()));
-	    row.setCell(convertBoolean(summary.getProblemsR8()));
-	    row.setCell(convertBoolean(summary.getProblemsR9()));
-	    row.setCell(convertBoolean(summary.getProblemsR10()));
-	    row.setCell(summary.getProblemsOther());
-
-	    row.setCell("");
-	    row.setCell(convertBoolean(summary.getGainsR1()));
-	    row.setCell(convertBoolean(summary.getGainsR2()));
-	    row.setCell(convertBoolean(summary.getGainsR3()));
-	    row.setCell(convertBoolean(summary.getGainsR4()));
-	    row.setCell(convertBoolean(summary.getGainsR5()));
-	    row.setCell(convertBoolean(summary.getGainsR6()));
-	    row.setCell(convertBoolean(summary.getGainsR7()));
-	    row.setCell(convertBoolean(summary.getGainsR8()));
-	    row.setCell(convertBoolean(summary.getGainsR9()));
-	    row.setCell(convertBoolean(summary.getGainsR10()));
-	    row.setCell(summary.getGainsOther());
-
-	    if (summary.getTutorshipSummaryProgramAssessment() != null) {
-		row.setCell(bundleEnum.getString(summary.getTutorshipSummaryProgramAssessment().getName()));
-	    } else {
-		row.setCell("");
-	    }
-
-	    row.setCell(summary.getDifficulties());
-	    row.setCell(summary.getGains());
-	    row.setCell(summary.getSuggestions());
-	}
-
-	return spreadsheet;
-    }
-
-    private List<Object> getSummaryHeader() {
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale());
-	final List<Object> result = new ArrayList<Object>();
-
-	result.add("Docente");
-	result.add("Semestre");
-	result.add("Curso");
-	result.add("Aluno");
-	result.add(bundle.getString("label.tutorshipSummary.form.withoutEnrolments"));
-	result.add(bundle.getString("label.tutorshipSummary.form.participationType"));
-	result.add(bundle.getString("label.tutorshipSummary.form.participationRegularly"));
-	result.add(bundle.getString("label.tutorshipSummary.form.participationNone"));
-	result.add(bundle.getString("label.tutorshipSummary.form.outOfTouch"));
-	result.add(bundle.getString("label.tutorshipSummary.form.highPerformance"));
-	result.add(bundle.getString("label.tutorshipSummary.form.lowPerformance"));
-
-	return result;
-    }
-
-    private Spreadsheet generateDetailedSheet(List<TutorshipSummary> summaries) {
-
-	final ResourceBundle bundleEnum = ResourceBundle.getBundle("resources/EnumerationResources", Language.getLocale());
-
-	final Spreadsheet spreadsheet = new Spreadsheet("Fichas do Tutor (tutorandos)", getSummaryHeader());
-
-	for (TutorshipSummary summary : summaries) {
-	    for (TutorshipSummaryRelation relation : summary.getTutorshipSummaryRelations()) {
-		final Row relationRow = spreadsheet.addRow();
-
-		relationRow.setCell(summary.getTeacher().getPerson().getName());
-		relationRow.setCell(summary.getSemester().getSemester() + " - "
-			+ summary.getSemester().getExecutionYear().getYear());
-		relationRow.setCell(summary.getDegree().getSigla());
-		relationRow.setCell(relation.getTutorship().getStudent().getName() + "("
-			+ relation.getTutorship().getStudent().getNumber() + ")");
-
-		relationRow.setCell(convertBoolean(relation.getWithoutEnrolments()));
-		if (relation.getParticipationType() == null) {
-		    relationRow.setCell("");
-		} else {
-		    relationRow.setCell(bundleEnum.getString(relation.getParticipationType().getName()));
-		}
-		relationRow.setCell(convertBoolean(relation.getParticipationRegularly()));
-		relationRow.setCell(convertBoolean(relation.getParticipationNone()));
-		relationRow.setCell(convertBoolean(relation.getOutOfTouch()));
-		relationRow.setCell(convertBoolean(relation.getHighPerformance()));
-		relationRow.setCell(convertBoolean(relation.getLowPerformance()));
-	    }
-	}
-
-	return spreadsheet;
     }
 
     public ActionForward createSummary(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
