@@ -269,7 +269,9 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 
     @Override
     public boolean isCanGenerateRegistryCode() {
-	return isSendToExternalEntitySituationAccepted() && !hasRegistryCode();
+	return isSendToExternalEntitySituationAccepted() && !hasRegistryCode()
+		&& getRegistration().getDegreeType().isBolonhaType()
+		&& getRegistration().getDegreeType().getQualifiesForGraduateTitle();
     }
 
     @Override
