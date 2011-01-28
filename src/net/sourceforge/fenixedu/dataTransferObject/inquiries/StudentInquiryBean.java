@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Grade;
+import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
@@ -222,7 +223,7 @@ public class StudentInquiryBean implements Serializable {
 	inquiryCourseAnswer.setExecutionPeriod(getInquiryRegistry().getExecutionPeriod());
 
 	Grade grade = getGrade(getInquiryRegistry());
-	if (grade != null) {
+	if (grade != null && grade.getGradeScale() == GradeScale.TYPE20) {
 	    inquiryCourseAnswer.setGrade(InquiryGradesInterval.getInterval(Double.valueOf(grade.getIntegerValue()) * 10));
 	}
 	inquiryCourseAnswer.setNumberOfEnrolments(InquiryCourseAnswer.getNumberOfEnrolments(getInquiryRegistry()));
