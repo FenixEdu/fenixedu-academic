@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.domain.student;
 
-import net.sourceforge.fenixedu.domain.RemoteStudentCurricularPlan;
-
 import org.joda.time.DateTime;
 
+import net.sourceforge.fenixedu.domain.RemoteStudentCurricularPlan;
 import pt.ist.fenixframework.plugins.remote.domain.RemoteHost;
+import net.sourceforge.fenixedu.domain.RemoteExecutionYear;
 
 public class RemoteRegistration extends RemoteRegistration_Base {
 
