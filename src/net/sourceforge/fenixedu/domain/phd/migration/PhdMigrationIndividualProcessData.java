@@ -64,23 +64,7 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualProcessData_Base {
 
-    private transient Integer processNumber;
-    private transient PhdProgram phdProgram;
-    private transient String title;
-    private transient String guiderNumber;
-    private transient String assistantGuiderNumber;
-    private transient LocalDate startProcessDate;
-    private transient LocalDate startDevelopmentDate;
-    private transient LocalDate requirementDate;
-    private transient LocalDate meetingDate;
-    private transient LocalDate firstDiscussionDate;
-    private transient LocalDate secondDiscussionDate;
-    private transient LocalDate edictDate;
-
-    private transient PhdThesisFinalGrade classification;
-    private transient LocalDate ratificationDate;
-    private transient LocalDate annulmentDate;
-    private transient LocalDate limitToFinishDate;
+    private transient PhdMigrationIndividualProcessDataBean processBean;
 
     private PhdMigrationIndividualProcessData() {
 	super();
@@ -91,46 +75,226 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 	setMigrationStatus(PhdMigrationProcessStateType.NOT_MIGRATED);
     }
 
-    public void parseAndSetNumber() {
-	parse();
+    public class PhdMigrationIndividualProcessDataBean {
+	private transient String data;
 
-	setNumber(processNumber);
+	private transient Integer processNumber;
+	private transient PhdProgram phdProgram;
+	private transient String title;
+	private transient String guiderNumber;
+	private transient String assistantGuiderNumber;
+	private transient LocalDate startProcessDate;
+	private transient LocalDate startDevelopmentDate;
+	private transient LocalDate requirementDate;
+	private transient LocalDate meetingDate;
+	private transient LocalDate firstDiscussionDate;
+	private transient LocalDate secondDiscussionDate;
+	private transient LocalDate edictDate;
+
+	private transient PhdThesisFinalGrade classification;
+	private transient LocalDate ratificationDate;
+	private transient LocalDate annulmentDate;
+	private transient LocalDate limitToFinishDate;
+
+	public PhdMigrationIndividualProcessDataBean(String data) {
+	    setData(data);
+	    parse();
+	}
+
+	public void parse() {
+	    try {
+		String[] fields = getData().split("\t");
+
+		try {
+		    processNumber = Integer.valueOf(fields[0].trim());
+		} catch (NumberFormatException e) {
+		    throw new IncompleteFieldsException("processNumber");
+		}
+
+		try {
+		    phdProgram = PhdProgramTranslator.translate(fields[1].trim());
+		} catch (NumberFormatException e) {
+		    throw new IncompleteFieldsException("phdProgram");
+		}
+		title = fields[2].trim();
+		guiderNumber = fields[3].trim();
+		assistantGuiderNumber = fields[4].trim();
+		startProcessDate = ConversionUtilities.parseDate(fields[5].trim());
+		startDevelopmentDate = ConversionUtilities.parseDate(fields[6].trim());
+		requirementDate = ConversionUtilities.parseDate(fields[7].trim());
+		meetingDate = ConversionUtilities.parseDate(fields[8].trim());
+		firstDiscussionDate = ConversionUtilities.parseDate(fields[9].trim());
+		secondDiscussionDate = ConversionUtilities.parseDate(fields[10].trim());
+		edictDate = ConversionUtilities.parseDate(fields[11].trim());
+
+		classification = FinalGradeTranslator.translate(fields[13].trim());
+		ratificationDate = ConversionUtilities.parseDate(fields[14].trim());
+		annulmentDate = ConversionUtilities.parseDate(fields[15].trim());
+		limitToFinishDate = ConversionUtilities.parseDate(fields[16].trim());
+
+	    } catch (NoSuchElementException e) {
+		throw new IncompleteFieldsException("Not enough fields");
+	    }
+	}
+
+	public String getData() {
+	    return data;
+	}
+
+	public void setData(String data) {
+	    this.data = data;
+	}
+
+	public Integer getProcessNumber() {
+	    return processNumber;
+	}
+
+	public void setProcessNumber(Integer processNumber) {
+	    this.processNumber = processNumber;
+	}
+
+	public PhdProgram getPhdProgram() {
+	    return phdProgram;
+	}
+
+	public void setPhdProgram(PhdProgram phdProgram) {
+	    this.phdProgram = phdProgram;
+	}
+
+	public String getTitle() {
+	    return title;
+	}
+
+	public void setTitle(String title) {
+	    this.title = title;
+	}
+
+	public String getGuiderNumber() {
+	    return guiderNumber;
+	}
+
+	public void setGuiderNumber(String guiderNumber) {
+	    this.guiderNumber = guiderNumber;
+	}
+
+	public String getAssistantGuiderNumber() {
+	    return assistantGuiderNumber;
+	}
+
+	public void setAssistantGuiderNumber(String assistantGuiderNumber) {
+	    this.assistantGuiderNumber = assistantGuiderNumber;
+	}
+
+	public LocalDate getStartProcessDate() {
+	    return startProcessDate;
+	}
+
+	public void setStartProcessDate(LocalDate startProcessDate) {
+	    this.startProcessDate = startProcessDate;
+	}
+
+	public LocalDate getStartDevelopmentDate() {
+	    return startDevelopmentDate;
+	}
+
+	public void setStartDevelopmentDate(LocalDate startDevelopmentDate) {
+	    this.startDevelopmentDate = startDevelopmentDate;
+	}
+
+	public LocalDate getRequirementDate() {
+	    return requirementDate;
+	}
+
+	public void setRequirementDate(LocalDate requirementDate) {
+	    this.requirementDate = requirementDate;
+	}
+
+	public LocalDate getMeetingDate() {
+	    return meetingDate;
+	}
+
+	public void setMeetingDate(LocalDate meetingDate) {
+	    this.meetingDate = meetingDate;
+	}
+
+	public LocalDate getFirstDiscussionDate() {
+	    return firstDiscussionDate;
+	}
+
+	public void setFirstDiscussionDate(LocalDate firstDiscussionDate) {
+	    this.firstDiscussionDate = firstDiscussionDate;
+	}
+
+	public LocalDate getSecondDiscussionDate() {
+	    return secondDiscussionDate;
+	}
+
+	public void setSecondDiscussionDate(LocalDate secondDiscussionDate) {
+	    this.secondDiscussionDate = secondDiscussionDate;
+	}
+
+	public LocalDate getEdictDate() {
+	    return edictDate;
+	}
+
+	public void setEdictDate(LocalDate edictDate) {
+	    this.edictDate = edictDate;
+	}
+
+	public PhdThesisFinalGrade getClassification() {
+	    return classification;
+	}
+
+	public void setClassification(PhdThesisFinalGrade classification) {
+	    this.classification = classification;
+	}
+
+	public LocalDate getRatificationDate() {
+	    return ratificationDate;
+	}
+
+	public void setRatificationDate(LocalDate ratificationDate) {
+	    this.ratificationDate = ratificationDate;
+	}
+
+	public LocalDate getAnnulmentDate() {
+	    return annulmentDate;
+	}
+
+	public void setAnnulmentDate(LocalDate annulmentDate) {
+	    this.annulmentDate = annulmentDate;
+	}
+
+	public LocalDate getLimitToFinishDate() {
+	    return limitToFinishDate;
+	}
+
+	public void setLimitToFinishDate(LocalDate limitToFinishDate) {
+	    this.limitToFinishDate = limitToFinishDate;
+	}
+
+    }
+
+    public boolean hasProcessBean() {
+	return processBean != null;
+    }
+
+    public PhdMigrationIndividualProcessDataBean getProcessBean() {
+	if (hasProcessBean()) {
+	    return processBean;
+	}
+
+	processBean = new PhdMigrationIndividualProcessDataBean(getData());
+	return processBean;
     }
 
     public void parse() {
-	try {
-	    String[] fields = getData().split("\t");
+	getProcessBean();
+    }
 
-	    try {
-		processNumber = Integer.valueOf(fields[0].trim());
-	    } catch (NumberFormatException e) {
-		throw new IncompleteFieldsException("processNumber");
-	    }
-
-	    try {
-		phdProgram = PhdProgramTranslator.translate(fields[1].trim());
-	    } catch (NumberFormatException e) {
-		throw new IncompleteFieldsException("phdProgram");
-	    }
-	    title = fields[2].trim();
-	    guiderNumber = fields[3].trim();
-	    assistantGuiderNumber = fields[4].trim();
-	    startProcessDate = ConversionUtilities.parseDate(fields[5].trim());
-	    startDevelopmentDate = ConversionUtilities.parseDate(fields[6].trim());
-	    requirementDate = ConversionUtilities.parseDate(fields[7].trim());
-	    meetingDate = ConversionUtilities.parseDate(fields[8].trim());
-	    firstDiscussionDate = ConversionUtilities.parseDate(fields[9].trim());
-	    secondDiscussionDate = ConversionUtilities.parseDate(fields[10].trim());
-	    edictDate = ConversionUtilities.parseDate(fields[11].trim());
-
-	    classification = FinalGradeTranslator.translate(fields[13].trim());
-	    ratificationDate = ConversionUtilities.parseDate(fields[14].trim());
-	    annulmentDate = ConversionUtilities.parseDate(fields[15].trim());
-	    limitToFinishDate = ConversionUtilities.parseDate(fields[16].trim());
-
-	} catch (NoSuchElementException e) {
-	    throw new IncompleteFieldsException("Not enough fields");
-	}
+    public void parseAndSetNumber() {
+	final PhdMigrationIndividualProcessDataBean personalBean = getProcessBean();
+	setNumber(processBean.getProcessNumber());
     }
 
     public boolean hasMigrationParseLog() {
@@ -164,19 +328,19 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
     }
 
     public Person getGuidingPerson() {
-	if (guiderNumber.contains("E")) {
+	if (getProcessBean().getGuiderNumber().contains("E")) {
 	    throw new PersonNotFoundException();
 	}
 
-	return getPerson(guiderNumber);
+	return getPerson(getProcessBean().getGuiderNumber());
     }
 
     public Person getAssistantGuidingPerson() {
-	if (assistantGuiderNumber.contains("E")) {
+	if (getProcessBean().getAssistantGuiderNumber().contains("E")) {
 	    throw new PersonNotFoundException();
 	}
 
-	return getPerson(assistantGuiderNumber);
+	return getPerson(getProcessBean().getAssistantGuiderNumber());
     }
 
     public Person getPerson(String identification) {
@@ -214,57 +378,44 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
     }
 
     private LocalDate retrieveDateForExecutionYear() {
-	if (startDevelopmentDate != null) {
-	    return startDevelopmentDate;
+	if (getProcessBean().getStartDevelopmentDate() != null) {
+	    return getProcessBean().getStartDevelopmentDate();
 	}
-	if (ratificationDate != null) {
-	    return ratificationDate;
+	if (getProcessBean().getRatificationDate() != null) {
+	    return getProcessBean().getRatificationDate();
 	}
-	if (startProcessDate != null) {
-	    return startProcessDate;
+	if (getProcessBean().getStartProcessDate() != null) {
+	    return getProcessBean().getStartProcessDate();
 	}
 	return null;
     }
 
-    // startProcessDate; - começo do processo
-    // startDevelopmentDate; - desenvolvimento de trabalho (alternativa é data
-    // de homolgação)
-    // requirementDate; - marcação das discussões
-    // meetingDate; - data da reunião
-    // firstDiscussionDate; - data da 1ª discussão
-    // secondDiscussionDate; - data da 2ª discussão (usar esta
-    // preferencialmente)
-    // edictDate; - data da conclusão do process
-    // classification -
-    // ratificationDate; - data da homolgação da candidatura
-    // annulmentDate; - data da anulação do processo
-    // limitToFinishDate; - data limite para conclusão
     public PhdMigrationProcessStateType estimatedFinalMigrationStatus() {
 	if (isProcessCanceled()) {
 	    return PhdMigrationProcessStateType.CANCELED;
 	}
 
-	if (edictDate != null || classification != null) {
+	if (getProcessBean().getEdictDate() != null || getProcessBean().getClassification() != null) {
 	    return PhdMigrationProcessStateType.CONCLUDED;
 	}
 
-	if (firstDiscussionDate != null || secondDiscussionDate != null) {
+	if (getProcessBean().getFirstDiscussionDate() != null || getProcessBean().getSecondDiscussionDate() != null) {
 	    return PhdMigrationProcessStateType.COMPLETED_THESIS_DISCUSSION;
 	}
 
-	if (requirementDate != null) {
+	if (getProcessBean().getRequirementDate() != null) {
 	    return PhdMigrationProcessStateType.REQUESTED_THESIS_DISCUSSION;
 	}
 
-	if (startDevelopmentDate != null || ratificationDate != null) {
+	if (getProcessBean().getStartDevelopmentDate() != null || getProcessBean().getRatificationDate() != null) {
 	    return PhdMigrationProcessStateType.WORK_DEVELOPMENT;
 	}
 
-	if (ratificationDate != null) {
+	if (getProcessBean().getRatificationDate() != null) {
 	    return PhdMigrationProcessStateType.CANDIDACY_RATIFIED;
 	}
 
-	if (startProcessDate != null) {
+	if (getProcessBean().getStartProcessDate() != null) {
 	    return PhdMigrationProcessStateType.CANDIDACY_CREATED;
 	}
 
@@ -278,42 +429,42 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 	    return false;
 	}
 	
-	if (classification != null) {
+	if (getProcessBean().getClassification() != null) {
 	    return true;
 	}
 
 	if (activeState.equals(PhdMigrationProcessStateType.COMPLETED_THESIS_DISCUSSION)) {
-	    if (edictDate != null) {
+	    if (getProcessBean().getEdictDate() != null) {
 		return true;
 	    }
 	}
 
 	if (activeState.equals(PhdMigrationProcessStateType.REQUESTED_THESIS_DISCUSSION)) {
-	    if (firstDiscussionDate != null || secondDiscussionDate != null) {
+	    if (getProcessBean().getFirstDiscussionDate() != null || getProcessBean().getSecondDiscussionDate() != null) {
 		return true;
 	    }
 	}
 	
 	if(activeState.equals(PhdMigrationProcessStateType.WORK_DEVELOPMENT)) {
-	    if (requirementDate != null) {
+	    if (getProcessBean().getRequirementDate() != null) {
 		return true;
 	    }
 	}
 	
 	if (activeState.equals(PhdMigrationProcessStateType.CANDIDACY_RATIFIED)) {
-	    if (startDevelopmentDate != null || ratificationDate != null) {
+	    if (getProcessBean().getStartDevelopmentDate() != null || getProcessBean().getRatificationDate() != null) {
 		return true;
 	    }
 	}
 
 	if(activeState.equals(PhdMigrationProcessStateType.CANDIDACY_CREATED)) {
-	    if (ratificationDate != null) {
+	    if (getProcessBean().getRatificationDate() != null) {
 		return true;
 	    }
 	}
 	
 	if(activeState.equals(PhdMigrationProcessStateType.NOT_MIGRATED)) {
-	    if (startProcessDate != null) {
+	    if (getProcessBean().getStartProcessDate() != null) {
 		return true;
 	    }
 	}
@@ -322,7 +473,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
     }
 
     private boolean isProcessCanceled() {
-	return annulmentDate != null;
+	return getProcessBean().getAnnulmentDate() != null;
     }
 
     public boolean proceedWithMigration() {
@@ -404,16 +555,17 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
     private PhdIndividualProgramProcess createCandidacyProcess(final IUserView userView) {
 	final PhdProgramCandidacyProcessBean candidacyBean = new PhdProgramCandidacyProcessBean();
 
-	candidacyBean.setCandidacyDate(this.startProcessDate);
+	candidacyBean.setCandidacyDate(getProcessBean().getStartProcessDate());
 	candidacyBean.setState(PhdProgramCandidacyProcessState.STAND_BY_WITH_COMPLETE_INFORMATION);
 	candidacyBean.setPersonBean(getPhdMigrationIndividualPersonalData().getPersonBean());
 	candidacyBean.setMigratedProcess(true);
-	candidacyBean.setProgram(this.phdProgram);
-	candidacyBean.setThesisTitle(this.title);
+	candidacyBean.setProgram(getProcessBean().getPhdProgram());
+	candidacyBean.setThesisTitle(getProcessBean().getTitle());
 	candidacyBean.setPhdStudentNumber(getPhdMigrationIndividualPersonalData().getNumber());
 	candidacyBean.setCollaborationType(PhdIndividualProgramCollaborationType.NONE);
 	candidacyBean.setExecutionYear(ExecutionYear.readByDateTime(retrieveDateForExecutionYear()));
-	candidacyBean.setFocusArea((phdProgram.getPhdProgramFocusAreasCount() == 1) ? phdProgram.getPhdProgramFocusAreas().get(0)
+	candidacyBean.setFocusArea((getProcessBean().getPhdProgram().getPhdProgramFocusAreasCount() == 1) ? getProcessBean()
+		.getPhdProgram().getPhdProgramFocusAreas().get(0)
 		: null);
 
 	final PhdIndividualProgramProcess individualProcess = (PhdIndividualProgramProcess) CreateNewProcess.run(
@@ -440,7 +592,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
     private void ratifyCandidacyProcess(final IUserView userView, final PhdIndividualProgramProcess individualProcess) {
 	final PhdProgramCandidacyProcess candidacyProcess = individualProcess.getCandidacyProcess();
 	final RatifyCandidacyBean ratifyBean = new RatifyCandidacyBean(candidacyProcess);
-	ratifyBean.setWhenRatified(ratificationDate);
+	ratifyBean.setWhenRatified(getProcessBean().getRatificationDate());
 	ExecuteProcessActivity.run(candidacyProcess, RatifyCandidacy.class.getSimpleName(), ratifyBean);
     }
 
@@ -462,10 +614,10 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
     }
 
     private LocalDate getMostAccurateStartDevelopmentDate() {
-	if (startDevelopmentDate != null) {
-	    return startDevelopmentDate;
+	if (getProcessBean().getStartDevelopmentDate() != null) {
+	    return getProcessBean().getStartDevelopmentDate();
 	} else {
-	    return ratificationDate;
+	    return getProcessBean().getRatificationDate();
 	}
     }
 
@@ -473,8 +625,8 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 	ExecuteProcessActivity.run(individualProcess, ExemptPublicPresentationSeminarComission.class.getSimpleName(),
 		new PublicPresentationSeminarProcessBean());
 
-	if (!StringUtils.isEmpty(guiderNumber)) {
-	    final PhdMigrationGuiding migrationGuiding = getGuiding(guiderNumber);
+	if (!StringUtils.isEmpty(getProcessBean().getGuiderNumber())) {
+	    final PhdMigrationGuiding migrationGuiding = getGuiding(getProcessBean().getGuiderNumber());
 	    if (migrationGuiding != null) {
 		migrationGuiding.parse();
 		final PhdParticipantBean guidingBean = migrationGuiding.getPhdParticipantBean(individualProcess);
@@ -482,8 +634,8 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 	    }
 	}
 
-	if (!StringUtils.isEmpty(assistantGuiderNumber)) {
-	    final PhdMigrationGuiding migrationAssistantGuiding = getGuiding(assistantGuiderNumber);
+	if (!StringUtils.isEmpty(getProcessBean().getAssistantGuiderNumber())) {
+	    final PhdMigrationGuiding migrationAssistantGuiding = getGuiding(getProcessBean().getAssistantGuiderNumber());
 	    if (migrationAssistantGuiding != null) {
 		migrationAssistantGuiding.parse();
 		final PhdParticipantBean assistantGuidingBean = migrationAssistantGuiding
@@ -494,7 +646,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 	}
 
 	final PhdThesisProcessBean thesisBean = new PhdThesisProcessBean(individualProcess);
-	thesisBean.setWhenThesisDiscussionRequired(requirementDate);
+	thesisBean.setWhenThesisDiscussionRequired(getProcessBean().getRequirementDate());
 	thesisBean.setGenerateAlert(false);
 	thesisBean.setToNotify(false);
 	ExecuteProcessActivity.run(individualProcess, RequestPublicThesisPresentation.class.getSimpleName(), thesisBean);
@@ -547,18 +699,18 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
     }
 
     private DateTime getMostAccurateDiscussionDateTime() {
-	if (secondDiscussionDate != null) {
-	    return secondDiscussionDate.toDateTimeAtCurrentTime();
-	} else if (firstDiscussionDate != null) {
-	    return firstDiscussionDate.toDateTimeAtCurrentTime();
+	if (getProcessBean().getSecondDiscussionDate() != null) {
+	    return getProcessBean().getSecondDiscussionDate().toDateTimeAtCurrentTime();
+	} else if (getProcessBean().getFirstDiscussionDate() != null) {
+	    return getProcessBean().getFirstDiscussionDate().toDateTimeAtCurrentTime();
 	}
 
 	return null;
     }
 
     private DateTime getMeetingDate() {
-	if (meetingDate != null) {
-	    return meetingDate.toDateTimeAtCurrentTime();
+	if (getProcessBean().getMeetingDate() != null) {
+	    return getProcessBean().getMeetingDate().toDateTimeAtCurrentTime();
 	} else {
 	    return null;
 	}
@@ -570,11 +722,11 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 	thesisBean.setThesisProcess(thesisProcess);
 	thesisBean.setToNotify(false);
 	thesisBean.setGenerateAlert(false);
-	thesisBean.setWhenFinalThesisRatified(edictDate);
+	thesisBean.setWhenFinalThesisRatified(getProcessBean().getEdictDate());
 	ExecuteProcessActivity.run(thesisProcess, RatifyFinalThesis.class, thesisBean);
 
-	thesisBean.setConclusionDate(edictDate);
-	thesisBean.setFinalGrade(classification);
+	thesisBean.setConclusionDate(getProcessBean().getEdictDate());
+	thesisBean.setFinalGrade(getProcessBean().getClassification());
 	ExecuteProcessActivity.run(thesisProcess, SetFinalGrade.class, thesisBean);
     }
 

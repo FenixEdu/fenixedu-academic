@@ -52,6 +52,10 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessB
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.phd.candidacy.RegistrationFormalizationBean;
 import net.sourceforge.fenixedu.domain.phd.guidance.PhdGuidanceDocument;
+import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationGuiding;
+import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualProcessData;
+import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualProcessData.PhdMigrationIndividualProcessDataBean;
+import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationProcess;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessStateType;
@@ -1876,5 +1880,65 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	    }
 	}
 
+    }
+
+    public boolean hasAssociatedMigrationProcess() {
+	return getAssociatedMigrationProcess() != null;
+    }
+
+    public PhdMigrationIndividualProcessData getAssociatedMigrationProcess() {
+	if (!isMigratedProcess()) {
+	    return null;
+	}
+
+	if (getPhdStudentNumber() == null) {
+	    return null;
+	}
+
+	for (final PhdMigrationProcess migrationProcess : RootDomainObject.getInstance().getPhdMigrationProcesses()) {
+	    for (final PhdMigrationIndividualProcessData processData : migrationProcess.getPhdMigrationIndividualProcessData()) {
+		if (processData.getNumber().equals(getPhdStudentNumber())) {
+		    return processData;
+		}
+	    }
+	}
+
+	return null;
+    }
+
+    public PhdMigrationGuiding getAssociatedMigrationGuiding() {
+	if (!hasAssociatedMigrationProcess()) {
+	    return null;
+	}
+
+	final PhdMigrationIndividualProcessDataBean processDataBean = getAssociatedMigrationProcess().getProcessBean();
+
+	return getAssociatedMigrationgGuidingOrAssistant(processDataBean.getGuiderNumber());
+    }
+
+    public PhdMigrationGuiding getAssociatedMigrationAssistantGuiding() {
+	if (!hasAssociatedMigrationProcess()) {
+	    return null;
+	}
+
+	final PhdMigrationIndividualProcessDataBean processDataBean = getAssociatedMigrationProcess().getProcessBean();
+	
+	return getAssociatedMigrationgGuidingOrAssistant(processDataBean.getAssistantGuiderNumber());
+    }
+
+    private PhdMigrationGuiding getAssociatedMigrationgGuidingOrAssistant(String guiderNumber) {
+	for (final PhdMigrationProcess migrationProcess : RootDomainObject.getInstance().getPhdMigrationProcesses()) {
+	    for (final PhdMigrationGuiding guidingData : migrationProcess.getPhdMigrationGuiding()) {
+		if (guidingData.getTeacherNumber().equals(guiderNumber)) {
+		    return guidingData;
+		}
+	    }
+	}
+
+	return null;
+    }
+
+    public static List<PhdMigrationProcess> getMigrationProcesses() {
+	return RootDomainObject.getInstance().getPhdMigrationProcesses();
     }
 }

@@ -69,6 +69,8 @@ import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlert;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlertBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.RegistrationFormalizationBean;
+import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationGuiding;
+import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualProcessData;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -153,7 +155,11 @@ import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
 
 	@Forward(name = "sendPhdIndividualProcessEmail", path = "/phd/academicAdminOffice/sendPhdEmail.jsp"),
 
-	@Forward(name = "viewPhdIndividualProcessEmail", path = "/phd/academicAdminOffice/viewPhdEmail.jsp")
+	@Forward(name = "viewPhdIndividualProcessEmail", path = "/phd/academicAdminOffice/viewPhdEmail.jsp"),
+
+	@Forward(name = "viewMigrationProcess", path = "/phd/academicAdminOffice/viewMigrationProcess.jsp"),
+
+	@Forward(name = "viewMigrationProcesses", path = "/phd/academicAdminOffice/viewMigrationProcesses.jsp")
 
 })
 public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramProcessDA {
@@ -1222,4 +1228,48 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 	ExecuteProcessActivity.run(process, RemoveLastStateOnPhdIndividualProgramProcess.class, null);
 	return managePhdIndividualProgramProcessState(mapping, form, request, response);
     }
+
+    // Start of Individual Migration Process Visualization
+
+    public ActionForward viewMigrationProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final PhdIndividualProgramProcess process = getProcess(request);
+	final PhdMigrationIndividualProcessData processData = process.getAssociatedMigrationProcess();
+
+	if (processData != null) {
+	    request.setAttribute("processDataBean", processData.getProcessBean());
+
+	    if (processData.hasPhdMigrationIndividualPersonalData()) {
+		request.setAttribute("personalDataBean", processData.getPhdMigrationIndividualPersonalData().getPersonalBean());
+	    }
+
+	}
+
+	final PhdMigrationGuiding guidingData = process.getAssociatedMigrationGuiding();
+	final PhdMigrationGuiding assistantGuidingData = process.getAssociatedMigrationAssistantGuiding();
+
+	if (guidingData != null) {
+	    request.setAttribute("migrationGuidingBean", guidingData.getGuidingBean());
+	}
+
+	if (assistantGuidingData != null) {
+	    request.setAttribute("migrationAssistantGuidingBean", assistantGuidingData.getGuidingBean());
+	}
+
+	return mapping.findForward("viewMigrationProcess");
+    }
+
+    // End of Individual Migration Process Visualization
+
+    // Start of Migration Processes Visualization
+
+    public ActionForward viewMigratedProcesses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("migrationProcesses", PhdIndividualProgramProcess.getMigrationProcesses());
+
+	return mapping.findForward("viewMigrationProcesses");
+    }
+
+    // End of Migration Processes Visualization
 }
