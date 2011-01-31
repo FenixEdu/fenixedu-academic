@@ -42,4 +42,8 @@ public class RemotePerson extends RemotePerson_Base {
 	return readRemoteMethod("readAllExternalResearcherInformation");
     }
 
+    public String getWorkingPlaceForAnyRoleType() {
+	return readRemoteMethod("getWorkingPlaceForAnyRoleType");
+    }
+
 }
