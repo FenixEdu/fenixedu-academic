@@ -3604,8 +3604,52 @@ public class Person extends Person_Base {
     }
 
     public String getEmployeeRoleDescription() {
-	final RoleType roleType = getMostImportantRoleType(RoleType.TEACHER, RoleType.RESEARCHER, RoleType.EMPLOYEE);
-	return roleType.name();
+	final RoleType roleType = getMostImportantRoleType(RoleType.TEACHER, RoleType.RESEARCHER, RoleType.EMPLOYEE, RoleType.GRANT_OWNER);
+	if (roleType == RoleType.RESEARCHER && !hasRole(RoleType.EMPLOYEE)) {
+	    return "EXTERNAL_RESEARCH_PERSONNEL";
+	}
+	return roleType == null ? null : roleType.name();
+    }
+
+    // Temp method used for mission system.
+    public String getWorkingPlaceForAnyRoleType() {
+	if (hasRole(RoleType.TEACHER) || hasRole(RoleType.EMPLOYEE) || hasRole(RoleType.RESEARCHER)) {
+	    return getWorkingPlaceCostCenter();
+	}
+	if (hasRole(RoleType.RESEARCHER)) {
+	    final Collection<? extends Accountability> accountabilities = getParentAccountabilities(AccountabilityTypeEnum.RESEARCH_CONTRACT);
+	    final YearMonthDay currentDate = new YearMonthDay();
+	    for (final Accountability accountability : accountabilities) {
+		if (accountability.isActive(currentDate)) {
+		    final Unit unit = (Unit) accountability.getParentParty();
+		    final Integer costCenterCode = unit.getCostCenterCode();
+		    if (costCenterCode != null) {
+			return costCenterCode.toString();
+		    }
+		}
+	    }
+	}
+	final GrantOwner grantOwner = getGrantOwner();
+	if (grantOwner != null) {
+	    final YearMonthDay today = new YearMonthDay();
+	    for (final GrantContract grantContract : grantOwner.getGrantContracts()) {
+		for (final GrantContractRegime grantContractRegime : grantContract.getContractRegimes()) {
+		    if (!today.isBefore(grantContractRegime.getDateBeginContractYearMonthDay())
+			    && grantContractRegime.getDateEndContractYearMonthDay() != null
+			    && !today.isAfter(grantContractRegime.getDateEndContractYearMonthDay())) {
+			final GrantCostCenter grantCostCenter = grantContract.getGrantCostCenter();
+			final Person person = grantOwner.getPerson();
+			if (grantCostCenter != null && person != null) {
+			    final String costCenterDesignation = grantCostCenter.getNumber();
+			    if (costCenterDesignation != null && !costCenterDesignation.isEmpty()) {
+				return costCenterDesignation;
+			    }
+			}
+		    }
+		}
+	    }
+	}
+	return null;
     }
 
     private RoleType getMostImportantRoleType(final RoleType... roleTypes) {
