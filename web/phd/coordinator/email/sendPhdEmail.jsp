@@ -1,0 +1,157 @@
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+<%@ taglib uri="/WEB-INF/phd.tld" prefix="phd" %>
+
+<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisJuryElementBean"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.Action.phd.academicAdminOffice.PhdIndividualProgramProcessDA" %>
+<%@page import="net.sourceforge.fenixedu.domain.phd.email.PhdEmailBean" %>
+
+<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
+
+<%-- ### Title #### --%>
+<em><bean:message  key="label.phd.coordinator.breadcrumb" bundle="PHD_RESOURCES"/></em>
+<h2><bean:message key="label.phd.manage.emails.create" bundle="PHD_RESOURCES" /></h2>
+<%-- ### End of Title ### --%>
+
+<%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
+
+<p>
+	<html:link action="/phdIndividualProgramProcess.do?method=managePhdEmails">
+		« <bean:message key="label.back" bundle="PHD_RESOURCES" />
+	</html:link>
+</p>
+
+<%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
+
+<%--  ### Error Messages  ### --%>
+<jsp:include page="/phd/errorsAndMessages.jsp" />
+<%--  ### End of Error Messages  ### --%>
+
+
+<%-- ### Operational Area ### --%>
+
+<script src="<%= request.getContextPath() + "/javaScript/jquery/jquery.js" %>" type="text/javascript" >
+</script>
+
+<fr:form action="/phdIndividualProgramProcess.do?method=sendPhdEmail">
+	<fr:edit id="emailBean" name="emailBean" visible="false" />
+
+<style>
+
+
+ul ul {
+margin-bottom: 5px !important;
+margin-left: 20px !important;
+}
+
+/*
+div.compose-email table th { width: 150px; }
+div.compose-email table td { width: 700px; }
+*/
+
+.hide-theader th {
+display: none;
+}
+.hide-theader td {
+padding: 0;
+background: none;
+border: none;
+width: auto !important;
+}
+
+
+.recipients div {
+float: left;
+width: 325px;
+margin: 5px 0 10px 0;
+}
+
+div.compose-email table .col1 { width: 150px; }
+div.compose-email table .col2 { width: 700px; }
+
+
+</style>
+
+<div class="compose-email">
+	<table class="tstyle5 thlight thright mtop05 mbottom0 ulnomargin ">
+		<tr>
+			<th class="col1">Destinatários (grupos):</th>
+			<td class="col2 recipients">
+			
+				
+				<logic:iterate id="group" name="emailBean" property="possibleGroups" indexId="i">
+				
+					<div id='<%= "checkbox-" + i %>' class="hide-theader">
+						<p>
+							<b><fr:view name="group" property="groupLabel" ></fr:view></b>
+				
+							(<html:link href="#" onclick="<%= "$('div#checkbox-" + i + " input[type=checkbox]').attr('checked','true')" %>">
+								Seleccionar todos
+							</html:link>)
+						</p>
+					
+						<fr:edit id='<%= "emailBean.groups.edit." + group.toString() %>' name="emailBean">
+							<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.util.PhdProgramEmailBean">
+								<fr:slot name="selectedElements" layout="option-select">
+									<fr:property name="providerClass" value='<%= group.getClass().getName() %>' />
+									<fr:property name="eachSchema" value="PhdIndividualProgramProcess.view.name"/>
+							        <fr:property name="eachLayout" value="values"/>
+									<fr:property name="classes" value="nobullet noindent" />
+									<fr:property name="saveOptions" value="true"/>					
+								</fr:slot>
+							</fr:schema>
+							
+							<fr:layout name="list">
+								<fr:property name="classes" value="participant-groups"/>
+								<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+								<fr:property name="nullLabel" value="" />
+							</fr:layout>
+						
+						</fr:edit>
+					</div>
+				</logic:iterate>
+			</td>
+		</tr>
+	</table>
+
+	<fr:edit id="emailBean.individuals" name="emailBean" >
+		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.PhdEmailBean">
+			<fr:slot name="bccs" bundle="MESSAGING_RESOURCES" key="label.receiversOfCopy">
+				<fr:property name="size" value="60" />
+			</fr:slot>
+		</fr:schema>
+		
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle5 thlight thright mvert0 tgluetop"/>
+			<fr:property name="columnClasses" value="col1,col2,tdclear tderror1"/>
+		</fr:layout>
+	</fr:edit>
+	
+	<fr:edit id="emailBean.create" name="emailBean" >
+		
+		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.util.PhdEmailBean">
+			<fr:slot name="subject" bundle="MANAGER_RESOURCES" key="label.email.subject" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+				<fr:property name="size" value="60" />
+			</fr:slot>
+			<fr:slot name="message" bundle="MANAGER_RESOURCES" key="label.email.message" layout="longText" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+				<fr:property name="columns" value="80"/>
+				<fr:property name="rows" value="10"/>
+			</fr:slot>
+		</fr:schema>
+		
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle5 thlight thright mtop0 tgluetop"/>
+			<fr:property name="columnClasses" value="col1,col2,tdclear tderror1"/>
+			<fr:property name="requiredMarkShown" value="true" />
+		</fr:layout>
+			
+	</fr:edit>
+
+</div> <!-- compose-email -->
+  	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.submit"/></html:submit>	
+</fr:form>
+
+</logic:present>

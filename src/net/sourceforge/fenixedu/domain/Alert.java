@@ -94,4 +94,8 @@ public abstract class Alert extends Alert_Base {
 
     abstract public boolean isToSendMail();
 
+    public boolean isCancelable() {
+	return isToFire();
+    }
+
 }

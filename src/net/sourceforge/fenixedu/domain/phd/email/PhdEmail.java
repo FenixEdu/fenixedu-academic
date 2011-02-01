@@ -1,0 +1,69 @@
+package net.sourceforge.fenixedu.domain.phd.email;
+
+import java.util.Collection;
+
+import net.sourceforge.fenixedu.domain.util.email.Message;
+import net.sourceforge.fenixedu.domain.util.email.Recipient;
+import net.sourceforge.fenixedu.domain.util.email.ReplyTo;
+import net.sourceforge.fenixedu.domain.util.email.Sender;
+import pt.ist.fenixWebFramework.services.Service;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+
+public abstract class PhdEmail extends PhdEmail_Base {
+    
+    protected PhdEmail() {
+        super();
+    }
+
+    protected void init(final String subject, final String body, String additionalTo, String additionalBcc) {
+	super.init(new MultiLanguageString(subject), new MultiLanguageString(body));
+    }
+
+    @Override
+    public String getDescription() {
+	return null;
+    }
+
+    @Override
+    protected boolean isToDiscard() {
+	return !isToFire();
+    }
+
+    @Override
+    protected boolean isToFire() {
+	return getActive() && getFireDate() == null;
+    }
+
+    @Override
+    protected void generateMessage() {
+	new Message(getSender(), getReplyTos(), getRecipients(), getSubject().getContent(Language.pt),
+		getBody()
+		.getContent(Language.pt), getBccs());
+    }
+
+    @Override
+    public boolean isToSendMail() {
+	return true;
+    }
+    
+    @Service
+    public void cancel() {
+	discard();
+    }
+
+    @Override
+    @Service
+    public void fire() {
+	super.fire();
+    }
+
+    protected abstract Collection<? extends ReplyTo> getReplyTos();
+
+    protected abstract Sender getSender();
+
+    protected abstract Collection<Recipient> getRecipients();
+
+    protected abstract String getBccs();
+
+}

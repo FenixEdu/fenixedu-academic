@@ -51,6 +51,7 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.phd.candidacy.RegistrationFormalizationBean;
+import net.sourceforge.fenixedu.domain.phd.email.PhdIndividualProgramProcessEmailBean;
 import net.sourceforge.fenixedu.domain.phd.guidance.PhdGuidanceDocument;
 import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationGuiding;
 import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualProcessData;
@@ -1163,7 +1164,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
 		Object object) {
 
-	    final PhdEmailBean bean = (PhdEmailBean) object;
+	    final PhdIndividualProgramProcessEmailBean bean = (PhdIndividualProgramProcessEmailBean) object;
 
 	    final Sender sender = AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE)
 		    .getUnit().getUnitBasedSender().get(0);

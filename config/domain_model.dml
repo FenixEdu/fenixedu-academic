@@ -7576,6 +7576,14 @@ class phd.migration.PhdMigrationGuiding extends DomainObject {
 	String parseLog;
 }
 
+class phd.email.PhdEmail extends Alert {
+	String additionalTo;
+	String additionalBcc;
+}
+	
+	class phd.email.PhdProgramEmail extends phd.email.PhdEmail {
+	}
+
 /* End of Phd Module */
 
 class PendingRequest extends DomainObject{
@@ -8817,6 +8825,23 @@ relation PhdMigrationProcessPhdIndividualProcessData {
 relation PhdMigrationProcessPhdGuiding {
 	phd.migration.PhdMigrationProcess playsRole phdMigrationProcess;
 	phd.migration.PhdMigrationGuiding playsRole phdMigrationGuiding {
+		multiplicity *;
+	}
+}
+
+relation PhdProgramPhdProgramMessage {
+	phd.PhdProgram playsRole phdProgram;
+	phd.email.PhdProgramEmail playsRole phdProgramEmails {
+		multiplicity *;
+	}
+}
+
+relation PhdIndividualProgramProcessPhdProgramMessage {
+	phd.PhdIndividualProgramProcess playsRole phdIndividualProgramProcesses {
+		multiplicity *;
+	}
+	
+	phd.email.PhdProgramEmail playsRole phdProgramEmail {
 		multiplicity *;
 	}
 }

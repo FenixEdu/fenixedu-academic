@@ -25,6 +25,9 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RejectEnr
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
+import net.sourceforge.fenixedu.domain.phd.email.PhdProgramEmail;
+import net.sourceforge.fenixedu.domain.phd.email.PhdProgramEmailBean;
+import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.CommonPhdIndividualProgramProcessDA;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdCandidacyPredicateContainer;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdInactivePredicateContainer;
@@ -71,7 +74,14 @@ import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
 
 @Forward(name = "manageGuidanceDocuments", path = "/phd/coordinator/manageGuidanceDocuments.jsp"),
 
-@Forward(name = "uploadGuidanceDocument", path = "/phd/coordinator/uploadGuidanceDocument.jsp")
+@Forward(name = "uploadGuidanceDocument", path = "/phd/coordinator/uploadGuidanceDocument.jsp"),
+
+@Forward(name = "managePhdEmails", path = "/phd/coordinator/email/managePhdEmails.jsp"),
+
+@Forward(name = "sendPhdEmail", path = "/phd/coordinator/email/sendPhdEmail.jsp"),
+
+@Forward(name = "viewPhdEmail", path = "/phd/coordinator/email/viewPhdEmail.jsp")
+
 })
 public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramProcessDA {
 
@@ -251,4 +261,50 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 
     // end of manage enrolments
 
+    // manage emails
+
+    public ActionForward managePhdEmails(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("emailBean", createPhdProgramEmailBean((PhdProgram) getDomainObject(request, "phdProgramId")));
+	return mapping.findForward("managePhdEmails");
+    }
+
+    public ActionForward manageEmailBeanPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("emailBean", getRenderedObject("phdEmailBean"));
+	return mapping.findForward("managePhdEmails");
+    }
+
+    public ActionForward prepareSendPhdEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("emailBean", createPhdProgramEmailBean((PhdProgram) getDomainObject(request, "phdProgramId")));
+	return mapping.findForward("sendPhdEmail");
+    }
+
+    public ActionForward sendPhdEmailInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("emailBean", getRenderedObject("emailBean"));
+	return mapping.findForward("sendPhdEmail");
+    }
+
+    public ActionForward sendPhdEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	PhdProgramEmailBean bean = getRenderedObject("emailBean");
+	PhdProgramEmail.createEmail(bean);
+
+	return redirect("/phdIndividualProgramProcess.do?phdProgramId=" + bean.getPhdProgram().getExternalId(), request);
+    }
+
+    public ActionForward viewPhdEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	return mapping.findForward("viewPhdEmail");
+    }
+
+    private PhdProgramEmailBean createPhdProgramEmailBean(PhdProgram phdProgram) {
+	return new PhdProgramEmailBean(phdProgram);
+    }
+
+    private Message getPhdEmail(HttpServletRequest request) {
+	return getDomainObject(request, "phdEmailId");
+    }
 }

@@ -137,6 +137,10 @@ public class PhdProgram extends PhdProgram_Base {
 	return result;
     }
 
+    public boolean isCoordinatorFor(Person person, ExecutionYear executionYear) {
+	return getCoordinatorsFor(executionYear).contains(person);
+    }
+
     
     @Service
     static public PhdProgram create(final Degree degree, final MultiLanguageString name, final String acronym) {
