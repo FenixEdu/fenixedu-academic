@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
+import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
-import net.sourceforge.fenixedu.domain.assiduousness.EmployeeExtraWorkAuthorization;
 import net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest;
 import net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkAmount;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -56,8 +56,8 @@ public class ExportExtraWorkDispatchAction extends FenixDispatchAction {
 
     public ActionForward exportByEmployees(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	request.setAttribute("action", (String) getRenderedObject("action"));
-	request.setAttribute("chooseMonth", (String) getRenderedObject("chooseMonth"));
+	request.setAttribute("action", getRenderedObject("action"));
+	request.setAttribute("chooseMonth", getRenderedObject("chooseMonth"));
 	final YearMonth yearMonth = getRenderedObject("yearMonth");
 	if (yearMonth == null) {
 	    return chooseYearMonth(mapping, actionForm, request, response);
@@ -101,8 +101,8 @@ public class ExportExtraWorkDispatchAction extends FenixDispatchAction {
 
     public ActionForward exportByUnits(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	request.setAttribute("action", (String) getRenderedObject("action"));
-	request.setAttribute("chooseMonth", (String) getRenderedObject("chooseMonth"));
+	request.setAttribute("action", getRenderedObject("action"));
+	request.setAttribute("chooseMonth", getRenderedObject("chooseMonth"));
 	final YearMonth yearMonth = getRenderedObject("yearMonth");
 	if (yearMonth == null) {
 	    return chooseYearMonth(mapping, actionForm, request, response);
@@ -127,7 +127,7 @@ public class ExportExtraWorkDispatchAction extends FenixDispatchAction {
 	    if (sheetIndex == 0) {
 		UnitExtraWorkAmount.getExcelFooter(spreadsheet, bundle);
 	    } else {
-		EmployeeExtraWorkAuthorization.getExcelFooter(spreadsheet, bundle);
+		Assiduousness.getExcelFooter(spreadsheet, bundle);
 	    }
 	    spreadsheet.setSheetOrientation();
 	}
@@ -162,6 +162,7 @@ public class ExportExtraWorkDispatchAction extends FenixDispatchAction {
 	return extraWorkRequests;
     }
 
+    @Override
     protected String getFromRequest(HttpServletRequest request, String value) {
 	String result = request.getParameter(value);
 	if (result == null || result.length() == 0) {

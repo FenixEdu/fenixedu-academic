@@ -155,7 +155,7 @@ public class UnitExtraWorkAmount extends UnitExtraWorkAmount_Base {
     public void getExtraWorkAuthorizationsExcelRows(StyledExcelSpreadsheet spreadsheet, ResourceBundle bundle,
 	    ResourceBundle enumBundle) {
 	HashSet<Employee> inserted = new HashSet<Employee>();
-	for (ExtraWorkAuthorization extraWorkAuthorization : getExtraPayingUnitAuthorizationsForYear(getUnit())) {
+	for (ExtraWorkRequest extraWorkRequest : getUnit().getExtraWorkRequestsPayingYear(getYear())) {
 	    if (!spreadsheet.hasSheet(getUnit().getCostCenterCode().toString())) {
 		spreadsheet.getSheet(getUnit().getCostCenterCode().toString());
 
@@ -182,7 +182,7 @@ public class UnitExtraWorkAmount extends UnitExtraWorkAmount_Base {
 		// spreadsheet.addCell(bundle.getString(
 		// "message.extraWorkFirstYearMonthNote"));
 		spreadsheet.newHeaderRow();
-		EmployeeExtraWorkAuthorization.getExcelHeader(spreadsheet, bundle, enumBundle);
+		Assiduousness.getExcelHeader(spreadsheet, bundle, enumBundle);
 		spreadsheet.getSheet().addMergedRegion(
 			new Region(0, (short) 0, 0, (short) (spreadsheet.getMaxiumColumnNumber() - 1)));
 		// spreadsheet.getSheet().addMergedRegion(
@@ -191,27 +191,12 @@ public class UnitExtraWorkAmount extends UnitExtraWorkAmount_Base {
 	    } else {
 		spreadsheet.getSheet(getUnit().getCostCenterCode().toString());
 	    }
-	    for (EmployeeExtraWorkAuthorization employeeExtraWorkAuthorization : extraWorkAuthorization
-		    .getEmployeeExtraWorkAuthorizations()) {
-		if (!inserted.contains(employeeExtraWorkAuthorization.getAssiduousness().getEmployee())) {
-		    employeeExtraWorkAuthorization.getExcelRow(spreadsheet, getYear());
-		    inserted.add(employeeExtraWorkAuthorization.getAssiduousness().getEmployee());
-		}
+	    Assiduousness assiduousness = extraWorkRequest.getAssiduousness();
+	    if (!inserted.contains(assiduousness.getEmployee())) {
+		assiduousness.getExcelRow(spreadsheet, getUnit(), getYear());
+		inserted.add(assiduousness.getEmployee());
 	    }
 	}
-    }
-
-    private List<ExtraWorkAuthorization> getExtraPayingUnitAuthorizationsForYear(Unit unit) {
-	List<ExtraWorkAuthorization> extraWorkAuthorizationList = new ArrayList<ExtraWorkAuthorization>();
-	for (ExtraWorkAuthorization extraWorkAuthorization : unit.getExtraPayingUnitAuthorizations()) {
-	    if ((extraWorkAuthorization.getBeginDate().getYear() == getYear().intValue() && extraWorkAuthorization.getBeginDate()
-		    .getMonthOfYear() < 12)
-		    || (extraWorkAuthorization.getEndDate().getYear() == (getYear().intValue() - 1) && extraWorkAuthorization
-			    .getEndDate().getMonthOfYear() == 12)) {
-		extraWorkAuthorizationList.add(extraWorkAuthorization);
-	    }
-	}
-	return extraWorkAuthorizationList;
     }
 
     public void delete() {

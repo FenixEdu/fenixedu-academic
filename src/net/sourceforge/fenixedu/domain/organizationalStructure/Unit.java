@@ -73,6 +73,7 @@ import net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTimeFieldType;
+import org.joda.time.DurationFieldType;
 import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
 
@@ -854,8 +855,8 @@ public class Unit extends Unit_Base {
 	Unit noOfficialExternalInstitutionUnit = new Unit();
 	noOfficialExternalInstitutionUnit.init(new MultiLanguageString(Language.getDefaultLanguage(), unitName), null, null,
 		new YearMonthDay(), null, null, null, null, null);
-	noOfficialExternalInstitutionUnit.addParentUnit(externalInstitutionUnit, AccountabilityType
-		.readByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
+	noOfficialExternalInstitutionUnit.addParentUnit(externalInstitutionUnit,
+		AccountabilityType.readByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
 	noOfficialExternalInstitutionUnit.setCountry(country);
 	return noOfficialExternalInstitutionUnit;
     }
@@ -1208,6 +1209,33 @@ public class Unit extends Unit_Base {
 	return extraWorkRequestList;
     }
 
+    public List<ExtraWorkRequest> getExtraWorkRequestsPayingYear(Integer year) {
+	List<ExtraWorkRequest> extraWorkRequestList = new ArrayList<ExtraWorkRequest>();
+	for (ExtraWorkRequest extraWorkRequest : getExtraWorkRequests()) {
+	    Partial partialPayingDate = extraWorkRequest.getPartialPayingDate().withFieldAdded(DurationFieldType.months(), 1);
+	    if (partialPayingDate.get(DateTimeFieldType.year()) == year) {
+		extraWorkRequestList.add(extraWorkRequest);
+	    }
+	}
+	return extraWorkRequestList;
+    }
+
+    public List<ExtraWorkRequest> getExtraWorkRequestsByDoneAndPayingDates(Integer doneYear, Month doneMonth, Integer payingYear,
+	    Month payingMonth) {
+	Partial donePartialDate = new Partial().with(DateTimeFieldType.year(), doneYear).with(DateTimeFieldType.monthOfYear(),
+		doneMonth.ordinal() + 1);
+	Partial payingPartialDate = new Partial().with(DateTimeFieldType.year(), payingYear).with(
+		DateTimeFieldType.monthOfYear(), payingMonth.ordinal() + 1);
+	List<ExtraWorkRequest> extraWorkRequestList = new ArrayList<ExtraWorkRequest>();
+	for (ExtraWorkRequest extraWorkRequest : getExtraWorkRequests()) {
+	    if (extraWorkRequest.getHoursDoneInPartialDate().equals(donePartialDate)
+		    && extraWorkRequest.getPartialPayingDate().equals(payingPartialDate)) {
+		extraWorkRequestList.add(extraWorkRequest);
+	    }
+	}
+	return extraWorkRequestList;
+    }
+
     public UnitExtraWorkAmount getUnitExtraWorkAmountByYear(Integer year) {
 	for (UnitExtraWorkAmount unitExtraWorkAmount : getUnitExtraWorkAmounts()) {
 	    if (unitExtraWorkAmount.getYear().equals(year)) {
@@ -1227,22 +1255,6 @@ public class Unit extends Unit_Base {
 
     public boolean isEarth() {
 	return this.equals(RootDomainObject.getInstance().getEarthUnit());
-    }
-
-    public List<ExtraWorkRequest> getExtraWorkRequestsByDoneAndPayingDates(Integer doneYear, Month doneMonth, Integer payingYear,
-	    Month payingMonth) {
-	Partial donePartialDate = new Partial().with(DateTimeFieldType.year(), doneYear).with(DateTimeFieldType.monthOfYear(),
-		doneMonth.ordinal() + 1);
-	Partial payingPartialDate = new Partial().with(DateTimeFieldType.year(), payingYear).with(
-		DateTimeFieldType.monthOfYear(), payingMonth.ordinal() + 1);
-	List<ExtraWorkRequest> extraWorkRequestList = new ArrayList<ExtraWorkRequest>();
-	for (ExtraWorkRequest extraWorkRequest : getExtraWorkRequests()) {
-	    if (extraWorkRequest.getHoursDoneInPartialDate().equals(donePartialDate)
-		    && extraWorkRequest.getPartialPayingDate().equals(payingPartialDate)) {
-		extraWorkRequestList.add(extraWorkRequest);
-	    }
-	}
-	return extraWorkRequestList;
     }
 
     @Override
@@ -1400,8 +1412,9 @@ public class Unit extends Unit_Base {
 
     public List<ResearchResultPublication> getArticles(ScopeType locationType, ExecutionYear firstExecutionYear,
 	    ExecutionYear lastExecutionYear, Boolean checkSubunits) {
-	return filterArticlesWithType(this.getResearchResultPublicationsByType(Article.class, firstExecutionYear,
-		lastExecutionYear, checkSubunits), locationType);
+	return filterArticlesWithType(
+		this.getResearchResultPublicationsByType(Article.class, firstExecutionYear, lastExecutionYear, checkSubunits),
+		locationType);
     }
 
     public List<ResearchResultPublication> getArticles(Boolean checkSubunits) {
@@ -1424,8 +1437,8 @@ public class Unit extends Unit_Base {
 
     public List<ResearchResultPublication> getInproceedings(ScopeType locationType, ExecutionYear executionYear,
 	    Boolean checkSubunits) {
-	return filterInproceedingsWithType(this.getResearchResultPublicationsByType(Inproceedings.class, executionYear,
-		checkSubunits), locationType);
+	return filterInproceedingsWithType(
+		this.getResearchResultPublicationsByType(Inproceedings.class, executionYear, checkSubunits), locationType);
     }
 
     public List<ResearchResultPublication> getInproceedings(ScopeType locationType, ExecutionYear firstExecutionYear,
@@ -1571,8 +1584,8 @@ public class Unit extends Unit_Base {
     protected List<ResearchResultPublication> getResearchResultPublicationsByType(
 	    final Class<? extends ResearchResultPublication> clazz, ExecutionYear firstExecutionYear,
 	    ExecutionYear lastExecutionYear, Boolean checkSubunits) {
-	return filterResultPublicationsByType(clazz, getResearchResultPublicationsByExecutionYear(firstExecutionYear,
-		lastExecutionYear, checkSubunits));
+	return filterResultPublicationsByType(clazz,
+		getResearchResultPublicationsByExecutionYear(firstExecutionYear, lastExecutionYear, checkSubunits));
     }
 
     protected List<ResearchResultPublication> getResearchResultPublicationsByExecutionYear(ExecutionYear executionYear,
@@ -1703,8 +1716,8 @@ public class Unit extends Unit_Base {
     // root institution.
     public Grade convertGradeToEcts(CurriculumLine curriculumLine, Grade grade) {
 	ExecutionYear executionYear = curriculumLine.getExecutionYear();
-	CurricularYear curricularYear = CurricularYear.readByYear(curriculumLine.getParentCycleCurriculumGroup().getCurriculum(
-		executionYear).getCurricularYear());
+	CurricularYear curricularYear = CurricularYear.readByYear(curriculumLine.getParentCycleCurriculumGroup()
+		.getCurriculum(executionYear).getCurricularYear());
 	CycleType cycleType = curriculumLine.getParentCycleCurriculumGroup().getCycleType();
 	EctsInstitutionByCurricularYearConversionTable table = getEctsCourseConversionTable(executionYear.getAcademicInterval(),
 		cycleType, curricularYear);
@@ -1740,4 +1753,5 @@ public class Unit extends Unit_Base {
 	}
 	return null;
     }
+
 }
