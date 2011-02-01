@@ -800,7 +800,7 @@ public class Assiduousness extends Assiduousness_Base {
 	decimalFormat.setDecimalFormatSymbols(decimalFormatSymbols);
 	spreadsheet.newRow();
 	spreadsheet.addCell(getEmployee().getEmployeeNumber().toString());
-	spreadsheet.addCell(getSmallName());
+	spreadsheet.addCell(getEmployee().getPerson().getFirstAndLastName());
 	List<ExtraWorkRequest> extraWorkRequests = getExtraWorkRequestsByUnit(unit, year);
 	for (ExtraWorkRequest extraWorkRequest : extraWorkRequests) {
 	    YearMonth yearMonth = new YearMonth(extraWorkRequest.getPartialPayingDate());
@@ -812,11 +812,6 @@ public class Assiduousness extends Assiduousness_Base {
 	    spreadsheet.addCell(Double.valueOf(decimalFormat.format(extraWorkRequest.getAmount() + oldDouble)), spreadsheet
 		    .getExcelStyle().getDoubleStyle(), yearMonth.getNumberOfMonth() * 2 + 1);
 	}
-    }
-
-    private String getSmallName() {
-	String name = getEmployee().getPerson().getName();
-	return name.substring(0, name.indexOf(" ")).concat(name.substring(name.lastIndexOf(" ")));
     }
 
     private Double getOldValue(StyledExcelSpreadsheet spreadsheet, int colNumber) {
