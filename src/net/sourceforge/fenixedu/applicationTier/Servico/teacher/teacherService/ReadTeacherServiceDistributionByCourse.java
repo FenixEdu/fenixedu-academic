@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.teacherService;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -54,7 +55,7 @@ public class ReadTeacherServiceDistributionByCourse extends FenixService {
 
 		    Set<String> curricularYearsSet = buildCurricularYearsSet(curricularCourseEntry, executionPeriodEntry);
 
-		    for (ExecutionCourse executionCourseEntry : (List<ExecutionCourse>) curricularCourseEntry
+		    for (ExecutionCourse executionCourseEntry : curricularCourseEntry
 			    .getExecutionCoursesByExecutionPeriod(executionPeriodEntry)) {
 
 			if (executionCoursesMap.containsKey(executionCourseEntry.getIdInternal())) {
@@ -76,15 +77,33 @@ public class ReadTeacherServiceDistributionByCourse extends FenixService {
 			int praticalShiftsNumber = executionCourseEntry.getNumberOfShifts(ShiftType.PRATICA);
 			int theoPratShiftsNumber = executionCourseEntry.getNumberOfShifts(ShiftType.TEORICO_PRATICA);
 			int laboratorialShiftsNumber = executionCourseEntry.getNumberOfShifts(ShiftType.LABORATORIAL);
+			int seminaryShiftsNumber = executionCourseEntry.getNumberOfShifts(ShiftType.SEMINARY);
+			int problemsShiftsNumber = executionCourseEntry.getNumberOfShifts(ShiftType.PROBLEMS);
+			int tutorialOrientationShiftsNumber = executionCourseEntry
+				.getNumberOfShifts(ShiftType.TUTORIAL_ORIENTATION);
+
+			int fieldWorkShiftsNumber = executionCourseEntry.getNumberOfShifts(ShiftType.FIELD_WORK);
+			int trainingPeriodShiftsNumber = executionCourseEntry.getNumberOfShifts(ShiftType.TRAINING_PERIOD);
 
 			double theoreticalStudentsNumberPerShift = theoreticalShiftsNumber == 0 ? 0
 				: (double) totalStudentsNumber / theoreticalShiftsNumber;
-			double praticalStudentsNumberPerShift = theoreticalShiftsNumber == 0 ? 0 : (double) totalStudentsNumber
+			double praticalStudentsNumberPerShift = praticalShiftsNumber == 0 ? 0 : (double) totalStudentsNumber
 				/ praticalShiftsNumber;
-			double theoPratStudentsNumberPerShift = theoreticalShiftsNumber == 0 ? 0 : (double) totalStudentsNumber
+			double theoPratStudentsNumberPerShift = theoPratShiftsNumber == 0 ? 0 : (double) totalStudentsNumber
 				/ theoPratShiftsNumber;
-			double laboratorialStudentsNumberPerShift = theoreticalShiftsNumber == 0 ? 0
+			double laboratorialStudentsNumberPerShift = laboratorialShiftsNumber == 0 ? 0
 				: (double) totalStudentsNumber / laboratorialShiftsNumber;
+
+			double seminaryStudentsNumberPerShift = seminaryShiftsNumber == 0 ? 0 : (double) totalStudentsNumber
+				/ seminaryShiftsNumber;
+			double problemsStudentsNumberPerShift = problemsShiftsNumber == 0 ? 0 : (double) totalStudentsNumber
+				/ problemsShiftsNumber;
+			double tutorialOrientationStudentsNumberPerShift = tutorialOrientationShiftsNumber == 0 ? 0
+				: (double) totalStudentsNumber / tutorialOrientationShiftsNumber;
+			double fieldWorkStudentsNumberPerShift = fieldWorkShiftsNumber == 0 ? 0 : (double) totalStudentsNumber
+				/ fieldWorkShiftsNumber;
+			double trainingPeriodStudentsNumberPerShift = trainingPeriodShiftsNumber == 0 ? 0
+				: (double) totalStudentsNumber / trainingPeriodShiftsNumber;
 
 			String campus = getCampusForCurricularCourseAndExecutionPeriod(curricularCourseEntry,
 				executionPeriodEntry);
@@ -93,13 +112,21 @@ public class ReadTeacherServiceDistributionByCourse extends FenixService {
 				campus, curricularCourseEntry.getDegreeCurricularPlan().getDegree().getSigla(),
 				curricularYearsSet, executionCourseEntry.getExecutionPeriod().getSemester(),
 				executionCourseFirstTimeEnrollementStudentNumber,
-				executionCourseSecondTimeEnrollementStudentNumber, executionCourseEntry.getAllShiftUnitHours(
-					ShiftType.TEORICA).doubleValue(), executionCourseEntry.getAllShiftUnitHours(
-					ShiftType.PRATICA).doubleValue(), executionCourseEntry.getAllShiftUnitHours(
-					ShiftType.LABORATORIAL).doubleValue(), executionCourseEntry.getAllShiftUnitHours(
-					ShiftType.TEORICO_PRATICA).doubleValue(), theoreticalStudentsNumberPerShift,
-				praticalStudentsNumberPerShift, laboratorialStudentsNumberPerShift,
-				theoPratStudentsNumberPerShift);
+				executionCourseSecondTimeEnrollementStudentNumber,
+				executionCourseEntry.getAllShiftUnitHours(ShiftType.TEORICA).doubleValue(), executionCourseEntry
+					.getAllShiftUnitHours(ShiftType.PRATICA).doubleValue(), executionCourseEntry
+					.getAllShiftUnitHours(ShiftType.LABORATORIAL).doubleValue(), executionCourseEntry
+					.getAllShiftUnitHours(ShiftType.TEORICO_PRATICA).doubleValue(), executionCourseEntry
+					.getAllShiftUnitHours(ShiftType.SEMINARY).doubleValue(), executionCourseEntry
+					.getAllShiftUnitHours(ShiftType.PROBLEMS).doubleValue(), executionCourseEntry
+					.getAllShiftUnitHours(ShiftType.TUTORIAL_ORIENTATION).doubleValue(), executionCourseEntry
+					.getAllShiftUnitHours(ShiftType.FIELD_WORK).doubleValue(), executionCourseEntry
+					.getAllShiftUnitHours(ShiftType.TRAINING_PERIOD).doubleValue(),
+				theoreticalStudentsNumberPerShift, praticalStudentsNumberPerShift,
+				laboratorialStudentsNumberPerShift, theoPratStudentsNumberPerShift,
+				seminaryStudentsNumberPerShift, problemsStudentsNumberPerShift,
+				tutorialOrientationStudentsNumberPerShift, fieldWorkStudentsNumberPerShift,
+				trainingPeriodStudentsNumberPerShift);
 
 			fillExecutionCourseDTOWithTeachers(returnDTO, executionCourseEntry, department);
 
@@ -152,7 +179,9 @@ public class ReadTeacherServiceDistributionByCourse extends FenixService {
 
 	    Integer teacherIdInternal = teacher.getIdInternal();
 	    String teacherName = teacher.getPerson().getName();
-	    Double teacherRequiredHours = StrictMath.ceil(teacher.getHoursLecturedOnExecutionCourse(executionCourse));
+
+	    DecimalFormat df = new DecimalFormat("#.##");
+	    Double teacherRequiredHours = new Double(df.format(teacher.getHoursLecturedOnExecutionCourse(executionCourse)));
 
 	    boolean teacherBelongsToDepartment = false;
 
@@ -160,8 +189,8 @@ public class ReadTeacherServiceDistributionByCourse extends FenixService {
 		teacherBelongsToDepartment = true;
 	    }
 
-	    dto.addTeacherToExecutionCourse(executionCourse.getIdInternal(), teacherIdInternal, teacherName, teacherRequiredHours
-		    .intValue(), teacherBelongsToDepartment);
+	    dto.addTeacherToExecutionCourse(executionCourse.getIdInternal(), teacherIdInternal, teacherName,
+		    teacherRequiredHours, teacherBelongsToDepartment);
 	}
 
     }

@@ -56,13 +56,13 @@ public class ViewTeacherService extends FenixBackingBean {
 
     private static final int NUMBER_OF_FIXED_COLUMNS = 4;
 
-    private static final int HOURS_PER_SHIFT_INFORMATION_COLUMNS = 4;
+    private static final int HOURS_PER_SHIFT_INFORMATION_COLUMNS = 9;
 
     private static final int STUDENT_ENROLMENT_INFORMATION_COLUMNS = 2;
 
     private static final int COURSE_INFORMATION_COLUMNS = 4;
 
-    private static final int STUDENTS_PER_SHIFT_INFORMATION_COLUMNS = 4;
+    private static final int STUDENTS_PER_SHIFT_INFORMATION_COLUMNS = 9;
 
     private InfoExecutionYear previousExecutionYear = null;
 
@@ -107,7 +107,7 @@ public class ViewTeacherService extends FenixBackingBean {
 	    this.selectedExecutionYearID = Integer.valueOf(this.getRequestParameter("selectedExecutionYearID"));
 	} else {
 	    if (this.selectedExecutionYearID == null) {
-		InfoExecutionYear infoExecutionYear = (InfoExecutionYear) ReadCurrentExecutionYear.run();
+		InfoExecutionYear infoExecutionYear = ReadCurrentExecutionYear.run();
 
 		if (infoExecutionYear == null) {
 		    List<SelectItem> executionYearItems = (List<SelectItem>) this.getExecutionYearItems().getValue();
@@ -174,7 +174,7 @@ public class ViewTeacherService extends FenixBackingBean {
 
     private List<SelectItem> getExecutionYears() throws FenixFilterException, FenixServiceException {
 
-	List<InfoExecutionYear> executionYears = (List<InfoExecutionYear>) ReadNotClosedExecutionYears.run();
+	List<InfoExecutionYear> executionYears = ReadNotClosedExecutionYears.run();
 
 	List<SelectItem> result = new ArrayList<SelectItem>(executionYears.size());
 	for (InfoExecutionYear executionYear : executionYears) {
@@ -204,7 +204,7 @@ public class ViewTeacherService extends FenixBackingBean {
 
     public String getTeacherService() throws FenixFilterException, FenixServiceException {
 
-	InfoExecutionYear infoExecutionYear = (InfoExecutionYear) ReadExecutionYearByID.run(this.getSelectedExecutionYearID());
+	InfoExecutionYear infoExecutionYear = ReadExecutionYearByID.run(this.getSelectedExecutionYearID());
 
 	this.selectedExecutionYearName = infoExecutionYear.getYear();
 
@@ -242,13 +242,11 @@ public class ViewTeacherService extends FenixBackingBean {
     }
 
     private List<Integer> buildExecutionPeriodsIDsList() throws FenixFilterException, FenixServiceException {
-	List<InfoExecutionPeriod> executionPeriods = (List<InfoExecutionPeriod>) ReadExecutionPeriodsByExecutionYear.run(this
-		.getSelectedExecutionYearID());
+	List<InfoExecutionPeriod> executionPeriods = ReadExecutionPeriodsByExecutionYear.run(this.getSelectedExecutionYearID());
 
 	Collections.sort(executionPeriods, new BeanComparator("beginDate"));
 
-	InfoExecutionPeriod previousExecutionPeriod = (InfoExecutionPeriod) ReadPreviousExecutionPeriod.run(executionPeriods.get(
-		0).getIdInternal());
+	InfoExecutionPeriod previousExecutionPeriod = ReadPreviousExecutionPeriod.run(executionPeriods.get(0).getIdInternal());
 
 	if (previousExecutionPeriod != null) {
 	    previousExecutionYear = previousExecutionPeriod.getInfoExecutionYear();

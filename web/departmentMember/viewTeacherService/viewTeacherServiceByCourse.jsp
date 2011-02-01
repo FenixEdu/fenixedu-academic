@@ -80,6 +80,11 @@
 				<h:outputText value="<th>#{bundle['label.teacherService.course.praticalHours']}</th>" escape="false" />
 				<h:outputText value="<th>#{bundle['label.teacherService.course.laboratorialHours']}</th>" escape="false" />
 				<h:outputText value="<th>#{bundle['label.teacherService.course.theoPratHours']}</th>" escape="false" />
+				<h:outputText value="<th>#{bundle['label.teacherService.course.seminary']}</th>" escape="false" />
+				<h:outputText value="<th>#{bundle['label.teacherService.course.problems']}</th>" escape="false" />
+				<h:outputText value="<th>#{bundle['label.teacherService.course.tutorialOrientation']}</th>" escape="false" />
+				<h:outputText value="<th>#{bundle['label.teacherService.course.fieldWork']}</th>" escape="false" />
+				<h:outputText value="<th>#{bundle['label.teacherService.course.trainingPeriod']}</th>" escape="false" />
 			</h:panelGroup>
 			
 			<h:outputText value="<th>#{bundle['label.teacherService.course.totalHours']}</th>" escape="false" />
@@ -90,6 +95,11 @@
 				<h:outputText value="<th>#{bundle['label.teacherService.course.studentsNumberByPraticalShift']}</th>" escape="false" />
 				<h:outputText value="<th>#{bundle['label.teacherService.course.studentsNumberByLaboratorialShift']}</th>" escape="false" />
 				<h:outputText value="<th>#{bundle['label.teacherService.course.studentsNumberByTheoPraticalShift']}</th>" escape="false" />
+				<h:outputText value="<th>#{bundle['label.teacherService.course.studentsNumberBySeminaryShift']}</th>" escape="false" />
+				<h:outputText value="<th>#{bundle['label.teacherService.course.studentsNumberByProblemsShift']}</th>" escape="false" />
+				<h:outputText value="<th>#{bundle['label.teacherService.course.studentsNumberByTutorialOrientationShift']}</th>" escape="false" />		
+				<h:outputText value="<th>#{bundle['label.teacherService.course.studentsNumberByFieldWorkShift']}</th>" escape="false" />
+				<h:outputText value="<th>#{bundle['label.teacherService.course.studentsNumberByTrainingPeriodShift']}</th>" escape="false" />
 			</h:panelGroup>
 		<h:outputText value="</tr>" escape="false" />
 		<f:verbatim>
@@ -120,6 +130,11 @@
 						<h:outputText value="<td class='acenter' title=\"#{bundle['label.teacherService.course.praticalHours']}\">#{course.formattedExecutionCoursePraticalHours}</td>" escape="false" />
 						<h:outputText value="<td class='acenter' title=\"#{bundle['label.teacherService.course.laboratorialHours']}\">#{course.formattedExecutionCourseLaboratorialHours}</td>" escape="false" />
 						<h:outputText value="<td class='acenter' title=\"#{bundle['label.teacherService.course.theoPratHours']}\">#{course.formattedExecutionCourseTheoPratHours}</td>" escape="false" />
+						<h:outputText value="<td class='acenter' title=\"#{bundle['label.teacherService.course.seminary']}\">#{course.executionCourseSeminaryHours}</td>" escape="false" />
+						<h:outputText value="<td class='acenter' title=\"#{bundle['label.teacherService.course.problems']}\">#{course.executionCourseProblemsHours}</td>" escape="false" />
+						<h:outputText value="<td class='acenter' title=\"#{bundle['label.teacherService.course.tutorialOrientation']}\">#{course.executionCourseTutorialOrientationHours}</td>" escape="false" />
+						<h:outputText value="<td class='acenter' title=\"#{bundle['label.teacherService.course.fieldWork']}\">#{course.executionCourseFieldWorkHours}</td>" escape="false" />
+						<h:outputText value="<td class='acenter' title=\"#{bundle['label.teacherService.course.trainingPeriod']}\">#{course.executionCourseTrainingPeriodHours}</td>" escape="false" />
 					</h:panelGroup>
 									
 					<h:outputText value="<td class='acenter' title=\"#{bundle['label.teacherService.course.totalHours']}\">#{course.executionCourseTotalHours}</td>" escape="false" />
@@ -130,6 +145,11 @@
 						<h:outputText value="<td class='acenter' title=\"#{bundle['label.teacherService.course.studentsNumberByPraticalShift']}\">#{course.formattedExecutionCourseStudentsNumberByPraticalShift}</td>" escape="false" />
 						<h:outputText value="<td class='acenter' title=\"#{bundle['label.teacherService.course.studentsNumberByLaboratorialShift']}\">#{course.formattedExecutionCourseStudentsNumberByLaboratorialShift}</td>" escape="false" />
 						<h:outputText value="<td class='acenter' title=\"#{bundle['label.teacherService.course.studentsNumberByTheoPraticalShift']}\">#{course.formattedExecutionCourseStudentsNumberByTheoPraticalShift}</td>" escape="false" />
+						<h:outputText value="<td class='acenter' title=\"#{bundle['label.teacherService.course.studentsNumberBySeminaryShift']}\">#{course.executionCourseStudentsNumberBySeminaryShift}</td>" escape="false" />
+						<h:outputText value="<td class='acenter' title=\"#{bundle['label.teacherService.course.studentsNumberByProblemsShift']}\">#{course.executionCourseStudentsNumberByProblemsShift}</td>" escape="false" />
+						<h:outputText value="<td class='acenter' title=\"#{bundle['label.teacherService.course.studentsNumberByTutorialOrientationShift']}\">#{course.executionCourseStudentsNumberByTutorialOrientationShift}</td>" escape="false" />
+						<h:outputText value="<td class='acenter' title=\"#{bundle['label.teacherService.course.studentsNumberByFieldWorkShift']}\">#{course.executionCourseStudentsNumberByFieldWorkShift}</td>" escape="false" />
+						<h:outputText value="<td class='acenter' title=\"#{bundle['label.teacherService.course.studentsNumberByTrainingPeriodShift']}\">#{course.executionCourseStudentsNumberByTrainingPeriodShift}</td>" escape="false" />
 					</h:panelGroup>
 				<h:outputText value="</tr>" escape="false" />
 				
