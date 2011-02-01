@@ -27,8 +27,6 @@ import net.sourceforge.fenixedu.domain.QualificationBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.ManageEnrolmentsBean;
 import net.sourceforge.fenixedu.domain.phd.PhdConfigurationIndividualProgramProcessBean;
-import net.sourceforge.fenixedu.domain.phd.PhdEmailBean;
-import net.sourceforge.fenixedu.domain.phd.PhdEmailBean.PhdEmailParticipantsGroup;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.ActivatePhdProgramProcessInCandidacyState;
@@ -69,6 +67,9 @@ import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlert;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlertBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.RegistrationFormalizationBean;
+import net.sourceforge.fenixedu.domain.phd.email.PhdEmailBean;
+import net.sourceforge.fenixedu.domain.phd.email.PhdIndividualProgramProcessEmailBean;
+import net.sourceforge.fenixedu.domain.phd.email.PhdIndividualProgramProcessEmailBean.PhdEmailParticipantsGroup;
 import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationGuiding;
 import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualProcessData;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
@@ -1124,7 +1125,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
     public ActionForward prepareSendPhdEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	final PhdIndividualProgramProcess process = getProcess(request);
-	final PhdEmailBean emailBean = new PhdEmailBean();
+	final PhdIndividualProgramProcessEmailBean emailBean = new PhdIndividualProgramProcessEmailBean();
 
 	emailBean.setProcess(process);
 
@@ -1155,7 +1156,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
     public ActionForward sendEmailPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final PhdEmailBean emailBean = getRenderedObject("emailBean");
+	final PhdIndividualProgramProcessEmailBean emailBean = getRenderedObject("emailBean");
 
 	if (emailBean.getTemplate() != null) {
 	    emailBean.setSubject(emailBean.getTemplate().getTemplateSubject());
@@ -1181,7 +1182,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 
     public ActionForward checkAllParticipantsInGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	final PhdEmailBean emailBean = getRenderedObject("emailBean");
+	final PhdIndividualProgramProcessEmailBean emailBean = getRenderedObject("emailBean");
 	// getObjectFromViewState
 
 	final String groupName = request.getParameter("groupName");
@@ -1207,7 +1208,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 	    HttpServletResponse response) {
 
 	final PhdIndividualProgramProcess process = getProcess(request);
-	PhdEmailBean bean = new PhdEmailBean(getPhdEmail(request));
+	PhdIndividualProgramProcessEmailBean bean = new PhdIndividualProgramProcessEmailBean(getPhdEmail(request));
 	bean.setProcess(process);
 
 	request.setAttribute("emailBean", bean);

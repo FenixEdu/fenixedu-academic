@@ -1525,7 +1525,7 @@
 	<slot name="justification" required="true" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean.justification" />
 </schema>
 
-<schema name="PhdEmailBean.phdEmail.view" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.PhdEmailBean">
+<schema name="PhdIndividualProgramProcessEmailBean.phdEmail.view" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.email.PhdIndividualProgramProcessEmailBean">
 	<slot name="creator.name" />
 	<slot name="createdDate" layout="year-month"/>
 	<slot name="bccsView" />

@@ -30,7 +30,7 @@
 
 
 <%-- ### Operational Area ### --%>
-<fr:view name="emailBean" schema="PhdEmailBean.phdEmail.view">
+<fr:view name="emailBean" schema="PhdIndividualProgramProcessEmailBean.phdEmail.view">
 
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thlight mtop1" />
