@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 
@@ -264,12 +266,33 @@ public class DegreeInfo extends DegreeInfo_Base {
     @SuppressWarnings("unchecked")
     public static String readAllDegreeInfos() {
 	JSONArray infos = new JSONArray();
-	for(DegreeInfo degreeInfo : RootDomainObject.getInstance().getDegreeInfos()) {
-	    JSONObject obj = new JSONObject();
-	    obj.put("degreeOid", Long.toString(degreeInfo.getDegree().getOID()));
-	    obj.put("degreeType", JSONObject.escape(degreeInfo.getDegree().getDegreeType().toString()));
-	    obj.put("degreeName" , JSONObject.escape(degreeInfo.getName().getContent()));
-	    infos.add(obj);
+	for(Degree degree : RootDomainObject.getInstance().getDegrees()) {
+	    List<DegreeInfo> degreeInfos = degree.getDegreeInfos();
+	    if (!degreeInfos.isEmpty()) {
+		for (DegreeInfo degreeInfo : degreeInfos) {
+		    JSONObject obj = new JSONObject();
+		    String degreeType = JSONObject.escape(degreeInfo.getDegree().getDegreeType().toString());
+		    String degreeName = JSONObject.escape(degreeInfo.getName().getContent());
+		    String degreeOid = Long.toString(degreeInfo.getDegree().getOID());
+		    System.out.printf("with info : %s %s %s\n", degreeOid , degreeType, degreeName);
+		    obj.put("degreeOid", degreeOid);
+		    obj.put("degreeType", degreeType);
+		    obj.put("degreeName" , degreeName);
+		    
+		    infos.add(obj);
+		}
+	    } else {
+		JSONObject obj = new JSONObject();
+		String degreeOid = Long.toString(degree.getOID());
+		String degreeType = JSONObject.escape(degree.getDegreeType().toString());
+		String degreeName = JSONObject.escape(degree.getNome());
+		System.out.printf("no info : %s %s %s\n", degreeOid , degreeType, degreeName);
+		obj.put("degreeOid", degreeOid);
+		obj.put("degreeType", degreeType);
+		obj.put("degreeName" , degreeName);
+		infos.add(obj);
+	    }
+
 	}
 	return infos.toJSONString();
     }

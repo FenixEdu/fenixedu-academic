@@ -3953,7 +3953,7 @@ public class Registration extends Registration_Base {
 	int i = 0;
 	JSONArray infos = new JSONArray();
 	for(Registration registration : RootDomainObject.getInstance().getRegistrations()) {
-	    ExecutionYear conclusionYear = registration.calculateConclusionYear();
+	    ExecutionYear conclusionYear = registration.getConclusionYear();
 	    if (conclusionYear != null) {
 		if (i > 10) break;
 		String endDate = Integer.toString(conclusionYear.getEndDateYearMonthDay().getYear());
@@ -3961,6 +3961,7 @@ public class Registration extends Registration_Base {
 		String studentName = registration.getName();
 		String email = registration.getEmail();
 		String number = Integer.toString(registration.getNumber());
+		//String number = Integer.toString(registration.getStudent().getNumber());
 		String degreeRemoteOid = Long.toString(registration.getDegree().getOID());
 		String username = registration.getPerson().getUsername();
 		JSONObject studentInfo = new JSONObject();
