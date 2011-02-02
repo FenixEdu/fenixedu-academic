@@ -461,7 +461,8 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	    return Arrays.asList(PhdThesisProcessStateType.JURY_WAITING_FOR_VALIDATION, PhdThesisProcessStateType.JURY_VALIDATED,
 		    PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK);
 	case JURY_WAITING_FOR_VALIDATION:
-	    return Collections.singletonList(PhdThesisProcessStateType.JURY_VALIDATED);
+	    return Arrays.asList(PhdThesisProcessStateType.JURY_VALIDATED,
+		    PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK);
 	case JURY_VALIDATED:
 	    return Collections.singletonList(PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK);
 	case WAITING_FOR_JURY_REPORTER_FEEDBACK:

@@ -9,7 +9,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.DownloadThesisRequirement"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryReporterFeedbackUpload"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitJuryElementsDocuments"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisMeeting"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisMeeting "%>
 
 <logic:notEmpty name="process" property="thesisProcess">
 
@@ -70,6 +70,7 @@
 	</li>
 	--%>
 
+<%-- 
 	<phd:activityAvailable process="<%= thesisProcess %>" activity="<%= ScheduleThesisMeeting.class %>">
 		
 		<li style="display: inline;">
@@ -78,6 +79,7 @@
 			</html:link>
 		</li>
 	</phd:activityAvailable>
+--%>	
 
 	<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= JuryReporterFeedbackUpload.class %>">
 		<li style="display: inline;">
