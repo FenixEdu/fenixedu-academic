@@ -72,7 +72,7 @@
 	
 						<%-- INTERNAL jury type slots --%>
 						<logic:equal name="thesisJuryElementBean" property="participantType.name" value="INTERNAL">
-							<fr:slot name="personName" layout="autoComplete" required="true">
+							<fr:slot name="personName" layout="autoComplete">
 								<fr:property name="size" value="50"/>
 								<fr:property name="labelField" value="person.name"/>
 								<fr:property name="format" value="${person.name} (d${person.teacher.teacherNumber})" />
@@ -80,7 +80,8 @@
 								<fr:property name="serviceName" value="SearchInternalPersonsByNameHavingTeacher"/>
 								<fr:property name="serviceArgs" value="size=50"/>
 								<fr:property name="className" value="<%= PersonName.class.getName() %>"/>
-								<fr:property name="minChars" value="4"/>				
+								<fr:property name="minChars" value="4"/>	
+								<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator" />			
 							</fr:slot>
 						</logic:equal>
 						
