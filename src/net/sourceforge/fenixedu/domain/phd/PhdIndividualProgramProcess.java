@@ -1888,11 +1888,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public PhdMigrationIndividualProcessData getAssociatedMigrationProcess() {
-	if (!isMigratedProcess()) {
-	    return null;
-	}
-
-	if (getPhdStudentNumber() == null) {
+	if (!isMigratedProcess() || getPhdStudentNumber() == null) {
 	    return null;
 	}
 
@@ -1938,6 +1934,23 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
 	return null;
     }
+
+    static public List<PhdMigrationIndividualProcessData> searchMigrationProcesses(final ExecutionYear year,
+	    final Predicate<PhdMigrationIndividualProcessData> searchPredicate) {
+	final List<PhdMigrationIndividualProcessData> processDataList = new ArrayList<PhdMigrationIndividualProcessData>();
+	
+	for (final PhdMigrationProcess migrationProcess : RootDomainObject.getInstance().getPhdMigrationProcesses()) {
+	    for(final PhdMigrationIndividualProcessData processData : migrationProcess.getPhdMigrationIndividualProcessData()) {
+		final ExecutionYear processYear = processData.getExecutionYear();
+		if (processYear == null || year == null || processYear.equals(year)) {
+		    processDataList.add(processData);
+		}
+	    }
+	}
+    
+	return CollectionUtils.filter(processDataList, searchPredicate);
+    
+     }
 
     public static List<PhdMigrationProcess> getMigrationProcesses() {
 	return RootDomainObject.getInstance().getPhdMigrationProcesses();

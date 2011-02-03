@@ -404,14 +404,6 @@ public class PhdIndividualProgramProcessEmailBean extends PhdEmailBean implement
 	return new Message(getSender(), getReplyTos(), getRecipients(), getSubject(), message.toString(), bccs);
     }
 
-    @Service
-    public void removeRecipients() {
-	for (Recipient recipient : getRecipients()) {
-	    getSender().removeRecipients(recipient);
-	}
-	setRecipients(null);
-    }
-
     public PhdIndividualProgramProcess getProcess() {
 	return process;
     }

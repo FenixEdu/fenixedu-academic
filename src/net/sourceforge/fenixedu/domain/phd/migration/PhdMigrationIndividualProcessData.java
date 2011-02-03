@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.phd.migration;
 
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewProcess;
@@ -28,6 +29,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdStudyPlanBean;
+import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RatifyCandidacy;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RegistrationFormalization;
@@ -61,6 +63,7 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualProcessData_Base {
 
@@ -76,6 +79,8 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
     }
 
     public class PhdMigrationIndividualProcessDataBean {
+	private transient PhdMigrationIndividualProcessData processData;
+
 	private transient String data;
 
 	private transient Integer processNumber;
@@ -96,8 +101,9 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 	private transient LocalDate annulmentDate;
 	private transient LocalDate limitToFinishDate;
 
-	public PhdMigrationIndividualProcessDataBean(String data) {
-	    setData(data);
+	public PhdMigrationIndividualProcessDataBean(PhdMigrationIndividualProcessData processData) {
+	    setProcessData(processData);
+	    setData(processData.getData());
 	    parse();
 	}
 
@@ -135,6 +141,14 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 	    } catch (NoSuchElementException e) {
 		throw new IncompleteFieldsException("Not enough fields");
 	    }
+	}
+
+	public PhdMigrationIndividualProcessData getProcessData() {
+	    return processData;
+	}
+
+	public void setProcessData(PhdMigrationIndividualProcessData processData) {
+	    this.processData = processData;
 	}
 
 	public String getData() {
@@ -273,6 +287,10 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 	    this.limitToFinishDate = limitToFinishDate;
 	}
 
+	public boolean hasPhdProgram() {
+	    return phdProgram != null;
+	}
+
     }
 
     public boolean hasProcessBean() {
@@ -284,7 +302,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 	    return processBean;
 	}
 
-	processBean = new PhdMigrationIndividualProcessDataBean(getData());
+	processBean = new PhdMigrationIndividualProcessDataBean(this);
 	return processBean;
     }
 
@@ -327,6 +345,29 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 	return exceptionLine.substring(exceptionLine.indexOf(" "));
     }
 
+    public String getMigrationExceptionMessageFromBundle() {
+	final String exceptionString = getMigrationException();
+
+	if (exceptionString == null) {
+	    return null;
+	}
+
+	final String messageString = getMigrationExceptionMessage();
+	String errorTranslated = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale()).getString(
+		"label.phd.migration.exception." + exceptionString);
+	
+	if(errorTranslated == null) {
+	    errorTranslated = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale()).getString(
+			"label.phd.migration.exception.generic");
+	}
+
+	if (messageString != null) {
+	    errorTranslated += " - " + getMigrationExceptionMessage();
+	}
+	
+	return errorTranslated;
+    }
+
     public Person getGuidingPerson() {
 	if (getProcessBean().getGuiderNumber().contains("E")) {
 	    throw new PersonNotFoundException();
@@ -353,6 +394,25 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 	return teacher.getPerson();
     }
 
+    public boolean isMigratedToIndividualProgramProcess() {
+	return getMigratedIndividualProgramProcess() != null;
+    }
+
+    public PhdIndividualProgramProcess getMigratedIndividualProgramProcess() {
+
+	final SearchPhdIndividualProgramProcessBean searchBean = new SearchPhdIndividualProgramProcessBean();
+	searchBean.setFilterPhdPrograms(false);
+	searchBean.setFilterPhdProcesses(false);
+
+	for (final PhdIndividualProgramProcess process : PhdIndividualProgramProcess.search(searchBean.getPredicates())) {
+	    if (process.getPhdStudentNumber() != null && process.getPhdStudentNumber().equals(getNumber())) {
+		return process;
+	    }
+	}
+
+	return null;
+    }
+
     public boolean hasExistingIndividualProgramProcess() {
 	return getPhdIndividualProgramProcess() != null;
     }
@@ -375,6 +435,15 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 	}
 
 	return null;
+    }
+
+    public ExecutionYear getExecutionYear() {
+	final LocalDate date = retrieveDateForExecutionYear();
+	if (date != null) {
+	    return ExecutionYear.readByDateTime(date);
+	} else {
+	    return null;
+	}
     }
 
     private LocalDate retrieveDateForExecutionYear() {
@@ -549,6 +618,8 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 		    + activeState);
 	}
 
+	setMigrationDate(new DateTime());
+
 	return returnVal;
     }
 
@@ -563,7 +634,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 	candidacyBean.setThesisTitle(getProcessBean().getTitle());
 	candidacyBean.setPhdStudentNumber(getPhdMigrationIndividualPersonalData().getNumber());
 	candidacyBean.setCollaborationType(PhdIndividualProgramCollaborationType.NONE);
-	candidacyBean.setExecutionYear(ExecutionYear.readByDateTime(retrieveDateForExecutionYear()));
+	candidacyBean.setExecutionYear(getExecutionYear());
 	candidacyBean.setFocusArea((getProcessBean().getPhdProgram().getPhdProgramFocusAreasCount() == 1) ? getProcessBean()
 		.getPhdProgram().getPhdProgramFocusAreas().get(0)
 		: null);

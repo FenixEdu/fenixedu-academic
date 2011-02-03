@@ -178,7 +178,17 @@
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.manage.emails" />
 				</html:link>
 			</li> 
-
+			
+			<br/>
+			
+			<logic:equal name="process" property="migratedProcess" value="true">
+				<li>
+					<html:link action="/phdIndividualProgramProcess.do?method=viewAssociatedMigrationProcess" paramId="processId" paramName="process" paramProperty="externalId">
+						<bean:message bundle="PHD_RESOURCES" key="label.phd.viewMigrationProcess" />
+					</html:link>
+				</li>
+			</logic:equal>
+			
 			<br/>
 			
 			<phd:activityAvailable process="<%= process %>" activity="<%= ConfigurePhdIndividualProgramProcess.class %>">

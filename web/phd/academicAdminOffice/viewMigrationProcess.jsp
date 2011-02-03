@@ -8,20 +8,26 @@
 
 <%-- ### Title #### --%>
 <em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
-<h2><bean:message key="label.phd.manage.emails.create" bundle="PHD_RESOURCES" /></h2>
+<h2><bean:message key="label.phd.viewMigrationProcess" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
-
-<bean:define id="processId" name="process" property="externalId" />
-<bean:define id="process" name="process" />
-<bean:define id="processDataBean" name="processDataBean" />
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
 
-<p>
-	<html:link action="<%= "/phdIndividualProgramProcess.do?method=viewProcess&amp;processId=" + processId %>">
-		« <bean:message key="label.back" bundle="PHD_RESOURCES" />
-	</html:link>
-</p>
+<logic:present name="process">
+	<bean:define id="processId" name="process" property="externalId" />
+	<p>
+		<html:link action="<%= "/phdIndividualProgramProcess.do?method=viewProcess&amp;processId=" + processId %>">
+			« <bean:message key="label.back" bundle="PHD_RESOURCES" />
+		</html:link>
+	</p>
+</logic:present>
+<logic:notPresent name="process">
+	<p>
+		<html:link action="/phdIndividualProgramProcess.do?method=viewMigratedProcesses">
+			« <bean:message key="label.back" bundle="PHD_RESOURCES" />
+		</html:link>	
+	</p>
+</logic:notPresent>
 
 <%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
 
@@ -31,56 +37,68 @@
 
 <%-- ### Operational Area ### --%>
 
+<p class="mtop15 mbottom05"><strong><bean:message key="label.phd.migration.processData" bundle="PHD_RESOURCES" /></strong></p>
+
 <logic:present name="processDataBean">
 	<fr:view name="processDataBean" schema="PhdMigrationIndividualProcessDataBean">
 	
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle2 thlight mtop1" />
+			<fr:property name="classes" value="tstyle2 thlight thleft mtop05" />
+			<fr:property name="columnClasses" value="width200px,width500px" />
 		</fr:layout>
 		
 	</fr:view>
 </logic:present>
 <logic:notPresent name="processDataBean">
-	Does not have process bean!
+	<em><bean:message key="label.phd.missing.migrationProcessBean" bundle="PHD_RESOURCES"/></em>
 </logic:notPresent>
+
+<p class="mtop15 mbottom05"><strong><bean:message key="label.phd.migration.personalData" bundle="PHD_RESOURCES" /></strong></p>
 
 <logic:present name="personalDataBean">
 	<fr:view name="personalDataBean" schema="PhdMigrationIndividualPersonalDataBean">
 	
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle2 thlight mtop1" />
+			<fr:property name="classes" value="tstyle2 thlight thleft mtop05" />
+			<fr:property name="columnClasses" value="width200px,width500px" />
 		</fr:layout>
 		
 	</fr:view>
 </logic:present>
 <logic:notPresent name="personalDataBean">
-	Does not have personal bean!
+	<em><bean:message key="label.phd.missing.migrationPersonalBean" bundle="PHD_RESOURCES"/></em>
 </logic:notPresent>
+
+<p class="mtop15 mbottom05"><strong><bean:message key="label.phd.migration.guidingData" bundle="PHD_RESOURCES" /></strong></p>
 
 <logic:present name="migrationGuidingBean">
 	<fr:view name="migrationGuidingBean" schema="PhdMigrationGuidingBean">
 	
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle2 thlight mtop1" />
+			<fr:property name="classes" value="tstyle2 thlight thleft mtop05" />
+			<fr:property name="columnClasses" value="width200px,width500px" />
 		</fr:layout>
 		
 	</fr:view>
 </logic:present>
 <logic:notPresent name="migrationGuidingBean">
-	Does not have migration guiding bean!
+	<em><bean:message key="label.phd.missing.migrationGuidingBean" bundle="PHD_RESOURCES"/></em>
 </logic:notPresent>
+
+<p class="mtop15 mbottom05"><strong><bean:message key="label.phd.migration.assistantGuidingData" bundle="PHD_RESOURCES" /></strong></p>
 
 <logic:present name="migrationAssistantGuidingBean">
 	<fr:view name="migrationAssistantGuidingBean" schema="PhdMigrationGuidingBean">
 	
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle2 thlight mtop1" />
+			<fr:property name="classes" value="tstyle2 thlight thleft mtop05" />
+			<fr:property name="columnClasses" value="width200px,width500px" />
 		</fr:layout>
 		
 	</fr:view>
 </logic:present>
 <logic:notPresent name="migrationAssistantGuidingBean">
-	Does not have migration assistant guiding bean!
+	<em><bean:message key="label.phd.missing.migrationAssistantGuidingBean" bundle="PHD_RESOURCES"/></em>
 </logic:notPresent>
 
 

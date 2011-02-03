@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.JobBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.QualificationBean;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.ManageEnrolmentsBean;
 import net.sourceforge.fenixedu.domain.phd.PhdConfigurationIndividualProgramProcessBean;
@@ -72,6 +73,9 @@ import net.sourceforge.fenixedu.domain.phd.email.PhdIndividualProgramProcessEmai
 import net.sourceforge.fenixedu.domain.phd.email.PhdIndividualProgramProcessEmailBean.PhdEmailParticipantsGroup;
 import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationGuiding;
 import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualProcessData;
+import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationProcess;
+import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationProcessStateType;
+import net.sourceforge.fenixedu.domain.phd.migration.SearchPhdMigrationProcessBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -160,7 +164,7 @@ import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
 
 	@Forward(name = "viewMigrationProcess", path = "/phd/academicAdminOffice/viewMigrationProcess.jsp"),
 
-	@Forward(name = "viewMigrationProcesses", path = "/phd/academicAdminOffice/viewMigrationProcesses.jsp")
+	@Forward(name = "viewAllMigratedProcesses", path = "/phd/academicAdminOffice/viewAllMigratedProcesses.jsp")
 
 })
 public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramProcessDA {
@@ -1232,7 +1236,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 
     // Start of Individual Migration Process Visualization
 
-    public ActionForward viewMigrationProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward viewAssociatedMigrationProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	final PhdIndividualProgramProcess process = getProcess(request);
 	final PhdMigrationIndividualProcessData processData = process.getAssociatedMigrationProcess();
@@ -1260,6 +1264,76 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 	return mapping.findForward("viewMigrationProcess");
     }
 
+    public ActionForward viewMigrationProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final Integer migrationId = getMigrationProcessId(request);
+	final PhdMigrationIndividualProcessData processData = getMigrationProcessData(migrationId);
+
+	if (processData != null) {
+	    request.setAttribute("processDataBean", processData.getProcessBean());
+
+	    if (processData.hasPhdMigrationIndividualPersonalData()) {
+		request.setAttribute("personalDataBean", processData.getPhdMigrationIndividualPersonalData().getPersonalBean());
+	    }
+
+	    final String guiderCode = processData.getProcessBean().getGuiderNumber();
+	    final String assistantGuiderCode = processData.getProcessBean().getAssistantGuiderNumber();
+
+	    if (guiderCode != null) {
+		final PhdMigrationGuiding guiderData = getMigrationGuidingData(guiderCode);
+
+		if (guiderData != null) {
+		    request.setAttribute("migrationGuidingBean", guiderData.getGuidingBean());
+		}
+	    }
+
+	    if (assistantGuiderCode != null) {
+		final PhdMigrationGuiding assistantGuiderData = getMigrationGuidingData(assistantGuiderCode);
+
+		if (assistantGuiderData != null) {
+		    request.setAttribute("migrationAssistantGuidingBean", assistantGuiderData.getGuidingBean());
+		}
+	    }
+	}
+
+	return mapping.findForward("viewMigrationProcess");
+    }
+
+    private Integer getMigrationProcessId(HttpServletRequest request) {
+	final String attribute = (String) request.getAttribute("migrationProcessId");
+	final String parameter = (String) request.getParameter("migrationProcessId");
+
+	if (attribute != null) {
+	    return Integer.valueOf(attribute);
+	} else {
+	    return Integer.valueOf(parameter);
+	}
+    }
+
+    private PhdMigrationIndividualProcessData getMigrationProcessData(Integer migrationId) {
+	for (final PhdMigrationProcess migrationProcess : RootDomainObject.getInstance().getPhdMigrationProcesses()) {
+	    for (final PhdMigrationIndividualProcessData processData : migrationProcess.getPhdMigrationIndividualProcessData()) {
+		if (processData.getNumber().equals(migrationId)) {
+		    return processData;
+		}
+	    }
+	}
+
+	return null;
+    }
+
+    private PhdMigrationGuiding getMigrationGuidingData(String teacherCode) {
+	for (final PhdMigrationProcess migrationProcess : RootDomainObject.getInstance().getPhdMigrationProcesses()) {
+	    for (final PhdMigrationGuiding guidingData : migrationProcess.getPhdMigrationGuiding()) {
+		if (guidingData.getTeacherNumber().equals(teacherCode)) {
+		    return guidingData;
+		}
+	    }
+	}
+
+	return null;
+    }
+
     // End of Individual Migration Process Visualization
 
     // Start of Migration Processes Visualization
@@ -1267,9 +1341,27 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
     public ActionForward viewMigratedProcesses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	request.setAttribute("migrationProcesses", PhdIndividualProgramProcess.getMigrationProcesses());
+	SearchPhdMigrationProcessBean searchBean = (SearchPhdMigrationProcessBean) getObjectFromViewState("searchMigrationProcessBean");
 
-	return mapping.findForward("viewMigrationProcesses");
+	if (searchBean == null) {
+	    searchBean = initializeMigrationSearchBean(request);
+	}
+
+	request.setAttribute("searchMigrationProcessBean", searchBean);
+	request.setAttribute("migrationProcesses",
+		PhdIndividualProgramProcess.searchMigrationProcesses(searchBean.getExecutionYear(), searchBean.getPredicates()));
+
+	return mapping.findForward("viewAllMigratedProcesses");
+    }
+
+    protected SearchPhdMigrationProcessBean initializeMigrationSearchBean(HttpServletRequest request) {
+	final SearchPhdMigrationProcessBean searchBean = new SearchPhdMigrationProcessBean();
+	searchBean.setFilterPhdPrograms(false);
+	searchBean.setFilterPhdProcesses(false);
+
+	searchBean.setProcessState(PhdMigrationProcessStateType.CONCLUDED);
+
+	return searchBean;
     }
 
     // End of Migration Processes Visualization

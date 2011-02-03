@@ -1538,7 +1538,12 @@
 <schema name="PhdMigrationIndividualProcessDataBean" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualProcessData$PhdMigrationIndividualProcessDataBean">
 	<slot name="data" />
 	<slot name="processNumber" />
-	<slot name="phdProgram" />
+	<slot name="phdProgram" layout="null-as-label">
+		<property name="subLayout" value="values" />
+		<property name="subSchema" value="PhdProgram.name" />
+	</slot>
+	<slot name="processData.migrationStatus" layout="phd-enum-renderer" />
+	<slot name="processData.migrationExceptionMessageFromBundle" layout="null-as-label"/>
 	<slot name="title" />
 	<slot name="guiderNumber" />
 	<slot name="assistantGuiderNumber" />
@@ -1556,7 +1561,7 @@
 </schema>
 
 <schema name="PhdMigrationIndividualPersonalDataBean" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualPersonalData$PhdMigrationIndividualPersonalDataBean">
-	<slot name="data" />
+	<slot name="data" />"
 	<slot name="phdStudentNumber" />
 	<slot name="identificationNumber" />
 	<slot name="socialSecurityNumber" />
@@ -1564,7 +1569,7 @@
 	<slot name="familyName" />
 	<slot name="dateOfBirth" layout="year-month-day"/>
 	<slot name="gender" layout="phd-enum-renderer"/>
-	<slot name="nationality" layout="phd-enum-renderer"/>
+	<slot name="nationality.name" layout="null-as-label"/>
 	<slot name="parishOfResidence" />
 	<slot name="districtSubdivisionOfResidence" />
 	<slot name="districtOfResidence" />
@@ -1590,20 +1595,31 @@
 </schema>
 
 <schema name="PhdMigrationIndividualProcessData.simple" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualProcessData">
-	<slot name="migrationStatus" layout="phd-enum-renderer" />
 	<slot name="processBean.processNumber" />
-</schema>
-
-<schema name="PhdMigrationGuiding.simple" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationGuiding">
-	<slot name="guidingBean.teacherCode" />
-</schema>
-
-<schema name="PhdMigrationProcess" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationProcess">
-	<slot name="phdMigrationIndividualProcessDataCount" />
-	<slot name="phdMigrationIndividualProcessData">
-		<property name="subSchema" value="PhdMigrationIndividualProcessData.simple" />
+	<slot name="processBean.phdProgram" layout="null-as-label">
+		<property name="subLayout" value="values" />
+		<property name="subSchema" value="PhdProgram.name" />
 	</slot>
-	<slot name="phdMigrationGuiding">
-		<property name="subSchema" value="PhdMigrationGuiding.simple" />
+	<slot name="migrationStatus" layout="phd-enum-renderer" />
+	<slot name="executionYear" layout="format">
+		<property name="format" value="${year}" />
+	</slot>
+	<slot name="migrationDate" layout="null-as-label"/>
+</schema>
+
+<schema name="SearchPhdMigrationProcessBean.edit" type="net.sourceforge.fenixedu.domain.phd.migration.SearchPhdMigrationProcessBean" bundle="PHD_RESOURCES">
+	<slot name="executionYear" layout="menu-select">	
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.MigrationExecutionYearsProvider" />
+		<property name="format" value="${year}" />
+        <property name="saveOptions" value="true"/>
+	</slot>
+	<slot name="processState" layout="menu-select">
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationProcessStateType" />
+		<property name="format" value="${localizedName}" />
+	</slot>
+	<slot name="phdStudentNumber" />
+	<slot name="filterNotMigratedProcesses" layout="menu-select">
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.phd.migration.SearchPhdMigrationProcessBean$FilterMigratedProcesses" />
+		<property name="format" value="${localizedName}" />
 	</slot>
 </schema>

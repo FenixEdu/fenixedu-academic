@@ -61,6 +61,10 @@
 <%--  ### Results  ### --%>
 <html:link action="/phdProgramCandidacyProcess.do?method=prepareSearchPerson">
 	<bean:message bundle="PHD_RESOURCES" key="label.phd.candidacy.academicAdminOffice.createCandidacy"/>
+</html:link> | 
+
+<html:link action="/phdIndividualProgramProcess.do?method=viewMigratedProcesses">
+	<bean:message bundle="PHD_RESOURCES" key="label.phd.viewMigrationProcesses" />
 </html:link>
 <br/><br/>
 

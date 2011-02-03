@@ -23,7 +23,7 @@ public class PhdProgramEmail extends PhdProgramEmail_Base {
     }
 
     protected void init(String subject, String body, String additionalTo, String additionalBcc,
-	    List<PhdIndividualProgramProcess> indiivualProcessList) {
+	    List<PhdIndividualProgramProcess> individualProcessList) {
 	super.init(subject, body, additionalTo, additionalBcc);
     }
 
