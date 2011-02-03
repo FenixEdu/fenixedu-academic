@@ -11,6 +11,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -18,6 +19,7 @@ import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
 
+import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
@@ -50,6 +52,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.WrittenTest;
+import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
@@ -74,6 +77,10 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 public class EvaluationManagementBackingBean extends FenixBackingBean {
+
+    private static final String ENROLMENT_TYPE_FILTER_ALL = "all";
+
+    private static final String ENROLMENT_TYPE_FILTER_NOT_ENROLLED = "not.enrolled";
 
     protected final ResourceBundle enumerationBundle = getResourceBundle("resources/EnumerationResources");
 
@@ -163,11 +170,15 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
     protected GradeScale gradeScale;
 
+    protected String enrolmentTypeFilter;
+
     public EvaluationManagementBackingBean() {
 	/*
 	 * HACK: it's necessary set the executionCourseID for struts menu
 	 */
 	getAndHoldIntegerParameter("executionCourseID");
+
+	initializeEnrolmentFilter();
     }
 
     public Integer getExecutionCourseID() {
@@ -987,9 +998,22 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
     public List<Attends> getExecutionCourseAttends() {
 	final List<Attends> result = new ArrayList<Attends>();
+	String filter = getEnrolmentTypeFilter();
+
 	for (final Attends attends : getExecutionCourse().getAttendsSet()) {
 	    if (!attends.hasEnrolment() || !attends.getEnrolment().isImpossible()) {
-		result.add(attends);
+		if (filter.equals(ENROLMENT_TYPE_FILTER_ALL)) {
+		    result.add(attends);
+		} else if (filter.equals(ENROLMENT_TYPE_FILTER_NOT_ENROLLED)) {
+		    if (!attends.hasEnrolment()) {
+			result.add(attends);
+		    }
+		} else if (attends.hasEnrolment()) {
+		    if (attends.getEnrolment().getEnrolmentEvaluationType()
+.equals(EnrolmentEvaluationType.valueOf(filter))) {
+			result.add(attends);
+		    }
+		}
 	    }
 	}
 	Collections.sort(result, Attends.COMPARATOR_BY_STUDENT_NUMBER);
@@ -1366,5 +1390,58 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 	    // nothing
 	}
 	return false;
+    }
+
+    public List<SelectItem> getEnrolmentTypeFilterOptions() {
+	List<SelectItem> options = new ArrayList<SelectItem>();
+
+	options.add(new SelectItem(ENROLMENT_TYPE_FILTER_ALL, enumerationBundle.getString("filter.all")));
+	for (EnrolmentEvaluationType type : EnrolmentEvaluationType.values()) {
+	    options.add(new SelectItem(type.getName(), type.getDescription()));
+	}
+	options.add(new SelectItem(ENROLMENT_TYPE_FILTER_NOT_ENROLLED, enumerationBundle.getString("filter.not.enrolled")));
+
+	return options;
+    }
+
+    public String getEnrolmentTypeFilter() {
+	return enrolmentTypeFilter;
+    }
+
+    public void setEnrolmentTypeFilter(String filter) {
+	enrolmentTypeFilter = filter;
+    }
+
+    public String filterByEnrolmentType() {
+	marks.clear();
+	return null;
+    }
+
+    private UIComponent findComponent(UIComponent c, String id) {
+	if (id.equals(c.getId())) {
+	    return c;
+	}
+
+	Iterator<UIComponent> childIt = c.getFacetsAndChildren();
+	while (childIt.hasNext()) {
+	    UIComponent found = findComponent(childIt.next(), id);
+	    if (found != null) {
+		return found;
+	    }
+	}
+	return null;
+    }
+
+    private void initializeEnrolmentFilter() {
+	Map map = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+
+	UIComponent filterComponent = findComponent(FacesContext.getCurrentInstance().getViewRoot(), "enrolmentFilter");
+
+	if (filterComponent != null) {
+	    String clientId = filterComponent.getClientId(FacesContext.getCurrentInstance());
+	    enrolmentTypeFilter = (String) map.get(clientId);
+	} else {
+	    enrolmentTypeFilter = ENROLMENT_TYPE_FILTER_ALL;
+	}
     }
 }

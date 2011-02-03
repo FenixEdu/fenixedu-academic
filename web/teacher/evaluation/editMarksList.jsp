@@ -90,8 +90,21 @@
 				<h:outputText value="</p>" escape="false"/>
 			<h:outputText value="</div>" escape="false"/>
 
-			<h:outputText styleClass="warning0" rendered="#{evaluationManagementBackingBean.mixedGrades}"
-				value="#{bundle['message.teacher.edit.marks.mixedGrades']}" />
+			<h:outputText styleClass="warning0" rendered="#{evaluationManagementBackingBean.mixedGrades}" value="#{bundle['message.teacher.edit.marks.mixedGrades']}" />
+				
+			<h:outputText value="<div><table><tr>" escape="false"/>
+				<h:outputText value="<td>" escape="false"/>
+					<h:outputText value="#{bundle['label.teacher.marks.filter.evaluation.type']}" escape="false"/>
+				<h:outputText value="</td>" escape="false"/>
+				
+				<h:outputText value="<td>" escape="false"/>
+					<h:selectOneMenu id="enrolmentFilter" value="#{evaluationManagementBackingBean.enrolmentTypeFilter}">
+						<f:selectItems value="#{evaluationManagementBackingBean.enrolmentTypeFilterOptions}"/>
+					</h:selectOneMenu>
+					<h:commandButton style="display:none; visibility: hidden;" action="#{evaluationManagementBackingBean.editMarks}" value=""/>
+					<h:commandButton styleClass="inputbutton" action="#{evaluationManagementBackingBean.filterByEnrolmentType}" value="#{bundle['button.show']}" />
+				<h:outputText value="</td>" escape="false"/>
+			<h:outputText value="</tr></table></div>" escape="false"/>
 	
 			<h:dataTable value="#{evaluationManagementBackingBean.executionCourseAttends}" var="attends" styleClass="tstyle4">
 				<h:column>
