@@ -33,7 +33,7 @@ public class InquiryCourseAnswer extends InquiryCourseAnswer_Base {
     public static InquiryCourseAnswer createNotAnsweredInquiryCourse(final StudentInquiryRegistry inquiryRegistry,
 	    final InquiryNotAnsweredJustification justification, final String otherJustification) {
 	final InquiryCourseAnswer courseAnswer = new InquiryCourseAnswer(inquiryRegistry);
-	final StudentInquiryExecutionPeriod studentInquiryExecutionPeriod = inquiryRegistry.getStudent().getStudent()
+	final StudentInquiryExecutionPeriod studentInquiryExecutionPeriod = inquiryRegistry.getRegistration().getStudent()
 		.getStudentInquiryExecutionPeriod(inquiryRegistry.getExecutionPeriod());
 	courseAnswer.setWeeklyHoursSpentInAutonomousWork(studentInquiryExecutionPeriod.getWeeklyHoursSpentInClassesSeason());
 	courseAnswer.setNotAnsweredJustification(justification);
@@ -42,8 +42,8 @@ public class InquiryCourseAnswer extends InquiryCourseAnswer_Base {
 
 	courseAnswer.setNumberOfEnrolments(getNumberOfEnrolments(inquiryRegistry));
 	courseAnswer.setCommittedFraud(Boolean.FALSE);//TODO actualmente não existe registo desta info no fenix
-	courseAnswer.setStudentType(inquiryRegistry.getStudent().getRegistrationAgreement());
-	courseAnswer.setEntryGrade(InquiryGradesInterval.getInterval(inquiryRegistry.getStudent().getEntryGrade()));
+	courseAnswer.setStudentType(inquiryRegistry.getRegistration().getRegistrationAgreement());
+	courseAnswer.setEntryGrade(InquiryGradesInterval.getInterval(inquiryRegistry.getRegistration().getEntryGrade()));
 	courseAnswer.setGrade(inquiryRegistry.getLastGradeInterval());
 
 	inquiryRegistry.setState(InquiriesRegistryState.NOT_ANSWERED);
@@ -52,7 +52,7 @@ public class InquiryCourseAnswer extends InquiryCourseAnswer_Base {
     }
 
     public static int getNumberOfEnrolments(final StudentInquiryRegistry inquiryRegistry) {
-	final StudentCurricularPlan studentCurricularPlan = inquiryRegistry.getStudent().getStudentCurricularPlan(
+	final StudentCurricularPlan studentCurricularPlan = inquiryRegistry.getRegistration().getStudentCurricularPlan(
 		inquiryRegistry.getExecutionPeriod().getExecutionYear());
 	final int numberOfEnrolments = studentCurricularPlan.getEnrolments(inquiryRegistry.getCurricularCourse()).size();
 	return numberOfEnrolments;

@@ -162,7 +162,7 @@ public class StudentInquiryDA extends FenixDispatchAction {
 	    return handleDontRespondError(actionMapping, request, inquiryRegistry);
 	}
 
-	if (inquiryRegistry.getStudent().getPerson() != AccessControl.getPerson()) {
+	if (inquiryRegistry.getRegistration().getPerson() != AccessControl.getPerson()) {
 	    addActionMessage(request, "error.inquiries.notTheSamePerson");
 	    return handleDontRespondError(actionMapping, request, inquiryRegistry);
 	}

@@ -30,8 +30,8 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class Professorship extends Professorship_Base implements ICreditsEventOriginator {
 
-    public static final Comparator<Professorship> COMPARATOR_BY_PERSON_NAME = new BeanComparator("person.name",
-	    Collator.getInstance());
+    public static final Comparator<Professorship> COMPARATOR_BY_PERSON_NAME = new BeanComparator("person.name", Collator
+	    .getInstance());
 
     public Professorship() {
 	super();
@@ -60,7 +60,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 	professorShip.setExecutionCourse(executionCourse);
 	professorShip.setPerson(teacher.getPerson());
 	professorShip.setCreator(AccessControl.getPerson());
-		
+
 	professorShip.setResponsibleFor(responsibleFor);
 	executionCourse.moveSummariesFromTeacherToProfessorship(teacher, professorShip);
 
@@ -127,6 +127,8 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 	if (hasTeachingInquiry())
 	    throw new DomainException("error.remove.professorship");
 	if (hasAnyStudentInquiriesTeachingResults())
+	    throw new DomainException("error.remove.professorship");
+	if (hasAnyInquiriyResults())
 	    throw new DomainException("error.remove.professorship");
 	if (hasAnyAssociatedShiftProfessorship())
 	    throw new DomainException("error.remove.professorship");

@@ -30,7 +30,8 @@ public class StudentInquiryRegistry extends StudentInquiryRegistry_Base {
 	setExecutionCourse(executionCourse);
 	setExecutionPeriod(executionPeriod);
 	setCurricularCourse(curricularCourse);
-	setStudent(registration);
+	setRegistration(registration);
+	setStudent(registration.getStudent());
 
 	setState(executionCourse.getAvailableForInquiries() ? InquiriesRegistryState.ANSWER_LATER
 		: InquiriesRegistryState.UNAVAILABLE);
@@ -70,14 +71,14 @@ public class StudentInquiryRegistry extends StudentInquiryRegistry_Base {
 	if (isCreatedAfterWeeklySpentHoursSubmission()) {
 	    return false;
 	}
-	if (getStudent().getStudent().isWeeklySpentHoursSubmittedForOpenInquiry() && !isAvailableToInquiries()) {
+	if (getRegistration().getStudent().isWeeklySpentHoursSubmittedForOpenInquiry() && !isAvailableToInquiries()) {
 	    return false;
 	}
 	return true;
     }
 
     public InquiryGradesInterval getLastGradeInterval() {
-	Collection<Enrolment> enrolments = getStudent().getEnrolments(getExecutionPeriod());
+	Collection<Enrolment> enrolments = getRegistration().getEnrolments(getExecutionPeriod());
 	Grade grade = null;
 	for (Enrolment enrolment : enrolments) {
 	    if (getExecutionCourse() == enrolment.getExecutionCourseFor(getExecutionPeriod())) {
@@ -99,21 +100,21 @@ public class StudentInquiryRegistry extends StudentInquiryRegistry_Base {
     }
 
     public boolean isCreatedAfterWeeklySpentHoursSubmission() {
-	return getStudent().getStudent().isWeeklySpentHoursSubmittedForOpenInquiry()
+	return getRegistration().getStudent().isWeeklySpentHoursSubmittedForOpenInquiry()
 		&& (getWeeklyHoursSpentPercentage() == null || getStudyDaysSpentInExamsSeason() == null);
     }
 
     public StudentInquiryExecutionPeriod getStudentInquiryExecutionPeriod() {
-	return getStudent().getStudent().getStudentInquiryExecutionPeriod(getExecutionPeriod());
+	return getRegistration().getStudent().getStudentInquiryExecutionPeriod(getExecutionPeriod());
     }
 
     public ExecutionDegree getExecutionDegree() {
-	final StudentCurricularPlan studentCurricularPlan = getStudent().getActiveStudentCurricularPlan();
+	final StudentCurricularPlan studentCurricularPlan = getRegistration().getActiveStudentCurricularPlan();
 	if (studentCurricularPlan != null) {
 	    final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
 	    return degreeCurricularPlan.getExecutionDegreeByAcademicInterval(getExecutionPeriod().getAcademicInterval());
 	}
-	DegreeCurricularPlan lastDegreeCurricularPlan = getStudent().getLastDegreeCurricularPlan();
+	DegreeCurricularPlan lastDegreeCurricularPlan = getRegistration().getLastDegreeCurricularPlan();
 	if (lastDegreeCurricularPlan != null) {
 	    return lastDegreeCurricularPlan.getExecutionDegreeByAcademicInterval(getExecutionPeriod().getAcademicInterval());
 	}

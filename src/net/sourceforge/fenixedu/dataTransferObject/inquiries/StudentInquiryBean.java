@@ -211,9 +211,10 @@ public class StudentInquiryBean implements Serializable {
 	inquiryCourseAnswer.setAnswerDuration(endTime.getMillis() - getStartedWhen().getMillis());
 	inquiryCourseAnswer.setAttendenceClassesPercentage(getInquiryRegistry().getAttendenceClassesPercentage());
 	inquiryCourseAnswer.setCommittedFraud(Boolean.FALSE);//TODO actualmente não existe registo desta info no fenix
-	inquiryCourseAnswer.setEntryGrade(InquiryGradesInterval.getInterval(getInquiryRegistry().getStudent().getEntryGrade()));
+	inquiryCourseAnswer.setEntryGrade(InquiryGradesInterval.getInterval(getInquiryRegistry().getRegistration()
+		.getEntryGrade()));
 	inquiryCourseAnswer.setExecutionCourse(getInquiryRegistry().getExecutionCourse());
-	inquiryCourseAnswer.setExecutionDegreeStudent(getInquiryRegistry().getStudent().getLastStudentCurricularPlan()
+	inquiryCourseAnswer.setExecutionDegreeStudent(getInquiryRegistry().getRegistration().getLastStudentCurricularPlan()
 		.getDegreeCurricularPlan().getMostRecentExecutionDegree());
 	ExecutionDegree executionDegreeCourse = ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(getInquiryRegistry()
 		.getCurricularCourse().getDegreeCurricularPlan(), getInquiryRegistry().getExecutionPeriod().getExecutionYear());
@@ -223,9 +224,9 @@ public class StudentInquiryBean implements Serializable {
 	inquiryCourseAnswer.setGrade(getInquiryRegistry().getLastGradeInterval());
 	inquiryCourseAnswer.setNumberOfEnrolments(InquiryCourseAnswer.getNumberOfEnrolments(getInquiryRegistry()));
 	inquiryCourseAnswer.setResponseDateTime(endTime);
-	inquiryCourseAnswer.setStudentType(getInquiryRegistry().getStudent().getRegistrationAgreement());
+	inquiryCourseAnswer.setStudentType(getInquiryRegistry().getRegistration().getRegistrationAgreement());
 	inquiryCourseAnswer.setStudyDaysSpentInExamsSeason(getInquiryRegistry().getStudyDaysSpentInExamsSeason());
-	final StudentInquiryExecutionPeriod studentInquiryExecutionPeriod = getInquiryRegistry().getStudent().getStudent()
+	final StudentInquiryExecutionPeriod studentInquiryExecutionPeriod = getInquiryRegistry().getRegistration().getStudent()
 		.getStudentInquiryExecutionPeriod(getInquiryRegistry().getExecutionPeriod());
 	inquiryCourseAnswer.setWeeklyHoursSpentInAutonomousWork(studentInquiryExecutionPeriod
 		.getWeeklyHoursSpentInClassesSeason());

@@ -7849,7 +7849,7 @@ class inquiries.InquiryResult extends DomainObject {
 	String value;
 	ResultClassification resultClassification;
 	ShiftType shiftType;
-	DateTime lastUpdate;
+	DateTime lastModifiedDate;
 }
 
 /* End of Inquiries */
@@ -8026,7 +8026,14 @@ relation StudentInquiryRegistryRegistration {
 	inquiries.StudentInquiryRegistry playsRole studentsInquiryRegistries {
 		multiplicity *;
 	}
-	student.Registration playsRole student;
+	student.Registration playsRole registration;
+}
+
+relation StudentInquiryRegistryStudent {
+	inquiries.StudentInquiryRegistry playsRole studentsInquiryRegistries {
+		multiplicity *;
+	}
+	student.Student playsRole student;
 }
 
 relation StudentInquiryExecutionPeriodStudent {
