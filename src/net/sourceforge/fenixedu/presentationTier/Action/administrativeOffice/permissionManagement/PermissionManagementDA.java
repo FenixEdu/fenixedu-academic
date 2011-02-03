@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.permissionManagement;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -13,22 +14,28 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.PermissionType;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdminOffice.AdministrativeOfficePermission;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AdministrativeOfficeUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/permissionManagement", module = "academicAdminOffice")
-@Forwards( {
-	@Forward(name = "showAcademicAdminOfficePermissions", path = "/academicAdminOffice/permissions/showPermissions.jsp"),
+@Forwards({ @Forward(name = "showAcademicAdminOfficePermissions", path = "/academicAdminOffice/permissions/showPermissions.jsp"),
 	@Forward(name = "editPermissionMembersGroup", path = "/academicAdminOffice/permissions/editPermissionMembersGroup.jsp") })
 public class PermissionManagementDA extends FenixDispatchAction {
 
@@ -55,7 +62,7 @@ public class PermissionManagementDA extends FenixDispatchAction {
 	final AdministrativeOfficePermission permission = getOrCreatePermission(request);
 
 	final List<PermissionMemberBean> permissionMembers = new ArrayList<PermissionMemberBean>();
-	for (final Employee employee : person.getEmployee().getCurrentWorkingPlace().getAllCurrentActiveWorkingEmployees()) {
+	for (final Employee employee : getEmployees(person)) {
 	    permissionMembers.add(new PermissionMemberBean(permission, employee.getPerson()));
 	}
 
@@ -65,6 +72,45 @@ public class PermissionManagementDA extends FenixDispatchAction {
 	request.setAttribute("permissionMembers", permissionMembers);
 
 	return mapping.findForward("editPermissionMembersGroup");
+    }
+
+    private Collection<Employee> getEmployees(final Person person) {
+	Unit currentWorkingPlace = person.getEmployee().getCurrentWorkingPlace();
+	final Campus campus = currentWorkingPlace.getCampus();
+
+	AdministrativeOfficeUnit root = getRootAdministrativeOfficeUnit(currentWorkingPlace);
+	
+	List<Employee> allCurrentActiveWorkingEmployees = root.getAllCurrentActiveWorkingEmployees();
+	
+	return (List<Employee>) CollectionUtils.select(allCurrentActiveWorkingEmployees, new Predicate() {
+
+	    @Override
+	    public boolean evaluate(Object arg0) {
+		Employee employee = (Employee) arg0;
+		return campus != null && employee.getCurrentWorkingPlace().getCampus() == campus;
+	    }
+	});
+    }
+
+    private AdministrativeOfficeUnit getRootAdministrativeOfficeUnit(Unit currentWorkingPlace) {
+
+	if (currentWorkingPlace.isAdministrativeOfficeUnit()) {
+	    return (AdministrativeOfficeUnit) currentWorkingPlace;
+	}
+
+	Collection<? extends Accountability> parentAccountabilities = currentWorkingPlace
+		.getParentAccountabilities(AccountabilityTypeEnum.ADMINISTRATIVE_STRUCTURE);
+	for (Accountability accountability : parentAccountabilities) {
+	    if (accountability.isActive(new YearMonthDay())) {
+		AdministrativeOfficeUnit rootAdministrativeOfficeUnit = getRootAdministrativeOfficeUnit((Unit) accountability.getParentParty());
+		if (rootAdministrativeOfficeUnit != null) {
+		    return rootAdministrativeOfficeUnit;
+		}
+
+	    }
+	}
+
+	return null;
     }
 
     public ActionForward editMembers(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
