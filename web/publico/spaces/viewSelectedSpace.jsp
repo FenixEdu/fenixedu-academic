@@ -47,7 +47,6 @@
 		</fr:view>
 	</logic:notEmpty>
 
-	<%-- 
 	<logic:notEmpty name="mostRecentBlueprint">
 
 		<p class="mtop2 mbottom05"><b><bean:message key="label.selected.space.blueprint" bundle="DEFAULT"/></b></p>
@@ -74,7 +73,6 @@
 		</div>					
 					
 	</logic:notEmpty>
-	--%>
 	
 	<logic:notEmpty name="containedSpaces">
 		
