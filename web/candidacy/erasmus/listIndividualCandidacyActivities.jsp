@@ -24,6 +24,7 @@
 
 <logic:notEmpty name="process">
 	<bean:define id="processId" name="process" property="idInternal" />
+	<bean:define id="candidacy" name="process" property="candidacy" />
 	
 	<logic:notEmpty name="activities">
 		<%-- list process activities --%>
@@ -36,9 +37,8 @@
 				</html:link>
 			</li>
 		</logic:iterate>
-		</ul>
+	</ul>
 	</logic:notEmpty>
-	
 	<logic:present role="INTERNATIONAL_RELATION_OFFICE">
 		<logic:equal name="process" property="candidacy.mostRecentApprovedLearningAgreementNotViewed" value="true">
 			<div class="infoop-blue">

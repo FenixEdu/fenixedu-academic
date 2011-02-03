@@ -77,6 +77,7 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	activities.add(new RejectCandidacy());
 	activities.add(new CreateRegistration());
 	activities.add(new RevertCandidacyToStandBy());
+	activities.add(new EnrolStudent());
 
     }
 
@@ -1251,6 +1252,42 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	}
     }
 
+    static private class EnrolStudent extends  Activity<ErasmusIndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(ErasmusIndividualCandidacyProcess process, IUserView userView) {
+	    if (!isGriOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	    
+	    if (process.getCandidacy().getRegistration() == null){
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected ErasmusIndividualCandidacyProcess executeActivity(ErasmusIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    return process;
+	}
+	
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return false;
+	}
+
+	@Override
+	public Boolean isVisibleForCoordinator() {
+	    return false;
+	}
+
+	@Override
+	public Boolean isVisibleForGriOffice() {
+	    return true;
+	}
+	
+    }
+    
     private void createRegistration() {
 	getCandidacy().createRegistration(getDegreeCurricularPlan(this), CycleType.SECOND_CYCLE, null);
     }

@@ -378,4 +378,12 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
 
 	return listProcessAllowedActivities(mapping, form, request, response);
     }
+
+    public ActionForward prepareExecuteEnrolStudent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	return redirect(
+		"/caseHandlingErasmusIndividualCandidacyProcess.do?method=enrolStudent&processId="
+			+ getProcess(request).getIdInternal().toString(), request);
+    }
+
 }
