@@ -1527,7 +1527,7 @@
 
 <schema name="PhdIndividualProgramProcessEmailBean.phdEmail.view" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.email.PhdIndividualProgramProcessEmailBean">
 	<slot name="creator.name" />
-	<slot name="createdDate" layout="year-month"/>
+	<slot name="creationDate" layout="year-month"/>
 	<slot name="bccsView" />
 	<slot name="subject">
 		<property name="classes" value="bold"/>

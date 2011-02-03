@@ -7584,6 +7584,9 @@ class phd.email.PhdEmail extends Alert {
 	
 	class phd.email.PhdProgramEmail extends phd.email.PhdEmail {
 	}
+	
+	class phd.email.PhdIndividualProgramProcessEmail extends phd.email.PhdEmail {
+	}
 
 /* End of Phd Module */
 
@@ -8309,13 +8312,6 @@ relation PhdIndividualProgramProcessPhdProcessState {
     }
 }
 
-relation PhdIndividualProgramProcessMessage {
-	phd.PhdIndividualProgramProcess playsRole process;
-	util.email.Message playsRole messages {
-		multiplicity *;
-	}
-}
-
 relation PhdProgramPhdProgramUnit {
     phd.PhdProgram playsRole phdProgram;
     phd.PhdProgramUnit playsRole phdProgramUnit;
@@ -8850,6 +8846,20 @@ relation PhdIndividualProgramProcessPhdProgramMessage {
 	}
 	
 	phd.email.PhdProgramEmail playsRole phdProgramEmail {
+		multiplicity *;
+	}
+}
+
+relation PhdIndividualProgramProcessPhdIndividualProgramProcessMessage {
+	phd.PhdIndividualProgramProcess playsRole phdIndividualProgramProcess;
+	phd.email.PhdIndividualProgramProcessEmail playsRole phdIndividualProgramProcessEmails {
+		multiplicity *;
+	}
+}
+
+relation PhdEmailPerson {
+	Person playsRole person;
+	phd.email.PhdEmail playsRole phdEmail {
 		multiplicity *;
 	}
 }

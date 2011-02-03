@@ -26,8 +26,6 @@ import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.QualificationBean;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
@@ -51,6 +49,7 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.phd.candidacy.RegistrationFormalizationBean;
+import net.sourceforge.fenixedu.domain.phd.email.PhdIndividualProgramProcessEmail;
 import net.sourceforge.fenixedu.domain.phd.email.PhdIndividualProgramProcessEmailBean;
 import net.sourceforge.fenixedu.domain.phd.guidance.PhdGuidanceDocument;
 import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationGuiding;
@@ -69,7 +68,6 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.util.email.Message;
-import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
@@ -1165,19 +1163,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		Object object) {
 
 	    final PhdIndividualProgramProcessEmailBean bean = (PhdIndividualProgramProcessEmailBean) object;
-
-	    final Sender sender = AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE)
-		    .getUnit().getUnitBasedSender().get(0);
-	    bean.setSender(sender);
-
-	    String validate = bean.validate();
-	    if (validate != null) {
-		throw new DomainException(validate);
-	    }
-
-	    final Message email = bean.send(process);
-	    email.setProcess(process);
-	    email.setPerson(AccessControl.getPerson());
+	    bean.setProcess(process);
+	    PhdIndividualProgramProcessEmail.createEmail(bean);
 
 	    return process;
 	}

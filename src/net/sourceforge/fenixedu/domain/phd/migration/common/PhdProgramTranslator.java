@@ -19,7 +19,7 @@ public class PhdProgramTranslator {
 	translationMap.put(8, "DEN");
 	translationMap.put(9, "DMat");
 	translationMap.put(10, "DEIC");
-	translationMap.put(11, "DEGest");
+	translationMap.put(11, "");
 	translationMap.put(20, "DES");
 	translationMap.put(25, "Dquim");
 	translationMap.put(26, "Dbiotec");

@@ -140,23 +140,9 @@ div.compose-email table .col2 { width: 700px; }
 
 	</table>
 
-
-
-
-
-
-
-
-
-
-
-
-
-	
-	
 	<fr:edit id="emailBean.individuals" name="emailBean" >
 		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.email.PhdIndividualProgramProcessEmailBean">
-			<fr:slot name="bccs" bundle="MESSAGING_RESOURCES" key="label.receiversOfCopy">
+			<fr:slot name="bccs" bundle="MESSAGING_RESOURCES" key="label.receiversOfCopy" validator="net.sourceforge.fenixedu.presentationTier.Action.phd.validator.EmailListValidator">
 				<fr:property name="size" value="60" />
 			</fr:slot>
 		</fr:schema>

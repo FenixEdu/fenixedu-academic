@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
@@ -17,18 +16,9 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService.AlertMessage;
 import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
-import net.sourceforge.fenixedu.domain.util.email.Message;
-import net.sourceforge.fenixedu.domain.util.email.Recipient;
-import net.sourceforge.fenixedu.domain.util.email.ReplyTo;
-import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.util.StringUtils;
-
-import org.joda.time.DateTime;
-
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
-import pt.ist.fenixWebFramework.services.Service;
-import pt.utl.ist.fenix.tools.util.EMail;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class PhdIndividualProgramProcessEmailBean extends PhdEmailBean implements Serializable {
@@ -208,14 +198,7 @@ public class PhdIndividualProgramProcessEmailBean extends PhdEmailBean implement
 
     }
 
-    private static int MAX_EMAILS_PER_LINE = 5;
-
-    private Sender sender;
-    private Set<Recipient> recipients;
-    private String tos, ccs;
-    private Set<ReplyTo> replyTos;
-    private DateTime createdDate;
-    private Person creator;
+   private static int MAX_EMAILS_PER_LINE = 5;
 
     private PhdIndividualProgramProcess process;
 
@@ -226,78 +209,31 @@ public class PhdIndividualProgramProcessEmailBean extends PhdEmailBean implement
     public PhdIndividualProgramProcessEmailBean() {
     }
 
-    public PhdIndividualProgramProcessEmailBean(Message message) {
-	this.subject = message.getSubject();
-	this.message = message.getBody();
-	this.bccs = message.getBccs();
-	this.createdDate = message.getCreated();
-	this.creator = message.getPerson();
+    public PhdIndividualProgramProcessEmailBean(PhdIndividualProgramProcessEmail email) {
+	this.subject = email.getFormattedSubject().getContent(Language.pt);
+	this.message = email.getFormattedBody().getContent(Language.pt);
+	this.bccs = email.getBccs();
+	this.creationDate = email.getWhenCreated();
+	this.creator = email.getPerson();
+	this.process = email.getPhdIndividualProgramProcess();
     }
 
-    public Sender getSender() {
-	return sender;
-    }
+    public String getBccsWithSelectedParticipants() {
+	String bccs = getBccs() == null ? null : getBccs().replace(" ", "");
 
-    public void setSender(final Sender sender) {
-	this.sender = sender;
-    }
-
-    public List<Recipient> getRecipients() {
-	final List<Recipient> result = new ArrayList<Recipient>();
-	if (recipients != null) {
-	    for (final Recipient recipient : recipients) {
-		result.add(recipient);
-	    }
+	if (!StringUtils.isEmpty(bccs)) {
+	    bccs += ",";
 	}
-	return result;
-    }
 
-    public void setRecipients(List<Recipient> recipients) {
-	if (recipients == null) {
-	    this.recipients = null;
-	} else {
-	    this.recipients = new HashSet<Recipient>();
-	    for (final Recipient recipient : recipients) {
-		this.recipients.add(recipient);
-	    }
+	for (PhdParticipant participant : getSelectedParticipants()) {
+	    bccs += participant.getEmail();
+	    bccs += ",";
 	}
-    }
-
-    public List<ReplyTo> getReplyTos() {
-	final List<ReplyTo> result = new ArrayList<ReplyTo>();
-	if (replyTos != null) {
-	    for (final ReplyTo replyTo : replyTos) {
-		result.add(replyTo);
-	    }
+	if (getParticipantsGroup().size() != 0) {
+	    bccs = bccs.substring(0, bccs.length() - 1);
 	}
-	return result;
-    }
 
-    public void setReplyTos(List<ReplyTo> replyTos) {
-	if (replyTos == null) {
-	    this.replyTos = null;
-	} else {
-	    this.replyTos = new HashSet<ReplyTo>();
-	    for (final ReplyTo replyTo : replyTos) {
-		this.replyTos.add(replyTo);
-	    }
-	}
-    }
-
-    public String getTos() {
-	return tos;
-    }
-
-    public void setTos(String tos) {
-	this.tos = tos;
-    }
-
-    public String getCcs() {
-	return ccs;
-    }
-
-    public void setCcs(String ccs) {
-	this.ccs = ccs;
+	return bccs;
     }
 
     public String getBccsView() {
@@ -317,91 +253,6 @@ public class PhdIndividualProgramProcessEmailBean extends PhdEmailBean implement
 	    result.deleteCharAt(result.length() - 1);
 	}
 	return result.toString();
-    }
-
-    public String validate() {
-	final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
-
-	String bccs = getBccs();
-	if (getParticipantsGroup().isEmpty() && getSelectedParticipants().isEmpty() && getRecipients().isEmpty()
-		&& StringUtils.isEmpty(bccs)) {
-	    return resourceBundle.getString("error.email.validation.no.recipients");
-	}
-
-	if (!StringUtils.isEmpty(bccs)) {
-	    String[] emails = bccs.split(",");
-	    for (String emailString : emails) {
-		final String email = emailString.trim();
-		if (!email.matches(EMail.W3C_EMAIL_SINTAX_VALIDATOR)) {
-		    StringBuilder builder = new StringBuilder(resourceBundle.getString("error.email.validation.bcc.invalid"));
-		    builder.append(email);
-		    return builder.toString();
-		}
-	    }
-	}
-
-	if (StringUtils.isEmpty(getSubject())) {
-	    return resourceBundle.getString("error.email.validation.subject.empty");
-	}
-
-	if (StringUtils.isEmpty(getMessage())) {
-	    return resourceBundle.getString("error.email.validation.message.empty");
-	}
-
-	return null;
-    }
-
-    public DateTime getCreatedDate() {
-	return createdDate;
-    }
-
-    public void setCreatedDate(DateTime createdDate) {
-	this.createdDate = createdDate;
-    }
-
-    @Service
-    public Message send(PhdIndividualProgramProcess process) {
-	final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
-
-	final StringBuilder message = new StringBuilder();
-	message.append(getMessage());
-	// message.append("\n\n---\n");
-	// message.append(resourceBundle.getString("message.email.footer.prefix"));
-	// message.append(getSender().getFromName());
-	// message.append(resourceBundle.getString("message.email.footer.prefix.suffix"));
-	// for (final Recipient recipient : getRecipients()) {
-	// message.append("\n\t");
-	// message.append(recipient.getToName());
-	// }
-	//
-	// for (PhdEmailParticipantsGroup participantGroup :
-	// getParticipantsGroup()) {
-	// message.append("\n\t");
-	// message.append(participantGroup.getGroupLabel());
-	// }
-	// message.append("\n");
-
-	String bccs = getBccs() == null ? null : getBccs().replace(" ", "");
-	
-	if (!StringUtils.isEmpty(bccs)) {
-	    bccs += ",";
-	}
-
-	// for (PhdEmailParticipantsGroup participantGroup :
-	// getParticipantsGroup()) {
-	// bccs += participantGroup.getEmailsAsBccs(process);
-	// bccs += ",";
-	// }
-
-	for (PhdParticipant participant : getSelectedParticipants()) {
-	    bccs += participant.getEmail();
-	    bccs += ",";
-	}
-	if (getParticipantsGroup().size() != 0) {
-	    bccs = bccs.substring(0, bccs.length() - 1);
-	}
-
-	return new Message(getSender(), getReplyTos(), getRecipients(), getSubject(), message.toString(), bccs);
     }
 
     public PhdIndividualProgramProcess getProcess() {
@@ -507,5 +358,14 @@ public class PhdIndividualProgramProcessEmailBean extends PhdEmailBean implement
 	}
     }
 
+    public void refreshTemplateInUse() {
+	if (getTemplate() != null) {
+	    setSubject(getTemplate().getTemplateSubject());
+	    setMessage(getTemplate().getTemplateBody());
+	} else {
+	    setSubject("");
+	    setMessage("");
+	}
+    }
 
 }

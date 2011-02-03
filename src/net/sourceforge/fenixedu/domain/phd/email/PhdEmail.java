@@ -2,10 +2,12 @@ package net.sourceforge.fenixedu.domain.phd.email;
 
 import java.util.Collection;
 
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.ReplyTo;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
+import org.joda.time.DateTime;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -18,6 +20,15 @@ public abstract class PhdEmail extends PhdEmail_Base {
 
     protected void init(final String subject, final String body, String additionalTo, String additionalBcc) {
 	super.init(new MultiLanguageString(subject), new MultiLanguageString(body));
+    }
+
+    protected void init(final String subject, final String body, String additionalTo, String additionalBcc, Person creator,
+	    DateTime whenCreated) {
+	super.init(new MultiLanguageString(subject), new MultiLanguageString(body));
+	setAdditionalTo(additionalTo);
+	setAdditionalBcc(additionalBcc);
+	setPerson(creator);
+	setWhenCreated(whenCreated);
     }
 
     @Override

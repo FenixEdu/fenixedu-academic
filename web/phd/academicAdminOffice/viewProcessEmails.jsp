@@ -7,7 +7,7 @@
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 
 <%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.SendPhdEmail"%>
-<%@page import="net.sourceforge.fenixedu.domain.util.email.Message" %>
+<%@page import="net.sourceforge.fenixedu.domain.phd.email.PhdIndividualProgramProcessEmail" %>
 
 <%-- ### Title #### --%>
 <em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
@@ -41,18 +41,18 @@
 
 
 <%-- ### History Area ### --%>
-<logic:empty name="process" property="messages">
+<logic:empty name="process" property="phdIndividualProgramProcessEmails">
 	<p>
 		<em><bean:message key="message.phd.email.do.not.exist" bundle="PHD_RESOURCES" />.</em>
 	</p>
 </logic:empty>
 
-<logic:notEmpty name="process" property="messages">
-	<fr:view name="process" property="messages">
+<logic:notEmpty name="process" property="phdIndividualProgramProcessEmails">
+	<fr:view name="process" property="phdIndividualProgramProcessEmails">
 	
-		<fr:schema bundle="PHD_RESOURCES" type="<%= Message.class.getName() %>">
-			<fr:slot name="created" layout="year-month"/>
-			<fr:slot name="subject" /> 
+		<fr:schema bundle="PHD_RESOURCES" type="<%= PhdIndividualProgramProcessEmail.class.getName() %>">
+			<fr:slot name="whenCreated" layout="year-month"/>
+			<fr:slot name="formattedSubject" /> 
 		</fr:schema>
 	
 		<fr:layout name="tabular">
