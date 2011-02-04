@@ -249,12 +249,19 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 
     @Override
     public boolean isPossibleToSendToOtherEntity() {
-	return true;
+	// FIXME: diplomas should be intended for official purposes and those
+	// imply external entity signature. DFAs should therefore be another
+	// type of document with a specific workflow, the document is completely
+	// different anyway.
+	return getDegree() == null || getDegreeType() == null
+		|| !getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA);
     }
 
     @Override
     public boolean isManagedWithRectorateSubmissionBatch() {
-	return true;
+	// FIXME: see isPossibleToSendToOtherEntity()
+	return getDegree() == null || getDegreeType() == null
+		|| !getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA);
     }
 
     @Override
