@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.reports.GraduationReportFile;
 import net.sourceforge.fenixedu.domain.reports.RaidesDfaReportFile;
 import net.sourceforge.fenixedu.domain.reports.RaidesGraduationReportFile;
 import net.sourceforge.fenixedu.domain.reports.RaidesPhdReportFile;
+import net.sourceforge.fenixedu.domain.reports.RaidesSpecializationReportFile;
 import net.sourceforge.fenixedu.domain.reports.RegistrationReportFile;
 import net.sourceforge.fenixedu.domain.reports.StatusAndApprovalReportFile;
 import net.sourceforge.fenixedu.domain.reports.TeachersByShiftReportFile;
@@ -211,6 +212,16 @@ public class ReportFileFactory {
     @Service
     public static GepReportFile createRaidesPhdReportFile(String type, DegreeType degreeType, ExecutionYear executionYear) {
 	final RaidesPhdReportFile reportFile = new RaidesPhdReportFile();
+	reportFile.setType(type);
+	reportFile.setDegreeType(degreeType);
+	reportFile.setExecutionYear(executionYear);
+	return reportFile;
+    }
+
+    @Service
+    public static GepReportFile createRaidesSpecializationReportFile(String type, DegreeType degreeType,
+	    ExecutionYear executionYear) {
+	final RaidesSpecializationReportFile reportFile = new RaidesSpecializationReportFile();
 	reportFile.setType(type);
 	reportFile.setDegreeType(degreeType);
 	reportFile.setExecutionYear(executionYear);

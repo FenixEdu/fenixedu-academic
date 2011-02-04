@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.reports.GraduationReportFile;
 import net.sourceforge.fenixedu.domain.reports.RaidesDfaReportFile;
 import net.sourceforge.fenixedu.domain.reports.RaidesGraduationReportFile;
 import net.sourceforge.fenixedu.domain.reports.RaidesPhdReportFile;
+import net.sourceforge.fenixedu.domain.reports.RaidesSpecializationReportFile;
 import net.sourceforge.fenixedu.domain.reports.RegistrationReportFile;
 import net.sourceforge.fenixedu.domain.reports.StatusAndApprovalReportFile;
 import net.sourceforge.fenixedu.domain.reports.TeachersByShiftReportFile;
@@ -501,6 +502,16 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	return selectDegreeType(mapping, actionForm, request, response);
     }
 
+    public ActionForward downloadRaidesSpecialization(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	if (isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
+	    return selectDegreeType(mapping, actionForm, request, response);
+	}
+	prepareNewJobResponse(request, ReportFileFactory.createRaidesSpecializationReportFile(getFormat(request),
+		getDegreeType(request), getExecutionYear(request)));
+	return selectDegreeType(mapping, actionForm, request, response);
+    }
+
     private void prepareNewJobResponse(HttpServletRequest request, GepReportFile job) {
 
 	ReportBean reportBean = getRenderedObject();
@@ -559,6 +570,8 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	    return CourseLoadAndResponsiblesReportFile.class;
 	case 20:
 	    return TimetablesReportFile.class;
+	case 21:
+	    return RaidesSpecializationReportFile.class;
 	default:
 	    return null;
 	}

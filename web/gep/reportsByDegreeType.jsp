@@ -106,6 +106,7 @@
     <bean:define id="urlRaidesGraduation" type="java.lang.String">/reportsByDegreeType.do?method=downloadRaidesGraduation&amp;<bean:write name="args" filter="false"/></bean:define>
     <bean:define id="urlRaidesDfa" type="java.lang.String">/reportsByDegreeType.do?method=downloadRaidesDfa&amp;<bean:write name="args" filter="false"/></bean:define>
     <bean:define id="urlRaidesPhd" type="java.lang.String">/reportsByDegreeType.do?method=downloadRaidesPhd&amp;<bean:write name="args" filter="false"/></bean:define>
+    <bean:define id="urlRaidesSpecialization" type="java.lang.String">/reportsByDegreeType.do?method=downloadRaidesSpecialization&amp;<bean:write name="args" filter="false"/></bean:define>
 	<bean:define id="viewReports" type="java.lang.String">/reportsByDegreeType.do?method=viewReports&amp;<bean:write name="args" filter="false"/></bean:define>
 	
 			<table class="tstyle1 thleft thlight mtop05">
@@ -432,6 +433,29 @@
                         <td>
                             <html:link page="<%= viewReports + "&type=15" %>">
                                 <bean:message key="label.view.requests.done" bundle="GEP_RESOURCES" /> (<bean:write name="numberOfReportsType15"/>)
+                            </html:link>
+                        </td>
+                    </tr>
+                </logic:equal>
+                <logic:equal value="BOLONHA_SPECIALIZATION_DEGREE" name="degreeType" >
+                    <tr>
+                        <td>
+                            <bean:message key="label.report.raides.specialization" bundle="GEP_RESOURCES"/>
+                        </td>
+                        <td>
+                            <bean:define id="urlRaidesSpecializationCsv" type="java.lang.String"><bean:write name="urlRaidesSpecialization" filter="false"/>&amp;format=csv&amp;type=21</bean:define>
+                            <html:link page="<%= urlRaidesSpecializationCsv %>">
+                                <bean:message key="label.request.csv" bundle="GEP_RESOURCES" />
+                            </html:link>
+                            |
+                            <bean:define id="urlRaidesSpecializationXls" type="java.lang.String"><bean:write name="urlRaidesSpecialization" filter="false"/>&amp;format=xls&amp;type=21</bean:define>
+                            <html:link page="<%= urlRaidesSpecializationXls %>">
+                                <bean:message key="label.request.xls" bundle="GEP_RESOURCES" />
+                            </html:link>
+                        </td>
+                        <td>
+                            <html:link page="<%= viewReports + "&type=16" %>">
+                                <bean:message key="label.view.requests.done" bundle="GEP_RESOURCES" /> (<bean:write name="numberOfReportsType21"/>)
                             </html:link>
                         </td>
                     </tr>
