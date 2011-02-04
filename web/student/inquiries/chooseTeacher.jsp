@@ -11,7 +11,7 @@
 <table class="tstyle2 tdtop">
 	<tr>
 		<td><bean:message key="label.degree.name" bundle="INQUIRIES_RESOURCES"/>:</td>
-		<td><bean:write name="studentInquiry" property="inquiriesRegistry.student.degree.name" /></td>
+		<td><bean:write name="studentInquiry" property="inquiriesRegistry.registration.degree.name" /></td>
 	</tr>
 	<tr>
 		<td><bean:message key="label.curricularCourse.name" bundle="INQUIRIES_RESOURCES"/>:</td>
