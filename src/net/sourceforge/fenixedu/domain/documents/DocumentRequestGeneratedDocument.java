@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.documents;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.ist.fenixWebFramework.services.Service;
@@ -16,6 +17,14 @@ public class DocumentRequestGeneratedDocument extends DocumentRequestGeneratedDo
 	super();
 	setSource(source);
 	init(GeneratedDocumentType.determineType(source.getDocumentRequestType()), addressee, operator, filename, content);
+    }
+
+    @Override
+    public boolean isPersonAllowedToAccess(Person person) {
+	if (person.hasRole(RoleType.RECTORATE) && getSource().hasRegistryCode()) {
+	    return true;
+	}
+	return super.isPersonAllowedToAccess(person);
     }
 
     @Override

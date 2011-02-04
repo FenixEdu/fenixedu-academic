@@ -86,20 +86,21 @@ public class DocumentRequestExcelUtils {
 		ResourceBundle enumeration = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
 		addCell("Código", document.getRegistryCode().getCode());
 		addCell("Tipo de Documento", enumeration.getString(document.getDocumentRequestType().name()));
+		CycleType cycle = null;
 		switch (document.getDocumentRequestType()) {
 		case REGISTRY_DIPLOMA_REQUEST:
-		    addCell("Ciclo", enumeration.getString(((RegistryDiplomaRequest) document).getRequestedCycle().name()));
+		    cycle = ((RegistryDiplomaRequest) document).getRequestedCycle();
 		    break;
 		case DIPLOMA_REQUEST:
-		    CycleType cycle = ((DiplomaRequest) document).getWhatShouldBeRequestedCycle();
-		    addCell("Ciclo", cycle != null ? enumeration.getString(cycle.name()) : null);
+		    cycle = ((DiplomaRequest) document).getWhatShouldBeRequestedCycle();
 		    break;
 		case DIPLOMA_SUPPLEMENT_REQUEST:
-		    addCell("Ciclo", enumeration.getString(((DiplomaSupplementRequest) document).getRequestedCycle().name()));
+		    cycle = ((DiplomaSupplementRequest) document).getRequestedCycle();
 		    break;
 		default:
 		    addCell("Ciclo", null);
 		}
+		addCell("Ciclo", cycle != null ? enumeration.getString(cycle.name()) : null);
 		addCell("Tipo de Curso", enumeration.getString(document.getDegreeType().name()));
 		addCell("Nº de Aluno", document.getRegistration().getNumber());
 		addCell("Nome", document.getPerson().getName());
@@ -112,8 +113,7 @@ public class DocumentRequestExcelUtils {
 	try {
 	    response.setContentType("application/vnd.ms-excel");
 	    response.setHeader("Content-disposition", "attachment; filename=" + prefix + calculateMin(codes) + "-"
-		    + calculateMax(codes) + "(" + codes.size()
-		    + ")" + ".xls");
+		    + calculateMax(codes) + "(" + codes.size() + ")" + ".xls");
 	    final ServletOutputStream writer = response.getOutputStream();
 	    new SpreadsheetBuilder().addSheet("lote", data).build(WorkbookExportFormat.EXCEL, writer);
 	    writer.flush();
