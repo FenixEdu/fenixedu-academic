@@ -43,3 +43,7 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add timestap to migration" phdMigrationData.sql
+execute "Add last modified date" alterTableInquiryResult.sql
+execute "Corrected the name from Student to Registration and added Student relation" alterTableStudentInquiryRegistry.sql
+execute "Add PhdIndividualProgramProcessEmail entity and Person associated to PhdEmail" addPhdProcessAndPersonToEmail.sql
