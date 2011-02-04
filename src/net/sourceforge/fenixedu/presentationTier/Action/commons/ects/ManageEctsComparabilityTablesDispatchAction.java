@@ -399,6 +399,8 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 	    case THIRD_CYCLE:
 		years = Arrays.asList(1, 2);
 		break;
+	    default:
+		years = Collections.emptyList();
 	    }
 	    for (Integer year : years) {
 		EctsInstitutionByCurricularYearConversionTable table = ist.getEctsCourseConversionTable(
