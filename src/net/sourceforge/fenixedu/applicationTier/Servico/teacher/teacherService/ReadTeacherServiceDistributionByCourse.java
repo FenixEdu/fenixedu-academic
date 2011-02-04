@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.teacherService;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -181,6 +182,9 @@ public class ReadTeacherServiceDistributionByCourse extends FenixService {
 	    String teacherName = teacher.getPerson().getName();
 
 	    DecimalFormat df = new DecimalFormat("#.##");
+	    DecimalFormatSymbols decimalFormatSymbols = df.getDecimalFormatSymbols();
+	    decimalFormatSymbols.setDecimalSeparator('.');
+	    df.setDecimalFormatSymbols(decimalFormatSymbols);
 	    Double teacherRequiredHours = new Double(df.format(teacher.getHoursLecturedOnExecutionCourse(executionCourse)));
 
 	    boolean teacherBelongsToDepartment = false;
