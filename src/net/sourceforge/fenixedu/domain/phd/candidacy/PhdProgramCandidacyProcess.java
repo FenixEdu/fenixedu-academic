@@ -883,7 +883,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     public CandidacyInformationBean getCandidacyInformationBean() {
-	return hasCandidacy() && !getCandidacy().hasRegistration() ? getCandidacy().getCandidacyInformationBean() : null;
+	return getCandidacy().getCandidacyInformationBean();
     }
 
     public List<PhdProgramCandidacyProcessState> getPossibleNextStates() {

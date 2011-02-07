@@ -1719,7 +1719,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public LocalDate getConclusionDate() {
-	return getThesisProcess().getConclusionDate();
+	return hasThesisProcess() ? getThesisProcess().getConclusionDate() : null;
     }
 
     public boolean hasCurricularCoursesToEnrol() {
@@ -1801,6 +1801,10 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     
     public boolean isConcluded() {
 	return hasThesisProcess() && getThesisProcess().isConcluded();
+    }
+
+    public boolean isInWorkDevelopment() {
+	return PhdIndividualProgramProcessState.WORK_DEVELOPMENT.equals(getActiveState());
     }
 
     public PhdThesisFinalGrade getFinalGrade() {

@@ -103,7 +103,18 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
     }
 
     protected boolean canBeDeleted() {
-	return !(hasAnyThesisJuryElements() || hasProcessForGuiding() || hasProcessForAssistantGuiding() || hasAnyCandidacyFeedbackRequestElements());
+	return !(hasAnyThesisJuryElements() || hasProcessForGuiding() || hasProcessForAssistantGuiding()
+		|| hasAnyCandidacyFeedbackRequestElements() || isParticipantCoordinator());
+    }
+
+    private boolean isParticipantCoordinator() {
+	if (!isInternal()) {
+	    return false;
+	}
+
+	InternalPhdParticipant internalParticipant = (InternalPhdParticipant) this;
+	return getIndividualProcess().getPhdProgram().isCoordinatorFor(internalParticipant.getPerson(),
+		getIndividualProcess().getExecutionYear());
     }
 
     public boolean isGuidingOrAssistantGuiding() {
