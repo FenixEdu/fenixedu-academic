@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.teacher.distribution;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.HashMap;
@@ -271,6 +272,9 @@ public class DistributionTeacherServicesByCourseDTO extends DataTranferObject {
 
 	public Double getExecutionCourseHoursBalance() {
 	    DecimalFormat df = new DecimalFormat("#.##");
+	    DecimalFormatSymbols decimalFormatSymbols = df.getDecimalFormatSymbols();
+	    decimalFormatSymbols.setDecimalSeparator('.');
+	    df.setDecimalFormatSymbols(decimalFormatSymbols);
 	    return new Double(df.format(getExecutionCourseTotalHours() - executionCourseTotalHoursLecturedByTeachers));
 	}
 
