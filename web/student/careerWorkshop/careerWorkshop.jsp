@@ -29,6 +29,10 @@
 	%>
 </h4>
 
+<p><html:link action="/index.do">
+	<bean:message bundle="STUDENT_RESOURCES" key="link.student.back"/>
+</html:link></p>
+
 <logic:present name="comingFromSubmission">
 	<div class="success0">
 		<bean:message key="label.careerWorkshopApplication.successfulEdit" bundle="STUDENT_RESOURCES"/><br/>
@@ -37,12 +41,17 @@
 
 <div class="infoop2">
 	<bean:message key="label.careerWorkshopApplication.applicationRules" bundle="STUDENT_RESOURCES"/><br/>
+	<a href="http://tt.ist.utl.pt/desenvolvimento-de-carreiras-alunos/programa-ist-career-workshops/concurso-de-bolsas-para-os-ist-career-workshops/"><bean:message key="link.careerWorkshopApplication.rules"/></a>
 </div>
 
 <form action="<%= request.getContextPath() + "/student/careerWorkshopApplication.do" %>" method="post">
 	<html:hidden property="applicationExternalId" value="<%= applicationX.getExternalId() %>"/>
 	<html:hidden property="method" value="submitApplication"/>
 	<table>
+		<tr>
+			<th><bean:message key="label.careerWorkshop.shiftProposals"/></th>
+			<th colspan="<%= CareerWorkshopSessions.values().length %>"><bean:message key="label.careerWorkshop.preference" arg0="<%= Integer.toString(CareerWorkshopSessions.values().length) %>"/></th>
+		</tr>
 		<tr>
 			<td></td>
 <%
@@ -77,6 +86,10 @@
 	
 	<table>
 		<tr>
+			<th><bean:message key="label.careerWorkshop.themeProposals"/></th>
+			<th colspan="<%= CareerWorkshopThemes.values().length %>"><bean:message key="label.careerWorkshop.preference" arg0="<%= Integer.toString(CareerWorkshopThemes.values().length) %>"/></th>
+		</tr>
+		<tr>
 			<td></td>
 <%
 	for (int i = 0; i < CareerWorkshopThemes.values().length; i++) {
@@ -107,6 +120,10 @@
 %>
 
 	</table>
+	
+	<div class="infoop3">
+		<bean:message key="label.careerWorkshopApplication.termsOfResponsability"/>
+	</div>
 	
 	<html:submit>
 		<bean:message bundle="STUDENT_RESOURCES" key="button.submit" />

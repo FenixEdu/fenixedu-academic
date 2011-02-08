@@ -432,10 +432,10 @@ public class Student extends Student_Base {
     }
 
     public DegreeType getMostSignificantDegreeType() {
-	//	if (isStudentOfDegreeType(DegreeType.MASTER_DEGREE))
-	//	    return DegreeType.MASTER_DEGREE;
-	//	if (isStudentOfDegreeType(DegreeType.DEGREE))
-	//	    return DegreeType.DEGREE;
+	// if (isStudentOfDegreeType(DegreeType.MASTER_DEGREE))
+	// return DegreeType.MASTER_DEGREE;
+	// if (isStudentOfDegreeType(DegreeType.DEGREE))
+	// return DegreeType.DEGREE;
 	if (isStudentOfDegreeType(DegreeType.BOLONHA_SPECIALIZATION_DEGREE))
 	    return DegreeType.BOLONHA_SPECIALIZATION_DEGREE;
 	if (isStudentOfDegreeType(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA))
@@ -1094,7 +1094,8 @@ public class Student extends Student_Base {
 
     private ExecutionCourse getQUCExecutionCourseForAnnualCC(final ExecutionSemester executionSemester, final Enrolment enrolment) {
 	ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(executionSemester);
-	if (executionCourse == null) { //some annual courses only have one execution in the 1st semester
+	if (executionCourse == null) { // some annual courses only have one
+				       // execution in the 1st semester
 	    executionCourse = enrolment.getExecutionCourseFor(executionSemester.getPreviousExecutionPeriod());
 	}
 	return executionCourse;
@@ -1455,7 +1456,8 @@ public class Student extends Student_Base {
     }
 
     /*
-     * If student has delegate role, get the curricular courses he is responsible for
+     * If student has delegate role, get the curricular courses he is
+     * responsible for
      */
     public Set<CurricularCourse> getCurricularCoursesResponsibleForByFunctionType(FunctionType delegateFunctionType,
 	    ExecutionYear executionYear) {
@@ -1800,16 +1802,25 @@ public class Student extends Student_Base {
 	List<Registration> registrations = super.getRegistrations();
 	registrations.addAll(otherRegistrations);
     }
-    
+
     public boolean isEligibleForCareerWorkshopApplication() {
-	ExecutionSemester presentSemester = ExecutionSemester.readActualExecutionSemester();
-	for(Registration registration : getActiveRegistrationsIn(presentSemester)) {
-	    if(!registration.getStudentCurricularPlan(presentSemester).isSecondCycle())
-		return false;
+	if (hasActiveSecondCycleRegistration()) {
+	    for (CareerWorkshopApplicationEvent applicationEvents : RootDomainObject.getInstance()
+		    .getCareerWorkshopApplicationEvents()) {
+		if (applicationEvents.isApplicationEventOpened()) {
+		    return true;
+		}
+	    }
 	}
-	for(CareerWorkshopApplicationEvent applicationEvents : RootDomainObject.getInstance().getCareerWorkshopApplicationEvents()) {
-	    if(applicationEvents.isApplicationEventOpened())
+	return false;
+    }
+
+    private boolean hasActiveSecondCycleRegistration() {
+	ExecutionSemester presentSemester = ExecutionSemester.readActualExecutionSemester();
+	for (Registration registration : getActiveRegistrationsIn(presentSemester)) {
+	    if (registration.getStudentCurricularPlan(presentSemester).isSecondCycle()) {
 		return true;
+	    }
 	}
 	return false;
     }
