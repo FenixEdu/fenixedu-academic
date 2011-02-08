@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
@@ -36,18 +37,22 @@ public class Diploma extends AdministrativeOfficeDocument {
 	final Registration registration = getRegistration();
 	addParameter("registration", registration);
 
-	final RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(registration, diplomaRequest
-		.getCycleCurriculumGroup());
+	final RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(registration,
+		diplomaRequest.getCycleCurriculumGroup());
 
 	addParameter("conclusionDate", getConclusionDate(diplomaRequest, registrationConclusionBean));
 	addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
 	addParameter("day", getFormatedCurrentDate());
 
 	if (diplomaRequest.hasFinalAverageDescription()) {
-	    addParameter("finalAverageDescription", StringUtils.capitalize(getEnumerationBundle().getString(
-		    registrationConclusionBean.getFinalAverage().toString())));
-	    addParameter("finalAverageQualified", registration.getDegreeType().getGradeScale().getQualifiedName(
-		    registrationConclusionBean.getFinalAverage().toString()));
+	    addParameter(
+		    "finalAverageDescription",
+		    StringUtils.capitalize(getEnumerationBundle().getString(
+			    registrationConclusionBean.getFinalAverage().toString())));
+	    addParameter(
+		    "finalAverageQualified",
+		    registration.getDegreeType().getGradeScale()
+			    .getQualifiedName(registrationConclusionBean.getFinalAverage().toString()));
 	} else if (diplomaRequest.hasDissertationTitle()) {
 	    addParameter("dissertationTitle", registration.getDissertationThesisTitle());
 	}
@@ -98,8 +103,14 @@ public class Diploma extends AdministrativeOfficeDocument {
 
     private LocalDate calculateConclusionDate(final DiplomaRequest diplomaRequest,
 	    final RegistrationConclusionBean registrationConclusionBean) {
-	return diplomaRequest.hasDissertationTitle() ? registrationConclusionBean.getRegistration()
-		.getDissertationThesisDiscussedDate() : new LocalDate(registrationConclusionBean.getConclusionDate());
+	if (diplomaRequest.hasDissertationTitle()) {
+	    LocalDate date = registrationConclusionBean.getRegistration().getDissertationThesisDiscussedDate();
+	    if (date == null) {
+		throw new DomainException("DiplomaRequest.dissertation.not.discussed");
+	    }
+	    return date;
+	}
+	return new LocalDate(registrationConclusionBean.getConclusionDate());
     }
 
     final private String getConclusionStatusAndDegreeType(final DiplomaRequest diplomaRequest, final Registration registration) {
