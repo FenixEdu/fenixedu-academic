@@ -44,3 +44,4 @@ function executeWithTempFile() {
 }
 execute "Add Room Request Date to Written Test" addWrittenTestRequestDate.sql
 execute "Create new tables for the IST CareerWorkshops" addCareerWorkshopTables.sql
+execute "Alter table ClosedMonth" alterTableClosedMonth.sql
