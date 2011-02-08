@@ -46,7 +46,7 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 		: EMPTY_STR);
 	addParameter("degreeFinalizationEcts", getDegreeFinalizationEcts(req));
 	addParameter("creditsDescription", getCreditsDescription());
-	addParameter("graduateTitle", getGraduateTitle(getRegistration(), req.getRequestedCycle()));
+	addParameter("graduateTitle", getGraduateTitle(getRegistration(), req.getWhatShouldBeRequestedCycle()));
 	addParameter("diplomaDescription", getDiplomaDescription());
 	addParameter("detailedInfoIntro", getDetailedInfoIntro(req));
 	addParameter("degreeFinalizationInfo", getDegreeFinalizationInfo(req));
@@ -192,9 +192,7 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 		    break;
 		default:
 		    res.append(SINGLE_SPACE);
-		    res
-			    .append(getResourceBundle().getString(
-				    "documents.DegreeFinalizationCertificate.diplomaDescription.letter"));
+		    res.append(getResourceBundle().getString("documents.DegreeFinalizationCertificate.diplomaDescription.letter"));
 		    break;
 		}
 	    }
@@ -207,8 +205,9 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 	final StringBuilder res = new StringBuilder();
 
 	if (request.getDetailed()) {
-	    res.append(SINGLE_SPACE).append(
-		    getResourceBundle().getString("documents.DegreeFinalizationCertificate.detailedInfoIntro")).append(":");
+	    res.append(SINGLE_SPACE)
+		    .append(getResourceBundle().getString("documents.DegreeFinalizationCertificate.detailedInfoIntro"))
+		    .append(":");
 	} else {
 	    res.append(".");
 	}
@@ -271,8 +270,9 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 	return result.toString();
     }
 
+    @Override
     protected void addPriceFields() {
-	final CertificateRequest certificateRequest = (CertificateRequest) getDocumentRequest();
+	final CertificateRequest certificateRequest = getDocumentRequest();
 	final CertificateRequestPR certificateRequestPR = (CertificateRequestPR) getPostingRule();
 
 	final Money amountPerPage = certificateRequestPR.getAmountPerPage();
