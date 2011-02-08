@@ -52,6 +52,25 @@
 						<f:param name="evaluationID" value="#{writtenTest.idInternal}" />
 						<h:outputFormat value="#{bundle['link.edit']}" />
 					</h:commandLink>
+					
+					<%--
+						Send Email Request for Room
+					 --%>
+					<h:outputText value=" | " escape="false"/>
+					
+										
+					<h:commandLink rendered="#{writtenTest.canRequestRoom}" 
+									action="#{evaluationManagementBackingBean.sendEmailRequestRoom}">
+						<f:param name="evaluationID" value="#{writtenTest.idInternal}" />
+						<h:outputFormat value="#{bundle['link.request.room']}" />
+					</h:commandLink>
+					
+					<h:outputFormat rendered="#{!writtenTest.canRequestRoom}" 
+						value=" Requisição de sala efectuada em {0}" escape="false">
+						<f:param value="#{writtenTest.requestRoomSentDateString}"/>
+					</h:outputFormat>
+						
+					
 
 					<h:panelGroup rendered="#{evaluationManagementBackingBean.canManageRoomsMap[writtenTest.idInternal]}">
 						<h:outputText value="<p class='indent1 mvert05'>#{bundle['label.teacher.evaluation.room.management']}: " escape="false"/>

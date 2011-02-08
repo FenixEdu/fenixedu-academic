@@ -34,7 +34,11 @@ public class Message extends Message_Base {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
     }
-
+    
+    public Message(final Sender sender, String to, String subject, String body) {
+	this(sender,sender.getReplyTos(),null,subject,body,to);
+    }
+    
     public Message(final Sender sender, final Collection<? extends ReplyTo> replyTos, final Collection<Recipient> tos,
 	    final Collection<Recipient> ccs, final Collection<Recipient> recipientsBccs, final String subject, final String body,
 	    final Set<String> bccs) {

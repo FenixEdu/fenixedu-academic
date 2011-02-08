@@ -42,4 +42,4 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
-
+execute "Add Room Request Date to Written Test" addWrittenTestRequestDate.sql

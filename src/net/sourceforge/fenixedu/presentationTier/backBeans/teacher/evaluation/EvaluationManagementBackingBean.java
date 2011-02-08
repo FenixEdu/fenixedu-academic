@@ -1444,4 +1444,10 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 	    enrolmentTypeFilter = ENROLMENT_TYPE_FILTER_ALL;
 	}
     }
+    
+    public String sendEmailRequestRoom() {
+	final WrittenTest eval = (WrittenTest) getEvaluation();
+	eval.requestRoom(getExecutionCourse());
+	return null;
+    }
 }

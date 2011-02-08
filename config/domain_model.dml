@@ -1083,6 +1083,7 @@ class DomainObject {
 
             class WrittenTest extends WrittenEvaluation {
                 String description;
+                DateTime requestRoomSentDate;
             }
 
         class onlineTests.OnlineTest extends Evaluation {
