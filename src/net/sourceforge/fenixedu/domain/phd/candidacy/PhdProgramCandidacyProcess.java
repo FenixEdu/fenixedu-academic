@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
+import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -773,6 +774,17 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	registration.setPhdIndividualProgramProcess(getIndividualProgramProcess());
 
 	registration.editStartDates(bean.getWhenStartedStudies(), getWhenRatified(), bean.getWhenStartedStudies());
+
+	if (registration.getStudentCandidacy() == getIndividualProgramProcess().getCandidacyProcess().getCandidacy()) {
+	    return;
+	}
+
+	StudentCandidacy studentCandidacy = registration.getStudentCandidacy();
+	if (registration.getCandidacyInformationBean().isValid()) {
+	    getIndividualProgramProcess().getCandidacyProcess().getCandidacy().copyFromStudentCandidacy(studentCandidacy);
+	}
+
+	studentCandidacy.delete();
     }
 
     private Registration getOrCreateRegistration(final RegistrationFormalizationBean bean, final DegreeCurricularPlan dcp,

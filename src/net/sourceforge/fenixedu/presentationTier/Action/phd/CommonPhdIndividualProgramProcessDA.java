@@ -46,12 +46,15 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
 
 	final PhdIndividualProgramProcess process = getProcess(request);
 
-	if (process != null) {
-	    request.setAttribute("processAlertMessagesToNotify", process.getUnreadedAlertMessagesFor(getLoggedPerson(request)));
-
-	}
+	loadProcessAlertMessagesToNotify(request, process);
 
 	return super.execute(mapping, actionForm, request, response);
+    }
+
+    private void loadProcessAlertMessagesToNotify(HttpServletRequest request, final PhdIndividualProgramProcess process) {
+	if (process != null) {
+	    request.setAttribute("processAlertMessagesToNotify", process.getUnreadedAlertMessagesFor(getLoggedPerson(request)));
+	}
     }
 
     public ActionForward manageProcesses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -124,6 +127,7 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
 	}
 	if (processes.size() == 1) {
 	    request.setAttribute("process", processes.get(0));
+	    loadProcessAlertMessagesToNotify(request, processes.get(0));
 	    return mapping.findForward("viewProcess");
 	}
 	request.setAttribute("searchProcessBean", searchBean);

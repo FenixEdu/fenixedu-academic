@@ -431,7 +431,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	    return participantBean.getPerson();
 	}
 
-	if (participantBean.getParticipant().isInternal()) {
+	if (participantBean.getParticipant() != null && participantBean.getParticipant().isInternal()) {
 	    return ((InternalPhdParticipant) participantBean.getParticipant()).getPerson();
 	}
 
