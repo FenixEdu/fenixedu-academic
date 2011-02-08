@@ -253,12 +253,15 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 	if (document.isPiggyBackedOnRegistry()) {
 	    addActionMessage(request, "error.rectorateSubmissionBatch.cannotDelayPiggyBackedDocument");
 	} else {
-	    RectorateSubmissionBatch next = document.getRectorateSubmissionBatch().getNextRectorateSubmissionBatch();
+	    RectorateSubmissionBatch target = document.getRectorateSubmissionBatch();
+	    while (!target.isUnsent()) {
+		target = target.getNextRectorateSubmissionBatch();
+	    }
 	    if (document.isRegistryDiploma()) {
 		RegistryDiplomaRequest registry = (RegistryDiplomaRequest) document;
-		registry.getDiplomaSupplement().setRectorateSubmissionBatch(next);
+		registry.getDiplomaSupplement().setRectorateSubmissionBatch(target);
 	    }
-	    document.setRectorateSubmissionBatch(next);
+	    document.setRectorateSubmissionBatch(target);
 	}
 	return viewBatch(mapping, actionForm, request, response);
     }
