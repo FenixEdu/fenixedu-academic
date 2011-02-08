@@ -31,8 +31,6 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.ClosedMonthDocumentTyp
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationGroup;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.exceptions.InvalidGiafCodeException;
-import net.sourceforge.fenixedu.domain.system.CronScriptState;
-import net.sourceforge.fenixedu.domain.system.CronScriptState.RunNowExecutor;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
@@ -91,20 +89,14 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 
     public ActionForward closeMonth(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	final CronScriptState cronScriptState = getClosedMonthCronScritp();
-	executeFactoryMethod(new RunNowExecutor(cronScriptState));
-	return prepareToCloseMonth(mapping, actionForm, request, response);
-    }
-
-    private CronScriptState getClosedMonthCronScritp() {
-	for (CronScriptState cronScriptState : rootDomainObject.getCronScriptStates()) {
-	    if (cronScriptState.getActive()
-		    && cronScriptState.getCronScriptClassname().equals(
-			    "pt.utl.ist.scripts.process.updateData.assiduousness.CloseAssiduousnessMonthCron")) {
-		return cronScriptState;
-	    }
+	YearMonth yearMonth = getRenderedObject("yearMonth");
+	RenderUtils.invalidateViewState();
+	if (yearMonth != null && yearMonth.getCanCloseMonth()) {
+	    final LocalDate beginDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, 01);
+	    ClosedMonth closedMonth = ClosedMonth.getOrCreateOpenClosedMonth(beginDate);
+	    closedMonth.setIntensionToCloseForBalance();
 	}
-	return null;
+	return prepareToCloseMonth(mapping, actionForm, request, response);
     }
 
     public ActionForward exportClosedMonth(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

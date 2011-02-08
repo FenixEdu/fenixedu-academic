@@ -2732,6 +2732,7 @@ class DomainObject {
         Boolean closedForExtraWork;
         Partial closedYearMonth;
         DateTime closedForBalanceDate;
+        Boolean intensionToCloseForBalance;
     }
 
     class assiduousness.ClosedMonthDocument extends DomainObject {

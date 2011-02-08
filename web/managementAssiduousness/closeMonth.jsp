@@ -73,7 +73,6 @@
 		</logic:equal>
 	</p>
 	
-	
 	<logic:notEmpty name="closedMonthDocuments">
 		<bean:define id="closedMonthDocuments" name="closedMonthDocuments" toScope="request" />
 		<jsp:include page="showClosedMonthDocuments.jsp"/>	
@@ -106,8 +105,13 @@
 			<p>
 				<span class="warning0"><bean:message key="message.closeMonthConfirmation" bundle="ASSIDUOUSNESS_RESOURCES"/></span>
 			</p>
+			
+			<bean:define id="disableButton" value="false"/>
+			<logic:equal name="yearMonth" property="intensionToCloseForBalance" value="true">
+				<bean:define id="disableButton" value="true"/>
+			</logic:equal> 
 			<p>
-				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="invisible">
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="invisible" disabled="<%=Boolean.valueOf(disableButton).booleanValue()%>" >
 					<bean:message key="button.confirm" />
 				</html:submit>
 			</p>

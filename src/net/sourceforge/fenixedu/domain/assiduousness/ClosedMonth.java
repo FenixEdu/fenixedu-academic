@@ -16,6 +16,8 @@ import org.joda.time.DateTimeFieldType;
 import org.joda.time.LocalDate;
 import org.joda.time.Partial;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public class ClosedMonth extends ClosedMonth_Base {
 
     static final public Comparator<ClosedMonth> COMPARATOR_BY_DATE = new Comparator<ClosedMonth>() {
@@ -64,8 +66,8 @@ public class ClosedMonth extends ClosedMonth_Base {
 
     public static LocalDate getLastClosedLocalDate() {
 	Partial lastClosedYearMonth = getLastMonthClosed(false).getClosedYearMonth();
-	LocalDate firstDay = new LocalDate(lastClosedYearMonth.get(DateTimeFieldType.year()), lastClosedYearMonth
-		.get(DateTimeFieldType.monthOfYear()), 1);
+	LocalDate firstDay = new LocalDate(lastClosedYearMonth.get(DateTimeFieldType.year()),
+		lastClosedYearMonth.get(DateTimeFieldType.monthOfYear()), 1);
 	return new LocalDate(lastClosedYearMonth.get(DateTimeFieldType.year()), lastClosedYearMonth.get(DateTimeFieldType
 		.monthOfYear()), firstDay.dayOfMonth().getMaximumValue());
     }
@@ -115,8 +117,7 @@ public class ClosedMonth extends ClosedMonth_Base {
     public boolean hasAnyCorrectionOnAClosedMonth() {
 	for (AssiduousnessClosedMonth assiduousnessClosedMonth : getAssiduousnessClosedMonths()) {
 	    if ((assiduousnessClosedMonth.getIsCorrection() && assiduousnessClosedMonth.getCorrectedOnClosedMonth()
-		    .getClosedForBalance())
-		    || assiduousnessClosedMonth.hasAnyCorrectionOnAClosedMonth()) {
+		    .getClosedForBalance()) || assiduousnessClosedMonth.hasAnyCorrectionOnAClosedMonth()) {
 		return true;
 	    }
 	}
@@ -289,8 +290,8 @@ public class ClosedMonth extends ClosedMonth_Base {
 	    if (assiduousnessClosedMonthFromMap == null
 		    || (assiduousnessClosedMonth.getIsCorrection() && (!assiduousnessClosedMonthFromMap.getIsCorrection()))
 		    || (assiduousnessClosedMonth.getIsCorrection() && assiduousnessClosedMonthFromMap.getIsCorrection() && assiduousnessClosedMonth
-			    .getCorrectedOnClosedMonth().getClosedYearMonth().isAfter(
-				    assiduousnessClosedMonthFromMap.getCorrectedOnClosedMonth().getClosedYearMonth()))) {
+			    .getCorrectedOnClosedMonth().getClosedYearMonth()
+			    .isAfter(assiduousnessClosedMonthFromMap.getCorrectedOnClosedMonth().getClosedYearMonth()))) {
 		assiduousnessClosedMonths.put(assiduousnessClosedMonth.getAssiduousnessStatusHistory(), assiduousnessClosedMonth);
 	    }
 	}
@@ -314,8 +315,8 @@ public class ClosedMonth extends ClosedMonth_Base {
     }
 
     public void openMonth() {
-	List<AssiduousnessClosedMonth> assiduousnessClosedMonths = new ArrayList<AssiduousnessClosedMonth>(super
-		.getAssiduousnessClosedMonths());
+	List<AssiduousnessClosedMonth> assiduousnessClosedMonths = new ArrayList<AssiduousnessClosedMonth>(
+		super.getAssiduousnessClosedMonths());
 	for (AssiduousnessClosedMonth assiduousnessClosedMonth : assiduousnessClosedMonths) {
 	    super.getAssiduousnessClosedMonths().remove(assiduousnessClosedMonth);
 	    assiduousnessClosedMonth.delete();
@@ -324,4 +325,8 @@ public class ClosedMonth extends ClosedMonth_Base {
 	setClosedForExtraWork(Boolean.FALSE);
     }
 
+    @Service
+    public void setIntensionToCloseForBalance() {
+	setIntensionToCloseForBalance(true);
+    }
 }

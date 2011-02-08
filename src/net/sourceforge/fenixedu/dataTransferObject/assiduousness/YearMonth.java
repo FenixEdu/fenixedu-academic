@@ -133,4 +133,9 @@ public class YearMonth implements Serializable, IFormation {
 	return ((YearMonth) obj).getYear().equals(getYear()) && ((YearMonth) obj).getMonth().equals(getMonth());
     }
 
+    public boolean getIntensionToCloseForBalance() {
+	ClosedMonth closedMonth = ClosedMonth.getClosedMonth(this);
+	return closedMonth != null ? closedMonth.getIntensionToCloseForBalance() : false;
+    }
+
 }
