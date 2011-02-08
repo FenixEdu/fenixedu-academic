@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +17,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ExportClos
 import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ExportToGIAFAndSaveFile;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
-import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedDay;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
@@ -33,6 +31,8 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.ClosedMonthDocumentTyp
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationGroup;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.exceptions.InvalidGiafCodeException;
+import net.sourceforge.fenixedu.domain.system.CronScriptState;
+import net.sourceforge.fenixedu.domain.system.CronScriptState.RunNowExecutor;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
@@ -91,59 +91,20 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 
     public ActionForward closeMonth(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	YearMonth yearMonth = getRenderedObject("yearMonth");
-	RenderUtils.invalidateViewState();
-	if (yearMonth != null && yearMonth.getCanCloseMonth()) {
-	    final LocalDate beginDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, 01);
-	    int endDay = beginDate.dayOfMonth().getMaximumValue();
-	    if (yearMonth.getYear() == new LocalDate().getYear()
-		    && yearMonth.getMonth().ordinal() + 1 == new LocalDate().getMonthOfYear()) {
-		endDay = new LocalDate().getDayOfMonth();
-	    }
-	    final LocalDate endDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, endDay);
-	    HashMap<Assiduousness, List<AssiduousnessRecord>> assiduousnessRecords = getAssiduousnessRecord(beginDate, endDate
-		    .plusDays(2));
-
-	    List<AssiduousnessClosedMonth> negativeAssiduousnessClosedMonths = (List<AssiduousnessClosedMonth>) ServiceUtils
-		    .executeService("CloseAssiduousnessMonth", new Object[] { assiduousnessRecords, beginDate, endDate });
-
-	    request.setAttribute("negativeAssiduousnessClosedMonths", negativeAssiduousnessClosedMonths);
-	}
-
+	final CronScriptState cronScriptState = getClosedMonthCronScritp();
+	executeFactoryMethod(new RunNowExecutor(cronScriptState));
 	return prepareToCloseMonth(mapping, actionForm, request, response);
     }
 
-    public HashMap<Assiduousness, List<AssiduousnessRecord>> getAssiduousnessRecord(LocalDate beginDate, LocalDate endDate) {
-	HashMap<Assiduousness, List<AssiduousnessRecord>> assiduousnessLeaves = new HashMap<Assiduousness, List<AssiduousnessRecord>>();
-	Interval interval = new Interval(beginDate.toDateTimeAtStartOfDay(), Assiduousness.defaultEndWorkDay.toDateTime(endDate
-		.toDateTimeAtStartOfDay()));
-	Set<AssiduousnessRecord> assiduousnessRecordList = AssiduousnessRecordMonthIndex.getAssiduousnessRecordBetweenDates(
-		interval.getStart(), interval.getEnd());
-	for (AssiduousnessRecord assiduousnessRecord : assiduousnessRecordList) {
-	    if (assiduousnessRecord.isLeave() && !assiduousnessRecord.isAnulated()) {
-		Interval leaveInterval = new Interval(assiduousnessRecord.getDate(), ((Leave) assiduousnessRecord).getEndDate()
-			.plusSeconds(1));
-		if (leaveInterval.overlaps(interval)) {
-		    List<AssiduousnessRecord> leavesList = assiduousnessLeaves.get(assiduousnessRecord.getAssiduousness());
-		    if (leavesList == null) {
-			leavesList = new ArrayList<AssiduousnessRecord>();
-		    }
-		    leavesList.add(assiduousnessRecord);
-		    assiduousnessLeaves.put(assiduousnessRecord.getAssiduousness(), leavesList);
-		}
-	    } else if ((assiduousnessRecord.isClocking() || assiduousnessRecord.isMissingClocking())
-		    && (!assiduousnessRecord.isAnulated())) {
-		if (interval.contains(assiduousnessRecord.getDate().getMillis())) {
-		    List<AssiduousnessRecord> list = assiduousnessLeaves.get(assiduousnessRecord.getAssiduousness());
-		    if (list == null) {
-			list = new ArrayList<AssiduousnessRecord>();
-		    }
-		    list.add(assiduousnessRecord);
-		    assiduousnessLeaves.put(assiduousnessRecord.getAssiduousness(), list);
-		}
+    private CronScriptState getClosedMonthCronScritp() {
+	for (CronScriptState cronScriptState : rootDomainObject.getCronScriptStates()) {
+	    if (cronScriptState.getActive()
+		    && cronScriptState.getCronScriptClassname().equals(
+			    "pt.utl.ist.scripts.process.updateData.assiduousness.CloseAssiduousnessMonthCron")) {
+		return cronScriptState;
 	    }
 	}
-	return assiduousnessLeaves;
+	return null;
     }
 
     public ActionForward exportClosedMonth(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -312,8 +273,8 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 		double leavesDaysByJustificationMotive = getLeavesDaysByJustificationMotive(justificationMotive,
 			assiduousnessClosedMonth);
 		if (justificationMotive.getJustificationGroup() == null) {
-		    spreadsheet.addCell(leavesDaysByJustificationMotive, justificationsByGroups.get(justificationMotive
-			    .getAcronym()));
+		    spreadsheet.addCell(leavesDaysByJustificationMotive,
+			    justificationsByGroups.get(justificationMotive.getAcronym()));
 		} else {
 		    Double value = justificationsValues.get(justificationMotive.getJustificationGroup());
 		    if (value == null) {
@@ -324,7 +285,6 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 		}
 	    }
 	    for (JustificationGroup justificationGroup : justificationsValues.keySet()) {
-		Double value = justificationsValues.get(justificationGroup);
 		spreadsheet.addCell(justificationsByGroups.get(justificationGroup.name()));
 	    }
 
@@ -355,8 +315,8 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	double countWorkDays = 0;
 	LocalDate beginDate = assiduousnessClosedMonth.getBeginDate();
 	LocalDate endDate = assiduousnessClosedMonth.getEndDate();
-	for (Leave leave : assiduousnessClosedMonth.getAssiduousnessStatusHistory().getAssiduousness().getLeaves(beginDate,
-		endDate)) {
+	for (Leave leave : assiduousnessClosedMonth.getAssiduousnessStatusHistory().getAssiduousness()
+		.getLeaves(beginDate, endDate)) {
 	    if (leave.getJustificationMotive().equals(justificationMotive)) {
 		if (leave.getJustificationMotive().getJustificationType() == JustificationType.OCCURRENCE) {
 		    countWorkDays += leave.getWorkDaysBetween(new Interval(beginDate.toDateTimeAtStartOfDay(), endDate
@@ -410,8 +370,8 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	YearMonth yearMonth = getRenderedObject("yearMonthToOpen");
 	if (yearMonth != null && yearMonth.getIsThisYearMonthClosedForExtraWork()) {
-	    ServiceUtils.executeService("OpenExtraWorkClosedMonth", new Object[] { ClosedMonth
-		    .getClosedMonthForBalance(yearMonth) });
+	    ServiceUtils.executeService("OpenExtraWorkClosedMonth",
+		    new Object[] { ClosedMonth.getClosedMonthForBalance(yearMonth) });
 	}
 	RenderUtils.invalidateViewState();
 	return prepareToCloseExtraWorkMonth(mapping, actionForm, request, response);
@@ -538,9 +498,9 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	response.setContentType("text/plain");
 	ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
 	String month = bundleEnumeration.getString(yearMonth.getMonth().toString());
-	response.addHeader("Content-Disposition", new StringBuilder("attachment; filename=").append(month).append("-").append(
-		yearMonth.getYear()).toString()
-		+ ".txt");
+	response.addHeader("Content-Disposition",
+		new StringBuilder("attachment; filename=").append(month).append("-").append(yearMonth.getYear()).toString()
+			+ ".txt");
 
 	byte[] data = result.getBytes();
 	response.setContentLength(data.length);
@@ -576,9 +536,9 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	response.setContentType("text/plain");
 	ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
 	String month = bundleEnumeration.getString(yearMonth.getMonth().toString());
-	response.addHeader("Content-Disposition", new StringBuilder("attachment; filename=").append(month).append("-").append(
-		yearMonth.getYear()).toString()
-		+ ".txt");
+	response.addHeader("Content-Disposition",
+		new StringBuilder("attachment; filename=").append(month).append("-").append(yearMonth.getYear()).toString()
+			+ ".txt");
 
 	byte[] data = result.getBytes();
 	response.setContentLength(data.length);
@@ -612,16 +572,17 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 		if (oldAssiduousnessClosedMonth.getAccumulatedArticle66Days() != assiduousnessClosedMonth
 			.getAccumulatedArticle66Days()) {
 		    fillRow(spreadsheet, assiduousnessStatusHistory, bundleAssiduousness.getString("label.accumulatedArticle66"),
-			    oldAssiduousnessClosedMonth.getAccumulatedArticle66Days(), assiduousnessClosedMonth
-				    .getAccumulatedArticle66Days(), assiduousnessClosedMonth.getClosedMonth()
+			    oldAssiduousnessClosedMonth.getAccumulatedArticle66Days(),
+			    assiduousnessClosedMonth.getAccumulatedArticle66Days(), assiduousnessClosedMonth.getClosedMonth()
 				    .getClosedYearMonth());
 		}
 		if (oldAssiduousnessClosedMonth.getAccumulatedUnjustifiedDays() != assiduousnessClosedMonth
 			.getAccumulatedUnjustifiedDays()) {
-		    fillRow(spreadsheet, assiduousnessStatusHistory, bundleAssiduousness
-			    .getString("label.accumulatedUnjustifiedDays"), oldAssiduousnessClosedMonth
-			    .getAccumulatedUnjustifiedDays(), assiduousnessClosedMonth.getAccumulatedUnjustifiedDays(),
-			    assiduousnessClosedMonth.getClosedMonth().getClosedYearMonth());
+		    fillRow(spreadsheet, assiduousnessStatusHistory,
+			    bundleAssiduousness.getString("label.accumulatedUnjustifiedDays"),
+			    oldAssiduousnessClosedMonth.getAccumulatedUnjustifiedDays(),
+			    assiduousnessClosedMonth.getAccumulatedUnjustifiedDays(), assiduousnessClosedMonth.getClosedMonth()
+				    .getClosedYearMonth());
 		}
 		if (oldAssiduousnessClosedMonth.getUnjustifiedDays() != assiduousnessClosedMonth.getUnjustifiedDays()) {
 		    fillRow(spreadsheet, assiduousnessStatusHistory, bundleAssiduousness.getString("label.unjustifiedDays"),
@@ -637,8 +598,8 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 		Integer oldValue = oldclosedMonthJustification == null ? 0 : oldclosedMonthJustification
 			.getJustificationDays(pastJustificationsDurations);
 		fillRow(spreadsheet, closedMonthJustification.getAssiduousnessClosedMonth().getAssiduousnessStatusHistory(),
-			closedMonthJustification.getJustificationMotive().getAcronym(), oldValue, closedMonthJustification
-				.getJustificationDays(pastJustificationsDurations), closedMonthJustification
+			closedMonthJustification.getJustificationMotive().getAcronym(), oldValue,
+			closedMonthJustification.getJustificationDays(pastJustificationsDurations), closedMonthJustification
 				.getAssiduousnessClosedMonth().getClosedMonth().getClosedYearMonth());
 	    }
 
@@ -687,8 +648,9 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	    for (AssiduousnessRecord assiduousnessRecord : assiduousnessRecordMonthIndex.getAssiduousnessRecordsSet()) {
 		if (assiduousnessRecord.isLeave()
 			&& ((Leave) assiduousnessRecord).occuredInDate(assiduousnessClosedDay.getDay())
-			&& (!(((Leave) assiduousnessRecord).getJustificationMotive().getJustificationType().equals(
-				JustificationType.TIME) && ((Leave) assiduousnessRecord).getJustificationMotive().getAccumulate()))
+			&& (!(((Leave) assiduousnessRecord).getJustificationMotive().getJustificationType()
+				.equals(JustificationType.TIME) && ((Leave) assiduousnessRecord).getJustificationMotive()
+				.getAccumulate()))
 			&& (!(((Leave) assiduousnessRecord).getJustificationMotive().getJustificationType()
 				.equals(JustificationType.BALANCE)))
 			&& (!(((Leave) assiduousnessRecord).getJustificationMotive().getJustificationType()

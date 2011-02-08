@@ -23,14 +23,29 @@
 			</fr:layout>
 		</fr:view>
 	</h3>
-	<p>
-		<fr:form action="/monthClosure.do?method=exportClosedMonth">
-			<fr:edit id="yearMonthToExport" name="yearMonthToExport" schema="show.date" visible="false"/>
-			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="invisible">
-				<bean:message key="button.exportAplica" />
-			</html:submit>
-		</fr:form>
-	</p>
+	<logic:present role="MANAGER">
+		<p>
+			<fr:form action="/monthClosure.do?method=exportClosedMonth">
+				<fr:edit id="yearMonthToExport" name="yearMonthToExport" schema="show.date" visible="false"/>
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="invisible">
+					<bean:message key="button.exportAplica" />
+				</html:submit>
+			</fr:form>
+			<fr:form action="/monthClosure.do?method=exportClosedMonthFile">
+				<fr:edit id="yearMonthToOpen2" name="yearMonthToExport" schema="show.date" visible="false"/>
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.open" styleClass="invisible">
+					<bean:message key="button.export" />
+				</html:submit>
+			</fr:form>
+			<fr:form action="/monthClosure.do?method=showMonthCorrections">
+				<fr:edit id="yearMonth" name="yearMonthToExport" schema="show.date" visible="false"/>
+				<html:submit bundle="ASSIDUOUSNESS_RESOURCES" altKey="submit.submit" styleClass="invisible">
+					<bean:message key="button.corrections" />
+				</html:submit>
+			</fr:form>
+		</p>
+	</logic:present>
+	
 	<p>
 		<fr:form action="/monthClosure.do?method=exportClosedMonthList">
 			<fr:edit id="yearMonthToExportList" name="yearMonthToExport" schema="show.date" visible="false"/>
@@ -57,22 +72,7 @@
 			</fr:form>
 		</logic:equal>
 	</p>
-	<p>	
-		<fr:form action="/monthClosure.do?method=exportClosedMonthFile">
-			<fr:edit id="yearMonthToOpen2" name="yearMonthToExport" schema="show.date" visible="false"/>
-			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.open" styleClass="invisible">
-				<bean:message key="button.export" />
-			</html:submit>
-		</fr:form>
-	</p>
-	<p>
-		<fr:form action="/monthClosure.do?method=showMonthCorrections">
-			<fr:edit id="yearMonth" name="yearMonthToExport" schema="show.date" visible="false"/>
-			<html:submit bundle="ASSIDUOUSNESS_RESOURCES" altKey="submit.submit" styleClass="invisible">
-				<bean:message key="button.corrections" />
-			</html:submit>
-		</fr:form>
-	</p>
+	
 	
 	<logic:notEmpty name="closedMonthDocuments">
 		<bean:define id="closedMonthDocuments" name="closedMonthDocuments" toScope="request" />
