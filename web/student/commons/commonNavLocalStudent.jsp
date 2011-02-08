@@ -38,6 +38,9 @@
 	<li><html:link page="/weeklyWorkLoad.do?method=prepare" titleKey="link.weekly.work.load"><bean:message key="link.weekly.work.load"/></html:link></li>
 	<li><html:link page="/studentInquiry.do?method=showCoursesToAnswer" titleKey="link.title.inquiry.students.courses"><bean:message key="link.inquiries" bundle="INQUIRIES_RESOURCES"/></html:link></li>
 	<li><html:link page="/yearDelegateManagement.do?method=prepare" titleKey="link.title.yearDelegateElections"><bean:message key="link.student.yearDelegateElections"/></html:link></li>
+	<logic:equal name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.student.eligibleForCareerWorkshopApplication" value="true">
+		<li><html:link page="/careerWorkshopApplication.do?method=prepare" titleKey="link.title.careerWorkshop"><bean:message key="link.student.careerWorkshop"/></html:link></li>
+	</logic:equal>
 
 
 	<li class="navheader"><bean:message key="submit"/></li>

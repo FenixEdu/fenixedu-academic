@@ -216,6 +216,8 @@ enum net.sourceforge.fenixedu.domain.inquiries.InquiryResultType														  
 enum net.sourceforge.fenixedu.domain.inquiries.InquiryConnectionType													  as InquiryConnectionType;
 enum net.sourceforge.fenixedu.domain.inquiries.ResultClassification														  as ResultClassification;
 enum net.sourceforge.fenixedu.domain.accounting.report.GratuityReportQueueJobType                                         as GratuityReportQueueJobType;
+enum net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopSessions                                                as CareerWorkshopSessions;
+enum net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopThemes                                                  as CareerWorkshopThemes;
 
 /*
  * Value types that need special externalization
@@ -1292,6 +1294,9 @@ class DomainObject {
             Language language;
             String subTitle;
             String title;
+        }
+        
+        class careerWorkshop.CareerWorkshopSpreadsheet extends File {
         }
 
 
@@ -7858,6 +7863,19 @@ class inquiries.InquiryResult extends DomainObject {
 }
 
 /* End of Inquiries */
+
+class careerWorkshop.CareerWorkshopApplication extends DomainObject {
+	String sessions;
+	String themes;
+	DateTime sealStamp;
+}
+
+class careerWorkshop.CareerWorkshopApplicationEvent extends DomainObject {
+	DateTime beginDate;
+	DateTime endDate;
+	DateTime lastUpdate;
+	String relatedInformation;
+}
 
  	
 /*
@@ -19560,3 +19578,41 @@ relation ProfessorshipUser {
 	}
 }
 
+relation CareerWorkshopApplicationRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	careerWorkshop.CareerWorkshopApplication playsRole careerWorkshopApplications {
+		multiplicity *;
+	}
+}
+
+relation CareerWorkshopApplicationStudent {
+	careerWorkshop.CareerWorkshopApplication playsRole careerWorkshopApplications {
+		multiplicity *;
+	}
+	student.Student playsRole student {
+		multiplicity 1;
+	}
+}
+
+relation CareerWorkshopApplicationEventRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	careerWorkshop.CareerWorkshopApplicationEvent playsRole careerWorkshopApplicationEvents {
+		multiplicity *;
+	}
+}
+
+relation CareerWorkshopApplicationEventCareerWorkshopApplication {
+	careerWorkshop.CareerWorkshopApplicationEvent playsRole careerWorkshopApplicationEvent {
+		multiplicity 1;
+	}
+	careerWorkshop.CareerWorkshopApplication playsRole careerWorkshopApplications {
+		multiplicity *;
+	}
+}
+
+relation CareerWorkshopApplicationEventFile {
+	careerWorkshop.CareerWorkshopApplicationEvent playsRole careerWorkshopApplicationEvent;
+	careerWorkshop.CareerWorkshopSpreadsheet playsRole spreadsheet {
+		multiplicity 1;
+	}
+}

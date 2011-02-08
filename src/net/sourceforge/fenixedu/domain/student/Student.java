@@ -44,6 +44,8 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
+import net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopApplication;
+import net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopApplicationEvent;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
 import net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod;
@@ -1797,5 +1799,18 @@ public class Student extends Student_Base {
     public void acceptRegistrationsFromOtherStudent(java.util.List<Registration> otherRegistrations) {
 	List<Registration> registrations = super.getRegistrations();
 	registrations.addAll(otherRegistrations);
+    }
+    
+    public boolean isEligibleForCareerWorkshopApplication() {
+	ExecutionSemester presentSemester = ExecutionSemester.readActualExecutionSemester();
+	for(Registration registration : getActiveRegistrationsIn(presentSemester)) {
+	    if(!registration.getStudentCurricularPlan(presentSemester).isSecondCycle())
+		return false;
+	}
+	for(CareerWorkshopApplicationEvent applicationEvents : RootDomainObject.getInstance().getCareerWorkshopApplicationEvents()) {
+	    if(applicationEvents.isApplicationEventOpened())
+		return true;
+	}
+	return false;
     }
 }
