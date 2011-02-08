@@ -66,6 +66,12 @@
 
 </html:form>
 
+<logic:present name="availableRoomIndicationMsg">
+	<p>
+		<bean:write name="availableRoomIndicationMsg"/>
+	</p>
+</logic:present>
+
 <logic:present name="writtenEvaluations">
 	<table class="tstyle4">
 		<tr>

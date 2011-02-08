@@ -13,9 +13,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
+import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -79,10 +81,18 @@ public class SearchWrittenEvaluationsByDate extends FenixContextDispatchAction {
 
 	return search(mapping, request, DateFormatUtil.parse("yyyy/MM/dd", date), begin, end, dynaActionForm);
     }
-
+    
+    public static boolean isEvalBetweenDates(WrittenEvaluation eval, Date begin , Date end) {
+	return (DateFormatUtil.isInBetween("HH:mm", eval.getBeginningDate(), begin, end) || 
+		DateFormatUtil.isInBetween("HH:mm", eval.getEndDate(), begin, end)) || 
+		(DateFormatUtil.isInBetween("HH:mm", begin, eval.getBeginningDate(), eval.getEndDate()) || 
+			DateFormatUtil.isInBetween("HH:mm", end, eval.getBeginningDate(), eval.getEndDate()));
+		
+    }
+    
     public ActionForward search(ActionMapping mapping, HttpServletRequest request, final Date day, final Date begin,
 	    final Date end, DynaActionForm dynaActionForm) throws Exception {
-
+	Integer totalOfStudents = 0;
 	AcademicInterval academicInterval = getAcademicInterval(dynaActionForm, request);
 	final Set<WrittenEvaluation> writtenEvaluations = new HashSet<WrittenEvaluation>();
 	for (final ExecutionCourse executionCourse : ExecutionCourse.filterByAcademicInterval(academicInterval)) {
@@ -92,8 +102,10 @@ public class SearchWrittenEvaluationsByDate extends FenixContextDispatchAction {
 		    final Date evaluationDate = writtenEvaluation.getDayDate();
 		    if (evaluationDate != null) {
 			if (DateFormatUtil.equalDates("yyyy/MM/dd", day, evaluationDate)) {
-			    if (begin == null || DateFormatUtil.equalDates("HH:mm", begin, writtenEvaluation.getBeginningDate())) {
-				if (end == null || DateFormatUtil.equalDates("HH:mm", end, writtenEvaluation.getEndDate())) {
+			    if (begin == null || end == null || isEvalBetweenDates(writtenEvaluation,begin,end)) {
+				    if (!writtenEvaluations.contains(writtenEvaluation)) {
+					totalOfStudents += writtenEvaluation.getCountStudentsEnroledAttendingExecutionCourses();
+				    }
 				    writtenEvaluations.add(writtenEvaluation);
 				}
 			    }
@@ -101,10 +113,8 @@ public class SearchWrittenEvaluationsByDate extends FenixContextDispatchAction {
 		    }
 		}
 	    }
-	}
-
-	request.setAttribute("writtenEvaluations", writtenEvaluations);
-
+	request.setAttribute("availableRoomIndicationMsg",BundleUtil.getStringFromResourceBundle("resources.ResourceAllocationManagerResources", "info.total.students.vs.available.seats", totalOfStudents.toString(), Room.countAllAvailableSeatsForExams().toString()));
+	request.setAttribute("writtenEvaluations",writtenEvaluations);
 	return mapping.findForward("show");
     }
 

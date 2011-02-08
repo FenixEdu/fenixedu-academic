@@ -844,11 +844,11 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 	    DateTime enrollmentEnd = convertTimes(this.getEnrollmentEndDayDateYearMonthDay(), this
 		    .getEnrollmentEndTimeDateHourMinuteSecond());
 
-	    result.add(new EventBean("Inicio das inscrições para " + description + " : " + courseName, enrollmentBegin,
-		    enrollmentBegin.plusHours(1), false, "Sistema Fénix", url + "/privado", null));
+	    result.add(new EventBean("Inicio das inscriï¿½ï¿½es para " + description + " : " + courseName, enrollmentBegin,
+		    enrollmentBegin.plusHours(1), false, "Sistema Fï¿½nix", url + "/privado", null));
 
-	    result.add(new EventBean("Fim das inscrições para " + description + " : " + courseName, enrollmentEnd.minusHours(1),
-		    enrollmentEnd, false, "Sistema Fénix", url + "/privado", null));
+	    result.add(new EventBean("Fim das inscriï¿½ï¿½es para " + description + " : " + courseName, enrollmentEnd.minusHours(1),
+		    enrollmentEnd, false, "Sistema Fï¿½nix", url + "/privado", null));
 	}
 
 	String room = "";
