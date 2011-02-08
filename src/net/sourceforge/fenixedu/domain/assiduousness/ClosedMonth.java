@@ -32,6 +32,7 @@ public class ClosedMonth extends ClosedMonth_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
 	setClosedForBalance(false);
 	setClosedForExtraWork(false);
+	setIntensionToCloseForBalance(false);
 	setClosedYearMonth(new Partial().with(DateTimeFieldType.monthOfYear(), day.getMonthOfYear()).with(
 		DateTimeFieldType.year(), day.getYear()));
     }
@@ -323,6 +324,7 @@ public class ClosedMonth extends ClosedMonth_Base {
 	}
 	setClosedForBalance(Boolean.FALSE);
 	setClosedForExtraWork(Boolean.FALSE);
+	setIntensionToCloseForBalance(Boolean.FALSE);
     }
 
     @Service
