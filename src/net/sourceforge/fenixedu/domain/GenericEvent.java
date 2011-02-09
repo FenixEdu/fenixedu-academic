@@ -317,6 +317,14 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 	return null;
     }
 
+    public String getPeriodPrettyPrint() {
+	String prettyPrint = new String();
+	if (!getGenericEventSpaceOccupations().isEmpty()) {
+	    prettyPrint = getGenericEventSpaceOccupations().get(0).getPrettyPrint();
+	} 
+	return prettyPrint;
+    }
+    
     public String getGanttDiagramEventPeriod() {
 	if (!getGenericEventSpaceOccupations().isEmpty()) {
 	    String prettyPrint = getGenericEventSpaceOccupations().get(0).getPrettyPrint();

@@ -23,11 +23,10 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.ExpressionG
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilderRegistry;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.collections.set.UnmodifiableSet;
-
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 /**
  * A <code>Group</code> is a dynamic aggregation of persons. It works as a
@@ -148,7 +147,7 @@ public abstract class Group implements Serializable, IGroup {
     }
 
     public String getName() {
-	String name = RenderUtils.getResourceString("GROUP_NAME_RESOURCES", "label.name." + getClass().getSimpleName());
+	String name = BundleUtil.getStringFromResourceBundle("resources.GroupNameResources", "label.name." + getClass().getSimpleName());
 	return name != null ? name : getExpression();
     }
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -12,14 +13,12 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
-import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class Recipient extends Recipient_Base {
 
     public static final Comparator<Recipient> COMPARATOR_BY_NAME = new Comparator<Recipient>() {
 
-	@Override
 	public int compare(Recipient r1, Recipient r2) {
 	    final int c = r1.getToName().compareTo(r2.getToName());
 	    return c == 0 ? COMPARATOR_BY_ID.compare(r1, r2) : c;
@@ -98,6 +97,14 @@ public class Recipient extends Recipient_Base {
     @Service
     public static List<Recipient> newInstance(final List<? extends Group> groups) {
 	List<Recipient> recipients = new ArrayList<Recipient>();
+	for (Group group : groups) {
+	    recipients.add(new Recipient(group));
+	}
+	return recipients;
+    }
+    
+    public static Set<Recipient> newInstance(final Set<? extends Group> groups) {
+	Set<Recipient> recipients = new HashSet<Recipient>();
 	for (Group group : groups) {
 	    recipients.add(new Recipient(group));
 	}

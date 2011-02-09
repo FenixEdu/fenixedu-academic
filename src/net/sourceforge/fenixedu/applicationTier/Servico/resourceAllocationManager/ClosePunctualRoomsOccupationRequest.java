@@ -1,7 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.GenericEvent;
@@ -9,7 +12,10 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationComment;
 import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.space.GenericEventSpaceOccupation;
 import net.sourceforge.fenixedu.domain.util.email.Message;
+import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 
 import org.apache.struts.util.MessageResources;
@@ -26,9 +32,30 @@ public class ClosePunctualRoomsOccupationRequest extends FenixService {
 	if (request != null) {
 	    request.closeRequestAndAssociateOwnerOnlyForEmployees(new DateTime(), person);
 	    sendCloseRequestMessage(request);
+	    sendMessageSpaceManagers(request);
 	}
     }
-
+    private static void sendMessageSpaceManagers(PunctualRoomsOccupationRequest request) {
+	final MessageResources messages = MessageResources.getMessageResources("resources/ResourceAllocationManagerResources");
+	String body = messages.getMessage("message.room.reservation.spacemanager.body");
+	
+	Set<Group> groups = new HashSet<Group>();
+	for (GenericEvent event : request.getGenericEvents()) {
+	    body += "\t ";
+	    for (GenericEventSpaceOccupation space : event.getGenericEventSpaceOccupations()) {
+		body += space.getRoom().getIdentification() + ",";
+		final Group spaceManagementAccessGroup = space.getRoom().getSpaceBuilding().getSpaceManagementAccessGroup();
+		if (spaceManagementAccessGroup != null) {
+		    groups.add(spaceManagementAccessGroup);
+		}
+	    }
+	    body = body.substring(0, body.length()-1);
+	    body += messages.getMessage("message.room.reservation.spacemanager.body.sep") + event.getPeriodPrettyPrint() + "\n"; 
+	}
+	
+	sendMessage(Recipient.newInstance(groups), "", messages.getMessage("message.room.reservation.spacemanager.subject"),body);
+    }
+    
     private static void sendCloseRequestMessage(PunctualRoomsOccupationRequest roomsReserveRequest) {
 	MessageResources messages = MessageResources.getMessageResources("resources/ResourceAllocationManagerResources");
 	String body = messages.getMessage("message.room.reservation.solved") + "\n\n"
@@ -62,8 +89,7 @@ public class ClosePunctualRoomsOccupationRequest extends FenixService {
 	}else{
 	    body += "-";
 	}
-	
-	sendMessage(roomsReserveRequest.getRequestor().getDefaultEmailAddressValue(),
+	sendMessage(Collections.EMPTY_LIST, roomsReserveRequest.getRequestor().getDefaultEmailAddressValue(),
 		messages.getMessage("message.room.reservation"), body);
     }
 
@@ -77,10 +103,11 @@ public class ClosePunctualRoomsOccupationRequest extends FenixService {
     }
 
     @Service
-    private static void sendMessage(String email, String subject, String body) {
+    private static void sendMessage(Collection<Recipient> spaceManagers, String email, String subject, String body) {
 	SystemSender systemSender = RootDomainObject.getInstance().getSystemSender();
 	if (email != null) {
-	    new Message(systemSender, systemSender.getConcreteReplyTos(), Collections.EMPTY_LIST, subject, body, email);
+	    
+	    new Message(systemSender, systemSender.getConcreteReplyTos(), spaceManagers, subject, body, email);
 	}
     }
 }
