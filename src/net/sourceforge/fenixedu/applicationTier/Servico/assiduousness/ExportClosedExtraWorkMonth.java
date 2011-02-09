@@ -134,6 +134,8 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 	state.maternityJustificationList = new ArrayList<Assiduousness>();
 
 	StringBuilder extraWorkResult = new StringBuilder();
+	List<Assiduousness> alreadyProcessedExtraWork = new ArrayList<Assiduousness>();
+
 	for (AssiduousnessClosedMonth assiduousnessClosedMonth : closedMonth.getAssiduousnessClosedMonths()) {
 	    state.unjustifiedDays = new ArrayList<LocalDate>();
 	    if (getWorkAbsences) {
@@ -151,7 +153,11 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 		}
 	    }
 	    if (getExtraWorkMovements) {
-		extraWorkResult.append(getAssiduousnessExtraWork(assiduousnessClosedMonth));
+		if (!alreadyProcessedExtraWork.contains(assiduousnessClosedMonth.getAssiduousnessStatusHistory()
+			.getAssiduousness())) {
+		    extraWorkResult.append(getAssiduousnessExtraWork(assiduousnessClosedMonth));
+		    alreadyProcessedExtraWork.add(assiduousnessClosedMonth.getAssiduousnessStatusHistory().getAssiduousness());
+		}
 	    }
 	}
 	if (endDate.getDayOfMonth() != 30 && getExtraWorkMovements) {
