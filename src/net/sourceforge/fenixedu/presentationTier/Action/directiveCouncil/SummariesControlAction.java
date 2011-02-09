@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
@@ -25,9 +24,9 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.DepartmentSummaryElement;
+import net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.DepartmentSummaryElement.SummaryControlCategory;
 import net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.DetailSummaryElement;
 import net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.ExecutionCourseSummaryElement;
-import net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.DepartmentSummaryElement.SummaryControlCategory;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -60,7 +59,6 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.Pair;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class SummariesControlAction extends FenixDispatchAction {
 
@@ -115,8 +113,8 @@ public class SummariesControlAction extends FenixDispatchAction {
     public ActionForward departmentSummariesResume(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	String departmentID = (String) request.getParameter("departmentID");
-	String executionPeriodID = (String) request.getParameter("executionSemesterID");
+	String departmentID = request.getParameter("departmentID");
+	String executionPeriodID = request.getParameter("executionSemesterID");
 	String categoryControl = (String) getFromRequest(request, "categoryControl");
 
 	SummaryControlCategory summaryControlCategory = null;
@@ -168,14 +166,14 @@ public class SummariesControlAction extends FenixDispatchAction {
 	List<Pair<ExecutionSemester, List<DetailSummaryElement>>> last4SemestersSummaryControl = new ArrayList<Pair<ExecutionSemester, List<DetailSummaryElement>>>();
 	ExecutionSemester executionSemesterToPresent = ExecutionSemester.readActualExecutionSemester();
 
-	List<DetailSummaryElement> executionCoursesResume = getExecutionCourseResume(executionSemesterToPresent, person
-		.getProfessorshipsByExecutionSemester(executionSemesterToPresent));
+	List<DetailSummaryElement> executionCoursesResume = getExecutionCourseResume(executionSemesterToPresent,
+		person.getProfessorshipsByExecutionSemester(executionSemesterToPresent));
 	last4SemestersSummaryControl.add(new Pair<ExecutionSemester, List<DetailSummaryElement>>(executionSemesterToPresent,
 		executionCoursesResume));
 	for (int iter = 0; iter < 3; iter++) {
 	    executionSemesterToPresent = executionSemesterToPresent.getPreviousExecutionPeriod();
-	    executionCoursesResume = getExecutionCourseResume(executionSemesterToPresent, person
-		    .getProfessorshipsByExecutionSemester(executionSemesterToPresent));
+	    executionCoursesResume = getExecutionCourseResume(executionSemesterToPresent,
+		    person.getProfessorshipsByExecutionSemester(executionSemesterToPresent));
 	    last4SemestersSummaryControl.add(new Pair<ExecutionSemester, List<DetailSummaryElement>>(executionSemesterToPresent,
 		    executionCoursesResume));
 	}
@@ -218,9 +216,12 @@ public class SummariesControlAction extends FenixDispatchAction {
 		String categoryName = (category != null) ? category.getCode() : "";
 		String siglas = getSiglas(professorship);
 
+		String teacherEmail = professorship.getPerson().getDefaultEmailAddress() != null ? professorship.getPerson()
+			.getDefaultEmailAddress().getPresentationValue() : null;
+
 		DetailSummaryElement listElementDTO = new DetailSummaryElement(professorship.getPerson().getName(), professorship
-			.getExecutionCourse().getNome(), teacher != null ? teacher.getTeacherNumber() : null, categoryName,
-			lessonsDeclared, summariesGiven, givenSumariesPercentage, siglas);
+			.getExecutionCourse().getNome(), teacher != null ? teacher.getTeacherNumber() : null, teacherEmail,
+			categoryName, lessonsDeclared, summariesGiven, givenSumariesPercentage, siglas);
 
 		allListElements.add(listElementDTO);
 	    }
@@ -461,17 +462,16 @@ public class SummariesControlAction extends FenixDispatchAction {
 	departmentSummaryResume.setSummaryControlCategory(summaryControlCategory);
 
 	if (departmentSummaryResume != null) {
-	    final ResourceBundle bundle = ResourceBundle.getBundle("resources/DirectiveCouncilResources", Language.getLocale());
 	    String sigla = departmentSummaryResume.getDepartment().getAcronym();
 	    DateTime dt = new DateTime();
 	    DateTimeFormatter fmt = DateTimeFormat.forPattern("dd-MM-yyyy");
 	    String date = fmt.print(dt);
 
-	    final String filename = getResourceMessage(DEFAULT_MODULE, "link.summaries.control") + "_" + controlCategory + "_"
-		    + sigla + "_" + date;
+	    final String filename = getResourceMessage(DEFAULT_MODULE, "link.summaries.control").replaceAll(" ", "_") + "_"
+		    + controlCategory + "_" + sigla + "_" + date + ".xls";
 
 	    response.setContentType("application/vnd.ms-excel");
-	    response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
+	    response.setHeader("Content-disposition", "attachment; filename=" + filename);
 	    ServletOutputStream writer = response.getOutputStream();
 	    exportToXls(departmentSummaryResume, departmentSummaryResume.getDepartment(), executionSemester, writer);
 	    writer.flush();
@@ -497,7 +497,6 @@ public class SummariesControlAction extends FenixDispatchAction {
      * @param departmentSummaryResume
      * @param department
      * @param semester
-     * @param x
      * @param sheet
      */
     private void fillSpreadSheet(DepartmentSummaryElement departmentSummaryResume, Department department,
@@ -509,33 +508,34 @@ public class SummariesControlAction extends FenixDispatchAction {
 	// Iterate on all executionCourses and print them
 	for (ExecutionCourseSummaryElement executionCourse : executionCourses) {
 	    counter = 0;
-	    Set<Person> persons = executionCourse.getPersons();
+	    List<DetailSummaryElement> executionCoursesResume = getExecutionCourseResume(executionCourse.getExecutionCourse()
+		    .getExecutionPeriod(), executionCourse.getExecutionCourse().getProfessorships());
+
 	    int lessons = executionCourse.getNumberOfLessonInstances().intValue();
 	    int lessonsWithSummaries = executionCourse.getNumberOfLessonInstancesWithSummary().intValue();
 	    double lessonsWithSummariesPercentage = executionCourse.getPercentageOfLessonsWithSummary().doubleValue();
-	    for (Person person : persons) {
+	    for (DetailSummaryElement detailSummaryElement : executionCoursesResume) {
 		if (counter == 0) {
 		    sheet.newRow();
-		    sheet.addCell(semester.getName());
-		    sheet.addCell(department.getName());
-		    sheet.addCell(executionCourse.getExecutionCourse().getName());
-		    sheet.addCell(lessons);
-		    sheet.addCell(lessonsWithSummaries);
-		    sheet.addCell(lessonsWithSummariesPercentage);
+		    sheet.addCell(semester.getName(), sheet.getExcelStyle().getLabelStyle());
+		    sheet.addCell(department.getName(), sheet.getExcelStyle().getLabelStyle());
+		    sheet.addCell(executionCourse.getExecutionCourse().getName(), sheet.getExcelStyle().getLabelStyle());
+		    sheet.addCell(lessons, sheet.getExcelStyle().getLabelStyle());
+		    sheet.addCell(lessonsWithSummaries, sheet.getExcelStyle().getLabelStyle());
+		    sheet.addCell(lessonsWithSummariesPercentage, sheet.getExcelStyle().getLabelStyle());
 
 		}
 		sheet.newRow();
 		sheet.addCell(null);
 		sheet.addCell(null);
 		sheet.addCell(null);
-		sheet.addCell(null);
-		sheet.addCell(null);
-		sheet.addCell(null);
+		sheet.addCell(detailSummaryElement.getDeclaredLessons());
+		sheet.addCell(detailSummaryElement.getGivenSummaries());
+		sheet.addCell(detailSummaryElement.getGivenSummariesPercentage());
 
-		sheet.addCell(person.getName());
-		sheet.addCell(person.getTeacher() != null ? person.getTeacher().getTeacherNumber() : null);
-		sheet.addCell(person.getDefaultEmailAddress() != null ? person.getDefaultEmailAddress().getPresentationValue()
-			: StringUtils.EMPTY);
+		sheet.addCell(detailSummaryElement.getTeacherName());
+		sheet.addCell(detailSummaryElement.getTeacherNumber());
+		sheet.addCell(detailSummaryElement.getTeacherEmail());
 		counter++;
 
 	    }
@@ -546,14 +546,14 @@ public class SummariesControlAction extends FenixDispatchAction {
 	spreadsheet.newHeaderRow();
 
 	spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.semester"));
-	spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.department"));
-	spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.course"));
+	spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.department"), 10000);
+	spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.course"), 10000);
 	spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.lessons"));
 	spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.lessons.summaries"));
 	spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.lessons.summaries.percentage"));
-	spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.professorName"));
+	spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.professorName"), 10000);
 	spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.professorUsername"));
-	spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.professorEmail"));
+	spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.professorEmail"), 10000);
     }
 
     static private String getResourceMessage(String module, String key) {

@@ -19,18 +19,29 @@ public class DetailSummaryElement implements Serializable {
     BigDecimal givenSummaries;
     BigDecimal givenSummariesPercentage;
     Integer teacherNumber;
+    String teacherEmail;
 
-    public DetailSummaryElement(String teacherName, String executionCourseName, Integer teacherNumber, String categoryName,
-	    BigDecimal declaredLessons, BigDecimal givenSummaries, BigDecimal givenSummariesPercentage, String siglas) {
+    public DetailSummaryElement(String teacherName, String executionCourseName, Integer teacherNumber, String teacherEmail,
+	    String categoryName, BigDecimal declaredLessons, BigDecimal givenSummaries, BigDecimal givenSummariesPercentage,
+	    String siglas) {
 
 	setExecutionCourseName(executionCourseName);
 	setTeacherName(teacherName);
 	setTeacherNumber(teacherNumber);
+	setTeacherEmail(teacherEmail);
 	setCategoryName(categoryName);
 	setSiglas(siglas);
 	setDeclaredLessons(declaredLessons);
 	setGivenSummaries(givenSummaries);
 	setGivenSummariesPercentage(givenSummariesPercentage);
+    }
+
+    public String getTeacherEmail() {
+	return teacherEmail;
+    }
+
+    public void setTeacherEmail(String teacherEmail) {
+	this.teacherEmail = teacherEmail;
     }
 
     public String getTeacherName() {
