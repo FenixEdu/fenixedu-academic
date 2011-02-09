@@ -160,6 +160,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	activities.add(new SendPhdEmail());
 
 	activities.add(new UploadGuidanceDocument());
+	activities.add(new EditPhdParticipant());
     }
 
     @StartActivity
@@ -1215,6 +1216,26 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
 	    new PhdGuidanceDocument(process, bean.getType(), bean.getRemarks(),
 		    bean.getFileContent(), bean.getFilename(), userView.getPerson());
+
+	    return process;
+	}
+
+    }
+
+    static public class EditPhdParticipant extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
+		Object object) {
+	    PhdParticipantBean bean = (PhdParticipantBean) object;
+	    bean.getParticipant().edit(bean);
 
 	    return process;
 	}

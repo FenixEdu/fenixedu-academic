@@ -35,6 +35,8 @@ public class ExternalPhdParticipant extends ExternalPhdParticipant_Base {
 
     @Override
     public void edit(final PhdParticipantBean bean) {
+	check(bean.getName(), "error.ExternalPhdParticipant.invalid.name");
+
 	super.edit(bean);
 
 	setName(bean.getName());

@@ -33,6 +33,20 @@ public class PhdParticipantBean implements Serializable {
 	setIndividualProgramProcess(individualProgramProcess);
     }
 
+    public PhdParticipantBean(final PhdParticipant phdParticipant) {
+	setParticipant(phdParticipant);
+
+	setName(phdParticipant.getName());
+	setTitle(phdParticipant.getTitle());
+	setQualification(phdParticipant.getQualification());
+	setCategory(phdParticipant.getCategory());
+	setWorkLocation(phdParticipant.getWorkLocation());
+	setInstitution(phdParticipant.getInstitution());
+	setAddress(phdParticipant.getAddress());
+	setEmail(phdParticipant.getEmail());
+	setPhone(phdParticipant.getPhone());
+    }
+
     public PhdIndividualProgramProcess getIndividualProgramProcess() {
 	return individualProgramProcess;
     }

@@ -49,6 +49,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteStu
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteStudyPlanEntry;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditIndividualProcessInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditPersonalInformation;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditPhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditQualificationExams;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditStudyPlan;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditWhenStartedStudies;
@@ -59,6 +60,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RequestPu
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.SendPhdEmail;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.SuspendPhdProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
+import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.PhdStudyPlanBean;
@@ -164,7 +166,11 @@ import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
 
 	@Forward(name = "viewMigrationProcess", path = "/phd/academicAdminOffice/viewMigrationProcess.jsp"),
 
-	@Forward(name = "viewAllMigratedProcesses", path = "/phd/academicAdminOffice/viewAllMigratedProcesses.jsp")
+	@Forward(name = "viewAllMigratedProcesses", path = "/phd/academicAdminOffice/viewAllMigratedProcesses.jsp"),
+
+	@Forward(name = "viewPhdParticipants", path = "/phd/academicAdminOffice/participant/viewPhdParticipants.jsp"),
+
+	@Forward(name = "editPhdParticipant", path = "/phd/academicAdminOffice/participant/editPhdParticipant.jsp")
 
 })
 public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramProcessDA {
@@ -1332,4 +1338,38 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
     }
 
     // End of Migration Processes Visualization
+
+    // Edition of Phd Participants
+
+    public ActionForward viewPhdParticipants(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	return mapping.findForward("viewPhdParticipants");
+    }
+
+    public ActionForward prepareEditPhdParticipant(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	PhdParticipant phdParticipant = getDomainObject(request, "phdParticipantId");
+	PhdParticipantBean bean = new PhdParticipantBean(phdParticipant);
+	request.setAttribute("phdParticipantBean", bean);
+
+	return mapping.findForward("editPhdParticipant");
+    }
+
+    public ActionForward editPhdParticipant(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	PhdParticipantBean bean = getRenderedObject("phdParticipantBean");
+	ExecuteProcessActivity.run(getProcess(request), EditPhdParticipant.class, bean);
+
+	return viewPhdParticipants(mapping, form, request, response);
+    }
+
+    public ActionForward editPhdParticipantInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	PhdParticipantBean bean = getRenderedObject("phdParticipantBean");
+	request.setAttribute("phdParticipantBean", bean);
+
+	return mapping.findForward("editPhdParticipant");
+    }
+
+    // End of Edition of Phd Participants
 }

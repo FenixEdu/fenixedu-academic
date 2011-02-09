@@ -1,3 +1,4 @@
+<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditPhdParticipant"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
@@ -11,6 +12,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RequestPublicThesisPresentation"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.ExemptPublicPresentationSeminarComission"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.ConfigurePhdIndividualProgramProcess" %>
+<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditPhdParticipant"  %>
 
 <%-- ### Title #### --%>
 <em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
@@ -124,6 +126,13 @@
 				<html:link action="/phdIndividualProgramProcess.do?method=managePhdIndividualProgramProcessState" paramId="processId" paramName="process" paramProperty="externalId">
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.manage.states"/>
 				</html:link>
+			</li>
+			<li>
+				<phd:activityAvailable activity="<%= EditPhdParticipant.class %>" process="<%= process %>">
+					<html:link action="/phdIndividualProgramProcess.do?method=viewPhdParticipants" paramId="processId" paramName="process" paramProperty="externalId">
+						<bean:message key="link.phd.participants.view" bundle="PHD_RESOURCES" />
+					</html:link>
+				</phd:activityAvailable>
 			</li>
 			
 			<br />
