@@ -45,19 +45,19 @@
 				<bean:message key="logins.management.title" bundle="MANAGER_RESOURCES"/>
 			</html:link>
 		</li>
-	<!-- 
+		
 	<li class="navheader">Equivalências</li>
-		<li>
+		<!--<li>
 			<html:link page="/prepareNotNeedToEnroll.do">
 				<bean:message key="link.manager.notNeedToEnrol" bundle="MANAGER_RESOURCES" />
 			</html:link>
-		</li>
+		</li>-->
 		<li>
 			<html:link page="/curricularCourseEquivalencies.do?method=prepare">
 				<bean:message key="title.equivalencies" bundle="MANAGER_RESOURCES" />
 			</html:link>
 		</li>
-	
+	<!-- 
 	<li class="navheader">Gestão de Pessoal</li>
 		<li>
 			<html:link page="/curricularCourseEquivalencies.do?method=prepare">

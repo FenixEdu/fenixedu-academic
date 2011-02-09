@@ -42,6 +42,17 @@
 		<form-property name="page" type="java.lang.Integer"/>
 		<form-property name="entryPhase" type="java.lang.String" />
   	  </form-bean>
+  	  
+  	  <form-bean name="curricularCourseEquivalenciesForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+			<form-property name="degreeID" type="java.lang.String"/>
+			<form-property name="degreeCurricularPlanID" type="java.lang.String"/>
+			<form-property name="curricularCourseID" type="java.lang.String"/>
+			<form-property name="oldDegreeID" type="java.lang.String"/>
+			<form-property name="oldDegreeCurricularPlanID" type="java.lang.String"/>
+			<form-property name="oldCurricularCourseID" type="java.lang.String"/>
+			<form-property name="curricularCourseEquivalencyID" type="java.lang.String"/>
+		</form-bean>
 
      </form-beans>
     
