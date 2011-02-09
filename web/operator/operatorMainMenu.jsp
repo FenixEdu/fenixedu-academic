@@ -26,11 +26,63 @@
 			<bean:message key="link.operator.candidacy.passwords" />
 		</html:link>
 	</li>
+	
 	<li class="navheader">Alumni</li>
 		<li>
 			<html:link page="/alumni.do?method=prepareIdentityRequestsList">
 				<bean:message key="alumni.identity.requests" bundle="MANAGER_RESOURCES" />
 			</html:link>
 		</li>
-	</li>
+	
+	<li class="navheader">Gestão de Sistema</li>
+		<li>
+			<html:link page="/monitorSystem.do?method=monitor">
+				<bean:message key="title.system.information" bundle="MANAGER_RESOURCES"/>
+			</html:link>
+		</li>
+		<li>
+			<html:link page="/loginsManagement.do?method=prepareSearchPerson">
+				<bean:message key="logins.management.title" bundle="MANAGER_RESOURCES"/>
+			</html:link>
+		</li>
+	<!-- 
+	<li class="navheader">Equivalências</li>
+		<li>
+			<html:link page="/prepareNotNeedToEnroll.do">
+				<bean:message key="link.manager.notNeedToEnrol" bundle="MANAGER_RESOURCES" />
+			</html:link>
+		</li>
+		<li>
+			<html:link page="/curricularCourseEquivalencies.do?method=prepare">
+				<bean:message key="title.equivalencies" bundle="MANAGER_RESOURCES" />
+			</html:link>
+		</li>
+	
+	<li class="navheader">Gestão de Pessoal</li>
+		<li>
+			<html:link page="/curricularCourseEquivalencies.do?method=prepare">
+				<bean:message key="link.manager.studentsManagement" bundle="MANAGER_RESOURCES" />
+			</html:link>
+		</li>
+		<li>
+			<html:link page="/curricularCourseEquivalencies.do?method=prepare">
+				<bean:message key="label.manager.personManagement" bundle="MANAGER_RESOURCES" />
+			</html:link>
+		</li>
+		<li>
+			<html:link page="/curricularCourseEquivalencies.do?method=prepare">
+				<bean:message key="label.manager.teachersManagement" bundle="MANAGER_RESOURCES" />
+			</html:link>
+		</li>
+		<li>
+			<html:link page="/manageHolidays.do?method=prepare&page=0">
+				<bean:message key="label.manage.holidays" bundle="MANAGER_RESOURCES" />
+			</html:link>
+		</li>
+		<li>
+			<html:link page="/viewPersonsWithRole.do?method=prepare">
+				<bean:message key="title.manage.roles" bundle="MANAGER_RESOURCES" />
+			</html:link>
+		</li>
+		-->
 </ul>
