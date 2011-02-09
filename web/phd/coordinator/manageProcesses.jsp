@@ -43,13 +43,13 @@
 			<bean:message bundle="PHD_RESOURCES" key="label.viewInactiveProcesses"/>
 		</html:link>
 	</li>
-<%-- 	
-	<li>
+ 	
+	<%-- <li>
 		<html:link action="/phdIndividualProgramProcess.do?method=managePhdEmails">
 			<bean:message bundle="PHD_RESOURCES" key="label.phd.prepare.email.management" />
 		</html:link>
-	</li>
---%>	
+	</li>--%>
+	
 </ul>
 
 <jsp:include page="/phd/common/manageProcesses.jsp"/>

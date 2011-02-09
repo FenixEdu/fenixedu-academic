@@ -1535,6 +1535,16 @@
 	<slot name="message" />
 </schema>
 
+<schema name="PhdProgramEmailBean.phdEmail.view" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.email.PhdProgramEmailBean">
+	<slot name="creator.name" />
+	<slot name="creationDate" layout="year-month"/>
+	<slot name="bccsView" />
+	<slot name="subject">
+		<property name="classes" value="bold"/>
+	</slot>
+	<slot name="message" />
+</schema>
+
 <schema name="PhdMigrationIndividualProcessDataBean" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualProcessData$PhdMigrationIndividualProcessDataBean">
 	<slot name="data" />
 	<slot name="processNumber" />

@@ -6,7 +6,6 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.StringTokenizer;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -198,8 +197,6 @@ public class PhdIndividualProgramProcessEmailBean extends PhdEmailBean implement
 
     }
 
-   private static int MAX_EMAILS_PER_LINE = 5;
-
     private PhdIndividualProgramProcess process;
 
     private PhdEmailTemplate template;
@@ -229,30 +226,11 @@ public class PhdIndividualProgramProcessEmailBean extends PhdEmailBean implement
 	    bccs += participant.getEmail();
 	    bccs += ",";
 	}
-	if (getParticipantsGroup().size() != 0) {
+	if (bccs.endsWith(",")) {
 	    bccs = bccs.substring(0, bccs.length() - 1);
 	}
 
 	return bccs;
-    }
-
-    public String getBccsView() {
-	StringTokenizer tokenizer = new StringTokenizer(getBccs(), ",");
-	StringBuilder result = new StringBuilder();
-	int emailsCurrentLine = 0;
-	while (tokenizer.hasMoreTokens()) {
-	    if (emailsCurrentLine == MAX_EMAILS_PER_LINE) {
-		result.append('\n');
-		emailsCurrentLine = 0;
-	    }
-	    result.append(tokenizer.nextToken());
-	    result.append(',');
-	    emailsCurrentLine++;
-	}
-	if (!StringUtils.isEmpty(result.toString())) {
-	    result.deleteCharAt(result.length() - 1);
-	}
-	return result.toString();
     }
 
     public PhdIndividualProgramProcess getProcess() {
