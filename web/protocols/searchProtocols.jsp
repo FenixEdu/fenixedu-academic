@@ -8,12 +8,14 @@
 	<p class="mvert0"><bean:message key="message.protocol.exampleFiles" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></p>
 	
 	<ul class="list1">
+	<%-- 
 	<bean:message key="label.thesisMaster" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 	<li><html:link href="<%= request.getContextPath()+"/protocols/files/Protocolo-DissertacaoMestrado.doc"%>">Protocolo-DissertacaoMestrado.doc</html:link></li>
 	<li><html:link href="<%= request.getContextPath()+"/protocols/files/Anexo-Protocolo-DissertacaoMestrado.doc"%>">Anexo-Protocolo-DissertacaoMestrado.doc</html:link></li>
 	<bean:message key="label.company" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 	<li><html:link href="<%= request.getContextPath()+"/protocols/files/Protocolo-Empresa.doc"%>" >Protocolo-Empresa.doc</html:link></li>
 	<li><html:link href="<%= request.getContextPath()+"/protocols/files/Anexo-Protocolo-Empresa.doc"%>">Anexo-Protocolo-Empresa.doc</html:link></li>
+	--%>
 	<bean:message key="label.international" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 	<li><html:link href="<%= request.getContextPath()+"/protocols/files/Protocolo-Internacional.doc"%>">Protocolo-Internacional.doc</html:link></li>
 	<bean:message key="label.polytechnic" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
