@@ -230,10 +230,6 @@
 		<put name="body" value="/manager/showRoleOperationLogs.jsp"/>
 	</definition>
 	
-	<definition name="df.page.show-roleoperationlogs" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/showRoleOperationLogs.jsp"/>
-	</definition>
-	
 	<definition name="df.page.manage-persons-with-role" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/viewPersonsWithRole_bd.jsp" />
 	</definition>

@@ -57,9 +57,9 @@
 				<bean:message key="title.equivalencies" bundle="MANAGER_RESOURCES" />
 			</html:link>
 		</li>
-	<!-- 
+	
 	<li class="navheader">Gestão de Pessoal</li>
-		<li>
+		<!--<li>
 			<html:link page="/curricularCourseEquivalencies.do?method=prepare">
 				<bean:message key="link.manager.studentsManagement" bundle="MANAGER_RESOURCES" />
 			</html:link>
@@ -73,7 +73,7 @@
 			<html:link page="/curricularCourseEquivalencies.do?method=prepare">
 				<bean:message key="label.manager.teachersManagement" bundle="MANAGER_RESOURCES" />
 			</html:link>
-		</li>
+		</li>-->
 		<li>
 			<html:link page="/manageHolidays.do?method=prepare&page=0">
 				<bean:message key="label.manage.holidays" bundle="MANAGER_RESOURCES" />
@@ -84,5 +84,4 @@
 				<bean:message key="title.manage.roles" bundle="MANAGER_RESOURCES" />
 			</html:link>
 		</li>
-		-->
 </ul>

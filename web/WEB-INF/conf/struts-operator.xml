@@ -198,6 +198,28 @@
        		<forward name="showEquivalencies" path="show-curricular-course-equivalencies"/>
        		<forward name="showCreateEquivalencyForm" path="show-create-curricular-course-equivalencies"/>
        	</action>
+       	
+       	<!-- ========== ROLE MANIPULATION ========== -->
+       	<action path="/viewPersonsWithRole"
+      			input="/viewPersonsWithRole.do?method=prepare"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.ViewPersonsWithRoleDA"
+				parameter="method"
+				validate="false"
+				scope="request"
+				>
+          <forward name="SelectRole" path="df.page.manage-persons-with-role"/>
+          <forward name="ShowPersons" path="df.page.manage-persons-with-role"/>
+          <forward name="ShowRoleOperationLogs" path="df.page.show-roleoperationlogs"/>
+      	</action>
+      	
+      	<!-- ========== EXECUTION DEGREE MANAGEMENT ========== -->
+      	<action path="/manageHolidays"
+				input="/manageHolidays.do?method=prepare&amp;page=0"
+				parameter="method"
+				scope="request"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageHolidaysDA">
+			<forward name="showHolidays" path="df.show.holidays" />
+		</action>
 		   
      </action-mappings>     
 

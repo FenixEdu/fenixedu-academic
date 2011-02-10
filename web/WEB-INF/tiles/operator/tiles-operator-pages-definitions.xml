@@ -79,4 +79,17 @@
 		<put name="body" value="/manager/equivalences/createCurricularCourseEquivalencies.jsp"></put>
 	</definition>
 	
+	<!-- ========== ROLES MANIPULATION ========== -->
+	<definition name="df.page.manage-persons-with-role" extends="definition.operator.two-column" >
+		<put name="body" value="/manager/viewPersonsWithRole_bd.jsp" />
+	</definition>
+	
+	<definition name="df.page.show-roleoperationlogs" extends="definition.operator.two-column" >
+		<put name="body" value="/manager/showRoleOperationLogs.jsp"/>
+	</definition>
+	
+	<definition name="df.show.holidays" extends="definition.operator.two-column" >
+		<put name="body" value="/manager/showHolidays.jsp" />
+	</definition>
+	
 </tiles-definitions>	
