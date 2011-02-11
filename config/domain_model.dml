@@ -7596,6 +7596,11 @@ class phd.email.PhdEmail extends Alert {
 	class phd.email.PhdIndividualProgramProcessEmail extends phd.email.PhdEmail {
 	}
 
+class phd.PhdProgramContextPeriod extends DomainObject {
+	DateTime beginDate;
+	DateTime endDate;
+}
+
 /* End of Phd Module */
 
 class PendingRequest extends DomainObject{
@@ -8881,6 +8886,20 @@ relation PhdIndividualProgramProcessPhdIndividualProgramProcessMessage {
 relation PhdEmailPerson {
 	Person playsRole person;
 	phd.email.PhdEmail playsRole phdEmail {
+		multiplicity *;
+	}
+}
+
+relation PhdProgramContextPeriodRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	phd.PhdProgramContextPeriod playsRole phdProgramContextPeriods {
+		multiplicity *;
+	}
+}
+
+relation PhdProgramPhdProgramContextPeriod {
+	phd.PhdProgram playsRole phdProgram;
+	phd.PhdProgramContextPeriod playsRole phdProgramContextPeriods {
 		multiplicity *;
 	}
 }

@@ -42,3 +42,5 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Add Phd Program Period Table" addPhdProgramContextPeriod.sql

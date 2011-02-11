@@ -65,6 +65,10 @@
 
 <html:link action="/phdIndividualProgramProcess.do?method=viewMigratedProcesses">
 	<bean:message bundle="PHD_RESOURCES" key="label.phd.viewMigrationProcesses" />
+</html:link> |
+
+<html:link action="/phdProgram.do?method=listPhdProgramForPeriods">
+	<bean:message bundle="PHD_RESOURCES" key="link.phdProgram.periods.list" />
 </html:link>
 <br/><br/>
 

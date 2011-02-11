@@ -1,7 +1,10 @@
 package net.sourceforge.fenixedu.domain.phd;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -108,6 +111,10 @@ public class PhdProgram extends PhdProgram_Base {
     }
 
     public Set<Person> getCoordinatorsFor(ExecutionYear executionYear) {
+	if (!hasDegree()) {
+	    return Collections.EMPTY_SET;
+	}
+
 	final ExecutionDegree executionDegree = getDegree().getLastActiveDegreeCurricularPlan().getExecutionDegreeByYear(
 		executionYear);
 
@@ -159,6 +166,38 @@ public class PhdProgram extends PhdProgram_Base {
 	    }
 	}
 	return null;
+    }
+
+    public PhdProgramContextPeriod getMostRecentPeriod() {
+	List<PhdProgramContextPeriod> periods = new ArrayList<PhdProgramContextPeriod>();
+	periods.addAll(getPhdProgramContextPeriods());
+
+	Collections.sort(periods, Collections.reverseOrder(PhdProgramContextPeriod.COMPARATOR_BY_BEGIN_DATE));
+
+	if (periods.isEmpty()) {
+	    return null;
+	}
+
+	return periods.get(0);
+    }
+
+    public boolean isActiveNow() {
+	return isActive(new DateTime());
+    }
+
+    public boolean isActive(DateTime date) {
+	for (PhdProgramContextPeriod period : getPhdProgramContextPeriods()) {
+	    if (period.contains(date)) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
+    @Service
+    public PhdProgramContextPeriod create(PhdProgramContextPeriodBean bean) {
+	return PhdProgramContextPeriod.create(bean);
     }
 
 }

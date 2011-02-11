@@ -171,7 +171,6 @@ import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
 	@Forward(name = "viewPhdParticipants", path = "/phd/academicAdminOffice/participant/viewPhdParticipants.jsp"),
 
 	@Forward(name = "editPhdParticipant", path = "/phd/academicAdminOffice/participant/editPhdParticipant.jsp")
-
 })
 public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramProcessDA {
 
@@ -1372,4 +1371,5 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
     }
 
     // End of Edition of Phd Participants
+
 }
