@@ -57,5 +57,6 @@
 		<fr:slot name="formattedBeginDate" key="label.manageCareerWorkshop.startDate" />
 		<fr:slot name="formattedEndDate" key="label.manageCareerWorkshop.endDate"/>
 		<fr:slot name="relatedInformation" key="label.manageCareerWorkshop.relatedInformation"/>
+		<fr:slot name="numberOfApplications" key="label.managerCareerWorkshop.numberOfApplications"/>
 	</fr:schema>
 </fr:view>

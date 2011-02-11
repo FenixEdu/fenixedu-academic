@@ -129,6 +129,16 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
     public String getFormattedEndDate() {
 	return getEndDate().toString("dd-MM-yyyy");
     }
+    
+    public int getNumberOfApplications() {
+	int result = 0;
+	for(CareerWorkshopApplication application : getCareerWorkshopApplications()) {
+	    if(application.getSealStamp() != null) {
+		result++;
+	    }
+	}
+	return result;
+    }    
 
     private boolean isOverlapping(DateTime beginDate, DateTime endDate) {
 	for (CareerWorkshopApplicationEvent each : RootDomainObject.getInstance().getCareerWorkshopApplicationEvents()) {
