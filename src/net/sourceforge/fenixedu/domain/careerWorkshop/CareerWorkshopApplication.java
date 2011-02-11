@@ -92,11 +92,12 @@ public class CareerWorkshopApplication extends CareerWorkshopApplication_Base {
 	    preferences[i] = CareerWorkshopSessions.values().length-1;
 	}
 	
-	for (int x = 0; x < CareerWorkshopSessions.values().length; ) {
+	int index = 0;
+	for (int x = 0; x < CareerWorkshopSessions.values().length; x++) {
 	    for(int y = 0; y < CareerWorkshopSessions.values().length; y++) {
 		if(preferences[y] == x) {
-		    result[x] = CareerWorkshopSessions.values()[y];
-		    x++;
+		    result[index] = CareerWorkshopSessions.values()[y];
+		    index++;
 		}
 	    }
 	}
@@ -121,11 +122,12 @@ public class CareerWorkshopApplication extends CareerWorkshopApplication_Base {
 	    preferences[i] = CareerWorkshopThemes.values().length-1;
 	}
 	
-	for (int x = 0; x < CareerWorkshopThemes.values().length; ) {
+	int index = 0;
+	for (int x = 0; x < CareerWorkshopThemes.values().length; x++) {
 	    for(int y = 0; y < CareerWorkshopThemes.values().length; y++) {
 		if(preferences[y] == x) {
-		    result[x] = CareerWorkshopThemes.values()[y];
-		    x++;
+		    result[index] = CareerWorkshopThemes.values()[y];
+		    index++;
 		}
 	    }
 	}

@@ -1,6 +1,12 @@
 package net.sourceforge.fenixedu.domain.careerWorkshop;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import org.joda.time.DateTime;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -53,20 +59,14 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
     }
 
     @Service
-    private void generateSpreadsheet() {
+    public void generateSpreadsheet() {
 	StringBuilder stringBuilder = new StringBuilder();
-	stringBuilder.append("ISTCareerWorkshopsApplications - ");
-	stringBuilder.append(getBeginDate().getDayOfMonth());
-	stringBuilder.append(getBeginDate().getMonthOfYear());
-	stringBuilder.append(getBeginDate().getYear());
-	stringBuilder.append(" - ");
-	stringBuilder.append(getEndDate().getDayOfMonth());
-	stringBuilder.append(getEndDate().getMonthOfYear());
-	stringBuilder.append(getEndDate().getYear());
+	stringBuilder.append("ISTCareerWorkshopsApplications-");
+	stringBuilder.append(getLastUpdate().toString("ddMMyyyyhhmm"));
 	stringBuilder.append(".csv");
 
 	final SheetData<CareerWorkshopApplication> dataSheet = new SheetData<CareerWorkshopApplication>(
-		getCareerWorkshopApplications()) {
+		getProcessedList()) {
 
 	    @Override
 	    protected void makeLine(CareerWorkshopApplication item) {
@@ -88,54 +88,37 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
 		    if (reg.hasAnyActiveState(yearIter)) {
 			registrationLength++;
 		    }
-		    yearIter.getPreviousExecutionYear();
+		    yearIter = yearIter.getPreviousExecutionYear();
 		}
+		CareerWorkshopSessions[] sessionPreferences = item.getSessionPreferences();
+		CareerWorkshopThemes[] themePreferences = item.getThemePreferences();
 
-		// addCell(header, value);
-
-		// addCell("Data");
 		addCell("Data de inscrição", timestamp.toString("dd-MM-yyyy"));
-
-		// addCell("Hora");
 		addCell("Hora de inscrição", timestamp.toString("hh:mm"));
-
-		// addCell("Nr Aluno");
 		addCell("Número aluno", item.getStudent().getNumber());
-
-		// addCell("Nome");
 		addCell("Nome", item.getStudent().getName());
-
-		// addCell("Email");
 		addCell("Email", item.getStudent().getPerson().getDefaultEmailAddressValue());
-
-		// addCell("Sigla Curso");
 		addCell("Curso", reg.getDegree().getSigla());
-
-		// addCell("Ano Curricular");
 		addCell("Ano Curricular", reg.getCurricularYear());
-
-		// addCell("Nr de inscricoes");
 		addCell("Número de inscrições", registrationLength);
-
-		// addCell("data1");
-		// .
-		// .
-		// addCell("data10");
-		// addCell("tema1");
-		// .
-		// .
-		// addCell("tema4");
+		for(int i = 0; i < sessionPreferences.length; i++) {
+		    addCell(("Sessao"+(i+1)),sessionPreferences[i].getDescription());
+		}		
+		for(int i = 0; i < themePreferences.length; i++) {
+		    addCell(("Tema"+(i+1)),themePreferences[i].getDescription());
+		}
+		
 	    }
 
 	};
 
 	try {
 	    ByteArrayOutputStream io = new ByteArrayOutputStream();
-	    new SpreadsheetBuilder().addSheet("ISTCareerWorkshopsApplications", dataSheet).build(WorkbookExportFormat.CSV, io);
+	    new SpreadsheetBuilder().addSheet(stringBuilder.toString(), dataSheet).build(WorkbookExportFormat.CSV, io);
 
 	    setSpreadsheet(new CareerWorkshopSpreadsheet(stringBuilder.toString(), io.toByteArray()));
-	} catch (Exception e) {
-	    throw new DomainException("error.careerWorkshop.criticalFailureGeneratingTheSpreadsheetFile");
+	} catch (IOException ioe) {
+	    throw new DomainException("error.careerWorkshop.criticalFailureGeneratingTheSpreadsheetFile", ioe);
 	}
     }
 
@@ -154,6 +137,29 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
 		return true;
 	}
 	return false;
+    }
+    
+    private List<CareerWorkshopApplication> getProcessedList() {
+	List<CareerWorkshopApplication> processedApplications = new ArrayList<CareerWorkshopApplication>();
+	for(CareerWorkshopApplication application : getCareerWorkshopApplications()) {
+	    if(application.getSealStamp() != null) {
+		processedApplications.add(application);
+	    }
+	}
+	Collections.sort(processedApplications, new Comparator<CareerWorkshopApplication>() {
+
+	    @Override
+	    public int compare(CareerWorkshopApplication o1, CareerWorkshopApplication o2) {
+		if(o1.getSealStamp().isBefore(o2.getSealStamp())) {
+		    return -1;
+		}
+		if(o1.getSealStamp().isAfter(o2.getSealStamp())) {
+		    return 1;
+		}
+		return 0;
+	    }
+	});
+	return processedApplications;
     }
 
     public boolean isApplicationEventOpened() {
