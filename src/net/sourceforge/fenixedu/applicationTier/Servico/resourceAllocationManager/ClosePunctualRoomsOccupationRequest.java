@@ -32,7 +32,8 @@ public class ClosePunctualRoomsOccupationRequest extends FenixService {
 	if (request != null) {
 	    request.closeRequestAndAssociateOwnerOnlyForEmployees(new DateTime(), person);
 	    sendCloseRequestMessage(request);
-	    sendMessageSpaceManagers(request);
+	    // not for deploy ATM
+	    //sendMessageSpaceManagers(request);
 	}
     }
     private static void sendMessageSpaceManagers(PunctualRoomsOccupationRequest request) {
