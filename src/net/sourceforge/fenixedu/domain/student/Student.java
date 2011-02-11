@@ -44,7 +44,6 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
-import net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopApplication;
 import net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopApplicationEvent;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
@@ -1037,11 +1036,13 @@ public class Student extends Student_Base {
 		    coursesToAnswer.put(executionCourse, enrolment.getCurricularCourse().getName());
 		}
 	    }
-	    for (final Enrolment enrolment : registration.getEnrolments(executionSemester.getPreviousExecutionPeriod())) {
-		if (enrolment.getCurricularCourse().isAnual()) {
-		    ExecutionCourse executionCourse = getQUCExecutionCourseForAnnualCC(executionSemester, enrolment);
-		    if (executionCourse != null && !coursesAnswered.contains(executionCourse)) {
-			coursesToAnswer.put(executionCourse, enrolment.getCurricularCourse().getName());
+	    if (executionSemester.getPreviousExecutionPeriod().getExecutionYear() == executionSemester.getExecutionYear()) {
+		for (final Enrolment enrolment : registration.getEnrolments(executionSemester.getPreviousExecutionPeriod())) {
+		    if (enrolment.getCurricularCourse().isAnual()) {
+			ExecutionCourse executionCourse = getQUCExecutionCourseForAnnualCC(executionSemester, enrolment);
+			if (executionCourse != null && !coursesAnswered.contains(executionCourse)) {
+			    coursesToAnswer.put(executionCourse, enrolment.getCurricularCourse().getName());
+			}
 		    }
 		}
 	    }
@@ -1080,11 +1081,13 @@ public class Student extends Student_Base {
 		}
 	    }
 
-	    for (final Enrolment enrolment : registration.getEnrolments(executionSemester.getPreviousExecutionPeriod())) {
-		if (enrolment.getCurricularCourse().isAnual()) {
-		    ExecutionCourse executionCourse = getQUCExecutionCourseForAnnualCC(executionSemester, enrolment);
-		    if (executionCourse != null && !inquiryCurricularCourses.contains(enrolment.getCurricularCourse())) {
-			return true;
+	    if (executionSemester.getPreviousExecutionPeriod().getExecutionYear() == executionSemester.getExecutionYear()) {
+		for (final Enrolment enrolment : registration.getEnrolments(executionSemester.getPreviousExecutionPeriod())) {
+		    if (enrolment.getCurricularCourse().isAnual()) {
+			ExecutionCourse executionCourse = getQUCExecutionCourseForAnnualCC(executionSemester, enrolment);
+			if (executionCourse != null && !inquiryCurricularCourses.contains(enrolment.getCurricularCourse())) {
+			    return true;
+			}
 		    }
 		}
 	    }
@@ -1095,7 +1098,7 @@ public class Student extends Student_Base {
     private ExecutionCourse getQUCExecutionCourseForAnnualCC(final ExecutionSemester executionSemester, final Enrolment enrolment) {
 	ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(executionSemester);
 	if (executionCourse == null) { // some annual courses only have one
-				       // execution in the 1st semester
+	    // execution in the 1st semester
 	    executionCourse = enrolment.getExecutionCourseFor(executionSemester.getPreviousExecutionPeriod());
 	}
 	return executionCourse;
@@ -1456,8 +1459,7 @@ public class Student extends Student_Base {
     }
 
     /*
-     * If student has delegate role, get the curricular courses he is
-     * responsible for
+     * If student has delegate role, get the curricular courses he is responsible for
      */
     public Set<CurricularCourse> getCurricularCoursesResponsibleForByFunctionType(FunctionType delegateFunctionType,
 	    ExecutionYear executionYear) {
