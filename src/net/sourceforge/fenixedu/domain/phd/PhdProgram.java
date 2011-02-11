@@ -195,6 +195,10 @@ public class PhdProgram extends PhdProgram_Base {
 	return false;
     }
 
+    public boolean isActive(final ExecutionYear executionYear) {
+	return getMostRecentPeriod().getInterval().overlaps(executionYear.getAcademicInterval());
+    }
+
     @Service
     public PhdProgramContextPeriod create(PhdProgramContextPeriodBean bean) {
 	return PhdProgramContextPeriod.create(bean);

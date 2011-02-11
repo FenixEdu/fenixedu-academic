@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.phd;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
 
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
@@ -48,7 +49,8 @@ public class PhdProgramContextPeriod extends PhdProgramContextPeriod_Base {
 	}
 
 	if (endPeriod != null && !endPeriod.isAfter(beginPeriod)) {
-	    throw new DomainException("phd.PhdProgramContextPeriod.endPeriod.is.after.of.beginPeriod");
+	    throw new PhdDomainOperationException(
+		    "error.net.sourceforge.fenixedu.domain.phd.PhdProgramContextPeriod.endPeriod.is.after.of.beginPeriod");
 	}
 
 	checkOverlaps(phdProgram, beginPeriod, endPeriod);
@@ -61,20 +63,21 @@ public class PhdProgramContextPeriod extends PhdProgramContextPeriod_Base {
 	    }
 
 	    if (period.overlaps(beginPeriod, endPeriod)) {
-		throw new DomainException("phd.PhdProgramContextPeriod.period.is.overlaping.another");
+		throw new PhdDomainOperationException(
+			"error.net.sourceforge.fenixedu.domain.phd.PhdProgramContextPeriod.period.is.overlaping.another");
 	    }
 	}
     }
 
     private boolean overlaps(DateTime beginPeriod, DateTime endPeriod) {
-	return getOwnInterval().overlaps(new Interval(beginPeriod, endPeriod));
+	return getInterval().overlaps(new Interval(beginPeriod, endPeriod));
     }
 
     public boolean contains(DateTime dateTime) {
-	return getOwnInterval().contains(dateTime);
+	return getInterval().contains(dateTime);
     }
 
-    private Interval getOwnInterval() {
+    public Interval getInterval() {
 	return new Interval(getBeginDate(), getEndDate());
     }
 
@@ -86,7 +89,8 @@ public class PhdProgramContextPeriod extends PhdProgramContextPeriod_Base {
     @Service
     public void closePeriod(DateTime endPeriod) {
 	if (endPeriod == null) {
-	    throw new DomainException("phd.PhdProgramContextPeriod.endPeriod.cannot.be.null");
+	    throw new DomainException(
+		    "error.net.sourceforge.fenixedu.domain.phd.PhdProgramContextPeriod.endPeriod.cannot.be.null");
 	}
 
 	setEndDate(endPeriod);

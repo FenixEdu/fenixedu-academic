@@ -7,7 +7,8 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramContextPeriod;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramContextPeriodBean;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
+import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -22,7 +23,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "listPhdProgramForPeriods", path = "/phd/academicAdminOffice/periods/phdProgram/listPhdProgramForPeriods.jsp"),
 	@Forward(name = "viewPhdProgramPeriods", path = "/phd/academicAdminOffice/periods/phdProgram/viewPhdProgramPeriods.jsp"),
 	@Forward(name = "addPhdProgramPeriod", path = "/phd/academicAdminOffice/periods/phdProgram/addPhdProgramPeriod.jsp") })
-public class PhdProgramDA extends FenixDispatchAction {
+public class PhdProgramDA extends PhdDA {
 
     // Phd Program Management Periods
 
@@ -61,9 +62,15 @@ public class PhdProgramDA extends FenixDispatchAction {
 
     public ActionForward addPhdProgramPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	PhdProgram phdProgram = getDomainObject(request, "phdProgramId");
-	PhdProgramContextPeriodBean bean = getRenderedObject("phdProgramContextPeriodBean");
-	phdProgram.create(bean);
+	try {
+	    PhdProgram phdProgram = getDomainObject(request, "phdProgramId");
+	    PhdProgramContextPeriodBean bean = getRenderedObject("phdProgramContextPeriodBean");
+	    phdProgram.create(bean);
+
+	} catch (PhdDomainOperationException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	    return addPhdProgramPeriodInvalid(mapping, form, request, response);
+	}
 
 	return viewPhdProgramPeriods(mapping, form, request, response);
     }
