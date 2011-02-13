@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add Phd Program Period Table" addPhdProgramContextPeriod.sql
