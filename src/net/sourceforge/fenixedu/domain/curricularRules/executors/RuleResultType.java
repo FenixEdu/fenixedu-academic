@@ -22,11 +22,11 @@ public enum RuleResultType {
 
     { FALSE, TRUE, FALSE, WARNING },
 
-    { TRUE, TRUE, TRUE, WARNING },
+    { TRUE, TRUE, TRUE, TRUE },
 
     { FALSE, TRUE, NA, WARNING },
 
-    { WARNING, WARNING, WARNING, WARNING }
+    { WARNING, TRUE, WARNING, WARNING }
 
     };
 
