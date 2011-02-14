@@ -13,11 +13,14 @@ import java.util.TreeMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.StudentInquiriesCourseResultBean;
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.TeachingInquiryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.YearDelegateCourseInquiryDTO;
 import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
@@ -35,19 +38,24 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.executionCourse.SummariesSearchBean;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
-import net.sourceforge.fenixedu.domain.oldInquiries.teacher.TeachingInquiry;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod;
 import net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesCourseResult;
 import net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesTeachingResult;
+import net.sourceforge.fenixedu.domain.oldInquiries.teacher.TeachingInquiry;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.YearDelegateCourseInquiry;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteVisualizationDA;
+import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.RequestUtils;
+
+import pt.ist.fenixWebFramework.security.UserView;
+
 
 public class ExecutionCourseDA extends SiteVisualizationDA {
 
@@ -181,14 +189,40 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
 	request.setAttribute("lessonPlanningsMap", lessonPlanningsMap);
 	return mapping.findForward("execution-course-lesson-plannings");
     }
-
+    
+    private boolean hasPermissionToViewSchedule(ExecutionCourse executionCourse) {
+	if (executionCourse.getExecutionPeriod().getState() != PeriodState.NOT_OPEN) {
+	    return true;
+	}
+	
+	if (!UserView.hasUser()) { //public access
+	    return false;
+	}
+	
+	final IUserView userview =  (IUserView) UserView.getUser();
+	if (userview.hasRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER)) { // allow gop to view
+	    return true;
+	}
+	
+	for(Degree degree : executionCourse.getDegreesSortedByDegreeName()) {
+	    for(Coordinator coordinator : degree.getCurrentCoordinators()) {
+		if (coordinator.getPerson().equals(userview.getPerson())) {
+		    return true;
+		}
+	    }
+	}
+	return false;
+    }
+    
     public ActionForward schedule(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	final ExecutionCourse executionCourse = getExecutionCourse(request);
-	final List<InfoLesson> infoLessons = new ArrayList<InfoLesson>();
-	for (final Lesson lesson : executionCourse.getLessons()) {
-	    infoLessons.add(InfoLesson.newInfoFromDomain(lesson));
+	if (hasPermissionToViewSchedule(executionCourse)) {
+	    final List<InfoLesson> infoLessons = new ArrayList<InfoLesson>();
+	    for (final Lesson lesson : executionCourse.getLessons()) {
+		infoLessons.add(InfoLesson.newInfoFromDomain(lesson));
+	    }
+	    request.setAttribute("infoLessons", infoLessons);
 	}
-	request.setAttribute("infoLessons", infoLessons);
 	return mapping.findForward("execution-course-schedule");
     }
 
