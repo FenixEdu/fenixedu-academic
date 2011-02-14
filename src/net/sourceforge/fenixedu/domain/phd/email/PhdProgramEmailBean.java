@@ -23,6 +23,7 @@ public class PhdProgramEmailBean extends PhdEmailBean {
 
     private PhdProgram phdProgram;
     private List<PhdIndividualProgramProcess> selectedElements;
+    private boolean showProgramsChoice = true;
 
     public PhdProgramEmailBean() {
 
@@ -106,6 +107,14 @@ public class PhdProgramEmailBean extends PhdEmailBean {
 	}
 
 	return bccs;
+    }
+
+    public boolean isShowProgramsChoice() {
+	return showProgramsChoice;
+    }
+
+    public void setShowProgramsChoice(boolean showProgramsChoice) {
+	this.showProgramsChoice = showProgramsChoice;
     }
 
 }

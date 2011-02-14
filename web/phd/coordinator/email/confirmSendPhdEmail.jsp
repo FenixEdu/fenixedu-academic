@@ -23,7 +23,7 @@
 
 <p><jsp:include page="createEmailStepsBreadcrumb.jsp?step=3"></jsp:include></p>
 
-<p class="mtop15 mbottom05"><strong><bean:message key="label.phd.coordinator.email.confirmEmail" bundle="PHD_RESOURCES"/></strong></p>
+<p class="mvert15"><strong><bean:message key="label.phd.coordinator.email.confirmEmail" bundle="PHD_RESOURCES"/></strong></p>
 
 
 <style>
@@ -65,12 +65,13 @@
 		</fr:schema>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight thtop thright mvert0 width800px" />
+			<fr:property name="columnClasses" value="width150px,,"/>
 		</fr:layout>
 	</fr:view>
 	
-	<table class="tstyle2 thlight thright mvert0 tgluetop mbottom0 ulnomargin">
+	<table class="tstyle2 thlight thright mvert0 tgluetop mbottom0 ulnomargin width800px">
 		<tr>
-			<th>Destinatários:</th>
+			<th class="width150px">Destinatários:</th>
 			<td class="xpto">
 
 			<div>
@@ -83,7 +84,7 @@
 						<fr:slot name="phdProgram.acronym" />
 					</fr:schema>
 					<fr:layout name="tabular">
-						<fr:property name="classes" value="xpto2" />
+						<fr:property name="classes" value="xpto2 thdnone" />
 					</fr:layout>
 				</fr:view>
 				
@@ -101,16 +102,21 @@
 		</fr:schema>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight thright mvert0 tgluetop width800px" />
+			<fr:property name="columnClasses" value="width150px,,"/>
 		</fr:layout>
 		
 	</fr:view>
 
- 	<html:submit bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='prepareSendPhdEmail';">
-		<bean:message bundle="APPLICATION_RESOURCES" key="label.cancel" />
-	</html:submit>	
-  	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="<%= "javascript:document.getElementById('skipValidationId').value='false';javascript:document.getElementById('methodId').value='sendPhdEmail';javascript:document.getElementById('emailForm').submit();" %>">
-		<bean:message bundle="APPLICATION_RESOURCES" key="label.submit" />
-	</html:submit>	
+	<p class="mtop15">
+	  	<html:submit bundle="PHD_RESOURCES" altKey="label.submitEmail" onclick="<%= "javascript:document.getElementById('skipValidationId').value='false';javascript:document.getElementById('methodId').value='sendPhdEmail';javascript:document.getElementById('emailForm').submit();" %>">
+			<bean:message bundle="PHD_RESOURCES" key="label.submitEmail" />
+		</html:submit>
+	
+	 	<html:submit bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='prepareSendPhdEmail';">
+			<bean:message bundle="APPLICATION_RESOURCES" key="label.back" />
+		</html:submit>
+	</p>
+
 </fr:form> 
 
 </logic:present>

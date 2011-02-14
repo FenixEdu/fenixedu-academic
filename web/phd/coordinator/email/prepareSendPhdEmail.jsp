@@ -35,8 +35,8 @@
 		margin-left: 20px !important;
 	}
 	
-	div.compose-email table th { width: 150px; }
-	div.compose-email table td { width: 700px; }
+	div.compose-email table th {  }
+	div.compose-email table td {  }
 	
 	table td.xpto table {
 		width: auto !important;
@@ -55,6 +55,10 @@
 		height: 200px;
 		width: auto;
 	}
+	
+	.tderror1 {
+	white-space: normal !important;
+	}
 </style>
 
 <bean:define id="phdProgramId" name="phdEmailBean" property="phdProgram.externalId"/>
@@ -68,45 +72,46 @@
 			
 	<div class="compose-email">
 		
-		<table class="tstyle5 thlight thright mtop05 mbottom0 ulnomargin">
+		<table class="tstyle5 thlight thright mtop05 mbottom0 ulnomargin width1000px">
 			<tr>
-				<th>Destinatários:</th>
+				<th style="width: 150px;">Destinatários:</th>
 				<td class="xpto">
 	
-				<div>
-
-				<fr:view name="phdEmailBean" property="selectedElements">
-					<fr:schema bundle="PHD_RESOURCES" type="<%= PhdIndividualProgramProcess.class.getName() %>">
-						<fr:slot name="phdIndividualProcessNumber.number"/>
-						<fr:slot name="person.name" />
-						<fr:slot name="executionYear.year"/>
-						<fr:slot name="phdProgram.acronym" />
-					</fr:schema>
-					<fr:layout name="tabular">
-						<fr:property name="classes" value=""/>
-						<fr:property name="columnClasses" value=""/>
-						<fr:property name="nullLabel" value="" />
-					</fr:layout>
-				</fr:view>
-				
-				</div>
+					<div>
+	
+					<fr:view name="phdEmailBean" property="selectedElements">
+						<fr:schema bundle="PHD_RESOURCES" type="<%= PhdIndividualProgramProcess.class.getName() %>">
+							<fr:slot name="phdIndividualProcessNumber.number"/>
+							<fr:slot name="person.name" />
+							<fr:slot name="executionYear.year"/>
+							<fr:slot name="phdProgram.acronym" />
+						</fr:schema>
+						<fr:layout name="tabular">
+							<fr:property name="classes" value="thdnone"/>
+							<fr:property name="columnClasses" value=""/>
+							<fr:property name="nullLabel" value="" />
+						</fr:layout>
+					</fr:view>
+					
+					</div>
 			
 				</td>
+				<td class="width150px tdclear tderror1"></td>
 			</tr>
 
 		</table>
-		
+
 	
 		<fr:edit id="phdEmailBean.individuals" name="phdEmailBean" >
 			<fr:schema bundle="PHD_RESOURCES" type="<%= PhdProgramEmailBean.class.getName() %>">
 				<fr:slot name="bccs" bundle="MESSAGING_RESOURCES" key="label.receiversOfCopy" validator="net.sourceforge.fenixedu.presentationTier.Action.phd.validator.EmailListValidator">
-					<fr:property name="size" value="60" />
+					<fr:property name="size" value="50" />
 				</fr:slot>
 			</fr:schema>
 			
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle5 thlight thright mvert0 tgluetop"/>
-				<fr:property name="columnClasses" value="col1,col2,tdclear tderror1"/>
+				<fr:property name="classes" value="tstyle5 thlight thright mvert0 tgluetop width1000px thnowrap"/>
+				<fr:property name="columnClasses" value="width150px,,width150px tdclear tderror1 "/>
 			</fr:layout>
 		</fr:edit> 
 		
@@ -114,29 +119,30 @@
 			
 			<fr:schema bundle="PHD_RESOURCES" type="<%= PhdProgramEmailBean.class.getName() %>">
 				<fr:slot name="subject" bundle="MANAGER_RESOURCES" key="label.email.subject" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-					<fr:property name="size" value="60" />
+					<fr:property name="size" value="50" />
 				</fr:slot>
 				<fr:slot name="message" bundle="MANAGER_RESOURCES" key="label.email.message" layout="longText" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-					<fr:property name="columns" value="80"/>
+					<fr:property name="columns" value="70"/>
 					<fr:property name="rows" value="10"/>
 				</fr:slot>
 			</fr:schema>
 			
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle5 thlight thright mvert0 tgluetop"/>
-				<fr:property name="columnClasses" value="col1,col2,tdclear tderror1"/>
+				<fr:property name="classes" value="tstyle5 thlight thright mvert0 tgluetop width1000px thnowrap"/>
+				<fr:property name="columnClasses" value="width150px,,width150px tdclear tderror1"/>
 				<fr:property name="requiredMarkShown" value="true" />
 			</fr:layout>
 				
 		</fr:edit>
 
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='choosePhdEmailRecipients';">
-			<bean:message bundle="APPLICATION_RESOURCES" key="label.back" />
-		</html:submit>	
+	
 	  	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="<%= "javascript:document.getElementById('skipValidationId').value='false';javascript:document.getElementById('methodId').value='confirmSendPhdEmail';javascript:document.getElementById('emailForm').submit();" %>">
-			<bean:message bundle="APPLICATION_RESOURCES" key="label.continue" />
+			<bean:message bundle="PHD_RESOURCES" key="label.continue" />
 		</html:submit>
 
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='choosePhdEmailRecipients';">
+			<bean:message bundle="APPLICATION_RESOURCES" key="label.back" />
+		</html:submit>
 	  	
   	</div>
   	

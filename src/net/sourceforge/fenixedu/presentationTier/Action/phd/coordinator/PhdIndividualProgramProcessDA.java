@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -28,6 +29,7 @@ import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
 import net.sourceforge.fenixedu.domain.phd.email.PhdProgramEmail;
 import net.sourceforge.fenixedu.domain.phd.email.PhdProgramEmailBean;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.CommonPhdIndividualProgramProcessDA;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdCandidacyPredicateContainer;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdInactivePredicateContainer;
@@ -282,7 +284,14 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 
     public ActionForward managePhdEmails(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	request.setAttribute("phdEmailBean", new PhdProgramEmailBean());
+	final PhdProgramEmailBean bean = new PhdProgramEmailBean();
+	List<PhdProgram> coordinatedPrograms = getCoordinatedPhdPrograms();
+	if (coordinatedPrograms.size() == 1) {
+	    bean.setPhdProgram(coordinatedPrograms.get(0));
+	    bean.setShowProgramsChoice(false);
+	}
+
+	request.setAttribute("phdEmailBean", bean);
 	return mapping.findForward("managePhdEmails");
     }
 
@@ -318,9 +327,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 	final PhdProgramEmailBean bean = getRenderedObject("phdEmailBean");
 	
 	List<PhdIndividualProgramProcess> selectedIndividual = retrieveSelectedProcesses((PhdEmailProgramForm) form);
-	if (selectedIndividual.size() != 0) {
-	    bean.setSelectedElements(selectedIndividual);
-	}
+	bean.setSelectedElements(selectedIndividual);
 
 	request.setAttribute("phdEmailBean", bean);
 
@@ -395,6 +402,18 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 	}
 
 	return processList;
+    }
+
+    private List<PhdProgram> getCoordinatedPhdPrograms() {
+	List<PhdProgram> programs = new ArrayList<PhdProgram>();
+
+	for (PhdProgram program : RootDomainObject.getInstance().getPhdPrograms()) {
+	    if (program.isCoordinatorFor(AccessControl.getPerson(), ExecutionYear.readCurrentExecutionYear())) {
+		programs.add(program);
+	    }
+	}
+
+	return programs;
     }
 
 }

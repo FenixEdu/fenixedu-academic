@@ -30,19 +30,21 @@
 
 <bean:define id="phdEmailBean" name="phdEmailBean" />
 
-<fr:form action="/phdIndividualProgramProcess.do?method=manageEmailBeanPostback">
-	<fr:edit id="phdEmailBean" name="phdEmailBean">
-		<fr:schema bundle="PHD_RESOURCES" type="<%= PhdProgramEmailBean.class.getName() %>">
-			<fr:slot name="phdProgram" layout="menu-select-postback">
-				<fr:property name="providerClass" value="<%= PhdProgramsAssociatedToCoordinator.class.getName() %>" />
-				<fr:property name="format" value="${name}" />
-			</fr:slot>
-		</fr:schema>
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle5 thlight" />
-		</fr:layout>
-	</fr:edit>
-</fr:form>
+<logic:equal name="phdEmailBean" property="showProgramsChoice" value="true">
+	<fr:form action="/phdIndividualProgramProcess.do?method=manageEmailBeanPostback">
+		<fr:edit id="phdEmailBean" name="phdEmailBean">
+			<fr:schema bundle="PHD_RESOURCES" type="<%= PhdProgramEmailBean.class.getName() %>">
+				<fr:slot name="phdProgram" layout="menu-select-postback">
+					<fr:property name="providerClass" value="<%= PhdProgramsAssociatedToCoordinator.class.getName() %>" />
+					<fr:property name="format" value="${name}" />
+				</fr:slot>
+			</fr:schema>
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle5 thlight" />
+			</fr:layout>
+		</fr:edit>
+	</fr:form>
+</logic:equal>
 
 <logic:empty name="phdEmailBean" property="phdProgram" >
 	<p><em><bean:message bundle="PHD_RESOURCES" key="label.phd.email.chooseProgram" /></em></p>

@@ -49,7 +49,7 @@
 
 
 <logic:iterate id="containerEnum" name="candidacyCategory" indexId="i">
-	<div id='<%= "checkbox-" + i %>' class="hide-theader">
+	<div id='<%= "checkbox-1-" + i %>' class="hide-theader">
 	
 	<phd:filterProcessesForEmail id="processList" predicateContainer="containerEnum" bean="phdEmailBean"/>
 	<bean:size id="size" name="processList" />		
@@ -58,7 +58,7 @@
 		
 		<logic:notEqual name="size" value="0">
 			 |	
-			<html:link href="#" onclick="<%= "$('div#checkbox-" + i + " input[type=checkbox]').attr('checked','true')" %>">
+			<html:link href="#" onclick="<%= "$('div#checkbox-1-" + i + " input[type=checkbox]').attr('checked','true')" %>">
 				Seleccionar todos
 			</html:link>
 		</logic:notEqual>
@@ -95,7 +95,7 @@
 <h3 class="separator2"><bean:message key="label.phd.publicPresentationSeminar" bundle="PHD_RESOURCES"/></h3>
 
 <logic:iterate id="containerEnum" name="seminarCategory" indexId="i">
-	<div id='<%= "checkbox-" + i %>' class="hide-theader">
+	<div id='<%= "checkbox-2-" + i %>' class="hide-theader">
 	
 	<phd:filterProcessesForEmail id="processList" predicateContainer="containerEnum" bean="phdEmailBean" />
 	<bean:size id="size" name="processList" />
@@ -104,7 +104,7 @@
 		
 		<logic:notEqual name="size" value="0">
 			 |	
-			<html:link href="#" onclick="<%= "$('div#checkbox-" + i + " input[type=checkbox]').attr('checked','true')" %>">
+			<html:link href="#" onclick="<%= "$('div#checkbox-2-" + i + " input[type=checkbox]').attr('checked','true')" %>">
 				Seleccionar todos
 			</html:link>
 		</logic:notEqual>
@@ -140,7 +140,7 @@
 <h3 class="separator2"><bean:message key="label.phd.thesis" bundle="PHD_RESOURCES"/></h3>
 
 <logic:iterate id="containerEnum" name="thesisCategory" indexId="i">
-	<div id='<%= "checkbox-" + i %>' class="hide-theader">
+	<div id='<%= "checkbox-3-" + i %>' class="hide-theader">
 	
 	<phd:filterProcessesForEmail id="processList" predicateContainer="containerEnum" bean="phdEmailBean" />
 	<bean:size id="size" name="processList" />
@@ -149,7 +149,7 @@
 		
 		<logic:notEqual name="size" value="0">
 			 |	
-			<html:link href="#" onclick="<%= "$('div#checkbox-" + i + " input[type=checkbox]').attr('checked','true')" %>">
+			<html:link href="#" onclick="<%= "$('div#checkbox-3-" + i + " input[type=checkbox]').attr('checked','true')" %>">
 				Seleccionar todos
 			</html:link>
 		</logic:notEqual>
@@ -186,7 +186,7 @@
 <h3 class="separator2"><bean:message key="label.phd.concluded" bundle="PHD_RESOURCES"/></h3>
 
 <bean:define id="concludedThisYearContainer" name="concludedThisYearContainer"/>
-	<div id="checkbox" class="hide-theader">
+	<div id="checkbox-4" class="hide-theader">
 	
 	<phd:filterProcessesForEmail id="processList" predicateContainer="concludedThisYearContainer" bean="phdEmailBean" />
 	<bean:size id="size" name="processList" />
@@ -196,7 +196,7 @@
 		
 		<logic:notEqual name="size" value="0">
 			 |	
-			<html:link href="#" onclick="<%= "$('div#checkbox input[type=checkbox]').attr('checked','true')" %>">
+			<html:link href="#" onclick="<%= "$('div#checkbox-4 input[type=checkbox]').attr('checked','true')" %>">
 				Seleccionar todos
 			</html:link>
 		</logic:notEqual>
