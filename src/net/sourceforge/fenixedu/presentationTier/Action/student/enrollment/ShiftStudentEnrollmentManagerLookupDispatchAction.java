@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -149,7 +150,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 	request.setAttribute("infoClasslessons", infoClasslessons);
 	request.setAttribute("infoClasslessonsEndTime", Integer.valueOf(getEndTime(infoClasslessons)));
 
-	final List infoLessons = (List) ReadStudentTimeTable.run(registration);
+	final List infoLessons = ReadStudentTimeTable.run(registration);
 
 	request.setAttribute("infoLessons", infoLessons);
 	request.setAttribute("infoLessonsEndTime", Integer.valueOf(getEndTime(infoLessons)));
@@ -169,6 +170,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 
     private SchoolClass searchSchoolClassFrom(final List<SchoolClass> schoolClassesToEnrol, final Integer classId) {
 	return (SchoolClass) CollectionUtils.find(schoolClassesToEnrol, new Predicate() {
+	    @Override
 	    public boolean evaluate(Object object) {
 		return ((SchoolClass) object).getIdInternal().equals(classId);
 	    }
@@ -247,6 +249,18 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 	}
     }
 
+    @Override
+    protected String getLookupMapName(HttpServletRequest request, String keyName, ActionMapping mapping) throws ServletException {
+	String key = super.getLookupMapName(request, keyName, mapping);
+	if (key == null) {
+	    if (request.getParameter("method").equals("Escolher Turma")) {
+		key = "link.shift.enrolement.edit";
+	    }
+	}
+	return key;
+    }
+
+    @Override
     protected Map getKeyMethodMap() {
 	Map map = new HashMap();
 	map.put("button.addCourse", "addCourses");
@@ -256,6 +270,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 	map.put("label.class", "proceedToShiftEnrolment");
 	map.put("link.shift.enrolement.edit", "proceedToShiftEnrolment");
 	map.put("button.clean", "proceedToShiftEnrolment");
+	map.put("Escolher Turma", "exitEnrollment");
 	return map;
     }
 
