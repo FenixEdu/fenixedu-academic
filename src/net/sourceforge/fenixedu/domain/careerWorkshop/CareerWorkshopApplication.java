@@ -74,11 +74,9 @@ public class CareerWorkshopApplication extends CareerWorkshopApplication_Base {
 	}
 	setThemes(stringBuilder.toString());
     }
-
-    public CareerWorkshopSessions[] getSessionPreferences() {
-	final CareerWorkshopSessions[] result = new CareerWorkshopSessions[CareerWorkshopSessions.values().length];
-
-	final int[] preferences = new int[CareerWorkshopSessions.values().length];
+    
+    public int[] getSessionPreferences() {
+	int[] preferences = new int[CareerWorkshopSessions.values().length];
 	int i = 0;
 	if (getSessions() != null) {
 	    final String[] parts = getSessions().split(";");
@@ -91,6 +89,13 @@ public class CareerWorkshopApplication extends CareerWorkshopApplication_Base {
 	for (; i < CareerWorkshopSessions.values().length; i++) {
 	    preferences[i] = CareerWorkshopSessions.values().length-1;
 	}
+	return preferences;
+    }
+
+    public CareerWorkshopSessions[] getSortedSessionPreferences() {
+	final CareerWorkshopSessions[] result = new CareerWorkshopSessions[CareerWorkshopSessions.values().length];
+
+	int[] preferences = getSessionPreferences();
 	
 	int index = 0;
 	for (int x = 0; x < CareerWorkshopSessions.values().length; x++) {
@@ -105,10 +110,8 @@ public class CareerWorkshopApplication extends CareerWorkshopApplication_Base {
 	return result;
     }
     
-    public CareerWorkshopThemes[] getThemePreferences() {
-	final CareerWorkshopThemes[] result = new CareerWorkshopThemes[CareerWorkshopThemes.values().length];
-
-	final int[] preferences = new int[CareerWorkshopThemes.values().length];
+    public int[] getThemePreferences() {
+	int[] preferences = new int[CareerWorkshopThemes.values().length];
 	int i = 0;
 	if (getThemes() != null) {
 	    final String[] parts = getThemes().split(";");
@@ -121,6 +124,13 @@ public class CareerWorkshopApplication extends CareerWorkshopApplication_Base {
 	for (; i < CareerWorkshopThemes.values().length; i++) {
 	    preferences[i] = CareerWorkshopThemes.values().length-1;
 	}
+	return preferences;
+    }
+    
+    public CareerWorkshopThemes[] getSortedThemePreferences() {
+	final CareerWorkshopThemes[] result = new CareerWorkshopThemes[CareerWorkshopThemes.values().length];
+
+	int[] preferences = getThemePreferences();
 	
 	int index = 0;
 	for (int x = 0; x < CareerWorkshopThemes.values().length; x++) {

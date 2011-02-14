@@ -50,11 +50,11 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
     }
 
     public CareerWorkshopSpreadsheet getApplications() {
-	if (getLastUpdate() == null || getSpreadsheet() == null)
+	//if (getLastUpdate() == null || getSpreadsheet() == null)
 	    generateSpreadsheet();
-	if (getLastUpdate().isAfter(getSpreadsheet().getUploadTime())) {
-	    generateSpreadsheet();
-	}
+	//if (getLastUpdate().isAfter(getSpreadsheet().getUploadTime())) {
+	//    generateSpreadsheet();
+	//}
 	return getSpreadsheet();
     }
 
@@ -90,8 +90,10 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
 		    }
 		    yearIter = yearIter.getPreviousExecutionYear();
 		}
-		CareerWorkshopSessions[] sessionPreferences = item.getSessionPreferences();
-		CareerWorkshopThemes[] themePreferences = item.getThemePreferences();
+		int[] sessionPreferences = item.getSessionPreferences();
+		CareerWorkshopSessions[] sessionsList = CareerWorkshopSessions.values();
+		int[] themePreferences = item.getThemePreferences();
+		CareerWorkshopThemes[] themesList = CareerWorkshopThemes.values();
 
 		addCell("Data de inscrição", timestamp.toString("dd-MM-yyyy"));
 		addCell("Hora de inscrição", timestamp.toString("hh:mm"));
@@ -102,10 +104,10 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
 		addCell("Ano Curricular", reg.getCurricularYear());
 		addCell("Número de inscrições", registrationLength);
 		for(int i = 0; i < sessionPreferences.length; i++) {
-		    addCell(("Sessao"+(i+1)),sessionPreferences[i].getDescription());
+		    addCell(sessionsList[i].getDescription(),sessionPreferences[i]+1);
 		}		
 		for(int i = 0; i < themePreferences.length; i++) {
-		    addCell(("Tema"+(i+1)),themePreferences[i].getDescription());
+		    addCell(themesList[i].getDescription(),themePreferences[i]+1);
 		}
 		
 	    }
