@@ -343,6 +343,7 @@ public class Registration extends Registration_Base {
 	removeRegistrationYear();
 	removeDegree();
 	removeStudent();
+	removeRegistrationProtocol();
 	removeRootDomainObject();
 
 	getDestinyRegistrations().clear();
@@ -2451,7 +2452,7 @@ public class Registration extends Registration_Base {
     public ExecutionYear getConclusionYear() {
 	return isRegistrationConclusionProcessed() ? getConclusionProcess().getConclusionYear() : null;
     }
-    
+
     public ExecutionYear calculateConclusionYear() {
 	ExecutionYear result = getLastApprovementExecutionYear();
 
@@ -3947,12 +3948,12 @@ public class Registration extends Registration_Base {
 
 	return !activeStateList.isEmpty() ? Collections.max(activeStateList, RegistrationState.DATE_COMPARATOR) : null;
     }
-    
+
     @SuppressWarnings("unchecked")
     public static String readAllStudentInfo() {
 	int i = 0;
 	JSONArray infos = new JSONArray();
-	for(Registration registration : RootDomainObject.getInstance().getRegistrations()) {
+	for (Registration registration : RootDomainObject.getInstance().getRegistrations()) {
 	    ExecutionYear conclusionYear = registration.getConclusionYear();
 	    if (conclusionYear != null) {
 		if (i > 10) break;
@@ -3965,13 +3966,13 @@ public class Registration extends Registration_Base {
 		String degreeRemoteOid = Long.toString(registration.getDegree().getOID());
 		String username = registration.getPerson().getUsername();
 		JSONObject studentInfo = new JSONObject();
-		studentInfo.put("username",username);
-		studentInfo.put("studentName",studentName);
-		studentInfo.put("email",email);
-		studentInfo.put("number",number);
-		studentInfo.put("endDate",endDate);
-		studentInfo.put("startDate",startDate);
-		studentInfo.put("degreeRemoteOid",degreeRemoteOid);
+		studentInfo.put("username", username);
+		studentInfo.put("studentName", studentName);
+		studentInfo.put("email", email);
+		studentInfo.put("number", number);
+		studentInfo.put("endDate", endDate);
+		studentInfo.put("startDate", startDate);
+		studentInfo.put("degreeRemoteOid", degreeRemoteOid);
 		infos.add(studentInfo);
 		i++;
 	    }
@@ -3979,6 +3980,5 @@ public class Registration extends Registration_Base {
 	final String jsonString = infos.toJSONString();
 	return jsonString;
     }
-    
-}
 
+}
