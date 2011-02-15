@@ -3939,7 +3939,6 @@ public class Registration extends Registration_Base {
 
 	CollectionUtils.select(getRegistrationStates(), new Predicate() {
 
-	    @Override
 	    public boolean evaluate(Object arg0) {
 		return ((RegistrationState) arg0).getStateType().isActive();
 	    }
@@ -3951,12 +3950,10 @@ public class Registration extends Registration_Base {
 
     @SuppressWarnings("unchecked")
     public static String readAllStudentInfo() {
-	int i = 0;
 	JSONArray infos = new JSONArray();
 	for (Registration registration : RootDomainObject.getInstance().getRegistrations()) {
 	    ExecutionYear conclusionYear = registration.getConclusionYear();
 	    if (conclusionYear != null) {
-		if (i > 10) break;
 		String endDate = Integer.toString(conclusionYear.getEndDateYearMonthDay().getYear());
 		String startDate = Integer.toString(registration.getStartDate().getYear());
 		String studentName = registration.getName();
@@ -3974,7 +3971,6 @@ public class Registration extends Registration_Base {
 		studentInfo.put("startDate", startDate);
 		studentInfo.put("degreeRemoteOid", degreeRemoteOid);
 		infos.add(studentInfo);
-		i++;
 	    }
 	}
 	final String jsonString = infos.toJSONString();
