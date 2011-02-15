@@ -14,8 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
-import net.sourceforge.fenixedu.applicationTier.Servico.department.ReadDepartmentByTeacher;
-import net.sourceforge.fenixedu.applicationTier.Servico.department.ReadDepartmentByUser;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.ReadPersonByID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
@@ -23,9 +21,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.DetailedProfessorship;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -90,6 +88,7 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
 	}
     }
 
+    @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 	IUserView userView = UserView.getUser();
@@ -194,7 +193,7 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
     private void prepareConstants(IUserView userView, InfoPerson infoPerson, HttpServletRequest request)
 	    throws FenixServiceException, FenixFilterException {
 
-	List executionYears = (List) ReadNotClosedExecutionYears.run();
+	List executionYears = ReadNotClosedExecutionYears.run();
 
 	InfoExecutionYear infoExecutionYear = (InfoExecutionYear) CollectionUtils.find(executionYears, new Predicate() {
 	    public boolean evaluate(Object arg0) {
@@ -208,16 +207,13 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
 	Person person = (Person) RootDomainObject.getInstance().readPartyByOID(infoPerson.getIdInternal());
 	InfoDepartment teacherDepartment = null;
 	if (person.getTeacher() != null) {
-	    teacherDepartment = (InfoDepartment) ReadDepartmentByTeacher.run(InfoTeacher.newInfoFromDomain(person.getTeacher()));
+	    Department department = person.getTeacher().getCurrentWorkingDepartment();
+	    teacherDepartment = InfoDepartment.newInfoFromDomain(department);
 
 	    if (userView == null || !userView.hasRoleType(RoleType.CREDITS_MANAGER)) {
 
-		InfoDepartment userDepartment = (InfoDepartment) ReadDepartmentByUser.run(userView.getUtilizador());
-		if (userDepartment != null) {
-		    request.setAttribute("isDepartmentManager", Boolean.valueOf(userDepartment.equals(teacherDepartment)));
-		} else {
-		    request.setAttribute("isDepartmentManager", Boolean.FALSE);
-		}
+		final List<Department> departmentList = userView.getPerson().getManageableDepartmentCredits();
+		request.setAttribute("isDepartmentManager", departmentList.contains(department));
 	    } else {
 		request.setAttribute("isDepartmentManager", Boolean.FALSE);
 	    }
@@ -226,7 +222,6 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
 	}
 
 	request.setAttribute("teacherDepartment", teacherDepartment);
-
 	request.setAttribute("executionYear", infoExecutionYear);
 	request.setAttribute("executionYears", executionYears);
     }

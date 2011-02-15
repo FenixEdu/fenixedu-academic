@@ -15,13 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
-import net.sourceforge.fenixedu.applicationTier.Servico.department.ReadDepartmentByTeacher;
-import net.sourceforge.fenixedu.applicationTier.Servico.department.ReadDepartmentByUser;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.DetailedProfessorship;
+import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.PeriodState;
@@ -35,16 +34,18 @@ import org.apache.struts.action.DynaActionForm;
  */
 public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractReadProfessorshipsAction {
 
+    @Override
     List getDetailedProfessorships(IUserView userView, Integer teacherId, DynaActionForm actionForm, HttpServletRequest request)
 	    throws FenixServiceException, FenixFilterException {
 
 	List detailedInfoProfessorshipList = (List) ServiceUtils
-		.executeService("ReadDetailedTeacherProfessorshipsByExecutionYear", new Object[] { teacherId,
-			actionForm.get("executionYearId") });
+		.executeService("ReadDetailedTeacherProfessorshipsByExecutionYear",
+			new Object[] { teacherId, actionForm.get("executionYearId") });
 	request.setAttribute("args", new TreeMap());
 	return detailedInfoProfessorshipList;
     }
 
+    @Override
     protected void extraPreparation(IUserView userView, InfoTeacher infoTeacher, HttpServletRequest request,
 	    DynaActionForm dynaForm) throws FenixServiceException, FenixFilterException {
 
@@ -87,7 +88,7 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractRead
     private void prepareConstants(IUserView userView, InfoTeacher infoTeacher, HttpServletRequest request)
 	    throws FenixServiceException, FenixFilterException {
 
-	List executionYears = (List) ReadNotClosedExecutionYears.run();
+	List executionYears = ReadNotClosedExecutionYears.run();
 
 	InfoExecutionYear infoExecutionYear = (InfoExecutionYear) CollectionUtils.find(executionYears, new Predicate() {
 	    public boolean evaluate(Object arg0) {
@@ -99,22 +100,19 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractRead
 	    }
 	});
 
-	InfoDepartment teacherDepartment = (InfoDepartment) ReadDepartmentByTeacher.run(infoTeacher);
+	Department department = infoTeacher.getTeacher().getCurrentWorkingDepartment();
+	InfoDepartment teacherDepartment = InfoDepartment.newInfoFromDomain(department);
 
 	if (userView == null || !userView.hasRoleType(RoleType.CREDITS_MANAGER)) {
 
-	    InfoDepartment userDepartment = (InfoDepartment) ReadDepartmentByUser.run(userView.getUtilizador());
-	    if (userDepartment != null) {
-		request.setAttribute("isDepartmentManager", Boolean.valueOf(userDepartment.equals(teacherDepartment)));
-	    } else {
-		request.setAttribute("isDepartmentManager", Boolean.FALSE);
-	    }
+	    final List<Department> departmentList = userView.getPerson().getManageableDepartmentCredits();
+	    request.setAttribute("isDepartmentManager", Boolean.valueOf(departmentList.contains(department)));
+
 	} else {
 	    request.setAttribute("isDepartmentManager", Boolean.FALSE);
 	}
 
 	request.setAttribute("teacherDepartment", teacherDepartment);
-
 	request.setAttribute("executionYear", infoExecutionYear);
 	request.setAttribute("executionYears", executionYears);
     }
