@@ -63,13 +63,13 @@
 			<html:link page="/curricularCourseEquivalencies.do?method=prepare">
 				<bean:message key="link.manager.studentsManagement" bundle="MANAGER_RESOURCES" />
 			</html:link>
-		</li>
+		</li>-->
 		<li>
 			<html:link page="/personManagement.do?method=firstPage">
 				<bean:message key="label.manager.personManagement" bundle="MANAGER_RESOURCES" />
 			</html:link>
 		</li>
-		<li>
+		<!--<li>
 			<html:link page="/curricularCourseEquivalencies.do?method=prepare">
 				<bean:message key="label.manager.teachersManagement" bundle="MANAGER_RESOURCES" />
 			</html:link>
