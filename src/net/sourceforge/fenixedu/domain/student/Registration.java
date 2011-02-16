@@ -3952,8 +3952,8 @@ public class Registration extends Registration_Base {
     public static String readAllStudentInfo() {
 	JSONArray infos = new JSONArray();
 	for (Registration registration : RootDomainObject.getInstance().getRegistrations()) {
-	    ExecutionYear conclusionYear = registration.getConclusionYear();
-	    if (conclusionYear != null) {
+	    if (registration.isConcluded()) {
+		ExecutionYear conclusionYear = new RegistrationConclusionBean(registration).calculateConclusionYear();
 		String endDate = Integer.toString(conclusionYear.getEndDateYearMonthDay().getYear());
 		String startDate = Integer.toString(registration.getStartDate().getYear());
 		String studentName = registration.getName();
