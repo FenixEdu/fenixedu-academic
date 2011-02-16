@@ -2,6 +2,11 @@
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
 <!-- Tiles definitions -->
 <tiles-definitions>
+	<definition name="home" extends="definition.operator.two-column" >
+		<put name="body" value="/operator/welcomeScreen.jsp"></put>
+		<put name="navLocal" value="/operator/operatorMainMenu.jsp"></put>
+	</definition>
+	
 	<definition name="definition.operator.password" extends="definition.operator.two-column">
 		<put name="body" value="/operator/password/generateNewStudentsPassword_bd.jsp" />
 	</definition>
@@ -91,5 +96,66 @@
 	<definition name="df.show.holidays" extends="definition.operator.two-column" >
 		<put name="body" value="/manager/showHolidays.jsp" />
 	</definition>
+	
+	<!-- ========== PERSON MANAGEMENT ========== -->
+	<definition name="df.personManagement.firstPage" extends="definition.operator.two-column" >
+		<put name="body" value="/manager/personManagement/welcomeScreen.jsp" />
+		<put name="navLocal" value="/operator/personManagement/personManagementMainMenu.jsp" />
+	</definition>
+	
+	<definition name="findPerson" extends="df.personManagement.firstPage" >
+		<put name="body" value="/manager/personManagement/findPerson.jsp" />
+	</definition>
+	<definition name="displayPerson" extends="df.personManagement.firstPage" >
+		<put name="body" value="/manager/personManagement/displayPerson.jsp" />
+	</definition>
+	<definition name="viewPerson" extends="df.personManagement.firstPage" >
+		<put name="body" value="/manager/personManagement/viewPerson.jsp" />
+	</definition>
+	
+	<definition name="df.recover.inactive.person.search.form" extends="df.personManagement.firstPage" >
+		<put name="body" value="/manager/personManagement/recoverInactivePerson.jsp" />
+	</definition>
+	
+	<definition name="search-person-to-edit" extends="df.personManagement.firstPage" >
+		<put name="body" value="/manager/personManagement/prepareEditPerson.jsp" />
+	</definition>	
+	<definition name="prepare-edit-person" extends="df.personManagement.firstPage" >
+		<put name="body" value="/manager/personManagement/editPerson.jsp" />
+	</definition>
+	
+	<definition name="df.page.manage-roles" extends="df.personManagement.firstPage" >
+		<put name="body" value="/manager/manageRoles_bd.jsp" />
+	</definition>
+	<definition name="df.page.show-roleoperationlogs" extends="df.personManagement.firstPage" >
+		<put name="body" value="/manager/showRoleOperationLogs.jsp"/>
+	</definition>
+	
+	<definition name="show-generate-password-link" extends="df.personManagement.firstPage" >
+		<put name="body" value="/manager/password/showGeneratePassLink.jsp" />
+	</definition>
+	
+	<definition name="show-existent-persons-before-create-invited-person" extends="df.personManagement.firstPage" >
+		<put name="body" value="/manager/personManagement/showExistentPersonsBeforeCreateInvitedPerson.jsp" />
+	</definition>
+	<definition name="prepare-create-invited-person" extends="df.personManagement.firstPage" >
+		<put name="body" value="/manager/personManagement/createInvitedPerson.jsp" />
+	</definition>
+	
+	<definition name="searh-person-before-invitations-management" extends="df.personManagement.firstPage" >
+		<put name="body" value="/manager/personManagement/choosePersonForManageInvitations.jsp" />
+	</definition>	
+	<definition name="manage-person-invitations" extends="df.personManagement.firstPage" >
+		<put name="body" value="/manager/personManagement/managePersonInvitations.jsp" />
+	</definition>		
+	<definition name="prepare-edit-invitation" extends="df.personManagement.firstPage" >
+		<put name="body" value="/manager/personManagement/editInvitation.jsp" />
+	</definition>
+	<definition name="prepare-change-invitation-details" extends="df.personManagement.firstPage" >
+		<put name="body" value="/manager/personManagement/changeInvitationDetails.jsp" />
+	</definition>	
+	<definition name="prepare-create-new-person-invitation" extends="df.personManagement.firstPage" >
+		<put name="body" value="/manager/personManagement/createNewPersonInvitation.jsp" />
+	</definition>	
 	
 </tiles-definitions>	

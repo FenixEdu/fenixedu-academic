@@ -7,7 +7,7 @@
 
 <h2><bean:message key="edit.person.title" bundle="MANAGER_RESOURCES"/></h2>
 
-<logic:present role="MANAGER">
+<logic:present role="MANAGER,OPERATOR">
 		
 	<fr:form action="/editPerson.do?method=searchPersonToEdit">		
 		<fr:edit name="personBean" id="personBeanID" schema="SearchPersonAttributes">

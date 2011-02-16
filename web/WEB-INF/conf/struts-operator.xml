@@ -53,6 +53,26 @@
 			<form-property name="oldCurricularCourseID" type="java.lang.String"/>
 			<form-property name="curricularCourseEquivalencyID" type="java.lang.String"/>
 		</form-bean>
+		
+		<form-bean name="findPersonForm"
+		    	type="org.apache.struts.validator.DynaValidatorForm"
+		    	dynamic="true">
+		    		<form-property name="name" type="java.lang.String"/>	
+		    		<form-property name="email" type="java.lang.String"/>
+		    		<form-property name="username" type="java.lang.String"/>
+		    		<form-property name="documentIdNumber" type="java.lang.String"/>
+		    		<form-property name="mechanoGraphicalNumber" type="java.lang.String"/>
+		    		<form-property name="page" type="java.lang.Integer" initial="0"/>     		    		
+		    </form-bean>
+		    
+		<form-bean name="rolesForm"
+                type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+	        <form-property name="roleOIDs" type="java.lang.String[]"/>
+	        <form-property name="username" type="java.lang.String"/>
+	        <form-property name="documentIdNumber" type="java.lang.String"/>
+	        <form-property name="page" type="java.lang.Integer"/>
+     	</form-bean>
 
      </form-beans>
     
@@ -140,6 +160,8 @@
 				<forward name="success" path="/candidacy/password/severalNewPasswordsTemplate.jsp"/>
 		   </action>
 		   
+		   <action path="/back" forward="home" />
+		   
 		   <!-- ========== Generate User Universal Identifier =============== -->
 		   <action 	path="/generateUserUID"
 					parameter="method"					
@@ -219,6 +241,80 @@
 				scope="request"
 				type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageHolidaysDA">
 			<forward name="showHolidays" path="df.show.holidays" />
+		</action>
+		
+		<!-- ========== PERSON MANAGEMENT ========== -->
+		<action path="/personManagement"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PersonManagementAction"
+				parameter="method"
+				scope="request"
+				input="findPerson">
+			<forward name="firstPage" path="df.personManagement.firstPage"/>
+		</action>
+		
+		<action path="/findPerson"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PersonManagementAction"
+				parameter="method"
+				scope="request"
+				name="findPersonForm"
+				input="findPerson">
+			<forward name="findPerson" path="findPerson"/>
+			<forward name="displayPerson" path="displayPerson"/>
+			<forward name="viewPerson" path="viewPerson" />
+		</action>
+		
+		<action path="/recoverInactivePerson"
+				input="/recoverInactivePerson.do?method=prepare&amp;page=0"
+				parameter="method"
+				scope="request"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.RecoverInactivePersonDA">
+			<forward name="showSearchForm" path="df.recover.inactive.person.search.form" />
+		</action>
+		
+		<action path="/editPerson"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PersonManagementAction"
+				parameter="method"
+				scope="request"
+				input="personManagement">
+			<forward name="searchPersonToEdit" path="search-person-to-edit"/>
+			<forward name="prepareEditPerson" path="prepare-edit-person"/>
+		</action>	
+		
+		<action path="/manageRoles"
+      		  name="rolesForm"
+		      input="/manageRoles.do?method=prepare&amp;page=0"
+              type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageRolesDA"
+              parameter="method"
+              validate="false"
+              scope="request">
+          <forward name="SelectUserPage" path="df.page.manage-roles"/>
+          <forward name="Manage" path="df.page.manage-roles"/>
+          <forward name="ShowRoleOperationLogs" path="df.page.show-roleoperationlogs"/>
+     	</action>
+      
+		<action path="/generateNewPassword"
+		  		type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction" 
+				forward="show-generate-password-link"/>
+				
+		<action path="/createInvitedPerson"
+			type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PersonManagementAction"
+			parameter="method"
+			scope="request"
+			input="personManagement">
+			<forward name="showExistentPersonsBeforeCreateInvitedPerson" path="show-existent-persons-before-create-invited-person"/>
+			<forward name="prepareCreateInvitedPerson" path="prepare-create-invited-person"/>				
+		</action>
+		
+		<action path="/invitationsManagement"
+			type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PersonManagementAction"
+			parameter="method"
+			scope="request"
+			input="personManagement">
+			<forward name="searhPersonBeforeInvitationsManagement" path="searh-person-before-invitations-management"/>		
+			<forward name="managePersonInvitations" path="manage-person-invitations"/>	
+			<forward name="prepareEditInvitation" path="prepare-edit-invitation"/>		
+			<forward name="prepareEditInvitationDetails" path="prepare-change-invitation-details"/>										
+			<forward name="prepareCreateNewPersonInvitation" path="prepare-create-new-person-invitation"/>										
 		</action>
 		   
      </action-mappings>     

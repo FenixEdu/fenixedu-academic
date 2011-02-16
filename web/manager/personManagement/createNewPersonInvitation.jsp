@@ -8,7 +8,7 @@
 
 <h2><bean:message key="person.invitation.create.title" bundle="MANAGER_RESOURCES"/></h2>
 
-<logic:present role="MANAGER">
+<logic:present role="MANAGER,OPERATOR">
 
 	<script language="JavaScript">
 		function check(e,v)
