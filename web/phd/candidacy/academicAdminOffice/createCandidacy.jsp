@@ -72,9 +72,11 @@
 			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 			<fr:property name="columnClasses" value=",,tdclear tderror1" />
 			<fr:property name="requiredMarkShown" value="true" />
+			<fr:property name="sortBy" value="program.presentationName" />
 		</fr:layout>
 		
-		<fr:destination name="postback" path="/phdProgramCandidacyProcess.do?method=createCandidacyPostback" />
+		<fr:destination name="select-execution-year-postback" path="/phdProgramCandidacyProcess.do?method=createCandidacyPostback" />
+		<fr:destination name="migration-postback" path="/phdProgramCandidacyProcess.do?method=createCandidacyPostback" />
 		<fr:destination name="invalid" path="/phdProgramCandidacyProcess.do?method=createCandidacyInvalid" />
 		<fr:destination name="cancel" path="/phdProgramCandidacyProcess.do?method=cancelCreateCandidacy" />
 	</fr:edit>

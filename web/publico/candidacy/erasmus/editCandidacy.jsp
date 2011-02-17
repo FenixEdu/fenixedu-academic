@@ -9,6 +9,7 @@
 <%@ page import="java.util.Locale"%>
 
 <%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess" %>
+<%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean" %>
 <%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.StorkAttributeType" %>
 
 
@@ -24,6 +25,23 @@
 <bean:define id="fullPath"><%= request.getContextPath() + "/publico" + mappingPath + ".do" %></bean:define>
 <bean:define id="applicationInformationLinkDefault" name="application.information.link.default"/>
 <bean:define id="applicationInformationLinkEnglish" name="application.information.link.english"/>
+
+<script src="<%= request.getContextPath() + "/javaScript/jquery/jquery.js" %>" type="text/javascript" ></script>
+
+<bean:define id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" type="ErasmusIndividualCandidacyProcessBean"/>
+
+
+<logic:notEmpty name="individualCandidacyProcessBean" property="personBean.gender">
+	<script language="javascript">
+		$(document).ready(function() {
+			var inputReadOnly = $('input[name$="gender"] + input[readonly="readonly"]');
+			
+			if(inputReadOnly != null) {
+				inputReadOnly.val(<%= "'"  + individualCandidacyProcessBean.getPersonBean().getGender().toLocalizedString() + "'" %>);
+			}
+		})
+	</script>
+</logic:notEmpty>
 
 <div class="breadcumbs">
 	<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://gri.ist.utl.pt/en">NMCI</a> &gt;
@@ -110,10 +128,10 @@
 					<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 					<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
 						<fr:property name="type" value="character"/>
-						<fr:property name="length" value="50"/>
+						<fr:property name="length" value="100"/>
 					</fr:validator>
 					<fr:property name="size" value="50"/>
-					<fr:property name="maxlength" value="50"/>			
+					<fr:property name="maxlength" value="100"/>			
 				</fr:slot>
 	
 				<fr:slot name="nationality" layout="menu-select" key="label.nationality" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
@@ -161,9 +179,10 @@
 					<fr:property name="maxLength" value="15"/>
 					<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 					<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-			            <fr:property name="regexp" value="(\d{4,15})?"/>
+			            <fr:property name="regexp" value="(\+?\d{4,15})?"/>
 			            <fr:property name="message" value="error.phone.invalidFormat"/>
 			            <fr:property name="key" value="true"/>
+			            <fr:property name="bundle" value="APPLICATION_RESOURCES" />
 			        </fr:validator>
 			    </fr:slot>
 			</fr:schema>
@@ -173,7 +192,8 @@
 				<fr:property name="classes" value="thlight thleft"/>
 		        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 			</fr:layout>
-		<fr:destination name="invalid" path='<%= mappingPath + ".do?method=executeEditCandidacyPersonalInformationInvalid" %>' />
+			
+		<fr:destination name="invalid" path='<%= mappingPath + ".do?method=editCandidacyProcessInvalid" %>' />
 	</fr:edit>
 	
 	<p class="mtop15">	

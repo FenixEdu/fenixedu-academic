@@ -404,6 +404,12 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 	return mapping.findForward("edit-candidacy");
     }
 
+    public ActionForward editCandidacyProcessInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	return mapping.findForward("edit-candidacy");
+    }
+
     @Override
     protected void setStartInformation(ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	// TODO Auto-generated method stub

@@ -18,6 +18,8 @@
 
 <html:xhtml/>
 
+<script src="<%= request.getContextPath() + "/javaScript/jquery/jquery.js" %>" type="text/javascript" ></script>
+
 <script language="javascript">
 	function set_image_size(imagetag, image) {
 		var image_width = image.width;
@@ -43,6 +45,19 @@
 <bean:define id="applicationInformationLinkEnglish" name="application.information.link.english"/>
 
 <bean:define id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" type="ErasmusIndividualCandidacyProcessBean"/>
+
+
+<logic:notEmpty name="individualCandidacyProcessBean" property="personBean.gender">
+	<script language="javascript">
+		$(document).ready(function() {
+			var inputReadOnly = $('input[name$="gender"] + input[readonly="readonly"]');
+			
+			if(inputReadOnly != null) {
+				inputReadOnly.val(<%= "'"  + individualCandidacyProcessBean.getPersonBean().getGender().toLocalizedString() + "'" %>);
+			}
+		})
+	</script>
+</logic:notEmpty>
 
 <div class="breadcumbs">
 	<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://gri.ist.utl.pt/en">NMCI</a> &gt;
@@ -145,7 +160,8 @@
 						<fr:property name="size" value="50"/>
 						<fr:property name="maxlength" value="100"/>		
 					</fr:slot>
-							
+					
+					
 					<fr:slot name="gender" key="label.gender" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
 						<fr:property name="readOnly" value="<%= String.valueOf(individualCandidacyProcessBean.getPersonBean().getGender() != null) %>" />
 					</fr:slot>
@@ -167,10 +183,10 @@
 						<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 						<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
 							<fr:property name="type" value="character"/>
-							<fr:property name="length" value="50"/>
+							<fr:property name="length" value="100"/>
 						</fr:validator>
 						<fr:property name="size" value="50"/>
-						<fr:property name="maxlength" value="50"/>			
+						<fr:property name="maxlength" value="100"/>			
 					</fr:slot>
 		
 					<fr:slot name="nationality" layout="menu-select" key="label.nationality" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
@@ -213,14 +229,15 @@
 						<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
 					</fr:slot>
 				
-					<fr:slot name="phone" key="label.phone">
+					<fr:slot name="phone" key="label.phone" bundle="APPLICATION_RESOURCES">
 				    	<fr:property name="size" value="15"/>
 						<fr:property name="maxLength" value="15"/>
 						<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 						<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-				            <fr:property name="regexp" value="(\d{4,15})?"/>
+				            <fr:property name="regexp" value="(\+?\d{4,15})?"/>
 				            <fr:property name="message" value="error.phone.invalidFormat"/>
 				            <fr:property name="key" value="true"/>
+				            <fr:property name="bundle" value="APPLICATION_RESOURCES" />
 				        </fr:validator>
 				    </fr:slot>
 	

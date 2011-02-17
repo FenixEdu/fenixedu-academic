@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Change Document Id Number size" changeDocumentIdNumberSize.sql
+ 

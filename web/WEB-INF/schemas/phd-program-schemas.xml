@@ -108,18 +108,19 @@
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
 	</slot>
-	<slot name="program" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">	
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProgramsProvider" />
-		<property name="format" value="${presentationName}" />
-        <property name="saveOptions" value="true"/>
-	</slot>
-	<slot name="executionYear" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">	
+	<slot name="executionYear" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">	
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.ExecutionYearsProvider" />
+		<property name="destination" value="select-execution-year-postback" />
 		<property name="format" value="${year}" />
         <property name="saveOptions" value="true"/>
 	</slot>
+	<slot name="program" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">	
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.ActivePhdProgramsOnExecutionYearProvider" />
+		<property name="format" value="${presentationName}" />
+        <property name="saveOptions" value="true"/>
+	</slot>
 	<slot name="migratedProcess" layout="radio-postback">
-		<property name="destination" value="postback" />
+		<property name="destination" value="migration-postback" />
 	</slot>
 </schema>
 
