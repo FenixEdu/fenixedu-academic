@@ -55,7 +55,7 @@
 					
 					<%--
 						Send Email Request for Room
-					 
+					 --%>
 					<h:outputText value=" | " escape="false"/>
 					
 										
@@ -69,7 +69,7 @@
 						value=" Requisi��o de sala efectuada em {0}" escape="false">
 						<f:param value="#{writtenTest.requestRoomSentDateString}"/>
 					</h:outputFormat>
-					--%>	
+						
 					
 
 					<h:panelGroup rendered="#{evaluationManagementBackingBean.canManageRoomsMap[writtenTest.idInternal]}">
