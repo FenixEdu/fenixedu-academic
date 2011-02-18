@@ -161,6 +161,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
 	activities.add(new UploadGuidanceDocument());
 	activities.add(new EditPhdParticipant());
+	activities.add(new TransferToAnotherProcess());
     }
 
     @StartActivity
@@ -1242,6 +1243,26 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     }
 
+    static public class TransferToAnotherProcess extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
+		Object object) {
+	    PhdIndividualProgramProcessBean bean = (PhdIndividualProgramProcessBean) object;
+	    process.transferToAnotherProcess(bean.getDestiny(), userView.getPerson(), bean.getRemarks());
+
+	    return process;
+	}
+
+    }
+
     private PhdIndividualProgramProcess(final PhdProgramCandidacyProcessBean bean, final Person person) {
 	super();
 
@@ -1797,8 +1818,11 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     public List<PhdIndividualProgramProcessState> getPossibleNextStates() {
 	PhdIndividualProgramProcessState activeState = getActiveState();
 	switch (activeState) {
-	case CANDIDACY:
 	case WORK_DEVELOPMENT:
+	    return Arrays.asList(new PhdIndividualProgramProcessState[] { PhdIndividualProgramProcessState.NOT_ADMITTED,
+		    PhdIndividualProgramProcessState.SUSPENDED, PhdIndividualProgramProcessState.FLUNKED,
+		    PhdIndividualProgramProcessState.CANCELLED, PhdIndividualProgramProcessState.TRANSFERRED });
+	case CANDIDACY:
 	case THESIS_DISCUSSION:
 	    return Arrays.asList(new PhdIndividualProgramProcessState[] { PhdIndividualProgramProcessState.NOT_ADMITTED,
 		    PhdIndividualProgramProcessState.SUSPENDED, PhdIndividualProgramProcessState.FLUNKED,
@@ -1810,6 +1834,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	    return Arrays.asList(new PhdIndividualProgramProcessState[] { getLastActiveState().getType() });
 	case CONCLUDED:
 	    return Collections.emptyList();
+	case TRANSFERRED:
+	    return Collections.singletonList(PhdIndividualProgramProcessState.WORK_DEVELOPMENT);
 	default:
 	    throw new DomainException("error.PhdIndividualProgramProcess.unknown.process.state.types");
 	}
@@ -1967,4 +1993,55 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     public static List<PhdMigrationProcess> getMigrationProcesses() {
 	return RootDomainObject.getInstance().getPhdMigrationProcesses();
     }
+
+    public boolean isTransferable() {
+	return isInWorkDevelopment() && !hasDestiny();
+    }
+
+    public boolean isTransferred() {
+	return PhdIndividualProgramProcessState.TRANSFERRED.equals(getActiveState());
+    }
+
+    public boolean isFromTransferredProcess() {
+	return hasSource();
+    }
+
+    private void transferToAnotherProcess(final PhdIndividualProgramProcess destiny, final Person responsible, String remarks) {
+	if (!isTransferable()) {
+	    throw new DomainException("phd.PhdIndividualProgramProcess.cannot.be.transferred");
+	}
+
+	if (hasRegistration() && getRegistration().isConcluded()) {
+	    throw new DomainException("phd.PhdIndividualProgramProcess.source.registration.is.concluded");
+	}
+
+	this.createState(PhdIndividualProgramProcessState.TRANSFERRED, getPerson(), remarks);
+
+	if (hasRegistration() && getRegistration().isActive()) {
+	    RegistrationStateCreator.createState(getRegistration(), responsible, getWhenCreated(),
+		    RegistrationStateType.INTERNAL_ABANDON);
+	}
+
+	super.setDestiny(destiny);
+	destiny.assignSource(this);
+    }
+
+    private void assignSource(PhdIndividualProgramProcess source) {
+	if (source.getDestiny() != this) {
+	    throw new DomainException("phdIndividualProgramProcess.source.has.different.destiny");
+	}
+
+	super.setSource(source);
+    }
+
+    @Override
+    public void setSource(PhdIndividualProgramProcess source) {
+	throw new DomainException("phd.PhdIndividualProgramProcess.cannot.modify.source");
+    }
+
+    @Override
+    public void setDestiny(PhdIndividualProgramProcess destiny) {
+	throw new DomainException("phd.PhdIndividualProgramProcess.cannot.modify.destiny");
+    }
+
 }

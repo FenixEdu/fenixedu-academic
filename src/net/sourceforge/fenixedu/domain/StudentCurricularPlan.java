@@ -63,6 +63,10 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroupFactory;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule.CurriculumModulePredicateByApproval;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule.CurriculumModulePredicateByExecutionSemester;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule.CurriculumModulePredicateByExecutionYear;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule.CurriculumModulePredicateByType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Equivalence;
@@ -75,10 +79,6 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.PropaedeuticsCurriculum
 import net.sourceforge.fenixedu.domain.studentCurriculum.RootCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.StandaloneCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Substitution;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule.CurriculumModulePredicateByApproval;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule.CurriculumModulePredicateByExecutionSemester;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule.CurriculumModulePredicateByExecutionYear;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule.CurriculumModulePredicateByType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.curriculumLine.CurriculumLineLocationBean;
 import net.sourceforge.fenixedu.domain.studentCurriculum.curriculumLine.MoveCurriculumLinesBean;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -2106,7 +2106,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    throw new DomainException("error.already.aproved", new String[] { curricularCourse.getName() });
 	}
 	if (getRoot().isEnroledInExecutionPeriod(curricularCourse, executionSemester)) {
-	    throw new DomainException("error.already.enroled.in.executioPerdiod", new String[] { curricularCourse.getName(),
+	    throw new DomainException("error.already.enroled.in.executionPeriod", new String[] { curricularCourse.getName(),
 		    executionSemester.getQualifiedName() });
 	}
 

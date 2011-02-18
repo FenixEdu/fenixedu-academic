@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.phd.academicAdminOffice
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -59,6 +60,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RemoveLas
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RequestPublicThesisPresentation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.SendPhdEmail;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.SuspendPhdProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.TransferToAnotherProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean;
@@ -87,6 +89,7 @@ import net.sourceforge.fenixedu.presentationTier.docs.phd.registration.PhdSchool
 import net.sourceforge.fenixedu.util.ContentType;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -170,7 +173,11 @@ import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
 
 	@Forward(name = "viewPhdParticipants", path = "/phd/academicAdminOffice/participant/viewPhdParticipants.jsp"),
 
-	@Forward(name = "editPhdParticipant", path = "/phd/academicAdminOffice/participant/editPhdParticipant.jsp")
+	@Forward(name = "editPhdParticipant", path = "/phd/academicAdminOffice/participant/editPhdParticipant.jsp"),
+
+	@Forward(name = "chooseProcessToTransfer", path = "/phd/academicAdminOffice/transfer/chooseProcessToTransfer.jsp"),
+
+	@Forward(name = "fillRemarksOnTransfer", path = "/phd/academicAdminOffice/transfer/fillRemarksOnTransfer.jsp")
 })
 public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramProcessDA {
 
@@ -1372,4 +1379,48 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 
     // End of Edition of Phd Participants
 
+    // Process Transfer
+
+    public ActionForward prepareChooseProcessToTransfer(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	PhdIndividualProgramProcess process = getProcess(request);
+	request.setAttribute("studentProcesses", getStudentOtherProcesses(process));
+
+	return mapping.findForward("chooseProcessToTransfer");
+    }
+
+    private List<PhdIndividualProgramProcess> getStudentOtherProcesses(PhdIndividualProgramProcess process) {
+	List<PhdIndividualProgramProcess> result = new ArrayList<PhdIndividualProgramProcess>();
+	result.addAll(CollectionUtils.disjunction(process.getPerson().getPhdIndividualProgramProcesses(),
+		Collections.singletonList(process)));
+
+	return result;
+    }
+
+    public ActionForward prepareFillRemarksOnTransfer(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	PhdIndividualProgramProcessBean bean = new PhdIndividualProgramProcessBean(getProcess(request));
+
+	bean.setDestiny((PhdIndividualProgramProcess) getDomainObject(request, "destinyId"));
+	request.setAttribute("phdIndividualProgramProcessBean", bean);
+
+	return mapping.findForward("fillRemarksOnTransfer");
+    }
+
+    public ActionForward transferProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	PhdIndividualProgramProcessBean bean = getRenderedObject("phdIndividualProgramProcessBean");
+	ExecuteProcessActivity.run(getProcess(request), TransferToAnotherProcess.class, bean);
+
+	return viewProcess(mapping, form, request, response);
+    }
+
+    public ActionForward transferProcessInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("phdIndividualProgramProcessBean", getRenderedObject("phdIndividualProgramProcessBean"));
+
+	return mapping.findForward("fillRemarksOnTransfer");
+    }
+
+    // End of Process transfer
 }

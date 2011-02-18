@@ -68,4 +68,14 @@
 	
 </fr:form>
 
+<logic:equal name="process" property="transferable" value="true">
+	<p>
+		<html:link 	action="/phdIndividualProgramProcess.do?method=prepareChooseProcessToTransfer" 
+					paramId="processId" paramName="process" paramProperty="externalId" >
+			<bean:message key="label.phd.transfer.process" bundle="PHD_RESOURCES" />
+		</html:link>
+	</p>
+</logic:equal>
+
+
 </logic:present>

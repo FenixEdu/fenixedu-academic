@@ -21,7 +21,9 @@ public enum PhdIndividualProgramProcessState implements PhdProcessStateType {
 
     FLUNKED,
 
-    CONCLUDED;
+    CONCLUDED,
+
+    TRANSFERRED;
 
     private boolean activeState;
 

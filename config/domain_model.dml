@@ -8904,6 +8904,11 @@ relation PhdProgramPhdProgramContextPeriod {
 	}
 }
 
+relation PhdIndividualProgramProcessSourceDestiny {
+	phd.PhdIndividualProgramProcess playsRole source;
+	phd.PhdIndividualProgramProcess playsRole destiny;
+}
+
 /* End of Phd Module */
 
 relation AcademicCalendarEntryAcademicCalendarEntry {

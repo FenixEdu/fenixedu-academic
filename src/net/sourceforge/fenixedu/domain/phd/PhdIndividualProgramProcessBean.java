@@ -61,6 +61,10 @@ public class PhdIndividualProgramProcessBean implements Serializable {
 
     private Integer phdStudentNumber;
 
+    private PhdIndividualProgramProcess destiny;
+
+    private String remarks;
+
     public PhdIndividualProgramProcessBean() {
 	setQualificationExamsRequired(QualificationExamsResult.NULL);
 	setQualificationExamsPerformed(QualificationExamsResult.NULL);
@@ -218,5 +222,21 @@ public class PhdIndividualProgramProcessBean implements Serializable {
 
     public void setPhdStudentNumber(Integer phdStudentNumber) {
 	this.phdStudentNumber = phdStudentNumber;
+    }
+
+    public PhdIndividualProgramProcess getDestiny() {
+	return destiny;
+    }
+
+    public void setDestiny(PhdIndividualProgramProcess destiny) {
+	this.destiny = destiny;
+    }
+
+    public String getRemarks() {
+	return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+	this.remarks = remarks;
     }
 }

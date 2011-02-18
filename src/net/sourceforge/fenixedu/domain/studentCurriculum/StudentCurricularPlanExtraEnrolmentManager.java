@@ -4,8 +4,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
@@ -61,7 +61,7 @@ public class StudentCurricularPlanExtraEnrolmentManager extends StudentCurricula
 	}
 
 	if (getStudentCurricularPlan().isEnroledInExecutionPeriod(curricularCourse, getExecutionSemester())) {
-	    throw new DomainException("error.already.enroled.in.executioPerdiod", curricularCourse.getName(),
+	    throw new DomainException("error.already.enroled.in.executionPeriod", curricularCourse.getName(),
 		    getExecutionSemester().getQualifiedName());
 	}
     }

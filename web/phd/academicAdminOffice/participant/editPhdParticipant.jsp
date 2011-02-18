@@ -19,7 +19,7 @@
 <bean:define id="processId" name="process" property="externalId" />
 
 <p>
-	<html:link action="/phdIndividualProgramProcess.do?method=manageProcesses" paramId="processId" paramName="process" paramProperty="externalId">
+	<html:link action="/phdIndividualProgramProcess.do?method=viewProcess" paramId="processId" paramName="process" paramProperty="externalId">
 		« <bean:message bundle="PHD_RESOURCES" key="label.back" />
 	</html:link>
 </p>
