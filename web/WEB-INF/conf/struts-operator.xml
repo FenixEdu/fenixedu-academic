@@ -73,6 +73,13 @@
 	        <form-property name="documentIdNumber" type="java.lang.String"/>
 	        <form-property name="page" type="java.lang.Integer"/>
      	</form-bean>
+     	
+     	<form-bean name="equivalencesForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String"/>
+			<form-property name="studentNumber" type="java.lang.String"/>
+			<form-property name="curricularCoursesID" type="java.lang.Integer[]"/>
+			<form-property name="studentCurricularPlanID" type="java.lang.String"/>
+		</form-bean>
 
      </form-beans>
     
@@ -205,6 +212,16 @@
        	</action>
        	
        	<!-- =================== Equivalences =================== -->
+       	<action path="/showNotNeedToEnroll"
+		       	name="equivalencesForm"
+	       		type="net.sourceforge.fenixedu.presentationTier.Action.manager.equivalences.ManageNotNeedToEnrollDispathAction"
+	       		scope="request"
+				input=""
+	       		parameter="method">
+       		<forward name="showNotNeedToEnroll" path="show-not-need-to-enroll"/>
+       		<forward name="insertNotNeedToEnroll" path="/showNotNeedToEnroll.do?method=prepareNotNeedToEnroll"/>
+       	</action>
+       	
        	<action path="/prepareNotNeedToEnroll" forward="show-not-need-to-enroll"/>
        	
        	<!-- ==================== Curricular Course Equivalencies ================== -->

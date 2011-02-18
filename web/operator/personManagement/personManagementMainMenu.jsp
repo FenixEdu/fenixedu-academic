@@ -17,21 +17,21 @@
 				<bean:message key="label.manager.findPerson" bundle="MANAGER_RESOURCES" />
 			</html:link>
 		</li>
-		<!--<li>
+		<li>
 			<html:link page="/recoverInactivePerson.do?method=prepare&page=0">
 				<bean:message key="link.recover.inactive.person" bundle="MANAGER_RESOURCES" />
 			</html:link>
-		</li>-->
+		</li>
 		<li>
 			<html:link page="/editPerson.do?method=prepareSearchPersonToEdit">
 				<bean:message key="edit.person.title" bundle="MANAGER_RESOURCES" />
 			</html:link>
 		</li>
-		<!--<li>
+		<li>
 			<html:link page="/manageRoles.do?method=prepare">
 				<bean:message key="label.manager.privilegesManagement" bundle="MANAGER_RESOURCES" />
 			</html:link>
-		</li>-->
+		</li>
 		<li>
 			<html:link page="/generateNewPassword.do?method=prepare&page=0">
 				<bean:message key="link.operator.newPassword" bundle="MANAGER_RESOURCES" />
@@ -43,7 +43,7 @@
 			</html:link>
 		</li>-->
     
-	<!-- <li class="navheader">Pessoas Externas-Convidadas</li>
+	<li class="navheader">Pessoas Externas-Convidadas</li>
     	<li>
 			<html:link page="/createInvitedPerson.do?method=prepareSearchExistentPersonBeforeCreateNewInvitedPerson">
 				<bean:message key="link.create.external.person.invited" bundle="MANAGER_RESOURCES" />
@@ -53,6 +53,6 @@
 			<html:link page="/invitationsManagement.do?method=prepareSearchPersonForManageInvitations">
 				<bean:message key="invitations.management.title" bundle="MANAGER_RESOURCES" />
 			</html:link>
-		</li>-->
+		</li>
 
 </ul>

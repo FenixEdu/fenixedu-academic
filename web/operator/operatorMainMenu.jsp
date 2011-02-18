@@ -46,17 +46,17 @@
 			</html:link>
 		</li>
 		
-	<!--<li class="navheader">Equivalências</li>
-		<li>
-			<html:link page="/prepareNotNeedToEnroll.do">
+	<li class="navheader">Equivalências</li>
+		<!--<li>
+			<html:link page="/showNotNeedToEnroll.do?method=prepare">
 				<bean:message key="link.manager.notNeedToEnrol" bundle="MANAGER_RESOURCES" />
 			</html:link>
-		</li>
+		</li>-->
 		<li>
 			<html:link page="/curricularCourseEquivalencies.do?method=prepare">
 				<bean:message key="title.equivalencies" bundle="MANAGER_RESOURCES" />
 			</html:link>
-		</li>-->
+		</li>
 	
 	<li class="navheader">Gestão de Pessoal</li>
 		<!--<li>

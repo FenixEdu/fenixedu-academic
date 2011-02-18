@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateCurricularCourseEquivalency;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteCurricularCourseEquivalency;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadCurricularCoursesByDegreeCurricularPlan;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadDegreeCurricularPlansByDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
@@ -20,10 +22,10 @@ import net.sourceforge.fenixedu.domain.CurricularCourseEquivalence;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -105,9 +107,13 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
 	final String oldCurricularCourseIDString = (String) actionForm.get("oldCurricularCourseID");
 	if (isValidObjectID(degreeCurricularPlanIDString) && isValidObjectID(curricularCourseIDString)
 		&& isValidObjectID(oldCurricularCourseIDString)) {
-	    final Object[] args = { Integer.valueOf(degreeCurricularPlanIDString), Integer.valueOf(curricularCourseIDString),
-		    Integer.valueOf(oldCurricularCourseIDString) };
-	    ServiceUtils.executeService("CreateCurricularCourseEquivalency", args);
+
+	    try {
+		CreateCurricularCourseEquivalency.run(Integer.valueOf(degreeCurricularPlanIDString),
+			Integer.valueOf(curricularCourseIDString), Integer.valueOf(oldCurricularCourseIDString));
+	    } catch (DomainException e) {
+		addActionMessage(request, e.getMessage());
+	    }
 	}
 
 	return prepare(mapping, form, request, response);
@@ -119,8 +125,11 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
 
 	final String curricularCourseEquivalencyIDString = (String) actionForm.get("curricularCourseEquivalencyID");
 	if (isValidObjectID(curricularCourseEquivalencyIDString)) {
-	    final Object[] args = { Integer.valueOf(curricularCourseEquivalencyIDString) };
-	    ServiceUtils.executeService("DeleteCurricularCourseEquivalency", args);
+	    try {
+		DeleteCurricularCourseEquivalency.run(Integer.valueOf(curricularCourseEquivalencyIDString));
+	    } catch (DomainException e) {
+		addActionMessage(request, e.getMessage());
+	    }
 	}
 
 	return prepare(mapping, form, request, response);
@@ -134,7 +143,7 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
 
 	// FIXME: temporary solution because interface is used simultaneously in
 	// manager and admin office
-	if (AccessControl.getPerson().hasRole(RoleType.MANAGER)) {
+	if (AccessControl.getPerson().hasRole(RoleType.MANAGER) || AccessControl.getPerson().hasRole(RoleType.OPERATOR)) {
 	    degrees.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_DEGREE));
 	    degrees.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
 	    degrees.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_MASTER_DEGREE));
@@ -146,7 +155,7 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
     private void setInfoDegreeCurricularPlans(final HttpServletRequest request, final IUserView userView, final Integer degreeID,
 	    final String attributeName) throws FenixFilterException, FenixServiceException {
 
-	final List<InfoDegreeCurricularPlan> infoDegreeCurricularPlans = (List<InfoDegreeCurricularPlan>) ReadDegreeCurricularPlansByDegree
+	final List<InfoDegreeCurricularPlan> infoDegreeCurricularPlans = ReadDegreeCurricularPlansByDegree
 		.run(degreeID);
 	sortInfoDegreeCurricularPlans(infoDegreeCurricularPlans);
 	request.setAttribute(attributeName, infoDegreeCurricularPlans);
@@ -155,7 +164,7 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
     private void setInfoCurricularCourses(final HttpServletRequest request, final IUserView userView,
 	    final Integer degreeCurricularPlanID, final String attribute) throws FenixFilterException, FenixServiceException {
 
-	final List<InfoCurricularCourse> infoCurricularCourses = (List<InfoCurricularCourse>) ReadCurricularCoursesByDegreeCurricularPlan
+	final List<InfoCurricularCourse> infoCurricularCourses = ReadCurricularCoursesByDegreeCurricularPlan
 		.run(degreeCurricularPlanID);
 	sortInfoCurricularCourses(infoCurricularCourses);
 	request.setAttribute(attribute, infoCurricularCourses);
