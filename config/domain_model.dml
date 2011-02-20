@@ -5228,6 +5228,7 @@ class DomainObject {
     }
 
     class space.SpaceInformation extends DomainObject {
+    	Integer capacity;
         String blueprintNumber;
         YearMonthDay validFrom;
         YearMonthDay validUntil;
@@ -5261,6 +5262,14 @@ class DomainObject {
         class space.RoomSubdivisionInformation extends space.SpaceInformation {
             String identification;
         }
+        
+    class space.SpaceAttendances {
+    	String personIstUsername;
+    	String responsibleForEntranceIstUsername;
+    	DateTime entranceTime;
+    	DateTime exitTime;
+    	String responsibleForExitIstUsername;
+    }
 
     class student.curriculum.ConclusionProcess extends DomainObject {
     }
@@ -6410,6 +6419,7 @@ class personnelSection.payrollSection.bonus.EmployeeMonthlyBonusInstallment exte
 class library.LibraryCard extends DomainObject {
     String userName;
     String unitName;    
+    String cardNumber;
     PartyClassification partyClassification;
     Integer pin;
     YearMonthDay validUntil;
@@ -19601,6 +19611,31 @@ relation ProfessorshipUser {
 	Professorship playsRole professorshipCreated{
 		multiplicity *;
 	}
+}
+
+relation RootDomainObjectHasLibraries {
+    RootDomainObject playsRole rootDomainObjectForLibrary;
+    space.Space playsRole libraries {
+        multiplicity *;
+    }
+}
+
+relation SpacesHaveAttendances {
+    space.Space playsRole spaces {
+    	multiplicity *;
+    }
+    space.SpaceAttendances playsRole attendances {
+        multiplicity *;
+    }
+}
+
+relation SpacesHaveAttendanceHistory {
+    space.Space playsRole spacesHistory {
+    	multiplicity *;
+    }
+    space.SpaceAttendances playsRole attendancesHistory {
+        multiplicity *;
+    }
 }
 
 relation CareerWorkshopApplicationRootDomainObject {

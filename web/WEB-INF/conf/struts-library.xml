@@ -58,6 +58,12 @@
 			<forward name="create-person" path="create-person"/>
 			<forward name="create-unit-person" path="create-unit-person"/>			
     	</action>
+    	
+    	<action path="/libraryOperator" 
+    			parameter="method"
+    			type="net.sourceforge.fenixedu.presentationTier.Action.library.LibraryOperatorDispatchAction">
+    		<forward name="libraryOperator" path="libraryOperator"/>
+    	</action>
     </action-mappings>
 
     <!-- ========== Controller Configuration ================================ -->

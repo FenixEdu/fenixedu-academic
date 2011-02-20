@@ -75,6 +75,7 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.homepage.Homepage;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriodType;
+import net.sourceforge.fenixedu.domain.library.LibraryCard;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.domain.messaging.ForumSubscription;
@@ -109,6 +110,7 @@ import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResul
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.Space;
+import net.sourceforge.fenixedu.domain.space.SpaceAttendances;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -3824,5 +3826,23 @@ public class Person extends Person_Base {
 	ArrayList<RoleOperationLog> roleOperationLogList = new ArrayList<RoleOperationLog>(roleOperationLogSet);
 	Collections.sort(roleOperationLogList, new ReverseComparator(new BeanComparator(value)));
 	return roleOperationLogList;
+    }
+
+    public boolean insideSpace(Space space) {
+	for (SpaceAttendances attendance : space.getAttendances()) {
+	    if (attendance.getPersonIstUsername().equals(this.getIstUsername())) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    public static Person readPersonByLibraryCardNumber(String cardNumber) {
+	for (LibraryCard card : RootDomainObject.getInstance().getLibraryCards()) {
+	    if (card.getCardNumber() != null && card.getCardNumber().equals(cardNumber)) {
+		return card.getPerson();
+	    }
+	}
+	return null;
     }
 }

@@ -35,6 +35,7 @@ import net.sourceforge.fenixedu.injectionCode.IGroup;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -47,6 +48,7 @@ public abstract class Space extends Space_Base {
     public abstract Integer getNormalCapacity();
 
     public final static Comparator<Space> COMPARATOR_BY_PRESENTATION_NAME = new Comparator<Space>() {
+	@Override
 	public int compare(Space o1, Space o2) {
 
 	    if (o1.isFloor() && o2.isFloor()) {
@@ -58,6 +60,7 @@ public abstract class Space extends Space_Base {
     };
 
     public final static Comparator<Space> COMPARATOR_BY_NAME_FLOOR_BUILDING_AND_CAMPUS = new Comparator<Space>() {
+	@Override
 	public int compare(Space o1, Space o2) {
 
 	    Integer buildingCheck = checkObjects(o1.getSpaceBuilding(), o2.getSpaceBuilding());
@@ -805,7 +808,7 @@ public abstract class Space extends Space_Base {
 
 	if (toAdd) {
 	    for (Iterator<IGroup> iter = existentGroups.iterator(); iter.hasNext();) {
-		IGroup existentGroup_ = (IGroup) iter.next();
+		IGroup existentGroup_ = iter.next();
 		if (existentGroup_.getElements().containsAll(groupToAddOrRemove.getElements())) {
 		    toAdd = false;
 		    break;
@@ -817,7 +820,7 @@ public abstract class Space extends Space_Base {
 
 	} else {
 	    for (Iterator<IGroup> iter = existentGroups.iterator(); iter.hasNext();) {
-		IGroup existentGroup_ = (IGroup) iter.next();
+		IGroup existentGroup_ = iter.next();
 		if (existentGroup_.getElementsCount() == groupToAddOrRemove.getElementsCount()
 			&& existentGroup_.getElements().containsAll(groupToAddOrRemove.getElements())) {
 		    iter.remove();
@@ -1123,5 +1126,41 @@ public abstract class Space extends Space_Base {
 	    }
 	}
 	return result;
+    }
+    
+    public boolean hasEnoughSpace() {
+	return this.getAttendancesCount() < this.getSpaceInformation().getCapacity();
+    }
+
+    public void addAttendance(Person person, String responsibleUsername) {
+	if (person != null && !person.insideSpace(this) && this.hasEnoughSpace()) {
+	    SpaceAttendances attendance = new SpaceAttendances(person.getIstUsername(), responsibleUsername, new DateTime());
+	    this.addAttendances(attendance);
+	    this.addAttendancesHistory(attendance);
+	}
+    }
+
+    public void removeAttendance(Person person, String responsibleUsername) {
+	if (person != null && person.insideSpace(this)) {
+	    SpaceAttendances attendance = getAttendance(person);
+	    if (attendance != null) {
+		this.removeAttendanceAndSaveHistory(attendance, responsibleUsername);
+	    }
+	}
+    }
+
+    private void removeAttendanceAndSaveHistory(SpaceAttendances attendance, String responsibleUsername) {
+	attendance.setResponsibleForExitIstUsername(responsibleUsername);
+	attendance.setExitTime(new DateTime());
+	this.removeAttendances(attendance);
+    }
+
+    public SpaceAttendances getAttendance(Person person) {
+	for (SpaceAttendances attendance : this.getAttendances()) {
+	    if (attendance.getPersonIstUsername().equals(person.getIstUsername())) {
+		return attendance;
+	    }
+	}
+	return null;
     }
 }
