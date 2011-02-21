@@ -12,8 +12,10 @@ public class CareerWorkshopApplication extends CareerWorkshopApplication_Base {
     public CareerWorkshopApplication(Student student, CareerWorkshopApplicationEvent event) {
 	super();
 	if(student == null)
-	    throw new DomainException("error.careerWorkshop.criticalFailureGeneratingTheSpreadsheetFile");
+	    throw new DomainException("error.careerWorkshop.creatingNewApplication: Student cannot be a null value.");
 	setStudent(student);
+	if(event == null)
+	    throw new DomainException("error.careerWorkshop.creatingNewApplication: Event cannot be a null value.");
 	setCareerWorkshopApplicationEvent(event);
     }
 

@@ -44,7 +44,9 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
+import net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopApplication;
 import net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopApplicationEvent;
+import net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopConfirmationEvent;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
 import net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod;
@@ -1806,7 +1808,7 @@ public class Student extends Student_Base {
     }
 
     public boolean isEligibleForCareerWorkshopApplication() {
-	if (hasActiveSecondCycleRegistration()) {
+	/*if (hasActiveSecondCycleRegistration()) {
 	    for (CareerWorkshopApplicationEvent applicationEvents : RootDomainObject.getInstance()
 		    .getCareerWorkshopApplicationEvents()) {
 		if (applicationEvents.isApplicationEventOpened()) {
@@ -1815,6 +1817,8 @@ public class Student extends Student_Base {
 	    }
 	}
 	return false;
+	*/
+	return hasActiveSecondCycleRegistration();
     }
 
     private boolean hasActiveSecondCycleRegistration() {
@@ -1825,5 +1829,33 @@ public class Student extends Student_Base {
 	    }
 	}
 	return false;
+    }
+    
+    public List<CareerWorkshopApplication> getCareerWorkshopApplicationsWaitingForConfirmation() {
+	List<CareerWorkshopApplication> result = new ArrayList<CareerWorkshopApplication>();
+	for(CareerWorkshopApplication app : getCareerWorkshopApplications()) {
+	    if(app.getCareerWorkshopConfirmation() != null) {
+		continue;
+	    }
+	    if(!app.getCareerWorkshopApplicationEvent().isConfirmationPeriodOpened()) {
+		continue;
+	    }
+	    result.add(app);
+	}
+	return result;
+    }
+    
+    public List<CareerWorkshopConfirmationEvent> getApplicationsWaitingForConfirmation() {
+	List<CareerWorkshopConfirmationEvent> result = new ArrayList<CareerWorkshopConfirmationEvent>();
+	for(CareerWorkshopApplication app : getCareerWorkshopApplications()) {
+	    if(app.getCareerWorkshopConfirmation() != null && app.getCareerWorkshopConfirmation().getSealStamp() != null) {
+		continue;
+	    }
+	    if(!app.getCareerWorkshopApplicationEvent().isConfirmationPeriodOpened()) {
+		continue;
+	    }
+	    result.add(app.getCareerWorkshopApplicationEvent().getCareerWorkshopConfirmationEvent());
+	}
+	return result;
     }
 }

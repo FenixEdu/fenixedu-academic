@@ -1298,6 +1298,9 @@ class DomainObject {
         
         class careerWorkshop.CareerWorkshopSpreadsheet extends File {
         }
+        
+        class careerWorkshop.CareerWorkshopConfirmationSpreadsheet extends File {
+        }
 
 
     class GenericEvent extends DomainObject {
@@ -7891,6 +7894,18 @@ class careerWorkshop.CareerWorkshopApplicationEvent extends DomainObject {
 	DateTime endDate;
 	DateTime lastUpdate;
 	String relatedInformation;
+}
+
+class careerWorkshop.CareerWorkshopConfirmation extends DomainObject {
+	Boolean confirmation;
+	String confirmationCode;
+	DateTime sealStamp;
+}
+
+class careerWorkshop.CareerWorkshopConfirmationEvent extends DomainObject {
+	DateTime beginDate;
+	DateTime endDate;
+	DateTime lastUpdate;
 }
 
  	
@@ -19675,4 +19690,53 @@ relation CareerWorkshopApplicationEventFile {
 	careerWorkshop.CareerWorkshopSpreadsheet playsRole spreadsheet {
 		multiplicity 1;
 	}
+}
+
+relation CareerWorkshopConfirmationRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	careerWorkshop.CareerWorkshopConfirmation playsRole careerWorkshopConfirmations {
+		multiplicity *;
+	}
+}
+
+relation CareerWorkshopConfirmationStudent {
+	careerWorkshop.CareerWorkshopConfirmation playsRole careerWorkshopConfirmations {
+		multiplicity *;
+	}
+	student.Student playsRole student {
+		multiplicity 1;
+	}
+}
+
+relation CareerWorkshopApplicationCareerWorkshopConfirmation {
+	careerWorkshop.CareerWorkshopApplication playsRole careerWorkshopApplication;
+	careerWorkshop.CareerWorkshopConfirmation playsRole careerWorkshopConfirmation;
+}
+
+relation CareerWorkshopConfirmationEventRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	careerWorkshop.CareerWorkshopConfirmationEvent playsRole careerWorkshopConfirmationEvents {
+		multiplicity *;
+	}
+}
+
+relation CareerWorkshopConfirmationEventCareerWorkshopConfirmation {
+	careerWorkshop.CareerWorkshopConfirmationEvent playsRole careerWorkshopConfirmationEvent {
+		multiplicity 1;
+	}
+	careerWorkshop.CareerWorkshopConfirmation playsRole careerWorkshopConfirmations {
+		multiplicity *;
+	}
+}
+
+relation CareerWorkshopConfirmationEventFile {
+	careerWorkshop.CareerWorkshopConfirmationEvent playsRole careerWorkshopConfirmationEvent;
+	careerWorkshop.CareerWorkshopConfirmationSpreadsheet playsRole confirmations {
+		multiplicity 1;
+	}
+}
+
+relation CareerWorkshopApplicationEventCareerWorkshopConfirmationEvent {
+	careerWorkshop.CareerWorkshopApplicationEvent playsRole careerWorkshopApplicationEvent;
+	careerWorkshop.CareerWorkshopConfirmationEvent playsRole careerWorkshopConfirmationEvent;
 }

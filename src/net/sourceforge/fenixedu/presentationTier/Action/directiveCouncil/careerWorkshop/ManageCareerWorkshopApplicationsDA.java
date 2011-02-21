@@ -19,7 +19,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path="/careerWorkshopApplication", module="directiveCouncil")
-@Forwards({@Forward(name="manageCareerWorkshops", path="/directiveCouncil/careerWorkshop/manageCareerWorkshops.jsp")})
+@Forwards({@Forward(name="manageCareerWorkshops", path="/directiveCouncil/careerWorkshop/manageCareerWorkshops.jsp"),
+    @Forward(name="setConfirmationPeriod", path="/directiveCouncil/careerWorkshop/setConfirmationPeriod.jsp")})
 public class ManageCareerWorkshopApplicationsDA extends FenixDispatchAction {
     
     public ActionForward prepare(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
@@ -64,7 +65,6 @@ public class ManageCareerWorkshopApplicationsDA extends FenixDispatchAction {
     public ActionForward downloadApplications(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	
-	ManageCareerWorkshopApplicationsBean applicationsBean = new ManageCareerWorkshopApplicationsBean();
 	final String eventExternalId = request.getParameter("eventId");
 	CareerWorkshopApplicationEvent eventToDownload = AbstractDomainObject.fromExternalId(eventExternalId);
 	CareerWorkshopSpreadsheet spreadsheet = eventToDownload.getApplications();
@@ -81,11 +81,30 @@ public class ManageCareerWorkshopApplicationsDA extends FenixDispatchAction {
 	    }
 	}
 	return null;
-	/*
-	request.setAttribute("applicationsBean", applicationsBean);
+    }
+    
+    public ActionForward setConfirmationPeriod(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	
+	ManageCareerWorkshopApplicationsBean eventsBean = new ManageCareerWorkshopApplicationsBean();
+	final String eventExternalId = request.getParameter("eventId");
+	CareerWorkshopApplicationEvent affectedEvent = AbstractDomainObject.fromExternalId(eventExternalId);
+	eventsBean.setAffectedEvent(affectedEvent);
+	request.setAttribute("eventsBean", eventsBean);
+	
+	return actionMapping.findForward("setConfirmationPeriod");
+    }
+    
+    public ActionForward addConfirmationPeriod(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	
+	ManageCareerWorkshopApplicationsBean eventsBean = getRenderedObject("eventsBean");
+	eventsBean.addConfirmationPeriod();
+	
+	request.setAttribute("applicationsBean", eventsBean);
 	RenderUtils.invalidateViewState("applicationsBean");
 	
-	return actionMapping.findForward("manageCareerWorkshops");*/
+	return actionMapping.findForward("manageCareerWorkshops");
     }
 
 }

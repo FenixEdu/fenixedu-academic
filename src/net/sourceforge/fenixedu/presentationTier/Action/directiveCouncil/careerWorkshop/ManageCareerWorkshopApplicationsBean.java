@@ -10,6 +10,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopApplicationEvent;
+import net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopConfirmationEvent;
 
 public class ManageCareerWorkshopApplicationsBean implements Serializable {
     
@@ -18,6 +19,34 @@ public class ManageCareerWorkshopApplicationsBean implements Serializable {
     private String newEventInformation;
     private List<CareerWorkshopApplicationEvent> existingEvents;
     
+    private DateTime confirmationStartDate;
+    private DateTime confirmationEndDate;
+    private CareerWorkshopApplicationEvent affectedEvent;
+    
+    public DateTime getConfirmationStartDate() {
+        return confirmationStartDate;
+    }
+
+    public void setConfirmationStartDate(DateTime confirmationStartDate) {
+        this.confirmationStartDate = confirmationStartDate;
+    }
+
+    public DateTime getConfirmationEndDate() {
+        return confirmationEndDate;
+    }
+
+    public void setConfirmationEndDate(DateTime confirmationEndDate) {
+        this.confirmationEndDate = confirmationEndDate;
+    }
+
+    public CareerWorkshopApplicationEvent getAffectedEvent() {
+        return affectedEvent;
+    }
+
+    public void setAffectedEvent(CareerWorkshopApplicationEvent affectedEvent) {
+        this.affectedEvent = affectedEvent;
+    }
+
     public ManageCareerWorkshopApplicationsBean() {
 	existingEvents = new ArrayList<CareerWorkshopApplicationEvent>(RootDomainObject.getInstance().getCareerWorkshopApplicationEvents());
     }
@@ -64,6 +93,15 @@ public class ManageCareerWorkshopApplicationsBean implements Serializable {
     public void deleteEvent(CareerWorkshopApplicationEvent careerWorkshopApplicationEvent) {
 	careerWorkshopApplicationEvent.delete();
 	existingEvents = new ArrayList<CareerWorkshopApplicationEvent>(RootDomainObject.getInstance().getCareerWorkshopApplicationEvents());
+    }
+    
+    @Service
+    public void addConfirmationPeriod() {
+	new CareerWorkshopConfirmationEvent(affectedEvent, confirmationStartDate, confirmationEndDate);
+	
+	setConfirmationStartDate(null);
+	setConfirmationEndDate(null);
+	setAffectedEvent(null);
     }
     
 }

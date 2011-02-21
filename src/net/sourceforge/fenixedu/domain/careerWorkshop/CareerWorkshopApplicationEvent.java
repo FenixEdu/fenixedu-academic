@@ -44,17 +44,19 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
 	if (!getCareerWorkshopApplications().isEmpty())
 	    throw new DomainException(
 		    "error.careerWorkshop.deletingEvent: This event already have applications associated, therefore it cannot be destroyed.");
+	if (getCareerWorkshopConfirmationEvent() != null)
+	    throw new DomainException("error.careerWorkshop.deletingEvent: A confirmation period is already defined.");
 	removeSpreadsheet();
 	setRootDomainObject(null);
 	deleteDomainObject();
     }
 
     public CareerWorkshopSpreadsheet getApplications() {
-	//if (getLastUpdate() == null || getSpreadsheet() == null)
+	if (getLastUpdate() == null || getSpreadsheet() == null)
 	    generateSpreadsheet();
-	//if (getLastUpdate().isAfter(getSpreadsheet().getUploadTime())) {
-	//    generateSpreadsheet();
-	//}
+	if (getLastUpdate().isAfter(getSpreadsheet().getUploadTime())) {
+	    generateSpreadsheet();
+	}
 	return getSpreadsheet();
     }
 
@@ -132,6 +134,20 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
 	return getEndDate().toString("dd-MM-yyyy");
     }
     
+    public String getConfirmationBeginDate() {
+	if (getCareerWorkshopConfirmationEvent() == null) {
+	    return "--";
+	}
+	return getCareerWorkshopConfirmationEvent().getFormattedBeginDate();
+    }
+
+    public String getConfirmationEndDate() {
+	if (getCareerWorkshopConfirmationEvent() == null) {
+	    return "--";
+	}
+	return getCareerWorkshopConfirmationEvent().getFormattedEndDate();
+    }
+    
     public int getNumberOfApplications() {
 	int result = 0;
 	for(CareerWorkshopApplication application : getCareerWorkshopApplications()) {
@@ -177,6 +193,18 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
     public boolean isApplicationEventOpened() {
 	DateTime today = new DateTime();
 	return (today.isBefore(getBeginDate()) || today.isAfter(getEndDate())) ? false : true;
+    }
+    
+    public boolean isConfirmationPeriodOpened() {
+	DateTime today = new DateTime();
+	if(getCareerWorkshopConfirmationEvent() == null) {
+	    return false;
+	}
+	CareerWorkshopConfirmationEvent confirmation = getCareerWorkshopConfirmationEvent();
+	if(confirmation.getBeginDate() == null || confirmation.getEndDate() == null) {
+	    return false;
+	}
+	return (today.isBefore(confirmation.getBeginDate()) || today.isAfter(confirmation.getEndDate())) ? false : true;
     }
 
     static public CareerWorkshopApplicationEvent getActualEvent() {
