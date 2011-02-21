@@ -51,8 +51,8 @@ public class InsertStudentTestResponses extends FenixService {
     public static InfoSiteStudentTestFeedback run(Registration registration, Integer studentNumber,
 	    final Integer distributedTestId, Response[] response, String path) throws FenixServiceException {
 
-	String logIdString = StringAppender.append("student num", studentNumber.toString(), " testId ", distributedTestId
-		.toString());
+	String logIdString = StringAppender.append("student num", studentNumber.toString(), " testId ",
+		distributedTestId.toString());
 	InfoSiteStudentTestFeedback infoSiteStudentTestFeedback = new InfoSiteStudentTestFeedback();
 	path = path.replace('\\', '/');
 	if (registration == null) {
@@ -216,9 +216,19 @@ public class InsertStudentTestResponses extends FenixService {
     private static SubQuestion correctQuestionValues(SubQuestion subQuestion, Double questionValue) {
 	Double maxValue = subQuestion.getMaxValue();
 	if (maxValue.compareTo(questionValue) != 0) {
-	    double difValue = questionValue.doubleValue() * Math.pow(maxValue.doubleValue(), -1);
-	    for (ResponseProcessing responseProcessing : subQuestion.getResponseProcessingInstructions()) {
-		responseProcessing.setResponseValue(Double.valueOf(responseProcessing.getResponseValue() * difValue));
+	    if (maxValue == 0.0) {
+		for (ResponseProcessing responseProcessing : subQuestion.getResponseProcessingInstructions()) {
+		    if (responseProcessing.getResponseValue() == maxValue) {
+			responseProcessing.setResponseValue(questionValue);
+		    } else {
+			responseProcessing.setResponseValue(maxValue);
+		    }
+		}
+	    } else {
+		double difValue = questionValue.doubleValue() * Math.pow(maxValue.doubleValue(), -1);
+		for (ResponseProcessing responseProcessing : subQuestion.getResponseProcessingInstructions()) {
+		    responseProcessing.setResponseValue(Double.valueOf(responseProcessing.getResponseValue() * difValue));
+		}
 	    }
 	}
 
