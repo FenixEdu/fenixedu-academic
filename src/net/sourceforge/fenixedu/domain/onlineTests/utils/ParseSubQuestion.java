@@ -5,6 +5,9 @@ package net.sourceforge.fenixedu.domain.onlineTests.utils;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -410,9 +413,19 @@ public class ParseSubQuestion extends DefaultHandler {
 		if (atts.getIndex("action") != -1) {
 		    responseProcessing.setAction(atts.getValue("action"));
 		}
-		Double value = new Double(element.getValue().replace(',', '.'));
-		responseProcessing.setResponseValue(value);
 
+		DecimalFormat df = new DecimalFormat("#0.##");
+		DecimalFormatSymbols decimalFormatSymbols = df.getDecimalFormatSymbols();
+		decimalFormatSymbols.setDecimalSeparator('.');
+		df.setDecimalFormatSymbols(decimalFormatSymbols);
+		double value = 0.0;
+		try {
+		    value = df.parse(element.getValue().replace(',', '.')).doubleValue();
+		} catch (ParseException e) {
+		    throw new ParseQuestionException("Erro na cotação da pergunta");
+		}
+
+		responseProcessing.setResponseValue(value);
 		if (responseProcessing.getAction().intValue() == ResponseProcessing.SET
 			|| responseProcessing.getAction().intValue() == ResponseProcessing.ADD) {
 		    if (subQuestion.getQuestionValue() == null || (subQuestion.getQuestionValue().compareTo(value) < 0))
@@ -688,9 +701,9 @@ public class ParseSubQuestion extends DefaultHandler {
 		}
 		newResponseConditionList.add(newResponseCondition);
 	    }
-	    ResponseProcessing newResponseProcessing = new ResponseProcessing(newResponseConditionList, responseProcessing
-		    .getResponseValue(), responseProcessing.getAction(), responseProcessing.getFeedback(), responseProcessing
-		    .isFenixCorrectResponse());
+	    ResponseProcessing newResponseProcessing = new ResponseProcessing(newResponseConditionList,
+		    responseProcessing.getResponseValue(), responseProcessing.getAction(), responseProcessing.getFeedback(),
+		    responseProcessing.isFenixCorrectResponse());
 	    newResponseProcessing.setNextItem(responseProcessing.getNextItem());
 	    newResponseProcessingList.add(newResponseProcessing);
 	}
