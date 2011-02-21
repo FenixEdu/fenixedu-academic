@@ -65,8 +65,8 @@
 						<h:outputFormat value="#{bundle['link.request.room']}" />
 					</h:commandLink>
 					
-					<h:outputFormat rendered="#{!writtenTest.canRequestRoom}" 
-						value=" Requisi��o de sala efectuada em {0}" escape="false">
+					<h:outputFormat rendered="#{!writtenTest.canRequestRoom}"  
+						value="#{bundle['label.room.request']}" escape="false">
 						<f:param value="#{writtenTest.requestRoomSentDateString}"/>
 					</h:outputFormat>
 						
