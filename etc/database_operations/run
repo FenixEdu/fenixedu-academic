@@ -44,4 +44,5 @@ function executeWithTempFile() {
 }
 
 execute "Add source and destiny on phd individual program processes" addSourceAndDestinyOnPhdProcesses.sql
+execute "Add email contacts to space information" addEmailToBuilding.sql
 execute "Creating CareerWorkshopConfirmation tables and updating related tables" careerWorkshopConfirmations.sql

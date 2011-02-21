@@ -5235,6 +5235,7 @@ class DomainObject {
         String blueprintNumber;
         YearMonthDay validFrom;
         YearMonthDay validUntil;
+        String emails;
     }
 
         class space.BuildingInformation extends space.SpaceInformation {

@@ -16,10 +16,10 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class Building extends Building_Base {
 
-    public Building(Space surroundingSpace, String name, YearMonthDay begin, YearMonthDay end, String blueprintNumber) {
+    public Building(Space surroundingSpace, String name, YearMonthDay begin, YearMonthDay end, String blueprintNumber, String emails) {
 	super();
 	setSuroundingSpace(surroundingSpace);
-	new BuildingInformation(this, name, begin, end, blueprintNumber);
+	new BuildingInformation(this, name, begin, end, blueprintNumber,emails);
     }
 
     @Override
@@ -108,6 +108,8 @@ public class Building extends Building_Base {
 	private YearMonthDay end;
 
 	private String blueprintNumber;
+	
+	private String emails;
 
 	public YearMonthDay getBegin() {
 	    return begin;
@@ -140,6 +142,14 @@ public class Building extends Building_Base {
 	public void setBlueprintNumber(String blueprintNumber) {
 	    this.blueprintNumber = blueprintNumber;
 	}
+	
+	public String getEmails() {
+	    return this.emails;
+	}
+	
+	public void setEmails(String emails) {
+	    this.emails = emails;
+	}
     }
 
     public static class BuildingFactoryCreator extends BuildingFactory {
@@ -157,7 +167,7 @@ public class Building extends Building_Base {
 	}
 
 	public Building execute() {
-	    return new Building(getSurroundingSpace(), getName(), getBegin(), getEnd(), getBlueprintNumber());
+	    return new Building(getSurroundingSpace(), getName(), getBegin(), getEnd(), getBlueprintNumber(),getEmails());
 	}
     }
 
@@ -176,7 +186,7 @@ public class Building extends Building_Base {
 	}
 
 	public BuildingInformation execute() {
-	    return new BuildingInformation(getSpace(), getName(), getBegin(), getEnd(), getBlueprintNumber());
+	    return new BuildingInformation(getSpace(), getName(), getBegin(), getEnd(), getBlueprintNumber(),getEmails());
 	}
     }
 }

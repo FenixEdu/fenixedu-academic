@@ -28,19 +28,15 @@
 	<slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="begin" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="end"/>
-</schema>
-<schema name="BuildingFactoryEditor" type="net.sourceforge.fenixedu.domain.space.Building$BuildingFactoryEditor" bundle="SPACE_RESOURCES">
-	<slot name="blueprintNumber"/>
-	<slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="begin" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="end"/>
+	<slot name="emails" key="title.building.emails"/>
 </schema>
 <schema name="EditBuildingInformation" type="net.sourceforge.fenixedu.domain.space.BuildingInformation" bundle="SPACE_RESOURCES">
 	<slot name="blueprintNumber"/>
 	<slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="validFrom" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="validUntil"/>
-	<setter signature="editBuildingCharacteristics(name, validFrom, validUntil, blueprintNumber)"/>
+	<slot name="emails" key="title.building.emails"/>
+	<setter signature="editBuildingCharacteristics(name, validFrom, validUntil, blueprintNumber,emails)"/>
 </schema>
 <schema name="ViewBuildingInformation" type="net.sourceforge.fenixedu.domain.space.BuildingInformation" bundle="SPACE_RESOURCES">
 	<slot name="blueprintNumber"/>
