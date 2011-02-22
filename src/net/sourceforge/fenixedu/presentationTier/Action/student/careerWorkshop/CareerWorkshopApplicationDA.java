@@ -36,7 +36,9 @@ public class CareerWorkshopApplicationDA extends FenixDispatchAction {
 	final Student student = getLoggedStudent(request);
 	CareerWorkshopApplicationEvent openApplicationEvent = CareerWorkshopApplicationEvent.getActualEvent();
 	List<CareerWorkshopApplicationEvent> openApplicationEvents = new ArrayList<CareerWorkshopApplicationEvent>();
-	openApplicationEvents.add(openApplicationEvent);
+	if(openApplicationEvent != null) {
+	    openApplicationEvents.add(openApplicationEvent);
+	}
 	List<CareerWorkshopConfirmationEvent> pendingForConfirmation = student.getApplicationsWaitingForConfirmation();
 	request.setAttribute("openApplicationEvents", openApplicationEvents);
 	request.setAttribute("pendingForConfirmation", pendingForConfirmation);
