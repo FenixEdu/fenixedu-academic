@@ -265,8 +265,9 @@ public class WrittenTest extends WrittenTest_Base {
 	final SystemSender systemSender = RootDomainObject.getInstance().getSystemSender();
 	final String date = new SimpleDateFormat("dd/MM/yyyy").format(getDay().getTime());
 	final String time = new SimpleDateFormat("HH:mm").format(getBeginning().getTime());
+	final String degreeName = course.getDegreePresentationString();
 	final String subject =BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "email.request.room.subject", course.getName(), getDescription());
-	final String body = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "email.request.room.body", getDescription(), course.getName(), date,time); 
+	final String body = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "email.request.room.body", getDescription(), course.getName(), date,time,degreeName); 
 	new Message(systemSender,"gop@ist.utl.pt", subject, body);
 	setRequestRoomSentDate(new DateTime());
     }
