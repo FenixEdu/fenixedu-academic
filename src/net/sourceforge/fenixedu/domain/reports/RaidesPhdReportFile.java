@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.reports;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -7,11 +8,13 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.StudentStatute;
 import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
@@ -73,7 +76,13 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
     }
 
     private List<PhdIndividualProgramProcess> retrieveProcesses(ExecutionYear executionYear) {
-	return executionYear.getPhdIndividualProgramProcesses();
+	List<PhdIndividualProgramProcess> phdIndividualProgramProcessList = new ArrayList<PhdIndividualProgramProcess>();
+
+	for (PhdProgram program : RootDomainObject.getInstance().getPhdPrograms()) {
+	    phdIndividualProgramProcessList.addAll(program.getIndividualProgramProcesses());
+	}
+
+	return phdIndividualProgramProcessList;
     }
 
     private Set<StudentCurricularPlan> getStudentCurricularPlansToProcess(ExecutionYear executionYear) {
