@@ -105,6 +105,7 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
 	    Building building = getSpaceBuilding();
 	    builder.append(getIdentification()).append(" - ");
 	    builder.append(building != null ? building.getNameWithCampus() : "");
+	    builder.append(String.format(" [%d,%d]", getNormalCapacity(), getExamCapacity()));
 	}
 	return builder.toString();
     }
