@@ -347,7 +347,10 @@ public class Room extends Room_Base {
 	int countAllSeatsForExams = 0;
 	for (Resource resource :  RootDomainObject.getInstance().getResources()) {
 	    if (resource.isRoom()) {
-		countAllSeatsForExams += ((Room) resource).getExamCapacity(); 
+		final Room room = (Room) resource;
+		if (room.getSpaceBuilding().getSpaceCampus().isCampusAlameda()) {
+		    countAllSeatsForExams += room.getExamCapacity();
+		}
 	    }
 	}
 	return countAllSeatsForExams;
