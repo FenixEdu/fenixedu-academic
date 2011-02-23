@@ -64,7 +64,8 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
     public void generateSpreadsheet() {
 	StringBuilder stringBuilder = new StringBuilder();
 	stringBuilder.append("ISTCareerWorkshopsApplications-");
-	stringBuilder.append(getLastUpdate().toString("ddMMyyyyhhmm"));
+	DateTime stamp = (getLastUpdate() != null ? getLastUpdate() : new DateTime());
+	stringBuilder.append(stamp.toString("ddMMyyyyhhmm"));
 	stringBuilder.append(".csv");
 
 	final SheetData<CareerWorkshopApplication> dataSheet = new SheetData<CareerWorkshopApplication>(
@@ -134,6 +135,10 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
 	return getEndDate().toString("dd-MM-yyyy");
     }
     
+    public Boolean getIsConfirmationPeriodAttached() {
+	return (getCareerWorkshopConfirmationEvent() != null ? true : false);
+    }
+    
     public String getConfirmationBeginDate() {
 	if (getCareerWorkshopConfirmationEvent() == null) {
 	    return "--";
@@ -156,7 +161,14 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
 	    }
 	}
 	return result;
-    }    
+    }
+    
+    public int getNumberOfConfirmations() {
+	if(getCareerWorkshopConfirmationEvent() == null) {
+	    return 0;
+	}
+	return getCareerWorkshopConfirmationEvent().getNumberOfConfirmations();
+    }
 
     private boolean isOverlapping(DateTime beginDate, DateTime endDate) {
 	for (CareerWorkshopApplicationEvent each : RootDomainObject.getInstance().getCareerWorkshopApplicationEvents()) {
