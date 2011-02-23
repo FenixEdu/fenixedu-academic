@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -8,11 +9,16 @@ import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.Roo
 import net.sourceforge.fenixedu.domain.GenericEvent;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.GenericEventSpaceOccupation;
+
+import org.apache.struts.util.MessageResources;
+
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class EditRoomsPunctualScheduling extends FenixService {
-
+    
+    public static final MessageResources messages = MessageResources.getMessageResources("resources/ResourceAllocationManagerResources");
+    
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
     public static void run(RoomsPunctualSchedulingBean bean) {
@@ -34,6 +40,9 @@ public class EditRoomsPunctualScheduling extends FenixService {
 	    }
 
 	    genericEvent.edit(bean.getSmallDescription(), bean.getCompleteDescription(), roomsToInsert, roomOccupationsToDelete);
+	    String description = bean.getSmallDescription().getContent() + "\n";
+	    description += bean.getCompleteDescription().getContent() + "\n"; 
+//	    ClosePunctualRoomsOccupationRequest.sendMessageToSpaceManagers(Collections.singleton(genericEvent), description);
 	}
     }
 }
