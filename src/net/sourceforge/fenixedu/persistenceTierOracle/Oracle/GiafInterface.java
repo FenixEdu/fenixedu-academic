@@ -109,7 +109,7 @@ public class GiafInterface {
 	    }
 	    persistentSuportOracle.closeConnection();
 	}
-	return salary;
+	return salary.equals(BigDecimal.ZERO) ? getEmployeeSalary(employee, new LocalDate()) : salary;
     }
 
     public void updateExtraWorkRequest(ExtraWorkRequest extraWorkRequest) throws ExcepcaoPersistencia {
