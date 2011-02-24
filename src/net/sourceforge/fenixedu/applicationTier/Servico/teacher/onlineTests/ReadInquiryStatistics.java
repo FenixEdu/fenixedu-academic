@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.util.tests.QuestionType;
 import net.sourceforge.fenixedu.util.tests.Response;
+import net.sourceforge.fenixedu.util.tests.ResponseNUM;
 import net.sourceforge.fenixedu.util.tests.ResponseSTR;
 
 import org.apache.commons.lang.StringUtils;
@@ -66,23 +67,21 @@ public class ReadInquiryStatistics extends FenixService {
 		String percentage = "0%";
 		for (StudentTestQuestion studentTestQuestion2 : responses) {
 		    Response response = studentTestQuestion2.getResponse();
-		    if (response != null && !StringUtils.isEmpty(((ResponseSTR) response).getResponse())) {
-			percentage = df.format(distributedTest.countResponses(studentTestQuestion.getTestQuestionOrder(),
-				((ResponseSTR) response).getResponse())
-				* java.lang.Math.pow(numOfStudentResponses, -1));
-			LabelValueBean labelValueBean = new LabelValueBean(percentage, ((ResponseSTR) response).getResponse());
-			// if (response instanceof ResponseSTR) {
-			// new LabelValueBean(percentage,
-			// statistics.add();
-			// } else {
-			// new LabelValueBean(percentage, ((ResponseNUM)
-			// response)
-			// .getResponse())
-			// }
-			if (!statistics.contains(labelValueBean)) {
-			    statistics.add(labelValueBean);
+		    if (response != null) {
+			String responseString = null;
+			if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getType().intValue() == QuestionType.STR) {
+			    responseString = ((ResponseSTR) response).getResponse();
+			} else {
+			    responseString = ((ResponseNUM) response).getResponse();
 			}
-
+			if (!StringUtils.isEmpty(responseString)) {
+			    percentage = df.format(distributedTest.countResponses(studentTestQuestion.getTestQuestionOrder(),
+				    responseString) * java.lang.Math.pow(numOfStudentResponses, -1));
+			    LabelValueBean labelValueBean = new LabelValueBean(percentage, responseString);
+			    if (!statistics.contains(labelValueBean)) {
+				statistics.add(labelValueBean);
+			    }
+			}
 		    }
 		}
 	    }
