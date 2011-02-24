@@ -39,13 +39,8 @@ public class IMS_LIDQuestionCorrectionStrategy extends QuestionCorrectionStrateg
 			.indexOf(responseProcessing));
 		studentTestQuestion.setResponse(r);
 		studentTestQuestion.getSubQuestionByItem().setNextItemId(responseProcessing.getNextItem());
-	    } else {
-		ResponseLID r = (ResponseLID) studentTestQuestion.getResponse();
-		r.setIsCorrect(new Boolean[] { new Boolean(false) });
-		studentTestQuestion.setResponse(r);
-		studentTestQuestion.setTestQuestionMark(new Double(0));
+		return studentTestQuestion;
 	    }
-	    return studentTestQuestion;
 	}
 	studentTestQuestion.setTestQuestionMark(new Double(0));
 	return studentTestQuestion;
