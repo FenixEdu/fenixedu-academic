@@ -44,6 +44,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context.DegreeModuleScopeContext;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
+import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
@@ -529,11 +530,11 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	}
 
 	List<SelectItem> curricularYearItems = new ArrayList<SelectItem>(6);
-	curricularYearItems.add(new SelectItem(1, "1º Ano"));
-	curricularYearItems.add(new SelectItem(2, "2º Ano"));
-	curricularYearItems.add(new SelectItem(3, "3º Ano"));
-	curricularYearItems.add(new SelectItem(4, "4º Ano"));
-	curricularYearItems.add(new SelectItem(5, "5º Ano"));
+	curricularYearItems.add(new SelectItem(1, "1ï¿½ Ano"));
+	curricularYearItems.add(new SelectItem(2, "2ï¿½ Ano"));
+	curricularYearItems.add(new SelectItem(3, "3ï¿½ Ano"));
+	curricularYearItems.add(new SelectItem(4, "4ï¿½ Ano"));
+	curricularYearItems.add(new SelectItem(5, "5ï¿½ Ano"));
 
 	return curricularYearItems;
     }
@@ -890,7 +891,6 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
     private static final Comparator<SelectItem> COMPARATOR_BY_LABEL = new Comparator<SelectItem>() {
 
-	@Override
 	public int compare(SelectItem o1, SelectItem o2) {
 	    return o1.getLabel().compareTo(o2.getLabel());
 	}
@@ -962,22 +962,22 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	return orderByCriteriaItems;
     }
 
-    public Integer[] getChosenRoomsIDs() throws FenixFilterException, FenixServiceException {
+    public String[] getChosenRoomsIDs() throws FenixFilterException, FenixServiceException {
 	if (this.getViewState().getAttribute("chosenRoomsIDs") == null && this.getEvaluationID() != null) {
-	    List<Integer> associatedRooms = new ArrayList<Integer>();
+	    List<String> associatedRooms = new ArrayList<String>();
 
 	    for (AllocatableSpace room : ((WrittenEvaluation) this.getEvaluation()).getAssociatedRooms()) {
-		associatedRooms.add(room.getIdInternal());
+		associatedRooms.add(room.getIdInternal() + "-" + room.getExamCapacity());
 	    }
 
-	    Integer[] selectedRooms = {};
+	    String[] selectedRooms = {};
 	    this.setChosenRoomsIDs(associatedRooms.toArray(selectedRooms));
 	}
 
-	return (Integer[]) this.getViewState().getAttribute("chosenRoomsIDs");
+	return (String[]) this.getViewState().getAttribute("chosenRoomsIDs");
     }
 
-    public void setChosenRoomsIDs(Integer[] chosenRoomsIDs) {
+    public void setChosenRoomsIDs(String[] chosenRoomsIDs) {
 	this.getViewState().setAttribute("chosenRoomsIDs", chosenRoomsIDs);
     }
 
@@ -1051,18 +1051,32 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	    label.append(infoRoom.getTipo());
 	    label.append(" )");
 
-	    items.add(new SelectItem(infoRoom.getIdInternal(), label.toString()));
+	    final String value = getRoomWithExamCapacityString(infoRoom);
+	    final SelectItem selectItem = new SelectItem(value, label.toString());
+	    items.add(selectItem);
 	}
 
 	return items;
     }
-
+    private Integer getRoomID(String roomString) {
+	return Integer.parseInt(roomString.split("-")[0]);
+    }
+    
+    private String getRoomWithExamCapacityString(InfoRoom infoRoom) {
+	return infoRoom.getIdInternal() + "-" + infoRoom.getCapacidadeExame();
+    }
+    
+    private String getRoomWithExamCapacityString(Room room) {
+	return room.getIdInternal() + "-" + room.getCapacidadeExame();
+    }
+    
     public String getAssociatedRooms() throws FenixFilterException, FenixServiceException {
 	StringBuilder result = new StringBuilder();
 
 	if (this.getChosenRoomsIDs() != null && this.getChosenRoomsIDs().length != 0) {
-	    for (Integer chosenRoomID : this.getChosenRoomsIDs()) {
-		AllocatableSpace room = (AllocatableSpace) rootDomainObject.readResourceByOID(chosenRoomID);
+	    for (String chosenRoomString : this.getChosenRoomsIDs()) {
+		Integer chosenRoomID = getRoomID(chosenRoomString);
+		AllocatableSpace room = (AllocatableSpace) rootDomainObject.readResourceByOID(chosenRoomID );
 		result.append(room.getIdentification());
 		result.append("; ");
 	    }
@@ -1140,7 +1154,8 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	}
 
 	if (this.getChosenRoomsIDs() != null) {
-	    for (Integer roomID : this.getChosenRoomsIDs()) {
+	    for (String roomIDString : this.getChosenRoomsIDs()) {
+		Integer roomID = getRoomID(roomIDString);
 		roomsIDs.add(roomID.toString());
 	    }
 	}
@@ -1299,7 +1314,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
 			StringBuilder label = new StringBuilder();
 			label.append(curricularCourse.getDegreeCurricularPlan().getName());
-			label.append(" ").append(degreeModuleScope.getCurricularYear()).append(" º Ano");
+			label.append(" ").append(degreeModuleScope.getCurricularYear()).append(" ï¿½ Ano");
 			if (!degreeModuleScope.getBranch().equals("")) {
 			    label.append(" ").append(degreeModuleScope.getBranch());
 			}

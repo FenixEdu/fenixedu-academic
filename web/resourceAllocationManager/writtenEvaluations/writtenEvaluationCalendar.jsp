@@ -29,7 +29,7 @@
 		<h:outputText escape="false" value="<input alt='input.academicInterval' id='academicInterval' name='academicInterval' type='hidden' value='#{SOPEvaluationManagementBackingBean.academicInterval}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.curricularYearIDsParameterString' id='curricularYearIDsParameterString' name='curricularYearIDsParameterString' type='hidden' value='#{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}'/>"/>
 
-		
+
 		<h:outputText value="<p class='mbottom05'>#{bundleSOP['title.selected.degree']}:</p>" escape="false"/>
 
 		<h:outputText value="<table class='tstyle5 thlight thright thmiddle mtop05 mbottom2'>" escape="false"/>			
@@ -165,7 +165,7 @@
 								<fmt:formatDate pattern="HH:mm" value="${evaluation.beginningDate}"/>
 								<c:out value=" ${bundle['label.coordinator.to']} "/>
 								<fmt:formatDate pattern="HH:mm" value="${evaluation.endDate}"/>
-							</td>
+							</td> <!--  enrolled students  -->
 							<td><c:out value="${SOPEvaluationManagementBackingBean.executionCoursesEnroledStudents[evaluation.idInternal]}"/></td>
 							<td>
 								<c:if test="${SOPEvaluationManagementBackingBean.writtenEvaluationsFreeSpace[evaluation.idInternal] != 0}">
@@ -191,7 +191,7 @@
 									<c:out value=" - "/>
 								</td>
 							</c:if>
-							<td>
+							<td> <!-- rooms  -->
 								<c:if test="${SOPEvaluationManagementBackingBean.writtenEvaluationsRooms[evaluation.idInternal] != ''}">
 									<c:out value="${SOPEvaluationManagementBackingBean.writtenEvaluationsRooms[evaluation.idInternal]}"/>
 								</c:if>
@@ -199,7 +199,7 @@
 									<c:out value="-"/>
 								</c:if>
 							</td>
-							<td>
+							<td> <!-- links -->
 								<c:url var="editEvaluationURL" value="editWrittenTest.faces">
 									<c:param name="executionDegreeID" value="${SOPEvaluationManagementBackingBean.executionDegreeID}"/>
 									<c:param name="evaluationID" value="${evaluation.idInternal}"/>

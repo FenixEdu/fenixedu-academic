@@ -7,7 +7,47 @@
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ResourceAllocationManagerResources" var="bundleSOP"/>
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
-
+	<script src="<%= request.getContextPath() + "/javaScript/jquery/jquery.js" %>" type="text/javascript"></script> 
+	<script type="text/javascript">
+		function getRoomCount(checkbox) {
+			return 	parseInt(checkbox.value.split('-')[1]);
+		}
+		function setCount(divID, value) {
+			document.getElementById(divID).innerHTML = value;
+		}
+		function getCount(divID) {
+			value  = parseInt(document.getElementById(divID).innerHTML);
+			if (isNaN(value) || value == null) { 
+				value = 0;
+			}
+			return value;
+		}
+		
+		function init() {
+			inputs = document.getElementsByTagName('input');
+			value = getCount('totalCount');
+			setCount('diffCount',value);
+			for(var i=0;i < inputs.length; i++) { 
+				if (inputs[i].type == 'checkbox') { 
+					if (inputs[i].checked) {
+						value -= getRoomCount(inputs[i]);
+					} 
+				}
+			}
+			setCount('diffCount', value);
+		}
+		function updateCount(selected) {
+			value = parseInt(document.getElementById('diffCount').innerHTML);
+			if (selected.checked) {
+				 value -= getRoomCount(selected);
+			} else {
+				value += getRoomCount(selected);
+			}
+			setCount('diffCount', value);
+		}
+		$(document).ready(init);
+	</script>
+	
 	<h:outputFormat value="<em>#{bundleSOP['link.writtenEvaluationManagement']}</em>" escape="false"/>
 	<h:outputText value="<h2>#{bundleSOP['written.evaluation.associate.rooms']}</h2>" escape="false"/>
 
@@ -32,7 +72,7 @@
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.endMinuteHidden}"/>
 		<h:outputText escape="false" value="<input alt='input.academicInterval' id='academicInterval' name='academicInterval' type='hidden' value='#{SOPEvaluationManagementBackingBean.academicInterval}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.curricularYearIDsParameterString' id='curricularYearIDsParameterString' name='curricularYearIDsParameterString' type='hidden' value='#{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}'/>"/>
-
+		
 		<h:outputText escape="false" value="<input alt='input.year' id='year' name='year' type='hidden' value='#{SOPEvaluationManagementBackingBean.year}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.month' id='month' name='month' type='hidden' value='#{SOPEvaluationManagementBackingBean.month}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.day' id='day' name='day' type='hidden' value='#{SOPEvaluationManagementBackingBean.day}'/>"/>
@@ -45,6 +85,7 @@
 			<h:outputText value="<p>#{bundleSOP['property.aula.disciplina']}: <b>#{SOPEvaluationManagementBackingBean.executionCourse.nome}</b></p>" escape="false"/>
 			<h:outputText value="<p>#{bundleSOP['label.day']}: #{SOPEvaluationManagementBackingBean.selectedDateString}</p>" escape="false"/>
 			<h:outputText value="<p>#{bundleSOP['label.hours']}: #{SOPEvaluationManagementBackingBean.selectedBeginHourString} #{bundleSOP['label.at']} #{SOPEvaluationManagementBackingBean.selectedEndHourString}</p>" escape="false"/>
+			<h:outputText value="#{bundleSOP['label.number.students.enrolled']}:<div style='display: inline;' id='totalCount'>#{SOPEvaluationManagementBackingBean.evaluation.countStudentsEnroledAttendingExecutionCourses}</div> #{bundleSOP['label.number.missing.places']} : <div style='display: inline;' id='diffCount'>#{SOPEvaluationManagementBackingBean.evaluation.countStudentsEnroledAttendingExecutionCourses}</div>" escape="false"/>
 		<h:outputText value="</div>" escape="false"/>
 		
 		<h:outputText value="<p>" escape="false"/>
@@ -62,8 +103,8 @@
 		</h:panelGrid>
 
 
-		<h:selectManyCheckbox value="#{SOPEvaluationManagementBackingBean.chosenRoomsIDs}" layout="pageDirection" >
-			<f:selectItems value="#{SOPEvaluationManagementBackingBean.roomsSelectItems}" />	
+		<h:selectManyCheckbox value="#{SOPEvaluationManagementBackingBean.chosenRoomsIDs}" layout="pageDirection" onclick="updateCount(this);">
+			<f:selectItems value="#{SOPEvaluationManagementBackingBean.roomsSelectItems}"  />	
 		</h:selectManyCheckbox>
 
 
