@@ -23,8 +23,8 @@ public class IMS_LIDQuestionCorrectionStrategy extends QuestionCorrectionStrateg
 		    .getResponseProcessingInstructions(), ((ResponseLID) studentTestQuestion.getResponse()).getResponse());
 	    studentTestQuestion.setTestQuestionMark(responseProcessing.getResponseValue());
 	    ResponseLID r = (ResponseLID) studentTestQuestion.getResponse();
-	    r.setResponseProcessingIndex(studentTestQuestion.getSubQuestionByItem().getResponseProcessingInstructions().indexOf(
-		    responseProcessing));
+	    r.setResponseProcessingIndex(studentTestQuestion.getSubQuestionByItem().getResponseProcessingInstructions()
+		    .indexOf(responseProcessing));
 	    studentTestQuestion.setResponse(r);
 	    studentTestQuestion.getSubQuestionByItem().setNextItemId(responseProcessing.getNextItem());
 	    return studentTestQuestion;
@@ -32,12 +32,19 @@ public class IMS_LIDQuestionCorrectionStrategy extends QuestionCorrectionStrateg
 		&& studentTestQuestion.getSubQuestionByItem().getQuestionType().getCardinalityType().getType().intValue() == CardinalityType.SINGLE) {
 	    ResponseProcessing responseProcessing = getLIDResponseProcessing(studentTestQuestion.getSubQuestionByItem()
 		    .getResponseProcessingInstructions(), ((ResponseLID) studentTestQuestion.getResponse()).getResponse()[0]);
-	    studentTestQuestion.setTestQuestionMark(responseProcessing.getResponseValue());
-	    ResponseLID r = (ResponseLID) studentTestQuestion.getResponse();
-	    r.setResponseProcessingIndex(studentTestQuestion.getSubQuestionByItem().getResponseProcessingInstructions().indexOf(
-		    responseProcessing));
-	    studentTestQuestion.setResponse(r);
-	    studentTestQuestion.getSubQuestionByItem().setNextItemId(responseProcessing.getNextItem());
+	    if (responseProcessing != null) {
+		studentTestQuestion.setTestQuestionMark(responseProcessing.getResponseValue());
+		ResponseLID r = (ResponseLID) studentTestQuestion.getResponse();
+		r.setResponseProcessingIndex(studentTestQuestion.getSubQuestionByItem().getResponseProcessingInstructions()
+			.indexOf(responseProcessing));
+		studentTestQuestion.setResponse(r);
+		studentTestQuestion.getSubQuestionByItem().setNextItemId(responseProcessing.getNextItem());
+	    } else {
+		ResponseLID r = (ResponseLID) studentTestQuestion.getResponse();
+		r.setIsCorrect(new Boolean[] { new Boolean(false) });
+		studentTestQuestion.setResponse(r);
+		studentTestQuestion.setTestQuestionMark(new Double(0));
+	    }
 	    return studentTestQuestion;
 	}
 	studentTestQuestion.setTestQuestionMark(new Double(0));

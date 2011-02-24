@@ -27,14 +27,16 @@ public class IMS_STRQuestionCorrectionStrategy extends QuestionCorrectionStrateg
 	    Iterator questionCorrectionIt = questionCorrectionList.iterator();
 	    for (int i = 0; questionCorrectionIt.hasNext(); i++) {
 		ResponseProcessing responseProcessing = (ResponseProcessing) questionCorrectionIt.next();
-		if (isCorrectSTR(responseProcessing.getResponseConditions(), new String(((ResponseSTR) studentTestQuestion
-			.getResponse()).getResponse()))) {
-		    studentTestQuestion.setTestQuestionMark(responseProcessing.getResponseValue());
-		    ResponseSTR r = (ResponseSTR) studentTestQuestion.getResponse();
-		    r.setResponseProcessingIndex(Integer.valueOf(i));
-		    studentTestQuestion.setResponse(r);
-		    studentTestQuestion.getSubQuestionByItem().setNextItemId(responseProcessing.getNextItem());
-		    return studentTestQuestion;
+		if (responseProcessing != null) {
+		    if (isCorrectSTR(responseProcessing.getResponseConditions(),
+			    new String(((ResponseSTR) studentTestQuestion.getResponse()).getResponse()))) {
+			studentTestQuestion.setTestQuestionMark(responseProcessing.getResponseValue());
+			ResponseSTR r = (ResponseSTR) studentTestQuestion.getResponse();
+			r.setResponseProcessingIndex(Integer.valueOf(i));
+			studentTestQuestion.setResponse(r);
+			studentTestQuestion.getSubQuestionByItem().setNextItemId(responseProcessing.getNextItem());
+			return studentTestQuestion;
+		    }
 		}
 	    }
 	}
