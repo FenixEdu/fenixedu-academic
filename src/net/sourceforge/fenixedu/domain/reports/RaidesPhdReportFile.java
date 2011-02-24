@@ -126,6 +126,8 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	spreadsheet.setHeader("data nascimento");
 	spreadsheet.setHeader("país nascimento");
 	spreadsheet.setHeader("país nacionalidade");
+	spreadsheet.setHeader("sigla programa doutoral");
+	spreadsheet.setHeader("programa doutoral");
 	spreadsheet.setHeader("tipo curso");
 	spreadsheet.setHeader("nome curso");
 	spreadsheet.setHeader("sigla curso");
@@ -163,11 +165,16 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	final Registration registration = process.getRegistration();
 	final boolean concluded = process.isConcluded();
 	final LocalDate conclusionDate = process.getConclusionDate();
-	final YearMonthDay registrationConclusionDate = registration != null ? registration.getLastStudentCurricularPlan()
+
+	if (registration != null && !registration.isBolonha()) {
+	    return;
+	}
+
+	YearMonthDay registrationConclusionDate = registration != null ? registration.getLastStudentCurricularPlan()
 		.getCycle(CycleType.THIRD_CYCLE).getConclusionDate() : null;
 
 	row.setCell(String.valueOf(registration != null && !registration.isCanceled()));
-	
+
 	// Ciclo
 	row.setCell(CycleType.THIRD_CYCLE.getDescription());
 
@@ -175,8 +182,13 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	row.setCell(String.valueOf(process.isConcluded()));
 
 	// Média do Ciclo
-	row.setCell(concluded ? registration.getLastStudentCurricularPlan().getCycle(CycleType.THIRD_CYCLE)
-		.getCurriculum(registrationConclusionDate.toDateTimeAtMidnight()).getAverage().toPlainString() : "n/a");
+	String grade = concluded ? process.getFinalGrade().getLocalizedName() : "n/a";
+	if (concluded && registration != null) {
+	    grade += " "
+		    + registration.getLastStudentCurricularPlan().getCycle(CycleType.THIRD_CYCLE)
+			    .getCurriculum(registrationConclusionDate.toDateTimeAtMidnight()).getAverage().toPlainString();
+	}
+	row.setCell(grade);
 
 	// Data de conclusão
 	row.setCell(conclusionDate != null ? conclusionDate.toString("dd-MM-yyyy") : "");
@@ -209,6 +221,12 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	// País de Nacionalidade
 	row.setCell(graduate.getCountry() != null ? graduate.getCountry().getName() : "n/a");
 
+	// Sigla programa doutoral
+	row.setCell(process.getPhdProgram().getAcronym());
+
+	// Programa doutoral
+	row.setCell(process.getPhdProgram().getName().getContent());
+
 	// Tipo Curso
 	row.setCell(registration != null ? registration.getDegreeType().getLocalizedName() : "n/a");
 
@@ -222,7 +240,7 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	row.setCell("não determinável");
 
 	// Nº de anos lectivos de inscrição no Curso actual
-	if(registration != null) {
+	if (registration != null) {
 	    row.setCell(calculateNumberOfEnrolmentYears(registration));
 	} else {
 	    row.setCell("n/a");
@@ -246,8 +264,8 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	if (candidacyInformationBean.getCountryOfResidence() != null) {
 	    row.setCell(candidacyInformationBean.getCountryOfResidence().getName());
 	} else {
-	    row.setCell(process.getStudent().getPerson().getCountryOfResidence() != null ? process.getStudent()
-		    .getPerson().getCountryOfResidence().getName() : "");
+	    row.setCell(process.getStudent().getPerson().getCountryOfResidence() != null ? process.getStudent().getPerson()
+		    .getCountryOfResidence().getName() : "");
 	}
 
 	// Distrito de Residência Permanente
