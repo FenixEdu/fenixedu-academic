@@ -51,7 +51,7 @@
 			<html:link page="/showNotNeedToEnroll.do?method=prepare">
 				<bean:message key="link.manager.notNeedToEnrol" bundle="MANAGER_RESOURCES" />
 			</html:link>
-		</li> -->
+		</li>-->
 		<li>
 			<html:link page="/curricularCourseEquivalencies.do?method=prepare">
 				<bean:message key="title.equivalencies" bundle="MANAGER_RESOURCES" />

@@ -171,7 +171,7 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.AssociateNewFunctionToPerson</implementationClass>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="ManagerOrCientificCouncilAuthentication"/>
+            <chain name="ManagerOrOperatorOrCientificCouncilAuthentication"/>
         </filterChains>
     </service>
 
@@ -1177,7 +1177,7 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.DeletePersonFunction</implementationClass>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="ManagerOrCientificCouncilAuthentication"/>
+            <chain name="ManagerOrOperatorOrCientificCouncilAuthentication"/>
         </filterChains>
     </service>
 
@@ -1688,7 +1688,7 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.EditPersonFunction</implementationClass>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="ManagerOrCientificCouncilAuthentication"/>
+            <chain name="ManagerOrOperatorOrCientificCouncilAuthentication"/>
         </filterChains>
     </service>
 

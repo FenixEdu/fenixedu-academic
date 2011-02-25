@@ -37,11 +37,11 @@
 				<bean:message key="link.operator.newPassword" bundle="MANAGER_RESOURCES" />
 			</html:link>
 		</li>
-		<!-- <li>
-			<html:link page="/alumni.do?method=prepareIdentityRequestsList">
+		<li>
+			<html:link module="/manager" page="/functionsManagement/personSearchForFunctionsManagement.faces">
 				<bean:message key="link.functions.management" bundle="MANAGER_RESOURCES" />
 			</html:link>
-		</li>-->
+		</li>
     
 	<li class="navheader">Pessoas Externas-Convidadas</li>
     	<li>

@@ -426,6 +426,13 @@
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
+    
+    <filterChain>
+        <name>ManagerOrOperatorOrCientificCouncilAuthentication</name>
+        <expression>ManagerAuthorization || OperatorAuthorization || ScientificCouncilAuthorization</expression>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
 
     <filterChain>
         <name>ManagerOrCoordinatorAuthorization</name>
