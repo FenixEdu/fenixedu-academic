@@ -25,18 +25,18 @@ import net.sourceforge.fenixedu.util.tests.ResponseProcessing;
 public abstract class QuestionCorrectionStrategy implements IQuestionCorrectionStrategy {
 
     protected boolean isCorrectLID(List responseCondicions, String[] studentResponse) {
-	for (int st = 0; st < studentResponse.length; st++) {
+
+	for (int rc = 0; rc < responseCondicions.size(); rc++) {
+	    ResponseCondition responseCondition = (ResponseCondition) responseCondicions.get(rc);
 	    boolean match = false;
-	    for (int rc = 0; rc < responseCondicions.size(); rc++) {
-		ResponseCondition responseCondition = (ResponseCondition) responseCondicions.get(rc);
-		// if (responseCondition.getCondition().intValue() ==
-		// ResponseCondition.VAREQUAL)
+	    for (int st = 0; st < studentResponse.length; st++) {
 		if (responseCondition.isCorrectLID(studentResponse[st])) {
 		    match = true;
 		}
 	    }
-	    if (!match)
+	    if (!match) {
 		return false;
+	    }
 	}
 	return true;
     }
@@ -138,8 +138,8 @@ public abstract class QuestionCorrectionStrategy implements IQuestionCorrectionS
 		return "Pergunta " + studentTestQuestion.getTestQuestionOrder().toString() + ": Formato de resposta inválido";
 	    }
 	} else if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getRender() instanceof RenderChoise) {
-	    if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getCardinalityType().getType().equals(
-		    new Integer(CardinalityType.MULTIPLE))) {
+	    if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getCardinalityType().getType()
+		    .equals(new Integer(CardinalityType.MULTIPLE))) {
 		int emptyOptionIndex = getEmptyOptionIndex(studentTestQuestion.getSubQuestionByItem().getOptions());
 		if (emptyOptionIndex != -1) {
 		    if (responseIsEmptyAndOther(((ResponseLID) newResponse).getResponse(), emptyOptionIndex))
