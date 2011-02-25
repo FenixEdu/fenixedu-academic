@@ -12,6 +12,7 @@ import org.joda.time.DateTime;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
@@ -104,7 +105,7 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
 		addCell("Nome", item.getStudent().getName());
 		addCell("Email", item.getStudent().getPerson().getDefaultEmailAddressValue());
 		addCell("Curso", reg.getDegree().getSigla());
-		addCell("Ano Curricular", reg.getCurricularYear());
+		addCell("Ano Curricular", reg.getCurriculum(ExecutionYear.readCurrentExecutionYear(), CycleType.SECOND_CYCLE).getCurricularYear());
 		addCell("Número de inscrições", registrationLength);
 		for(int i = 0; i < sessionPreferences.length; i++) {
 		    addCell(sessionsList[i].getDescription(),sessionPreferences[i]+1);

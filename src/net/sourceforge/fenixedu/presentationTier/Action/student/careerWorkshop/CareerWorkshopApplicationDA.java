@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -59,8 +60,14 @@ public class CareerWorkshopApplicationDA extends FenixDispatchAction {
     public ActionForward submitApplication(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	
-	boolean comingFromSubmission = true;
 	CareerWorkshopApplication application = getDomainObject(request, "applicationExternalId");
+	
+	if(isApplicationPeriodExpired(application)) {
+	    addActionMessage("error", request, "error.careerWorkshops.applicationPeriodExpired");
+	    return prepare(actionMapping, actionForm, request, response);
+	}
+	
+	boolean comingFromSubmission = true;
 	String[] sessionPreferences = new String[CareerWorkshopSessions.values().length];
 	for(CareerWorkshopSessions careerWorkshopSessions : CareerWorkshopSessions.values()) {
 	    sessionPreferences[careerWorkshopSessions.ordinal()] = (String)getFromRequest(request, careerWorkshopSessions.name());
@@ -79,6 +86,11 @@ public class CareerWorkshopApplicationDA extends FenixDispatchAction {
 
 	request.setAttribute("application", application);
 	return actionMapping.findForward("careerWorkshopApplicationForm");
+    }
+    
+    private boolean isApplicationPeriodExpired(CareerWorkshopApplication application) {
+	DateTime thisInstant = new DateTime();
+	return thisInstant.isAfter(application.getCareerWorkshopApplicationEvent().getEndDate());
     }
     
     public ActionForward presentConfirmation(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
@@ -101,12 +113,21 @@ public class CareerWorkshopApplicationDA extends FenixDispatchAction {
 	
 	CareerWorkshopConfirmationBean bean = getRenderedObject("confirmationBean");
 	CareerWorkshopConfirmation confirmation = AbstractDomainObject.fromExternalId(bean.getExternalId());
+	if(isConfirmationPeriodExpired(confirmation)) {
+	    addActionMessage("error", request, "error.careerWorkshops.confirmationPeriodExpired");
+	    return prepare(actionMapping, actionForm, request, response);
+	}
 	confirmation.setConfirmationCode(bean.getConfirmationCode());
 	confirmation.setConfirmation(true);
 	confirmation.sealConfirmation();
 	
 	return prepare(actionMapping, actionForm, request, response);
     
+    }
+    
+    private boolean isConfirmationPeriodExpired(CareerWorkshopConfirmation confirmation) {
+	DateTime thisInstant = new DateTime();
+	return thisInstant.isAfter(confirmation.getCareerWorkshopConfirmationEvent().getEndDate());
     }
     
     public ActionForward declineConfirmation(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,

@@ -60,7 +60,13 @@
 		<fr:property name="confirmationKey(delete)" value="label.manageCareerWorkshop.cancellationConfirmation"/>
 		<fr:property name="confirmationBundle(delete)" value="DIRECTIVE_COUNCIL_RESOURCES"/>
 		<fr:property name="confirmationArgs(delete)" value="<%="${formattedBeginDate},${formattedEndDate}"%>"/>
-		
+		<%--
+		<fr:property name="linkFormat(purgeConfirmations)" value="<%="/careerWorkshopApplication.do?method=purgeConfirmations&eventId=${externalId}"%>"/>
+		<fr:property name="visibleIf(purgeConfirmations)" value="isConfirmationPeriodAttached"/>
+		<fr:property name="order(purgeConfirmations)" value="5" />
+		<fr:property name="key(purgeConfirmations)" value="label.manageCareerWorkshop.purgeConfirmations" />
+		<fr:property name="bundle(purgeConfirmations)" value="DIRECTIVE_COUNCIL_RESOURCES" />
+		--%>
 		<fr:property name="classes" value="tstyle1 thleft thlight mvert05" />
 		<fr:property name="columnClasses" value=",,,,,,,,tdclear tderror1" />
 	</fr:layout>

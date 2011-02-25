@@ -14,6 +14,18 @@
 
 <h3 class="mbottom025"><bean:message key="label.careerWorkshop.openApplicationEvents" bundle="STUDENT_RESOURCES"/></h3>
 
+<logic:messagesPresent message="true" property="error">
+	<div class="error0" style="padding: 0.5em;">
+	<p class="mvert0"><strong><bean:message bundle="STUDENT_RESOURCES" key="label.careerWorkshop.achtung" />:</strong></p>
+	<ul class="mvert05">
+		<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES" property="error">
+			<li><span><bean:write name="messages" /></span></li>
+		</html:messages>
+	</ul>
+	</div>
+	<bean:define id="noFurtherAccess" value="true"/>
+</logic:messagesPresent>
+
 <logic:empty name="openApplicationEvents" >
     <p><em><bean:message key="label.careerWorkshop.noOpenApplicationEvents" bundle="STUDENT_RESOURCES"/></em></p>
 </logic:empty>

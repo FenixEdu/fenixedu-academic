@@ -1,10 +1,14 @@
 package net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.careerWorkshop;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopApplicationEvent;
+import net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopConfirmation;
 import net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopConfirmationEvent;
 import net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopConfirmationSpreadsheet;
 import net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopSpreadsheet;
@@ -15,6 +19,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -128,6 +133,18 @@ public class ManageCareerWorkshopApplicationsDA extends FenixDispatchAction {
 	    }
 	}
 	return null;
+    }
+    
+    public ActionForward purgeConfirmations(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	final String eventExternalId = request.getParameter("eventId");
+	CareerWorkshopApplicationEvent application = AbstractDomainObject.fromExternalId(eventExternalId);
+	List<CareerWorkshopConfirmation> confirmations = new ArrayList<CareerWorkshopConfirmation>(application.getCareerWorkshopConfirmationEvent().getCareerWorkshopConfirmations());
+	for(CareerWorkshopConfirmation confToDelete : confirmations) {
+	    confToDelete.delete();
+	}
+	
+	return prepare(actionMapping, actionForm, request, response);
     }
 
 }

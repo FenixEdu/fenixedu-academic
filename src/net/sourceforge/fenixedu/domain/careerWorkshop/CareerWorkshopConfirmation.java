@@ -25,6 +25,15 @@ public class CareerWorkshopConfirmation extends CareerWorkshopConfirmation_Base 
     }
     
     @Service
+    public void delete() {
+	removeStudent();
+	removeCareerWorkshopApplication();
+	removeCareerWorkshopConfirmationEvent();
+	removeRootDomainObject();
+	deleteDomainObject();
+    }
+    
+    @Service
     @Override
     public void setConfirmation(Boolean confirmation) {
         super.setConfirmation(confirmation);

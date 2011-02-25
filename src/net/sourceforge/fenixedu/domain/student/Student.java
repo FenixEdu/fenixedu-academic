@@ -1808,24 +1808,63 @@ public class Student extends Student_Base {
     }
 
     public boolean isEligibleForCareerWorkshopApplication() {
-	/*if (hasActiveSecondCycleRegistration()) {
-	    for (CareerWorkshopApplicationEvent applicationEvents : RootDomainObject.getInstance()
-		    .getCareerWorkshopApplicationEvents()) {
-		if (applicationEvents.isApplicationEventOpened()) {
+	for(Registration registration : getActiveRegistrations()) {
+	    
+	    if(isMasterDegreeOnly(registration))
+		return true;
+	    
+	    if(isIntegratedMasterDegree(registration)) {
+		if(hasConcludedFirstCycle(registration)) {
+		    return true;
+		}
+		if(hasAnyOtherConcludedFirstCycle(registration)) {
 		    return true;
 		}
 	    }
 	}
 	return false;
-	*/
-	return hasActiveSecondCycleRegistration();
     }
-
-    private boolean hasActiveSecondCycleRegistration() {
-	ExecutionSemester presentSemester = ExecutionSemester.readActualExecutionSemester();
-	for (Registration registration : getActiveRegistrationsIn(presentSemester)) {
-	    if (registration.getStudentCurricularPlan(presentSemester).isSecondCycle()) {
-		return true;
+    
+    private boolean isMasterDegreeOnly(Registration registration) {
+	return (registration.getDegree().getDegreeType() == DegreeType.BOLONHA_MASTER_DEGREE);
+    }
+    
+    private boolean isIntegratedMasterDegree(Registration registration) {
+	return (registration.getDegree().getDegreeType() == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+    }
+    
+    private boolean hasConcludedFirstCycle(Registration registration) {
+	if(registration.getLastStudentCurricularPlan().getFirstCycle() == null)
+	    return false;
+	if(!registration.getLastStudentCurricularPlan().getFirstCycle().isConcluded())
+	    return false;
+	return true;
+    }
+    
+    private boolean hasAnyOtherConcludedFirstCycle(Registration registration) {
+	List<Registration> otherRegistrations = new ArrayList<Registration>(getAllRegistrations());
+	otherRegistrations.remove(registration);
+	//Coming from other school
+	if(otherRegistrations.isEmpty()) {
+	    return true;
+	}
+	
+	//Has any 1st Cycle (bologna or classic, half IM) concluded Degree
+	for(Registration reg : otherRegistrations) {
+	    if(reg.getDegree().getDegreeType() == DegreeType.DEGREE) {
+		if(reg.isConcluded()) {
+		    return true;
+		}
+	    }
+	    if(reg.getDegree().getDegreeType() == DegreeType.BOLONHA_DEGREE) {
+		if(reg.isConcluded()) {
+		    return true;
+		}
+	    }
+	    if(isIntegratedMasterDegree(reg)) {
+		if(hasConcludedFirstCycle(reg)) {
+		    return true;
+		}
 	    }
 	}
 	return false;

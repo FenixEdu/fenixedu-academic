@@ -59,21 +59,22 @@ public class CareerWorkshopConfirmationEvent extends CareerWorkshopConfirmationE
     }
     
     public int getNumberOfConfirmations() {
-	int result = 0;
+	/*int result = 0;
 	for(CareerWorkshopConfirmation confirmation : getCareerWorkshopConfirmations()) {
 	    if(confirmation.getSealStamp() != null) {
 		result++;
 	    }
 	}
-	return result;
+	return result;*/
+	return getCareerWorkshopConfirmationsCount();
     }
     
     public CareerWorkshopConfirmationSpreadsheet getConfirmations() {
-	//if (getLastUpdate() == null || getConfirmations() == null)
+	if (getLastUpdate() == null || getConfirmations() == null)
 	    generateSpreadsheet();
-	//if (getLastUpdate().isAfter(getConfirmations().getUploadTime())) {
-	//    generateSpreadsheet();
-	//}
+	if (getLastUpdate().isAfter(getConfirmations().getUploadTime())) {
+	    generateSpreadsheet();
+	}
 	return super.getConfirmations();
     }
 
@@ -92,14 +93,24 @@ public class CareerWorkshopConfirmationEvent extends CareerWorkshopConfirmationE
 	    protected void makeLine(CareerWorkshopConfirmation item) {
 		DateTime timestamp = item.getSealStamp();
 
-		addCell("Data de confirmação", timestamp.toString("dd-MM-yyyy"));
-		addCell("Hora de confirmação", timestamp.toString("hh:mm"));
-		addCell("Confirmou?", (item.getConfirmation() ? "SIM" : "Não"));
+		addCell("Data de confirmação", (timestamp == null ? "" : timestamp.toString("dd-MM-yyyy")));
+		addCell("Hora de confirmação", (timestamp == null ? "" : timestamp.toString("hh:mm")));
+		addCell("Confirmou?", getConfirmationStatus(item));
 		addCell("Número aluno", item.getStudent().getNumber());
 		addCell("Nome", item.getStudent().getName());
 		addCell("Email", item.getStudent().getPerson().getDefaultEmailAddressValue());
 		addCell("Código", item.getConfirmationCode());
 		
+	    }
+	    
+	    protected String getConfirmationStatus(CareerWorkshopConfirmation item) {
+		if(item.getConfirmation() == null) {
+		    return "Não";
+		}
+		if(!item.getConfirmation()) {
+		    return "Não";
+		}
+		return "SIM";
 	    }
 
 	};
@@ -114,17 +125,27 @@ public class CareerWorkshopConfirmationEvent extends CareerWorkshopConfirmationE
 	}
     }
     
+    @Service
     private List<CareerWorkshopConfirmation> getProcessedList() {
-	List<CareerWorkshopConfirmation> processedConfirmations = new ArrayList<CareerWorkshopConfirmation>();
-	for(CareerWorkshopConfirmation confirmation : getCareerWorkshopConfirmations()) {
-	    if(confirmation.getSealStamp() != null) {
-		processedConfirmations.add(confirmation);
-	    }
+	for(CareerWorkshopApplication application : getCareerWorkshopApplicationEvent().getCareerWorkshopApplications()) {
+	    if(!(application.getCareerWorkshopConfirmation() == null))
+		continue;
+	    if(application.getSealStamp() == null)
+		continue;
+	    
+	    new CareerWorkshopConfirmation(application.getStudent(), this, application);
 	}
+	List<CareerWorkshopConfirmation> processedConfirmations = new ArrayList<CareerWorkshopConfirmation>(getCareerWorkshopConfirmations());
 	Collections.sort(processedConfirmations, new Comparator<CareerWorkshopConfirmation>() {
 
 	    @Override
 	    public int compare(CareerWorkshopConfirmation o1, CareerWorkshopConfirmation o2) {
+		if(o1.getSealStamp() == null) {
+		    return 1;
+		}
+		if(o2.getSealStamp() == null) {
+		    return -1;
+		}
 		if(o1.getSealStamp().isBefore(o2.getSealStamp())) {
 		    return -1;
 		}
