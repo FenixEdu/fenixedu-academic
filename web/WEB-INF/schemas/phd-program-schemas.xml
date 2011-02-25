@@ -534,6 +534,10 @@
 		<property name="format" value="${year}" />
         <property name="saveOptions" value="true"/>
 	</slot>
+	<slot name="phdProgram" layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProgramsProvider" />
+		<property name="format" value="${name}" />
+	</slot>
 	<slot name="processState" layout="menu-select">
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState" />
 		<property name="format" value="${localizedName}" />
@@ -612,7 +616,7 @@
 	<slot name="title" />
 	<slot name="qualification" />
 	<slot name="category" />
-	<slot name="workLocation" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="workLocation" />
 	<slot name="institution" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="address" />
 	<slot name="email">
@@ -634,7 +638,7 @@
 		<property name="minChars" value="4"/>				
 	</slot>
 	<slot name="title" />
-	<slot name="workLocation" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="workLocation" />
 	<slot name="institution" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 </schema>
 

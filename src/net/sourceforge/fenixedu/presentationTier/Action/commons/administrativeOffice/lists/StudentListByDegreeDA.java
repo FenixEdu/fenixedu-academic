@@ -367,6 +367,9 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 		spreadsheet.addCell(registrationWithStateForExecutionYearBean.getPersonalDataAuthorization());
 
 		addBranchsInformation(spreadsheet, studentCurricularPlan);
+
+		spreadsheet.addCell(registration.getEnrolments(executionYear.getExecutionSemesterFor(1)).size());
+		spreadsheet.addCell(registration.getEnrolments(executionYear.getExecutionSemesterFor(2)).size());
 	    }
 	}
     }
@@ -501,6 +504,8 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 
 	    spreadsheet.addHeader(getResourceMessage("label.main.branch"));
 	    spreadsheet.addHeader(getResourceMessage("label.minor.branch"));
+	    spreadsheet.addHeader(getResourceMessage("label.student.enrolments.number.first.semester"));
+	    spreadsheet.addHeader(getResourceMessage("label.student.enrolments.number.second.semester"));
 	}
     }
 

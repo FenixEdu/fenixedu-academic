@@ -216,13 +216,18 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 		throw new PreConditionNotValidException();
 	    }
 
+	    if (!process.isSentToCoordinator() && !process.isSentToScientificCouncil()) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (!process.getCandidacy().hasEvent() || process.getCandidacy().getEvent().isCancelled()) {
+		return;
+	    }
+
 	    if (!process.hasAnyPaymentForCandidacy()) {
 		throw new PreConditionNotValidException();
 	    }
 
-	    if (!process.isSentToCoordinator() && !process.isSentToScientificCouncil()) {
-		throw new PreConditionNotValidException();
-	    }
 	}
 
 	@Override

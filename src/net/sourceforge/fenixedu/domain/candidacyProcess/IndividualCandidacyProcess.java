@@ -185,7 +185,11 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     }
 
     public boolean isCandidacyValid() {
-	return !isCandidacyCancelled() && isCandidacyDebtPayed();
+	return !isCandidacyCancelled() && (isEventCanceledOrNoEvent() || isCandidacyDebtPayed());
+    }
+
+    private boolean isEventCanceledOrNoEvent() {
+	return !getCandidacy().hasEvent() || getCandidacy().getEvent().isCancelled();
     }
 
     public boolean isCandidacyInStandBy() {

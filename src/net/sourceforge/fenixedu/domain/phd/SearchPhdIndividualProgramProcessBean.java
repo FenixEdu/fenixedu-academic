@@ -49,6 +49,8 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
 
     private PhdProgramCandidacyProcessState candidacyProcessState;
 
+    private PhdProgram phdProgram;
+
     public String getSearchValue() {
 	return searchValue;
     }
@@ -239,6 +241,17 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
 		}
 	    });
 	}
+	
+	if(getPhdProgram() != null) {
+	    result.add(new InlinePredicate<PhdIndividualProgramProcess, PhdProgram>(getPhdProgram()) {
+
+		@Override
+		public boolean eval(PhdIndividualProgramProcess process) {
+		    return process.getPhdProgram() == getValue();
+		}
+		
+	    });
+	}
 
 	if (getProcessState() != null) {
 	    result.add(new InlinePredicate<PhdIndividualProgramProcess, PhdIndividualProgramProcessState>(getProcessState()) {
@@ -299,5 +312,13 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
 
     public void setPhdStudentNumber(Integer phdStudentNumber) {
 	this.phdStudentNumber = phdStudentNumber;
+    }
+
+    public PhdProgram getPhdProgram() {
+	return phdProgram;
+    }
+
+    public void setPhdProgram(PhdProgram phdProgram) {
+	this.phdProgram = phdProgram;
     }
 }
