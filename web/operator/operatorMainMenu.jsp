@@ -47,11 +47,11 @@
 		</li>
 		
 	<li class="navheader">Equivalências</li>
-		<!--<li>
+		<!-- <li>
 			<html:link page="/showNotNeedToEnroll.do?method=prepare">
 				<bean:message key="link.manager.notNeedToEnrol" bundle="MANAGER_RESOURCES" />
 			</html:link>
-		</li>-->
+		</li> -->
 		<li>
 			<html:link page="/curricularCourseEquivalencies.do?method=prepare">
 				<bean:message key="title.equivalencies" bundle="MANAGER_RESOURCES" />
@@ -59,21 +59,21 @@
 		</li>
 	
 	<li class="navheader">Gestão de Pessoal</li>
-		<!--<li>
-			<html:link page="/curricularCourseEquivalencies.do?method=prepare">
+		<li>
+			<html:link page="/studentsManagement.do?method=show">
 				<bean:message key="link.manager.studentsManagement" bundle="MANAGER_RESOURCES" />
 			</html:link>
-		</li>-->
+		</li>
 		<li>
 			<html:link page="/personManagement.do?method=firstPage">
 				<bean:message key="label.manager.personManagement" bundle="MANAGER_RESOURCES" />
 			</html:link>
 		</li>
-		<!--<li>
-			<html:link page="/curricularCourseEquivalencies.do?method=prepare">
+		<!-- <li>
+			<html:link page="/teachersManagement.do?method=firstPage">
 				<bean:message key="label.manager.teachersManagement" bundle="MANAGER_RESOURCES" />
 			</html:link>
-		</li>-->
+		</li> -->
 		<li>
 			<html:link page="/manageHolidays.do?method=prepare&page=0">
 				<bean:message key="label.manage.holidays" bundle="MANAGER_RESOURCES" />

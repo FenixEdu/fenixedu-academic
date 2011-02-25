@@ -158,4 +158,36 @@
 		<put name="body" value="/manager/personManagement/createNewPersonInvitation.jsp" />
 	</definition>	
 	
+	<!-- ========== STUDENTS MANAGEMENT ========== -->
+	<definition name="show-student-curricular-plan" extends="definition.operator.two-column" >
+		<put name="body" value="/manager/studentCurricularPlan.jsp" />
+	</definition>
+	<definition name="create-student-curricular-plan" extends="definition.operator.two-column" >
+		<put name="body" value="/manager/createStudentCurricularPlan.jsp" />
+	</definition>
+	<definition name="transfer-enrollments" extends="definition.operator.two-column" >
+		<put name="body" value="/manager/transferEnrollments.jsp" />
+	</definition>
+	<definition name="chooseDegreeCurricularPlan" extends="definition.operator.two-column" >
+		<put name="body" value="/manager/student/classifications/chooseDegreeCurricularPlan.jsp" />
+	</definition>
+	
+	<!-- ========== TEACHERS MANAGEMENT ========== -->
+	<definition name="df.teacherManagement.firstPage" extends="definition.operator.two-column" >
+		<put name="body" value="/manager/teachersManagement/welcomeScreen.jsp" />
+		<put name="navLocal" value="/operator/teacherManagement/teacherManagementMainMenu.jsp" />
+	</definition>
+	<definition name="df.page.main-page" extends="definition.operator.two-column" >
+		<put name="body" value="/operator/welcomeScreen.jsp" />
+	</definition>
+	<definition name="df.page.editCategories" extends="df.teacherManagement.firstPage" >
+		<put name="body" value="/manager/teachersManagement/editCategories.jsp" />
+	</definition>
+	<definition name="df.page.prepareDissociateEC" extends="df.teacherManagement.firstPage" >
+		<put name="body" value="/manager/teachersManagement/prepareDissociateEC.jsp" />
+	</definition>
+	<definition name="df.page.prepareDissociateECShowProfShipsAndRespFor" extends="df.teacherManagement.firstPage" >
+		<put name="body" value="/manager/teachersManagement/prepareDissociateECShowProfShipsAndRespFor.jsp" />
+	</definition>	
+	
 </tiles-definitions>	

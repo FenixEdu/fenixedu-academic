@@ -20,7 +20,7 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class DeleteStudentCurricularPlan extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static void run(final Integer studentCurricularPlanId) throws DomainException, NonExistingServiceException {
 	final StudentCurricularPlan studentCurricularPlan = rootDomainObject

@@ -80,6 +80,52 @@
 			<form-property name="curricularCoursesID" type="java.lang.Integer[]"/>
 			<form-property name="studentCurricularPlanID" type="java.lang.String"/>
 		</form-bean>
+		
+		<form-bean name="studentCurricularPlanForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+				dynamic="true">
+			<form-property name="page" type="java.lang.Integer"/>
+			<form-property name="number" type="java.lang.String"/>
+			<form-property name="degreeType" type="java.lang.String"/>
+			<form-property name="studentCurricularPlanState" type="java.lang.String"/>
+			<form-property name="selectedStudentCurricularPlanId" type="java.lang.String"/>
+			<form-property name="degreeCurricularPlanId" type="java.lang.String"/>
+			<form-property name="startDate" type="java.lang.String"/>
+			<form-property name="enrollmentIDsToTransfer" type="java.lang.String[]"/>
+			<form-property name="selectedCurriculumGroupID" type="java.lang.Integer"/>
+		</form-bean>
+		
+		<form-bean name="createClassificationsForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+				dynamic="true">
+			<form-property name="entryGradeLimits" type="java.lang.Integer[]"/>
+			<form-property name="approvationRatioLimits" type="java.lang.Integer[]"/>
+			<form-property name="arithmeticMeanLimits" type="java.lang.Integer[]"/>
+			<form-property name="method" type="java.lang.String"/>
+			<form-property name="degreeCurricularPlanID" type="java.lang.Integer"/>
+		</form-bean>
+		
+		<form-bean name="teacherManagementForm"
+	      		type="org.apache.struts.validator.DynaValidatorForm"
+	      		dynamic="true">
+			<form-property name="teacherNumber" type="java.lang.String"/>
+			<form-property name="deletePS" type="java.lang.Boolean"/>
+			<form-property name="deleteRF" type="java.lang.Boolean"/>
+	    	<form-property name="professorshipsListSize" type="java.lang.Integer" />
+		    <form-property name="responsibleForListSize" type="java.lang.Integer" />
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+	    </form-bean>
+	    
+	    <form-bean name="teacherManagementForm"
+      			type="org.apache.struts.validator.DynaValidatorForm"
+      			dynamic="true">
+			<form-property name="teacherNumber" type="java.lang.String"/>
+			<form-property name="deletePS" type="java.lang.Boolean"/>
+			<form-property name="deleteRF" type="java.lang.Boolean"/>
+	    	<form-property name="professorshipsListSize" type="java.lang.Integer" />
+		    <form-property name="responsibleForListSize" type="java.lang.Integer" />
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+	    </form-bean>   
 
      </form-beans>
     
@@ -333,6 +379,68 @@
 			<forward name="prepareEditInvitationDetails" path="prepare-change-invitation-details"/>										
 			<forward name="prepareCreateNewPersonInvitation" path="prepare-create-new-person-invitation"/>										
 		</action>
+		
+		<!-- ========== STUDENT MANAGEMENT ========== -->	
+		<action path="/studentsManagement"
+				parameter="method"
+				validate="true"
+				input="/studentsManagement.do?method=show&amp;page=0"
+				name="studentCurricularPlanForm"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageStudentCurricularPlanDA"
+				scope="request">
+			<exception type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException"
+					key="exception.student.does.not.exist"
+					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException"
+					key="student.curricular.plan.already.exists"
+					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception type="net.sourceforge.fenixedu.domain.exceptions.DomainException"
+					key="error.enrolmentEvaluation.cannot.be.deleted"
+					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<forward name="show" path="show-student-curricular-plan"/>
+			<forward name="createStudentCurricularPlan" path="create-student-curricular-plan"/>
+			<forward name="transferEnrollments" path="transfer-enrollments"/>
+		</action>
+		
+		<!-- Inquiries -->     
+		<action path="/createClassificationsForStudents"
+				parameter="method"
+				name="createClassificationsForm"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.inquiries.CreateClassificationsForStudentsDispatchAction"
+				scope="request">
+			<forward name="chooseDegreeCurricularPlan" path="chooseDegreeCurricularPlan"/>
+		</action>
+		
+		<!-- ================== TEACHERS MANAGEMENT ======================-->
+		<action path="/teachersManagement"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.teachersManagement.TeachersManagementAction"
+				parameter="method"
+				name="teacherManagementForm"
+				scope="request"
+				validate="true"
+				input="/teachersManagement.do?method=prepareDissociateEC&amp;page=0">
+
+			<forward name="firstPage" path="df.teacherManagement.firstPage"/>
+			<forward name="mainPage" path="df.page.main-page"/>
+		</action>
+		
+		<action path="/teacherCategoriesManagement"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.teachersManagement.TeacherCategoriesManagement"
+				parameter="method"
+				scope="request">
+			<forward name="editCategories" path="df.page.editCategories"/>
+		</action>
+		
+		<action path="/dissociateProfShipsAndRespFor"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.teachersManagement.DissociateProfShipsAndRespForDispatchAction"
+				parameter="method"
+				name="teacherManagementForm"
+				scope="request"
+				validate="true"
+				input="/dissociateProfShipsAndRespFor.do?method=prepareDissociateEC&amp;page=0">
+			<forward name="prepareDissociateEC" path="df.page.prepareDissociateEC"/>
+			<forward name="prepareDissociateECShowProfShipsAndRespFor" path="df.page.prepareDissociateECShowProfShipsAndRespFor"/>
+		</action>
 		   
      </action-mappings>     
 
@@ -344,6 +452,7 @@
 	<message-resources parameter="resources.ManagerResources" key="MANAGER_RESOURCES" null="false"/>
 	<message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>
     <message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
+    <message-resources parameter="resources.AcademicAdminOffice" key="ACADEMIC_OFFICE_RESOURCES" null="false"/>
 
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

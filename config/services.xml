@@ -402,7 +402,7 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.CreateClassificationsForStudents</implementationClass>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="ManagerOrGEPAuthorization"/>
+            <chain name="ManagerOrGEPOrOperatorAuthorization"/>
         </filterChains>
     </service>
 
