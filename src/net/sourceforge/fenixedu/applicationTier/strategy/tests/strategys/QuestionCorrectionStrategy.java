@@ -42,14 +42,14 @@ public abstract class QuestionCorrectionStrategy implements IQuestionCorrectionS
 	if (studentResponse.length == 0) {
 	    return false;
 	}
-	if (responseCondition.getCondition() == ResponseCondition.VAREQUAL) {
+	if (responseCondition.getCondition().intValue() == ResponseCondition.VAREQUAL) {
 	    for (int st = 0; st < studentResponse.length; st++) {
 		if (responseCondition.isCorrectLID(studentResponse[st])) {
 		    return true;
 		}
 	    }
 	}
-	if (responseCondition.getCondition() == ResponseCondition.NOTVAREQUAL) {
+	if (responseCondition.getCondition().intValue() == ResponseCondition.NOTVAREQUAL) {
 	    for (int st = 0; st < studentResponse.length; st++) {
 		if (!responseCondition.isCorrectLID(studentResponse[st])) {
 		    return false;
