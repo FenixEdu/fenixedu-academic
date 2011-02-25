@@ -25,20 +25,39 @@ import net.sourceforge.fenixedu.util.tests.ResponseProcessing;
 public abstract class QuestionCorrectionStrategy implements IQuestionCorrectionStrategy {
 
     protected boolean isCorrectLID(List responseCondicions, String[] studentResponse) {
-
+	if (responseCondicions.isEmpty()) {
+	    return false;
+	}
 	for (int rc = 0; rc < responseCondicions.size(); rc++) {
 	    ResponseCondition responseCondition = (ResponseCondition) responseCondicions.get(rc);
-	    boolean match = false;
-	    for (int st = 0; st < studentResponse.length; st++) {
-		if (responseCondition.isCorrectLID(studentResponse[st])) {
-		    match = true;
-		}
-	    }
-	    if (!match) {
+	    if (!isCorrectResponse(studentResponse, responseCondition)) {
 		return false;
 	    }
 	}
 	return true;
+
+    }
+
+    private boolean isCorrectResponse(String[] studentResponse, ResponseCondition responseCondition) {
+	if (studentResponse.length == 0) {
+	    return false;
+	}
+	if (responseCondition.getCondition() == ResponseCondition.VAREQUAL) {
+	    for (int st = 0; st < studentResponse.length; st++) {
+		if (responseCondition.isCorrectLID(studentResponse[st])) {
+		    return true;
+		}
+	    }
+	}
+	if (responseCondition.getCondition() == ResponseCondition.NOTVAREQUAL) {
+	    for (int st = 0; st < studentResponse.length; st++) {
+		if (!responseCondition.isCorrectLID(studentResponse[st])) {
+		    return false;
+		}
+	    }
+	    return true;
+	}
+	return false;
     }
 
     protected ResponseProcessing getLIDResponseProcessing(List<ResponseProcessing> responseProcessingList,
