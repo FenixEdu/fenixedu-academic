@@ -298,7 +298,7 @@
 					<html:link page="/teacherEvaluation.do?method=viewFacultyEvaluationProcess" paramId="facultyEvaluationProcessOID" paramName="facultyEvaluationProcess" paramProperty="OID">
 						<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.view" bundle="RESEARCHER_RESOURCES"/>
 					</html:link>
-					<logic:present role="MANAGER">
+					<logic:present role="MANAGER,OPERATOR">
 						<html:link page="/teacherEvaluation.do?method=deleteFacultyEvaluationProcess" paramId="facultyEvaluationProcessOID" paramName="facultyEvaluationProcess" paramProperty="OID">
 							<bean:message key="label.delete" bundle="APPLICATION_RESOURCES"/>
 						</html:link>

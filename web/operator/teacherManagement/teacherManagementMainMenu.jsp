@@ -23,7 +23,7 @@
 			</html:link>
 		</li>
 		<li>
-			<html:link page="/teacherEvaluation.do?method=viewManagementInterface">
+			<html:link module="/researcher" page="/teacherEvaluation.do?method=viewManagementInterface">
 				<bean:message key="label.manager.teachersManagement.evaluation" bundle="MANAGER_RESOURCES" />
 			</html:link>
 		</li>

@@ -69,11 +69,11 @@
 				<bean:message key="label.manager.personManagement" bundle="MANAGER_RESOURCES" />
 			</html:link>
 		</li>
-		<!-- <li>
+		<li>
 			<html:link page="/teachersManagement.do?method=firstPage">
 				<bean:message key="label.manager.teachersManagement" bundle="MANAGER_RESOURCES" />
 			</html:link>
-		</li> -->
+		</li>
 		<li>
 			<html:link page="/manageHolidays.do?method=prepare&page=0">
 				<bean:message key="label.manage.holidays" bundle="MANAGER_RESOURCES" />
