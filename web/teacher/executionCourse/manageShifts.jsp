@@ -18,7 +18,7 @@
 		</tr>
 		<logic:iterate id="shift" name="shifts">
 		<tr>
-			<td><fr:view name="shift" property="nome"/></td>
+			<td style="text-align:left"><fr:view name="shift" property="presentationName"/></td>
 			<td><fr:view name="shift" property="lotacao"/></td>
 			<td><fr:view name="shift" property="studentsCount"/></td>
 			<bean:define id="executionCourseID" name="executionCourseID"></bean:define>
