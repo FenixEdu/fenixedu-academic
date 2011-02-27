@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Set default value on DocumentIdNumber in Party table" setDefaultValueOnDocumentIdNumber.sql
