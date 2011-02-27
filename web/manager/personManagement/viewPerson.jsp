@@ -30,13 +30,6 @@
 	   		<bean:message key="link.title.qualification" bundle="MANAGER_RESOURCES"/>
 	   	</html:link>
 	   </p>
-		<logic:present role="MANAGER">
-			<logic:present user="ist24439">
-			   	<html:link page="<%= "/monitorSystem.do?method=mock&personID="+ personID%>" >
-	   				<bean:message key="link.title.mock" bundle="MANAGER_RESOURCES"/>
-	   			</html:link>
-			</logic:present>
-		</logic:present>
 	<logic:messagesPresent message="true" property="contacts">
 		<ul class="nobullet list6">
 			<html:messages id="messages" property="contacts" message="true">
