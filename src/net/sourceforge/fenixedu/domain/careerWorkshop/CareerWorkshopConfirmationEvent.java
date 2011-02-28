@@ -59,20 +59,21 @@ public class CareerWorkshopConfirmationEvent extends CareerWorkshopConfirmationE
     }
     
     public int getNumberOfConfirmations() {
-	/*int result = 0;
+	int result = 0;
 	for(CareerWorkshopConfirmation confirmation : getCareerWorkshopConfirmations()) {
 	    if(confirmation.getSealStamp() != null) {
-		result++;
+		if(confirmation.getConfirmation() != null) {
+		    result += (confirmation.getConfirmation() ? 1 : 0);
+		}
 	    }
 	}
-	return result;*/
-	return getCareerWorkshopConfirmationsCount();
+	return result;
     }
     
     public CareerWorkshopConfirmationSpreadsheet getConfirmations() {
-	if (getLastUpdate() == null || getConfirmations() == null)
+	if (getLastUpdate() == null || super.getConfirmations() == null)
 	    generateSpreadsheet();
-	if (getLastUpdate().isAfter(getConfirmations().getUploadTime())) {
+	if (getLastUpdate().isAfter(super.getConfirmations().getUploadTime())) {
 	    generateSpreadsheet();
 	}
 	return super.getConfirmations();
