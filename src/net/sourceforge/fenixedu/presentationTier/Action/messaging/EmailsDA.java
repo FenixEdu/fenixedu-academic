@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.messaging;
 
 import java.util.Arrays;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -16,6 +17,7 @@ import net.sourceforge.fenixedu.domain.util.email.MessageDeleteService;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.struts.action.ActionForm;
@@ -29,6 +31,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Mapping(path = "/emails", module = "messaging")
 @Forwards( { @Forward(name = "new.email", path = "/messaging/newEmail.jsp"),
@@ -74,7 +77,9 @@ public class EmailsDA extends FenixDispatchAction {
 	RenderUtils.invalidateViewState();
 	String validate = emailBean.validate();
 	if (validate != null) {
-	    request.setAttribute("errorMessage", validate);
+	    final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
+	    final String noneSentString = resourceBundle.getString("error.email.none.sent");
+	    request.setAttribute("errorMessage", noneSentString + " " + validate);
 	    request.setAttribute("emailBean", emailBean);
 	    return mapping.findForward("new.email");
 	}
